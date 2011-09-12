@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: bp-cgt.php:281
+#, php-format
+#@ bp-group-management
+msgid "%s joined the group %s"
+msgstr "%s ist jetzt Freund von %s"
+
+#: bp-cgt.php:342
+#@ default
+msgctxt "taxonomy general name"
+msgid "Categories"
+msgstr ""
+
+#: bp-cgt.php:343
+#@ default
+msgctxt "taxonomy singular name"
+msgid "Category"
+msgstr ""
+
+#: bp-cgt.php:347
+#@ default
+msgctxt "taxonomy general name"
+msgid "Tags"
+msgstr ""
+
+#: bp-cgt.php:348
+#@ default
+msgctxt "taxonomy singular name"
+msgid "Tag"
+msgstr ""
+
+#: includes/TKF/tk_test_framework_plugin.php:61
+#@ tk_framework
+msgid "Framework test"
+msgstr ""
+
+#: includes/TKF/tk_test_framework_plugin.php:61
+#@ tk_framework
+msgid "Test functions"
+msgstr ""
+
+#: includes/admin.php:214
+#@ default
+msgid "Save Changes"
+msgstr ""
+
+#: includes/templates/cgt/comments.php:21
+#, php-format
+#@ cgt
+msgid "Discussion (%d)"
+msgstr "Diskussion (%d)"
+
+#: includes/templates/cgt/comments.php:43
+#@ cgt
+msgid "There are no comments for this doc yet."
+msgstr "Keine Kommentare bis jetzt."
+
+#: includes/templates/cgt/comments.php:55
+#@ cgt
+msgid "Comment posting has been disabled on this doc."
+msgstr "Kommentieren ist deaktiviert für dieses Tierprofil."
+
+#: includes/templates/cgt/delete-post.php:22
+#: includes/templates/cgt/post-header.php:6
+#@ cgt
+#@ bp-cgt
+msgid "Delete"
+msgstr "Löschen"
+
+#: includes/templates/cgt/edit-post.php:74
+#@ cgt
+msgid "The post has been changed."
+msgstr "Das Tierprofil wurde geändert."
+
+#: includes/templates/cgt/edit-post.php:89
+#: includes/templatetags.php:122
+#@ cgt
+msgid "Username"
+msgstr "Username"
+
+#: includes/templates/cgt/edit-post.php:93
+#: includes/templatetags.php:126
+#@ cgt
+msgid "Password"
+msgstr "Passwort"
+
+#: includes/templates/cgt/edit-post.php:96
+#: includes/templatetags.php:129
+#@ cgt
+msgid "Remember Me"
+msgstr "Erinner dich an mich."
+
+#: includes/templates/cgt/edit-post.php:98
+#: includes/templatetags.php:131
+#@ default
+msgid "Log In"
+msgstr ""
+
+#: includes/templates/cgt/edit-post.php:126
+#: includes/templatetags.php:148
+#@ cgt
+msgid "Title"
+msgstr "Name"
+
+#: includes/templates/cgt/edit-post.php:134
+#: includes/templatetags.php:153
+#@ default
+#@ cgt
+msgid "Category"
+msgstr "Tierart"
+
+#: includes/templates/cgt/edit-post.php:139
+#: includes/templatetags.php:157
+#@ cgt
+msgid "Content"
+msgstr "Beschreibung"
+
+#: includes/templates/cgt/edit-post.php:161
+#: includes/templatetags.php:176
+#@ cgt
+msgid "Submit"
+msgstr "Senden"
+
+#: includes/templates/cgt/post-header.php:3
+#@ bp-cgt
+msgid "View"
+msgstr "Ansehen"
+
+#: includes/templates/cgt/post-header.php:5
+#@ bp-cgt
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: includes/templates/wp/cgt-loop.php:5
+#: includes/templates/wp/cgt-loop.php:31
+#@ cgt
+msgid "&larr; Previous Entries"
+msgstr "&larr; voriger Eintrag"
+
+#: includes/templates/wp/cgt-loop.php:6
+#: includes/templates/wp/cgt-loop.php:32
+#@ cgt
+msgid "Next Entries &rarr;"
+msgstr "nächster Eintrag &rarr;"
+
+#: includes/templates/wp/cgt-loop.php:38
+#@ cgt
+msgid "Not Found"
+msgstr "Nicht gefunden"
+
+#: includes/templates/wp/page.php:17
+#@ buddypress
+msgid "<p class=\"serif\">Read the rest of this page &rarr;</p>"
+msgstr ""
+
+#: includes/templates/wp/page.php:18
+#@ buddypress
+msgid "<p><strong>Pages:</strong> "
+msgstr ""
+
+#: includes/templates/wp/page.php:35
+#@ buddypress
+msgid "Edit this entry."
+msgstr ""
+
+#: includes/templates/wp/taxonomy.php:10
+#, php-format
+#@ cgt
+msgid "Group Category: %s"
+msgstr "Tierart: %s"
+
+#: includes/templatetags.php:92
+#@ cgt
+msgid "The post has been created."
+msgstr "Das Tierprofil wurde angelegt."
+
