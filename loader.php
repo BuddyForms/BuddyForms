@@ -3,7 +3,7 @@
 Plugin Name: Custom Group Types
 Plugin URI: http://themekraft.com
 Description: Atache Groups to custom posts types and parcitipate from all the goodness wordpress brings to the custom post types and taxonomy sytem. This means you will have not only caching and benefite fromm planty of plugins available. With custom group types you will be able to use group categories, tags with custom taxonomies to sort and display you groups in there different ways.
-Version: 0.1-beta
+Version: 0.1 alpha
 Author: Sven Lehnert
 Author URI: http://themekraft.com
 Licence: GPLv3
