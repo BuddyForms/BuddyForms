@@ -1,5 +1,3 @@
-<?php cgt_locate_template('cgt/post-header.php'); ?>
-
 <div class="content">
 	<?php 
 	$customfields = get_option('cgt_custom_fields');
@@ -49,7 +47,7 @@
 			do_action('wp_insert_post', 'wp_insert_post');
 			
 			foreach($customfields[$_POST['editpost_post_type']] as $customfield) : 
-				update_post_meta($post_id, $customfield, $_POST[$customfield] );
+            	update_post_meta($post_id, $customfield, $_POST[$customfield] );
 			endforeach;
 			
 		}
@@ -102,9 +100,17 @@
 		</form>
 	 
 	<?php else : ?>
-		<?php if ( have_posts() ) : while ( have_posts() ) : the_post() ?>
+<?php global $post, $group_type, $wc_query; ?>
+
+<?php $groups_post_id = groups_get_groupmeta( bp_get_group_id(), 'group_post_id' ); ?>
+<?php $group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' ); ?>
+
+<?php $wc_query = new WP_Query( array('post_type' => $group_type, 'p' => $groups_post_id ) ); ?>
+
+<?php if ( $wc_query->have_posts() ) while ( $wc_query->have_posts() ) : $wc_query->the_post(); ?>
+	
 		
-	<?php if ( get_current_user_id() == get_the_author_ID() ) { ?>
+	<?php if ( bp_group_is_member() ) { ?>
 	
 	<div class="gform_wrapper">
 		<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" enctype="multipart/form-data" id="editpost" method="POST">
@@ -132,16 +138,35 @@
 			
 			<div id="categories">
 			<li><div class="label"><label for="editpost_category" class="inputlable"><?php _e('Category'); ?>:</label></div>
-				<?php $categories = wp_get_object_terms(get_the_ID(), 'group_cat'); ?>
-				<?php wp_dropdown_categories(array('taxonomy' => 'group_cat', 'hide_empty' => 0, 'hierarchical' => 1, 'selected' => $categories[0]->term_id)); ?>
+				<?php 
+				
+				foreach (get_object_taxonomies($post, 'names') as $tax_name ) {
+				   		wp_dropdown_categories(array('taxonomy' => $tax_name, 'hide_empty' => 0, 'hierarchical' => 1, 'show_option_none' => 'Bitte ' . $tax_name . ' w&auml;hlen'));
+			
+				}
+				
+				?>
 			</li>
 			 
-			<li class="textarea"><div class="label"><label for="editpost_content"><?php _e('Content', 'cgt');?>:</label></div>
-			<textarea name="editpost_content" id="editpost_content" rows="20" cols="30" class="requiredField"><?php echo strip_tags(get_the_content()); ?></textarea>
-			<?php if($contentError != '') { ?>
-				<span class="error"><?php $contentError; ?></span>
-			 <?php } ?>
-			</li>
+			 
+	<div id="doc-content-textarea">
+		<label id="content-label" for="doc[content]"><?php _e( 'Content', 'bp-docs' ) ?></label>        
+		<div id="editor-toolbar">
+			<?php /* No media support for now
+			<div id="media-toolbar">
+			    <?php  echo bpsp_media_buttons(); ?>
+			</div>
+			*/ ?>
+			<?php 
+				if ( function_exists( 'wp_editor' ) ) {
+					wp_editor( get_the_content(), 'editpost_content', array(
+						'media_buttons' => false,
+						'dfw'		=> false
+					) );
+				}
+			?>
+		</div>
+        </div>
 			 
 			<?php if(!empty($customfields[get_post_type( get_the_ID() )])){ ?>
 				<?php foreach($customfields[get_post_type( get_the_ID() )] as $customfield) : ?>
@@ -168,5 +193,5 @@
 		
 		<?php endwhile; endif;?>
 	
-	<?php endif; ?>
+
 </div>

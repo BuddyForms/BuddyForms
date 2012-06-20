@@ -9,7 +9,7 @@ class BP_CGT {
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta
 	 */
-	function bp_docs() {
+	function BP_cgt() {
 		$this->__construct();
 	}
 	
@@ -45,7 +45,10 @@ class BP_CGT {
 				unset($bp->bp_cgt->new_post_types[$key]);
 			}
 		}
-		
+			
+		// Add Activity Tab for the activity stream, since we’re displacing it
+		//add_action( 'bp_actions',	array( $this, 'add_activity_tab' ), 8 );
+	
 		// Load textdomain
 		add_action( 'init',	array( $this, 'load_plugin_textdomain' ) );
 		
@@ -70,14 +73,111 @@ class BP_CGT {
 		// Includes necessary files
 		add_action( 'bp_cgt_init', 	array( $this, 'includes' ), 4 );	
 		
-		
+		add_action( 'bp_setup_nav', array( $this, 'profile_setup_nav'), 10 );
+        
+        add_filter( 'post_type_link', array( $this, 'remove_slug'), 10, 3 );
+        
 		// Let plugins know that BP Docs has started loading
 		$this->init_hook();
 		
-		if(is_admin()) {
-		//	tk_framework();
-		// Adding all needed jquery scripts you need in your scripts 
-		//	tk_jqueryui( array( 'jquery-ui-tabs', 'jquery-ui-accordion', 'jquery-ui-autocomplete' ) );
+		if(is_admin()) 
+		  $this->framework_init();
+       
+	}
+
+    function framework_init(){
+        
+        // Registering the form where the data have to be saved
+        $args['forms'] = array( 'cgt-config' );
+        $args['text_domain'] = 'cgt_text_domain';
+        tk_framework( $args ); 
+         
+    }
+    
+
+
+	// Set the profil menu navigation
+	function profile_setup_nav() {
+	    global $bp;
+	    
+		if ( bp_has_groups('user_id='.bp_displayed_user_id()) ) : 
+			
+			while ( bp_groups() ) : bp_the_group(); 
+		
+			 	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+				
+				$post_count[$group_type] ++ ;
+		
+			endwhile;endif;
+		
+		$position = 20;
+        
+        
+        $post_types = array_merge($bp->bp_cgt->new_post_types, $bp->bp_cgt->existing_post_types);
+        
+        foreach($post_types as $post_type) {
+			$position ++;
+			bp_core_new_nav_item( array( 
+		 		'name' => sprintf(__( get_option($post_type.'_name').' <span>%d</span>', 'cgt' ), $post_count[$post_type]),
+	            'slug' => $post_type, 
+	            'position' => $position,
+	            'screen_function' => create_function('',"bp_core_load_template( 'members_post_loop' );"),
+			) );
+            bp_core_new_subnav_item( 'subnav'.$post_type, 'subnav'.$post_type, __('new ', 'cgt').get_option($post_type.'_name'), 'create', 'members_post_sub_menue', 'apps_sub_nav', true, false  );
+			bp_core_new_subnav_item( 
+            array( 
+                'name' => sprintf(__(' Add %s', 'cgt' ), get_option($post_type.'_name')),
+                'slug' => 'create', 
+                'parent_slug' => $post_type, 
+                'parent_url' => $bp->loggedin_user->domain.$post_type.'/', 
+                'item_css_id' => 'apps_sub_nav',
+                'screen_function' => create_function('',"bp_core_load_template( 'members_post_create' );"),
+                'user_has_access' => bp_is_my_profile()
+            ) 
+        );
+		}		
+ 
+	     bp_core_remove_nav_item('groups');
+		 	
+	}
+
+	// Load a page template for your custom item. You'll need to have an item-one-template.php and item-two-template.php in your theme root.
+	function members_post_create() {
+	      
+        do_shortcode('[create_group_type_form]'); 
+                    
+    }   
+	
+	function members_post_loop() {
+	     // bp_core_load_template( 'members_post_loop_firmen' );
+		  load_sub_template( array( BP_CGT_TEMPLATE_PATH.'/bp/members_post_loop.php' ) );
+	}	
+	function load_sub_template( $template ) {
+		if ( $located_template = apply_filters( 'bp_located_template', locate_template( $template , false ), $template ) )	
+			load_template( apply_filters( 'bp_load_template', $located_template ) );
+	}
+
+	function add_activity_tab() {
+		global $bp;
+	 
+		if(bp_is_group()) {
+			bp_core_new_subnav_item( 
+				array( 
+					'name' => 'Activity', 
+					'slug' => 'activity', 
+					'parent_slug' => $bp->groups->current_group->slug, 
+					'parent_url' => bp_get_group_permalink( $bp->groups->current_group ), 
+					'position' => 11, 
+					'item_css_id' => 'nav-activity',
+					'screen_function' => create_function('',"bp_core_load_template( apply_filters( 'groups_template_group_home', 'groups/single/home' ) );"),
+					'user_has_access' => 1
+				) 
+			);
+	 
+			if ( bp_is_current_action( 'activity' ) ) {
+				add_action( 'bp_template_content_header', create_function( '', 'echo "' . esc_attr( 'Activity' ) . '";' ) );
+				add_action( 'bp_template_title', create_function( '', 'echo "' . esc_attr( 'Activity' ) . '";' ) );
+			}
 		}
 	}
 	
@@ -133,11 +233,12 @@ class BP_CGT {
 	function includes() {
 
 		require_once(  BP_CGT_INCLUDES_PATH . 'group-extension.php' );	
-		require_once(  BP_CGT_INCLUDES_PATH . 'templatetags.php' );	
-		
+	    require_once(  BP_CGT_INCLUDES_PATH . 'templatetags.php' ); 
+        require_once(  BP_CGT_INCLUDES_PATH . 'widgets.php' ); 
+    	
 		if ( is_admin() ) {
 			require_once(  BP_CGT_INCLUDES_PATH. 'admin.php' );
-	//		require_once(  BP_CGT_INCLUDES_PATH . 'TKF/tk_framework.php' );
+			require_once(  BP_CGT_INCLUDES_PATH . 'tkf/loader.php' );
 		}
 	}
 	
@@ -348,7 +449,7 @@ class BP_CGT {
 	    'singular_name' => _x( 'Tag', 'taxonomy singular name' ),
 	  ); 
 	
-	  register_taxonomy('group_cat',$bp->bp_cgt->new_post_types,array(
+	  register_taxonomy('firma_category',$bp->bp_cgt->new_post_types,array(
 	    'hierarchical' => true,
 	    'labels' => $labels_group_cat
 	  ));
@@ -360,6 +461,17 @@ class BP_CGT {
 	  
 	}
 
+    // change the shop slug to groups slug to ceep it consitent 
+    function remove_slug($permalink, $post, $leavename) {
+        global $bp;
+        
+        $post_types = array_merge($bp->bp_cgt->new_post_types, $bp->bp_cgt->existing_post_types);
+        foreach($post_types as $post_type){
+            $permalink = str_replace(get_bloginfo('url') . '/'.$post_type , get_bloginfo('url') . '/groups', $permalink);
+        }
+       return $permalink;
+    }
+ 
 	/**
 	 * Redirect a post to its group
 	 * 
@@ -367,12 +479,17 @@ class BP_CGT {
 	 * @since 0.1-beta	
 	 */
 	function theme_redirect() {
-		global $wp, $wp_query, $bp, $post;
+	   global $wp, $wp_query, $bp, $post;
 	    $plugindir = dirname( __FILE__ );
 	    
+        // echo '<pre>';
+        // print_r($wp);
+        // echo '</pre>';
+        
+        //echo $wp->query_vars["post_type"];
+        
 		//A Specific Custom Post Type redirect to the atached group
 		if (in_array( $wp->query_vars["post_type"], $bp->bp_cgt->existing_post_types ) || in_array( $wp->query_vars["post_type"], $bp->bp_cgt->new_post_types )) {
-		
 		if ( is_singular()) {
 			    $link = get_bloginfo('url').'/'.BP_GROUPS_SLUG.'/'.get_post_meta( $wp_query->post->ID, '_link_to_group', true );
 				if ( !$link )
@@ -383,8 +500,8 @@ class BP_CGT {
 		}
 	
 		// A custom Taxonomy Page	
-	    } elseif ($wp->query_vars["groupcats"] || $wp->query_vars["grouptags"] || $wp->query_vars["tierart"]) {
-			$templatefilename = 'taxonomy-tierart.php';
+	    } elseif ($wp->query_vars["app_category"] || $wp->query_vars["app_filter"]) {
+			$templatefilename = 'taxonomy-app_category.php';
 				
 		    if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
 				$return_template = STYLESHEETPATH . '/' . $templatefilename;
@@ -396,7 +513,7 @@ class BP_CGT {
 			BP_CGT::do_theme_redirect($return_template);
 	
 	    //A Single Page
-	    }  elseif ($wp->query_vars["pagename"] == 'tiere') {
+	    }  elseif ($wp->query_vars["pagename"] == 'apps') {
 	        $templatefilename = 'page-'.$wp->query_vars["pagename"].'.php';
 	        if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
 				$return_template = STYLESHEETPATH . '/' . $templatefilename;

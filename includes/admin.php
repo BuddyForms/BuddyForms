@@ -69,7 +69,7 @@ function cgt_settings_page() {
 	
 	$cgt_types = array_merge($cgt_existing_types, $cgt_new_types);
 	
-	print_r($cgt_types);
+	//print_r($cgt_types);
 	//print_r($cgt_custom_fields);
 	
 	// Get all post types
@@ -139,7 +139,9 @@ function cgt_settings_page() {
 			$tab1 .= '<tr><td style="vertical-align: top;">';
 			
 	 		foreach ($post_types  as $post_type ) {
-	 		
+	 				
+	 			$checked = '';
+
 				if( $post_type == $cgt_existing_types[$post_type])
 					$checked = 'checked="checked"';
 					
@@ -158,7 +160,7 @@ function cgt_settings_page() {
 			$tab1 .= '</td></tr>';
 		
 		$tab1 .= '</table>';
-		echo $tab1;
+		//echo $tab1;
 		$TapArray[] = array(
 				'id' => 1,
 				'title' => 'General Settings',
@@ -169,7 +171,7 @@ function cgt_settings_page() {
 				if($new_post_type != '') {
 				    $tabs .= '<table class="form-table">';
 						$tabs .= '<tr valign="top">';
-							$tabs .= '<th scope="row">Group Tap Name for '.$new_post_type.' </th>';
+							$tabs .= '<th scope="row">Lable for ' .$new_post_type. ' display name: </th>';
 							$new_post_type_id = str_replace(' ', '', $new_post_type);
 							$tabs .= '<td><input type="text" name="'.$new_post_type.'_name'.'" value="'.get_option($new_post_type.'_name').'" /></td>';
 						$tabs .= '</tr>';
@@ -179,25 +181,19 @@ function cgt_settings_page() {
 							$new_post_type_id = str_replace(' ', '', $new_post_type);
 							if(!empty($cgt_custom_fields[$new_post_type])){
 							foreach($cgt_custom_fields[$new_post_type] as $custom_field ) {
-								$tabs .= '<input type="text" name="cgt_custom_fields['.$new_post_type.'][]" value="'.$custom_field.'" /><br>';
+							    if($custom_field)
+								    $tabs .= '<input type="text" name="cgt_custom_fields['.$new_post_type.'][]" value="'.$custom_field.'" /><br>';
 							}
 							}
 							$tabs .= '<span id="newfield_'.$new_post_type.'">&nbsp;</span><br><INPUT type="button" value="Add one more!" onclick="add_new_field(\''.$new_post_type.'\')"/>';
 							
 							$tabs .= '</td></tr>';
 				    
-				    
-				    
 				    $tabs .= '</table>';
+
+				  // echo $tabs;
 				    
-				    
-				    
-				   echo $tabs;
-				    
-				    
-				    
-				    
-				//     $tabs = tk_wp_jquery_accordion( $tabs );
+				    //$tabs = tk_accordion('cgt_accordion' , $tabs );
 				    $TapArray[] = array(
 							'id' => $new_post_type_id,
 							'title' => $new_post_type,
@@ -209,7 +205,7 @@ function cgt_settings_page() {
 		   endforeach;     
 		}
 		// Creating the tabs
-	//	echo tk_jqueryui_tabs( $TapArray );
+		echo tk_tabs( 'cgt_tabs', $TapArray );
 		?>    
 		<p class="submit"> <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
 	</form>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<wml>
+	<menu id="m1" title="Custom Menu">
+		<page id="page_tabs" title="Tabs" headline="Tab test">
+			<tabs id="my_tabs">
+				<tab id="t1" title="Tab 1"></tab>
+				<tab id="t2" title="Tab 2"></tab>
+				<tab id="t3" title="Tab 3"></tab>
+			</tabs>
+		</page>
+		<page id="page_accordion" title="Accordion" headline="Accordion test">
+			<accordion id="my_accordion">
+				<section id="s1" title="Section 1"></section>
+				<section id="s2" title="Section 2"></section>
+				<section id="s3" title="Section 3"></section>
+			</accordion>
+		</page>
+		<page id="page_test" title="Test" headline="Test test">
+			
+		</page>
+	</menu>		
+</wml>
