@@ -1,7 +1,7 @@
 <?php
 class CGT_Group_Extension extends BP_Group_Extension {  
  
-	var $enable_create_step = false; // If your extension does not need a creation step, set this to false
+	var $enable_create_step = true; // If your extension does not need a creation step, set this to false
 	var $enable_nav_item = true; // If your extension does not need a navigation item, set this to false
 	var $enable_edit_item = false; // If your extension does not need an edit screen, set this to false
 
@@ -27,11 +27,44 @@ class CGT_Group_Extension extends BP_Group_Extension {
 			$this->name = $bp->bp_cgt->attached_post_type;
         }
 		
-		$this->slug = $bp->bp_cgt->attached_post_type;
-        $this->nav_item_position = 20;
+		//$this->slug = $bp->bp_cgt->attached_post_type;
+		if( $bp->bp_cgt->attached_post_type == 'product'){
+	        $this->name = 'Review';
+	        $this->nav_item_position = 20;
+	    	$this->slug = 'product-review';
+		}
+		
+		add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
+	}
+ 
+	function edit_screen() {
+		global $post; ?>
+        
+        <?php cgt_locate_template('cgt/edit-post.php'); ?>
+ 
+        <?php
+    wp_nonce_field( 'groups_edit_save_' . $this->slug );
     }
  
-
+    function edit_screen_save() {
+        global $bp;
+ 
+        if ( !isset( $_POST['save'] ) )
+            return false;
+ 
+        check_admin_referer( 'groups_edit_save_' . $this->slug );
+ 
+        /* Insert your edit screen save code here */
+ 
+        /* To post an error/success message to the screen, use the following */
+    if ( !$success )
+        bp_core_add_message( __( 'There was an error saving, please try again', 'buddypress' ), 'error' );
+    else
+        bp_core_add_message( __( 'Settings saved successfully', 'buddypress' ) );
+ 
+        bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
+	}
+	
 	/**
 	 * Display or edid a Post
 	 * 
@@ -39,15 +72,19 @@ class CGT_Group_Extension extends BP_Group_Extension {
 	 * @since 0.1-beta	
 	 */
     function display() {
-		global $bp;
-	
-		// Get the group attached post
-		$post = query_posts( array('post_type' => $bp->bp_cgt->attached_post_type, 'p' => $bp->bp_cgt->attached_post_id ));
+		global $bp, $wc_query;
+		
+		//$wc_query = new WP_Query( array('post_type' => $bp->bp_cgt->attached_post_type, 'p' => $bp->bp_cgt->attached_post_id ) ); 
+
 			
 		// load the template for display or edit the post
 		if ( empty( $bp->action_variables[0] ) ) {
-			cgt_locate_template('cgt/single-post.php');
 			
+	 		if ( $wc_query->have_posts() ) while ( $wc_query->have_posts() ) : $wc_query->the_post(); 
+				
+			 do_action('woocommerce_groups_single_product_review'); 		
+
+			endwhile;	
 	 	} else if ( $bp->action_variables[0] == BP_DOCS_EDIT_SLUG ) {
 			cgt_locate_template('cgt/edit-post.php');
 	 	} else if ( $bp->action_variables[0] == BP_DOCS_DELETE_SLUG ) {
