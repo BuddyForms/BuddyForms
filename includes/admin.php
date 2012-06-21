@@ -36,12 +36,13 @@ function cgt_register_settings() {
 	register_setting( 'cgt_options', 'cgt_custom_fields' );
 	
 	foreach($bp->bp_cgt->cgt_custom_fields as $custom_field ) :
+       // print_r($custom_field);
  	    register_setting( 'cgt_options', $custom_field.'_custom_fields' ); 	
     endforeach;       
  
 	
-	foreach($bp->bp_cgt->new_post_types as $new_post_type ) :
- 	    register_setting( 'cgt_options', $new_post_type.'_name' ); 	
+	foreach($bp->bp_cgt->new_post_types as $new_group_type ) :
+ 	    register_setting( 'cgt_options', $new_group_type.'_name' ); 	
     endforeach;       
  
     foreach($bp->bp_cgt->existing_post_types as $existing_post_type ) :
@@ -166,41 +167,145 @@ function cgt_settings_page() {
 				'title' => 'General Settings',
 				'content' => $tab1	
 				);
+                
 		if(!empty($cgt_types)){
-			foreach($cgt_types as $new_post_type ) :
-				if($new_post_type != '') {
-				    $tabs .= '<table class="form-table">';
-						$tabs .= '<tr valign="top">';
-							$tabs .= '<th scope="row">Lable for ' .$new_post_type. ' display name: </th>';
-							$new_post_type_id = str_replace(' ', '', $new_post_type);
-							$tabs .= '<td><input type="text" name="'.$new_post_type.'_name'.'" value="'.get_option($new_post_type.'_name').'" /></td>';
-						$tabs .= '</tr>';
+			foreach($cgt_types as $new_group_type ) :
+				if($new_group_type != '') {
 				    
-				    	$tabs .= '<tr valign="top">';
-							$tabs .= '<th scope="row">Custom fields '.$new_post_type.' </th><td>';
-							$new_post_type_id = str_replace(' ', '', $new_post_type);
-							if(!empty($cgt_custom_fields[$new_post_type])){
-							foreach($cgt_custom_fields[$new_post_type] as $custom_field ) {
-							    if($custom_field)
-								    $tabs .= '<input type="text" name="cgt_custom_fields['.$new_post_type.'][]" value="'.$custom_field.'" /><br>';
-							}
-							}
-							$tabs .= '<span id="newfield_'.$new_post_type.'">&nbsp;</span><br><INPUT type="button" value="Add one more!" onclick="add_new_field(\''.$new_post_type.'\')"/>';
-							
-							$tabs .= '</td></tr>';
-				    
-				    $tabs .= '</table>';
+		    	$new_group_type_id = str_replace(' ', '', $new_group_type);
+		    	
+		    	$accordion_lable .= '<div>';
+				$accordion_lable .= '<div>Lable for ' .$new_group_type. ' display name: </div>';
+				$accordion_lable .= '<div><input type="text" name="'.$new_group_type.'_name'.'" value="'.get_option($new_group_type.'_name').'" /></div>';
+                $accordion_lable .= '</div>';
+    		    
+                $accordion_custom_fields .= '<table border="1" bordercolor="#ECECEC" style="background-color:#ECECEC" width="100%" cellpadding="0" cellspacing="0">';
+                $accordion_custom_fields .= '<tbody>';
+                $accordion_custom_fields .= '<tr>';
+                    $accordion_custom_fields .= '<th>Field Name</th>';
+                    $accordion_custom_fields .= '<th>form</th>';
+                    $accordion_custom_fields .= '<th>multi select</th>';
+                    $accordion_custom_fields .= '<th>required</th>';
+                    $accordion_custom_fields .= '<th>display</th>';
+                $accordion_custom_fields .= '</tr>';
+   
+				
+				if(!empty($cgt_custom_fields[$new_group_type])){
+					foreach($cgt_custom_fields[$new_group_type] as $custom_field ) {
+					    if($custom_field)
+                         $accordion_custom_fields .= '<tr>';
+                          $accordion_custom_fields .= '<td><input type="text" name="cgt_custom_fields['.$new_group_type.'][]" value="'.$custom_field.'" /></td>';
+                          $accordion_custom_fields .= '<td>' . tk_checkbox($taxonomy_form) . '</td>';
+                          $accordion_custom_fields .= '<td>' . tk_checkbox($taxonomy_multy_select) . '</td>';
+                          $accordion_custom_fields .= ' <td>' . tk_checkbox($taxonomy_required) . '</td>';
+                          $accordion_custom_fields .= ' <td>' . tk_checkbox($taxonomy_display) . '</td>';
+                        $accordion_custom_fields .= '</tr>';
+                             
+					}
+				}
+				$accordion_custom_fields .= ' </tbody></table>';	
+                     
+                $cgt_custom_field_type['value'] = 'text';
+                $cgt_custom_field_type['option_name'] = 'Text';
+                $cgt_custom_field_types[] = $cgt_custom_field_type;
+                
+                $cgt_custom_field_type['value'] = 'textarea';
+                $cgt_custom_field_type['option_name'] = 'Textarea';
+                $cgt_custom_field_types[] = $cgt_custom_field_type;
+    
+                $cgt_custom_field_type['value'] = 'dropdown';
+                $cgt_custom_field_type['option_name'] = 'Dropdown';
+                $cgt_custom_field_types[] = $cgt_custom_field_type;
 
-				  // echo $tabs;
-				    
-				    //$tabs = tk_accordion('cgt_accordion' , $tabs );
-				    $TapArray[] = array(
-							'id' => $new_post_type_id,
-							'title' => $new_post_type,
-							'content' => $tabs
-						);
-				    
-					$tabs = '';
+                $cgt_custom_field_type['value'] = 'checkbox';
+                $cgt_custom_field_type['option_name'] = 'Checkbox';
+                $cgt_custom_field_types[] = $cgt_custom_field_type;
+            
+                $cgt_custom_field_type['value'] = 'radiobutton';
+                $cgt_custom_field_type['option_name'] = 'Radiobutton';
+                $cgt_custom_field_types[] = $cgt_custom_field_type;
+  
+                $cgt_custom_field_type['value'] = 'mail';
+                $cgt_custom_field_type['option_name'] = 'Mail';
+                $cgt_custom_field_types[] = $cgt_custom_field_type; 
+                            
+                $accordion_custom_fields .= 'Field Type'. tk_form_select( 'custom_fields', $cgt_custom_field_types, array( 'multi_index' => 0 ) ); 
+                $accordion_custom_fields .= '<INPUT type="button" value="Add one more!" onclick="add_new_field(\''.$new_group_type.'\')"/>';
+				
+				
+		    
+                
+                  $accordion_taxonomies .= '<table border="1" bordercolor="#ECECEC" style="background-color:#ECECEC" width="100%" cellpadding="0" cellspacing="0">';
+                  $accordion_taxonomies .= '<tbody>';
+                   $accordion_taxonomies .= '<tr>';
+                      $accordion_taxonomies .= '<th>Name</th>';
+                      $accordion_taxonomies .= '<th>form</th>';
+                      $accordion_taxonomies .= '<th>multi select</th>';
+                      $accordion_taxonomies .= '<th>required</th>';
+                      $accordion_taxonomies .= '<th>display</th>';
+                   $accordion_taxonomies .= '</tr>';
+    			   
+                   $args=array(
+                      'object_type' => array($new_group_type),
+                      'public'   => true,
+                      '_builtin' => false
+                      
+                    ); 
+                    $output = 'names'; // or objects
+                    $operator = 'and'; // 'and' or 'or'
+                    $taxonomies=get_taxonomies($args,$output,$operator); 
+                              
+                    if  ($taxonomies) {
+                      foreach ($taxonomies  as $taxonomy ) {
+                          
+                        $accordion_taxonomies .= '<tr>';
+                          $accordion_taxonomies .= '<td>' . $taxonomy . '</td>';
+                          $accordion_taxonomies .= '<td>' . tk_checkbox($taxonomy_form) . '</td>';
+                          $accordion_taxonomies .= '<td>' . tk_checkbox($taxonomy_multy_select) . '</td>';
+                          $accordion_taxonomies .= '<td>' . tk_checkbox($taxonomy_required) . '</td>';
+                          $accordion_taxonomies .= '<td>' . tk_checkbox($taxonomy_display) . '</td>';
+                        $accordion_taxonomies .= '</tr>';
+                       // $cgt_post_type_taxonomies_options[] = $taxonomy;
+                      }
+                    }
+                    
+                    $accordion_taxonomies .= '  </tbody></table>';
+                        
+                    //$cgt_post_type_taxonomies = tk_form_select( 'cgt_post_type_taxonomies_'.$new_group_type_id, $cgt_post_type_taxonomies_options, array(  'multiselect' => true ) );
+                        
+    			    $accordion_Array[] = array(
+                            'id' => 'accordion_lable_'.$new_group_type_id,
+                            'title' => $new_group_type.' Lable',
+                            'content' => $accordion_lable
+                            );
+                    $accordion_Array[] = array(
+                            'id' => 'accordion_taxonomies_'.$new_group_type_id,
+                            'title' => $new_group_type. ' taxonomies',
+                            'content' => $accordion_taxonomies
+                            );  
+                     $accordion_Array[] = array(
+                            'id' => 'accordion_custom_fields_'.$new_group_type_id,
+                            'title' => $new_group_type. ' custom Fields',
+                            'content' => $accordion_custom_fields
+                            );
+                            
+     
+    				   
+    			    $tabs = tk_accordion('cgt_accordion_'.$new_group_type_id , $accordion_Array );
+                      
+    			   $TapArray[] = array(
+    					'id' => $new_group_type_id,
+    					'title' => $new_group_type,
+    					'content' => $tabs
+    				);
+    		    
+    				$tabs = '';
+                    $accordion_Array = '';
+                    $accordion_lable = '';
+                    $accordion_custom_fields = '';
+                    $accordion_taxonomies = '';
+                    $cgt_post_type_taxonomies_options = '';
+
 				}
 		   endforeach;     
 		}
