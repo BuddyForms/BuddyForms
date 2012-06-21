@@ -88,9 +88,9 @@ class BP_CGT {
     function framework_init(){
         
         // Registering the form where the data have to be saved
-        $args['forms'] = array( 'cgt-config' );
-        $args['text_domain'] = 'cgt_text_domain';
-        tk_framework( $args ); 
+        //$args['forms'] = array( 'cgt-config' );
+        //$args['text_domain'] = 'cgt_text_domain';
+        tk_framework(); 
          
     }
     

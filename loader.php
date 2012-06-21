@@ -26,6 +26,7 @@ function bp_cgt_init() {
 
 	require( dirname( __FILE__ ) . '/bp-cgt.php' );
 	$bp_cgt = new BP_CGT;
+    
 }
 add_action( 'bp_include', 'bp_cgt_init' );
 ?>
