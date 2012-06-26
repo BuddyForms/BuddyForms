@@ -114,7 +114,15 @@ function tk_register_wp_option_group( $option_group ){
 	$post_option_group = $option_group;
 	
 	add_action( 'save_post', 'tk_save_wp_metabox_option_group' );
-	register_setting( $option_group, $option_group . '_values' );
+    //register_setting( $option_group, $option_group . '_values', create_function('$input', 'mail("mail@sven-lehnert.de", "Mein Betreff", "asas".print_r($input)); return $input;') );
+    register_setting( $option_group, $option_group . '_values', 'tk_sanitize_callback' );
+}
+
+function tk_sanitize_callback($input){
+
+    print_r($input);
+    
+    return $input;
 }
 
 function tk_save_wp_metabox_option_group( $post_id ){

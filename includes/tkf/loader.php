@@ -48,7 +48,7 @@ if( !function_exists( 'tkf_init_010' ) ){
 		$tkf_hide_class_options = array();
 		
 		$defaults = array(
-			'jqueryui_components' => array( 'jquery-cookies', 'jquery-fileuploader', 'jquery-ui-tabs', 'jquery-ui-accordion', 'jquery-colorpicker', 'jquery-ui-autocomplete', 'jquery-linedtextarea', 'jquery-autogrow-textarea', 'jquery-sheepit', 'google-fonts' ),
+			'jqueryui_components' => array( 'jquery-cookies', 'jquery-fileuploader', 'jquery-ui-tabs', 'jquery-ui-accordion', 'jquery-colorpicker', 'jquery-ui-autocomplete', 'jquery-linedtextarea', 'jquery-autogrow-textarea', 'jquery-sheepit', 'jquery-tablednd', 'google-fonts' ),
 			'forms' => array(),
 			'text_domain' => '',
 			'text_domain_path' => '/lang'
