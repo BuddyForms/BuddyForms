@@ -68,8 +68,9 @@ class TK_Jqueryui{
 			wp_enqueue_style( 'jquery-ui-css', TKF_URL . '/includes/css/jquery-ui.css' );
 			wp_enqueue_style( 'jquery-colorpicker-css', TKF_URL . '/includes/css/colorpicker.css' );
 			wp_enqueue_style( 'linedtextarea', TKF_URL . '/includes/css/jquery-linedtextarea.css' );
-			wp_enqueue_style( 'tkf-css', TKF_URL . '/includes/css/tkf.css' );
-			wp_enqueue_style( 'thickbox' );
+		    wp_enqueue_style( 'tkf-css', TKF_URL . '/includes/css/tkf.css' );
+            wp_enqueue_style( 'jquery-tablednd', TKF_URL . '/includes/css/tablednd.css' );
+        	wp_enqueue_style( 'thickbox' );
 		}
 		
 		$jqueryui_url = '';
@@ -153,15 +154,17 @@ class TK_Jqueryui{
 		$this->add_jqueryui_component( 'jquery-linedtextarea', TKF_URL . '/includes/js/jquery/jquery-linedtextarea.js', '1.3.2' );
 		$this->add_jqueryui_component( 'jquery-autogrow-textarea', TKF_URL . '/includes/js/jquery/jquery.elastic.source.js', '1.6.11' );
 		$this->add_jqueryui_component( 'jquery-sheepit', TKF_URL . '/includes/js/jquery/jquery.sheepit.js', '1.4' );
-		$this->add_jqueryui_component( 'google-fonts', TKF_URL . '/includes/js/jquery/google-fonts.js', '1.4' );
+        $this->add_jqueryui_component( 'jquery-tablednd', TKF_URL . '/includes/js/jquery/jquery.tablednd.0.7.min.js', '1.7' );
+        $this->add_jqueryui_component( 'google-fonts', TKF_URL . '/includes/js/jquery/google-fonts.js', '1.4' );
 		
 		$this->add_depency( 'jquery-cookies', array( 'jquery' ) );
 		$this->add_depency( 'jquery-colorpicker', array( 'jquery-color' ) );
 		$this->add_depency( 'jquery-fileuploader', array( 'jquery', 'media-upload', 'thickbox' ) );			
 		$this->add_depency( 'jquery-linedtextarea', array( 'jquery' ) );			
 		$this->add_depency( 'jquery-autogrow-textarea', array( 'jquery', 'jquery-ui' ) );
-		$this->add_depency( 'jquery-sheepit', array( 'jquery', 'jquery-ui' ) );
-		$this->add_depency( 'google-fonts', array( 'jquery', 'jquery-ui' ) );
+	    $this->add_depency( 'jquery-sheepit', array( 'jquery', 'jquery-ui' ) );
+        $this->add_depency( 'jquery-tablednd', array( 'jquery', 'jquery-ui' ) );
+    	$this->add_depency( 'google-fonts', array( 'jquery', 'jquery-ui' ) );
 	}
 	
 	function init_known_jqueryui_components(){

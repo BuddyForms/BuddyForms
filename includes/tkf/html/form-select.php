@@ -36,7 +36,8 @@ class TK_Form_select extends TK_Form_element{
 			'onchange' => '',
 			'size' => '',
 			'multiselect' => FALSE,
-			'extra' => ''
+			'extra' => '',
+			'elements' => ''
 		);
 		
 		$args = wp_parse_args($args, $defaults);
@@ -44,8 +45,14 @@ class TK_Form_select extends TK_Form_element{
 		
 		parent::__construct( $args );
 		
-		$this->size = $size;		
-		$this->elements = array();
+		$this->size = $size;	
+        
+        if($elements){
+          $this->elements  = $elements;
+        } else {
+		  $this->elements = array();
+        }
+		
 		$this->multiselect = $multiselect;
 		$this->extra = $extra;
 		$this->onchange = $onchange;
@@ -209,4 +216,14 @@ function tk_select_delete_option( $select_id, $value ){
 		$tk_select_option_elements[ $select_id ] = array();
 		
 	array_push( $tk_select_option_elements[ $select_id ], array( 'action' => 'delete' , 'value' => $value ) );
+}
+
+function tk_select( $args, $return_object = FALSE ){
+    $select = new TK_Form_select( $args );
+
+    if( TRUE == $return_object ){
+        return $select;
+    }else{
+        return $select->get_html();
+    }   
 }

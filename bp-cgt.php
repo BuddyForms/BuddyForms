@@ -82,15 +82,37 @@ class BP_CGT {
 		
 		if(is_admin()) 
 		  $this->framework_init();
-       
-	}
+        
+        
+         add_filter( 'plugins_loaded', array( $this, 'framework_init'), 10, 3 );
+        // add_action( 'after_setup_theme', array( $this, 'set_globals'), 11 );
+  
+ 	}
+
+
+  
+
+    function set_globals(){
+        if(!is_admin()) 
+            return;
+            
+        global $cgt;
+        
+         
+        $cgt = tk_get_values( 'cgt-config' );
+ 
+    } 
 
     function framework_init(){
         
         // Registering the form where the data have to be saved
-        //$args['forms'] = array( 'cgt-config' );
+        $args['forms'] = array( 'cgt-config' );
         //$args['text_domain'] = 'cgt_text_domain';
-        tk_framework(); 
+        
+        //require_once( 'loader.php' );
+ 
+        
+        tk_framework($args); 
          
     }
     
