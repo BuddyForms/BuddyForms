@@ -21,37 +21,15 @@ class BP_CGT {
 	 */	
 	function __construct() {
 		global $bp;
-		
-		$bp->bp_cgt->cgt_custom_fields = str_replace(' ', '', get_option('cgt_custom_fields'));	
-		if(empty($bp->bp_cgt->cgt_custom_fields))	
-			$bp->bp_cgt->cgt_custom_fields = array();
-		
-		$bp->bp_cgt->existing_post_types = str_replace(' ', '', get_option('cgt_existing_types'));	
-		if(empty($bp->bp_cgt->existing_post_types))	
-			$bp->bp_cgt->existing_post_types = array();
-		
-		foreach($bp->bp_cgt->existing_post_types as $key => $value) {
-			if($value == "") {
-				unset($bp->bp_cgt->existing_post_types[$key]);
-			}
-		}
-			
-		$bp->bp_cgt->new_post_types = str_replace(' ', '', get_option('cgt_new_types'));
-		if(empty($bp->bp_cgt->new_post_types))	
-			$bp->bp_cgt->new_post_types = array();
-				
-		foreach($bp->bp_cgt->new_post_types as $key => $value) {
-			if($value == "") {
-				unset($bp->bp_cgt->new_post_types[$key]);
-			}
-		}
-			
+					
 		// Add Activity Tab for the activity stream, since we’re displacing it
 		//add_action( 'bp_actions',	array( $this, 'add_activity_tab' ), 8 );
 	
 		// Load textdomain
-		add_action( 'init',	array( $this, 'load_plugin_textdomain' ) );
-		
+		add_action( 'init',   array( $this, 'load_plugin_textdomain' ) );
+       
+        add_action( 'init', array( $this, 'add_firmen' ) );
+        
 		// Includes necessary files
 		add_action('save_post', array( &$this, 'create_a_group'), 10, 2 );
 		
@@ -59,13 +37,17 @@ class BP_CGT {
 		add_action('trash_post', array( &$this,'delete_a_group'), 10, 2 );
 		
 		// Includes necessary files
-		add_action( 'init', array( &$this,'create_post_type'), 2 );
+		add_action( 'init', array( &$this,'register_post_type'), 2 );
+         
+        add_action( 'after_switch_theme', 'new_group_type_rewrite_flush' );
+        
+        add_filter( 'post_updated_messages',array( $this,  'group_type_updated_messages' ));
+              
+		// Includes necessary files
+		add_action( 'init', array( &$this,'register_taxonomy'), 1, 2 );
 		
 		// Includes necessary files
-		add_action( 'init', array( &$this,'create_categories'), 1, 2 );
-		
-		// Includes necessary files
-		add_action("template_redirect", array( &$this,'theme_redirect'),1 , 2 );	
+	    add_action("template_redirect", array( &$this,'theme_redirect'),1 , 2 );	
 		
 		// Load predefined constants first thing
 		add_action( 'bp_cgt_init', 	array( $this, 'load_constants' ), 2 );
@@ -77,30 +59,50 @@ class BP_CGT {
         
         add_filter( 'post_type_link', array( $this, 'remove_slug'), 10, 3 );
         
-		// Let plugins know that BP Docs has started loading
+        // Let plugins know that BP Docs has started loading
 		$this->init_hook();
 		
-		if(is_admin()) 
-		  $this->framework_init();
+		$this->framework_init();
         
-        
+
          add_filter( 'plugins_loaded', array( $this, 'framework_init'), 10, 3 );
-        // add_action( 'after_setup_theme', array( $this, 'set_globals'), 11 );
-  
+         add_action( 'after_setup_theme', array( $this, 'set_globals'), 12 );
+  $this->enqueue_style();
  	}
 
-
-  
+function enqueue_style(){
+        $plugindir = dirname( __FILE__ );
+      
+     wp_register_style( 'cgt-style', plugins_url('/includes/css/cgt.css', __FILE__) );
+        wp_enqueue_style( 'cgt-style' );
+    
+}
+        
 
     function set_globals(){
-        if(!is_admin()) 
-            return;
-            
-        global $cgt;
+        global $bp, $cgt ;
         
-         
         $cgt = tk_get_values( 'cgt-config' );
+        
+        foreach($cgt->new_post_types_slug as $key => $post_type_slug){
+            if($post_type_slug != '')
+                $post_types_slug[$post_type_slug] = $post_type_slug;
+        }
+        $cgt->new_post_types_slug = $post_types_slug;
+       
+       
+        
+        //$cgt->custom_field_slug = $custom_field_slug;
  
+        $cgt->post_types = array_merge($cgt->existing_post_types, $post_types_slug);
+    
+        foreach ($cgt->post_types as $post_type) {
+            foreach($cgt->custom_field_slug[$post_type] as $key => $field_slug){
+                if($field_slug == '')
+                    unset($cgt->custom_field_slug[$post_type][$key]);
+            }
+        }
+       
     } 
 
     function framework_init(){
@@ -110,18 +112,15 @@ class BP_CGT {
         //$args['text_domain'] = 'cgt_text_domain';
         
         //require_once( 'loader.php' );
- 
         
         tk_framework($args); 
          
     }
-    
-
-
+ 
 	// Set the profil menu navigation
 	function profile_setup_nav() {
-	    global $bp;
-	    
+	    global $bp, $cgt;
+        
 		if ( bp_has_groups('user_id='.bp_displayed_user_id()) ) : 
 			
 			while ( bp_groups() ) : bp_the_group(); 
@@ -133,22 +132,19 @@ class BP_CGT {
 			endwhile;endif;
 		
 		$position = 20;
-        
-        
-        $post_types = array_merge($bp->bp_cgt->new_post_types, $bp->bp_cgt->existing_post_types);
-        
-        foreach($post_types as $post_type) {
+ 
+        foreach($cgt->post_types as $post_type) {
 			$position ++;
 			bp_core_new_nav_item( array( 
-		 		'name' => sprintf(__( get_option($post_type.'_name').' <span>%d</span>', 'cgt' ), $post_count[$post_type]),
+		 		'name' => sprintf(__( $cgt->new_group_types[$post_type]['name'].' <span>%d</span>', 'cgt' ), $post_count[$post_type]),
 	            'slug' => $post_type, 
 	            'position' => $position,
 	            'screen_function' => create_function('',"bp_core_load_template( 'members_post_loop' );"),
 			) );
-            bp_core_new_subnav_item( 'subnav'.$post_type, 'subnav'.$post_type, __('new ', 'cgt').get_option($post_type.'_name'), 'create', 'members_post_sub_menue', 'apps_sub_nav', true, false  );
+            bp_core_new_subnav_item( 'subnav'.$post_type, 'subnav'.$post_type, __('new ', 'cgt').$cgt->new_group_types[$post_type]['name'], 'create', 'members_post_sub_menue', 'apps_sub_nav', true, false  );
 			bp_core_new_subnav_item( 
             array( 
-                'name' => sprintf(__(' Add %s', 'cgt' ), get_option($post_type.'_name')),
+                'name' => sprintf(__(' Add %s', 'cgt' ), $cgt->new_group_types[$post_type]['name']),
                 'slug' => 'create', 
                 'parent_slug' => $post_type, 
                 'parent_url' => $bp->loggedin_user->domain.$post_type.'/', 
@@ -159,7 +155,7 @@ class BP_CGT {
         );
 		}		
  
-	     bp_core_remove_nav_item('groups');
+	     bp_core_remove_nav_item('groups'); //needs to become an admin option
 		 	
 	}
 
@@ -174,6 +170,7 @@ class BP_CGT {
 	     // bp_core_load_template( 'members_post_loop_firmen' );
 		  load_sub_template( array( BP_CGT_TEMPLATE_PATH.'/bp/members_post_loop.php' ) );
 	}	
+    
 	function load_sub_template( $template ) {
 		if ( $located_template = apply_filters( 'bp_located_template', locate_template( $template , false ), $template ) )	
 			load_template( apply_filters( 'bp_load_template', $located_template ) );
@@ -257,10 +254,10 @@ class BP_CGT {
 		require_once(  BP_CGT_INCLUDES_PATH . 'group-extension.php' );	
 	    require_once(  BP_CGT_INCLUDES_PATH . 'templatetags.php' ); 
         require_once(  BP_CGT_INCLUDES_PATH . 'widgets.php' ); 
+        require_once(  BP_CGT_INCLUDES_PATH . 'tkf/loader.php' );
     	
 		if ( is_admin() ) {
 			require_once(  BP_CGT_INCLUDES_PATH. 'admin.php' );
-			require_once(  BP_CGT_INCLUDES_PATH . 'tkf/loader.php' );
 		}
 	}
 	
@@ -281,15 +278,18 @@ class BP_CGT {
 	 * @since 0.1-beta
 	 */	 
 	function create_a_group($post_ID, $post) {
-		global $flag, $wpdb, $bp;
+		global $flag, $wpdb, $bp, $cgt;
 		
-			$post = query_posts(array( 'post_type' => $post->post_type, 'p' => $post->ID));
-			$post = $post[0];
+           $post = query_posts(array( 'post_type' => $post->post_type, 'p' => $post->ID));
+	       $post = $post[0];
 			
-	 	if( in_array( $post->post_type, $bp->bp_cgt->existing_post_types ) || in_array( $post->post_type, $bp->bp_cgt->new_post_types ) ){
+	 	if( in_array( $post->post_type, $cgt->existing_post_types ) || in_array( $post->post_type, $cgt->new_post_types_slug ) ){
 	        
 	     	$post_group_id = get_post_meta($post->ID,"_post_group_id", true);
-	            $new_group = new BP_Groups_Group();
+            
+           //  $group =  new BP_Groups_Group( $post_group_id );
+           
+                $new_group = new BP_Groups_Group();
 		        if($post_group_id != 0){
 		         	$new_group->id = $post_group_id;
 		         }
@@ -336,12 +336,12 @@ class BP_CGT {
 	 * @since 0.1-beta
 	 */	 
 	function delete_a_group() {
-		global $flag, $post, $bp, $wpdb;
+		global $flag, $post, $bp, $wpdb, $cgt;
 		
 		$post = query_posts(array( 'post_type' => $post->post_type, 'p' => $post->ID));
 		$post = $post[0];
 		
-	 	if( in_array( $post->post_type, $bp->bp_cgt->existing_post_types ) || in_array( $post->post_type, $bp->bp_cgt->new_post_types)) {
+	 	if( in_array( $post->post_type, $cgt->existing_post_types ) || in_array( $post->post_type, $cgt->new_post_types_slug)) {
 	 	
 	     	$post_group_id = get_post_meta($post->ID,"_post_group_id", true);
 	     	
@@ -421,35 +421,78 @@ class BP_CGT {
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta	
 	 */
-	function create_post_type() {
-		global $bp;
-		
-		foreach ($bp->bp_cgt->new_post_types as $post_type) :
-			register_post_type($post_type, array(
-		        'labels' => array(
-		            'name' => $post_type,
-		            'singular_name' => $post_type,
-		        ),
-				'rewrite' => array(
-					'slug' => $post_type,
-					'with_front' => false
-				),
-				//'has_archive' => $post_type,
-				'hierarchical' => true,
-				'public' => true,
-				'supports' => array(
-		            'title',
-		        	'editor',
-		        	'thumbnail',
-		        	'custom-fields',
-		        	'revisions'
-		        ),
-		    ));
+	function register_post_type() {
+		global $bp, $cgt;
+        
+		foreach ($cgt->new_post_types_slug as $post_type) :
+             if($post_type != '') {
+                 $labels = array(
+                    'name' => _x($cgt->new_group_types[$post_type][name], 'post type general name'),
+                    'singular_name' => _x($cgt->new_group_types[$post_type][singular_name], 'post type singular name'),
+                    'add_new' => _x('Add New', strtolower($cgt->new_group_types[$post_type][singular_name])),
+                    'add_new_item' => __('Add New '. $cgt->new_group_types[$post_type][singular_name]),
+                    'edit_item' => __('Edit '.$cgt->new_group_types[$post_type][singular_name]),
+                    'new_item' => __('New '.$cgt->new_group_types[$post_type][singular_name]),
+                    'all_items' => __('All '. $cgt->new_group_types[$post_type][name]),
+                    'view_item' => __('View '. $cgt->new_group_types[$post_type][name]),
+                    'search_items' => __('Search '. $cgt->new_group_types[$post_type][name]),
+                    'not_found' =>  __('No '.$cgt->new_group_types[$post_type][name].' found'),
+                    'not_found_in_trash' => __('No '.strtolower($cgt->new_group_types[$post_type][name]).' found in Trash'), 
+                    'parent_item_colon' => '',
+                    'menu_name' => $cgt->new_group_types[$post_type][name]
+                
+                  );
+                  
+                   $args = array(
+                    'labels' => $labels,
+                    'public' => true,
+                    'publicly_queryable' => true,
+                    'show_ui' => true, 
+                    'show_in_menu' => true, 
+                    'query_var' => true,
+                    'rewrite' => true,
+                    'capability_type' => 'post',
+                    'has_archive' => true, 
+                    'hierarchical' => false,
+                    'menu_position' => null,
+                    'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+                  );            
+                 register_post_type($post_type, $args);
+             }
 		endforeach; 
 	  
-	  //flush_rewrite_rules();  
-	  
 	}
+
+    function new_group_type_rewrite_flush() {
+        flush_rewrite_rules();
+    }
+
+    //add filter to ensure the text is displayed when user updates
+    
+    function group_type_updated_messages( $messages ) {
+      global $post, $post_ID, $cgt;
+      
+      foreach ($cgt->new_post_types_slug as $post_type) :
+        
+        $messages[$post_type] = array(
+        0 => '', // Unused. Messages start at index 1.
+        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'),$cgt->new_group_types[$post_type][singular_name], esc_url( get_permalink($post_ID) ),strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+        2 => __('Custom field updated.'),
+        3 => __('Custom field deleted.'),
+        4 => sprintf( __('%s updated'), $cgt->new_group_types[$post_type][singular_name] ),
+        /* translators: %s: date and time of the revision */
+        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->new_group_types[$post_type][singular_name], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->new_group_types[$post_type][singular_name], esc_url( get_permalink($post_ID) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+        7 => sprintf( __('%s saved'), $cgt->new_group_types[$post_type][singular_name] ),
+        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type][singular_name],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+        9 => sprintf( __('%s scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview %s</a>'),
+          // translators: Publish box date format, see http://php.net/date
+          date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type][singular_name], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+      );    
+      endforeach;
+      return $messages;
+    }
 
 	 /**
  	 * 
@@ -458,38 +501,100 @@ class BP_CGT {
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta	
 	 */
-	function create_categories() {
-		global $bp;	
-
+	function register_taxonomy() {
+		global $bp, $cgt;	
+    foreach ($cgt->new_post_types_slug as $post_type) :
+     
+    
 	 $labels_group_cat = array(
-	    'name' => _x( 'Categories', 'taxonomy general name' ),
-	    'singular_name' => _x( 'Category', 'taxonomy singular name' ),
+	    'name' => sprintf( __('%s Categories'), $cgt->new_group_types[$post_type][name] ),
+	    'singular_name' => sprintf( __('%s Category'), $cgt->new_group_types[$post_type][singular_name] ),
 	  ); 
 	
 	  $labels_group_tags = array(
-	    'name' => _x( 'Tags', 'taxonomy general name' ),
-	    'singular_name' => _x( 'Tag', 'taxonomy singular name' ),
-	  ); 
-	
-	  register_taxonomy('firma_category',$bp->bp_cgt->new_post_types,array(
-	    'hierarchical' => true,
-	    'labels' => $labels_group_cat
-	  ));
-	  
-	  register_taxonomy('group_tag',$bp->bp_cgt->new_post_types,array(
+	    'name' => sprintf( __('%s Tags'), $cgt->new_group_types[$post_type][name] ),
+        'singular_name' => sprintf( __('%s Tag'), $cgt->new_group_types[$post_type][singular_name] ),
+      ); 
+      	
+	  register_taxonomy($post_type.'_category',$post_type,array(
+        'hierarchical' => true,
+        'labels' => $labels_group_cat,
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array( 'slug' => $post_type.'_category' ),
+      ));
+      
+      register_taxonomy($post_type.'_tag',$post_type,array(
 	    'hierarchical' => false,
-	    'labels' => $labels_group_tags
+	    'labels' => $labels_group_tags,
+        'show_ui' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'rewrite' => array( 'slug' => $post_type.'_tag' ),
 	  ));
-	  
-	}
+      endforeach;
+      
+                        
+   foreach($cgt->post_types as $post_type) :
+      
+      if($cgt->custom_field_attach_group[$post_type]){
+       foreach($cgt->custom_field_attach_group[$post_type] as $key => $attached_group ){
+             $labels_group_groups = array(
+            'name' => sprintf( __('%s Categories'), $cgt->custom_field_name[$post_type][$key] ),
+            'singular_name' => sprintf( __('%s Category'), $cgt->custom_field_name[$post_type][$key] ),
+         ); 
+        
+        register_taxonomy($post_type . '_attached_' . $attached_group, $post_type,array(
+            'hierarchical' => true,
+            'labels' => $labels_group_groups,
+            'show_ui' => true,
+            'query_var' => true,
+            'rewrite' => array( 'slug' => $post_type . '_attached_' . $attached_group ),
+            'show_in_nav_menus' => false,
+          ));
+         
+         
+        }   
+      }
+     
+   endforeach;
+      	
+   }
+
+    function add_firmen(){
+      global $cgt;
+      if ( bp_has_groups('type=alphabetical') ) : while ( bp_groups() ) : bp_the_group(); 
+            if ( bp_get_group_status() == ('public' || 'private')) { 
+                if(groups_get_groupmeta( bp_get_group_id(), 'group_type' ) != ''){
+                    
+                       foreach($cgt->post_types as $post_type) :
+      
+                          if($cgt->custom_field_attach_group[$post_type]){
+                           foreach($cgt->custom_field_attach_group[$post_type] as $key => $attached_group ){
+                               if(groups_get_groupmeta( bp_get_group_id(), 'group_type' ) != $post_type) {
+                                wp_set_object_terms( bp_get_group_id(), bp_get_group_name(), $post_type . '_attached_' . $attached_group);
+                               }
+                          
+                            }   
+                          }
+                         
+                       endforeach;
+                    
+                 }
+            }
+        endwhile; /* endif; */ 
+        endif;
+}
 
     // change the shop slug to groups slug to ceep it consitent 
     function remove_slug($permalink, $post, $leavename) {
-        global $bp;
+        global $bp ,$cgt;
         
-        $post_types = array_merge($bp->bp_cgt->new_post_types, $bp->bp_cgt->existing_post_types);
-        foreach($post_types as $post_type){
-            $permalink = str_replace(get_bloginfo('url') . '/'.$post_type , get_bloginfo('url') . '/groups', $permalink);
+        $post_types = array_merge($cgt->existing_post_types_slug, $cgt->new_post_types_slug);
+  
+         foreach($post_types as $post_type){
+             if($post_type)
+                $permalink = str_replace(get_bloginfo('url') . '/'.$post_type , get_bloginfo('url') . '/groups', $permalink);
         }
        return $permalink;
     }
@@ -501,53 +606,59 @@ class BP_CGT {
 	 * @since 0.1-beta	
 	 */
 	function theme_redirect() {
-	   global $wp, $wp_query, $bp, $post;
+	   global $wp, $wp_query, $bp, $post, $cgt;
 	    $plugindir = dirname( __FILE__ );
-	    
-        // echo '<pre>';
-        // print_r($wp);
-        // echo '</pre>';
-        
-        //echo $wp->query_vars["post_type"];
-        
+
 		//A Specific Custom Post Type redirect to the atached group
-		if (in_array( $wp->query_vars["post_type"], $bp->bp_cgt->existing_post_types ) || in_array( $wp->query_vars["post_type"], $bp->bp_cgt->new_post_types )) {
-		if ( is_singular()) {
-			    $link = get_bloginfo('url').'/'.BP_GROUPS_SLUG.'/'.get_post_meta( $wp_query->post->ID, '_link_to_group', true );
-				if ( !$link )
-					return;
-			$redirect_type = '301';	
-			wp_redirect( $link, $redirect_type );
-			exit;
-		}
-	
-		// A custom Taxonomy Page	
-	    } elseif ($wp->query_vars["app_category"] || $wp->query_vars["app_filter"]) {
-			$templatefilename = 'taxonomy-app_category.php';
-				
-		    if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
-				$return_template = STYLESHEETPATH . '/' . $templatefilename;
-			} else if ( file_exists(TEMPLATEPATH . '/' . $templatefilename) ) {
-				$return_template = TEMPLATEPATH . '/' . $templatefilename;
-		    } else {
-				$return_template = $plugindir . '/includes/templates/wp/taxonomy.php';
-			}
-			BP_CGT::do_theme_redirect($return_template);
-	
-	    //A Single Page
-	    }  elseif ($wp->query_vars["pagename"] == 'apps') {
-	        $templatefilename = 'page-'.$wp->query_vars["pagename"].'.php';
-	        if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
-				$return_template = STYLESHEETPATH . '/' . $templatefilename;
-			} else if ( file_exists(TEMPLATEPATH . '/' . $templatefilename) ) {
-				$return_template = TEMPLATEPATH . '/' . $templatefilename;
-		    } else {
-				$return_template = $plugindir . '/includes/templates/wp/page.php';
-			}     
-	        
-	        BP_CGT::do_theme_redirect($return_template);
-		} 
-	}
+		if (in_array( $wp->query_vars["post_type"], $cgt->existing_post_types ) || in_array( $wp->query_vars["post_type"], $cgt->new_post_types_slug )) {
+    		if ( is_singular()) {
+    			    $link = get_bloginfo('url').'/'.BP_GROUPS_SLUG.'/'.get_post_meta( $wp_query->post->ID, '_link_to_group', true );
+    				if ( !$link )
+    					return;
+    			$redirect_type = '301';	
+    			wp_redirect( $link, $redirect_type );
+    			exit;
+    		} else {
+    		  
+    		    foreach ($cgt->new_post_types_slug as $post_type) :
+ 
+                    if($wp->query_vars["post_type"] == $post_type){
+                        $templatefilename = 'page-'.$post_type.'.php';
+                    if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
+                        $return_template = STYLESHEETPATH . '/' . $templatefilename;
+                    } else if ( file_exists(TEMPLATEPATH . '/' . $templatefilename) ) {
+                        $return_template = TEMPLATEPATH . '/' . $templatefilename;
+                    } else {
+                        //$return_template = get_template_part( 'archive' );
+                        $return_template = $plugindir . '/includes/templates/wp/taxonomy.php';
+                    }     
+                   BP_CGT::do_theme_redirect($return_template);  
+                    }
+ 
+            
+                endforeach;
+            
+    		}
+         // A custom Taxonomy Page	
+	    } else {
+    	    foreach ($cgt->new_post_types_slug as $post_type) :
+              if ($wp->query_vars[$post_type.'_category']) {
+                $templatefilename = 'taxonomy-'.$post_type.'_category.php';
+                    
+                if ( file_exists(STYLESHEETPATH . '/' . $templatefilename)) {
+                    $return_template = STYLESHEETPATH . '/' . $templatefilename;
+                } else if ( file_exists(TEMPLATEPATH . '/' . $templatefilename) ) {
+                    $return_template = TEMPLATEPATH . '/' . $templatefilename;
+                } else {
+                    //  $return_template =  get_template_part( 'archive' );
+                    $return_template = $plugindir . '/includes/templates/wp/taxonomy.php';
+                }
+                BP_CGT::do_theme_redirect($return_template);
+        
+              }        
+            endforeach;
+       }
+   }
 
 	function do_theme_redirect($url) {
 	    global $post, $wp_query;

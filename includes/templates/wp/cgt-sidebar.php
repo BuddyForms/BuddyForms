@@ -3,14 +3,17 @@
 	
 	<div id="categories-apps" class="widget widget_categories">
 	
-		<h3 class="widgettitle">Gruppen Kategorien</h3>
-			
-			<?php
-			$orderby = 'name';
+		<h3 class="widgettitle">Kategorien</h3>
+			<?php 
+			global $post, $cgt;
+            
+			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); 
+            
+            $orderby = 'name';
 			$show_count = 0; // 1 for yes, 0 for no
 			$pad_counts = 0; // 1 for yes, 0 for no
 			$hierarchical = 1; // 1 for yes, 0 for no
-			$taxonomy = 'group_cat';
+			$taxonomy = $post->post_type . '_category';
 			$title = '';
 			$hide_empty = 0;
 			$show_count = 1;

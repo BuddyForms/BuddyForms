@@ -46,7 +46,8 @@ class TK_Form_Textfield extends TK_Form_Element{
 		
 		$this->id = $id;
 		$this->extra = $extra;
-		
+        $this->value = $value;
+        
 		$this->multi_index = $multi_index;
 		
 		$this->before_element = $before_element;

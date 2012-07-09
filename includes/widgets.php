@@ -131,7 +131,7 @@ function widget_firmen_nav() { ?>
 		$show_count = 0; // 1 for yes, 0 for no
 		$pad_counts = 0; // 1 for yes, 0 for no
 		$hierarchical = 1; // 1 for yes, 0 for no
-		$taxonomy = 'firma_category';
+		$taxonomy = 'firmen_category';
 		$title = '';
 		$hide_empty = 1;
 		
@@ -190,11 +190,13 @@ if ( $wc_query->have_posts() ) while ( $wc_query->have_posts() ) : $wc_query->th
 		break;	
 		default:
            echo get_the_post_thumbnail(get_the_ID(), array (222, 160)); ?>
-            <h2 class="pagetitle"><a href="<?php the_permalink() ?>" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-            <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <div class="entry">
-                    <?php echo get_the_excerpt(); ?>
-                </div>
+            <div class="summary">
+            	<h2 class="pagetitle"><a href="<?php the_permalink() ?>" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+	            <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	                <div class="entry">
+	                    <?php echo get_the_excerpt(); ?>
+	                </div>
+	            </div>
             </div>
             <?php
 		break;
@@ -206,156 +208,71 @@ endwhile
 <?php } ?>
 <?php if ( function_exists('groups_header_product_widget') )
     wp_register_sidebar_widget( 'groups_header_product_widget', 'groups header product widget', 'groups_header_product_widget', '' );
+     
 
- 
-   
-/**
- * Implementation of highest-rated groups widget
- *
- * @package BP Group Reviews
- * @since 1.2
- */
-class AppRatingWidget extends WP_Widget {
+ function cc_appknight_groups_widget() {
+    	global $post, $group_type, $wp_query, $cgt;
+    
+    	$this_post_id = $post->ID;
+        
+     	if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group();
+    		$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+            
+    		$attached_group_id = get_post_meta($this_post_id, '_'.$group_type.'_attached', true);
+            $attached_tax_name = get_post_meta($this_post_id, '_'.$group_type.'_attached_tax_name', true);
+            $term =  get_term_by('id', $attached_group_id, $attached_tax_name);
+            $group_slug = bp_get_group_slug();
+        endwhile; endif; 
+             
+        if ( bp_has_groups( 'slug=' . $term->slug) ) : while ( bp_groups() ) : bp_the_group();
+        $firma_post_type_post_id = groups_get_groupmeta( bp_get_group_id(), 'group_post_id' );
+            
+            if ( $firma_post_type_post_id != '' && $group_type == 'product' && bp_group_is_visible()  ) { 
 
-	/**
-	 * Constructor
-	 *
-	 * @package BP Group Reviews
-	 * @since 1.2
-	 */
-	function AppRatingWidget() {
-		parent::WP_Widget( false, __( 'App Ratings', 'bpgr' ) );
-	}
+                // The Query
+                query_posts( array( 'post_type' => 'firmen', 'p' => $firma_post_type_post_id) );
+        
 
-	/**
-	 * Renders the widget on the front end
-	 *
-	 * @package BP Group Reviews
-	 * @since 1.2
-	 */
-	function widget( $args, $instance ) {
-		global $bp, $wpdb, $groups_template;
-		
-		extract( $args );
-		
-		$title = esc_attr( $instance['title'] );
-		$number = empty( $instance['number'] ) ? 3 : (int)$instance['number'];
-		
-		$sql = apply_filters( 'bpgr_groups_data_sql', $wpdb->prepare( "
-		SELECT m1.group_id, m1.meta_value AS rating, m2.meta_value AS rating_count  
-		FROM {$bp->groups->table_name_groupmeta} m1 
-		LEFT JOIN {$bp->groups->table_name_groupmeta} m2 ON (m1.group_id = m2.group_id) 
-		WHERE m1.meta_key = 'bpgr_rating'
-		AND m2.meta_key = 'bpgr_how_many_ratings'
-		ORDER BY rating DESC
-		LIMIT 0, %d",
-		$number
-		) );
-		
-		$ratings = $wpdb->get_results( $sql, ARRAY_A );
-		
-		echo $before_widget;
-		echo $before_title . $title . $after_title;
-		echo '<ul class="item-list"><div class="first-post-border"></div>';
-		
-		foreach( $ratings as $rating ) {
-			$group = new BP_Groups_Group( $rating['group_id'] );
-			$groups_template->group = $group; 
-			$groups_post_id = groups_get_groupmeta( $rating['group_id'], 'group_post_id' );
-			
-			?>
-			<li>
-				<a href="<?php bp_group_permalink(); ?>" class="clickable_box">
-				<?php echo get_the_post_thumbnail($groups_post_id ,array(40, 40));?>
-								
-				 <div class="title"><h5><?php bp_group_name(); ?></h5></div>
-				 <span><?php echo bpgr_get_plugin_rating_html($rating['rating'], $rating['rating_count']); ?></span>
-				 </a>
-			 </li>
-			 
-			<?php
-		}
-		
-		echo '<div class="last-post-border"></div></ul>';
-		echo $after_widget;
-	}
-	
-	function form( $instance ) {				
-		$title = empty( $instance['title'] ) ? __( 'Highest Rated Groups', 'bpgr' ) : esc_attr( $instance['title'] );
-		$number = empty( $instance['number'] ) ? 3 : (int)$instance['number'];
-
-		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bpgr' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-		
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of groups to display:', 'bpgr' ); ?> <input class="widefat" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" /></label></p>
-		<?php 
-	}
-}
-
-add_action('widgets_init', create_function('', 'return register_widget("AppRatingWidget");'));
- 	
-function cc_appknight_groups_widget() {
-	global $post, $group_type, $wc_query;
-
-	$app_post_options = app_get_post_meta(); 
-
-	$app_from_company = $app_post_options[app_from_company];
-
-	$this_post_id = $post->ID;
-
-	do_action( 'bp_before_group_header' );
-
-	if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group();
-					
-		$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-		
-		if ( $group_type == 'product' && bp_group_is_visible() ) {
-			
-			$firma_post_type_post_id = groups_get_groupmeta( $app_from_company, 'group_post_id' );
-			
-			if ( $firma_post_type_post_id != '' ) { 
-
-				// The Query
-				query_posts( array( 'post_type' => 'firma', 'p' => $firma_post_type_post_id) );
-		
-
-				$get_the_post_thumbnail_attr = array(
-					'class'	=> "avatar",
-				);
-		
-				if(have_posts()){
-					$tmp .= '<div id="item-list" class="widget widget_from_firma"><!-- Begin Widget Firma -->';	
-					$tmp .= '<div><ul>';
-					$tmp .= '<h3 class="widgettitle">Anbieter</h3>';
-			
-					// The Loop
-					while ( have_posts() ) : the_post();
-						if ( $this_post_id != $post->ID ) {
-							$tmp .= '<a href="'.get_permalink().'" title="'.the_title_attribute(Array('echo'=> 0)).'" class="clickable_box">';
-							$tmp .= '<li>';
-							$tmp .= get_the_post_thumbnail($post->ID , 'post-thumbnails' , $get_the_post_thumbnail_attr);
-							$tmp .= '<h3 class="firma_name">'.get_the_title().'</h3>';
-							$tmp .= '<div class="firma_slogan">'.get_post_meta(get_the_ID(), 'Slogen', true).'</div>';
-							$tmp .= '</li>';
-							$tmp .= '</a>';
-							$tmp .= '<div class="clear"></div>';
-						}
-					endwhile;
-				
-					$tmp .= '</ul></div>';
-					$tmp .= '</div><!-- End Widget Ansprechpartner -->';
-					
-					$tmp .= '<div class="clear"></div>';
-					
-					echo $tmp;
-					
-					// Reset $tmp and the Query
-					$tmp = '';
-					wp_reset_query();
-				}
-			
- 			}
-		}
+                $get_the_post_thumbnail_attr = array(
+                    'class' => "avatar",
+                );
+        
+                if(have_posts()){
+                    $tmp .= '<div id="item-list" class="widget widget_from_firma"><!-- Begin Widget Firma -->'; 
+                    $tmp .= '<div><ul>';
+                    $tmp .= '<h3 class="widgettitle">Anbieter</h3>';
+            
+                    // The Loop
+                    while ( have_posts() ) : the_post();
+                        if ( $this_post_id != $post->ID ) {
+                            $tmp .= '<a href="'.get_permalink().'" title="'.the_title_attribute(Array('echo'=> 0)).'" class="clickable_box">';
+                            $tmp .= '<li>';
+                            $tmp .= get_the_post_thumbnail($post->ID , 'post-thumbnails' , $get_the_post_thumbnail_attr);
+                            $tmp .= '<h3 class="firma_name">'.get_the_title().'</h3>';
+                            $tmp .= '<div class="firma_slogan">'.get_post_meta(get_the_ID(), 'Slogen', true).'</div>';
+                            $tmp .= '</li>';
+                            $tmp .= '</a>';
+                            $tmp .= '<div class="clear"></div>';
+                        }
+                    endwhile;
+                
+                    $tmp .= '</ul></div>';
+                    $tmp .= '</div><!-- End Widget Ansprechpartner -->';
+                    
+                    $tmp .= '<div class="clear"></div>';
+                    
+                    echo $tmp;
+                    
+                    // Reset $tmp and the Query
+                    $tmp = '';
+                    wp_reset_query();
+                }
+            
+            }
+       endwhile; endif;
+       
+       if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group();
+      
 		if ( bp_group_is_visible() ) : ?>
 			
 		<div id="item-list" class="widget widget_ansprechpartner"><!-- Begin Widget Ansprechpartner -->
@@ -372,56 +289,64 @@ function cc_appknight_groups_widget() {
 		<?php endif; ?>
 		<?php 
 		
-		if ( $group_type == 'product' ) {
-			$h3_widget_title = '<h3 class="widgettitle">Andere Apps des Anbieters</h3>';
-			$company_apps = groups_get_groupmeta( $app_post_options['app_from_company'], 'company_apps' );
-		} 
-
-		if ( $group_type == 'firma' ) { 
-			$h3_widget_title .= '<h3 class="widgettitle">Apps des Anbieters</h3>';
-			$company_apps = groups_get_groupmeta( bp_get_group_id(), 'company_apps' );
-		}
+		if($group_type != 'firmen') {
+    		$args = array(
+                'post_type'=> 'product',
+                $attached_tax_name => $term->slug,
+                'order'    => 'ASC',
+            );    
+		} else {
+		  $args = array(
+                'post_type'=> 'product',
+                'product_attached_firmen' => $group_slug,
+                'order'    => 'ASC',
+            );    
+        }
 		
-		
-		if ( $company_apps != '' ) { 
-//print_r( $company_apps);
-			// The Query 
-			query_posts( array( 'post_type' => 'product', 'post__in' => $company_apps ) );
+     	// The Query 
+		query_posts( $args );
 
-			if(have_posts()){
-				 
-				$tmp .= '<div class="widget widget_apps_from_company"><!-- Begin Widget Apps des Anbieters / Andere Apps -->';
-				$tmp .= '<div><ul>';
-				
-				$tmp .= $h3_widget_title;
-				
-				// The Loop
-				while ( have_posts() ) : the_post();
-					if ( $this_post_id != $post->ID ) {
-						$tmp .= '<a href="'.get_permalink().'" title="'.the_title_attribute(Array('echo'=> 0)).'" class="clickable_box">';
-						$tmp .= '<li>';
-						$tmp .= get_the_post_thumbnail($post->ID ,array(50, 50));
-						$tmp .= '<h4>'.get_the_title().'</h4>';
-						// $tmp .= '<div class="app_slogan">Hier kommt ein kurzer Slogan des Apps hin. </div>';
-						$tmp .= '</li>';
-						$tmp .= '</a>';
-						$tmp .= '<div class="clear"></div>';
-					}
-				endwhile;
+		if(have_posts()){
+		    
+		    if ( $group_type == 'product' ) {
+                $h3_widget_title = '<h3 class="widgettitle">Andere Apps des Anbieters</h3>';
+            } 
+    
+            if ( $group_type == 'firmen' ) { 
+                $h3_widget_title .= '<h3 class="widgettitle">Apps des Anbieters</h3>';
+            }
+            
+			 
+			$tmp .= '<div class="widget widget_apps_from_company"><!-- Begin Widget Apps des Anbieters / Andere Apps -->';
+			$tmp .= '<div><ul>';
 			
-				$tmp .= '</ul></div></div>';
-				
-				$tmp .= '<div class="clear"></div>';
-				
-				echo $tmp;
-				
-				// Reset $tmp and the Query
-				$tmp = '';
-				wp_reset_query();
-			}
-				
-	 	}
-	
+			$tmp .= $h3_widget_title;
+			
+			// The Loop
+			while ( have_posts() ) : the_post();
+				if ( $this_post_id != $post->ID ) {
+					$tmp .= '<a href="'.get_permalink().'" title="'.the_title_attribute(Array('echo'=> 0)).'" class="clickable_box">';
+					$tmp .= '<li>';
+					$tmp .= get_the_post_thumbnail($post->ID ,array(50, 50));
+					$tmp .= '<h4>'.get_the_title().'</h4>';
+					// $tmp .= '<div class="app_slogan">Hier kommt ein kurzer Slogan des Apps hin. </div>';
+					$tmp .= '</li>';
+					$tmp .= '</a>';
+					$tmp .= '<div class="clear"></div>';
+				}
+			endwhile;
+		
+			$tmp .= '</ul></div></div>';
+			
+			$tmp .= '<div class="clear"></div>';
+			
+			echo $tmp;
+			
+			// Reset $tmp and the Query
+			$tmp = '';
+			wp_reset_query();
+		}
+        
 	endwhile; endif;
 	
 	do_action( 'bp_after_group_header' );
