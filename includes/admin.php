@@ -100,7 +100,8 @@ function cgt_settings_page() {
             $new_cgt_form .= '<table>';
             
             $new_cgt_form .= '<div class="hidden_fields" style="display: none;">';
-            foreach($cgt->new_post_types_slug as $key => $new_post_type_slug){
+
+            foreach( (array) $cgt->new_post_types_slug as $key => $new_post_type_slug){
                 if($new_post_type_slug)
                     $new_post_types_slug_hidden[$new_post_type_slug] = tk_textfield(Array('id' => 'new_post_types_slug','name' => 'cgt-config_values[new_post_types_slug]['.$key.']', 'value' => $new_post_type_slug)) ;
             $new_cgt_form .= $new_post_types_slug_hidden[$new_post_type_slug] ;

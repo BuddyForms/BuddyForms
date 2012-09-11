@@ -13,6 +13,9 @@ class CGT_Group_Extension extends BP_Group_Extension {
 	 */
     function cgt_group_extension() {
     	global $bp;
+		
+		if( ! is_object( $bp->bp_cgt ) )
+			$bp->bp_cgt = new stdClass;
     
     	// Add the displayed groupmeta for group type and post id to the $bp global
     	if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group();

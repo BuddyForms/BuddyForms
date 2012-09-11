@@ -83,8 +83,11 @@ function enqueue_style(){
         global $bp, $cgt ;
         
         $cgt = tk_get_values( 'cgt-config' );
+		
+		if( ! is_object( $cgt ) )
+			$cgt = new stdClass;
         
-        foreach($cgt->new_post_types_slug as $key => $post_type_slug){
+        foreach( (array) $cgt->new_post_types_slug as $key => $post_type_slug){
             if($post_type_slug != '')
                 $post_types_slug[$post_type_slug] = $post_type_slug;
         }
@@ -94,9 +97,9 @@ function enqueue_style(){
         
         //$cgt->custom_field_slug = $custom_field_slug;
  
-        $cgt->post_types = array_merge($cgt->existing_post_types, $post_types_slug);
+        $cgt->post_types = array_merge((array)$cgt->existing_post_types, (array)$post_types_slug);
     
-        foreach ($cgt->post_types as $post_type) {
+        foreach ((array) $cgt->post_types as $post_type) {
             foreach($cgt->custom_field_slug[$post_type] as $key => $field_slug){
                 if($field_slug == '')
                     unset($cgt->custom_field_slug[$post_type][$key]);
@@ -133,7 +136,7 @@ function enqueue_style(){
 		
 		$position = 20;
  
-        foreach($cgt->post_types as $post_type) {
+        foreach((array)$cgt->post_types as $post_type) {
 			$position ++;
 			bp_core_new_nav_item( array( 
 		 		'name' => sprintf(__( $cgt->new_group_types[$post_type]['name'].' <span>%d</span>', 'cgt' ), $post_count[$post_type]),
@@ -424,7 +427,7 @@ function enqueue_style(){
 	function register_post_type() {
 		global $bp, $cgt;
         
-		foreach ($cgt->new_post_types_slug as $post_type) :
+		foreach ((array)$cgt->new_post_types_slug as $post_type) :
              if($post_type != '') {
                  $labels = array(
                     'name' => _x($cgt->new_group_types[$post_type][name], 'post type general name'),
@@ -472,7 +475,7 @@ function enqueue_style(){
     function group_type_updated_messages( $messages ) {
       global $post, $post_ID, $cgt;
       
-      foreach ($cgt->new_post_types_slug as $post_type) :
+      foreach ((array)$cgt->new_post_types_slug as $post_type) :
         
         $messages[$post_type] = array(
         0 => '', // Unused. Messages start at index 1.
@@ -503,7 +506,7 @@ function enqueue_style(){
 	 */
 	function register_taxonomy() {
 		global $bp, $cgt;	
-    foreach ($cgt->new_post_types_slug as $post_type) :
+    foreach ((array)$cgt->new_post_types_slug as $post_type) :
      
     
 	 $labels_group_cat = array(
@@ -535,7 +538,7 @@ function enqueue_style(){
       endforeach;
       
                         
-   foreach($cgt->post_types as $post_type) :
+   foreach((array)$cgt->post_types as $post_type) :
       
       if($cgt->custom_field_attach_group[$post_type]){
        foreach($cgt->custom_field_attach_group[$post_type] as $key => $attached_group ){
