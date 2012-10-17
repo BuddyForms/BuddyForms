@@ -11,9 +11,9 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	
 	public function __construct() {
-		$this->init_hook();  		
+		$this->init_hook();
+		$this->load_constants();		
 			
-		add_action( 'bp_include', 			array( $this, 'load_constants' 			),  2, 1 );
 		add_action( 'bp_include', 			array( $this, 'includes' 				),  4, 1 );	
         add_action( 'bp_include', 			array( $this, 'framework_init'			), 10, 3 );
 		add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
@@ -25,11 +25,11 @@ class BP_CGT
 		add_action( 'wp_trash_post',		array( $this, 'delete_a_group'			), 10, 1 );
 	    add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
 		add_action( 'bp_setup_nav', 		array( $this, 'profile_setup_nav'		), 10, 1 );
-        add_action( 'after_setup_theme', 	array( $this, 'set_globals'				), 12, 1 );
+        add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
 
-        add_action( 'after_switch_theme', 'new_group_type_rewrite_flush' );
+        add_action( 'after_switch_theme', 	array( $this, 'new_group_type_rewrite_flush' ) );
         
         add_filter( 'post_type_link', 		array( $this, 'remove_slug'					), 10, 3 );
         add_filter( 'post_updated_messages',array( $this, 'group_type_updated_messages' ), 10, 1 );
@@ -90,14 +90,14 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	
 	public function includes() {	
+        require_once( BP_CGT_INCLUDES_PATH .'tkf/loader.php' 		);
 	    require_once( BP_CGT_INCLUDES_PATH .'templatetags.php' 		); 
-        require_once( BP_CGT_INCLUDES_PATH .'functions.php' 		); 
+        require_once( BP_CGT_INCLUDES_PATH .'functions.php' 		);
         require_once( BP_CGT_INCLUDES_PATH .'widget-apps.php' 		); 
         require_once( BP_CGT_INCLUDES_PATH .'widget-categories.php' ); 
         require_once( BP_CGT_INCLUDES_PATH .'widget-groups.php' 	); 
         require_once( BP_CGT_INCLUDES_PATH .'widget-product.php' 	); 
-        require_once( BP_CGT_INCLUDES_PATH .'tkf/loader.php' 		);
-    	
+		
 		if( is_admin() ) {
 			require_once(  BP_CGT_INCLUDES_PATH. 'admin.php' );
 		}
@@ -144,7 +144,7 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
     public function set_globals(){
-        global $cgt;
+        global $cgt, $bp;
         
         $cgt = tk_get_values( 'cgt-config' );
 		
@@ -162,7 +162,7 @@ class BP_CGT
 		
         $cgt->new_post_type_slugs = $post_type_slugs; 
 		      
-        $cgt->post_types 		  = array_merge( 
+        $cgt->post_types = array_merge( 
         	(array) $cgt->existing_post_types, 
         	(array) $post_type_slugs
 		);
@@ -195,7 +195,7 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function profile_setup_nav() {
-	    global $cgt;
+	    global $cgt, $bp;
 		
 		$post_count = array();
         
@@ -270,7 +270,7 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function members_post_loop() {
-		  load_sub_template( array( BP_CGT_TEMPLATE_PATH .'/bp/members_post_loop.php' ) );
+		  $this->load_sub_template( array( BP_CGT_TEMPLATE_PATH .'/bp/members_post_loop.php' ) );
 	}	
     
 	/**
@@ -634,7 +634,7 @@ class BP_CGT
 	public function remove_slug( $permalink, $post, $leavename ) {
         global $cgt;
         
-        $post_types = array_merge( (array) $cgt->existing_post_types_slug, (array) $cgt->new_post_type_slugs );
+        $post_types = array_merge( (array) $cgt->existing_post_type_slugs, (array) $cgt->new_post_type_slugs );
   
         foreach( $post_types as $post_type ){
              if( $post_type )

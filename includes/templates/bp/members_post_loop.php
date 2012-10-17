@@ -54,13 +54,16 @@
             
             echo list_posts_template_builder_css();
             //echo list_posts_template_builder_js();    // hier muss das js für mause over noch rauß geholt werden
-
-            $wp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids ) );
-
-    
-            if ($wp_query->have_posts()) : while ($wp_query->have_posts()) : $wp_query->the_post();
-                get_template_part( 'the-loop-item' );
-            endwhile; endif;
+            
+            if( count( $cgt_post_ids ) <= 0 ) :
+				echo '<div id="message" class="info"><p>Es wurden keine Apps gefunden</p></div>';
+			else :
+	            $wp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids ) );
+	    
+	            if ($wp_query->have_posts()) : while ($wp_query->have_posts()) : $wp_query->the_post();
+	                get_template_part( 'the-loop-item' );
+	            endwhile; endif;
+			endif;
 
              do_action( 'bp_after_postsonprofile_body' ) ?>                
 

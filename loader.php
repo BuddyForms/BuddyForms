@@ -10,7 +10,7 @@ Licence: GPLv3
 Network: true
 */
 
-define( 'BP_Custom_Group_Types_VERSION', '0.1' );
+define( 'BP_CUSTOM_GROUP_TYPES_VERSION', '0.1' );
 
 /**
  * Loads Custom Group Types files only if BuddyPress is present
@@ -25,6 +25,6 @@ function bp_cgt_init() {
 		return;
 
 	require( dirname( __FILE__ ) .'/bp-cgt.php' );
-	$bp_cgt = new BP_CGT;    
+	$bp_cgt = new BP_CGT();    
 }
-add_action( 'bp_loaded', 'bp_cgt_init', -9999 );
+add_action( 'bp_loaded', 'bp_cgt_init', 0 );

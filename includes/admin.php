@@ -1,39 +1,36 @@
 <?php
-
 /**
  * Create "CGT Options" sub nav menu under the Buddypress main admin nav
  *
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta
  */
-add_action('admin_menu', 'cgt_create_menu');
 function cgt_create_menu() {
-
-    if ( !is_super_admin() )
+    if( ! is_super_admin() )
         return false;
     
     $args = array(
-            'id' => 'cgt_options',
-            'menu_title' => 'CGT Options',
-            'page_title' => 'CGT Options',
-            'capability' => 'edit_posts',
-            'parent_slug' => '',
-            'menu_slug' => 'cgt_options_page',          
-            'icon_url' => '',
-            'position' => '',
-            'object_menu' => TRUE   
-        );
+		'id' => 'cgt_options',
+        'menu_title' => 'CGT Options',
+        'page_title' => 'CGT Options',
+        'capability' => 'edit_posts',
+        'parent_slug' => '',
+        'menu_slug' => 'cgt_options_page',          
+        'icon_url' => '',
+        'position' => '',
+        'object_menu' => TRUE   
+    );
         
     $element[0] = array( 
-            'id' => 'afsd',
-            'menu_title' => 'Pagessss',
-            'page_title' => 'page_title',
-            'content' => tk_form( 'cgt-config', 'cgt-config', cgt_settings_page()),
-        );
-        
+		'id' => 'afsd',
+        'menu_title' => 'Pagessss',
+        'page_title' => 'page_title',
+        'content' => tk_form( 'cgt-config', 'cgt-config', cgt_settings_page()),
+    );    
       
     tk_admin_pages($element, $args, false);  
 }  
+add_action('admin_menu', 'cgt_create_menu');
 
 /**
  * Create the option settings page
@@ -111,7 +108,7 @@ function cgt_settings_page() {
             
             $new_cgt_form .= '<tr>';
             $new_cgt_form .= ' <td class="label">Slug: </td>';
-            $new_cgt_form .= ' <td> ' . tk_textfield(Array('multi_index' => 0, 'id' => 'new_post_type_slugs','name' => 'cgt-config_values[new_post_type_slugs][]')). ' </td>';
+            $new_cgt_form .= ' <td> ' . tk_textfield(array('multi_index' => 0, 'id' => 'new_post_type_slugs','name' => 'cgt-config_values[new_post_type_slugs][]')). ' </td>';
             $new_cgt_form .= '</tr>';
             $new_cgt_form .= '<tr><td class="create_cgt">' . tk_button('Create new CGT', 'cgt_create_new_form_submit') . '</td><tr>';
             $new_cgt_form .= '</table>';
@@ -164,7 +161,7 @@ function cgt_settings_page() {
                     $accordion_lable .= '</tr>';
                 } else {
                     $accordion_lable .= ' <td>Overwrite slug if needed * : </td>';
-                    $accordion_lable .= ' <td> ' . tk_textfield(Array('id' => 'existing_post_types_slug','name' => 'cgt-config_values[existing_post_types_slug]['.$new_group_type.']', 'value' => $cgt->existing_post_types_slug    [$new_group_type])) . ' </td>';
+                    $accordion_lable .= ' <td> ' . tk_textfield(Array('id' => 'existing_post_type_slugs','name' => 'cgt-config_values[existing_post_type_slugs]['.$new_group_type.']', 'value' => $cgt->existing_post_type_slugs[$new_group_type])) . ' </td>';
                     $accordion_lable .= '</tr>';   
                 }
                 $accordion_lable .= '</table>';

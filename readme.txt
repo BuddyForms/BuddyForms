@@ -1,9 +1,9 @@
 === BuddyPress Custom Post Types  ===
-Contributors: svenl77
+Contributors: svenl77, travel-junkie
 Tags: buddypress, groups, custom post types, taxonomy
 Requires at least: WordPress 3.1, BuddyPress 1.5
-Tested up to: WordPress 3.3-bleeding, BuddyPress 1.5
-Stable tag: 0.1 alpha
+Tested up to: WordPress 3.4.2, BuddyPress 1.6.1
+Stable tag: 0.2 alpha
  
 Atache Groups to custom posts types.
 

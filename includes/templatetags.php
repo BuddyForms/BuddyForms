@@ -64,7 +64,7 @@ function app_clean_input( $input, $type ) {
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta	
  */
-function create_group_type_form( $atts = array(),$content = null ) {
+function create_group_type_form( $atts = array(), $content = null ) {
     global $cc_page_options, $post, $bp, $current_user, $cgt;
    
     get_currentuserinfo();	
@@ -93,8 +93,8 @@ function create_group_type_form( $atts = array(),$content = null ) {
 	
 	$customfields = $cgt->custom_field_slugs[$posttype];
 		
-	foreach( $customfields as $key => $value ) {
-		if(!$value) {
+	foreach( (array) $customfields as $key => $value ) {
+		if( ! $value ) {
 			unset($customfields[$key]);
 		}
 	}
@@ -129,7 +129,7 @@ function create_group_type_form( $atts = array(),$content = null ) {
           	$hasError = true;
 	    }
 		
-		foreach( $customfields as $key => $customfield ) : 
+		foreach( (array) $customfields as $key => $customfield ) : 
             if( $cgt->custom_field_required[$posttype][$key] == 'on' && empty( $_POST[$customfield] ) ){
                 $custom_field_Error .= 'Please enter '. $customfield .' value. <br />';
                 $hasError = true;
@@ -155,7 +155,7 @@ function create_group_type_form( $atts = array(),$content = null ) {
                 // insert the new form
                 $post_id = wp_update_post( $my_post );
                 
-               foreach( $customfields as $key => $customfield ) : 
+               foreach( (array) $customfields as $key => $customfield ) : 
                     if( $cgt->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
                        $custom_field_taxonomy = $cgt->custom_field_taxonomy[$posttype][$key];
                        
@@ -204,7 +204,7 @@ function create_group_type_form( $atts = array(),$content = null ) {
                 // insert the new form
                 $post_id = wp_insert_post($my_post);
                 
-               	foreach( $customfields as $key => $customfield ) : 
+               	foreach( (array) $customfields as $key => $customfield ) : 
                     if( $cgt->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
                        	$custom_field_taxonomy = $cgt->custom_field_taxonomy[$posttype][$key];
                         wp_set_post_terms( $post_id, $_POST[$customfield], $custom_field_taxonomy, false );
@@ -270,10 +270,10 @@ function create_group_type_form( $atts = array(),$content = null ) {
 			<div class="thanks">
 				<?php if($_POST['editpost_id']){ ?>
 		    		<h1><?php _e('Saved', 'cgt')?></h1>
-		    	    <p><?php _e('Post has bean created.','cgt'); ?> </p>
+		    	    <p><?php _e('Post has been created.','cgt'); ?> </p>
 	   			<?php } else { ?>
 		            <h1><?php _e('Saved', 'cgt')?></h1>
-		            <p><?php _e('Post has bean updated.','cgt'); ?> </p>
+		            <p><?php _e('Post has been updated.','cgt'); ?> </p>
 				<?php } ?>
 			</div>
 			<?php
