@@ -28,7 +28,7 @@ class BP_CGT
 		add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
         add_action( 'init', 				array( $this, 'add_firmen' 				), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_post_type'		), 10, 1 );
-		add_action( 'init', 				array( $this, 'register_taxonomy'		),  1, 2 );
+		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
 		add_action( 'init', 				array( $this, 'setup_group_extension'	), 10, 1 );
 		add_action( 'save_post', 			array( $this, 'create_a_group'			), 10, 2 );
 		add_action( 'wp_trash_post',		array( $this, 'delete_a_group'			), 10, 1 );
@@ -460,7 +460,7 @@ class BP_CGT
 	 */
 	public function register_post_type() {
 		global $cgt;
-		
+				
 		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
              if( ! empty( $post_type ) ) {
                  $labels = array(
