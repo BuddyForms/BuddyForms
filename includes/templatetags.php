@@ -91,7 +91,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
    	if( empty( $posttype ) )
    	   $posttype = $the_post->post_type;
 	
-	$customfields = $cgt->custom_field_slugs[$posttype];
+	$customfields = $cgt->custom_field_slug[$posttype];
 		
 	foreach( (array) $customfields as $key => $value ) {
 		if( ! $value ) {
@@ -387,7 +387,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                if( $cgt->custom_field_name[$posttype][$key] ){
 			                    $field_name = $cgt->custom_field_name[$posttype][$key];
 			                } else {
-			                    $field_name = $cgt->custom_field_slugs[$posttype][$key];
+			                    $field_name = $cgt->custom_field_slug[$posttype][$key];
 			                }
 							
 			               	switch( $cgt->custom_field_type[$posttype][$key] ) {

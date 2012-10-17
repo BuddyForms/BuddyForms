@@ -5,7 +5,6 @@
  *
  * new_post_types_slug 		=> new_post_type_slugs
  * existing_post_types_slug => existing_post_type_slugs
- * custom_field_slug		=> custom_field_slugs
  * 
  * Deactivate this:
  * add_action( 'bp_init', 'cc_change_profile_tab_order' );
@@ -180,9 +179,9 @@ class BP_CGT
 		);
     
         foreach( (array) $cgt->post_types as $post_type ) {
-            foreach( (array) $cgt->custom_field_slugs[$post_type] as $key => $field_slug ){
+            foreach( (array) $cgt->custom_field_slug[$post_type] as $key => $field_slug ){
                 if( empty( $field_slug ) )
-                    unset( $cgt->custom_field_slugs[$post_type][$key] );
+                    unset( $cgt->custom_field_slug[$post_type][$key] );
             }
         }       
     } 

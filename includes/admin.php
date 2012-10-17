@@ -175,15 +175,15 @@ function cgt_settings_page() {
                 $accordion_custom_fields .= '<th>Field meta</th>';
                 $accordion_custom_fields .= '</tr>';
     
-                if(!empty($cgt->custom_field_slugs[$new_group_type])){
+                if(!empty($cgt->custom_field_slug[$new_group_type])){
                             
-                  foreach($cgt->custom_field_slugs[$new_group_type] as $key => $custom_field ) {
+                  foreach($cgt->custom_field_slug[$new_group_type] as $key => $custom_field ) {
                     if($custom_field == ''){
-                        unset($cgt->custom_field_slugs[$new_group_type][$key] );
+                        unset($cgt->custom_field_slug[$new_group_type][$key] );
                     }
                    }    
                    
-                    foreach($cgt->custom_field_slugs[$new_group_type] as $key => $custom_field ) {
+                    foreach($cgt->custom_field_slug[$new_group_type] as $key => $custom_field ) {
                         
                           $accordion_custom_fields .= '<tr id="table5-row-'.$key.'">';
                           $accordion_custom_fields .= '<td class="dragHandle">'.$key.'</td><td>';
@@ -205,7 +205,7 @@ function cgt_settings_page() {
                            $accordion_custom_fields .= '<div><div class="label">Type: </div>' . $new_field_type->get_html().'</div>';
                            $accordion_custom_fields .= '<div><div class="label">Name: </div>' . tk_textfield(Array('id' => 'custom_field_name','name' => 'cgt-config_values[custom_field_name]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_name[$new_group_type][$key])) . ' </div>';
                            $accordion_custom_fields .= '<div><div class="label">Discription: </div>' . tk_textfield(Array('id' => 'custom_field_discription','name' => 'cgt-config_values[custom_field_discription]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_discription[$new_group_type][$key])) . ' </div>';
-                           $accordion_custom_fields .= '<div><div class="label">Slug: </div>' . tk_textfield(Array('id' => 'custom_field_slugs','name' => 'cgt-config_values[custom_field_slugs]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_slugs[$new_group_type][$key])) . ' </div>';
+                           $accordion_custom_fields .= '<div><div class="label">Slug: </div>' . tk_textfield(Array('id' => 'custom_field_slug','name' => 'cgt-config_values[custom_field_slug]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_slug[$new_group_type][$key])) . ' </div>';
                           $custom_fields_meta = '';
                            switch ($cgt->custom_field_type[$new_group_type][$key]) {
                                case 'AttachGroupType':
@@ -286,7 +286,7 @@ function cgt_settings_page() {
                $new_field_type->add_option('AttachGroupType');
                
                $accordion_custom_fields .=  $new_field_type->get_html();
-               $accordion_custom_fields .= ' <td> ' . tk_textfield(Array('id' => 'custom_field_slugs','name' => 'cgt-config_values[custom_field_slugs]['.$new_group_type.'][]' )). ' </td>';
+               $accordion_custom_fields .= ' <td> ' . tk_textfield(Array('id' => 'custom_field_slug','name' => 'cgt-config_values[custom_field_slug]['.$new_group_type.'][]' )). ' </td>';
                
                $accordion_custom_fields .= '<tr><td>' . tk_button('Add one more', 'cgt_add_form_element_submit') . '</td><tr>';
                        
