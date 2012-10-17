@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Rewritten option names
+ *
+ * new_post_types_slug 		=> new_post_type_slugs
+ * existing_post_types_slug => existing_post_type_slugs
+ * custom_field_slug		=> custom_field_slugs
+ */
+
 class BP_CGT
 {
 	public $post_type_name;
