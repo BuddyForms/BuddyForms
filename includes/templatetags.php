@@ -81,7 +81,13 @@ function create_group_type_form( $atts = array(), $content = null ) {
     		'posttype' => $the_post->post_type,
     		'taxonomy' => $the_post->post_type .'_category',
     	), $atts ) );   
-    } else { 
+    } else {
+		$post_id = 0;
+       	$the_post = new stdClass;
+		$the_post->ID = $post_id;
+		$the_post->post_type = $bp->current_component;
+		$the_post->post_title = '';
+		
         extract( shortcode_atts( array(
             'posttype' => $bp->current_component,
             'taxonomy' => $bp->current_component .'_category',
@@ -282,19 +288,19 @@ function create_group_type_form( $atts = array(), $content = null ) {
 
 	?>
 	<div class="hinzufuegen">
-	    <?php if($custom_field_Error != ''){ ?>
+	    <?php if(isset($custom_field_Error) && $custom_field_Error != ''){ ?>
 	        <div class="error"><?php echo $custom_field_Error;?></div>
 	    <?php } ?>
 	
-		<?php if($titleError != '') { ?>
+		<?php if(isset($titleError) && $titleError != '') { ?>
 			<div class="error"><?php echo $titleError;?></div>
 		<?php } ?>
 		
-		<?php if($contentError != '') { ?>
+		<?php if(isset($contentError) && $contentError != '') { ?>
 			<div class="error"><?php echo $contentError; ?></div>
 		<?php } ?>
 		
-		<?php if($fileError != '') { ?>
+		<?php if(isset($fileError) && $fileError != '') { ?>
 			<div class="error"><?php echo $fileError; ?></div>
 		<?php } ?>
 
@@ -325,7 +331,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				$editpost_title =  $the_post->post_title;
 			}			
 
-			if( $_POST['editpost_content'] ){
+			if( isset( $_POST['editpost_content'] ) ){
 				$editpost_content_val = $_POST['editpost_content'];
 			} else {
 				$editpost_content_val = $the_post->post_title;
@@ -390,7 +396,9 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                    $field_name = $cgt->custom_field_slug[$posttype][$key];
 			                }
 							
-			               	switch( $cgt->custom_field_type[$posttype][$key] ) {
+							$custom_field_type = isset( $cgt->custom_field_type[$posttype][$key] ) ? $cgt->custom_field_type[$posttype][$key] : '';
+							
+			               	switch( $custom_field_type ) {
 								case 'AttachGroupType':
 									?>
 			                        <li>

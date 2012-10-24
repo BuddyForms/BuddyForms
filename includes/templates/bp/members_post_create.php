@@ -26,7 +26,7 @@
 
             <div id="item-body">
             
-          <?php do_shortcode('[create_group_type_form]'); ?>
+          	<?php do_shortcode('[create_group_type_form]'); ?>
            
             </div><!-- #item-body -->
 
