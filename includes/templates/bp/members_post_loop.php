@@ -27,8 +27,9 @@
             <div id="item-body">
             
             <?php 
-            global $list_post_atts, $list_post_query, $wp_query, $tkf, $bp;
+            global $wp_query, $bp;
            
+		   	$cgt_post_ids = array();
             if ( bp_has_groups('user_id='.bp_displayed_user_id()) ) : 
                 
                 $groups_post_ids = array();
@@ -44,25 +45,26 @@
                     
                 endwhile;
     
-                do_action( 'bp_after_groups_loop' ) ?>
+                do_action( 'bp_after_groups_loop' );
      
-            <?php endif; ?>
-                
-            <?php
-            
-            $list_post_atts = create_template_builder_args('Apps');
-            
-            echo list_posts_template_builder_css();
-            //echo list_posts_template_builder_js();    // hier muss das js für mause over noch rauß geholt werden
-            
+            endif;
+			
             if( count( $cgt_post_ids ) <= 0 ) :
-				echo '<div id="message" class="info"><p>Es wurden keine Apps gefunden</p></div>';
+				echo '<div id="message" class="info"><p>Es wurden keine Resultate gefunden</p></div>';
+				
 			else :
 	            $wp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids ) );
 	    
-	            if ($wp_query->have_posts()) : while ($wp_query->have_posts()) : $wp_query->the_post();
-	                get_template_part( 'the-loop-item' );
-	            endwhile; endif;
+	            if ($wp_query->have_posts()) : 
+	            	while ($wp_query->have_posts()) : $wp_query->the_post();
+	                	
+						?>
+						<a class="clickable" href="<?php the_permalink() ?>" title="<?php _e( 'Permanent Link to', 'cc' ) . the_title_attribute(); ?>">			
+							<?php the_title() ?>
+						</a>
+						<?php
+	            	endwhile;
+	            endif;
 			endif;
 
              do_action( 'bp_after_postsonprofile_body' ) ?>                
