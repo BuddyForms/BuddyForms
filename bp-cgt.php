@@ -214,7 +214,7 @@ class BP_CGT
 		if( bp_has_groups( array( 'user_id' => bp_displayed_user_id() ) ) ) :			
 			while( bp_groups() ) : bp_the_group();		
 			 	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-			
+						
 				if( ! isset( $post_count[$group_type] ) )
 					$post_count[$group_type] = 0;
 				
@@ -226,8 +226,10 @@ class BP_CGT
         foreach( (array) $cgt->post_types as $post_type ) {
 			$position ++;
 			
+			$count = isset( $post_count[$post_type] ) ? $post_count[$post_type] : 0;
+			
 			bp_core_new_nav_item( array( 
-		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt->new_group_types[$post_type]['name'], $post_count[$post_type] ),
+		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt->new_group_types[$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
 	            'screen_function' 	=> create_function( '', "bp_core_load_template( 'members_post_loop' );" ),
