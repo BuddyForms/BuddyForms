@@ -232,69 +232,39 @@ class BP_CGT
 		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt->new_group_types[$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
-	            'screen_function' 	=> create_function( '', "bp_core_load_template( 'members_post_loop' );" ),
+	            'screen_function' 	=> array( $this, 'load_members_post_loop' )
 			) );
 			
-			/**
-			 * @TODO figure out what the bit below is supposed to do
-            bp_core_new_subnav_item( 
-            	'subnav'. $post_type, 
-            	'subnav'. $post_type, 
-            	 sprintf( __( 'new %s', 'cgt') . $cgt->new_group_types[$post_type]['name'] ),
-            	 'create', 
-            	 'members_post_sub_menue', 
-            	 'apps_sub_nav', 
-            	 true, 
-            	 false
-			);
-			 */
-
 			bp_core_new_subnav_item( array( 
                 'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt->new_group_types[$post_type]['name']),
                 'slug' 				=> 'create', 
                 'parent_slug' 		=> $post_type, 
                 'parent_url' 		=> trailingslashit( bp_loggedin_user_domain() . $post_type ),
                 'item_css_id' 		=> 'apps_sub_nav',
-                'screen_function' 	=> create_function( '', "bp_core_load_template( 'members_post_create' );" ),
+                'screen_function' 	=> array( $this, 'load_members_post_create' ),
                 'user_has_access'	=> bp_is_my_profile()
 	        ) );
-		}		
- 
- 		/**
-		 * @TODO needs to become an admin option
-		 */
-	    //bp_core_remove_nav_item( 'groups' );		 	
+		}	
 	}
 
 	/**
 	 * Show the post create form
 	 *
 	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta
+	 * @since 0.2-beta
 	 */	 
-	public function members_post_create() {	      
-        do_shortcode('[create_group_type_form]');                    
-    }   
-	
+	public function load_members_post_loop() {
+		bp_core_load_template( 'members_post_loop' );
+	}
+
 	/**
-	 * Show the members post loop
+	 * Show the post create form
 	 *
 	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta
+	 * @since 0.2-beta
 	 */	 
-	public function members_post_loop() {
-		  $this->load_sub_template( array( BP_CGT_TEMPLATE_PATH .'/bp/members_post_loop.php' ) );
-	}	
-    
-	/**
-	 * Load a sub template
-	 *
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta
-	 */	 
-	public function load_sub_template( $template ) {
-		if( $located_template = apply_filters( 'bp_located_template', locate_template( $template , false ), $template ) )	
-			load_template( apply_filters( 'bp_load_template', $located_template ) );
+	public function load_members_post_create() {
+		bp_core_load_template( 'members_post_create' );
 	}
 
 	/**
