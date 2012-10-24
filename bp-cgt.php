@@ -44,6 +44,7 @@ class BP_CGT
         
         add_filter( 'post_type_link', 		array( $this, 'remove_slug'					), 10, 3 );
         add_filter( 'post_updated_messages',array( $this, 'group_type_updated_messages' ), 10, 1 );
+		add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 		), 10, 2 );
  	}
 
 	/**
@@ -254,7 +255,7 @@ class BP_CGT
 	 * @since 0.2-beta
 	 */	 
 	public function load_members_post_loop() {
-		bp_core_load_template( 'members_post_loop' );
+		bp_core_load_template( 'bp/members_post_loop' );
 	}
 
 	/**
@@ -264,7 +265,33 @@ class BP_CGT
 	 * @since 0.2-beta
 	 */	 
 	public function load_members_post_create() {
-		bp_core_load_template( 'members_post_create' );
+		bp_core_load_template( 'bp/members_post_create' );
+	}
+	
+	/**
+	 * Look for the templates in the proper places
+	 * 
+	 * @package BuddyPress Custom Group Types
+	 * @since 0.2-beta
+	 */
+	public function load_template_filter( $found_template, $templates ) {
+		if( empty( $found_template ) ) :
+			foreach( (array)$templates as $template ) {
+				if( file_exists( STYLESHEETPATH . '/' . $template ) )
+					$filtered_template = STYLESHEETPATH . '/' . $template;
+						
+				else
+					$filtered_template =  BP_CGT_TEMPLATE_PATH . $template;
+			}
+			
+			if( file_exists( $filtered_template ) ) :	
+				return apply_filters( 'cgt_load_template_filter', $filtered_template );
+			else :
+				return '';
+			endif;
+		else :
+			return $found_template;
+		endif;
 	}
 
 	/**
