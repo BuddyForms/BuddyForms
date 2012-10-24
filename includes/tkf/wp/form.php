@@ -28,7 +28,7 @@ class TK_WP_Form extends TK_Form{
 	 */
 	function __construct( $id, $option_group ){
 		$args['method'] = 'POST';
-		$args['action'] = 'options.php';
+		$args['action'] = admin_url('options.php');
 		$args['name'] = $id;
 		
 		parent::__construct( $id, $args );
@@ -92,7 +92,7 @@ function tk_form_end( $output = true ){
 	global $tk_form_instance_option_group, $tk_form_instance_id, $tk_form_instance_buffer, $tk_form_instance_content;
 	ob_end_flush();	
 	
-	$form = new TK_WP_Form( $tk_form_instance_option_group, $tk_form_instance_id );
+	$form = new TK_WP_Form( $tk_form_instance_id, $tk_form_instance_option_group );
 	
 	if( $tk_form_instance_content != '' ){
 		$form->add_element( $tk_form_instance_content );
@@ -119,9 +119,6 @@ function tk_register_wp_option_group( $option_group ){
 }
 
 function tk_sanitize_callback($input){
-
-    print_r($input);
-    
     return $input;
 }
 

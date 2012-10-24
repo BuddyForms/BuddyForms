@@ -33,7 +33,7 @@
 			<p>You can also put in Text here like in HTML</p>
 			<form name="myform" id="myform">
 
-				<textfield name="name" label="Name:" />
+				<textfield name="name" label="Name:" class="myname" />
 				<textarea name="longtext" label="Long text:" />
 
 				<checkbox name="mycheckbox" label="Check this:" description="Checkbox description" />
@@ -44,9 +44,9 @@
 				
 				<select name="myselect" label="Select box" tooltip="Some entries in a dropdown">
 					<option id="o1" name="First entry" value="first" />
-					<option id="o2" name="Second entry" value="second" />
+					<option id="o2" name="Second entry" value="second"/>
 					<option id="o3" name="Third entry" value="third" />
-					<option id="o4" name="Fourth entry" value="fourth" />
+					<option id="o4" name="Hide Name" value="fourth" hide_class="myname" />
 				</select>
 				
 				<autocomplete name="city" label="City">

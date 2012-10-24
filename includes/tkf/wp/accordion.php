@@ -165,7 +165,7 @@ class TK_Jqueryui_Accordion extends TK_HTML{
 	}
 	
 }
-function tk_accordion( $id, $elements, $return_object = FALSE ){
+function tk_accordion( $id, $elements, $return = 'echo' ){
 	$accordion = new TK_Jqueryui_Accordion( $id );
 	
 	foreach ( $elements AS $element ){
@@ -186,9 +186,5 @@ function tk_accordion( $id, $elements, $return_object = FALSE ){
 		$accordion->add_section( $element['id'], $element['title'], $element['content'], $args );
 	}
 	
-	if( TRUE == $return_object ){
-		return $accordion;
-	}else{
-		return $accordion->get_html();
-	}	
+	return tk_element_return( $accordion, $return );	
 }

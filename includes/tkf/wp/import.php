@@ -85,12 +85,7 @@ function tk_import_values( $option_group, $file_name ){
 	
 	return $values;
 }
-function tk_import_button( $name, $args, $return_object = FALSE ){
+function tk_import_button( $name, $args, $return = 'echo' ){
 	$import_button = new TK_Import_Button( $name, $args );
-	
-	if( TRUE == $return_object ){
-		return $import_button;
-	}else{
-		return $import_button->get_html();
-	}
+	return tk_element_return( $import_button, $return );
 }

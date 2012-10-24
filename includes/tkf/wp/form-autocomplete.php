@@ -70,18 +70,13 @@ class TK_Jqueryui_Autocomplete extends TK_WP_Form_Textfield{
 	}
 }
 
-function tk_jqueryui_autocomplete( $name, $values, $args, $return_object = false ){
+function tk_jqueryui_autocomplete( $name, $values, $args, $return = 'echo' ){
 	$autocomplete = new TK_Jqueryui_Autocomplete( $name, $args );
 	
-	foreach ( $values AS $value ){
+	foreach ( $values AS $value )
 		$autocomplete->add_autocomplete_value( $value[0] );
-	}
 	
-	if( TRUE == $return_object ){
-		return $autocomplete;
-	}else{
-		return $autocomplete->get_html();
-	}
+	return tk_element_return( $autocomplete, $return );
 }
 
 function tk_autocomplete_add_value( $autocomplete_id, $value ){

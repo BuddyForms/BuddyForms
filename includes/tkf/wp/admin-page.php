@@ -232,7 +232,7 @@ class TK_Admin_Page_Creator{
 		echo $html;
 	}	
 }
-function tk_admin_pages( $elements = array(), $args = array(), $return_object = FALSE ){
+function tk_admin_pages( $elements = array(), $args = array(), $return = 'echo' ){
 	$tabs = new	TK_Admin_Pages( $args );
 
 	foreach ( $elements AS $element ){
@@ -244,9 +244,5 @@ function tk_admin_pages( $elements = array(), $args = array(), $return_object = 
 		$tabs->add_page( $element['id'], $element['menu_title'], $element['page_title'], $element['content'], $element['args'] );
 	}
 	
-	if( TRUE == $return_object ){
-		return $tabs;
-	}else{
-		return $tabs->get_html();
-	}
+	return tk_element_return( $accordion, $return );	
 }

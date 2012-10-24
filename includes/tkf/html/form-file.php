@@ -24,6 +24,7 @@ class TK_Fileuploader{
 	 * @param array $args Array of [ $id , $extra Extra colorfield code, option_groupOption group to save data, $before_textfield Code before colorfield, $after_textfield Code after colorfield   ]
 	 */
 	function __construct( $name, $args = array() ){
+		
 		$defaults = array(
 			'id' => substr( md5 ( time() * rand() ), 0, 10 ),
 			'extra' => '',
@@ -33,7 +34,7 @@ class TK_Fileuploader{
 		
 		$args = wp_parse_args( $args, $defaults );
 		extract( $args , EXTR_SKIP );
-
+		
 		$this->name = $name;
 		
 		$this->extra = $extra;
@@ -41,6 +42,10 @@ class TK_Fileuploader{
 		$this->before_element = $before_element;
 		$this->after_element = $after_element;
 
+	}
+	
+	function get_id(){
+		return $this->id;
 	}
 	
 	function get_html(){

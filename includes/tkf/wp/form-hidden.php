@@ -1,6 +1,6 @@
 <?php
 
-class TK_WP_Form_Textfield extends TK_Form_Textfield{
+class TK_WP_Form_Hidden extends TK_Form_Hidden{
 	
 	var $option_group;
 	
@@ -13,7 +13,7 @@ class TK_WP_Form_Textfield extends TK_Form_Textfield{
 	 * @param string $name Name of textfield
 	 * @param array $args Array of [ $id , $value,  $extra Extra textfield code   ]
 	 */
-	function tk_wp_form_textfield( $name, $args = array() ){
+	function tk_wp_form_hidden( $name, $args = array() ){
 		$this->__construct( $name, $args );
 	}
 	
@@ -51,14 +51,9 @@ class TK_WP_Form_Textfield extends TK_Form_Textfield{
 		parent::__construct( $args );
 	}
 
-	function get_html(){
-		$this->field_name_set = TRUE;
-		return parent::get_html();
-	}
-
 }
 
-function tk_form_textfield( $name, $args = array(), $return = "echo" ){
-	$textfield = new TK_WP_Form_Textfield( $name, $args );
-	return tk_element_return( $textfield, $return );
+function tk_form_hidden( $name, $args = array(), $return = 'echo' ){
+	$hidden = new TK_WP_Form_Hidden( $name, $args );
+	return tk_element_return( $hidden, $return );
 }

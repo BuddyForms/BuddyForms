@@ -46,18 +46,11 @@ class TK_Form_select extends TK_Form_element{
 		parent::__construct( $args );
 		
 		$this->size = $size;	
-        
-        if($elements){
-          $this->elements  = $elements;
-        } else {
-		  $this->elements = array();
-        }
-		
-		$this->multiselect = $multiselect;
-		$this->extra = $extra;
+		$this->multi_select = $multi_select;
 		$this->onchange = $onchange;
-		$this->before_element = $before_element;
-		$this->after_element = $after_element;
+		
+		if( $this->onchange != '' ) $this->str_onchange = '  onchange="' . $this->onchange . '"';
+		if( $this->size != '' ) $this->str_size = ' size="' . $this->size . '"';
 	}
 	
 	/**
@@ -96,19 +89,6 @@ class TK_Form_select extends TK_Form_element{
 		// Merging values
 		$this->merge_option_elements();
 		
-		// Setting up parameters
-		$id_string = '';
-		$name_string = '';
-		$size_string = '';
-		$extra_string = '';
-		
-		if( $this->onchange != '' ) $onchange = '  onchange="' . $this->onchange . '"';
-		
-		if( $this->id != '' ) $id_string = ' id="' . $this->id . '"';
-		
-		if( $this->size != '' ) $size_string = ' size="' . $this->size . '"';		
-		if( $this->extra != '' ) $extra_string = $this->extra;
-		
 		if( $this->multiselect ):
 			if( $this->name != '' ) $name_string = ' name="' . $this->name . '[]"';
 			$multiselect_string = ' multiple="multiple"';
@@ -117,7 +97,8 @@ class TK_Form_select extends TK_Form_element{
 		endif;
 		
 		$html = $this->before_element;
-		$html.= '<select '.$onchange . $id_string . $name_string . $size_string . $multiselect_string . $extra_string . '>';
+
+		$html.= '<select' . $this->str_id . $this->str_name . $this->str_size . $this->str_onchange  . $this->str_css_classes . $multiselect_string . $this->extra . '>';
 		
 		// Adding options
 		$options = '';

@@ -261,7 +261,7 @@ class BP_CGT
  		/**
 		 * @TODO needs to become an admin option
 		 */
-	    bp_core_remove_nav_item( 'groups' );		 	
+	    //bp_core_remove_nav_item( 'groups' );		 	
 	}
 
 	/**
@@ -466,19 +466,19 @@ class BP_CGT
 		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
              if( ! empty( $post_type ) ) {
                  $labels = array(
-                    'name' 				 => _x($cgt->new_group_types[$post_type][name], 'post type general name'),
-                    'singular_name' 	 => _x($cgt->new_group_types[$post_type][singular_name], 'post type singular name'),
-                    'add_new' 			 => _x('Add New', strtolower($cgt->new_group_types[$post_type][singular_name])),
-                    'add_new_item' 		 => sprintf( __('Add New %s'), $cgt->new_group_types[$post_type][singular_name] ),
-                    'edit_item' 		 => sprintf( __('Edit %s'), $cgt->new_group_types[$post_type][singular_name] ),
-                    'new_item' 			 => sprintf( __('New %s'), $cgt->new_group_types[$post_type][singular_name] ),
-                    'all_items' 		 => sprintf( __('All %s'), $cgt->new_group_types[$post_type][name] ),
-                    'view_item' 		 => sprintf( __('View %s'), $cgt->new_group_types[$post_type][name] ),
-                    'search_items' 		 => sprintf( __('Search %s'), $cgt->new_group_types[$post_type][name]),
-                    'not_found' 		 => sprintf(__('No %s found'), $cgt->new_group_types[$post_type][name] ),
-                    'not_found_in_trash' => sprintf(__('No %s found in Trash'), strtolower($cgt->new_group_types[$post_type][name]) ), 
+                    'name' 				 => _x($cgt->new_group_types[$post_type]['name'], 'post type general name'),
+                    'singular_name' 	 => _x($cgt->new_group_types[$post_type]['singular_name'], 'post type singular name'),
+                    'add_new' 			 => _x('Add New', strtolower($cgt->new_group_types[$post_type]['singular_name'])),
+                    'add_new_item' 		 => sprintf( __('Add New %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
+                    'edit_item' 		 => sprintf( __('Edit %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
+                    'new_item' 			 => sprintf( __('New %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
+                    'all_items' 		 => sprintf( __('All %s'), $cgt->new_group_types[$post_type]['name'] ),
+                    'view_item' 		 => sprintf( __('View %s'), $cgt->new_group_types[$post_type]['name'] ),
+                    'search_items' 		 => sprintf( __('Search %s'), $cgt->new_group_types[$post_type]['name']),
+                    'not_found' 		 => sprintf(__('No %s found'), $cgt->new_group_types[$post_type]['name'] ),
+                    'not_found_in_trash' => sprintf(__('No %s found in Trash'), strtolower($cgt->new_group_types[$post_type]['name']) ), 
                     'parent_item_colon'  => '',
-                    'menu_name' 		 => $cgt->new_group_types[$post_type][name]
+                    'menu_name' 		 => $cgt->new_group_types[$post_type]['name']
                 );
                   
 				$args = array(
@@ -523,19 +523,19 @@ class BP_CGT
 		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :        
 			$messages[$post_type] = array(
 		        0 => '', // Unused. Messages start at index 1.
-		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cgt->new_group_types[$post_type][singular_name], esc_url( get_permalink($post_ID) ),strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cgt->new_group_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
 		        2 => __('Custom field updated.'),
 		        3 => __('Custom field deleted.'),
 		        4 => sprintf( __('%s updated'), $cgt->new_group_types[$post_type][singular_name] ),
 		        /* translators: %s: date and time of the revision */
-		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->new_group_types[$post_type][singular_name], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->new_group_types[$post_type][singular_name], esc_url( get_permalink($post_ID) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->new_group_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->new_group_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
 		        7 => sprintf( __('%s saved'), $cgt->new_group_types[$post_type][singular_name] ),
-		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type][singular_name],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
 		        9 => sprintf( __('%s scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview %s</a>'),
 		          // translators: Publish box date format, see http://php.net/date
 		          date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type][singular_name], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type][singular_name]) ),
+		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
 			);    
 		endforeach;
 		
@@ -553,13 +553,13 @@ class BP_CGT
 		
 		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :    
 			$labels_group_cat = array(
-			    'name' 			=> sprintf( __('%s Categories'), $cgt->new_group_types[$post_type][name] ),
-			    'singular_name' => sprintf( __('%s Category'), $cgt->new_group_types[$post_type][singular_name] ),
+			    'name' 			=> sprintf( __('%s Categories'), $cgt->new_group_types[$post_type]['name'] ),
+			    'singular_name' => sprintf( __('%s Category'), $cgt->new_group_types[$post_type]['singular_name'] ),
 		  	); 
 	
 			$labels_group_tags = array(
-			    'name' 			=> sprintf( __('%s Tags'), $cgt->new_group_types[$post_type][name] ),
-		        'singular_name' => sprintf( __('%s Tag'), $cgt->new_group_types[$post_type][singular_name] ),
+			    'name' 			=> sprintf( __('%s Tags'), $cgt->new_group_types[$post_type]['name'] ),
+		        'singular_name' => sprintf( __('%s Tag'), $cgt->new_group_types[$post_type]['singular_name'] ),
 			); 
       	
 			register_taxonomy( $post_type.'_category', $post_type, array(
@@ -581,7 +581,7 @@ class BP_CGT
       	endforeach;
                   
 		foreach( (array) $cgt->post_types as $post_type ) :      
-			if( $cgt->custom_field_attach_group[$post_type] ){
+			if( isset( $cgt->custom_field_attach_group[$post_type] ) ){
 				foreach( $cgt->custom_field_attach_group[$post_type] as $key => $attached_group ){
 		            $labels_group_groups = array(
 			            'name' 			=> sprintf( __('%s Categories'), $cgt->custom_field_name[$post_type][$key] ),
@@ -621,7 +621,7 @@ class BP_CGT
 	                if( ! empty( $group_type ) ) :
 	                	// loop through all cpts            
 	                   	foreach( (array) $cgt->post_types as $post_type ) :      
-	                       	if( $cgt->custom_field_attach_group[$post_type] ) :
+	                       	if( isset( $cgt->custom_field_attach_group[$post_type] ) ) :
 	                       		// loop through all attached groups
 	                       		foreach( (array) $cgt->custom_field_attach_group[$post_type] as $key => $attached_group ) :
 	                       			// set the terms
@@ -698,7 +698,7 @@ class BP_CGT
 	    } else {
     	    foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
 				$templatefilename = '';
-              	if( $wp_query->query_vars[$post_type .'_category'] ) {
+              	if( isset( $wp_query->query_vars[$post_type .'_category'] ) ) {
 	                $templatefilename = 'taxonomy-'.$post_type.'_category.php';
 	                    
                     if( file_exists( STYLESHEETPATH .'/'. $templatefilename ) ) {

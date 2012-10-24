@@ -6,31 +6,19 @@
  * @since 0.1-beta
  */
 function cgt_create_menu() {
-    if( ! is_super_admin() )
-        return false;
-    
-    $args = array(
-		'id' => 'cgt_options',
-        'menu_title' => 'CGT Options',
-        'page_title' => 'CGT Options',
-        'capability' => 'edit_posts',
-        'parent_slug' => '',
-        'menu_slug' => 'cgt_options_page',          
-        'icon_url' => '',
-        'position' => '',
-        'object_menu' => TRUE   
-    );
-        
-    $element[0] = array( 
-		'id' => 'afsd',
-        'menu_title' => 'Pagessss',
-        'page_title' => 'page_title',
-        'content' => tk_form( 'cgt-config', 'cgt-config', cgt_settings_page()),
-    );    
-      
-    tk_admin_pages($element, $args, false);  
+	add_menu_page( 'CGT Options', 'CGT Options', 'edit_posts', 'cgt_options_page', 'cgt_options_content' );
 }  
 add_action('admin_menu', 'cgt_create_menu');
+
+/**
+ * Display the settings page
+ *
+ * @package BuddyPress Custom Group Types
+ * @since 0.2-beta
+ */
+function cgt_options_content() {
+	echo tk_form( 'cgt-config', 'cgt-config', cgt_settings_page() );
+}
 
 /**
  * Create the option settings page
@@ -296,7 +284,7 @@ function cgt_settings_page() {
                         'content' => $accordion_lable
                         );
                    
-                $tabs = tk_accordion('cgt_accordion_'.$new_group_type_id , $accordion_Array );
+                $tabs = tk_accordion('cgt_accordion_'.$new_group_type_id , $accordion_Array, 'html' );
                   
                $TapArray[] = array(
                     'id' => $new_group_type_id,
@@ -703,10 +691,7 @@ function cgt_settings_page() {
                 <div id="post-body-content">            
                 <?php
                 // Creating the tabs
-                $cgt_tabs = tk_tabs( 'cgt_tabs', $TapArray );
-                
-                //echo tk_form( 'cgt_create_new_form', 'cgt_create_new_form', $cgt_tabs );
-                echo $cgt_tabs;
+                tk_tabs( 'cgt_tabs', $TapArray, 'echo' );
                 ?>    
               </div>
            </div>

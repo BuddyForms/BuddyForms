@@ -30,7 +30,8 @@ class TK_Form_Button extends TK_Form_Element{
 		$defaults = array(
 			'id' => '',
 			'name' => '',
-			'submit' => true,
+			'css_classes' => '',
+			'submit' => TRUE,
 			'extra' => '',
 			'before_element' => '',
 			'after_element' => ''

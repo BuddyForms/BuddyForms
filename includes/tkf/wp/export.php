@@ -81,12 +81,7 @@ function tk_download_export_values( $option_groups, $file_name = 'export.tkf' ){
 	exit;
 }
 
-function tk_export_button( $value, $args, $return_object = FALSE  ){
+function tk_export_button( $value, $args, $return = 'echo'  ){
 	$export_button = new TK_Export_Button( $value, $args );
-	
-	if( TRUE == $return_object ){
-		return $export_button;
-	}else{
-		return $export_button->get_html();
-	}
+	return tk_element_return( $export_button, $return );		
 }

@@ -46,12 +46,7 @@ class TK_WP_Metabox extends TK_HTML{
 	
 }
 
-function tk_wp_metabox( $id, $title, $content, $post_type = 'post', $return_object = FALSE ){
+function tk_wp_metabox( $id, $title, $content, $post_type = 'post', $return = 'echo' ){
 	$metabox = new TK_WP_Metabox( $id, $title, $content, $post_type );
-	
-	if( TRUE == $return_object ){
-		return $metabox;
-	}else{
-		return $metabox->get_html();
-	}
+	return tk_element_return( $metabox, $return );
 }

@@ -62,7 +62,7 @@ class TK_Values{
 		extract( $parsed_args , EXTR_SKIP );
 		
 		// Getting values from post
-		if( $post != '' || isset( $_GET['post_type'] ) || ( $_GET['action'] == 'edit' && ( isset( $_GET['message'] )  || isset( $_GET['post'] ) ) ) ):
+		if( isset( $_GET['post_type'] ) || ( $_GET['action'] == 'edit' && ( isset( $_GET['message'] )  || isset( $_GET['post'] ) ) ) ):
 			// Getting Post ID
 			$post_id =  $post->ID;
 			
@@ -82,7 +82,12 @@ class TK_Values{
 						$field_name .= '[' . $index . ']';
 					}
 				else:
-					$field_name = $option_group . '[' . $name . ']';
+					
+					if( '' == $option_group )
+						$field_name = $name;
+					else
+						$field_name = $option_group . '[' . $name . ']';
+					
 				endif;
 				
 			endif;
@@ -118,12 +123,10 @@ class TK_Values{
 			
 		$this->name = $name;
 		
-		// echo 'Name: ' . $this->name .  '<br />';
-			
 		$parsed_args = wp_parse_args( $args, $defaults );
 		extract( $parsed_args , EXTR_SKIP );
 		
-		add_action( 'save_post', array( $this, 'save_post_fields' ) );
+		add_action( 'save_post', array( $this, 'save_post_fields' ), 1 );
 		
 		/*
 		 * If we are within a post, use post meta data
@@ -142,11 +145,12 @@ class TK_Values{
 				$option_group = $tkf_metabox_id;
 				
 				// Getting data
-				$value = get_post_meta( $post_id, $option_group , TRUE );
-				
-				/*echo '<pre>';
-				print_r( $value );
-				echo '</pre>';*/
+				if( '' == $option_group ):
+					// If it's only a field in a metabox
+					$value = get_post_meta( $post_id, $name , TRUE );
+				else:
+					$value = get_post_meta( $post_id, $option_group , TRUE );
+				endif;
 				
 				// Getting field value			
 				if( $multi_index != '' || is_int($multi_index) ):
@@ -157,7 +161,7 @@ class TK_Values{
 						$value = $value[ $option_group ][ $name ][ $multi_index ];
 					endif;
 				else:
-					if( isset( $value[ $option_group ] ) )
+					if( isset( $value[ $option_group ] ) && '' != $option_group )
 						$value = $value[ $option_group ][ $name ];
 				endif;
 				
@@ -208,6 +212,10 @@ class TK_Values{
 				$post_meta[ $tkf_metabox_id ][ $this->name ] = $_REQUEST[ $tkf_metabox_id ][ $this->name ];
 								
 				update_post_meta( $post_id, $tkf_metabox_id, $post_meta );
+				
+			// If it's only a field in a metabox
+			elseif( isset( $_REQUEST[ $this->name ] ) ):
+				update_post_meta( $post_id, $this->name, $_REQUEST[ $this->name ] );
 			endif;
 			
 		endif;

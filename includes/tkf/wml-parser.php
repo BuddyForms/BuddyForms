@@ -50,12 +50,12 @@ class TK_WML_Parser{
 		$bound_content['tabs'] = 'tab';
 		
 		// Accordion
-		$functions['accordion'] = array( 'id' => '',  'section' => array(), 'return_object' => $return_object );
-		$functions['section'] = array( 'id' => '',  'title' => '', 'content' => '', 'class' => '' );
+		$functions['accordion'] = array( 'id' => '', 'section' => array(), 'return_object' => $return_object );
+		$functions['section'] = array( 'id' => '', 'title' => '', 'content' => '', 'class' => '' );
 		$bound_content['accordion'] = 'section';
 		
 		// Autocomplete
-		$functions['autocomplete'] = array( 'name' => '', 'value' => array(), 'label' => '', 'return_object' => $return_object );
+		$functions['autocomplete'] = array( 'name' => '', 'class' => '' , 'value' => array(), 'label' => '', 'return_object' => $return_object );
 		$functions['value'] = array( 'content' => '' );
 		$bound_content['autocomplete'] = 'value';
 		
@@ -185,9 +185,11 @@ class TK_WML_Parser{
 				$values = tk_get_values( $tk_form_instance_option_group );
 				
 				// If value from select is option value
-				if( $values->$parent_name != $params['value'] ){
+				if( $values->$parent_name == $params['value'] ){
 					if($params['show_class'] != '')			
-						$tkf_hide_class[] = $params['show_class'];
+						$tkf_show_class[] = $params['show_class'];
+					if($params['hide_class'] != '')	
+						$tkf_hide_class[] = $params['hide_class'];
 				}
 				
 				$tkf_hide_class_options[$parent_name]['value'] = $values->$parent_name;
@@ -394,7 +396,7 @@ function tk_db_autocomplete( $name = '', $css_class = '', $values = array(), $la
 		'before_element' => $before_element,
 		'after_element' => $after_element
 	);
-
+	
 	return tk_jqueryui_autocomplete( $name, $values, $args, $return_object );
 }
 function tk_db_value( $value ){
@@ -405,7 +407,15 @@ function tk_db_value( $value ){
  * Form function
  */
 function tk_db_form( $id, $name, $content = '', $return_object = TRUE ){
-	$form = tk_form( $id, $name, $content, $return_object );
+	$args = array(
+		'id' => $id,
+		'name' => $name,
+		'css_classes' => '',
+		'extra' => '',
+		'before_element' => '',
+		'after_element' => '',
+	);
+	$form = tk_form( $name, $content, $args, $return_object );
 	return $form;
 }
 
@@ -416,7 +426,7 @@ function tk_db_textfield( $name, $css_class = '', $label, $tooltip, $description
 	global $tkf_hide_class, $tkf_show_class;
 	
 	if($link != '')
-		$link = '<div class="field_link"> <a title="Go to this topic in our Knowledge Base" href="' . $link . '" target="_blank">&rarr; More help.</a></div>';
+		$link = '<div class="field_link"> <a title="' . __( 'Go to this topic in our Knowledge Base', 'tkf') . '" href="' . $link . '" target="_blank">&rarr; ' . __( 'More help', 'tkf') . '.</a></div>';
 		
 	if( trim( $label ) != '' ){
 			
@@ -483,7 +493,7 @@ function tk_db_checkbox( $name, $css_class = '', $label, $tooltip, $description,
 	global $tkf_hide_class, $tkf_show_class;
 
 	if($link != '')
-		$link = '<div class="field_link"> <a title="Go to this topic in our Knowledge Base" href="' . $link . '" target="_blank">&rarr; More help.</a></div>';
+		$link = '<div class="field_link"> <a title="' . __( 'Go to this topic in our Knowledge Base', 'tkf') . '" href="' . $link . '" target="_blank">&rarr; ' . __( 'More help', 'tkf') . '.</a></div>';
 			
 	if( trim( $label ) != '' ){
 		
@@ -540,9 +550,11 @@ function tk_db_radio( $name, $css_class = '', $value, $label, $tooltip, $descrip
 		
 		$before_element = '<div class="tk_field_row ' . $css_class . '"' . $style_str . '><div class="tk_field_main"><div class="tk_field_label"><label for="' . $name . '" title="' . $tooltip . '">' . $label . '</label></div><div class="tk_field"><div class="tk_field_option">';
 		$after_element = '</div></div></div><div class="field_description">' . $description . $link . '</div></div>';
+
 		}else{
 			$after_element = '<div class="field_description">' . $description . '</div>' . $link;
 		}
+		
 	$args = array(
 		'id' => $name,
 		'before_element' => $before_element,
@@ -552,11 +564,25 @@ function tk_db_radio( $name, $css_class = '', $value, $label, $tooltip, $descrip
 }
 
 function tk_db_select( $name, $options, $multiselect = FALSE, $size = '', $label, $tooltip = '', $description, $link, $css_class = '', $onchange = '', $return_object = TRUE ){
-
+	global $tkf_hide_class_options, $tkf_hide_class, $tkf_show_class;	
+	
 	if($link != '')
 		$link = '<div class="field_link"> <a title="Go to this topic in our Knowledge Base" href="' . $link . '" target="_blank">&rarr; More help.</a></div>';
-				
-	global $tkf_hide_class_options, $tkf_hide_class, $tkf_show_class;	
+	
+	$found_onchange_hide_functions = FALSE;
+	
+	if( is_array($options) ):
+		foreach ( $options AS $option ):
+			if( !empty( $option['hide_class'] ) ):
+				$found_onchange_hide_functions = TRUE;
+				break;
+			endif;
+		endforeach;
+	endif;
+	
+	if( $found_onchange_hide_functions ):
+		$onchange.= 'hide_class(\'' . $name . '\');';
+	endif;
 	
 	if( trim( $label ) != '' ){
 			
@@ -576,7 +602,7 @@ function tk_db_select( $name, $options, $multiselect = FALSE, $size = '', $label
 					$style_str = ' style="display:none"';
 			}
 		}
-							
+
 		$before_element = '<div class="tk_field_row ' . $css_class . '"' . $style_str . '><div class="tk_field_main"><div class="tk_field_label"><label for="' . $name . '" title="' . $tooltip . '">' . $label . '</label></div><div class="tk_field"><div class="tk_field_option">';
 		$after_element = '</div></div></div><div class="field_description">' . $description . $link . '</div></div>';
 
@@ -609,9 +635,7 @@ function tk_db_select( $name, $options, $multiselect = FALSE, $size = '', $label
 		'before_element' => $before_element,
 		'after_element' => $after_element
 	);
-	
-	$select = tk_form_select( $name, $options, $args , true );
-	return $select->get_html();
+	return tk_form_select( $name, $options, $args , $return_object );
 }
 
 function tk_db_option( $id, $value, $name, $hide_class ){
@@ -625,7 +649,7 @@ function tk_db_option( $id, $value, $name, $hide_class ){
 }
 
 function tk_db_button( $name, $return_object = TRUE ){
-		
+	
 	tk_add_text_string( $name );
 	
 	$args = array(

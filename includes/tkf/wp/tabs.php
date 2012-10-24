@@ -63,11 +63,11 @@ class TK_Jqueryui_Tabs extends TK_HTML{
 			
 			$html = '<script type="text/javascript">
 			jQuery(document).ready(function($){
-				var cookieName = "stickyTabs_' . $id . '";
+				var cookieName_' . $id . ' = "stickyTabs_' . $id . '";
 				$( ".' . $id . '" ).tabs({
-					selected: ( $.cookies.get( cookieName ) || 0 ),
+					selected: ( $.cookies.get( cookieName_' . $id . ' ) || 0 ),
 					show: function(event, ui) {
-						$.cookies.set( cookieName, $( ".' . $id . '" ).tabs( "option", "selected" ) );
+						$.cookies.set( cookieName_' . $id . ', $( ".' . $id . '" ).tabs( "option", "selected" ) );
 					}
 				});
 			});
@@ -144,18 +144,13 @@ class TK_Jqueryui_Tabs extends TK_HTML{
 		}
 	}
 }
-function tk_tabs( $id = '', $elements = array(), $return_object = FALSE ){	
+function tk_tabs( $id = '', $elements = array(), $return = 'echo' ){	
 	$tabs = new	TK_Jqueryui_Tabs( $id );	
 	
-	foreach ( $elements AS $element ){
+	foreach ( $elements AS $element )
 		$tabs->add_tab( $element['id'], $element['title'], $element['content'] );
-	}
 
-	if( TRUE == $return_object ){
-		return $tabs;
-	}else{
-		return $tabs->get_html();
-	}
+	return tk_element_return( $tabs, $return );
 }
 
 ?>

@@ -58,12 +58,7 @@ class TK_WP_Form_Checkbox extends TK_Form_Checkbox{
 
 	}		
 }
-function tk_form_checkbox( $name, $args = array(), $return_object = FALSE ){
+function tk_form_checkbox( $name, $args = array(), $return = 'echo' ){
 	$checkbox = new TK_WP_Form_Checkbox( $name, $args  );
-	
-	if( TRUE == $return_object ){
-		return $checkbox;
-	}else{
-		return $checkbox->get_html();
-	}
+	return tk_element_return( $checkbox, $return );
 }
