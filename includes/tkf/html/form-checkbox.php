@@ -57,7 +57,9 @@ class TK_Form_Checkbox extends TK_Form_Element{
 	 * @return string $html The HTML of checkbox
 	 */
 	function get_html(){
-	    $checked = fales;
+	    $checked = false;
+		$id = $name = $value = $extra = $checked = '';
+		
 		if( $this->id != '' ) $id = ' id="' . $this->id . '"';
 		if( $this->name != '' ) $name = ' name="' . $this->name . '"';
 		if( $this->value != '' ) $value = ' value="' . $this->value . '"';

@@ -89,6 +89,7 @@ class TK_Form_select extends TK_Form_element{
 		// Merging values
 		$this->merge_option_elements();
 		
+		$name_string = '';
 		if( $this->multiselect ):
 			if( $this->name != '' ) $name_string = ' name="' . $this->name . '[]"';
 			$multiselect_string = ' multiple="multiple"';
@@ -97,8 +98,8 @@ class TK_Form_select extends TK_Form_element{
 		endif;
 		
 		$html = $this->before_element;
-
-		$html.= '<select' . $this->str_id . $this->str_name . $this->str_size . $this->str_onchange  . $this->str_css_classes . $multiselect_string . $this->extra . '>';
+		
+		$html.= '<select' . $name_string . $this->str_id . $this->str_name . $this->str_size . $this->str_onchange  . $this->str_css_classes . $multiselect_string . $this->extra . '>';
 		
 		// Adding options
 		$options = '';
