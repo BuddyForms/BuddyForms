@@ -24,7 +24,7 @@ class BP_CGT
 		add_action( 'save_post', 			array( $this, 'create_a_group'			), 10, 2 );
 		add_action( 'wp_trash_post',		array( $this, 'delete_a_group'			), 10, 1 );
 	    add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
-		add_action( 'bp_setup_nav', 		array( $this, 'profile_setup_nav'		), 10, 1 );
+		add_action( 'bp_setup_nav', 		array( $this, 'profile_setup_nav'		), 20, 1 );
         add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
@@ -234,7 +234,9 @@ class BP_CGT
                 'screen_function' 	=> array( $this, 'load_members_post_create' ),
                 'user_has_access'	=> bp_is_my_profile()
 	        ) );
-		}	
+		}
+		
+		bp_core_remove_nav_item( 'groups' );	
 	}
 
 	/**
