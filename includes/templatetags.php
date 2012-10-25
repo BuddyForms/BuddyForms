@@ -370,7 +370,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				        </div>
 				    </li>
 					<?php
-					
 					if( $customfields ){
 						foreach( $customfields as $key => $customfield ) :
 							if( isset( $_POST[$customfield] ) ) {

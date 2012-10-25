@@ -134,7 +134,7 @@ function cgt_settings_page() {
                 $accordion_lable .= ' <td>Status: </td>';
                 
                       
-                $new_field_type = new tk_form_select( array( 'id' => 'custom_field_type_status', 'name' => 'cgt-config_values[new_group_types]['.$new_group_type.'][status] ', 'value' => $cgt->new_group_types[$new_group_type]['status'] ));
+                $new_field_type = new tk_form_select( array( 'id' => 'custom_field_type_status', 'name' => 'cgt-config_values[new_group_types]['.$new_group_type.'][status]', 'value' => $cgt->new_group_types[$new_group_type]['status'] ));
                 $new_field_type->add_option('publish');
                 $new_field_type->add_option('pending');
                 $new_field_type->add_option('draft');
@@ -176,7 +176,7 @@ function cgt_settings_page() {
                           $accordion_custom_fields .= '<tr id="table5-row-'.$key.'">';
                           $accordion_custom_fields .= '<td class="dragHandle">'.$key.'</td><td>';
                           
-                          $new_field_type = new tk_form_select( array('value' => $cgt->custom_field_type[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_type]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_type'));
+                          $new_field_type = new tk_form_select( array('value' => $cgt->custom_field_type[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_type]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_type'));
                           $new_field_type->add_option('-');
                           $new_field_type->add_option('Mail');
                           $new_field_type->add_option('Link');
@@ -214,7 +214,7 @@ function cgt_settings_page() {
                                  $accordion_custom_fields .= '<div><div class="label">Value: </div>' . tk_textfield(Array('id' => 'custom_field_select','name' => 'cgt-config_values[custom_field_select]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_select[$new_group_type][$key])) . ' </div>';
                                 
                                  if($cgt->custom_field_m_select[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                                 $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'value' => $cgt->custom_field_m_select[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_m_select')) . '</div>';
+                                 $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'value' => $cgt->custom_field_m_select[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_m_select')) . '</div>';
                          
                                break;
                                case 'Hidden':
@@ -232,7 +232,7 @@ function cgt_settings_page() {
                                 $output = 'names'; // or objects
                                 $operator = 'and'; // 'and' or 'or'
                                 $taxonomies=get_taxonomies($args,$output,$operator); 
-                                $new_field_type = new tk_form_select( array('value' => $cgt->custom_field_taxonomy[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_taxonomy]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_taxonomy'));
+                                $new_field_type = new tk_form_select( array('value' => $cgt->custom_field_taxonomy[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_taxonomy]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_taxonomy'));
                                 if  ($taxonomies) {
                                   foreach ($taxonomies as $taxonomy ) {
                                    $new_field_type->add_option($taxonomy);
@@ -241,26 +241,26 @@ function cgt_settings_page() {
                                 $accordion_custom_fields .=  '<div><div class="label">Taxonomie: </div>'.$new_field_type->get_html().'</div>';
                                 
                                 if($cgt->custom_field_m_select[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                                $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_m_select')) . '</div>';
+                                $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_m_select')) . '</div>';
                          
                                break;
                                }
                           $accordion_custom_fields .= '</td><td>';
                           
                           if($cgt->custom_field_display[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                          $accordion_custom_fields .= '<div>display ' . tk_checkbox(array('checked' => $checked, 'value' => $cgt->custom_field_display[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_display]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_display')) . '</div>';
+                          $accordion_custom_fields .= '<div>display ' . tk_checkbox(array('checked' => $checked, 'value' => $cgt->custom_field_display[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_display]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_display')) . '</div>';
                           
                           $accordion_custom_fields .= $custom_fields_meta;
                           
                           if($cgt->custom_field_required[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                          $accordion_custom_fields .= '<div>required ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_required]['.$new_group_type.']['.$key.'] ', 'id' => 'custom_field_required')) . '</div>';
+                          $accordion_custom_fields .= '<div>required ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_required]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_required')) . '</div>';
                           
                           $accordion_custom_fields .= '</td></tr>';
                     }
                 }
                 $accordion_custom_fields .= ' </tbody></table>';    
                
-               $new_field_type = new tk_form_select( array('name' => 'cgt-config_values[custom_field_type]['.$new_group_type.'][] ', 'id' => 'custom_field_type'));
+               $new_field_type = new tk_form_select( array('name' => 'cgt-config_values[custom_field_type]['.$new_group_type.'][]', 'id' => 'custom_field_type'));
                $new_field_type->add_option('-');
                $new_field_type->add_option('Mail');
                $new_field_type->add_option('Link');

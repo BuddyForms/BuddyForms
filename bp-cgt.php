@@ -1,15 +1,4 @@
 <?php
-
-/**
- * Rewritten option names
- *
- * new_post_types_slug 		=> new_post_type_slugs
- * existing_post_types_slug => existing_post_type_slugs
- * 
- * Deactivate this:
- * add_action( 'bp_init', 'cc_change_profile_tab_order' );
- */
-
 class BP_CGT
 {
 	public $post_type_name;
