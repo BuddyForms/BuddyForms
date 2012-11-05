@@ -26,6 +26,11 @@ function cgt_locate_template( $file ) {
 	}
 }
 
+function cgt_group_extension_link(){
+	global $bp;
+	echo bp_group_permalink().$bp->current_action.'/';
+}
+
 /**
  * Clean the input by type
  * 

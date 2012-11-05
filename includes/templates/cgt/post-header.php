@@ -7,11 +7,3 @@
 		<?php }?>
 	</ul>
 </div><!-- .item-list-tabs -->
-
-<?php
-
-
-function cgt_group_extension_link(){
-	global $bp;
-	echo bp_group_permalink().$bp->current_action.'/';
-}?>

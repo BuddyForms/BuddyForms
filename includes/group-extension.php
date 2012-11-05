@@ -16,7 +16,7 @@ class CGT_Group_Extension extends BP_Group_Extension
 		
 		if( ! is_object( $bp->bp_cgt ) )
 			$bp->bp_cgt = new stdClass;
-    	
+		   	
 		/**
 		 * @TODO Is this supposed to loop through everything and constantly replace the parameters?
 		 */ 
@@ -91,10 +91,10 @@ class CGT_Group_Extension extends BP_Group_Extension
     public function display() {
 		global $bp, $wc_query;
 		
-		// $wc_query = new WP_Query( array(
-		//	'post_type' => $bp->bp_cgt->attached_post_type, 
-		//	'p' 		=> $bp->bp_cgt->attached_post_id
-		// ) );
+		$wc_query = new WP_Query( array(
+			'post_type' => $bp->bp_cgt->attached_post_type, 
+			'p' 		=> $bp->bp_cgt->attached_post_id
+		) );
 			
 		// load the template for display or edit the post
 		if( empty( $bp->action_variables[0] ) ) {			
@@ -102,7 +102,7 @@ class CGT_Group_Extension extends BP_Group_Extension
 	 			while ( $wc_query->have_posts() ) : $wc_query->the_post(); 
 				
 			 		do_action( 'woocommerce_groups_single_product_review' ); 		
-
+				
 				endwhile;
 			endif;
 				

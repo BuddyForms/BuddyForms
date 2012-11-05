@@ -20,7 +20,7 @@ class BP_CGT
         add_action( 'init', 				array( $this, 'add_firmen' 				), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_post_type'		), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
-		add_action( 'init', 				array( $this, 'setup_group_extension'	), 10, 1 );
+		add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
 		add_action( 'save_post', 			array( $this, 'create_a_group'			), 10, 2 );
 		add_action( 'wp_trash_post',		array( $this, 'delete_a_group'			), 10, 1 );
 	    add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
