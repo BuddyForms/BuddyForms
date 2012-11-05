@@ -152,7 +152,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$tags = $_POST['editpost_tags'];
 			$permalink = get_permalink( $_POST['editpost_id'] );
             
-            if( $_POST['new_post_id'] ) {                     
+            if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {                     
 				$my_post = array(
                     'ID'        	=> $_POST['new_post_id'],
                     'post_title' 	=> $_POST['editpost_title'],
