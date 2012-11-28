@@ -343,260 +343,212 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			}
 			?>	
 			<div class="gform_wrapper">
-			<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" enctype="multipart/form-data" id="editpost" method="POST">
+				
+			<?php 
+			
+			$options = array("Option #1", "Option #2", "Option #3");
+			$form = new PFBC\Form("editpost");
+			$form->configure(array(
+				"prevent" => array("bootstrap", "jQuery", "focus"),
+				"action" => $_SERVER['REQUEST_URI'],
+				"view" => new PFBC\View\Vertical
+			));
+			
+			$form->addElement(new PFBC\Element\HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
+			$form->addElement(new PFBC\Element\Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
+			$form->addElement(new PFBC\Element\Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
+			
+			$form->addElement(new PFBC\Element\HTML('<div class="label"><label>Title</label></div>'));					
+			$form->addElement(new PFBC\Element\Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+			
+			$form->addElement(new PFBC\Element\HTML('<div class="label"><label>Content</label></div>'));					
+			$form->addElement(new PFBC\Element\TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', 'value' => $editpost_content_val, 'id' => "editpost_content")));
 
-			    <?php wp_nonce_field('client-file-upload'); ?>  
-			    <input type="hidden" name="new_post_id" id="new_post_id" value="<?php echo $post_id ?>" />  
-			    <input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />  
 
-				<ol class="forms">
-					<li>
-						<div class="label"><label for="editpost_title"><?php _e('Name','cgt'); ?>:</label></div>
-						<?php echo tk_textfield( array('id' => 'editpost_title','name' => 'editpost_title', 'value' => $editpost_title ) ) ?>
-					</li>					
-					<li>
-						<div id="doc-content-textarea">
-							<label id="content-label" for="doc[content]"><?php _e( 'Content', 'bp-docs' ) ?></label>        
-							<div id="editor-toolbar">
-								<?php
-								/* No media support for now
-								<div id="media-toolbar">
-								    <?php  echo bpsp_media_buttons(); ?>
-								</div>
-								*/
-								if( function_exists( 'wp_editor' ) ) {
-									wp_editor($editpost_content_val, 'editpost_content', array(
-										'media_buttons' => false,
-										'dfw'		=> false
-									) );
-								}
-								?>
-							</div>
-				        </div>
-				    </li>
-					<?php
-					if( $customfields ){
-						foreach( $customfields as $key => $customfield ) :
-							if( isset( $_POST[$customfield] ) ) {
-			                    if( function_exists( 'stripslashes' ) ) {
-			                       $customfield_val = $_POST[ $customfield ];
-			                    } else {
-			                       $customfield_val = $_POST[ $customfield ];
-			                    }
-			                    
-			                    if( $customfield_val == 'on' ){
-			                        $checked = true;
-			                    } else {
-			                      $checked = false;  
-			                    }
-			                    
-			                } else {
-			                    $customfield_val = get_post_meta($the_post->ID, $customfield, true);
-			                }
-							
-			                if( $cgt->custom_field_name[$posttype][$key] ){
-			                    $field_name = $cgt->custom_field_name[$posttype][$key];
-			                } else {
-			                    $field_name = $cgt->custom_field_slug[$posttype][$key];
-			                }
-							
-							$custom_field_type = isset( $cgt->custom_field_type[$posttype][$key] ) ? $cgt->custom_field_type[$posttype][$key] : '';
-							
-			               	switch( $custom_field_type ) {
-								case 'AttachGroupType':
-									?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                           	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                              
-			                            <?php
-			                            $customfield_val = get_post_meta($post_id, '_'.$posttype.'_attached', false);
-			                            $args = array(
-				                            'hide_empty'         => 0,
-				                            'id'                 => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
-				                            'child_of'           => 0,
-				                            'echo'               => FALSE,
-				                            'selected'           => $customfield_val[0],
-				                            'hierarchical'       => TRUE, 
-				                            'name'               => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
-				                            'class'              => 'postform',
-				                            'depth'              => 0,
-				                            'tab_index'          => 0,
-				                            'taxonomy'           => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
-				                            'hide_if_empty'      => FALSE 
-			                            );
-			                        
-			                          	echo wp_dropdown_categories( $args );
-			                            ?> 
-									</li>
-			                        <?php
-			                        break;
-									
-			                    case 'Mail':
-		                    		?>
-		                            <li>
-		                            	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-		                            	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-		                             	<?php echo tk_textfield(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val)); ?>
-		                            </li>
-		                        	<?php
-		                        	break;
-										
-			                    case 'Radiobutton':
-		                    		?>
-		                            <li>
-		                            	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-		                            	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-		                             	<?php echo tk_radiobutton(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
-		                            </li>
-		                        	<?php
-		                        	break;
-										
-			                    case 'Checkbox':
-		                    		?>
-		                            <li>
-		                            	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-		                            	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-		                             	<?php echo tk_checkbox(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
-		                            </li>
-		                        	<?php
-		                        	break;
-										
-			                    case 'Dropdown':
-			                    	?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                            <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                                
-			                             <?php
-			                             if($cgt->custom_field_m_select[$posttype][$key] == 'on'){
-			                                 $custom_field_m_select = TRUE;
-			                             } else {
-			                                $custom_field_m_select = FALSE; 
-			                             }
-			                          
-			                            $new_field_type = new tk_form_select( array('value' => $customfield_val, 'multiselect' => $custom_field_m_select, 'name' => $customfield, 'id' => $customfield, 'elements' => $elements));
-			                             
-			                            $custom_field_select = explode(',', $cgt->custom_field_select[$posttype][$key]);
-			                            foreach( $custom_field_select as $key => $value) {
-			                            	$new_field_type->add_option($value);
-			                                $elements[$key] = array(  'value'=> $value, 'option_name' => $value );
-			                            }
-			                             
-			                            //echo tk_select(Array('multiselect' => $custom_field_m_select, 'id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'elements' => $elements)); 
-			                           	echo $new_field_type->get_html();
-			                           	?>
-									</li>
-			                        <?php
-			                        break;
-										
-			                    case 'Textarea':
-			                    	?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                            <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                            <?php echo tk_textarea(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val)); ?>
-			                        </li>
-			                        <?php
-			                        break;
-									
-			                    case 'Hidden':
-			                    	?>
-			                        <li style="display: none">  
-			                        	<?php echo tk_textfield(Array('id' => $customfield,'name' => $customfield, 'value' => $cgt->custom_field_hidden_val[$posttype][$key])); ?>
-			                        </li>
-			                        <?php
-			                        break;
-									
-			                    case 'Text':
-			                    	?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                            <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                            <?php echo tk_textfield(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val)); ?>
-			                        </li>
-			                        <?php
-			                        break;
-									
-			                    case 'Link':
-			                    	?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                            <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                            <?php echo tk_textfield(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val)); ?>
-			                        </li>
-			                        <?php
-			                        break;
-									
-			                    case 'Taxonomy':
-			                    	?>
-			                        <li>
-			                        	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
-			                            <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
-			                                
-			                            <?php
-			                            if($cgt->custom_field_m_select[$posttype][$key] == 'on'){
-			                                $customfield_name = $customfield . '[]';
-			                            } else {
-			                                $customfield_name = $customfield;
-			                            }
-			                            
-			                            $args = array(
-				                            'hide_empty'         => 0,
-				                            'id'                 => $customfield,
-				                            'child_of'           => 0,
-				                            'echo'               => FALSE,
-				                            'selected'           => $customfield_val,
-				                            'hierarchical'       => TRUE, 
-				                            'name'               => $customfield_name,
-				                            'class'              => 'postform',
-				                            'depth'              => 0,
-				                            'tab_index'          => 0,
-				                            'taxonomy'           => $cgt->custom_field_taxonomy[$posttype][$key],
-				                            'hide_if_empty'      => FALSE 
-			                            );
-			                        
-			                            //echo wp_dropdown_categories( $args );
-			                            $select_cats = wp_dropdown_categories( $args  );
-			                            
-			                            if($cgt->custom_field_m_select[$posttype][$key] == 'on'){
-			                                 $select_cats = str_replace( 'id=', 'multiple="multiple" id=', $select_cats );
-			                            } 
-			                            echo $select_cats;
-			                            
-			                             // $categories=  get_categories($args); 
-			                             // if($cgt->custom_field_m_select[$posttype][$key] == 'on'){
-			                                 // $custom_field_m_select = TRUE;
-			                             // } else {
-			                                // $custom_field_m_select = FALSE; 
-			                             // }
-			                              // $new_field_type = new tk_form_select( array('value' => $customfield_val, 'multiselect' => $custom_field_m_select, 'name' => $customfield_name, 'id' => $customfield_name));
-			                              // foreach ($categories as $category) {
-			                                // $new_field_type->add_option($category->cat_name);
-			                              // }
-			                              // echo $new_field_type->get_html();
-			                            ?>
-			                        </li>			 
-			                        <?php
-			                        break;
-									
-			                    default:									
-									break;
-							}							
-						endforeach;
-					}
-					?>					
-					<li id="upload-img">  
-						<div class="label"><label for="upload-img">Neues Featured Image hochladen</label></div>  
-						<input type="file" id="async-upload" name="async-upload"> 
-					</li>
+			if( $customfields ){
+				foreach( $customfields as $key => $customfield ) :
+					if( isset( $_POST[$customfield] ) ) {
+			            if( function_exists( 'stripslashes' ) ) {
+			               $customfield_val = $_POST[ $customfield ];
+			            } else {
+			               $customfield_val = $_POST[ $customfield ];
+			            }
+			            
+			            if( $customfield_val == 'on' ){
+			                $checked = true;
+			            } else {
+			              $checked = false;  
+			            }
+			            
+			        } else {
+			            $customfield_val = get_post_meta($the_post->ID, $customfield, true);
+			        }
 					
-					<li class="buttons">
-						<input type="hidden" name="submitted" id="submitted" value="true" class="requiredField" />
-						<button type="submit" id="submitted" class="button"><?php _e('Submit','cgt'); ?></button>
-					</li>
-				</ol>
-			</form>
+			        if( $cgt->custom_field_name[$posttype][$key] ){
+			            $field_name = $cgt->custom_field_name[$posttype][$key];
+			        } else {
+			            $field_name = $cgt->custom_field_slug[$posttype][$key];
+			        }
+					
+					$custom_field_type = isset( $cgt->custom_field_type[$posttype][$key] ) ? $cgt->custom_field_type[$posttype][$key] : '';
+					
+			       	switch( $custom_field_type ) {
+						case 'AttachGroupType':
+							$form->addElement(new PFBC\Element\HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cgt') . ':</label></div><p>' . $cgt->custom_field_discription[$posttype][$key] . '</p>'));
+							?>
+			            
+			                	
+			                      
+			                    <?php
+			                    $customfield_val = get_post_meta($post_id, '_'.$posttype.'_attached', false);
+			                    $args = array(
+			                        'hide_empty'         => 0,
+			                        'id'                 => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
+			                        'child_of'           => 0,
+			                        'echo'               => FALSE,
+			                        'selected'           => $customfield_val[0],
+			                        'hierarchical'       => TRUE, 
+			                        'name'               => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
+			                        'class'              => 'postform',
+			                        'depth'              => 0,
+			                        'tab_index'          => 0,
+			                        'taxonomy'           => $posttype.'_attached_'.$cgt->custom_field_attach_group[$posttype][$key],
+			                        'hide_if_empty'      => FALSE 
+			                    );
+			                
+			                $form->addElement(new PFBC\Element\HTML(wp_dropdown_categories( $args )));
+			
+
+			                    ?> 
+						
+			                <?php
+			                break;
+							
+			            case 'Mail':
+							$form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+			        	break;
+						case 'Radiobutton':
+							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
+			        		// $form->addElement(new PFBC\Element\Radio("Radio Buttons:", "RadioButtons", $options));
+			        		?>
+			                <li>
+			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
+			                	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
+			                 	<?php echo tk_radiobutton(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
+			                </li>
+			            	<?php
+			            	break;
+								
+			            case 'Checkbox':
+							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
+			        		// $form->addElement(new PFBC\Element\Checkbox("Checkboxes:", "Checkboxes", $options));
+			        		?>
+			                <li>
+			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
+			                	<p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
+			                 	<?php echo tk_checkbox(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
+			                </li>
+			            	<?php
+			            	break;
+								
+			            case 'Dropdown':
+							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
+			        		// $form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
+			            	?>
+			            	
+			                <li>
+			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cgt');?>:</label></div>
+			                    <p><?php echo $cgt->custom_field_discription[$posttype][$key] ?></p>
+			                        
+			                     <?php
+			                     if($cgt->custom_field_m_select[$posttype][$key] == 'on'){
+			                         $custom_field_m_select = TRUE;
+			                     } else {
+			                        $custom_field_m_select = FALSE; 
+			                     }
+			                  
+			                    $new_field_type = new tk_form_select( array('value' => $customfield_val, 'multiselect' => $custom_field_m_select, 'name' => $customfield, 'id' => $customfield, 'elements' => $elements));
+			                     
+			                    $custom_field_select = explode(',', $cgt->custom_field_select[$posttype][$key]);
+			                    foreach( $custom_field_select as $key => $value) {
+			                    	$new_field_type->add_option($value);
+			                        $elements[$key] = array(  'value'=> $value, 'option_name' => $value );
+			                    }
+			                     
+			                    //echo tk_select(Array('multiselect' => $custom_field_m_select, 'id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'elements' => $elements)); 
+			                   	echo $new_field_type->get_html();
+			                   	?>
+							</li>
+			                <?php
+			                break;
+								
+			            case 'Textarea':
+							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new PFBC\Element\Textarea($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+			        		 break;
+							
+			            case 'Hidden':
+							$form->addElement(new PFBC\Element\Hidden($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+			        		break;
+							
+			            case 'Text':
+							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new PFBC\Element\Textbox($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+			        		 break;
+							
+			            case 'Link':
+							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new PFBC\Element\Url( $field_name, $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+			        		break;
+							
+			            case 'Taxonomy':
+							
+							$form->addElement(new PFBC\Element\HTML('<div class="label"><label for="' . $field_name . '">' . __( $field_name, 'cgt' ) . ':</label></div><p>' . $cgt->custom_field_discription[ $posttype ][ $key ] . '</p>'));
+
+							if ( $cgt->custom_field_m_select[ $posttype ][ $key ] == 'on' ) {
+							    $customfield_name = $customfield . '[]';
+							} else {
+							    $customfield_name = $customfield;
+							}
+							$args = array(
+							    'multiple' => ($cgt->custom_field_m_select[ $posttype ][ $key ] == 'on'),
+							    'selected_cats' => $customfield_val,
+							    'hide_empty' => 0,
+							    'id' => $customfield,
+							    'child_of' => 0,
+							    'echo' => FALSE,
+							    'selected' => false,
+							    'hierarchical' => 1,
+							    'name' => $customfield_name,
+							    'class' => 'postform',
+							    'depth' => 0,
+							    'tab_index' => 0,
+							    'taxonomy' => $cgt->custom_field_taxonomy[ $posttype ][ $key ],
+							    'hide_if_empty' => FALSE,
+							);
+							
+							$form->addElement(new PFBC\Element\HTML(tk_terms_dropdown($args)));
+				
+							?>
+
+			<?php
+			break;
+
+				}							
+			endforeach;
+		}
+
+		$form->addElement(new PFBC\Element\File("File:", "async-upload", array('id' => "async-upload")));
+	
+	
+		// $form->addElement(new PFBC\Element\HTML('<li id="upload-img">  
+			    // <div class="label"><label for="upload-img">Neues Featured Image hochladen</label></div>  
+			    // <input type="file" id="async-upload" name="async-upload"></li> '));
+
+		$form->addElement(new PFBC\Element\Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
+		$form->addElement(new PFBC\Element\Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
+		$form->render();
+		?>
 		</div>
 	</div>		
 	<?php 

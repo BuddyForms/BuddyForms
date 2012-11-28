@@ -90,7 +90,8 @@ class BP_CGT
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta
 	 */	
-	public function includes() {	
+	public function includes() {
+		require_once( BP_CGT_INCLUDES_PATH .'PFBC/Form.php' 		);	
         require_once( BP_CGT_INCLUDES_PATH .'tkf/loader.php' 		);
 	    require_once( BP_CGT_INCLUDES_PATH .'templatetags.php' 		); 
         require_once( BP_CGT_INCLUDES_PATH .'functions.php' 		);
