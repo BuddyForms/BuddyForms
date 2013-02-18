@@ -1,11 +1,9 @@
 <?php
-namespace PFBC;
-
 abstract class Element extends Base {
-	private $errors = array();
+	protected $_errors = array();
+	protected $_attributes = array();
+	protected $_form;
 
-	protected $attributes;
-	protected $form;
 	protected $label;
 	protected $shortDesc;
 	protected $longDesc;
@@ -28,7 +26,7 @@ abstract class Element extends Base {
 	/*When an element is serialized and stored in the session, this method prevents any non-essential
 	information from being included.*/
 	public function __sleep() {
-		return array("attributes", "label", "validation");
+		return array("_attributes", "label", "validation");
 	}
 
 	/*If an element requires external stylesheets, this method is used to return an
@@ -36,15 +34,8 @@ abstract class Element extends Base {
 	public function getCSSFiles() {}
 
 	public function getErrors() {
-		return $this->errors;
+		return $this->_errors;
 	}	
-
-	public function getID() {
-		if(!empty($this->attributes["id"]))
-			return $this->attributes["id"];
-		else
-			return "";
-	}
 
 	/*If an element requires external javascript file, this method is used to return an
 	array of entries that will be applied after the form is rendered.*/
@@ -58,18 +49,11 @@ abstract class Element extends Base {
 		return $this->longDesc;
 	}
 
-	public function getName() {
-		if(!empty($this->attributes["name"]))
-			return $this->attributes["name"];
-		else
-			return "";
-	}
-
 	/*This method provides a shortcut for checking if an element is required.*/
 	public function isRequired() {
 		if(!empty($this->validation)) {
 			foreach($this->validation as $validation) {
-				if($validation instanceof Validation\Required)
+				if($validation instanceof Validation_Required)
 					return true;
 			}
 		}
@@ -87,10 +71,10 @@ abstract class Element extends Base {
 		if(!empty($this->validation)) {
 			if(!empty($this->label))
 				$element = $this->label;
-			elseif(!empty($this->attributes["placeholder"]))
-				$element = $this->attributes["placeholder"];
+			elseif(!empty($this->_attributes["placeholder"]))
+				$element = $this->_attributes["placeholder"];
 			else
-				$element = $this->attributes["name"];
+				$element = $this->_attributes["name"];
 
 			if(substr($element, -1) == ":")
 				$element = substr($element, 0, -1);
@@ -99,7 +83,7 @@ abstract class Element extends Base {
 				if(!$validation->isValid($value)) {
 					/*In the error message, %element% will be replaced by the element's label (or 
 					name if label is not provided).*/
-					$this->errors[] = str_replace("%element%", $element, $validation->getMessage());
+					$this->_errors[] = str_replace("%element%", $element, $validation->getMessage());
 					$valid = false;
 				}	
 			}
@@ -146,38 +130,19 @@ abstract class Element extends Base {
 	the form is rendered.*/
 	public function renderJS() {}
 
-	public function setClass($class) {
-		if(!empty($this->attributes["class"]))
-			$this->attributes["class"] .= " " . $class;
-		else
-			$this->attributes["class"] = $class;
-	}
-
-	public function setForm(Form $form) {
-		$this->form = $form;
-	}
-
-	public function setID($id) {
-		$this->attributes["id"] = $id;
+	public function _setForm(Form $form) {
+		$this->_form = $form;
 	}
 
 	public function setLabel($label) {
 		$this->label = $label;
 	}
 
-	public function setPlaceholder($placeholder) {
-		$this->attributes["placeholder"] = $placeholder;
-	}
-
-	public function setValue($value) {
-		$this->attributes["value"] = $value;
-	}
-
 	/*This method provides a shortcut for applying the Required validation class to an element.*/
 	public function setRequired($required) {
 		if(!empty($required))
-			$this->validation[] = new Validation\Required;
-		$this->attributes["required"] = "";	
+			$this->validation[] = new Validation_Required;
+		$this->_attributes["required"] = "";	
 	}
 
 	/*This method applies one or more validation rules to an element.  If can accept a single concrete 
@@ -190,8 +155,8 @@ abstract class Element extends Base {
 			/*Ensures $object contains a existing concrete validation class.*/
 			if($object instanceof Validation) {
 				$this->validation[] = $object;
-				if($object instanceof Validation\Required)
-					$this->attributes["required"] = "";	
+				if($object instanceof Validation_Required)
+					$this->_attributes["required"] = "";	
 			}	
 		}	
 	}

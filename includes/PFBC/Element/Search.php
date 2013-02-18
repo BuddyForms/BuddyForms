@@ -1,8 +1,6 @@
 <?php
-namespace PFBC\Element;
-
-class Search extends Textbox {
-	protected $attributes = array(
+class Element_Search extends Element_Textbox {
+	protected $_attributes = array(
 		"type" => "search",
 		"class" => "search-query"
 	);

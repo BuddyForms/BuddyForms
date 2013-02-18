@@ -1,39 +1,20 @@
 <?php
-namespace PFBC\Element;
-
-class Checksort extends Sort {
-	protected $attributes = array("type" => "checkbox");
+class Element_Checksort extends Element_Sort {
+	protected $_attributes = array("type" => "checkbox");
 	protected $inline;
-	protected $maxheight;
-
-	public function jQueryDocumentReady() {
-		parent::jQueryDocumentReady();
-        if(!empty($this->maxheight) && is_numeric($this->maxheight)) {
-            echo <<<JS
-var checkboxes = jQuery("#{$this->attributes["id"]}");
-if(checkboxes.outerHeight() > {$this->maxheight}) {
-    checkboxes.css({
-        "height": "{$this->maxheight}px",
-        "overflow": "auto",
-        "overflow-x": "hidden"
-    }); 
-}           
-JS;
-        }
-    }
 
 	public function render() { 
-		if(isset($this->attributes["value"])) {
-			if(!is_array($this->attributes["value"]))
-				$this->attributes["value"] = array($this->attributes["value"]);
+		if(isset($this->_attributes["value"])) {
+			if(!is_array($this->_attributes["value"]))
+				$this->_attributes["value"] = array($this->_attributes["value"]);
 		}
 		else
-			$this->attributes["value"] = array();
+			$this->_attributes["value"] = array();
 
-		if(substr($this->attributes["name"], -2) != "[]")
-			$this->attributes["name"] .= "[]";
+		if(substr($this->_attributes["name"], -2) != "[]")
+			$this->_attributes["name"] .= "[]";
 
-		$labelClass = $this->attributes["type"];
+		$labelClass = $this->_attributes["type"];
 		if(!empty($this->inline))
 			$labelClass .= " inline";
 		
@@ -44,18 +25,18 @@ JS;
             $value = $this->getOptionValue($value);
             if(!empty($this->inline) && $count > 0)
                 echo ' ';
-            echo '<label class="', $labelClass, '"><input id="', $this->attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "value", "checked", "name", "onclick")), ' value="', $this->filter($value), '"';
-            if(in_array($value, $this->attributes["value"]))
+            echo '<label class="', $labelClass, '"><input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "value", "checked", "name", "onclick", "required")), ' value="', $this->filter($value), '"';
+            if(in_array($value, $this->_attributes["value"]))
                 echo ' checked="checked"';
             echo ' onclick="updateChecksort(this, \'', str_replace(array('"', "'"), array('&quot;', "\'"), $text), '\');"/>', $text, '</label>';
 
-			if(in_array($value, $this->attributes["value"]))
-				$existing .= '<li id="' . $this->attributes["id"] . "-sort-" . $count . '" class="ui-state-default"><input type="hidden" name="' . $this->attributes["name"] . '" value="' . $value . '"/>' . $text . '</li>';
+			if(in_array($value, $this->_attributes["value"]))
+				$existing .= '<li id="' . $this->_attributes["id"] . "-sort-" . $count . '" class="ui-state-default"><input type="hidden" name="' . $this->_attributes["name"] . '" value="' . $value . '"/>' . $text . '</li>';
 
             ++$count;
         }
 
-		echo '<ul id="', $this->attributes["id"], '">', $existing, '</ul>';
+		echo '<ul id="', $this->_attributes["id"], '">', $existing, '</ul>';
 	}
 
 	function renderJS() {
@@ -66,7 +47,7 @@ if(typeof updateChecksort != "function") {
 		var id = element.id.substr(0, position);
 		var index = element.id.substr(position + 1);
 		if(element.checked) {
-			jQuery("#" + id).append('<li id="' + id + '-sort-' + index + '" class="ui-state-default"><input type="hidden" name="{$this->attributes["name"]}" value="' + element.value + '"/>' + text + '</li>');
+			jQuery("#" + id).append('<li id="' + id + '-sort-' + index + '" class="ui-state-default"><input type="hidden" name="{$this->_attributes["name"]}" value="' + element.value + '"/>' + text + '</li>');
 		}	
 		else
 			jQuery("#" + id + "-sort-" + index).remove();

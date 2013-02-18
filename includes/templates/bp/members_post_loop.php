@@ -54,12 +54,15 @@
 			
 			echo list_posts_template_builder_css();
 			
-			$meins = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids, 'posts_per_page' => 99 ) );
+			$meins = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
 				if ($meins->have_posts()) : while ($meins->have_posts()) : $meins->the_post();
 				get_template_part( 'the-loop-item' );
 			endwhile; endif;
             
-            wp_pagenavi( array( 'query' => $meins) );
+            if(function_exists('wp_pagenavi')){
+            	wp_pagenavi( array( 'query' => $meins) );	
+            }
+            
 
 			 do_action( 'bp_after_postsonprofile_body' ) ?>                
 

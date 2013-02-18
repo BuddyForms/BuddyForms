@@ -10,14 +10,116 @@ function cgt_create_menu() {
 }  
 add_action('admin_menu', 'cgt_create_menu');
 
+function my_save_item_order() {
+    global $wpdb;
+	
+	$cgt_options_form_fields_order = get_option('cgt_options_form_fields_order');
+    $order = explode(',', $_POST['order']);
+    $counter = 0;
+    foreach ($order as $item_id) {
+        //$wpdb->update($wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => $item_id) );
+        $cgt_options_form_fields_order[$counter] = $item_id;
+        
+        $counter++;
+    }
+	update_option("cgt_options_form_fields_order", $cgt_options_form_fields_order);
+    die(1);
+}
+add_action('wp_ajax_item_sort', 'my_save_item_order');
+//add_action('wp_ajax_nopriv_item_sort', 'my_save_item_order');
+
 /**
  * Display the settings page
  *
  * @package BuddyPress Custom Group Types
  * @since 0.2-beta
  */
-function cgt_options_content() {
-	echo tk_form( 'cgt-config', 'cgt-config', cgt_settings_page() );
+function cgt_options_content() { 
+	 wp_enqueue_script('jQuery');
+     wp_enqueue_script('jquery-ui-sortable');
+	 
+	 
+	 
+	 
+	 
+	?>
+	<script>
+	jQuery(document).ready(function(jQuery) {        
+    var itemList = $('#sortable');
+
+    itemList.sortable({
+        update: function(event, ui) {
+            jQuery('#loading-animation').show(); // Show the animate loading gif while waiting
+
+            opts = {
+                url: ajaxurl, // ajaxurl is defined by WordPress and points to /wp-admin/admin-ajax.php
+                type: 'POST',
+                async: true,
+                cache: false,
+                dataType: 'json',
+                data:{
+                    action: 'item_sort', // Tell WordPress how to handle this ajax request
+                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in  1,3,2 format
+                },
+                success: function(response) {
+                    jQuery('#loading-animation').hide(); // Hide the loading animation
+                    return; 
+                },
+                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
+                    alert(e);
+                    // alert('There was an error saving the updates');
+                    jQuery('#loading-animation').hide(); // Hide the loading animation
+                    return; 
+                }
+            };
+            jQuery.ajax(opts);
+        }
+    }); 
+});
+	
+	
+	
+	
+	
+	</script>
+
+	<style>
+		.accordion{
+			float:right;
+		}
+	</style>
+	<div class="wrap">
+	<?php 
+	$cgt_options_form_fields_order = get_option('cgt_options_form_fields_order');
+	print_r($cgt_options_form_fields_order);
+
+	?>	
+<ul id="sortable">
+   <li id="field_id_44" class="ui-state-default">Item 1</li>
+   <li id="field_id_5" class="ui-state-default">Item 2</li>
+   <li id="field_id_9" class="ui-state-default">Item 3</li>
+</ul>
+		
+
+
+
+
+
+
+		
+		
+		
+		<?php screen_icon('themes') ?>
+		<h2>CGT - General Settings</h2>
+	      
+		<div id="post-body">
+			<div id="post-body-content">            
+				<?php cgt_settings_page(); ?>
+			</div>
+		</div>
+	
+	</div>
+<?php
 }
 
 /**
@@ -29,10 +131,23 @@ function cgt_options_content() {
 function cgt_settings_page() {
     global $bp, $cgt;
     
-    // Create the Array for the jQuery Taps 
-    $TapArray = array();
-    
-   // Get all post types
+	// Check that the user is allowed to update options
+	if (!current_user_can('manage_options')) {
+	    wp_die('You do not have sufficient permissions to access this page.');
+	}
+	
+	if (isset($_POST['submit'])) {
+		$cgt_options = $_POST["cgt_options"];
+		update_option("cgt_options", $cgt_options);
+		?><div id="message" class="updated"><p>CGT Settings Saved :-)</p></div><?php
+	}	
+	// Get all needed values
+			
+	$cgt_options = get_option('cgt_options');
+		
+	//print_r($cgt_options);
+		
+	// Get all post types
     $args=array(
       '_builtin' => false
     ); 
@@ -45,671 +160,100 @@ function cgt_settings_page() {
              unset($post_types[$key]);
          }
      }       
-      
-     	$new_group_types = $cgt->post_types;
-
-           
-        $tab1 = '<table class="global-settings-table">';
-
-            $tab1 .= '<tr valign="top">';   
-            $tab1 .= '<th scope="row">Use existing post type as custom group type</th>';
-            $tab1 .= '<th scope="row">Create new post type to use as custom group type</th>';
-            $tab1 .= '</tr>';
-            
-            $tab1 .= '<tr><td style="vertical-align: top;">';
-            
-            foreach ($post_types  as $post_type ) {
-                    
-                $checked = false;
-				
-				$pt = isset( $cgt->existing_post_types[$post_type] ) ? $cgt->existing_post_types[$post_type] : '';
-
-                if( $post_type == $pt )
-                    $checked = true;
-                 
-                  $cgt_existing = array(
-                    'id' => '',
-                    'name' => 'cgt-config_values[existing_post_types]['.$post_type.']',
-                    'value' => $post_type,
-                    'checked' => $checked,
-                    'extra' => '',
-                    'before_element' => '',
-                    'after_element' => ''
-                );
-        
-                $tab1 .=  tk_checkbox($cgt_existing) . ' ' . $post_type . '<br>' ;
-        
-            }
-
-            $tab1 .= '</td><td>';
-          
-            $new_cgt_form = '<table>';
-            
-            $new_cgt_form .= '<div class="hidden_fields" style="display: none;">';
-
-            foreach( (array) $cgt->new_post_type_slugs as $key => $new_post_type_slug){
-                if($new_post_type_slug)
-                    $new_post_type_slugs_hidden[$new_post_type_slug] = tk_textfield(array('id' => 'new_post_type_slugs','name' => 'cgt-config_values[new_post_type_slugs]['.$key.']', 'value' => $new_post_type_slug)) ;
-            $new_cgt_form .= $new_post_type_slugs_hidden[$new_post_type_slug] ;
-            }
-            
-            $new_cgt_form .= '</div>';
-            
-            $new_cgt_form .= '<tr>';
-            $new_cgt_form .= ' <td class="label">Slug: </td>';
-            $new_cgt_form .= ' <td> ' . tk_textfield(array('multi_index' => 0, 'id' => 'new_post_type_slugs','name' => 'cgt-config_values[new_post_type_slugs][]')). ' </td>';
-            $new_cgt_form .= '</tr>';
-            $new_cgt_form .= '<tr><td class="create_cgt">' . tk_button('Create new CGT', 'cgt_create_new_form_submit') . '</td><tr>';
-            $new_cgt_form .= '</table>';
-   
-            $tab1 .= $new_cgt_form;
-            
-            $tab1 .= '</td></tr>';
-        
-        $tab1 .= '</table>';
-       
-        $TapArray[] = array(
-            'id' => 1,
-            'title' => 'General Settings',
-            'content' => $tab1  
-        );
-         
-        if(!empty($new_group_types)){
-            foreach($new_group_types as $new_group_type ) :
-                if($new_group_type != '') {
-                    
-                $new_group_type_id = str_replace(' ', '', $new_group_type);
-                
-                $accordion_lable  = '<div>';
-                $accordion_lable .= '<div>Lable for ' .$new_group_type. ' display name: </div>';
-                $accordion_lable .= '<table>';
-                $accordion_lable .= '<tr>';
-                $accordion_lable .= ' <td>Name: </td>';
-                $accordion_lable .= ' <td> ' . tk_textfield(Array('id' => 'new_group_types_name','name' => 'cgt-config_values[new_group_types]['.$new_group_type.'][name]', 'value' => $cgt->new_group_types[$new_group_type]['name'])) . ' </td>';
-                $accordion_lable .= '</tr>';
-                $accordion_lable .= '<tr>';
-                $accordion_lable .= ' <td>Singular Name: </td>';
-                $accordion_lable .= ' <td> ' . tk_textfield(Array('id' => 'new_group_types_singular_name','name' => 'cgt-config_values[new_group_types]['.$new_group_type.'][singular_name]', 'value' => $cgt->new_group_types[$new_group_type]['singular_name'])) . ' </td>';
-                $accordion_lable .= '</tr>';
-                $accordion_lable .= '<tr>';
-                $accordion_lable .= ' <td>Status: </td>';
-                
-                      
-                $new_field_type = new tk_form_select( array( 'id' => 'custom_field_type_status', 'name' => 'cgt-config_values[new_group_types]['.$new_group_type.'][status]', 'value' => isset( $cgt->new_group_types[$new_group_type]['status'] ) ? $cgt->new_group_types[$new_group_type]['status'] : '' ));
-                $new_field_type->add_option('publish');
-                $new_field_type->add_option('pending');
-                $new_field_type->add_option('draft');
-              
-                
-              $accordion_lable .= '<td>' . $new_field_type->get_html().'</td>';
-                $accordion_lable .= '</tr>';
-                $accordion_lable .= '<tr>';
-                if(isset($new_post_type_slugs_hidden[$new_group_type])){
-                    $accordion_lable .= ' <td>Slug: </td>';
-                    $accordion_lable .= ' <td> ' . $new_post_type_slugs_hidden[$new_group_type] . ' </td>';
-                    $accordion_lable .= '</tr>';
-                } else {
-                    $accordion_lable .= ' <td>Overwrite slug if needed * : </td>';
-                    $accordion_lable .= ' <td> ' . tk_textfield(Array('id' => 'existing_post_type_slugs','name' => 'cgt-config_values[existing_post_type_slugs]['.$new_group_type.']', 'value' => $cgt->existing_post_type_slugs[$new_group_type])) . ' </td>';
-                    $accordion_lable .= '</tr>';   
-                }
-                $accordion_lable .= '</table>';
-                $accordion_lable .= '</div>';
-                
-                $accordion_custom_fields  = '<table id="table-5" class="cgt_fields" border="0" width="100%" cellpadding="0" cellspacing="0">';
-                $accordion_custom_fields .= '<tbody>';
-                $accordion_custom_fields .= '<tr class="nodrop nodrag">';
-                $accordion_custom_fields .= '<th>Position</th>';
-                $accordion_custom_fields .= '<th>Field Type</th>';
-                $accordion_custom_fields .= '<th>Field meta</th>';
-                $accordion_custom_fields .= '</tr>';
     
-                if(!empty($cgt->custom_field_slug[$new_group_type])){
-                            
-                  foreach($cgt->custom_field_slug[$new_group_type] as $key => $custom_field ) {
-                    if($custom_field == ''){
-                        unset($cgt->custom_field_slug[$new_group_type][$key] );
-                    }
-                   }    
-                   
-                    foreach($cgt->custom_field_slug[$new_group_type] as $key => $custom_field ) {
-                        
-                          $accordion_custom_fields .= '<tr id="table5-row-'.$key.'">';
-                          $accordion_custom_fields .= '<td class="dragHandle">'.$key.'</td><td>';
-                          
-                          $new_field_type = new TK_Form_select( array(
-                          	'value' => isset($cgt->custom_field_type[$new_group_type][$key]) ? $cgt->custom_field_type[$new_group_type][$key] : '',
-                          	'name' 	=> 'cgt-config_values[custom_field_type]['.$new_group_type.']['.$key.']', 
-                          	'id' 	=> 'custom_field_type'
-						  ) );
-						  
-                          $new_field_type->add_option('-');
-                          $new_field_type->add_option('Mail');
-                          $new_field_type->add_option('Link');
-                          $new_field_type->add_option('Radiobutton');
-                          $new_field_type->add_option('Checkbox');
-                          $new_field_type->add_option('Dropdown');
-                          $new_field_type->add_option('Textarea');
-                          $new_field_type->add_option('Text');
-                          $new_field_type->add_option('Taxonomy');
-                          $new_field_type->add_option('Hidden');
-                          $new_field_type->add_option('AttachGroupType');
-               
-              
-                           $accordion_custom_fields .= '<div><div class="label">Type: </div>' . $new_field_type->get_html().'</div>';
-                           $accordion_custom_fields .= '<div><div class="label">Name: </div>' . tk_textfield(Array('id' => 'custom_field_name','name' => 'cgt-config_values[custom_field_name]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_name[$new_group_type][$key])) . ' </div>';
-                           $accordion_custom_fields .= '<div><div class="label">Discription: </div>' . tk_textfield(Array('id' => 'custom_field_discription','name' => 'cgt-config_values[custom_field_discription]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_discription[$new_group_type][$key])) . ' </div>';
-                           $accordion_custom_fields .= '<div><div class="label">Slug: </div>' . tk_textfield(Array('id' => 'custom_field_slug','name' => 'cgt-config_values[custom_field_slug]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_slug[$new_group_type][$key])) . ' </div>';
-                          $custom_fields_meta = '';
-						  
-						  $cft = isset( $cgt->custom_field_type[$new_group_type][$key] ) ? $cgt->custom_field_type[$new_group_type][$key] : '';
-						  
-                           switch ($cft) {
-                               case 'AttachGroupType':
-                               $new_field_type2 = new tk_form_select( array('value' => $cgt->custom_field_attach_group[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_attach_group]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_attach_group'));
-                                  foreach ($cgt->post_types as $post_type ) {
-                                   $new_field_type2->add_option($post_type);
-                                  }
-                                $accordion_custom_fields .=  '<div><div class="label">Taxonomie: </div>'.$new_field_type2->get_html().'</div>';
-                                
-                               break;
-                            case 'Link':
-                         
-                                 $accordion_custom_fields .= '<div><div class="label">Options: </div>' . tk_textfield(Array('id' => 'custom_field_option','name' => 'cgt-config_values[custom_field_option]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_option[$new_group_type][$key])) . ' </div>';
-                                
-                               break;
-                               case 'Dropdown':
-                         
-                                 $accordion_custom_fields .= '<div><div class="label">Value: </div>' . tk_textfield(Array('id' => 'custom_field_select','name' => 'cgt-config_values[custom_field_select]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_select[$new_group_type][$key])) . ' </div>';
-                                
-                                 if($cgt->custom_field_m_select[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                                 $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'value' => $cgt->custom_field_m_select[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_m_select')) . '</div>';
-                         
-                               break;
-                               case 'Hidden':
-                         
-                                 $accordion_custom_fields .= '<div><div class="label">Value: </div>' . tk_textfield(Array('id' => 'custom_field_hidden_val','name' => 'cgt-config_values[custom_field_hidden_val]['.$new_group_type.']['.$key.']', 'value' => $cgt->custom_field_hidden_val[$new_group_type][$key])) . ' </div>';
-                            
-                               break;
-                               case 'Taxonomy':
-                                   
-                                $args=array(
-                                 'public'   => true,
-                                  '_builtin' => false
-                                  
-                                ); 
-                                $output = 'names'; // or objects
-                                $operator = 'and'; // 'and' or 'or'
-                                $taxonomies=get_taxonomies($args,$output,$operator); 
-                                $new_field_type = new tk_form_select( array('value' => $cgt->custom_field_taxonomy[$new_group_type][$key] , 'name' => 'cgt-config_values[custom_field_taxonomy]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_taxonomy'));
-                                if  ($taxonomies) {
-                                  foreach ($taxonomies as $taxonomy ) {
-                                   $new_field_type->add_option($taxonomy);
-                                  }
-                                }
-                                $accordion_custom_fields .=  '<div><div class="label">Taxonomie: </div>'.$new_field_type->get_html().'</div>';
-                                
-                                if(isset($cgt->custom_field_m_select[$new_group_type][$key]) && $cgt->custom_field_m_select[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                                $custom_fields_meta = '<div>multi select ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_m_select]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_m_select')) . '</div>';
-                         
-                               break;
-                               }
-                          $accordion_custom_fields .= '</td><td>';
-                          
-                          if(isset($cgt->custom_field_display[$new_group_type][$key]) && $cgt->custom_field_display[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                          $accordion_custom_fields .= '<div>display ' . tk_checkbox(array('checked' => $checked, 'value' => isset($cgt->custom_field_display[$new_group_type][$key]) ? $cgt->custom_field_display[$new_group_type][$key] : '', 'name' => 'cgt-config_values[custom_field_display]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_display')) . '</div>';
-                          
-                          $accordion_custom_fields .= $custom_fields_meta;
-                          
-                          if(isset($cgt->custom_field_required[$new_group_type][$key]) && $cgt->custom_field_required[$new_group_type][$key] == 'on') { $checked = true; } else {  $checked = false; };
-                          $accordion_custom_fields .= '<div>required ' . tk_checkbox(array('checked' => $checked, 'name' => 'cgt-config_values[custom_field_required]['.$new_group_type.']['.$key.']', 'id' => 'custom_field_required')) . '</div>';
-                          
-                          $accordion_custom_fields .= '</td></tr>';
-                    }
-                }
-                $accordion_custom_fields .= ' </tbody></table>';    
-               
-               $new_field_type = new tk_form_select( array('name' => 'cgt-config_values[custom_field_type]['.$new_group_type.'][]', 'id' => 'custom_field_type'));
-               $new_field_type->add_option('-');
-               $new_field_type->add_option('Mail');
-               $new_field_type->add_option('Link');
-               $new_field_type->add_option('Radiobutton');
-               $new_field_type->add_option('Checkbox');
-               $new_field_type->add_option('Dropdown');
-               $new_field_type->add_option('Textarea');
-               $new_field_type->add_option('Text');
-               $new_field_type->add_option('Taxonomy');
-               $new_field_type->add_option('Hidden');
-               $new_field_type->add_option('AttachGroupType');
-               
-               $accordion_custom_fields .=  $new_field_type->get_html();
-               $accordion_custom_fields .= ' <td> ' . tk_textfield(Array('id' => 'custom_field_slug','name' => 'cgt-config_values[custom_field_slug]['.$new_group_type.'][]' )). ' </td>';
-               
-               $accordion_custom_fields .= '<tr><td>' . tk_button('Add one more', 'cgt_add_form_element_submit') . '</td><tr>';
-                       
-                $accordion_Array[] = array(
-                        'id' => 'accordion_lable_'.$new_group_type_id,
-                        'title' => $new_group_type.' Lable',
-                        'content' => $accordion_lable
-                        );
-                   
-                $tabs = tk_accordion('cgt_accordion_'.$new_group_type_id , $accordion_Array, 'html' );
-                  
-               $TapArray[] = array(
-                    'id' => $new_group_type_id,
-                    'title' => $new_group_type,
-                    'content' => $tabs.'<br>'.$accordion_custom_fields
-                );
-            
-                $tabs = '';
-                $accordion_Array = '';
-                $accordion_lable = '';
-                $accordion_custom_fields = '';
-                $accordion_taxonomies = '';
-                $cgt_post_type_taxonomies_options = '';
+	$new_group_types = $cgt->post_types;
+	
+	
+	// Form starts
+	$form = new Form("cgt_form");
+	$form->configure(array(
+		//"prevent" => array("bootstrap", "jQuery", "focus"),
+		"action" => $_SERVER['REQUEST_URI'],
+		"view" => new View_Vertical
+	));
+	
+	$form->addElement(new Element_Hidden("submit", "submit"));
+	$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'submit')));
+	
+	$form->addElement(new Element_HTML('					
+		<div class="tabbable tabs-top">
+			<ul class="nav nav-tabs">
+				<label for="cgt_form-element-1"></label>
+				<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>
+				
+			'));
+		
+		foreach( $cgt_options['existing_post_types'] as $key => $existing_post_types) {
+			$form->addElement(new Element_HTML('<li class=""><a href="#'.$existing_post_types.'" data-toggle="tab">'.$existing_post_types.'</a></li>'));
+		}
+		
+		$form->addElement(new Element_HTML('
+		</ul>
+		</div>	
+		<div class="tab-content">
+		<div class="subcontainer tab-pane fade in active" id="general-settings">'));
+	$form->addElement(new Element_Checkbox("Use existing post types as custom group type::", "cgt_options[existing_post_types][]", $post_types, array('value' => $cgt_options['existing_post_types'])));
+	$form->addElement(new Element_HTML('</div>'));
+		
+		
 
-                }
-           endforeach;     
-        }
-        ob_start(); 
-    ?>
-    <div class="wrap">
-        
-        <div class="admin_right_box">
-            <p>Custom Group Types is proudly brought to you by 
-                <a href="http://themekraft.com/" target="_blank" class="">
-                    <img class="admin_tk_logo" />
-                </a>
-            </p>
-            <a href="https://twitter.com/themekraft" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow</a>
-            <div class="fb-like" data-href="http://themekraft.com/" data-send="false" data-layout="button_count" data-width="80" data-show-faces="false" data-font="lucida grande"></div> 
-        </div>
-        
-        <div class="headerwrap">    
-            <div id="icon-buddypress" class="icon32"></div>    
-            <h2>Custom Group Types Setup</h2>
-            
-            <script type="text/javascript">
-            jQuery(document).ready(function() {
-                // Initialise the table
-                jQuery("#table-5").tableDnD({
-                    onDrop: function(table, row) {
-                        //alert(jQuery.tableDnD.serialize());
-                    },
-                    dragHandle: ".dragHandle" 
-                });
-                
-                jQuery("#table-5 tr").hover(function() {
-                      jQuery(this.cells[0]).addClass('showDragHandle');
-                }, function() {
-                      jQuery(this.cells[0]).removeClass('showDragHandle');
-                });
-            
-            });
-            </script>
-            
-                <div id="fb-root"></div>
-        
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        
-                <script>(function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-                
-                jQuery.noConflict();
-                jQuery(document).ready(function(){          
-                    jQuery('textarea').elastic();
-                    jQuery('textarea').trigger('update').linedtextarea({selectedLine: 1}).elastic();
-                }); 
-                </script>
-        
-                <style>
-                    /* CGT Settings page jQuery CSS overwrite */ 
-                                            
-                    .ui-accordion .ui-accordion-header a { color: #888888; }
-                    
-                    .ui-accordion .ui-accordion-header.ui-state-hover a,
-                    .ui-accordion .ui-accordion-header.ui-state-active a { 
-                        color: #212121; 
-                    }
-                    
-                    div.ui-accordion h3.ui-accordion-header:hover,
-                    div.ui-accordion h3.ui-accordion-header:focus {
-                        border: 1px solid #D3D3D3;
-                    }
-                    
-                    div.ui-tabs div.ui-tabs-panel {
-                        padding: 1.5em 0;
-                    }
-                                
-        
-        
-                    /* CGT Settings buttons */ 
-        
-                    div.theme_settings_form input[id="Export settings"],
-                    div.theme_settings_form input[name="cc-config_values[import_settings]"] {
-                        background-color: #F5F5F5;
-                        background-image: -moz-linear-gradient(center top , #FFFFFF, #F5F5F5);
-                        border: 1px solid #999999;
-                        border-radius: 11px 11px 11px 11px;
-                        font-size: 12px;
-                        font-family: sans-serif;
-                        color: #555555;
-                        text-shadow: -1px 1px 0 #FFFFFF;
-                        min-width: 50px;
-                        padding: 2px 6px;
-                        font-weight: normal;
-                        cursor: pointer;
-                    }
-                    
-                    div.theme_settings_form input[id="Export settings"]:hover,
-                    div.theme_settings_form input[name="cc-config_values[import_settings]"]:hover {
-                        border: 1px solid #222222;
-                        color: #222222;
-                    }
-                    
-                    /* CC Import Export Styles */
-                    
-                    div.cc_export_import {
-                        width: auto; 
-                        overflow: auto;
-                        border-top: 1px solid #dddddd;
-                    }
-                    
-                    div.cc_export_import_header h2 {
-                        padding-top: 0;
-                    }
-                    
-                    div.cc_export_import div.tk_field_row {
-                        padding: 14px 24px;
-                    }
-                    
-                    div.cc_export_import div.tk_field_label {
-                        width: 80px;
-                    }
-                    
-                    div.cc_export_import div.tk_field {
-                        float: left;
-                        margin-left: 1%;
-                        width: 70%;
-                    }
-                    
-                    div.cc_export_import a {
-                        margin-left: 6px;
-                    }
-                    
-                                
-                    /* other Theme Settings page specific CSS */
-                    
-                    span.fb_edge_comment_widget {
-                        display: none;
-                    }
-                    div.wrap div.title { 
-                        float: left; 
-                        width: auto; 
-                        height: auto; 
-                    }
-                    div.headerwrap {
-                        margin-right: 278px;
-                    }
-                    
-                    div.admin_right_box {
-                        width: 258px; 
-                        float: right;
-                        height: auto;
-                        overflow: auto;
-                        padding: 8px;
-                    }
-                    
-                    div.admin_right_box p {
-                        font-size: 11.7px; 
-                        text-align: right;
-                        margin-top: 0;
-                        float: right;
-                    }
-                    div.admin_main_box {
-                        padding: 0;
-                        clear: left;
-                        width: 450px;
-                        height: auto;
-                        margin-top: 30px;
-                        overflow: auto;
-                    }
-                    div.theme_settings_form {
-                        float: none;
-                        margin-top: 20px;
-                    }
-                    div.admin_right_box img.admin_tk_logo {
-                        height: 36px;
-                        margin-bottom: 6px;
-                        margin-top: 18px;
-                        margin-right: 0;
-                        padding-bottom: 6px;
-                        border-bottom: 1px solid transparent;
-                        width: 256px;
-                        float: right;
-                        background: url("<?php echo plugins_url(); ?>/BP-Custom-Group-Types/includes/images/themekraft-logo-s.png") no-repeat scroll 0 0 transparent;
-                    }            
-                    div#icon-buddypress {
-                        background: url("<?php echo plugins_url(); ?>/BP-Custom-Group-Types/includes/images/icons32.png") no-repeat scroll -4px 0 transparent;
-                    }
-                    .icon32 {
-                        float: left;
-                        height: 34px;
-                        margin: 7px 8px 0 0;
-                        width: 36px;
-                    }            
-                    div.fb-like {
-                        float: left; 
-                    }
-                    iframe.twitter-follow-button {
-                        float: right;
-                    }
-                    div.headerlink {
-                        width: auto; 
-                        float: left;
-                        padding: 4px 32px 4px 4px; 
-                    }
-                    div.headerlink p {
-                        font-size: 15px; 
-                        font-weight: bold; 
-                        color: #888888; 
-                        margin-bottom: 8px;
-                    }
-                    div.headerlink a {
-                        font-size: 15px; 
-                    }
-                    div#publishing-action.cc_settings_save {
-                        height: 34px;
-                    }
-                    div.save_it {
-                        color: #888888;
-                        margin-top: 4px;
-                        float: left;
-                    }
-                    div#submitpost {
-                        height: 44px;
-                    }
-                    div.theme_settings_form div#side-sortables {
-                        padding-top: 0.5em;
-                    }
-                    table.global-settings-table th {
-					    font-weight: bold;
-					    padding-bottom: 20px;
-					    padding-right: 25px;
-					    text-align: left;
-					}
-					table.global-settings-table td.label {
-						width: 90px;
-					}
-					td.create_cgt {
-						padding-top: 20px;
-					}
-					.ui-accordion .ui-accordion-content div, .ui-accordion .ui-accordion-content td {
-					    padding: 5px !important;
-					}
-					table.cgt_fields {
-						background: #F5F5F5;
-						margin-bottom: 20px;
-						border: 1px solid #ddd; 
-					}
-					table.cgt_fields td, table.cgt_fields th {
-					    border-bottom: 1px solid #ddd !important;
-					    border-left: medium none;
-					    border-right: medium none;
-					    border-top: 1px solid #FFFFFF !important;
-					    padding: 10px !important;
-					    text-align: left;
-					}
-					table.cgt_fields input[type="checkbox"] {
-					    margin: 2px 5px 0 0;
-					    float: left;
-					}
-					table.cgt_fields div.label {
-					    float: left;
-					    min-width: 90px;
-					}
-					table.cgt_fields input[type="text"], 
-					table.cgt_fields select {
-					    width: 150px;
-					}
-					.cgt_tabs table input[type="text"], 
-					.cgt_tabs table select {
-					    width: 150px;
-					}
-        
-                </style>
-                
-                        
-                <div class="admin_main_box">          
-                    <div class="getting_started headerlink">
-                        <a href="#" target="_blank">Getting started</a>
-                    </div>
-        
-                    <div class="documentation headerlink">
-                        <a href="#" target="_blank">Documentation</a>
-                    </div>
-        
-                    <div class="support headerlink"> 
-                        <a href="http://themekraft.com/shop/premium-support/" title="Get Premium Support" target="_blank">Premium support</a>
-                    </div>
-                </div>
-            </div>
-        
-        
-        
-       <div class="theme_settings_form">
+	foreach( $cgt_options['existing_post_types'] as $key => $existing_post_types) {
+    	$form->addElement(new Element_HTML('<div class="subcontainer tab-pane fade in" id="'.$existing_post_types.'">'));
+			
+			
+		$form->addElement(new Element_HTML('
+		<div class="accordion" id="accordion_'.$existing_post_types.'">
+		  <div class="accordion-group">
+		    <div class="accordion-heading">
+		      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_content">
+		       '.$existing_post_types.' Label
+		      </a>
+		    </div>
+		    <div id="accordion_'.$existing_post_types.'_content" class="accordion-body collapse in">
+		      <div class="accordion-inner">
+			')); 
+			
+				$form->addElement(new Element_Textbox("Name:", "cgt_options[new_group_types][".$existing_post_types."][name]", array('value' => $cgt_options['new_group_types'][$existing_post_types]['name'])));
+				$form->addElement(new Element_Textbox("Singular Name:", "cgt_options[new_group_types][".$existing_post_types."][singular_name]", array('value' => $cgt_options['new_group_types'][$existing_post_types]['singular_name'])));
+				$form->addElement(new Element_Textbox("Overwrite slug if needed *:", "cgt_options[new_group_types][".$existing_post_types."][slug]", array('value' => $cgt_options['new_group_types'][$existing_post_types]['slug'])));
+				
+				$form->addElement(new Element_HTML('
+		      </div>
+		    </div>
+		  </div>
+ 		<div class="accordion-group">
+		    <div class="accordion-heading">
+		      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_status">
+		       '.$existing_post_types.' Status
+		      </a>
+		    </div>
+		    <div id="accordion_'.$existing_post_types.'_status" class="accordion-body collapse in">
+		      <div class="accordion-inner">
+			')); 
+			
+				
+				$form->addElement(new Element_Select("Status:", "cgt_options[new_group_types][".$existing_post_types."][status]", array('publish','pending','draft'),array('value' => $cgt_options['new_group_types'][$existing_post_types]['status'])));
+				
+				$form->addElement(new Element_HTML('
+		      </div>
+		    </div>
+		  </div>		  
+		  
+		</div>
+		  <div id="cgt_forms_builder_'.$existing_post_types.'" class="cgt_forms_builder">
+		  <h3>Hier kommt der form builder angerollt ;-)<h3>
+		  </div>
+		
+		'));
+			
+		
+		$form->addElement(new Element_HTML('</div>'));
+    
+	}
        
-       <div id="poststuff" class="metabox-holder has-right-sidebar">           
-            
-            <div id="side-info-column" class="inner-sidebar">
-                
+	$form->addElement(new Element_HTML('</div>'));			
+		
 
-                
-                <div id="side-sortables" class="meta-box-sortables ui-sortable">
-                
-                    <div id="submitdiv" class="postbox">
-                        <div title="Click to toggle" class="handlediv"><br></br></div><h3 class="hndle"><span>Save</span></h3>
-                        <div class="inside">
-                            <div id="submitpost" class="submitbox">
-                                
-                                <div id="major-publishing-actions">
-                                    <div class="save_it">Save CGT settings</div>
-                                    <div id="publishing-action" class="cc_settings_save">
-                                        <input type="submit" id="Save" value="Save" class="button-primary" />
-                                    </div>
-                                </div>
-
-                            </div>  
-                        </div>
-                    </div>
-            
-   
-                 <div id="cc_admin_navigation" class="postbox">
-                        <div title="Click to toggle" class="handlediv"><br></br></div><h3 class="hndle"><span>Standard Fields</span></h3>
-                        
-                        <div class="inside">
-                            <div id="cc_admin_navigation_box" class="submitbox">
-
-                                <ul></ul>
-  
-                            </div>  
-                        </div>
-                        
-                    </div>    
-   
-                   <div id="cc_admin_navigation" class="postbox">
-                        <div title="Click to toggle" class="handlediv"><br></br></div><h3 class="hndle"><span>Post Fields</span></h3>
-                        
-                        <div class="inside">
-                            <div id="cc_admin_navigation_box" class="submitbox">
-
-                                <ul>
-                               <li>etwas</li>
-                       
-                                </ul>
-                       
-  
-                            </div>  
-                        </div>
-                        
-                    </div>    
-                   
-            
-                    <div id="cc_admin_navigation" class="postbox">
-                        <div title="Click to toggle" class="handlediv"><br></br></div><h3 class="hndle"><span>Navigator</span></h3>
-                        
-                        <div class="inside">
-                            <div id="cc_admin_navigation_box" class="submitbox">
-                                
-                                <b>CGT Settings</b>
-                                <ul>
-                                    <li>
-                                        <a href="#">CGT Settings Home</a>
-                                    </li>
-                                </ul>
-
-                                
-                                <b>Help</b>
-                                <ul>
-                                    <li>
-                                        <a href="#">Getting Started</a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">Knowledge Base</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Get Premium Support</a>
-                                    </li>
-
-                                </ul>
-  
-                            </div>  
-                        </div>
-                        
-                    </div>                  
-                </div>
-            </div> 
-
-            <div id="post-body">
-                <div id="post-body-content">            
-                <?php
-                // Creating the tabs
-                tk_tabs( 'cgt_tabs', $TapArray, 'echo' );
-                ?>    
-              </div>
-           </div>
-       </div>
-    </div>  
-    </div>
-<?php
-
-    $inhalte = ob_get_contents();
-    ob_end_clean();
-    return $inhalte;
- } ?>
+	
+	$form->render();
+}?>

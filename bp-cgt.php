@@ -15,8 +15,7 @@ class BP_CGT
 		$this->load_constants();		
 			
 		add_action( 'bp_include', 			array( $this, 'includes' 				),  4, 1 );	
-        add_action( 'bp_include', 			array( $this, 'framework_init'			), 10, 3 );
-		add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
+        add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
         add_action( 'init', 				array( $this, 'add_firmen' 				), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_post_type'		), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
@@ -82,7 +81,11 @@ class BP_CGT
 	 */	
 	public function enqueue_style(){
      	wp_enqueue_style( 'cgt-style', plugins_url( '/includes/css/cgt.css', __FILE__ ) );
-	}        
+
+		
+	}   
+	
+	     
 	
 	/**
 	 * Includes files needed by BuddyPress CGT
@@ -92,7 +95,6 @@ class BP_CGT
 	 */	
 	public function includes() {
 		require_once( BP_CGT_INCLUDES_PATH .'PFBC/Form.php' 		);	
-        require_once( BP_CGT_INCLUDES_PATH .'tkf/loader.php' 		);
 	    require_once( BP_CGT_INCLUDES_PATH .'templatetags.php' 		); 
         require_once( BP_CGT_INCLUDES_PATH .'functions.php' 		);
         require_once( BP_CGT_INCLUDES_PATH .'widget-apps.php' 		); 
@@ -148,7 +150,7 @@ class BP_CGT
     public function set_globals(){
         global $cgt, $bp;
         
-        $cgt = tk_get_values( 'cgt-config' );
+        $cgt = get_option('cgt_options');
 		
 		if( ! is_object( $cgt ) )
 			$cgt = new stdClass;
@@ -177,19 +179,6 @@ class BP_CGT
         }       
     } 
 
-	/**
-	 * Initiate the framework
-	 *
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta
-	 */	 
-    public function framework_init(){
-    	$args = array();
-        $args['forms'] = array( 'cgt-config' );
-        
-        tk_framework( $args );          
-    }
- 
 	/**
 	 * Setup profile navigation
 	 *

@@ -346,23 +346,21 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				
 			<?php 
 			
-			$options = array("Option #1", "Option #2", "Option #3");
-			$form = new PFBC\Form("editpost");
+			$form = new Form("editpost");
 			$form->configure(array(
 				"prevent" => array("bootstrap", "jQuery", "focus"),
 				"action" => $_SERVER['REQUEST_URI'],
-				"view" => new PFBC\View\Vertical
+				"view" => new View_Vertical
 			));
+			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
+			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
+			$form->addElement(new Element_Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
 			
-			$form->addElement(new PFBC\Element\HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
-			$form->addElement(new PFBC\Element\Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
-			$form->addElement(new PFBC\Element\Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
+			$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));					
+			$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
 			
-			$form->addElement(new PFBC\Element\HTML('<div class="label"><label>Title</label></div>'));					
-			$form->addElement(new PFBC\Element\Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
-			
-			$form->addElement(new PFBC\Element\HTML('<div class="label"><label>Content</label></div>'));					
-			$form->addElement(new PFBC\Element\TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
+			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
+			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
 
 
 			if( $customfields ){
@@ -397,7 +395,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = '<span class="required">* </span>';
 							
-							$form->addElement(new PFBC\Element\HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cgt') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cgt->custom_field_discription[$posttype][$key] . '</label>'));
+							$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cgt') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cgt->custom_field_discription[$posttype][$key] . '</label>'));
 							?>
 			            
 			                	
@@ -419,7 +417,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                        'hide_if_empty'      => FALSE 
 			                    );
 			                
-			                $form->addElement(new PFBC\Element\HTML(wp_dropdown_categories( $args )));
+			                $form->addElement(new Element_HTML(wp_dropdown_categories( $args )));
 			
 
 			                    ?> 
@@ -431,7 +429,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = 1;
 							
-							$form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+							$form->addElement(new Element_Email($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
 			        	break;
 						case 'Radiobutton':
 							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
@@ -492,28 +490,28 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = 1;
 							
-							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new PFBC\Element\Textarea($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new Element_Textarea($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
 			        		 break;
 							
 			            case 'Hidden':
-							$form->addElement(new PFBC\Element\Hidden($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+							$form->addElement(new Element_Hidden($field_name.':', $customfield, array('label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
 			        		break;
 							
 			            case 'Text':
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = 1;
 								
-							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new PFBC\Element\Textbox($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new Element_Textbox($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
 			        		 break;
 							
 			            case 'Link':
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = 1;
 							
-							$form->addElement(new PFBC\Element\HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new PFBC\Element\Url( $field_name, $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
+							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							$form->addElement(new Element_Url( $field_name, $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
 			        		break;
 							
 			            case 'Taxonomy':
@@ -521,7 +519,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = '<span class="required">* </span>';
 							
-							$form->addElement(new PFBC\Element\HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cgt') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cgt->custom_field_discription[$posttype][$key] . '</label>'));
+							$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cgt') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cgt->custom_field_discription[$posttype][$key] . '</label>'));
 							
 							if ( $cgt->custom_field_m_select[ $posttype ][ $key ] == 'on' ) {
 							    $customfield_name = $customfield . '[]';
@@ -545,7 +543,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							    'hide_if_empty' => FALSE,
 							);
 							
-							$form->addElement(new PFBC\Element\HTML(tk_terms_dropdown($args)));
+							$form->addElement(new Element_HTML(tk_terms_dropdown($args)));
 				
 							?>
 
@@ -559,15 +557,15 @@ function create_group_type_form( $atts = array(), $content = null ) {
 		if(! $the_post->ID)
 			$required[$posttype][$key] = 1;
 							
-		$form->addElement(new PFBC\Element\File("File:", "async-upload", array("required" => $required[$posttype][$key], 'id' => "async-upload")));
+		$form->addElement(new Element_File("File:", "async-upload", array("required" => $required[$posttype][$key], 'id' => "async-upload")));
 	
 	
 		// $form->addElement(new PFBC\Element\HTML('<li id="upload-img">  
 			    // <div class="label"><label for="upload-img">Neues Featured Image hochladen</label></div>  
 			    // <input type="file" id="async-upload" name="async-upload"></li> '));
 
-		$form->addElement(new PFBC\Element\Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
-		$form->addElement(new PFBC\Element\Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
+		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
+		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
 		$form->render();
 		?>
 		</div>

@@ -1,6 +1,4 @@
 <?php
-namespace PFBC\Element;
-
-class Phone extends Textbox {
-	protected $attributes = array("type" => "tel");
+class Element_Phone extends Element_Textbox {
+	protected $_attributes = array("type" => "tel");
 }

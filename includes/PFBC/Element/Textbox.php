@@ -1,8 +1,6 @@
 <?php
-namespace PFBC\Element;
-
-class Textbox extends \PFBC\Element {
-	protected $attributes = array("type" => "text");
+class Element_Textbox extends Element {
+	protected $_attributes = array("type" => "text");
 	protected $prepend;
 	protected $append;
 

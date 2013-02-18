@@ -1,8 +1,6 @@
 <?php
-namespace PFBC\Element;
-
-class Button extends \PFBC\Element {
-	protected $attributes = array("type" => "submit", "value" => "Submit");
+class Element_Button extends Element {
+	protected $_attributes = array("type" => "submit", "value" => "Submit");
 	protected $icon;
 
 	public function __construct($label = "Submit", $type = "", array $properties = null) {
@@ -15,7 +13,11 @@ class Button extends \PFBC\Element {
 		$class = "btn";
 		if(empty($type) || $type == "submit")
 			$class .= " btn-primary";
-		$properties["class"] = $class;
+
+		if(!empty($properties["class"]))
+			$properties["class"] .= " " . $class;
+		else
+			$properties["class"] = $class;
 		
 		if(empty($properties["value"]))
 			$properties["value"] = $label;
