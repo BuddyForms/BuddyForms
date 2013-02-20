@@ -21,7 +21,7 @@ class Form extends Base {
 	protected $labelToPlaceholder;
 	protected $resourcesPath;
 	/*Prevents various automated from being automatically applied.  Current options for this array
-	included jQuery, bootstrap and focus.*/
+	included jquery, jqueryui, bootstrap and focus.*/
 	protected $prevent = array();
 	protected $view;
 
@@ -114,10 +114,6 @@ class Form extends Base {
 		return $this->_prefix;
 	}
 
-	public function getPrevent() {
-        return $this->prevent;
-    }
-
     public function getResourcesPath() {
         return $this->resourcesPath;
     }
@@ -179,7 +175,9 @@ class Form extends Base {
 						}
 						else
 							$value = stripslashes($value);
-						self::_setSessionValue($id, $name, $value);
+
+						if($element->prefillAfterValidation())
+							self::_setSessionValue($id, $name, $value);
 					}		
 					else
 						$value = null;
@@ -205,6 +203,19 @@ class Form extends Base {
 
 		return $valid;
 	}
+
+	 protected function isAllowedUrl($url) {
+        if(!empty($this->prevent)) {
+            if(in_array("bootstrap", $this->prevent) && strpos($url, "/bootstrap/") !== false)
+                return false;
+            elseif(in_array("jquery", $this->prevent) && strpos($url, "/jquery.min.js") !== false)
+                return false;
+            elseif(in_array("jqueryui", $this->prevent) && strpos($url, "/jquery-ui/") !== false)
+                return false;
+        }
+
+        return true;
+    }
 
 	/*This method restores the serialized form instance.*/
 	protected static function recover($id) {
@@ -237,6 +248,9 @@ class Form extends Base {
 
 		if($returnHTML)
 			ob_start();
+
+		//For usability, the prevent array is treated case insensitively.
+		$this->prevent = array_map("strtolower", $this->prevent);
 
 		$this->renderCSS();
 		$this->view->render();
@@ -272,9 +286,10 @@ class Form extends Base {
 	}
 
 	protected function renderCSSFiles() {
-		$urls = array();
-		if(!in_array("bootstrap", $this->prevent))
-			$urls[] = $this->_prefix . "://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css";
+		$urls = array(
+			$this->resourcesPath . "/bootstrap/css/bootstrap.min.css",
+			$this->resourcesPath . "/bootstrap/css/bootstrap-responsive.min.css"
+		);
 
 		foreach($this->_elements as $element) {
 			$elementUrls = $element->getCSSFiles();
@@ -285,8 +300,10 @@ class Form extends Base {
 		/*This section prevents duplicate css files from being loaded.*/ 
 		if(!empty($urls)) {	
 			$urls = array_values(array_unique($urls));
-			foreach($urls as $url)
-				echo '<link type="text/css" rel="stylesheet" href="', $url, '"/>';
+			foreach($urls as $url) {
+				if($this->isAllowedUrl($url))
+					echo '<link type="text/css" rel="stylesheet" href="', $url, '"/>';
+			}		
 		}	
 	}
 
@@ -364,11 +381,10 @@ JS;
 	}
 
 	protected function renderJSFiles() {
-		$urls = array();
-		if(!in_array("jQuery", $this->prevent))
-			$urls[] = $this->_prefix . "://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";
-		if(!in_array("bootstrap", $this->prevent))
-			$urls[] = $this->_prefix . "://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js";
+		$urls = array(
+			$this->resourcesPath . "/jquery.min.js",
+			$this->resourcesPath . "/bootstrap/js/bootstrap.min.js"
+		);
 
 		foreach($this->_elements as $element) {
 			$elementUrls = $element->getJSFiles();
@@ -379,8 +395,10 @@ JS;
 		/*This section prevents duplicate js files from being loaded.*/ 
 		if(!empty($urls)) {	
 			$urls = array_values(array_unique($urls));
-			foreach($urls as $url)
-				echo '<script type="text/javascript" src="', $url, '"></script>';
+			foreach($urls as $url) {
+				if($this->isAllowedUrl($url))
+					echo '<script type="text/javascript" src="', $url, '"></script>';
+			}		
 		}	
 	}
 
