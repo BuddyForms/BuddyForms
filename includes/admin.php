@@ -12,17 +12,22 @@ add_action('admin_menu', 'cgt_create_menu');
 
 function save_item_order() {
     global $wpdb;
-	//$cgt_options_form_fields_order = get_option('cgt_options_form_fields_order');
+	
+	$cgt_options = get_option('cgt_options');
     $order = explode(',', $_POST['order']);
     $counter = 0;
-    // foreach ($order as $item_id) {
+	//print_r($order);
+	foreach ($order as $item_id) {
         // //$wpdb->update($wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => $item_id) );
         // $cgt_options_form_fields_order[$counter] = $item_id;
-//         
-        // $counter++;
-    // }
-	update_option("cgt_options_form_fields_order", '');
-    die(1);
+		//         
+		$item_id = explode('/', $item_id);
+		
+        $cgt_options[$item_id[0]][$item_id[1]][$item_id[2]][$counter] = $item_id[3];
+		$counter++;
+ 	}
+	update_option("cgt_options", $cgt_options);
+    die();
 }
 add_action('wp_ajax_item_sort', 'save_item_order');
 add_action('wp_ajax_nopriv_item_sort', 'save_item_order');
@@ -73,7 +78,7 @@ function view_form_fields($args){
 	}
 
 	ob_start(); ?>
-	<li>
+	<li id="new_group_types/<?php echo $field_type[1] ?>/form_fields_order/<?php echo $key ?>">
 	<div class="accordion_fields">
 		<div class="accordion-group">
 			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $field_type[1]; ?>_<?php echo $field_type[0].'_'.$key; ?>"><?php echo $field_type[0]; ?></a></div>
@@ -155,6 +160,8 @@ function cgt_options_content() { ?>
 	                    return; 
 	                }
 	            };
+	            alert(itemList.sortable('toArray').toString())
+	            
 	            jQuery.ajax(opts);
 	        }
 	    }); 
@@ -228,7 +235,7 @@ function cgt_settings_page() {
 	$form->configure(array(
 		"prevent" => array("bootstrap", "jQuery"),
 		"action" => $_SERVER['REQUEST_URI'],
-		"view" => new View_Vertical
+		//"view" => new View_Vertical
 	));
 	
 	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
@@ -304,13 +311,14 @@ function cgt_settings_page() {
 	
 			echo '<pre>';
 			print_r($cgt_options);
-			echo '</pre>';
+			echo '</pre>';			
 
 		$form->addElement(new Element_HTML('
 		<ul id="sortable">'));
-		foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $key => $value) {
-			$args = Array('key' => $key, 'value' => $value,'post_type' => $existing_post_types, 'type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields_types'][$key]);
-			$form->addElement(new Element_HTML(view_form_fields($args)));
+		foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'] as $key => $value) {
+			$cgt_v = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$value];
+			$args = Array('key' => $value, 'value' => $cgt_v,'post_type' => $existing_post_types, 'type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields_types'][$value]);
+			$form->addElement(new Element_HTML(view_form_fields($args), array('description' => false)));
 		}
 		$form->addElement(new Element_HTML('</ul></div></div>'));
     
