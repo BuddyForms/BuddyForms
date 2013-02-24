@@ -50,14 +50,19 @@ function array_pop_by_key($arr, $key) {
 }
 
 function item_delete(){
-	$post_args = $_POST['post_args'];
+	$post_args = explode('/', $_POST['post_args']);
 	
 	$cgt_options = get_option('cgt_options');
 	
-	unset( $array[array_search( $post_args, $cgt_options )] );
 	
+	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields][$post_args[3]] );
+	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields_types][$post_args[3]] );
+	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields_order][$post_args[3]] );
+	
+	print_r($post_args);
+    print_r($cgt_options);
+    
 	update_option("cgt_options", $cgt_options);
-    echo $post_args;
     die();
 }
 add_action('wp_ajax_item_delete', 'item_delete');
@@ -85,6 +90,9 @@ function view_form_fields($args){
 			$form_fields = '<input type="text" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields]['.$field_id.']" value="'.$field_value.'">';
 			$form_fields .= '<input type="hidden" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields_types]['.$field_id.']" value="Text">';
 			$form_fields .= '<input type="hidden" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields_order]['.$field_id.']" value="'.$field_position.'">';
+			
+			$form_fields_new = new Element_Textbox("Name:", "cgt_options[new_group_types][".$post_args[1]."][test][".$field_id."]", array('value' => $cgt_options['new_group_types'][$post_args[1]][test][$field_id]));
+		print_r($form_fields_new);
 		break;
 		case 'Textarea':
 			$field_value = 'Felder';
@@ -119,10 +127,10 @@ function view_form_fields($args){
 	<li id="new_group_types/<?php echo $post_args[1] ?>/form_fields_order/<?php echo $field_id ?>" class="list_item <?php echo $field_id ?>">
 	<div class="accordion_fields">
 		<div class="accordion-group">
-			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>"><?php echo $post_args[0]; ?></a> - <a class="delete" id="<?php echo $field_id ?>" href="<?php echo $field_id ?>">X</a></div>
+			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>"><?php echo $post_args[0]; ?></a> - <a class="delete" id="<?php echo $field_id ?>" href="new_group_types/<?php echo $post_args[1] ?>/form_fields_order/<?php echo $field_id ?>">X</a></div>
 			<div id="accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
-					<?php echo $form_fields; ?>
+					<?php echo $form_fields; 			$form_fields_new->render();	?>
 				</div>
 	    	</div>
 		</div>
@@ -170,7 +178,7 @@ function cgt_options_content() { ?>
 					url: ajaxurl,
 					data: {"action": "item_delete", "post_args": action.attr('href')},
 					success: function(data){
-						jQuery("." + action.attr('href')).remove();
+						jQuery("." + del_id).remove();
 						alert(data);
 	
 				}
@@ -294,7 +302,6 @@ function cgt_settings_page() {
 	$form->configure(array(
 		"prevent" => array("bootstrap", "jQuery"),
 		"action" => $_SERVER['REQUEST_URI'],
-		//"view" => new View_Vertical
 	));
 	
 	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
@@ -374,7 +381,7 @@ function cgt_settings_page() {
 				echo '</pre>';			
 	
 	//aasort($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'],"order");
-	array_sort_by_column($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'],"order");
+	array_sort_by_column($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'], 'SORT_ASC');
 	echo '<pre>';
 				print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields_order']);
 				echo '</pre>';			
@@ -405,11 +412,13 @@ function cgt_settings_page() {
 
 function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
     $sort_col = array();
-    foreach ($arr as $key=> $row) {
-        $sort_col[$key] = $row[$col];
-    }
+	if(is_array($arr)){
+	    foreach ($arr as $key=> $row) {
+	        $sort_col[$key] = $row[$col];
+	    }
 
-    array_multisort($sort_col, $dir, $arr);
+   		array_multisort($sort_col, $dir, $arr);
+	}
 }
 
 
