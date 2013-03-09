@@ -16,38 +16,18 @@ function save_item_order() {
 	$cgt_options = get_option('cgt_options');
     $order = explode(',', $_POST['order']);
     $counter = 0;
-	//print_r($order);
+	
 	foreach ($order as $item_id) {
-        // //$wpdb->update($wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => $item_id) );
-        // $cgt_options_form_fields_order[$counter] = $item_id;
-		//         
-		$item_id = explode('/', $item_id);
-		
-        $cgt_options[$item_id[0]][$item_id[1]][$item_id[2]][$item_id[3]] = $counter;
+    	$item_id = explode('/', $item_id);
+	    $cgt_options[$item_id[0]][$item_id[1]][$item_id[2]][$item_id[3]][$item_id[4]] = $counter;
 		$counter++;
  	}
+	
 	update_option("cgt_options", $cgt_options);
     die();
 }
 add_action('wp_ajax_item_sort', 'save_item_order');
 add_action('wp_ajax_nopriv_item_sort', 'save_item_order');
-
-/**
- * Remove array Element based on key value
- * @param $arr
- * @param $key
- * @return array
- */
-function array_pop_by_key($arr, $key) { 
-    $array_keys = array_keys($arr);
-    foreach($arr as $array_key => $value) {
-        if($array_key == $key) {
-            unset($arr[$key]);
-        }
-    }
-    return $arr;
-
-}
 
 function item_delete(){
 	$post_args = explode('/', $_POST['post_args']);
@@ -56,11 +36,6 @@ function item_delete(){
 	
 	
 	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields][$post_args[3]] );
-	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields_types][$post_args[3]] );
-	unset( $cgt_options[$post_args[0]][$post_args[1]][form_fields_order][$post_args[3]] );
-	
-	print_r($post_args);
-    print_r($cgt_options);
     
 	update_option("cgt_options", $cgt_options);
     die();
@@ -73,26 +48,29 @@ function view_form_fields($args){
 	$numItems = $_POST['numItems'];
 	$cgt_options = get_option('cgt_options');
 	
-	
 	if(is_array($args)){
 		extract($args);
 		$post_args[0] = $field_type;
 		$post_args[1] = $post_type;
 	}
+	
 	if($field_id == '')
 		$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);;
 		
 	if($field_position =='')
 		$field_position = $numItems;
-		
+	
+	$form_fields_new = Array();
+	
 	switch ($post_args[0]) {
 		case 'Text':
-			$form_fields = '<input type="text" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields]['.$field_id.']" value="'.$field_value.'">';
-			$form_fields .= '<input type="hidden" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields_types]['.$field_id.']" value="Text">';
-			$form_fields .= '<input type="hidden" name="cgt_options[new_group_types]['.$post_args[1].'][form_fields_order]['.$field_id.']" value="'.$field_position.'">';
+		
+			$form_fields_new[0] = new Element_Textbox("Name:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][name]));
+			$form_fields_new[1] = new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][type]", 'Text');
+			$form_fields_new[2] = new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'new_group_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
 			
-			$form_fields_new = new Element_Textbox("Name:", "cgt_options[new_group_types][".$post_args[1]."][test][".$field_id."]", array('value' => $cgt_options['new_group_types'][$post_args[1]][test][$field_id]));
-		print_r($form_fields_new);
+			$form_fields_new[3] = new Element_Textbox("Test 1:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][test1]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][test1]));
+		
 		break;
 		case 'Textarea':
 			$field_value = 'Felder';
@@ -124,13 +102,18 @@ function view_form_fields($args){
 	}
 
 	ob_start(); ?>
-	<li id="new_group_types/<?php echo $post_args[1] ?>/form_fields_order/<?php echo $field_id ?>" class="list_item <?php echo $field_id ?>">
+	<li id="new_group_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id ?>">
 	<div class="accordion_fields">
 		<div class="accordion-group">
-			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>"><?php echo $post_args[0]; ?></a> - <a class="delete" id="<?php echo $field_id ?>" href="new_group_types/<?php echo $post_args[1] ?>/form_fields_order/<?php echo $field_id ?>">X</a></div>
+			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>"><?php echo $post_args[0]; ?></a> - <a class="delete" id="<?php echo $field_id ?>" href="new_group_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order">X</a></div>
 			<div id="accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
-					<?php echo $form_fields; 			$form_fields_new->render();	?>
+					<?php 	
+					//print_r($form_fields_new);
+					foreach ($form_fields_new as $key => $value) {
+						$form_fields_new[$key]->render();	
+					}
+					?>
 				</div>
 	    	</div>
 		</div>
@@ -139,7 +122,7 @@ function view_form_fields($args){
 	<?php	
 	$field_html = ob_get_contents();
 	ob_end_clean();
-	
+
 	if(is_array($args)){
 		return $field_html;
 	}else{
@@ -158,7 +141,9 @@ add_action( 'wp_ajax_nopriv_view_form_fields', 'view_form_fields' );
  * @package BuddyPress Custom Group Types
  * @since 0.2-beta
  */
-function cgt_options_content() { ?>
+function cgt_options_content() { 
+		session_start();
+	?>
      
      <script type="text/javascript">
 	
@@ -172,17 +157,18 @@ function cgt_options_content() { ?>
 			
 			 var del_id = jQuery(this).attr('id');
 			 var action = jQuery(this); 
-			 
-			jQuery.ajax({
+			if (confirm('Delete Permanently'))
+				jQuery.ajax({
 					type: 'POST',
 					url: ajaxurl,
 					data: {"action": "item_delete", "post_args": action.attr('href')},
 					success: function(data){
 						jQuery("." + del_id).remove();
-						alert(data);
-	
-				}
-			});
+					}
+				});
+			else return false;
+			
+			
 			return false;
 		});
 		
@@ -218,6 +204,11 @@ function cgt_options_content() { ?>
 	                },
 	                success: function(response) {
 	                    jQuery('#loading-animation').hide(); // Hide the loading animation
+	                    var testst = itemList.sortable('toArray');
+	                   for (var key in testst){
+	                   	alert(key + ': ' + testst[key]);
+	                   	jQuery("input[id='" + testst[key] + "']").val(key); 
+	                   }
 	                    return; 
 	                },
 	                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
@@ -227,7 +218,6 @@ function cgt_options_content() { ?>
 	                    return; 
 	                }
 	            };
-	            alert(itemList.sortable('toArray').toString())
 	            
 	            jQuery.ajax(opts);
 	        }
@@ -380,21 +370,30 @@ function cgt_settings_page() {
 				print_r($cgt_options);
 				echo '</pre>';			
 	
-	//aasort($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'],"order");
-	array_sort_by_column($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'], 'SORT_ASC');
-	echo '<pre>';
-				print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields_order']);
+			//incision_sort($cgt_options['new_group_types'][$existing_post_types]['form_fields'],$cgt_options['new_group_types'][$existing_post_types]['order']);
+				    
+			$sortArray = array(); 
+		    foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $key => $array) { 
+		        $sortArray[$key] = $array['order']; 
+		    } 
+
+    		array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $cgt_options['new_group_types'][$existing_post_types]['form_fields']); 
+    
+				echo '<pre>';
+				print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields']);
 				echo '</pre>';			
 	
 			$form->addElement(new Element_HTML('
 			<ul id="sortable">'));
-			if(is_array($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'])){
+			if(is_array($cgt_options['new_group_types'][$existing_post_types]['form_fields'])){
 				
-				foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields_order'] as $field_id => $field_position) {
+				foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $field_id => $sad) {
 					
-					$field_value = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id];
+					$field_position = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id]['order'];
 					
-					$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $existing_post_types, 'field_type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields_types'][$field_id]);
+					//$field_value = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id];
+					
+					$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $existing_post_types, 'field_type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id][type]);
 					
 					$form->addElement(new Element_HTML(view_form_fields($args)));
 				}
@@ -410,18 +409,24 @@ function cgt_settings_page() {
 	$form->render();
 }
 
-function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
-    $sort_col = array();
-	if(is_array($arr)){
-	    foreach ($arr as $key=> $row) {
-	        $sort_col[$key] = $row[$col];
-	    }
-
-   		array_multisort($sort_col, $dir, $arr);
-	}
-}
-
-
-
+// $arr = array to sort. 
+// $col = column to sort by. 
+function incision_sort($arr, $col){ 
+   for($k = 0; $k < sizeof($arr)-1; $k++){ 
+       // $arr[$k+1] is possibly in the wrong place. Take it out. 
+       $t = $arr[$k+1]; 
+       $i = $k;    
+       
+       // Push $arr[i] to the right until we find the right place for $t. 
+       while($i >= 0 && $arr[$i][$col] > $t[$col]){ 
+           $arr[$i+1] = $arr[$i]; 
+           $i--; 
+       } 
+       
+       // Insert $t into the right place. 
+       $arr[$i+1] = $t;                            
+   }// End sort 
+       return $arr;        
+   } 
 
 ?>
