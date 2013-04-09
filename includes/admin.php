@@ -142,21 +142,16 @@ add_action( 'wp_ajax_nopriv_view_form_fields', 'view_form_fields' );
  * @since 0.2-beta
  */
 function cgt_options_content() { 
-		session_start();
-	?>
+	session_start(); ?>
      
-     <script type="text/javascript">
-	
-</script>
-     
-	<script>
+	<script type="text/javascript">
+
 	jQuery(document).ready(function(jQuery) {        
-	    var itemList = jQuery('#sortable');
-		
+	    
 		jQuery(".delete").click(function(){
 			
-			 var del_id = jQuery(this).attr('id');
-			 var action = jQuery(this); 
+			var del_id = jQuery(this).attr('id');
+			var action = jQuery(this); 
 			if (confirm('Delete Permanently'))
 				jQuery.ajax({
 					type: 'POST',
@@ -166,8 +161,6 @@ function cgt_options_content() {
 						jQuery("." + del_id).remove();
 					}
 				});
-			else return false;
-			
 			
 			return false;
 		});
@@ -182,70 +175,78 @@ function cgt_options_content() {
 				url: ajaxurl,
 				data: {"action": "view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 				success: function(data){
-				jQuery('#sortable').append(data);
-			}
+					var myvar = action.attr('href');
+					var arr = myvar.split('/');
+				jQuery('.sortable_' + arr[1]).append(data);
+				}
 			});
 			return false;
 		});
 	
-	    itemList.sortable({
-	        update: function(event, ui) {
-	            jQuery('#loading-animation').show(); // Show the animate loading gif while waiting
-	
-	            opts = {
-	                url: ajaxurl,
-	                type: 'POST',
-	                async: true,
-	                cache: false,
-	                dataType: 'json',
-	                data:{
-	                    action: 'item_sort', // Tell WordPress how to handle this ajax request
-	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in  1,3,2 format
-	                },
-	                success: function(response) {
-	                    jQuery('#loading-animation').hide(); // Hide the loading animation
-	                    var testst = itemList.sortable('toArray');
-	                   for (var key in testst){
-	                   	alert(key + ': ' + testst[key]);
-	                   	jQuery("input[id='" + testst[key] + "']").val(key); 
-	                   }
-	                    return; 
-	                },
-	                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
-	                    alert(e);
-	                    // alert('There was an error saving the updates');
-	                    jQuery('#loading-animation').hide(); // Hide the loading animation
-	                    return; 
-	                }
-	            };
-	            
-	            jQuery.ajax(opts);
-	        }
-	    }); 
+		jQuery('.cgt_forms_builder div').mousedown(function(){
+	  		
+	  		itemList = jQuery(this).closest('.sortable').sortable({
+	        	
+	        	update: function(event, ui) {
+
+					jQuery('#loading-animation').show(); // Show the animate loading gif while waiting
+		    	    
+				    opts = {
+		                url: ajaxurl,
+		                type: 'POST',
+		                async: true,
+		                cache: false,
+		                dataType: 'json',
+		                data:{
+		                    action: 'item_sort', // Tell WordPress how to handle this ajax request
+		                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in  1,3,2 format
+		                },
+		                success: function(response) {
+		                	
+		                    jQuery('#loading-animation').hide(); // Hide the loading animation
+		                    var testst = itemList.sortable('toArray');
+		                   for (var key in testst){
+		                   	// alert(key + ': ' + testst[key]);
+		                   	jQuery("input[id='" + testst[key] + "']").val(key); 
+		                   }
+		                    return; 
+		                },
+		                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
+		                    alert(e);
+		                    // alert('There was an error saving the updates');
+		                    jQuery('#loading-animation').hide(); // Hide the loading animation
+		                    return; 
+		                }
+		            };
+		            
+		            jQuery.ajax(opts);
+		        }
+	        });
+	    });
+
 	});
+	
 	</script>
 
 	<style>
-		.accordion_sidebar{
-			float:right;
+		.accordion_sidebar {
+			float: right;
+			width: 20%;
 		}
 		.accordion_fields{
-			margin-right: 300px;
+			margin-right: 22%;
 		}
 		
 	</style>
 	
 	<div class="wrap">
-		
 		<?php screen_icon('themes') ?>
 		<h2>CGT - General Settings</h2>
-	      
 		<div id="post-body">
 			<div id="post-body-content">            
 				<?php cgt_settings_page(); ?>
 			</div>
 		</div>
-	
 	</div>
 <?php
 }
@@ -292,6 +293,7 @@ function cgt_settings_page() {
 	$form->configure(array(
 		"prevent" => array("bootstrap", "jQuery"),
 		"action" => $_SERVER['REQUEST_URI'],
+		"view" => new View_Inline
 	));
 	
 	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
@@ -366,11 +368,9 @@ function cgt_settings_page() {
 			<div id="cgt_forms_builder_'.$existing_post_types.'" class="cgt_forms_builder">
 			<h3>Hier kommt der form builder angerollt ;-)</h3>'));
 		
-				echo '<pre>';
-				print_r($cgt_options);
-				echo '</pre>';			
-	
-			//incision_sort($cgt_options['new_group_types'][$existing_post_types]['form_fields'],$cgt_options['new_group_types'][$existing_post_types]['order']);
+			// echo '<pre>';
+			// print_r($cgt_options);
+			// echo '</pre>';			
 				    
 			$sortArray = array(); 
 		    foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $key => $array) { 
@@ -379,23 +379,26 @@ function cgt_settings_page() {
 
     		array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $cgt_options['new_group_types'][$existing_post_types]['form_fields']); 
     
-				echo '<pre>';
-				print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields']);
-				echo '</pre>';			
+			// echo '<pre>';
+			// print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields']);
+			// echo '</pre>';			
 	
 			$form->addElement(new Element_HTML('
-			<ul id="sortable">'));
+			<ul id="sortable_'. $existing_post_types .'" class="sortable sortable_'. $existing_post_types .'">'));
 			if(is_array($cgt_options['new_group_types'][$existing_post_types]['form_fields'])){
 				
 				foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $field_id => $sad) {
+					if($cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id]['name'] != ''){
+							
+						$field_position = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id]['order'];
+						
+						//$field_value = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id];
+						
+						$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $existing_post_types, 'field_type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id][type]);
+						
+						$form->addElement(new Element_HTML(view_form_fields($args)));
+					}
 					
-					$field_position = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id]['order'];
-					
-					//$field_value = $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id];
-					
-					$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $existing_post_types, 'field_type' => $cgt_options['new_group_types'][$existing_post_types]['form_fields'][$field_id][type]);
-					
-					$form->addElement(new Element_HTML(view_form_fields($args)));
 				}
 			}
 			$form->addElement(new Element_HTML('</ul></div></div>'));
@@ -408,25 +411,4 @@ function cgt_settings_page() {
 		
 	$form->render();
 }
-
-// $arr = array to sort. 
-// $col = column to sort by. 
-function incision_sort($arr, $col){ 
-   for($k = 0; $k < sizeof($arr)-1; $k++){ 
-       // $arr[$k+1] is possibly in the wrong place. Take it out. 
-       $t = $arr[$k+1]; 
-       $i = $k;    
-       
-       // Push $arr[i] to the right until we find the right place for $t. 
-       while($i >= 0 && $arr[$i][$col] > $t[$col]){ 
-           $arr[$i+1] = $arr[$i]; 
-           $i--; 
-       } 
-       
-       // Insert $t into the right place. 
-       $arr[$i+1] = $t;                            
-   }// End sort 
-       return $arr;        
-   } 
-
 ?>
