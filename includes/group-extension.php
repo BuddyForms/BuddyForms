@@ -17,6 +17,7 @@ class CGT_Group_Extension extends BP_Group_Extension
 		if( ! is_object( $bp->bp_cgt ) )
 			$bp->bp_cgt = new stdClass;
 		   	
+
 		/**
 		 * @TODO Is this supposed to loop through everything and constantly replace the parameters?
 		 */ 
@@ -27,6 +28,7 @@ class CGT_Group_Extension extends BP_Group_Extension
 			endwhile; 
 		endif;
 	    
+		
 		// Check if the Group extention nav title has bean overwriten in the admin settings for this group type
 		$name = get_option( $bp->bp_cgt->attached_post_type .'_name' );
 		if( ! empty( $name ) ) {

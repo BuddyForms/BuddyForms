@@ -64,13 +64,17 @@ function view_form_fields($args){
 	
 	switch ($post_args[0]) {
 		case 'Text':
-		
-			$form_fields_new[0] = new Element_Textbox("Name:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][name]));
-			$form_fields_new[1] = new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][type]", 'Text');
-			$form_fields_new[2] = new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'new_group_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
+			$form_field_display		= new Element_Checkbox("Display:","cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][display]));
+			$form_field_required	= new Element_Checkbox("Required:","cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][required]));
 			
-			$form_fields_new[3] = new Element_Textbox("Test 1:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][test1]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][test1]));
-		
+			//$form_field_required	= new Element_YesNo("Required:","cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][required]",array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][required]));
+			
+			$form_fields_new[0] 	= new Element_Textbox("Name:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][name]));
+			$form_fields_new[1] 	= new Element_Textbox("Discription:", "cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][discription]", array('value' => $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][discription]));
+			$form_fields_new[2] 	= new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][type]", 'Text');
+			$form_fields_new[3] 	= new Element_Hidden("cgt_options[new_group_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'new_group_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
+			
+			
 		break;
 		case 'Textarea':
 			$field_value = 'Felder';
@@ -105,13 +109,41 @@ function view_form_fields($args){
 	<li id="new_group_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id ?>">
 	<div class="accordion_fields">
 		<div class="accordion-group">
-			<div class="accordion-heading"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>"><?php echo $post_args[0]; ?></a> - <a class="delete" id="<?php echo $field_id ?>" href="new_group_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order">X</a></div>
+			<div class="accordion-heading"> 
+				
+				<div class="accordion-heading-options">
+				<b>Delete: </b> <a class="delete" id="<?php echo $field_id ?>" href="new_group_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order">X</a>
+				</div>
+				
+				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>">
+				<b>Type: </b> <?php echo $post_args[0]; ?> 
+				<br><b>Name: </b> <?php echo $cgt_options['new_group_types'][$post_args[1]][form_fields][$field_id][name]; ?>
+				</a>
+				
+			</div>
+						
 			<div id="accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
+					<div class="cgt_field_options">
+						<?php 
+						
+						echo '<div class="cgt_field_label">' . $form_field_display->getLabel() . '</div>';
+						echo '<div class="cgt_form_field">' . $form_field_display->render() . '</div>';
+						
+						echo '<div class="cgt_field_label">' . $form_field_required->getLabel() . '</div>';
+						echo '<div class="cgt_form_field">' . $form_field_required->render() . '</div>';
+						
+						?>
+					</div>
+					
 					<?php 	
 					//print_r($form_fields_new);
 					foreach ($form_fields_new as $key => $value) {
-						$form_fields_new[$key]->render();	
+					
+						echo '<div class="cgt_field_label">' . $form_fields_new[$key]->getLabel() . '</div>';
+						
+						echo '<div class="cgt_form_field">' . $form_fields_new[$key]->render() . '</div>';
+
 					}
 					?>
 				</div>
@@ -229,6 +261,19 @@ function cgt_options_content() {
 	</script>
 
 	<style>
+
+		.cgt_field_options{
+			float: right;
+			margin-top: 10px;
+			margin-right: 15px;
+		}
+	
+		.accordion-heading-options {
+			float: right;
+			margin-top: 10px;
+			margin-right: 15px;
+		}
+	
 		.accordion_sidebar {
 			float: right;
 			width: 20%;
@@ -276,7 +321,8 @@ function cgt_settings_page() {
 		
 	// Get all post types
     $args=array(
-		'_builtin' => false
+		'public' => true,
+		'show_ui' => true
     ); 
     $output = 'names'; // names or objects, note names is the default
     $operator = 'and'; // 'and' or 'or'
@@ -301,11 +347,10 @@ function cgt_settings_page() {
     wp_enqueue_script('jQuery');
     wp_enqueue_script('jquery-ui-sortable'); 
 	    
-	$form->addElement(new Element_Hidden("submit", "submit"));
-	$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'submit')));
 	
-	$form->addElement(new Element_HTML('<div class="tabbable tabs-top"><ul class="nav nav-tabs"><label for="cgt_form-element-1"></label>
+	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs"><label for="cgt_form-element-1"></label>
 		<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>'));
+		
 	if(is_array($cgt_options['existing_post_types'])){
 		foreach( $cgt_options['existing_post_types'] as $key => $existing_post_types) {
 			$form->addElement(new Element_HTML('<li class=""><a href="#'.$existing_post_types.'" data-toggle="tab">'.$existing_post_types.'</a></li>'));
@@ -313,7 +358,34 @@ function cgt_settings_page() {
 	}	
 	$form->addElement(new Element_HTML('</ul></div>
 		<div class="tab-content"><div class="subcontainer tab-pane fade in active" id="general-settings">'));
-	$form->addElement(new Element_Checkbox("Use existing post types as custom group type::", "cgt_options[existing_post_types][]", $post_types, array('value' => $cgt_options['existing_post_types'])));
+		
+				$form->addElement(new Element_HTML('
+			<div class="accordion_sidebar" id="accordion_'.$existing_post_types.'">
+				<div class="accordion-group">
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_save">Save</a></div>
+					<div id="accordion_'.$existing_post_types.'_save" class="accordion-body">
+						<div class="accordion-inner">')); 
+							
+							$form->addElement(new Element_Hidden("submit", "submit"));
+							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'submit')));
+								
+							$form->addElement(new Element_HTML('
+						</div>
+			    	</div>
+				</div>
+			</div>'));
+		
+		
+				$form->addElement(new Element_HTML('
+				<div class="hero-unit">
+  <h3>Global Setup</h3>
+'));
+$form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want to make available in <b>BuddyPress</b> ;-)</p>", "cgt_options[existing_post_types][]", $post_types, array('value' => $cgt_options['existing_post_types'])));
+	
+				$form->addElement(new Element_HTML(' 
+</div>
+			'));
+		
 	$form->addElement(new Element_HTML('</div>'));
 	
 	if(is_array($cgt_options['existing_post_types'])){
@@ -324,8 +396,20 @@ function cgt_settings_page() {
 			$form->addElement(new Element_HTML('
 			<div class="accordion_sidebar" id="accordion_'.$existing_post_types.'">
 				<div class="accordion-group">
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_save">Save</a></div>
+					<div id="accordion_'.$existing_post_types.'_save" class="accordion-body">
+						<div class="accordion-inner">')); 
+							
+							$form->addElement(new Element_Hidden("submit", "submit"));
+							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'submit')));
+								
+							$form->addElement(new Element_HTML('
+						</div>
+			    	</div>
+				</div>
+				<div class="accordion-group">
 					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_content">'.$existing_post_types.' Label</a></div>
-					<div id="accordion_'.$existing_post_types.'_content" class="accordion-body collapse in">
+					<div id="accordion_'.$existing_post_types.'_content" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Textbox("Name:", "cgt_options[new_group_types][".$existing_post_types."][name]", array('value' => $cgt_options['new_group_types'][$existing_post_types]['name'])));
 							$form->addElement(new Element_Textbox("Singular Name:", "cgt_options[new_group_types][".$existing_post_types."][singular_name]", array('value' => $cgt_options['new_group_types'][$existing_post_types]['singular_name'])));
@@ -337,17 +421,28 @@ function cgt_settings_page() {
 				</div>
 		 		<div class="accordion-group">
 					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_status">'.$existing_post_types.' Status</a></div>
-				    <div id="accordion_'.$existing_post_types.'_status" class="accordion-body collapse in">
+				    <div id="accordion_'.$existing_post_types.'_status" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Select("Status:", "cgt_options[new_group_types][".$existing_post_types."][status]", array('publish','pending','draft'),array('value' => $cgt_options['new_group_types'][$existing_post_types]['status'])));
 						
 							$form->addElement(new Element_HTML('
 						</div>
 					</div>
+				</div>	
+				<div class="accordion-group">
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_group_options">'.$existing_post_types.' Groups Options</a></div>
+				    <div id="accordion_'.$existing_post_types.'_group_options" class="accordion-body collapse">
+						<div class="accordion-inner">')); 
+							$form->addElement(new Element_Select("Privacy Options:", "cgt_options[new_group_types][".$existing_post_types."][groups][privacy]", array('public','private','hidden'),array('postHTML' => 'Which members of this group are allowed to invite others?', 'value' => $cgt_options['new_group_types'][$existing_post_types]['groups'][privacy])));
+							$form->addElement(new Element_Select("Group Invitations", "cgt_options[new_group_types][".$existing_post_types."][groups][invitations]", array('All group members','Group admins and mods only','Group admins only'),array('value' => $cgt_options['new_group_types'][$existing_post_types]['groups'][invitations])));
+							$form->addElement(new Element_Checkbox("Enable Group Forum", "cgt_options[new_group_types][".$existing_post_types."][groups][forum]", array("Yes. I want this groups to have a forum.")));
+							$form->addElement(new Element_HTML('
+						</div>
+					</div>
 				</div>		  
 				<div class="accordion-group">
 					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$existing_post_types.'" href="#accordion_'.$existing_post_types.'_fields">'.$existing_post_types.' Form Fields</a></div>
-				    <div id="accordion_'.$existing_post_types.'_fields" class="accordion-body collapse in">
+				    <div id="accordion_'.$existing_post_types.'_fields" class="accordion-body collapse">
 						<div class="accordion-inner">
 							<div id="#idkommtnoch">
 								<p><a href="Text/'.$existing_post_types.'" class="action">Text</a></p>
@@ -365,23 +460,16 @@ function cgt_settings_page() {
 					</div>
 				</div>		  
 			</div>
-			<div id="cgt_forms_builder_'.$existing_post_types.'" class="cgt_forms_builder">
-			<h3>Hier kommt der form builder angerollt ;-)</h3>'));
-		
-			// echo '<pre>';
-			// print_r($cgt_options);
-			// echo '</pre>';			
+			<div id="cgt_forms_builder_'.$existing_post_types.'" class="cgt_forms_builder">'));
 				    
 			$sortArray = array(); 
-		    foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $key => $array) { 
-		        $sortArray[$key] = $array['order']; 
-		    } 
-
-    		array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $cgt_options['new_group_types'][$existing_post_types]['form_fields']); 
-    
-			// echo '<pre>';
-			// print_r($cgt_options['new_group_types'][$existing_post_types]['form_fields']);
-			// echo '</pre>';			
+			
+			if(!empty($cgt_options['new_group_types'][$existing_post_types]['form_fields'] )){
+				foreach($cgt_options['new_group_types'][$existing_post_types]['form_fields'] as $key => $array) { 
+		        	$sortArray[$key] = $array['order']; 
+		    	} 
+				array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $cgt_options['new_group_types'][$existing_post_types]['form_fields']); 
+			}
 	
 			$form->addElement(new Element_HTML('
 			<ul id="sortable_'. $existing_post_types .'" class="sortable sortable_'. $existing_post_types .'">'));
@@ -400,6 +488,16 @@ function cgt_settings_page() {
 					}
 					
 				}
+			} else {
+				
+			$form->addElement(new Element_HTML('<div class="popover left">
+            <div class="arrow"></div>
+            <h3 class="popover-title">Popover left</h3>
+            <div class="popover-content">
+              <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+            </div>
+          </div>'));
+	    	
 			}
 			$form->addElement(new Element_HTML('</ul></div></div>'));
 	    

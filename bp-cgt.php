@@ -148,35 +148,36 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
     public function set_globals(){
-        global $cgt, $bp;
+        global $cgt;
         
         $cgt = get_option('cgt_options');
 		
-		if( ! is_object( $cgt ) )
-			$cgt = new stdClass;
-        
-		$post_type_slugs = array();
+		// echo '<pre>';
+		// print_r($cgt[existing_post_types]);
+		// echo '</pre>';
+			
+		// $post_type_slugs = $cgt[existing_post_types];
 		
-        foreach( (array) $cgt->new_post_type_slugs as $key => $post_type_slug ){
-            if( ! empty( $post_type_slug ) ) :
-                $post_type_slugs[] = $post_type_slug;
-				break;
-			endif;
-        }
+        // foreach( (array) $cgt->new_post_type_slugs as $key => $post_type_slug ){
+            // if( ! empty( $post_type_slug ) ) :
+                // $post_type_slugs[] = $post_type_slug;
+				// break;
+			// endif;
+        // }
 		
-        $cgt->new_post_type_slugs = $post_type_slugs; 
+       // $cgt->new_post_type_slugs = $post_type_slugs; 
 		      
-        $cgt->post_types = array_merge( 
-        	(array) $cgt->existing_post_types, 
-        	(array) $post_type_slugs
-		);
+        // $cgt->post_types = array_merge( 
+        	// (array) $cgt->existing_post_types, 
+        	// (array) $post_type_slugs
+		// );
     
-        foreach( (array) $cgt->post_types as $post_type ) {
-            foreach( (array) $cgt->custom_field_slug[$post_type] as $key => $field_slug ){
-                if( empty( $field_slug ) )
-                    unset( $cgt->custom_field_slug[$post_type][$key] );
-            }
-        }       
+        // foreach( (array) $cgt->post_types as $post_type ) {
+            // foreach( (array) $cgt->custom_field_slug[$post_type] as $key => $field_slug ){
+                // if( empty( $field_slug ) )
+                    // unset( $cgt->custom_field_slug[$post_type][$key] );
+            // }
+        // }       
     } 
 
 	/**
@@ -187,6 +188,8 @@ class BP_CGT
 	 */	 
 	public function profile_setup_nav() {
 	    global $cgt, $bp;
+		
+
 		
 		$post_count = array();
         
@@ -203,20 +206,24 @@ class BP_CGT
 		endif;
 		
 		$position = 20; 
-        foreach( (array) $cgt->post_types as $post_type ) {
+		
+		if(empty($cgt[existing_post_types]))
+			return;
+		
+        foreach( $cgt[existing_post_types] as $post_type ) {
 			$position ++;
 			
 			$count = isset( $post_count[$post_type] ) ? $post_count[$post_type] : 0;
 			
 			bp_core_new_nav_item( array( 
-		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt->new_group_types[$post_type]['name'], $count ),
+		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt['new_group_types'][$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
 	            'screen_function' 	=> array( $this, 'load_members_post_loop' )
 			) );
 			
 			bp_core_new_subnav_item( array( 
-                'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt->new_group_types[$post_type]['name']),
+                'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt['new_group_types'][$post_type]['name']),
                 'slug' 				=> 'create', 
                 'parent_slug' 		=> $post_type, 
                 'parent_url' 		=> trailingslashit( bp_loggedin_user_domain() . $post_type ),
