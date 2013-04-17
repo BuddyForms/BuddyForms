@@ -2,6 +2,7 @@
 
 global $the_lp_query, $tmp, $list_post_atts;
 
+
 if ( $the_lp_query->have_posts() ) : ?>
 
 	<div class="loop-default">
@@ -11,7 +12,9 @@ if ( $the_lp_query->have_posts() ) : ?>
         <?php do_action( 'bp_before_blog_post' ) ?>
 
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
+        <a href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID(); ?>'>Edit</a> - 
+        Delete <a href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID().'&delete=true'; ?>'>x</a>
+            
             <div class="author-box">
                 <?php echo get_avatar( get_the_author_meta( 'user_email' ), '50' ); ?>
                 <?php if(defined('BP_VERSION')){ ?>

@@ -219,7 +219,7 @@ class CPT4BP
 		 		'name' 				=> sprintf( '%s <span>%d</span>', $cpt4bp['bp_post_types'][$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
-	            'screen_function' 	=> array( $this, 'load_members_post_loop' )
+	            'screen_function' 	=> array( $this, 'cpt4bp_screen_settings' )
 			) );
 			
 			bp_core_new_subnav_item( array( 
@@ -231,9 +231,10 @@ class CPT4BP
                 'screen_function' 	=> array( $this, 'load_members_post_create' ),
                 'user_has_access'	=> bp_is_my_profile()
 	        ) );
+
 		}
 		
-		bp_core_remove_nav_item( 'groups' );	
+		//bp_core_remove_nav_item( 'groups' );	
 	}
 
 	/**
@@ -242,8 +243,14 @@ class CPT4BP
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.2-beta
 	 */	 
-	public function load_members_post_loop() {
+	public function cpt4bp_screen_settings() {
+		global $bp;
+
+		if($_GET[post_id]){
+			bp_core_load_template( 'bp/members_post_create' );
+		}
 		bp_core_load_template( 'bp/members_post_loop' );
+	
 	}
 
 	/**
@@ -255,6 +262,16 @@ class CPT4BP
 	public function load_members_post_create() {
 		bp_core_load_template( 'bp/members_post_create' );
 	}
+
+	/**
+	 * Show the post create form
+	 *
+	 * @package BuddyPress Custom Group Types
+	 * @since 0.2-beta
+	 */	 
+	public function load_members_post_edit() {
+		bp_core_load_template( 'bp/members_post_edit' );
+	}
 	
 	/**
 	 * Look for the templates in the proper places
@@ -263,6 +280,7 @@ class CPT4BP
 	 * @since 0.2-beta
 	 */
 	public function load_template_filter( $found_template, $templates ) {
+
 		if( empty( $found_template ) ) :
 			foreach( (array)$templates as $template ) {
 				if( file_exists( STYLESHEETPATH . '/' . $template ) )

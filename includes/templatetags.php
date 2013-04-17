@@ -71,26 +71,38 @@ function app_clean_input( $input, $type ) {
  */
 function create_group_type_form( $atts = array(), $content = null ) {
     global $cc_page_options, $post, $bp, $current_user, $cpt4bp;
-   
-  
-   // echo '<pre>';
-   // print_r($cpt4bp);
-   // echo '</pre>';
+
     get_currentuserinfo();	
-    
+  	
     if( $bp->current_component  == 'groups' ) {
-       	$groups_post_id = groups_get_groupmeta( bp_get_group_id(), 'group_post_id' ); 
-        
-       	$posttype = groups_get_groupmeta( bp_get_group_id(), 'group_type' ); 
-       
-       	$the_post = get_post( $groups_post_id );
-		$post_id = $the_post->ID;
+       	$groups_post_id	= groups_get_groupmeta( bp_get_group_id(), 'group_post_id' ); 
+        $posttype		= groups_get_groupmeta( bp_get_group_id(), 'group_type' ); 
+		$the_post		= get_post( $groups_post_id );
+		$post_id		= $the_post->ID;
 	   
 		extract( shortcode_atts( array(
     		'posttype' => $the_post->post_type,
     		'taxonomy' => $the_post->post_type .'_category',
     	), $atts ) );   
-    } else {
+
+    } elseif($_GET[post_id]) { 
+    			
+    	$groups_post_id	= $_GET[post_id]; 
+        $posttype		= $bp->current_component;
+       	$the_post		= get_post( $groups_post_id );
+		$post_id		= $the_post->ID;
+	   
+		if ($the_post->post_author != $current_user->ID){
+			echo '<div class="error alert">You are not allowed to edit this Post what are you doing here?</div>';
+			return;	
+		}
+			
+		extract( shortcode_atts( array(
+    		'posttype' => $the_post->post_type,
+    		'taxonomy' => $the_post->post_type .'_category',
+    	), $atts ) );   
+	
+	} else {
 		$post_id = 0;
        	$the_post = new stdClass;
 		$the_post->ID = $post_id;
