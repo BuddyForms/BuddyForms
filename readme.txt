@@ -1,4 +1,4 @@
-=== BuddyPress Custom Post Types  ===
+=== CPT4BP  ===
 Contributors: svenl77, travel-junkie
 Tags: buddypress, groups, custom post types, taxonomy
 Requires at least: WordPress 3.1, BuddyPress 1.5

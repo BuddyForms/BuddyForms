@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Custom Group Types
+Plugin Name: CPT4BP
 Plugin URI: http://themekraft.com
-Description: Attach groups to custom posts types and benefit from all the goodness WordPress brings to the custom post type and taxonomy sytem. This means you will have not only caching and benefit from plenty of plugins available. With custom group types you will be able to use group categories, tags with custom taxonomies to sort and display your groups in their different ways.
+Description: not now
 Version: 0.1 alpha
 Author: Sven Lehnert
 Author URI: http://themekraft.com
