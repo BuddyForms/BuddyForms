@@ -50,15 +50,15 @@
 				
             <?php
             
-            $list_post_atts = create_template_builder_args('apps');
+            // $list_post_atts = create_template_builder_args('apps');
 			
-			echo list_posts_template_builder_css();
-			
-			$meins = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
-				if ($meins->have_posts()) : while ($meins->have_posts()) : $meins->the_post();
-				get_template_part( 'the-loop-item' );
-			endwhile; endif;
-            
+			// echo list_posts_template_builder_css();
+						global $the_lp_query;
+			$the_lp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
+
+				//get_template_part( 'cgt-loop' );
+				cgt_locate_template('wp/cgt-loop.php');
+
             if(function_exists('wp_pagenavi')){
             	wp_pagenavi( array( 'query' => $meins) );	
             }

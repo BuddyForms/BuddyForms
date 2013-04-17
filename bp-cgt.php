@@ -16,10 +16,7 @@ class BP_CGT
 			
 		add_action( 'bp_include', 			array( $this, 'includes' 				),  4, 1 );	
         add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
-        add_action( 'init', 				array( $this, 'add_firmen' 				), 10, 1 );
-		add_action( 'init', 				array( $this, 'register_post_type'		), 10, 1 );
-		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
-		add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
+        add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
 		add_action( 'save_post', 			array( $this, 'create_a_group'			), 10, 2 );
 		add_action( 'wp_trash_post',		array( $this, 'delete_a_group'			), 10, 1 );
 	    add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
@@ -152,32 +149,35 @@ class BP_CGT
         
         $cgt = get_option('cgt_options');
 		
-		// echo '<pre>';
-		// print_r($cgt[existing_post_types]);
-		// echo '</pre>';
 			
-		// $post_type_slugs = $cgt[existing_post_types];
+		// echo '<pre>';
+		// print_r($cgt);
+		// echo '</pre>';
 		
-        // foreach( (array) $cgt->new_post_type_slugs as $key => $post_type_slug ){
-            // if( ! empty( $post_type_slug ) ) :
-                // $post_type_slugs[] = $post_type_slug;
-				// break;
-			// endif;
-        // }
+		if(empty($cgt['bp_post_types']))
+			return;
 		
-       // $cgt->new_post_type_slugs = $post_type_slugs; 
-		      
-        // $cgt->post_types = array_merge( 
-        	// (array) $cgt->existing_post_types, 
-        	// (array) $post_type_slugs
-		// );
-    
-        // foreach( (array) $cgt->post_types as $post_type ) {
-            // foreach( (array) $cgt->custom_field_slug[$post_type] as $key => $field_slug ){
-                // if( empty( $field_slug ) )
-                    // unset( $cgt->custom_field_slug[$post_type][$key] );
-            // }
-        // }       
+		foreach ($cgt['bp_post_types'] as $key => $value) {
+			
+			$post_type_object = get_post_type_object( $key );
+			
+			// echo '<pre>';
+			// print_r($post_type_object);
+			// echo '</pre>';
+		
+			if(empty($cgt['bp_post_types'][$key][name]))
+				$cgt['bp_post_types'][$key][name] = $post_type_object->labels->name;
+			
+			if(empty($cgt['bp_post_types'][$key][name]))
+				$cgt['bp_post_types'][$key][name] = $key;
+		
+			if(empty($cgt['bp_post_types'][$key][slug]))
+				$cgt['bp_post_types'][$key][slug] = $key;
+		}
+		
+		// echo '<pre>';
+		// print_r($cgt);
+		// echo '</pre>';
     } 
 
 	/**
@@ -189,7 +189,7 @@ class BP_CGT
 	public function profile_setup_nav() {
 	    global $cgt, $bp;
 		
-
+		session_start();
 		
 		$post_count = array();
         
@@ -207,23 +207,23 @@ class BP_CGT
 		
 		$position = 20; 
 		
-		if(empty($cgt[existing_post_types]))
+		if(empty($cgt[selected_post_types]))
 			return;
 		
-        foreach( $cgt[existing_post_types] as $post_type ) {
+        foreach( $cgt[selected_post_types] as $post_type ) {
 			$position ++;
 			
 			$count = isset( $post_count[$post_type] ) ? $post_count[$post_type] : 0;
 			
 			bp_core_new_nav_item( array( 
-		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt['new_group_types'][$post_type]['name'], $count ),
+		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt['bp_post_types'][$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
 	            'screen_function' 	=> array( $this, 'load_members_post_loop' )
 			) );
 			
 			bp_core_new_subnav_item( array( 
-                'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt['new_group_types'][$post_type]['name']),
+                'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt['bp_post_types'][$post_type]['name']),
                 'slug' 				=> 'create', 
                 'parent_slug' 		=> $post_type, 
                 'parent_url' 		=> trailingslashit( bp_loggedin_user_domain() . $post_type ),
@@ -320,12 +320,14 @@ class BP_CGT
 	 */	 
 	public function create_a_group( $post_ID, $post ) {
 		global $bp, $cgt;
-		
+		// echo '<pre>';
+		// print_r($cgt);
+		// echo '</pre>';
 		// make sure we get the correct data
 		if( $post->post_type == 'revision' )
 			$post = get_post( $post->post_parent );		
 			
-	 	if( in_array( $post->post_type, $cgt->existing_post_types ) || in_array( $post->post_type, $cgt->new_post_type_slugs ) ){	        
+	 	if( in_array( $post->post_type, $cgt['selected_post_types'] ) ){	        
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
             
 			$new_group = new BP_Groups_Group();
@@ -376,7 +378,7 @@ class BP_CGT
 		
 		$post = get_post( $post_id );
 		
-	 	if( in_array( $post->post_type, array_merge( (array) $cgt->existing_post_types, (array) $cgt->new_post_type_slugs ) ) ) {	 
+	 	if( in_array( $post->post_type, array_merge( (array) $cgt->selected_post_types, (array) $cgt->new_post_type_slugs ) ) ) {	 
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
 	     	
 			if( ! empty( $post_group_id ) )
@@ -441,52 +443,6 @@ class BP_CGT
 		return true;
 	}
 	 
-	/**
- 	 * Registers BuddyPress CGT post types
-	 * 
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta	
-	 */
-	public function register_post_type() {
-		global $cgt;
-				
-		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
-             if( ! empty( $post_type ) ) {
-                 $labels = array(
-                    'name' 				 => _x($cgt->new_group_types[$post_type]['name'], 'post type general name'),
-                    'singular_name' 	 => _x($cgt->new_group_types[$post_type]['singular_name'], 'post type singular name'),
-                    'add_new' 			 => _x('Add New', strtolower($cgt->new_group_types[$post_type]['singular_name'])),
-                    'add_new_item' 		 => sprintf( __('Add New %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
-                    'edit_item' 		 => sprintf( __('Edit %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
-                    'new_item' 			 => sprintf( __('New %s'), $cgt->new_group_types[$post_type]['singular_name'] ),
-                    'all_items' 		 => sprintf( __('All %s'), $cgt->new_group_types[$post_type]['name'] ),
-                    'view_item' 		 => sprintf( __('View %s'), $cgt->new_group_types[$post_type]['name'] ),
-                    'search_items' 		 => sprintf( __('Search %s'), $cgt->new_group_types[$post_type]['name']),
-                    'not_found' 		 => sprintf(__('No %s found'), $cgt->new_group_types[$post_type]['name'] ),
-                    'not_found_in_trash' => sprintf(__('No %s found in Trash'), strtolower($cgt->new_group_types[$post_type]['name']) ), 
-                    'parent_item_colon'  => '',
-                    'menu_name' 		 => $cgt->new_group_types[$post_type]['name']
-                );
-                  
-				$args = array(
-                   'labels' 			=> $labels,
-                   'public' 			=> true,
-                   'publicly_queryable' => true,
-                   'show_ui' 			=> true, 
-                   'show_in_menu' 		=> true, 
-                   'query_var' 		 	=> true,
-                   'rewrite' 			=> true,
-                   'capability_type' 	=> 'post',
-                   'has_archive' 		=> true, 
-                   'hierarchical' 		=> false,
-                   'menu_position' 	 	=> null,
-                   'supports' 			=> array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
-                );
-				   
-                register_post_type( $post_type, $args );
-        	}
-		endforeach;	
-	}
 
 	/**
  	 * Flush rewrite rules
@@ -510,121 +466,27 @@ class BP_CGT
 		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :        
 			$messages[$post_type] = array(
 		        0 => '', // Unused. Messages start at index 1.
-		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cgt->new_group_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
+		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
 		        2 => __('Custom field updated.'),
 		        3 => __('Custom field deleted.'),
-		        4 => sprintf( __('%s updated'), $cgt->new_group_types[$post_type][singular_name] ),
+		        4 => sprintf( __('%s updated'), $cgt->bp_post_types[$post_type][singular_name] ),
 		        /* translators: %s: date and time of the revision */
-		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->new_group_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->new_group_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
-		        7 => sprintf( __('%s saved'), $cgt->new_group_types[$post_type][singular_name] ),
-		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
+		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->bp_post_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
+		        7 => sprintf( __('%s saved'), $cgt->bp_post_types[$post_type][singular_name] ),
+		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
 		        9 => sprintf( __('%s scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview %s</a>'),
 		          // translators: Publish box date format, see http://php.net/date
 		          date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->new_group_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->new_group_types[$post_type]['singular_name']) ),
+		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
 			);    
 		endforeach;
 		
 		return $messages;
     }
 
-	 /**
- 	  * Registers BuddyPress CGT taxonomies
-	  * 
-	  * @package BuddyPress Custom Group Types
-	  * @since 0.1-beta	
-	  */
-	public function register_taxonomy() {
-		global $cgt;
-		
-		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :    
-			$labels_group_cat = array(
-			    'name' 			=> sprintf( __('%s Categories'), $cgt->new_group_types[$post_type]['name'] ),
-			    'singular_name' => sprintf( __('%s Category'), $cgt->new_group_types[$post_type]['singular_name'] ),
-		  	); 
-	
-			$labels_group_tags = array(
-			    'name' 			=> sprintf( __('%s Tags'), $cgt->new_group_types[$post_type]['name'] ),
-		        'singular_name' => sprintf( __('%s Tag'), $cgt->new_group_types[$post_type]['singular_name'] ),
-			); 
-      	
-			register_taxonomy( $post_type.'_category', $post_type, array(
-		        'hierarchical' 	=> true,
-		        'labels' 		=> $labels_group_cat,
-		        'show_ui' 		=> true,
-		        'query_var' 	=> true,
-		        'rewrite' 		=> array( 'slug' => $post_type. '_category' ),
-			) );
-      
-			register_taxonomy( $post_type.'_tag', $post_type, array(
-			    'hierarchical' 			=> false,
-			    'labels' 				=> $labels_group_tags,
-		        'show_ui' 				=> true,
-		        'update_count_callback' => '_update_post_term_count',
-		        'query_var' 			=> true,
-		        'rewrite' 				=> array( 'slug' => $post_type .'_tag' ),
-			) );
-      	endforeach;
-                  
-		foreach( (array) $cgt->post_types as $post_type ) :      
-			if( isset( $cgt->custom_field_attach_group[$post_type] ) ){
-				foreach( $cgt->custom_field_attach_group[$post_type] as $key => $attached_group ){
-		            $labels_group_groups = array(
-			            'name' 			=> sprintf( __('%s Categories'), $cgt->custom_field_name[$post_type][$key] ),
-			            'singular_name' => sprintf( __('%s Category'), $cgt->custom_field_name[$post_type][$key] ),
-		         	); 
-	        
-			        register_taxonomy( $post_type .'_attached_'. $attached_group, $post_type, array(
-			            'hierarchical' 		=> true,
-			            'labels' 			=> $labels_group_groups,
-			            'show_ui' 			=> true,
-			            'query_var' 		=> true,
-			            'rewrite' 			=> array( 'slug' => $post_type .'_attached_'. $attached_group ),
-			            'show_in_nav_menus' => false,
-		          	) );
-	        	}   
-      		}
-	   	endforeach;
-	}
-
 	/**
- 	 * Add some terms
-	 * 
-	 * @package BuddyPress Custom Group Types
-	 * @since 	0.1-beta	
-	 */
-    public function add_firmen(){
-      	global $cgt;
-		
-      	if( bp_has_groups( 'type=alphabetical' ) ) :
-			// loop through all groups
-      		while( bp_groups() ) : bp_the_group(); 
-				// only do public and private groups
-	            if( bp_get_group_status() == ('public' || 'private' ) ) :
-	            	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-					
-					// make sure we have a valid group type
-	                if( ! empty( $group_type ) ) :
-	                	// loop through all cpts            
-	                   	foreach( (array) $cgt->post_types as $post_type ) :      
-	                       	if( isset( $cgt->custom_field_attach_group[$post_type] ) ) :
-	                       		// loop through all attached groups
-	                       		foreach( (array) $cgt->custom_field_attach_group[$post_type] as $key => $attached_group ) :
-	                       			// set the terms
-	                           		if( $group_type != $post_type )
-	                               		wp_set_object_terms( bp_get_group_id(), bp_get_group_name(), $post_type . '_attached_' . $attached_group );
-								endforeach;
-	                       	endif;                   
-	                   	endforeach;
-					endif;
-				endif;
-        	endwhile;			
-        endif;
-	}
-
-	/**
- 	 * Change the shop slug to groups slug to keep it consistent
+ 	 * Change the slug to groups slug to keep it consistent
 	 * 
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta	
@@ -653,14 +515,14 @@ class BP_CGT
 	    $plugindir = dirname( __FILE__ );
 
 		//A Specific Custom Post Type redirect to the atached group
-		if( in_array( $wp_query->query_vars['post_type'], array_merge( (array) $cgt->existing_post_types, (array) $cgt->new_post_type_slugs ) ) ) {
+		if( in_array( $wp_query->query_vars['post_type'], $cgt['selected_post_types'] ) ) {
     		if( is_singular() ) {
 				$link = get_bloginfo('url') .'/'. BP_GROUPS_SLUG .'/'. get_post_meta( $wp_query->post->ID, '_link_to_group', true );
 
     			wp_redirect( $link, '301' );
     			exit;
     		} else {
-    		    foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
+    		    foreach( $cgt['selected_post_types'] as $post_type ) :
 					$templatefilename = '';
 					 
                     if( $wp_query->query_vars['post_type'] == $post_type ){
@@ -683,7 +545,7 @@ class BP_CGT
 
         // A custom Taxonomy Page	
 	    } else {
-    	    foreach( (array) $cgt->new_post_type_slugs as $post_type ) :
+    	    foreach( $cgt['selected_post_types'] as $post_type ) :
 				$templatefilename = '';
               	if( isset( $wp_query->query_vars[$post_type .'_category'] ) ) {
 	                $templatefilename = 'taxonomy-'.$post_type.'_category.php';

@@ -72,6 +72,10 @@ function app_clean_input( $input, $type ) {
 function create_group_type_form( $atts = array(), $content = null ) {
     global $cc_page_options, $post, $bp, $current_user, $cgt;
    
+  
+   // echo '<pre>';
+   // print_r($cgt);
+   // echo '</pre>';
     get_currentuserinfo();	
     
     if( $bp->current_component  == 'groups' ) {
@@ -102,9 +106,9 @@ function create_group_type_form( $atts = array(), $content = null ) {
    	if( empty( $posttype ) )
    	   $posttype = $the_post->post_type;
 	
-	$customfields = $cgt->custom_field_slug[$posttype];
+	$customfields = $cgt['bp_post_types'][$posttype]['form_fields'];
 		
-	foreach( (array) $customfields as $key => $value ) {
+	foreach( $customfields as $key => $value ) {
 		if( ! $value ) {
 			unset($customfields[$key]);
 		}
@@ -140,7 +144,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
           	$hasError = true;
 	    }
 		
-		foreach( (array) $customfields as $key => $customfield ) : 
+		foreach( $customfields as $key => $customfield ) : 
             if( $cgt->custom_field_required[$posttype][$key] == 'on' && empty( $_POST[$customfield] ) ){
                 $custom_field_Error .= 'Please enter '. $customfield .' value. <br />';
                 $hasError = true;
@@ -166,7 +170,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 // insert the new form
                 $post_id = wp_update_post( $my_post );
                 
-               foreach( (array) $customfields as $key => $customfield ) : 
+               foreach( $customfields as $key => $customfield ) : 
                     if( $cgt->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
                        $custom_field_taxonomy = $cgt->custom_field_taxonomy[$posttype][$key];
                        
@@ -187,8 +191,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
                                 'is_visible' 	=> $custom_field_display,
                                 'is_taxonomy' 	=> 1
                             );
-                            
-                            update_post_meta( $post_id, '_product_attributes', $product_attributes[0] );                            
+                           update_post_meta( $post_id, '_product_attributes', $product_attributes[0] );                            
                         }                 
                     }
 
@@ -200,8 +203,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
                         update_post_meta( $post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
                         update_post_meta( $post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
                    }
-
-                   update_post_meta($post_id, $customfield, $_POST[$customfield] );                    
+                    update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
                 endforeach;
             } else {                    
                 $my_post = array(
@@ -209,13 +211,13 @@ function create_group_type_form( $atts = array(), $content = null ) {
                     'post_title' 	=> $_POST['editpost_title'],
                     'post_content' 	=> $_POST['editpost_content'],
                     'post_type' 	=> $posttype,
-                    'post_status' 	=> $cgt->new_group_types[$posttype]['status']
+                    'post_status' 	=> $cgt->bp_post_types[$posttype]['status']
                 );   
                     
                 // insert the new form
                 $post_id = wp_insert_post($my_post);
                 
-               	foreach( (array) $customfields as $key => $customfield ) : 
+               	foreach( $customfields as $key => $customfield ) : 
                     if( $cgt->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
                        	$custom_field_taxonomy = $cgt->custom_field_taxonomy[$posttype][$key];
                         wp_set_post_terms( $post_id, $_POST[$customfield], $custom_field_taxonomy, false );
@@ -247,9 +249,8 @@ function create_group_type_form( $atts = array(), $content = null ) {
                         update_post_meta($post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
                         update_post_meta($post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
                    }
-
-                   update_post_meta($post_id, $customfield, $_POST[$customfield] );                        
-                endforeach;
+                   update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+               endforeach;
             }       
         
         	// Do the wp_insert_post action to insert it
@@ -345,13 +346,19 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			<div class="gform_wrapper">
 				
 			<?php 
-			
+				// Form starts
+	
+ 	    
 			$form = new Form("editpost");
 			$form->configure(array(
 				"prevent" => array("bootstrap", "jQuery", "focus"),
 				"action" => $_SERVER['REQUEST_URI'],
 				"view" => new View_Vertical
 			));
+
+			wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
+
+
 			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
 			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 			$form->addElement(new Element_Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
@@ -362,14 +369,16 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
 			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
 
-
+			// echo '<pre>';
+			// print_r($customfields);
+			// echo '<pre>';
 			if( $customfields ){
 				foreach( $customfields as $key => $customfield ) :
-					if( isset( $_POST[$customfield] ) ) {
+					if( isset( $_POST[sanitize_title($customfield['name'])] ) ) {
 			            if( function_exists( 'stripslashes' ) ) {
-			               $customfield_val = $_POST[ $customfield ];
+			               $customfield_val = $_POST[ sanitize_title($customfield['name']) ];
 			            } else {
-			               $customfield_val = $_POST[ $customfield ];
+			               $customfield_val = $_POST[ sanitize_title($customfield['name']) ];
 			            }
 			            
 			            if( $customfield_val == 'on' ){
@@ -379,18 +388,19 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			            }
 			            
 			        } else {
-			            $customfield_val = get_post_meta($the_post->ID, $customfield, true);
+			            $customfield_val = get_post_meta($the_post->ID, sanitize_title($customfield['name']), true);
 			        }
 					
-			        if( $cgt->custom_field_name[$posttype][$key] ){
-			            $field_name = $cgt->custom_field_name[$posttype][$key];
-			        } else {
-			            $field_name = $cgt->custom_field_slug[$posttype][$key];
-			        }
+			        // if( $cgt->custom_field_name[$posttype][$key] ){
+			            // $field_name = $cgt->custom_field_name[$posttype][$key];
+			        // } else {
+			            // $field_name = $cgt->custom_field_slug[$posttype][$key];
+			        // }
+					//echo $customfield_val;
 					
-					$custom_field_type = isset( $cgt->custom_field_type[$posttype][$key] ) ? $cgt->custom_field_type[$posttype][$key] : '';
+					//$custom_field_type = isset( $customfield['type'] ) ? $cgt->custom_field_type[$posttype][$key] : '';
 					
-			       	switch( $custom_field_type ) {
+			       	switch( $customfield['type'] ) {
 						case 'AttachGroupType':
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = '<span class="required">* </span>';
@@ -502,8 +512,10 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							if($cgt->custom_field_required[$posttype][$key] == 'on')
 								$required[$posttype][$key] = 1;
 								
-							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new Element_Textbox($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+							// $form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
+							// $form->addElement(new Element_Textbox($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cgt->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
+			        		 $form->addElement(new Element_Textbox($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							
 			        		 break;
 							
 			            case 'Link':

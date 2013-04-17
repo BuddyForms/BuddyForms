@@ -13,7 +13,7 @@ $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' 
 		    <?php if($term){ ?>
 		        <h2 class="pagetitle"><?php printf( __( 'Category: %s', 'cgt' ), '<span>' . $term->name . '</span>' ); ?></h2>
 		   <?php } else { ?>
-		          <h2 class="pagetitle"><span><?php echo $cgt->new_group_types[$post->post_type][name] ?></span></h2>
+		          <h2 class="pagetitle"><span><?php echo $cgt->bp_post_types[$post->post_type][name] ?></span></h2>
           <?php } ?>
 			
 			<?php cgt_locate_template('wp/cgt-loop.php'); ?>
