@@ -24,7 +24,7 @@ function bp_cgt_init() {
 	if( is_multisite() && BP_ROOT_BLOG != $wpdb->blogid )
 		return;
 
-	require( dirname( __FILE__ ) .'/bp-cgt.php' );
+	require( dirname( __FILE__ ) .'/CPT4BP.php' );
 	$bp_cgt = new BP_CGT();    
 }
 add_action( 'bp_loaded', 'bp_cgt_init', 0 );

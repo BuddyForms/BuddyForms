@@ -39,7 +39,7 @@
 					$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
 					
 					if($group_type == $bp->current_component){
-						$cgt_post_ids[] = $group_post_id;
+						$cpt4bp_post_ids[] = $group_post_id;
 					}
 					
 				endwhile;
@@ -54,10 +54,10 @@
 			
 			// echo list_posts_template_builder_css();
 						global $the_lp_query;
-			$the_lp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cgt_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
+			$the_lp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cpt4bp_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
 
-				//get_template_part( 'cgt-loop' );
-				cgt_locate_template('wp/cgt-loop.php');
+				//get_template_part( 'cpt4bp-loop' );
+				cpt4bp_locate_template('wp/cpt4bp-loop.php');
 
             if(function_exists('wp_pagenavi')){
             	wp_pagenavi( array( 'query' => $meins) );	
