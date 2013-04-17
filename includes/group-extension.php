@@ -1,5 +1,5 @@
 <?php
-class CGT_Group_Extension extends BP_Group_Extension
+class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
 	public $enable_create_step = true;
 	public $enable_nav_item 	= true;
@@ -14,8 +14,8 @@ class CGT_Group_Extension extends BP_Group_Extension
     public function __construct() {
     	global $bp;
 		
-		if( ! is_object( $bp->bp_cgt ) )
-			$bp->bp_cgt = new stdClass;
+		if( ! is_object( $bp->bp_cpt4bp ) )
+			$bp->bp_cpt4bp = new stdClass;
 		   	
 
 		/**
@@ -23,22 +23,22 @@ class CGT_Group_Extension extends BP_Group_Extension
 		 */ 
     	if( bp_has_groups() ) :
 	    	while( bp_groups() ) : bp_the_group();
-		    	$bp->bp_cgt->attached_post_id 	= groups_get_groupmeta( bp_get_group_id(), 'group_post_id' );
-				$bp->bp_cgt->attached_post_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+		    	$bp->bp_cpt4bp->attached_post_id 	= groups_get_groupmeta( bp_get_group_id(), 'group_post_id' );
+				$bp->bp_cpt4bp->attached_post_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
 			endwhile; 
 		endif;
 	    
 		
 		// Check if the Group extention nav title has bean overwriten in the admin settings for this group type
-		$name = get_option( $bp->bp_cgt->attached_post_type .'_name' );
+		$name = get_option( $bp->bp_cpt4bp->attached_post_type .'_name' );
 		if( ! empty( $name ) ) {
 			$this->name = $name;
         } else {
-			$this->name = $bp->bp_cgt->attached_post_type;
+			$this->name = $bp->bp_cpt4bp->attached_post_type;
         }
 		
-		//$this->slug = $bp->bp_cgt->attached_post_type;
-		if( $bp->bp_cgt->attached_post_type == 'product' ){
+		//$this->slug = $bp->bp_cpt4bp->attached_post_type;
+		if( $bp->bp_cpt4bp->attached_post_type == 'product' ){
 	        $this->name 				= 'Review';
 	        $this->nav_item_position 	= 20;
 	    	$this->slug 				= 'product-review';
@@ -56,7 +56,7 @@ class CGT_Group_Extension extends BP_Group_Extension
 	public function edit_screen() {
 		global $post;
         
-        cgt_locate_template( 'cgt/edit-post.php' );
+        cpt4bp_locate_template( 'cpt4bp/edit-post.php' );
  
     	wp_nonce_field( 'groups_edit_save_'. $this->slug );
     }
@@ -94,8 +94,8 @@ class CGT_Group_Extension extends BP_Group_Extension
 		global $bp, $wc_query;
 		
 		$wc_query = new WP_Query( array(
-			'post_type' => $bp->bp_cgt->attached_post_type, 
-			'p' 		=> $bp->bp_cgt->attached_post_id
+			'post_type' => $bp->bp_cpt4bp->attached_post_type, 
+			'p' 		=> $bp->bp_cpt4bp->attached_post_id
 		) );
 			
 		// load the template for display or edit the post
@@ -109,11 +109,11 @@ class CGT_Group_Extension extends BP_Group_Extension
 			endif;
 				
 	 	} elseif( $bp->action_variables[0] == BP_DOCS_EDIT_SLUG ) {
-			cgt_locate_template('cgt/edit-post.php');
+			cpt4bp_locate_template('cpt4bp/edit-post.php');
 			
 	 	} elseif( $bp->action_variables[0] == BP_DOCS_DELETE_SLUG ) {
-			cgt_locate_template('cgt/delete-post.php');
+			cpt4bp_locate_template('cpt4bp/delete-post.php');
 	 	}	 	
     } 
 }
-bp_register_group_extension( 'CGT_Group_Extension' );
+bp_register_group_extension( 'CPT4BP_Group_Extension' );

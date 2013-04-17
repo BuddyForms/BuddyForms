@@ -5,7 +5,7 @@
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta
  */
-class BP_CGT_Product_Widget extends WP_Widget
+class CPT4BP_Product_Widget extends WP_Widget
 {
 	/**
 	 * Initialize the widget
@@ -15,11 +15,11 @@ class BP_CGT_Product_Widget extends WP_Widget
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname'   => 'widget_display_cgt_products',
-			'description' => __( 'A list of products.', 'cgt' )
+			'classname'   => 'widget_display_cpt4bp_products',
+			'description' => __( 'A list of products.', 'cpt4bp' )
 		);
 		
-		parent::__construct( false, __( 'CGT Proucts', 'cgt' ), $widget_ops );
+		parent::__construct( false, __( 'CPT4BP Proucts', 'cpt4bp' ), $widget_ops );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class BP_CGT_Product_Widget extends WP_Widget
 		<div>
 			<p>
 				<label for="<?php echo $this->get_field_id( 'title' ); ?>">
-					<?php _e( 'Title:', 'cgt' ) ?>
+					<?php _e( 'Title:', 'cpt4bp' ) ?>
 					<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title ?>" />
 				</label>
 			</p>

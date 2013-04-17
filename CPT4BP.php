@@ -1,5 +1,5 @@
 <?php
-class BP_CGT
+class CPT4BP
 {
 	public $post_type_name;
 	public $associated_item_tax_name;
@@ -39,10 +39,10 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	
 	public function register_widgets() {
-		register_widget( 'BP_CGT_Apps_Widget' 		);
-		register_widget( 'BP_CGT_Categories_Widget' );
-		register_widget( 'BP_CGT_Groups_Widget' 	);
-		register_widget( 'BP_CGT_Product_Widget' 	);
+		register_widget( 'CPT4BP_Apps_Widget' 		);
+		register_widget( 'CPT4BP_Categories_Widget' );
+		register_widget( 'CPT4BP_Groups_Widget' 	);
+		register_widget( 'CPT4BP_Product_Widget' 	);
 	}
 	
 	/**
@@ -54,14 +54,14 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	
 	public function load_constants() {	
-		if( !defined( 'BP_CGT_INSTALL_PATH' ) )
-			define( 'BP_CGT_INSTALL_PATH', dirname(__FILE__) .'/' );
+		if( !defined( 'CPT4BP_INSTALL_PATH' ) )
+			define( 'CPT4BP_INSTALL_PATH', dirname(__FILE__) .'/' );
 			
-		if( !defined( 'BP_CGT_INCLUDES_PATH' ) )
-			define( 'BP_CGT_INCLUDES_PATH', BP_CGT_INSTALL_PATH .'includes/' );
+		if( !defined( 'CPT4BP_INCLUDES_PATH' ) )
+			define( 'CPT4BP_INCLUDES_PATH', CPT4BP_INSTALL_PATH .'includes/' );
 		
-		if( !defined( 'BP_CGT_TEMPLATE_PATH' ) )
-			define( 'BP_CGT_TEMPLATE_PATH', BP_CGT_INCLUDES_PATH .'templates/' );
+		if( !defined( 'CPT4BP_TEMPLATE_PATH' ) )
+			define( 'CPT4BP_TEMPLATE_PATH', CPT4BP_INCLUDES_PATH .'templates/' );
 					
 		if( !defined( 'BP_DOCS_EDIT_SLUG' ) )
 			define( 'BP_DOCS_EDIT_SLUG', 'edit' );
@@ -77,7 +77,7 @@ class BP_CGT
 	 * @since 	unknown
 	 */	
 	public function enqueue_style(){
-     	wp_enqueue_style( 'cgt-style', plugins_url( '/includes/css/cgt.css', __FILE__ ) );
+     	wp_enqueue_style( 'cpt4bp-style', plugins_url( '/includes/css/cpt4bp.css', __FILE__ ) );
 
 		
 	}   
@@ -85,22 +85,22 @@ class BP_CGT
 	     
 	
 	/**
-	 * Includes files needed by BuddyPress CGT
+	 * Includes files needed by BuddyPress CPT4BP
 	 *
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta
 	 */	
 	public function includes() {
-		require_once( BP_CGT_INCLUDES_PATH .'PFBC/Form.php' 		);	
-	    require_once( BP_CGT_INCLUDES_PATH .'templatetags.php' 		); 
-        require_once( BP_CGT_INCLUDES_PATH .'functions.php' 		);
-        require_once( BP_CGT_INCLUDES_PATH .'widget-apps.php' 		); 
-        require_once( BP_CGT_INCLUDES_PATH .'widget-categories.php' ); 
-        require_once( BP_CGT_INCLUDES_PATH .'widget-groups.php' 	); 
-        require_once( BP_CGT_INCLUDES_PATH .'widget-product.php' 	); 
+		require_once( CPT4BP_INCLUDES_PATH .'PFBC/Form.php' 		);	
+	    require_once( CPT4BP_INCLUDES_PATH .'templatetags.php' 		); 
+        require_once( CPT4BP_INCLUDES_PATH .'functions.php' 		);
+        require_once( CPT4BP_INCLUDES_PATH .'widget-apps.php' 		); 
+        require_once( CPT4BP_INCLUDES_PATH .'widget-categories.php' ); 
+        require_once( CPT4BP_INCLUDES_PATH .'widget-groups.php' 	); 
+        require_once( CPT4BP_INCLUDES_PATH .'widget-product.php' 	); 
 		
 		if( is_admin() ) {
-			require_once(  BP_CGT_INCLUDES_PATH. 'admin.php' );
+			require_once( CPT4BP_INCLUDES_PATH. 'admin.php' );
 		}
 	}
 
@@ -111,21 +111,21 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	
 	public function setup_group_extension() {
-		require_once(  BP_CGT_INCLUDES_PATH . 'group-extension.php' );
+		require_once(  CPT4BP_INCLUDES_PATH . 'group-extension.php' );
 	}
 	
 	/**
-	 * Defines bp_cgt_init action
+	 * Defines bp_cpt4bp_init action
 	 *
 	 * This action fires on WP's init action and provides a way for the rest of BuddyPress
-	 * CGT, as well as other dependent plugins, to hook into the loading process in an
+	 * CPT4BP, as well as other dependent plugins, to hook into the loading process in an
 	 * orderly fashion.
 	 *
 	 * @package BuddyPress Custom Group Types
 	 * @since 0.1-beta
 	*/
 	public function init_hook() {
-		do_action( 'bp_cgt_init' );
+		do_action( 'bp_cpt4bp_init' );
 	}
 	
 	/**
@@ -135,7 +135,7 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( 'bp-cgt', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'cpt4bp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -145,19 +145,19 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
     public function set_globals(){
-        global $cgt;
+        global $cpt4bp;
         
-        $cgt = get_option('cgt_options');
+        $cpt4bp = get_option('cpt4bp_options');
 		
 			
 		// echo '<pre>';
-		// print_r($cgt);
+		// print_r($cpt4bp);
 		// echo '</pre>';
 		
-		if(empty($cgt['bp_post_types']))
+		if(empty($cpt4bp['bp_post_types']))
 			return;
 		
-		foreach ($cgt['bp_post_types'] as $key => $value) {
+		foreach ($cpt4bp['bp_post_types'] as $key => $value) {
 			
 			$post_type_object = get_post_type_object( $key );
 			
@@ -165,18 +165,18 @@ class BP_CGT
 			// print_r($post_type_object);
 			// echo '</pre>';
 		
-			if(empty($cgt['bp_post_types'][$key][name]))
-				$cgt['bp_post_types'][$key][name] = $post_type_object->labels->name;
+			if(empty($cpt4bp['bp_post_types'][$key][name]))
+				$cpt4bp['bp_post_types'][$key][name] = $post_type_object->labels->name;
 			
-			if(empty($cgt['bp_post_types'][$key][name]))
-				$cgt['bp_post_types'][$key][name] = $key;
+			if(empty($cpt4bp['bp_post_types'][$key][name]))
+				$cpt4bp['bp_post_types'][$key][name] = $key;
 		
-			if(empty($cgt['bp_post_types'][$key][slug]))
-				$cgt['bp_post_types'][$key][slug] = $key;
+			if(empty($cpt4bp['bp_post_types'][$key][slug]))
+				$cpt4bp['bp_post_types'][$key][slug] = $key;
 		}
 		
 		// echo '<pre>';
-		// print_r($cgt);
+		// print_r($cpt4bp);
 		// echo '</pre>';
     } 
 
@@ -187,7 +187,7 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function profile_setup_nav() {
-	    global $cgt, $bp;
+	    global $cpt4bp, $bp;
 		
 		session_start();
 		
@@ -207,23 +207,23 @@ class BP_CGT
 		
 		$position = 20; 
 		
-		if(empty($cgt[selected_post_types]))
+		if(empty($cpt4bp[selected_post_types]))
 			return;
 		
-        foreach( $cgt[selected_post_types] as $post_type ) {
+        foreach( $cpt4bp[selected_post_types] as $post_type ) {
 			$position ++;
 			
 			$count = isset( $post_count[$post_type] ) ? $post_count[$post_type] : 0;
 			
 			bp_core_new_nav_item( array( 
-		 		'name' 				=> sprintf( '%s <span>%d</span>', $cgt['bp_post_types'][$post_type]['name'], $count ),
+		 		'name' 				=> sprintf( '%s <span>%d</span>', $cpt4bp['bp_post_types'][$post_type]['name'], $count ),
 	            'slug' 				=> $post_type, 
 	            'position' 			=> $position,
 	            'screen_function' 	=> array( $this, 'load_members_post_loop' )
 			) );
 			
 			bp_core_new_subnav_item( array( 
-                'name' 				=> sprintf(__(' Add %s', 'cgt' ), $cgt['bp_post_types'][$post_type]['name']),
+                'name' 				=> sprintf(__(' Add %s', 'cpt4bp' ), $cpt4bp['bp_post_types'][$post_type]['name']),
                 'slug' 				=> 'create', 
                 'parent_slug' 		=> $post_type, 
                 'parent_url' 		=> trailingslashit( bp_loggedin_user_domain() . $post_type ),
@@ -269,11 +269,11 @@ class BP_CGT
 					$filtered_template = STYLESHEETPATH . '/' . $template;
 						
 				else
-					$filtered_template =  BP_CGT_TEMPLATE_PATH . $template;
+					$filtered_template =  CPT4BP_TEMPLATE_PATH . $template;
 			}
 			
 			if( file_exists( $filtered_template ) ) :	
-				return apply_filters( 'cgt_load_template_filter', $filtered_template );
+				return apply_filters( 'cpt4bp_load_template_filter', $filtered_template );
 			else :
 				return '';
 			endif;
@@ -319,15 +319,15 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function create_a_group( $post_ID, $post ) {
-		global $bp, $cgt;
+		global $bp, $cpt4bp;
 		// echo '<pre>';
-		// print_r($cgt);
+		// print_r($cpt4bp);
 		// echo '</pre>';
 		// make sure we get the correct data
 		if( $post->post_type == 'revision' )
 			$post = get_post( $post->post_parent );		
 			
-	 	if( in_array( $post->post_type, $cgt['selected_post_types'] ) ){	        
+	 	if( in_array( $post->post_type, $cpt4bp['selected_post_types'] ) ){	        
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
             
 			$new_group = new BP_Groups_Group();
@@ -374,11 +374,11 @@ class BP_CGT
 	 * @since 0.1-beta
 	 */	 
 	public function delete_a_group( $post_id ) {
-		global $cgt;
+		global $cpt4bp;
 		
 		$post = get_post( $post_id );
 		
-	 	if( in_array( $post->post_type, array_merge( (array) $cgt->selected_post_types, (array) $cgt->new_post_type_slugs ) ) ) {	 
+	 	if( in_array( $post->post_type, array_merge( (array) $cpt4bp->selected_post_types, (array) $cpt4bp->new_post_type_slugs ) ) ) {	 
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
 	     	
 			if( ! empty( $post_group_id ) )
@@ -429,7 +429,7 @@ class BP_CGT
 		/* Record this in activity streams */
 		groups_record_activity( array(
 			'user_id' 	=> $user_id,
-			'action' 	=> apply_filters( 'groups_activity_joined_group', sprintf( __( '%s joined the group %s', 'cgt' ), bp_core_get_userlink( $user_id ), '<a href="'. bp_get_group_permalink( $bp->groups->current_group ) .'">'. esc_html( $bp->groups->current_group->name ) .'</a>' ) ),
+			'action' 	=> apply_filters( 'groups_activity_joined_group', sprintf( __( '%s joined the group %s', 'cpt4bp' ), bp_core_get_userlink( $user_id ), '<a href="'. bp_get_group_permalink( $bp->groups->current_group ) .'">'. esc_html( $bp->groups->current_group->name ) .'</a>' ) ),
 			'type' 		=> 'joined_group',
 			'item_id' 	=> $group_id
 		) );
@@ -461,24 +461,24 @@ class BP_CGT
 	 * @since 0.1-beta	
 	 */
     public function group_type_updated_messages( $messages ) {
-		global $post, $post_ID, $cgt;
+		global $post, $post_ID, $cpt4bp;
       
-		foreach( (array) $cgt->new_post_type_slugs as $post_type ) :        
+		foreach( (array) $cpt4bp->new_post_type_slugs as $post_type ) :        
 			$messages[$post_type] = array(
 		        0 => '', // Unused. Messages start at index 1.
-		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
+		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
 		        2 => __('Custom field updated.'),
 		        3 => __('Custom field deleted.'),
-		        4 => sprintf( __('%s updated'), $cgt->bp_post_types[$post_type][singular_name] ),
+		        4 => sprintf( __('%s updated'), $cpt4bp->bp_post_types[$post_type][singular_name] ),
 		        /* translators: %s: date and time of the revision */
-		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cgt->bp_post_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cgt->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
-		        7 => sprintf( __('%s saved'), $cgt->bp_post_types[$post_type][singular_name] ),
-		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
+		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cpt4bp->bp_post_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
+		        7 => sprintf( __('%s saved'), $cpt4bp->bp_post_types[$post_type][singular_name] ),
+		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
 		        9 => sprintf( __('%s scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview %s</a>'),
 		          // translators: Publish box date format, see http://php.net/date
 		          date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cgt->bp_post_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cgt->bp_post_types[$post_type]['singular_name']) ),
+		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
 			);    
 		endforeach;
 		
@@ -492,9 +492,9 @@ class BP_CGT
 	 * @since 0.1-beta	
 	 */
 	public function remove_slug( $permalink, $post, $leavename ) {
-        global $cgt;
+        global $cpt4bp;
         
-        $post_types = array_merge( (array) $cgt->existing_post_type_slugs, (array) $cgt->new_post_type_slugs );
+        $post_types = array_merge( (array) $cpt4bp->existing_post_type_slugs, (array) $cpt4bp->new_post_type_slugs );
   
         foreach( $post_types as $post_type ){
              if( $post_type )
@@ -511,18 +511,18 @@ class BP_CGT
 	 * @since 0.1-beta	
 	 */
 	public function theme_redirect() {
-	   global $wp_query, $bp, $post, $cgt;
+	   global $wp_query, $bp, $post, $cpt4bp;
 	    $plugindir = dirname( __FILE__ );
 
 		//A Specific Custom Post Type redirect to the atached group
-		if( in_array( $wp_query->query_vars['post_type'], $cgt['selected_post_types'] ) ) {
+		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {
     		if( is_singular() ) {
 				$link = get_bloginfo('url') .'/'. BP_GROUPS_SLUG .'/'. get_post_meta( $wp_query->post->ID, '_link_to_group', true );
 
     			wp_redirect( $link, '301' );
     			exit;
     		} else {
-    		    foreach( $cgt['selected_post_types'] as $post_type ) :
+    		    foreach( $cpt4bp['selected_post_types'] as $post_type ) :
 					$templatefilename = '';
 					 
                     if( $wp_query->query_vars['post_type'] == $post_type ){
@@ -545,7 +545,7 @@ class BP_CGT
 
         // A custom Taxonomy Page	
 	    } else {
-    	    foreach( $cgt['selected_post_types'] as $post_type ) :
+    	    foreach( $cpt4bp['selected_post_types'] as $post_type ) :
 				$templatefilename = '';
               	if( isset( $wp_query->query_vars[$post_type .'_category'] ) ) {
 	                $templatefilename = 'taxonomy-'.$post_type.'_category.php';

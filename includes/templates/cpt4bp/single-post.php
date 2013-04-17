@@ -1,6 +1,6 @@
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post() ?>
 
-	<?php cgt_locate_template('cgt/post-header.php'); ?>
+	<?php cpt4bp_locate_template('cpt4bp/post-header.php'); ?>
 	
 	<div class="doc-content">
 			<table class="profile-fields">
@@ -33,6 +33,6 @@
 	</div>
 
 
-	<?php // cgt_locate_template('cgt/comments.php'); ?>
+	<?php // cpt4bp_locate_template('cpt4bp/comments.php'); ?>
 	
 <?php endwhile; endif ?>

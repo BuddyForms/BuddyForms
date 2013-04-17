@@ -18,7 +18,7 @@ foreach ( (array)$comments as $comment ) {
 
 	<div id="comments">
 		<h3>
-			<?php printf( _e( 'Discussion (%d)', 'cgt' ), $num_comments ) ?>
+			<?php printf( _e( 'Discussion (%d)', 'cpt4bp' ), $num_comments ) ?>
 		</h3>
 		
 		<?php do_action( 'bp_before_blog_comment_list' ) ?>
@@ -40,7 +40,7 @@ foreach ( (array)$comments as $comment ) {
 		<?php else : ?>
 
 			<p class="comments-closed comments-empty">
-				<?php _e( 'There are no comments for this doc yet.', 'cgt' ) ?>
+				<?php _e( 'There are no comments for this doc yet.', 'cpt4bp' ) ?>
 			</p>
 
 		<?php endif ?>
@@ -52,6 +52,6 @@ foreach ( (array)$comments as $comment ) {
 	<?php comment_form() ?>
 <?php else : ?>
 	<p class="comments-closed comment-posting-disabled">
-		<?php _e( 'Comment posting has been disabled on this doc.', 'cgt' ) ?>
+		<?php _e( 'Comment posting has been disabled on this doc.', 'cpt4bp' ) ?>
 	</p>
 <?php endif; ?>

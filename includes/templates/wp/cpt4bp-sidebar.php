@@ -5,7 +5,7 @@
 	
 		<h3 class="widgettitle">Kategorien</h3>
 			<?php 
-			global $post, $cgt;
+			global $post, $cpt4bp;
             
 			$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); 
             
