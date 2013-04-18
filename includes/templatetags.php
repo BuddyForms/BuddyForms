@@ -583,7 +583,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							
 		$form->addElement(new Element_File("File:", "async-upload", array("required" => $required[$posttype][$key], 'id' => "async-upload")));
 	
-	
 		// $form->addElement(new PFBC\Element\HTML('<li id="upload-img">  
 			    // <div class="label"><label for="upload-img">Neues Featured Image hochladen</label></div>  
 			    // <input type="file" id="async-upload" name="async-upload"></li> '));

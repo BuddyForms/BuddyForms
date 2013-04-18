@@ -333,7 +333,7 @@ class CPT4BP
 	/**
 	 * Creates a group if a group associated post is created   
 	 *
-	 * @package BuddyPress Custom Group Types
+	 * @package Custom Post Types for BuddyPress
 	 * @since 0.1-beta
 	 */	 
 	public function create_a_group( $post_ID, $post ) {
@@ -380,6 +380,12 @@ class CPT4BP
 	   		groups_update_groupmeta( $new_group->id, 'stylesheet', 			'buddypress'  	 );
 			groups_update_groupmeta( $new_group->id, 'group_post_id', 		$post->ID 		 );
 			groups_update_groupmeta( $new_group->id, 'group_type', 			$post->post_type );
+			
+			
+			$file['file'] = $_FILES['async-upload'];
+			print_r($file);
+			echo '<br>';
+			bp_core_avatar_handle_upload($file,'group');
 			
 			self::add_member_to_group( $new_group->id, $post->post_author );			
 	 	}	   
