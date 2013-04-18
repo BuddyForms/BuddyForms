@@ -96,7 +96,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			echo '<div class="error alert">You are not allowed to edit this Post what are you doing here?</div>';
 			return;	
 		}
-			
+		
 		extract( shortcode_atts( array(
     		'posttype' => $the_post->post_type,
     		'taxonomy' => $the_post->post_type .'_category',
@@ -223,7 +223,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
                     'post_title' 	=> $_POST['editpost_title'],
                     'post_content' 	=> $_POST['editpost_content'],
                     'post_type' 	=> $posttype,
-                    'post_status' 	=> $cpt4bp->bp_post_types[$posttype]['status']
+                    'post_status' 	=> $cpt4bp['bp_post_types'][$posttype]['status']
                 );   
                     
                 // insert the new form

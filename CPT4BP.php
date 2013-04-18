@@ -78,10 +78,7 @@ class CPT4BP
 	 */	
 	public function enqueue_style(){
      	wp_enqueue_style( 'cpt4bp-style', plugins_url( '/includes/css/cpt4bp.css', __FILE__ ) );
-
-		
-	}   
-	
+	}	
 	     
 	
 	/**
@@ -244,10 +241,23 @@ class CPT4BP
 	 * @since 0.2-beta
 	 */	 
 	public function cpt4bp_screen_settings() {
-		global $bp;
+		global $current_user, $bp;
 
 		if($_GET[post_id]){
 			bp_core_load_template( 'bp/members_post_create' );
+		}
+		if($_GET[delete]){
+			get_currentuserinfo();	
+			$the_post = get_post( $_GET[delete] );
+			
+			if ($the_post->post_author != $current_user->ID){
+				echo '<div class="error alert">You are not allowed to delete this entry! What are you doing here?</div>';
+				return;	
+			}
+		
+			$this->delete_a_group( $_GET[delete] );
+			wp_delete_post( $_GET[delete] );
+
 		}
 		bp_core_load_template( 'bp/members_post_loop' );
 	
@@ -263,16 +273,6 @@ class CPT4BP
 		bp_core_load_template( 'bp/members_post_create' );
 	}
 
-	/**
-	 * Show the post create form
-	 *
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.2-beta
-	 */	 
-	public function load_members_post_edit() {
-		bp_core_load_template( 'bp/members_post_edit' );
-	}
-	
 	/**
 	 * Look for the templates in the proper places
 	 * 
@@ -381,12 +381,9 @@ class CPT4BP
 			groups_update_groupmeta( $new_group->id, 'group_post_id', 		$post->ID 		 );
 			groups_update_groupmeta( $new_group->id, 'group_type', 			$post->post_type );
 			
-			
-			$file['file'] = $_FILES['async-upload'];
-			print_r($file);
-			echo '<br>';
-			bp_core_avatar_handle_upload($file,'group');
-			
+			echo bp_core_avatar_handle_upload($_FILES['async-upload'],'groups_avatar_upload_dir');
+			//	require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			// wp_handle_upload( $_FILES['async-upload'], array( 'action'=> 'bp_avatar_upload' ));
 			self::add_member_to_group( $new_group->id, $post->post_author );			
 	 	}	   
 	 }
@@ -399,12 +396,11 @@ class CPT4BP
 	 */	 
 	public function delete_a_group( $post_id ) {
 		global $cpt4bp;
-		
 		$post = get_post( $post_id );
 		
-	 	if( in_array( $post->post_type, array_merge( (array) $cpt4bp->selected_post_types, (array) $cpt4bp->new_post_type_slugs ) ) ) {	 
+		if( in_array( $post->post_type, $cpt4bp['selected_post_types'] ) ) {	 
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
-	     	
+			
 			if( ! empty( $post_group_id ) )
 				groups_delete_group( $post_group_id );
 		 }
@@ -598,8 +594,7 @@ class CPT4BP
 	 */
 	public static function do_theme_redirect( $url ) {
 	    global $wp_query;
-		
-	    if( have_posts() ) {
+		if( have_posts() ) {
 	        include( $url );
 	        die();
 	    } else {
