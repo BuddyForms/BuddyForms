@@ -3,7 +3,7 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
 	public $enable_create_step = true;
 	public $enable_nav_item 	= true;
-	public $enable_edit_item 	= false;
+	public $enable_edit_item 	= true;
 
 	/**
 	 * Extends the group and register the nav item and add groupmeta to the $bp global
@@ -113,6 +113,8 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 			
 	 	} elseif( $bp->action_variables[0] == BP_DOCS_DELETE_SLUG ) {
 			cpt4bp_locate_template('cpt4bp/delete-post.php');
+	 	} else {
+	 		cpt4bp_locate_template('cpt4bp/single-post.php');
 	 	}	 	
     } 
 }
