@@ -1,0 +1,1 @@
+<?php echo create_group_type_form(); ?>
