@@ -25,11 +25,8 @@ class CPT4BP
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
 
-        add_action( 'after_switch_theme', 	array( $this, 'new_group_type_rewrite_flush' ) );
-        
         add_filter( 'post_type_link', 		array( $this, 'remove_slug'					), 10, 3 );
-        add_filter( 'post_updated_messages',array( $this, 'group_type_updated_messages' ), 10, 1 );
-		add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 		), 10, 2 );
+        add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 		), 10, 2 );
  	}
 
 	/**
@@ -62,12 +59,6 @@ class CPT4BP
 		
 		if( !defined( 'CPT4BP_TEMPLATE_PATH' ) )
 			define( 'CPT4BP_TEMPLATE_PATH', CPT4BP_INCLUDES_PATH .'templates/' );
-					
-		if( !defined( 'BP_DOCS_EDIT_SLUG' ) )
-			define( 'BP_DOCS_EDIT_SLUG', 'edit' );
-
-		if( !defined( 'BP_DOCS_DELETE_SLUG' ) )
-			define( 'BP_DOCS_DELETE_SLUG', 'delete' );			
 	}
 
 	/**
@@ -90,11 +81,11 @@ class CPT4BP
 	public function includes() {
 		require_once( CPT4BP_INCLUDES_PATH .'PFBC/Form.php' 		);	
 	    require_once( CPT4BP_INCLUDES_PATH .'templatetags.php' 		); 
-        require_once( CPT4BP_INCLUDES_PATH .'functions.php' 		);
-        require_once( CPT4BP_INCLUDES_PATH .'widget-apps.php' 		); 
-        require_once( CPT4BP_INCLUDES_PATH .'widget-categories.php' ); 
-        require_once( CPT4BP_INCLUDES_PATH .'widget-groups.php' 	); 
-        require_once( CPT4BP_INCLUDES_PATH .'widget-product.php' 	); 
+
+        require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-apps.php' 		); 
+        require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-categories.php' ); 
+        require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-groups.php' 	); 
+        require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-product.php' 	); 
 		
 		if( is_admin() ) {
 			require_once( CPT4BP_INCLUDES_PATH. 'admin.php' );
@@ -244,7 +235,7 @@ class CPT4BP
 		global $current_user, $bp;
 
 		if($_GET[post_id]){
-			bp_core_load_template( 'bp/members_post_create' );
+			bp_core_load_template( 'bp/members-post-create' );
 		}
 		if($_GET[delete]){
 			get_currentuserinfo();	
@@ -259,7 +250,7 @@ class CPT4BP
 			wp_delete_post( $_GET[delete] );
 
 		}
-		bp_core_load_template( 'bp/members_post_loop' );
+		bp_core_load_template( 'bp/members-post-display' );
 	
 	}
 
@@ -270,7 +261,7 @@ class CPT4BP
 	 * @since 0.2-beta
 	 */	 
 	public function load_members_post_create() {
-		bp_core_load_template( 'bp/members_post_create' );
+		bp_core_load_template( 'bp/members-post-create' );
 	}
 
 	/**
@@ -338,9 +329,7 @@ class CPT4BP
 	 */	 
 	public function create_a_group( $post_ID, $post ) {
 		global $bp, $cpt4bp;
-		// echo '<pre>';
-		// print_r($cpt4bp);
-		// echo '</pre>';
+
 		// make sure we get the correct data
 		if( $post->post_type == 'revision' )
 			$post = get_post( $post->post_parent );		
@@ -381,9 +370,6 @@ class CPT4BP
 			groups_update_groupmeta( $new_group->id, 'group_post_id', 		$post->ID 		 );
 			groups_update_groupmeta( $new_group->id, 'group_type', 			$post->post_type );
 			
-			echo bp_core_avatar_handle_upload($_FILES['async-upload'],'groups_avatar_upload_dir');
-			//	require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			// wp_handle_upload( $_FILES['async-upload'], array( 'action'=> 'bp_avatar_upload' ));
 			self::add_member_to_group( $new_group->id, $post->post_author );			
 	 	}	   
 	 }
@@ -462,48 +448,6 @@ class CPT4BP
 	
 		return true;
 	}
-	 
-
-	/**
- 	 * Flush rewrite rules
-	 * 
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta	
-	 */
-    public function new_group_type_rewrite_flush() {
-        flush_rewrite_rules();
-    }
-
-	/**
- 	 * Adjust backend messages
-	 * 
-	 * @package BuddyPress Custom Group Types
-	 * @since 0.1-beta	
-	 */
-    public function group_type_updated_messages( $messages ) {
-		global $post, $post_ID, $cpt4bp;
-      
-		foreach( (array) $cpt4bp->new_post_type_slugs as $post_type ) :        
-			$messages[$post_type] = array(
-		        0 => '', // Unused. Messages start at index 1.
-		        1 => sprintf( __('%s updated. <a href="%s">View %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ),strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
-		        2 => __('Custom field updated.'),
-		        3 => __('Custom field deleted.'),
-		        4 => sprintf( __('%s updated'), $cpt4bp->bp_post_types[$post_type][singular_name] ),
-		        /* translators: %s: date and time of the revision */
-		        5 => isset($_GET['revision']) ? sprintf( __('%s restored to revision from %s'), $cpt4bp->bp_post_types[$post_type]['singular_name'], wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		        6 => sprintf( __('%s published. <a href="%s">View %s</a>'),$cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( get_permalink($post_ID) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
-		        7 => sprintf( __('%s saved'), $cpt4bp->bp_post_types[$post_type][singular_name] ),
-		        8 => sprintf( __('%s submitted. <a target="_blank" href="%s">Preview %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'],  esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
-		        9 => sprintf( __('%s scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview %s</a>'),
-		          // translators: Publish box date format, see http://php.net/date
-		          date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		        10 => sprintf( __('%s draft updated. <a target="_blank" href="%s">Preview %s</a>'), $cpt4bp->bp_post_types[$post_type]['singular_name'], esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), strtolower($cpt4bp->bp_post_types[$post_type]['singular_name']) ),
-			);    
-		endforeach;
-		
-		return $messages;
-    }
 
 	/**
  	 * Change the slug to groups slug to keep it consistent
@@ -514,11 +458,13 @@ class CPT4BP
 	public function remove_slug( $permalink, $post, $leavename ) {
         global $cpt4bp;
         
-        $post_types = array_merge( (array) $cpt4bp->existing_post_type_slugs, (array) $cpt4bp->new_post_type_slugs );
+		//print_r($cpt4bp);
+		
+        $post_types =  $cpt4bp['selected_post_types'] ;
   
         foreach( $post_types as $post_type ){
              if( $post_type )
-                $permalink = str_replace( get_bloginfo('url') .'/'. $post_type , get_bloginfo('url') .'/groups', $permalink );
+                $permalink = str_replace( get_bloginfo('url') .'/'. $post_type , get_bloginfo('url') .'/'.BP_GROUPS_SLUG, $permalink );
         }
 
 		return $permalink;
@@ -531,59 +477,20 @@ class CPT4BP
 	 * @since 0.1-beta	
 	 */
 	public function theme_redirect() {
-	   global $wp_query, $bp, $post, $cpt4bp;
+	   global $wp_query, $cpt4bp;
+	   
 	    $plugindir = dirname( __FILE__ );
 
 		//A Specific Custom Post Type redirect to the atached group
 		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {
     		if( is_singular() ) {
 				$link = get_bloginfo('url') .'/'. BP_GROUPS_SLUG .'/'. get_post_meta( $wp_query->post->ID, '_link_to_group', true );
-
     			wp_redirect( $link, '301' );
     			exit;
-    		} else {
-    		    foreach( $cpt4bp['selected_post_types'] as $post_type ) :
-					$templatefilename = '';
-					 
-                    if( $wp_query->query_vars['post_type'] == $post_type ){
-                        $templatefilename = 'page-'. $post_type .'.php';
-						
-	                    if( file_exists( STYLESHEETPATH .'/'. $templatefilename ) ) {
-	                        $return_template = STYLESHEETPATH .'/'. $templatefilename;
-							
-	                    } elseif( file_exists( TEMPLATEPATH .'/'. $templatefilename ) ) {
-	                        $return_template = TEMPLATEPATH .'/'. $templatefilename;
-							
-	                    } else {
-	                       $return_template = $plugindir .'/includes/templates/wp/taxonomy.php';
-	                    }
-						
-	                   	self::do_theme_redirect( $return_template );  
-					}
-                endforeach;
     		}
+			
+	    } 
 
-        // A custom Taxonomy Page	
-	    } else {
-    	    foreach( $cpt4bp['selected_post_types'] as $post_type ) :
-				$templatefilename = '';
-              	if( isset( $wp_query->query_vars[$post_type .'_category'] ) ) {
-	                $templatefilename = 'taxonomy-'.$post_type.'_category.php';
-	                    
-                    if( file_exists( STYLESHEETPATH .'/'. $templatefilename ) ) {
-                        $return_template = STYLESHEETPATH .'/'. $templatefilename;
-							
-                    } elseif( file_exists( TEMPLATEPATH .'/'. $templatefilename ) ) {
-                        $return_template = TEMPLATEPATH .'/'. $templatefilename;
-							
-                    } else {
-                       $return_template = $plugindir .'/includes/templates/wp/taxonomy.php';
-                    }
-					
-                   	self::do_theme_redirect( $return_template );  
-              	}        
-            endforeach;
-       	}
 	}
 
 	/**
