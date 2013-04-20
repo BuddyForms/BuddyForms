@@ -10,7 +10,7 @@ function cpt4bp_create_menu() {
 }  
 add_action('admin_menu', 'cpt4bp_create_menu');
 
-function save_item_order() {
+function cpt4bp_save_item_order() {
     global $wpdb;
 	
 	$cpt4bp_options = get_option('cpt4bp_options');
@@ -26,10 +26,10 @@ function save_item_order() {
 	update_option("cpt4bp_options", $cpt4bp_options);
     die();
 }
-add_action('wp_ajax_item_sort', 'save_item_order');
-add_action('wp_ajax_nopriv_item_sort', 'save_item_order');
+add_action('wp_ajax_item_sort', 'cpt4bp_save_item_order');
+add_action('wp_ajax_nopriv_item_sort', 'cpt4bp_save_item_order');
 
-function item_delete(){
+function cpt4bp_item_delete(){
 	$post_args = explode('/', $_POST['post_args']);
 	
 	$cpt4bp_options = get_option('cpt4bp_options');
@@ -40,10 +40,10 @@ function item_delete(){
 	update_option("cpt4bp_options", $cpt4bp_options);
     die();
 }
-add_action('wp_ajax_item_delete', 'item_delete');
-add_action('wp_ajax_nopriv_item_delete', 'item_delete');
+add_action('wp_ajax_cpt4bp_item_delete', 'cpt4bp_item_delete');
+add_action('wp_ajax_nopriv_cpt4bp_item_delete', 'cpt4bp_item_delete');
 
-function view_form_fields($args){
+function cpt4bp_view_form_fields($args){
 	$post_args = explode('/', $_POST['post_args']);
 	$numItems = $_POST['numItems'];
 	$cpt4bp_options = get_option('cpt4bp_options');
@@ -164,8 +164,8 @@ function view_form_fields($args){
 
 
 }
-add_action( 'wp_ajax_view_form_fields', 'view_form_fields' );
-add_action( 'wp_ajax_nopriv_view_form_fields', 'view_form_fields' );
+add_action( 'wp_ajax_cpt4bp_view_form_fields', 'cpt4bp_view_form_fields' );
+add_action( 'wp_ajax_nopriv_cpt4bp_view_form_fields', 'cpt4bp_view_form_fields' );
 
 /**
  * Display the settings page
@@ -188,7 +188,7 @@ function cpt4bp_options_content() {
 				jQuery.ajax({
 					type: 'POST',
 					url: ajaxurl,
-					data: {"action": "item_delete", "post_args": action.attr('href')},
+					data: {"action": "cpt4bp_item_delete", "post_args": action.attr('href')},
 					success: function(data){
 						jQuery("." + del_id).remove();
 					}
@@ -205,7 +205,7 @@ function cpt4bp_options_content() {
 			jQuery.ajax({
 				type: 'POST',
 				url: ajaxurl,
-				data: {"action": "view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
+				data: {"action": "cpt4bp_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 				success: function(data){
 					var myvar = action.attr('href');
 					var arr = myvar.split('/');
@@ -501,7 +501,7 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 						
 						$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $selected_post_types, 'field_type' => $cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id][type]);
 						
-						$form->addElement(new Element_HTML(view_form_fields($args)));
+						$form->addElement(new Element_HTML(cpt4bp_view_form_fields($args)));
 					}
 					
 				}

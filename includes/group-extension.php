@@ -45,6 +45,7 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 		}
 		
 		add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
+		$this->add_activity_tab();
 	}
  
 	/**
@@ -117,5 +118,36 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 	 		cpt4bp_locate_template('cpt4bp/single-post.php');
 	 	}	 	
     } 
+	
+	/**
+	 * Add an activity tab
+	 *
+	 * @package BuddyPress Custom Group Types
+	 * @since 0.1-beta
+	 */	 
+	public function add_activity_tab() {
+		global $bp;
+	 
+		if( bp_is_group() ) {
+			bp_core_new_subnav_item( 
+				array( 
+					'name' 				=> 'Activity', 
+					'slug' 				=> 'activity', 
+					'parent_slug' 		=> $bp->groups->current_group->slug, 
+					'parent_url' 		=> bp_get_group_permalink( $bp->groups->current_group ), 
+					'position' 			=> 11, 
+					'item_css_id' 		=> 'nav-activity',
+					'screen_function' 	=> create_function( '', "bp_core_load_template( apply_filters( 'groups_template_group_home', 'groups/single/home' ) );" ),
+					'user_has_access' 	=> 1
+				) 
+			);
+	 
+			if( bp_is_current_action( 'activity' ) ) {
+				add_action( 'bp_template_content_header', create_function( '', 'echo "'. esc_attr( 'Activity' ) .'";' ) );
+				add_action( 'bp_template_title', 		  create_function( '', 'echo "'. esc_attr( 'Activity' ) .'";' ) );
+			}
+		}
+	}
+	
 }
 bp_register_group_extension( 'CPT4BP_Group_Extension' );
