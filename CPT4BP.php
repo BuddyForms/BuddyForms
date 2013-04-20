@@ -17,15 +17,13 @@ class CPT4BP
 		add_action( 'bp_include', 			array( $this, 'includes' 				),  4, 1 );	
         add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
         add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
-		
 		add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
-
-        add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
+		add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
 
         add_filter( 'post_type_link', 		array( $this, 'remove_slug'					), 10, 3 );
-
+		
  	}
 	
 	/**
@@ -184,9 +182,7 @@ class CPT4BP
 	public function remove_slug( $permalink, $post, $leavename ) {
         global $cpt4bp;
         
-		//print_r($cpt4bp);
-		
-        $post_types =  $cpt4bp['selected_post_types'] ;
+		$post_types =  $cpt4bp['selected_post_types'] ;
   
         foreach( $post_types as $post_type ){
              if( $post_type )
@@ -196,6 +192,14 @@ class CPT4BP
 		return $permalink;
     }
  
+	function filter_template( $template ) {
+		
+	 	$template = cpt4bp_locate_template('bp/groups-home.php');
+		load_template( apply_filters( 'bp_load_template', $template ) );
+		exit;
+		
+	}
+	 
 	/**
 	 * Redirect a post to its group
 	 * 
@@ -203,9 +207,13 @@ class CPT4BP
 	 * @since 0.1-beta	
 	 */
 	public function theme_redirect() {
-	   global $wp_query, $cpt4bp;
+	   global $wp_query, $cpt4bp, $bp;
 	   
 	    $plugindir = dirname( __FILE__ );
+
+		if( $bp->current_component == BP_GROUPS_SLUG && $bp->current_action == 'home'){
+			add_action( 'bp_core_pre_load_template', array( $this, 'filter_template' ));	
+		}
 
 		//A Specific Custom Post Type redirect to the atached group
 		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {

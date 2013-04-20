@@ -3,7 +3,7 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
 	public $enable_create_step = true;
 	public $enable_nav_item 	= true;
-	public $enable_edit_item 	= true;
+	public $enable_edit_item 	= false;
 
 	/**
 	 * Extends the group and register the nav item and add groupmeta to the $bp global
