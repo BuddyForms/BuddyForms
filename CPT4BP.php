@@ -22,7 +22,7 @@ class CPT4BP
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
 
-        add_filter( 'post_type_link', 		array( $this, 'remove_slug'					), 10, 3 );
+        add_filter( 'post_type_link', 		array( $this, 'remove_slug'				), 10, 3 );
 		
  	}
 	
@@ -194,7 +194,7 @@ class CPT4BP
  
 	function filter_template( $template ) {
 		
-	 	$template = cpt4bp_locate_template('bp/groups-home.php');
+	 	$template = cpt4bp_locate_template('cpt4bp/bp/groups-home.php');
 		load_template( apply_filters( 'bp_load_template', $template ) );
 		exit;
 		

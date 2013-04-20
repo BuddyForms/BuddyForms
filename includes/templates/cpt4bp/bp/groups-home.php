@@ -39,7 +39,8 @@
 				// Group is visible
 				if ( bp_group_is_visible() ) : 
 
-					get_template_part( 'single' );
+					cpt4bp_locate_template('cpt4bp/single-post.php');
+					//get_template_part( 'single' );
 				// Group is not visible
 				elseif ( ! bp_group_is_visible() ) :
 

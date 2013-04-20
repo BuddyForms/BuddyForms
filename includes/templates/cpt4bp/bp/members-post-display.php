@@ -57,7 +57,7 @@
 			$the_lp_query = new WP_Query( array( 'post_type' => $bp->current_component, 'post__in' => $cpt4bp_post_ids, 'posts_per_page' => 99, 'author' => get_current_user_id() ) );
 
 				//get_template_part( 'cpt4bp-loop' );
-				cpt4bp_locate_template('bp/members-post-loop.php');
+				cpt4bp_locate_template('cpt4bp/bp/members-post-loop.php');
 
             if(function_exists('wp_pagenavi')){
             	wp_pagenavi( array( 'query' => $meins) );	

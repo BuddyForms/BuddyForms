@@ -81,7 +81,7 @@ class CPT4BP_Members
 		global $current_user, $bp;
 
 		if($_GET[post_id]){
-			bp_core_load_template( 'bp/members-post-create' );
+			bp_core_load_template( 'cpt4bp/bp/members-post-create' );
 		}
 		if($_GET[delete]){
 			get_currentuserinfo();	
@@ -96,7 +96,7 @@ class CPT4BP_Members
 			wp_delete_post( $_GET[delete] );
 
 		}
-		bp_core_load_template( 'bp/members-post-display' );
+		bp_core_load_template( 'cpt4bp/bp/members-post-display' );
 	
 	}
 
@@ -107,7 +107,7 @@ class CPT4BP_Members
 	 * @since 0.2-beta
 	 */	 
 	public function load_members_post_create() {
-		bp_core_load_template( 'bp/members-post-create' );
+		bp_core_load_template( 'cpt4bp/bp/members-post-create' );
 	}
 
 	/**
