@@ -43,6 +43,19 @@ function cpt4bp_item_delete(){
 add_action('wp_ajax_cpt4bp_item_delete', 'cpt4bp_item_delete');
 add_action('wp_ajax_nopriv_cpt4bp_item_delete', 'cpt4bp_item_delete');
 
+function my_taxonomies(){
+	$args=array(
+     'public'   => true,
+    //  '_builtin' => true
+      
+    ); 
+    $output = 'names'; // or objects
+    $operator = 'and'; // 'and' or 'or'
+    $taxonomies=get_taxonomies($args,$output,$operator); 
+	
+	return $taxonomies;
+}
+
 function cpt4bp_view_form_fields($args){
 	$post_args = explode('/', $_POST['post_args']);
 	$numItems = $_POST['numItems'];
@@ -61,48 +74,41 @@ function cpt4bp_view_form_fields($args){
 		$field_position = $numItems;
 	
 	$form_fields_new = Array();
+
+	$form_field_display		= new Element_Checkbox("Display:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
+	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
 	
+	$form_fields_new[0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
+	$form_fields_new[1] 	= new Element_Textbox("Discription:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][discription]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][discription]));
+	$form_fields_new[2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", $post_args[0]);
+	$form_fields_new[3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
+
+
 	switch ($post_args[0]) {
-		case 'Text':
-			$form_field_display		= new Element_Checkbox("Display:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
-			$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
-			
-			//$form_field_required	= new Element_YesNo("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
-			
-			$form_fields_new[0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
-			$form_fields_new[1] 	= new Element_Textbox("Discription:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][discription]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][discription]));
-			$form_fields_new[2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", 'Text');
-			$form_fields_new[3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
-			
-			
-		break;
-		case 'Textarea':
-			$field_value = 'Felder';
-			break;
+
 		case 'Link':
-			$field_value = 'Felder';
-			break;
-		case 'Mail':
-			$field_value = 'Felder';
+			$form_fields_new[4] 	= new Element_Select("Target:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][target]))	;
 			break;
 		case 'Dropdown':
-			$field_value = 'Felder';
+			$form_fields_new[4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
 			break;
 		case 'Radiobutton':
-			$field_value = 'Felder';
+			$form_fields_new[4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
 			break;
 		case 'Checkbox':
-			$field_value = 'Felder';
+			$form_fields_new[4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
 			break;
 		case 'Taxonomy':
-			$field_value = 'Felder';
+			$taxonomies = my_taxonomies();
+			$form_fields_new[4] 	= new Element_Select("Taxonomy:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][taxonomy]));
+			$form_fields_new[5] 	= new Element_Checkbox("Multiple:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][multiple]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][multiple]));
 			break;
 		case 'Hidden':
-
+			$form_fields_new[1] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
 			break;
 		case 'AttachGroupType':
-			$field_value = 'Felder';
-			break;
+		    $form_fields_new[4] 	= new Element_Select("Target:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][target]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][target]))	;
+		break;
 	}
 
 	ob_start(); ?>
@@ -338,13 +344,7 @@ function cpt4bp_settings_page() {
     $output = 'names'; // names or objects, note names is the default
     $operator = 'and'; // 'and' or 'or'
     $post_types=get_post_types($args,$output,$operator); 
-      
-    foreach($post_types as $key => $value) {
-		if(array_key_exists($key, (array)$cpt4bp->new_post_type_slugs)) {
-    		unset($post_types[$key]);
-		}
-    }
-	
+   
 	// Form starts
 	$form = new Form("cpt4bp_form");
 	$form->configure(array(

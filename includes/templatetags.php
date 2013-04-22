@@ -56,16 +56,16 @@ function create_group_type_form( $atts = array(), $content = null ) {
 	
 	$customfields = $cpt4bp['bp_post_types'][$posttype]['form_fields'];
 		
-	foreach( $customfields as $key => $value ) {
-		if( ! $value ) {
-			unset($customfields[$key]);
-		}
-	}
+	// foreach( $customfields as $key => $value ) {
+		// if( ! $value ) {
+			// unset($customfields[$key]);
+		// }
+	// }
 
-	if( ! function_exists( 'wp_editor' ) ) {
-    	require_once ABSPATH . '/wp-admin/includes/post.php' ;
-    	wp_tiny_mce();
-    }
+	// if( ! function_exists( 'wp_editor' ) ) {
+    	// require_once ABSPATH . '/wp-admin/includes/post.php' ;
+    	// wp_tiny_mce();
+    // }
 	
 	//If the form is submitted
 	if( isset( $_POST['submitted'] ) ) {
@@ -92,12 +92,12 @@ function create_group_type_form( $atts = array(), $content = null ) {
           	$hasError = true;
 	    }
 		
-		foreach( $customfields as $key => $customfield ) : 
-            if( $cpt4bp->custom_field_required[$posttype][$key] == 'on' && empty( $_POST[$customfield] ) ){
-                $custom_field_Error .= 'Please enter '. $customfield .' value. <br />';
-                $hasError = true;
-            }
-        endforeach;
+		// foreach( $customfields as $key => $customfield ) : 
+            // if( $cpt4bp->custom_field_required[$posttype][$key] == 'on' && empty( $_POST[$customfield] ) ){
+                // $custom_field_Error .= 'Please enter '. $customfield .' value. <br />';
+                // $hasError = true;
+            // }
+        // endforeach;
 		
 	    //If there is no error, send the form
 		if(! $hasError ) {
@@ -119,31 +119,14 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 $post_id = wp_update_post( $my_post );
                 
                foreach( $customfields as $key => $customfield ) : 
-                    if( $cpt4bp->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
-                       $custom_field_taxonomy = $cpt4bp->custom_field_taxonomy[$posttype][$key];
-                       
-                       wp_set_post_terms( $post_id, $_POST[$customfield], $custom_field_taxonomy, false );
-                        
-                        if( substr( $custom_field_taxonomy, 0, 3 ) == 'pa_') {                           
-                            if( $cpt4bp->custom_field_display[$posttype][$key] == 'on' )
-                                $custom_field_display = 1;
-                            
-                            $product_attributes 		= get_post_meta($post_id, '_product_attributes', false);
-                            $product_attributes_count 	= count( $product_attributes[0] );
-                            $product_attributes_count++;
-							
-                            $product_attributes[0][$custom_field_taxonomy] = array(
-                                'name' 			=> $custom_field_taxonomy,
-                                'value' 		=> '',
-                                'position' 		=> $product_attributes_count,
-                                'is_visible' 	=> $custom_field_display,
-                                'is_taxonomy' 	=> 1
-                            );
-                           update_post_meta( $post_id, '_product_attributes', $product_attributes[0] );                            
-                        }                 
+				   
+				    if( $customfield['type'] == 'Taxonomy' ){
+				       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+                       wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+                       do_action('cpt4bp_after_wp_set_post_terms',$customfield);
                     }
 
-                    if( $cpt4bp->custom_field_type[$posttype][$key] == 'AttachGroupType' ){
+                    if( $customfield['type'] == 'AttachGroupType' ){
                        	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
 						
                         wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
@@ -165,28 +148,12 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 // insert the new form
                 $post_id = wp_insert_post($my_post);
                 
-               	foreach( $customfields as $key => $customfield ) : 
-                    if( $cpt4bp->custom_field_type[$posttype][$key] == 'Taxonomy' ){                           
-                       	$custom_field_taxonomy = $cpt4bp->custom_field_taxonomy[$posttype][$key];
-                        wp_set_post_terms( $post_id, $_POST[$customfield], $custom_field_taxonomy, false );
-                        
-                        if( substr( $custom_field_taxonomy, 0, 3 ) == 'pa_' ){                           
-                            if($cpt4bp->custom_field_display[$posttype][$key] == 'on')
-                                $custom_field_display = 1;
-                            
-                            $product_attributes 	  = get_post_meta( $post_id, '_product_attributes', false );
-                            $product_attributes_count = count( $product_attributes[0] );
-                            $product_attributes_count++;
-                            $product_attributes[0][$custom_field_taxonomy] = array(
-                                'name' 			=> $custom_field_taxonomy,
-                                'value' 		=> '',
-                                'position' 		=> $product_attributes_count,
-                                'is_visible' 	=> $custom_field_display,
-                                'is_taxonomy'	=> 1
-                            );
-                            
-                            update_post_meta( $post_id, '_product_attributes', $product_attributes[0] );                            
-                        }                 
+               foreach( $customfields as $key => $customfield ) : 
+				   
+				    if( $customfield['type'] == 'Taxonomy' ){                   
+                       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+                       wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+                       do_action('cpt4bp_after_wp_set_post_terms',$customfield);
                     } 
 
                     if( $cpt4bp->custom_field_type[$posttype][$key] == 'AttachGroupType' ){
@@ -339,15 +306,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			            $customfield_val = get_post_meta($the_post->ID, sanitize_title($customfield['name']), true);
 			        }
 					
-			        // if( $cpt4bp->custom_field_name[$posttype][$key] ){
-			            // $field_name = $cpt4bp->custom_field_name[$posttype][$key];
-			        // } else {
-			            // $field_name = $cpt4bp->custom_field_slug[$posttype][$key];
-			        // }
-					//echo $customfield_val;
-					
-					//$custom_field_type = isset( $customfield['type'] ) ? $cpt4bp->custom_field_type[$posttype][$key] : '';
-					
+			       	
 			       	switch( $customfield['type'] ) {
 						case 'AttachGroupType':
 							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
@@ -389,126 +348,65 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							
 							$form->addElement(new Element_Email($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cpt4bp->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
 			        	break;
+						
 						case 'Radiobutton':
-							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
-			        		// $form->addElement(new PFBC\Element\Radio("Radio Buttons:", "RadioButtons", $options));
-			        		?>
-			                <li>
-			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cpt4bp');?>:</label></div>
-			                	<p><?php echo $cpt4bp->custom_field_discription[$posttype][$key] ?></p>
-			                 	<?php echo tk_radiobutton(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
-			                </li>
-			            	<?php
-			            	break;
+							break;
 								
 			            case 'Checkbox':
-							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
-			        		// $form->addElement(new PFBC\Element\Checkbox("Checkboxes:", "Checkboxes", $options));
-			        		?>
-			                <li>
-			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cpt4bp');?>:</label></div>
-			                	<p><?php echo $cpt4bp->custom_field_discription[$posttype][$key] ?></p>
-			                 	<?php echo tk_checkbox(Array('id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'checked' => $checked)); ?>
-			                </li>
-			            	<?php
-			            	break;
+							break;
 								
 			            case 'Dropdown':
-							// $form->addElement(new PFBC\Element\Email($field_name.':', $customfield, array('id' => $customfield, 'value' => $customfield_val)));
-			        		// $form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
-			            	?>
-			            	
-			                <li>
-			                	<div class="label"><label for="<?php echo $field_name ?>"><?php _e($field_name, 'cpt4bp');?>:</label></div>
-			                    <p><?php echo $cpt4bp->custom_field_discription[$posttype][$key] ?></p>
-			                        
-			                     <?php
-			                     if($cpt4bp->custom_field_m_select[$posttype][$key] == 'on'){
-			                         $custom_field_m_select = TRUE;
-			                     } else {
-			                        $custom_field_m_select = FALSE; 
-			                     }
-			                  
-			                    $new_field_type = new tk_form_select( array('value' => $customfield_val, 'multiselect' => $custom_field_m_select, 'name' => $customfield, 'id' => $customfield, 'elements' => $elements));
-			                     
-			                    $custom_field_select = explode(',', $cpt4bp->custom_field_select[$posttype][$key]);
-			                    foreach( $custom_field_select as $key => $value) {
-			                    	$new_field_type->add_option($value);
-			                        $elements[$key] = array(  'value'=> $value, 'option_name' => $value );
-			                    }
-			                     
-			                    //echo tk_select(Array('multiselect' => $custom_field_m_select, 'id' => $customfield,'name' => $customfield, 'value' => $customfield_val, 'elements' => $elements)); 
-			                   	echo $new_field_type->get_html();
-			                   	?>
-							</li>
-			                <?php
-			                break;
+							break;
 								
 			            case 'Textarea':
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = 1;
-							
-							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new Element_Textarea($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cpt4bp->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
-			        		 break;
+							 break;
 							
 			            case 'Hidden':
-							$form->addElement(new Element_Hidden($field_name.':', $customfield, array('label' => $cpt4bp->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
-			        		break;
-							
-			            case 'Text':
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = 1;
-								
-							// $form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							// $form->addElement(new Element_Textbox($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cpt4bp->custom_field_discription[$posttype][$key],'id' => $customfield, 'value' => $customfield_val)));
-			        		 $form->addElement(new Element_Textbox($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
-							
-			        		 break;
+							break;
+						
+						case 'Text':
+							 $form->addElement(new Element_Textbox($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							 break;
 							
 			            case 'Link':
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = 1;
-							
-							$form->addElement(new Element_HTML('<div class="label"><label>'. $field_name . '</label></div>'));
-							$form->addElement(new Element_Url( $field_name, $customfield, array("required" => $required[$posttype][$key], 'label' => $cpt4bp->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
-			        		break;
+							break;
 							
 			            case 'Taxonomy':
 							
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = '<span class="required">* </span>';
-							
-							$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cpt4bp') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cpt4bp->custom_field_discription[$posttype][$key] . '</label>'));
-							
-							if ( $cpt4bp->custom_field_m_select[ $posttype ][ $key ] == 'on' ) {
-							    $customfield_name = $customfield . '[]';
-							} else {
-							    $customfield_name = $customfield;
-							}
+							//Returns All Term Items for "my_term"
+							$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
+
 							$args = array(
-							    'multiple' => ($cpt4bp->custom_field_m_select[ $posttype ][ $key ] == 'on'),
-							    'selected_cats' => $customfield_val,
+							    'multiple' => $customfield['multiple'],
+							    'selected_cats' => $term_list,
 							    'hide_empty' => 0,
-							    'id' => $customfield,
+							    'id' => $key,
 							    'child_of' => 0,
 							    'echo' => FALSE,
 							    'selected' => false,
 							    'hierarchical' => 1,
-							    'name' => $customfield_name,
+							    'name' => sanitize_title($customfield['name']).'[]',
 							    'class' => 'postform',
 							    'depth' => 0,
 							    'tab_index' => 0,
-							    'taxonomy' => $cpt4bp->custom_field_taxonomy[ $posttype ][ $key ],
+							    'taxonomy' => $customfield['taxonomy'],
 							    'hide_if_empty' => FALSE,
 							);
 							
-							$form->addElement(new Element_HTML(tk_terms_dropdown($args)));
-				
-							?>
-
-			<?php
-			break;
+							
+							$dropdown = wp_dropdown_categories( $args );
+							
+							if ( is_array($customfield['multiple']) ) {
+							    $dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+							}
+							if ( is_array( $term_list ) ) {
+							    foreach ( $term_list as $value ) {
+								$dropdown = str_replace( ' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown );
+							    }
+							}
+						
+							$form->addElement(new Element_HTML($dropdown));
+						break;
 
 				}							
 			endforeach;
