@@ -56,141 +56,95 @@ function create_group_type_form( $atts = array(), $content = null ) {
 	
 	$customfields = $cpt4bp['bp_post_types'][$posttype]['form_fields'];
 		
-	// foreach( $customfields as $key => $value ) {
-		// if( ! $value ) {
-			// unset($customfields[$key]);
-		// }
-	// }
-
-	// if( ! function_exists( 'wp_editor' ) ) {
-    	// require_once ABSPATH . '/wp-admin/includes/post.php' ;
-    	// wp_tiny_mce();
-    // }
-	
 	//If the form is submitted
 	if( isset( $_POST['submitted'] ) ) {
-		$hasError = false;
-			   
-		//Check to make sure that the post title field is not empty
-		$title = trim( $_POST['editpost_title'] );
-		
-		if( empty( $title ) ) {
-			$titleError = __('Please enter a title','cpt4bp');
-			$hasError = true;
-        }
- 
-        //Check to make sure that content is submitted
-        $content = trim( $_POST['editpost_content'] );
-		
-        if( empty( $content ) )  {
-            $contentError = __('Please enter a content','cpt4bp');
-            $hasError = true;
-        }
-		
-		if( ! $the_post->ID && $_FILES['async-upload']['error'] != 0 ) {
-		 	$fileError = 'Please select an image';
-          	$hasError = true;
-	    }
-		
-		// foreach( $customfields as $key => $customfield ) : 
-            // if( $cpt4bp->custom_field_required[$posttype][$key] == 'on' && empty( $_POST[$customfield] ) ){
-                // $custom_field_Error .= 'Please enter '. $customfield .' value. <br />';
-                // $hasError = true;
-            // }
-        // endforeach;
-		
-	    //If there is no error, send the form
-		if(! $hasError ) {
-			$tags = $_POST['editpost_tags'];
-			$permalink = get_permalink( $_POST['editpost_id'] );
-            
-            if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {                     
-				$my_post = array(
-                    'ID'        	=> $_POST['new_post_id'],
-                    'post_title' 	=> $_POST['editpost_title'],
-                    'post_content' 	=> $_POST['editpost_content'],
-                    'tags_input' 	=> $_POST['editpost_tags'],
-                    'post_category' => array( (int)$_POST['editpost_cat'] ),
-                    'post_type' 	=> $posttype,
-                    'post_status' 	=> 'publish'
-				);
-                    
-                // insert the new form
-                $post_id = wp_update_post( $my_post );
-                
-               foreach( $customfields as $key => $customfield ) : 
-				   
-				    if( $customfield['type'] == 'Taxonomy' ){
-				       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-                       wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-                       do_action('cpt4bp_after_wp_set_post_terms',$customfield);
-                    }
 
-                    if( $customfield['type'] == 'AttachGroupType' ){
-                       	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
-						
-                        wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
-                        
-                        update_post_meta( $post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
-                        update_post_meta( $post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
-                   }
-                    update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
-                endforeach;
-            } else {                    
-                $my_post = array(
-                    'post_author' 	=> $current_user->ID,
-                    'post_title' 	=> $_POST['editpost_title'],
-                    'post_content' 	=> $_POST['editpost_content'],
-                    'post_type' 	=> $posttype,
-                    'post_status' 	=> $cpt4bp['bp_post_types'][$posttype]['status']
-                );   
-                    
-                // insert the new form
-                $post_id = wp_insert_post($my_post);
-                
-               foreach( $customfields as $key => $customfield ) : 
-				   
-				    if( $customfield['type'] == 'Taxonomy' ){                   
-                       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-                       wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-                       do_action('cpt4bp_after_wp_set_post_terms',$customfield);
-                    } 
-
-                    if( $cpt4bp->custom_field_type[$posttype][$key] == 'AttachGroupType' ){
-                       	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
-                        
-                        wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
-                        
-                        update_post_meta($post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
-                        update_post_meta($post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
-                   }
-                   update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
-               endforeach;
-            }       
+		$permalink = get_permalink( $_POST['editpost_id'] );
         
-        	// Do the wp_insert_post action to insert it
-            do_action( 'wp_insert_post', 'wp_insert_post' );
-			
-			if( ! empty( $_FILES ) ) {  
-		        require_once(ABSPATH . 'wp-admin/includes/admin.php');  
-		        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
+        if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {                     
+			$my_post = array(
+                'ID'        	=> $_POST['new_post_id'],
+                'post_title' 	=> $_POST['editpost_title'],
+                'post_content' 	=> $_POST['editpost_content'],
+                'post_type' 	=> $posttype,
+                'post_status' 	=> 'publish'
+			);
+                
+            // update the new post
+            $post_id = wp_update_post( $my_post );
+            
+           foreach( $customfields as $key => $customfield ) : 
+			   
+			    if( $customfield['type'] == 'Taxonomy' ){
+			       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+                   wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+                }
+
+                if( $customfield['type'] == 'AttachGroupType' ){
+                   	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
+					
+                    wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
+                    
+                    update_post_meta( $post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
+                    update_post_meta( $post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+               }
+                update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+            endforeach;
+        } else {                    
+            $my_post = array(
+                'post_author' 	=> $current_user->ID,
+                'post_title' 	=> $_POST['editpost_title'],
+                'post_content' 	=> $_POST['editpost_content'],
+                'post_type' 	=> $posttype,
+                'post_status' 	=> $cpt4bp['bp_post_types'][$posttype]['status']
+            );   
+                
+            // insert the new form
+            $post_id = wp_insert_post($my_post);
+            
+           foreach( $customfields as $key => $customfield ) : 
+			   
+			    if( $customfield['type'] == 'Taxonomy' ){                   
+                   do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+                   wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+                } 
+
+                if( $cpt4bp->custom_field_type[$posttype][$key] == 'AttachGroupType' ){
+                   	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
+                    
+                    wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
+                    
+                    update_post_meta($post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
+                    update_post_meta($post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+               }
+               update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+           endforeach;
+        }       
+    
+    	// Do the wp_insert_post action to insert it
+        do_action( 'wp_insert_post', 'wp_insert_post' );
 		
-		        unset( $_FILES );  
-		        if( is_wp_error( $id ) ) {  
-		            $errors['upload_error'] = $id;  
-		            $id = false;  
-		        } 
-				
-		        set_post_thumbnail($post_id, $id);
-		      
-               	if( ! $the_post->ID){
-	               	if( $errors ) {  
-			            $fileError 	= '<p>There has bean an error uploading the image.</p>';  
-			            $hasError 	= true;
-			        }  
-               	}
-    		}        
-    	} 
+		if( ! empty( $_FILES ) ) {  
+	        require_once(ABSPATH . 'wp-admin/includes/admin.php');  
+	        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
+	
+	        unset( $_FILES );  
+	        if( is_wp_error( $id ) ) {  
+	            $errors['upload_error'] = $id;  
+	            $id = false;  
+	        } 
+			
+	        set_post_thumbnail($post_id, $id);
+	      
+           	if( ! $the_post->ID){
+               	if( $errors ) {  
+		            $fileError 	= '<p>There has bean an error uploading the image.</p>';  
+		            $hasError 	= true;
+		        }  
+           	}
+		}        
 
     	if( empty( $hasError ) ) {
     		?>
@@ -208,22 +162,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 	}
 
 	?>
-	<div class="hinzufuegen">
-	    <?php if(isset($custom_field_Error) && $custom_field_Error != ''){ ?>
-	        <div class="error"><?php echo $custom_field_Error;?></div>
-	    <?php } ?>
-	
-		<?php if(isset($titleError) && $titleError != '') { ?>
-			<div class="error"><?php echo $titleError;?></div>
-		<?php } ?>
-		
-		<?php if(isset($contentError) && $contentError != '') { ?>
-			<div class="error"><?php echo $contentError; ?></div>
-		<?php } ?>
-		
-		<?php if(isset($fileError) && $fileError != '') { ?>
-			<div class="error"><?php echo $fileError; ?></div>
-		<?php } ?>
+	<div class="the_cpt4bp_form">
 
 		<?php if ( !is_user_logged_in() ) : ?>
 			<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ) ?>" method="post">
@@ -258,12 +197,10 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				$editpost_content_val = $the_post->post_content;
 			}
 			?>	
-			<div class="gform_wrapper">
+			<div class="form_wrapper">
 				
 			<?php 
-				// Form starts
-	
- 	    
+			// Form starts
 			$form = new Form("editpost");
 			$form->configure(array(
 				"prevent" => array("bootstrap", "jQuery", "focus"),
@@ -272,7 +209,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			));
 
 			wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
-
 
 			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
 			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
@@ -284,9 +220,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
 			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
 
-			// echo '<pre>';
-			// print_r($customfields);
-			// echo '<pre>';
 			if( $customfields ){
 				foreach( $customfields as $key => $customfield ) :
 					if( isset( $_POST[sanitize_title($customfield['name'])] ) ) {
@@ -306,7 +239,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			            $customfield_val = get_post_meta($the_post->ID, sanitize_title($customfield['name']), true);
 			        }
 					
-			       	
 			       	switch( $customfield['type'] ) {
 						case 'AttachGroupType':
 							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
@@ -343,11 +275,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                break;
 							
 			            case 'Mail':
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = 1;
-							
-							$form->addElement(new Element_Email($field_name.':', $customfield, array("required" => $required[$posttype][$key], 'label' => $cpt4bp->custom_field_discription[$posttype][$key], 'id' => $customfield, 'value' => $customfield_val)));
-			        	break;
+							break;
 						
 						case 'Radiobutton':
 							break;
@@ -412,14 +340,13 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			endforeach;
 		}
 
-		if(! $the_post->ID)
-			$required[$posttype][$key] = 1;
-							
-		$form->addElement(new Element_File("File:", "async-upload", array("required" => $required[$posttype][$key], 'id' => "async-upload")));
-	
-		// $form->addElement(new PFBC\Element\HTML('<li id="upload-img">  
-			    // <div class="label"><label for="upload-img">Neues Featured Image hochladen</label></div>  
-			    // <input type="file" id="async-upload" name="async-upload"></li> '));
+		if($post_id == 0) {
+			$file_attr = array("required" => 1, 'id' => "async-upload");
+		} else {
+			$file_attr = array('id' => "async-upload");
+		}
+			
+		$form->addElement(new Element_File("File:", "async-upload", $file_attr));
 
 		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
