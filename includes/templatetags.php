@@ -82,11 +82,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				}
 		
 				if( $customfield['type'] == 'AttachGroupType' ){
-						
-					wp_set_post_terms( $post_id, $_POST[sanitize_title($customfield['name'])], $posttype.'_attached_'.$customfield['AttachGroupType'], false);
-                    
-                    update_post_meta( $post_id, '_attached_term_id', $_POST[sanitize_title($customfield['name'])] );
-                    update_post_meta( $post_id, '_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
 				}
 				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
             endforeach;
@@ -111,11 +107,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 } 
 
                if( $customfield['type'] == 'AttachGroupType' ){
-						
-					wp_set_post_terms( $post_id, $_POST[sanitize_title($customfield['name'])], $posttype.'_attached_'.$customfield['AttachGroupType'], false);
-                    
-                    update_post_meta( $post_id, '_attached_term_id', $_POST[sanitize_title($customfield['name'])] );
-                    update_post_meta( $post_id, '_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
 				}
 				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
 			endforeach;
@@ -243,34 +235,42 @@ function create_group_type_form( $atts = array(), $content = null ) {
 								// $required[$posttype][$key] = '<span class="required">* </span>';
 
 							//$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cpt4bp') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cpt4bp->custom_field_discription[$posttype][$key] . '</label>'));
-							?>
-			            
-			                	
-			                      
-			                    <?php
-			                    $customfield_val = get_post_meta($post_id, '_'.$posttype.'_attached', false);
+							
+			                $attached_tax_name = $posttype.'_attached_'.$customfield['AttachGroupType'];
+								
+							$term_list = wp_get_post_terms($post_id, $attached_tax_name, array("fields" => "ids"));
 
-			                    $args = array(
-			                        'hide_empty'         => 0,
-			                        'id'                 => $posttype.'_attached_'.$customfield['AttachGroupType'],
-			                        'child_of'           => 0,
-			                        'echo'               => FALSE,
-			                        'selected'           => $customfield_val[0],
-			                        'hierarchical'       => TRUE, 
-			                        'name'               => $posttype.'_attached_'.$customfield['AttachGroupType'],
-			                        'class'              => 'postform',
-			                        'depth'              => 0,
-			                        'tab_index'          => 0,
-			                        'taxonomy'           => $posttype.'_attached_'.$customfield['AttachGroupType'],
-			                        'hide_if_empty'      => FALSE 
-			                    );
-			                
-			                $form->addElement(new Element_HTML(wp_dropdown_categories( $args )));
-			
-
-			                    ?> 
+							$args = array(
+							    'multiple' => $customfield['multiple'],
+							    'selected_cats' => $term_list,
+							    'hide_empty' => 0,
+							    'id' => $key,
+							    'child_of' => 0,
+							    'echo' => FALSE,
+							    'selected' => false,
+							    'hierarchical' => 1,
+							    'name' => sanitize_title($customfield['name']).'[]',
+							    'class' => 'postform',
+							    'depth' => 0,
+							    'tab_index' => 0,
+							    'taxonomy' => $attached_tax_name,
+							    'hide_if_empty' => FALSE,
+							);
+							
+							
+							$dropdown = wp_dropdown_categories( $args );
+							
+							if ( is_array($customfield['multiple']) ) {
+							    $dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+							}
+							if ( is_array( $term_list ) ) {
+							    foreach ( $term_list as $value ) {
+								$dropdown = str_replace( ' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown );
+							    }
+							}
 						
-			                <?php
+							$form->addElement(new Element_HTML($dropdown));
+
 			                break;
 							
 			            case 'Mail':
@@ -300,7 +300,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							
 			            case 'Taxonomy':
 							
-							//Returns All Term Items for "my_term"
 							$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
 
 							$args = array(

@@ -195,10 +195,10 @@ class CPT4BP
 			          	) );	
 						
 						
-						$terms = get_terms( $post_type .'_attached_'. $form_field['AttachGroupType'],'hide_empty=0'); 
-						foreach ($terms as $term) {
-							wp_delete_term( $term->term_id,  $post_type .'_attached_'. $form_field['AttachGroupType'] );
-						}
+						// $terms = get_terms( $post_type .'_attached_'. $form_field['AttachGroupType'],'hide_empty=0'); 
+						// foreach ($terms as $term) {
+						//	wp_delete_term( $term->term_id,  $post_type .'_attached_'. $form_field['AttachGroupType'] );
+						// }
 						
 						$args = array( 
 					    'post_type' => $form_field['AttachGroupType'], // my custom post type
@@ -218,30 +218,6 @@ class CPT4BP
 	        	} 
 			} 
 	   	endforeach;
-			
-      	// if( bp_has_groups( 'type=alphabetical' ) ) :
-			// // loop through all groups
-      		// while( bp_groups() ) : bp_the_group(); 
-				// // only do public and private groups
-	            // if( bp_get_group_status() == ('public' || 'private' ) ) :
-	            	// $group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-// 					
-					// if( ! empty( $group_type ) ) :
-// 						
-						// if(isset($cpt4bp['bp_post_types'][$group_type]['form_fields'])){
-		                	// foreach( $cpt4bp['bp_post_types'][$group_type]['form_fields'] as $form_field ) :      
-		                       	// if( $form_field['AttachGroupType'] != $group_type) :
-		                       		// wp_set_object_terms( bp_get_group_id(), bp_get_group_name(),  $form_field['AttachGroupType']. '_attached_' .$group_type  );
-								// endif;                   
-		                   	// endforeach;	                		
-	                	// } 
-// 
-					// endif;
-				// endif;
-        	// endwhile;			
-        // endif;
-
-		
 		
 	}
 	
