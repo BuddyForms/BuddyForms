@@ -143,7 +143,7 @@ class CPT4BP_GroupControl
 }
 add_action('cpt4bp_init',new CPT4BP_GroupControl());
 
-function cpt_4bp_delete_a_group( $post_id ){
+function cpt4bp_delete_a_group( $post_id ){
 	CPT4BP_GroupControl::delete_a_group( $post_id );
 }
 ?>

@@ -92,7 +92,7 @@ class CPT4BP_Members
 				return;	
 			}
 		
-			cpt_4bp_delete_a_group( $_GET[delete] );
+			cpt4bp_delete_a_group( $_GET[delete] );
 			wp_delete_post( $_GET[delete] );
 
 		}

@@ -73,23 +73,22 @@ function create_group_type_form( $atts = array(), $content = null ) {
             // update the new post
             $post_id = wp_update_post( $my_post );
             
-           foreach( $customfields as $key => $customfield ) : 
+			foreach( $customfields as $key => $customfield ) : 
 			   
-			    if( $customfield['type'] == 'Taxonomy' ){
-			       do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-                   wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
-                }
-
-                if( $customfield['type'] == 'AttachGroupType' ){
-                   	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
-					
-                    wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
+				if( $customfield['type'] == 'Taxonomy' ){
+					do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+					do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+				}
+		
+				if( $customfield['type'] == 'AttachGroupType' ){
+						
+					wp_set_post_terms( $post_id, $_POST[sanitize_title($customfield['name'])], $posttype.'_attached_'.$customfield['AttachGroupType'], false);
                     
-                    update_post_meta( $post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
-                    update_post_meta( $post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
-               }
-                update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+                    update_post_meta( $post_id, '_attached_term_id', $_POST[sanitize_title($customfield['name'])] );
+                    update_post_meta( $post_id, '_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+				}
+				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
             endforeach;
         } else {                    
             $my_post = array(
@@ -111,16 +110,15 @@ function create_group_type_form( $atts = array(), $content = null ) {
                    do_action('cpt4bp_after_wp_set_post_terms',$customfield);
                 } 
 
-                if( $cpt4bp->custom_field_type[$posttype][$key] == 'AttachGroupType' ){
-                   	$custom_field_attach_group = $cpt4bp->custom_field_attach_group[$posttype][$key];
+               if( $customfield['type'] == 'AttachGroupType' ){
+						
+					wp_set_post_terms( $post_id, $_POST[sanitize_title($customfield['name'])], $posttype.'_attached_'.$customfield['AttachGroupType'], false);
                     
-                    wp_set_post_terms( $post_id, $_POST[$posttype.'_attached_'.$custom_field_attach_group], $posttype.'_attached_'.$custom_field_attach_group, false);
-                    
-                    update_post_meta($post_id, '_'.$posttype.'_attached', $_POST[$posttype.'_attached_'.$custom_field_attach_group] );
-                    update_post_meta($post_id, '_'.$posttype.'_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
-               }
-               update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
-           endforeach;
+                    update_post_meta( $post_id, '_attached_term_id', $_POST[sanitize_title($customfield['name'])] );
+                    update_post_meta( $post_id, '_attached_tax_name', $posttype.'_attached_'.$custom_field_attach_group );
+				}
+				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+			endforeach;
         }       
     
     	// Do the wp_insert_post action to insert it
@@ -241,28 +239,29 @@ function create_group_type_form( $atts = array(), $content = null ) {
 					
 			       	switch( $customfield['type'] ) {
 						case 'AttachGroupType':
-							if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								$required[$posttype][$key] = '<span class="required">* </span>';
-							
-							$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cpt4bp') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cpt4bp->custom_field_discription[$posttype][$key] . '</label>'));
+							// if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
+								// $required[$posttype][$key] = '<span class="required">* </span>';
+
+							//$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cpt4bp') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cpt4bp->custom_field_discription[$posttype][$key] . '</label>'));
 							?>
 			            
 			                	
 			                      
 			                    <?php
 			                    $customfield_val = get_post_meta($post_id, '_'.$posttype.'_attached', false);
+
 			                    $args = array(
 			                        'hide_empty'         => 0,
-			                        'id'                 => $posttype.'_attached_'.$cpt4bp->custom_field_attach_group[$posttype][$key],
+			                        'id'                 => $posttype.'_attached_'.$customfield['AttachGroupType'],
 			                        'child_of'           => 0,
 			                        'echo'               => FALSE,
 			                        'selected'           => $customfield_val[0],
 			                        'hierarchical'       => TRUE, 
-			                        'name'               => $posttype.'_attached_'.$cpt4bp->custom_field_attach_group[$posttype][$key],
+			                        'name'               => $posttype.'_attached_'.$customfield['AttachGroupType'],
 			                        'class'              => 'postform',
 			                        'depth'              => 0,
 			                        'tab_index'          => 0,
-			                        'taxonomy'           => $posttype.'_attached_'.$cpt4bp->custom_field_attach_group[$posttype][$key],
+			                        'taxonomy'           => $posttype.'_attached_'.$customfield['AttachGroupType'],
 			                        'hide_if_empty'      => FALSE 
 			                    );
 			                

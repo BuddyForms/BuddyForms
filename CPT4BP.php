@@ -16,6 +16,7 @@ class CPT4BP
 			
 		add_action( 'bp_include', 			array( $this, 'includes' 				),  4, 1 );	
         add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
+		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
         add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
 		add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
 		add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
@@ -157,6 +158,91 @@ class CPT4BP
 	 */	
 	public function setup_group_extension() {
 		require_once(  CPT4BP_INCLUDES_PATH . 'group-extension.php' );
+	}
+	
+	
+		 /**
+ 	  * Registers BuddyPress CGT taxonomies
+	  * 
+	  * @package BuddyPress Custom Group Types
+	  * @since 0.1-beta	
+	  */
+	public function register_taxonomy() {
+		global $cpt4bp;
+		
+		// echo '<pre>';
+		// print_r($cpt4bp);
+		// echo '</pre>';
+		
+		foreach( $cpt4bp['selected_post_types'] as $post_type ) :      
+			if( isset( $cpt4bp['bp_post_types'][$post_type]['form_fields'] ) ){
+				foreach( $cpt4bp['bp_post_types'][$post_type]['form_fields'] as $key => $form_field ){
+					
+					if($form_field['type'] == 'AttachGroupType') {
+						
+						$labels_group_groups = array(
+				            'name' 			=> sprintf( __('%s Categories'), $form_field['name'] ),
+				            'singular_name' => sprintf( __('%s Category'), $form_field['name'] ),
+			         	); 
+		       	
+				        register_taxonomy( $post_type .'_attached_'. $form_field['AttachGroupType'], $post_type, array(
+				            'hierarchical' 		=> true,
+				            'labels' 			=> $labels_group_groups,
+				            'show_ui' 			=> true,
+				            'query_var' 		=> true,
+				            'rewrite' 			=> array( 'slug' => $post_type .'_attached_'. $form_field['AttachGroupType'] ),
+				            'show_in_nav_menus' => false,
+			          	) );	
+						
+						
+						$terms = get_terms( $post_type .'_attached_'. $form_field['AttachGroupType'],'hide_empty=0'); 
+						foreach ($terms as $term) {
+							wp_delete_term( $term->term_id,  $post_type .'_attached_'. $form_field['AttachGroupType'] );
+						}
+						
+						$args = array( 
+					    'post_type' => $form_field['AttachGroupType'], // my custom post type
+					    'posts_per_page' => -1, // show all posts 
+					    'post_status'=>'publish'
+						);
+						
+						$attached_posts = new WP_Query( $args );
+						
+						while ( $attached_posts->have_posts() ) :
+							$attached_posts->the_post();
+							wp_set_object_terms( get_the_ID(), get_the_title(),  $post_type .'_attached_'. $form_field['AttachGroupType'] );
+						endwhile;
+
+						
+					}
+	        	} 
+			} 
+	   	endforeach;
+			
+      	// if( bp_has_groups( 'type=alphabetical' ) ) :
+			// // loop through all groups
+      		// while( bp_groups() ) : bp_the_group(); 
+				// // only do public and private groups
+	            // if( bp_get_group_status() == ('public' || 'private' ) ) :
+	            	// $group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+// 					
+					// if( ! empty( $group_type ) ) :
+// 						
+						// if(isset($cpt4bp['bp_post_types'][$group_type]['form_fields'])){
+		                	// foreach( $cpt4bp['bp_post_types'][$group_type]['form_fields'] as $form_field ) :      
+		                       	// if( $form_field['AttachGroupType'] != $group_type) :
+		                       		// wp_set_object_terms( bp_get_group_id(), bp_get_group_name(),  $form_field['AttachGroupType']. '_attached_' .$group_type  );
+								// endif;                   
+		                   	// endforeach;	                		
+	                	// } 
+// 
+					// endif;
+				// endif;
+        	// endwhile;			
+        // endif;
+
+		
+		
 	}
 	
 	/**

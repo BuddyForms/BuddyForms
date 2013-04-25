@@ -107,7 +107,7 @@ function cpt4bp_view_form_fields($args){
 			$form_fields_new[1] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
 			break;
 		case 'AttachGroupType':
-		    $form_fields_new[4] 	= new Element_Select("Target:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][target]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][target]))	;
+		    $form_fields_new[4] 	= new Element_Select("Attach Group Type:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][AttachGroupType]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]))	;
 		break;
 	}
 
