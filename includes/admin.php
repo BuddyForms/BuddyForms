@@ -79,7 +79,7 @@ function cpt4bp_view_form_fields($args){
 	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
 	
 	$form_fields_new[0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
-	$form_fields_new[1] 	= new Element_Textbox("Discription:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][discription]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][discription]));
+	$form_fields_new[1] 	= new Element_Textbox("Description:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][description]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][description]));
 	$form_fields_new[2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", $post_args[0]);
 	$form_fields_new[3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
 

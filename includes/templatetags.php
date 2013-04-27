@@ -244,8 +244,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			            
 			        } else {
 			            $customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
-						echo '$customfield_val: '.$customfield_val.' - '.$customfield['name'].'<br>';
-			        }
+					}
 					// echo '<pre>';
 					// print_r($customfield);
 					// echo '</pre>';
@@ -294,26 +293,23 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                break;
 							
 			            case 'Mail':
-							$form->addElement(new Element_Email($customfield['name'].':', sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							$form->addElement(new Element_Email($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							break;
 						
 						case 'Radiobutton':
-							$form->addElement(new Element_Radio($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
+							$form->addElement(new Element_Radio($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Checkbox':
-							$form->addElement(new Element_Checkbox($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
+							$form->addElement(new Element_Checkbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Dropdown':
-							echo '<pre>';
-							print_r($customfield['Values']);
-							echo '</pre>';
 							$form->addElement(new Element_Select($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Textarea':
-							$form->addElement(new Element_Textarea($customfield['name'].':', sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							$form->addElement(new Element_Textarea($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							 break;
 							
 			            case 'Hidden':
@@ -321,11 +317,12 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							break;
 						
 						case 'Text':
-							 $form->addElement(new Element_Textbox($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							 $form->addElement(new Element_Textbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							 break;
 							
 			            case 'Link':
-							$form->addElement(new Element_Url($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							$form->addElement(new Element_Url($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), array('lable' => 'asasdasdd','value' => $customfield_val)));
+							
 							break;
 							
 			            case 'Taxonomy':
@@ -361,7 +358,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							    }
 							}
 						
-							$form->addElement(new Element_HTML($dropdown));
+							$form->addElement(new Element_HTML($customfield['taxonomy'].':<p><smal>' . $customfield['description'] . '</smal></p>',$dropdown));
 						break;
 
 				}							
