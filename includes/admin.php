@@ -357,14 +357,17 @@ function cpt4bp_settings_page() {
     wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
     wp_enqueue_script('jQuery');
     wp_enqueue_script('jquery-ui-sortable'); 
-	    
 	
 	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs"><label for="cpt4bp_form-element-1"></label>
 		<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>'));
 		
 	if(is_array($cpt4bp_options['selected_post_types'])){
 		foreach( $cpt4bp_options['selected_post_types'] as $key => $selected_post_types) {
-			$form->addElement(new Element_HTML('<li class=""><a href="#'.$selected_post_types.'" data-toggle="tab">'.$selected_post_types.'</a></li>'));
+			$tabname = $cpt4bp['bp_post_types'][$selected_post_types]['name'];
+			if(empty($tabname))
+				$tabname = $selected_post_types;
+				
+			$form->addElement(new Element_HTML('<li class=""><a href="#'.$selected_post_types.'" data-toggle="tab">'.$tabname.'</a></li>'));
 		}
 	}	
 	$form->addElement(new Element_HTML('</ul></div>

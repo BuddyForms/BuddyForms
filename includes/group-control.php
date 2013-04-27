@@ -21,7 +21,13 @@ class CPT4BP_GroupControl
 	 */	 
 	public function create_a_group( $post_ID, $post ) {
 		global $bp, $cpt4bp;
-
+		
+		if(!isset($cpt4bp['selected_post_types'] ))
+			return;
+		
+		if(!function_exists('BP_Groups_Group'))
+			return;
+		
 		// make sure we get the correct data
 		if( $post->post_type == 'revision' )
 			$post = get_post( $post->post_parent );		

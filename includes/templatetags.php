@@ -72,20 +72,21 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 
             // update the new post
             $post_id = wp_update_post( $my_post );
-            
-			foreach( $customfields as $key => $customfield ) : 
-			   
-				if( $customfield['type'] == 'Taxonomy' ){
-					do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-					do_action('cpt4bp_after_wp_set_post_terms',$customfield);
-				}
-		
-				if( $customfield['type'] == 'AttachGroupType' ){
-					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
-				}
-				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
-            endforeach;
+            if(isset($customfields)){
+				foreach( $customfields as $key => $customfield ) : 
+				   
+					if( $customfield['type'] == 'Taxonomy' ){
+						do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+						do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+					}
+			
+					if( $customfield['type'] == 'AttachGroupType' ){
+						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
+					}
+					update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+	            endforeach;
+	    	}
         } else {                    
             $my_post = array(
                 'post_author' 	=> $current_user->ID,
@@ -97,20 +98,21 @@ function create_group_type_form( $atts = array(), $content = null ) {
                 
             // insert the new form
             $post_id = wp_insert_post($my_post);
-            
-           foreach( $customfields as $key => $customfield ) : 
-			   
-			    if( $customfield['type'] == 'Taxonomy' ){                   
-                   do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-                   wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
-                } 
-
-               if( $customfield['type'] == 'AttachGroupType' ){
-					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
-				}
-				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
-			endforeach;
+           if(isset($customfields)) {
+	           foreach( $customfields as $key => $customfield ) : 
+				   
+				    if( $customfield['type'] == 'Taxonomy' ){                   
+	                   do_action('cpt4bp_before_wp_set_post_terms',$customfield);
+	                   wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+	                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+	                } 
+	
+	               if( $customfield['type'] == 'AttachGroupType' ){
+						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
+					}
+					update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
+				endforeach;
+		   }
         }       
     
     	// Do the wp_insert_post action to insert it
@@ -255,7 +257,7 @@ var file_frame;
 			    'tabindex' => 1
 			);   
 			ob_start();       
-			//wp_editor( $editpost_content_val , 'editpost_content', $args );
+			wp_editor( $editpost_content_val , 'editpost_content', $args );
 			$wp_editor = ob_get_contents();
 			ob_clean();
 			$form->addElement(new Element_HTML($wp_editor));					

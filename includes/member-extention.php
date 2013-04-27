@@ -13,6 +13,12 @@ class CPT4BP_Members
 		add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 	), 10, 2 );
 	}
 	
+	function custom_get_user_posts_count($user_id,$args ){
+    $args['author'] = $user;
+    $args['fields'] = 'ids';
+    $ps = get_posts($args);
+    return count($ps);
+	}
 	/**
 	 * Setup profile navigation
 	 *
@@ -22,23 +28,10 @@ class CPT4BP_Members
 	public function profile_setup_nav() {
 	    global $cpt4bp, $bp;
 		
+		get_currentuserinfo();	
+			
 		session_start();
 		
-		$post_count = array();
-        
-		// count up the groups for a user, sorted by group type
-		if(function_exists(bp_has_groups)){
-			if( bp_has_groups( array( 'user_id' => bp_displayed_user_id() ) ) ) :			
-				while( bp_groups() ) : bp_the_group();		
-				 	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-							
-					if( ! isset( $post_count[$group_type] ) )
-						$post_count[$group_type] = 0;
-					
-					$post_count[$group_type]++;		
-				endwhile;
-			endif;
-		}
 		$position = 20; 
 		
 		if(empty($cpt4bp[selected_post_types]))
@@ -47,7 +40,7 @@ class CPT4BP_Members
         foreach( $cpt4bp[selected_post_types] as $post_type ) {
 			$position ++;
 			
-			$count = isset( $post_count[$post_type] ) ? $post_count[$post_type] : 0;
+			$count = $this->custom_get_user_posts_count($user_ID,array('post_type' => $post_type));
 			
 			bp_core_new_nav_item( array( 
 		 		'name' 				=> sprintf( '%s <span>%d</span>', $cpt4bp['bp_post_types'][$post_type]['name'], $count ),
@@ -57,7 +50,7 @@ class CPT4BP_Members
 			) );
 			
 			bp_core_new_subnav_item( array( 
-                'name' 				=> sprintf(__(' Add %s', 'cpt4bp' ), $cpt4bp['bp_post_types'][$post_type]['name']),
+                'name' 				=> sprintf(__(' Add %s', 'cpt4bp' ), $cpt4bp['bp_post_types'][$post_type]['singular_name']),
                 'slug' 				=> 'create', 
                 'parent_slug' 		=> $post_type, 
                 'parent_url' 		=> trailingslashit( bp_loggedin_user_domain() . $post_type ),

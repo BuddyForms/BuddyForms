@@ -79,25 +79,31 @@ class CPT4BP
 		// print_r($cpt4bp);
 		// echo '</pre>';
 		
-		if(empty($cpt4bp['bp_post_types']))
+		if(empty($cpt4bp['selected_post_types']))
 			return;
 		
-		foreach ($cpt4bp['bp_post_types'] as $key => $value) {
+		foreach ($cpt4bp['selected_post_types'] as $key => $value) {
 			
-			$post_type_object = get_post_type_object( $key );
+			$post_type_object = get_post_type_object( $value );
 			
 			// echo '<pre>';
 			// print_r($post_type_object);
 			// echo '</pre>';
-		
-			if(empty($cpt4bp['bp_post_types'][$key][name]))
-				$cpt4bp['bp_post_types'][$key][name] = $post_type_object->labels->name;
 			
-			if(empty($cpt4bp['bp_post_types'][$key][name]))
-				$cpt4bp['bp_post_types'][$key][name] = $key;
+			//echo $post_type_object->labels->name;
+			if(empty($cpt4bp['bp_post_types'][$value][name])) {
+				$cpt4bp['bp_post_types'][$value][name] = $post_type_object->labels->name;
+				$cpt4bp['bp_post_types'][$value][singular_name] = $post_type_object->labels->singular_name;
+			}
+			
+			if(empty($cpt4bp['bp_post_types'][$value][name])){
+				$cpt4bp['bp_post_types'][$value][name] = $value;
+				$cpt4bp['bp_post_types'][$value][singular_name] = $value;
+			}		
 		
-			if(empty($cpt4bp['bp_post_types'][$key][slug]))
-				$cpt4bp['bp_post_types'][$key][slug] = $key;
+			if(empty($cpt4bp['bp_post_types'][$value][slug]))
+				$cpt4bp['bp_post_types'][$value][slug] = $value;
+			
 		}
 		
 		// echo '<pre>';
@@ -173,7 +179,9 @@ class CPT4BP
 		// echo '<pre>';
 		// print_r($cpt4bp);
 		// echo '</pre>';
-		
+		if(!isset($cpt4bp['selected_post_types']))
+			return;
+			
 		foreach( $cpt4bp['selected_post_types'] as $post_type ) :      
 			if( isset( $cpt4bp['bp_post_types'][$post_type]['form_fields'] ) ){
 				foreach( $cpt4bp['bp_post_types'][$post_type]['form_fields'] as $key => $form_field ){
@@ -244,6 +252,12 @@ class CPT4BP
 	public function remove_slug( $permalink, $post, $leavename ) {
         global $cpt4bp;
         
+		if(!isset($cpt4bp['selected_post_types'] ))
+			return $permalink;
+		
+		if(!defined(BP_GROUPS_SLUG))
+			return $permalink;
+			
 		$post_types =  $cpt4bp['selected_post_types'] ;
   
         foreach( $post_types as $post_type ){
@@ -270,6 +284,12 @@ class CPT4BP
 	 */
 	public function theme_redirect() {
 	   global $wp_query, $cpt4bp, $bp;
+	   
+		if(!isset($cpt4bp['selected_post_types']))
+				return;
+	   
+		if(!defined(BP_GROUPS_SLUG))
+			return;
 	   
 	    $plugindir = dirname( __FILE__ );
 
