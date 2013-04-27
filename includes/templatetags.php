@@ -118,8 +118,8 @@ function create_group_type_form( $atts = array(), $content = null ) {
     	// Do the wp_insert_post action to insert it
         do_action( 'wp_insert_post', 'wp_insert_post' );
 		
-		if( ! empty( $_FILES ) ) {  
-	        require_once(ABSPATH . 'wp-admin/includes/admin.php');  
+		if( ! empty( $_FILES ) ) {
+			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
 	        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
 	
 	        unset( $_FILES );  
@@ -190,42 +190,6 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			}
 			?>	
 			<div class="form_wrapper">
-				<script>
-					// Uploading files
-var file_frame;
- 
-  jQuery('.file2').live('click', function( event ){
- 
-    event.preventDefault();
- 
-    // If the media frame already exists, reopen it.
-    if ( file_frame ) {
-      file_frame.open();
-      return;
-    }
- 
-    // Create the media frame.
-    file_frame = wp.media.frames.file_frame = wp.media({
-      title: jQuery( this ).data( 'uploader_title' ),
-      button: {
-        text: jQuery( this ).data( 'uploader_button_text' ),
-      },
-      multiple: false  // Set to true to allow multiple files to be selected
-    });
- 
-    // When an image is selected, run a callback.
-    file_frame.on( 'select', function() {
-      // We set multiple to false so only get one image from the uploader
-      attachment = file_frame.state().get('selection').first().toJSON();
- 		alert(attachment.url);
-      // Do something with attachment.id and/or attachment.url here
-    });
- 
-    // Finally, open the modal
-    file_frame.open();
-  });
-					
-				</script>
 			<?php 
 			
 			// Form starts
@@ -248,16 +212,20 @@ var file_frame;
 			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
 //			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
 			global $post_ID;
+			ob_start();   
 			$post_ID = $post_id;
-			$args = array(
-			    'wpautop' => true,
-			    'media_buttons' => true,
-			    'editor_class' => 'frontend',
-			    'textarea_rows' => 5,
-			    'tabindex' => 1
-			);   
-			ob_start();       
-			wp_editor( $editpost_content_val , 'editpost_content', $args );
+			$settings = array(
+			'wpautop' => true,
+			'media_buttons' => true,
+			'wpautop' => true,
+			'tinymce' => true,
+			'quicktags' => true,
+			'textarea_rows' => 18
+			);
+			
+			$post = get_post($post_id, 'OBJECT');
+			wp_editor($post->post_content, 'editpost_content', $settings );
+    
 			$wp_editor = ob_get_contents();
 			ob_clean();
 			$form->addElement(new Element_HTML($wp_editor));					
@@ -272,16 +240,15 @@ var file_frame;
 			               $customfield_val = $_POST[ sanitize_title($customfield['name']) ];
 			            }
 			            
-			            if( $customfield_val == 'on' ){
-			                $checked = true;
-			            } else {
-			              $checked = false;  
-			            }
+
 			            
 			        } else {
-			            $customfield_val = get_post_meta($the_post->ID, sanitize_title($customfield['name']), true);
+			            $customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
+						echo '$customfield_val: '.$customfield_val.' - '.$customfield['name'].'<br>';
 			        }
-					
+					// echo '<pre>';
+					// print_r($customfield);
+					// echo '</pre>';
 			       	switch( $customfield['type'] ) {
 						case 'AttachGroupType':
 							// if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
@@ -327,21 +294,30 @@ var file_frame;
 			                break;
 							
 			            case 'Mail':
+							$form->addElement(new Element_Email($customfield['name'].':', sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							break;
 						
 						case 'Radiobutton':
+							$form->addElement(new Element_Radio($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Checkbox':
+							$form->addElement(new Element_Checkbox($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Dropdown':
+							echo '<pre>';
+							print_r($customfield['Values']);
+							echo '</pre>';
+							$form->addElement(new Element_Select($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
 							break;
 								
 			            case 'Textarea':
+							$form->addElement(new Element_Textarea($customfield['name'].':', sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							 break;
 							
 			            case 'Hidden':
+							$form->addElement(new Element_Hidden( sanitize_title($customfield['name'],array('value' => $customfield_val))));
 							break;
 						
 						case 'Text':
@@ -349,6 +325,7 @@ var file_frame;
 							 break;
 							
 			            case 'Link':
+							$form->addElement(new Element_Url($customfield['name'].':',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
 							break;
 							
 			            case 'Taxonomy':
@@ -397,11 +374,10 @@ var file_frame;
 			$file_attr = array('id' => "async-upload");
 		}
 			
-		$form->addElement(new Element_File("File:", "async-upload", $file_attr));
+	//	$form->addElement(new Element_File("File:", "async-upload", $file_attr));
 
 		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
-		$form->addElement(new Element_Button('file2','button',array('id' => 'file2', 'name' => 'file2','class' => 'file2')));
 		$form->render();
 		?>
 		</div>
