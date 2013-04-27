@@ -27,17 +27,18 @@ class CPT4BP_Members
 		$post_count = array();
         
 		// count up the groups for a user, sorted by group type
-		if( bp_has_groups( array( 'user_id' => bp_displayed_user_id() ) ) ) :			
-			while( bp_groups() ) : bp_the_group();		
-			 	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
-						
-				if( ! isset( $post_count[$group_type] ) )
-					$post_count[$group_type] = 0;
-				
-				$post_count[$group_type]++;		
-			endwhile;
-		endif;
-		
+		if(function_exists(bp_has_groups)){
+			if( bp_has_groups( array( 'user_id' => bp_displayed_user_id() ) ) ) :			
+				while( bp_groups() ) : bp_the_group();		
+				 	$group_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+							
+					if( ! isset( $post_count[$group_type] ) )
+						$post_count[$group_type] = 0;
+					
+					$post_count[$group_type]++;		
+				endwhile;
+			endif;
+		}
 		$position = 20; 
 		
 		if(empty($cpt4bp[selected_post_types]))

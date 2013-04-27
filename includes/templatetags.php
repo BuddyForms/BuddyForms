@@ -188,8 +188,44 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			}
 			?>	
 			<div class="form_wrapper">
-				
+				<script>
+					// Uploading files
+var file_frame;
+ 
+  jQuery('.file2').live('click', function( event ){
+ 
+    event.preventDefault();
+ 
+    // If the media frame already exists, reopen it.
+    if ( file_frame ) {
+      file_frame.open();
+      return;
+    }
+ 
+    // Create the media frame.
+    file_frame = wp.media.frames.file_frame = wp.media({
+      title: jQuery( this ).data( 'uploader_title' ),
+      button: {
+        text: jQuery( this ).data( 'uploader_button_text' ),
+      },
+      multiple: false  // Set to true to allow multiple files to be selected
+    });
+ 
+    // When an image is selected, run a callback.
+    file_frame.on( 'select', function() {
+      // We set multiple to false so only get one image from the uploader
+      attachment = file_frame.state().get('selection').first().toJSON();
+ 		alert(attachment.url);
+      // Do something with attachment.id and/or attachment.url here
+    });
+ 
+    // Finally, open the modal
+    file_frame.open();
+  });
+					
+				</script>
 			<?php 
+			
 			// Form starts
 			$form = new Form("editpost");
 			$form->configure(array(
@@ -208,7 +244,22 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
 			
 			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
-			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
+//			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
+			global $post_ID;
+			$post_ID = $post_id;
+			$args = array(
+			    'wpautop' => true,
+			    'media_buttons' => true,
+			    'editor_class' => 'frontend',
+			    'textarea_rows' => 5,
+			    'tabindex' => 1
+			);   
+			ob_start();       
+			//wp_editor( $editpost_content_val , 'editpost_content', $args );
+			$wp_editor = ob_get_contents();
+			ob_clean();
+			$form->addElement(new Element_HTML($wp_editor));					
+        
 
 			if( $customfields ){
 				foreach( $customfields as $key => $customfield ) :
@@ -348,6 +399,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 
 		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
+		$form->addElement(new Element_Button('file2','button',array('id' => 'file2', 'name' => 'file2','class' => 'file2')));
 		$form->render();
 		?>
 		</div>

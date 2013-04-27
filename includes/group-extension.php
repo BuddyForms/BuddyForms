@@ -1,4 +1,5 @@
 <?php
+if ( class_exists( 'BP_Group_Extension' ) ) :
 class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
 	public $enable_create_step = true;
@@ -151,3 +152,4 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 	
 }
 bp_register_group_extension( 'CPT4BP_Group_Extension' );
+endif;

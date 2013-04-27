@@ -25,7 +25,7 @@ class Element_TinyMCE extends Element_Textarea {
 
     function getJSFiles() {
         return array(
-            $this->_form->getResourcesPath() . "/tiny_mce/tiny_mce.js"
+    //        $this->_form->getResourcesPath() . "/tiny_mce/tiny_mce.js"
         );
     }
 }
