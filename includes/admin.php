@@ -104,7 +104,7 @@ function cpt4bp_view_form_fields($args){
 			$form_fields_new[5] 	= new Element_Checkbox("Multiple:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][multiple]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][multiple]));
 			break;
 		case 'Hidden':
-			$form_fields_new[1] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
+			$form_fields_new[1] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][value]", $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][value]);
 			break;
 		case 'AttachGroupType':
 		    $form_fields_new[4] 	= new Element_Select("Attach Group Type:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][AttachGroupType]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]))	;
@@ -475,6 +475,8 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 								<p><a href="Taxonomy/'.$selected_post_types.'" class="action">Taxonomy</a></p>
 								<p><a href="Hidden/'.$selected_post_types.'" class="action">Hidden</a></p>
 								<p><a href="AttachGroupType/'.$selected_post_types.'" class="action">AttachGroupType</a></p>
+								<p><a href="file/'.$selected_post_types.'" class="action">File</a></p>
+								
 							</div>
 						</div>
 					</div>

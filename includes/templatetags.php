@@ -293,36 +293,52 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			                break;
 							
 			            case 'Mail':
-							$form->addElement(new Element_Email($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Email($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 							break;
 						
 						case 'Radiobutton':
-							$form->addElement(new Element_Radio($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Radio($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
 							break;
 								
 			            case 'Checkbox':
-							$form->addElement(new Element_Checkbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Checkbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
 							break;
 								
 			            case 'Dropdown':
-							$form->addElement(new Element_Select($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), array('value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Select($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
 							break;
 								
 			            case 'Textarea':
-							$form->addElement(new Element_Textarea($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), array('value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Textarea($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 							 break;
 							
 			            case 'Hidden':
-							$form->addElement(new Element_Hidden( sanitize_title($customfield['name'],array('value' => $customfield_val))));
+							$form->addElement(new Element_Hidden( sanitize_title($customfield['name'], $customfield['value'])));
 							break;
 						
 						case 'Text':
-							 $form->addElement(new Element_Textbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), array('value' => $customfield_val)));
-							 break;
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Textbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), $element_attr));
+							break;
 							
 			            case 'Link':
-							$form->addElement(new Element_Url($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), array('lable' => 'asasdasdd','value' => $customfield_val)));
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
+							$form->addElement(new Element_Url($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), $element_attr));
 							
+							break;
+						case 'file':
+
+							if($post_id == 0) {
+								$file_attr = array("required" => 1, 'id' => "async-upload");
+							} else {
+								$file_attr = array('id' => "async-upload");
+							}
+							$form->addElement(new Element_File($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $file_attr));
 							break;
 							
 			            case 'Taxonomy':
@@ -365,13 +381,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			endforeach;
 		}
 
-		if($post_id == 0) {
-			$file_attr = array("required" => 1, 'id' => "async-upload");
-		} else {
-			$file_attr = array('id' => "async-upload");
-		}
-			
-	//	$form->addElement(new Element_File("File:", "async-upload", $file_attr));
+
 
 		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));

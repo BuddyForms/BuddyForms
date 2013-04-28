@@ -130,9 +130,12 @@ class CPT4BP
         require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-groups.php' 	); 
         require_once( CPT4BP_INCLUDES_PATH .'widgets/widget-product.php' 	); 
 		
-		if( is_admin() ) {
+		if ( ! class_exists( 'BP_Theme_Compat' ) )
+			require_once( CPT4BP_INCLUDES_PATH .'bp-backwards-compatibililty-functions.php' 		); 
+
+		
+		if( is_admin() )
 			require_once( CPT4BP_INCLUDES_PATH. 'admin.php' );
-		}
 	}
 	
 	/**

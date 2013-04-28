@@ -10,7 +10,7 @@ class CPT4BP_Members
 	 */	
 	public function __construct() {
 		add_action( 'bp_setup_nav', 		array( $this, 'profile_setup_nav'		), 20, 1 );
-		add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 	), 10, 2 );
+		//add_filter( 'bp_located_template',  array( $this, 'load_template_filter' 	), 10, 2 );
 	}
 	
 	function custom_get_user_posts_count($user_id,$args ){
@@ -75,9 +75,11 @@ class CPT4BP_Members
 		global $current_user, $bp;
 
 		if($_GET[post_id]){
+			$bp->current_action = 'create';
 			bp_core_load_template( 'cpt4bp/bp/members-post-create' );
 		}
 		if($_GET[delete]){
+			$bp->current_action = 'create';
 			get_currentuserinfo();	
 			$the_post = get_post( $_GET[delete] );
 			
@@ -90,6 +92,7 @@ class CPT4BP_Members
 			wp_delete_post( $_GET[delete] );
 
 		}
+		$bp->current_action = 'my-posts';
 		bp_core_load_template( 'cpt4bp/bp/members-post-display' );
 	
 	}
