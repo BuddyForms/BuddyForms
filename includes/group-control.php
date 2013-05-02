@@ -25,7 +25,7 @@ class CPT4BP_GroupControl
 		if(!isset($cpt4bp['selected_post_types'] ))
 			return;
 		
-		if(!isset($cpt4bp['bp_post_types'][$post->post_type]['groups']['attached']))
+		if(!isset($cpt4bp['bp_post_types'][$post->post_type]['groups']['attache']))
 			return;
 		
 		if(!class_exists('BP_Groups_Group'))
@@ -37,6 +37,9 @@ class CPT4BP_GroupControl
 		if( $post->post_type == 'revision' )
 			$post = get_post( $post->post_parent );		
 			
+		
+		// if(is_object($post))
+			// echo 'boom';
 	 	if( in_array( $post->post_type, $cpt4bp['selected_post_types'] ) ){	        
 	     	$post_group_id = get_post_meta( $post->ID, '_post_group_id', true );
             

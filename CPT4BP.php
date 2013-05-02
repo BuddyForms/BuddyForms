@@ -261,6 +261,10 @@ class CPT4BP
 		if(!defined(BP_GROUPS_SLUG))
 			return $permalink;
 			
+			
+		if(!isset($cpt4bp['bp_post_types'][$post->post_type]['groups']['attache']))
+			return $permalink;
+		
 		$post_types =  $cpt4bp['selected_post_types'] ;
   
         foreach( $post_types as $post_type ){
@@ -270,14 +274,6 @@ class CPT4BP
 
 		return $permalink;
     }
- 
-	function filter_template( $template ) {
-		
-	 	$template = cpt4bp_locate_template('cpt4bp/bp/groups-home.php');
-		load_template( apply_filters( 'bp_load_template', $template ) );
-		exit;
-		
-	}
 	 
 	/**
 	 * Redirect a post to its group
@@ -289,19 +285,15 @@ class CPT4BP
 	   global $wp_query, $cpt4bp, $bp;
 	   
 		if(!isset($cpt4bp['selected_post_types']))
-				return;
+			return;
 	   
 		if(!BP_GROUPS_SLUG)
 			return;
 	   
-	   	if(!isset($cpt4bp['bp_post_types'][$wp_query->query_vars['post_type']]['groups']['attached']))
+	   	if(!isset($cpt4bp['bp_post_types'][$wp_query->query_vars['post_type']]['groups']['attache']))
 			return;
 	   
 	    $plugindir = dirname( __FILE__ );
-
-		// if( $bp->current_component == BP_GROUPS_SLUG && $bp->current_action == 'home'){
-			// add_action( 'bp_core_pre_load_template', array( $this, 'filter_template' ));	
-		// }
 
 		//A Specific Custom Post Type redirect to the atached group
 		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {

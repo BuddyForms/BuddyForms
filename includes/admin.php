@@ -447,6 +447,13 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_group_options">Groups Control</a></div>
 				    <div id="accordion_'.$selected_post_types.'_group_options" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
+							$form->addElement(new Element_HTML('<p>
+							Here you can attache this post type to groups. Every time a new post is created a new Group will be created too.<br>
+							Important:<br>
+							Post startus will affect group privacy options.
+						    draft = hidded<br>
+						    publish = public<br>
+							</p>'));
 							$form->addElement(new Element_Checkbox("Attache to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
 							$form->addElement(new Element_HTML('<br>'));
 							$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
@@ -457,14 +464,6 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 							'replace home new tab activity')
 							,array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][display_post])));
 							
-							$form->addElement(new Element_HTML('<br>'));
-							
-							$form->addElement(new Element_Select("Privacy Options:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][privacy]", array('public','private','hidden'),array('postHTML' => 'Which members of this group are allowed to invite others?', 'value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][privacy])));
-							$form->addElement(new Element_Select("Group Invitations", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][invitations]", array('All group members','Group admins and mods only','Group admins only'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][invitations])));
-							$form->addElement(new Element_HTML('<br>'));
-
-							
-							$form->addElement(new Element_Checkbox("Enable Group Forum", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][forum]", array("Yes. I want this groups to have a forum."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][forum])));
 							$form->addElement(new Element_HTML('
 						</div>
 					</div>

@@ -11,12 +11,10 @@ $content_post = get_post($groups_post_id);
               	<?php echo $content_post->post_content; ?>
               	</div>      
 
-
-	<h2>Zusätzliche Informationen</a></h2>
             <div class="entry">
                 
                 <?php 
-				if(!empty($cpt4bp['bp_post_types'][$group_type])){ ?>
+				if(!empty($cpt4bp['bp_post_types'][$group_type]['form_fields'])){ ?>
                     <table class="shop_attributes">
                      <tbody>
                         <?php foreach($cpt4bp['bp_post_types'][$group_type]['form_fields'] as $key => $customfield) : 

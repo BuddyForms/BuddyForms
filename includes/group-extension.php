@@ -3,8 +3,8 @@ if ( class_exists( 'BP_Group_Extension' ) ) :
 class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
 	public $enable_create_step = true;
-	public $enable_nav_item 	= true;
-	public $enable_edit_item 	= false;
+	public $enable_nav_item 	= false;
+	public $enable_edit_item 	= true;
 
 	/**
 	 * Extends the group and register the nav item and add groupmeta to the $bp global
@@ -40,9 +40,7 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 			   		add_action('bp_after_group_activity_content', array( $this, 'display_post'), 1 );
 				break;
 		    case 'create a new tab':
-				$this->name					= $cpt4bp['bp_post_types'][$attached_post_type]['singular_name'];
-			    $this->nav_item_position 	= 20;
-		    	$this->slug 				= $cpt4bp['bp_post_types'][$attached_post_type]['slug'];
+					 $this->enable_nav_item 	= true;
 			   break;
 			case 'replace home new tab activity':
 				add_filter( 'bp_located_template', 'cpt4bp_groups_load_template_filter', 10, 2 );
@@ -51,8 +49,10 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 
 	   }
 
-
-		add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
+				$this->name					= $cpt4bp['bp_post_types'][$attached_post_type]['singular_name'];
+			    $this->nav_item_position 	= 20;
+		    	$this->slug 				= $cpt4bp['bp_post_types'][$attached_post_type]['slug'];
+		//add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
 		
 		
 	}

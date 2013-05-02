@@ -345,7 +345,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							break;
 							
 			            case 'Taxonomy':
-							
+
 							$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
 
 							$args = array(
@@ -377,7 +377,8 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							    }
 							}
 						
-							$form->addElement(new Element_HTML($customfield['taxonomy'].':<p><smal>' . $customfield['description'] . '</smal></p>',$dropdown));
+							$form->addElement(new Element_HTML($customfield['taxonomy'].':<p><smal>' . $customfield['description'] . '</smal></p>'));
+							$form->addElement(new Element_HTML($dropdown));
 						break;
 
 				}							
