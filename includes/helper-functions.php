@@ -1,5 +1,31 @@
 <?php 
 /**
+ * this function is a bit tricky and needs some fixing.
+ * I have not find a way to overwrite the group home and use the new template system.
+ * If someone can have a look into this one would be greate!
+ *
+ * @author svenl77
+ * @since 0.1
+ *
+ * @uses apply_filters()
+ * @return string
+ */
+ 
+function cpt4bp_groups_load_template_filter( $found_template, $templates ) {
+	global $bp;
+ 
+ 	if( $bp->current_component == BP_GROUPS_SLUG && $bp->current_action == 'home'){
+			$templates = cpt4bp_locate_template('cpt4bp/bp/groups-home.php');
+		exit;
+	}
+
+	return apply_filters( 'cpt4bp_load_template_filter', $found_template );
+}
+add_filter( 'bp_located_template', 'cpt4bp_groups_load_template_filter', 10, 2 );
+
+
+
+/**
  * Get the BP Follow template directory.
  *
  * @author r-a-y
@@ -36,10 +62,17 @@ function cpt4bp_get_template_directory() {
 function cpt4bp_load_template_filter( $found_template, $templates ) {
 	global $bp;
  
+ 
+ 
  // echo '<pre>';
  // print_r($bp);
  // echo '</pre>';
  
+ 
+  if($bp->current_action == 'create' || $bp->current_action == 'my-posts'){
+
+
+  
  	// Only filter the template location when we're on the follow component pages.
 	//if ( ! bp_is_current_component( $bp->follow->followers->slug ) && ! bp_is_current_component( $bp->follow->following->slug ) )
 		//return $found_template;
@@ -84,6 +117,7 @@ function cpt4bp_load_template_filter( $found_template, $templates ) {
 				bp_get_template_part( 'cpt4bp/bp/members-post-create' );
 			" ) );
 		} 
+	}
 	}
 
 	return apply_filters( 'cpt4bp_load_template_filter', $found_template );

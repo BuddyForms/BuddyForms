@@ -40,6 +40,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 	
 	} else {
 		$post_id = 0;
+		$new = true;
        	$the_post = new stdClass;
 		$the_post->ID = $post_id;
 		$the_post->post_type = $bp->current_component;
@@ -139,6 +140,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 		}        
 
     	if( empty( $hasError ) ) {
+
     		?>
 			<div class="thanks">
 				<?php if($_POST['editpost_id']){ ?>
@@ -150,6 +152,7 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				<?php } ?>
 			</div>
 			<?php
+
 		} 	
 	}
 

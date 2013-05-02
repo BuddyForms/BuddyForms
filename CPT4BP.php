@@ -18,7 +18,7 @@ class CPT4BP
         add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
         add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
-		add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
+		//add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
 		add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
@@ -291,14 +291,14 @@ class CPT4BP
 		if(!isset($cpt4bp['selected_post_types']))
 				return;
 	   
-		if(!defined(BP_GROUPS_SLUG))
+		if(!BP_GROUPS_SLUG)
 			return;
 	   
 	    $plugindir = dirname( __FILE__ );
 
-		if( $bp->current_component == BP_GROUPS_SLUG && $bp->current_action == 'home'){
-			add_action( 'bp_core_pre_load_template', array( $this, 'filter_template' ));	
-		}
+		// if( $bp->current_component == BP_GROUPS_SLUG && $bp->current_action == 'home'){
+			// add_action( 'bp_core_pre_load_template', array( $this, 'filter_template' ));	
+		// }
 
 		//A Specific Custom Post Type redirect to the atached group
 		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {
