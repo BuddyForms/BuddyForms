@@ -25,8 +25,13 @@ class CPT4BP_GroupControl
 		if(!isset($cpt4bp['selected_post_types'] ))
 			return;
 		
+		if(!isset($cpt4bp['bp_post_types'][$post->post_type]['groups']['attached']))
+			return;
+		
 		if(!class_exists('BP_Groups_Group'))
 			return;
+		
+		
 		
 		// make sure we get the correct data
 		if( $post->post_type == 'revision' )

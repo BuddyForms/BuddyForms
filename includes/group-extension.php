@@ -13,42 +13,54 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 	 * @since 0.1-beta	
 	 */
     public function __construct() {
-    	global $bp;
-		
-		if( ! is_object( $bp->bp_cpt4bp ) )
-			$bp->bp_cpt4bp = new stdClass;
-		   	
-
+    	global $bp, $cpt4bp;
+			
 		/**
 		 * @TODO Is this supposed to loop through everything and constantly replace the parameters?
 		 */ 
     	if( bp_has_groups() ) :
 	    	while( bp_groups() ) : bp_the_group();
-		    	$bp->bp_cpt4bp->attached_post_id 	= groups_get_groupmeta( bp_get_group_id(), 'group_post_id' );
-				$bp->bp_cpt4bp->attached_post_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
+				$attached_post_id 	= groups_get_groupmeta( bp_get_group_id(), 'group_post_id' );
+				$attached_post_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
 			endwhile; 
 		endif;
-	    
-		
-		// Check if the Group extention nav title has bean overwriten in the admin settings for this group type
-		$name = get_option( $bp->bp_cpt4bp->attached_post_type .'_name' );
-		if( ! empty( $name ) ) {
-			$this->name = $name;
-        } else {
-			$this->name = $bp->bp_cpt4bp->attached_post_type;
-        }
-		
-		//$this->slug = $bp->bp_cpt4bp->attached_post_type;
-		if( $bp->bp_cpt4bp->attached_post_type == 'product' ){
-	        $this->name 				= 'Review';
-	        $this->nav_item_position 	= 20;
-	    	$this->slug 				= 'product-review';
-		}
-		
+		// echo '<pre>';
+		// print_r($cpt4bp);
+		// echo '</pre>';
+		// echo $cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post'];
+	   switch ($cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post']) {
+
+			case 'before group activity post form':
+			   		add_action('bp_before_group_activity_post_form', array( $this, 'display_post'), 1 );
+				break;
+			case 'before group activity content':
+					add_action('bp_before_group_activity_content', array( $this, 'display_post'), 1 );
+				break;
+			case 'after group activity content':
+			   		add_action('bp_after_group_activity_content', array( $this, 'display_post'), 1 );
+				break;
+		    case 'create a new tab':
+				$this->name					= $cpt4bp['bp_post_types'][$attached_post_type]['singular_name'];
+			    $this->nav_item_position 	= 20;
+		    	$this->slug 				= $cpt4bp['bp_post_types'][$attached_post_type]['slug'];
+			   break;
+			case 'replace home new tab activity':
+				add_filter( 'bp_located_template', 'cpt4bp_groups_load_template_filter', 10, 2 );
+				$this->add_activity_tab();
+				break;
+
+	   }
+
+
 		add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
-		$this->add_activity_tab();
+		
+		
 	}
- 
+	
+	 function display_post() {
+			cpt4bp_locate_template('cpt4bp/single-post.php');
+	}
+	 
 	/**
 	 * Display the edit screen
 	 * 
@@ -94,31 +106,10 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 	 */
     public function display() {
 		global $bp, $wc_query;
-		
-		$wc_query = new WP_Query( array(
-			'post_type' => $bp->bp_cpt4bp->attached_post_type, 
-			'p' 		=> $bp->bp_cpt4bp->attached_post_id
-		) );
-			
-		// load the template for display or edit the post
-		if( empty( $bp->action_variables[0] ) ) {			
-	 		if( $wc_query->have_posts() ) :
-	 			while ( $wc_query->have_posts() ) : $wc_query->the_post(); 
-				
-			 		do_action( 'woocommerce_groups_single_product_review' ); 		
-				
-				endwhile;
-			endif;
-				
-	 	} elseif( $bp->action_variables[0] == BP_DOCS_EDIT_SLUG ) {
-			cpt4bp_locate_template('cpt4bp/edit-post.php');
-			
-	 	} elseif( $bp->action_variables[0] == BP_DOCS_DELETE_SLUG ) {
-			cpt4bp_locate_template('cpt4bp/delete-post.php');
-	 	} else {
-	 		cpt4bp_locate_template('cpt4bp/single-post.php');
-	 	}	 	
-    } 
+
+		cpt4bp_locate_template('cpt4bp/single-post.php');
+
+	} 
 	
 	/**
 	 * Add an activity tab

@@ -1,4 +1,10 @@
 <?php 
+
+
+
+
+
+
 /**
  * this function is a bit tricky and needs some fixing.
  * I have not find a way to overwrite the group home and use the new template system.
@@ -21,7 +27,7 @@ function cpt4bp_groups_load_template_filter( $found_template, $templates ) {
 
 	return apply_filters( 'cpt4bp_load_template_filter', $found_template );
 }
-add_filter( 'bp_located_template', 'cpt4bp_groups_load_template_filter', 10, 2 );
+
 
 
 

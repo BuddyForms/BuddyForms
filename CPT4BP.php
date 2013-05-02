@@ -18,7 +18,7 @@ class CPT4BP
         add_action( 'init',   				array( $this, 'load_plugin_textdomain' 	), 10, 1 );
 		add_action( 'init', 				array( $this, 'register_taxonomy'		), 10, 2 );
         add_action( 'bp_init', 				array( $this, 'setup_group_extension'	), 10, 1 );
-		//add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
+		add_action( 'template_redirect', 	array( $this, 'theme_redirect'			),  1, 2 );	
 		add_action( 'bp_setup_globals',		array( $this, 'set_globals'				), 12, 1 );
         add_action( 'wp_enqueue_scripts', 	array( $this, 'enqueue_style'			), 10, 1 );
         add_action( 'widgets_init', 		array( $this, 'register_widgets'		), 10, 1 );
@@ -292,6 +292,9 @@ class CPT4BP
 				return;
 	   
 		if(!BP_GROUPS_SLUG)
+			return;
+	   
+	   	if(!isset($cpt4bp['bp_post_types'][$wp_query->query_vars['post_type']]['groups']['attached']))
 			return;
 	   
 	    $plugindir = dirname( __FILE__ );

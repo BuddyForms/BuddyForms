@@ -422,7 +422,7 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 			    	</div>
 				</div>
 				<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_content">'.$selected_post_types.' Label</a></div>
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_content">Label</a></div>
 					<div id="accordion_'.$selected_post_types.'_content" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$selected_post_types."][name]", array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['name'])));
@@ -434,7 +434,7 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 			    	</div>
 				</div>
 		 		<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">'.$selected_post_types.' Status</a></div>
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Status</a></div>
 				    <div id="accordion_'.$selected_post_types.'_status" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Select("Status:", "cpt4bp_options[bp_post_types][".$selected_post_types."][status]", array('publish','pending','draft'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['status'])));
@@ -444,16 +444,25 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 					</div>
 				</div>	
 				<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_group_options">'.$selected_post_types.' Groups Options</a></div>
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_group_options">Groups Control</a></div>
 				    <div id="accordion_'.$selected_post_types.'_group_options" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
-							$form->addElement(new Element_Checkbox("Redirect to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][connect]", array("Yes. I want to create a group for each post of this post type."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][connect])));
+							$form->addElement(new Element_Checkbox("Attache to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
+							$form->addElement(new Element_HTML('<br>'));
+							$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
+							'before group activity post form',
+							'before group activity content', 
+							'after group activity content',
+							'create a new tab', 
+							'replace home new tab activity')
+							,array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][display_post])));
+							
 							$form->addElement(new Element_HTML('<br>'));
 							
-							$form->addElement(new Element_Select("Redirect Options:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][redirect]", array('to group','to post'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][redirect])));
 							$form->addElement(new Element_Select("Privacy Options:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][privacy]", array('public','private','hidden'),array('postHTML' => 'Which members of this group are allowed to invite others?', 'value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][privacy])));
 							$form->addElement(new Element_Select("Group Invitations", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][invitations]", array('All group members','Group admins and mods only','Group admins only'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][invitations])));
 							$form->addElement(new Element_HTML('<br>'));
+
 							
 							$form->addElement(new Element_Checkbox("Enable Group Forum", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][forum]", array("Yes. I want this groups to have a forum."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][forum])));
 							$form->addElement(new Element_HTML('
@@ -461,7 +470,7 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 					</div>
 				</div>		  
 				<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_fields">'.$selected_post_types.' Form Fields</a></div>
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_fields"> Form Elements</a></div>
 				    <div id="accordion_'.$selected_post_types.'_fields" class="accordion-body collapse">
 						<div class="accordion-inner">
 							<div id="#idkommtnoch">
