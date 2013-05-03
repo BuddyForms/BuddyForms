@@ -1,9 +1,5 @@
 <?php 
 
-
-
-
-
 /**
  * this function is a bit tricky and needs some fixing.
  * I have not find a way to overwrite the group home and use the new template system.
@@ -144,6 +140,21 @@ function cpt4bp_delete_product_post( $group_id ){
 }
 add_action( 'groups_before_delete_group', 'cpt4bp_delete_product_post' );
 
+function cpt4bp_group_header_fields_save($group_id){
+    $groups_post_id	= groups_get_groupmeta( $group_id, 'group_post_id' ); 
+    $posttype		= groups_get_groupmeta( $group_id, 'group_type' ); 
+	
+	$my_post = array(
+        'ID'        	=> $groups_post_id,
+        'post_title' 	=> $_POST['group-name'],
+        'post_content' 	=> $_POST['group-desc']
+	);
+            
+    // update the new post
+    $post_id = wp_update_post( $my_post );
+}
+add_action( 'groups_group_details_edited', 'cpt4bp_group_header_fields_save' );
+
 /**
  * Locate a template
  * 
@@ -156,43 +167,6 @@ function cpt4bp_locate_template( $file ) {
 	} else {
 		include( CPT4BP_TEMPLATE_PATH .$file );
 	}
-}
-
-function cpt4bp_group_extension_link(){
-	global $bp;
-	echo bp_group_permalink().$bp->current_action.'/';
-}
-
-/**
- * Clean the input by type
- * 
- * @package BuddyPress Custom Group Types
- * @since 0.1-beta	
- */
-function cpt4bp_app_clean_input( $input, $type ) {
-	global $allowedposttags;
-	
-    $cleanInput = false;
-    
-    switch( $type ) {
-		case 'text':
-			$cleanInput = wp_filter_nohtml_kses( $input );
-	        break;
-			
-        case 'checkbox':
-            $input === '1'? $cleanInput = '1' : $cleanInput = '';
-        	break;
-			
-		case 'html':
-            $cleanInput = wp_kses( $input, $allowedposttags );
-        	break;
-			
-    	default:
-        	$cleanInput = false;
-        	break;
-    }
-	
-    return $cleanInput;
 }
 
 ?>

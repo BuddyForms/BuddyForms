@@ -208,8 +208,9 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
 			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 			$form->addElement(new Element_Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
+			if (!$groups_post_id){
+				$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));					
 			
-			$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));					
 			$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
 			
 			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
@@ -232,7 +233,12 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$wp_editor = ob_get_contents();
 			ob_clean();
 			$form->addElement(new Element_HTML($wp_editor));					
-        
+			} else {
+				$post = get_post($post_id, 'OBJECT');
+				$form->addElement(new Element_Hidden("editpost_title",$editpost_title));
+				$form->addElement(new Element_Hidden("editpost_content",$post->post_content));
+			
+			}
 
 			if( $customfields ){
 				foreach( $customfields as $key => $customfield ) :

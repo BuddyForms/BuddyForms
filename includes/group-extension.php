@@ -92,29 +92,6 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
  
     	wp_nonce_field( 'groups_edit_save_'. $this->slug );
     }
- 
-	/**
-	 * Save action
-	 * 
-	 * @TODO	Figure out what this is supposed to do
-	 * @package BuddyPress Custom Group Types
-	 * @since 	0.1-beta	
-	 */
-    public function edit_screen_save() {
-        global $bp;
- 
-        if( ! isset( $_POST['save'] ) )
-            return false;
- 
-        check_admin_referer( 'groups_edit_save_' . $this->slug );
- 
-	    if( ! $success )
-        	bp_core_add_message( __( 'There was an error saving, please try again', 'buddypress' ), 'error' );
-	    else
-	        bp_core_add_message( __( 'Settings saved successfully', 'buddypress' ) );
- 
-        bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
-	}
 	
 	/**
 	 * Display or edit a Post
