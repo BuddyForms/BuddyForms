@@ -1,7 +1,6 @@
 <?php 
 
-global $the_lp_query, $tmp, $list_post_atts;
-
+global $the_lp_query;
 
 if ( $the_lp_query->have_posts() ) : ?>
 

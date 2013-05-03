@@ -294,9 +294,19 @@ class CPT4BP
 			return;
 	   
 	    $plugindir = dirname( __FILE__ );
-
+		// echo '<pre>';
+		// print_r($wp_query);
+		// echo '</pre>';
+		$post_id = $wp_query->post->ID;
+		$post_group_id = get_post_meta($post_id, '_post_group_id', true);
+		$group_post_id = groups_get_groupmeta($post_group_id,'group_post_id');
+		
+		if($post_id != $group_post_id)
+			return;
+		
 		//A Specific Custom Post Type redirect to the atached group
 		if( in_array( $wp_query->query_vars['post_type'], $cpt4bp['selected_post_types'] ) ) {
+			
     		if( is_singular() ) {
 				$link = get_bloginfo('url') .'/'. BP_GROUPS_SLUG .'/'. get_post_meta( $wp_query->post->ID, '_link_to_group', true );
     			wp_redirect( $link, '301' );
