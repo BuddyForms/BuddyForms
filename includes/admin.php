@@ -75,9 +75,22 @@ function cpt4bp_view_form_fields($args){
 	
 	$form_fields_new = Array();
 
-	$form_field_display		= new Element_Checkbox("Display:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
-	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
+	//$form_field_display		= new Element_Checkbox("Display:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
+	 $form_field_display	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", array(
+											'no',
+											'bp_before_group_header,',
+											'bp_after_group_menu_admins',
+											'bp_before_group_menu_mods',
+											'bp_after_group_menu_mods', 
+											'bp_before_group_header_meta',
+											'bp_group_header_actions', 
+											'bp_group_header_meta',
+											'bp_after_group_header',
+											'bp_before_group_activity_post_form')
+											,array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
 	
+	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
+							
 	$form_fields_new[0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
 	$form_fields_new[1] 	= new Element_Textbox("Description:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][description]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][description]));
 	$form_fields_new[2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", $post_args[0]);

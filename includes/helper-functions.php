@@ -4,7 +4,6 @@
 
 
 
-
 /**
  * this function is a bit tricky and needs some fixing.
  * I have not find a way to overwrite the group home and use the new template system.

@@ -2,10 +2,11 @@
 if ( class_exists( 'BP_Group_Extension' ) ) :
 class CPT4BP_Group_Extension extends BP_Group_Extension
 {  
-	public $enable_create_step = true;
+	public $enable_create_step	= true;
 	public $enable_nav_item 	= false;
 	public $enable_edit_item 	= true;
 
+	
 	/**
 	 * Extends the group and register the nav item and add groupmeta to the $bp global
 	 * 
@@ -28,6 +29,23 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 		// print_r($cpt4bp);
 		// echo '</pre>';
 		// echo $cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post'];
+		
+		
+		if(!empty($cpt4bp['bp_post_types'][$attached_post_type]['form_fields'])){ 
+			foreach($cpt4bp['bp_post_types'][$attached_post_type]['form_fields'] as $key => $customfield) : 
+				$customfield_value = get_post_meta($attached_post_id, sanitize_title($customfield['name']) , true);
+                if( $customfield_value != '' && $customfield['display'] != 'no') :
+					$post_meta_tmp = '<div class="post_meta '.sanitize_title($customfield['name']).'">';
+			        $post_meta_tmp  .= '<lable>' . $customfield['name'] . '</lable>';
+			        $post_meta_tmp  .= "<p><a href='".$customfield_value."' " . $customfield['name']. ">". $customfield_value ." </a></p>";
+			        $post_meta_tmp  .= '</div>';
+
+					add_action( $customfield['display'], create_function( '', 'echo "' . addcslashes( $post_meta_tmp, '"' ) . '";' ) );
+				endif;
+            endforeach;
+		 }   
+		
+		
 	   switch ($cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post']) {
 
 			case 'before group activity post form':
@@ -56,7 +74,7 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 		
 		
 	}
-	
+
 	 function display_post() {
 			cpt4bp_locate_template('cpt4bp/single-post.php');
 	}
