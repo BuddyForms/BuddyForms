@@ -25,11 +25,6 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 				$attached_post_type = groups_get_groupmeta( bp_get_group_id(), 'group_type' );
 			endwhile; 
 		endif;
-		// echo '<pre>';
-		// print_r($cpt4bp);
-		// echo '</pre>';
-		// echo $cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post'];
-		
 		
 		if(!empty($cpt4bp['bp_post_types'][$attached_post_type]['form_fields'])){ 
 			foreach($cpt4bp['bp_post_types'][$attached_post_type]['form_fields'] as $key => $customfield) : 
@@ -48,14 +43,8 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 		
 	   switch ($cpt4bp['bp_post_types'][$attached_post_type]['groups']['display_post']) {
 
-			case 'before group activity post form':
+			case 'nothing':
 			   		add_action('bp_before_group_activity_post_form', array( $this, 'display_post'), 1 );
-				break;
-			case 'before group activity content':
-					add_action('bp_before_group_activity_content', array( $this, 'display_post'), 1 );
-				break;
-			case 'after group activity content':
-			   		add_action('bp_after_group_activity_content', array( $this, 'display_post'), 1 );
 				break;
 		    case 'create a new tab':
 					 $this->enable_nav_item 	= true;
@@ -66,12 +55,18 @@ class CPT4BP_Group_Extension extends BP_Group_Extension
 				break;
 
 	   }
+	  
+	  	if($cpt4bp['bp_post_types'][$attached_post_type][groups][title][display] != 'no') {
+	   		add_action( $cpt4bp['bp_post_types'][$attached_post_type][groups][title][display], create_function( '', 'echo "<div class=\"group_title\">' . get_the_title($attached_post_id) . '</div>";' ) );
+		}
+		if($cpt4bp['bp_post_types'][$attached_post_type][groups][content][display] != 'no') {
+	   		add_action( $cpt4bp['bp_post_types'][$attached_post_type][groups][content][display], create_function( '', 'echo "<div class=\"group_content\">' . get_post_field('post_content', $attached_post_id) . '</div>";' ) );
+		}
 
-				$this->name					= $cpt4bp['bp_post_types'][$attached_post_type]['singular_name'];
-			    $this->nav_item_position 	= 20;
-		    	$this->slug 				= $cpt4bp['bp_post_types'][$attached_post_type]['slug'];
-		//add_action( 'bp_after_group_details_admin', array( $this, 'edit_screen'), 1 );
-		
+		$this->name					= $cpt4bp['bp_post_types'][$attached_post_type]['singular_name'];
+	    $this->nav_item_position 	= 20;
+    	$this->slug 				= $cpt4bp['bp_post_types'][$attached_post_type]['slug'];
+
 		
 	}
 

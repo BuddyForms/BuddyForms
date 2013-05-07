@@ -684,12 +684,6 @@ h4 small {
   border-bottom: 1px solid #eeeeee;
 }
 
-ul,
-ol {
-  padding: 0;
-  margin: 0 0 10px 25px;
-}
-
 ul ul,
 ul ol,
 ol ol,

@@ -73,21 +73,30 @@ function cpt4bp_view_form_fields($args){
 	if($field_position =='')
 		$field_position = $numItems;
 	
+	$field_display_hook = array(
+	'no',
+	'bp_before_group_header',
+	'bp_after_group_menu_admins',
+	'bp_before_group_menu_mods',
+	'bp_after_group_menu_mods', 
+	'bp_before_group_header_meta',
+	'bp_group_header_actions', 
+	'bp_group_header_meta',
+	'bp_after_group_header',
+	'bp_before_group_activity_post_form',
+	'bp_before_group_activity_content',
+	'bp_after_group_activity_content',
+	'cpt4bp_before_groups_single_title',
+	'cpt4bp_groups_single_title',
+	'cpt4bp_before_groups_single_content',
+	'cpt4bp_groups_single_content',
+	'cpt4bp_after_groups_single_content'
+	);
+	
 	$form_fields_new = Array();
 
 	//$form_field_display		= new Element_Checkbox("Display:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
-	 $form_field_display	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", array(
-											'no',
-											'bp_before_group_header,',
-											'bp_after_group_menu_admins',
-											'bp_before_group_menu_mods',
-											'bp_after_group_menu_mods', 
-											'bp_before_group_header_meta',
-											'bp_group_header_actions', 
-											'bp_group_header_meta',
-											'bp_after_group_header',
-											'bp_before_group_activity_post_form')
-											,array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
+	 $form_field_display	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
 	
 	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
 							
@@ -147,7 +156,7 @@ function cpt4bp_view_form_fields($args){
 						<?php 
 						
 						echo '<div class="cpt4bp_field_label">' . $form_field_display->getLabel() . '</div>';
-						echo '<div class="cpt4bp_form_field">' . $form_field_display->render() . '</div>';
+						echo '<div class="cpt4bp_form_field">' . $form_field_display->render() . '</div>';	
 						
 						echo '<div class="cpt4bp_field_label">' . $form_field_required->getLabel() . '</div>';
 						echo '<div class="cpt4bp_form_field">' . $form_field_required->render() . '</div>';
@@ -236,13 +245,12 @@ function cpt4bp_options_content() {
 			return false;
 		});
 	
-		jQuery('.cpt4bp_forms_builder div').mousedown(function(){
-	  		
+		jQuery('.hero-unit div').mousedown(function(){
+
 	  		itemList = jQuery(this).closest('.sortable').sortable({
 	        	
 	        	update: function(event, ui) {
-
-					jQuery('#loading-animation').show(); // Show the animate loading gif while waiting
+					jQuery('.loading-animation').show(); // Show the animate loading gif while waiting
 		    	    
 				    opts = {
 		                url: ajaxurl,
@@ -256,7 +264,7 @@ function cpt4bp_options_content() {
 		                },
 		                success: function(response) {
 		                	
-		                    jQuery('#loading-animation').hide(); // Hide the loading animation
+		                    jQuery('.loading-animation').hide('slow'); // Hide the loading animation
 		                    var testst = itemList.sortable('toArray');
 		                   for (var key in testst){
 		                   	// alert(key + ': ' + testst[key]);
@@ -267,7 +275,7 @@ function cpt4bp_options_content() {
 		                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
 		                    alert(e);
 		                    // alert('There was an error saving the updates');
-		                    jQuery('#loading-animation').hide(); // Hide the loading animation
+		                    jQuery('.loading-animation').hide('slow'); // Hide the loading animation
 		                    return; 
 		                }
 		            };
@@ -283,14 +291,13 @@ function cpt4bp_options_content() {
 
 	<style>
 
-.popover.left .arrow {
-top: 50%;
-right: -11px;
-margin-top: -11px;
-border-left-color: #999;
-border-left-color: rgba(0, 0, 0, 0.25);
-border-right-width: 0;
-}
+
+		.loading-animation {
+			display: none;
+		}
+		.list_item{
+			background-color: #fcfcfc;
+		}
 
 		.cpt4bp_field_options{
 			float: right;
@@ -308,9 +315,7 @@ border-right-width: 0;
 			float: right;
 			width: 20%;
 		}
-		.accordion_fields{
-			margin-right: 22%;
-		}
+
 		
 	</style>
 	
@@ -365,6 +370,26 @@ function cpt4bp_settings_page() {
 		"action" => $_SERVER['REQUEST_URI'],
 		"view" => new View_Inline
 	));
+	
+	$field_display_hook = array(
+	'no',
+	'bp_before_group_header',
+	'bp_after_group_menu_admins',
+	'bp_before_group_menu_mods',
+	'bp_after_group_menu_mods', 
+	'bp_before_group_header_meta',
+	'bp_group_header_actions', 
+	'bp_group_header_meta',
+	'bp_after_group_header',
+	'bp_before_group_activity_post_form',
+	'bp_before_group_activity_content',
+	'bp_after_group_activity_content',
+	'cpt4bp_before_groups_single_title',
+	'cpt4bp_groups_single_title',
+	'cpt4bp_before_groups_single_content',
+	'cpt4bp_groups_single_content',
+	'cpt4bp_after_groups_single_content'
+	);
 	
 	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
     wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
@@ -447,11 +472,12 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 			    	</div>
 				</div>
 		 		<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Status</a></div>
+					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Control</a></div>
 				    <div id="accordion_'.$selected_post_types.'_status" class="accordion-body collapse">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Select("Status:", "cpt4bp_options[bp_post_types][".$selected_post_types."][status]", array('publish','pending','draft'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['status'])));
-						
+							$form->addElement( new Element_Checkbox("Featured Image:","cpt4bp_options[bp_post_types][".$selected_post_types."][featured_image][required]",array('Required'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['featured_image']['required'])));
+			
 							$form->addElement(new Element_HTML('
 						</div>
 					</div>
@@ -470,12 +496,15 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 							$form->addElement(new Element_Checkbox("Attache to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
 							$form->addElement(new Element_HTML('<br>'));
 							$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
-							'before group activity post form',
-							'before group activity content', 
-							'after group activity content',
+							'nothing',
 							'create a new tab', 
 							'replace home new tab activity')
 							,array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][display_post])));
+							
+							$form->addElement(new Element_HTML('<br><br><p>The Title and Content is displayed in the Group header. If you want to display it somewere else, you can do it here but need to adjust the groups-header.php in your theme. If you want to hide it there.</p>'));
+							$form->addElement( new Element_Select("Display Title:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][title][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['title']['display'])));
+							$form->addElement( new Element_Select("Display Content:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][content][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['content']['display'])));
+			
 							
 							$form->addElement(new Element_HTML('
 						</div>
@@ -496,7 +525,6 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 								<p><a href="Taxonomy/'.$selected_post_types.'" class="action">Taxonomy</a></p>
 								<p><a href="Hidden/'.$selected_post_types.'" class="action">Hidden</a></p>
 								<p><a href="AttachGroupType/'.$selected_post_types.'" class="action">AttachGroupType</a></p>
-								<p><a href="file/'.$selected_post_types.'" class="action">File</a></p>
 								
 							</div>
 						</div>
@@ -504,7 +532,10 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 				</div>		  
 			</div>
 			<div id="cpt4bp_forms_builder_'.$selected_post_types.'" class="cpt4bp_forms_builder">'));
-				    
+			$form->addElement(new Element_HTML('<div class="hero-unit">
+           		<h3>Post Type General Settings</h3> <div class="loading-animation alert alert-success">Save new order <i class="icon-ok"></i></div>
+           	'));    
+			
 			$sortArray = array(); 
 			
 			if(!empty($cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'] )){
@@ -513,14 +544,15 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 		    	} 
 				array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields']); 
 			}
-	
+
+		  
 			$form->addElement(new Element_HTML('
 			<ul id="sortable_'. $selected_post_types .'" class="sortable sortable_'. $selected_post_types .'">'));
 			if(is_array($cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'])){
 				
 				foreach($cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'] as $field_id => $sad) {
 					if($cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id]['name'] != ''){
-							
+								
 						$field_position = $cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id]['order'];
 						
 						//$field_value = $cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id];
@@ -531,18 +563,8 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 					}
 					
 				}
-			} else {
-				
-			$form->addElement(new Element_HTML('<div class="popover left info_'.$selected_post_types.'">
-            <div class="arrow"></div>
-            <h3 class="popover-title">Popover left</h3>
-            <div class="popover-content">
-              <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-            </div>
-          </div>'));
-	    	
-			}
-			$form->addElement(new Element_HTML('</ul></div></div>'));
+			} 
+			$form->addElement(new Element_HTML('</ul></div></div></div>'));
 	    
 		}	
 	}

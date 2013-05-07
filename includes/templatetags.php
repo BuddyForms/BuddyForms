@@ -208,31 +208,32 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
 			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 			$form->addElement(new Element_Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
-			if (!$groups_post_id){
+			
+			if ($bp->current_component != 'groups'){
 				$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));					
 			
-			$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
-			
-			$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
-//			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
-			global $post_ID;
-			ob_start();   
-			$post_ID = $post_id;
-			$settings = array(
-			'wpautop' => true,
-			'media_buttons' => true,
-			'wpautop' => true,
-			'tinymce' => true,
-			'quicktags' => true,
-			'textarea_rows' => 18
-			);
-			
-			$post = get_post($post_id, 'OBJECT');
-			wp_editor($post->post_content, 'editpost_content', $settings );
-    
-			$wp_editor = ob_get_contents();
-			ob_clean();
-			$form->addElement(new Element_HTML($wp_editor));					
+				$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+				
+				$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
+	//			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
+				global $post_ID;
+				ob_start();   
+				$post_ID = $post_id;
+				$settings = array(
+				'wpautop' => true,
+				'media_buttons' => true,
+				'wpautop' => true,
+				'tinymce' => true,
+				'quicktags' => true,
+				'textarea_rows' => 18
+				);
+				
+				$post = get_post($post_id, 'OBJECT');
+				wp_editor($post->post_content, 'editpost_content', $settings );
+	    
+				$wp_editor = ob_get_contents();
+				ob_clean();
+				$form->addElement(new Element_HTML($wp_editor));					
 			} else {
 				$post = get_post($post_id, 'OBJECT');
 				$form->addElement(new Element_Hidden("editpost_title",$editpost_title));
@@ -340,15 +341,15 @@ function create_group_type_form( $atts = array(), $content = null ) {
 							$form->addElement(new Element_Url($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), $element_attr));
 							
 							break;
-						case 'file':
-
-							if($post_id == 0) {
-								$file_attr = array("required" => 1, 'id' => "async-upload");
-							} else {
-								$file_attr = array('id' => "async-upload");
-							}
-							$form->addElement(new Element_File($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $file_attr));
-							break;
+						// case 'file':
+// 
+							// if($post_id == 0) {
+								// $file_attr = array("required" => 1, 'id' => "async-upload");
+							// } else {
+								// $file_attr = array('id' => "async-upload");
+							// }
+							// $form->addElement(new Element_File($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $file_attr));
+							// break;
 							
 			            case 'Taxonomy':
 
@@ -392,6 +393,19 @@ function create_group_type_form( $atts = array(), $content = null ) {
 		}
 
 
+		if($post_id == 0) {
+			$file_attr = array("required" => 1, 'id' => "async-upload");
+		} else {
+			$file_attr = array('id' => "async-upload");
+		}
+		
+		// echo '<pre>';
+		// print_r($cpt4bp);
+		// echo '</pre>';
+		// echo $cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0];
+					
+		if($cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required')
+			$form->addElement(new Element_File('Featured Image:', 'async-upload', $file_attr));
 
 		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
