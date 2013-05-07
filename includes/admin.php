@@ -229,7 +229,7 @@ function cpt4bp_options_content() {
 			var numItems = jQuery('.list_item').length;
 		
 			var action = jQuery(this);
-			
+			jQuery('.loading-animation-new').show(); // Show the animate loading gif while waiting
 			jQuery.ajax({
 				type: 'POST',
 				url: ajaxurl,
@@ -240,6 +240,8 @@ function cpt4bp_options_content() {
 				jQuery('.sortable_' + arr[1]).append(data);
 				//alert('.info_' + arr[1]);
 				jQuery('.info_' + arr[1]).hide();
+				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
+			
 				}
 			});
 			return false;
@@ -250,7 +252,7 @@ function cpt4bp_options_content() {
 	  		itemList = jQuery(this).closest('.sortable').sortable({
 	        	
 	        	update: function(event, ui) {
-					jQuery('.loading-animation').show(); // Show the animate loading gif while waiting
+					jQuery('.loading-animation-order').show(); // Show the animate loading gif while waiting
 		    	    
 				    opts = {
 		                url: ajaxurl,
@@ -264,7 +266,7 @@ function cpt4bp_options_content() {
 		                },
 		                success: function(response) {
 		                	
-		                    jQuery('.loading-animation').hide('slow'); // Hide the loading animation
+		                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
 		                    var testst = itemList.sortable('toArray');
 		                   for (var key in testst){
 		                   	// alert(key + ': ' + testst[key]);
@@ -275,7 +277,7 @@ function cpt4bp_options_content() {
 		                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
 		                    alert(e);
 		                    // alert('There was an error saving the updates');
-		                    jQuery('.loading-animation').hide('slow'); // Hide the loading animation
+		                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
 		                    return; 
 		                }
 		            };
@@ -292,8 +294,8 @@ function cpt4bp_options_content() {
 	<style>
 
 
-		.loading-animation {
-			display: none;
+		.loading-animation-new, .loading-animation-order  {
+			display: none;		
 		}
 		.list_item{
 			background-color: #fcfcfc;
@@ -533,9 +535,10 @@ $form->addElement(new Element_Checkbox("<p>Select the <b>PostTypes</b> you want 
 			</div>
 			<div id="cpt4bp_forms_builder_'.$selected_post_types.'" class="cpt4bp_forms_builder">'));
 			$form->addElement(new Element_HTML('<div class="hero-unit">
-           		<h3>Post Type General Settings</h3> <div class="loading-animation alert alert-success">Save new order <i class="icon-ok"></i></div>
+           		<h3>Post Type General Settings</h3>
            	'));    
-			
+			$form->addElement(new Element_HTML('<div class="loading-animation-order alert alert-success">Save new order <i class="icon-ok"></i></div>'));
+			$form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">Loade new element <i class="icon-ok"></i></div>'));
 			$sortArray = array(); 
 			
 			if(!empty($cpt4bp_options['bp_post_types'][$selected_post_types]['form_fields'] )){
