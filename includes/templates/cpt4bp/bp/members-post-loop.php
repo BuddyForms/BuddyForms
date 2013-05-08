@@ -10,11 +10,9 @@ if ( $the_lp_query->have_posts() ) : ?>
 
         <?php do_action( 'bp_before_blog_post' ) ?>
 
-
-
 		<li>
 			<div class="item-avatar">
-				<a href="<?php bp_group_permalink(); ?>"><?php the_post_thumbnail( array(70,70),array('class'=>"avatar")); ?></a>
+				<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( array(70,70),array('class'=>"avatar")); ?></a>
 			</div>
 
 			<div class="item">
