@@ -1,1 +1,1 @@
-<?php echo create_group_type_form(); ?>
+<?php echo cpt4bp_create_edit_form(); ?>

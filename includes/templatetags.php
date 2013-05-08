@@ -1,11 +1,11 @@
 <?php
 /**
- * Adds a form shortcode
+ * Adds a form shortcode for the create and edit sreen
  * 
- * @package BuddyPress Custom Group Types
+ * @package CPT4BP
  * @since 0.1-beta	
  */
-function create_group_type_form( $atts = array(), $content = null ) {
+function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
     global $cc_page_options, $post, $bp, $current_user, $cpt4bp;
 
     get_currentuserinfo();	
@@ -39,12 +39,12 @@ function create_group_type_form( $atts = array(), $content = null ) {
     	), $atts ) );   
 	
 	} else {
-		$post_id = 0;
-		$new = true;
-       	$the_post = new stdClass;
-		$the_post->ID = $post_id;
-		$the_post->post_type = $bp->current_component;
-		$the_post->post_title = '';
+		$post_id				= 0;
+		$new					= true;
+       	$the_post				= new stdClass;
+		$the_post->ID 			= $post_id;
+		$the_post->post_type 	= $bp->current_component;
+		$the_post->post_title 	= '';
 		
         extract( shortcode_atts( array(
             'posttype' => $bp->current_component,
@@ -145,17 +145,16 @@ function create_group_type_form( $atts = array(), $content = null ) {
 			<div class="thanks">
 				<?php if($_POST['editpost_id']){ ?>
 		    		<h1><?php _e('Saved', 'cpt4bp')?></h1>
-		    	    <p><?php _e('Post has been created.','cpt4bp'); ?> </p>
+		    	    <p><?php _e('Post has been created.', 'cpt4bp'); ?> </p>
 	   			<?php } else { ?>
 		            <h1><?php _e('Saved', 'cpt4bp')?></h1>
-		            <p><?php _e('Post has been updated.','cpt4bp'); ?> </p>
+		            <p><?php _e('Post has been updated.', 'cpt4bp'); ?> </p>
 				<?php } ?>
 			</div>
 			<?php
 
-		} 	
-	}
-
+			}
+			}
 	?>
 	<div class="the_cpt4bp_form">
 
@@ -176,244 +175,172 @@ function create_group_type_form( $atts = array(), $content = null ) {
 				<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 			</form>	 
 		<?php else :
-			if( isset( $_POST['editpost_title'])) {
+				if( isset( $_POST['editpost_title'])) {
 				if(function_exists('stripslashes')) {
 					$editpost_title = stripslashes($_POST['editpost_title']);
 				} else {
 					$editpost_title = $_POST['editpost_title'];
 				}
-			} else {
-				$editpost_title =  $the_post->post_title;
-			}			
+				} else {
+					$editpost_title =  $the_post->post_title;
+				}
 
-			if( isset( $_POST['editpost_content'] ) ){
-				$editpost_content_val = $_POST['editpost_content'];
-			} else {
-				$editpost_content_val = $the_post->post_content;
-			}
+				if( isset( $_POST['editpost_content'] ) ){
+					$editpost_content_val = $_POST['editpost_content'];
+				} else {
+					$editpost_content_val = $the_post->post_content;
+				}
 			?>	
 			<div class="form_wrapper">
-			<?php 
-			
-			// Form starts
+			<?php // Form starts
 			$form = new Form("editpost");
-			$form->configure(array(
-				"prevent" => array("bootstrap", "jQuery", "focus"),
-				"action" => $_SERVER['REQUEST_URI'],
-				"view" => new View_Vertical
-			));
+			$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical));
 
 			wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
 
-			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload','_wpnonce',true,false)));
+			$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
 			$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
-			$form->addElement(new Element_Hidden("redirect_to",  $_SERVER['REQUEST_URI']));
-			
-			if ($bp->current_component != 'groups'){
-				$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));					
-			
-				$form->addElement(new Element_Textbox("Title:", "editpost_title",array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
-				
-				$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));					
-	//			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
+			$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
+
+			if ($bp->current_component != 'groups') {
+				$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));
+
+				$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+
+				$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));
+				//			$form->addElement(new Element_TinyMCE("Content:", "editpost_content", array('lable' => 'enter some content', "required" => 1, 'value' => $editpost_content_val, 'id' => "editpost_content")));
 				global $post_ID;
-				ob_start();   
+				ob_start();
 				$post_ID = $post_id;
-				$settings = array(
-				'wpautop' => true,
-				'media_buttons' => true,
-				'wpautop' => true,
-				'tinymce' => true,
-				'quicktags' => true,
-				'textarea_rows' => 18
-				);
-				
+				$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
+
 				$post = get_post($post_id, 'OBJECT');
-				wp_editor($post->post_content, 'editpost_content', $settings );
-	    
+				wp_editor($post->post_content, 'editpost_content', $settings);
+
 				$wp_editor = ob_get_contents();
 				ob_clean();
-				$form->addElement(new Element_HTML($wp_editor));					
+				$form->addElement(new Element_HTML($wp_editor));
 			} else {
 				$post = get_post($post_id, 'OBJECT');
-				$form->addElement(new Element_Hidden("editpost_title",$editpost_title));
-				$form->addElement(new Element_Hidden("editpost_content",$post->post_content));
-			
+				$form->addElement(new Element_Hidden("editpost_title", $editpost_title));
+				$form->addElement(new Element_Hidden("editpost_content", $post->post_content));
+
 			}
 
-			if( $customfields ){
-				foreach( $customfields as $key => $customfield ) :
-					if( isset( $_POST[sanitize_title($customfield['name'])] ) ) {
-			            if( function_exists( 'stripslashes' ) ) {
-			               $customfield_val = $_POST[ sanitize_title($customfield['name']) ];
-			            } else {
-			               $customfield_val = $_POST[ sanitize_title($customfield['name']) ];
-			            }
-			            
+			if ($customfields) {
+				foreach ($customfields as $key => $customfield) :
+					if (isset($_POST[sanitize_title($customfield['name'])])) {
+						if (function_exists('stripslashes')) {
+							$customfield_val = $_POST[sanitize_title($customfield['name'])];
+						} else {
+							$customfield_val = $_POST[sanitize_title($customfield['name'])];
+						}
 
-			            
-			        } else {
-			            $customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
+					} else {
+						$customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
 					}
-					// echo '<pre>';
-					// print_r($customfield);
-					// echo '</pre>';
-			       	switch( $customfield['type'] ) {
-						case 'AttachGroupType':
-							// if($cpt4bp->custom_field_required[$posttype][$key] == 'on')
-								// $required[$posttype][$key] = '<span class="required">* </span>';
+					switch( $customfield['type'] ) {
+						case 'AttachGroupType' :
+							$attached_tax_name = $posttype . '_attached_' . $customfield['AttachGroupType'];
 
-							//$form->addElement(new Element_HTML('<div class="label"><label for="' . $field_name . '">' . __($field_name, 'cpt4bp') . ':</label></div><label for="' . $field_name . '">' . $required[$posttype][$key] . $cpt4bp->custom_field_discription[$posttype][$key] . '</label>'));
-							
-			                $attached_tax_name = $posttype.'_attached_'.$customfield['AttachGroupType'];
-								
 							$term_list = wp_get_post_terms($post_id, $attached_tax_name, array("fields" => "ids"));
 
-							$args = array(
-							    'multiple' => $customfield['multiple'],
-							    'selected_cats' => $term_list,
-							    'hide_empty' => 0,
-							    'id' => $key,
-							    'child_of' => 0,
-							    'echo' => FALSE,
-							    'selected' => false,
-							    'hierarchical' => 1,
-							    'name' => sanitize_title($customfield['name']).'[]',
-							    'class' => 'postform',
-							    'depth' => 0,
-							    'tab_index' => 0,
-							    'taxonomy' => $attached_tax_name,
-							    'hide_if_empty' => FALSE,
-							);
-							
-							
-							$dropdown = wp_dropdown_categories( $args );
-							
-							if ( is_array($customfield['multiple']) ) {
-							    $dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+							$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => sanitize_title($customfield['name']) . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $attached_tax_name, 'hide_if_empty' => FALSE, );
+
+							$dropdown = wp_dropdown_categories($args);
+
+							if (is_array($customfield['multiple'])) {
+								$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
 							}
-							if ( is_array( $term_list ) ) {
-							    foreach ( $term_list as $value ) {
-								$dropdown = str_replace( ' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown );
-							    }
+							if (is_array($term_list)) {
+								foreach ($term_list as $value) {
+									$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
+								}
 							}
-						
+
 							$form->addElement(new Element_HTML($dropdown));
 
-			                break;
-							
-			            case 'Mail':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Email($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 							break;
-						
-						case 'Radiobutton':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Radio($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
-							break;
-								
-			            case 'Checkbox':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Checkbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
-							break;
-								
-			            case 'Dropdown':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Select($customfield['name'].':', sanitize_title($customfield['name']), explode(",",$customfield['Values']), $element_attr));
-							break;
-								
-			            case 'Textarea':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Textarea($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
-							 break;
-							
-			            case 'Hidden':
-							$form->addElement(new Element_Hidden( sanitize_title($customfield['name'], $customfield['value'])));
-							break;
-						
-						case 'Text':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Textbox($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), $element_attr));
-							break;
-							
-			            case 'Link':
-							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) :  array( 'value' => $customfield_val);
-							$form->addElement(new Element_Url($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>',  sanitize_title($customfield['name']), $element_attr));
-							
-							break;
-						// case 'file':
-// 
-							// if($post_id == 0) {
-								// $file_attr = array("required" => 1, 'id' => "async-upload");
-							// } else {
-								// $file_attr = array('id' => "async-upload");
-							// }
-							// $form->addElement(new Element_File($customfield['name'].':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $file_attr));
-							// break;
-							
-			            case 'Taxonomy':
 
+						case 'Mail' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+							break;
+
+						case 'Radiobutton' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+							break;
+
+						case 'Checkbox' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+							break;
+
+						case 'Dropdown' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Select($customfield['name'] . ':', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+							break;
+
+						case 'Textarea' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+							break;
+
+						case 'Hidden' :
+							$form->addElement(new Element_Hidden(sanitize_title($customfield['name'], $customfield['value'])));
+							break;
+
+						case 'Text' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+							break;
+
+						case 'Link' :
+							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+							$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+
+							break;
+
+						case 'Taxonomy' :
 							$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
 
-							$args = array(
-							    'multiple' => $customfield['multiple'],
-							    'selected_cats' => $term_list,
-							    'hide_empty' => 0,
-							    'id' => $key,
-							    'child_of' => 0,
-							    'echo' => FALSE,
-							    'selected' => false,
-							    'hierarchical' => 1,
-							    'name' => sanitize_title($customfield['name']).'[]',
-							    'class' => 'postform',
-							    'depth' => 0,
-							    'tab_index' => 0,
-							    'taxonomy' => $customfield['taxonomy'],
-							    'hide_if_empty' => FALSE,
-							);
-							
-							
-							$dropdown = wp_dropdown_categories( $args );
-							
-							if ( is_array($customfield['multiple']) ) {
-							    $dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+							$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => sanitize_title($customfield['name']) . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $customfield['taxonomy'], 'hide_if_empty' => FALSE, );
+
+							$dropdown = wp_dropdown_categories($args);
+
+							if (is_array($customfield['multiple'])) {
+								$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
 							}
-							if ( is_array( $term_list ) ) {
-							    foreach ( $term_list as $value ) {
-								$dropdown = str_replace( ' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown );
-							    }
+							if (is_array($term_list)) {
+								foreach ($term_list as $value) {
+									$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
+								}
 							}
-						
-							$form->addElement(new Element_HTML($customfield['taxonomy'].':<p><smal>' . $customfield['description'] . '</smal></p>'));
+
+							$form->addElement(new Element_HTML($customfield['taxonomy'] . ':<p><smal>' . $customfield['description'] . '</smal></p>'));
 							$form->addElement(new Element_HTML($dropdown));
-						break;
+							break;
+					}
+				endforeach;
+			}
 
-				}							
-			endforeach;
-		}
+			if ($post_id == 0) {
+				$file_attr = array("required" => 1, 'id' => "async-upload");
+			} else {
+				$file_attr = array('id' => "async-upload");
+			}
 
+			if ($cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required')
+				$form->addElement(new Element_File('Featured Image:', 'async-upload', $file_attr));
 
-		if($post_id == 0) {
-			$file_attr = array("required" => 1, 'id' => "async-upload");
-		} else {
-			$file_attr = array('id' => "async-upload");
-		}
-		
-		// echo '<pre>';
-		// print_r($cpt4bp);
-		// echo '</pre>';
-		// echo $cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0];
-					
-		if($cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required')
-			$form->addElement(new Element_File('Featured Image:', 'async-upload', $file_attr));
-
-		$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
-		$form->addElement(new Element_Button('submitted','submit',array('id' => 'submitted', 'name' => 'submitted')));
-		$form->render();
+			$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
+			$form->addElement(new Element_Button('submitted', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+			$form->render();
 		?>
 		</div>
 	</div>		
-	<?php 
+	<?php
 	endif;
 }
-add_shortcode('create_group_type_form', 'create_group_type_form');
+add_shortcode('cpt4bp_create_edit_form', 'cpt4bp_create_edit_form');

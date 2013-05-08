@@ -29,18 +29,12 @@
 
 				<?php do_action( 'bp_before_group_body' );
 
-				/**
-				 * Does this next bit look familiar? If not, go check out WordPress's
-				 * /wp-includes/template-loader.php file.
-				 *
-				 * @todo A real template hierarchy? Gasp!
-				 */
 
 				// Group is visible
 				if ( bp_group_is_visible() ) : 
 
 					cpt4bp_locate_template('cpt4bp/single-post.php');
-					//get_template_part( 'single' );
+				
 				// Group is not visible
 				elseif ( ! bp_group_is_visible() ) :
 

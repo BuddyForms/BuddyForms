@@ -38,7 +38,7 @@
 
 		// Private methods
 
-		// HTML -> BBCode in PunBB dialect
+		// HTML->BBCode in PunBB dialect
 		_punbb_html2bbcode : function(s) {
 			s = tinymce.trim(s);
 
@@ -88,7 +88,7 @@
 			return s; 
 		},
 
-		// BBCode -> HTML from PunBB dialect
+		// BBCode->HTML from PunBB dialect
 		_punbb_bbcode2html : function(s) {
 			s = tinymce.trim(s);
 

@@ -2176,7 +2176,7 @@ tinymce.html.Styles = function(settings, schema) {
 		function hex(val) {
 			val = parseInt(val).toString(16);
 
-			return val.length > 1 ? val : '0' + val; // 0 -> 00
+			return val.length > 1 ? val : '0' + val; // 0->00
 		};
 
 		return '#' + hex(r) + hex(g) + hex(b);
@@ -6172,7 +6172,7 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 			function hex(s) {
 				s = parseInt(s, 10).toString(16);
 
-				return s.length > 1 ? s : '0' + s; // 0 -> 00
+				return s.length > 1 ? s : '0' + s; // 0->00
 			};
 
 			if (c) {
@@ -6549,7 +6549,7 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 			var c = /^\s*?#([0-9A-F]{2})([0-9A-F]{1,2})([0-9A-F]{2})?\s*?$/.exec(s);
 
 			if (c) {
-				// #FFF -> #FFFFFF
+				// #FFF->#FFFFFF
 				if (!is(c[3]))
 					c[3] = c[2] = c[1];
 

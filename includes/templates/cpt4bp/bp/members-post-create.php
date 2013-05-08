@@ -2,7 +2,7 @@
 
     <div id="item-body">
     
-  	<?php do_shortcode('[create_group_type_form]'); ?>
+  	<?php do_shortcode('[cpt4bp_create_edit_form]'); ?>
    
     </div><!-- #item-body -->
 

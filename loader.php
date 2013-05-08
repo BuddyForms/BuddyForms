@@ -1,30 +1,31 @@
 <?php
 /*
-Plugin Name: CPT4BP
-Plugin URI: http://themekraft.com
-Description: not now
-Version: 0.1 alpha
-Author: Sven Lehnert
-Author URI: http://themekraft.com
-Licence: GPLv3
-Network: true
-*/
+ Plugin Name: CPT4BP
+ Plugin URI: http://themekraft.com
+ Description:   
+ Version: 0.1 beta
+ Author: Sven Lehnert
+ Author URI: http://themekraft.com
+ Licence: GPLv3
+ Network: true
+ */
 
-define( 'CPT4BP', '0.1' );
+define('CPT4BP', '0.1');
 
 /**
- * Loads Custom Group Types files only if BuddyPress is present
+ * Loads CPT4BP files only if BuddyPress is present
  *
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta
  */
 function cpt4bp_init() {
 	global $wpdb;
-	
-	if( is_multisite() && BP_ROOT_BLOG != $wpdb->blogid )
+
+	if (is_multisite() && BP_ROOT_BLOG != $wpdb->blogid)
 		return;
 
-	require( dirname( __FILE__ ) .'/CPT4BP.php' );
-	$bp_cpt4bp = new CPT4BP();    
+	require (dirname(__FILE__) . '/CPT4BP.php');
+	$cpt4bp = new CPT4BP();
 }
-add_action( 'bp_loaded', 'cpt4bp_init', 0 );
+
+add_action('bp_loaded', 'cpt4bp_init', 0);
