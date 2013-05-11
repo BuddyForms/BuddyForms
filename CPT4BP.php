@@ -232,7 +232,7 @@ class CPT4BP {
 		if (!isset($cpt4bp['selected_post_types']))
 			return;
 
-		if (!BP_GROUPS_SLUG)
+		if(!bp_is_active('groups'))
 			return;
 
 		if (!isset($cpt4bp['bp_post_types'][$wp_query->query_vars['post_type']]['groups']['attache']))

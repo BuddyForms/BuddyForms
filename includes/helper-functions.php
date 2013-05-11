@@ -1,7 +1,6 @@
 <?php
 
 function cpt4bp_form_add_element($form_fields_new, $post_type, $field_type, $value){
-	echo $post_type;
 	
 	if($field_type  == 'test')
 		$form_fields_new[4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
