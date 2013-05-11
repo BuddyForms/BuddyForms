@@ -79,13 +79,13 @@ function cpt4bp_admin_settings_form_post_type_sidebar($form, $selected_post_type
 		    <div id="accordion_'.$selected_post_types.'_group_options" class="accordion-body collapse">
 				<div class="accordion-inner">')); 
 					$form->addElement(new Element_HTML('<p>
-					Here you can attache this post type to groups. Every time a new post is created a new Group will be created too.<br>
+					Here you can attach this post type to groups. Every time a new post is created a new group will be created too.<br>
 					Important:<br>
-					Post startus will affect group privacy options.
-				    draft = hidded<br>
+					Post status will affect group privacy options.
+				    draft = hidden<br>
 				    publish = public<br>
 					</p>'));
-					$form->addElement(new Element_Checkbox("Attach to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
+					$form->addElement(new Element_Checkbox("Attach to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attach the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
 					$form->addElement(new Element_HTML('<br>'));
 					$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
 					'nothing',
@@ -93,7 +93,7 @@ function cpt4bp_admin_settings_form_post_type_sidebar($form, $selected_post_type
 					'replace home new tab activity')
 					,array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][display_post])));
 					
-					$form->addElement(new Element_HTML('<br><br><p>The Title and Content is displayed in the Group header. If you want to display it somewere else, you can do it here but need to adjust the groups-header.php in your theme. If you want to hide it there.</p>'));
+					$form->addElement(new Element_HTML('<br><br><p>The title and content is displayed in the group header. If you want to display it somewere else, you can do it here but need to adjust the groups-header.php in your theme. If you want to hide it there.</p>'));
 					$form->addElement( new Element_Select("Display Title:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][title][display]", $cpt4bp[hooks][form_element], array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['title']['display'])));
 					$form->addElement( new Element_Select("Display Content:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][content][display]", $cpt4bp[hooks][form_element], array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['content']['display'])));
 	
@@ -135,8 +135,8 @@ add_filter('form_element_hooks','form_element_group_hooks');
 
  /**
  * this function is a bit tricky and needs some fixing.
- * I have not find a way to overwrite the group home and use the new template system.
- * If someone can have a look into this one would be greate!
+ * I have not found a way to overwrite the group home and use the new template system.
+ * If someone can have a look into this one would be great!
  *
  * @author svenl77
  * @since 0.1
