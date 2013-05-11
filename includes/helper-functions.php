@@ -85,7 +85,7 @@ function cpt4bp_admin_settings_form_post_type_sidebar($form, $selected_post_type
 				    draft = hidded<br>
 				    publish = public<br>
 					</p>'));
-					$form->addElement(new Element_Checkbox("Attache to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
+					$form->addElement(new Element_Checkbox("Attach to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
 					$form->addElement(new Element_HTML('<br>'));
 					$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
 					'nothing',
