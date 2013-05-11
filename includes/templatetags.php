@@ -321,6 +321,10 @@ function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
 							$form->addElement(new Element_HTML($customfield['taxonomy'] . ':<p><smal>' . $customfield['description'] . '</smal></p>'));
 							$form->addElement(new Element_HTML($dropdown));
 							break;
+							default:
+								apply_filters('cpt4bp_form_display_element',$form,$customfield,$customfield_val);
+							break;
+
 					}
 				endforeach;
 			}

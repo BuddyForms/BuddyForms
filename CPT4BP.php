@@ -59,6 +59,8 @@ class CPT4BP {
 			define('CPT4BP_TEMPLATE_PATH', CPT4BP_INCLUDES_PATH . 'templates/');
 	}
 
+
+
 	/**
 	 * Setup all globals
 	 *
@@ -71,6 +73,14 @@ class CPT4BP {
 
 		$cpt4bp = get_option('cpt4bp_options');
 
+		$form_element_hooks = array(
+			'no',
+			'bp_before_blog_single_post',
+			'bp_after_blog_single_post'
+		);
+		
+		$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$form_element_hooks);
+		
 		if (empty($cpt4bp['selected_post_types']))
 			return;
 
@@ -188,10 +198,16 @@ class CPT4BP {
 		if (!isset($cpt4bp['selected_post_types']))
 			return $permalink;
 
-		if (!BP_GROUPS_SLUG)
+		if(!bp_is_active('groups'))
 			return $permalink;
 
 		if (!isset($cpt4bp['bp_post_types'][$post->post_type]['groups']['attache']))
+			return $permalink;
+		
+		$post_group_id = get_post_meta($post->ID, '_post_group_id', true);
+		$group_post_id = groups_get_groupmeta($post_group_id, 'group_post_id');
+
+		if ($post->ID != $group_post_id)
 			return $permalink;
 
 		$post_types = $cpt4bp['selected_post_types'];

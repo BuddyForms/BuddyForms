@@ -73,9 +73,12 @@ function cpt4bp_taxonomies(){
  * @since 0.1-beta
  */
 function cpt4bp_view_form_fields($args){
+	global $cpt4bp;
+	
+	$cpt4bp_options = get_option('cpt4bp_options');
+	
 	$post_args = explode('/', $_POST['post_args']);
 	$numItems = $_POST['numItems'];
-	$cpt4bp_options = get_option('cpt4bp_options');
 	
 	if(is_array($args)){
 		extract($args);
@@ -89,36 +92,18 @@ function cpt4bp_view_form_fields($args){
 	if($field_position =='')
 		$field_position = $numItems;
 	
-	$field_display_hook = array(
-	'no',
-	'bp_before_group_header',
-	'bp_after_group_menu_admins',
-	'bp_before_group_menu_mods',
-	'bp_after_group_menu_mods', 
-	'bp_before_group_header_meta',
-	'bp_group_header_actions', 
-	'bp_group_header_meta',
-	'bp_after_group_header',
-	'bp_before_group_activity_post_form',
-	'bp_before_group_activity_content',
-	'bp_after_group_activity_content',
-	'cpt4bp_before_groups_single_title',
-	'cpt4bp_groups_single_title',
-	'cpt4bp_before_groups_single_content',
-	'cpt4bp_groups_single_content',
-	'cpt4bp_after_groups_single_content'
-	);
 	
 	$form_fields_new = Array();
 
-	$form_field_display	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
+	$form_field_display		= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", $cpt4bp[hooks][form_element], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
 	$form_field_required	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
 							
 	$form_fields_new[0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
 	$form_fields_new[1] 	= new Element_Textbox("Description:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][description]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][description]));
 	$form_fields_new[2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", $post_args[0]);
 	$form_fields_new[3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
-
+	
+	
 
 	switch ($post_args[0]) {
 
@@ -144,7 +129,11 @@ function cpt4bp_view_form_fields($args){
 			break;
 		case 'AttachGroupType':
 		    $form_fields_new[4] 	= new Element_Select("Attach Group Type:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][AttachGroupType]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]))	;
-		break;
+			break;
+		default:
+			$form_fields_new = apply_filters('cpt4bp_form_add_element',$form_fields_new,$post_args[1],$post_args[0],$cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]);
+			break;
+
 	}
 
 	ob_start(); ?>
@@ -329,7 +318,7 @@ function cpt4bp_options_content() {
 		<?php screen_icon('themes') ?>
 		<h2>CPT4BP - General Settings</h2>
 		<div id="post-body">
-			<div id="post-body-content">            
+			<div id="post-body-content">  
 				<?php cpt4bp_settings_page(); ?>
 			</div>
 		</div>
@@ -376,26 +365,6 @@ function cpt4bp_settings_page() {
 		"action" => $_SERVER['REQUEST_URI'],
 		"view" => new View_Inline
 	));
-	
-	$field_display_hook = array(
-		'no',
-		'bp_before_group_header',
-		'bp_after_group_menu_admins',
-		'bp_before_group_menu_mods',
-		'bp_after_group_menu_mods', 
-		'bp_before_group_header_meta',
-		'bp_group_header_actions', 
-		'bp_group_header_meta',
-		'bp_after_group_header',
-		'bp_before_group_activity_post_form',
-		'bp_before_group_activity_content',
-		'bp_after_group_activity_content',
-		'cpt4bp_before_groups_single_title',
-		'cpt4bp_groups_single_title',
-		'cpt4bp_before_groups_single_content',
-		'cpt4bp_groups_single_content',
-		'cpt4bp_after_groups_single_content'
-	);
 	
 	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
     wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
@@ -457,7 +426,8 @@ function cpt4bp_settings_page() {
 									$form->addElement(new Element_HTML('
 								</div>
 					    	</div>
-						</div>
+						</div>'));
+						$form->addElement(new Element_HTML('
 						<div class="accordion-group">
 							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_content">Label</a></div>
 							<div id="accordion_'.$selected_post_types.'_content" class="accordion-body collapse">
@@ -480,34 +450,11 @@ function cpt4bp_settings_page() {
 									$form->addElement(new Element_HTML('
 								</div>
 							</div>
-						</div>	
-						<div class="accordion-group">
-							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_group_options">Groups Control</a></div>
-						    <div id="accordion_'.$selected_post_types.'_group_options" class="accordion-body collapse">
-								<div class="accordion-inner">')); 
-									$form->addElement(new Element_HTML('<p>
-									Here you can attache this post type to groups. Every time a new post is created a new Group will be created too.<br>
-									Important:<br>
-									Post startus will affect group privacy options.
-								    draft = hidded<br>
-								    publish = public<br>
-									</p>'));
-									$form->addElement(new Element_Checkbox("Attache to Group?", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][attache]", array("Yes. I want to create a group for each post of this post type and attache the post to the group."), array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][attache])));
-									$form->addElement(new Element_HTML('<br>'));
-									$form->addElement(new Element_Select("Display Post: <p>the option \"replace home create new tab activity\" only works with a buddypress theme. </p>", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][display_post]", array(
-									'nothing',
-									'create a new tab', 
-									'replace home new tab activity')
-									,array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['groups'][display_post])));
-									
-									$form->addElement(new Element_HTML('<br><br><p>The Title and Content is displayed in the Group header. If you want to display it somewere else, you can do it here but need to adjust the groups-header.php in your theme. If you want to hide it there.</p>'));
-									$form->addElement( new Element_Select("Display Title:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][title][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['title']['display'])));
-									$form->addElement( new Element_Select("Display Content:", "cpt4bp_options[bp_post_types][".$selected_post_types."][groups][content][display]", $field_display_hook, array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types][groups]['content']['display'])));
+						</div>'));	
 					
-						$form->addElement(new Element_HTML('
-								</div>
-							</div>
-						</div>		  
+					 apply_filters('cpt4bp_admin_settings_form_post_type_sidebar',$form, $selected_post_types);
+					
+					$form->addElement(new Element_HTML('
 						<div class="accordion-group">
 							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_fields"> Form Elements</a></div>
 						    <div id="accordion_'.$selected_post_types.'_fields" class="accordion-body collapse">
@@ -522,8 +469,10 @@ function cpt4bp_settings_page() {
 										<p><a href="Checkbox/'.$selected_post_types.'" class="action">Checkbox</a></p>
 										<p><a href="Taxonomy/'.$selected_post_types.'" class="action">Taxonomy</a></p>
 										<p><a href="Hidden/'.$selected_post_types.'" class="action">Hidden</a></p>
-										<p><a href="AttachGroupType/'.$selected_post_types.'" class="action">AttachGroupType</a></p>
 										
+										'));
+										$form = apply_filters('cpt4bp_add_form_element_in_sidebar', $form, $selected_post_types);
+									$form->addElement(new Element_HTML('
 									</div>
 								</div>
 							</div>
