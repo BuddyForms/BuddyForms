@@ -127,11 +127,8 @@ function cpt4bp_view_form_fields($args){
 		case 'Hidden':
 			$form_fields_new[1] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][value]", $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][value]);
 			break;
-		case 'AttachGroupType':
-		    $form_fields_new[4] 	= new Element_Select("Attach Group Type:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][AttachGroupType]", $cpt4bp_options['selected_post_types'], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]))	;
-			break;
 		default:
-			$form_fields_new = apply_filters('cpt4bp_form_add_element',$form_fields_new,$post_args[1],$post_args[0],$cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]);
+			$form_fields_new = apply_filters('cpt4bp_form_add_element',$form_fields_new,$post_args[1],$post_args[0],$field_id,$cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]);
 			break;
 
 	}
@@ -208,9 +205,10 @@ function cpt4bp_options_content() {
      
 	<script type="text/javascript">
 
-	jQuery(document).ready(function(jQuery) {        
-	    
-		jQuery(".delete").click(function(){
+	
+	jQuery(document).ready(function(jQuery) {       
+
+		jQuery(document).on('click','.delete',function() {
 			
 			var del_id = jQuery(this).attr('id');
 			var action = jQuery(this); 
@@ -247,8 +245,7 @@ function cpt4bp_options_content() {
 			});
 			return false;
 		});
-	
-		jQuery('.hero-unit div').mousedown(function(){
+			jQuery(document).on('mousedown','.hero-unit div',function() {
 
 	  		itemList = jQuery(this).closest('.sortable').sortable({
 	        	
@@ -389,11 +386,11 @@ function cpt4bp_settings_page() {
 			$form->addElement(new Element_HTML('
 			<div class="accordion_sidebar" id="accordion_'.$selected_post_types.'">
 				<div class="accordion-group">
-					<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_save">Save</a></div>
+					<div class="accordion-heading"><p class="accordion-toggle">Publish</p></div>
 					<div id="accordion_'.$selected_post_types.'_save" class="accordion-body">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Hidden("submit", "submit"));
-							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'submit')));
+							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
 								
 							$form->addElement(new Element_HTML('
 						</div>
@@ -417,11 +414,11 @@ function cpt4bp_settings_page() {
 					$form->addElement(new Element_HTML('
 					<div class="accordion_sidebar" id="accordion_'.$selected_post_types.'">
 						<div class="accordion-group">
-							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_save">Save</a></div>
+							<div class="accordion-heading"><p class="accordion-toggle">Save</p></div>
 							<div id="accordion_'.$selected_post_types.'_save" class="accordion-body">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Hidden("submit", "submit"));
-									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'submit')));
+									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
 										
 									$form->addElement(new Element_HTML('
 								</div>
@@ -429,7 +426,7 @@ function cpt4bp_settings_page() {
 						</div>'));
 						$form->addElement(new Element_HTML('
 						<div class="accordion-group">
-							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_content">Label</a></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_content">Label</p></div>
 							<div id="accordion_'.$selected_post_types.'_content" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$selected_post_types."][name]", array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['name'])));
@@ -441,7 +438,7 @@ function cpt4bp_settings_page() {
 					    	</div>
 						</div>
 				 		<div class="accordion-group">
-							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Control</a></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Control</p></div>
 						    <div id="accordion_'.$selected_post_types.'_status" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Select("Status:", "cpt4bp_options[bp_post_types][".$selected_post_types."][status]", array('publish','pending','draft'),array('value' => $cpt4bp_options['bp_post_types'][$selected_post_types]['status'])));
@@ -456,7 +453,7 @@ function cpt4bp_settings_page() {
 					
 					$form->addElement(new Element_HTML('
 						<div class="accordion-group">
-							<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_fields"> Form Elements</a></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_fields"> Form Elements</p></div>
 						    <div id="accordion_'.$selected_post_types.'_fields" class="accordion-body collapse">
 								<div class="accordion-inner">
 									<div id="#idkommtnoch">

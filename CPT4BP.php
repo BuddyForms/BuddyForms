@@ -69,9 +69,7 @@ class CPT4BP {
 		$cpt4bp = get_option('cpt4bp_options');
 
 		$form_element_hooks = array(
-			'no',
-			'bp_before_blog_single_post',
-			'bp_after_blog_single_post'
+			'no'
 		);
 		
 		$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$form_element_hooks);

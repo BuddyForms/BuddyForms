@@ -240,29 +240,7 @@ function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
 						$customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
 					}
 					switch( $customfield['type'] ) {
-						case 'AttachGroupType' :
-							$attached_tax_name = $posttype . '_attached_' . $customfield['AttachGroupType'];
-
-							$term_list = wp_get_post_terms($post_id, $attached_tax_name, array("fields" => "ids"));
-
-							$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => sanitize_title($customfield['name']) . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $attached_tax_name, 'hide_if_empty' => FALSE, );
-
-							$dropdown = wp_dropdown_categories($args);
-
-							if (is_array($customfield['multiple'])) {
-								$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
-							}
-							if (is_array($term_list)) {
-								foreach ($term_list as $value) {
-									$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
-								}
-							}
-
-							$form->addElement(new Element_HTML($dropdown));
-
-							break;
-
-						case 'Mail' :
+							case 'Mail' :
 							$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
 							$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 							break;
@@ -322,7 +300,7 @@ function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
 							$form->addElement(new Element_HTML($dropdown));
 							break;
 							default:
-								apply_filters('cpt4bp_form_display_element',$form,$customfield,$customfield_val);
+								apply_filters('cpt4bp_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
 							break;
 
 					}
