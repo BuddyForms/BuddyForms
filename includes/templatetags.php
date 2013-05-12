@@ -82,9 +82,11 @@ function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
 						do_action('cpt4bp_after_wp_set_post_terms',$customfield);
 					}
 			
-					if( $customfield['type'] == 'AttachGroupType' ){
-						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
-					}
+					// if( $customfield['type'] == 'AttachGroupType' ){
+						// wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
+					// }
+					do_action('cpt4bp_update_post_meta',$customfield,$post_id,$_POST);
+	               
 					update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
 	            endforeach;
 	    	}
@@ -108,17 +110,17 @@ function cpt4bp_create_edit_form( $atts = array(), $content = null ) {
 	                   do_action('cpt4bp_after_wp_set_post_terms',$customfield);
 	                } 
 	
-	               if( $customfield['type'] == 'AttachGroupType' ){
-						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
-					}
+	               // if( $customfield['type'] == 'AttachGroupType' ){
+						// wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $posttype.'_attached_'.$customfield['AttachGroupType'], false );
+					// }
+					do_action('cpt4bp_update_post_meta',$customfield,$post_id,$_POST);
+	                //$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$form_element_hooks);
+					
 					update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] );                    
 				endforeach;
 		   }
         }       
     
-    	// Do the wp_insert_post action to insert it
-        do_action( 'wp_insert_post', 'wp_insert_post' );
-		
 		if( ! empty( $_FILES ) ) {
 			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
 	        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
