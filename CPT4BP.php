@@ -72,7 +72,7 @@ class CPT4BP {
 			'no'
 		);
 		
-		$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$form_element_hooks);
+		$cpt4bp[hooks][form_element] = $form_element_hooks;
 		
 		if (empty($cpt4bp['selected_post_types']))
 			return;

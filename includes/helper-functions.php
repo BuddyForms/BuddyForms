@@ -1,6 +1,6 @@
 <?php
 
-function form_element_single_hooks($form_element_hooks){
+function form_element_single_hooks($form_element_hooks,$post_type,$field_id){
 		array_push($form_element_hooks,
 			'bp_before_blog_single_post',
 			'bp_after_blog_single_post'
@@ -8,7 +8,7 @@ function form_element_single_hooks($form_element_hooks){
 
 	return $form_element_hooks;
 }
-add_filter('form_element_hooks','form_element_single_hooks');
+add_filter('form_element_hooks','form_element_single_hooks',1,3);
 
 function cpt4bp_form_display_element_frontend(){
 	global $cpt4bp, $post, $bp;
@@ -38,7 +38,7 @@ function cpt4bp_form_display_element_frontend(){
 		endforeach;
 	}
 }
-add_action('bp_before_header','cpt4bp_form_display_element_frontend');
+add_action('wp_head','cpt4bp_form_display_element_frontend');
 
 
 /**
