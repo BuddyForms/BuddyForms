@@ -61,7 +61,7 @@ class CPT4BP_Members {
 
 		if ($_GET[post_id]) {
 			$bp->current_action = 'create';
-			bp_core_load_template('cpt4bp/bp/members-post-create');
+			bp_core_load_template('cpt4bp/members/members-post-create');
 		}
 		if ($_GET[delete]) {
 			$bp->current_action = 'create';
@@ -72,13 +72,14 @@ class CPT4BP_Members {
 				echo '<div class="error alert">You are not allowed to delete this entry! What are you doing here?</div>';
 				return;
 			}
-
-			cpt4bp_delete_a_group($_GET[delete]);
+			
+			do_action('cpt4bp_delete_post',$_GET[delete]);
+			
 			wp_delete_post($_GET[delete]);
 
 		}
 		$bp->current_action = 'my-posts';
-		bp_core_load_template('cpt4bp/bp/members-post-display');
+		bp_core_load_template('cpt4bp/members/members-post-display');
 
 	}
 
@@ -89,7 +90,7 @@ class CPT4BP_Members {
 	* @since 0.2-beta
 	*/
 	public function load_members_post_create() {
-		bp_core_load_template('cpt4bp/bp/members-post-create');
+		bp_core_load_template('cpt4bp/members/members-post-create');
 	}
 
 }

@@ -106,8 +106,8 @@ class CPT4BP {
 
 	public function includes() {
 		require_once (CPT4BP_INCLUDES_PATH . 'PFBC/Form.php');
-		require_once (CPT4BP_INCLUDES_PATH . 'helper-functions.php');
-		require_once (CPT4BP_INCLUDES_PATH . 'templatetags.php');
+		require_once (CPT4BP_INCLUDES_PATH . 'functions.php');
+		require_once (CPT4BP_INCLUDES_PATH . 'the-form.php');
 		require_once (CPT4BP_INCLUDES_PATH . 'member-extention.php');
 		
 		if (!class_exists('BP_Theme_Compat'))

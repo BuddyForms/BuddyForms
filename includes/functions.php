@@ -101,11 +101,11 @@ function cpt4bp_load_template_filter($found_template, $templates) {
 			
 			if ($bp->current_action == 'my-posts') {
 				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'cpt4bp/bp/members-post-display' );
+				bp_get_template_part( 'cpt4bp/members/members-post-display' );
 			"));
 			} elseif ($bp->current_action == 'create') {
 				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'cpt4bp/bp/members-post-create' );
+				bp_get_template_part( 'cpt4bp/members/members-post-create' );
 			"));
 			}
 		}

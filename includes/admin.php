@@ -45,8 +45,7 @@ function cpt4bp_item_delete(){
 	$post_args = explode('/', $_POST['post_args']);
 	
 	$cpt4bp_options = get_option('cpt4bp_options');
-	
-	
+		
 	unset( $cpt4bp_options[$post_args[0]][$post_args[1]][form_fields][$post_args[3]] );
     
 	update_option("cpt4bp_options", $cpt4bp_options);
