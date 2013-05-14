@@ -13,9 +13,9 @@ class CPT4BP {
 		$this->init_hook();
 		$this->load_constants();
 
-		add_action('bp_include', array($this, 'includes'), 4, 1);
-		add_action('init', array($this, 'load_plugin_textdomain'), 10, 1);
-		add_action('bp_setup_globals', array($this, 'set_globals'), 12, 1);
+		add_action('bp_include'			, array($this, 'includes')					, 4, 1);
+		add_action('init'				, array($this, 'load_plugin_textdomain')	, 10, 1);
+		add_action('bp_setup_globals'	, array($this, 'set_globals')				, 12, 1);
 		
 	}
 
@@ -44,6 +44,7 @@ class CPT4BP {
 	 */
 
 	public function load_constants() {
+		
 		if (!defined('CPT4BP_INSTALL_PATH'))
 			define('CPT4BP_INSTALL_PATH', dirname(__FILE__) . '/');
 
@@ -52,6 +53,7 @@ class CPT4BP {
 
 		if (!defined('CPT4BP_TEMPLATE_PATH'))
 			define('CPT4BP_TEMPLATE_PATH', CPT4BP_INCLUDES_PATH . 'templates/');
+		
 	}
 
 
@@ -95,6 +97,7 @@ class CPT4BP {
 				$cpt4bp['bp_post_types'][$value][slug] = $value;
 
 		}
+
 	}
 
 	/**
@@ -105,6 +108,7 @@ class CPT4BP {
 	 */
 
 	public function includes() {
+		
 		require_once (CPT4BP_INCLUDES_PATH . 'PFBC/Form.php');
 		require_once (CPT4BP_INCLUDES_PATH . 'functions.php');
 		require_once (CPT4BP_INCLUDES_PATH . 'the-form.php');
@@ -115,6 +119,7 @@ class CPT4BP {
 
 		if (is_admin())
 			require_once (CPT4BP_INCLUDES_PATH . 'admin.php');
+		
 	}
 
 	/**
