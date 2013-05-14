@@ -79,11 +79,8 @@ function cpt4bp_view_form_fields($args){
 	$post_args = explode('/', $_POST['post_args']);
 	$numItems = $_POST['numItems'];
 	
-	if(is_array($args)){
+	if(is_array($args))
 		extract($args);
-		$post_args[0] = $field_type;
-		$post_args[1] = $post_type;
-	}
 	
 	if($field_id == '')
 		$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);;
@@ -94,64 +91,64 @@ function cpt4bp_view_form_fields($args){
 	
 	$form_fields = Array();
 	
-	$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$cpt4bp[hooks][form_element],$post_args[1],$field_id);
+	$cpt4bp[hooks][form_element] = apply_filters('form_element_hooks',$cpt4bp[hooks][form_element],$post_type,$field_id);
 	
-	$form_fields[display]	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][display]", $cpt4bp[hooks][form_element], array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][display]));
-	$form_fields[required]	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][required]));
+	$form_fields[display]	= new Element_Select("Display:", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][display]", $cpt4bp[hooks][form_element], array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][display]));
+	$form_fields[required]	= new Element_Checkbox("Required:","cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][required]));
 							
-	$form_fields['new'][0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]));
-	$form_fields['new'][1] 	= new Element_Textbox("Description:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][description]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][description]));
-	$form_fields['new'][2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][type]", $post_args[0]);
-	$form_fields['new'][3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_args[1] .'/form_fields/'. $field_id .'/order'));
+	$form_fields['new'][0] 	= new Element_Textbox("Name:", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][name]));
+	$form_fields['new'][1] 	= new Element_Textbox("Description:", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][description]", array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][description]));
+	$form_fields['new'][2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
+	$form_fields['new'][3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
 	
 	
 
-	switch ($post_args[0]) {
+	switch ($field_type) {
 
 		case 'Link':
-			$form_fields['new'][4] 	= new Element_Select("Target:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][target]))	;
+			$form_fields['new'][4] 	= new Element_Select("Target:", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][target]))	;
 			break;
 		case 'Dropdown':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
+			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
 			break;
 		case 'Radiobutton':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
+			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
 			break;
 		case 'Checkbox':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][Values]));
+			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
 			break;
 		case 'Taxonomy':
 			$taxonomies = cpt4bp_taxonomies();
-			$form_fields['new'][4] 	= new Element_Select("Taxonomy:", "cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][taxonomy]));
-			$form_fields['new'][5] 	= new Element_Checkbox("Multiple:","cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][multiple]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][multiple]));
+			$form_fields['new'][4] 	= new Element_Select("Taxonomy:", "cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][taxonomy]));
+			$form_fields['new'][5] 	= new Element_Checkbox("Multiple:","cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
 			break;
 		case 'Hidden':
-			$form_fields['new'][1] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_args[1]."][form_fields][".$field_id."][value]", $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][value]);
+			$form_fields['new'][1] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][value]);
 			break;
 		default:
-			$form_fields = apply_filters('cpt4bp_form_add_element',$form_fields,$post_args[1],$post_args[0],$field_id,$cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][AttachGroupType]);
+			$form_fields = apply_filters('cpt4bp_form_add_element',$form_fields,$post_type,$field_type,$field_id,$cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
 			break;
 
 	}
 
 	ob_start(); ?>
-	<li id="bp_post_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id ?>">
+	<li id="bp_post_types/<?php echo $post_type ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id ?>">
 	<div class="accordion_fields">
 		<div class="accordion-group">
 			<div class="accordion-heading"> 
 				
 				<div class="accordion-heading-options">
-				<b>Delete: </b> <a class="delete" id="<?php echo $field_id ?>" href="bp_post_types/<?php echo $post_args[1] ?>/form_fields/<?php echo $field_id ?>/order">X</a>
+				<b>Delete: </b> <a class="delete" id="<?php echo $field_id ?>" href="bp_post_types/<?php echo $post_type ?>/form_fields/<?php echo $field_id ?>/order">X</a>
 				</div>
 				
-				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>">
-				<b>Type: </b> <?php echo $post_args[0]; ?> 
-				<br><b>Name: </b> <?php echo $cpt4bp_options['bp_post_types'][$post_args[1]][form_fields][$field_id][name]; ?>
+				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>">
+				<b>Type: </b> <?php echo $field_type; ?> 
+				<br><b>Name: </b> <?php echo $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][name]; ?>
 				</a>
 				
 			</div>
 						
-			<div id="accordion_<?php echo $post_args[1]; ?>_<?php echo $post_args[0].'_'.$field_id; ?>" class="accordion-body collapse">
+			<div id="accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
 					<div class="cpt4bp_field_options">
 						<?php 
@@ -204,114 +201,6 @@ add_action( 'wp_ajax_nopriv_cpt4bp_view_form_fields', 'cpt4bp_view_form_fields' 
  */
 function cpt4bp_options_content() { 
 	session_start(); ?>
-     
-	<script type="text/javascript">
-
-	
-	jQuery(document).ready(function(jQuery) {       
-
-		jQuery(document).on('click','.delete',function() {
-			
-			var del_id = jQuery(this).attr('id');
-			var action = jQuery(this); 
-			if (confirm('Delete Permanently'))
-				jQuery.ajax({
-					type: 'POST',
-					url: ajaxurl,
-					data: {"action": "cpt4bp_item_delete", "post_args": action.attr('href')},
-					success: function(data){
-						jQuery("." + del_id).remove();
-					}
-				});
-			
-			return false;
-		});
-		
-		jQuery('.action').click(function(){
-			var numItems = jQuery('.list_item').length;
-		
-			var action = jQuery(this);
-			jQuery('.loading-animation-new').show(); // Show the animate loading gif while waiting
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "cpt4bp_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
-				success: function(data){
-					var myvar = action.attr('href');
-					var arr = myvar.split('/');
-				jQuery('.sortable_' + arr[1]).append(data);
-				jQuery('.info_' + arr[1]).hide();
-				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
-			
-				}
-			});
-			return false;
-		});
-			jQuery(document).on('mousedown','.hero-unit div',function() {
-
-	  		itemList = jQuery(this).closest('.sortable').sortable({
-	        	
-	        	update: function(event, ui) {
-					jQuery('.loading-animation-order').show(); // Show the animate loading gif while waiting
-		    	    
-				    opts = {
-		                url: ajaxurl,
-		                type: 'POST',
-		                async: true,
-		                cache: false,
-		                dataType: 'json',
-		                data:{
-		                    action: 'item_sort', // Tell WordPress how to handle this ajax request
-		                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in  1,3,2 format
-		                },
-		                success: function(response) {
-		                	
-		                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
-		                    var testst = itemList.sortable('toArray');
-		                   for (var key in testst){
-		                   	jQuery("input[id='" + testst[key] + "']").val(key); 
-		                   }
-		                    return; 
-		                },
-		                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
-		                    //alert(e);
-		                    alert('There was an error saving the order');
-		                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
-		                    return; 
-		                }
-		            };
-		            
-		            jQuery.ajax(opts);
-		        }
-	        });
-	    });
-
-	});
-	
-	</script>
-
-	<style>
-		.loading-animation-new, .loading-animation-order  {
-			display: none;		
-		}
-		.list_item{
-			background-color: #fcfcfc;
-		}
-		.cpt4bp_field_options{
-			float: right;
-			margin-top: 10px;
-			margin-right: 15px;
-		}
-		.accordion-heading-options {
-			float: right;
-			margin-top: 10px;
-			margin-right: 15px;
-		}
-		.accordion_sidebar {
-			float: right;
-			width: 20%;
-		}
-	</style>
 	
 	<div class="wrap">
 		<?php screen_icon('themes') ?>
@@ -364,11 +253,6 @@ function cpt4bp_settings_page() {
 		"action" => $_SERVER['REQUEST_URI'],
 		"view" => new View_Inline
 	));
-	
-	wp_enqueue_script('bootstrapjs', plugins_url('PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
-    wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
-    wp_enqueue_script('jQuery');
-    wp_enqueue_script('jquery-ui-sortable'); 
 	
 	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs"><label for="cpt4bp_form-element-1"></label>
 		<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>'));

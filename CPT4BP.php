@@ -13,9 +13,11 @@ class CPT4BP {
 		$this->init_hook();
 		$this->load_constants();
 
-		add_action('bp_include'			, array($this, 'includes')					, 4, 1);
-		add_action('init'				, array($this, 'load_plugin_textdomain')	, 10, 1);
-		add_action('bp_setup_globals'	, array($this, 'set_globals')				, 12, 1);
+		add_action('bp_include'				, array($this, 'includes')					, 4, 1);
+		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
+		add_action('bp_setup_globals'		, array($this, 'set_globals')				, 12, 1);
+		add_action('admin_enqueue_scripts'	, array($this, 'cpt4bp_admin_style')		, 1, 1);
+		add_action('admin_enqueue_scripts'	, array($this, 'cpt4bp_admin_js')			, 2, 1);
 		
 	}
 
@@ -44,7 +46,7 @@ class CPT4BP {
 	 */
 
 	public function load_constants() {
-		
+			
 		if (!defined('CPT4BP_INSTALL_PATH'))
 			define('CPT4BP_INSTALL_PATH', dirname(__FILE__) . '/');
 
@@ -118,7 +120,7 @@ class CPT4BP {
 			require_once (CPT4BP_INCLUDES_PATH . 'bp-backwards-compatibililty-functions.php');
 
 		if (is_admin())
-			require_once (CPT4BP_INCLUDES_PATH . 'admin.php');
+			require_once (CPT4BP_INCLUDES_PATH . '/admin/admin.php');
 		
 	}
 
@@ -131,6 +133,30 @@ class CPT4BP {
 
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain('cpt4bp', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+	}
+
+	function cpt4bp_admin_style($hook_suffix) {
+			
+		if($hook_suffix == 'toplevel_page_cpt4bp_options_page') {
+			
+			wp_enqueue_style('cpt4bp_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
+			wp_enqueue_style('bootstrapcss', plugins_url('includes/PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
+			
+		}
+		
+	}
+
+	function cpt4bp_admin_js($hook_suffix) {
+	
+		if($hook_suffix == 'toplevel_page_cpt4bp_options_page') {
+			
+			wp_enqueue_script('cpt4bp_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+			wp_enqueue_script('bootstrapjs', plugins_url('includes/PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
+		    wp_enqueue_script('jQuery');
+		    wp_enqueue_script('jquery-ui-sortable'); 
+	
+	    }
+	
 	}
 
 }
