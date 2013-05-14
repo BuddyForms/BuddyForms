@@ -132,7 +132,26 @@ function cpt4bp_create_edit_form( $args = array() ) {
 	}     
 	?>
 	<div class="the_cpt4bp_form">
-
+		<style>
+			.standard-form textarea, .standard-form input[type=text], .standard-form input[type=url],.standard-form input[type=link],.standard-form input[type=email], .standard-form input[type=password]{
+				width: 75%;
+				border: 1px inset #ccc;
+				-moz-border-radius: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+				color: #888;
+				font: inherit;
+				font-size: 14px;
+				padding: 6px;
+			}
+			
+		/** BuddyPress Fix  for the Theme Compatibility **/
+			#buddypress table tr td, #buddypress table tr th {
+				padding: 0px;
+				vertical-align: middle;
+			}
+			
+		</style>
 		<?php if ( !is_user_logged_in() ) : ?>
 			
 			<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ) ?>" method="post">
@@ -152,7 +171,9 @@ function cpt4bp_create_edit_form( $args = array() ) {
 			</form>
 				 
 		<?php else :
+		
 			if( isset( $_POST['editpost_title'])) {
+				
 				if(function_exists('stripslashes')) {
 					$editpost_title = stripslashes($_POST['editpost_title']);
 				} else {
@@ -171,11 +192,9 @@ function cpt4bp_create_edit_form( $args = array() ) {
 			<div class="form_wrapper">
 				<?php // Form starts
 				$form = new Form("editpost");
-				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical));
+				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
-				wp_enqueue_style('bootstrapcss', plugins_url('PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
-	
-				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
+					$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
 				$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 				$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
 	
@@ -214,27 +233,27 @@ function cpt4bp_create_edit_form( $args = array() ) {
 						}
 						switch( $customfield['type'] ) {
 								case 'Mail' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 								break;
 	
 							case 'Radiobutton' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Checkbox' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Dropdown' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Select($customfield['name'] . ':', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Textarea' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 								break;
 	
@@ -243,12 +262,12 @@ function cpt4bp_create_edit_form( $args = array() ) {
 								break;
 	
 							case 'Text' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 								break;
 	
 							case 'Link' :
-								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val) : array('value' => $customfield_val);
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
 	
 								break;

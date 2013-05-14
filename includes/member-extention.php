@@ -62,6 +62,7 @@ class CPT4BP_Members {
 		if ($_GET[post_id]) {
 			$bp->current_action = 'create';
 			bp_core_load_template('cpt4bp/members/members-post-create');
+			return;
 		}
 		if ($_GET[delete]) {
 			$bp->current_action = 'create';
