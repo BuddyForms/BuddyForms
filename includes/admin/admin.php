@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Create "CPT4BP Options" nav menu
  *
@@ -6,7 +7,9 @@
  * @since 0.1-beta
  */
 function cpt4bp_create_menu() {
+	
 	add_menu_page( 'CPT4BP Options', 'CPT4BP Options', 'edit_posts', 'cpt4bp_options_page', 'cpt4bp_options_content' );
+	
 }  
 add_action('admin_menu', 'cpt4bp_create_menu');
 
@@ -101,8 +104,6 @@ function cpt4bp_view_form_fields($args){
 	$form_fields['new'][2] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
 	$form_fields['new'][3] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
 	
-	
-
 	switch ($field_type) {
 
 		case 'Link':
