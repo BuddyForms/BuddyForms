@@ -8,7 +8,7 @@
 function cpt4bp_create_edit_form( $args = array() ) {
     global $post, $bp, $current_user, $cpt4bp, $post_id;
 
-	$args = apply_filters('cpt4bp_create_edit_form_atts',$args);
+	$args = apply_filters('cpt4bp_create_edit_form_args',$args);
 	
 	extract(shortcode_atts(array(
 		'posttype' => $bp->current_component,
@@ -310,7 +310,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
 								break;
 								
 							default:
-								apply_filters('cpt4bp_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
+								apply_filters('cpt4bp_create_edit_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
 								
 								break;
 	

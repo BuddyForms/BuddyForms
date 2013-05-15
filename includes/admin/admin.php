@@ -134,7 +134,7 @@ function cpt4bp_view_form_fields($args){
 			$form_fields['new'][1] 	= new Element_Hidden("cpt4bp_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", $cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][value]);
 			break;
 		default:
-			$form_fields = apply_filters('cpt4bp_form_add_element',$form_fields,$post_type,$field_type,$field_id,$cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
+			$form_fields = apply_filters('cpt4bp_form_element_add_field',$form_fields,$post_type,$field_type,$field_id,$cpt4bp_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
 			break;
 
 	}
