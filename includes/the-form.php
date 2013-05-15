@@ -82,9 +82,25 @@ function cpt4bp_create_edit_form( $args = array() ) {
 			foreach( $customfields as $key => $customfield ) : 
 			   
 				if( $customfield['type'] == 'Taxonomy' ){
-					do_action('cpt4bp_before_wp_set_post_terms',$customfield);
-					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-					do_action('cpt4bp_after_wp_set_post_terms',$customfield);
+				
+					if($customfield['taxonomy'] == 'category'){
+				
+						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+				
+					} else {
+				
+						$slug = Array();
+						$postCategories = $_POST[ sanitize_title( $customfield['name'] ) ];
+						
+						foreach ( $postCategories as $postCategory ) {
+							$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
+							$slug[] = $term->slug;
+						}
+							
+						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+				
+					}
+					
 				}
 		
 				do_action('cpt4bp_update_post_meta',$customfield,$post_id,$_POST);
@@ -95,6 +111,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
     	}
 
 		if( ! empty( $_FILES ) ) {
+			
 			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
 	        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
 	

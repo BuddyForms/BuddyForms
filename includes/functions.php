@@ -30,9 +30,25 @@ function cpt4bp_form_display_element_frontend(){
 			if ($customfield_value != '' && $customfield['display'] != 'no') :
 				$post_meta_tmp = '<div class="post_meta ' . sanitize_title($customfield['name']) . '">';
 				$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
-				$post_meta_tmp .= "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
+				
+				$meta_tmp = $meta_tmp = "<p>". $customfield_value ."</p>";
+				
+				switch ($customfield['type']) {
+					case 'Taxonomy':
+						$meta_tmp = "<p>". get_the_term_list( $post->ID, $customfield['taxonomy'] )."</p>";
+						break;
+					case 'Link':
+						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
+						break;
+					default:
+						 apply_filters('cpt4bp_form_element_display_frontend',$customfield,$post_type);
+						break;
+				}
+				
+				$post_meta_tmp .= $meta_tmp;
+				
 				$post_meta_tmp .= '</div>';
-
+				apply_filters('cpt4bp_form_element_display_frontend_before_hook',$post_meta_tmp);
 				add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
 			endif;
 		endforeach;

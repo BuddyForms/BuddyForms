@@ -77,10 +77,18 @@ function cpt4bp_taxonomies(){
 function cpt4bp_view_form_fields($args){
 	global $cpt4bp;
 	
-	$cpt4bp_options = get_option('cpt4bp_options');
+	$cpt4bp_options	= get_option('cpt4bp_options');
 	
-	$post_args = explode('/', $_POST['post_args']);
-	$numItems = $_POST['numItems'];
+	$post_args		= explode('/', $_POST['post_args']);
+	
+	if(isset($post_args[0]))
+		$field_type	= $post_args[0];
+	
+	if(isset($post_args[1]))
+		$post_type = $post_args[1];
+	
+	if(isset($_POST['numItems']))
+		$numItems = $_POST['numItems'];
 	
 	if(is_array($args))
 		extract($args);
@@ -90,7 +98,6 @@ function cpt4bp_view_form_fields($args){
 		
 	if($field_position =='')
 		$field_position = $numItems;
-	
 	
 	$form_fields = Array();
 	
