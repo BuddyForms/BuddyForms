@@ -1,10 +1,10 @@
 <?php
 
 /**
-* hook the buddypress default single hooks into the form display field 
-*
-* @package buddyforms
-* @since 0.2-beta
+ * hook the buddypress default single hooks into the form display field 
+ *
+ * @package buddyforms
+ * @since 0.2-beta
 */
 function buddyforms_form_element_single_hooks($buddyforms_form_element_hooks,$post_type,$field_id){
 		array_push($buddyforms_form_element_hooks,
@@ -25,7 +25,6 @@ add_filter('buddyforms_form_element_hooks','buddyforms_form_element_single_hooks
  * @package buddyforms
  * @since 0.2-beta
 */
-
 function buddyforms_form_display_element_frontend(){
 	global $buddyforms, $post, $bp;
 	

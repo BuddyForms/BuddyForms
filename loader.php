@@ -1,16 +1,16 @@
 <?php
 /*
  Plugin Name: BuddyForms
- Plugin URI: http://themekraft.com
+ Plugin URI: http://buddyforms.com
  Description:   
- Version: 0.1 beta
+ Version: 0.1 rc1
  Author: Sven Lehnert
  Author URI: http://themekraft.com
  Licence: GPLv3
  Network: true
  */
 
-define('buddyforms', '0.1');
+define('buddyforms', '1.0 rc1');
 
 /**
  * Loads buddyforms files only if BuddyPress is present
