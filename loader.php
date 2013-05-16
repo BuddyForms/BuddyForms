@@ -1,6 +1,6 @@
 <?php
 /*
- Plugin Name: CPT4BP
+ Plugin Name: BuddyForms
  Plugin URI: http://themekraft.com
  Description:   
  Version: 0.1 beta
@@ -10,22 +10,22 @@
  Network: true
  */
 
-define('CPT4BP', '0.1');
+define('buddyforms', '0.1');
 
 /**
- * Loads CPT4BP files only if BuddyPress is present
+ * Loads buddyforms files only if BuddyPress is present
  *
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta
  */
-function cpt4bp_init() {
+function buddyforms_init() {
 	global $wpdb;
 
 	if (is_multisite() && BP_ROOT_BLOG != $wpdb->blogid)
 		return;
 
-	require (dirname(__FILE__) . '/CPT4BP.php');
-	$cpt4bp = new CPT4BP();
+	require (dirname(__FILE__) . '/buddyforms.php');
+	$buddyforms = new buddyforms();
 }
 
-add_action('bp_loaded', 'cpt4bp_init', 0);
+add_action('bp_loaded', 'buddyforms_init', 0);

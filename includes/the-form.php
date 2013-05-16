@@ -2,13 +2,13 @@
 /**
  * Adds a form shortcode for the create and edit sreen
  * 
- * @package CPT4BP
+ * @package buddyforms
  * @since 0.1-beta	
  */
-function cpt4bp_create_edit_form( $args = array() ) {
-    global $post, $bp, $current_user, $cpt4bp, $post_id;
+function buddyforms_create_edit_form( $args = array() ) {
+    global $post, $bp, $current_user, $buddyforms, $post_id;
 
-	$args = apply_filters('cpt4bp_create_edit_form_args',$args);
+	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
 	extract(shortcode_atts(array(
 		'posttype' => $bp->current_component,
@@ -42,7 +42,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
    	if( empty( $posttype ) )
    	   $posttype = $the_post->post_type;
 	
-	$customfields = $cpt4bp['bp_post_types'][$posttype]['form_fields'];
+	$customfields = $buddyforms['bp_post_types'][$posttype]['form_fields'];
 		
 	//If the form is submitted
 	if( isset( $_POST['submitted'] ) ) {
@@ -69,7 +69,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
                 'post_title' 	=> $_POST['editpost_title'],
                 'post_content' 	=> $_POST['editpost_content'],
                 'post_type' 	=> $posttype,
-                'post_status' 	=> $cpt4bp['bp_post_types'][$posttype]['status']
+                'post_status' 	=> $buddyforms['bp_post_types'][$posttype]['status']
             );   
                 
             // insert the new form
@@ -103,7 +103,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
 					
 				}
 		
-				do_action('cpt4bp_update_post_meta',$customfield,$post_id,$_POST);
+				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
 				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] ); 
 				                   
@@ -136,11 +136,11 @@ function cpt4bp_create_edit_form( $args = array() ) {
 			?>
 			<div class="thanks">
 				<?php if($_GET['post_id']){ ?>
-		            <h1><?php _e('Saved', 'cpt4bp')?></h1>
-		            <p><?php _e('Post has been updated.', 'cpt4bp'); ?> </p>
+		            <h1><?php _e('Saved', 'buddyforms')?></h1>
+		            <p><?php _e('Post has been updated.', 'buddyforms'); ?> </p>
 	   			<?php } else { ?>
-	   				<h1><?php _e('Saved', 'cpt4bp')?></h1>
-		    	    <p><?php _e('Post has been created.', 'cpt4bp'); ?> </p>
+	   				<h1><?php _e('Saved', 'buddyforms')?></h1>
+		    	    <p><?php _e('Post has been created.', 'buddyforms'); ?> </p>
 				<?php } ?>
 			</div>
 			<?php
@@ -148,7 +148,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
 		}
 	}     
 	?>
-	<div class="the_cpt4bp_form">
+	<div class="the_buddyforms_form">
 		<style>
 			.standard-form textarea, .standard-form input[type=text], .standard-form input[type=url],.standard-form input[type=link],.standard-form input[type=email], .standard-form input[type=password]{
 				width: 75%;
@@ -174,16 +174,16 @@ function cpt4bp_create_edit_form( $args = array() ) {
 			<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ) ?>" method="post">
 				
 				<div style="float:left; margin-right:10px;">
-					<label><?php _e( 'Username', 'cpt4bp' ) ?><br />
+					<label><?php _e( 'Username', 'buddyforms' ) ?><br />
 					<input type="text" style="width:200px;" name="log" id="sidebar-user-login" class="input" value="<?php echo esc_attr(stripslashes($user_login)); ?>" tabindex="97" /></label>
 				</div>
 				<div style="float:left;margin-right:10px;">
-					<label><?php _e( 'Password', 'cpt4bp' ) ?><br />
+					<label><?php _e( 'Password', 'buddyforms' ) ?><br />
 					<input type="password" style="width:200px;" name="pwd" id="sidebar-user-pass" class="input" value="" tabindex="98" /></label>
 				</div>
-				<label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" tabindex="99" /> <?php _e( 'Remember Me', 'cpt4bp' ) ?></label>	 
-				<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e('Log In', 'cpt4bp'); ?>" tabindex="100" />
-				<input type="hidden" name="cpt4bpcookie" value="1" />
+				<label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" tabindex="99" /> <?php _e( 'Remember Me', 'buddyforms' ) ?></label>	 
+				<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e('Log In', 'buddyforms'); ?>" tabindex="100" />
+				<input type="hidden" name="buddyformscookie" value="1" />
 				<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 			</form>
 				 
@@ -310,7 +310,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
 								break;
 								
 							default:
-								apply_filters('cpt4bp_create_edit_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
+								apply_filters('buddyforms_create_edit_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
 								
 								break;
 	
@@ -320,7 +320,7 @@ function cpt4bp_create_edit_form( $args = array() ) {
 				}
 	
 				
-				if ($cpt4bp['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required'){
+				if ($buddyforms['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required'){
 					if ($post_id == 0) {
 						$file_attr = array("required" => 1, 'id' => "async-upload");
 					} else {
@@ -338,4 +338,4 @@ function cpt4bp_create_edit_form( $args = array() ) {
 	</div>		
 	<?php endif;
 }
-add_shortcode('cpt4bp_create_edit_form', 'cpt4bp_create_edit_form');
+add_shortcode('buddyforms_create_edit_form', 'buddyforms_create_edit_form');

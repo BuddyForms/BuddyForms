@@ -1,6 +1,6 @@
 <?php
 
-function cpt4bp_form_element_single_hooks($form_element_hooks,$post_type,$field_id){
+function buddyforms_form_element_single_hooks($form_element_hooks,$post_type,$field_id){
 		array_push($form_element_hooks,
 			'bp_before_blog_single_post',
 			'bp_after_blog_single_post'
@@ -8,24 +8,24 @@ function cpt4bp_form_element_single_hooks($form_element_hooks,$post_type,$field_
 
 	return $form_element_hooks;
 }
-add_filter('form_element_hooks','cpt4bp_form_element_single_hooks',1,3);
+add_filter('form_element_hooks','buddyforms_form_element_single_hooks',1,3);
 
-function cpt4bp_form_display_element_frontend(){
-	global $cpt4bp, $post, $bp;
+function buddyforms_form_display_element_frontend(){
+	global $buddyforms, $post, $bp;
 	
 	if(!is_single($post))
 		return;
 					
-	if (!isset($cpt4bp['selected_post_types']))
+	if (!isset($buddyforms['selected_post_types']))
 		return;
 
 	$post_type = get_post_type($post);
 	
-	if (!in_array($post_type, $cpt4bp['selected_post_types']))
+	if (!in_array($post_type, $buddyforms['selected_post_types']))
 		return;
 		
-	if (!empty($cpt4bp['bp_post_types'][$post_type]['form_fields'])) {
-		foreach ($cpt4bp['bp_post_types'][$post_type]['form_fields'] as $key => $customfield) :
+	if (!empty($buddyforms['bp_post_types'][$post_type]['form_fields'])) {
+		foreach ($buddyforms['bp_post_types'][$post_type]['form_fields'] as $key => $customfield) :
 			$customfield_value = get_post_meta($post->ID, sanitize_title($customfield['name']), true);
 			if ($customfield_value != '' && $customfield['display'] != 'no') :
 				$post_meta_tmp = '<div class="post_meta ' . sanitize_title($customfield['name']) . '">';
@@ -41,23 +41,23 @@ function cpt4bp_form_display_element_frontend(){
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
 						break;
 					default:
-						 apply_filters('cpt4bp_form_element_display_frontend',$customfield,$post_type);
+						 apply_filters('buddyforms_form_element_display_frontend',$customfield,$post_type);
 						break;
 				}
 				
 				$post_meta_tmp .= $meta_tmp;
 				
 				$post_meta_tmp .= '</div>';
-				apply_filters('cpt4bp_form_element_display_frontend_before_hook',$post_meta_tmp);
+				apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
 				add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
 			endif;
 		endforeach;
 	}
 }
-add_action('wp_head','cpt4bp_form_display_element_frontend');
+add_action('wp_head','buddyforms_form_display_element_frontend');
 
 /**
- * Get the CPT4BP template directory.
+ * Get the buddyforms template directory.
  *
  * @author Sven Lehnert
  * @since 0.1 beta
@@ -65,16 +65,16 @@ add_action('wp_head','cpt4bp_form_display_element_frontend');
  * @uses apply_filters()
  * @return string
  */
-function cpt4bp_get_template_directory() {
-	return apply_filters('cpt4bp_get_template_directory', constant('CPT4BP_TEMPLATE_PATH'));
+function buddyforms_get_template_directory() {
+	return apply_filters('buddyforms_get_template_directory', constant('BUDDYFORMS_TEMPLATE_PATH'));
 }
 
 /** TEMPLATE LOADER ************************************************/
 
 /**
- * CPT4BP template loader.
+ * buddyforms template loader.
  *
- * This function sets up CPT4BP to use custom templates.
+ * This function sets up buddyforms to use custom templates.
  *
  * If a template does not exist in the current theme, we will use our own
  * bundled templates.
@@ -90,7 +90,7 @@ function cpt4bp_get_template_directory() {
  *
  * @since 1.0
  */
-function cpt4bp_load_template_filter($found_template, $templates) {
+function buddyforms_load_template_filter($found_template, $templates) {
 	global $bp;
 
 	if ($bp->current_action == 'create' || $bp->current_action == 'my-posts') {
@@ -100,7 +100,7 @@ function cpt4bp_load_template_filter($found_template, $templates) {
 			//
 			// this tells BP to look for templates in our plugin directory last
 			// when the template isn't found in the parent / child theme
-			bp_register_template_stack('cpt4bp_get_template_directory', 14);
+			bp_register_template_stack('buddyforms_get_template_directory', 14);
 
 			// locate_template() will attempt to find the plugins.php template in the
 			// child and parent theme and return the located template when found
@@ -116,20 +116,20 @@ function cpt4bp_load_template_filter($found_template, $templates) {
 			
 			if ($bp->current_action == 'my-posts') {
 				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'cpt4bp/members/members-post-display' );
+				bp_get_template_part( 'buddyforms/members/members-post-display' );
 			"));
 			} elseif ($bp->current_action == 'create') {
 				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'cpt4bp/members/members-post-create' );
+				bp_get_template_part( 'buddyforms/members/members-post-create' );
 			"));
 			}
 		}
 	}
 
-	return apply_filters('cpt4bp_load_template_filter', $found_template);
+	return apply_filters('buddyforms_load_template_filter', $found_template);
 }
 
-add_filter('bp_located_template', 'cpt4bp_load_template_filter', 10, 2);
+add_filter('bp_located_template', 'buddyforms_load_template_filter', 10, 2);
 
 
 /**
@@ -138,11 +138,11 @@ add_filter('bp_located_template', 'cpt4bp_load_template_filter', 10, 2);
  * @package BuddyPress Custom Group Types
  * @since 0.1-beta
  */
-function cpt4bp_locate_template($file) {
+function buddyforms_locate_template($file) {
 	if (locate_template(array($file), false)) {
 		locate_template(array($file), true);
 	} else {
-		include (CPT4BP_TEMPLATE_PATH . $file);
+		include (BUDDYFORMS_TEMPLATE_PATH . $file);
 	}
 }
 ?>

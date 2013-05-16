@@ -1,4 +1,4 @@
-=== CPT4BP  ===
+=== buddyforms  ===
 Contributors: svenl77
 Tags: buddypress, groups, custom post types, taxonomy, frontend posting, frontend edeting,
 Requires at least: WordPress 3.x, BuddyPress 1.7.x

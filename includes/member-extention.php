@@ -1,10 +1,10 @@
 <?php
-class CPT4BP_Members {
+class BuddyForms_Members {
 
 	/**
 	* Initiate the class
 	*
-	* @package CPT4BP
+	* @package buddyforms
 	* @since 0.1-beta
 	*/
 	public function __construct() {
@@ -21,11 +21,11 @@ class CPT4BP_Members {
 	/**
 	* Setup profile navigation
 	*
-	* @package CPT4BP
+	* @package buddyforms
 	* @since 0.1-beta
 	*/
 	public function profile_setup_nav() {
-		global $cpt4bp, $bp;
+		global $buddyforms, $bp;
 
 		get_currentuserinfo();
 
@@ -33,17 +33,17 @@ class CPT4BP_Members {
 
 		$position = 20;
 
-		if (empty($cpt4bp[selected_post_types]))
+		if (empty($buddyforms[selected_post_types]))
 			return;
 
-		foreach ($cpt4bp[selected_post_types] as $post_type) {
+		foreach ($buddyforms[selected_post_types] as $post_type) {
 			$position++;
 
 			$count = $this->custom_get_user_posts_count($user_ID, array('post_type' => $post_type));
 
-			bp_core_new_nav_item(array('name' => sprintf('%s <span>%d</span>', $cpt4bp['bp_post_types'][$post_type]['name'], $count), 'slug' => $post_type, 'position' => $position, 'screen_function' => array($this, 'cpt4bp_screen_settings')));
+			bp_core_new_nav_item(array('name' => sprintf('%s <span>%d</span>', $buddyforms['bp_post_types'][$post_type]['name'], $count), 'slug' => $post_type, 'position' => $position, 'screen_function' => array($this, 'buddyforms_screen_settings')));
 
-			bp_core_new_subnav_item(array('name' => sprintf(__(' Add %s', 'cpt4bp'), $cpt4bp['bp_post_types'][$post_type]['singular_name']), 'slug' => 'create', 'parent_slug' => $post_type, 'parent_url' => trailingslashit(bp_loggedin_user_domain() . $post_type), 'item_css_id' => 'apps_sub_nav', 'screen_function' => array($this, 'load_members_post_create'), 'user_has_access' => bp_is_my_profile()));
+			bp_core_new_subnav_item(array('name' => sprintf(__(' Add %s', 'buddyforms'), $buddyforms['bp_post_types'][$post_type]['singular_name']), 'slug' => 'create', 'parent_slug' => $post_type, 'parent_url' => trailingslashit(bp_loggedin_user_domain() . $post_type), 'item_css_id' => 'apps_sub_nav', 'screen_function' => array($this, 'load_members_post_create'), 'user_has_access' => bp_is_my_profile()));
 
 		}
 
@@ -53,15 +53,15 @@ class CPT4BP_Members {
 	/**
 	* Show the post create form
 	*
-	* @package CPT4BP
+	* @package buddyforms
 	* @since 0.2-beta
 	*/
-	public function cpt4bp_screen_settings() {
+	public function buddyforms_screen_settings() {
 		global $current_user, $bp;
 
 		if ($_GET[post_id]) {
 			$bp->current_action = 'create';
-			bp_core_load_template('cpt4bp/members/members-post-create');
+			bp_core_load_template('buddyforms/members/members-post-create');
 			return;
 		}
 		if ($_GET[delete]) {
@@ -74,27 +74,27 @@ class CPT4BP_Members {
 				return;
 			}
 			
-			do_action('cpt4bp_delete_post',$_GET[delete]);
+			do_action('buddyforms_delete_post',$_GET[delete]);
 			
 			wp_delete_post($_GET[delete]);
 
 		}
 		$bp->current_action = 'my-posts';
-		bp_core_load_template('cpt4bp/members/members-post-display');
+		bp_core_load_template('buddyforms/members/members-post-display');
 
 	}
 
 	/**
 	* Show the post create form
 	*
-	* @package CPT4BP
+	* @package buddyforms
 	* @since 0.2-beta
 	*/
 	public function load_members_post_create() {
-		bp_core_load_template('cpt4bp/members/members-post-create');
+		bp_core_load_template('buddyforms/members/members-post-create');
 	}
 
 }
 
-add_action('cpt4bp_init', new CPT4BP_Members());
+add_action('buddyforms_init', new BuddyForms_Members());
 ?>

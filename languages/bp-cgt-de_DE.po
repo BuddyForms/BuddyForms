@@ -19,31 +19,31 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: cpt4bp.php:281
+#: buddyforms.php:281
 #, php-format
 #@ bp-group-management
 msgid "%s joined the group %s"
 msgstr "%s ist jetzt Freund von %s"
 
-#: cpt4bp.php:342
+#: buddyforms.php:342
 #@ default
 msgctxt "taxonomy general name"
 msgid "Categories"
 msgstr ""
 
-#: cpt4bp.php:343
+#: buddyforms.php:343
 #@ default
 msgctxt "taxonomy singular name"
 msgid "Category"
 msgstr ""
 
-#: cpt4bp.php:347
+#: buddyforms.php:347
 #@ default
 msgctxt "taxonomy general name"
 msgid "Tags"
 msgstr ""
 
-#: cpt4bp.php:348
+#: buddyforms.php:348
 #@ default
 msgctxt "taxonomy singular name"
 msgid "Tag"
@@ -64,107 +64,107 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: includes/templates/cpt4bp/comments.php:21
+#: includes/templates/buddyforms/comments.php:21
 #, php-format
-#@ cpt4bp
+#@ buddyforms
 msgid "Discussion (%d)"
 msgstr "Diskussion (%d)"
 
-#: includes/templates/cpt4bp/comments.php:43
-#@ cpt4bp
+#: includes/templates/buddyforms/comments.php:43
+#@ buddyforms
 msgid "There are no comments for this doc yet."
 msgstr "Keine Kommentare bis jetzt."
 
-#: includes/templates/cpt4bp/comments.php:55
-#@ cpt4bp
+#: includes/templates/buddyforms/comments.php:55
+#@ buddyforms
 msgid "Comment posting has been disabled on this doc."
 msgstr "Kommentieren ist deaktiviert für dieses Tierprofil."
 
-#: includes/templates/cpt4bp/delete-post.php:22
-#: includes/templates/cpt4bp/post-header.php:6
-#@ cpt4bp
-#@ cpt4bp
+#: includes/templates/buddyforms/delete-post.php:22
+#: includes/templates/buddyforms/post-header.php:6
+#@ buddyforms
+#@ buddyforms
 msgid "Delete"
 msgstr "Löschen"
 
-#: includes/templates/cpt4bp/edit-post.php:74
-#@ cpt4bp
+#: includes/templates/buddyforms/edit-post.php:74
+#@ buddyforms
 msgid "The post has been changed."
 msgstr "Das Tierprofil wurde geändert."
 
-#: includes/templates/cpt4bp/edit-post.php:89
+#: includes/templates/buddyforms/edit-post.php:89
 #: includes/templatetags.php:122
-#@ cpt4bp
+#@ buddyforms
 msgid "Username"
 msgstr "Username"
 
-#: includes/templates/cpt4bp/edit-post.php:93
+#: includes/templates/buddyforms/edit-post.php:93
 #: includes/templatetags.php:126
-#@ cpt4bp
+#@ buddyforms
 msgid "Password"
 msgstr "Passwort"
 
-#: includes/templates/cpt4bp/edit-post.php:96
+#: includes/templates/buddyforms/edit-post.php:96
 #: includes/templatetags.php:129
-#@ cpt4bp
+#@ buddyforms
 msgid "Remember Me"
 msgstr "Erinner dich an mich."
 
-#: includes/templates/cpt4bp/edit-post.php:98
+#: includes/templates/buddyforms/edit-post.php:98
 #: includes/templatetags.php:131
 #@ default
 msgid "Log In"
 msgstr ""
 
-#: includes/templates/cpt4bp/edit-post.php:126
+#: includes/templates/buddyforms/edit-post.php:126
 #: includes/templatetags.php:148
-#@ cpt4bp
+#@ buddyforms
 msgid "Title"
 msgstr "Name"
 
-#: includes/templates/cpt4bp/edit-post.php:134
+#: includes/templates/buddyforms/edit-post.php:134
 #: includes/templatetags.php:153
 #@ default
-#@ cpt4bp
+#@ buddyforms
 msgid "Category"
 msgstr "Tierart"
 
-#: includes/templates/cpt4bp/edit-post.php:139
+#: includes/templates/buddyforms/edit-post.php:139
 #: includes/templatetags.php:157
-#@ cpt4bp
+#@ buddyforms
 msgid "Content"
 msgstr "Beschreibung"
 
-#: includes/templates/cpt4bp/edit-post.php:161
+#: includes/templates/buddyforms/edit-post.php:161
 #: includes/templatetags.php:176
-#@ cpt4bp
+#@ buddyforms
 msgid "Submit"
 msgstr "Senden"
 
-#: includes/templates/cpt4bp/post-header.php:3
-#@ cpt4bp
+#: includes/templates/buddyforms/post-header.php:3
+#@ buddyforms
 msgid "View"
 msgstr "Ansehen"
 
-#: includes/templates/cpt4bp/post-header.php:5
-#@ cpt4bp
+#: includes/templates/buddyforms/post-header.php:5
+#@ buddyforms
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: includes/templates/wp/cpt4bp-loop.php:5
-#: includes/templates/wp/cpt4bp-loop.php:31
-#@ cpt4bp
+#: includes/templates/wp/buddyforms-loop.php:5
+#: includes/templates/wp/buddyforms-loop.php:31
+#@ buddyforms
 msgid "&larr; Previous Entries"
 msgstr "&larr; voriger Eintrag"
 
-#: includes/templates/wp/cpt4bp-loop.php:6
-#: includes/templates/wp/cpt4bp-loop.php:32
-#@ cpt4bp
+#: includes/templates/wp/buddyforms-loop.php:6
+#: includes/templates/wp/buddyforms-loop.php:32
+#@ buddyforms
 msgid "Next Entries &rarr;"
 msgstr "nächster Eintrag &rarr;"
 
-#: includes/templates/wp/cpt4bp-loop.php:38
-#@ cpt4bp
+#: includes/templates/wp/buddyforms-loop.php:38
+#@ buddyforms
 msgid "Not Found"
 msgstr "Nicht gefunden"
 
@@ -185,12 +185,12 @@ msgstr ""
 
 #: includes/templates/wp/taxonomy.php:10
 #, php-format
-#@ cpt4bp
+#@ buddyforms
 msgid "Group Category: %s"
 msgstr "Tierart: %s"
 
 #: includes/templatetags.php:92
-#@ cpt4bp
+#@ buddyforms
 msgid "The post has been created."
 msgstr "Das Tierprofil wurde angelegt."
 

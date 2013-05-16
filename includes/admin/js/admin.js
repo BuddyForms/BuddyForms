@@ -8,7 +8,7 @@ jQuery(document).ready(function(jQuery) {
 			jQuery.ajax({
 				type: 'POST',
 				url: ajaxurl,
-				data: {"action": "cpt4bp_item_delete", "post_args": action.attr('href')},
+				data: {"action": "buddyforms_item_delete", "post_args": action.attr('href')},
 				success: function(data){
 					jQuery("." + del_id).remove();
 				}
@@ -25,7 +25,7 @@ jQuery(document).ready(function(jQuery) {
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data: {"action": "cpt4bp_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
+			data: {"action": "buddyforms_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 			success: function(data){
 				var myvar = action.attr('href');
 				var arr = myvar.split('/');
