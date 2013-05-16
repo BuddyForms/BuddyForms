@@ -1,8 +1,6 @@
 <?php
-class buddyforms {
-	public $post_type_name;
-	public $associated_item_tax_name;
-
+class BuddyForms {
+	
 	/**
 	 * Initiate the class
 	 *
@@ -16,8 +14,8 @@ class buddyforms {
 		add_action('bp_include'				, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
 		add_action('bp_setup_globals'		, array($this, 'set_globals')				, 12, 1);
-		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
-		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')			, 2, 1);
+		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
+		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
 		
 	}
 
@@ -31,7 +29,6 @@ class buddyforms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-
 	public function init_hook() {
 		do_action('buddyforms_init');
 	}
@@ -44,7 +41,6 @@ class buddyforms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-
 	public function load_constants() {
 			
 		if (!defined('BUDDYFORMS_INSTALL_PATH'))
@@ -58,25 +54,18 @@ class buddyforms {
 		
 	}
 
-
-
 	/**
 	 * Setup all globals
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-
 	public function set_globals() {
 		global $buddyforms;
 
 		$buddyforms = get_option('buddyforms_options');
-
-		$form_element_hooks = array(
-			'no'
-		);
 		
-		$buddyforms[hooks][form_element] = $form_element_hooks;
+		$buddyforms[hooks][form_element] = array('no');
 		
 		if (empty($buddyforms['selected_post_types']))
 			return;
@@ -108,7 +97,6 @@ class buddyforms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-
 	public function includes() {
 		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'PFBC/Form.php');
@@ -130,11 +118,16 @@ class buddyforms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain('buddyforms', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 	}
 
+	/**
+	 * enqueue the needed css for the admin screen
+	 *
+	 * @package buddyforms
+	 * @since 0.1-beta
+	 */
 	function buddyforms_admin_style($hook_suffix) {
 			
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {
@@ -146,6 +139,12 @@ class buddyforms {
 		
 	}
 
+	/**
+	 * enqueue the needed js for the admin screen
+	 *
+	 * @package buddyforms
+	 * @since 0.1-beta
+	 */
 	function buddyforms_admin_js($hook_suffix) {
 	
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {

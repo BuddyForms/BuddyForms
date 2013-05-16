@@ -25,7 +25,7 @@ function buddyforms_init() {
 		return;
 
 	require (dirname(__FILE__) . '/buddyforms.php');
-	$buddyforms = new buddyforms();
+	$buddyforms = new BuddyForms();
 }
 
 add_action('bp_loaded', 'buddyforms_init', 0);

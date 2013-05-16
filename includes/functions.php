@@ -1,14 +1,30 @@
 <?php
 
-function buddyforms_form_element_single_hooks($form_element_hooks,$post_type,$field_id){
-		array_push($form_element_hooks,
+/**
+* hook the buddypress default single hooks into the form display field 
+*
+* @package buddyforms
+* @since 0.2-beta
+*/
+function buddyforms_form_element_single_hooks($buddyforms_form_element_hooks,$post_type,$field_id){
+		array_push($buddyforms_form_element_hooks,
 			'bp_before_blog_single_post',
 			'bp_after_blog_single_post'
 		);
 
-	return $form_element_hooks;
+	return $buddyforms_form_element_hooks;
 }
-add_filter('form_element_hooks','buddyforms_form_element_single_hooks',1,3);
+add_filter('buddyforms_form_element_hooks','buddyforms_form_element_single_hooks',1,3);
+
+/**
+ * If single and if the post type is selected for buddypress and if there is post meta to display. 
+ * hook the post meta to the right places.
+ * 
+ * This function is an example how you can hook fields into the template in your buddyforms extention 
+ *
+ * @package buddyforms
+ * @since 0.2-beta
+*/
 
 function buddyforms_form_display_element_frontend(){
 	global $buddyforms, $post, $bp;
@@ -68,69 +84,6 @@ add_action('wp_head','buddyforms_form_display_element_frontend');
 function buddyforms_get_template_directory() {
 	return apply_filters('buddyforms_get_template_directory', constant('BUDDYFORMS_TEMPLATE_PATH'));
 }
-
-/** TEMPLATE LOADER ************************************************/
-
-/**
- * buddyforms template loader.
- *
- * This function sets up buddyforms to use custom templates.
- *
- * If a template does not exist in the current theme, we will use our own
- * bundled templates.
- *
- * We're doing two things here:
- *  1) Support the older template format for themes that are using them
- *     for backwards-compatibility (the template passed in
- *     {@link bp_core_load_template()}).
- *  2) Route older template names to use our new template locations and
- *     format.
- *
- * View the inline doc for more details.
- *
- * @since 1.0
- */
-function buddyforms_load_template_filter($found_template, $templates) {
-	global $bp;
-
-	if ($bp->current_action == 'create' || $bp->current_action == 'my-posts') {
-
-		if (empty($found_template)) {
-			// register our theme compat directory
-			//
-			// this tells BP to look for templates in our plugin directory last
-			// when the template isn't found in the parent / child theme
-			bp_register_template_stack('buddyforms_get_template_directory', 14);
-
-			// locate_template() will attempt to find the plugins.php template in the
-			// child and parent theme and return the located template when found
-			//
-			// plugins.php is the preferred template to use, since all we'd need to do is
-			// inject our content into BP
-			//
-			// note: this is only really relevant for bp-default themes as theme compat
-			// will kick in on its own when this template isn't found
-			$found_template = locate_template('members/single/plugins.php', false, false);
-
-			// add our hook to inject content into BP
-			
-			if ($bp->current_action == 'my-posts') {
-				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'buddyforms/members/members-post-display' );
-			"));
-			} elseif ($bp->current_action == 'create') {
-				add_action('bp_template_content', create_function('', "
-				bp_get_template_part( 'buddyforms/members/members-post-create' );
-			"));
-			}
-		}
-	}
-
-	return apply_filters('buddyforms_load_template_filter', $found_template);
-}
-
-add_filter('bp_located_template', 'buddyforms_load_template_filter', 10, 2);
-
 
 /**
  * Locate a template

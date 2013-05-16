@@ -1,13 +1,15 @@
 <?php
 /**
  * Adds a form shortcode for the create and edit sreen
+ * @var $args = posttype, the_post, post_id
  * 
  * @package buddyforms
  * @since 0.1-beta	
- */
+*/
 function buddyforms_create_edit_form( $args = array() ) {
     global $post, $bp, $current_user, $buddyforms, $post_id;
-
+	
+	// hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
 	extract(shortcode_atts(array(
@@ -16,20 +18,21 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'post_id' => $post_id
 	), $args));
 
-    get_currentuserinfo();	
+	get_currentuserinfo();	
   	
+	// if post edit screen is displayed
 	if($_GET[post_id]) { 
     			
     	$post_id		= $_GET[post_id]; 
         $posttype		= $bp->current_component;
        	$the_post		= get_post( $post_id );
-		$post_id		= $the_post->ID;
+
 	   
 		if ($the_post->post_author != $current_user->ID){
 			echo '<div class="error alert">You are not allowed to edit this Post what are you doing here?</div>';
 			return;	
 		}
-		
+	// If post_id == 0 a new post is created 	
 	} elseif($post_id == 0){
 		
 		$the_post = new stdClass;
@@ -44,11 +47,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	$customfields = $buddyforms['bp_post_types'][$posttype]['form_fields'];
 		
-	//If the form is submitted
+	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 
 		$permalink = get_permalink( $_POST['editpost_id'] );
-        
+		
+        // check if post is new or edit 
         if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
         	                     
 			$my_post = array(
@@ -76,13 +80,15 @@ function buddyforms_create_edit_form( $args = array() ) {
             $post_id = wp_insert_post($my_post);
 			
 		}
-		
+		// if the post has post meta / custom fields 
         if(isset($customfields)){
         	
 			foreach( $customfields as $key => $customfield ) : 
 			   
 				if( $customfield['type'] == 'Taxonomy' ){
-				
+					
+					// check if the custom field is a taxonomy
+					// We need to check if the tax is a normal category, because categories want id's and custom taxonomies slugs... ;-()
 					if($customfield['taxonomy'] == 'category'){
 				
 						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
@@ -102,14 +108,15 @@ function buddyforms_create_edit_form( $args = array() ) {
 					}
 					
 				}
-		
+				// update meta do action to hook into. This can be interesting if you added new Form Element and want to manipulate how they get saved.
 				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
+               // update the post
 				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] ); 
 				                   
             endforeach;
     	}
-
+		// Featured image ? If yes save via media_handle_upload and set the post thumbnail
 		if( ! empty( $_FILES ) ) {
 			
 			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
@@ -130,7 +137,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 		        }  
 	       	}
 		}        
-	
+		
+		// Display the message  
 		if( empty( $hasError ) ) {
 	
 			?>
@@ -169,6 +177,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			}
 			
 		</style>
+		
 		<?php if ( !is_user_logged_in() ) : ?>
 			
 			<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ) ?>" method="post">
@@ -207,14 +216,16 @@ function buddyforms_create_edit_form( $args = array() ) {
 			}
 			?>	
 			<div class="form_wrapper">
+				
 				<?php // Form starts
 				$form = new Form("editpost");
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
-					$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
+				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
 				$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 				$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
-	
+				
+				// this if needs to be changed to be a hook so the if can be done in the groups extension plugin
 				if ($bp->current_component != 'groups') {
 					
 					$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));
@@ -235,7 +246,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 					$form->addElement(new Element_Hidden("editpost_title", $editpost_title));
 					$form->addElement(new Element_Hidden("editpost_content", $post->post_content));
 				}
-	
+				
+				// if the form have custom field to save as post meta data they get displayed here 
 				if ($customfields) {
 					foreach ($customfields as $key => $customfield) :
 						if (isset($_POST[sanitize_title($customfield['name'])])) {
@@ -310,6 +322,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 								break;
 								
 							default:
+								
+								// hook to add your form element
 								apply_filters('buddyforms_create_edit_form_display_element',$form,$post_id,$posttype,$customfield,$customfield_val);
 								
 								break;
@@ -319,7 +333,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					endforeach;
 				}
 	
-				
+				// Display Upload Field for Featured image if required is selected for this form
 				if ($buddyforms['bp_post_types'][$posttype]['featured_image']['required'][0] == 'Required'){
 					if ($post_id == 0) {
 						$file_attr = array("required" => 1, 'id' => "async-upload");
@@ -332,10 +346,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 				$form->addElement(new Element_Button('submitted', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
 				
+				// thats it render the form!
 				$form->render(); ?>
 			
 			</div>
 	</div>		
 	<?php endif;
 }
+// shortcode to add the form everywere easely ;-)
 add_shortcode('buddyforms_create_edit_form', 'buddyforms_create_edit_form');

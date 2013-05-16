@@ -57,6 +57,12 @@ function buddyforms_item_delete(){
 add_action('wp_ajax_buddyforms_item_delete', 'buddyforms_item_delete');
 add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
 
+/**
+ * get all taxonomies
+ *
+ * @package buddyforms
+ * @since 0.1-beta
+ */
 function buddyforms_taxonomies(){
 	$args=array(
      'public'   => true,
@@ -101,7 +107,7 @@ function buddyforms_view_form_fields($args){
 	
 	$form_fields = Array();
 	
-	$buddyforms[hooks][form_element] = apply_filters('form_element_hooks',$buddyforms[hooks][form_element],$post_type,$field_id);
+	$buddyforms[hooks][form_element] = apply_filters('buddyforms_form_element_hooks',$buddyforms[hooks][form_element],$post_type,$field_id);
 	
 	$form_fields[display]	= new Element_Select("Display:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][display]));
 	$form_fields[required]	= new Element_Checkbox("Required:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][required]));
@@ -343,7 +349,7 @@ function buddyforms_settings_page() {
 							</div>
 						</div>'));	
 					
-					 apply_filters('buddyforms_admin_settings_form_post_type_sidebar',$form, $selected_post_types);
+					 apply_filters('buddyforms_admin_settings_sidebar_metabox',$form, $selected_post_types);
 					
 					$form->addElement(new Element_HTML('
 						<div class="accordion-group">
