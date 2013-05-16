@@ -99,7 +99,7 @@ class BuddyForms {
 	 */
 	public function includes() {
 		
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'PFBC/Form.php');
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'member-extention.php');
@@ -133,7 +133,7 @@ class BuddyForms {
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {
 			
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
-			wp_enqueue_style('bootstrapcss', plugins_url('includes/PFBC/Resources/bootstrap/css/bootstrap.min.css', __FILE__));
+			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__));
 			
 		}
 		
@@ -150,7 +150,7 @@ class BuddyForms {
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {
 			
 			wp_enqueue_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
-			wp_enqueue_script('bootstrapjs', plugins_url('includes/PFBC/Resources/bootstrap/js/bootstrap.min.js', __FILE__), array('jquery') );
+			wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
 		    wp_enqueue_script('jQuery');
 		    wp_enqueue_script('jquery-ui-sortable'); 
 	
