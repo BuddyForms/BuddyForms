@@ -111,8 +111,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// update meta do action to hook into. This can be interesting if you added new Form Element and want to manipulate how they get saved.
 				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
+	
+			   	if(isset($customfield['slug'])){
+			   		$slug = $customfield['slug'];
+			   	} else {
+			  		$slug = sanitize_title($customfield['name']);
+			   	}
                // update the post
-				update_post_meta($post_id, sanitize_title($customfield['name']), $_POST[sanitize_title($customfield['name'])] ); 
+				update_post_meta($post_id, $slug, $_POST[$slug] ); 
 				                   
             endforeach;
     	}
@@ -250,61 +256,63 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// if the form have custom field to save as post meta data they get displayed here 
 				if ($customfields) {
 					foreach ($customfields as $key => $customfield) :
-						if (isset($_POST[sanitize_title($customfield['name'])])) {
-							if (function_exists('stripslashes')) {
-								$customfield_val = $_POST[sanitize_title($customfield['name'])];
-							} else {
-								$customfield_val = $_POST[sanitize_title($customfield['name'])];
-							}
-	
+						if(isset($customfield['slug'])){
+							$slug = $customfield['slug'];
 						} else {
-							$customfield_val = get_post_meta($post_id, sanitize_title($customfield['name']), true);
+							$slug = sanitize_title($customfield['name']);
 						}
+
+						if (isset($_POST[$slug])) {
+							$customfield_val = $_POST[$slug];
+						} else {
+							$customfield_val = get_post_meta($post_id, $slug, true);
+						}
+
 						switch( $customfield['type'] ) {
 								case 'Mail' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+								$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 								break;
 	
 							case 'Radiobutton' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+								$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Checkbox' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+								$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Dropdown' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Select($customfield['name'] . ':', sanitize_title($customfield['name']), explode(",", $customfield['Values']), $element_attr));
+								$form->addElement(new Element_Select($customfield['name'] . ':', $slug, explode(",", $customfield['Values']), $element_attr));
 								break;
 	
 							case 'Textarea' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+								$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 								break;
 	
 							case 'Hidden' :
-								$form->addElement(new Element_Hidden(sanitize_title($customfield['name'], $customfield['value'])));
+								$form->addElement(new Element_Hidden($customfield['name'], $customfield['value']));
 								break;
 	
 							case 'Text' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+								$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 								break;
 	
 							case 'Link' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-								$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', sanitize_title($customfield['name']), $element_attr));
+								$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 	
 								break;
 	
 							case 'Taxonomy' :
 								$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
 	
-								$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => sanitize_title($customfield['name']) . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $customfield['taxonomy'], 'hide_if_empty' => FALSE, );
+								$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => $slug . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $customfield['taxonomy'], 'hide_if_empty' => FALSE, );
 	
 								$dropdown = wp_dropdown_categories($args);
 	

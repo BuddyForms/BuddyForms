@@ -1,12 +1,18 @@
 <?php
 
 /**
- * hook the buddypress default single hooks into the form display field 
+ * hook the buddypress default single.php hooks into the form display field
+ * 
+ * this functions is support for the bp_default theme and an can be used as example for other theme/plugin developer
+ * how to hook there theme plugin hooks. 
  *
  * @package buddyforms
  * @since 0.2-beta
 */
 function buddyforms_form_element_single_hooks($buddyforms_form_element_hooks,$post_type,$field_id){
+	if(get_template() != 'bp-default')
+		return $buddyforms_form_element_hooks;
+	 
 		array_push($buddyforms_form_element_hooks,
 			'bp_before_blog_single_post',
 			'bp_after_blog_single_post'
@@ -14,13 +20,14 @@ function buddyforms_form_element_single_hooks($buddyforms_form_element_hooks,$po
 
 	return $buddyforms_form_element_hooks;
 }
-add_filter('buddyforms_form_element_hooks','buddyforms_form_element_single_hooks',1,3);
+	add_filter('buddyforms_form_element_hooks','buddyforms_form_element_single_hooks',1,3);
 
 /**
  * If single and if the post type is selected for buddypress and if there is post meta to display. 
  * hook the post meta to the right places.
  * 
- * This function is an example how you can hook fields into the template in your buddyforms extention 
+ * This function is an example how you can hook fields into templates in your buddyforms extention
+ * of curse you can also use get_post_meta(sanitize_title('name'))
  *
  * @package buddyforms
  * @since 0.2-beta
@@ -40,11 +47,22 @@ function buddyforms_form_display_element_frontend(){
 		return;
 		
 	if (!empty($buddyforms['bp_post_types'][$post_type]['form_fields'])) {
+			
 		foreach ($buddyforms['bp_post_types'][$post_type]['form_fields'] as $key => $customfield) :
-			$customfield_value = get_post_meta($post->ID, sanitize_title($customfield['name']), true);
+			if(isset($customfield['slug'])){
+				$slug = $customfield['slug'];
+			} else {
+				$slug = sanitize_title($customfield['name']);
+			}
+			
+			$customfield_value = get_post_meta($post->ID, $slug, true);
+			
 			if ($customfield_value != '' && $customfield['display'] != 'no') :
-				$post_meta_tmp = '<div class="post_meta ' . sanitize_title($customfield['name']) . '">';
-				$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
+				
+				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
+				
+				if($customfield['display_name'])
+					$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
 				
 				$meta_tmp = $meta_tmp = "<p>". $customfield_value ."</p>";
 				

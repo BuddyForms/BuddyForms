@@ -109,35 +109,47 @@ function buddyforms_view_form_fields($args){
 	
 	$buddyforms[hooks][form_element] = apply_filters('buddyforms_form_element_hooks',$buddyforms[hooks][form_element],$post_type,$field_id);
 	
-	$form_fields[display]	= new Element_Select("Display:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][display]));
-	$form_fields[required]	= new Element_Checkbox("Required:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][required]));
+	 if (count ($buddyforms[hooks][form_element]) == 1 )
+	 $msg =  "<br><i>If you see this text, your theme do not support BuddyForms.<br>
+	 You can use get_post_meta(sanitize_title('name')); <br>
+	 or get_post_meta('slug'); if slug <br> 
+	 in your theme to get the custom post meta value. <br>
+	 Or you write a smal fuction to add your hooks here. <br>
+	 For this please see the <a target='_blank' href='http://buddyforms.com'>documentation</a><br>
+	 how to creat and use hooks with BuddyForms</i>";
+	 
+	$form_fields['right'][display]			= new Element_Select("Display?".$msg, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][display]));
+	$form_fields['right'][display_name]		= new Element_Checkbox("Display name?","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][display_name]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][display_name]));
+	$form_fields['right'][required]			= new Element_Checkbox("Required?","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][required]));
 							
-	$form_fields['new'][0] 	= new Element_Textbox("Name:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][name]));
-	$form_fields['new'][1] 	= new Element_Textbox("Description:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][description]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][description]));
-	$form_fields['new'][2] 	= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
-	$form_fields['new'][3] 	= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
+	$form_fields['left'][name] 				= new Element_Textbox("Name:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][name]));
+	$form_fields['left'][slug]		 		= new Element_Textbox("Slug: <i>optional '_name' will create a hidden post meta field</i>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]));
+	$form_fields['left'][description] 		= new Element_Textbox("Description:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][description]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][description]));
+	
+	$form_fields['left'][type] 				= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
+	$form_fields['left'][order] 			= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
 	
 	switch ($field_type) {
 
 		case 'Link':
-			$form_fields['new'][4] 	= new Element_Select("Target:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][target]))	;
+			$form_fields['left'][target] 	= new Element_Select("Target:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][target]))	;
 			break;
 		case 'Dropdown':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
+			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
 			break;
 		case 'Radiobutton':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
+			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
 			break;
 		case 'Checkbox':
-			$form_fields['new'][4] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][Values]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][Values]));
+			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
 			break;
 		case 'Taxonomy':
 			$taxonomies = buddyforms_taxonomies();
-			$form_fields['new'][4] 	= new Element_Select("Taxonomy:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][taxonomy]));
-			$form_fields['new'][5] 	= new Element_Checkbox("Multiple:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
+			$form_fields['left'][taxonomy] 	= new Element_Select("Taxonomy:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][taxonomy]));
+			$form_fields['left'][multiple] 	= new Element_Checkbox("Multiple:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
 			break;
 		case 'Hidden':
-			$form_fields['new'][1] 	= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]);
+			$form_fields['left'][value] 	= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]);
 			break;
 		default:
 			$form_fields = apply_filters('buddyforms_form_element_add_field',$form_fields,$post_type,$field_type,$field_id,$buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
@@ -166,23 +178,20 @@ function buddyforms_view_form_fields($args){
 				<div class="accordion-inner">
 					<div class="buddyforms_field_options">
 						<?php 
-						if(isset($form_fields[display])){
-							echo '<div class="buddyforms_field_label">' . $form_fields[display]->getLabel() . '</div>';
-							echo '<div class="buddyforms_form_field">' . $form_fields[display]->render() . '</div>';	
-						}
-						if(isset($form_fields[required])){
-							echo '<div class="buddyforms_field_label">' . $form_fields[required]->getLabel() . '</div>';
-							echo '<div class="buddyforms_form_field">' . $form_fields[required]->render() . '</div>';
+						foreach ($form_fields['right'] as $key => $value) {
+						
+							echo '<div class="buddyforms_field_label">' . $form_fields['right'][$key]->getLabel() . '</div>';
+							echo '<div class="buddyforms_form_field">' . $form_fields['right'][$key]->render() . '</div>';
+
 						}
 						?>
 					</div>
 					
 					<?php 	
-					foreach ($form_fields['new'] as $key => $value) {
+					foreach ($form_fields['left'] as $key => $value) {
 					
-						echo '<div class="buddyforms_field_label">' . $form_fields['new'][$key]->getLabel() . '</div>';
-						
-						echo '<div class="buddyforms_form_field">' . $form_fields['new'][$key]->render() . '</div>';
+						echo '<div class="buddyforms_field_label">' . $form_fields['left'][$key]->getLabel() . '</div>';
+						echo '<div class="buddyforms_form_field">' . $form_fields['left'][$key]->render() . '</div>';
 
 					}
 					?>
