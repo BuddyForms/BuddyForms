@@ -19,20 +19,38 @@ jQuery(document).ready(function(jQuery) {
 	
 	jQuery('.action').click(function(){
 		var numItems = jQuery('.list_item').length;
-	
 		var action = jQuery(this);
+		var args = action.attr('href').split("/")
+		var unique = jQuery("#sortable_"+args[1]+' .'+args[0]);
+		 
+		if(args[2] == 'unique'){
+			if (unique.length){
+				alert('This element can only be added ones into each form');
+				return false;
+		    }	
+		}
+		
 		jQuery('.loading-animation-new').show(); // Show the animate loading gif while waiting
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
 			data: {"action": "buddyforms_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 			success: function(data){
+				if(data == false){
+					alert('This element can only be added ones into each form');
+					jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
+					return false;
+				}
+				
 				var myvar = action.attr('href');
 				var arr = myvar.split('/');
-			jQuery('.sortable_' + arr[1]).append(data);
-			jQuery('.info_' + arr[1]).hide();
-			jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
+				jQuery('.sortable_' + arr[1]).append(data);
+				jQuery('.info_' + arr[1]).hide();
+				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
 		
+			},
+			error: function() { 
+				alert('so nich junge');
 			}
 		});
 		return false;

@@ -17,7 +17,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'the_post' => 0,
 		'post_id' => $post_id
 	), $args));
-
 	get_currentuserinfo();	
   	
 	// if post edit screen is displayed
@@ -30,10 +29,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 		} else {
 			$the_post		= get_post( $_GET[post_id] );
 		}
-       		
-
-	   
-		if ($the_post->post_author != $current_user->ID){
+       	
+       	if ($the_post->post_author != $current_user->ID){
 			echo '<div class="error alert">You are not allowed to edit this Post what are you doing here?</div>';
 			return;	
 		}
@@ -54,17 +51,22 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
-
+			
+		$comment_status = $buddyforms['bp_post_types'][$posttype]['comment_status'];
 		
+		if(isset($_POST['comment_status']))
+				$comment_status = $_POST['comment_status'];
+			
         // check if post is new or edit 
         if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
         	                     
 			$my_post = array(
-                'ID'        	=> $_POST['new_post_id'],
-                'post_title' 	=> $_POST['editpost_title'],
-                'post_content' 	=> $_POST['editpost_content'],
-                'post_type' 	=> $posttype,
-                'post_status' 	=> 'publish'
+                'ID'        		=> $_POST['new_post_id'],
+                'post_title' 		=> $_POST['editpost_title'],
+                'post_content' 		=> $_POST['editpost_content'],
+                'post_type' 		=> $posttype,
+                'post_status' 		=> 'publish',
+                'comment_status'	=> $comment_status,
 			);
                 
             // update the new post
@@ -73,11 +75,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 		} else {
 			
 			  $my_post = array(
-                'post_author' 	=> $current_user->ID,
-                'post_title' 	=> $_POST['editpost_title'],
-                'post_content' 	=> $_POST['editpost_content'],
-                'post_type' 	=> $posttype,
-                'post_status' 	=> $buddyforms['bp_post_types'][$posttype]['status']
+                'post_author' 		=> $current_user->ID,
+                'post_title' 		=> $_POST['editpost_title'],
+                'post_content' 		=> $_POST['editpost_content'],
+                'post_type' 		=> $posttype,
+                'post_status' 		=> $buddyforms['bp_post_types'][$posttype]['status'],
+                'comment_status'	=> $comment_status,
             );   
                 
             // insert the new form
@@ -280,7 +283,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 						}
 
 						switch( $customfield['type'] ) {
-								case 'Mail' :
+							case 'Mail' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 								break;
@@ -298,6 +301,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 							case 'Dropdown' :
 								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 								$form->addElement(new Element_Select($customfield['name'] . ':', $slug, explode(",", $customfield['Values']), $element_attr));
+								break;
+							
+							case 'Comments' :
+								$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+								$form->addElement(new Element_Select($customfield['name'] . ':', 'comment_status', array('open','closed'), $element_attr));
 								break;
 	
 							case 'Textarea' :
@@ -434,9 +442,25 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	echo "</ul>";
 
 }
+function buddyforms_wp_revisions_to_keep( $post ) {
+	$num = WP_POST_REVISIONS;
+	
+	if ( true === $num )
+		$num = -1;
+	else
+		$num = intval( $num );
+
+	if ( ! post_type_supports( $post->post_type, 'revisions' ) )
+		$num = 0;
+
+	return (int) apply_filters( 'wp_revisions_to_keep', $num, $post );
+}
+function buddyforms_wp_revisions_enabled( $post ) {
+	return buddyforms_wp_revisions_to_keep( $post ) != 0;
+}
 function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 	$post = get_post( $post_id );
-	if ( ! $post || empty( $post->ID ) || ! wp_revisions_enabled( $post ) )
+	if ( ! $post || empty( $post->ID ) || ! buddyforms_wp_revisions_enabled( $post ) )
 		return array();
 
 	$defaults = array( 'order' => 'DESC', 'orderby' => 'date' );
