@@ -25,7 +25,12 @@ function buddyforms_create_edit_form( $args = array() ) {
     			
     	$post_id		= $_GET[post_id]; 
         $posttype		= $bp->current_component;
-       	$the_post		= get_post( $post_id );
+		if($_GET[revision_id]) {
+			$the_post		= get_post( $_GET[revision_id] );
+		} else {
+			$the_post		= get_post( $_GET[post_id] );
+		}
+       		
 
 	   
 		if ($the_post->post_author != $current_user->ID){
@@ -50,7 +55,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 
-		$permalink = get_permalink( $_POST['editpost_id'] );
 		
         // check if post is new or edit 
         if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
@@ -164,6 +168,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 	?>
 	<div class="the_buddyforms_form">
 		<style>
+			.post-revisions li {
+			float: left;
+			padding: 5px;
+			width: 100%;
+			}
+		
 			.standard-form textarea, .standard-form input[type=text], .standard-form input[type=url],.standard-form input[type=link],.standard-form input[type=email], .standard-form input[type=password]{
 				width: 75%;
 				border: 1px inset #ccc;
@@ -222,8 +232,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 			}
 			?>	
 			<div class="form_wrapper">
-				
+
 				<?php // Form starts
+				
 				$form = new Form("editpost");
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
@@ -356,10 +367,122 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				// thats it render the form!
 				$form->render(); ?>
-			
 			</div>
+			<?php 
+			if($buddyforms['bp_post_types'][$posttype]['revision']){ ?>
+				<div class="revision">
+					<h3>Revision</h3>
+					<?php buddyforms_wp_list_post_revisions($post_id ); ?>
+				</div>
+			<?php } ?>
 	</div>		
 	<?php endif;
+}
+
+function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
+	if ( ! $post = get_post( $post_id ) )
+		return;
+
+	// $args array with (parent, format, right, left, type) deprecated since 3.6
+	if ( is_array( $type ) ) {
+		$type = ! empty( $type['type'] ) ? $type['type']  : $type;
+		_deprecated_argument( __FUNCTION__, '3.6' );
+	}
+
+	if ( ! $revisions = buddyforms_wp_get_post_revisions( $post->ID ) )
+		return;
+
+	$rows = '';
+	foreach ( $revisions as $revision ) {
+		if ( ! current_user_can( 'read_post', $revision->ID ) )
+			continue;
+
+		$is_autosave = wp_is_post_autosave( $revision );
+		if ( ( 'revision' === $type && $is_autosave ) || ( 'autosave' === $type && ! $is_autosave ) )
+			continue;
+
+		$rows .= "\t<li>" . buddyforms_wp_post_revision_title_expanded( $revision,$post_id ) . "</li>\n";
+	}
+
+	echo "<ul class='post-revisions'>\n";
+	echo $rows;
+
+	// if the post was previously restored from a revision
+	// show the restore event details
+	if ( $restored_from_meta = get_post_meta( $post->ID, '_post_restored_from', true ) ) {
+		$author = get_user_by( 'id', $restored_from_meta[ 'restored_by_user' ] );
+		/* translators: revision date format, see http://php.net/date */
+		$datef = _x( 'j F, Y @ G:i:s', 'revision date format');
+		$date = date_i18n( $datef, strtotime( $restored_from_meta[ 'restored_time' ] ) );
+		$time_diff = human_time_diff( $restored_from_meta[ 'restored_time' ] ) ;
+		?>
+		<hr />
+		<div id="revisions-meta-restored">
+			<?php
+			printf(
+				/* translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date */
+				__( 'Previously restored by %1$s %2$s, %3$s ago (%4$s)' ),
+				get_avatar( $author->ID, 24 ),
+				$author->display_name,
+				$time_diff,
+				$date
+			);
+			?>
+		</div>
+		<?php
+	}
+	echo "</ul>";
+
+}
+function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
+	$post = get_post( $post_id );
+	if ( ! $post || empty( $post->ID ) || ! wp_revisions_enabled( $post ) )
+		return array();
+
+	$defaults = array( 'order' => 'DESC', 'orderby' => 'date' );
+	$args = wp_parse_args( $args, $defaults );
+	$args = array_merge( $args, array( 'post_parent' => $post->ID, 'post_type' => 'revision', 'post_status' => 'inherit' ) );
+
+	if ( ! $revisions = get_children( $args ) )
+		return array();
+
+	return $revisions;
+}
+function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link = true ) {
+	if ( !$revision = get_post( $revision ) )
+		return $revision;
+
+	if ( !in_array( $revision->post_type, array( 'post', 'page', 'revision' ) ) )
+		return false;
+
+	$author = get_the_author_meta( 'display_name', $revision->post_author );
+	/* translators: revision date format, see http://php.net/date */
+	$datef = _x( 'j F, Y @ G:i:s', 'revision date format');
+
+	$gravatar = get_avatar( $revision->post_author, 24 );
+
+	$date = date_i18n( $datef, strtotime( $revision->post_modified ) );
+	if ( $link && current_user_can( 'edit_post', $revision->ID ) && $link = trailingslashit( bp_loggedin_user_domain() ).get_post_type($post_id).'?post_id='.$post_id.'&revision_id='.$revision->ID  )
+		$date = "<a href='$link'>$date</a>";
+
+	$revision_date_author = sprintf(
+		/* translators: post revision title: 1: author avatar, 2: author name, 3: time ago, 4: date */
+		_x( '%1$s %2$s, %3$s ago (%4$s)', 'post revision title' ),
+		$gravatar,
+		$author,
+		human_time_diff( strtotime( $revision->post_modified ), current_time( 'timestamp' ) ),
+		$date
+	);
+
+	$autosavef = __( '%1$s [Autosave]' );
+	$currentf  = __( '%1$s [Current Revision]' );
+
+	if ( !wp_is_post_revision( $revision ) )
+		$revision_date_author = sprintf( $currentf, $revision_date_author );
+	elseif ( wp_is_post_autosave( $revision ) )
+		$revision_date_author = sprintf( $autosavef, $revision_date_author );
+
+	return $revision_date_author;
 }
 // shortcode to add the form everywere easely ;-)
 add_shortcode('buddyforms_create_edit_form', 'buddyforms_create_edit_form');

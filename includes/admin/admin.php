@@ -350,10 +350,13 @@ function buddyforms_settings_page() {
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_post_types.'" href="#accordion_'.$selected_post_types.'_status">Post Control</p></div>
 						    <div id="accordion_'.$selected_post_types.'_status" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
-									$form->addElement(new Element_Select("Status:", "buddyforms_options[bp_post_types][".$selected_post_types."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['bp_post_types'][$selected_post_types]['status'])));
+									$form->addElement( new Element_Select("Status:", "buddyforms_options[bp_post_types][".$selected_post_types."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['bp_post_types'][$selected_post_types]['status'])));
+									$form->addElement( new Element_HTML('<br><br>'));
 									$form->addElement( new Element_Checkbox("Featured Image:","buddyforms_options[bp_post_types][".$selected_post_types."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['bp_post_types'][$selected_post_types]['featured_image']['required'])));
-					
-									$form->addElement(new Element_HTML('
+									$form->addElement( new Element_HTML('<br>'));
+									$form->addElement( new Element_Checkbox("Revision: <br><i> enable frontend revison control   </i>","buddyforms_options[bp_post_types][".$selected_post_types."][revision]",array('Revision'),array('value' => $buddyforms_options['bp_post_types'][$selected_post_types]['revision'])));
+									
+									$form->addElement( new Element_HTML('
 								</div>
 							</div>
 						</div>'));	
