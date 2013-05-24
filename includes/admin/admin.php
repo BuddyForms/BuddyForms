@@ -150,7 +150,31 @@ function buddyforms_view_form_fields($args){
 			$form_fields['left'][target] 	= new Element_Select("Target:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][target]))	;
 			break;
 		case 'Dropdown':
-			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
+			$form_fields['left'][html_1]	= new Element_HTML('
+			<div class="element_field">
+			<p>Dropdown Values:</p>
+				 <ul id="'.$post_type.'_field_'.$field_id.'" class="element_field_sortable">');
+				 if(isset($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value])){
+				 	$count = 1;
+				 	 foreach ($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value] as $key => $value) {
+						$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
+						 $form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value, 'class' => 'field-sortable'));
+						$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="'.$field_id.'" id="'.$field_id.'_'.$count.'" class="delete_field">X</a>
+																						<a href="#" id="'.$field_id.'" class="orderr">move</a></li>');
+						$count++;
+					 }
+				 } else {
+				 	$form_fields['left']['html_li_start_1']	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_1">');
+					$form_fields['left']['value_1'] 	= new Element_Textbox("Entry 1", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value, 'class' => 'field-sortable'));
+					$form_fields['left']['html_li_end_1']	= new Element_HTML('<a href="'.$field_id.'" id="'.$field_id.'_1" class="delete_field">X</a></li>');
+				 }    		
+				     $form_fields['left'][html_2]		= new Element_HTML(' 
+			     </ul>
+		     </div>
+		     <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>
+		     
+			');
+				
 			break;
 		case 'Radiobutton':
 			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
@@ -166,7 +190,7 @@ function buddyforms_view_form_fields($args){
 		case 'Hidden':
 			unset($form_fields);
 			$form_fields['left'][name]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]);
-			$form_fields['left'][slug]		= new Element_Textbox("Slug:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('required' => true, "validation" => new Validation_AlphaNumeric, 'value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]));
+			$form_fields['left'][slug]		= new Element_Textbox("Slug:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('required' => true, 'value' => $slug));
 			$form_fields['left'][type]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
 			$form_fields['left'][order]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
 			$form_fields['left'][value] 	= new Element_Textbox("Value:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
@@ -219,8 +243,14 @@ function buddyforms_view_form_fields($args){
 					<?php 	
 					if($form_fields['left']){
 						foreach ($form_fields['left'] as $key => $value) {
-							echo '<div class="buddyforms_field_label">' . $form_fields['left'][$key]->getLabel() . '</div>';
-							echo '<div class="buddyforms_form_field">' . $form_fields['left'][$key]->render() . '</div>';
+							if(substr($key, 0,4) == 'html'){
+								echo $form_fields['left'][$key]->getLabel();
+								echo $form_fields['left'][$key]->render();
+							} else {
+								echo '<div class="buddyforms_field_label">' . $form_fields['left'][$key]->getLabel() . '</div>';
+								echo '<div class="buddyforms_form_field">' . $form_fields['left'][$key]->render() . '</div>';
+							}
+							
 						}
 					}
 					?>
@@ -439,7 +469,7 @@ function buddyforms_settings_page() {
 					if(is_array($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'])){
 						foreach($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'] as $field_id => $customfield) {
 								
-							$slug = $customfield['slug'];	
+							$slug = sanitize_title($customfield['slug']);	
 							if($slug == '')
 								$slug = sanitize_title($customfield['name']);
 							

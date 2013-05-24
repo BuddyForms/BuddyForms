@@ -1,22 +1,5 @@
-jQuery(document).ready(function(jQuery) {       
-	
-	jQuery(document).on('click','.delete',function() {
-		
-		var del_id = jQuery(this).attr('id');
-		var action = jQuery(this); 
-		if (confirm('Delete Permanently'))
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "buddyforms_item_delete", "post_args": action.attr('href')},
-				success: function(data){
-					jQuery("." + del_id).remove();
-				}
-			});
-		
-		return false;
-	});
-	
+jQuery(document).ready(function(jQuery) {    
+	   
 	jQuery('.action').click(function(){
 		var numItems = jQuery('.list_item').length;
 		var action = jQuery(this);
@@ -55,6 +38,46 @@ jQuery(document).ready(function(jQuery) {
 		});
 		return false;
 	});
+	
+	jQuery(document).on('click','.delete',function() {
+		
+		var del_id = jQuery(this).attr('id');
+		var action = jQuery(this); 
+		if (confirm('Delete Permanently'))
+			jQuery.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {"action": "buddyforms_item_delete", "post_args": action.attr('href')},
+				success: function(data){
+					jQuery("." + del_id).remove();
+				}
+			});
+		
+		return false;
+	});
+	
+	jQuery(document).on('click','.add_input',function() {
+	
+		var action = jQuery(this);
+		var args = action.attr('href').split("/");
+	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
+	 	numItems = numItems + 1;
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"><div class="buddyforms_field_label">Entry '+numItems+'</div><input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_field">X</a></li>');     
+      	
+    	return false;
+	
+	});
+	
+	jQuery(document).on('click','.delete_field',function() {
+		var del_id = jQuery(this).attr('id');
+		jQuery(".field_item_" + del_id).remove();
+		return false;
+	});
+	
+	jQuery(document).on('mousedown','.field_item',function() {
+		//jQuery('.sortable').sortable('cancel');
+		itemList_field = jQuery(this).closest('.element_field_sortable').sortable();
+	});	
 	
 	jQuery(document).on('mousedown','.hero-unit div',function() {
 	

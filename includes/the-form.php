@@ -120,13 +120,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// update meta do action to hook into. This can be interesting if you added new Form Element and want to manipulate how they get saved.
 				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
-	
-			   	if(isset($customfield['slug'])){
-			   		$slug = $customfield['slug'];
-			   	} else {
-			  		$slug = sanitize_title($customfield['name']);
-			   	}
-               // update the post
+	echo $slug;
+			   	$slug = sanitize_title($customfield['slug']);	
+				if($slug == '')
+					$slug = sanitize_title($customfield['name']);
+				
+				// update the post
 				update_post_meta($post_id, $slug, $_POST[$slug] ); 
 				                   
             endforeach;
@@ -224,7 +223,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// this if needs to be changed to be a hook so the if can be done in the groups extension plugin
 				if ($bp->current_component != 'groups') {
 					
-					$form->addElement(new Element_HTML('<div class="label"><label>Title</label></div>'));
 					$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
 					$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));
 
@@ -247,12 +245,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if ($customfields) {
 					foreach ($customfields as $key => $customfield) :
 					
-						if($customfield['slug'] != ''){
-							$slug = $customfield['slug'];
-						} else {
+						$slug = sanitize_title($customfield['slug']);	
+						if($slug == '')
 							$slug = sanitize_title($customfield['name']);
-						}
-
+				
 						if ($_POST[$slug] != '') {
 							$customfield_val = $_POST[$slug];
 						} else {
