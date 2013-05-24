@@ -9,6 +9,8 @@
 function buddyforms_create_edit_form( $args = array() ) {
     global $post, $bp, $current_user, $buddyforms, $post_id;
 	
+	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
+	
 	// hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
@@ -170,32 +172,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 	}     
 	?>
 	<div class="the_buddyforms_form">
-		<style>
-			.post-revisions li {
-			float: left;
-			padding: 5px;
-			width: 100%;
-			}
-		
-			.standard-form textarea, .standard-form input[type=text], .standard-form input[type=url],.standard-form input[type=link],.standard-form input[type=email], .standard-form input[type=password]{
-				width: 75%;
-				border: 1px inset #ccc;
-				-moz-border-radius: 3px;
-				-webkit-border-radius: 3px;
-				border-radius: 3px;
-				color: #888;
-				font: inherit;
-				font-size: 14px;
-				padding: 6px;
-			}
-			
-		/** BuddyPress Fix  for the Theme Compatibility **/
-			#buddypress table tr td, #buddypress table tr th {
-				padding: 0px;
-				vertical-align: middle;
-			}
-			
-		</style>
 		
 		<?php if ( !is_user_logged_in() ) : ?>
 			

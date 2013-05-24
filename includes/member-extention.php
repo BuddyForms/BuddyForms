@@ -10,6 +10,7 @@ class BuddyForms_Members {
 	public function __construct() {
 		add_action('bp_setup_nav', array($this, 'profile_setup_nav'), 20, 1);
 		add_action('bp_located_template', array($this, 'buddyforms_load_template_filter'), 10, 2);
+		
 	}
 	
 	/**
@@ -65,7 +66,7 @@ class BuddyForms_Members {
 	*/
 	public function buddyforms_screen_settings() {
 		global $current_user, $bp;
-
+			
 		if ($_GET[post_id]) {
 			$bp->current_action = 'create';
 			bp_core_load_template('buddyforms/members/members-post-create');
@@ -86,6 +87,7 @@ class BuddyForms_Members {
 			wp_delete_post($_GET[delete]);
 
 		}
+		wp_enqueue_style('members-profil-css', plugins_url('css/members-profil.css', __FILE__));
 		$bp->current_action = 'my-posts';
 		bp_core_load_template('buddyforms/members/members-post-display');
 
