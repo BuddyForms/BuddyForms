@@ -1,0 +1,23 @@
+.post-revisions li {
+float: left;
+padding: 5px;
+width: 100%;
+}
+
+.standard-form textarea, .standard-form input[type=text], .standard-form input[type=url],.standard-form input[type=link],.standard-form input[type=email], .standard-form input[type=password]{
+	width: 75%;
+	border: 1px inset #ccc;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #888;
+	font: inherit;
+	font-size: 14px;
+	padding: 6px;
+}
+
+/** BuddyPress Fix  for the Theme Compatibility **/
+#buddypress table tr td, #buddypress table tr th {
+	padding: 0px;
+	vertical-align: middle;
+}
