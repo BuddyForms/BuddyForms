@@ -35,7 +35,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 					<div class="meta">
 						<div class="item-status"><?php echo get_post_status(); ?></div>
 						<a href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID(); ?>'>Edit</a>
-						- Delete <a onclick="return confirm('Are you sure you want delete this entry?');" href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?delete='.get_the_ID() ?>'>x</a>
+						- <a onclick="return confirm('Are you sure you want to delete this entry?');" href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?delete='.get_the_ID() ?>'>Delete</a>
 					</div>
 				<?php } ?>
 			</div>
