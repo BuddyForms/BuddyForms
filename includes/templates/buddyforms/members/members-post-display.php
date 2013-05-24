@@ -1,5 +1,5 @@
 <style>
-	.item .item-status { 
+.action .item-status { 
 padding: 3px 5px; 
 border-radius: 3px; 
 -moz-border-radius: 3px; 
@@ -7,10 +7,14 @@ border-radius: 3px;
 font-weight: bold; 
 color: white; 
 background: #555555; 
+font-size: 11px;
+float: left;
+margin-right: 5px;
+text-shadow: -1px -1px 0px #222;
 }
-li.publish .item .item-status { background: green; } 
-li.pending .item .item-status { background: orange; }
-li.draft .item .item-status { background: red; }
+li.publish .action .item-status { background: green; } 
+li.pending .action .item-status { background: orange; }
+li.draft .action .item-status { background: red; }
 </style>
 <div id="item-body">
 
