@@ -1,3 +1,19 @@
 .test{
 	float:left;
 }
+.item-status { 
+	padding: 3px 5px; 
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	font-weight: bold; 
+	color: white; 
+	background: #555555; 
+	font-size: 11px;
+	float: left;
+	margin-right: 5px;
+	text-shadow: -1px -1px 0px #222;
+}
+.publish .item-status { background: green; } 
+.pending .item-status { background: orange; }
+.draft .item-status { background: red; }
