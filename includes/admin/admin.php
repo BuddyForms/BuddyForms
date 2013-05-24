@@ -138,7 +138,7 @@ function buddyforms_view_form_fields($args){
 	$form_fields['right'][required]			= new Element_Checkbox("Required?","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][required]));
 							
 	$form_fields['left'][name] 				= new Element_Textbox("Name:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][name]));
-	$form_fields['left'][slug]		 		= new Element_Textbox("Slug: <i>optional '_name' will create a hidden post meta field</i>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]));
+	$form_fields['left'][slug]		 		= new Element_Textbox("Slug: <i>optional '_name' will create a hidden post meta field</i>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('value' => $slug));
 	$form_fields['left'][description] 		= new Element_Textbox("Description:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][description]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][description]));
 	
 	$form_fields['left'][type] 				= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
@@ -164,10 +164,15 @@ function buddyforms_view_form_fields($args){
 			$form_fields['left'][multiple] 	= new Element_Checkbox("Multiple:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
 			break;
 		case 'Hidden':
-			$form_fields['left'][value] 	= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]);
+			unset($form_fields);
+			$form_fields['left'][name]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]);
+			$form_fields['left'][slug]		= new Element_Textbox("Slug:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][slug]", array('required' => true, "validation" => new Validation_AlphaNumeric, 'value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][slug]));
+			$form_fields['left'][type]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
+			$form_fields['left'][order]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
+			$form_fields['left'][value] 	= new Element_Textbox("Value:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
 			break;
 		case 'Comments':
-			 unset($form_fields);
+			unset($form_fields);
 			$form_fields['left'][name]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][name]", 'Comments');
 			$form_fields['left'][type]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
 			$form_fields['left'][order]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
@@ -176,7 +181,7 @@ function buddyforms_view_form_fields($args){
 			
 			break;
 		default:
-			//$form_fields = apply_filters('buddyforms_form_element_add_field',$form_fields,$post_type,$field_type,$field_id,$buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
+			$form_fields = apply_filters('buddyforms_form_element_add_field',$form_fields,$post_type,$field_type,$field_id,$buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][AttachGroupType]);
 			break;
 
 	}
@@ -432,12 +437,23 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 					<ul id="sortable_'. $selected_post_types .'" class="sortable sortable_'. $selected_post_types .'">'));
 					if(is_array($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'])){
-						foreach($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'] as $field_id => $sad) {
-							if($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id]['name'] != ''){
-								$field_position = $buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id]['order'];
-								$args = Array('field_position' => $field_position, 'field_id' => $field_id, 'field_value' => $field_value,'post_type' => $selected_post_types, 'field_type' => $buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'][$field_id][type]);
+						foreach($buddyforms_options['bp_post_types'][$selected_post_types]['form_fields'] as $field_id => $customfield) {
+								
+							$slug = $customfield['slug'];	
+							if($slug == '')
+								$slug = sanitize_title($customfield['name']);
+							
+							if( $slug != '' ){
+								$args = Array(
+									'slug'				=> $slug,
+									'field_position'	=> $customfield['order'],
+									'field_id'			=> $field_id,
+									'post_type'			=> $selected_post_types,
+									'field_type'		=> $customfield['type']
+									);
 								$form->addElement(new Element_HTML(buddyforms_view_form_fields($args)));
 							}
+							
 						}
 					} 
 					$form->addElement(new Element_HTML('</ul></div></div></div>'));

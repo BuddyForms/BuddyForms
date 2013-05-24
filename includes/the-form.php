@@ -246,6 +246,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// if the form have custom field to save as post meta data they get displayed here 
 				if ($customfields) {
 					foreach ($customfields as $key => $customfield) :
+					
 						if($customfield['slug'] != ''){
 							$slug = $customfield['slug'];
 						} else {
