@@ -270,13 +270,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// if the form have custom field to save as post meta data they get displayed here 
 				if ($customfields) {
 					foreach ($customfields as $key => $customfield) :
-						if(isset($customfield['slug'])){
+						if($customfield['slug'] != ''){
 							$slug = $customfield['slug'];
 						} else {
 							$slug = sanitize_title($customfield['name']);
 						}
 
-						if (isset($_POST[$slug])) {
+						if ($_POST[$slug] != '') {
 							$customfield_val = $_POST[$slug];
 						} else {
 							$customfield_val = get_post_meta($post_id, $slug, true);
@@ -378,10 +378,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 			</div>
 			<?php 
 			if($buddyforms['bp_post_types'][$posttype]['revision']){ ?>
-				<div class="revision">
-					<h3>Revision</h3>
+
 					<?php buddyforms_wp_list_post_revisions($post_id ); ?>
-				</div>
+
 			<?php } ?>
 	</div>		
 	<?php endif;
@@ -411,7 +410,8 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 
 		$rows .= "\t<li>" . buddyforms_wp_post_revision_title_expanded( $revision,$post_id ) . "</li>\n";
 	}
-
+	echo '<div class="revision">';
+	echo '<h3>Revision</h3>';
 	echo "<ul class='post-revisions'>\n";
 	echo $rows;
 
@@ -440,7 +440,8 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 		<?php
 	}
 	echo "</ul>";
-
+	echo "</div>";
+	
 }
 function buddyforms_wp_revisions_to_keep( $post ) {
 	$num = WP_POST_REVISIONS;

@@ -1,4 +1,17 @@
-
+<style>
+	.item .item-status { 
+padding: 3px 5px; 
+border-radius: 3px; 
+-moz-border-radius: 3px; 
+-webkit-border-radius: 3px; 
+font-weight: bold; 
+color: white; 
+background: #555555; 
+}
+li.publish .item .item-status { background: green; } 
+li.pending .item .item-status { background: orange; }
+li.draft .item .item-status { background: red; }
+</style>
 <div id="item-body">
 
 <?php 

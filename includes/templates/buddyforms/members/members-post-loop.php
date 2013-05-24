@@ -1,6 +1,6 @@
 <?php 
 
-global $the_lp_query;
+global $bp, $the_lp_query;
 
 if ( $the_lp_query->have_posts() ) : ?>
 
@@ -23,7 +23,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			<div class="item">
 				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
-				<div class="item-status"><?php echo 'Post Status: '.get_post_status(); ?></div>
+				<div class="item-status"><?php echo get_post_status(); ?></div>
 				<div class="item-desc"><?php the_excerpt(); ?></div>
 
 				<?php do_action( 'bp_directory_groups_item' ); ?>
@@ -32,10 +32,12 @@ if ( $the_lp_query->have_posts() ) : ?>
 
 			<div class="action">
 				Created <?php the_time('F j, Y') ?>
-				<div class="meta">
-				<a href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID(); ?>'>Edit</a>
-				- Delete <a onclick="return confirm('Are you sure you want delete this entry?');" href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?delete='.get_the_ID() ?>'>x</a>
-				</div>
+				<?php if ($bp->displayed_user->id ==  get_current_user_id()){ ?>
+					<div class="meta">
+						<a href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID(); ?>'>Edit</a>
+						- Delete <a onclick="return confirm('Are you sure you want delete this entry?');" href='<?php echo trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?delete='.get_the_ID() ?>'>x</a>
+					</div>
+				<?php } ?>
 			</div>
 
 			<div class="clear"></div>
