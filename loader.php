@@ -11,7 +11,8 @@
  */
 
 define('buddyforms', '1.0 rc1');
-
+global $buddyforms;
+	
 /**
  * Loads buddyforms files only if BuddyPress is present
  *
@@ -19,13 +20,8 @@ define('buddyforms', '1.0 rc1');
  * @since 0.1-beta
  */
 function buddyforms_init() {
-	global $wpdb;
-
-	if (is_multisite() && BP_ROOT_BLOG != $wpdb->blogid)
-		return;
-
-	require (dirname(__FILE__) . '/buddyforms.php');
-	$buddyforms = new BuddyForms();
+	require (dirname(__FILE__) . '/BuddyForms.php');
+	$buddyforms_new = new BuddyForms();
 }
 
-add_action('bp_loaded', 'buddyforms_init', 0);
+add_action('init', 'buddyforms_init', 0);

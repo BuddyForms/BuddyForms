@@ -1,27 +1,4 @@
 <?php
-
-/**
- * hook the buddypress default single.php hooks into the form display field
- * 
- * this functions is support for the bp_default theme and an can be used as example for other theme/plugin developer
- * how to hook there theme plugin hooks. 
- *
- * @package buddyforms
- * @since 0.2-beta
-*/
-function buddyforms_form_element_single_hooks($buddyforms_form_element_hooks,$post_type,$field_id){
-	if(get_template() != 'bp-default')
-		return $buddyforms_form_element_hooks;
-	 
-		array_push($buddyforms_form_element_hooks,
-			'bp_before_blog_single_post',
-			'bp_after_blog_single_post'
-		);
-
-	return $buddyforms_form_element_hooks;
-}
-	add_filter('buddyforms_form_element_hooks','buddyforms_form_element_single_hooks',1,3);
-
 /**
  * If single and if the post type is selected for buddypress and if there is post meta to display. 
  * hook the post meta to the right places.

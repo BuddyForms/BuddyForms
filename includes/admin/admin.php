@@ -7,7 +7,7 @@
  * @since 0.1-beta
  */
 function buddyforms_create_menu() {
-	
+	session_start();
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
 	
 }  
@@ -274,9 +274,8 @@ add_action( 'wp_ajax_nopriv_buddyforms_view_form_fields', 'buddyforms_view_form_
  * @package buddyforms
  * @since 0.2-beta
  */
-function buddyforms_options_content() { 
-	session_start(); ?>
-	
+function buddyforms_options_content() { ?>
+		
 	<div class="wrap">
 		<?php screen_icon('themes') ?>
 		<h2>buddyforms - General Settings</h2>

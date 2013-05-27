@@ -8,14 +8,15 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
-		$this->init_hook();
-		$this->load_constants();
-
-		add_action('bp_include'				, array($this, 'includes')					, 4, 1);
+		
+		add_action('init'					, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
-		add_action('bp_setup_globals'		, array($this, 'set_globals')				, 12, 1);
+		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
+		$this->init_hook();
+		$this->load_constants();
+		
 		
 	}
 
@@ -30,6 +31,8 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function init_hook() {
+		global $buddyforms;
+		$this->set_globals();
 		do_action('buddyforms_init');
 	}
 
@@ -63,6 +66,7 @@ class BuddyForms {
 	public function set_globals() {
 		global $buddyforms;
 
+print_r($buddyforms);
 		$buddyforms = get_option('buddyforms_options');
 		
 		$buddyforms[hooks][form_element] = array('no');
@@ -102,11 +106,7 @@ class BuddyForms {
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'member-extention.php');
 		
-		if (!class_exists('BP_Theme_Compat'))
-			require_once (BUDDYFORMS_INCLUDES_PATH . 'bp-backwards-compatibililty-functions.php');
-
 		if (is_admin())
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 		
@@ -157,5 +157,4 @@ class BuddyForms {
 	    }
 	
 	}
-
 }
