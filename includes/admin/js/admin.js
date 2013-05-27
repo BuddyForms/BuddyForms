@@ -62,24 +62,30 @@ jQuery(document).ready(function(jQuery) {
 		var args = action.attr('href').split("/");
 	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
 	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"><div class="buddyforms_field_label">Entry '+numItems+'</div><input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_field">X</a></li>');     
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'">Entry '+numItems+'<input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
       	
     	return false;
 	
 	});
 	
-	jQuery(document).on('click','.delete_field',function() {
+	jQuery(document).on('click','.delete_input',function() {
 		var del_id = jQuery(this).attr('id');
 		jQuery(".field_item_" + del_id).remove();
 		return false;
 	});
 	
-	jQuery(document).on('mousedown','.field_item',function() {
-		//jQuery('.sortable').sortable('cancel');
-		itemList_field = jQuery(this).closest('.element_field_sortable').sortable();
-	});	
+	jQuery(document).on('mousedown','.list_item',function() {
+		jQuery(".element_field_sortable").sortable({
+			update: function(event, ui) {
+				var testst = jQuery(".element_field_sortable").sortable('toArray');
+				for (var key in testst){
+				//	alert(key); this needs to be rethinked ;-)
+				}
+			}
+		});
+	});
 	
-	jQuery(document).on('mousedown','.hero-unit div',function() {
+	jQuery(document).on('mousedown','.list_item',function() {
 	
 		itemList = jQuery(this).closest('.sortable').sortable({
 	    	

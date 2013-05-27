@@ -158,23 +158,16 @@ function buddyforms_view_form_fields($args){
 				 	$count = 1;
 				 	 foreach ($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value] as $key => $value) {
 						$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
-						 $form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value, 'class' => 'field-sortable'));
-						$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="'.$field_id.'" id="'.$field_id.'_'.$count.'" class="delete_field">X</a>
-																						<a href="#" id="'.$field_id.'" class="orderr">move</a></li>');
+						$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
+						$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input">X</a> - <a href="#" id="'.$field_id.'">move</a></li>');
 						$count++;
 					 }
-				 } else {
-				 	$form_fields['left']['html_li_start_1']	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_1">');
-					$form_fields['left']['value_1'] 	= new Element_Textbox("Entry 1", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value, 'class' => 'field-sortable'));
-					$form_fields['left']['html_li_end_1']	= new Element_HTML('<a href="'.$field_id.'" id="'.$field_id.'_1" class="delete_field">X</a></li>');
-				 }    		
-				     $form_fields['left'][html_2]		= new Element_HTML(' 
-			     </ul>
+				 }   		
+				$form_fields['left'][html_2] = new Element_HTML(' 
+			    </ul>
 		     </div>
 		     <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>
-		     
-			');
-				
+		    ');
 			break;
 		case 'Radiobutton':
 			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
