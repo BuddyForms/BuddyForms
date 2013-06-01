@@ -14,6 +14,7 @@ class BuddyForms {
 		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
+		//add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
 		$this->init_hook();
 		$this->load_constants();
 		
@@ -66,7 +67,6 @@ class BuddyForms {
 	public function set_globals() {
 		global $buddyforms;
 
-print_r($buddyforms);
 		$buddyforms = get_option('buddyforms_options');
 		
 		$buddyforms[hooks][form_element] = array('no');
@@ -134,6 +134,7 @@ print_r($buddyforms);
 			
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__));
+			wp_enqueue_style('bootstrap-responsive', plugins_url('includes/admin/css/bootstrap-responsive.css', __FILE__));
 			
 		}
 		
@@ -155,6 +156,22 @@ print_r($buddyforms);
 		    wp_enqueue_script('jquery-ui-sortable'); 
 	
 	    }
+	
+	}
+	
+	/**
+	 * enqueue the needed js for the form in the frontend
+	 *
+	 * @package buddyforms
+	 * @since 0.1-beta
+	 */
+	function buddyform_front_js() {
+		
+		wp_enqueue_script('jquery');
+		wp_enqueue_script('thickbox');
+        wp_enqueue_style('thickbox');
+	
+		wp_enqueue_script( 'buddyforms-form',  plugins_url('includes/js/buddyforms.js', __FILE__), array('jquery') );
 	
 	}
 }

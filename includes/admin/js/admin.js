@@ -19,7 +19,7 @@ jQuery(document).ready(function(jQuery) {
 			url: ajaxurl,
 			data: {"action": "buddyforms_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 			success: function(data){
-				if(data == false){
+				if(data == 'unique'){
 					alert('This element can only be added ones into each form');
 					jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
 					return false;
@@ -33,7 +33,7 @@ jQuery(document).ready(function(jQuery) {
 		
 			},
 			error: function() { 
-				alert('so nich junge');
+				alert('something went wrong ;-(sorry)');
 			}
 		});
 		return false;
@@ -62,7 +62,7 @@ jQuery(document).ready(function(jQuery) {
 		var args = action.attr('href').split("/");
 	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
 	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'">Entry '+numItems+'<input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> new -> <input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
       	
     	return false;
 	

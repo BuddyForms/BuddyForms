@@ -1,4 +1,19 @@
 <?php
+
+//add_action( 'wp_ajax_buddyforms_form_ajax', 'buddyforms_form_ajax' );
+//add_action( 'wp_ajax_nopriv_buddyforms_form_ajax', 'buddyforms_form_ajax' );
+function buddyforms_form_ajax() {
+	
+	$args = array(
+		'posttype' => 'post',
+		'the_post' => 0,
+		'post_id' => $_POST['post_id']
+		);
+		
+	buddyforms_create_edit_form( $args ); 
+	die();
+}
+
 /**
  * If single and if the post type is selected for buddypress and if there is post meta to display. 
  * hook the post meta to the right places.
@@ -41,8 +56,12 @@ function buddyforms_form_display_element_frontend(){
 				if($customfield['display_name'])
 					$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
 				
-				$meta_tmp = $meta_tmp = "<p>". $customfield_value ."</p>";
 				
+				$meta_tmp = "<p>". $customfield_value ."</p>";
+				
+				if(is_array($customfield_value))
+					$meta_tmp = "<p>". implode(',' , $customfield_value)."</p>";
+			
 				switch ($customfield['type']) {
 					case 'Taxonomy':
 						$meta_tmp = "<p>". get_the_term_list( $post->ID, $customfield['taxonomy'] )."</p>";

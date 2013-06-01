@@ -102,7 +102,7 @@ function buddyforms_view_form_fields($args){
 				
 			foreach ($buddyforms[bp_post_types][$post_type][form_fields] as $key => $form_field) {
 				if($form_field[type] == $field_type)
-					return false;
+					return 'unique';
 			}
 			
 		}		
@@ -150,35 +150,34 @@ function buddyforms_view_form_fields($args){
 			$form_fields['left'][target] 	= new Element_Select("Target:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][target]))	;
 			break;
 		case 'Dropdown':
-			$form_fields['left'][html_1]	= new Element_HTML('
-			<div class="element_field">
-			<p>Dropdown Values:</p>
-				 <ul id="'.$post_type.'_field_'.$field_id.'" class="element_field_sortable">');
-				 if(isset($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value])){
-				 	$count = 1;
-				 	 foreach ($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value] as $key => $value) {
-						$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
-						$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
-						$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input">X</a> - <a href="#" id="'.$field_id.'">move</a></li>');
-						$count++;
-					 }
-				 }   		
-				$form_fields['left'][html_2] = new Element_HTML(' 
-			    </ul>
-		     </div>
-		     <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>
-		    ');
-			break;
+			$field_args = Array(
+				'post_type' => $post_type, 
+				'field_id' => $field_id,
+				'buddyforms_options' => $buddyforms_options
+			);
+			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
+		break;
 		case 'Radiobutton':
-			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
-			break;
+			$field_args = Array(
+				'post_type' => $post_type, 
+				'field_id' => $field_id,
+				'buddyforms_options' => $buddyforms_options
+			);
+			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
+		break;
 		case 'Checkbox':
-			$form_fields['left'][value] 	= new Element_Textbox("Values: <smal>value 1, value 2, ... </smal>", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value]", array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value]));
+			$field_args = Array(
+				'post_type' => $post_type, 
+				'field_id' => $field_id,
+				'buddyforms_options' => $buddyforms_options
+			);
+			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
 			break;
 		case 'Taxonomy':
 			$taxonomies = buddyforms_taxonomies();
-			$form_fields['left'][taxonomy] 	= new Element_Select("Taxonomy:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][taxonomy]));
-			$form_fields['left'][multiple] 	= new Element_Checkbox("Multiple:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
+			$form_fields['left'][taxonomy] 		= new Element_Select("Taxonomy:", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][taxonomy]));
+			$form_fields['left'][multiple]		= new Element_Checkbox("Multiple:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][multiple]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][multiple]));
+			$form_fields['left'][creat_new_tax] = new Element_Checkbox("User can creat new?:","buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][creat_new_tax]));
 			break;
 		case 'Hidden':
 			unset($form_fields);
@@ -194,7 +193,7 @@ function buddyforms_view_form_fields($args){
 			$form_fields['left'][type]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][type]", $field_type);
 			$form_fields['left'][order]		= new Element_Hidden("buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][order]", $field_position, array('id' => 'bp_post_types/' . $post_type .'/form_fields/'. $field_id .'/order'));
 			//$form_fields['left'][comments]	= new Element_Select("Comments open?", "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][comments]", array('open','closed'), array('value' => $buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][comments]));
-			$form_fields['left'][html]		= new Element_HTML('There are no settings needed so far');
+			$form_fields['left'][html]		= new Element_HTML('There are no settings needed so far You can change theh global comment settings in the sidebar, and with the comments element added to the form the user has the posebility to overwrite the global settings and open close comments from ther eown post');
 			
 			break;
 		default:
@@ -328,7 +327,7 @@ function buddyforms_settings_page() {
 		"view" => new View_Inline
 	));
 	
-	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs"><label for="buddyforms_form-element-1"></label>
+	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs">
 		<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>'));
 		
 	if(is_array($buddyforms_options['selected_post_types'])){
@@ -483,5 +482,31 @@ function buddyforms_settings_page() {
 			}
 		$form->addElement(new Element_HTML('</div>'));			
 	$form->render();
+}
+
+function buddyforms_form_element_multyble($form_fields, $args){
+		
+	extract( $args );
+	
+	$form_fields['left'][html_1] = new Element_HTML('
+	<div class="element_field">
+	<p>Checkbox Values:</p>
+		 <ul id="'.$post_type.'_field_'.$field_id.'" class="element_field_sortable">');
+		 if(isset($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value])){
+		 	$count = 1;
+		 	 foreach ($buddyforms_options['bp_post_types'][$post_type][form_fields][$field_id][value] as $key => $value) {
+				$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
+				$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[bp_post_types][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
+				$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input">X</a> - <a href="#" id="'.$field_id.'">move</a></li>');
+				$count++;
+			 }
+		 }   		
+		$form_fields['left'][html_2] = new Element_HTML(' 
+	    </ul>
+     </div>
+     <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>
+    ');	
+	
+	return $form_fields;
 }
 ?>
