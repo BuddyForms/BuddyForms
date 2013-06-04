@@ -1,4 +1,58 @@
 jQuery(document).ready(function(jQuery) {    
+	
+	jQuery(".select_posttype").each(function(idx, li) {
+		var li_id = jQuery(this).attr('id');
+		if(jQuery(this).is(':checked')){
+			jQuery('.'+li_id).show();
+		} else {
+			jQuery('.'+li_id).hide();
+		}
+	})
+
+	jQuery('.select_posttype').click(function(){
+		var li_id = jQuery(this).attr('id');
+		if(jQuery(this).is(':checked')){
+			jQuery('.'+li_id).show();
+		} else {
+			jQuery('.'+li_id).hide();
+		}
+	});
+	
+	jQuery('.new_tab').click(function(){
+		var action = jQuery(this);
+		var create_new_form_name = jQuery('#create_new_form_name').val();
+		var create_new_form_singular_name = jQuery('#create_new_form_singular_name').val();
+		
+		jQuery.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {"action": "buddyforms_add_form", "create_new_form_name": create_new_form_name, "create_new_form_singular_name": create_new_form_singular_name},
+			success: function(data){
+				window.location.reload(true);
+			},
+			error: function() { 
+				alert('something went wrong ;-(sorry)');
+			}
+		});
+	});
+ 	jQuery('.dele_form').click(function(){
+
+ 		var dele_form_slug = jQuery(this).attr('id');
+
+		var action = jQuery(this); 
+		if (confirm('Delete Permanently'))
+			jQuery.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {"action": "buddyforms_delete_form", "dele_form_slug": dele_form_slug},
+				success: function(data){
+					window.location.reload(true);
+				}
+			});
+		
+		return false;
+ 	});
+	 
 	   
 	jQuery('.action').click(function(){
 		var numItems = jQuery('.list_item').length;
@@ -62,7 +116,7 @@ jQuery(document).ready(function(jQuery) {
 		var args = action.attr('href').split("/");
 	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
 	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> new -> <input class="field-sortable" type="text" name="buddyforms_options[bp_post_types]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> new -> <input class="field-sortable" type="text" name="buddyforms_options[buddyforms]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
       	
     	return false;
 	

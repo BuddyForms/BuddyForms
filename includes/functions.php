@@ -30,17 +30,19 @@ function buddyforms_form_display_element_frontend(){
 	if(!is_single($post))
 		return;
 					
-	if (!isset($buddyforms['selected_post_types']))
+	if (!isset($buddyforms['buddyforms']))
 		return;
 
 	$post_type = get_post_type($post);
 	
-	if (!in_array($post_type, $buddyforms['selected_post_types']))
-		return;
+	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+		if($buddyforms['buddyforms'][$key]['post_type'] != 'none' &&  $buddyforms['buddyforms'][$key]['post_type'] == $post_type)
+			$form = $buddyforms['buddyforms'][$key]['slug'];
+	}
 		
-	if (!empty($buddyforms['bp_post_types'][$post_type]['form_fields'])) {
+	if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 			
-		foreach ($buddyforms['bp_post_types'][$post_type]['form_fields'] as $key => $customfield) :
+		foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
 			if(isset($customfield['slug'])){
 				$slug = $customfield['slug'];
 			} else {

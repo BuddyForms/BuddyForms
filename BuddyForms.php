@@ -71,27 +71,34 @@ class BuddyForms {
 		
 		$buddyforms[hooks][form_element] = array('no');
 		
-		if (empty($buddyforms['selected_post_types']))
+		if (empty($buddyforms['buddyforms']))
 			return;
+		
+		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);	
+		
+		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+				
+				//$post_type_object = get_post_type_object($key);
 
-		foreach ($buddyforms['selected_post_types'] as $key => $value) {
-
-			$post_type_object = get_post_type_object($value);
-
-			if (empty($buddyforms['bp_post_types'][$value][name])) {
-				$buddyforms['bp_post_types'][$value][name] = $post_type_object->labels->name;
-				$buddyforms['bp_post_types'][$value][singular_name] = $post_type_object->labels->singular_name;
-			}
-
-			if (empty($buddyforms['bp_post_types'][$value][name])) {
-				$buddyforms['bp_post_types'][$value][name] = $value;
-				$buddyforms['bp_post_types'][$value][singular_name] = $value;
-			}
-
-			if (empty($buddyforms['bp_post_types'][$value][slug]))
-				$buddyforms['bp_post_types'][$value][slug] = $value;
-
+				// if (empty($buddyforms['buddyforms'][$form][name])) {
+					// $buddyforms['buddyforms'][$form][name] = $post_type_object->labels->name;
+					// $buddyforms['buddyforms'][$form][singular_name] = $post_type_object->labels->singular_name;
+				// }
+	
+				// if (empty($buddyforms['buddyforms'][$form][name])) {
+					// $buddyforms['buddyforms'][$form][name] = $form;
+					// $buddyforms['buddyforms'][$form][singular_name] = $form;
+				// }
+				$slug = sanitize_title($buddyforms['buddyforms'][$key][slug]);
+				if($slug != $key){
+					$buddyforms['buddyforms'][$slug] = $buddyforms['buddyforms'][$key];
+					unset($buddyforms['buddyforms'][$key]);
+					$buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms, $slug, $key);	
+				}
+				
 		}
+		
+
 
 	}
 
@@ -106,6 +113,8 @@ class BuddyForms {
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-control.php');
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 		
 		if (is_admin())
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
@@ -131,11 +140,10 @@ class BuddyForms {
 	function buddyforms_admin_style($hook_suffix) {
 			
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {
-			
+				
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__));
-			wp_enqueue_style('bootstrap-responsive', plugins_url('includes/admin/css/bootstrap-responsive.css', __FILE__));
-			
+		
 		}
 		
 	}

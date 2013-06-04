@@ -919,7 +919,6 @@ textarea {
 }
 
 label {
-  display: block;
   margin-bottom: 5px;
 }
 
@@ -1712,7 +1711,7 @@ input.search-query {
 .form-inline label,
 .form-search .btn-group,
 .form-inline .btn-group {
-  display: block;
+	display: inline;
 }
 
 .form-search .input-append,
