@@ -113,11 +113,13 @@ class BuddyForms {
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-control.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 		
-		if (is_admin())
+		if (is_admin()){
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
+			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
+		}
+			
 		
 	}
 
