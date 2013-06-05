@@ -1,6 +1,5 @@
 <?php
 
-
 //add a button to the content editor, next to the media button
 //this button will show a popup that contains inline content
 add_action('media_buttons_context', 'add_my_custom_button');
@@ -15,7 +14,7 @@ function add_my_custom_button($context) {
   	return $context;
   
   //path to my icon
-  $img = plugins_url( 'penguin.png' , __FILE__ );
+  $img = plugins_url( 'admin/img/icon-buddyformsc-16.png' , __FILE__ );
   
   //the id of the container I want to show in the popup
   $container_id = 'popup_container';
@@ -23,10 +22,10 @@ function add_my_custom_button($context) {
   //our popup's title
   $title = 'BuddyForms Shortcode Generator!';
 
-  //append the icon
-  $context .= "<a class='thickbox' title='{$title}'
+  //append the icon< a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
+  $context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
     href='#TB_inline?width=400&inlineId={$container_id}'>
-    <img src='{$img}' /></a>";
+    <img src='{$img}' /></span> Add Form</a>";
   
   return $context;
 }

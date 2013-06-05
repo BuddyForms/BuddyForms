@@ -245,12 +245,15 @@ function buddyforms_create_edit_form( $args = array() ) {
 					$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));
 
 					ob_start();
+					
 						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 						if(isset($post_id)){
 							$post = get_post($post_id, 'OBJECT');
 							wp_editor($post->post_content, 'editpost_content', $settings);
 						} else {
-							wp_editor('', 'editpost_content', $settings);
+							$content = false;
+							$post = 0;
+							wp_editor($content, 'editpost_content', $settings);
 						}
 						$wp_editor = ob_get_contents();
 					ob_clean();
