@@ -1,5 +1,95 @@
 <?php
 
+
+//add a button to the content editor, next to the media button
+//this button will show a popup that contains inline content
+add_action('media_buttons_context', 'add_my_custom_button');
+
+//add some content to the bottom of the page 
+//This will be shown in the inline modal
+add_action('admin_footer', 'add_inline_popup_content');
+
+//action to add a custom button to the content editor
+function add_my_custom_button($context) {
+  if (!is_admin())
+  	return $context;
+  
+  //path to my icon
+  $img = plugins_url( 'penguin.png' , __FILE__ );
+  
+  //the id of the container I want to show in the popup
+  $container_id = 'popup_container';
+  
+  //our popup's title
+  $title = 'BuddyForms Shortcode Generator!';
+
+  //append the icon
+  $context .= "<a class='thickbox' title='{$title}'
+    href='#TB_inline?width=400&inlineId={$container_id}'>
+    <img src='{$img}' /></a>";
+  
+  return $context;
+}
+
+function add_inline_popup_content() {
+global $buddyforms;
+	if (!is_admin())
+		return; ?>
+		
+	<div id="popup_container" style="display:none;">
+	<h2>Hello from my custom button!</h2>
+	<?php 
+  
+  	// Get all post types
+    $args=array(
+		'public' => true,
+		'show_ui' => true
+    ); 
+    $output = 'names'; // names or objects, note names is the default
+    $operator = 'and'; // 'and' or 'or'
+    $post_types = get_post_types($args,$output,$operator); 
+   	$post_types_none[none] = none;
+	$post_types = array_merge($post_types_none,$post_types);
+	
+  
+  	$form = new Form("buddyforms_add_form");
+	$form->configure(array(
+		"prevent" => array("bootstrap", "jQuery"),
+		"action" => $_SERVER['REQUEST_URI'],
+		"view" => new View_Inline
+	));
+	$the_forms[] = 'Select the form to use';
+	
+	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+		$the_forms[] = $buddyform['slug'];
+	}
+	$form->addElement( new Element_Select("Select the form to use!", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
+	$form->addElement( new Element_Select("Select the posttype!", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
+	$form->render();
+  ?>
+  <a href="#" class="buddyforms-button-insert">Insert into page</a>
+</div>
+<?php
+}
+
+add_action('admin_footer',  'add_mce_popup');
+
+function add_mce_popup(){ ?>
+   <script>
+
+jQuery(document).ready(function (){
+    jQuery('.buddyforms-button-insert').on('click',function(event){  
+    	var form = jQuery('.buddyforms_add_form').val();
+    	var posttype = jQuery('.buddyforms_posttype').val();
+		window.send_to_editor('[buddyforms_form form="'+form +'" post_type="'+posttype+'"]');
+        });
+});
+
+</script>
+<?php
+}
+
+
 //add_action( 'wp_ajax_buddyforms_form_ajax', 'buddyforms_form_ajax' );
 //add_action( 'wp_ajax_nopriv_buddyforms_form_ajax', 'buddyforms_form_ajax' );
 function buddyforms_form_ajax() {

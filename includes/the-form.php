@@ -246,8 +246,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 					ob_start();
 						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
-						$post = get_post($post_id, 'OBJECT');
-						wp_editor($post->post_content, 'editpost_content', $settings);
+						if(isset($post_id)){
+							$post = get_post($post_id, 'OBJECT');
+							wp_editor($post->post_content, 'editpost_content', $settings);
+						} else {
+							wp_editor('', 'editpost_content', $settings);
+						}
 						$wp_editor = ob_get_contents();
 					ob_clean();
 					
