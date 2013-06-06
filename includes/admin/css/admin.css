@@ -1,3 +1,118 @@
+/** the tab menu **/
+
+.nav a { 
+	text-decoration: none; 
+	font-size: 15px; 
+	color: #aaa; 
+}
+
+.nav .active a {
+	color: #464646;
+}
+
+.nav a:hover {
+	color: red;
+}
+
+
+/** the content area **/ 
+
+.tab-content .hero-unit {
+	background-color: #fcfcfc;
+	border: 1px solid #dfdfdf;	
+}
+.accordion-group .accordion-heading {
+	border-bottom: 1px solid #dfdfdf;
+	text-shadow: #fff 0 1px 0;
+	-webkit-box-shadow: 0 1px 0 #fff;
+	box-shadow: 0 1px 0 #fff;
+	background: #f1f1f1;
+	background-image: -webkit-gradient(linear,left bottom,left top,from(#ececec),to(#f9f9f9));
+	background-image: -webkit-linear-gradient(bottom,#ececec,#f9f9f9);
+	background-image: -moz-linear-gradient(bottom,#ececec,#f9f9f9);
+	background-image: -o-linear-gradient(bottom,#ececec,#f9f9f9);
+	background-image: linear-gradient(to top,#ececec,#f9f9f9);
+}
+
+.create-form-box label[for=create_new_form_name], 
+.create-form-box label[for=create_new_form_singular_name] {
+	width: 20%;
+	float: left; 
+}
+.create-form-box label[for=create_new_form_singular_name] {
+	clear: both; 
+}
+.create-form-box input[name=create_new_form_name], 
+.create-form-box input[name=create_new_form_singular_name] {
+	width: 50%;
+	float: left; 
+	clear: right; 
+}
+.accordion-body .accordion-inner {
+	padding: 30px 15px;
+}
+.hero-unit .create-form-box p {
+padding-top: 18px !important;
+}
+.accordion-inner .innerblock {
+	overflow: auto;
+	height: auto;
+	margin-bottom: 20px;
+}
+.accordion-inner .innerblock .radio {
+	padding-right: 15px;	
+}
+.accordion-inner .innerblock .radio input[type=radio] {
+	margin-right: 5px;
+	margin-left: 1px;
+}
+.form-inline .buddyforms_accordion_left select {
+	margin-bottom: 15px;
+}
+.form-inline .buddyforms_accordion_right .checkbox {
+	margin-bottom: 15px;
+}
+i.small {
+	font-size: 15px;
+}
+.form_type_settings input[type="text"] {
+	margin-bottom: 20px;
+}
+
+
+
+/** sidebar **/ 
+	
+.accordion_sidebar .accordion-heading p {
+	font-size: 15px;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	text-shadow: #fff 0 1px 0; 
+	padding: 7px 10px;
+	margin: 0;
+}
+.accordion_sidebar .accordion-inner {
+	background: #fcfcfc;
+	border-color: #dfdfdf;
+	padding: 15px;
+}
+.accordion_sidebar .accordion-group {
+	margin-bottom: 20px;
+}
+.accordion_sidebar input[type="text"] {
+	width: 188px;
+	margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+/** the beginning **/ 
+
 .loading-animation-new, .loading-animation-order  {
 	display: none;		
 }
