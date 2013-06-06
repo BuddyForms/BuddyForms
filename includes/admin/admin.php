@@ -96,7 +96,7 @@ function buddyforms_settings_page() {
 			$form->addElement(new Element_HTML('
 			<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
 				<div class="accordion-group">
-					<div class="accordion-heading"><p class="accordion-toggle">Publish</p></div>
+					<div class="accordion-heading"><p class="accordion-toggle">Save Settings</p></div>
 					<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Hidden("submit", "submit"));
@@ -140,7 +140,7 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 					<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
 						<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle">Publish</p></div>
+							<div class="accordion-heading"><p class="accordion-toggle">Save This Form</p></div>
 							<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Hidden("submit", "submit"));
@@ -249,6 +249,9 @@ function buddyforms_settings_page() {
 						</div>'));	
 					
 					$form->addElement(new Element_HTML('
+					<br>
+					<h3>Form Builder</h3>
+					<p>Add elements from the right box "Form Elements" by clicking on them.</p>
 					<ul id="sortable_'. $buddyform['slug'] .'" class="sortable sortable_'. $buddyform['slug'] .'">'));
 					if(is_array($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){
 						foreach($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'] as $field_id => $customfield) {
