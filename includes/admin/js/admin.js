@@ -1,5 +1,38 @@
 jQuery(document).ready(function(jQuery) {    
+
+	jQuery(".form_type").each(function(idx, li) {
+    	var form_type_id = jQuery(this).attr('id').slice(0,-2);
+    	var form_type_val = jQuery(this).val();
+		
+		if(jQuery(this).is(':checked')){
+			if(form_type_val == 'post_form'){
+				jQuery('.bf_element_display_'+form_type_id).show('fast');
+			} else {
+				jQuery('.bf_element_display_'+form_type_id).hide('fast');
+			}
+			jQuery('.'+form_type_val+'_'+form_type_id).show();
+		} else {
+			jQuery('.'+form_type_val+'_'+form_type_id).hide();
+		}
+    	 
+	})	
 	
+	jQuery('.form_type').click(function(){
+    	var form_type_id = jQuery(this).attr('id').slice(0,-2);
+    	var form_type_val = jQuery(this).val();
+
+    	if(form_type_val == 'post_form'){
+    		jQuery('.bf_element_display_'+form_type_id).show('fast');
+    		jQuery('.mail_form_'+form_type_id).hide('fast');
+    		jQuery('.'+form_type_val+'_'+form_type_id).show('fast');	
+    	} else {
+    		jQuery('.bf_element_display_'+form_type_id).hide('fast');
+    		jQuery('.post_form_'+form_type_id).hide('fast');
+    		jQuery('.'+form_type_val+'_'+form_type_id).show('fast');	
+    	}
+        
+    });
+
 	jQuery(".select_posttype").each(function(idx, li) {
 		var li_id = jQuery(this).attr('id');
 		if(jQuery(this).is(':checked')){
@@ -18,10 +51,25 @@ jQuery(document).ready(function(jQuery) {
 		}
 	});
 	
-	jQuery('.new_tab').click(function(){
+	jQuery('.new_form').click(function(){
 		var action = jQuery(this);
 		var create_new_form_name = jQuery('#create_new_form_name').val();
 		var create_new_form_singular_name = jQuery('#create_new_form_singular_name').val();
+		
+		jQuery(".nav-tabs li a").each(function(idx, li) {
+			var li_href = jQuery(this).attr('href');
+			
+			if(create_new_form_name == ''){
+				alert('You need to enter a name for the form!')
+				exit; 
+			}
+			
+			if(li_href == '#'+create_new_form_name.toLowerCase()){
+				alert('This form already exists please choose a different name!')
+				exit; 
+			}
+		});
+		
 		
 		jQuery.ajax({
 			type: 'POST',

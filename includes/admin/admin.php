@@ -107,20 +107,28 @@ function buddyforms_settings_page() {
 			    	</div>
 				</div>
 			</div>'));
-		
-			$form->addElement(new Element_HTML('
-			<div class="hero-unit">
-			  <h3>Global Setup</h3>
-			  <lable><b>Create a new Form</b></lable>
+					$form->addElement(new Element_HTML('
+			<div class="hero-unit">'));
+						$form->addElement(new Element_HTML('
+			  <h3>General Settings</h3>
 			'));
-			$form->addElement(new Element_Textbox("<br>Name:<br>", "create_new_form_name",array('id' => 'create_new_form_name')));
-			$form->addElement(new Element_Textbox("<br>Singular Name:<br>", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name')));
-			
-			$form->addElement(new Element_HTML('<br>'));
-			$form->addElement(new Element_Button('button','button',array('class' => 'new_tab', 'name' => 'new_tab','value' => 'Creat new Form')));
+			$form->addElement(new Element_HTML('
+	 		<div class="accordion-group">
+				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create a new Form</p></div>
+			    <div id="accordion_buddyforms_general_settings_create_form" class="accordion-body collapse">
+					<div class="accordion-inner">')); 
+						$form->addElement(new Element_Textbox("<br>Name:<br>", "create_new_form_name",array('id' => 'create_new_form_name')));
+						$form->addElement(new Element_Textbox("<br>Singular Name:<br>", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name')));
+						
+						$form->addElement(new Element_HTML('<br><br>'));
+						$form->addElement(new Element_Button('button','button',array('class' => 'new_form', 'name' => 'new_form','value' => 'Creat new Form')));
+						
+						$form->addElement( new Element_HTML('
+					</div>
+				</div>
+			</div>'));	
 					
 			$form = apply_filters('buddyforms_general_settings', $form);	
-					
 									
 			$form->addElement(new Element_HTML('</div></div>'));
 		
@@ -155,35 +163,8 @@ function buddyforms_settings_page() {
 									$form->addElement(new Element_HTML('
 								</div>
 					    	</div>
-						</div>
-				 		<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status">Post Control</p></div>
-						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
-								<div class="accordion-inner">')); 
-									$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['status'])));
-									$form->addElement( new Element_HTML('<br><br>'));
-									$form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status'])));
-									$form->addElement( new Element_HTML('<br><br>'));
-									$form->addElement( new Element_Checkbox("Featured Image:","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
-									$form->addElement( new Element_HTML('<br>'));
-									$form->addElement( new Element_Checkbox("Revision: <br><i> enable frontend revison control   </i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
-									
-									$form->addElement( new Element_HTML('
-								</div>
-							</div>
-						</div>'));	
-					
-						$form->addElement( new Element_HTML('<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_post_type">Hook Custom Post Meta</p></div>
-						    <div id="accordion_'.$buddyform['slug'].'_post_type" class="accordion-body collapse">
-								<div class="accordion-inner">')); 
-									$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'])));
-									
-									$form->addElement( new Element_HTML('
-								</div>
-							</div>
-						</div>'));	
-					
+						</div>'));
+						
 					 apply_filters('buddyforms_admin_settings_sidebar_metabox',$form, $buddyform['slug']);
 					
 					$form->addElement(new Element_HTML('
@@ -211,8 +192,9 @@ function buddyforms_settings_page() {
 						</div>		  
 					</div>
 					<div id="buddyforms_forms_builder_'.$buddyform['slug'].'" class="buddyforms_forms_builder">'));
-					$form->addElement(new Element_HTML('<div class="hero-unit">
-						<h3>Post Type General Settings</h3>'));    
+						$form->addElement(new Element_HTML('
+						<div class="hero-unit">
+						<h3>Form Settings for "'.$buddyform['name'].'"</h3>'));    
 					$form->addElement(new Element_HTML('<p class="loading-animation-order alert alert-success">Save new order <i class="icon-ok"></i></p>'));
 					$form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">Loade new element <i class="icon-ok"></i></div>
 					'));
@@ -225,7 +207,34 @@ function buddyforms_settings_page() {
 				    	} 
 						array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields']); 
 					}
-				  
+				  $form->addElement(new Element_HTML('
+				 		<div class="accordion-group">
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status">Form Control <i class="accordion_title"><br>The "Form Control" settings can be overwritten from Shortcodes and other Plugins! Define the default seetings here.</i></p></div>
+						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
+								<div class="accordion-inner">')); 
+									//$form->addElement(new Element_HTML('<i>The "Post Control" settings can be overwritten from Shortcodes and other Plugins! Define the default seetings here.</i><br>'));
+									$form->addElement( new Element_Radio("Form type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'])));
+									$form->addElement(new Element_HTML('<br><br>'));
+									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
+										$form->addElement(new Element_HTML('<h3><p>No settings needed so far!</p></h3>'));
+									$form->addElement(new Element_HTML('</div>'));
+									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
+										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
+											$form->addElement( new Element_Checkbox("Featured Image:","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
+											$form->addElement( new Element_Checkbox("Revision: <br><i> enable frontend revison control   </i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
+										$form->addElement(new Element_HTML('</div>'));
+											$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));
+											$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['status'])));
+											$form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status'])));
+											$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'])));
+										$form->addElement(new Element_HTML('</div>'));
+									$form->addElement(new Element_HTML('</div>'));
+									
+									$form->addElement( new Element_HTML('
+								</div>
+							</div>
+						</div>'));	
+					
 					$form->addElement(new Element_HTML('
 					<ul id="sortable_'. $buddyform['slug'] .'" class="sortable sortable_'. $buddyform['slug'] .'">'));
 					if(is_array($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){

@@ -1711,7 +1711,7 @@ input.search-query {
 .form-inline label,
 .form-search .btn-group,
 .form-inline .btn-group {
-	display: inline;
+	display: block;
 }
 
 .form-search .input-append,

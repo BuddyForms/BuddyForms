@@ -155,9 +155,15 @@ function buddyforms_view_form_fields($args){
 	 Or you write a smal fuction to add your hooks here. <br>
 	 For this please see the <a target='_blank' href='http://buddyforms.com'>documentation</a><br>
 	 how to creat and use hooks with BuddyForms</i>";
-	 
-	$form_fields['right'][display]			= new Element_Select("Display?".$msg, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display]));
-	$form_fields['right'][display_name]		= new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display_name]",array(''),array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display_name]));
+	
+	//if($buddyforms_options['buddyforms'][$post_type]['form_type'] == 'post_form'){
+		$form_fields['right'][html_display]		= new Element_HTML('<div class="bf_element_display_'.$post_type.'">');
+			
+		$form_fields['right'][display]			= new Element_Select("Display?".$msg, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display]));
+		$form_fields['right'][display_name]		= new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display_name]",array(''),array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display_name]));
+		$form_fields['right'][html_display_end]	= new Element_HTML('</div>');
+	//} 
+	
 	$form_fields['right'][required]			= new Element_Checkbox("Required?","buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][required]));
 							
 	$form_fields['left'][name] 				= new Element_Textbox("Name:", "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][name]", array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][name]));
@@ -244,7 +250,7 @@ function buddyforms_view_form_fields($args){
 						
 			<div id="accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
-					<div class="buddyforms_field_options">
+					<div class="buddyforms_accordion_right">
 						<?php 
 						if($form_fields['right']){
 							foreach ($form_fields['right'] as $key => $value) {
@@ -254,21 +260,22 @@ function buddyforms_view_form_fields($args){
 						}
 						?>
 					</div>
-					
-					<?php 	
-					if($form_fields['left']){
-						foreach ($form_fields['left'] as $key => $value) {
-							if(substr($key, 0,4) == 'html'){
-								echo $form_fields['left'][$key]->getLabel();
-								echo $form_fields['left'][$key]->render();
-							} else {
-								echo '<div class="buddyforms_field_label">' . $form_fields['left'][$key]->getLabel() . '</div>';
-								echo '<div class="buddyforms_form_field">' . $form_fields['left'][$key]->render() . '</div>';
+					<div class="buddyforms_accordion_left">
+						<?php 	
+						if($form_fields['left']){
+							foreach ($form_fields['left'] as $key => $value) {
+								if(substr($key, 0,4) == 'html'){
+									echo $form_fields['left'][$key]->getLabel();
+									echo $form_fields['left'][$key]->render();
+								} else {
+									echo '<div class="buddyforms_field_label">' . $form_fields['left'][$key]->getLabel() . '</div>';
+									echo '<div class="buddyforms_form_field">' . $form_fields['left'][$key]->render() . '</div>';
+								}
+								
 							}
-							
 						}
-					}
-					?>
+						?>
+					</div>
 				</div>
 	    	</div>
 		</div>

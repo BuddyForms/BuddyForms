@@ -4,10 +4,13 @@
 .list_item{
 	background-color: #fcfcfc;
 }
-.buddyforms_field_options{
+.buddyforms_accordion_right{
 	float: right;
 	margin-top: 10px;
 	margin-right: 15px;
+}
+.buddyforms_accordion_left{
+
 }
 .accordion-heading-options {
 	float: right;
@@ -17,4 +20,16 @@
 .accordion_sidebar {
 	float: right;
 	width: 20%;
+}
+
+.accordion_title {
+font-size: 14px;
+}
+
+.radio {
+float: left;
+padding: 5px;
+}
+.form_type_settings {
+clear: both;
 }
