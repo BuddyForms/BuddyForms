@@ -6,12 +6,13 @@ jQuery(document).ready(function(jQuery) {
 		
 		if(jQuery(this).is(':checked')){
 			if(form_type_val == 'post_form'){
-				jQuery('.bf_element_display_'+form_type_id).show('fast');
+				jQuery('.bf_element_display_'+form_type_id).show();
 			} else {
-				jQuery('.bf_element_display_'+form_type_id).hide('fast');
+				jQuery('.bf_element_display_'+form_type_id).hide();
 			}
 			jQuery('.'+form_type_val+'_'+form_type_id).show();
 		} else {
+			jQuery('.bf_element_display_'+form_type_id).hide();
 			jQuery('.'+form_type_val+'_'+form_type_id).hide();
 		}
     	 

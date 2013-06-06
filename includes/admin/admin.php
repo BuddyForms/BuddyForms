@@ -216,20 +216,25 @@ function buddyforms_settings_page() {
 									$form->addElement( new Element_Radio("Form type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'])));
 									$form->addElement(new Element_HTML('<br><br>'));
 									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
-										$form->addElement(new Element_HTML('<h3><p>No settings needed so far!</p></h3>'));
+											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email'])));
+											$form->addElement(new Element_Textbox("What should the subject line be?", "buddyforms_options[buddyforms][".$buddyform['slug']."][email_subject]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'])));
 									$form->addElement(new Element_HTML('</div>'));
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
 											$form->addElement( new Element_Checkbox("Featured Image:","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
 											$form->addElement( new Element_Checkbox("Revision: <br><i> enable frontend revison control   </i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
 										$form->addElement(new Element_HTML('</div>'));
-											$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));
+										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));
 											$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['status'])));
 											$form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status'])));
 											$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'])));
 										$form->addElement(new Element_HTML('</div>'));
+										
 									$form->addElement(new Element_HTML('</div>'));
-									
+									$form->addElement(new Element_HTML('<div class="buddyforms_accordion_bottom">'));
+										//	$form->addElement(new Element_HTML('<h3><p>Notification settings</p></h3>'));
+										$form->addElement(new Element_HTML('</div>'));
+										
 									$form->addElement( new Element_HTML('
 								</div>
 							</div>
