@@ -240,7 +240,9 @@ function buddyforms_view_form_fields($args){
 			<div class="accordion-heading"> 
 				
 				<div class="accordion-heading-options">
-				<b>Delete: </b> <a class="delete" id="<?php echo $field_id ?>" href="buddyforms/<?php echo $post_type ?>/form_fields/<?php echo $field_id ?>/order">X</a>
+					<a class="delete" id="<?php echo $field_id ?>" href="buddyforms/<?php echo $post_type ?>/form_fields/<?php echo $field_id ?>/order">
+						<i class="icon-remove-sign" style="margin-top:0px;"></i><b>Delete</b>
+					</a>
 				</div>
 				
 				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>">
