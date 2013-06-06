@@ -24,7 +24,7 @@ function buddyforms_options_content() { ?>
 		
 	<div class="wrap">
 		<?php screen_icon('themes') ?>
-		<h2>buddyforms - General Settings</h2>
+		<h2>BuddyForms - General Settings</h2>
 		<div id="post-body">
 			<div id="post-body-content">  
 				<?php buddyforms_settings_page(); ?>
@@ -52,7 +52,7 @@ function buddyforms_settings_page() {
 	if (isset($_POST['submit'])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
 		update_option("buddyforms_options", $buddyforms_options);
-		?><div id="message" class="updated"><p>buddyforms Settings Saved :-)</p></div><?php
+		?><div id="message" class="updated"><p>Settings saved.</p></div><?php
 	}
 	
 	// Get all needed values
@@ -113,15 +113,15 @@ function buddyforms_settings_page() {
 			  <h3>General Settings</h3>
 			'));
 			$form->addElement(new Element_HTML('
-	 		<div class="accordion-group">
+	 		<div class="accordion-group create-form-box">
 				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create a new Form</p></div>
 			    <div id="accordion_buddyforms_general_settings_create_form" class="accordion-body collapse">
 					<div class="accordion-inner">')); 
-						$form->addElement(new Element_Textbox("<br>Name:<br>", "create_new_form_name",array('id' => 'create_new_form_name')));
-						$form->addElement(new Element_Textbox("<br>Singular Name:<br>", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name')));
+						$form->addElement(new Element_Textbox("Name:", "create_new_form_name",array('id' => 'create_new_form_name')));
+						$form->addElement(new Element_Textbox("Singular Name:", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name')));
 						
-						$form->addElement(new Element_HTML('<br><br>'));
-						$form->addElement(new Element_Button('button','button',array('class' => 'new_form', 'name' => 'new_form','value' => 'Creat new Form')));
+						$form->addElement(new Element_HTML('<div class="clear"></div><br>'));
+						$form->addElement(new Element_Button('button','button',array('class' => 'new_form', 'name' => 'new_form','value' => 'Create Form')));
 						
 						$form->addElement( new Element_HTML('
 					</div>
@@ -140,12 +140,13 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 					<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
 						<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle">Save</p></div>
+							<div class="accordion-heading"><p class="accordion-toggle">Publish</p></div>
 							<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Hidden("submit", "submit"));
-									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
-									$form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete this Form')));
+									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save Form')));
+									$form->addElement(new Element_HTML('<p></p>'));
+									$form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete Form')));
 										
 									$form->addElement(new Element_HTML('
 								</div>
@@ -211,20 +212,25 @@ function buddyforms_settings_page() {
 					}
 				  $form->addElement(new Element_HTML('
 				 		<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status">Form Control <i class="accordion_title"><br>The "Form Control" settings can be overwritten from Shortcodes and other Plugins! Define the default seetings here.</i></p></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status">Form Control<br><i class="small">Choose Form Type and Moderation.</i></p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
-									//$form->addElement(new Element_HTML('<i>The "Post Control" settings can be overwritten from Shortcodes and other Plugins! Define the default seetings here.</i><br>'));
-									$form->addElement( new Element_Radio("Form type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'])));
-									$form->addElement(new Element_HTML('<br><br>'));
+									$form->addElement(new Element_HTML('<i class="icon-info-sign" style="margin-top:-1px;"></i>&nbsp;These settings can be overwritten by shortcodes and other plugins! Define the defaults here.<br><br>'));
+									$form->addElement(new Element_HTML('<div class="innerblock form-type">'));
+									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'])));
+									$form->addElement(new Element_HTML('</div><div class="clear"></div>'));
 									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
 											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email'])));
 											$form->addElement(new Element_Textbox("What should the subject line be?", "buddyforms_options[buddyforms][".$buddyform['slug']."][email_subject]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'])));
 									$form->addElement(new Element_HTML('</div>'));
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
-											$form->addElement( new Element_Checkbox("Featured Image:","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
-											$form->addElement( new Element_Checkbox("Revision: <br><i> enable frontend revison control   </i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
+											$form->addElement(new Element_HTML('<div class="innerblock featured-image">'));
+											$form->addElement( new Element_Checkbox("<b>Featured Image</b>","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
+											$form->addElement(new Element_HTML('</div>'));
+											$form->addElement(new Element_HTML('<div class="innerblock revision">'));
+											$form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
+											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));
 											$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['status'])));
