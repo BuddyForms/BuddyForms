@@ -156,13 +156,15 @@ function buddyforms_view_form_fields($args){
 	 For this please see the <a target='_blank' href='http://buddyforms.com'>documentation</a><br>
 	 how to creat and use hooks with BuddyForms</i>";
 	
-	//if($buddyforms_options['buddyforms'][$post_type]['form_type'] == 'post_form'){
-		$form_fields['right'][html_display]		= new Element_HTML('<div class="bf_element_display_'.$post_type.'">');
+	if($buddyforms_options['buddyforms'][$post_type]['form_type'] != 'post_form')
+		$style = 'style="display: none;"';
+		
+		$form_fields['right'][html_display]		= new Element_HTML('<div class="bf_element_display_'.$post_type.'" '.$style.'>');
 			
 		$form_fields['right'][display]			= new Element_Select("Display?".$msg, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display]", $buddyforms[hooks][form_element], array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display]));
 		$form_fields['right'][display_name]		= new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display_name]",array(''),array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][display_name]));
 		$form_fields['right'][html_display_end]	= new Element_HTML('</div>');
-	//} 
+	 
 	
 	$form_fields['right'][required]			= new Element_Checkbox("Required?","buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][required]",array(''),array('value' => $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][required]));
 							

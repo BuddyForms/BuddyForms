@@ -173,6 +173,7 @@ function buddyforms_settings_page() {
 						    <div id="accordion_'.$buddyform['slug'].'_fields" class="accordion-body collapse">
 								<div class="accordion-inner">
 									<div id="#idkommtnoch">
+										<p><b>Normal Fields</b></p>
 										<p><a href="Text/'.$buddyform['slug'].'" class="action">Text</a></p>
 										<p><a href="Textarea/'.$buddyform['slug'].'" class="action">Textarea</a></p>
 										<p><a href="Link/'.$buddyform['slug'].'" class="action">Link</a></p>
@@ -180,6 +181,7 @@ function buddyforms_settings_page() {
 										<p><a href="Dropdown/'.$buddyform['slug'].'" class="action">Dropdown</a></p>
 										<p><a href="Radiobutton/'.$buddyform['slug'].'" class="action">Radiobutton</a></p>
 										<p><a href="Checkbox/'.$buddyform['slug'].'" class="action">Checkbox</a></p>
+										<p><b>Post Fields</b></p>
 										<p><a href="Taxonomy/'.$buddyform['slug'].'" class="action">Taxonomy</a></p>
 										<p><a href="Hidden/'.$buddyform['slug'].'" class="action">Hidden</a></p>
 										<p><a href="Comments/'.$buddyform['slug'].'/unique" class="action">Comments</a></p>
