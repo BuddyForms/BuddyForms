@@ -1,12 +1,34 @@
 <?php
 
+// Register a URL that will set this variable to true
+add_action( 'init', 'buddyforms_edit_init' );
+function buddyforms_edit_init() {
+    add_rewrite_rule( 'buddyform_edit', 'index.php?buddyform_edit=true' );
+}
+
+// But WordPress has a whitelist of variables it allows, so we must put it on that list
+add_action( 'query_vars', 'buddyforms_edit_query_vars' );
+function buddyforms_edit_query_vars( $query_vars ){
+    $query_vars[] = 'buddyform_edit';
+    return $query_vars;
+}
+
+// If this is done, we can access it later
+// This example checks very early in the process:
+// if the variable is set, we include our page and stop execution after it
+add_action( 'parse_request', 'buddyforms_edit_parse_request' );
+function buddyforms_edit_parse_request( &$wp ){
+    if ( array_key_exists( 'buddyform_edit', $wp->query_vars ) ) {
+        	get_template_part('header');
+			do_shortcode('[buddyforms_form]');
+			get_template_part('footer');
+        exit();
+    }
+}
+
 //add a button to the content editor, next to the media button
 //this button will show a popup that contains inline content
 add_action('media_buttons_context', 'add_my_custom_button');
-
-//add some content to the bottom of the page 
-//This will be shown in the inline modal
-add_action('admin_footer', 'add_inline_popup_content');
 
 //action to add a custom button to the content editor
 function add_my_custom_button($context) {
@@ -29,6 +51,11 @@ function add_my_custom_button($context) {
   
   return $context;
 }
+
+
+//add some content to the bottom of the page 
+//This will be shown in the inline modal
+add_action('admin_footer', 'add_inline_popup_content');
 
 function add_inline_popup_content() {
 global $buddyforms;
