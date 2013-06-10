@@ -1,4 +1,18 @@
+
+
 jQuery(document).ready(function(jQuery) {    
+
+
+	if (typeof(Zenbox) !== "undefined") {
+		Zenbox.init({
+			dropboxID:   "20181572",
+			url:         "https://themekraft.zendesk.com",
+			tabTooltip:  "Feedback",
+			tabColor:    "black",
+			tabPosition: "Left",
+			hide_tab: true
+		});
+	}
 
 	jQuery(".form_type").each(function(idx, li) {
     	var form_type_id = jQuery(this).attr('id').slice(0,-2);
@@ -228,6 +242,3 @@ jQuery(document).ready(function(jQuery) {
 	   });
 	
 });
-
-
-	
