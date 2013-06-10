@@ -60,8 +60,19 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	$customfields = $buddyforms['buddyforms'][$form]['form_fields'];
 		
-	// If the form is submitted we will get in action
+		// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
+		
+		if($buddyforms['buddyforms'][$form]['form_type'] == 'mail_form'){
+			$wpmail = wp_mail( $buddyforms['buddyforms'][$form]['email'], $buddyforms['buddyforms'][$form]['email_subject'], 'Ein test');
+
+			if($wpmail == TRUE){ 
+				echo '<p>Form has bean send succsessfull</p>';
+			} elseif($wpmail == FALSE){
+				echo '<p>There has bean an error submiting the form</p>';
+			}
+			return;
+		} 
 			
 		$comment_status = $buddyforms['buddyforms'][$post_type]['comment_status'];
 		
