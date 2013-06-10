@@ -29,23 +29,7 @@ function buddyforms_options_content() { ?>
 		<div class="themekraft">Proudly presented by <a href="http://themekraft.com" title="ThemeKraft WordPress Solutions" target="_blank"><img src="<?php echo plugins_url( 'img/themekraft-logo-s.png' , __FILE__ ); ?>" title="ThemeKraft WordPress Solutions" /></a></div>
 		
 		<div class="button-nav">
-			<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.6/zenbox.js"></script>
-			<style type="text/css" media="screen, projection">
-			  @import url(//assets.zendesk.com/external/zenbox/v2.6/zenbox.css);
-			</style>
-			<script type="text/javascript">
-			  if (typeof(Zenbox) !== "undefined") {
-			    Zenbox.init({
-			      dropboxID:   "20181572",
-			      url:         "https://themekraft.zendesk.com",
-			      tabTooltip:  "Feedback",
-			      tabColor:    "black",
-			      tabPosition: "Left",
-			      hide_tab: true
-			    });
-			  }
-			</script>
-			<a class="btn btn-small" href="http://buddyforms.com/" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
+			<a class="btn btn-small" href="http://support.themekraft.com/categories/20110697-BuddyForms" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
 			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
 		</div>
 		

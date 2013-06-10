@@ -132,6 +132,8 @@ class BuddyForms {
 				
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__));
+			wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
+			
 		
 		}
 		
@@ -146,11 +148,13 @@ class BuddyForms {
 	function buddyforms_admin_js($hook_suffix) {
 	
 		if($hook_suffix == 'toplevel_page_buddyforms_options_page') {
-			
+
 			wp_enqueue_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
 			wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
 		    wp_enqueue_script('jQuery');
 		    wp_enqueue_script('jquery-ui-sortable'); 
+			wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
+			
 	
 	    }
 	
