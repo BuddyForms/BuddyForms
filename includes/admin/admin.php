@@ -24,7 +24,15 @@ function buddyforms_options_content() { ?>
 		
 	<div class="wrap">
 		<?php screen_icon('themes') ?>
-		<h2>BuddyForms Settings</h2>
+		<h2>BuddyForms <span class="version">Beta</span></h2>
+		
+		<div class="themekraft">Proudly presented by <a href="http://themekraft.com" title="ThemeKraft WordPress Solutions" target="_blank"><img src="img/themekraft-logo-s.png" title="ThemeKraft WordPress Solutions" /></a></div>
+		
+		<div class="button-nav">
+			<a class="btn btn-small" href="#" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
+			<a class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever." target="_blank"><i class="icon-comment"></i> Submit an issue</a>
+		</div>
+		
 		<div id="post-body">
 			<div id="post-body-content">  
 				<?php buddyforms_settings_page(); ?>
