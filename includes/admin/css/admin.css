@@ -60,7 +60,7 @@ h2 span.version { font-size: 14px; font-style: italic; padding-left: 5px; }
 .accordion-body .accordion-inner {
 	padding: 30px 15px;
 }
-.hero-unit .create-form-box p {
+.hero-unit p.accordion-toggle {
 padding-top: 18px !important;
 }
 .accordion-inner .innerblock {
