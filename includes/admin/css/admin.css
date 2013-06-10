@@ -2,10 +2,14 @@
 	
 h2 span.version { font-size: 14px; font-style: italic; padding-left: 5px; }
 
-.themekraft { position: absolute; right: 0; top: 0; padding: 5px; }
+.credits { position: absolute; right: 0; top: 0; padding: 5px 10px; }
+.credits a img { border-bottom: 1px solid transparent; margin: -4px 5px 0 5px; }
+.credits a img:hover { border-bottom: 1px solid #aaa; }
+.credits p { color: #aaa; padding: 4px 0; }
 
 .button-nav { margin: 20px 0 10px 0; }
 .button-nav a.btn { text-decoration: none; margin-right: 5px; }
+
 
 /** the tab menu **/
 
@@ -87,6 +91,7 @@ i.small {
 .form_type_settings input[type="text"] {
 	margin-bottom: 20px;
 }
+.btn { margin-right: 5px; }
 
 
 

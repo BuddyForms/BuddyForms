@@ -26,8 +26,13 @@ function buddyforms_options_content() { ?>
 		<?php screen_icon('themes') ?>
 		<h2>BuddyForms <span class="version">Beta</span></h2>
 		
-		<div class="themekraft">Proudly presented by <a href="http://themekraft.com" title="ThemeKraft WordPress Solutions" target="_blank"><img src="<?php echo plugins_url( 'img/themekraft-logo-s.png' , __FILE__ ); ?>" title="ThemeKraft WordPress Solutions" /></a></div>
-		
+		<div class="credits">
+			<p>
+				<a class="buddyforms" href="http://themekraft.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
+				Form Magic and Collaborative Publishing for WordPress.
+			</p>
+		</div>
+				
 		<div class="button-nav">
 			<a class="btn btn-small" href="http://support.themekraft.com/categories/20110697-BuddyForms" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
 			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
@@ -152,9 +157,9 @@ function buddyforms_settings_page() {
 							<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_Hidden("submit", "submit"));
-									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save Form')));
-									$form->addElement(new Element_HTML('<p></p>'));
-									$form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete Form')));
+									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
+									// $form->addElement(new Element_HTML('<p></p>'));
+									$form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete')));
 										
 									$form->addElement(new Element_HTML('
 								</div>
