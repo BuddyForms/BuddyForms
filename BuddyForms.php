@@ -78,17 +78,6 @@ class BuddyForms {
 		
 		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 				
-				//$post_type_object = get_post_type_object($key);
-
-				// if (empty($buddyforms['buddyforms'][$form][name])) {
-					// $buddyforms['buddyforms'][$form][name] = $post_type_object->labels->name;
-					// $buddyforms['buddyforms'][$form][singular_name] = $post_type_object->labels->singular_name;
-				// }
-	
-				// if (empty($buddyforms['buddyforms'][$form][name])) {
-					// $buddyforms['buddyforms'][$form][name] = $form;
-					// $buddyforms['buddyforms'][$form][singular_name] = $form;
-				// }
 				$slug = sanitize_title($buddyforms['buddyforms'][$key][slug]);
 				if($slug != $key){
 					$buddyforms['buddyforms'][$slug] = $buddyforms['buddyforms'][$key];
@@ -97,9 +86,7 @@ class BuddyForms {
 				}
 				
 		}
-		
-
-
+	
 	}
 
 	/**
