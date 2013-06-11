@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms
  Plugin URI: http://buddyforms.com
  Description:   
- Version: 0.1 rc1
+ Version: 0.1 Beta
  Author: Sven Lehnert
  Author URI: http://themekraft.com
  Licence: GPLv3
@@ -14,9 +14,9 @@ define('buddyforms', '1.0 rc1');
 global $buddyforms;
 	
 /**
- * Loads buddyforms files only if BuddyPress is present
+ * Loads BuddyForms files only if BuddyPress is present
  *
- * @package BuddyPress Custom Group Types
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_init() {

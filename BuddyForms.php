@@ -90,7 +90,7 @@ class BuddyForms {
 	}
 
 	/**
-	 * Includes files needed by buddyforms
+	 * Include files needed by BuddyForms
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
@@ -111,7 +111,7 @@ class BuddyForms {
 	}
 
 	/**
-	 * Loads the textdomain for the plugin
+	 * Load the textdomain for the plugin
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
@@ -121,7 +121,7 @@ class BuddyForms {
 	}
 
 	/**
-	 * enqueue the needed css for the admin screen
+	 * Enqueue the needed CSS for the admin screen
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
@@ -140,7 +140,7 @@ class BuddyForms {
 	}
 
 	/**
-	 * enqueue the needed js for the admin screen
+	 * Enqueue the needed JS for the admin screen
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
@@ -161,7 +161,7 @@ class BuddyForms {
 	}
 	
 	/**
-	 * enqueue the needed js for the form in the frontend
+	 * Enqueue the needed JS for the form in the frontend
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
