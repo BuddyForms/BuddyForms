@@ -94,7 +94,7 @@ jQuery(document).ready(function(jQuery) {
 				window.location.reload(true);
 			},
 			error: function() { 
-				alert('something went wrong ;-(sorry)');
+				alert('Something went wrong.. ;-(sorry)');
 			}
 		});
 	});
@@ -125,7 +125,7 @@ jQuery(document).ready(function(jQuery) {
 		 
 		if(args[2] == 'unique'){
 			if (unique.length){
-				alert('This element can only be added ones into each form');
+				alert('This element can only be added once into each form');
 				return false;
 		    }	
 		}
@@ -137,7 +137,7 @@ jQuery(document).ready(function(jQuery) {
 			data: {"action": "buddyforms_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
 			success: function(data){
 				if(data == 'unique'){
-					alert('This element can only be added ones into each form');
+					alert('This element can only be added once into each form');
 					jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
 					return false;
 				}
@@ -150,7 +150,7 @@ jQuery(document).ready(function(jQuery) {
 		
 			},
 			error: function() { 
-				alert('something went wrong ;-(sorry)');
+				alert('Something went wrong ;-(sorry)');
 			}
 		});
 		return false;
@@ -217,7 +217,7 @@ jQuery(document).ready(function(jQuery) {
 	                dataType: 'json',
 	                data:{
 	                    action: 'item_sort', // Tell WordPress how to handle this ajax request
-	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in  1,3,2 format
+	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in 1,3,2 format
 	                },
 	                success: function(response) {
 	                	

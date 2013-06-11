@@ -29,7 +29,7 @@ function buddyforms_options_content() { ?>
 		<div class="credits">
 			<p>
 				<a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
-				- &nbsp; Form Magic and Collaborative Publishing for WordPress.
+				- &nbsp; <?php _e( 'Form Magic and Collaborative Publishing for WordPress.', 'buddyforms' ); ?>
 			</p>
 		</div>
 				
@@ -49,7 +49,7 @@ function buddyforms_options_content() { ?>
 }
 
 /**
- * Create the option settings page
+ * Create the BuddyForms settings page
  *
  * @package buddyforms
  * @since 0.1-beta
@@ -65,12 +65,12 @@ function buddyforms_settings_page() {
 	if (isset($_POST['submit'])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
 		update_option("buddyforms_options", $buddyforms_options);
-		?><div id="message" class="updated"><p>Settings saved.</p></div><?php
+		?><div id="message" class="updated"><p><?php _e( 'Setup saved.', 'buddyforms' ); ?></p></div><?php
 	}
 	
 	// Get all needed values
 	BuddyForms::set_globals();
-	$buddyforms_options = $buddyforms;//get_option('buddyforms_options');
+	$buddyforms_options = $buddyforms; //get_option('buddyforms_options');
 	
 	// Get all post types
     $args=array(
@@ -127,7 +127,7 @@ function buddyforms_settings_page() {
 			'));
 			$form->addElement(new Element_HTML('
 	 		<div class="accordion-group create-form-box">
-				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create A New Form</p></div>
+				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create New Form</p></div>
 			    <div id="accordion_buddyforms_general_settings_create_form" class="accordion-body collapse">
 					<div class="accordion-inner">')); 
 						$form->addElement(new Element_Textbox("Name:", "create_new_form_name",array('id' => 'create_new_form_name', 'placeholder' => 'e.g. Movies')));
@@ -200,7 +200,7 @@ function buddyforms_settings_page() {
 								<div class="accordion-inner">
 									<div id="#idkommtnoch">
 										<p>Add new elements to your form <br>by clicking on them.</p>
-										<h5>Normal Fields</h5>
+										<h5>Classic Fields</h5>
 										<p><a href="Text/'.$buddyform['slug'].'" class="action">Text</a></p>
 										<p><a href="Textarea/'.$buddyform['slug'].'" class="action">Textarea</a></p>
 										<p><a href="Link/'.$buddyform['slug'].'" class="action">Link</a></p>
@@ -225,7 +225,7 @@ function buddyforms_settings_page() {
 						<div class="hero-unit">
 						<h3>Form Settings for "'.$buddyform['name'].'"</h3>'));    
 					$form->addElement(new Element_HTML('<p class="loading-animation-order alert alert-success">Save new order <i class="icon-ok"></i></p>'));
-					$form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">Loade new element <i class="icon-ok"></i></div>
+					$form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">Load new element <i class="icon-ok"></i></div>
 					'));
 					
 					$sortArray = array(); 
@@ -238,7 +238,7 @@ function buddyforms_settings_page() {
 					}
 				  $form->addElement(new Element_HTML('
 				 		<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status">Form Control<br><i class="small">Choose Form Type and Moderation.</i></p></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status"><b>Form Control</b><br><i class="small">Choose Form Type and Moderation.</i></p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_HTML('<i class="icon-info-sign" style="margin-top:-1px;"></i>&nbsp;These settings can be overwritten by shortcodes and other plugins! Define the defaults here.<br><br>'));
@@ -277,7 +277,7 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 					<br>
 					<h3>Form Builder</h3>
-					<p>Add elements from the right box "Form Elements".</p>
+					<p>Add elements from the right box "Form Elements". Change the order via drag and drop.</p>
 					<ul id="sortable_'. $buddyform['slug'] .'" class="sortable sortable_'. $buddyform['slug'] .'">'));
 					if(is_array($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){
 						foreach($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'] as $field_id => $customfield) {
@@ -319,7 +319,7 @@ function buddyforms_form_element_multyble($form_fields, $args){
 		 	 foreach ($buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][value] as $key => $value) {
 				$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
 				$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
-				$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input">X</a> - <a href="#" id="'.$field_id.'">move</a></li>');
+				$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input" title="delete me">X</a> - <a href="#" id="'.$field_id.'" title="drag and move me!">move</a></li>');
 				$count++;
 			 }
 		 }   		

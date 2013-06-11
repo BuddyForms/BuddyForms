@@ -3,7 +3,7 @@
 /**
  * Ajax call back function to add a form element
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_add_form(){
@@ -24,7 +24,7 @@ add_action( 'wp_ajax_nopriv_buddyforms_add_form', 'buddyforms_add_form' );
 /**
  * Ajax call back function to delete a form element
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_delete_form(){
@@ -41,7 +41,7 @@ add_action('wp_ajax_nopriv_buddyforms_delete_form', 'buddyforms_delete_form');
 /**
  * Ajax call back function to save the new form elements order
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_save_item_order() {
@@ -66,7 +66,7 @@ add_action('wp_ajax_nopriv_item_sort', 'buddyforms_save_item_order');
 /**
  * Ajax call back function to delete a form element
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_item_delete(){
@@ -83,9 +83,9 @@ add_action('wp_ajax_buddyforms_item_delete', 'buddyforms_item_delete');
 add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
 
 /**
- * get all taxonomies
+ * Get all taxonomies
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_taxonomies(){
@@ -100,9 +100,9 @@ function buddyforms_taxonomies(){
 }
 
 /**
- * View Form Fields
+ * View form fields
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.1-beta
  */
 function buddyforms_view_form_fields($args){
@@ -247,14 +247,14 @@ function buddyforms_view_form_fields($args){
 				
 				<div class="accordion-heading-options">
 					<a class="delete" id="<?php echo $field_id ?>" href="buddyforms/<?php echo $post_type ?>/form_fields/<?php echo $field_id ?>/order">
-						<i class="icon-remove-sign" style="margin-top:0px;"></i><b>Delete</b>
+						<i class="icon-remove-sign" style="margin-top:0px;"></i><b><?php _e( 'Delete', 'buddyforms' ); ?></b>
 					</a>
 				</div>
 				
-				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>">
-				<b>Type: </b> <?php echo $field_type; ?> 
-				<br><b>Name: </b> <?php echo $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][name]; ?>
-				</a>
+				<p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $post_type; ?>_<?php echo $field_type.'_'.$field_id; ?>">
+				<b><?php echo $field_type; ?></b>  
+				<i><?php echo $buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][name]; ?></i>
+				</p>
 				
 			</div>
 						
