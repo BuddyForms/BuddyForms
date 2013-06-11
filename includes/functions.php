@@ -6,7 +6,7 @@ function buddyforms_edit_init() {
     add_rewrite_rule( 'buddyform_edit', 'index.php?buddyform_edit=true' );
 }
 
-// But WordPress has a whitelist of variables it allows, so we must put it on that list
+// WordPress has a whitelist of variables it allows, so we must put it on that list
 add_action( 'query_vars', 'buddyforms_edit_query_vars' );
 function buddyforms_edit_query_vars( $query_vars ){
     $query_vars[] = 'buddyform_edit';
@@ -15,7 +15,7 @@ function buddyforms_edit_query_vars( $query_vars ){
 
 // If this is done, we can access it later
 // This example checks very early in the process:
-// if the variable is set, we include our page and stop execution after it
+// If the variable is set, we include our page and stop execution after it
 add_action( 'parse_request', 'buddyforms_edit_parse_request' );
 function buddyforms_edit_parse_request( &$wp ){
     if ( array_key_exists( 'buddyform_edit', $wp->query_vars ) ) {
@@ -26,25 +26,25 @@ function buddyforms_edit_parse_request( &$wp ){
     }
 }
 
-//add a button to the content editor, next to the media button
-//this button will show a popup that contains inline content
+// Add a button to the content editor, next to the media button 
+// This button will show a popup that contains inline content 
 add_action('media_buttons_context', 'add_my_custom_button');
 
-//action to add a custom button to the content editor
+// Action to add a custom button to the content editor
 function add_my_custom_button($context) {
   if (!is_admin())
   	return $context;
   
-  //path to my icon
+  // Path to my icon
   $img = plugins_url( 'admin/img/icon-buddyformsc-16.png' , __FILE__ );
   
-  //the id of the container I want to show in the popup
+  // The ID of the container I want to show in the popup
   $container_id = 'popup_container';
   
-  //our popup's title
+  // Our popup's title
   $title = 'BuddyForms Shortcode Generator!';
 
-  //append the icon< a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
+  // Append the icon <a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
   $context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
     href='#TB_inline?width=400&inlineId={$container_id}'>
     <img src='{$img}' /></span> Add Form</a>";
@@ -53,8 +53,8 @@ function add_my_custom_button($context) {
 }
 
 
-//add some content to the bottom of the page 
-//This will be shown in the inline modal
+// Add some content to the bottom of the page 
+// This will be shown in the inline modal
 add_action('admin_footer', 'add_inline_popup_content');
 
 function add_inline_popup_content() {
@@ -89,8 +89,8 @@ global $buddyforms;
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		$the_forms[] = $buddyform['slug'];
 	}
-	$form->addElement( new Element_Select("Select the form to use!", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
-	$form->addElement( new Element_Select("Select the posttype!", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
+	$form->addElement( new Element_Select("Select the form to use", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
+	$form->addElement( new Element_Select("Select the post type", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
 	$form->render();
   ?>
   <a href="#" class="buddyforms-button-insert">Insert into page</a>
@@ -116,8 +116,8 @@ jQuery(document).ready(function (){
 }
 
 
-//add_action( 'wp_ajax_buddyforms_form_ajax', 'buddyforms_form_ajax' );
-//add_action( 'wp_ajax_nopriv_buddyforms_form_ajax', 'buddyforms_form_ajax' );
+// add_action( 'wp_ajax_buddyforms_form_ajax', 'buddyforms_form_ajax' );
+// add_action( 'wp_ajax_nopriv_buddyforms_form_ajax', 'buddyforms_form_ajax' );
 function buddyforms_form_ajax() {
 	
 	$args = array(
@@ -131,13 +131,13 @@ function buddyforms_form_ajax() {
 }
 
 /**
- * If single and if the post type is selected for buddypress and if there is post meta to display. 
- * hook the post meta to the right places.
+ * If single and if the post type is selected for BuddyPress and if there is post meta to display. 
+ * Hook the post meta to the right places.
  * 
- * This function is an example how you can hook fields into templates in your buddyforms extention
- * of curse you can also use get_post_meta(sanitize_title('name'))
+ * This function is an example how you can hook fields into templates in your BuddyForms extension
+ * of course you can also use get_post_meta(sanitize_title('name'))
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 0.2-beta
 */
 function buddyforms_form_display_element_frontend(){
@@ -204,9 +204,9 @@ function buddyforms_form_display_element_frontend(){
 add_action('wp_head','buddyforms_form_display_element_frontend');
 
 /**
- * Get the buddyforms template directory.
+ * Get the BuddyForms template directory.
  *
- * @author Sven Lehnert
+ * @package BuddyForms
  * @since 0.1 beta
  *
  * @uses apply_filters()
@@ -219,8 +219,8 @@ function buddyforms_get_template_directory() {
 /**
  * Locate a template
  *
- * @package BuddyPress Custom Group Types
- * @since 0.1-beta
+ * @package BuddyForms
+ * @since 0.1 beta
  */
 function buddyforms_locate_template($file) {
 	if (locate_template(array($file), false)) {

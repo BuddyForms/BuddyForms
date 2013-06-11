@@ -1,8 +1,8 @@
 <?php
 
 
-// This function are taken from the WORDPRESS 3.6-BETA3-24432 release and modifired to work for us in the frontend. 
-// Some of the functions can be deleted or modifired if wp 3.6 is released.
+// These functions are taken from the WORDPRESS 3.6-BETA3-24432 release and modified to work for us in the frontend. 
+// Some of the functions can be deleted or modified if WP 3.6 is released.
 
 function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	if ( ! $post = get_post( $post_id ) )

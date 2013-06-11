@@ -1,6 +1,6 @@
 <?php
 /**
- * Adds a form shortcode for the create and edit sreen
+ * Adds a form shortcode for the create and edit screen
  * @var $args = posttype, the_post, post_id
  * 
  * @package buddyforms
@@ -37,7 +37,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 		}
        	
        	if ($the_post->post_author != $current_user->ID){
-			echo '<div class="error alert">You are not allowed to edit this Post what are you doing here?</div>';
+       		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
+			echo '<div class="error alert">'.$error_message.'</div>';
 			return;	
 		}
 		
@@ -60,16 +61,16 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	$customfields = $buddyforms['buddyforms'][$form]['form_fields'];
 		
-		// If the form is submitted we will get in action
+	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 		
 		if($buddyforms['buddyforms'][$form]['form_type'] == 'mail_form'){
 			$wpmail = wp_mail( $buddyforms['buddyforms'][$form]['email'], $buddyforms['buddyforms'][$form]['email_subject'], 'Ein test');
 
 			if($wpmail == TRUE){ 
-				echo '<p>Form has bean send succsessfull</p>';
+				echo '<p>Form has been sent successful.</p>';
 			} elseif($wpmail == FALSE){
-				echo '<p>There has bean an error submiting the form</p>';
+				echo '<p>There has been an error submitting the form.</p>';
 			}
 			return;
 		} 
@@ -79,7 +80,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(isset($_POST['comment_status']))
 				$comment_status = $_POST['comment_status'];
 			
-        // check if post is new or edit 
+        // Check if post is new or edit 
         if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
         	                     
 			$my_post = array(
@@ -91,7 +92,7 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'comment_status'	=> $comment_status,
 			);
                 
-            // update the new post
+            // Update the new post
             $post_id = wp_update_post( $my_post );
 			
 		} else {
@@ -105,19 +106,19 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'comment_status'	=> $comment_status,
             );   
                 
-            // insert the new form
+            // Insert the new form
             $post_id = wp_insert_post($my_post);
 			
 		}
-		// if the post has post meta / custom fields 
+		// Check if the post has post meta / custom fields 
         if(isset($customfields)){
         	
 			foreach( $customfields as $key => $customfield ) : 
 			   
 				if( $customfield['type'] == 'Taxonomy' ){
 					
-					// check if the custom field is a taxonomy
-					// We need to check if the tax is a normal category, because categories want id's and custom taxonomies slugs... ;-()
+					// Check if the custom field is a taxonomy
+					// * We need to check if the taxonomy is a normal category, because categories want id's and custom taxonomies slugs... ;-()
 					if($customfield['taxonomy'] == 'category'){
 				
 						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
@@ -148,19 +149,19 @@ function buddyforms_create_edit_form( $args = array() ) {
 					}
 					
 				}
-				// update meta do action to hook into. This can be interesting if you added new Form Element and want to manipulate how they get saved.
+				// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
 				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
 			   	$slug = sanitize_title($customfield['slug']);	
 				if($slug == '')
 					$slug = sanitize_title($customfield['name']);
 				
-				// update the post
+				// Update the post
 				update_post_meta($post_id, $slug, $_POST[$slug] ); 
 				                   
             endforeach;
     	}
-		// Featured image ? If yes save via media_handle_upload and set the post thumbnail
+		// Featured image? If yes, save via media_handle_upload and set the post thumbnail
 		if( ! empty( $_FILES ) ) {
 			
 			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
@@ -176,7 +177,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	      
 	       	if( ! $the_post->ID){
 	           	if( $errors ) {  
-		            $fileError 	= '<p>There has bean an error uploading the image.</p>';  
+		            $fileError 	= '<p>'.__( 'There has bean an error uploading the image.', 'buddyforms' ).'</p>';  
 		            $hasError 	= true;
 		        }  
 	       	}
@@ -188,11 +189,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 			?>
 			<div class="thanks">
 				<?php if($_GET['post_id']){ ?>
-		            <h1><?php _e('Saved', 'buddyforms')?></h1>
-		            <p><?php _e('Post has been updated.', 'buddyforms'); ?> </p>
+		            <h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
+		            <p><?php _e( 'Post has been updated.', 'buddyforms' ); ?> </p>
 	   			<?php } else { ?>
-	   				<h1><?php _e('Saved', 'buddyforms')?></h1>
-		    	    <p><?php _e('Post has been created.', 'buddyforms'); ?> </p>
+	   				<h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
+		    	    <p><?php _e( 'Post has been created.', 'buddyforms' ); ?> </p>
 				<?php } ?>
 			</div>
 			<?php
@@ -215,7 +216,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					<input type="password" style="width:200px;" name="pwd" id="sidebar-user-pass" class="input" value="" tabindex="98" /></label>
 				</div>
 				<label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" tabindex="99" /> <?php _e( 'Remember Me', 'buddyforms' ) ?></label>	 
-				<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e('Log In', 'buddyforms'); ?>" tabindex="100" />
+				<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e('Login', 'buddyforms'); ?>" tabindex="100" />
 				<input type="hidden" name="buddyformscookie" value="1" />
 				<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 			</form>
@@ -252,7 +253,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				
 					
-					$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+					$form->addElement(new Element_Textbox("Title", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
 					$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));
 
 					ob_start();
