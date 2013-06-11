@@ -24,12 +24,12 @@ function buddyforms_options_content() { ?>
 		
 	<div class="wrap">
 		<?php screen_icon('themes') ?>
-		<h2>BuddyForms <span class="version">Beta</span></h2>
+		<h2>BuddyForms <span class="version">Beta 1.0</span></h2>
 		
 		<div class="credits">
 			<p>
-				<a class="buddyforms" href="http://themekraft.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
-				Form Magic and Collaborative Publishing for WordPress.
+				<a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
+				- &nbsp; Form Magic and Collaborative Publishing for WordPress.
 			</p>
 		</div>
 				
@@ -92,7 +92,7 @@ function buddyforms_settings_page() {
 	));
 	
 	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs">
-		<li class="active"><a href="#general-settings" data-toggle="tab">General Settings</a></li>'));
+		<li class="active"><a href="#general-settings" data-toggle="tab">Setup</a></li>'));
 		
 	if(is_array($buddyforms_options['buddyforms'])){
 		foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
@@ -123,7 +123,7 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 			<div class="hero-unit">'));
 						$form->addElement(new Element_HTML('
-			  <h3>General Settings</h3>
+			  <h3>BuddyForms Setup</h3>
 			'));
 			$form->addElement(new Element_HTML('
 	 		<div class="accordion-group create-form-box">
@@ -137,6 +137,18 @@ function buddyforms_settings_page() {
 						$form->addElement(new Element_Button('button','button',array('class' => 'new_form', 'name' => 'new_form','value' => 'Create Form')));
 						
 						$form->addElement( new Element_HTML('
+					</div>
+				</div>
+			</div>'));
+			
+			$form->addElement(new Element_HTML('
+	 		<div class="accordion-group general-settings">
+				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings" href="#accordion_buddyforms_general_settings">General Settings</p></div>
+			    <div id="accordion_buddyforms_general_settings" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<div>
+							<h4>License Key</h4>
+						</div>
 					</div>
 				</div>
 			</div>'));	
