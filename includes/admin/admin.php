@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Create "buddyforms Options" nav menu
+ * Create "BuddyForms Options" nav menu
  *
  * @package buddyforms
  * @since 0.1-beta
@@ -23,7 +23,7 @@ add_action('admin_menu', 'buddyforms_create_menu');
 function buddyforms_options_content() { ?>
 		
 	<div class="wrap">
-		<?php screen_icon('themes') ?>
+		<img style="float: left; padding: 8px 10px 0 0;" src="<?php echo plugins_url( 'img/BuddyForms-Icon-32-active.png' , __FILE__ ); ?>" title="BuddyForms" />
 		<h2>BuddyForms <span class="version">Beta 1.0</span></h2>
 		
 		<div class="credits">
@@ -77,7 +77,7 @@ function buddyforms_settings_page() {
 		'public' => true,
 		'show_ui' => true
     ); 
-    $output = 'names'; // names or objects, note names is the default
+    $output = 'names'; // names or objects, note: names is the default
     $operator = 'and'; // 'and' or 'or'
     $post_types = get_post_types($args,$output,$operator); 
    	$post_types_none[none] = none;
@@ -109,7 +109,7 @@ function buddyforms_settings_page() {
 			$form->addElement(new Element_HTML('
 			<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
 				<div class="accordion-group">
-					<div class="accordion-heading"><p class="accordion-toggle">Save Settings</p></div>
+					<div class="accordion-heading"><p class="accordion-toggle">Save Setup</p></div>
 					<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Hidden("submit", "submit"));
@@ -130,8 +130,8 @@ function buddyforms_settings_page() {
 				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create A New Form</p></div>
 			    <div id="accordion_buddyforms_general_settings_create_form" class="accordion-body collapse">
 					<div class="accordion-inner">')); 
-						$form->addElement(new Element_Textbox("Name:", "create_new_form_name",array('id' => 'create_new_form_name', 'placeholder' => 'e.g. Movie')));
-						$form->addElement(new Element_Textbox("Singular Name:", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'e.g. Movies')));
+						$form->addElement(new Element_Textbox("Name:", "create_new_form_name",array('id' => 'create_new_form_name', 'placeholder' => 'e.g. Movies')));
+						$form->addElement(new Element_Textbox("Singular Name:", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'e.g. Movie')));
 						
 						$form->addElement(new Element_HTML('<div class="clear"></div><br>'));
 						$form->addElement(new Element_Button('button','button',array('class' => 'new_form', 'name' => 'new_form','value' => 'Create Form')));
