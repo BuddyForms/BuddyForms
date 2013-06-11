@@ -151,7 +151,9 @@ function buddyforms_settings_page() {
 						</div>
 					</div>
 				</div>
-			</div>'));	
+			</div>'));
+			
+			$form->addElement(new Element_HTML('<h3>Extensions Setup</h3><p>Find more extensions <a href="http://buddyforms.com" title="BuddyForms Extensions" target="_parent">here</a>.'));	
 					
 			$form = apply_filters('buddyforms_general_settings', $form);	
 									
