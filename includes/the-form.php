@@ -177,7 +177,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	      
 	       	if( ! $the_post->ID){
 	           	if( $errors ) {  
-		            $fileError 	= '<p>'.__( 'There has bean an error uploading the image.', 'buddyforms' ).'</p>';  
+		            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';  
 		            $hasError 	= true;
 		        }  
 	       	}
@@ -253,8 +253,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				
 					
-					$form->addElement(new Element_Textbox("Title", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
-					$form->addElement(new Element_HTML('<div class="label"><label>Content</label></div>'));
+					$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+					$form->addElement(new Element_HTML('<div class="label"><label>Content:</label></div>'));
 
 					ob_start();
 					
@@ -380,7 +380,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					endforeach;
 				}
 	
-				// Display Upload Field for Featured image if required is selected for this form
+				// Display upload field for featured image if required is selected for this form
 				if ($buddyforms['buddyforms'][$post_type]['featured_image']['required'][0] == 'Required'){
 					if ($post_id == 0) {
 						$file_attr = array("required" => 1, 'id' => "async-upload");
@@ -391,9 +391,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 				}
 	
 				$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
-				$form->addElement(new Element_Button('submitted', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+				$form->addElement(new Element_Button('Submit', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
 				
-				// thats it render the form!
+				// thats it! render the form!
 				$form->render(); ?>
 			</div>
 			<?php 
@@ -406,5 +406,5 @@ function buddyforms_create_edit_form( $args = array() ) {
 	<?php endif;
 }
 
-// shortcode to add the form everywere easely ;-)
+// Shortcode to add the form everywhere easely ;-)
 add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
