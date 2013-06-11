@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Ajax call back function to add a form element
+ *
+ * @package buddyforms
+ * @since 0.1-beta
+ */
 function buddyforms_add_form(){
 	$buddyforms_options = get_option('buddyforms_options');
 	$buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = Array(
