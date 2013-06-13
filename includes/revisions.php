@@ -95,6 +95,8 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 }
 
 function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link = true ) {
+	global $bp;
+	
 	if ( !$revision = get_post( $revision ) )
 		return $revision;
 
@@ -108,7 +110,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 	$gravatar = get_avatar( $revision->post_author, 24 );
 
 	$date = date_i18n( $datef, strtotime( $revision->post_modified ) );
-	if ( $link && current_user_can( 'edit_post', $revision->ID ) && $link = trailingslashit( bp_loggedin_user_domain() ).get_post_type($post_id).'?post_id='.$post_id.'&revision_id='.$revision->ID.'&post_type='.get_post_type()   )
+	if ( $link && current_user_can( 'edit_post', $revision->ID ) && $link = trailingslashit( bp_loggedin_user_domain() ).$bp->current_component.'?post_id='.$post_id.'&revision_id='.$revision->ID.'&post_type='.get_post_type()   )
 		$date = "<a href='$link'>$date</a>";
 
 	$revision_date_author = sprintf(

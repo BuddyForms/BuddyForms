@@ -245,7 +245,12 @@ function buddyforms_settings_page() {
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_HTML('<i class="icon-info-sign" style="margin-top:-1px;"></i>&nbsp;These settings can be overwritten by shortcodes and other plugins! Define the defaults here.<br><br>'));
 									$form->addElement(new Element_HTML('<div class="innerblock form-type">'));
-									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'])));
+									$form_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'];
+									
+									if($form_type == '')
+										$form_type = 'post_form';
+									
+									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $form_type)));
 									$form->addElement(new Element_HTML('</div><div class="clear"></div>'));
 									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
 											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email'])));
