@@ -59,13 +59,13 @@ function buddyforms_create_edit_form( $args = array() ) {
    	   $form_slug = apply_filters('buddyforms_the_form_to_use',$form, $post_type);
 	
 	
-	$customfields = $buddyforms['buddyforms'][$form]['form_fields'];
+	$customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
 		
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 		
-		if($buddyforms['buddyforms'][$form]['form_type'] == 'mail_form'){
-			$wpmail = wp_mail( $buddyforms['buddyforms'][$form]['email'], $buddyforms['buddyforms'][$form]['email_subject'], 'Ein test');
+		if($buddyforms['buddyforms'][$form_slug]['form_type'] == 'mail_form'){
+			$wpmail = wp_mail( $buddyforms['buddyforms'][$form_slug]['email'], $buddyforms['buddyforms'][$form_slug]['email_subject'], 'Ein test');
 
 			if($wpmail == TRUE){ 
 				echo '<p>Form has been sent successful.</p>';
@@ -75,7 +75,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			return;
 		} 
 			
-		$comment_status = $buddyforms['buddyforms'][$post_type]['comment_status'];
+		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
 		
 		if(isset($_POST['comment_status']))
 				$comment_status = $_POST['comment_status'];
@@ -102,7 +102,7 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'post_title' 		=> $_POST['editpost_title'],
                 'post_content' 		=> $_POST['editpost_content'],
                 'post_type' 		=> $post_type,
-                'post_status' 		=> $buddyforms['buddyforms'][$post_type]['status'],
+                'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
                 'comment_status'	=> $comment_status,
             );   
                 
