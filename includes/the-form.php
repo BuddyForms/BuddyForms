@@ -19,7 +19,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'post_type' => 'post',
 		'the_post' => 0,
 		'post_id' => $post_id,
-		'form' => ''
+		'form_slug' => ''
 	), $args));
 	
 
@@ -55,8 +55,8 @@ function buddyforms_create_edit_form( $args = array() ) {
    	if( empty( $post_type ) )
    	   $post_type = $the_post->post_type;
 		
-	if( empty( $form ) )
-   	   $form = apply_filters('buddyforms_the_form_to_use',$form, $post_type);
+	if( empty( $form_slug ) )
+   	   $form_slug = apply_filters('buddyforms_the_form_to_use',$form, $post_type);
 	
 	
 	$customfields = $buddyforms['buddyforms'][$form]['form_fields'];
@@ -381,7 +381,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				}
 	
 				// Display upload field for featured image if required is selected for this form
-				if ($buddyforms['buddyforms'][$post_type]['featured_image']['required'][0] == 'Required'){
+				if ($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0] == 'Required'){
 					if ($post_id == 0) {
 						$file_attr = array("required" => 1, 'id' => "async-upload");
 					} else {
@@ -397,7 +397,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->render(); ?>
 			</div>
 			<?php 
-			if($buddyforms['buddyforms'][$post_type]['revision']){ ?>
+			if($buddyforms['buddyforms'][$form_slug]['revision']){ ?>
 
 					<?php buddyforms_wp_list_post_revisions($post_id ); ?>
 
