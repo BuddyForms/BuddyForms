@@ -192,7 +192,7 @@ function buddyforms_view_form_fields($args){
 				'field_id' => $field_id,
 				'buddyforms_options' => $buddyforms_options
 			);
-			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
+			$form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
 		break;
 		case 'Radiobutton':
 			$field_args = Array(
@@ -200,7 +200,7 @@ function buddyforms_view_form_fields($args){
 				'field_id' => $field_id,
 				'buddyforms_options' => $buddyforms_options
 			);
-			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
+			$form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
 		break;
 		case 'Checkbox':
 			$field_args = Array(
@@ -208,7 +208,7 @@ function buddyforms_view_form_fields($args){
 				'field_id' => $field_id,
 				'buddyforms_options' => $buddyforms_options
 			);
-			$form_fields = buddyforms_form_element_multyble($form_fields, $field_args);
+			$form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
 			break;
 		case 'Taxonomy':
 			$taxonomies = buddyforms_taxonomies();

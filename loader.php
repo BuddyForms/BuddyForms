@@ -1,16 +1,16 @@
 <?php
 /*
  Plugin Name: BuddyForms
- Plugin URI: http://buddyforms.com
+ Plugin URI:  http://buddyforms.com
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.   
- Version: Beta 1.0
- Author: ThemeKraft
- Author URI: http://themekraft.com
+ Version: 1.0 beta 1
+ Author: Sven Lehnert
+ Author URI: http://themekraft.com/members/svenl77/
  Licence: GPLv3
  Network: true
  */
 
-define('buddyforms', '1.0 rc1');
+define('buddyforms', '1.0 beta 1');
 global $buddyforms;
 	
 /**

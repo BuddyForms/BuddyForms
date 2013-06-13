@@ -308,7 +308,7 @@ function buddyforms_settings_page() {
 	$form->render();
 }
 
-function buddyforms_form_element_multyble($form_fields, $args){
+function buddyforms_form_element_multiple($form_fields, $args){
 		
 	extract( $args );
 	

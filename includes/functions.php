@@ -53,10 +53,9 @@ function add_my_custom_button($context) {
 }
 
 
-// Add some content to the bottom of the page 
-// This will be shown in the inline modal
+// Add some content to the bottom of the page for the BuddyForms Shortcodes
+// This will be shown in the thickbox of the post edit screen
 add_action('admin_footer', 'add_inline_popup_content');
-
 function add_inline_popup_content() {
 global $buddyforms;
 	if (!is_admin())
