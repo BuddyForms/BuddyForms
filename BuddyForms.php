@@ -69,7 +69,8 @@ class BuddyForms {
 
 		$buddyforms = get_option('buddyforms_options');
 		
-		$buddyforms[hooks][form_element] = array('no');
+		
+		$buddyforms['hooks']['form_element'] = array('no');
 		
 		if (empty($buddyforms['buddyforms']))
 			return;
@@ -78,7 +79,7 @@ class BuddyForms {
 		
 		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 				
-				$slug = sanitize_title($buddyforms['buddyforms'][$key][slug]);
+				$slug = sanitize_title($buddyforms['buddyforms'][$key]['slug']);
 				if($slug != $key){
 					$buddyforms['buddyforms'][$slug] = $buddyforms['buddyforms'][$key];
 					unset($buddyforms['buddyforms'][$key]);

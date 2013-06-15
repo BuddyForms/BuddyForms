@@ -7,7 +7,10 @@
  * @since 0.1-beta
  */
 function buddyforms_create_menu() {
-	session_start();
+	if(session_id() == 'buddyforms') {
+	  session_start('buddyforms');
+	}
+
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
 	
 }  
@@ -57,12 +60,17 @@ function buddyforms_options_content() { ?>
 function buddyforms_settings_page() {
     global $bp, $buddyforms;
 
+
+	// echo '<pre>';
+	// print_r($buddyforms);
+	// echo '</pre>';
+	
     // Check that the user is allowed to update options
 	if (!current_user_can('manage_options')) {
 	    wp_die('You do not have sufficient permissions to access this page.');
 	}	
 	
-	if (isset($_POST['submit'])) {
+	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
 		update_option("buddyforms_options", $buddyforms_options);
 		?><div id="message" class="updated"><p><?php _e( 'Setup saved.', 'buddyforms' ); ?></p></div><?php
@@ -80,7 +88,7 @@ function buddyforms_settings_page() {
     $output = 'names'; // names or objects, note: names is the default
     $operator = 'and'; // 'and' or 'or'
     $post_types = get_post_types($args,$output,$operator); 
-   	$post_types_none[none] = none;
+   	$post_types_none['none'] = 'none';
 	$post_types = array_merge($post_types_none,$post_types);
 	
 	// Form starts
@@ -94,7 +102,7 @@ function buddyforms_settings_page() {
 	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs">
 		<li class="active"><a href="#general-settings" data-toggle="tab">Setup</a></li>'));
 		
-	if(is_array($buddyforms_options['buddyforms'])){
+	if(isset($buddyforms_options['buddyforms'])){
 		foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
 			$tabname = $buddyform['name'];
 			if(empty($tabname))
@@ -105,12 +113,11 @@ function buddyforms_settings_page() {
 	}	
 	$form->addElement(new Element_HTML('</ul></div>
 		<div class="tab-content"><div class="subcontainer tab-pane fade in active" id="general-settings">'));
-		
 			$form->addElement(new Element_HTML('
-			<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
+			<div class="accordion_sidebar" id="accordion_save">
 				<div class="accordion-group">
 					<div class="accordion-heading"><p class="accordion-toggle">Save Setup</p></div>
-					<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
+					<div id="accordion_save" class="accordion-body">
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Hidden("submit", "submit"));
 							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
@@ -159,7 +166,7 @@ function buddyforms_settings_page() {
 									
 			$form->addElement(new Element_HTML('</div></div>'));
 		
-			if(is_array($buddyforms_options['buddyforms'])){
+			if(isset($buddyforms_options['buddyforms'])){
 				foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
 					
 			    	$form->addElement(new Element_HTML('<div class="subcontainer tab-pane fade in" id="'.$buddyform['slug'].'">'));
@@ -245,30 +252,67 @@ function buddyforms_settings_page() {
 								<div class="accordion-inner">')); 
 									$form->addElement(new Element_HTML('<i class="icon-info-sign" style="margin-top:-1px;"></i>&nbsp;These settings can be overwritten by shortcodes and other plugins! Define the defaults here.<br><br>'));
 									$form->addElement(new Element_HTML('<div class="innerblock form-type">'));
-									$form_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'];
 									
-									if($form_type == '')
+									if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['form_type']))
+										$form_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'];
+									
+									if(empty($form_type))
 										$form_type = 'post_form';
 									
 									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $form_type)));
 									$form->addElement(new Element_HTML('</div><div class="clear"></div>'));
 									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
-											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email'])));
-											$form->addElement(new Element_Textbox("What should the subject line be?", "buddyforms_options[buddyforms][".$buddyform['slug']."][email_subject]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'])));
+											
+											$email = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email']))
+												$email = $buddyforms_options['buddyforms'][$buddyform['slug']]['email'];
+											
+											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $email)));
+											
+											$email_subject = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject']))
+												$email_subject = $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'];
+												
+											$form->addElement(new Element_Textbox("What should the subject line be?", "buddyforms_options[buddyforms][".$buddyform['slug']."][email_subject]", array('value' => $email_subject)));
 									$form->addElement(new Element_HTML('</div>'));
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
 											$form->addElement(new Element_HTML('<div class="innerblock featured-image">'));
-											$form->addElement( new Element_Checkbox("<b>Featured Image</b>","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'])));
+											
+											$required = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required']))
+												$required = $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'];
+											
+											$form->addElement( new Element_Checkbox("<b>Featured Image</b>","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $required)));
 											$form->addElement(new Element_HTML('</div>'));
 											$form->addElement(new Element_HTML('<div class="innerblock revision">'));
-											$form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'])));
+											
+											$revision = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['revision']))
+												$revision = $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'];
+											
+											$form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $revision)));
 											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));
-											$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['status'])));
-											$form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status'])));
-											$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'])));
+											
+											$status = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['status']))
+												$status = $buddyforms_options['buddyforms'][$buddyform['slug']]['status'];
+												
+											$form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $status)));
+											
+											$comment_status = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status']))
+												$comment_status = $buddyforms_options['buddyforms'][$buddyform['slug']]['comment_status'];
+											
+											$form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $comment_status)));
+											
+											$post_type = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['post_type']))
+												$post_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'];
+											
+											$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $post_type)));
 										$form->addElement(new Element_HTML('</div>'));
 										
 									$form->addElement(new Element_HTML('</div>'));
@@ -286,11 +330,16 @@ function buddyforms_settings_page() {
 					<h3>Form Builder</h3>
 					<p>Add elements from the right box "Form Elements". Change the order via drag and drop.</p>
 					<ul id="sortable_'. $buddyform['slug'] .'" class="sortable sortable_'. $buddyform['slug'] .'">'));
-					if(is_array($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){
+
+					if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){
+						
 						foreach($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'] as $field_id => $customfield) {
-								
-							$slug = sanitize_title($customfield['slug']);	
-							if($slug == '')
+							
+							
+							if(isset($customfield['slug']))	
+								$slug = sanitize_title($customfield['slug']);	
+							
+							if(empty($slug))
 								$slug = sanitize_title($customfield['name']);
 							
 							if( $slug != '' ){
@@ -317,20 +366,20 @@ function buddyforms_form_element_multiple($form_fields, $args){
 		
 	extract( $args );
 	
-	$form_fields['left'][html_1] = new Element_HTML('
+	$form_fields['left']['html_1'] = new Element_HTML('
 	<div class="element_field">
 	<p>Checkbox Values:</p>
 		 <ul id="'.$post_type.'_field_'.$field_id.'" class="element_field_sortable">');
-		 if(isset($buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][value])){
+		 if(isset($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['value'])){
 		 	$count = 1;
-		 	 foreach ($buddyforms_options['buddyforms'][$post_type][form_fields][$field_id][value] as $key => $value) {
+		 	 foreach ($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['value'] as $key => $value) {
 				$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
 				$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
 				$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input" title="delete me">X</a> - <a href="#" id="'.$field_id.'" title="drag and move me!">move</a></li>');
 				$count++;
 			 }
 		 }   		
-		$form_fields['left'][html_2] = new Element_HTML(' 
+		$form_fields['left']['html_2'] = new Element_HTML(' 
 	    </ul>
      </div>
      <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>

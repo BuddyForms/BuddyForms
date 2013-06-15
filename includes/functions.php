@@ -62,7 +62,7 @@ global $buddyforms;
 		return; ?>
 		
 	<div id="popup_container" style="display:none;">
-	<h2>Hello from my custom button!</h2>
+	<h2></h2>
 	<?php 
   
   	// Get all post types
@@ -73,7 +73,7 @@ global $buddyforms;
     $output = 'names'; // names or objects, note names is the default
     $operator = 'and'; // 'and' or 'or'
     $post_types = get_post_types($args,$output,$operator); 
-   	$post_types_none[none] = none;
+   	$post_types_none['none'] = 'none';
 	$post_types = array_merge($post_types_none,$post_types);
 	
   
@@ -106,7 +106,7 @@ jQuery(document).ready(function (){
     jQuery('.buddyforms-button-insert').on('click',function(event){  
     	var form = jQuery('.buddyforms_add_form').val();
     	var posttype = jQuery('.buddyforms_posttype').val();
-		window.send_to_editor('[buddyforms_form form="'+form +'" post_type="'+posttype+'"]');
+		window.send_to_editor('[buddyforms_form form_slug="'+form +'" post_type="'+posttype+'"]');
         });
 });
 
@@ -154,6 +154,9 @@ function buddyforms_form_display_element_frontend(){
 		if($buddyforms['buddyforms'][$key]['post_type'] != 'none' &&  $buddyforms['buddyforms'][$key]['post_type'] == $post_type)
 			$form = $buddyforms['buddyforms'][$key]['slug'];
 	}
+	
+	if(!isset($form))
+		return;
 		
 	if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 			

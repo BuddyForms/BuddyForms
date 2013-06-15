@@ -26,14 +26,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 	get_currentuserinfo();	
 
 	// if post edit screen is displayed
-	if($_GET[post_id]) { 
+	if(isset($_GET['post_id'])) { 
     			
-    	$post_id		= $_GET[post_id]; 
-        $post_type		= $_GET[post_type];
-		if($_GET[revision_id]) {
-			$the_post		= get_post( $_GET[revision_id] );
+    	$post_id		= $_GET['post_id']; 
+        $post_type		= $_GET['post_type'];
+		if(isset($_GET['revision_id'])) {
+			$the_post		= get_post( $_GET['revision_id'] );
 		} else {
-			$the_post		= get_post( $_GET[post_id] );
+			$the_post		= get_post( $_GET['post_id'] );
 		}
        	
        	if ($the_post->post_author != $current_user->ID){
@@ -56,10 +56,10 @@ function buddyforms_create_edit_form( $args = array() ) {
    	   $post_type = $the_post->post_type;
 		
 	if( empty( $form_slug ) )
-   	   $form_slug = apply_filters('buddyforms_the_form_to_use',$form, $post_type);
+   	   $form_slug = apply_filters('buddyforms_the_form_to_use',$form_slug, $post_type);
 	
-	
-	$customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
+	if(isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
+		$customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
 		
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
@@ -131,18 +131,19 @@ function buddyforms_create_edit_form( $args = array() ) {
 					} else {
 				
 						$slug = Array();
-						$postCategories = $_POST[ sanitize_title( $customfield['name'] ) ];
 						
-						if(is_array($postCategories)){
+						if(isset($_POST[ sanitize_title( $customfield['name'] ) ])) {
+							$postCategories = $_POST[ sanitize_title( $customfield['name'] ) ];
+						
 							foreach ( $postCategories as $postCategory ) {
 								$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
 								$slug[] = $term->slug;
 							}
 						
 							
-						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+							wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
 						}
-						if($_POST[$customfield['slug'].'_creat_new_tax']){
+						if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
 							$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
 							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 						}
@@ -152,12 +153,15 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
 				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
                
-			   	$slug = sanitize_title($customfield['slug']);	
+			   	if(isset($customfield['slug']))
+			   		$slug = sanitize_title($customfield['slug']);	
+				
 				if($slug == '')
 					$slug = sanitize_title($customfield['name']);
 				
 				// Update the post
-				update_post_meta($post_id, $slug, $_POST[$slug] ); 
+				if(isset($_POST[$slug] ))
+					update_post_meta($post_id, $slug, $_POST[$slug] ); 
 				                   
             endforeach;
     	}
@@ -188,7 +192,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 			?>
 			<div class="thanks">
-				<?php if($_GET['post_id']){ ?>
+				<?php if(isset($_GET['post_id'])){ ?>
 		            <h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
 		            <p><?php _e( 'Post has been updated.', 'buddyforms' ); ?> </p>
 	   			<?php } else { ?>
@@ -237,7 +241,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if( isset( $_POST['editpost_content'] ) ){
 					$editpost_content_val = $_POST['editpost_content'];
 				} else {
-					$editpost_content_val = $the_post->post_content;
+					if(!empty($the_post->post_content))
+						$editpost_content_val = $the_post->post_content;
 			}
 			?>	
 			<div class="form_wrapper">
@@ -280,16 +285,18 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				
 				// if the form have custom field to save as post meta data they get displayed here 
-				if (is_array($customfields)) {
+				if (isset($customfields)) {
 					foreach ($customfields as $key => $customfield) :
 						
-						$slug = sanitize_title($customfield['slug']);	
+						if(isset($customfield['slug']))
+							$slug = sanitize_title($customfield['slug']);	
+							
 						if($slug == '')
 							$slug = sanitize_title($customfield['name']);
 				
 						if($slug != '') :
 						
-							if ($_POST[$slug] != '') {
+							if (isset($_POST[$slug] )) {
 								$customfield_val = $_POST[$slug];
 							} else {
 								$customfield_val = get_post_meta($post_id, $slug, true);
@@ -297,35 +304,35 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 							switch( $customfield['type'] ) {
 								case 'Mail' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 									break;
 		
 								case 'Radiobutton' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									if(is_array($customfield['value']))
 										$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Checkbox' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									if(is_array($customfield['value']))
 										$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Dropdown' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									if(is_array($customfield['value']))
 										$form->addElement(new Element_Select($customfield['name'] . ':', $slug, $customfield['value'], $element_attr));
 									break;
 								
 								case 'Comments' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									$form->addElement(new Element_Select($customfield['name'] . ':', 'comment_status', array('open','closed'), $element_attr));
 									break;
 		
 								case 'Textarea' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 									break;
 		
@@ -334,12 +341,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 									break;
 		
 								case 'Text' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 									break;
 		
 								case 'Link' :
-									$element_attr = $customfield['required'] ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
 		
 									break;
@@ -381,7 +388,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				}
 	
 				// Display upload field for featured image if required is selected for this form
-				if ($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0] == 'Required'){
+				if (isset($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0])){
 					if ($post_id == 0) {
 						$file_attr = array("required" => 1, 'id' => "async-upload");
 					} else {
@@ -397,7 +404,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->render(); ?>
 			</div>
 			<?php 
-			if($buddyforms['buddyforms'][$form_slug]['revision']){ ?>
+			if(isset($buddyforms['buddyforms'][$form_slug]['revision'])){ ?>
 
 					<?php buddyforms_wp_list_post_revisions($post_id ); ?>
 
