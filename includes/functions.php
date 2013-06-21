@@ -4,6 +4,8 @@
 add_action('admin_init', 'buddyforms_handle_custompage_route');
 function buddyforms_handle_custompage_route(){
 	global $buddyforms;
+	if(!isset($buddyforms['buddyforms']))
+		return;
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		if(isset($buddyform['attached_page'])){

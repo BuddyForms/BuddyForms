@@ -379,6 +379,9 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('</ul></div></div></div>'));
 			    }	
 			}
+
+			$form = apply_filters( 'buddyforms_before_admin_form_render', $form);
+
 		$form->addElement(new Element_HTML('</div>'));			
 	$form->render();
 }
