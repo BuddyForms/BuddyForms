@@ -298,6 +298,21 @@ function buddyforms_settings_page() {
 												$admin_bar = $buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar'];
 											
 											$form->addElement( new Element_Checkbox("<b>Add to Admin Bar</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('admin_bar'),array('value' => $admin_bar)));
+											
+											$attached_page = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page']))
+												$attached_page = $buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page'];
+											
+											$args = array( 
+												'id' => $key, 
+												'echo' => FALSE,
+												'name' => "buddyforms_options[buddyforms][".$buddyform['slug']."][attached_page]",
+												'class' => 'postform',
+												'selected' => $attached_page
+											);
+		
+											$form->addElement(new Element_HTML(wp_dropdown_pages($args)));
+											
 											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));

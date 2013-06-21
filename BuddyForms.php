@@ -101,6 +101,7 @@ class BuddyForms {
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
 		
 		if (is_admin()){
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');

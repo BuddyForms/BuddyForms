@@ -21,7 +21,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'post_id' => $post_id,
 		'form_slug' => ''
 	), $args));
-	
 
 	get_currentuserinfo();	
 
