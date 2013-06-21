@@ -18,7 +18,6 @@ class BuddyForms {
 		$this->init_hook();
 		$this->load_constants();
 		
-		
 	}
 
 	/**
