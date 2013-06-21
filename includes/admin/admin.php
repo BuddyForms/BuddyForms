@@ -292,6 +292,12 @@ function buddyforms_settings_page() {
 												$revision = $buddyforms_options['buddyforms'][$buddyform['slug']]['revision'];
 											
 											$form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $revision)));
+											
+											$admin_bar = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar']))
+												$admin_bar = $buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar'];
+											
+											$form->addElement( new Element_Checkbox("<b>Add to Admin Bar</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('admin_bar'),array('value' => $admin_bar)));
 											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_left">'));

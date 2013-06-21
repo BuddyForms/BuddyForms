@@ -1,5 +1,39 @@
 <?php
 
+function buddyforms_wp_before_admin_bar_render(){
+	global $wp_admin_bar, $buddyforms;
+
+	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+		
+		if(isset($buddyform['admin_bar'][0])){
+		
+			$wp_admin_bar->add_menu( array(
+				'parent' 	=> 'my-account',
+				'id'		=> 'my-account-'.$buddyform['slug'],
+				'title'		=> __($buddyform['name'], 'buddypress'),
+				'href'		=> trailingslashit(bp_loggedin_user_domain() . $buddyform['slug'])
+			));
+			$wp_admin_bar->add_menu( array(
+				'parent'	=> 'my-account-'.$buddyform['slug'],
+				'id'		=> 'my-account-'.$buddyform['slug'].'-view',
+				'title'		=> __('View my '.$buddyform['name'],'buddypress'),
+				'href'		=> trailingslashit(bp_loggedin_user_domain() . $buddyform['slug'])
+			)); 
+
+			 $wp_admin_bar->add_menu( array(
+				'parent'	=> 'my-account-'.$buddyform['slug'],
+				'id'		=> 'my-account-'.$buddyform['slug'].'-new',
+				'title'		=> __('New '.$buddyform['singular_name'],'buddypress'),
+				'href'		=> trailingslashit(bp_loggedin_user_domain() . $buddyform['slug']).'/create'
+			));  
+
+		}
+	}
+}
+add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render',1,2);
+
+
+
 // Register a URL that will set this variable to true
 add_action( 'init', 'buddyforms_edit_init' );
 function buddyforms_edit_init() {
