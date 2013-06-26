@@ -30,9 +30,8 @@ function buddyforms_handle_custompage_query_vars($query_vars){
 add_filter('the_content', 'buddyforms_custompage_content');
 function buddyforms_custompage_content($content){
     global $wp_query, $buddyforms;
-	
+
 	$new_content = $content;
-    
     if (isset($wp_query->query_vars['bf_action'])) {
     	
 		$args = array(
@@ -41,7 +40,7 @@ function buddyforms_custompage_content($content){
 		);
        	
     	if($wp_query->query_vars['bf_action'] == 'edit')
-       		$new_content .= buddyforms_edit_form($args);
+       		$new_content .= buddyforms_the_loop($args);
 		
 		if($wp_query->query_vars['bf_action'] != 'edit'){
 			ob_start();
