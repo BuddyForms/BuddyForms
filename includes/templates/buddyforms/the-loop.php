@@ -2,6 +2,11 @@
 
 global $buddyforms, $bp, $the_lp_query, $current_user;
 	get_currentuserinfo();	
+// echo '<pre>';
+// print_r($the_lp_query);
+// echo '</pre>';
+
+$form =  $the_lp_query->query_vars['form_slug'];
 
 if ( $the_lp_query->have_posts() ) : ?>
 
@@ -36,14 +41,13 @@ if ( $the_lp_query->have_posts() ) : ?>
 				
 				<?php
 			
-				if (get_the_author_meta('id') ==  get_current_user_id()){ 
-					$componente = $buddyforms['selected_post_types'][get_post_type()][form];
-					
+				if (get_the_author_meta('id') ==  get_current_user_id()){
+					$permalink = get_permalink( $buddyforms['buddyforms'][$form]['attached_page'] );
 					?>
 					<div class="meta">
 						<div class="item-status"><?php echo get_post_status(); ?></div>
-						<a title="Edit me" href='<?php echo''.get_the_ID().'/'.get_post_type(); ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
-						- <a title="Delete me" onclick="return confirm('Are you sure you want to delete this entry?');" href='<?php echo trailingslashit( bp_loggedin_user_domain() ).$componente.'?delete='.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
+						<a title="Edit me" href='<?php echo $permalink.'edit/'.$form.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
+						- <a title="Delete me" onclick="return confirm('Are you sure you want to delete this entry?');" href='<?php echo $permalink.'delete/'.$form.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
 					</div>
 				<?php } ?>
 			</div>

@@ -34,24 +34,21 @@ function buddyforms_the_loop($args){?>
 	global $current_user, $the_lp_query, $bp, $buddyforms;
 	
 	extract(shortcode_atts(array(
-		'post_type' => 'post',
+		'post_type' => '',
 		'form_slug' => ''
 	), $args));
 	
-	if ($bp->displayed_user->id == $current_user->ID){	
+	if(empty($post_type))
+		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+	if (get_the_author_meta('ID') == get_current_user_id()){	
 		$args = array( 
 			'post_type' => $post_type,
+			'form_slug' => $form_slug,
 			'post_status' => array('publish', 'pending', 'draft'),
 			'posts_per_page' => 10,
 			'author' => get_current_user_id() );
-	} else {
-		$args = array( 
-			'post_type' => $post_type,
-			'post_status' => array('publish'),
-			'posts_per_page' => 10,
-			'author' => $bp->displayed_user->id );
 	}
-	
 	
 	$the_lp_query = new WP_Query( $args );
 	

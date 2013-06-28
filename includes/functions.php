@@ -1,8 +1,8 @@
 <?php
 // handle custom page
 // do flush if changing rule, then reload an admin page
-add_action('admin_init', 'buddyforms_handle_custompage_route');
-function buddyforms_handle_custompage_route(){
+add_action('admin_init', 'buddyforms_attached_page_rewrite_rules');
+function buddyforms_attached_page_rewrite_rules(){
 	global $buddyforms;
 	if(!isset($buddyforms['buddyforms']))
 		return;
@@ -10,7 +10,12 @@ function buddyforms_handle_custompage_route(){
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		if(isset($buddyform['attached_page'])){
 			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
-			add_rewrite_rule($post_data['post_name'].'/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=$matches[1]&bf_post_type=$matches[2]&bf_form_slug=$matches[3]', 'top');
+			//add_rewrite_rule($post_data['post_name'].'/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=$matches[1]&bf_post_type=$matches[2]&bf_form_slug=$matches[3]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/view/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=view&bf_form_slug=$matches[1]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/edit/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/delete/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=delete&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/revison/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revison&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
 		}
 			
 	}
@@ -18,33 +23,52 @@ function buddyforms_handle_custompage_route(){
 }
 
 // add the query vars 
-add_filter('query_vars', 'buddyforms_handle_custompage_query_vars');
-function buddyforms_handle_custompage_query_vars($query_vars){
+add_filter('query_vars', 'buddyforms_attached_page_query_vars');
+function buddyforms_attached_page_query_vars($query_vars){
 	$query_vars[] = 'bf_action';
-	$query_vars[] = 'bf_post_type';
 	$query_vars[] = 'bf_form_slug';	
+	$query_vars[] = 'bf_post_id';
+	$query_vars[] = 'bf_rev_id';
+
 	return $query_vars;
 }
 
 // make the template redirect
-add_filter('the_content', 'buddyforms_custompage_content');
-function buddyforms_custompage_content($content){
+add_filter('the_content', 'buddyforms_attached_page_content');
+function buddyforms_attached_page_content($content){
     global $wp_query, $buddyforms;
+
+
+	// echo '<pre>';
+	// print_r($wp_query->query_vars);
+	// echo '</pre>';
 
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
     	
 		$args = array(
-			'post_type' => $wp_query->query_vars['bf_post_type'],
-			'form_slug' => $wp_query->query_vars['bf_form_slug']
+
+			'form_slug' => $wp_query->query_vars['bf_form_slug'],
+			'post_id' => $wp_query->query_vars['bf_post_id']
 		);
        	
-    	if($wp_query->query_vars['bf_action'] == 'edit')
-       		$new_content .= buddyforms_the_loop($args);
-		
-		if($wp_query->query_vars['bf_action'] != 'edit'){
+    	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revison'){
 			ob_start();
 				buddyforms_create_edit_form($args);
+				$bf_form = ob_get_contents();
+			ob_clean();
+			$new_content .= $bf_form;		
+    	}
+		if($wp_query->query_vars['bf_action'] == 'view'){
+    		ob_start();
+				buddyforms_the_loop($args);
+				$bf_form = ob_get_contents();
+			ob_clean();
+			$new_content .= $bf_form;				
+		}
+		if($wp_query->query_vars['bf_action'] == 'delete'){
+			ob_start();
+				buddyforms_delete_post($args);
 				$bf_form = ob_get_contents();
 			ob_clean();
 			$new_content .= $bf_form;		
@@ -55,8 +79,13 @@ function buddyforms_custompage_content($content){
 		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
 			if($post_data['post_name'] == $wp_query->query_vars['pagename']){
+				$args = array(
+
+					'form_slug' => $buddyform['slug'],
+				//	'post_id' => $post_data->post_id
+				);
 				ob_start();
-					buddyforms_create_edit_form(array( 'pagename' => $wp_query->query_vars['pagename']));
+					buddyforms_the_loop($args);
 					$bf_form = ob_get_contents();
 				ob_clean();
 				$new_content .= $bf_form;
@@ -69,6 +98,7 @@ function buddyforms_custompage_content($content){
 }
 
 // add the forms to the admin bar
+add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render',1,2);
 function buddyforms_wp_before_admin_bar_render(){
 	global $wp_admin_bar, $buddyforms;
 
@@ -89,53 +119,24 @@ function buddyforms_wp_before_admin_bar_render(){
 				'parent'	=> 'my-account-'.$buddyform['slug'],
 				'id'		=> 'my-account-'.$buddyform['slug'].'-view',
 				'title'		=> __('View my '.$buddyform['name'],'buddypress'),
-				'href'		=> $permalink.'/edit/'.$buddyform['post_type'].'/'.$buddyform['slug']
+				'href'		=> $permalink.'/view/'.$buddyform['slug'].'/'
 			)); 
 
 			 $wp_admin_bar->add_menu( array(
 				'parent'	=> 'my-account-'.$buddyform['slug'],
 				'id'		=> 'my-account-'.$buddyform['slug'].'-new',
 				'title'		=> __('New '.$buddyform['singular_name'],'buddypress'),
-				'href'		=> $permalink.'/create/'.$buddyform['post_type'].'/'.$buddyform['slug']
+				'href'		=> $permalink.'create/'.$buddyform['slug'].'/'
 			));  
 
 		}
 	}
 }
-add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render',1,2);
-
-// Register a URL that will set this variable to true
-add_action( 'init', 'buddyforms_edit_init' );
-function buddyforms_edit_init() {
-    add_rewrite_rule( 'buddyform_edit', 'index.php?buddyform_edit=true' );
-}
-
-// WordPress has a whitelist of variables it allows, so we must put it on that list
-add_action( 'query_vars', 'buddyforms_edit_query_vars' );
-function buddyforms_edit_query_vars( $query_vars ){
-    $query_vars[] = 'buddyform_edit';
-    return $query_vars;
-}
-
-// If this is done, we can access it later
-// This example checks very early in the process:
-// If the variable is set, we include our page and stop execution after it
-add_action( 'parse_request', 'buddyforms_edit_parse_request' );
-function buddyforms_edit_parse_request( &$wp ){
-    if ( array_key_exists( 'buddyform_edit', $wp->query_vars ) ) {
-        	get_template_part('header');
-			do_shortcode('[buddyforms_form]');
-			get_template_part('footer');
-        exit();
-    }
-}
 
 // Add a button to the content editor, next to the media button 
 // This button will show a popup that contains inline content 
-add_action('media_buttons_context', 'add_my_custom_button');
-
-// Action to add a custom button to the content editor
-function add_my_custom_button($context) {
+add_action('media_buttons_context', 'buddyforms_editor_button');
+function buddyforms_editor_button($context) {
   if (!is_admin())
   	return $context;
   
@@ -159,8 +160,8 @@ function add_my_custom_button($context) {
 
 // Add some content to the bottom of the page for the BuddyForms Shortcodes
 // This will be shown in the thickbox of the post edit screen
-add_action('admin_footer', 'add_inline_popup_content');
-function add_inline_popup_content() {
+add_action('admin_footer', 'buddyforms_editor_button_inline_content');
+function buddyforms_editor_button_inline_content() {
 global $buddyforms;
 	if (!is_admin())
 		return; ?>
@@ -201,9 +202,8 @@ global $buddyforms;
 <?php
 }
 
-add_action('admin_footer',  'add_mce_popup');
-
-function add_mce_popup(){ ?>
+add_action('admin_footer',  'buddyforms_editor_button_mce_popup');
+function buddyforms_editor_button_mce_popup(){ ?>
    <script>
 
 jQuery(document).ready(function (){
@@ -216,21 +216,6 @@ jQuery(document).ready(function (){
 
 </script>
 <?php
-}
-
-
-// add_action( 'wp_ajax_buddyforms_form_ajax', 'buddyforms_form_ajax' );
-// add_action( 'wp_ajax_nopriv_buddyforms_form_ajax', 'buddyforms_form_ajax' );
-function buddyforms_form_ajax() {
-	
-	$args = array(
-		'posttype' => 'post',
-		'the_post' => 0,
-		'post_id' => $_POST['post_id']
-		);
-		
-	buddyforms_create_edit_form( $args ); 
-	die();
 }
 
 /**

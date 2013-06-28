@@ -7,22 +7,61 @@
  * @since 0.1-beta	
 */
 function buddyforms_create_edit_form( $args = array() ) {
-    global $post, $bp, $current_user, $buddyforms, $post_id;
+    global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query;
 	session_id('buddyforms-create-edit-form');
 
+
+	// echo '<pre>';
+	// print_r($wp_query->query_vars);
+	// echo '</pre>';
+	// if post edit screen is displayed
+	
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
 	
 	// hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
 	extract(shortcode_atts(array(
-		'post_type' => 'post',
+		'post_type' => '',
 		'the_post' => 0,
 		'post_id' => $post_id,
 		'form_slug' => ''
 	), $args));
 
 	get_currentuserinfo();	
+
+	if(empty($post_type))
+		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+	if(isset($wp_query->query_vars['bf_action'])){
+		
+		$action = $wp_query->query_vars['bf_action'];
+		$form_slug = $wp_query->query_vars['bf_form_slug'];
+		$post_id = $wp_query->query_vars['bf_post_id'];
+		
+		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+		
+		if(isset($revision_id)) {
+			$the_post		= get_post( $revision_id );
+		} else {
+			$the_post		= get_post( $post_id );
+		}
+       	
+		if($wp_query->query_vars['bf_action'] == 'edit'){
+	       	if ($the_post->post_author != $current_user->ID){
+	       		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
+				echo '<div class="error alert">'.$error_message.'</div>';
+				return;	
+			}
+		}
+		
+	}
+
+
+	
+		
+		
 
 	// if post edit screen is displayed
 	if(isset($_GET['post_id'])) { 
@@ -414,3 +453,36 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 // Shortcode to add the form everywhere easely ;-)
 add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
+
+
+function buddyforms_delete_post(){
+	global $wp_query, $buddyforms;
+	
+		if(isset($wp_query->query_vars['bf_action'])){
+		
+		$action = $wp_query->query_vars['bf_action'];
+		$form_slug = $wp_query->query_vars['bf_form_slug'];
+		$post_id = $wp_query->query_vars['bf_post_id'];
+		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+		if(isset($revision_id)) {
+			$the_post		= get_post( $revision_id );
+		} else {
+			$the_post		= get_post( $post_id );
+		}
+       	
+		if($wp_query->query_vars['bf_action'] == 'delete'){
+			if ($the_post->post_author != $current_user->ID) {
+				echo '<div class="error alert">You are not allowed to delete this entry! What are you doing here?</div>';
+				return;
+			}
+			do_action('buddyforms_delete_post',$post_id);
+			wp_delete_post( $post_id );
+		}	
+	}
+		$args = array(
+			'form_slug' => $form_slug,
+		);
+       
+	buddyforms_the_loop($args);
+}
