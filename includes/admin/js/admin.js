@@ -26,7 +26,6 @@ jQuery(document).ready(function(jQuery) {
 			}
 			jQuery('.'+form_type_val+'_'+form_type_id).show();
 		} else {
-			jQuery('.bf_element_display_'+form_type_id).hide();
 			jQuery('.'+form_type_val+'_'+form_type_id).hide();
 		}
     	 

@@ -7,7 +7,7 @@
  * @since 0.1-beta
  */
 function buddyforms_create_menu() {
-	if(session_id() == 'buddyforms') {
+	if(session_id() != 'buddyforms') {
 	  session_start('buddyforms');
 	}
 
@@ -262,14 +262,14 @@ function buddyforms_settings_page() {
 									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $form_type)));
 									$form->addElement(new Element_HTML('</div><div class="clear"></div>'));
 									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
-											
-											$email = 'false';
+											$form->addElement(new Element_HTML('<p>NOT READY YET<br>I will leave the mail/notification development for later and focus on the logic of form and post control first. After the logic is deaply tested, we will put the same patition into mail and notification.</p>'));
+											$email = '';
 											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email']))
 												$email = $buddyforms_options['buddyforms'][$buddyform['slug']]['email'];
 											
 											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $email)));
 											
-											$email_subject = 'false';
+											$email_subject = '';
 											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject']))
 												$email_subject = $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'];
 												
@@ -297,21 +297,13 @@ function buddyforms_settings_page() {
 											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar']))
 												$admin_bar = $buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar'];
 											
-											$form->addElement( new Element_Checkbox("<b>Add to Admin Bar</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('admin_bar'),array('value' => $admin_bar)));
+											$form->addElement( new Element_Checkbox("<b>Add to Admin Bar?</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('admin_bar'),array('value' => $admin_bar)));
 											
-											$attached_page = 'false';
-											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page']))
-												$attached_page = $buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page'];
+											$edit_link = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['edit_link']))
+												$edit_link = $buddyforms_options['buddyforms'][$buddyform['slug']]['edit_link'];
 											
-											$args = array( 
-												'id' => $key, 
-												'echo' => FALSE,
-												'name' => "buddyforms_options[buddyforms][".$buddyform['slug']."][attached_page]",
-												'class' => 'postform',
-												'selected' => $attached_page
-											);
-		
-											$form->addElement(new Element_HTML(wp_dropdown_pages($args)));
+											$form->addElement( new Element_Checkbox("<b>Overwrite Edit this entry?</b><br><i>WordPress link to the backend will be changed<br> to use the frontend form</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][edit_link]",array('overwrite'),array('value' => $edit_link)));
 											
 											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
@@ -334,6 +326,26 @@ function buddyforms_settings_page() {
 												$post_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['post_type'];
 											
 											$form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $post_type)));
+										
+											$attached_page = 'false';
+											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page']))
+												$attached_page = $buddyforms_options['buddyforms'][$buddyform['slug']]['attached_page'];
+											
+											$args = array( 
+												'id' => $key, 
+												'echo' => FALSE,
+												'sort_column'  => 'post_title',
+												'show_option_none' => __( 'none', 'buddyforms' ),
+												'name' => "buddyforms_options[buddyforms][".$buddyform['slug']."][attached_page]",
+												'class' => 'postform',
+												'selected' => $attached_page
+											);
+											$form->addElement(new Element_HTML('<label><b>Associate a WordPress Pages with this Form:</b></label><br>'));
+											$form->addElement(new Element_HTML(wp_dropdown_pages($args)));
+											
+											$form->addElement(new Element_HTML('<a href="'. admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ).'" class="button-secondary">'. __( 'New Page', 'buddypress' ).'</a>'));
+							
+										
 										$form->addElement(new Element_HTML('</div>'));
 										
 									$form->addElement(new Element_HTML('</div>'));

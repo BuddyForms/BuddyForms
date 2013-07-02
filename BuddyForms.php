@@ -69,7 +69,7 @@ class BuddyForms {
 		$buddyforms = get_option('buddyforms_options');
 		
 		
-		$buddyforms['hooks']['form_element'] = array('no');
+		$buddyforms['hooks']['form_element'] = array('no','before_the_title','after_the_title','before_the_content','after_the_content');
 		
 		if (empty($buddyforms['buddyforms']))
 			return;

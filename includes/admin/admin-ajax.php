@@ -154,15 +154,6 @@ function buddyforms_view_form_fields($args){
 	$form_fields = Array();
 	
 	$buddyforms['hooks']['form_element'] = apply_filters('buddyforms_form_element_hooks',$buddyforms['hooks']['form_element'],$post_type,$field_id);
-	$msg = '';
-	if (count ($buddyforms['hooks']['form_element']) == 1 )
-		 $msg =  "<br><i>If you see this text, your theme do not support BuddyForms.<br>
-		 You can use get_post_meta(sanitize_title('name')); <br>
-		 or get_post_meta('slug'); if slug <br> 
-		 in your theme to get the custom post meta value. <br>
-		 Or you write a smal fuction to add your hooks here. <br>
-		 For this please see the <a target='_blank' href='http://buddyforms.com'>documentation</a><br>
-		 how to creat and use hooks with BuddyForms</i>";
 	$style = 'false';
 	if(isset($buddyforms_options['buddyforms'][$post_type]['form_type']) && $buddyforms_options['buddyforms'][$post_type]['form_type'] != 'post_form')
 		$style = 'style="display: none;"';
@@ -173,7 +164,7 @@ function buddyforms_view_form_fields($args){
 		if(isset($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['display']))
 			$display = $buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['display'];
 												
-		$form_fields['right']['display']			= new Element_Select("Display?".$msg, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
+		$form_fields['right']['display']			= new Element_Select("Display?", "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
 		
 		$display_name = 'false';
 		if(isset($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['display_name']))

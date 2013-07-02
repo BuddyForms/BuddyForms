@@ -1,4 +1,28 @@
 <?php
+
+add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
+function my_edit_post_link( $url, $post_ID, $context) {
+	global $buddyforms, $current_user;
+	
+	$the_post	= get_post( $post_ID );
+	$post_type	= get_post_type( $the_post );
+	
+	
+	if ($the_post->post_author != $current_user->ID)
+		return $url;
+	
+	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+
+		if($buddyform['post_type'] == $post_type && isset($buddyform['edit_link'][0])){
+			$permalink	= get_permalink( $buddyform['attached_page'] );
+			$url = $permalink.'edit/'.$key.'/'.get_the_ID();
+			return $url;	
+		}
+	}
+
+	return $url;
+}
+
 // handle custom page
 // do flush if changing rule, then reload an admin page
 add_action('admin_init', 'buddyforms_attached_page_rewrite_rules');
@@ -45,11 +69,17 @@ function buddyforms_attached_page_content($content){
 
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
-    	
+    	$form_slug = '';
+		if(isset($wp_query->query_vars['bf_form_slug']))
+    		$form_slug = $wp_query->query_vars['bf_form_slug'];
+		
+		$post_id = '';
+		if(isset($wp_query->query_vars['bf_post_id']))
+    		$post_id = $wp_query->query_vars['bf_post_id'];
+		
 		$args = array(
-
-			'form_slug' => $wp_query->query_vars['bf_form_slug'],
-			'post_id' => $wp_query->query_vars['bf_post_id']
+			'form_slug' => $form_slug,
+			'post_id' => $post_id
 		);
        	
     	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revison'){
@@ -96,7 +126,7 @@ function buddyforms_attached_page_content($content){
 	
 	return $new_content;
 }
-
+												
 // add the forms to the admin bar
 add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render',1,2);
 function buddyforms_wp_before_admin_bar_render(){
@@ -106,8 +136,8 @@ function buddyforms_wp_before_admin_bar_render(){
 		return;
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-		
-		if(isset($buddyform['admin_bar'][0])){
+
+		if(isset($buddyform['admin_bar'][0]) && $buddyform['post_type'] != 'none' && !empty($buddyform['attached_page']) ){
 			$permalink = get_permalink( $buddyform['attached_page'] );
 			$wp_admin_bar->add_menu( array(
 				'parent' 	=> 'my-account',
@@ -262,7 +292,7 @@ function buddyforms_form_display_element_frontend(){
 				
 				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
 				
-				if($customfield['display_name'])
+				if(isset($customfield['display_name']))
 					$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
 				
 				
@@ -287,7 +317,29 @@ function buddyforms_form_display_element_frontend(){
 				
 				$post_meta_tmp .= '</div>';
 				apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
-				add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
+
+
+
+				switch ($customfield['display']) {
+					case 'before_the_title':
+						add_filter( 'the_title', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_title, '"') . '";') );
+						break;
+					case 'after_the_title':
+						add_filter( 'the_title', create_function('', 'return "' . addcslashes($post->post_title.$post_meta_tmp, '"') . '";') );
+						break;
+					case 'before_the_content':
+						add_filter( 'the_content', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_content, '"') . '";') );
+						break;
+					case 'after_the_content':
+						add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
+						break;
+					
+					default:
+						add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
+						break;
+				}
+
+				
 			endif;
 		endforeach;
 	}

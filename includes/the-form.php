@@ -11,9 +11,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 	session_id('buddyforms-create-edit-form');
 
 
-	echo '<pre>';
-	print_r($wp_query->query_vars);
-	echo '</pre>';
+	// echo '<pre>';
+	// print_r($wp_query->query_vars);
+	// echo '</pre>';
 	// if post edit screen is displayed
 	
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
@@ -35,10 +35,20 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	if(isset($wp_query->query_vars['bf_action'])){
 		
+		
 		$action = $wp_query->query_vars['bf_action'];
-		$form_slug = $wp_query->query_vars['bf_form_slug'];
-		$post_id = $wp_query->query_vars['bf_post_id'];
-		$rev_id = $wp_query->query_vars['bf_rev_id'];
+		
+		$form_slug = '';
+		if(isset($wp_query->query_vars['bf_form_slug']))
+			$form_slug = $wp_query->query_vars['bf_form_slug'];
+		
+		$post_id = '';	
+		if(isset($wp_query->query_vars['bf_post_id']))
+			$post_id = $wp_query->query_vars['bf_post_id'];
+		
+		$rev_id = '';	
+		if(isset($wp_query->query_vars['bf_rev_id']))
+			$rev_id = $wp_query->query_vars['bf_rev_id'];
 		
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
