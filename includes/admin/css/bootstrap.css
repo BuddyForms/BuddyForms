@@ -942,9 +942,10 @@ input[type="color"],
   display: inline-block;
   height: 20px;
   padding: 4px 6px;
-  margin-bottom: 9px;
+  margin-bottom: 10px;
   font-size: 14px;
   line-height: 20px;
+  min-height: 24px;
   color: #555555;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;

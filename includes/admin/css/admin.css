@@ -94,6 +94,20 @@ i.small {
 .btn { margin-right: 5px; }
 
 
+/** form elements **/ 
+	
+.element_field {
+margin: 10px 0;	
+}
+
+.element_field li input[type="text"] {
+	margin: 0 5px;
+}
+
+.buddyforms_form_field {
+margin: 10px 0 15px;
+}
+
 
 /** sidebar **/ 
 	
