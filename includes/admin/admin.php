@@ -311,13 +311,13 @@ function buddyforms_settings_page() {
 											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar']))
 												$admin_bar = $buddyforms_options['buddyforms'][$buddyform['slug']]['admin_bar'];
 											
-											$form->addElement( new Element_Checkbox("<b>Add to Admin Bar?</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('admin_bar'),array('value' => $admin_bar)));
+											$form->addElement( new Element_Checkbox("<br><b>Admin Bar</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('Add to Admin Bar'),array('value' => $admin_bar)));
 											
 											$edit_link = 'false';
 											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['edit_link']))
 												$edit_link = $buddyforms_options['buddyforms'][$buddyform['slug']]['edit_link'];
 											
-											$form->addElement( new Element_Checkbox("<b>Overwrite Edit this entry?</b><br><i>WordPress link to the backend will be changed<br> to use the frontend form</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][edit_link]",array('overwrite'),array('value' => $edit_link)));
+											$form->addElement( new Element_Checkbox("<br><b>Overwrite Edit-this-entry link?</b><br><i>The link to the backend will be changed<br> to use the frontend editing.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][edit_link]",array('overwrite'),array('value' => $edit_link)));
 											
 											$form->addElement(new Element_HTML('</div>'));
 										$form->addElement(new Element_HTML('</div>'));
@@ -354,10 +354,10 @@ function buddyforms_settings_page() {
 												'class' => 'postform',
 												'selected' => $attached_page
 											);
-											$form->addElement(new Element_HTML('<label><b>Associate a WordPress Pages with this Form:</b></label><br>'));
+											$form->addElement(new Element_HTML('<br><br><p><b>Attach a page to this form</b></p><i>Select a page for the author, call it e.g. "My Posts".</i><br><br>'));
 											$form->addElement(new Element_HTML(wp_dropdown_pages($args)));
 											
-											$form->addElement(new Element_HTML('<a href="'. admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ).'" class="button-secondary">'. __( 'New Page', 'buddypress' ).'</a>'));
+											$form->addElement(new Element_HTML('<br>Or you can <a href="'. admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ).'" class="button-secondary">'. __( 'Create A New Page', 'buddypress' ).'</a>'));
 							
 										
 										$form->addElement(new Element_HTML('</div>'));
