@@ -1,3 +1,32 @@
+ul#buddyforms-list {
+margin: 20px 10px;
+list-style: none outside none;
+}	
+
+ul#buddyforms-list li {
+padding: 20px 0;
+overflow: auto;
+height: auto;
+min-height: 44px;
+position: relative;
+padding: 15px 0 20px 0;
+border-bottom: 1px solid #dedede;
+list-style: none outside none;	
+}
+
+ul#buddyforms-list li img.avatar {
+float: left;
+margin: 3px 10px 10px 2px;
+}
+
+ul#buddyforms-list li div.action {
+position: absolute;
+top: 15px;
+right: 15px;
+text-align: right;
+width: auto;
+}
+
 .post-revisions li {
 	float: left;
 	padding: 5px;

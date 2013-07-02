@@ -1,5 +1,5 @@
 <?php
-// Shortcode to add the form everywhere easely ;-)
+// Shortcode to add the form everywhere easily ;-)
 add_shortcode('buddyforms_edit_form', 'buddyforms_edit_form');
 function buddyforms_edit_form(){
 	return 'Boom';
@@ -10,21 +10,18 @@ function buddyforms_the_loop($args){?>
 <div id="item-body">
 <style>
 	
-	.test{
-	float:left;
-}
 .item-status { 
 	padding: 3px 5px; 
 	border-radius: 3px; 
 	-moz-border-radius: 3px; 
 	-webkit-border-radius: 3px; 
-	font-weight: bold; 
+	font-weight: bold;
 	color: white; 
 	background: #555555; 
 	font-size: 11px;
-	float: left;
-	margin-right: 5px;
-	text-shadow: -1px -1px 0px #222;
+	float: right;
+	margin-left: 5px;
+	text-shadow: -1px -1px 0px #333;
 }
 .publish .item-status { background: green; } 
 .pending .item-status { background: orange; }
