@@ -270,8 +270,8 @@ function buddyforms_form_display_element_frontend(){
 	$post_type = get_post_type($post);
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-		if($buddyforms['buddyforms'][$key]['post_type'] != 'none' &&  $buddyforms['buddyforms'][$key]['post_type'] == $post_type)
-			$form = $buddyforms['buddyforms'][$key]['slug'];
+		if($buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type)
+			$form = $buddyform['slug'];
 	}
 	
 	if(!isset($form))

@@ -60,7 +60,7 @@ function buddyforms_options_content() { ?>
 function buddyforms_settings_page() {
     global $bp, $buddyforms;
 
-
+	//$buddyforms = get_option('buddyforms_options');
 	// echo '<pre>';
 	// print_r($buddyforms);
 	// echo '</pre>';
@@ -72,6 +72,20 @@ function buddyforms_settings_page() {
 	
 	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
+		
+		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
+				
+			$slug = sanitize_title($buddyform['slug']);
+			echo $slug;
+			if($slug != $key){
+				$buddyforms_options['buddyforms'][$slug] = $buddyforms_options['buddyforms'][$key];
+				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
+				unset($buddyforms_options['buddyforms'][$key]);
+				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
+			}
+				
+		}
+		
 		update_option("buddyforms_options", $buddyforms_options);
 		?><div id="message" class="updated"><p><?php _e( 'Setup saved.', 'buddyforms' ); ?></p></div><?php
 	}

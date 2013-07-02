@@ -97,7 +97,7 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link = true ) {
 	global $bp, $wp_query, $buddyforms;
 	
-		// echo '<pre>';
+	// echo '<pre>';
 	// print_r($wp_query->query_vars);
 	// echo '</pre>';
 	
@@ -106,11 +106,17 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 
 	if ( !in_array( $revision->post_type, array( 'post', 'page', 'revision' ) ) )
 		return false;
-
-
-	$form_slug = $wp_query->query_vars['bf_form_slug'];
-	$post_id = $wp_query->query_vars['bf_post_id'];
-	$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
+	
+	$form_slug = '';
+	if(isset($wp_query->query_vars['bf_form_slug']))
+		$form_slug = $wp_query->query_vars['bf_form_slug'];
+	
+	if(isset($wp_query->query_vars['bf_post_id']))
+		$post_id = $wp_query->query_vars['bf_post_id'];
+	
+	$permalink = '';
+	if(isset($form_slug) && isset($buddyforms['buddyforms'][$form_slug]['attached_page']))
+		$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
 
 	$author = get_the_author_meta( 'display_name', $revision->post_author );
 	/* translators: revision date format, see http://php.net/date */
@@ -119,7 +125,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 	$gravatar = get_avatar( $revision->post_author, 24 );
 
 	$date = date_i18n( $datef, strtotime( $revision->post_modified ) );
-	if ( $link && current_user_can( 'edit_post', $revision->ID ) && $link = $permalink.'revison/'.$form_slug.'/'.$post_id.'/'.$revision->ID )
+	if ( $link && current_user_can( 'edit_post', $revision->ID ) && isset($permalink) && $link = $permalink.'revison/'.$form_slug.'/'.$post_id.'/'.$revision->ID )
 		$date = "<a href='$link'>$date</a>";
 
 	$revision_date_author = sprintf(

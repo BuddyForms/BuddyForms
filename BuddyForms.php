@@ -68,24 +68,9 @@ class BuddyForms {
 
 		$buddyforms = get_option('buddyforms_options');
 		
-		
 		$buddyforms['hooks']['form_element'] = array('no','before_the_title','after_the_title','before_the_content','after_the_content');
 		
-		if (empty($buddyforms['buddyforms']))
-			return;
-		
 		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);	
-		
-		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-				
-				$slug = sanitize_title($buddyforms['buddyforms'][$key]['slug']);
-				if($slug != $key){
-					$buddyforms['buddyforms'][$slug] = $buddyforms['buddyforms'][$key];
-					unset($buddyforms['buddyforms'][$key]);
-					$buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms, $slug, $key);	
-				}
-				
-		}
 	
 	}
 
