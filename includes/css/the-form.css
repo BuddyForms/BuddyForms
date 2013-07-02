@@ -19,6 +19,13 @@ float: left;
 margin: 3px 10px 10px 2px;
 }
 
+#buddypress ul#buddyforms-list.item-list li div.item-desc {
+font-size: 80%;
+margin: 10px 0 0 0px;
+width: 50%;
+}
+
+
 ul#buddyforms-list li div.action {
 position: absolute;
 top: 15px;
