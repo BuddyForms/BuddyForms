@@ -10,7 +10,6 @@ function buddyforms_create_edit_form( $args = array() ) {
     global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query;
 	session_id('buddyforms-create-edit-form');
 
-
 	// echo '<pre>';
 	// print_r($wp_query->query_vars);
 	// echo '</pre>';
@@ -52,13 +51,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
-		
-		if(isset($rev_id)) {
+
+		if(!empty($rev_id)) {
 			$the_post		= get_post( $rev_id );
 		} else {
-			$the_post		= get_post( $post_id );
+			$the_post		= get_post($post_id, 'OBJECT');
 		}
-       	
+
 		if($wp_query->query_vars['bf_action'] == 'edit'){
 	       	if ($the_post->post_author != $current_user->ID){
 	       		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
@@ -69,16 +68,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 	}
 
-
-	
-		
-		
-
 	// if post edit screen is displayed
 	if(isset($_GET['post_id'])) { 
     			
     	$post_id		= $_GET['post_id']; 
         $post_type		= $_GET['post_type'];
+		
 		if(isset($_GET['revision_id'])) {
 			$the_post		= get_post( $_GET['revision_id'] );
 		} else {
@@ -93,14 +88,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 	// If post_id == 0 a new post is created 	
 	} elseif($post_id == 0){
-		
 		$the_post = new stdClass;
 		$the_post->ID 			= $post_id;
 		$the_post->post_type 	= $post_type;
 		$the_post->post_title 	= '';
-	
 	}
-     
+ 	 
    	if( empty( $post_type ) )
    	   $post_type = $the_post->post_type;
 		
@@ -188,7 +181,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 								$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
 								$slug[] = $term->slug;
 							}
-						
 							
 							wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
 						}
@@ -275,7 +267,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			</form>
 				 
 		<?php else :
-		
+
 			if( isset( $_POST['editpost_title'])) {
 				
 				if(function_exists('stripslashes')) {
@@ -297,7 +289,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			<div class="form_wrapper">
 
 				<?php // Form starts
-				
+
 				$form = new Form("editpost");
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
@@ -314,8 +306,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					
 						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 						if(isset($post_id)){
-							$post = get_post($post_id, 'OBJECT');
-							wp_editor($post->post_content, 'editpost_content', $settings);
+							wp_editor($the_post->post_content, 'editpost_content', $settings);
 						} else {
 							$content = false;
 							$post = 0;
@@ -491,9 +482,9 @@ function buddyforms_delete_post(){
 			wp_delete_post( $post_id );
 		}	
 	}
-		$args = array(
-			'form_slug' => $form_slug,
-		);
+	$args = array(
+		'form_slug' => $form_slug,
+	);
        
 	buddyforms_the_loop($args);
 }
