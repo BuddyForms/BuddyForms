@@ -43,9 +43,13 @@ if ( $the_lp_query->have_posts() ) : ?>
 			
 				if (get_the_author_meta('ID') ==  get_current_user_id()){
 					$permalink = get_permalink( $buddyforms['buddyforms'][$form]['attached_page'] );
+					
+					$post_status = get_post_status();
+					if( $post_status == 'publish')
+						$post_status = 'published';
 					?>
 					<div class="meta">
-						<div class="item-status"><?php echo get_post_status(); ?></div>
+						<div class="item-status"><?php echo $post_status; ?></div>
 						<a title="Edit me" href='<?php echo $permalink.'edit/'.$form.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
 						- <a title="Delete me" onclick="return confirm('Are you sure you want to delete this entry?');" href='<?php echo $permalink.'delete/'.$form.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
 					</div>
