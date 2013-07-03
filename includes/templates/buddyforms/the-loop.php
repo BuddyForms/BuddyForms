@@ -10,7 +10,7 @@ $form =  $the_lp_query->query_vars['form_slug'];
 
 if ( $the_lp_query->have_posts() ) : ?>
 
-	<ul id="buddyforms-list" class="item-list" role="main">
+	<ul class="buddyforms-list item-list" role="main">
 
     <?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 		

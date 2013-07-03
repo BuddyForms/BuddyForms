@@ -1,37 +1,19 @@
-ul#buddyforms-list {
-margin: 20px 10px;
-list-style: none outside none;
-}	
-
-ul#buddyforms-list li {
-padding: 20px 0;
-overflow: auto;
-height: auto;
-min-height: 44px;
-position: relative;
-padding: 15px 0 20px 0;
-border-bottom: 1px solid #dedede;
-list-style: none outside none;	
+.the_buddyforms_form .revision {
+	overflow: auto; 
+	overflow-x: hidden;
+	margin: 40px 0 20px 0;	
 }
 
-ul#buddyforms-list li img.avatar {
-float: left;
-margin: 3px 10px 10px 2px;
+ul.post-revisions {
+	list-style: none outside none;
 }
 
-#buddypress ul#buddyforms-list.item-list li div.item-desc {
-font-size: 80%;
-margin: 10px 0 0 0px;
-width: 50%;
+ul.post-revisions li {
+	margin: 5px 0;
 }
 
-
-ul#buddyforms-list li div.action {
-position: absolute;
-top: 15px;
-right: 15px;
-text-align: right;
-width: auto;
+ul.post-revisions li img {
+	margin-right: 10px;
 }
 
 .post-revisions li {

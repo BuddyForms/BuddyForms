@@ -1,6 +1,6 @@
 /** header **/ 
 	
-#wpbody .wrap h2 { float: left; }
+#wpbody .wrap h2 { float: none; }
 
 h2 span.version { font-size: 14px; font-style: italic; padding-left: 5px; }
 

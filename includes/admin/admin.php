@@ -11,6 +11,39 @@ function buddyforms_create_menu() {
 	  session_start('buddyforms');
 	}
 
+
+	global $bp, $buddyforms;
+	
+	// Check that the user is allowed to update options
+	if (!current_user_can('manage_options')) {
+	    wp_die('You do not have sufficient permissions to access this page.');
+	}	
+	
+	if (isset($_POST["buddyforms_options"])) {
+		$buddyforms_options = $_POST["buddyforms_options"];
+		
+		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
+				
+			$slug = sanitize_title($buddyform['slug']);
+
+			if($slug != $key){
+				$buddyforms_options['buddyforms'][$slug] = $buddyforms_options['buddyforms'][$key];
+				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
+				unset($buddyforms_options['buddyforms'][$key]);
+				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
+			}
+				
+		}
+		$update_option = false;
+		$update_option = update_option("buddyforms_options", $buddyforms_options);
+		
+		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
+		 
+	}
+	
+	 
+
+
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
 	
 }  
@@ -23,11 +56,9 @@ add_action('admin_menu', 'buddyforms_create_menu');
  * @package buddyforms
  * @since 0.2-beta
  */
-function buddyforms_options_content() { ?>
+function buddyforms_options_content() {?>
 		
 	<div class="wrap">
-		<img style="float: left; padding: 8px 10px 0 0;" src="<?php echo plugins_url( 'img/BuddyForms-Icon-32-active.png' , __FILE__ ); ?>" title="BuddyForms" />
-		<h2>BuddyForms <span class="version">Beta 1.0</span></h2>
 		
 		<div class="credits">
 			<p>
@@ -35,11 +66,16 @@ function buddyforms_options_content() { ?>
 				- &nbsp; <?php _e( 'Form Magic and Collaborative Publishing for WordPress.', 'buddyforms' ); ?>
 			</p>
 		</div>
-				
+		
+		<img style="float: left; padding: 8px 10px 0 0;" src="<?php echo plugins_url( 'img/BuddyForms-Icon-32-active.png' , __FILE__ ); ?>" title="BuddyForms" />
+		<h2>BuddyForms <span class="version">Beta 1.0</span></h2>
+		
 		<div class="button-nav">
 			<a class="btn btn-small" href="http://support.themekraft.com/categories/20110697-BuddyForms" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
 			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
 		</div>
+		
+		
 		
 		<div id="post-body">
 			<div id="post-body-content">  
@@ -65,30 +101,9 @@ function buddyforms_settings_page() {
 	// print_r($buddyforms);
 	// echo '</pre>';
 	
-    // Check that the user is allowed to update options
-	if (!current_user_can('manage_options')) {
-	    wp_die('You do not have sufficient permissions to access this page.');
-	}	
+ 
 	
-	if (isset($_POST["buddyforms_options"])) {
-		$buddyforms_options = $_POST["buddyforms_options"];
-		
-		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
-				
-			$slug = sanitize_title($buddyform['slug']);
-			echo $slug;
-			if($slug != $key){
-				$buddyforms_options['buddyforms'][$slug] = $buddyforms_options['buddyforms'][$key];
-				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
-				unset($buddyforms_options['buddyforms'][$key]);
-				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
-			}
-				
-		}
-		
-		update_option("buddyforms_options", $buddyforms_options);
-		?><div id="message" class="updated"><p><?php _e( 'Setup saved.', 'buddyforms' ); ?></p></div><?php
-	}
+
 	
 	// Get all needed values
 	BuddyForms::set_globals();

@@ -6,27 +6,11 @@ function buddyforms_edit_form(){
 }
 
 add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
-function buddyforms_the_loop($args){?>
-<div id="item-body">
-<style>
+function buddyforms_the_loop($args){
 	
-.item-status { 
-	padding: 3px 5px; 
-	border-radius: 3px; 
-	-moz-border-radius: 3px; 
-	-webkit-border-radius: 3px; 
-	font-weight: bold;
-	color: white; 
-	background: #555555; 
-	font-size: 11px;
-	float: right;
-	margin-left: 5px;
-	text-shadow: -1px -1px 0px #333;
-}
-.publish .item-status { background: green; } 
-.pending .item-status { background: orange; }
-.draft .item-status { background: red; }
-</style>
+	wp_enqueue_style('the-loop-css', plugins_url('css/the-loop.css', __FILE__)); ?>
+	
+<div id="item-body">
 	<?php 
 	global $current_user, $the_lp_query, $bp, $buddyforms;
 	

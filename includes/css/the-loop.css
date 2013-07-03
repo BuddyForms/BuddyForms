@@ -1,0 +1,54 @@
+ul#buddyforms-list {
+	margin: 20px 10px;
+	list-style: none outside none !important;
+}	
+
+ul.buddyforms-list li {
+	padding: 20px 0;
+	overflow: auto;
+	height: auto;
+	min-height: 44px;
+	position: relative;
+	padding: 15px 0 20px 0;
+	margin-left: 0;
+	border-bottom: 1px solid #dedede;
+	list-style: none outside none;	
+}
+
+ul.buddyforms-list li img.avatar {
+	float: left;
+	margin: 3px 10px 10px 2px;
+}
+
+ul.buddyforms-list.item-list li div.item-desc {
+	font-size: 100%;
+	margin: 10px 0 0 0px;
+	width: 50%;
+	margin: 5px 5px 5px 0;
+	clear: right;
+}
+
+ul.buddyforms-list li div.action {
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	text-align: right;
+	width: 35%;
+}
+
+.item-status { 
+	padding: 3px 5px; 
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	font-weight: bold;
+	color: white; 
+	background: #555555; 
+	font-size: 11px;
+	float: right;
+	margin-left: 5px;
+	text-shadow: -1px -1px 0px #333;
+}
+.publish .item-status { background: green; } 
+.pending .item-status { background: orange; }
+.draft .item-status { background: red; }
