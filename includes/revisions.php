@@ -97,9 +97,9 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link = true ) {
 	global $bp, $wp_query, $buddyforms;
 	
-	echo '<pre>';
-	print_r($wp_query->query_vars);
-	echo '</pre>';
+	// echo '<pre>';
+	// print_r($wp_query->query_vars);
+	// echo '</pre>';
 	
 	if ( !$revision = get_post( $revision ) )
 		return $revision;
