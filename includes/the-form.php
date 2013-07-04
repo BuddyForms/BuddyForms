@@ -10,11 +10,8 @@ function buddyforms_create_edit_form( $args = array() ) {
     global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query;
 	session_id('buddyforms-create-edit-form');
 
-	// echo '<pre>';
-	// print_r($wp_query->query_vars);
-	// echo '</pre>';
 	// if post edit screen is displayed
-	
+
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
 	
 	// hook for plugins to overwrite the $args.
@@ -24,6 +21,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'post_type' => '',
 		'the_post' => 0,
 		'post_id' => $post_id,
+		'revision_id' => '',
 		'form_slug' => ''
 	), $args));
 
@@ -69,12 +67,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 	}
 
 	// if post edit screen is displayed
-	if(isset($_GET['post_id'])) { 
-    			
-    	$post_id		= $_GET['post_id']; 
-        $post_type		= $_GET['post_type'];
+	if(isset($post_id)) {   			
 		
-		if(isset($_GET['revision_id'])) {
+		if(isset($revision_id)) {
 			$the_post		= get_post( $_GET['revision_id'] );
 		} else {
 			$the_post		= get_post( $_GET['post_id'] );
@@ -244,7 +239,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			<?php
 	
 		}
-	}     
+	} 
 	?>
 	<div class="the_buddyforms_form">
 		

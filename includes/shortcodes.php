@@ -12,7 +12,7 @@ function buddyforms_the_loop($args){
 	
 <div id="item-body">
 	<?php 
-	global $current_user, $the_lp_query, $bp, $buddyforms;
+	global $current_user, $the_lp_query, $bp, $buddyforms, $form_slug;
 	
 	extract(shortcode_atts(array(
 		'post_type' => '',
@@ -32,6 +32,7 @@ function buddyforms_the_loop($args){
 	}
 	
 	$the_lp_query = new WP_Query( $args );
+	$form_slug = $the_lp_query->query_vars['form_slug'];
 	
 	buddyforms_locate_template('buddyforms/the-loop.php');
 	

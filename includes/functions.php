@@ -58,14 +58,14 @@ function buddyforms_attached_page_query_vars($query_vars){
 }
 
 // make the template redirect
-add_filter('the_content', 'buddyforms_attached_page_content');
+add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
-    global $wp_query, $buddyforms;
+    global $wp_query, $buddyforms, $bp;
 
 
-	// echo '<pre>';
-	// print_r($wp_query->query_vars);
-	// echo '</pre>';
+		// echo '<pre>';
+		// print_r($wp_query);
+		// echo '</pre>';
 
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
@@ -123,8 +123,9 @@ function buddyforms_attached_page_content($content){
 		}
 		
 	}
-	
-	return $new_content;
+	add_filter( 'the_content', create_function('', 'return "' . addcslashes($new_content, '"') . '";') );
+						
+
 }
 												
 // add the forms to the admin bar
