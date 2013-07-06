@@ -75,8 +75,6 @@ function buddyforms_options_content() {?>
 			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
 		</div>
 		
-		
-		
 		<div id="post-body">
 			<div id="post-body-content">  
 				<?php buddyforms_settings_page(); ?>
@@ -95,15 +93,6 @@ function buddyforms_options_content() {?>
  */
 function buddyforms_settings_page() {
     global $bp, $buddyforms;
-
-	//$buddyforms = get_option('buddyforms_options');
-	// echo '<pre>';
-	// print_r($buddyforms);
-	// echo '</pre>';
-	
- 
-	
-
 	
 	// Get all needed values
 	BuddyForms::set_globals();

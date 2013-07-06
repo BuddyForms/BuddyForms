@@ -1,10 +1,13 @@
 <?php
-// Shortcode to add the form everywhere easily ;-)
-add_shortcode('buddyforms_edit_form', 'buddyforms_edit_form');
-function buddyforms_edit_form(){
-	return 'Boom';
-}
+// Shortcode to add the form everywhere easely ;-) the form is locatet under the_form
+add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
 
+/**
+ * Shortcode to display autor post of a specific post type
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
 	global $current_user, $the_lp_query, $bp, $buddyforms, $form_slug;

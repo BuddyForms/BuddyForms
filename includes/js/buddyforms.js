@@ -1,4 +1,3 @@
-
 jQuery(document).ready(function (){
 	
     jQuery('#options_to_connect a').on('click',function(event){   

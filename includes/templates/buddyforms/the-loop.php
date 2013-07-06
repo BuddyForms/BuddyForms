@@ -34,7 +34,6 @@ if ( $the_lp_query->have_posts() ) : ?>
 				
 				
 				<?php
-			
 				if (get_the_author_meta('ID') ==  get_current_user_id()){
 					$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
 					

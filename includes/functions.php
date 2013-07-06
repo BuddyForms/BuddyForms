@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * rewrite the url of a the edit this post link in the frontend
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
 function my_edit_post_link( $url, $post_ID, $context) {
 	global $buddyforms, $current_user;
@@ -23,8 +29,13 @@ function my_edit_post_link( $url, $post_ID, $context) {
 	return $url;
 }
 
-// handle custom page
-// do flush if changing rule, then reload an admin page
+/**
+ * handle custom page
+ * do flush if changing rule, then reload an admin page
+ * 
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_action('admin_init', 'buddyforms_attached_page_rewrite_rules');
 function buddyforms_attached_page_rewrite_rules(){
 	global $buddyforms;
@@ -46,7 +57,12 @@ function buddyforms_attached_page_rewrite_rules(){
 	flush_rewrite_rules();
 }
 
-// add the query vars 
+/**
+ * add the query vars 
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_filter('query_vars', 'buddyforms_attached_page_query_vars');
 function buddyforms_attached_page_query_vars($query_vars){
 	$query_vars[] = 'bf_action';
@@ -57,7 +73,13 @@ function buddyforms_attached_page_query_vars($query_vars){
 	return $query_vars;
 }
 
-// make the template redirect
+
+/**
+ * make the template redirect
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
     global $wp_query, $buddyforms, $bp;
@@ -123,7 +145,12 @@ function buddyforms_attached_page_content($content){
 
 }
 												
-// add the forms to the admin bar
+/**
+ * add the forms to the admin bar
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render',1,2);
 function buddyforms_wp_before_admin_bar_render(){
 	global $wp_admin_bar, $buddyforms;
@@ -159,8 +186,13 @@ function buddyforms_wp_before_admin_bar_render(){
 	}
 }
 
-// Add a button to the content editor, next to the media button 
-// This button will show a popup that contains inline content 
+/**
+ * Add a button to the content editor, next to the media button 
+ * This button will show a popup that contains inline content 
+ * @package BuddyForms
+ * @since 0.3 beta
+ * 
+ */
 add_action('media_buttons_context', 'buddyforms_editor_button');
 function buddyforms_editor_button($context) {
   if (!is_admin())
@@ -184,8 +216,13 @@ function buddyforms_editor_button($context) {
 }
 
 
-// Add some content to the bottom of the page for the BuddyForms Shortcodes
-// This will be shown in the thickbox of the post edit screen
+/**
+ * Add some content to the bottom of the page for the BuddyForms Shortcodes
+ * This will be shown in the thickbox of the post edit screen
+ * 
+ * @package BuddyForms
+ * @since 0.1 beta
+ */
 add_action('admin_footer', 'buddyforms_editor_button_inline_content');
 function buddyforms_editor_button_inline_content() {
 global $buddyforms;

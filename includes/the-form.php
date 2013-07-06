@@ -11,7 +11,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 	session_id('buddyforms-create-edit-form');
 
 	// if post edit screen is displayed
-
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
 	
 	// hook for plugins to overwrite the $args.
@@ -84,6 +83,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		}
 		
 	}
+	
 	// If post_id == 0 a new post is created 	
 	if($post_id == 0){
 		$the_post = new stdClass;
@@ -105,13 +105,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 	if( isset( $_POST['submitted'] ) ) {
 		
 		if($buddyforms['buddyforms'][$form_slug]['form_type'] == 'mail_form'){
-			$wpmail = wp_mail( $buddyforms['buddyforms'][$form_slug]['email'], $buddyforms['buddyforms'][$form_slug]['email_subject'], 'Ein test');
+			//$wpmail = wp_mail( $buddyforms['buddyforms'][$form_slug]['email'], $buddyforms['buddyforms'][$form_slug]['email_subject'], 'Ein test');
 
-			if($wpmail == TRUE){ 
-				echo '<p>Form has been sent successful.</p>';
-			} elseif($wpmail == FALSE){
-				echo '<p>There has been an error submitting the form.</p>';
-			}
+			// if($wpmail == TRUE){ 
+				// echo '<p>Form has been sent successful.</p>';
+			// } elseif($wpmail == FALSE){
+				// echo '<p>There has been an error submitting the form.</p>';
+			// }
 			return;
 		} 
 			
@@ -318,11 +318,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 					//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
 					$form->addElement(new Element_HTML($wp_editor));
 					
-				
 					// $post = get_post($post_id, 'OBJECT');
 					// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
 					// $form->addElement(new Element_Hidden("editpost_content", $post->post_content));
-				
 				
 				// if the form have custom field to save as post meta data they get displayed here 
 				if (isset($customfields)) {
@@ -463,10 +461,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 		echo $form_html;
 }
 
-// Shortcode to add the form everywhere easely ;-)
-add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
-
-
+/**
+ * Delete a post 
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 function buddyforms_delete_post(){
 	global $wp_query, $buddyforms, $current_user;
 	

@@ -3,14 +3,14 @@
  Plugin Name: BuddyForms
  Plugin URI:  http://buddyforms.com
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.   
- Version: 1.0 beta 2
+ Version: 1.0 beta 3
  Author: Sven Lehnert
  Author URI: http://themekraft.com/members/svenl77/
  Licence: GPLv3
  Network: true
  */
 
-define('buddyforms', '1.0 beta 2');
+define('buddyforms', '1.0 beta 3');
 global $buddyforms;
 	
 /**
