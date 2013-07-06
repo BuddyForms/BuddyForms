@@ -62,11 +62,6 @@ add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
     global $wp_query, $buddyforms, $bp;
 
-
-		// echo '<pre>';
-		// print_r($wp_query);
-		// echo '</pre>';
-
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
     	$form_slug = '';
@@ -77,11 +72,14 @@ function buddyforms_attached_page_content($content){
 		if(isset($wp_query->query_vars['bf_post_id']))
     		$post_id = $wp_query->query_vars['bf_post_id'];
 		
+		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+		
 		$args = array(
 			'form_slug' => $form_slug,
-			'post_id' => $post_id
+			'post_id' => $post_id,
+			'post_type' => $post_type
 		);
-       	
+		
     	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revison'){
 			ob_start();
 				buddyforms_create_edit_form($args);
@@ -110,9 +108,7 @@ function buddyforms_attached_page_content($content){
 			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
 			if($post_data['post_name'] == $wp_query->query_vars['pagename']){
 				$args = array(
-
 					'form_slug' => $buddyform['slug'],
-				//	'post_id' => $post_data->post_id
 				);
 				ob_start();
 					buddyforms_the_loop($args);

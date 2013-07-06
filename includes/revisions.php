@@ -95,11 +95,7 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 }
 
 function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link = true ) {
-	global $bp, $wp_query, $buddyforms;
-	
-	// echo '<pre>';
-	// print_r($wp_query->query_vars);
-	// echo '</pre>';
+	global $wp_query, $buddyforms, $form_slug;
 	
 	if ( !$revision = get_post( $revision ) )
 		return $revision;
@@ -107,9 +103,11 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 	if ( !in_array( $revision->post_type, array( 'post', 'page', 'revision' ) ) )
 		return false;
 	
-	$form_slug = '';
+
 	if(isset($wp_query->query_vars['bf_form_slug']))
 		$form_slug = $wp_query->query_vars['bf_form_slug'];
+	
+	$form_slug = apply_filters('buddyforms_wp_post_revision_title_expanded_form_slug', $form_slug);
 	
 	if(isset($wp_query->query_vars['bf_post_id']))
 		$post_id = $wp_query->query_vars['bf_post_id'];

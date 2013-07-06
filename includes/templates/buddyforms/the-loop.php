@@ -2,10 +2,6 @@
 
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo();	
-// echo '<pre>';
-// print_r($the_lp_query);
-// echo '</pre>';
-
 
 if ( $the_lp_query->have_posts() ) : ?>
 

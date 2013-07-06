@@ -7,7 +7,7 @@
  * @since 0.1-beta	
 */
 function buddyforms_create_edit_form( $args = array() ) {
-    global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query;
+    global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
 	session_id('buddyforms-create-edit-form');
 
 	// if post edit screen is displayed
@@ -21,7 +21,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'post_type' => '',
 		'the_post' => 0,
 		'post_id' => $post_id,
-		'revision_id' => '',
+		'revision_id' => false,
 		'form_slug' => ''
 	), $args));
 
@@ -30,6 +30,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	if(empty($post_type))
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
+	// if post edit screen is displayed in pages
 	if(isset($wp_query->query_vars['bf_action'])){
 		
 		
@@ -43,15 +44,15 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(isset($wp_query->query_vars['bf_post_id']))
 			$post_id = $wp_query->query_vars['bf_post_id'];
 		
-		$rev_id = '';	
+		$revision_id = '';	
 		if(isset($wp_query->query_vars['bf_rev_id']))
-			$rev_id = $wp_query->query_vars['bf_rev_id'];
+			$revision_id = $wp_query->query_vars['bf_rev_id'];
 		
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
 
-		if(!empty($rev_id)) {
-			$the_post		= get_post( $rev_id );
+		if(!empty($revision_id)) {
+			$the_post		= get_post( $revision_id );
 		} else {
 			$the_post		= get_post($post_id, 'OBJECT');
 		}
@@ -67,22 +68,24 @@ function buddyforms_create_edit_form( $args = array() ) {
 	}
 
 	// if post edit screen is displayed
-	if(isset($post_id)) {   			
-		
-		if(isset($revision_id)) {
-			$the_post		= get_post( $_GET['revision_id'] );
+	if(!empty($post_id)) {
+		   			
+		if(!empty($revision_id)) {
+			
+			$the_post		= get_post( $revision_id );
 		} else {
-			$the_post		= get_post( $_GET['post_id'] );
+			$the_post		= get_post( $post_id );
 		}
-       	
+		
        	if ($the_post->post_author != $current_user->ID){
        		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
 			echo '<div class="error alert">'.$error_message.'</div>';
 			return;	
 		}
 		
+	}
 	// If post_id == 0 a new post is created 	
-	} elseif($post_id == 0){
+	if($post_id == 0){
 		$the_post = new stdClass;
 		$the_post->ID 			= $post_id;
 		$the_post->post_type 	= $post_type;
@@ -273,7 +276,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				} else {
 					$editpost_title =  $the_post->post_title;
 				}
-
+				$editpost_content_val = false;
 				if( isset( $_POST['editpost_content'] ) ){
 					$editpost_content_val = $_POST['editpost_content'];
 				} else {
@@ -301,7 +304,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					
 						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 						if(isset($post_id)){
-							wp_editor($the_post->post_content, 'editpost_content', $settings);
+							wp_editor($editpost_content_val, 'editpost_content', $settings);
 						} else {
 							$content = false;
 							$post = 0;
@@ -441,7 +444,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			<?php 
 			if(isset($buddyforms['buddyforms'][$form_slug]['revision'])){ ?>
 
-					<?php buddyforms_wp_list_post_revisions($post_id ); ?>
+					<?php buddyforms_wp_list_post_revisions($post_id); ?>
 
 			<?php } ?>
 	</div>		
