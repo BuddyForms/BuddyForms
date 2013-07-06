@@ -1,5 +1,4 @@
 <?php 
-
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo();	
 

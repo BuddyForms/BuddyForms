@@ -228,26 +228,26 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 		// Display the message  
 		if( empty( $hasError ) ) {
-	
-			?>
-			<div class="thanks">
-				<?php if(isset($_GET['post_id'])){ ?>
-		            <h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
-		            <p><?php _e( 'Post has been updated.', 'buddyforms' ); ?> </p>
-	   			<?php } else { ?>
-	   				<h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
-		    	    <p><?php _e( 'Post has been created.', 'buddyforms' ); ?> </p>
-				<?php } ?>
-			</div>
+			ob_start();?>
+				<div class="thanks">
+					<?php if(isset($_GET['post_id'])){ ?>
+			            <h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
+			            <p><?php _e( 'Post has been updated.', 'buddyforms' ); ?> </p>
+		   			<?php } else { ?>
+		   				<h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
+			    	    <p><?php _e( 'Post has been created.', 'buddyforms' ); ?> </p>
+					<?php } ?>
+				</div>
 			<?php
-	
+			$form_notice = ob_get_contents();
+			ob_clean();
 		}
 	} 
-	?>
-	<div class="the_buddyforms_form">
-		
-		<?php if ( !is_user_logged_in() ) : ?>
-			
+	
+	$form_html = '<div class="the_buddyforms_form">';
+	?>	
+		<?php if ( !is_user_logged_in() ) : 
+			ob_start();?>
 			<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ) ?>" method="post">
 				
 				<div style="float:left; margin-right:10px;">
@@ -264,7 +264,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 				<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 			</form>
 				 
-		<?php else :
+		<?php 
+			$form_html .= ob_get_contents();
+			ob_clean();
+		else :
 
 			if( isset( $_POST['editpost_title'])) {
 				
@@ -283,10 +286,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 					if(!empty($the_post->post_content))
 						$editpost_content_val = $the_post->post_content;
 			}
-			?>	
-			<div class="form_wrapper">
-
-				<?php // Form starts
+			
+			$form_html .= '<div class="form_wrapper">';
 
 				$form = new Form("editpost");
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
@@ -294,7 +295,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
 				$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
 				$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
-				
+				if(isset($form_notice))
+					$form->addElement(new Element_HTML($form_notice));
 				
 					
 					$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
@@ -439,16 +441,26 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_Button('Submit', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
 				
 				// thats it! render the form!
-				$form->render(); ?>
-			</div>
-			<?php 
-			if(isset($buddyforms['buddyforms'][$form_slug]['revision'])){ ?>
+			ob_start();
+				$form->render(); 
+				$form_html .= ob_get_contents();
+			ob_clean();
+		
+			$form_html .= '</div>';
 
-					<?php buddyforms_wp_list_post_revisions($post_id); ?>
+			if(isset($buddyforms['buddyforms'][$form_slug]['revision'])){
+				 
+			ob_start(); 
+				buddyforms_wp_list_post_revisions($post_id);
+				$form_html .= ob_get_contents();
+			ob_clean();
 
-			<?php } ?>
-	</div>		
-	<?php endif;
+
+			 }
+			$form_html .= '</div>';	
+		endif;
+		
+		echo $form_html;
 }
 
 // Shortcode to add the form everywhere easely ;-)
