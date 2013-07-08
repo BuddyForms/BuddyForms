@@ -2,8 +2,6 @@
 	margin-top: 20px;
 }
 
-
-
 .the_buddyforms_form .bf_field_group {
 	margin-bottom: 20px;
 }
@@ -18,6 +16,14 @@
 
 .the_buddyforms_form .bf_field_group .bf_inputs {
 	margin: 0;
+}
+
+.the_buddyforms_form .bf_field_group .bf_inputs .wp-editor-container table tr {
+	background: transparent;
+}
+
+.the_buddyforms_form .bf_field_group label {
+	font-weight: normal !important;
 }
 
 .the_buddyforms_form .revision {
