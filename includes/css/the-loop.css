@@ -1,5 +1,5 @@
-ul#buddyforms-list {
-	margin: 20px 10px;
+ul.buddyforms-list.item-list {
+	margin: 20px 0;
 	list-style: none outside none !important;
 }	
 
