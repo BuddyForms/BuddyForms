@@ -344,36 +344,36 @@ function buddyforms_create_edit_form( $args = array() ) {
 							$form->addElement(new Element_HTML('<div class="labal">'));
 							switch( $customfield['type'] ) {
 								case 'Mail' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+									$form->addElement(new Element_Email($customfield['name'], $slug, $element_attr));
 									break;
 		
 								case 'Radiobutton' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
 									if(is_array($customfield['value']))
-										$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
+										$form->addElement(new Element_Radio($customfield['name'], $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Checkbox' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
 									if(is_array($customfield['value']))
-										$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
+										$form->addElement(new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Dropdown' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
 									if(is_array($customfield['value']))
-										$form->addElement(new Element_Select($customfield['name'] . ':', $slug, $customfield['value'], $element_attr));
+										$form->addElement(new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr));
 									break;
 								
 								case 'Comments' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Select($customfield['name'] . ':', 'comment_status', array('open','closed'), $element_attr));
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
+									$form->addElement(new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr));
 									break;
 		
 								case 'Textarea' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+									$form->addElement(new Element_Textarea($customfield['name'], $slug, $element_attr));
 									break;
 		
 								case 'Hidden' :
@@ -381,13 +381,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 									break;
 		
 								case 'Text' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+									$form->addElement(new Element_Textbox($customfield['name'], $slug, $element_attr));
 									break;
 		
 								case 'Link' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+									$form->addElement(new Element_Url($customfield['name'], $slug, $element_attr));
 		
 									break;
 		
