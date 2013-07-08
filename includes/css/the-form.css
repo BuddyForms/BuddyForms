@@ -1,34 +1,56 @@
+.the_buddyforms_form {
+	margin-top: 20px;
+}
+
+
+
+.the_buddyforms_form .bf_field_group {
+	margin-bottom: 20px;
+}
+
+.the_buddyforms_form .bf_field_group label {
+	margin-right: 10px;
+}
+
+.the_buddyforms_form .bf_field_group label p {
+	margin-bottom: 10px;
+}
+
+.the_buddyforms_form .bf_field_group .bf_inputs {
+	margin: 0;
+}
+
 .the_buddyforms_form .revision {
 	overflow: auto; 
 	overflow-x: hidden;
 	margin: 40px 0 20px 0;	
 }
 
-div.page ul.post-revisions {
+.the_buddyforms_form ul.post-revisions {
 	list-style: none outside none;
 	margin: 10px 0;
 }
 
-ul.post-revisions li {
+.the_buddyforms_form ul.post-revisions li {
 	margin: 5px 0;
 }
 
-ul.post-revisions li img {
+.the_buddyforms_form ul.post-revisions li img {
 	margin-right: 10px;
 }
 
-.post-revisions li {
+.the_buddyforms_form .post-revisions li {
 	float: left;
 	padding: 5px;
 	width: 100%;
 }
 
-.standard-form textarea, 
-.standard-form input[type=url], 
-.standard-form input[type=link], 
-.standard-form input[type=text], 
-.standard-form input[type=email], 
-.standard-form input[type=password] {
+.the_buddyforms_form .standard-form textarea, 
+.the_buddyforms_form .standard-form input[type=url], 
+.the_buddyforms_form .standard-form input[type=link], 
+.the_buddyforms_form .standard-form input[type=text], 
+.the_buddyforms_form .standard-form input[type=email], 
+.the_buddyforms_form .standard-form input[type=password] {
 	width: 75%;
 	border: 1px inset #ccc;
 	-moz-border-radius: 3px;

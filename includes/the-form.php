@@ -298,13 +298,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if(isset($form_notice))
 					$form->addElement(new Element_HTML($form_notice));
 				
-					$form->addElement(new Element_HTML('<div class="lable">'));
-					$form->addElement(new Element_Textbox("Title:", "editpost_title", array('lable' => 'enter a title', "required" => 1, 'value' => $editpost_title)));
+					$form->addElement(new Element_HTML('<div class="bf_field_group">'));
+					$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
 					$form->addElement(new Element_HTML('</div>'));
 
+					
+
 					ob_start();
-						echo '<div class="hans">';
-						echo '<div class="label"><label>Content:</label></div>';
+					
 						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 						if(isset($post_id)){
 							wp_editor($editpost_content_val, 'editpost_content', $settings);
@@ -313,12 +314,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 							$post = 0;
 							wp_editor($content, 'editpost_content', $settings);
 						}
-						echo '</div>';
 						$wp_editor = ob_get_contents();
 					ob_clean();
-					
-					//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
-					$form->addElement(new Element_HTML($wp_editor));
+					$form->addElement(new Element_HTML('<div class="label"><label>Content:</label></div><div class="bf_inputs">'.$wp_editor.'</div>'));
+					// $wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
+					// $form->addElement(new Element_HTML($wp_editor));
 					
 					// $post = get_post($post_id, 'OBJECT');
 					// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
@@ -341,7 +341,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 							} else {
 								$customfield_val = get_post_meta($post_id, $slug, true);
 							}
-							$form->addElement(new Element_HTML('<div class="labal">'));
+	
 							switch( $customfield['type'] ) {
 								case 'Mail' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
@@ -423,8 +423,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 									break;
 		
 							}
-							$form->addElement(new Element_HTML('</div>'));
-							
 						endif;
 					endforeach;
 				}
