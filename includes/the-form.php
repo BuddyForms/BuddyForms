@@ -302,7 +302,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
 					$form->addElement(new Element_HTML('</div>'));
 
-					$form->addElement(new Element_HTML('<div class="label"><label>Content:</label></div>'));
+					
 
 					ob_start();
 					
@@ -316,9 +316,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 						}
 						$wp_editor = ob_get_contents();
 					ob_clean();
-					
-					//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
-					$form->addElement(new Element_HTML($wp_editor));
+					$form->addElement(new Element_HTML('<div class="label"><label>Content:</label></div><div class="bf_inputs">'.$wp_editor.'</div>'));
+					// $wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
+					// $form->addElement(new Element_HTML($wp_editor));
 					
 					// $post = get_post($post_id, 'OBJECT');
 					// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
