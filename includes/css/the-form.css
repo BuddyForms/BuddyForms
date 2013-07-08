@@ -4,8 +4,9 @@
 	margin: 40px 0 20px 0;	
 }
 
-ul.post-revisions {
+div.page ul.post-revisions {
 	list-style: none outside none;
+	margin: 10px 0;
 }
 
 ul.post-revisions li {
