@@ -20,8 +20,12 @@ class View_Vertical extends View {
                     echo '</div>';
             }
             else {
-                $this->renderLabel($element);
-                $element->render();
+            	echo '<div class="bf_field_group">';
+	                $this->renderLabel($element);
+					echo '<div class="bf_inputs">';
+	                $element->render();
+					echo '</div>';
+	           echo '</div>';     
 				$this->renderDescriptions($element);
                 ++$elementCount;
             }
