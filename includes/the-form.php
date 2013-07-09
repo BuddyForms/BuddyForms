@@ -316,7 +316,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 						}
 						$wp_editor = ob_get_contents();
 					ob_clean();
-					$form->addElement(new Element_HTML('<div class="label"><label>Content:</label></div><div class="bf_inputs">'.$wp_editor.'</div>'));
+					$form->addElement(new Element_HTML('<label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div>'));
 					// $wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
 					// $form->addElement(new Element_HTML($wp_editor));
 					
@@ -345,19 +345,19 @@ function buddyforms_create_edit_form( $args = array() ) {
 							switch( $customfield['type'] ) {
 								case 'Mail' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Email($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$form->addElement(new Element_Email($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $element_attr));
 									break;
 		
 								case 'Radiobutton' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									if(is_array($customfield['value']))
-										$form->addElement(new Element_Radio($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
+										$form->addElement(new Element_Radio($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Checkbox' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
 									if(is_array($customfield['value']))
-										$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $customfield['value'], $element_attr));
+										$form->addElement(new Element_Checkbox($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $customfield['value'], $element_attr));
 									break;
 		
 								case 'Dropdown' :
@@ -373,7 +373,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 								case 'Textarea' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Textarea($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$form->addElement(new Element_Textarea($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $element_attr));
 									break;
 		
 								case 'Hidden' :
@@ -382,12 +382,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 								case 'Text' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Textbox($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$form->addElement(new Element_Textbox($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $element_attr));
 									break;
 		
 								case 'Link' :
 									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input') : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Url($customfield['name'] . ':<p><smal>' . $customfield['description'] . '</smal></p>', $slug, $element_attr));
+									$form->addElement(new Element_Url($customfield['name'] . ':<p><i>' . $customfield['description'] . '</i></p>', $slug, $element_attr));
 		
 									break;
 		
@@ -407,7 +407,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 										}
 									}
 		
-									$form->addElement(new Element_HTML('<label>'.$customfield['name'] . ':</label><p><smal>' . $customfield['description'] . '</smal></p>'));
+									$form->addElement(new Element_HTML('<label>'.$customfield['name'] . ':</label><p><i>' . $customfield['description'] . '</i></p>'));
 									$form->addElement(new Element_HTML($dropdown));
 	
 									if($customfield['creat_new_tax'])
