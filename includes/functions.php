@@ -1,7 +1,7 @@
 <?php
 
 /**
- * rewrite the url of a the edit this post link in the frontend
+ * rewrite the url of the edit-this-post link in the frontend
  *
  * @package BuddyForms
  * @since 0.3 beta
@@ -31,7 +31,7 @@ function my_edit_post_link( $url, $post_ID, $context) {
 
 /**
  * handle custom page
- * do flush if changing rule, then reload an admin page
+ * do flush if changing rule, then reload the admin page
  * 
  * @package BuddyForms
  * @since 0.3 beta
@@ -217,7 +217,7 @@ function buddyforms_editor_button($context) {
 
 
 /**
- * Add some content to the bottom of the page for the BuddyForms Shortcodes
+ * Add some content to the bottom of the page for the BuddyForms shortcodes
  * This will be shown in the thickbox of the post edit screen
  * 
  * @package BuddyForms

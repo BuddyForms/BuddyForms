@@ -316,7 +316,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 						}
 						$wp_editor = ob_get_contents();
 					ob_clean();
-					$form->addElement(new Element_HTML('<label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div>'));
+					$form->addElement(new Element_HTML('<div class="bf_field_group"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>'));
 					// $wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
 					// $form->addElement(new Element_HTML($wp_editor));
 					

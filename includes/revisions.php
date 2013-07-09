@@ -1,6 +1,6 @@
 <?php
 /**
- * These functions are taken from the WORDPRESS 3.6-BETA3-24432 release and havely modified to work for us in the frontend. 
+ * These functions are taken from the WORDPRESS 3.6-BETA3-24432 release and heavily modified to work for us in the frontend. 
  *
  * @package BuddyForms
  * @since 0.1 beta
@@ -62,6 +62,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	echo "</div>";
 	
 }
+
 function buddyforms_wp_revisions_to_keep( $post ) {
 	$num = WP_POST_REVISIONS;
 	

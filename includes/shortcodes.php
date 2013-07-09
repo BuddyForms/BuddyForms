@@ -1,9 +1,9 @@
 <?php
-// Shortcode to add the form everywhere easely ;-) the form is locatet under the_form
+// Shortcode to add the form everywhere easily ;) the form is located in the-form.php
 add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
 
 /**
- * Shortcode to display autor post of a specific post type
+ * Shortcode to display author posts of a specific post type
  *
  * @package BuddyForms
  * @since 0.3 beta
