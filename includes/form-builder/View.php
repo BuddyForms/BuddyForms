@@ -21,6 +21,7 @@ abstract class View extends Base {
 	}	
 
 	protected function renderDescriptions($element) {
+
 		$shortDesc = $element->getShortDesc();
 		if(!empty($shortDesc))
 			echo '<span class="help-inline">', $shortDesc, '</span>';;

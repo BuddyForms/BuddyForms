@@ -23,10 +23,10 @@ class View_Vertical extends View {
             	echo '<div class="bf_field_group">';
 	                $this->renderLabel($element);
 					echo '<div class="bf_inputs">';
-	                $element->render();
+	            	   $element->render();
 					echo '</div>';
-	           echo '</div>';     
-				$this->renderDescriptions($element);
+	          		$this->renderDescriptions($element);
+                echo '</div>'; 
                 ++$elementCount;
             }
         }
