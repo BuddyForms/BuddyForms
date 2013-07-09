@@ -22,7 +22,7 @@ ul.buddyforms-list li img.avatar {
 
 ul.buddyforms-list.item-list li div.item-desc {
 	font-size: 100%;
-	margin: 10px 0 0 0px;
+	margin: 10px 0 0 0px !important;
 	width: 50%;
 	margin: 5px 5px 5px 0;
 	clear: right;

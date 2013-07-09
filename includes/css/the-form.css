@@ -22,8 +22,16 @@
 	background: transparent;
 }
 
-.the_buddyforms_form .bf_field_group label {
+.the_buddyforms_form form label {
 	font-weight: normal !important;
+}
+
+.the_buddyforms_form span.help-inline, 
+.the_buddyforms_form span.help-block {
+	color: #888;
+	font-size: 85%;
+	font-style: italic;
+	font-weight: normal;
 }
 
 .the_buddyforms_form .revision {
