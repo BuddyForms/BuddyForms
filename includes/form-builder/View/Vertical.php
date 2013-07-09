@@ -18,8 +18,14 @@ class View_Vertical extends View {
                 $element->render();
                 if(($e + 1) == $elementSize || !$elements[($e + 1)] instanceof Element_Button)
                     echo '</div>';
-            }
-            else {
+
+            } elseif($element instanceof Element_Hidden)  {
+			   $element->render();
+
+			} elseif($element instanceof Element_HTML)  {
+			   $element->render();
+
+			} else {
             	echo '<div class="bf_field_group">';
 	                $this->renderLabel($element);
 					echo '<div class="bf_inputs">';
@@ -27,8 +33,9 @@ class View_Vertical extends View {
 					echo '</div>';
 	          		$this->renderDescriptions($element);
                 echo '</div>'; 
-                ++$elementCount;
+
             }
+			++$elementCount;
         }
 
 		echo '</form>';
