@@ -82,8 +82,19 @@ class BuddyForms {
 	 */
 	public function includes() {
 		
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
+		// echo '<pre>';
+		// print_r(get_declared_classes());
+		// echo '</pre>';
+		
+		if(!function_exists('PFBC_Load'))
+			require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
+			
+			
+			
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-elements-example.php');
+		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
+		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');

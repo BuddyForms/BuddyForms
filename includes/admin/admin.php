@@ -40,11 +40,9 @@ function buddyforms_create_menu() {
 		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
 		 
 	}
-	
-	 
-
-
+   
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
+	add_submenu_page( 'buddyforms_options_page', 'Documentation', 'BuddyForms Help', 'edit_posts', 'buddyforms-help', 'tk_form_elements_screen' );
 	
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
@@ -139,7 +137,7 @@ function buddyforms_settings_page() {
 						<div class="accordion-inner">')); 
 							$form->addElement(new Element_Hidden("submit", "submit"));
 							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
-								
+
 							$form->addElement(new Element_HTML('
 						</div>
 			    	</div>
