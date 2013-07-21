@@ -141,7 +141,8 @@ function buddyforms_attached_page_content($content){
 		}
 		
 	}
-	add_filter( 'the_content', create_function('', 'return "' . addcslashes($new_content, '"') . '";') );
+	if(!empty($new_content))
+		add_filter( 'the_content', create_function('', 'return "' . addcslashes($new_content, '"') . '";') );
 
 }
 												
