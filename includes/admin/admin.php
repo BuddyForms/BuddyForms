@@ -21,18 +21,20 @@ function buddyforms_create_menu() {
 	
 	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
-		
-		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
-				
-			$slug = sanitize_title($buddyform['slug']);
 
+		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
+					
+			echo $slug . '=' . $buddyform['slug'];
+					
+			$slug = $buddyform['slug'];
+		
 			if($slug != $key){
 				$buddyforms_options['buddyforms'][$slug] = $buddyforms_options['buddyforms'][$key];
 				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
 				unset($buddyforms_options['buddyforms'][$key]);
 				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
 			}
-				
+						
 		}
 		$update_option = false;
 		$update_option = update_option("buddyforms_options", $buddyforms_options);
@@ -42,7 +44,7 @@ function buddyforms_create_menu() {
 	}
    
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
-	//add_submenu_page( 'buddyforms_options_page', 'Documentation', 'BuddyForms Help', 'edit_posts', 'buddyforms-help', 'tk_form_elements_screen' );
+	add_submenu_page( 'buddyforms_options_page', 'Documentation', 'BuddyForms Help', 'edit_posts', 'buddyforms-help', 'tk_form_elements_screen' );
 	
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
@@ -223,7 +225,7 @@ function buddyforms_settings_page() {
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_fields"> Form Elements</p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_fields" class="accordion-body collapse">
 								<div class="accordion-inner">
-									<div id="#idkommtnoch">
+									<div>
 										<p>Add new elements to your form <br>by clicking on them.</p>
 										<h5>Classic Fields</h5>
 										<p><a href="Text/'.$buddyform['slug'].'" class="action">Text</a></p>
@@ -391,12 +393,14 @@ function buddyforms_settings_page() {
 							if(empty($slug))
 								$slug = sanitize_title($customfield['name']);
 							
+							
 							if( $slug != '' ){
 								$args = Array(
 									'slug'				=> $slug,
 									'field_position'	=> $customfield['order'],
 									'field_id'			=> $field_id,
-									'post_type'			=> $buddyform['slug'],
+									'form_slug'			=> $buddyform['slug'],
+									'post_type'			=> $buddyform['post_type'],
 									'field_type'		=> $customfield['type']
 									);
 								$form->addElement(new Element_HTML(buddyforms_view_form_fields($args)));

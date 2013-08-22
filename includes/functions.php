@@ -10,11 +10,14 @@ add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
 function my_edit_post_link( $url, $post_ID, $context) {
 	global $buddyforms, $current_user;
 	
+	if(is_admin())
+		return;
+	
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
 	
 	
-	if ($the_post->post_author != $current_user->ID)
+	if ($the_post->post_author != $current_user->ID) // this needs to be modified for admins and collaborative content creation
 		return $url;
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
@@ -83,7 +86,10 @@ function buddyforms_attached_page_query_vars($query_vars){
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
     global $wp_query, $buddyforms, $bp;
-
+	
+	if(!isset($buddyforms['buddyforms']))
+		return;
+	
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
     	$form_slug = '';
@@ -127,8 +133,11 @@ function buddyforms_attached_page_content($content){
 	} elseif(isset($wp_query->query_vars['pagename']) ){
 			
 		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
-			if($post_data['post_name'] == $wp_query->query_vars['pagename']){
+				
+			if(isset($buddyform['attached_page']))
+				$post_data = get_post($buddyform['attached_page'], ARRAY_A);
+			
+			if(isset($post_data['post_name']) && $post_data['post_name'] == $wp_query->query_vars['pagename']){
 				$args = array(
 					'form_slug' => $buddyform['slug'],
 				);
