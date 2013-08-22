@@ -24,12 +24,10 @@ function buddyforms_create_menu() {
 
 		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
 					
-			echo $slug . '=' . $buddyform['slug'];
-					
 			$slug = $buddyform['slug'];
 		
 			if($slug != $key){
-				$buddyforms_options['buddyforms'][$slug] = $buddyforms_options['buddyforms'][$key];
+				$buddyforms_options['buddyforms'][$slug] = $buddyform;
 				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
 				unset($buddyforms_options['buddyforms'][$key]);
 				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
