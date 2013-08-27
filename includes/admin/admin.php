@@ -14,6 +14,10 @@ function buddyforms_create_menu() {
 
 	global $bp, $buddyforms;
 	
+	// echo '<pre>';
+	// print_r($buddyforms);
+	// echo '</pre>';
+	
 	// Check that the user is allowed to update options
 	if (!current_user_can('manage_options')) {
 	    wp_die('You do not have sufficient permissions to access this page.');

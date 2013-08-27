@@ -13,7 +13,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	// if post edit screen is displayed
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
 	
-	// hook for plugins to overwrite the $args.
+	 // hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
 	extract(shortcode_atts(array(
@@ -21,7 +21,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		'the_post' => 0,
 		'post_id' => $post_id,
 		'revision_id' => false,
-		'form_slug' => ''
+		'form_slug' => $form_slug,
 	), $args));
 
 	get_currentuserinfo();	
@@ -135,6 +135,9 @@ function buddyforms_create_edit_form( $args = array() ) {
             // Update the new post
             $post_id = wp_update_post( $my_post );
 			
+			// Save the Form slug as post meta 
+            update_post_meta($post_id, '_bf_form_slug', $form_slug ); 
+			
 		} else {
 			
 			  $my_post = array(
@@ -148,6 +151,10 @@ function buddyforms_create_edit_form( $args = array() ) {
                 
             // Insert the new form
             $post_id = wp_insert_post($my_post);
+			
+			// Save the Form slug as post meta 
+			update_post_meta($post_id, '_bf_form_slug', $form_slug ); 
+			
 			
 		}
 		// Check if the post has post meta / custom fields 
