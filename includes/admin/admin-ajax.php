@@ -152,7 +152,7 @@ function buddyforms_view_form_fields($args){
 	
 	$form_fields = Array();
 	
-	$buddyforms['hooks']['form_element'] = apply_filters('buddyforms_form_element_hooks',$buddyforms['hooks']['form_element'],$form_slug,$field_id);
+	$buddyforms['hooks']['form_element'] = apply_filters('buddyforms_form_element_hooks',$buddyforms['hooks']['form_element'],$form_slug);
 	$style = 'false';
 	if(isset($buddyforms_options['buddyforms'][$form_slug]['form_type']) && $buddyforms_options['buddyforms'][$form_slug]['form_type'] != 'post_form')
 		$style = 'style="display: none;"';
