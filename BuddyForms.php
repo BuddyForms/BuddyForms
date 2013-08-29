@@ -91,7 +91,7 @@ class BuddyForms {
 			
 			
 			
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'form-elements-example.php');
+		//require_once (BUDDYFORMS_INCLUDES_PATH . 'form-elements-example.php');
 		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		

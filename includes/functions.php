@@ -11,7 +11,7 @@ function my_edit_post_link( $url, $post_ID, $context) {
 	global $buddyforms, $current_user;
 	
 	if(is_admin())
-		return;
+		return ;
 	
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
@@ -42,6 +42,7 @@ function my_edit_post_link( $url, $post_ID, $context) {
 add_action('admin_init', 'buddyforms_attached_page_rewrite_rules');
 function buddyforms_attached_page_rewrite_rules(){
 	global $buddyforms;
+	
 	if(!isset($buddyforms['buddyforms']))
 		return;
 	
@@ -68,6 +69,10 @@ function buddyforms_attached_page_rewrite_rules(){
  */
 add_filter('query_vars', 'buddyforms_attached_page_query_vars');
 function buddyforms_attached_page_query_vars($query_vars){
+		
+	if(is_admin())
+		return $query_vars;
+	
 	$query_vars[] = 'bf_action';
 	$query_vars[] = 'bf_form_slug';	
 	$query_vars[] = 'bf_post_id';
@@ -85,8 +90,11 @@ function buddyforms_attached_page_query_vars($query_vars){
  */
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
-    global $wp_query, $buddyforms, $bp;
+	global $wp_query, $buddyforms, $bp;
 	
+	if(is_admin())
+		return $content;
+		
 	if(!isset($buddyforms['buddyforms']))
 		return;
 	
@@ -205,6 +213,7 @@ function buddyforms_wp_before_admin_bar_render(){
  */
 add_action('media_buttons_context', 'buddyforms_editor_button');
 function buddyforms_editor_button($context) {
+  	
   if (!is_admin())
   	return $context;
   
