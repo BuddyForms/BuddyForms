@@ -146,11 +146,9 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'comment_status'	=> $comment_status,
 			);
                 
-            // Update the new post
+			// Update the new post
             $post_id = wp_update_post( $my_post );
 			
-			// Save the Form slug as post meta 
-            update_post_meta($post_id, '_bf_form_slug', $form_slug ); 
 			
 		} else {
 			
@@ -162,13 +160,9 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
                 'comment_status'	=> $comment_status,
             );   
-                
+            
             // Insert the new form
-            $post_id = wp_insert_post($my_post);
-			
-			// Save the Form slug as post meta 
-			update_post_meta($post_id, '_bf_form_slug', $form_slug ); 
-			
+            $post_id = wp_insert_post( $my_post );
 			
 		}
 		// Check if the post has post meta / custom fields 
@@ -225,6 +219,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 				                   
             endforeach;
     	}
+		
+
+		// Save the Form slug as post meta 
+		update_post_meta($post_id, "_bf_form_slug", $form_slug);
+		
 		// Featured image? If yes, save via media_handle_upload and set the post thumbnail
 		if( ! empty( $_FILES ) ) {
 			
@@ -263,6 +262,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$form_notice = ob_get_contents();
 			ob_clean();
 		}
+		do_action('buddyforms_after_save_post',$post_id);
+		
 	} 
 	
 	$form_html = '<div class="the_buddyforms_form">';

@@ -11,7 +11,7 @@ function my_edit_post_link( $url, $post_ID, $context) {
 	global $buddyforms, $current_user;
 	
 	if(is_admin())
-		return ;
+		return $url;
 	
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
