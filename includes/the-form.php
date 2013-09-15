@@ -536,20 +536,18 @@ function bf_update_post_meta($post_id, $customfields){
 		foreach( $customfields as $key => $customfield ) : 
 		   
 			if( $customfield['type'] == 'Taxonomy' ){
+					
+				$taxonomy = get_taxonomy($customfield['taxonomy']);
+				echo $customfield['slug'];
+				print_r( $_POST[ $customfield['slug'] ]);
 				
-				// Check if the custom field is a taxonomy
-				// * We need to check if the taxonomy is a normal category, because categories want id's and custom taxonomies slugs... ;-()
-				if($customfield['taxonomy'] == 'category'){
-			
-					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+				if (isset($taxonomy->hierarchical) && $taxonomy->hierarchical == true)  {
 					
-					if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
-						$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
-						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-					}
-					
+					if(isset($_POST[ $customfield['slug'] ]))					
+						wp_set_post_terms( $post_id, $_POST[ $customfield['slug'] ], $customfield['taxonomy'], false );
+					echo 'as '.$taxonomy->hierarchical;
 				} else {
-			
+				
 					$slug = Array();
 					
 					if(isset($_POST[ $customfield['slug'] ])) {
@@ -560,14 +558,16 @@ function bf_update_post_meta($post_id, $customfields){
 							$slug[] = $term->slug;
 						}
 					}
-					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
 					
-					if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
-						$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
-						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-					}
+					print_r($slug);
+					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+
 				}
 				
+				if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
+					$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
+					wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
+				}
 			}
 			// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
 			do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
