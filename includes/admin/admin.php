@@ -46,7 +46,6 @@ function buddyforms_create_menu() {
 	}
    
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
-	add_submenu_page( 'buddyforms_options_page', 'Documentation', 'BuddyForms Help', 'edit_posts', 'buddyforms-help', 'tk_form_elements_screen' );
 	
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
@@ -427,12 +426,12 @@ function buddyforms_form_element_multiple($form_fields, $args){
 	$form_fields['left']['html_1'] = new Element_HTML('
 	<div class="element_field">
 	<p>Checkbox Values:</p>
-		 <ul id="'.$post_type.'_field_'.$field_id.'" class="element_field_sortable">');
-		 if(isset($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['value'])){
+		 <ul id="'.$form_slug.'_field_'.$field_id.'" class="element_field_sortable">');
+		 if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['value'])){
 		 	$count = 1;
-		 	 foreach ($buddyforms_options['buddyforms'][$post_type]['form_fields'][$field_id]['value'] as $key => $value) {
+		 	 foreach ($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['value'] as $key => $value) {
 				$form_fields['left']['html_li_start_'.$key]	= new Element_HTML('<li class="field_item field_item_'.$field_id.'_'.$count.'">');
-				$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[buddyforms][".$post_type."][form_fields][".$field_id."][value][]", array('value' => $value));
+				$form_fields['left']['html_value_'.$key] 	= new Element_Textbox("Entry ".$key, "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][value][]", array('value' => $value));
 				$form_fields['left']['html_li_end_'.$key]	= new Element_HTML('<a href="#" id="'.$field_id.'_'.$count.'" class="delete_input" title="delete me">X</a> - <a href="#" id="'.$field_id.'" title="drag and move me!">move</a></li>');
 				$count++;
 			 }
@@ -440,7 +439,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
 		$form_fields['left']['html_2'] = new Element_HTML(' 
 	    </ul>
      </div>
-     <a href="'.$post_type.'/'.$field_id.'" class="button add_input">+</a>
+     <a href="'.$form_slug.'/'.$field_id.'" class="button add_input">+</a>
     ');	
 	
 	return $form_fields;

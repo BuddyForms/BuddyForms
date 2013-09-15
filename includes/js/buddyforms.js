@@ -1,19 +1,20 @@
 jQuery(document).ready(function (){
-	
-    jQuery('#options_to_connect a').on('click',function(event){   
-		event.preventDefault();
-		var post_id = jQuery(this).parent().attr('class'); 
-		jQuery.ajax({  
-			type: "POST",                  
-			url:  ajaxurl,  
-			data: {"action": "buddyforms_form_ajax", "post_id": post_id}, 
-			success: function (msg) {      
-				jQuery('#TB_ajaxContent').html(msg);
-			},
-			error: function () {                  
-				alert('Error');                    
-			}  
-		});           
-	});       
+	var config = {
+      '.chosen'     : {
+      	width:"50%",
+      	no_results_text:'No results match',
+      	placeholder_text_multiple:'Select multiple Options',
+		placeholder_text_single:'Select an Option',
+		search_contains: true,
+		allow_single_deselect: true,
+      }
+   };
+   
+   for (var selector in config) {
+      jQuery(selector).chosen(config[selector]);
+    }
 });      
 
+
+
+  

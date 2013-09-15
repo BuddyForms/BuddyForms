@@ -14,7 +14,7 @@ class BuddyForms {
 		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
-		//add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
+		add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
 		$this->init_hook();
 		$this->load_constants();
 		
@@ -82,17 +82,9 @@ class BuddyForms {
 	 */
 	public function includes() {
 		
-		// echo '<pre>';
-		// print_r(get_declared_classes());
-		// echo '</pre>';
-		
 		if(!function_exists('PFBC_Load'))
-			require_once (BUDDYFORMS_INCLUDES_PATH . 'form-builder/Form.php');
+			require_once (BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php');
 			
-			
-			
-		//require_once (BUDDYFORMS_INCLUDES_PATH . 'form-elements-example.php');
-		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
@@ -165,11 +157,13 @@ class BuddyForms {
 	 */
 	function buddyform_front_js() {
 		
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('thickbox');
-        wp_enqueue_style('thickbox');
-	
-		wp_enqueue_script( 'buddyforms-form',  plugins_url('includes/js/buddyforms.js', __FILE__), array('jquery') );
-	
+		wp_enqueue_script(	'jquery');
+		// wp_enqueue_script(	'thickbox');
+		// wp_enqueue_style(	'thickbox');
+
+	 	wp_enqueue_script(	'buddyforms-js',					plugins_url('includes/js/buddyforms.js', __FILE__), array('jquery') );
+
+		wp_enqueue_script(	'buddyforms-multiple-select',		plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
+		wp_enqueue_style(	'buddyforms-multiple-select-css',	plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
 	}
 }

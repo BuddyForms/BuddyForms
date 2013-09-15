@@ -165,60 +165,9 @@ function buddyforms_create_edit_form( $args = array() ) {
             $post_id = wp_insert_post( $my_post );
 			
 		}
+		
 		// Check if the post has post meta / custom fields 
-        if(isset($customfields)){
-        	
-			foreach( $customfields as $key => $customfield ) : 
-			   
-				if( $customfield['type'] == 'Taxonomy' ){
-					
-					// Check if the custom field is a taxonomy
-					// * We need to check if the taxonomy is a normal category, because categories want id's and custom taxonomies slugs... ;-()
-					if($customfield['taxonomy'] == 'category'){
-				
-						wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
-						
-						if($_POST[$customfield['slug'].'_creat_new_tax']){
-							$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
-							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-						}
-						
-					} else {
-				
-						$slug = Array();
-						
-						if(isset($_POST[ sanitize_title( $customfield['name'] ) ])) {
-							$postCategories = $_POST[ sanitize_title( $customfield['name'] ) ];
-						
-							foreach ( $postCategories as $postCategory ) {
-								$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
-								$slug[] = $term->slug;
-							}
-							
-							wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
-						}
-						if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
-							$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
-							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-						}
-					}
-					
-				}
-				// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
-				do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
-               
-			   	if(isset($customfield['slug']))
-			   		$slug = sanitize_title($customfield['slug']);	
-				
-				if($slug == '')
-					$slug = sanitize_title($customfield['name']);
-				
-				// Update the post
-				if(isset($_POST[$slug] ))
-					update_post_meta($post_id, $slug, $_POST[$slug] ); 
-				                   
-            endforeach;
-    	}
+		bf_update_post_meta($post_id, $customfields);
 		
 
 		// Save the Form slug as post meta 
@@ -320,139 +269,39 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if(isset($form_notice))
 					$form->addElement(new Element_HTML($form_notice));
 				
-					$form->addElement(new Element_HTML('<div class="bf_field_group bf_form_title">'));
-					$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
-					$form->addElement(new Element_HTML('</div>'));
+				$form->addElement(new Element_HTML('<div class="bf_field_group bf_form_title">'));
+				$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
+				$form->addElement(new Element_HTML('</div>'));
 
 					
 
-					ob_start();
-					
-						$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
-						if(isset($post_id)){
-							wp_editor($editpost_content_val, 'editpost_content', $settings);
-						} else {
-							$content = false;
-							$post = 0;
-							wp_editor($content, 'editpost_content', $settings);
-						}
-						$wp_editor = ob_get_contents();
-					ob_clean();
-					
-					
-					$wp_editor = '<div class="bf_field_group bf_form_content"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
-					//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
-					$form->addElement(new Element_HTML($wp_editor));
-					
-					// $form->addElement(new Element_HTML($wp_editor));
-					
-					// $post = get_post($post_id, 'OBJECT');
-					// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
-					// $form->addElement(new Element_Hidden("editpost_content", $post->post_content));
+				ob_start();
 				
+					$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
+					if(isset($post_id)){
+						wp_editor($editpost_content_val, 'editpost_content', $settings);
+					} else {
+						$content = false;
+						$post = 0;
+						wp_editor($content, 'editpost_content', $settings);
+					}
+					$wp_editor = ob_get_contents();
+				ob_clean();
+					
+				
+				$wp_editor = '<div class="bf_field_group bf_form_content"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
+				//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
+				$form->addElement(new Element_HTML($wp_editor));
+				
+				// $form->addElement(new Element_HTML($wp_editor));
+				
+				// $post = get_post($post_id, 'OBJECT');
+				// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
+				// $form->addElement(new Element_Hidden("editpost_content", $post->post_content));
+			
 				// if the form have custom field to save as post meta data they get displayed here 
-				if (isset($customfields)) {
-					foreach ($customfields as $key => $customfield) :
-						
-						if(isset($customfield['slug']))
-							$slug = sanitize_title($customfield['slug']);	
-							
-						if($slug == '')
-							$slug = sanitize_title($customfield['name']);
+				bf_post_meta($form, $post_id, $customfields);
 				
-						if($slug != '') :
-						
-							if (isset($_POST[$slug] )) {
-								$customfield_val = $_POST[$slug];
-							} else {
-								$customfield_val = get_post_meta($post_id, $slug, true);
-							}
-							print_r($customfield_val);
-							echo '<br>';
-							switch( $customfield['type'] ) {
-								case 'Mail' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									$form->addElement(new Element_Email($customfield['name'], $slug, $element_attr));
-									break;
-		
-								case 'Radiobutton' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									if(is_array($customfield['value']))
-										$form->addElement(new Element_Radio($customfield['name'], $slug, $customfield['value'], $element_attr));
-									break;
-		
-								case 'Checkbox' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									if(is_array($customfield['value']))
-										$form->addElement(new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr));
-									break;
-		
-								case 'Dropdown' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									if(is_array($customfield['value']))
-										$form->addElement(new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr));
-									break;
-								
-								case 'Comments' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
-									$form->addElement(new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr));
-									break;
-		
-								case 'Textarea' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									$form->addElement(new Element_Textarea($customfield['name'], $slug, $element_attr));
-									break;
-		
-								case 'Hidden' :
-									$form->addElement(new Element_Hidden($customfield['name'], $customfield['value']));
-									break;
-		
-								case 'Text' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									$form->addElement(new Element_Textbox($customfield['name'], $slug, $element_attr));
-									break;
-		
-								case 'Link' :
-									$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-									$form->addElement(new Element_Url($customfield['name'], $slug, $element_attr));		
-									break;
-		
-								case 'Taxonomy' :
-									$term_list = wp_get_post_terms($post_id, $customfield['taxonomy'], array("fields" => "ids"));
-		
-									$args = array('multiple' => $customfield['multiple'], 'selected_cats' => $term_list, 'hide_empty' => 0, 'id' => $key, 'child_of' => 0, 'echo' => FALSE, 'selected' => false, 'hierarchical' => 1, 'name' => $slug . '[]', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'taxonomy' => $customfield['taxonomy'], 'hide_if_empty' => FALSE, );
-		
-									$dropdown = wp_dropdown_categories($args);
-		
-									if (is_array($customfield['multiple'])) {
-										$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
-									}
-									if (is_array($term_list)) {
-										foreach ($term_list as $value) {
-											$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
-										}
-									}
-		
-									$form->addElement(new Element_HTML('<label>'.$customfield['name'] . ':</label><p><i>' . $customfield['description'] . '</i></p>'));
-									$form->addElement(new Element_HTML($dropdown));
-	
-									if($customfield['creat_new_tax'])
-										$form->addElement(new Element_Textbox('Create a new ' . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
-									
-									break;
-									
-								default:
-									
-									// hook to add your form element
-									apply_filters('buddyforms_create_edit_form_display_element',$form,$post_id,$post_type,$customfield,$customfield_val);
-									
-									break;
-		
-							}
-						endif;
-					endforeach;
-				}
-	
 				// Display upload field for featured image if required is selected for this form
 				if (isset($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0])){
 					if ($post_id == 0) {
@@ -525,4 +374,218 @@ function buddyforms_delete_post(){
 	);
        
 	buddyforms_the_loop($args);
+}
+
+function bf_add_element($form, $element){
+	if(is_object($form)) {
+		$form->addElement($element);
+	} else {
+		echo '
+		<div class="bf_field_group bf_form_title">
+			<div class="bf_field_group">
+				<label for="editpost-element-' . $element->getAttribute('name') . '">' .  $element->getLabel() . '</label>
+				<div class="bf_inputs">';
+					$element->render();
+		echo 	'</div>
+			</div>
+		</div>';
+	}
+}
+function bf_post_meta($form, $post_id, $customfields){
+		if (isset($customfields)) {
+			
+		foreach ($customfields as $key => $customfield) :
+			
+			if(isset($customfield['slug']))
+				$slug = sanitize_title($customfield['slug']);	
+				
+			if($slug == '')
+				$slug = sanitize_title($customfield['name']);
+	
+			if($slug != '') :
+			
+				if (isset($_POST[$slug] )) {
+					$customfield_val = $_POST[$slug];
+				} else {
+					$customfield_val = get_post_meta($post_id, $slug, true);
+				}
+
+				switch( $customfield['type'] ) {
+					case 'Mail' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						$element = new Element_Email($customfield['name'], $slug, $element_attr);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Radiobutton' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						if(is_array($customfield['value'])){
+							$element = new Element_Radio($customfield['name'], $slug, $customfield['value'], $element_attr);
+							bf_add_element($form, $element);
+						}
+						break;
+
+					case 'Checkbox' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						if(is_array($customfield['value'])){
+							$element = new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr);
+							bf_add_element($form, $element);
+						}
+						break;
+
+					case 'Dropdown' :
+						
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input chosen', 'shortDesc' =>  $customfield['description']);
+						if(is_array($customfield['value'])){
+							$element = new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr);
+
+							if (isset($customfield['multiple']) && is_array( $customfield['multiple'] )) 
+								$element->setAttribute('multiple', 'multiple');
+
+							bf_add_element($form, $element);
+						}
+						break;
+					
+					case 'Comments' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
+						$element = new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Textarea' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						$element = new Element_Textarea($customfield['name'], $slug, $element_attr);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Hidden' :
+						$element = new Element_Hidden($customfield['name'], $customfield['value']);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Text' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						$element = new Element_Textbox($customfield['name'], $slug, $element_attr);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Link' :
+						$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+						$element = new Element_Url($customfield['name'], $slug, $element_attr);
+						bf_add_element($form, $element);
+						break;
+
+					case 'Taxonomy' :
+						
+						$args = array(
+							'multiple' => $customfield['multiple'],
+							'hide_empty' => 0,
+							'id' => $key,
+							'child_of' => 0,
+							'echo' => FALSE,
+							'selected' => false,
+							'hierarchical' => 1,
+							'name' => $slug . '[]',
+							'class' => 'postform chosen',
+							'depth' => 0,
+							'tab_index' => 0,
+							'taxonomy' => $customfield['taxonomy'],
+							'hide_if_empty' => FALSE,
+						);
+
+						$dropdown = wp_dropdown_categories($args);
+
+						if (isset($customfield['multiple']) && is_array( $customfield['multiple'] )) 
+							$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
+						
+						if (is_array($customfield_val)) {
+							foreach ($customfield_val as $value) {
+								$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
+							}
+						}
+						
+						$element = new Element_HTML('<label>'.$customfield['name'] . ':</label><p><i>' . $customfield['description'] . '</i></p>');
+						bf_add_element($form, $element);
+						
+						$element = new Element_HTML($dropdown);
+						bf_add_element($form, $element);
+						
+						if(isset($customfield['creat_new_tax'])){
+							$element = new Element_Textbox('Create a new ' . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input'));
+							bf_add_element($form, $element);
+						}
+						
+						break;
+						
+					default:
+						
+						// hook to add your form element
+						apply_filters('buddyforms_create_edit_form_display_element',$form,$post_id,$post_type,$customfield,$customfield_val);
+						
+						break;
+
+				}
+			endif;
+		endforeach;
+	}
+}
+
+function bf_update_post_meta($post_id, $customfields){
+        if(isset($customfields)){
+    	
+		foreach( $customfields as $key => $customfield ) : 
+		   
+			if( $customfield['type'] == 'Taxonomy' ){
+				
+				// Check if the custom field is a taxonomy
+				// * We need to check if the taxonomy is a normal category, because categories want id's and custom taxonomies slugs... ;-()
+				if($customfield['taxonomy'] == 'category'){
+			
+					wp_set_post_terms( $post_id, $_POST[ sanitize_title( $customfield['name'] ) ], $customfield['taxonomy'], false );
+					
+					if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
+						$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
+						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
+					}
+					
+				} else {
+			
+					$slug = Array();
+					
+					if(isset($_POST[ $customfield['slug'] ])) {
+						$postCategories = $_POST[ $customfield['slug'] ];
+					
+						foreach ( $postCategories as $postCategory ) {
+							$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
+							$slug[] = $term->slug;
+						}
+					}
+					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+					
+					if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
+						$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
+						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
+					}
+				}
+				
+			}
+			// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
+			do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
+           
+		   	if(isset($customfield['slug']))
+		   		$slug = $customfield['slug'];	
+			
+			if($slug == '')
+				$slug = sanitize_title($customfield['name']);
+			
+			// Update the post
+			if(isset($_POST[$slug] )){
+				update_post_meta($post_id, $slug, $_POST[$slug] );
+			} else {
+				update_post_meta($post_id, $slug, '' );
+			}
+				 
+			                   
+        endforeach;
+	}
 }

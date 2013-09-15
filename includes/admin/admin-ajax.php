@@ -205,8 +205,14 @@ function buddyforms_view_form_fields($args){
 				$form_fields['left']['target'] 	= new Element_Select("Target:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $target))	;
 			break;
 			case 'Dropdown':
+			
+				$multiple = 'false';
+				if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
+					$multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
+				$form_fields['left']['multiple']		= new Element_Checkbox("Multiple:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
+				
 				$field_args = Array(
-					'post_type' => $post_type, 
+					'form_slug' => $form_slug, 
 					'field_id' => $field_id,
 					'buddyforms_options' => $buddyforms_options
 				);
@@ -214,7 +220,7 @@ function buddyforms_view_form_fields($args){
 			break;
 			case 'Radiobutton':
 				$field_args = Array(
-					'post_type' => $post_type, 
+					'form_slug' => $form_slug, 
 					'field_id' => $field_id,
 					'buddyforms_options' => $buddyforms_options
 				);
@@ -222,7 +228,7 @@ function buddyforms_view_form_fields($args){
 			break;
 			case 'Checkbox':
 				$field_args = Array(
-					'post_type' => $post_type, 
+					'form_slug' => $form_slug, 
 					'field_id' => $field_id,
 					'buddyforms_options' => $buddyforms_options
 				);
