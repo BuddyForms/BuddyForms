@@ -538,14 +538,11 @@ function bf_update_post_meta($post_id, $customfields){
 			if( $customfield['type'] == 'Taxonomy' ){
 					
 				$taxonomy = get_taxonomy($customfield['taxonomy']);
-				echo $customfield['slug'];
-				print_r( $_POST[ $customfield['slug'] ]);
 				
 				if (isset($taxonomy->hierarchical) && $taxonomy->hierarchical == true)  {
 					
 					if(isset($_POST[ $customfield['slug'] ]))					
 						wp_set_post_terms( $post_id, $_POST[ $customfield['slug'] ], $customfield['taxonomy'], false );
-					echo 'as '.$taxonomy->hierarchical;
 				} else {
 				
 					$slug = Array();
@@ -559,7 +556,6 @@ function bf_update_post_meta($post_id, $customfields){
 						}
 					}
 					
-					print_r($slug);
 					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
 
 				}
