@@ -74,7 +74,7 @@ function buddyforms_item_delete(){
 	
 	$buddyforms_options = get_option('buddyforms_options');
 		
-	unset( $buddyforms_options[$post_args[0]][$post_args[1]][form_fields][$post_args[3]] );
+	unset( $buddyforms_options[$post_args[0]][$post_args[1]]['form_fields'][$post_args[3]] );
     
 	update_option("buddyforms_options", $buddyforms_options);
     die();
