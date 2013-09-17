@@ -312,7 +312,10 @@ jQuery(document).ready(function (){
 */
 function buddyforms_form_display_element_frontend(){
 	global $buddyforms, $post, $bp;
-					
+	
+	if(is_archive())
+		return;
+				
 	if (!isset($buddyforms['buddyforms']))
 		return;
 
