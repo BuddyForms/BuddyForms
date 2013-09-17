@@ -312,13 +312,17 @@ jQuery(document).ready(function (){
 */
 function buddyforms_form_display_element_frontend(){
 	global $buddyforms, $post, $bp;
-	
-	if(!is_single($post))
-		return;
 					
 	if (!isset($buddyforms['buddyforms']))
 		return;
 
+	$post_id = ''; 
+	$post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);	
+
+	if(isset($post_id)){
+		$post = get_post($post_id);
+	}
+	
 	$post_type = get_post_type($post);
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
@@ -332,6 +336,7 @@ function buddyforms_form_display_element_frontend(){
 	if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 			
 		foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
+			
 			if(isset($customfield['slug'])){
 				$slug = $customfield['slug'];
 			} else {
@@ -369,8 +374,6 @@ function buddyforms_form_display_element_frontend(){
 				
 				$post_meta_tmp .= '</div>';
 				apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
-
-
 
 				switch ($customfield['display']) {
 					case 'before_the_title':

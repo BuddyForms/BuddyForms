@@ -167,7 +167,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 		}
 		
 		// Check if the post has post meta / custom fields 
-		bf_update_post_meta($post_id, $customfields);
+		if(isset($customfields))
+			bf_update_post_meta($post_id, $customfields);
 		
 
 		// Save the Form slug as post meta 
@@ -300,7 +301,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 				// $form->addElement(new Element_Hidden("editpost_content", $post->post_content));
 			
 				// if the form have custom field to save as post meta data they get displayed here 
-				bf_post_meta($form, $form_slug, $post_id, $customfields);
+				if(isset($customfields))
+					bf_post_meta($form, $form_slug, $post_id, $customfields);
 				
 				// Display upload field for featured image if required is selected for this form
 				if (isset($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0])){
@@ -395,8 +397,6 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 	
 	if (!isset($customfields))
 		return;
-			
-	print_r($form);		
 			
 	foreach ($customfields as $key => $customfield) :
 		
