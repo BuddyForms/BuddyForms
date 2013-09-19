@@ -363,7 +363,7 @@ function buddyforms_form_display_element_frontend(){
 			
 				switch ($customfield['type']) {
 					case 'Taxonomy':
-						$meta_tmp = "<p>". get_the_term_list( $post->ID, $customfield['taxonomy'] )."</p>";
+						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
 						break;
 					case 'Link':
 						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
