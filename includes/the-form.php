@@ -12,7 +12,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	// if post edit screen is displayed
 	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
-
+	
 	 // hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 	
@@ -133,6 +133,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 		if(isset($_POST['comment_status']))
 				$comment_status = $_POST['comment_status'];
+		
+		if(isset($_POST['post_excerpt']))
+				$post_excerpt = $_POST['post_excerpt'];
+		
 			
         // Check if post is new or edit 
         if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
@@ -144,6 +148,7 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'post_type' 		=> $post_type,
                 'post_status' 		=> 'publish',
                 'comment_status'	=> $comment_status,
+                'post_excerpt'		=> $post_excerpt
 			);
                 
 			// Update the new post
@@ -159,6 +164,7 @@ function buddyforms_create_edit_form( $args = array() ) {
                 'post_type' 		=> $post_type,
                 'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
                 'comment_status'	=> $comment_status,
+                'post_excerpt'		=> $post_excerpt
             );   
             
             // Insert the new form
