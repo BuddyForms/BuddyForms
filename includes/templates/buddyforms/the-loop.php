@@ -17,13 +17,20 @@ if ( $the_lp_query->have_posts() ) : ?>
 
 		<li class="<?php echo get_post_status(); ?>">
 			<div class="item-avatar">
-				<a href="<?php echo $the_permalink; ?>"><?php the_post_thumbnail( array(70,70),array('class'=>"avatar")); ?></a>
+				
+				<?php 
+				$post_thumbnail = get_the_post_thumbnail( array(70,70),array('class'=>"avatar")); 
+				$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail);
+				?>
+				
+				<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
+				<?php do_action( 'bp_before_blog_post' ); ?>
 			</div>
 
 			<div class="item">
 				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
-				<div class="item-desc"><?php the_excerpt(); ?></div>
+				<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
 				<?php do_action( 'bp_directory_groups_item' ); ?>
 
@@ -52,7 +59,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			<div class="clear"></div>
 		</li>
 
-        <?php do_action( 'bp_after_blog_post' ) ?>
+        <?php do_action( 'bf_after_loop_item' ) ?>
 
     <?php endwhile; ?>
 
