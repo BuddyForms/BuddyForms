@@ -117,107 +117,79 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
+			
+		$hasError = false;
 		
 		if($buddyforms['buddyforms'][$form_slug]['form_type'] == 'mail_form'){
-			//$wpmail = wp_mail( $buddyforms['buddyforms'][$form_slug]['email'], $buddyforms['buddyforms'][$form_slug]['email_subject'], 'Ein test');
-
-			// if($wpmail == TRUE){ 
-				// echo '<p>Form has been sent successful.</p>';
-			// } elseif($wpmail == FALSE){
-				// echo '<p>There has been an error submitting the form.</p>';
-			// }
-			return;
+			$error_message = __('Mail Forms are not supported in this Version and this is just a placeholder!', 'buddyforms');
+			echo '<div class="error alert">'.$error_message.'</div>';
+			return;	
 		} 
 			
 		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
 		
 		if(isset($_POST['comment_status']))
-				$comment_status = $_POST['comment_status'];
+			$comment_status = $_POST['comment_status'];
 		
+		$post_excerpt = '';
 		if(isset($_POST['post_excerpt']))
-				$post_excerpt = $_POST['post_excerpt'];
+			$post_excerpt = $_POST['post_excerpt'];
 		
-			
-        // Check if post is new or edit 
-        if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ) {
-        	                     
-			$my_post = array(
-                'ID'        		=> $_POST['new_post_id'],
-                'post_title' 		=> $_POST['editpost_title'],
-                'post_content' 		=> $_POST['editpost_content'],
-                'post_type' 		=> $post_type,
-                'post_status' 		=> 'publish',
-                'comment_status'	=> $comment_status,
-                'post_excerpt'		=> $post_excerpt
-			);
-                
-			// Update the new post
-            $post_id = wp_update_post( $my_post );
-			
-			
-		} else {
-			
-			  $my_post = array(
-                'post_author' 		=> $current_user->ID,
-                'post_title' 		=> $_POST['editpost_title'],
-                'post_content' 		=> $_POST['editpost_content'],
-                'post_type' 		=> $post_type,
-                'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
-                'comment_status'	=> $comment_status,
-                'post_excerpt'		=> $post_excerpt
-            );   
-            
-            // Insert the new form
-            $post_id = wp_insert_post( $my_post );
-			
+		$action			= 'save';
+		$post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
+		
+		echo '$_POST[new_post_id]' . $_POST['new_post_id'];
+		
+		if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ){
+			$action = 'update';
+			$post_status = 'publish';
 		}
-		
+			
+		$args = Array(
+			'action'			=> $action,
+			'form_slug'			=> $form_slug,
+			'post_type' 		=> $post_type,
+			'post_excerpt'		=> $post_excerpt,
+			'post_author' 		=> $current_user->ID,
+			'post_status' 		=> $post_status,
+			'comment_status'	=> $comment_status,
+		);
+			
+		   	   //$args = apply_filters('buddyforms_the_form_to_use',$form_slug, $post_type);	
+			
+		$hasError = bf_post_control($args, $hasError);
+				
 		// Check if the post has post meta / custom fields 
 		if(isset($customfields))
 			bf_update_post_meta($post_id, $customfields);
 		
-
+		$hasError = bf_set_post_thumbnail($post_id, $hasError);
+		
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
 		
-		// Featured image? If yes, save via media_handle_upload and set the post thumbnail
-		if( ! empty( $_FILES ) ) {
-			
-			require_once(ABSPATH . 'wp-admin/includes/admin.php');  
-	        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
-	
-	        unset( $_FILES );  
-	        if( is_wp_error( $id ) ) {  
-	            $errors['upload_error'] = $id;  
-	            $id = false;  
-	        } 
-			
-	        set_post_thumbnail($post_id, $id);
-	      
-	       	if( ! $the_post->ID){
-	           	if( $errors ) {  
-		            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';  
-		            $hasError 	= true;
-		        }  
-	       	}
-		}        
-		
 		// Display the message  
-		if( empty( $hasError ) ) {
-			ob_start();?>
-				<div class="thanks">
-					<?php if(isset($_GET['post_id'])){ ?>
-			            <h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
-			            <p><?php _e( 'Post has been updated.', 'buddyforms' ); ?> </p>
-		   			<?php } else { ?>
-		   				<h1><?php _e( 'Saved', 'buddyforms' ); ?></h1>
-			    	    <p><?php _e( 'Post has been created.', 'buddyforms' ); ?> </p>
-					<?php } ?>
-				</div>
-			<?php
-			$form_notice = ob_get_contents();
-			ob_clean();
-		}
+		if( empty( $hasError ) ) :
+			
+			if(isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] )){
+				$info_message = __('The post has been successfully updated', 'buddyforms');
+				$form_notice = '<div class="info alert">'.$info_message.'</div>';
+			} else {
+				$info_message = __('The post has been successfully created', 'buddyforms');
+				$form_notice = '<div class="info alert">'.$info_message.'</div>';
+				//wp_redirect( get_permalink(get_page_by_path( $buddyforms['buddyforms'][$form_slug]['attached_page'] )) );
+			} 
+			
+		 else: 
+
+			$error_message = __('Error! There was a problem submitting the post ;-(', 'buddyforms');
+			$form_notice = '<div class="error alert">'.$error_message.'</div>';
+			
+			if(!empty($fileError))
+				$form_notice = '<div class="error alert">'.$fileError.'</div>';
+			
+		endif;
+		
 		do_action('buddyforms_after_save_post',$post_id);
 		
 	} 
@@ -248,21 +220,19 @@ function buddyforms_create_edit_form( $args = array() ) {
 		else :
 
 			if( isset( $_POST['editpost_title'])) {
-				
 				if(function_exists('stripslashes')) {
 					$editpost_title = stripslashes($_POST['editpost_title']);
-				} else {
-					$editpost_title = $_POST['editpost_title'];
-				}
-				} else {
-					$editpost_title =  $the_post->post_title;
-				}
-				$editpost_content_val = false;
-				if( isset( $_POST['editpost_content'] ) ){
-					$editpost_content_val = $_POST['editpost_content'];
-				} else {
-					if(!empty($the_post->post_content))
-						$editpost_content_val = $the_post->post_content;
+				} else { $editpost_title = $_POST['editpost_title']; }
+			} else {
+				$editpost_title =  $the_post->post_title;
+			}
+			
+			$editpost_content_val = false;
+			if( isset( $_POST['editpost_content'] ) ){
+				$editpost_content_val = $_POST['editpost_content'];
+			} else {
+				if(!empty($the_post->post_content))
+					$editpost_content_val = $the_post->post_content;
 			}
 			
 			$form_html .= '<div class="form_wrapper">';
@@ -271,7 +241,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
 				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
-				$form->addElement(new Element_Hidden("new_post_id", $post_id, array('value' => $post_id, 'id' => "new_post_id")));
+				$form->addElement(new Element_Hidden("new_post_id", $post_id ));
 				$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
 				if(isset($form_notice))
 					$form->addElement(new Element_HTML($form_notice));
@@ -280,10 +250,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
 				$form->addElement(new Element_HTML('</div>'));
 
-					
-
 				ob_start();
-				
 					$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 					if(isset($post_id)){
 						wp_editor($editpost_content_val, 'editpost_content', $settings);
@@ -294,18 +261,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 					}
 					$wp_editor = ob_get_contents();
 				ob_clean();
-					
 				
 				$wp_editor = '<div class="bf_field_group bf_form_content"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
-				//$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor );
 				$form->addElement(new Element_HTML($wp_editor));
 				
-				// $form->addElement(new Element_HTML($wp_editor));
-				
-				// $post = get_post($post_id, 'OBJECT');
-				// $form->addElement(new Element_Hidden("editpost_title", $editpost_title));
-				// $form->addElement(new Element_Hidden("editpost_content", $post->post_content));
-			
 				// if the form have custom field to save as post meta data they get displayed here 
 				if(isset($customfields))
 					bf_post_meta($form, $form_slug, $post_id, $customfields);
@@ -324,14 +283,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_Button('Submit', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
 				
 				// thats it! render the form!
-			ob_start();
-				$form->render(); 
-				$form_html .= ob_get_contents();
-			ob_clean();
+				ob_start();
+					$form->render(); 
+					$form_html .= ob_get_contents();
+				ob_clean();
 		
 			$form_html .= '</div>';
 
-			if(isset($buddyforms['buddyforms'][$form_slug]['revision'])){
+			if(isset($buddyforms['buddyforms'][$form_slug]['revision']) && $post_id != 0){
 				 
 			ob_start(); 
 				buddyforms_wp_list_post_revisions($post_id);
@@ -343,7 +302,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$form_html .= '</div>';	
 		endif;
 		
-		echo $form_html;
+	echo $form_html;
 }
 
 /**
@@ -578,7 +537,7 @@ function bf_update_post_meta($post_id, $customfields){
 			}
 		}
 		// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
-		do_action('buddyforms_update_post_meta',$customfield,$post_id,$_POST);
+		do_action('buddyforms_update_post_meta',$customfield, $post_id);
        
 	   	if(isset($customfield['slug']))
 	   		$slug = $customfield['slug'];	
@@ -595,4 +554,75 @@ function bf_update_post_meta($post_id, $customfields){
 			 		                   
     endforeach;
 
+}
+
+function bf_post_control($args,$hasError){
+	global $buddyforms, $post_id;
+	extract($args);
+	
+    // Check if post is new or edit 
+    if( $action == 'update' ) {
+    
+    	                     
+		$my_post = array(
+            'ID'        		=> $_POST['new_post_id'],
+            'post_title' 		=> $_POST['editpost_title'],
+            'post_content' 		=> $_POST['editpost_content'],
+            'post_type' 		=> $post_type,
+            'post_status' 		=> $post_status,
+            'comment_status'	=> $comment_status,
+            'post_excerpt'		=> $post_excerpt
+		);
+            
+		// Update the new post
+        $post_id = wp_update_post( $my_post );
+		
+		if($post_id == 0 )
+			$hasError = true;
+		
+	} else {
+		
+		  $my_post = array(
+            'post_author' 		=> $post_author,
+            'post_title' 		=> $_POST['editpost_title'],
+            'post_content' 		=> $_POST['editpost_content'],
+            'post_type' 		=> $post_type,
+            'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
+            'comment_status'	=> $comment_status,
+            'post_excerpt'		=> $post_excerpt
+        );   
+        
+        // Insert the new form
+        $post_id = wp_insert_post( $my_post, true );
+		
+		if($post_id == 0 )
+			$hasError = true;
+		
+	}
+	return $hasError;
+}
+
+function bf_set_post_thumbnail($post_id,$hasError){
+// Featured image? If yes, save via media_handle_upload and set the post thumbnail
+	if( ! empty( $_FILES ) ) {
+		
+		require_once(ABSPATH . 'wp-admin/includes/admin.php');  
+        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
+
+        unset( $_FILES );  
+        if( is_wp_error( $id ) ) {  
+            $errors['upload_error'] = $id;  
+            $id = false;  
+        } 
+		
+        $set_post_thumbnail =  set_post_thumbnail($post_id, $id);
+      
+       	if( $set_post_thumbnail == false){
+           	if( $errors ) {  
+	            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';  
+	        }  
+			$hasError = true;
+       	}
+	}	
+	return $hasError;
 }

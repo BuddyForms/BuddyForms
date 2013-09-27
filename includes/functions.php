@@ -13,9 +13,11 @@ function my_edit_post_link( $url, $post_ID, $context) {
 	if(is_admin())
 		return $url;
 	
+	if(!isset($buddyforms['buddyforms']))
+		return $url;
+	
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
-	
 	
 	if ($the_post->post_author != $current_user->ID) // this needs to be modified for admins and collaborative content creation
 		return $url;
@@ -111,9 +113,9 @@ function buddyforms_attached_page_content($content){
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 		
 		$args = array(
-			'form_slug' => $form_slug,
-			'post_id' => $post_id,
-			'post_type' => $post_type
+			'form_slug'	=> $form_slug,
+			'post_id'	=> $post_id,
+			'post_type'	=> $post_type
 		);
 		
     	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revison'){
