@@ -115,6 +115,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 		$post_id = $wp_query->query_vars['bf_post_id'];
 	
 	$permalink = '';
+	
 	if(isset($form_slug) && isset($buddyforms['buddyforms'][$form_slug]['attached_page']))
 		$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
 

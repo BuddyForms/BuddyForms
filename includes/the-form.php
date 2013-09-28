@@ -138,8 +138,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 		$action			= 'save';
 		$post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
 		
-		echo '$_POST[new_post_id]' . $_POST['new_post_id'];
-		
 		if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ){
 			$action = 'update';
 			$post_status = 'publish';
@@ -536,6 +534,7 @@ function bf_update_post_meta($post_id, $customfields){
 				wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 			}
 		}
+		
 		// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
 		do_action('buddyforms_update_post_meta',$customfield, $post_id);
        
