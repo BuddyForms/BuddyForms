@@ -84,11 +84,13 @@ class BuddyForms {
 		
 		if(!function_exists('PFBC_Load'))
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php');
-			
+		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
 		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
+		require_once (BUDDYFORMS_INCLUDES_PATH . 'post-control.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
+		
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
 		
 		if (is_admin()){
