@@ -171,3 +171,8 @@ padding: 5px;
 .form_type_settings {
 clear: both;
 }
+
+.bs-sidebar{
+    width: 100px;
+    float: left;
+}

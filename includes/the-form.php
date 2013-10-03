@@ -82,7 +82,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(!empty($revision_id)) {
 			
 			$the_post		= get_post( $revision_id );
+			
 		} else {
+			
 			$the_post		= get_post( $post_id );
 		}
 		
@@ -177,7 +179,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 			} else {
 				$info_message = __('The post has been successfully created', 'buddyforms');
 				$form_notice = '<div class="info alert">'.$info_message.'</div>';
-				//wp_redirect( get_permalink(get_page_by_path( $buddyforms['buddyforms'][$form_slug]['attached_page'] )) );
 			} 
 			
 		 else: 

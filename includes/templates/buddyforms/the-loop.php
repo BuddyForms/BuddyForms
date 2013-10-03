@@ -24,15 +24,12 @@ if ( $the_lp_query->have_posts() ) : ?>
 				?>
 				
 				<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
-				<?php do_action( 'bp_before_blog_post' ); ?>
 			</div>
 
 			<div class="item">
 				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
 				<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
-
-				<?php do_action( 'bp_directory_groups_item' ); ?>
 
 			</div>
 

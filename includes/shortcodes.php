@@ -12,6 +12,9 @@ add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
 	global $current_user, $the_lp_query, $bp, $buddyforms, $form_slug;
 	
+	if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
+		return;
+	
 	wp_enqueue_style('the-loop-css', plugins_url('css/the-loop.css', __FILE__)); 
 	
 	extract(shortcode_atts(array(

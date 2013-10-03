@@ -46,10 +46,9 @@ function buddyforms_create_menu() {
 	}
    
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
-	
+	add_submenu_page( 'buddyforms_options_page', 'Import - Export', 'Import - Export', 'edit_posts', 'import-export', 'bf_import_export_screen' );
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
-
 
 /**
  * Display the settings page
@@ -118,7 +117,7 @@ function buddyforms_settings_page() {
 		"view" => new View_Inline
 	));
 	
-	$form->addElement(new Element_HTML('<br><div class="tabbable tabs-top"><ul class="nav nav-tabs">
+	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul class="nav bs-sidenav">
 		<li class="active"><a href="#general-settings" data-toggle="tab">Setup</a></li>'));
 		
 	if(isset($buddyforms_options['buddyforms'])){

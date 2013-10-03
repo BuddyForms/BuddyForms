@@ -24,7 +24,7 @@ function my_edit_post_link( $url, $post_ID, $context) {
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 
-		if($buddyform['post_type'] == $post_type && isset($buddyform['edit_link'][0])){
+		if(isset($buddyform['post_type']) && $buddyform['post_type'] == $post_type && isset($buddyform['edit_link'][0])){
 			$permalink	= get_permalink( $buddyform['attached_page'] );
 			$url = $permalink.'edit/'.$key.'/'.get_the_ID();
 			return $url;	
@@ -331,7 +331,7 @@ function buddyforms_form_display_element_frontend(){
 	$post_type = get_post_type($post);
 	
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-		if($buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type)
+		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type)
 			$form = $buddyform['slug'];
 	}
 	
