@@ -1,42 +1,42 @@
 jQuery(document).ready(function(jQuery) {    
 
 
-  function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
+  // function handleFileSelect(evt) {
+    // var files = evt.target.files; // FileList object
+// 
+	// // Loop through the FileList
+	// for (var i = 0, f; f = files[i]; i++) {
+// 
+		// var reader = new FileReader();
+// 	
+	 	// // Closure to capture the file information.
+		// reader.onload = (function(theFile) {
+		// return function(e) {
+// 			
+			// jQuery.ajax({
+				// type: 'POST',
+				// url: ajaxurl,
+				// data: {"action": "buddyforms_import", "bf_import_forms": e.target.result},
+				// success: function(data){
+					// alert(data);
+				// },
+				// error: function() { 
+					// alert('Something went wrong.. ;-(sorry)');
+				// }
+			// });
+// 		
+		// };
+// 		
+	// })(f);
+// 
+	// // Read in the file
+	// //reader.readAsDataText(f,UTF-8);
+	// //reader.readAsDataURL(f);
+	// reader.readAsText(f);
+	// }
+// }
 
-	// Loop through the FileList
-	for (var i = 0, f; f = files[i]; i++) {
-
-		var reader = new FileReader();
-	
-	 	// Closure to capture the file information.
-		reader.onload = (function(theFile) {
-		return function(e) {
-			
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "buddyforms_import", "bf_import_forms": e.target.result},
-				success: function(data){
-					alert(data);
-				},
-				error: function() { 
-					alert('Something went wrong.. ;-(sorry)');
-				}
-			});
-		
-		};
-		
-	})(f);
-
-	// Read in the file
-	//reader.readAsDataText(f,UTF-8);
-	//reader.readAsDataURL(f);
-	reader.readAsText(f);
-	}
-}
-
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+//document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 
 
