@@ -165,7 +165,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(isset($customfields))
 			bf_update_post_meta($post_id, $customfields);
 		
-		$hasError = bf_set_post_thumbnail($post_id, $hasError);
+		//$hasError = bf_set_post_thumbnail($post_id, $hasError);
 		
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
@@ -214,6 +214,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				<input type="hidden" name="buddyformscookie" value="1" />
 				<input type="hidden" name="redirect_to" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 			</form>
+			
 				 
 		<?php 
 			$form_html .= ob_get_contents();
@@ -239,6 +240,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$form_html .= '<div class="form_wrapper">';
 
 				$form = new Form("editpost");
+				$form->addElement(new Element_HTML(do_action( 'template_notices' )));
+				
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
 	
 				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
@@ -249,7 +252,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				$form->addElement(new Element_HTML('<div class="bf_field_group bf_form_title">'));
 				$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
-				$form->addElement(new Element_HTML('</div>'));
+				
 
 				ob_start();
 					$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
@@ -272,12 +275,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 				
 				// Display upload field for featured image if required is selected for this form
 				if (isset($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0])){
+
 					if ($post_id == 0) {
-						$file_attr = array("required" => 1, 'id' => "async-upload");
+						$file_attr = array("required" => 1, 'id' => "file");
 					} else {
-						$file_attr = array('id' => "async-upload");
+						$file_attr = array('id' => "file");
 					}
-					$form->addElement(new Element_File('Featured Image:', 'async-upload', $file_attr));
+					$form->addElement(new Element_File('Featured Image:', 'file', $file_attr));
+
 				}
 	
 				$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
