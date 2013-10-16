@@ -99,9 +99,9 @@ class Buddyforms_Key_Registration_Menu {
 		$api_key = $options['api_key'];
 		echo "<input id='api_key' name='bf_license_manager[api_key]' size='25' type='text' value='{$options['api_key']}' />";
 		if ( !empty( $options['api_key'] ) ) {
-			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "assets/images/complete.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
+			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "resources/api-manager/assets/images/complete.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
 		} else {
-			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "assets/images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
+			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "resources/api-manager/assets/images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
 		}
 	}
 
@@ -112,9 +112,9 @@ class Buddyforms_Key_Registration_Menu {
 		$activation_email = $options['activation_email'];
 		echo "<input id='activation_email' name='bf_license_manager[activation_email]' size='25' type='text' value='{$options['activation_email']}' />";
 		if ( !empty( $options['activation_email'] ) ) {
-			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "assets/images/complete.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
+			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "resources/api-manager/assets/images/complete.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
 		} else {
-			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "assets/images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
+			echo "<span class='icon-pos'><img src='" . $this->plugin_url() . "resources/api-manager/assets/images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
 		}
 	}
 
@@ -309,7 +309,7 @@ class Buddyforms_Key_Registration_Menu {
 
 		$curr_ver = get_option('bf_version');
 
-		wp_register_style( 'bf-admin-css', $this->plugin_url() . 'assets/css/admin-settings.css', array(), $curr_ver, 'all');
+		wp_register_style( 'bf-admin-css', $this->plugin_url() . 'resources/api-manager/assets/css/admin-settings.css', array(), $curr_ver, 'all');
 		wp_enqueue_style( 'bf-admin-css' );
 	}
 

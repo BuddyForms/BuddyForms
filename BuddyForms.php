@@ -137,13 +137,13 @@ class BuddyForms {
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/import-export.php');
 			
 			// License Key API Class
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/classes/class-bf-key-api.php');
+			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
 
 			// Plugin Updater Class
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/classes/class-bf-plugin-update.php');
+			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-plugin-update.php');
 
 			// API License Key Registration Form
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/admin/class-license-registration-menu.php');
+			require_once( plugin_dir_path( __FILE__ ) . 'includes/admin/license-registration.php');
 
 			// Load update class to update $this plugin from for example toddlahman.com
 			$this->load_plugin_self_updater();
@@ -255,7 +255,7 @@ class BuddyForms {
 		update_option( 'bf_license_manager', $global_options );
 
 		// Password Management Class
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/classes/class-bf-passwords.php');
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-passwords.php');
 
 		$buddyforms_password_management = new Buddyforms_Password_Management();
 
