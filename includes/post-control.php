@@ -141,28 +141,35 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					break;
 
 				case 'Taxonomy' :
-					
+
+                    $show_option_none = '';
+                    if($customfield['show_option_none'])
+                        $show_option_none = $customfield['show_option_none'];
+
 					$args = array(
-						'multiple' => $customfield['multiple'],
-						'hide_empty' => 0,
-						'id' => $key,
-						'child_of' => 0,
-						'echo' => FALSE,
-						'selected' => false,
-						'hierarchical' => 1,
-						'name' => $slug . '[]',
-						'class' => 'postform chosen',
-						'depth' => 0,
-						'tab_index' => 0,
-						'taxonomy' => $customfield['taxonomy'],
-						'hide_if_empty' => FALSE,
+                        'show_option_none'  => $show_option_none,
+                        'multiple'          => $customfield['multiple'],
+                        'hide_empty'        => 0,
+						'id'                => $key,
+						'child_of'          => 0,
+						'echo'              => FALSE,
+						'selected'          => false,
+                        'hierarchical'      => 1,
+						'name'              => $slug . '[]',
+						'class'             => 'postform chosen',
+						'depth'             => 0,
+						'tab_index'         => 0,
+                        'taxonomy'          => $customfield['taxonomy'],
+						'hide_if_empty'     => FALSE,
+                        'orderby'           => 'SLUG',
+                        'order'             => $customfield['taxonomy_order'],
 					);
 
 					$dropdown = wp_dropdown_categories($args);
 
-					if (isset($customfield['multiple']) && is_array( $customfield['multiple'] )) 
+					if (isset($customfield['multiple']) && is_array( $customfield['multiple'] ))
 						$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
-					
+
 					if (is_array($customfield_val)) {
 						foreach ($customfield_val as $value) {
 							$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
@@ -179,7 +186,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 						$element = new Element_Textbox('Create a new ' . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input'));
 						bf_add_element($form, $element);
 					}
-					
+
 					break;
 					
 				default:

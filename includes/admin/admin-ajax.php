@@ -268,18 +268,28 @@ function buddyforms_view_form_fields($args){
 				break;
 			case 'Taxonomy':
 				$taxonomies = buddyforms_taxonomies();
-				
-				$taxonomy = 'false';
-				if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy']))
-					$taxonomy = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy'];
-				$form_fields['left']['taxonomy'] 		= new Element_Select("Taxonomy:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $taxonomy));
-				
-				$multiple = 'false';
-				if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
-					$multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
-				$form_fields['left']['multiple']		= new Element_Checkbox("Multiple:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
-				
-				$creat_new_tax = 'false';
+
+                $taxonomy = 'false';
+                if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy']))
+                    $taxonomy = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy'];
+                $form_fields['left']['taxonomy'] 		= new Element_Select("Taxonomy:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $taxonomy));
+
+                $taxonomy_order = 'false';
+                if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_order']))
+                    $taxonomy_order = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_order'];
+                $form_fields['left']['taxonomy_order'] 		= new Element_Select("Taxonomy Order:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy_order]", array('ASC','DESC'), array('value' => $taxonomy_order));
+
+                $multiple = 'false';
+                if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
+                    $multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
+                $form_fields['left']['multiple']		= new Element_Checkbox("Multiple:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
+
+                $show_option_none = 'false';
+                if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['show_option_none']))
+                    $show_option_none = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['show_option_none'];
+                $form_fields['left']['show_option_none']		= new Element_Checkbox("Show \"Select an Option:\"","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][show_option_none]",array(''),array('value' => $show_option_none));
+
+                $creat_new_tax = 'false';
 				if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax']))
 					$creat_new_tax = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax'];
 				$form_fields['left']['creat_new_tax'] = new Element_Checkbox("User can creat new?:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $creat_new_tax));

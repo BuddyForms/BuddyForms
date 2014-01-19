@@ -404,7 +404,7 @@ function buddyforms_form_display_element_frontend(){
 		endforeach;
 	}
 }
-add_action('wp_head','buddyforms_form_display_element_frontend');
+//add_action('wp_head','buddyforms_form_display_element_frontend');
 
 /**
  * Get the BuddyForms template directory.
