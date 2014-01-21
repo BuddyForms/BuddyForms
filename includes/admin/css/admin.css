@@ -32,7 +32,7 @@
 
 /** the tab menu **/
 
-#bf_admin_wrap .nav a {
+#bf_admin_wrap #bf_side_nav a {
     text-decoration: none;
     font-size: 15px;
     color: #aaa;
@@ -41,17 +41,36 @@
     border-right: none;
     border-radius: 6px 0 0 6px;
 }
-#bf_admin_wrap .nav a:hover {
+#bf_admin_wrap #bf_side_nav a:hover {
     color: red;
 }
-#bf_admin_wrap .nav .active a {
+#bf_admin_wrap #bf_side_nav .active a {
     color: #464646;
     background: #fff;
 }
-#bf_admin_wrap .nav .active a:hover {
+#bf_admin_wrap #bf_side_nav .active a:hover {
     color: #464646;
 }
 
+/* import export tab menu */
+
+#bf_import_export_tabs li a {
+    border: 1px solid #dfdfdf;
+    border-bottom: none;
+    text-decoration: none;
+    background: #e4e4e4;
+}
+#bf_import_export_tabs li.active a {
+    background: #f1f1f1;
+}
+#bf_import_export_tabs li a:hover {
+    background: #e4e4e4;
+    color: red;
+}
+#bf_import_export_tabs li.active a:hover {
+    background: #f1f1f1;
+    color: #464646;
+}
 
 /** the content area **/
 

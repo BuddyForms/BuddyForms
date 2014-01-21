@@ -123,7 +123,7 @@ function buddyforms_settings_page() {
 		"view" => new View_Inline
 	));
 	
-	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul class="nav bs-sidenav">
+	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul id="bf_side_nav" class="nav bs-sidenav">
 		<li class="active"><a href="#general-settings" data-toggle="tab"><i>&raquo; Setup</i></a></li>'));
 		
 	if(isset($buddyforms_options['buddyforms'])){
