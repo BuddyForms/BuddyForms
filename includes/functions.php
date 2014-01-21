@@ -1,5 +1,4 @@
 <?php
-
 /**
  * rewrite the url of the edit-this-post link in the frontend
  *
@@ -432,4 +431,3 @@ function buddyforms_locate_template($file) {
 		include (BUDDYFORMS_TEMPLATE_PATH . $file);
 	}
 }
-?>

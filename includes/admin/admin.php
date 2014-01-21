@@ -47,6 +47,7 @@ function buddyforms_create_menu() {
    
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
 	add_submenu_page( 'buddyforms_options_page', 'Import - Export', 'Import - Export', 'edit_posts', 'import-export', 'bf_import_export_screen' );
+
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
 
