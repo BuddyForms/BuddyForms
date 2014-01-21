@@ -58,28 +58,33 @@ add_action('admin_menu', 'buddyforms_create_menu');
  */
 function buddyforms_options_content() {?>
 		
-	<div class="wrap">
-		
-		<div class="credits">
-			<p>
-				<a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
-				- &nbsp; <?php _e( 'Form Magic and Collaborative Publishing for WordPress.', 'buddyforms' ); ?>
-			</p>
+	<div id="bf_admin_wrap" class="wrap">
+
+        <div class="credits">
+            <p>
+                <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a>
+                - &nbsp; <?php _e( 'Collaborative Publishing and Form Magic for WordPress.', 'buddyforms' ); ?>
+            </p>
+        </div>
+
+        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta 1.0</span></h1>
+
+		<div id="bf_support_nav" class="button-nav">
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/en-us/categories/200022561-BuddyForms" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> Documentation</a>
+            <a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit a support ticket</a>
+            <!--            &nbsp; &nbsp;-->
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" title="Add and vote for ideas in our Ideas Forums!" target="_new"><i class="icon-plus-sign"></i> Submit your ideas</a>
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" title="Learn, share and discuss with other users in our free community forums!" target="_new"><i class="icon-circle-arrow-right"></i> Visit community forums</a>
 		</div>
-		
-		<img style="float: left; padding: 8px 10px 0 0;" src="<?php echo plugins_url( 'img/BuddyForms-Icon-32-active.png' , __FILE__ ); ?>" title="BuddyForms" />
-		<h2>BuddyForms <span class="version">Beta 1.0</span></h2>
-		
-		<div class="button-nav">
-			<a class="btn btn-small" href="http://support.themekraft.com/categories/20110697-BuddyForms" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
-			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
-		</div>
-		
+
+        <hr />
+
 		<div id="post-body">
-			<div id="post-body-content">  
+			<div id="post-body-content">
 				<?php buddyforms_settings_page(); ?>
 			</div>
 		</div>
+
 	</div>
 	
 <?php
@@ -118,7 +123,7 @@ function buddyforms_settings_page() {
 	));
 	
 	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul class="nav bs-sidenav">
-		<li class="active"><a href="#general-settings" data-toggle="tab">Setup</a></li>'));
+		<li class="active"><a href="#general-settings" data-toggle="tab"><i>&raquo; Setup</i></a></li>'));
 		
 	if(isset($buddyforms_options['buddyforms'])){
 		foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
@@ -166,19 +171,7 @@ function buddyforms_settings_page() {
 				</div>
 			</div>'));
 			
-			$form->addElement(new Element_HTML('
-	 		<div class="accordion-group general-settings">
-				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings" href="#accordion_buddyforms_general_settings">General Settings</p></div>
-			    <div id="accordion_buddyforms_general_settings" class="accordion-body collapse">
-					<div class="accordion-inner">
-						<div>
-							<h4>License Key</h4>
-						</div>
-					</div>
-				</div>
-			</div>'));
-			
-			$form->addElement(new Element_HTML('<h3>Extensions Setup</h3><p>Find more extensions <a href="http://buddyforms.com" title="BuddyForms Extensions" target="_parent">here</a>.'));	
+			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p><p><small>...or see all our WordPress Tools <a href="http://themekrat.com/wordpress-theme-plugin-store/" title="See all our ThemeKraft Tools" target="_parent">here.</a></small></p>'));
 					
 			$form = apply_filters('buddyforms_general_settings', $form);	
 									
@@ -268,7 +261,7 @@ function buddyforms_settings_page() {
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status"><b>Form Control</b><br><i class="small">Choose Form Type and Moderation.</i></p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
 								<div class="accordion-inner">')); 
-									$form->addElement(new Element_HTML('<i class="icon-info-sign" style="margin-top:-1px;"></i>&nbsp;These settings can be overwritten by shortcodes and other plugins! Define the defaults here.<br><br>'));
+									$form->addElement(new Element_HTML('<p><i class="icon-info-sign" style="margin-top:6px;"></i>&nbsp;<small><i>These settings can be overwritten by shortcodes and other plugins! <br>You can define the defaults here. </i></small></p><br />'));
 									$form->addElement(new Element_HTML('<div class="innerblock form-type">'));
 									
 									if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['form_type']))
@@ -358,10 +351,10 @@ function buddyforms_settings_page() {
 												'class' => 'postform',
 												'selected' => $attached_page
 											);
-											$form->addElement(new Element_HTML('<br><br><p><b>Attach a page to this form</b></p><i>Select a page for the author, call it e.g. "My Posts".</i><br><br>'));
+											$form->addElement(new Element_HTML('<br><br><p><b>Attach page to this form</b></p><i>Select a page for the author, <br>call it e.g. "My Posts".</i><br><br>'));
 											$form->addElement(new Element_HTML(wp_dropdown_pages($args)));
 											
-											$form->addElement(new Element_HTML('<br>Or you can <a href="'. admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ).'" class="button-secondary">'. __( 'Create A New Page', 'buddypress' ).'</a>'));
+											$form->addElement(new Element_HTML('<br>Or you can <a href="'. admin_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ).'" class="btn btn-small">'. __( 'Create A New Page', 'buddypress' ).'</a>'));
 							
 										
 										$form->addElement(new Element_HTML('</div>'));
