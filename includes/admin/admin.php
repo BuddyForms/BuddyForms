@@ -8,7 +8,7 @@
  */
 function buddyforms_create_menu() {
 	if(session_id() != 'buddyforms') {
-	  session_start('buddyforms');
+	  //session_start('buddyforms');
 	}
 
 

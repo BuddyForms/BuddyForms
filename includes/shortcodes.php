@@ -11,16 +11,16 @@ add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
 add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
 	global $current_user, $the_lp_query, $bp, $buddyforms, $form_slug;
-	
+
+    extract(shortcode_atts(array(
+        'post_type' => '',
+        'form_slug' => ''
+    ), $args));
+
 	if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
 		return;
-	
-	wp_enqueue_style('the-loop-css', plugins_url('css/the-loop.css', __FILE__)); 
-	
-	extract(shortcode_atts(array(
-		'post_type' => '',
-		'form_slug' => ''
-	), $args));
+
+	wp_enqueue_style('the-loop-css', plugins_url('css/the-loop.css', __FILE__));
 	
 	if(empty($post_type))
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
@@ -38,7 +38,7 @@ function buddyforms_the_loop($args){
 			
 	$the_lp_query = new WP_Query( $args );
 	$form_slug = $the_lp_query->query_vars['form_slug'];
-	
+
 	buddyforms_locate_template('buddyforms/the-loop.php');
 	
 	// Support for wp_pagenavi
