@@ -68,7 +68,7 @@ function buddyforms_options_content() {?>
             </p>
         </div>
 
-        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta 1.0</span></h1>
+        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta</span></h1>
 
 		<div id="bf_support_nav" class="button-nav">
             <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/en-us/categories/200022561-BuddyForms" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> Documentation</a>
