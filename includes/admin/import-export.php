@@ -1,23 +1,27 @@
 <?php
 
 function bf_import_export_screen(){ ?>
-	
-	<div class="wrap">
-		
-		<div class="credits">
-			<p>
-				<a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a> 
-				- &nbsp; <?php _e( 'Form Magic and Collaborative Publishing for WordPress.', 'buddyforms' ); ?>
-			</p>
-		</div>
-		
-		<img style="float: left; padding: 8px 10px 0 0;" src="<?php echo plugins_url( 'img/BuddyForms-Icon-32-active.png' , __FILE__ ); ?>" title="BuddyForms" />
-		<h2>BuddyForms<span class="version">Beta 1.0 </span>Import - Export</h2>
-		
-		<div class="button-nav">
-			<a class="btn btn-small" href="http://support.themekraft.com/categories/20110697-BuddyForms" title="BuddyForms Documentation" target="_blank"><i class="icon-list-alt"></i> Documentation</a>
-			<a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit an issue</a>
-		</div>
+
+    <div id="bf_admin_wrap" class="wrap">
+
+        <div class="credits">
+            <p>
+                <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a>
+                - &nbsp; <?php _e( 'Collaborative Publishing and Form Magic for WordPress.', 'buddyforms' ); ?>
+            </p>
+        </div>
+
+        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta</span></h1>
+
+        <div id="bf_support_nav" class="button-nav">
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/en-us/categories/200022561-BuddyForms" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> Documentation</a>
+            <a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> Submit a support ticket</a>
+            <!--            &nbsp; &nbsp;-->
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" title="Add and vote for ideas in our Ideas Forums!" target="_new"><i class="icon-plus-sign"></i> Submit your ideas</a>
+            <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" title="Learn, share and discuss with other users in our free community forums!" target="_new"><i class="icon-circle-arrow-right"></i> Visit community forums</a>
+        </div>
+
+        <hr />
 		
 		<div id="post-body">
 			<div id="post-body-content">  
@@ -63,8 +67,8 @@ function bf_import_export_control(){
 
 function bf_import_export_tabs() { ?>
 	
-		<ul class="nav nav-tabs">
-		  <li><a href="#export" data-toggle="tab">Export</a></li>
+		<ul id="bf_import_export_tabs" class="nav nav-tabs">
+		  <li class="active"><a href="#export" data-toggle="tab">Export</a></li>
 		  <li><a href="#import" data-toggle="tab">Import</a></li>
 		</ul>
 		<div class="tab-content">
@@ -78,19 +82,23 @@ function bf_import_export_tabs() { ?>
 function bf_export_tab(){ 
 	$buddyforms = get_option('buddyforms_options'); ?>
 
-    <h2><?php _e('Select the Forms you want to Export', 'buddyforms')?></h2>
-    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
+    <h2><?php _e('Export Forms', 'buddyforms')?></h2>
+    <p><?php _e('Select the forms you want to export', 'buddyforms')?></p>
+    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 	
 	<?php bf_get_forms_table($buddyforms['buddyforms']); ?>
 	
         <p class="submit alignleft">
-            <input id="bf_export" name="bf_export" type="button" value="<?php _e('Export Selected Forms','buddyforms');?>" />
+            <input id="bf_export" name="bf_export" class="btn btn-primary" type="button" value="<?php _e('Export Selected Forms','buddyforms');?>" />
         </p>
 	</form>
 
 <?php }
 
 function bf_import_tab(){ ?>
+
+    <h2><?php _e('Import Forms', 'buddyforms')?></h2>
+    <p><?php _e('Select the forms you want to import', 'buddyforms')?></p>
 	<input type="file" id="files" name="files[]" multiple />
 	<output id="list"></output>
 <?php 

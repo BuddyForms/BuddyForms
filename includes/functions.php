@@ -366,7 +366,7 @@ function buddyforms_form_display_element_frontend(){
 				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
 				
 				if(isset($customfield['display_name']))
-					$post_meta_tmp .= '<lable>' . $customfield['name'] . '</lable>';
+					$post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
 				
 				
 				$meta_tmp = "<p>". $customfield_value ."</p>";
