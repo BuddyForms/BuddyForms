@@ -312,33 +312,45 @@ jQuery(document).ready(function (){
  * @since 0.2-beta
 */
 function buddyforms_form_display_element_frontend(){
-	global $buddyforms, $post, $bp;
-	
-	if(is_archive())
-		return;
-				
-	if (!isset($buddyforms['buddyforms']))
+	global $buddyforms, $bp;
+
+    if(is_archive())
+        return;
+
+    //if(!is_single())
+    //    return;
+
+    if (!isset($buddyforms['buddyforms']))
 		return;
 
 	$post_id = ''; 
-	$post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);	
+	$post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);
 
-	if(isset($post_id)){
+
+   	if(isset($post_id)){
 		$post = get_post($post_id);
 	}
-	
-	$post_type = get_post_type($post);
-	
-	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type)
-			$form = $buddyform['slug'];
+
+    $post_type = get_post_type($post);
+
+//    echo $post->ID.' '.get_the_ID() ;
+
+//    echo '<pre>';
+//    print_r($post);
+//    echo '</pre>';
+
+    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type){
+            $form = $buddyform['slug'];
+        }
+
 	}
-	
+
 	if(!isset($form))
 		return;
-		
-	if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
-			
+
+    if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
+
 		foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
 			
 			if(isset($customfield['slug'])){
@@ -349,7 +361,7 @@ function buddyforms_form_display_element_frontend(){
 			
 			$customfield_value = get_post_meta($post->ID, $slug, true);
 			
-			if ($customfield_value != '' && $customfield['display'] != 'no') :
+			if (isset($customfield_value) && $customfield['display'] != 'no') :
 				
 				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
 				
@@ -403,7 +415,8 @@ function buddyforms_form_display_element_frontend(){
 		endforeach;
 	}
 }
-//add_action('wp_head','buddyforms_form_display_element_frontend');
+
+    add_action('the_post','buddyforms_form_display_element_frontend');
 
 /**
  * Get the BuddyForms template directory.
