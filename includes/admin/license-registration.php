@@ -308,7 +308,6 @@ class Buddyforms_Key_Registration_Menu {
 	public function css_scripts() {
 
 		$curr_ver = get_option('bf_version');
-	echo $this->plugin_url() . 'resources/api-manager/assets/css/admin-settings.css';
 		wp_register_style( 'bf-admin-css', $this->plugin_url() . 'resources/api-manager/assets/css/admin-settings.css', array(), $curr_ver, 'all');
 		wp_enqueue_style( 'bf-admin-css' );
 	}

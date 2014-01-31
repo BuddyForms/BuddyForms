@@ -18,11 +18,6 @@ function buddyforms_create_menu() {
 	// print_r($buddyforms);
 	// echo '</pre>';
 	
-	// Check that the user is allowed to update options
-	if (!current_user_can('manage_options')) {
-	    wp_die('You do not have sufficient permissions to access this page.');
-	}	
-	
 	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
 
@@ -57,7 +52,14 @@ add_action('admin_menu', 'buddyforms_create_menu');
  * @package buddyforms
  * @since 0.2-beta
  */
-function buddyforms_options_content() {?>
+function buddyforms_options_content() {
+
+    // Check that the user is allowed to update options
+    if (!current_user_can('manage_options')) {
+        wp_die('You do not have sufficient permissions to access this page.');
+    }
+
+    ?>
 		
 	<div id="bf_admin_wrap" class="wrap">
 

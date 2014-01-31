@@ -1,4 +1,40 @@
 <?php
+
+/**
+ * Restricting users to view only media library items they upload.
+ *
+ * @package BuddyForms
+ * @since 0.5 beta
+ */
+add_action('pre_get_posts','buddyforms_restrict_media_library');
+function buddyforms_restrict_media_library( $wp_query_obj ) {
+    global $current_user, $pagenow;
+    if( !is_a( $current_user, 'WP_User') )
+        return;
+    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
+        return;
+    if( !current_user_can('manage_media_library') )
+        $wp_query_obj->set('author', $current_user->ID );
+    return;
+}
+
+/**
+ * Check if a subscriber have the needed rights to upload images and add this capabilities if needed.
+ *
+ * @package BuddyForms
+ * @since 0.5 beta
+ */
+add_action('init', 'buddyforms_allow_subscriber_uploads');
+function buddyforms_allow_subscriber_uploads() {
+
+    if ( current_user_can('subscriber') && !current_user_can('upload_files') ){
+        $contributor = get_role('subscriber');
+
+        $contributor->add_cap('upload_files');
+    }
+
+}
+
 /**
  * rewrite the url of the edit-this-post link in the frontend
  *
@@ -415,8 +451,7 @@ function buddyforms_form_display_element_frontend(){
 		endforeach;
 	}
 }
-
-    add_action('the_post','buddyforms_form_display_element_frontend');
+add_action('the_post','buddyforms_form_display_element_frontend');
 
 /**
  * Get the BuddyForms template directory.
