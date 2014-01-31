@@ -174,10 +174,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if( empty( $hasError ) ) :
 			
 			if(isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] )){
-				$info_message = __('The post has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View Post</a>';
+				$info_message = __('The '.$buddyforms['buddyforms'][$form_slug]['singular_name'].' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
 				$form_notice = '<div class="info alert">'.$info_message.'</div>';
 			} else {
-				$info_message = __('The post has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View Post</a>';
+				$info_message = __('The '.$buddyforms['buddyforms'][$form_slug]['singular_name'].' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
 				$form_notice = '<div class="info alert">'.$info_message.'</div>';
 			} 
 			
