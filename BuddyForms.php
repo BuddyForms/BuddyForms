@@ -127,15 +127,17 @@ class BuddyForms {
 
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'post-control.php');
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
+        require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
+        require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
 
 		if (is_admin()){
+
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/import-export.php');
-			
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
+
 			// License Key API Class
 			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
 

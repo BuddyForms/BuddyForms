@@ -353,6 +353,9 @@ function buddyforms_form_display_element_frontend(){
     if(is_archive())
         return;
 
+    if(is_admin())
+        return;
+
     //if(!is_single())
     //    return;
 
@@ -369,11 +372,11 @@ function buddyforms_form_display_element_frontend(){
 
     $post_type = get_post_type($post);
 
-//    echo $post->ID.' '.get_the_ID() ;
+    //echo $post->ID.' '.get_the_ID() ;
 
-//    echo '<pre>';
-//    print_r($post);
-//    echo '</pre>';
+   /* echo '<pre>';
+    print_r($post);
+    echo '</pre>';*/
 
     foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type){
@@ -388,15 +391,15 @@ function buddyforms_form_display_element_frontend(){
     if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 
 		foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
-			
-			if(isset($customfield['slug'])){
+
+            if(isset($customfield['slug']) && !empty($customfield['slug'])){
 				$slug = $customfield['slug'];
 			} else {
 				$slug = sanitize_title($customfield['name']);
 			}
-			
+
 			$customfield_value = get_post_meta($post->ID, $slug, true);
-			
+
 			if (isset($customfield_value) && $customfield['display'] != 'no') :
 				
 				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
@@ -406,7 +409,7 @@ function buddyforms_form_display_element_frontend(){
 				
 				
 				$meta_tmp = "<p>". $customfield_value ."</p>";
-				
+
 				if(is_array($customfield_value))
 					$meta_tmp = "<p>". implode(',' , $customfield_value)."</p>";
 			
@@ -451,7 +454,7 @@ function buddyforms_form_display_element_frontend(){
 		endforeach;
 	}
 }
-add_action('the_post','buddyforms_form_display_element_frontend');
+//add_action('the_post','buddyforms_form_display_element_frontend');
 
 /**
  * Get the BuddyForms template directory.
