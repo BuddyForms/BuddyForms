@@ -10,6 +10,12 @@
  * Adds a box to the main column on the Post and Page edit screens.
  */
 function buddyforms_add_custom_box() {
+    global $buddyforms;
+
+/*    echo '<pre>',
+    print_r($buddyforms);
+    echo '</pre>',*/
+
 
     $screens = array( 'post', 'page' );
 

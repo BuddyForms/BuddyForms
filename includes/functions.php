@@ -348,7 +348,7 @@ jQuery(document).ready(function (){
  * @since 0.2-beta
 */
 function buddyforms_form_display_element_frontend(){
-	global $buddyforms, $bp;
+	global $buddyforms, $post, $bp;
 
     if(is_archive())
         return;
@@ -356,29 +356,22 @@ function buddyforms_form_display_element_frontend(){
     if(is_admin())
         return;
 
-    //if(!is_single())
-    //    return;
-
     if (!isset($buddyforms['buddyforms']))
 		return;
 
 	$post_id = ''; 
 	$post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);
 
-
+    echo '$post_id '.$post_id.'<br>';
    	if(isset($post_id)){
 		$post = get_post($post_id);
 	}
 
     $post_type = get_post_type($post);
 
-    //echo $post->ID.' '.get_the_ID() ;
+    echo '$post_type '.$post_type.'<br>';
 
-   /* echo '<pre>';
-    print_r($post);
-    echo '</pre>';*/
-
-    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+   foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type){
             $form = $buddyform['slug'];
         }
@@ -387,6 +380,15 @@ function buddyforms_form_display_element_frontend(){
 
 	if(!isset($form))
 		return;
+
+    echo '$post->ID '.$post->ID.'<br>';
+
+    $bf_form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
+
+    echo '$bf_form_slug '.$bf_form_slug.'<br>';
+
+    if(!isset($bf_form_slug) || $bf_form_slug == 'none' )
+        return;
 
     if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
 

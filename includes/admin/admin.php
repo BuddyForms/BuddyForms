@@ -7,10 +7,11 @@
  * @since 0.1-beta
  */
 function buddyforms_create_menu() {
-	if(session_id() != 'buddyforms') {
+/*	if(session_id() != 'buddyforms') {
 	  session_start('buddyforms');
-	}
-
+	}*/
+    if(!session_id());
+    @session_start();
 
 	global $bp, $buddyforms;
 	
@@ -174,7 +175,7 @@ function buddyforms_settings_page() {
 				</div>
 			</div>'));
 			
-			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p><p><small>...or see all our WordPress Tools <a href="http://themekrat.com/wordpress-theme-plugin-store/" title="See all our ThemeKraft Tools" target="_parent">here.</a></small></p>'));
+			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p>'));
 					
 			$form = apply_filters('buddyforms_general_settings', $form);	
 									
@@ -439,4 +440,13 @@ function buddyforms_form_element_multiple($form_fields, $args){
 	
 	return $form_fields;
 }
+
+function my_connection_types() {
+    p2p_register_connection_type( array(
+        'name' => 'posts_to_pages',
+        'from' => 'post',
+        'to' => 'page'
+    ) );
+}
+add_action( 'p2p_init', 'my_connection_types' );
 ?>
