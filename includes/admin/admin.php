@@ -440,13 +440,4 @@ function buddyforms_form_element_multiple($form_fields, $args){
 	
 	return $form_fields;
 }
-
-function my_connection_types() {
-    p2p_register_connection_type( array(
-        'name' => 'posts_to_pages',
-        'from' => 'post',
-        'to' => 'page'
-    ) );
-}
-add_action( 'p2p_init', 'my_connection_types' );
 ?>
