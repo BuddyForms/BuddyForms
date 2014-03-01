@@ -32,9 +32,20 @@ function buddyforms_create_menu() {
 				unset($buddyforms_options['buddyforms'][$key]);
 				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
 			}
-						
+
+            if(isset($buddyform['form_fields'])){
+                foreach ( $buddyform['form_fields'] as $field_key => $field ) {
+                    if(empty($field['slug']))
+                        $buddyforms_options['buddyforms'][$key]['form_fields'][$field_key]['slug'] =  sanitize_title($field['name']);
+                }
+            }
+
 		}
-		$update_option = false;
+
+
+
+
+        $update_option = false;
 		$update_option = update_option("buddyforms_options", $buddyforms_options);
 		
 		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
@@ -60,6 +71,11 @@ function buddyforms_options_content() {
         wp_die('You do not have sufficient permissions to access this page.');
     }
 
+    global $bp, $buddyforms;
+
+     /*echo '<pre>';
+     print_r($buddyforms);
+     echo '</pre>';*/
     ?>
 		
 	<div id="bf_admin_wrap" class="wrap">
