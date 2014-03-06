@@ -187,28 +187,26 @@ function buddyforms_view_form_fields($args){
 	$buddyforms['hooks']['form_element'] = apply_filters('buddyforms_form_element_hooks',$buddyforms['hooks']['form_element'],$form_slug);
 	$style = 'false';
 	if(isset($buddyforms_options['buddyforms'][$form_slug]['form_type']) && $buddyforms_options['buddyforms'][$form_slug]['form_type'] != 'post_form')
-		$style = 'style="display: none;"';
-		
-		$form_fields['right']['html_display']		= new Element_HTML('<div class="bf_element_display_'.$form_slug.'" '.$style.'>');
-		
+		/*
 		$display = 'false';
 		if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display']))
 			$display = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display'];
 												
 		$form_fields['right']['display']			= new Element_Select("Display?", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display]", $buddyforms['hooks']['form_element'], array('value' => $display));
-		
+		*/
+
+        /*
 		$display_name = 'false';
 		if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name']))
 			$display_name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['display_name'];
 		$form_fields['right']['display_name']		= new Element_Checkbox("Display name?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][display_name]",array(''),array('value' => $display_name));
-		
-		$form_fields['right']['html_display_end']	= new Element_HTML('</div>');
-		
-		$required = 'false';
-		if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
-			$required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
-		$form_fields['right']['required']			= new Element_Checkbox("Required?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][required]",array(''),array('value' => $required));
-								
+		*/
+
+        $required = 'false';
+        if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
+            $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
+        $form_fields['right']['required']			= new Element_Checkbox("Required?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][required]",array(''),array('value' => $required));
+
 		$name = '';
 		if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
 			$name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];

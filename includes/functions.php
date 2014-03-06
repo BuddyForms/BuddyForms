@@ -456,6 +456,8 @@ function buddyforms_form_display_element_frontend(){
 		endforeach;
 	}
 }
+
+// This function needs to be completely rewritten and I will leave it out for now
 //add_action('the_post','buddyforms_form_display_element_frontend');
 
 /**
