@@ -142,17 +142,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
 				case 'Taxonomy' :
 
-                    $show_option_none = '';
-                    if(isset($customfield['show_option_none']))
-                        $show_option_none = $customfield['show_option_none'];
-
-                    $multiple = '';
-                    if(isset($customfield['multiple']))
-                        $multiple = $customfield['multiple'];
-
                     $args = array(
-                        'show_option_none'  => $show_option_none,
-                        'multiple'          => $multiple,
                         'hide_empty'        => 0,
 						'id'                => $key,
 						'child_of'          => 0,
@@ -168,6 +158,12 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                         'orderby'           => 'SLUG',
                         'order'             => $customfield['taxonomy_order'],
 					);
+
+                    if(isset($customfield['show_option_none']) && !isset($customfield['multiple']))
+                        $args = array_merge( $args, Array( 'show_option_none' => 'Nothing Selected' ) );
+
+                    if(isset($customfield['multiple']))
+                        $args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
 
 					$dropdown = wp_dropdown_categories($args);
 
