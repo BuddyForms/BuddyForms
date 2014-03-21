@@ -135,7 +135,7 @@ class BuddyForms {
 
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/import-export.php');
+			require_once(BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
             require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
 
 			// License Key API Class

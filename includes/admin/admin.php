@@ -53,7 +53,7 @@ function buddyforms_create_menu() {
 	}
    
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
-	add_submenu_page( 'buddyforms_options_page', 'Import - Export', 'Import - Export', 'edit_posts', 'import-export', 'bf_import_export_screen' );
+	add_submenu_page( 'buddyforms_options_page', 'Add New', 'Add New', 'edit_posts', 'create-new-form', 'bf_import_export_screen' );
 
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
@@ -84,10 +84,13 @@ function buddyforms_options_content() {
             <p>
                 <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a>
                 - &nbsp; <?php _e( 'Collaborative Publishing and Form Magic for WordPress.', 'buddyforms' ); ?>
+
             </p>
         </div>
 
-        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta</span></h1>
+        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta</span>
+            <a href="<?php echo get_admin_url(); ?>admin.php?page=create-new-form" class="add-new-h2">Create New Form</a>
+        </h1>
 
 		<div id="bf_support_nav" class="button-nav">
             <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/en-us/categories/200022561-BuddyForms" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> Documentation</a>
@@ -101,7 +104,7 @@ function buddyforms_options_content() {
 
 		<div id="post-body">
 			<div id="post-body-content">
-				<?php buddyforms_settings_page(); ?>
+               	<?php buddyforms_settings_page(); ?>
 			</div>
 		</div>
 
@@ -142,7 +145,7 @@ function buddyforms_settings_page() {
 		"view" => new View_Inline
 	));
 	
-	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul id="bf_side_nav" class="nav bs-sidenav">
+/*	$form->addElement(new Element_HTML('<br><div class="bs-sidebar"><ul id="bf_side_nav" class="nav bs-sidenav">
 		<li class="active"><a href="#general-settings" data-toggle="tab"><i>&raquo; Setup</i></a></li>'));
 		
 	if(isset($buddyforms_options['buddyforms'])){
@@ -153,29 +156,68 @@ function buddyforms_settings_page() {
 
 			$form->addElement(new Element_HTML('<li class=""><a href="#'.$buddyform['slug'].'" data-toggle="tab">'.$tabname.'</a></li>'));
 		}
-	}	
-	$form->addElement(new Element_HTML('</ul></div>
-		<div class="tab-content"><div class="subcontainer tab-pane fade in active" id="general-settings">'));
-			$form->addElement(new Element_HTML('
-			<div class="accordion_sidebar" id="accordion_save">
-				<div class="accordion-group">
-					<div class="accordion-heading"><p class="accordion-toggle">Save Setup</p></div>
-					<div id="accordion_save" class="accordion-body">
-						<div class="accordion-inner">')); 
-							$form->addElement(new Element_Hidden("submit", "submit"));
-							$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
+	}
+	$form->addElement(new Element_HTML('</ul></div>*/
+    $form->addElement(new Element_HTML('<div class="tab-content"><div class="subcontainer tab-pane" id="create-new-form">'));
+    $form->addElement(new Element_HTML('
+			<div class="hero-unit-konrad">sss'));
 
-							$form->addElement(new Element_HTML('
-						</div>
-			    	</div>
-				</div>
-			</div>'));
+
+
+    $form->addElement(new Element_HTML('</div></div></div>'));
+    $form->addElement(new Element_HTML('<div class="tab-content"><div class="subcontainer tab-pane fade in active" id="general-settings">'));
+    /*$form->addElement(new Element_HTML('
+<div class="accordion_sidebar" id="accordion_save">
+    <div class="accordion-group">
+        <div class="accordion-heading"><p class="accordion-toggle">Save Setup</p></div>
+        <div id="accordion_save" class="accordion-body">
+            <div class="accordion-inner">'));
+                $form->addElement(new Element_Hidden("submit", "submit"));
+                $form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
+
+                $form->addElement(new Element_HTML('
+            </div>
+        </div>
+    </div>
+</div>'));*/
 					$form->addElement(new Element_HTML('
-			<div class="hero-unit">'));
-						$form->addElement(new Element_HTML('
+			<div class="hero-unit-konrad">'));
+
+    $form->addElement(new Element_HTML('
+<table class="wp-list-table widefat fixed posts">
+	<thead>
+		<tr>
+			<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+				<label class="screen-reader-text" for="cb-select-all-1">Select All</label>
+				<input id="cb-select-all-1" type="checkbox">
+			</th>
+			<th scope="col" id="name" class="manage-column column-comment sortable desc" style="">Name</th>
+			<th scope="col" id="slug" class="manage-column column-description" style="">Slug</th>
+			<th scope="col" id="attached-post-type" class="manage-column column-status" style="">Attached Post Type</th>
+			<th scope="col" id="attached-page" class="manage-column column-status" style="">Attached Page</th>
+
+	</thead>'));
+foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+    $form->addElement(new Element_HTML(' <tr>
+        <th scope="row" class="check-column">
+            <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . $buddyform['name'] .'</label>
+            <input type="checkbox" name="bf_export_form_slugs[]" value="' . $buddyform['slug'] . '" id="aid-' . $buddyform['slug'] . '">
+            <a href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a>
+        </th>
+        <td class="slug column-slug"> ' . $buddyform['name'] .' </td>
+        <td class="slug column-slug"> ' . $buddyform['name'] .' </td>
+       <td class="slug column-slug"> ' . $buddyform['name'] .'</td>
+        <td class="slug column-slug"> ' . get_the_title($buddyform['attached_page']) .' </td>
+</tr>'));
+}
+$form->addElement(new Element_HTML('</table>'));
+
+
+
+			/*			$form->addElement(new Element_HTML('
 			  <h3>BuddyForms Setup</h3>
-			'));
-			$form->addElement(new Element_HTML('
+			'));*/
+			/*$form->addElement(new Element_HTML('
 	 		<div class="accordion-group create-form-box">
 				<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_buddyforms_general_settings_create_form" href="#accordion_buddyforms_general_settings_create_form">Create New Form</p></div>
 			    <div id="accordion_buddyforms_general_settings_create_form" class="accordion-body collapse">
@@ -189,14 +231,14 @@ function buddyforms_settings_page() {
 						$form->addElement( new Element_HTML('
 					</div>
 				</div>
-			</div>'));
+			</div>'));*/
 			
-			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p>'));
-					
-			$form = apply_filters('buddyforms_general_settings', $form);	
-									
+			/*$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p>'));*/
+
+			//$form = apply_filters('buddyforms_general_settings', $form);
+
 			$form->addElement(new Element_HTML('</div></div>'));
-		
+
 			if(isset($buddyforms_options['buddyforms'])){
 				foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
 					
@@ -211,9 +253,9 @@ function buddyforms_settings_page() {
 									$form->addElement(new Element_Hidden("submit", "submit"));
 									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
 									// $form->addElement(new Element_HTML('<p></p>'));
-									$form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete')));
-										
-									$form->addElement(new Element_HTML('
+                    $form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete')));
+
+                    $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="Cancel">
 								</div>
 					    	</div>
 						</div>'));
@@ -455,5 +497,4 @@ function buddyforms_form_element_multiple($form_fields, $args){
     ');	
 	
 	return $form_fields;
-}
-?>
+}?>
