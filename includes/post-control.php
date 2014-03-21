@@ -101,7 +101,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 				case 'Dropdown' :
 					
 					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input chosen', 'shortDesc' =>  $customfield['description']);
-					if(is_array($customfield['value'])){
+					if(isset($customfield['value']) && is_array($customfield['value'])){
 						$element = new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr);
 
 						if (isset($customfield['multiple']) && is_array( $customfield['multiple'] )) 
@@ -142,13 +142,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
 				case 'Taxonomy' :
 
-                    $show_option_none = '';
-                    if($customfield['show_option_none'])
-                        $show_option_none = $customfield['show_option_none'];
-
-					$args = array(
-                        'show_option_none'  => $show_option_none,
-                        'multiple'          => $customfield['multiple'],
+                    $args = array(
                         'hide_empty'        => 0,
 						'id'                => $key,
 						'child_of'          => 0,
@@ -164,6 +158,12 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                         'orderby'           => 'SLUG',
                         'order'             => $customfield['taxonomy_order'],
 					);
+
+                    if(isset($customfield['show_option_none']) && !isset($customfield['multiple']))
+                        $args = array_merge( $args, Array( 'show_option_none' => 'Nothing Selected' ) );
+
+                    if(isset($customfield['multiple']))
+                        $args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
 
 					$dropdown = wp_dropdown_categories($args);
 

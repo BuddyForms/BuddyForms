@@ -4,7 +4,7 @@
  Plugin Name: BuddyForms
  Plugin URI:  http://buddyforms.com
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- Version: 0.9.1
+ Version: 0.9.3
  Author: Sven Lehnert
  Author URI: http://themekraft.com/members/svenl77/
  Licence: GPLv3
@@ -22,7 +22,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '0.9.1';
+	public $version = '0.9.3';
 
 	/**
 	 * @var string
@@ -40,7 +40,7 @@ class BuddyForms {
 		// Run the activation function
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
-		define('buddyforms', '0.9.1');
+		define('buddyforms', '0.9.3');
 
 		add_action('init'					, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
@@ -101,7 +101,7 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-	public function set_globals() {
+	static function set_globals() {
 		global $buddyforms;
 
 		$buddyforms = get_option('buddyforms_options');
@@ -127,15 +127,17 @@ class BuddyForms {
 
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'the-form.php');
 		require_once (BUDDYFORMS_INCLUDES_PATH . 'post-control.php');
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
+        require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
+        require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
 
 		if (is_admin()){
+
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/import-export.php');
-			
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
+
 			// License Key API Class
 			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
 

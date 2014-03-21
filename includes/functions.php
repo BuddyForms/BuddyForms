@@ -1,4 +1,40 @@
 <?php
+
+/**
+ * Restricting users to view only media library items they upload.
+ *
+ * @package BuddyForms
+ * @since 0.5 beta
+ */
+add_action('pre_get_posts','buddyforms_restrict_media_library');
+function buddyforms_restrict_media_library( $wp_query_obj ) {
+    global $current_user, $pagenow;
+    if( !is_a( $current_user, 'WP_User') )
+        return;
+    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
+        return;
+    if( !current_user_can('manage_media_library') )
+        $wp_query_obj->set('author', $current_user->ID );
+    return;
+}
+
+/**
+ * Check if a subscriber have the needed rights to upload images and add this capabilities if needed.
+ *
+ * @package BuddyForms
+ * @since 0.5 beta
+ */
+add_action('init', 'buddyforms_allow_subscriber_uploads');
+function buddyforms_allow_subscriber_uploads() {
+
+    if ( current_user_can('subscriber') && !current_user_can('upload_files') ){
+        $contributor = get_role('subscriber');
+
+        $contributor->add_cap('upload_files');
+    }
+
+}
+
 /**
  * rewrite the url of the edit-this-post link in the frontend
  *
@@ -301,110 +337,6 @@ jQuery(document).ready(function (){
 </script>
 <?php
 }
-
-/**
- * If single and if the post type is selected for BuddyPress and if there is post meta to display. 
- * Hook the post meta to the right places.
- * 
- * This function is an example how you can hook fields into templates in your BuddyForms extension
- * of course you can also use get_post_meta(sanitize_title('name'))
- *
- * @package BuddyForms
- * @since 0.2-beta
-*/
-function buddyforms_form_display_element_frontend(){
-	global $buddyforms, $post, $bp;
-	
-	if(is_archive())
-		return;
-				
-	if (!isset($buddyforms['buddyforms']))
-		return;
-
-	$post_id = ''; 
-	$post_id = apply_filters('buddyforms_hook_fields_from_post_id',$post_id);	
-
-	if(isset($post_id)){
-		$post = get_post($post_id);
-	}
-	
-	$post_type = get_post_type($post);
-	
-	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-		if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'none' &&  $buddyform['post_type'] == $post_type)
-			$form = $buddyform['slug'];
-	}
-	
-	if(!isset($form))
-		return;
-		
-	if (!empty($buddyforms['buddyforms'][$form]['form_fields'])) {
-			
-		foreach ($buddyforms['buddyforms'][$form]['form_fields'] as $key => $customfield) :
-			
-			if(isset($customfield['slug'])){
-				$slug = $customfield['slug'];
-			} else {
-				$slug = sanitize_title($customfield['name']);
-			}
-			
-			$customfield_value = get_post_meta($post->ID, $slug, true);
-			
-			if ($customfield_value != '' && $customfield['display'] != 'no') :
-				
-				$post_meta_tmp = '<div class="post_meta ' . $slug . '">';
-				
-				if(isset($customfield['display_name']))
-					$post_meta_tmp .= '<label>' . $customfield['name'] . '</label>';
-				
-				
-				$meta_tmp = "<p>". $customfield_value ."</p>";
-				
-				if(is_array($customfield_value))
-					$meta_tmp = "<p>". implode(',' , $customfield_value)."</p>";
-			
-				switch ($customfield['type']) {
-					case 'Taxonomy':
-						$meta_tmp = get_the_term_list( $post->ID, $customfield['taxonomy'], "<p>", ' - ', "</p>" );
-						break;
-					case 'Link':
-						$meta_tmp = "<p><a href='" . $customfield_value . "' " . $customfield['name'] . ">" . $customfield_value . " </a></p>";
-						break;
-					default:
-						 apply_filters('buddyforms_form_element_display_frontend',$customfield,$post_type);
-						break;
-				}
-				
-				$post_meta_tmp .= $meta_tmp;
-				
-				$post_meta_tmp .= '</div>';
-				apply_filters('buddyforms_form_element_display_frontend_before_hook',$post_meta_tmp);
-
-				switch ($customfield['display']) {
-					case 'before_the_title':
-						add_filter( 'the_title', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_title, '"') . '";') );
-						break;
-					case 'after_the_title':
-						add_filter( 'the_title', create_function('', 'return "' . addcslashes($post->post_title.$post_meta_tmp, '"') . '";') );
-						break;
-					case 'before_the_content':
-						add_filter( 'the_content', create_function('', 'return "' . addcslashes($post_meta_tmp.$post->post_content, '"') . '";') );
-						break;
-					case 'after_the_content':
-						add_filter( 'the_content', create_function('', 'return "' . addcslashes($post->post_content.$post_meta_tmp, '"') . '";') );
-						break;
-					
-					default:
-						add_action($customfield['display'], create_function('', 'echo "' . addcslashes($post_meta_tmp, '"') . '";'));
-						break;
-				}
-
-				
-			endif;
-		endforeach;
-	}
-}
-//add_action('wp_head','buddyforms_form_display_element_frontend');
 
 /**
  * Get the BuddyForms template directory.

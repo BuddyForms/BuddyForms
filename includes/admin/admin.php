@@ -7,21 +7,17 @@
  * @since 0.1-beta
  */
 function buddyforms_create_menu() {
-	if(session_id() != 'buddyforms') {
+/*	if(session_id() != 'buddyforms') {
 	  session_start('buddyforms');
-	}
-
+	}*/
+    if(!session_id());
+    @session_start();
 
 	global $bp, $buddyforms;
 	
 	// echo '<pre>';
 	// print_r($buddyforms);
 	// echo '</pre>';
-	
-	// Check that the user is allowed to update options
-	if (!current_user_can('manage_options')) {
-	    wp_die('You do not have sufficient permissions to access this page.');
-	}	
 	
 	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
@@ -36,9 +32,20 @@ function buddyforms_create_menu() {
 				unset($buddyforms_options['buddyforms'][$key]);
 				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
 			}
-						
+
+            if(isset($buddyform['form_fields'])){
+                foreach ( $buddyform['form_fields'] as $field_key => $field ) {
+                    if(empty($field['slug']))
+                        $buddyforms_options['buddyforms'][$key]['form_fields'][$field_key]['slug'] =  sanitize_title($field['name']);
+                }
+            }
+
 		}
-		$update_option = false;
+
+
+
+
+        $update_option = false;
 		$update_option = update_option("buddyforms_options", $buddyforms_options);
 		
 		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
@@ -57,7 +64,19 @@ add_action('admin_menu', 'buddyforms_create_menu');
  * @package buddyforms
  * @since 0.2-beta
  */
-function buddyforms_options_content() {?>
+function buddyforms_options_content() {
+
+    // Check that the user is allowed to update options
+    if (!current_user_can('manage_options')) {
+        wp_die('You do not have sufficient permissions to access this page.');
+    }
+
+    global $bp, $buddyforms;
+
+     /*echo '<pre>';
+     print_r($buddyforms);
+     echo '</pre>';*/
+    ?>
 		
 	<div id="bf_admin_wrap" class="wrap">
 
@@ -172,7 +191,7 @@ function buddyforms_settings_page() {
 				</div>
 			</div>'));
 			
-			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p><p><small>...or see all our WordPress Tools <a href="http://themekrat.com/wordpress-theme-plugin-store/" title="See all our ThemeKraft Tools" target="_parent">here.</a></small></p>'));
+			$form->addElement(new Element_HTML('<br /><br /><h3>Extensions Setup</h3><p><a style="text-decoration: none;" href="http://themekraft.com/products/wordpress-plugins-free-and-premium/buddyforms-front-end-posting/" target="_new" title="See our BuddyForms Extensions" class="btn">Browse BuddyForms Extensions</a></p>'));
 					
 			$form = apply_filters('buddyforms_general_settings', $form);	
 									
