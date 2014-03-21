@@ -309,11 +309,12 @@ function bf_post_control($args,$hasError){
 function bf_set_post_thumbnail($post_id,$hasError){
 // Featured image? If yes, save via media_handle_upload and set the post thumbnail
 	if( ! empty( $_FILES ) ) {
-		
+
+
 		require_once(ABSPATH . 'wp-admin/includes/admin.php');  
         $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
 
-        //unset( $_FILES );  
+        unset( $_FILES );
         if( is_wp_error( $id ) ) {  
             $errors['upload_error'] = $id;  
             $id = false;  

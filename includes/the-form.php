@@ -165,7 +165,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(isset($customfields))
 			bf_update_post_meta($post_id, $customfields);
 		
-		//$hasError = bf_set_post_thumbnail($post_id, $hasError);
+		$hasError = bf_set_post_thumbnail($post_id, $hasError);
 		
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
@@ -243,8 +243,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 				$form->addElement(new Element_HTML(do_action( 'template_notices' )));
 				
 				$form->configure(array("prevent" => array("bootstrap", "jQuery", "focus"), "action" => $_SERVER['REQUEST_URI'], "view" => new View_Vertical,'class' => 'standard-form'));
-	
-				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
+
+
+
+
+				$form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', 'client-file-upload')));
 				$form->addElement(new Element_Hidden("new_post_id", $post_id ));
 				$form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
 				if(isset($form_notice))
