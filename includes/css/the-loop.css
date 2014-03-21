@@ -29,14 +29,16 @@ ul.buddyforms-list.item-list li div.item-desc {
 }
 
 ul.buddyforms-list li div.action {
-	position: absolute;
-	top: 15px;
-	right: 20px;
-	text-align: right;
-	width: 35%;
+    clear: both;
+    margin-top: 20px;
+    font-size: 80%;
 }
 
-.item-status { 
+ul.buddyforms-list li div.meta {
+    margin-top: 10px;
+}
+
+ul.buddyforms-list .item-status {
 	padding: 3px 5px; 
 	border-radius: 3px; 
 	-moz-border-radius: 3px; 
@@ -45,10 +47,10 @@ ul.buddyforms-list li div.action {
 	color: white; 
 	background: #555555; 
 	font-size: 11px;
-	float: right;
-	margin-left: 5px;
+    float: left;
+    margin-right: 5px;
 	text-shadow: -1px -1px 0px #333;
 }
-.publish .item-status { background: green; } 
-.pending .item-status { background: orange; }
-.draft .item-status { background: red; }
+ul.buddyforms-list .publish .item-status { background: green; }
+ul.buddyforms-list .pending .item-status { background: orange; }
+ul.buddyforms-list .draft .item-status { background: red; }
