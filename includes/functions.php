@@ -255,7 +255,7 @@ function buddyforms_editor_button($context) {
   	return $context;
   
   // Path to my icon
-  $img = plugins_url( 'admin/img/icon-buddyformsc-16.png' , __FILE__ );
+  // $img = plugins_url( 'admin/img/icon-buddyformsc-16.png' , __FILE__ );
   
   // The ID of the container I want to show in the popup
   $container_id = 'popup_container';
@@ -266,7 +266,7 @@ function buddyforms_editor_button($context) {
   // Append the icon <a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
   $context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
     href='#TB_inline?width=400&inlineId={$container_id}'>
-    <img src='{$img}' /></span> Add Form</a>";
+    <span class='tk-icon-buddyforms' style='color: #888; font-size: 24px; margin-left: -2px;'/></span> Add Form</a>";
   
   return $context;
 }
@@ -312,11 +312,12 @@ global $buddyforms;
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		$the_forms[] = $buddyform['slug'];
 	}
-	$form->addElement( new Element_Select("Select the form to use", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
-	$form->addElement( new Element_Select("Select the post type", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
+	$form->addElement( new Element_Select("<h3>Select the form to use</h3><br>", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
+	$form->addElement( new Element_Select("<br /><h3>Select the post type</h3><br>", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
 	$form->render();
   ?>
-  <a href="#" class="buddyforms-button-insert">Insert into page</a>
+  <br /><br />
+  <a href="#" class="buddyforms-button-insert button">Add Form Now</a>
 </div>
 <?php
 }
