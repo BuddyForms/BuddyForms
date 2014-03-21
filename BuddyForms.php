@@ -222,6 +222,7 @@ class BuddyForms {
 
 		wp_enqueue_script(	'buddyforms-multiple-select',		plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
 		wp_enqueue_style(	'buddyforms-multiple-select-css',	plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
+        wp_enqueue_style(   'the-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
 	}
 	/**
 	 * Check for software updates

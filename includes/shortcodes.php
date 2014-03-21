@@ -20,8 +20,6 @@ function buddyforms_the_loop($args){
 	if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
 		return;
 
-	wp_enqueue_style('the-loop-css', plugins_url('css/the-loop.css', __FILE__));
-	
 	if(empty($post_type))
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
