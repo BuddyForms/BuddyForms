@@ -23,14 +23,14 @@ function buddyforms_create_menu() {
 		$buddyforms_options = $_POST["buddyforms_options"];
 
 		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
-					
+
 			$slug = $buddyform['slug'];
-		
+
 			if($slug != $key){
 				$buddyforms_options['buddyforms'][$slug] = $buddyform;
 				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
 				unset($buddyforms_options['buddyforms'][$key]);
-				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);	
+				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);
 			}
 
             if(isset($buddyform['form_fields'])){
@@ -47,11 +47,11 @@ function buddyforms_create_menu() {
 
         $update_option = false;
 		$update_option = update_option("buddyforms_options", $buddyforms_options);
-		
+
 		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
-		 
+
 	}
-   
+
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
 	add_submenu_page( 'buddyforms_options_page', 'Add New', 'Add New', 'edit_posts', 'create-new-form', 'bf_import_export_screen' );
 
@@ -202,9 +202,14 @@ foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
         <th scope="row" class="check-column">
             <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . $buddyform['name'] .'</label>
             <input type="checkbox" name="bf_export_form_slugs[]" value="' . $buddyform['slug'] . '" id="aid-' . $buddyform['slug'] . '">
-            <a href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a>
+
+
         </th>
-        <td class="slug column-slug"> ' . $buddyform['name'] .' </td>
+        <td class="slug column-slug">
+
+        <div class="showhim">' . $buddyform['slug'] .'<div class="showme"><a  href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a></div></div>
+        </td>
+
         <td class="slug column-slug"> ' . $buddyform['name'] .' </td>
        <td class="slug column-slug"> ' . $buddyform['name'] .'</td>
         <td class="slug column-slug"> ' . get_the_title($buddyform['attached_page']) .' </td>

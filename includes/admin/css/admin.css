@@ -1,5 +1,16 @@
-/** header **/ 
-	
+/** header **/
+
+.bf-edid-form {
+    display: none;
+}
+
+.showme{
+    display: none;
+}
+.showhim:hover .showme{
+    display : block;
+}
+
 #wpbody #bf_admin_wrap h1 { float: none; }
 
 #bf_admin_wrap h1 span.version { font-size: 14px; font-style: italic; padding-left: 5px; }
