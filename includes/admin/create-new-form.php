@@ -43,14 +43,13 @@ function bf_import_export_screen(){ ?>
             $form->addElement(new Element_Textbox("Singular Name:", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'e.g. Movie')));
         $form->addElement(new Element_HTML('</div></div>'));
 
-        $form->addElement( new Element_Select("Post Type:", "buddyforms_options[buddyforms][".$buddyform['slug']."][post_type]", $post_types,array('value' => $post_type)));
+        $form->addElement( new Element_Select("Post Type:", "create_new_form_post_type", $post_types));
 
         $args = array(
-            'id' => $key,
             'echo' => FALSE,
             'sort_column'  => 'post_title',
             'show_option_none' => __( 'none', 'buddyforms' ),
-            'name' => "buddyforms_options[buddyforms][".$buddyform['slug']."][attached_page]",
+            'name' => "create_new_form_attached_page",
             'class' => 'postform',
         );
         $form->addElement(new Element_HTML('<br><br><p><b>Attach page to this form</b></p><i>Select a page for the author, <br>call it e.g. "My Posts".</i><br><br>'));
@@ -80,7 +79,7 @@ function bf_import_export_screen(){ ?>
             <div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_publish">Publish</p></div>
             <div id="accordion_publish" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                 $form->addElement( new Element_Select("Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][status]", array('publish','pending','draft'),array('value' => $status)));
+                 $form->addElement( new Element_Select("Status:", "create_new_form_status", array('publish','pending','draft')));
                  $form->addElement(new Element_HTML('
                 </div>
             </div>
@@ -90,16 +89,16 @@ function bf_import_export_screen(){ ?>
             <div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_comments">Comments</p></div>
             <div id="accordion_comments" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                $form->addElement( new Element_Select("Comment Status:", "buddyforms_options[buddyforms][".$buddyform['slug']."][comment_status]", array('open','closed'),array('value' => $comment_status)));
+                $form->addElement( new Element_Select("Comment Status:", "create_new_form_status", array('open','closed')));
                 $form->addElement(new Element_HTML('
                 </div>
             </div>
         </div>'));
 
-        $form->addElement( new Element_Checkbox("<b>Featured Image</b>","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $required)));
-        $form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][revision]",array('Revision'),array('value' => $revision)));
-        $form->addElement( new Element_Checkbox("<br><b>Admin Bar</b><br>","buddyforms_options[buddyforms][".$buddyform['slug']."][admin_bar]",array('Add to Admin Bar'),array('value' => $admin_bar)));
-        $form->addElement( new Element_Checkbox("<br><b>Overwrite Edit-this-entry link?</b><br><i>The link to the backend will be changed<br> to use the frontend editing.</i>","buddyforms_options[buddyforms][".$buddyform['slug']."][edit_link]",array('overwrite'),array('value' => $edit_link)));
+        $form->addElement( new Element_Checkbox("<b>Featured Image</b>","create_new_form_featured_image_required",array('Required')));
+        $form->addElement( new Element_Checkbox("<b>Revision</b><br><i>Enable frontend revison control.</i>","create_new_form_revision",array('Revision')));
+        $form->addElement( new Element_Checkbox("<br><b>Admin Bar</b><br>","create_new_form_admin_bar",array('Add to Admin Bar')));
+        $form->addElement( new Element_Checkbox("<br><b>Overwrite Edit-this-entry link?</b><br><i>The link to the backend will be changed<br> to use the frontend editing.</i>","create_new_form_edit_link",array('overwrite')));
 
     // END SIDEBAR
         $form->addElement(new Element_HTML('</div></div>
