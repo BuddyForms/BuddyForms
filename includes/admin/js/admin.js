@@ -42,8 +42,15 @@ jQuery(document).ready(function(jQuery) {
                 "create_new_form_edit_link"                 : create_new_form_edit_link,
             },
 			success: function(data){
-				window.location.reload(true);
-                //alert(data);
+
+                if(data != false){
+                    var url = window.location.href;
+                    url = url.slice( 0, url.indexOf('?') );
+                    window.location.href = url + '?page=buddyforms_options_page';
+                }
+
+
+
 			},
 			error: function() { 
 				alert('Something went wrong.. ;-(sorry)');

@@ -8,6 +8,15 @@
 function buddyforms_add_form(){
     $buddyforms_options = get_option('buddyforms_options');
 
+    if(empty($_POST['create_new_form_name']))
+        return;
+    if(empty($_POST['create_new_form_singular_name']))
+        return;
+    if(empty($_POST['create_new_form_attached_page']))
+        return;
+    if(empty($_POST['create_new_form_post_type']))
+        return;
+
     $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = Array(
         'slug'              => sanitize_title($_POST['create_new_form_name']),
         'name'              => $_POST['create_new_form_name'],
@@ -15,7 +24,7 @@ function buddyforms_add_form(){
         'attached_page'     => $_POST['create_new_form_attached_page'],
         'post_type'         => $_POST['create_new_form_post_type'],
         'status'            => $_POST['create_new_form_status'],
-        'comment_status'          => $_POST['create_new_form_comment_status'],
+        'comment_status'    => $_POST['create_new_form_comment_status'],
         'image_required'    => $_POST['create_new_form_featured_image_required'],
         'revision'          => $_POST['create_new_form_revision'],
         'admin_bar'         => $_POST['create_new_form_admin_bar'],
