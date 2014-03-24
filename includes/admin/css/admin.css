@@ -237,11 +237,19 @@ clear: both;
 #bf_admin_wrap .wp-list-table tr td {
     height: 38px;
 }
+#bf_admin_wrap .bf-main-settings input[type="text"] {
+    width: 100%;
+    margin: 5px 0 10px;
+    height: 2em;
+    line-height: 2em;
+}
+#bf_admin_wrap .buddyforms_forms_builder .hero-unit p {
+    font-size: 14px;
+}
+.delete .icon-remove-sign { margin-right: 5px; margin-top: 2px !important;}
 
 
-
-
-/* Creat New Form View */
+/* Create New Form View */
 
 #create_new_form_singular_name {
     padding: 3px 8px;

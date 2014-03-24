@@ -260,16 +260,18 @@ $form->addElement(new Element_HTML('</table>'));
 					$form->addElement(new Element_HTML('
 					<div class="accordion_sidebar" id="accordion_'.$buddyform['slug'].'">
 						<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle">Save This Form</p></div>
+							<div class="accordion-heading"><p class="accordion-toggle">Save Form Settings</p></div>
 							<div id="accordion_'.$buddyform['slug'].'_save" class="accordion-body">
 								<div class="accordion-inner">')); 
-									$form->addElement(new Element_Hidden("submit", "submit"));
-									$form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save')));
-									// $form->addElement(new Element_HTML('<p></p>'));
-                    $form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'dele_form', 'name' => 'dele_form','value' => 'Delete')));
 
-                    $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="Cancel">
-								</div>
+                    $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="Cancel" />'));
+
+                    $form->addElement(new Element_Button('button','button',array('id' => $buddyform['slug'], 'class' => 'button dele_form', 'name' => 'dele_form','value' => 'Delete')));
+
+                    $form->addElement(new Element_Hidden("submit", "submit"));
+                    $form->addElement(new Element_Button('submit','submit',array('id' => 'submit', 'name' => 'action','value' => 'Save', 'class' => 'button-primary', 'style' => 'float: right;')));
+
+                    $form->addElement(new Element_HTML('</div>
 					    	</div>
 						</div>'));
 						
@@ -320,14 +322,14 @@ $form->addElement(new Element_HTML('</table>'));
 					}
 				  $form->addElement(new Element_HTML('
 				 		<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status"><b>Form Control</b><br><i class="small">Choose Form Type and Moderation.</i></p></div>
+							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status"><b>Form Control</b></p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
-								<div class="accordion-inner">'));
+								<div class="accordion-inner bf-main-settings">'));
                     $form->addElement(new Element_Textbox("Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['name'])));
                     $form->addElement(new Element_Textbox("Singular Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][singular_name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['singular_name'])));
                     $form->addElement(new Element_Textbox("Overwrite slug if needed *:", "buddyforms_options[buddyforms][".$buddyform['slug']."][slug]", array('value' => sanitize_title($buddyforms_options['buddyforms'][$buddyform['slug']]['slug']))));
 
-                    $form->addElement(new Element_HTML('<p><i class="icon-info-sign" style="margin-top:6px;"></i>&nbsp;<small><i>These settings can be overwritten by shortcodes and other plugins! <br>You can define the defaults here. </i></small></p><br />'));
+                    $form->addElement(new Element_HTML('<br><hr /><p><i class="icon-info-sign" style="margin-top:6px;"></i>&nbsp;<small><i>The following settings can be overwritten by shortcodes and other plugins! <br>You can define the defaults here. </i></small></p><br />'));
 
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
@@ -414,8 +416,8 @@ $form->addElement(new Element_HTML('</table>'));
 					
 					$form->addElement(new Element_HTML('
 					<br>
-					<h3>Form Builder</h3>
-					<p>Add elements from the right box "Form Elements". Change the order via drag and drop.</p>
+					<h4>Form Builder</h4>
+					<p>Add additional form elements from the right box "Form Elements". Change the order via drag and drop.</p>
 					<ul id="sortable_'. $buddyform['slug'] .'" class="sortable sortable_'. $buddyform['slug'] .'">'));
 
 					if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['form_fields'])){
