@@ -31,7 +31,6 @@ jQuery(document).ready(function(jQuery) {
 			}
 		});
 		
-		
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
@@ -44,6 +43,7 @@ jQuery(document).ready(function(jQuery) {
 			}
 		});
 	});
+
  	jQuery('.dele_form').click(function(){
 
  		var dele_form_slug = jQuery(this).attr('id');
