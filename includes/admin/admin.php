@@ -208,12 +208,20 @@ foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
         <td class="slug column-slug">
 
         <div class="showhim">' . $buddyform['slug'] .'<div class="showme"><a  href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a></div></div>
-        </td>
+        </td>'));
 
-        <td class="slug column-slug"> ' . $buddyform['name'] .' </td>
-       <td class="slug column-slug"> ' . $buddyform['name'] .'</td>
-        <td class="slug column-slug"> ' . get_the_title($buddyform['attached_page']) .' </td>
-</tr>'));
+        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+        $form->addElement(new Element_HTML( isset($buddyform['name']) ? $buddyform['name']: '--'));
+        $form->addElement(new Element_HTML('</td>'));
+
+        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+        $form->addElement(new Element_HTML( isset($buddyform['post_type']) ? $buddyform['post_type']: '--'));
+        $form->addElement(new Element_HTML('</td>'));
+
+        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+        $form->addElement(new Element_HTML( isset($buddyform['attached_page']) ? $buddyform['attached_page']: '--'));
+        $form->addElement(new Element_HTML('</td>'));
+    
 }
 $form->addElement(new Element_HTML('</table>'));
 
