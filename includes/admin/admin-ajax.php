@@ -40,6 +40,7 @@ add_action( 'wp_ajax_nopriv_buddyforms_export', 'buddyforms_export' );
  */
 function buddyforms_add_form(){
     $buddyforms_options = get_option('buddyforms_options');
+    print_r($_POST['create_new_form']);
     $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = Array(
         'slug' => sanitize_title($_POST['create_new_form_name']),
         'name' => $_POST['create_new_form_name'],

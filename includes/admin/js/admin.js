@@ -14,9 +14,11 @@ jQuery(document).ready(function(jQuery) {
 	jQuery('.new_form').click(function(){
 
 		var action = jQuery(this);
-		var create_new_form_name = jQuery('#create_new_form_name').val();
+		var create_new_form = jQuery('#create_new_form').val();
 		var create_new_form_singular_name = jQuery('#create_new_form_singular_name').val();
-		
+
+        alert(create_new_form);
+
 		jQuery(".nav-tabs li a").each(function(idx, li) {
 			var li_href = jQuery(this).attr('href');
 			
@@ -34,9 +36,10 @@ jQuery(document).ready(function(jQuery) {
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data: {"action": "buddyforms_add_form", "create_new_form_name": create_new_form_name, "create_new_form_singular_name": create_new_form_singular_name},
+			data: {"action": "buddyforms_add_form", "create_new_form": create_new_form, "create_new_form_singular_name": create_new_form_singular_name},
 			success: function(data){
-				window.location.reload(true);
+				//window.location.reload(true);
+                alert(data);
 			},
 			error: function() { 
 				alert('Something went wrong.. ;-(sorry)');
