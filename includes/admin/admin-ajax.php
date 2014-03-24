@@ -1,37 +1,4 @@
 <?php
-
-function buddyforms_import(){
-    $buddyforms			= get_option('buddyforms_options');
-    $bf_import_forms	= $_POST['bf_import_forms'];
-    //$data = unserialize($bf_import_forms);
-
-    //print_r($data);
-    $bf_import_forms = str_replace("/", "", $bf_import_forms);
-    echo $bf_import_forms;//unserialize(trim($bf_import_forms));
-
-    die();
-}
-add_action( 'wp_ajax_buddyforms_import', 'buddyforms_import' );
-add_action( 'wp_ajax_nopriv_buddyforms_import', 'buddyforms_import' );
-
-function buddyforms_export(){
-    $buddyforms_options = get_option('buddyforms_options');
-    $bf_export_form_slugs = $_POST['bf_export_form_slugs'];
-
-    $new_buddyforms = Array();
-    foreach ( $bf_export_form_slugs as $key => $form_slug) {
-
-        if($form_slug != 'on')
-            $new_buddyforms[$form_slug] = $buddyforms_options['buddyforms'][$form_slug];
-    }
-
-    echo serialize( $new_buddyforms );
-
-    die();
-}
-add_action( 'wp_ajax_buddyforms_export', 'buddyforms_export' );
-add_action( 'wp_ajax_nopriv_buddyforms_export', 'buddyforms_export' );
-
 /**
  * Ajax call back function to add a form element
  *
@@ -42,9 +9,18 @@ function buddyforms_add_form(){
     $buddyforms_options = get_option('buddyforms_options');
 
     $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = Array(
-        'slug' => sanitize_title($_POST['create_new_form_name']),
-        'name' => $_POST['create_new_form_name'],
-        'singular_name' => $_POST['create_new_form_singular_name']);
+        'slug'              => sanitize_title($_POST['create_new_form_name']),
+        'name'              => $_POST['create_new_form_name'],
+        'singular_name'     => $_POST['create_new_form_singular_name'],
+        'attached_page'     => $_POST['create_new_form_attached_page'],
+        'post_type'         => $_POST['create_new_form_post_type'],
+        'status'            => $_POST['create_new_form_status'],
+        'comment_status'          => $_POST['create_new_form_comment_status'],
+        'image_required'    => $_POST['create_new_form_featured_image_required'],
+        'revision'          => $_POST['create_new_form_revision'],
+        'admin_bar'         => $_POST['create_new_form_admin_bar'],
+        'edit_link'         => $_POST['create_new_form_edit_link'],
+    );
 
     update_option("buddyforms_options", $buddyforms_options);
 
