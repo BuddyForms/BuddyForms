@@ -238,7 +238,7 @@ clear: both;
     height: 2em;
     width: 100%;
     outline: 0;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 10px 0;
 }
 .bf-half-col {
     float: left;
@@ -265,4 +265,14 @@ clear: both;
 }
 .bf-main-desc {
     margin: 20px 0;
+}
+.postbox-container .accordion-inner {
+    padding: 20px 15px;
+}
+.postbox-container .accordion-inner label {
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+.postbox-container .accordion-inner label.checkbox {
+    line-height: 190%;
 }
