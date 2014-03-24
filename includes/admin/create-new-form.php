@@ -36,19 +36,19 @@ function bf_import_export_screen(){ ?>
             <div id="post-body" class="metabox-holder columns-2">
                 <div id="post-body-content">'));
 
-    // START CONTENT
+    // START CONTENT ,array("required" => 1)
 
         $form->addElement(new Element_HTML('<div id="titlediv"><div id="titlewrap">'));
-            $form->addElement(new Element_Textbox("", "create_new_form_name",array('id' => 'title', 'placeholder' => 'Enter Title here, e.g. Movies')));
+            $form->addElement(new Element_Textbox("", "create_new_form_name",array('id' => 'title', 'placeholder' => 'Enter Title here, e.g. Movies','required' => 1)));
             $form->addElement(new Element_HTML('</div>'));
-            $form->addElement(new Element_Textbox("", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'Enter Singluar Name here, e.g. Movie')));
+            $form->addElement(new Element_Textbox("", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'Enter Singluar Name here, e.g. Movie', 'required' => 1)));
         $form->addElement(new Element_HTML('</div>'));
 
 
         $form->addElement(new Element_HTML('<div class="bf-row"><div class="bf-half-col bf-left"><div class="bf-col-content">
                                             <h4>Post Type</h4>
                                             <p class="bf-main-desc">Select which post type should be created on form submission.</p>'));
-        $form->addElement( new Element_Select("", "create_new_form_post_type", $post_types));
+        $form->addElement( new Element_Select("", "create_new_form_post_type", $post_types,array("required" => 1)));
 
         $args = array(
             'echo' => FALSE,
