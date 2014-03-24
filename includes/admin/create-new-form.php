@@ -82,7 +82,7 @@ function bf_import_export_screen(){ ?>
             <div id="accordion_save" class="accordion-body">
                 <div class="accordion-inner">'));
                 $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="Cancel" />'));
-                $form->addElement(new Element_Button('button','button',array('class' => 'new_form button-primary', 'name' => 'new_form','value' => 'Create Form', 'style' => 'float: right;')));
+                $form->addElement(new Element_Button('button','button',array('class' => 'new_form button-primary', 'name' => 'new_form','value' => 'Create Form', 'style' => 'float: right; text-shadow: none;')));
                 $form->addElement(new Element_HTML('</div>
                     </div>
                 </div>'));

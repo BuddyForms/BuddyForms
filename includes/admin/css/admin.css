@@ -231,6 +231,18 @@ clear: both;
     float: left;
     width: 20%;
 }
+#bf_admin_wrap .wp-list-table tr {
+    border-bottom: 1px solid #ddd;
+}
+#bf_admin_wrap .wp-list-table tr td {
+    height: 38px;
+}
+
+
+
+
+/* Creat New Form View */
+
 #create_new_form_singular_name {
     padding: 3px 8px;
     font-size: 1em;
@@ -276,3 +288,7 @@ clear: both;
 .postbox-container .accordion-inner label.checkbox {
     line-height: 190%;
 }
+
+
+
+
