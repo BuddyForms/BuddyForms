@@ -272,19 +272,6 @@ $form->addElement(new Element_HTML('</table>'));
 								</div>
 					    	</div>
 						</div>'));
-						$form->addElement(new Element_HTML('
-						<div class="accordion-group">
-							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_content">Label</p></div>
-							<div id="accordion_'.$buddyform['slug'].'_content" class="accordion-body collapse">
-								<div class="accordion-inner">')); 
-									$form->addElement(new Element_Textbox("Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['name'])));
-									$form->addElement(new Element_Textbox("Singular Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][singular_name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['singular_name'])));
-									$form->addElement(new Element_Textbox("Overwrite slug if needed *:", "buddyforms_options[buddyforms][".$buddyform['slug']."][slug]", array('value' => sanitize_title($buddyforms_options['buddyforms'][$buddyform['slug']]['slug']))));
-									
-									$form->addElement(new Element_HTML('
-								</div>
-					    	</div>
-						</div>'));
 						
 					 apply_filters('buddyforms_admin_settings_sidebar_metabox',$form, $buddyform['slug']);
 					
@@ -335,32 +322,13 @@ $form->addElement(new Element_HTML('</table>'));
 				 		<div class="accordion-group">
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$buddyform['slug'].'" href="#accordion_'.$buddyform['slug'].'_status"><b>Form Control</b><br><i class="small">Choose Form Type and Moderation.</i></p></div>
 						    <div id="accordion_'.$buddyform['slug'].'_status" class="accordion-body collapse">
-								<div class="accordion-inner">')); 
-									$form->addElement(new Element_HTML('<p><i class="icon-info-sign" style="margin-top:6px;"></i>&nbsp;<small><i>These settings can be overwritten by shortcodes and other plugins! <br>You can define the defaults here. </i></small></p><br />'));
-									$form->addElement(new Element_HTML('<div class="innerblock form-type">'));
-									
-									if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['form_type']))
-										$form_type = $buddyforms_options['buddyforms'][$buddyform['slug']]['form_type'];
-									
-									if(empty($form_type))
-										$form_type = 'post_form';
-									
-									$form->addElement( new Element_Radio("<h4>Form Type</h4>", "buddyforms_options[buddyforms][".$buddyform['slug']."][form_type]", array('post_form','mail_form'),array('id' => $buddyform['slug'], 'class' => 'form_type', 'value' => $form_type)));
-									$form->addElement(new Element_HTML('</div><div class="clear"></div>'));
-									$form->addElement(new Element_HTML('<div class="mail_form_'.$buddyform['slug'].' form_type_settings" >'));
-											$form->addElement(new Element_HTML('<p>NOT READY YET<br>I will leave the mail/notification development for later and focus on the logic of form and post control first. After the logic is deaply tested, we will put the same patition into mail and notification.</p>'));
-											$email = '';
-											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email']))
-												$email = $buddyforms_options['buddyforms'][$buddyform['slug']]['email'];
-											
-											$form->addElement(new Element_Textbox("Enter your email address:", "buddyforms_options[buddyforms][".$buddyform['slug']."][email]", array('value' => $email)));
-											
-											$email_subject = '';
-											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject']))
-												$email_subject = $buddyforms_options['buddyforms'][$buddyform['slug']]['email_subject'];
-												
-											$form->addElement(new Element_Textbox("What should the subject line be?", "buddyforms_options[buddyforms][".$buddyform['slug']."][email_subject]", array('value' => $email_subject)));
-									$form->addElement(new Element_HTML('</div>'));
+								<div class="accordion-inner">'));
+                    $form->addElement(new Element_Textbox("Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['name'])));
+                    $form->addElement(new Element_Textbox("Singular Name:", "buddyforms_options[buddyforms][".$buddyform['slug']."][singular_name]", array('value' => $buddyforms_options['buddyforms'][$buddyform['slug']]['singular_name'])));
+                    $form->addElement(new Element_Textbox("Overwrite slug if needed *:", "buddyforms_options[buddyforms][".$buddyform['slug']."][slug]", array('value' => sanitize_title($buddyforms_options['buddyforms'][$buddyform['slug']]['slug']))));
+
+                    $form->addElement(new Element_HTML('<p><i class="icon-info-sign" style="margin-top:6px;"></i>&nbsp;<small><i>These settings can be overwritten by shortcodes and other plugins! <br>You can define the defaults here. </i></small></p><br />'));
+
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
 											$form->addElement(new Element_HTML('<div class="innerblock featured-image">'));
