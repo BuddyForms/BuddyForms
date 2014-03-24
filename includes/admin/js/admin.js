@@ -1,72 +1,5 @@
 jQuery(document).ready(function(jQuery) {    
 
-
-  // function handleFileSelect(evt) {
-    // var files = evt.target.files; // FileList object
-// 
-	// // Loop through the FileList
-	// for (var i = 0, f; f = files[i]; i++) {
-// 
-		// var reader = new FileReader();
-// 	
-	 	// // Closure to capture the file information.
-		// reader.onload = (function(theFile) {
-		// return function(e) {
-// 			
-			// jQuery.ajax({
-				// type: 'POST',
-				// url: ajaxurl,
-				// data: {"action": "buddyforms_import", "bf_import_forms": e.target.result},
-				// success: function(data){
-					// alert(data);
-				// },
-				// error: function() { 
-					// alert('Something went wrong.. ;-(sorry)');
-				// }
-			// });
-// 		
-		// };
-// 		
-	// })(f);
-// 
-	// // Read in the file
-	// //reader.readAsDataText(f,UTF-8);
-	// //reader.readAsDataURL(f);
-	// reader.readAsText(f);
-	// }
-// }
-
-//document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-
-
-
-	jQuery('#bf_export').click(function(){
-
-		var buddyforms_export_forms = [];
-        jQuery(':checkbox:checked').each(function(i){
-          buddyforms_export_forms[i] = jQuery(this).val();
-        });
-		alert(buddyforms_export_forms);
-		jQuery.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data: {"action": "buddyforms_export", "bf_export_form_slugs": buddyforms_export_forms},
-			success: function(data){
-				var a = document.createElement('a');
-				var blob = new Blob([data], {'type':'application\/octet-stream'});
-
-				a.href = window.URL.createObjectURL(blob);
-				a.download = 'buddyforms_export.txt';
-				a.click();
-			},
-			error: function() { 
-				alert('Something went wrong.. ;-(sorry)');
-			}
-		});
-
-	});
-
 	if (typeof(Zenbox) !== "undefined") {
 		Zenbox.init({
 			dropboxID:   "20181572",
@@ -77,59 +10,9 @@ jQuery(document).ready(function(jQuery) {
 			hide_tab: true
 		});
 	}
-
-	jQuery(".form_type").each(function(idx, li) {
-    	var form_type_id = jQuery(this).attr('id').slice(0,-2);
-    	var form_type_val = jQuery(this).val();
-		
-		if(jQuery(this).is(':checked')){
-			if(form_type_val == 'post_form'){
-				jQuery('.bf_element_display_'+form_type_id).show();
-			} else {
-				jQuery('.bf_element_display_'+form_type_id).hide();
-			}
-			jQuery('.'+form_type_val+'_'+form_type_id).show();
-		} else {
-			jQuery('.'+form_type_val+'_'+form_type_id).hide();
-		}
-    	 
-	});
-	
-	jQuery('.form_type').click(function(){
-    	var form_type_id = jQuery(this).attr('id').slice(0,-2);
-    	var form_type_val = jQuery(this).val();
-
-    	if(form_type_val == 'post_form'){
-    		jQuery('.bf_element_display_'+form_type_id).show('fast');
-    		jQuery('.mail_form_'+form_type_id).hide('fast');
-    		jQuery('.'+form_type_val+'_'+form_type_id).show('fast');	
-    	} else {
-    		jQuery('.bf_element_display_'+form_type_id).hide('fast');
-    		jQuery('.post_form_'+form_type_id).hide('fast');
-    		jQuery('.'+form_type_val+'_'+form_type_id).show('fast');	
-    	}
-        
-    });
-
-	jQuery(".select_posttype").each(function(idx, li) {
-		var li_id = jQuery(this).attr('id');
-		if(jQuery(this).is(':checked')){
-			jQuery('.'+li_id).show();
-		} else {
-			jQuery('.'+li_id).hide();
-		}
-	});
-
-	jQuery('.select_posttype').click(function(){
-		var li_id = jQuery(this).attr('id');
-		if(jQuery(this).is(':checked')){
-			jQuery('.'+li_id).show();
-		} else {
-			jQuery('.'+li_id).hide();
-		}
-	});
 	
 	jQuery('.new_form').click(function(){
+
 		var action = jQuery(this);
 		var create_new_form_name = jQuery('#create_new_form_name').val();
 		var create_new_form_singular_name = jQuery('#create_new_form_singular_name').val();
