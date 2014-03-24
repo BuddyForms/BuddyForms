@@ -231,3 +231,48 @@ clear: both;
     float: left;
     width: 20%;
 }
+#create_new_form_singular_name {
+    padding: 3px 8px;
+    font-size: 1em;
+    line-height: 120%;
+    height: 2em;
+    width: 100%;
+    outline: 0;
+    margin: 10px 0 10px 0;
+}
+.bf-half-col {
+    float: left;
+    margin-bottom: 20px;
+    width: 100%;
+}
+@media screen and (min-width: 1600px) {
+    .bf-half-col {
+        width: 49%;
+    }
+    .bf-half-col.bf-left {
+        margin-right: 1%;
+    }
+    .bf-half-col.bf-right {
+        margin-left: 1%;
+    }
+}
+.bf-col-content {
+    min-height: 180px;
+    padding: 10px 20px;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+.bf-main-desc {
+    margin: 20px 0;
+}
+.postbox-container .accordion-inner {
+    padding: 20px 15px;
+}
+.postbox-container .accordion-inner label {
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+.postbox-container .accordion-inner label.checkbox {
+    line-height: 190%;
+}
