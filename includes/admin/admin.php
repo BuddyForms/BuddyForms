@@ -83,13 +83,13 @@ function buddyforms_options_content() {
         <div class="credits">
             <p>
                 <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a>
-                - &nbsp; <?php _e( 'Collaborative Publishing and Form Magic for WordPress.', 'buddyforms' ); ?>
+                - &nbsp; <?php _e( 'User Front End Posting and Form Builder for WordPress.', 'buddyforms' ); ?>
 
             </p>
         </div>
 
-        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">Beta</span>
-            <a href="<?php echo get_admin_url(); ?>admin.php?page=create-new-form" class="add-new-h2">Create New Form</a>
+        <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version">1.0</span>
+            <a href="<?php echo get_admin_url(); ?>admin.php?page=create-new-form" class="add-new-h2">Add New Form</a>
         </h1>
 
 		<div id="bf_support_nav" class="button-nav">
