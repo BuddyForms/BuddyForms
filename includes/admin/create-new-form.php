@@ -101,7 +101,7 @@ function bf_import_export_screen(){ ?>
             <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_comments">Comments</h5></div>
             <div id="accordion_comments" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                $form->addElement( new Element_Select("Comment Status:", "create_new_form_status", array('open','closed')));
+                $form->addElement( new Element_Select("Comment Status:", "create_new_form_comment_status", array('open','closed')));
                 $form->addElement(new Element_HTML('
                 </div>
             </div>

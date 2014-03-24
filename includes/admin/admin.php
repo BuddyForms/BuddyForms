@@ -221,7 +221,7 @@ foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
         $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
         $form->addElement(new Element_HTML( isset($buddyform['attached_page']) ? $buddyform['attached_page']: '--'));
         $form->addElement(new Element_HTML('</td>'));
-    
+
 }
 $form->addElement(new Element_HTML('</table>'));
 

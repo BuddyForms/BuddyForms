@@ -14,32 +14,36 @@ jQuery(document).ready(function(jQuery) {
 	jQuery('.new_form').click(function(){
 
 		var action = jQuery(this);
-		var create_new_form = jQuery('#create_new_form').val();
-		var create_new_form_singular_name = jQuery('#create_new_form_singular_name').val();
+		var create_new_form_name                    = jQuery('[name="create_new_form_name"]').val();
+        var create_new_form_singular_name           = jQuery('[name="create_new_form_singular_name"]').val();
+        var create_new_form_attached_page           = jQuery('[name="create_new_form_attached_page"]').val();
+        var create_new_form_post_type               = jQuery('[name="create_new_form_post_type"]').val();
+        var create_new_form_status                  = jQuery('[name="create_new_form_status"]').val();
+        var create_new_form_comment_status          = jQuery('[name="create_new_form_comment_status"]').val();
+        var create_new_form_featured_image_required = jQuery('[name="create_new_form_featured_image_required"]').val();
+        var create_new_form_revision                = jQuery('[name="create_new_form_revision"]').val();
+        var create_new_form_admin_bar               = jQuery('[name="create_new_form_admin_bar"]').val();
+        var create_new_form_edit_link               = jQuery('[name="create_new_form_edit_link"]').val();
 
-        alert(create_new_form);
 
-		jQuery(".nav-tabs li a").each(function(idx, li) {
-			var li_href = jQuery(this).attr('href');
-			
-			if(create_new_form_name == ''){
-				alert('You need to enter a name for the form!');
-				exit; 
-			}
-			
-			if(li_href == '#'+create_new_form_name.toLowerCase()){
-				alert('This form already exists please choose a different name!');
-				exit; 
-			}
-		});
-		
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data: {"action": "buddyforms_add_form", "create_new_form": create_new_form, "create_new_form_singular_name": create_new_form_singular_name},
+			data: {"action": "buddyforms_add_form",
+                "create_new_form_name"                      : create_new_form_name,
+                "create_new_form_singular_name"             : create_new_form_singular_name,
+                "create_new_form_attached_page"             : create_new_form_attached_page,
+                "create_new_form_post_type"                 : create_new_form_post_type,
+                "create_new_form_status"                    : create_new_form_status,
+                "create_new_form_comment_status"            : create_new_form_comment_status,
+                "create_new_form_featured_image_required"   : create_new_form_featured_image_required,
+                "create_new_form_revision"                  : create_new_form_revision,
+                "create_new_form_admin_bar"                 : create_new_form_admin_bar,
+                "create_new_form_edit_link"                 : create_new_form_edit_link,
+            },
 			success: function(data){
-				//window.location.reload(true);
-                alert(data);
+				window.location.reload(true);
+                //alert(data);
 			},
 			error: function() { 
 				alert('Something went wrong.. ;-(sorry)');
