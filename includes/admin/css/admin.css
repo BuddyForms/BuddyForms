@@ -289,6 +289,13 @@ clear: both;
     line-height: 190%;
 }
 
-
+.bf-error {
+    border: 2px solid #d02a21 !important;
+    border: 2px solid #d02a21;
+}
+.bf-ok {
+    border: 2px solid #7ad03a !important;
+    border: 2px solid #7ad03a;
+}
 
 
