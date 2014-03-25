@@ -18,6 +18,11 @@ jQuery(document).ready(function(jQuery) {
         var create_new_form_singular_name           = jQuery('[name="create_new_form_singular_name"]').val();
         var create_new_form_post_type               = jQuery('[name="create_new_form_post_type"]').val();
         var create_new_form_attached_page           = jQuery('[name="create_new_form_attached_page"]').val();
+        var create_new_page                         = jQuery('[name="create_new_page"]').val();
+
+        if( create_new_form_attached_page === ''){
+            create_new_form_attached_page           = jQuery('[name="create_new_page"]').val();
+        }
 
         if( create_new_form_name === ''){
             jQuery('[name="create_new_form_name"]').removeClass('bf-ok');
@@ -66,13 +71,14 @@ jQuery(document).ready(function(jQuery) {
                 "create_new_form_name"                      : create_new_form_name,
                 "create_new_form_singular_name"             : create_new_form_singular_name,
                 "create_new_form_attached_page"             : create_new_form_attached_page,
+                "create_new_page"                           : create_new_page,
                 "create_new_form_post_type"                 : create_new_form_post_type,
                 "create_new_form_status"                    : create_new_form_status,
                 "create_new_form_comment_status"            : create_new_form_comment_status,
                 "create_new_form_featured_image_required"   : create_new_form_featured_image_required,
                 "create_new_form_revision"                  : create_new_form_revision,
                 "create_new_form_admin_bar"                 : create_new_form_admin_bar,
-                "create_new_form_edit_link"                 : create_new_form_edit_link,
+                "create_new_form_edit_link"                 : create_new_form_edit_link
             },
 			success: function(data){
 

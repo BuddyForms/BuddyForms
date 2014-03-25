@@ -12,10 +12,27 @@ function buddyforms_add_form(){
         return;
     if(empty($_POST['create_new_form_singular_name']))
         return;
-    if(empty($_POST['create_new_form_attached_page']))
+    if(empty($_POST['create_new_form_attached_page']) && empty($_POST['create_new_page']))
         return;
     if(empty($_POST['create_new_form_post_type']))
         return;
+
+    if(!empty($_POST['create_new_page'])){
+        // Create post object
+        $mew_post = array(
+            'post_title'    => wp_strip_all_tags( $_POST['create_new_page'] ),
+            'post_content'  => '',
+            'post_status'   => 'publish',
+            'post_author'   => 1,
+            'post_type'     => 'page'
+        );
+
+// Insert the post into the database
+        $_POST['create_new_form_attached_page'] = wp_insert_post( $mew_post );
+    }
+
+
+
 
     $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = Array(
         'slug'              => sanitize_title($_POST['create_new_form_name']),
