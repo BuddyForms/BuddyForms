@@ -64,7 +64,7 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML(wp_dropdown_pages($args)));
 
-        $form->addElement(new Element_Textbox("Or you can create a new Page.", "create_new_page",array('id' => 'create_new_page', 'placeholder' => 'Enter Title here, e.g. My Movies')));
+        $form->addElement(new Element_Textbox("<br>Or you can create a new Page.<br><i>Enter the title of the new page here: </i>", "create_new_page",array('id' => 'create_new_page', 'placeholder' => 'e.g. My Movies', 'style' => 'width: 400px;')));
 
         $form->addElement(new Element_HTML('</div></div></div></div>'));
 

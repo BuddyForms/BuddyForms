@@ -106,8 +106,6 @@ class BuddyForms {
 
 		$buddyforms = get_option('buddyforms_options');
 
-		$buddyforms['hooks']['form_element'] = array('no','before_the_title','after_the_title','before_the_content','after_the_content');
-
 		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);
 
 	}

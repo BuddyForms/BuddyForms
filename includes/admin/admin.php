@@ -15,9 +15,9 @@ function buddyforms_create_menu() {
 
 	global $bp, $buddyforms;
 	
-	// echo '<pre>';
-	// print_r($buddyforms);
-	// echo '</pre>';
+/*	 echo '<pre>';
+	 print_r($buddyforms);
+	 echo '</pre>';*/
 	
 	if (isset($_POST["buddyforms_options"])) {
 		$buddyforms_options = $_POST["buddyforms_options"];
@@ -183,47 +183,54 @@ function buddyforms_settings_page() {
 					$form->addElement(new Element_HTML('
 			<div class="hero-unit-konrad">'));
 
-    $form->addElement(new Element_HTML('
-<table class="wp-list-table widefat fixed posts">
-	<thead>
-		<tr>
-			<th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-				<label class="screen-reader-text" for="cb-select-all-1">Select All</label>
-				<input id="cb-select-all-1" type="checkbox">
-			</th>
-			<th scope="col" id="name" class="manage-column column-comment sortable desc" style="">Name</th>
-			<th scope="col" id="slug" class="manage-column column-description" style="">Slug</th>
-			<th scope="col" id="attached-post-type" class="manage-column column-status" style="">Attached Post Type</th>
-			<th scope="col" id="attached-page" class="manage-column column-status" style="">Attached Page</th>
+    if(isset($buddyforms['buddyforms']) && count($buddyforms['buddyforms']) > 0 ){
+        $form->addElement(new Element_HTML('
+        <table class="wp-list-table widefat fixed posts">
+            <thead>
+                <tr>
+                    <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
+                        <label class="screen-reader-text" for="cb-select-all-1">Select All</label>
+                        <input id="cb-select-all-1" type="checkbox">
+                    </th>
+                    <th scope="col" id="name" class="manage-column column-comment sortable desc" style="">Name</th>
+                    <th scope="col" id="slug" class="manage-column column-description" style="">Slug</th>
+                    <th scope="col" id="attached-post-type" class="manage-column column-status" style="">Attached Post Type</th>
+                    <th scope="col" id="attached-page" class="manage-column column-status" style="">Attached Page</th>
 
-	</thead>'));
-foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-    $form->addElement(new Element_HTML(' <tr>
-        <th scope="row" class="check-column">
-            <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . $buddyform['name'] .'</label>
-            <input type="checkbox" name="bf_export_form_slugs[]" value="' . $buddyform['slug'] . '" id="aid-' . $buddyform['slug'] . '">
+            </thead>'));
+            foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+                $form->addElement(new Element_HTML(' <tr>
+                    <th scope="row" class="check-column">
+                        <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . $buddyform['name'] .'</label>
+                        <input type="checkbox" name="bf_export_form_slugs[]" value="' . $buddyform['slug'] . '" id="aid-' . $buddyform['slug'] . '">
 
 
-        </th>
-        <td class="slug column-slug">
+                    </th>
+                    <td class="slug column-slug">
 
-        <div class="showhim">' . $buddyform['slug'] .'<div class="showme"><a  href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a></div></div>
-        </td>'));
+                    <div class="showhim">' . $buddyform['slug'] .'<div class="showme"><a  href="#' . $buddyform['slug'] . '" data-toggle="tab">edit</a></div></div>
+                    </td>'
+                ));
 
-        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
-        $form->addElement(new Element_HTML( isset($buddyform['name']) ? $buddyform['name']: '--'));
-        $form->addElement(new Element_HTML('</td>'));
+                $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+                $form->addElement(new Element_HTML( isset($buddyform['name']) ? $buddyform['name']: '--'));
+                $form->addElement(new Element_HTML('</td>'));
 
-        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
-        $form->addElement(new Element_HTML( isset($buddyform['post_type']) ? $buddyform['post_type']: '--'));
-        $form->addElement(new Element_HTML('</td>'));
+                $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+                $form->addElement(new Element_HTML( isset($buddyform['post_type']) ? $buddyform['post_type']: '--'));
+                $form->addElement(new Element_HTML('</td>'));
 
-        $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
-        $form->addElement(new Element_HTML( isset($buddyform['attached_page']) ? $buddyform['attached_page']: '--'));
-        $form->addElement(new Element_HTML('</td>'));
+                $form->addElement(new Element_HTML('<td class="slug column-slug"> '));
+                $form->addElement(new Element_HTML( isset($buddyform['attached_page']) ? $buddyform['attached_page']: '--'));
+                $form->addElement(new Element_HTML('</td>'));
 
-}
-$form->addElement(new Element_HTML('</table>'));
+            }
+        $form->addElement(new Element_HTML('</table>'));
+    } else {
+        $form->addElement(new Element_HTML('<div class="bf-row"><div class="bf-half-col bf-left"><div class="bf-col-content bf_no_form"><h3>No Form here so far... ;-( <a href="' . get_admin_url() . 'admin.php?page=create-new-form" class="add-new-h3">Create one now!</a></h3></div></div></div>'));
+    }
+
+
 
 
 
