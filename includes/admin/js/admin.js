@@ -28,7 +28,7 @@ jQuery(document).ready(function(jQuery) {
             jQuery('[name="create_new_form_name"]').addClass('bf-ok');
         }
 
-        if( create_new_form_name === ''){
+        if( create_new_form_singular_name === ''){
             jQuery('[name="create_new_form_singular_name"]').removeClass('bf-ok');
             jQuery('[name="create_new_form_singular_name"]').addClass('bf-error');
         } else {
@@ -36,7 +36,7 @@ jQuery(document).ready(function(jQuery) {
             jQuery('[name="create_new_form_singular_name"]').addClass('bf-ok');
         }
 
-        if( create_new_form_name ){
+        if( create_new_form_attached_page === ''){
             jQuery('[name="create_new_form_attached_page"]').removeClass('bf-ok');
             jQuery('[name="create_new_form_attached_page"]').addClass('bf-error');
         } else {
@@ -44,7 +44,7 @@ jQuery(document).ready(function(jQuery) {
             jQuery('[name="create_new_form_attached_page"]').addClass('bf-ok');
         }
 
-        if( create_new_form_name === ''){
+        if( create_new_form_post_type){
             jQuery('[name="create_new_form_post_type"]').removeClass('bf-ok');
             jQuery('[name="create_new_form_post_type"]').addClass('bf-error');
         } else {
