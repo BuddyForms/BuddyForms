@@ -16,9 +16,8 @@ jQuery(document).ready(function(jQuery) {
 		var action = jQuery(this);
 		var create_new_form_name                    = jQuery('[name="create_new_form_name"]').val();
         var create_new_form_singular_name           = jQuery('[name="create_new_form_singular_name"]').val();
-        var create_new_form_attached_page           = jQuery('[name="create_new_form_attached_page"]').val();
         var create_new_form_post_type               = jQuery('[name="create_new_form_post_type"]').val();
-
+        var create_new_form_attached_page           = jQuery('[name="create_new_form_attached_page"]').val();
 
         if( create_new_form_name === ''){
             jQuery('[name="create_new_form_name"]').removeClass('bf-ok');
@@ -36,20 +35,20 @@ jQuery(document).ready(function(jQuery) {
             jQuery('[name="create_new_form_singular_name"]').addClass('bf-ok');
         }
 
+        if( create_new_form_post_type === 'none'){
+            jQuery('[name="create_new_form_post_type"]').removeClass('bf-ok');
+            jQuery('[name="create_new_form_post_type"]').addClass('bf-error');
+        } else {
+            jQuery('[name="create_new_form_post_type"]').removeClass('bf-error');
+            jQuery('[name="create_new_form_post_type"]').addClass('bf-ok');
+        }
+
         if( create_new_form_attached_page === ''){
             jQuery('[name="create_new_form_attached_page"]').removeClass('bf-ok');
             jQuery('[name="create_new_form_attached_page"]').addClass('bf-error');
         } else {
             jQuery('[name="create_new_form_attached_page"]').removeClass('bf-error');
             jQuery('[name="create_new_form_attached_page"]').addClass('bf-ok');
-        }
-
-        if( create_new_form_post_type){
-            jQuery('[name="create_new_form_post_type"]').removeClass('bf-ok');
-            jQuery('[name="create_new_form_post_type"]').addClass('bf-error');
-        } else {
-            jQuery('[name="create_new_form_post_type"]').removeClass('bf-error');
-            jQuery('[name="create_new_form_post_type"]').addClass('bf-ok');
         }
 
         var create_new_form_status                  = jQuery('[name="create_new_form_status"]').val();
