@@ -218,7 +218,7 @@ function buddyforms_settings_page() {
             }
         $form->addElement(new Element_HTML('</table>'));
     } else {
-        $form->addElement(new Element_HTML('<div class="bf-row"><div class="bf-half-col bf-left"><div class="bf-col-content bf_no_form"><h3>No Form here so far... ;-( <a href="' . get_admin_url() . 'admin.php?page=create-new-form" class="add-new-h3">Create one now!</a></h3></div></div></div>'));
+        $form->addElement(new Element_HTML('<div class="bf-row"><div class="bf-half-col bf-left"><div class="bf-col-content bf_no_form"><h3 style="margin-top: 30px;">No Forms here so far...</h3> <a href="' . get_admin_url() . 'admin.php?page=create-new-form" class="button-primary add-new-h3" style="font-size: 15px;">Create A New Form</a></div></div></div>'));
     }
 
 
