@@ -29,7 +29,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			<div class="item">
 				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
-				<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
+				<div class="item-desc"><?php //echo get_the_excerpt(); ?></div>
 
 			</div>
 

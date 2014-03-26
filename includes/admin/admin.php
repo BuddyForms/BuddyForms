@@ -18,43 +18,10 @@ function buddyforms_create_menu() {
 /*	 echo '<pre>';
 	 print_r($buddyforms);
 	 echo '</pre>';*/
-	
-	if (isset($_POST["buddyforms_options"])) {
-		$buddyforms_options = $_POST["buddyforms_options"];
-
-		foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
-
-			$slug = $buddyform['slug'];
-
-			if($slug != $key){
-				$buddyforms_options['buddyforms'][$slug] = $buddyform;
-				$buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
-				unset($buddyforms_options['buddyforms'][$key]);
-				$buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);
-			}
-
-            if(isset($buddyform['form_fields'])){
-                foreach ( $buddyform['form_fields'] as $field_key => $field ) {
-                    if(empty($field['slug']))
-                        $buddyforms_options['buddyforms'][$key]['form_fields'][$field_key]['slug'] =  sanitize_title($field['name']);
-                }
-            }
-
-		}
-
-
-
-
-        $update_option = false;
-		$update_option = update_option("buddyforms_options", $buddyforms_options);
-
-		add_action( 'admin_notices', create_function('', 'echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";') );
-
-	}
 
 	add_menu_page( 'BuddyForms', 'BuddyForms', 'edit_posts', 'buddyforms_options_page', 'buddyforms_options_content' );
-	add_submenu_page( 'buddyforms_options_page', 'Add New', 'Add New', 'edit_posts', 'create-new-form', 'bf_import_export_screen' );
-
+    add_submenu_page( 'buddyforms_options_page', 'Add New', 'Add New', 'edit_posts', 'create-new-form', 'bf_import_export_screen' );
+    add_submenu_page( 'buddyforms_options_page', 'Add-ons', 'Add-ons', 'edit_posts', 'bf_add_ons', 'bf_add_ons_screen' );
 }  
 add_action('admin_menu', 'buddyforms_create_menu');
 
@@ -71,11 +38,35 @@ function buddyforms_options_content() {
         wp_die('You do not have sufficient permissions to access this page.');
     }
 
-    global $bp, $buddyforms;
+    if (isset($_POST["buddyforms_options"])) {
+        $buddyforms_options = $_POST["buddyforms_options"];
 
-     /*echo '<pre>';
-     print_r($buddyforms);
-     echo '</pre>';*/
+        foreach ($buddyforms_options['buddyforms'] as $key => $buddyform) {
+
+            $slug = $buddyform['slug'];
+
+            if($slug != $key){
+                $buddyforms_options['buddyforms'][$slug] = $buddyform;
+                $buddyforms_options['buddyforms'][$slug]['slug'] = $slug;
+                unset($buddyforms_options['buddyforms'][$key]);
+                $buddyforms_options = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);
+            }
+
+            if(isset($buddyform['form_fields'])){
+                foreach ( $buddyform['form_fields'] as $field_key => $field ) {
+                    if(empty($field['slug']))
+                        $buddyforms_options['buddyforms'][$key]['form_fields'][$field_key]['slug'] =  sanitize_title($field['name']);
+                }
+            }
+
+        }
+
+        $update_option = update_option("buddyforms_options", $buddyforms_options);
+
+        echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>Settings saved.</strong></p></div>";
+
+    }
+
     ?>
 		
 	<div id="bf_admin_wrap" class="wrap">
