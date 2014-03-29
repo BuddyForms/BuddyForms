@@ -308,14 +308,13 @@ function bf_post_control($args,$hasError){
 
 function bf_set_post_thumbnail($post_id,$hasError){
 // Featured image? If yes, save via media_handle_upload and set the post thumbnail
-	if( ! empty( $_FILES ) ) {
+	if( $_FILES['file']['size'] > 0 ) {
 
-
-		require_once(ABSPATH . 'wp-admin/includes/admin.php');  
-        $id = media_handle_upload('async-upload', $post_id ); //post id of Client Files page  
-
+        require_once(ABSPATH . 'wp-admin/includes/admin.php');
+        $id = media_handle_upload('file', $post_id ); //post id of Client Files page
         unset( $_FILES );
-        if( is_wp_error( $id ) ) {  
+
+        if( is_wp_error( $id ) ) {
             $errors['upload_error'] = $id;  
             $id = false;  
         } 
@@ -323,13 +322,14 @@ function bf_set_post_thumbnail($post_id,$hasError){
         $set_post_thumbnail =  set_post_thumbnail($post_id, $id);
       
        	if( $set_post_thumbnail == false){
-           	if( $errors ) {  
-	            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';  
+           	if( $errors ) {
+	            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';
 	        }  
 			$hasError = true;
        	}
-	}	
-	return $hasError;
+        return $hasError;
+	}
+
 }
 
 ?>

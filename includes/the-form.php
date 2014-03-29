@@ -123,12 +123,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 	if( isset( $_POST['submitted'] ) ) {
 			
 		$hasError = false;
-		
-		if($buddyforms['buddyforms'][$form_slug]['form_type'] == 'mail_form'){
-			$error_message = __('Mail Forms are not supported in this Version and this is just a placeholder!', 'buddyforms');
-			echo '<div class="error alert">'.$error_message.'</div>';
-			return;	
-		} 
+
 			
 		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
 		
@@ -165,7 +160,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if(isset($customfields))
 			bf_update_post_meta($post_id, $customfields);
 		
-		//$hasError = bf_set_post_thumbnail($post_id, $hasError);
+		$hasError = bf_set_post_thumbnail($post_id, $hasError);
 		
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
@@ -284,6 +279,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 					} else {
 						$file_attr = array('id' => "file");
 					}
+
+                    $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
+
 					$form->addElement(new Element_File('Featured Image:', 'file', $file_attr));
 
 				}

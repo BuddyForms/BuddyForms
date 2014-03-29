@@ -1,6 +1,6 @@
-<?php 
+<?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
-	get_currentuserinfo();	
+	get_currentuserinfo();
 
 if ( $the_lp_query->have_posts() ) : ?>
 
@@ -19,7 +19,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			<div class="item-avatar">
 				
 				<?php 
-				$post_thumbnail = get_the_post_thumbnail( array(70,70),array('class'=>"avatar")); 
+				$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(70,70),array('class'=>"avatar"));
 				$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail);
 				?>
 				
@@ -29,7 +29,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			<div class="item">
 				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
-				<div class="item-desc"><?php //echo get_the_excerpt(); ?></div>
+				<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
 			</div>
 
@@ -58,6 +58,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 
         <?php do_action( 'bf_after_loop_item' ) ?>
 
+
     <?php endwhile; ?>
 
     <div class="navigation">
@@ -78,3 +79,5 @@ if ( $the_lp_query->have_posts() ) : ?>
 	</div>
 
 <?php endif; ?>
+<?php wp_reset_query(); ?>
+<?php wp_reset_postdata(); ?>
