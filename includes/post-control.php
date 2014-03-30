@@ -308,7 +308,7 @@ function bf_post_control($args,$hasError){
 
 function bf_set_post_thumbnail($post_id,$hasError){
 // Featured image? If yes, save via media_handle_upload and set the post thumbnail
-	if( $_FILES['file']['size'] > 0 ) {
+	if( isset( $_FILES['file']['size'] ) && $_FILES['file']['size'] > 0 ) {
 
         require_once(ABSPATH . 'wp-admin/includes/admin.php');
         $id = media_handle_upload('file', $post_id ); //post id of Client Files page

@@ -225,12 +225,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 			}
 			
 			$editpost_content_val = false;
-			if( isset( $_POST['editpost_content'] ) ){
-				$editpost_content_val = $_POST['editpost_content'];
-			} else {
+			//if( isset( $_POST['editpost_content'] ) ){
+			//	$editpost_content_val = $_POST['editpost_content'];
+			//} else {
 				if(!empty($the_post->post_content))
 					$editpost_content_val = $the_post->post_content;
-			}
+			//}
 			
 			$form_html .= '<div class="form_wrapper">';
 
