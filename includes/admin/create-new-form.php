@@ -7,12 +7,6 @@ function bf_import_export_screen(){ ?>
 
         <?php
 
-        global $bp, $buddyforms;
-
-        // Get all needed values
-        BuddyForms::set_globals();
-        $buddyforms_options = $buddyforms; //get_option('buddyforms_options');
-
         // Get all post types
         $args=array(
             'public' => true,

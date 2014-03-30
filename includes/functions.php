@@ -42,7 +42,7 @@ function buddyforms_allow_subscriber_uploads() {
  * @since 0.3 beta
  */
 add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
-function my_edit_post_link( $url, $post_ID, $context) {
+function my_edit_post_link( $url, $post_ID) {
 	global $buddyforms, $current_user;
 	
 	if(is_admin())
@@ -127,14 +127,19 @@ function buddyforms_attached_page_query_vars($query_vars){
  */
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
-	global $wp_query, $buddyforms, $bp;
-	
+	global $wp_query, $buddyforms;
+
+/*	echo '<pre>';
+	print_r($wp_query);
+	echo '</pre>';*/
+
+
 	if(is_admin())
 		return $content;
 		
 	if(!isset($buddyforms['buddyforms']))
 		return;
-	
+
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
     	$form_slug = '';
@@ -175,11 +180,11 @@ function buddyforms_attached_page_content($content){
 			$new_content .= $bf_form;		
 		}
 		
-	} elseif(isset($wp_query->query_vars['pagename']) ){
-			
+	} elseif(isset($wp_query->query_vars['pagename'])){
+
 		foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 				
-			if(isset($buddyform['attached_page']))
+			if(isset($buddyform['attached_page']) && $wp_query->query_vars['pagename'] == $buddyform['attached_page'])
 				$post_data = get_post($buddyform['attached_page'], ARRAY_A);
 			
 			if(isset($post_data['post_name']) && $post_data['post_name'] == $wp_query->query_vars['pagename']){

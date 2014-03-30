@@ -79,5 +79,3 @@ if ( $the_lp_query->have_posts() ) : ?>
 	</div>
 
 <?php endif; ?>
-<?php wp_reset_query(); ?>
-<?php wp_reset_postdata(); ?>

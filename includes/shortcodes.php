@@ -10,7 +10,7 @@ add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
  */
 add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
-	global $current_user, $the_lp_query, $bp, $buddyforms, $form_slug;
+	global $the_lp_query, $buddyforms, $form_slug;
 
     extract(shortcode_atts(array(
         'post_type' => '',
