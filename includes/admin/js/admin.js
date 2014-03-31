@@ -1,4 +1,10 @@
-jQuery(document).ready(function(jQuery) {    
+jQuery(document).ready(function(jQuery) {
+
+    var hash = window.location.hash;
+    if(hash) {
+        var activeTab = jQuery('[href=' + hash + ']');
+        activeTab && activeTab.tab('show');
+    }
 
 	if (typeof(Zenbox) !== "undefined") {
 		Zenbox.init({
@@ -81,11 +87,10 @@ jQuery(document).ready(function(jQuery) {
                 "create_new_form_edit_link"                 : create_new_form_edit_link
             },
 			success: function(data){
-
                 if(data != false){
                     var url = window.location.href;
                     url = url.slice( 0, url.indexOf('?') );
-                    window.location.href = url + '?page=buddyforms_options_page';
+                    window.location.href = url + '?page=buddyforms_options_page#' + data;
                 }
 
 			},
