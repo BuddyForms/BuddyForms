@@ -216,21 +216,20 @@ function buddyforms_create_edit_form( $args = array() ) {
 			ob_clean();
 		else :
 
+            $editpost_title = '';
 			if( isset( $_POST['editpost_title'])) {
-				if(function_exists('stripslashes')) {
 					$editpost_title = stripslashes($_POST['editpost_title']);
-				} else { $editpost_title = $_POST['editpost_title']; }
 			} else {
 				$editpost_title =  $the_post->post_title;
 			}
 			
 			$editpost_content_val = false;
-			//if( isset( $_POST['editpost_content'] ) ){
-			//	$editpost_content_val = $_POST['editpost_content'];
-			//} else {
+			if( isset( $_POST['editpost_content'] ) ){
+				$editpost_content_val = stripslashes($_POST['editpost_content']);
+			} else {
 				if(!empty($the_post->post_content))
 					$editpost_content_val = $the_post->post_content;
-			//}
+			}
 			
 			$form_html .= '<div class="form_wrapper">';
 
