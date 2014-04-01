@@ -4,7 +4,7 @@ Contributors: Sven Lehnert, Konrad Sroka,
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
 Tested up to: WordPress 3.5.1, BuddyPress 1.7.1
-Stable tag: 0.9.3
+Stable tag: 1.0
 
 
 
@@ -39,8 +39,4 @@ Login with your account from http://themekraft.com.
 
 // Changelook
 
-0.9.3
-    rewrite the code. getting closer to a clean logical core.
-
-0.9.2:
-    fixed debugger issues and some bugs reported by users. Thanks for testing and bug reporting to Slava and DesignSEO
+finale 1.0 Version
