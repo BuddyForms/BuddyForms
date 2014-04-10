@@ -159,12 +159,14 @@ function buddyforms_create_edit_form( $args = array() ) {
 		// Check if the post has post meta / custom fields 
 		if(isset($customfields))
 			bf_update_post_meta($post_id, $customfields);
-		
-		$hasError = bf_set_post_thumbnail($post_id, $hasError);
-		
+
+        //print_r($_FILES);
+
+        $hasError = bf_set_post_thumbnail($post_id, $hasError);
+
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
-		
+
 		// Display the message  
 		if( empty( $hasError ) ) :
 			

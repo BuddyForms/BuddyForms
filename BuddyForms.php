@@ -40,7 +40,7 @@ class BuddyForms {
 		// Run the activation function
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
-		define('buddyforms', '0.9.3');
+		define('buddyforms', '1.0');
 
 		add_action('init'					, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
