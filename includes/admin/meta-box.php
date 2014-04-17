@@ -1,47 +1,41 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: svenl77
- * Date: 03.02.14
- * Time: 22:53
- */
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function buddyforms_add_custom_box() {
+function bf_add_custom_box() {
     global $buddyforms;
 
-/*    echo '<pre>',
-    print_r($buddyforms);
-    echo '</pre>',*/
-
-
-    $screens = array( 'post', 'page' );
+    $screens = Array();
+    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+        if(isset($buddyform['post_type']))
+            array_push($screens, $buddyform['post_type']);
+    }
 
     foreach ( $screens as $screen ) {
 
         add_meta_box(
-            'buddyforms_sectionid',
-            __( 'Attach BuddyForm', 'buddyforms' ),
-            'buddyforms_inner_custom_box',
+            'bf_sectionid',
+            __( 'Attache a BuddyForm', 'buddyforms' ),
+            'bf_inner_custom_box',
             $screen,
-            'side', 'high'
+            'side',
+            'high'
         );
     }
 }
-add_action( 'add_meta_boxes', 'buddyforms_add_custom_box' );
+add_action( 'add_meta_boxes', 'bf_add_custom_box' );
 
 /**
  * Prints the box content.
  *
  * @param WP_Post $post The object for the current post/page.
  */
-function buddyforms_inner_custom_box( $post ) {
+function bf_inner_custom_box( $post ) {
     global $buddyforms;
-    $buddyforms_options = $buddyforms; //get_option('buddyforms_options');
+
     // Add an nonce field so we can check for it later.
-    wp_nonce_field( 'buddyforms_inner_custom_box', 'buddyforms_inner_custom_box_nonce' );
+    wp_nonce_field( 'bf_inner_custom_box', 'bf_inner_custom_box_nonce' );
 
     /*
      * Use get_post_meta() to retrieve an existing value
@@ -50,17 +44,22 @@ function buddyforms_inner_custom_box( $post ) {
     $value = get_post_meta( $post->ID, '_bf_form_slug', true );
 
     echo '<label for="_bf_form_slug">';
-    _e( "Select a Form", 'buddyforms' );
+    _e( "Select the form", 'bf_textdomain' );
     echo '</label> ';
+    //echo '<input type="text" id="_bf_form_slug" name="_bf_form_slug" value="' . esc_attr( $value ) . '" size="25" />';
+    echo ' <p><select name="_bf_form_slug" id="_bf_form_slug">';
+    echo ' <option value="none" '.$selected.' > none </option>';
 
-    echo '<select id="_bf_form_slug" name="_bf_form_slug" >';
-    echo '<option value="none">none</option>';
-    if(isset($buddyforms_options['buddyforms'])){
-        foreach( $buddyforms_options['buddyforms'] as $key => $buddyform) {
-            echo  '<option value="' .$buddyform['slug']. '"' . selected(esc_attr( $value ),$buddyform['slug'] ) . '>'.$buddyform['name'].'</option>';
-        }
+    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+        $selected = '';
+        if($buddyform['slug'] == $value)
+            $selected = 'selected';
+
+        if($buddyform['post_type'] == get_post_type($post))
+            echo ' <option value="' . $buddyform['slug'] . '" '.$selected.' >' . $buddyform['name'] . '</option>';
     }
-    echo '</select>';
+
+    echo '</select></p>';
 }
 
 /**
@@ -68,7 +67,7 @@ function buddyforms_inner_custom_box( $post ) {
  *
  * @param int $post_id The ID of the post being saved.
  */
-function buddyforms_save_postdata( $post_id ) {
+function bf_save_postdata( $post_id ) {
 
     /*
      * We need to verify this came from the our screen and with proper authorization,
@@ -76,13 +75,13 @@ function buddyforms_save_postdata( $post_id ) {
      */
 
     // Check if our nonce is set.
-    if ( ! isset( $_POST['buddyforms_inner_custom_box_nonce'] ) )
+    if ( ! isset( $_POST['bf_inner_custom_box_nonce'] ) )
         return $post_id;
 
-    $nonce = $_POST['buddyforms_inner_custom_box_nonce'];
+    $nonce = $_POST['bf_inner_custom_box_nonce'];
 
     // Verify that the nonce is valid.
-    if ( ! wp_verify_nonce( $nonce, 'buddyforms_inner_custom_box' ) )
+    if ( ! wp_verify_nonce( $nonce, 'bf_inner_custom_box' ) )
         return $post_id;
 
     // If this is an autosave, our form has not been submitted, so we don't want to do anything.
@@ -109,4 +108,4 @@ function buddyforms_save_postdata( $post_id ) {
     // Update the meta field in the database.
     update_post_meta( $post_id, '_bf_form_slug', $mydata );
 }
-add_action( 'save_post', 'buddyforms_save_postdata' );
+add_action( 'save_post', 'bf_save_postdata' );
