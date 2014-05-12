@@ -182,7 +182,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					$element = new Element_HTML($dropdown);
 					bf_add_element($form, $element);
 					
-					if(isset($customfield['creat_new_tax'])){
+					if(isset($customfield['creat_new_tax']) ){
 						$element = new Element_Textbox('Create a new ' . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input'));
 						bf_add_element($form, $element);
 					}
@@ -234,7 +234,7 @@ function bf_update_post_meta($post_id, $customfields){
 
 			}
 			
-			if(isset($_POST[$customfield['slug'].'_creat_new_tax'])){
+			if( isset( $_POST[$customfield['slug'].'_creat_new_tax']) && !empty($_POST[$customfield['slug'].'_creat_new_tax'] ) ){
 				$wp_insert_term = wp_insert_term($_POST[$customfield['slug'].'_creat_new_tax'],$customfield['taxonomy']);
 				wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 			}
