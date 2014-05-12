@@ -3,8 +3,8 @@
 Contributors: Sven Lehnert, Konrad Sroka, 
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
-Tested up to: WordPress 3.5.1, BuddyPress 1.7.1
-Stable tag: 1.0
+Tested up to: WordPress 39.1, BuddyPress 2.x
+Stable tag: 1.0.1
 
 
 
