@@ -287,7 +287,7 @@ function buddyforms_view_form_fields($args){
             $creat_new_tax = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax']))
                 $creat_new_tax = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax'];
-            $form_fields['left']['creat_new_tax'] = new Element_Checkbox("User can creat new?:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $creat_new_tax));
+            $form_fields['left']['creat_new_tax'] = new Element_Checkbox("User can create new?:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $creat_new_tax));
             break;
         case 'Hidden':
             unset($form_fields);
@@ -319,6 +319,8 @@ function buddyforms_view_form_fields($args){
             break;
 
     }
+
+    $form_fields = apply_filters( 'buddyforms_formbuilder_fields_options' , $form_fields,$form_slug,$field_id);
 
     ob_start(); ?>
     <li id="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id.' '. $field_type ?>">
