@@ -39,19 +39,9 @@ function buddyforms_delete_post(){
 }
 
 function bf_add_element($form, $element){
-	if(is_object($form)) {
+
 		$form->addElement($element);
-	} else {
-		echo '
-		<div class="bf_field_group bf_form_title">
-			<div class="bf_field_group">
-				<label for="editpost-element-' . $element->getAttribute('name') . '">' .  $element->getLabel() . '</label>
-				<div class="bf_inputs">';
-					$element->render();
-		echo 	'</div>
-			</div>
-		</div>';
-	}
+
 }
 
 function bf_post_meta($form, $form_slug, $post_id, $customfields){
@@ -167,18 +157,29 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
 					$dropdown = wp_dropdown_categories($args);
 
-					if (isset($customfield['multiple']) && is_array( $customfield['multiple'] ))
-						$dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
+                    if (isset($customfield['multiple']) && is_array( $customfield['multiple'] ))
+                        $dropdown = str_replace('id=', 'multiple="multiple" id=', $dropdown);
 
-					if (is_array($customfield_val)) {
+                    if (isset($customfield['required']) && is_array( $customfield['required'] ))
+                        $dropdown = str_replace('id=', 'required id=', $dropdown);
+
+                    if (is_array($customfield_val)) {
 						foreach ($customfield_val as $value) {
 							$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
 						}
 					}
-					
-					$element = new Element_HTML('<label>'.$customfield['name'] . ':</label><p><i>' . $customfield['description'] . '</i></p>');
-					bf_add_element($form, $element);
-					
+                    $required = '';
+                    if(isset($customfield['required']) && is_array( $customfield['required'] )){
+                        $required = '<span class="required">* </span>';
+                    }
+                    $dropdown = '<div class="bf_field_group">
+                        <label for="editpost-element-' . $key . '">
+                            '.$required.$customfield['name'] . ':
+                        </label>
+                        <div class="bf_inputs">' . $dropdown . ' </div>
+                        <span class="help-inline">' . $customfield['description'] . '</span>
+                    </div>';
+
 					$element = new Element_HTML($dropdown);
 					bf_add_element($form, $element);
 					
@@ -192,7 +193,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 				default:
 					
 					// hook to add your form element
-					apply_filters('buddyforms_create_edit_form_display_element',$form,$post_id,$form_slug,$customfield,$customfield_val);
+					apply_filters('buddyforms_create_edit_form_display_element',$form, $post_id, $form_slug, $customfield, $customfield_val);
 					
 					break;
 
