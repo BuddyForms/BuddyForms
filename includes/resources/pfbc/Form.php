@@ -322,7 +322,7 @@ class Form extends Base {
 		/*When the form is submitted, disable all submit buttons to prevent duplicate submissions.*/
 		echo <<<JS
 		jQuery("#$id").bind("submit", function() { 
-			jQuery(this).find("input[type=submit]").attr("disabled", "disabled"); 
+			jQuery(this).find("input[type=submit]").attr("disabled", "disabled");
 		});
 JS;
 
@@ -356,7 +356,7 @@ JS;
 			$this->errorView->applyAjaxErrorResponse();
 
 			echo <<<JS
-							jQuery("html, body").animate({ scrollTop: jQuery("#$id").offset().top }, 500 ); 
+							jQuery("html, body").animate({ scrollTop: jQuery("#$id").offset().top }, 500 );
 						} 
 						else {
 JS;
