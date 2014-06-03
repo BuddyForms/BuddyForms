@@ -3,8 +3,8 @@
 Contributors: Sven Lehnert, Konrad Sroka, 
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
-Tested up to: WordPress 39.1, BuddyPress 2.x
-Stable tag: 1.0.2
+Tested up to: WordPress 3.9.1, BuddyPress 2.x
+Stable tag: 1.0.3
 
 
 
@@ -39,4 +39,9 @@ Login with your account from http://themekraft.com.
 
 // Changelook
 
-finale 1.0 Version
+= 1.0.3 =
+editing your pending/draft posts from the frontend.
+fixed some css issues
+
+= 1.0 =
+final 1.0 version

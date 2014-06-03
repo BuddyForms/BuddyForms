@@ -139,7 +139,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 		if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ){
 			$action = 'update';
-			$post_status = 'publish';
+			$post_status = get_post_status( $_POST['new_post_id'] );
 		}
 			
 		$args = Array(
