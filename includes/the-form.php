@@ -249,9 +249,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if(isset($form_notice))
 					$form->addElement(new Element_HTML($form_notice));
 				
-				$form->addElement(new Element_HTML('<div class="bf_field_group bf_form_title">'));
 				$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
-				
 
 				ob_start();
 					$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
@@ -264,11 +262,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 					}
 					$wp_editor = ob_get_contents();
 				ob_clean();
-				
+
 				$wp_editor = '<div class="bf_field_group bf_form_content"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
 				$form->addElement(new Element_HTML($wp_editor));
-				
-				// if the form have custom field to save as post meta data they get displayed here 
+
+				// if the form have custom field to save as post meta data they get displayed here
 				if(isset($customfields))
 					bf_post_meta($form, $form_slug, $post_id, $customfields);
 				
@@ -307,7 +305,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 
 			 }
-			$form_html .= '</div>';	
+			$form_html .= '</div>';
 		endif;
 		
 	echo $form_html;
