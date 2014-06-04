@@ -6,6 +6,9 @@
 function bf_add_custom_box() {
     global $buddyforms;
 
+    if(!(isset($buddyforms['buddyforms']) || is_array($buddyforms['buddyforms'])))
+        return;
+
     $screens = Array();
     foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
         if(isset($buddyform['post_type']))

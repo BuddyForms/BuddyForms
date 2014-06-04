@@ -4,7 +4,7 @@
  Plugin Name: BuddyForms
  Plugin URI:  http://buddyforms.com
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- Version: 1.0.3
+ Version: 1.0.4
  Author: Sven Lehnert
  Author URI: http://themekraft.com/members/svenl77/
  Licence: GPLv3
@@ -40,7 +40,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '1.0.3';
+	public $version = '1.0.4';
 
 	/**
 	 * @var string
@@ -58,7 +58,7 @@ class BuddyForms {
 		// Run the activation function
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
-		define('buddyforms', '1.0');
+		define('buddyforms', '1.0.4');
 
 		add_action('init'					, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
