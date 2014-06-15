@@ -48,9 +48,9 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 	
 	if (!isset($customfields))
 		return;
-			
+
 	foreach ($customfields as $key => $customfield) :
-		
+
 		if(isset($customfield['slug']))
 			$slug = sanitize_title($customfield['slug']);	
 			

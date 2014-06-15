@@ -294,7 +294,7 @@ function buddyforms_settings_page() {
 										<p><a href="Hidden/'.$buddyform['slug'].'" class="action">Hidden</a></p>
 										<p><a href="Comments/'.$buddyform['slug'].'/unique" class="action">Comments</a></p>
 										'));
-										$form = apply_filters('buddyforms_add_form_element_in_sidebar', $form, $buddyform['slug']);
+										$form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
 									$form->addElement(new Element_HTML('
 									</div>
 								</div>
