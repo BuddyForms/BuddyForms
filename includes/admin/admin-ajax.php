@@ -311,7 +311,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
             $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
             //$form_fields['left'][comments]	= new Element_Select("Comments open?", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][comments]", array('open','closed'), array('value' => $buddyforms_options['buddyforms'][$form_slug][form_fields][$field_id][comments]));
-            $form_fields['left']['html']		= new Element_HTML('There are no settings needed so far You can change theh global comment settings in the sidebar, and with the comments element added to the form the user has the posebility to overwrite the global settings and open close comments from ther eown post');
+            $form_fields['left']['html']		= new Element_HTML('There are no settings needed so far. You can change the global comment settings in the form control section, and with the comments element added to the form the user has the possibility to overwrite the global settings and open/close comments for their own post');
 
             break;
         default:
