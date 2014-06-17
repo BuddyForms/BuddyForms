@@ -4,7 +4,7 @@ Contributors: Sven Lehnert, Konrad Sroka,
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
 Tested up to: WordPress 3.9.1, BuddyPress 2.x
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 
 
@@ -38,6 +38,10 @@ You can also create support tickets there.
 Login with your account from http://themekraft.com. 
 
 // Changelook
+
+= 1.0.5 =
+Rename Hooks
+Spelling correction
 
 = 1.0.4 =
 Fixed a bug with the meta-box, there was an error if no form was selected.
