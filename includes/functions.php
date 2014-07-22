@@ -127,14 +127,7 @@ function buddyforms_attached_page_query_vars($query_vars){
  */
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
-	global $wp_query, $buddyforms, $the_lp_query;
-
-/*    	echo '<pre>';
-        print_r( $wp_query->query_vars );
-        echo '</pre>';
-
-        echo 'page' . get_query_var( 'page' );*/
-
+	global $wp_query, $buddyforms;
 
 	if(is_admin())
 		return $content;

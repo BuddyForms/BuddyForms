@@ -169,6 +169,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 
         $hasError = bf_set_post_thumbnail($post_id, $hasError);
 
+        $hasError = bf_media_handle_upload($post_id);
+
+
 		// Save the Form slug as post meta 
 		update_post_meta($post_id, "_bf_form_slug", $form_slug);
 
@@ -275,20 +278,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if(isset($customfields))
 					bf_post_meta($form, $form_slug, $post_id, $customfields);
 				
-				// Display upload field for featured image if required is selected for this form
-				if (isset($buddyforms['buddyforms'][$form_slug]['featured_image']['required'][0])){
 
-					if ($post_id == 0) {
-						$file_attr = array("required" => 1, 'id' => "file");
-					} else {
-						$file_attr = array('id' => "file");
-					}
-
-                    $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
-
-					$form->addElement(new Element_File(__('Featured Image:', 'buddyforms'), 'file', $file_attr));
-
-				}
 	
 				$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 				$form->addElement(new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));

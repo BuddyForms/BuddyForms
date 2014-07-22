@@ -135,8 +135,41 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					$element = new Element_Url($customfield['name'], $slug, $element_attr);
 					bf_add_element($form, $element);
 					break;
+                case 'FeaturedImage':
 
-				case 'Taxonomy' :
+                    // Display upload field for featured image if required is selected for this form
+                    if($customfield['required']){
+                        $file_attr = array("required" => 1, 'id' => "file");
+                    } else {
+                        $file_attr = array('id' => "file");
+                    }
+
+                    $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
+
+                    $form->addElement(new Element_File(__('Featured Image:', 'buddyforms'), 'file', $file_attr));
+
+
+
+                    break;
+                case 'File':
+
+                    // Display upload field for featured image if required is selected for this form
+                    if($customfield['required']){
+                        $file_attr = array("required" => 1, 'id' => "media");
+                    } else {
+                        $file_attr = array('id' => "media");
+                    }
+
+                    $form->addElement(new Element_File(__('File:', 'buddyforms'), 'media', $file_attr));
+
+                    ob_start();
+                    wp_multi_file_uploader($post_id);
+                    $wp_multi_file_uploader = ob_get_contents();
+                    ob_clean();
+                    $form->addElement(new Element_HTML( $wp_multi_file_uploader ));
+
+                    break;
+                case 'Taxonomy' :
 
                     $args = array(
                         'hide_empty'        => 0,
@@ -315,6 +348,7 @@ function bf_post_control($args,$hasError){
 
 function bf_set_post_thumbnail($post_id,$hasError){
 // Featured image? If yes, save via media_handle_upload and set the post thumbnail
+
 	if( isset( $_FILES['file']['size'] ) && $_FILES['file']['size'] > 0 ) {
 
         require_once(ABSPATH . 'wp-admin/includes/admin.php');
@@ -338,5 +372,21 @@ function bf_set_post_thumbnail($post_id,$hasError){
 	}
 
 }
+function bf_media_handle_upload($post_id){
 
+    if( isset( $_FILES['media']['size'] ) && $_FILES['media']['size'] > 0 ) {
+
+        require_once(ABSPATH . 'wp-admin/includes/admin.php');
+        $attachment_id = media_handle_upload('media', $post_id ); //post id of Client Files page
+        //unset( $_FILES );
+
+        if ( is_wp_error( $attachment_id ) ) {
+            echo 'There was an error uploading the image.';
+        } else {
+            echo 'The image was uploaded successfully!';
+        }
+
+    }
+
+}
 ?>

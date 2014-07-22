@@ -210,6 +210,8 @@ function buddyforms_settings_page() {
 										<p><a href="Hidden/'.$buddyform['slug'].'" class="action">' . __('Hidden', 'buddyforms') .'</a></p>
 										<p><a href="Comments/'.$buddyform['slug'].'/unique" class="action">' . __('Comments', 'buddyforms') .'</a></p>
 										<p><a href="Status/'.$buddyform['slug'].'/unique" class="action">' . __('Post Status', 'buddyforms') .'</a></p>
+										<p><a href="FeaturedImage/'.$buddyform['slug'].'/unique" class="action">' . __('Featured Image', 'buddyforms') .'</a></p>
+                                        <p><a href="File/'.$buddyform['slug'].'/unique" class="action">' . __('File', 'buddyforms') .'</a></p>
 										'));
 										$form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
 									$form->addElement(new Element_HTML('
@@ -247,14 +249,7 @@ function buddyforms_settings_page() {
 
 									$form->addElement(new Element_HTML('<div class="post_form_'.$buddyform['slug'].' form_type_settings" >'));
 										$form->addElement(new Element_HTML('<div class="buddyforms_accordion_right">'));
-											$form->addElement(new Element_HTML('<div class="innerblock featured-image">'));
-											
-											$required = 'false';
-											if(isset($buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required']))
-												$required = $buddyforms_options['buddyforms'][$buddyform['slug']]['featured_image']['required'];
-											
-											$form->addElement( new Element_Checkbox("<b>". __('Featured Image','buddyforms') . "</b>","buddyforms_options[buddyforms][".$buddyform['slug']."][featured_image][required]",array('Required'),array('value' => $required)));
-											$form->addElement(new Element_HTML('</div>'));
+
 											$form->addElement(new Element_HTML('<div class="innerblock revision">'));
 											
 											$revision = 'false';
