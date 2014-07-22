@@ -3,7 +3,8 @@
 function bf_import_export_screen(){ ?>
 
     <div class="wrap">
-        <h2>Add New Form</h2>
+
+        <h2><?php _e('Add New Form', 'buddyforms') ?></h2>
 
         <?php
 
@@ -33,15 +34,15 @@ function bf_import_export_screen(){ ?>
     // START CONTENT ,array("required" => 1)
 
         $form->addElement(new Element_HTML('<div id="titlediv"><div id="titlewrap">'));
-            $form->addElement(new Element_Textbox("", "create_new_form_name",array('id' => 'title', 'placeholder' => 'Enter Title here, e.g. Movies','required' => 1)));
+            $form->addElement(new Element_Textbox("", "create_new_form_name",array('id' => 'title', 'placeholder' => __('Enter Title here, e.g. Movies', 'buddyforms'),'required' => 1)));
             $form->addElement(new Element_HTML('</div>'));
-            $form->addElement(new Element_Textbox("", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => 'Enter Singluar Name here, e.g. Movie', 'required' => 1)));
+            $form->addElement(new Element_Textbox("", "create_new_form_singular_name",array('id' => 'create_new_form_singular_name', 'placeholder' => __('Enter Singluar Name here, e.g. Movie', 'buddyforms'), 'required' => 1)));
         $form->addElement(new Element_HTML('</div>'));
 
 
         $form->addElement(new Element_HTML('<div class="bf-row"><div class="bf-half-col bf-left"><div class="bf-col-content">
-                                            <h4>Post Type</h4>
-                                            <p class="bf-main-desc">Select which post type should be created on form submission.</p>'));
+                                            <h4>'.__('Post Type', 'buddyforms').'</h4>
+                                            <p class="bf-main-desc">'.__('Select which post type should be created on form submission.', 'buddyforms').'</p>'));
         $form->addElement( new Element_Select("", "create_new_form_post_type", $post_types,array("required" => 1)));
 
         $args = array(
@@ -53,12 +54,12 @@ function bf_import_export_screen(){ ?>
         );
 
         $form->addElement(new Element_HTML('</div></div><div class="bf-half-col bf-right"><div class="bf-col-content">'));
-        $form->addElement(new Element_HTML('<h4>Attach a page to this form</h4>
-                                            <p class="bf-main-desc">Select a page for the authors, call it e.g. "My Posts".</p>'));
+        $form->addElement(new Element_HTML('<h4>'.__('Attach a page to this form', 'buddyforms').'</h4>
+                                            <p class="bf-main-desc">'.__('Select a page for the authors, call it e.g. "My Posts".', 'buddyforms').'</p>'));
 
         $form->addElement(new Element_HTML(wp_dropdown_pages($args)));
 
-        $form->addElement(new Element_Textbox("<br>Or you can create a new Page.<br><i>Enter the title of the new page here: </i>", "create_new_page",array('id' => 'create_new_page', 'placeholder' => 'e.g. My Movies', 'style' => 'width: 400px;')));
+        $form->addElement(new Element_Textbox(__("<br>Or you can create a new Page.<br><i>Enter the title of the new page here: </i>", 'buddyforms'), "create_new_page",array('id' => 'create_new_page', 'placeholder' => __('e.g. My Movies', 'buddyforms'), 'style' => 'width: 400px;')));
 
         $form->addElement(new Element_HTML('</div></div></div></div>'));
 
@@ -72,30 +73,30 @@ function bf_import_export_screen(){ ?>
 
     <div class="accordion_sidebar" id="accordion_save">
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle"><b>Create New Form</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle"><b>'.__('Create New Form', 'buddyforms').'</h5></div>
             <div id="accordion_save" class="accordion-body">
                 <div class="accordion-inner">'));
-                $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="Cancel" />'));
-                $form->addElement(new Element_Button('button','button',array('class' => 'new_form button-primary', 'name' => 'new_form','value' => 'Create Form', 'style' => 'float: right; text-shadow: none;')));
+                $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="'.__('Cancel', 'buddyforms').'" />'));
+                $form->addElement(new Element_Button('button','button',array('class' => 'new_form button-primary', 'name' => 'new_form','value' => __('Create Form', 'buddyforms'), 'style' => 'float: right; text-shadow: none;')));
                 $form->addElement(new Element_HTML('</div>
                     </div>
                 </div>'));
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_publish">Moderation</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_publish">'.__('Moderation', 'buddyforms').'</h5></div>
             <div id="accordion_publish" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                 $form->addElement( new Element_Select("Post status on form submission:", "create_new_form_status", array('publish','pending','draft')));
+                 $form->addElement( new Element_Select(__("Post status on form submission:", 'buddyforms'), "create_new_form_status", array('publish','pending','draft')));
                  $form->addElement(new Element_HTML('
                 </div>
             </div>
         </div>'));
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_comments">Comments</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_publish" href="#accordion_comments">'.__('Comments', 'buddyforms').'</h5></div>
             <div id="accordion_comments" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                $form->addElement( new Element_Select("Comment status on form submission:", "create_new_form_comment_status", array('open','closed')));
+                $form->addElement( new Element_Select(__("Comment status on form submission:", 'buddyforms'), "create_new_form_comment_status", array('open','closed')));
                 $form->addElement(new Element_HTML('
                 </div>
             </div>
@@ -103,10 +104,10 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_featured_images" href="#accordion_featured_images">Featured Images</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_featured_images" href="#accordion_featured_images">'.__('Featured Images', 'buddyforms').'</h5></div>
             <div id="accordion_featured_images" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-                $form->addElement( new Element_Checkbox("<label>Make Featured Images Required?</label>","create_new_form_featured_image_required",array('Mark as required')));
+                $form->addElement( new Element_Checkbox("<label>" . __("Make Featured Images Required?", 'buddyforms') . "</label>","create_new_form_featured_image_required",array('Mark as required')));
                 $form->addElement(new Element_HTML('
                 </div>
             </div>
@@ -114,10 +115,10 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_revision" href="#accordion_revision">Revision</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_revision" href="#accordion_revision">'.__('Revision', 'buddyforms').'</h5></div>
             <div id="accordion_revision" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label>Enable frontend revison control?</label>","create_new_form_revision",array('Enable revision')));
+        $form->addElement( new Element_Checkbox("<label>" . __("Enable frontend revison control?", 'buddyforms') . "</label>","create_new_form_revision",array('Enable revision')));
         $form->addElement(new Element_HTML('
                 </div>
             </div>
@@ -125,10 +126,10 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_admin_bar" href="#accordion_admin_bar">Admin Bar</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_admin_bar" href="#accordion_admin_bar">'.__('Admin Bar', 'buddyforms').'</h5></div>
             <div id="accordion_admin_bar" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label>Add menu items to admin bar?</label>","create_new_form_admin_bar",array('Add to admin bar')));
+        $form->addElement( new Element_Checkbox("<label>" . __('Add menu items to admin bar?', 'buddyforms') . "</label>","create_new_form_admin_bar",array('Add to admin bar')));
         $form->addElement(new Element_HTML('
                 </div>
             </div>
@@ -136,10 +137,10 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML('
         <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_edit_link" href="#accordion_edit_link">Edit Link</h5></div>
+            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_edit_link" href="#accordion_edit_link">'.__('Edit Link', 'buddyforms').'</h5></div>
             <div id="accordion_edit_link" class="accordion-body collapse">
                 <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label><b>Overwrite Edit-this-entry Link?</b><br>The link to the backend will be changed to use the frontend editing.</label>","create_new_form_edit_link",array('Overwrite')));
+        $form->addElement( new Element_Checkbox("<label><b>" . __('Overwrite Edit-this-entry Link?', 'buddyforms') . "</b><br>" . __("The link to the backend will be changed to use the frontend editing.", 'buddyforms') . "</label>","create_new_form_edit_link",array('Overwrite')));
         $form->addElement(new Element_HTML('
                 </div>
             </div>

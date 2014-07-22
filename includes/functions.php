@@ -127,11 +127,13 @@ function buddyforms_attached_page_query_vars($query_vars){
  */
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
-	global $wp_query, $buddyforms;
+	global $wp_query, $buddyforms, $the_lp_query;
 
-/*	echo '<pre>';
-	print_r($wp_query);
-	echo '</pre>';*/
+/*    	echo '<pre>';
+        print_r( $wp_query->query_vars );
+        echo '</pre>';
+
+        echo 'page' . get_query_var( 'page' );*/
 
 
 	if(is_admin())
@@ -225,20 +227,20 @@ function buddyforms_wp_before_admin_bar_render(){
 			$wp_admin_bar->add_menu( array(
 				'parent' 	=> 'my-account',
 				'id'		=> 'my-account-'.$buddyform['slug'],
-				'title'		=> __($buddyform['name'], 'buddypress'),
+				'title'		=> $buddyform['name'],
 				'href'		=> $permalink
 			));
 			$wp_admin_bar->add_menu( array(
 				'parent'	=> 'my-account-'.$buddyform['slug'],
 				'id'		=> 'my-account-'.$buddyform['slug'].'-view',
-				'title'		=> __('View my '.$buddyform['name'],'buddypress'),
+				'title'		=> __('View my ', 'buddyforms') . $buddyform['name'],
 				'href'		=> $permalink.'/view/'.$buddyform['slug'].'/'
 			)); 
 
 			 $wp_admin_bar->add_menu( array(
 				'parent'	=> 'my-account-'.$buddyform['slug'],
 				'id'		=> 'my-account-'.$buddyform['slug'].'-new',
-				'title'		=> __('New '.$buddyform['singular_name'],'buddypress'),
+				'title'		=> __('New ', 'buddyforms') . $buddyform['singular_name'],
 				'href'		=> $permalink.'create/'.$buddyform['slug'].'/'
 			));  
 
@@ -317,12 +319,12 @@ global $buddyforms;
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		$the_forms[] = $buddyform['slug'];
 	}
-	$form->addElement( new Element_Select("<h3>Select the form to use</h3><br>", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
-	$form->addElement( new Element_Select("<br /><h3>Select the post type</h3><br>", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
+	$form->addElement( new Element_Select("<h3>" . __('Select the form to use', 'buddyforms') . "</h3><br>", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
+	$form->addElement( new Element_Select("<br /><h3>" . __('Select the post type', 'buddyforms') . "</h3><br>", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
 	$form->render();
   ?>
   <br /><br />
-  <a href="#" class="buddyforms-button-insert button">Add Form Now</a>
+  <a href="#" class="buddyforms-button-insert button"><?php _e('Add Form Now', 'buddyforms') ?></a>
 </div>
 <?php
 }

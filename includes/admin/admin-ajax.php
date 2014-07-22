@@ -202,22 +202,22 @@ function buddyforms_view_form_fields($args){
     $required = 'false';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
         $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
-    $form_fields['right']['required']			= new Element_Checkbox("Required?","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][required]",array(''),array('value' => $required));
+    $form_fields['right']['required']			= new Element_Checkbox(__('Required?', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][required]",array(''),array('value' => $required));
 
     $name = '';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
         $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
-    $form_fields['left']['name'] 				= new Element_Textbox("Name:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", array('value' => $name));
+    $form_fields['left']['name'] 				= new Element_Textbox(__('Name:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", array('value' => $name));
 
     if(empty($slug))
         $slug  = sanitize_title($name);
-    $form_fields['left']['slug']		 		= new Element_Textbox("Slug: <i>optional '_name' will create a hidden post meta field</i>", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][slug]", array('value' => $slug));
+    $form_fields['left']['slug']		 		= new Element_Textbox(__('Slug: ', 'buddyforms') . '<i>' . __('optional "_name" will create a hidden post meta field', 'buddyforms') . '</i>' , "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][slug]", array('value' => $slug));
 
     $description = '';
     if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
         $description = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description'];
 
-    $form_fields['left']['description'] 		= new Element_Textbox("Description:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][description]", array('value' => $description));
+    $form_fields['left']['description'] 		= new Element_Textbox(__('Description:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][description]", array('value' => $description));
 
     $form_fields['left']['type'] 				= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
     $form_fields['left']['order'] 				= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
@@ -229,14 +229,14 @@ function buddyforms_view_form_fields($args){
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['target']))
                 $target = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['target'];
 
-            $form_fields['left']['target'] 	= new Element_Select("Target:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $target))	;
+            $form_fields['left']['target'] 	= new Element_Select(__('Target:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][target]", array('_self','_blank'), array('value' => $target))	;
             break;
         case 'Dropdown':
 
             $multiple = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
                 $multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
-            $form_fields['left']['multiple']		= new Element_Checkbox("Multiple:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
+            $form_fields['left']['multiple']		= new Element_Checkbox(__('Multiple:', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
 
             $field_args = Array(
                 'form_slug' => $form_slug,
@@ -267,27 +267,27 @@ function buddyforms_view_form_fields($args){
             $taxonomy = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy']))
                 $taxonomy = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy'];
-            $form_fields['left']['taxonomy'] 		= new Element_Select("Taxonomy:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $taxonomy));
+            $form_fields['left']['taxonomy'] 		= new Element_Select(__('Taxonomy:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $taxonomy));
 
             $taxonomy_order = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_order']))
                 $taxonomy_order = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_order'];
-            $form_fields['left']['taxonomy_order'] 		= new Element_Select("Taxonomy Order:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy_order]", array('ASC','DESC'), array('value' => $taxonomy_order));
+            $form_fields['left']['taxonomy_order'] 		= new Element_Select(__('Taxonomy Order:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy_order]", array('ASC','DESC'), array('value' => $taxonomy_order));
 
             $multiple = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
                 $multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
-            $form_fields['left']['multiple']		= new Element_Checkbox("Multiple:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
+            $form_fields['left']['multiple']		= new Element_Checkbox(__('Multiple:', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][multiple]",array(''),array('value' => $multiple));
 
             $show_option_none = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['show_option_none']))
                 $show_option_none = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['show_option_none'];
-            $form_fields['left']['show_option_none']		= new Element_Checkbox("Show \"Select an Option:\"","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][show_option_none]",array(''),array('value' => $show_option_none));
+            $form_fields['left']['show_option_none']		= new Element_Checkbox(__('Show "Select an Option:"', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][show_option_none]",array(''),array('value' => $show_option_none));
 
             $creat_new_tax = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax']))
                 $creat_new_tax = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['creat_new_tax'];
-            $form_fields['left']['creat_new_tax'] = new Element_Checkbox("User can create new?:","buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $creat_new_tax));
+            $form_fields['left']['creat_new_tax'] = new Element_Checkbox(__('User can create new?:', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][creat_new_tax]",array(''),array('value' => $creat_new_tax));
             break;
         case 'Hidden':
             unset($form_fields);
@@ -296,22 +296,30 @@ function buddyforms_view_form_fields($args){
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug']))
                 $slug = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug'];
             $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", $slug);
-            $form_fields['left']['slug']		= new Element_Textbox("Slug:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][slug]", array('required' => true, 'value' => $slug));
+            $form_fields['left']['slug']		= new Element_Textbox(__('Slug:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][slug]", array('required' => true, 'value' => $slug));
             $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
             $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
 
             $value = '';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['value']))
                 $value = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['value'];
-            $form_fields['left']['value'] 	= 	new Element_Textbox("Value:", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][value]", array('value' => $value));
+            $form_fields['left']['value'] 	= 	new Element_Textbox(__('Value:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][value]", array('value' => $value));
             break;
         case 'Comments':
             unset($form_fields);
             $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", 'Comments');
             $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
             $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
-            //$form_fields['left'][comments]	= new Element_Select("Comments open?", "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][comments]", array('open','closed'), array('value' => $buddyforms_options['buddyforms'][$form_slug][form_fields][$field_id][comments]));
-            $form_fields['left']['html']		= new Element_HTML('There are no settings needed so far. You can change the global comment settings in the form control section, and with the comments element added to the form the user has the possibility to overwrite the global settings and open/close comments for their own post');
+            $form_fields['left']['html']		= new Element_HTML(__('There are no settings needed so far. You can change the global comment settings in the form control section, and with the comments element added to the form the user has the possibility to overwrite the global settings and open/close comments for their own post', 'buddyforms'));
+
+            break;
+        case 'Status':
+            unset($form_fields);
+
+            $form_fields['left']['html']		= new Element_HTML(__('There are no settings needed so far. You can change the global post status settings in the form control section, and with the status element added to the form the user has the possibility to overwrite the global settings and change the status for their own post', 'buddyforms'));
+            $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", 'Status');
+            $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
+            $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
 
             break;
         default:

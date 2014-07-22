@@ -32,13 +32,13 @@ class Buddyforms_Key_Registration_Menu {
 	// Add option page menu
 	public function add_menu() {
 
-		$page = add_submenu_page( 'buddyforms_options_page', 'BuddyForms', 'License Activation', 'manage_options', 'license_registration_dashboard', array( $this, 'config_page') );
+		$page = add_submenu_page( 'buddyforms_options_page', 'BuddyForms', __('License Activation', 'buddyforms'), 'manage_options', 'license_registration_dashboard', array( $this, 'config_page') );
 		add_action( 'admin_print_styles-' . $page, array( $this, 'css_scripts' ) );
 	}
 
 	// Draw option page
 	public function config_page() {
-		$settings_tabs = array( 'license_registration_dashboard' => 'Activate License', 'buddyforms_deactivation' => 'License Deactivation' );
+		$settings_tabs = array( 'license_registration_dashboard' => __('Activate License', 'buddyforms'), 'buddyforms_deactivation' => __('License Deactivation', 'buddyforms') );
 		$current_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'license_registration_dashboard';
 		$tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'license_registration_dashboard';
 		?>

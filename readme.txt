@@ -50,5 +50,5 @@ Fixed a bug with the meta-box, there was an error if no form was selected.
 editing your pending/draft posts from the frontend.
 fixed some css issues
 
-= 1.0 =
-final 1.0 version
+= v1.0 =
+* initial release.

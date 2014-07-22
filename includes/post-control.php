@@ -100,14 +100,20 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 						bf_add_element($form, $element);
 					}
 					break;
-				
-				case 'Comments' :
-					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
-					$element = new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr);
-					bf_add_element($form, $element);
-					break;
 
-				case 'Textarea' :
+                case 'Comments' :
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
+                    $element = new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr);
+                    bf_add_element($form, $element);
+                    break;
+
+                case 'Status' :
+                    $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
+                    $element = new Element_Select($customfield['name'] , 'status', array('publish','pending','draft'), $element_attr);
+                    bf_add_element($form, $element);
+                    break;
+
+                case 'Textarea' :
 					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
 					$element = new Element_Textarea($customfield['name'], $slug, $element_attr);
 					bf_add_element($form, $element);
@@ -184,7 +190,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					bf_add_element($form, $element);
 					
 					if(isset($customfield['creat_new_tax']) ){
-						$element = new Element_Textbox('Create a new ' . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input'));
+						$element = new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input'));
 						bf_add_element($form, $element);
 					}
 
@@ -292,7 +298,7 @@ function bf_post_control($args,$hasError){
             'post_title' 		=> $_POST['editpost_title'],
             'post_content' 		=> $_POST['editpost_content'],
             'post_type' 		=> $post_type,
-            'post_status' 		=> $buddyforms['buddyforms'][$form_slug]['status'],
+            'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
             'post_excerpt'		=> $post_excerpt
         );   

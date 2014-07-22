@@ -135,13 +135,18 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$post_excerpt = $_POST['post_excerpt'];
 		
 		$action			= 'save';
+
 		$post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
-		
+
 		if( isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] ) ){
 			$action = 'update';
 			$post_status = get_post_status( $_POST['new_post_id'] );
 		}
-			
+
+        if(isset($_POST['status']))
+            $post_status = $_POST['status'];
+
+
 		$args = Array(
 			'action'			=> $action,
 			'form_slug'			=> $form_slug,
@@ -171,10 +176,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 		if( empty( $hasError ) ) :
 			
 			if(isset( $_POST['new_post_id'] ) && ! empty( $_POST['new_post_id'] )){
-				$info_message = __('The '.$buddyforms['buddyforms'][$form_slug]['singular_name'].' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+				$info_message = __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
 				$form_notice = '<div class="info alert">'.$info_message.'</div>';
 			} else {
-				$info_message = __('The '.$buddyforms['buddyforms'][$form_slug]['singular_name'].' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+				$info_message = __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
 				$form_notice = '<div class="info alert">'.$info_message.'</div>';
 			} 
 			
@@ -249,7 +254,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 				if(isset($form_notice))
 					$form->addElement(new Element_HTML($form_notice));
 				
-				$form->addElement(new Element_Textbox("Title:", "editpost_title", array("required" => 1, 'value' => $editpost_title)));
+				$form->addElement(new Element_Textbox(__('Title:','buddyforms'), "editpost_title", array("required" => 1, 'value' => $editpost_title)));
 
 				ob_start();
 					$settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
@@ -263,7 +268,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 					$wp_editor = ob_get_contents();
 				ob_clean();
 
-				$wp_editor = '<div class="bf_field_group bf_form_content"><label>Content:</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
+				$wp_editor = '<div class="bf_field_group bf_form_content"><label>'.__('Content', 'buddyforms').':</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
 				$form->addElement(new Element_HTML($wp_editor));
 
 				// if the form have custom field to save as post meta data they get displayed here
@@ -281,12 +286,12 @@ function buddyforms_create_edit_form( $args = array() ) {
 
                     $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
 
-					$form->addElement(new Element_File('Featured Image:', 'file', $file_attr));
+					$form->addElement(new Element_File(__('Featured Image:', 'buddyforms'), 'file', $file_attr));
 
 				}
 	
 				$form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
-				$form->addElement(new Element_Button('Submit', 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+				$form->addElement(new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));
 				
 				// thats it! render the form!
 				ob_start();

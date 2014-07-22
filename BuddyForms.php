@@ -58,9 +58,10 @@ class BuddyForms {
 		// Run the activation function
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
-		define('buddyforms', '1.0.4');
+        define('buddyforms', $this->version);
+        define('BUDDYFORMS_VERSION', $this->version);
 
-		add_action('init'					, array($this, 'includes')					, 4, 1);
+        add_action('init'					, array($this, 'includes')					, 4, 1);
 		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
 		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
@@ -232,8 +233,6 @@ class BuddyForms {
 	function buddyform_front_js() {
 		
 		wp_enqueue_script(	'jquery');
-		// wp_enqueue_script(	'thickbox');
-		// wp_enqueue_style(	'thickbox');
 
 	 	wp_enqueue_script(	'buddyforms-js',					plugins_url('includes/js/buddyforms.js', __FILE__), array('jquery') );
 

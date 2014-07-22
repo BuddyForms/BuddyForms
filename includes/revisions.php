@@ -30,7 +30,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 		$rows .= "\t<li>" . buddyforms_wp_post_revision_title_expanded( $revision,$post_id ) . "</li>\n";
 	}
 	echo '<div class="revision">';
-	echo '<h3>Revision</h3>';
+	echo '<h3>'. __('Revision', 'buddyforms') .'</h3>';
 	echo "<ul class='post-revisions'>\n";
 	echo $rows;
 

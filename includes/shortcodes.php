@@ -10,7 +10,7 @@ add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
  */
 add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
-	global $the_lp_query, $buddyforms, $form_slug;
+	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
     extract(shortcode_atts(array(
         'post_type' => '',
@@ -25,16 +25,21 @@ function buddyforms_the_loop($args){
 
 	if (!get_current_user_id())
 		return;
-	
-	$args = array( 
+
+    $paged = get_query_var( 'page' );
+
+	$query_args = array(
 		'post_type' => $post_type,
 		'form_slug' => $form_slug,
 		'post_status' => array('publish', 'pending', 'draft'),
 		'posts_per_page' => 10,
-		'author' => get_current_user_id()
+		'author' => get_current_user_id(),
+        'paged' => $paged
 	);
-			
-	$the_lp_query = new WP_Query( $args );
+
+   // print_r($query_args);
+
+	$the_lp_query = new WP_Query( $query_args );
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
 	buddyforms_locate_template('buddyforms/the-loop.php');
@@ -43,5 +48,6 @@ function buddyforms_the_loop($args){
 	if(function_exists('wp_pagenavi')){
 		wp_pagenavi( array( 'query' => $the_lp_query) );	
 	}
+    wp_reset_postdata();
 }
 ?>

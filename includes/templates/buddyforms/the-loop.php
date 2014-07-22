@@ -8,11 +8,8 @@ if ( $the_lp_query->have_posts() ) : ?>
 
     <?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 		
-		if(get_post_status() == 'pending' || get_post_status() == 'draft'){
-			$the_permalink = trailingslashit( bp_loggedin_user_domain() ).get_post_type().'?post_id='.get_the_ID();
-		} else {
-			$the_permalink = get_permalink();
-		} 
+        $the_permalink = get_permalink();
+
 		do_action( 'bp_before_blog_post' ) ?>
 
 		<li class="<?php echo get_post_status(); ?>">
@@ -27,7 +24,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 			</div>
 
 			<div class="item">
-				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
+				<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></div>
 
 				<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
@@ -48,7 +45,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 					<div class="meta">
 						<div class="item-status"><?php echo $post_status; ?></div>
 						<a title="Edit me" href='<?php echo $permalink.'edit/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
-						- <a title="Delete me" onclick="return confirm('Are you sure you want to delete this entry?');" href='<?php echo $permalink.'delete/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
+						- <a title="Delete me" onclick="return confirm(__('Are you sure you want to delete this entry?', 'buddyforms'));" href='<?php echo $permalink.'delete/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
 					</div>
 				<?php } ?>
 			</div>
@@ -62,10 +59,9 @@ if ( $the_lp_query->have_posts() ) : ?>
     <?php endwhile; ?>
 
     <div class="navigation">
-
     <?php if(function_exists('wp_pagenavi')) : wp_pagenavi(); else: ?>
-        <div class="alignleft"><?php next_posts_link( __( '&larr; Previous Entries', 'buddyforms' ) ) ?></div>
-        <div class="alignright"><?php previous_posts_link( __( 'Next Entries &rarr;', 'buddyforms' ) ) ?></div>
+        <div class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
+        <div class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
     <?php endif; ?>
 
     </div>
