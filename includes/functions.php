@@ -44,25 +44,25 @@ function buddyforms_allow_subscriber_uploads() {
 add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
 function my_edit_post_link( $url, $post_ID) {
 	global $buddyforms, $current_user;
-	
+
 	if(is_admin())
 		return $url;
-	
+
 	if(!isset($buddyforms['buddyforms']))
 		return $url;
-	
+
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
-	
+
 	if ($the_post->post_author != $current_user->ID) // this needs to be modified for admins and collaborative content creation
 		return $url;
-	
+
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 
 		if(isset($buddyform['post_type']) && $buddyform['post_type'] == $post_type && isset($buddyform['edit_link'][0])){
 			$permalink	= get_permalink( $buddyform['attached_page'] );
 			$url = $permalink.'edit/'.$key.'/'.get_the_ID();
-			return $url;	
+			return $url;
 		}
 	}
 
@@ -72,7 +72,7 @@ function my_edit_post_link( $url, $post_ID) {
 /**
  * handle custom page
  * do flush if changing rule, then reload the admin page
- * 
+ *
  * @package BuddyForms
  * @since 0.3 beta
  */
@@ -82,7 +82,7 @@ function buddyforms_attached_page_rewrite_rules(){
 
 	if(!isset($buddyforms['buddyforms']))
 		return;
-	
+
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 		if(isset($buddyform['attached_page'])){
 			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
@@ -93,13 +93,13 @@ function buddyforms_attached_page_rewrite_rules(){
 			add_rewrite_rule($post_data['post_name'].'/delete/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=delete&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/revison/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revison&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
 		}
-			
+
 	}
 	flush_rewrite_rules();
 }
 
 /**
- * add the query vars 
+ * add the query vars
  *
  * @package BuddyForms
  * @since 0.3 beta
@@ -107,11 +107,12 @@ function buddyforms_attached_page_rewrite_rules(){
 add_filter('query_vars', 'buddyforms_attached_page_query_vars');
 function buddyforms_attached_page_query_vars($query_vars){
 
+
 	if(is_admin())
 		return $query_vars;
-	
+
 	$query_vars[] = 'bf_action';
-	$query_vars[] = 'bf_form_slug';	
+	$query_vars[] = 'bf_form_slug';
 	$query_vars[] = 'bf_post_id';
 	$query_vars[] = 'bf_rev_id';
 
@@ -128,6 +129,7 @@ function buddyforms_attached_page_query_vars($query_vars){
 add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
+
 
     if(is_admin())
 		return $content;
