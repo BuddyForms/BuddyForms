@@ -2,6 +2,18 @@
 // Shortcode to add the form everywhere easily ;) the form is located in the-form.php
 add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
 
+function bf_get_url_var($name){
+    $strURL = $_SERVER['REQUEST_URI'];
+    $arrVals = split("/",$strURL);
+    $found = 0;
+    foreach ($arrVals as $index => $value)
+    {
+        if($value == $name) $found = $index;
+    }
+    $place = $found + 1;
+    return ($found == 0) ? 1 : $arrVals[$place];
+}
+
 /**
  * Shortcode to display author posts of a specific post type
  *
@@ -26,7 +38,7 @@ function buddyforms_the_loop($args){
 	if (!get_current_user_id())
 		return;
 
-    $paged = get_query_var( 'page' );
+    $paged = bf_get_url_var('page');
 
 	$query_args = array(
 		'post_type' => $post_type,
@@ -37,9 +49,8 @@ function buddyforms_the_loop($args){
         'paged' => $paged
 	);
 
-   // print_r($query_args);
-
 	$the_lp_query = new WP_Query( $query_args );
+
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
 	buddyforms_locate_template('buddyforms/the-loop.php');

@@ -324,11 +324,16 @@ function buddyforms_view_form_fields($args){
             break;
         case 'FeaturedImage':
 
-
             unset($form_fields);
             $required = 'false';
 
             $form_fields['left']['html']		= new Element_HTML(__('With the Featured Image Form Element you can add a Featured Image upload to your Form', 'buddyforms'));
+
+            $description = '';
+            if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
+                $description = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description'];
+
+            $form_fields['left']['description'] 		= new Element_Textbox(__('Description:', 'buddyforms'), "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][description]", array('value' => $description));
 
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
                 $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
@@ -339,20 +344,8 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));
 
             break;
-        case 'File':
-
-/*            unset($form_fields);
-            if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
-                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
-            $form_fields['left']['required']			= new Element_Checkbox(__('Required?', 'buddyforms'),"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][required]",array(''),array('value' => $required));
-
-            $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", 'File');
-            $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
-            $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));*/
-
-            break;
         default:
-            $form_fields = apply_filters('buddyforms_form_element_add_field',$form_fields,$form_slug,$field_type,$field_id);
+            $form_fields = apply_filters('buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id);
             break;
 
     }

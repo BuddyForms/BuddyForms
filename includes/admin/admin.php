@@ -211,7 +211,7 @@ function buddyforms_settings_page() {
 										<p><a href="Comments/'.$buddyform['slug'].'/unique" class="action">' . __('Comments', 'buddyforms') .'</a></p>
 										<p><a href="Status/'.$buddyform['slug'].'/unique" class="action">' . __('Post Status', 'buddyforms') .'</a></p>
 										<p><a href="FeaturedImage/'.$buddyform['slug'].'/unique" class="action">' . __('Featured Image', 'buddyforms') .'</a></p>
-                                        <p><a href="File/'.$buddyform['slug'].'/unique" class="action">' . __('File', 'buddyforms') .'</a></p>
+                                        <p><a href="File/'.$buddyform['slug'].'" class="action">' . __('File', 'buddyforms') .'</a></p>
 										'));
 										$form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
 									$form->addElement(new Element_HTML('

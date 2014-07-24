@@ -138,10 +138,10 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                 case 'FeaturedImage':
 
                     // Display upload field for featured image if required is selected for this form
-                    if($customfield['required']){
-                        $file_attr = array("required" => 1, 'id' => "file");
+                    if($customfield['required'] && !has_post_thumbnail( $post_id )){
+                        $file_attr = array("required" => 1, 'id' => "file", 'shortDesc' => $customfield['description'] );
                     } else {
-                        $file_attr = array('id' => "file");
+                        $file_attr = array('id' => "file", 'shortDesc' => $customfield['description'] );
                     }
 
                     $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
@@ -153,20 +153,26 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                     break;
                 case 'File':
 
-                    // Display upload field for featured image if required is selected for this form
-                    if($customfield['required']){
-                        $file_attr = array("required" => 1, 'id' => "media");
-                    } else {
-                        $file_attr = array('id' => "media");
+                    $attachment_id  = get_post_meta($post_id, 'file_'.$slug, true);
+                    $attachment_url = wp_get_attachment_url($attachment_id);
+                    $attachment_desc_view = $customfield['description'];
+                    $attachment_desc_view_delete = $customfield['description'];
+
+                    if(!empty($attachment_id)){
+                        $attachment_desc_view .= '<div id="'.$attachment_id.'"><a href="' . $attachment_url . '" target="_new">View '. $customfield['name'] .'</a></div>';
+                        $attachment_desc_view_delete .= '<div id="'.$attachment_id.'"><a href="' . $attachment_url . '" target="_new">View '. $customfield['name'] .'</a> | <a href="'.$post_id.'/file_'.$slug .'" id="'.$attachment_id.'" class="remove_attachment">Delete '. $customfield['name'] .'</a></div>';
                     }
 
-                    $form->addElement(new Element_File(__('File:', 'buddyforms'), 'media', $file_attr));
+                    // Display upload field for featured image if required is selected for this form
+                    if($customfield['required'] && empty($attachment_id)){
+                        $file_attr = array("required" => 1, 'id' => $slug, 'shortDesc' => $attachment_desc_view );
+                    } elseif($customfield['required'] && !empty($attachment_id)) {
+                        $file_attr = array('id' => $slug, 'shortDesc' => $attachment_desc_view);
+                    } else {
+                        $file_attr = array('id' => $slug, 'shortDesc' =>  $attachment_desc_view_delete );
+                    }
 
-                    ob_start();
-                    wp_multi_file_uploader($post_id);
-                    $wp_multi_file_uploader = ob_get_contents();
-                    ob_clean();
-                    $form->addElement(new Element_HTML( $wp_multi_file_uploader ));
+                    $form->addElement(new Element_File($customfield['name'], $slug, $file_attr));
 
                     break;
                 case 'Taxonomy' :
@@ -374,19 +380,43 @@ function bf_set_post_thumbnail($post_id,$hasError){
 }
 function bf_media_handle_upload($post_id){
 
-    if( isset( $_FILES['media']['size'] ) && $_FILES['media']['size'] > 0 ) {
+    foreach($_FILES as $key => $file){
+        if( $key != 'file') {
 
-        require_once(ABSPATH . 'wp-admin/includes/admin.php');
-        $attachment_id = media_handle_upload('media', $post_id ); //post id of Client Files page
-        //unset( $_FILES );
+            if( isset( $_FILES[$key]['size'] ) && $_FILES[$key]['size'] > 0 ) {
 
-        if ( is_wp_error( $attachment_id ) ) {
-            echo 'There was an error uploading the image.';
-        } else {
-            echo 'The image was uploaded successfully!';
+                require_once(ABSPATH . 'wp-admin/includes/admin.php');
+                $attachment_id = media_handle_upload($key, $post_id ); //post id of Client Files page
+                //unset( $_FILES );
+
+                if ( is_wp_error( $attachment_id ) ) {
+                    echo 'There was an error uploading the file.';
+                } else {
+                    update_post_meta( $post_id, 'file_'.$key, $attachment_id);
+                }
+
+            }
         }
 
     }
+}
+
+function buddyforms_delete_attachment(){
+
+    $delete_attachment_id = $_POST['delete_attachment_id'];
+    $delete_attachment_href = $_POST['delete_attachment_href'];
+
+    $delete_attachment_attr = explode('/',$delete_attachment_href);
+
+    wp_delete_attachment( $delete_attachment_id );
+
+    delete_post_meta($delete_attachment_attr[0], $delete_attachment_attr[1]);
+
+    echo $_POST['delete_attachment_id'];
+
+    die();
 
 }
+add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
+add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 ?>
