@@ -196,7 +196,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			
 		endif;
 		
-		do_action('buddyforms_after_save_post',$post_id);
+		do_action('buddyforms_after_save_post', $post_id);
 		
 	} 
 	

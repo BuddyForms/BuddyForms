@@ -107,7 +107,6 @@ function buddyforms_attached_page_rewrite_rules(){
 add_filter('query_vars', 'buddyforms_attached_page_query_vars');
 function buddyforms_attached_page_query_vars($query_vars){
 
-
 	if(is_admin())
 		return $query_vars;
 
@@ -130,8 +129,7 @@ add_filter('template_redirect', 'buddyforms_attached_page_content');
 function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
 
-
-    if(is_admin())
+	if(is_admin())
 		return $content;
 		
 	if(!isset($buddyforms['buddyforms']))

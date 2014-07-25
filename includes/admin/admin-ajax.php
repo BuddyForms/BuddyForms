@@ -135,13 +135,12 @@ add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
  * @package BuddyForms
  * @since 0.1-beta
  */
-function buddyforms_taxonomies(){
-    $args=array(
-        'public'   => true,
-    );
-    $output = 'names'; // or objects
-    $operator = 'and'; // 'and' or 'or'
-    $taxonomies=get_taxonomies($args,$output,$operator);
+function buddyforms_taxonomies($form_slug){
+    global $buddyforms;
+
+    $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+    $taxonomies=get_object_taxonomies($post_type);
 
     return $taxonomies;
 }
@@ -262,7 +261,7 @@ function buddyforms_view_form_fields($args){
             $form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
             break;
         case 'Taxonomy':
-            $taxonomies = buddyforms_taxonomies();
+            $taxonomies = buddyforms_taxonomies($form_slug);
 
             $taxonomy = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy']))
