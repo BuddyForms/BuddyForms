@@ -102,50 +102,6 @@ function bf_import_export_screen(){ ?>
             </div>
         </div>'));
 
-        $form->addElement(new Element_HTML('
-        <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_featured_images" href="#accordion_featured_images">'.__('Featured Images', 'buddyforms').'</h5></div>
-            <div id="accordion_featured_images" class="accordion-body collapse">
-                <div class="accordion-inner">'));
-                $form->addElement( new Element_Checkbox("<label>" . __("Make Featured Images Required?", 'buddyforms') . "</label>","create_new_form_featured_image_required",array('Mark as required')));
-                $form->addElement(new Element_HTML('
-                </div>
-            </div>
-        </div>'));
-
-        $form->addElement(new Element_HTML('
-        <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_revision" href="#accordion_revision">'.__('Revision', 'buddyforms').'</h5></div>
-            <div id="accordion_revision" class="accordion-body collapse">
-                <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label>" . __("Enable frontend revison control?", 'buddyforms') . "</label>","create_new_form_revision",array('Enable revision')));
-        $form->addElement(new Element_HTML('
-                </div>
-            </div>
-        </div>'));
-
-        $form->addElement(new Element_HTML('
-        <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_admin_bar" href="#accordion_admin_bar">'.__('Admin Bar', 'buddyforms').'</h5></div>
-            <div id="accordion_admin_bar" class="accordion-body collapse">
-                <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label>" . __('Add menu items to admin bar?', 'buddyforms') . "</label>","create_new_form_admin_bar",array('Add to admin bar')));
-        $form->addElement(new Element_HTML('
-                </div>
-            </div>
-        </div>'));
-
-        $form->addElement(new Element_HTML('
-        <div class="accordion-group postbox">
-            <div class="accordion-heading"><h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_edit_link" href="#accordion_edit_link">'.__('Edit Link', 'buddyforms').'</h5></div>
-            <div id="accordion_edit_link" class="accordion-body collapse">
-                <div class="accordion-inner">'));
-        $form->addElement( new Element_Checkbox("<label><b>" . __('Overwrite Edit-this-entry Link?', 'buddyforms') . "</b><br>" . __("The link to the backend will be changed to use the frontend editing.", 'buddyforms') . "</label>","create_new_form_edit_link",array('Overwrite')));
-        $form->addElement(new Element_HTML('
-                </div>
-            </div>
-        </div>'));
-
 
     // END SIDEBAR
         $form->addElement(new Element_HTML('</div></div>

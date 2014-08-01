@@ -1,5 +1,16 @@
 /** header **/
 
+
+.tab-content {
+    background-color: #fff;
+    margin-top: -20px;
+    padding: 20px;
+}
+
+.bf-row{
+    max-width: 730px;
+}
+
 .bf_no_form{
 
 }
@@ -239,7 +250,7 @@ clear: both;
     border-bottom: 1px solid #ddd;
 }
 #bf_admin_wrap .wp-list-table tr td {
-    height: 38px;
+    height: 40px;
 }
 #bf_admin_wrap .bf-main-settings input[type="text"] {
     width: 100%;

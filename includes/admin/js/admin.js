@@ -16,7 +16,7 @@ jQuery(document).ready(function(jQuery) {
 			hide_tab: true
 		});
 	}
-	
+
 	jQuery('.new_form').click(function(){
 
 		var action = jQuery(this);
@@ -64,7 +64,7 @@ jQuery(document).ready(function(jQuery) {
 
         var create_new_form_status                  = jQuery('[name="create_new_form_status"]').val();
         var create_new_form_comment_status          = jQuery('[name="create_new_form_comment_status"]').val();
-        var create_new_form_featured_image_required = jQuery('[name="create_new_form_featured_image_required"]').val();
+
         var create_new_form_revision                = jQuery('[name="create_new_form_revision"]').val();
         var create_new_form_admin_bar               = jQuery('[name="create_new_form_admin_bar"]').val();
         var create_new_form_edit_link               = jQuery('[name="create_new_form_edit_link"]').val();
@@ -81,10 +81,6 @@ jQuery(document).ready(function(jQuery) {
                 "create_new_form_post_type"                 : create_new_form_post_type,
                 "create_new_form_status"                    : create_new_form_status,
                 "create_new_form_comment_status"            : create_new_form_comment_status,
-                "create_new_form_featured_image_required"   : create_new_form_featured_image_required,
-                "create_new_form_revision"                  : create_new_form_revision,
-                "create_new_form_admin_bar"                 : create_new_form_admin_bar,
-                "create_new_form_edit_link"                 : create_new_form_edit_link
             },
 			success: function(data){
                 if(data != false){
@@ -94,7 +90,7 @@ jQuery(document).ready(function(jQuery) {
                 }
 
 			},
-			error: function() { 
+			error: function() {
 				alert('Something went wrong.. ;-(sorry)');
 			}
 		});
@@ -104,7 +100,7 @@ jQuery(document).ready(function(jQuery) {
 
  		var dele_form_slug = jQuery(this).attr('id');
 
-		var action = jQuery(this); 
+		var action = jQuery(this);
 		if (confirm('Delete Permanently'))
 			jQuery.ajax({
 				type: 'POST',
@@ -114,24 +110,24 @@ jQuery(document).ready(function(jQuery) {
 					window.location.reload(true);
 				}
 			});
-		
+
 		return false;
  	});
-	 
-	   
+
+
 	jQuery('.action').click(function(){
 		var numItems = jQuery('.list_item').length;
 		var action = jQuery(this);
 		var args = action.attr('href').split("/");
 		var unique = jQuery("#sortable_"+args[1]+' .'+args[0]);
-		 
+
 		if(args[2] == 'unique'){
 			if (unique.length){
 				alert('This element can only be added once into each form');
 				return false;
-		    }	
+		    }
 		}
-		
+
 		jQuery('.loading-animation-new').show(); // Show the animate loading gif while waiting
 		jQuery.ajax({
 			type: 'POST',
@@ -143,25 +139,25 @@ jQuery(document).ready(function(jQuery) {
 					jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
 					return false;
 				}
-				
+
 				var myvar = action.attr('href');
 				var arr = myvar.split('/');
 				jQuery('.sortable_' + arr[1]).append(data);
 				jQuery('.info_' + arr[1]).hide();
 				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
-		
+
 			},
-			error: function() { 
+			error: function() {
 				alert('Something went wrong ;-(sorry)');
 			}
 		});
 		return false;
 	});
-	
+
 	jQuery(document).on('click','.delete',function() {
-		
+
 		var del_id = jQuery(this).attr('id');
-		var action = jQuery(this); 
+		var action = jQuery(this);
 		if (confirm('Delete Permanently'))
 			jQuery.ajax({
 				type: 'POST',
@@ -171,28 +167,28 @@ jQuery(document).ready(function(jQuery) {
 					jQuery("." + del_id).remove();
 				}
 			});
-		
+
 		return false;
 	});
-	
+
 	jQuery(document).on('click','.add_input',function() {
-	
+
 		var action = jQuery(this);
 		var args = action.attr('href').split("/");
 	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
 	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> new -> <input class="field-sortable" type="text" name="buddyforms_options[buddyforms]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');     
-      	
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> new -> <input class="field-sortable" type="text" name="buddyforms_options[buddyforms]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');
+
     	return false;
-	
+
 	});
-	
+
 	jQuery(document).on('click','.delete_input',function() {
 		var del_id = jQuery(this).attr('id');
 		jQuery(".field_item_" + del_id).remove();
 		return false;
 	});
-	
+
 	jQuery(document).on('mousedown','.list_item',function() {
 		jQuery(".element_field_sortable").sortable({
 			update: function(event, ui) {
@@ -203,14 +199,14 @@ jQuery(document).ready(function(jQuery) {
 			}
 		});
 	});
-	
+
 	jQuery(document).on('mousedown','.list_item',function() {
-	
+
 		itemList = jQuery(this).closest('.sortable').sortable({
-	    	
+
 	    	update: function(event, ui) {
 				jQuery('.loading-animation-order').show(); // Show the animate loading gif while waiting
-	    	    
+
 			    opts = {
 	                url: ajaxurl,
 	                type: 'POST',
@@ -222,26 +218,86 @@ jQuery(document).ready(function(jQuery) {
 	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in 1,3,2 format
 	                },
 	                success: function(response) {
-	                	
+
 	                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
 	                    var testst = itemList.sortable('toArray');
 	                   for (var key in testst){
-	                   	jQuery("input[id='" + testst[key] + "']").val(key); 
+	                   	jQuery("input[id='" + testst[key] + "']").val(key);
 	                   }
-	                    return; 
+	                    return;
 	                },
 	                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
 	                    //alert(e);
 	                    alert('There was an error saving the order');
 	                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
-		                    return; 
+		                    return;
 		                }
 		            };
-		            
+
 		   			jQuery.ajax(opts);
 		       }
 	       });
 	   });
-	
+
+
+    jQuery('#btnAdd').click(function (e) {
+
+        var trigger = jQuery('.buddyforms_notification_trigger').val();
+        var href = jQuery(location).attr('href');
+
+        if(trigger == 'none'){
+            alert('You need to select a Trigger first.');
+            return false;
+        }
+
+
+
+        var get = [];
+        location.search.replace('?', '').split('&').forEach(function (val) {
+            split = val.split("=", 2);
+            get[split[0]] = split[1];
+        });
+
+
+
+        var form_slug = get["form_slug"];
+
+
+        var action = jQuery(this);
+
+
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_new_mail_notification", "trigger": trigger, 'href': href, 'form_slug': form_slug},
+            success: function(data){
+
+                if(data == 0){
+                    alert('trigger already exists');
+                    return false;
+                }
+
+                var nextTab = jQuery('#tabs li').size()+1;
+
+                if(nextTab == 1){
+                    jQuery('<ul class="nav nav-tabs" id="tabs"></ul> <div class="tab-content"></div>').appendTo('#mailcontainer');
+                }
+                // create the tab
+                jQuery('<li><a href="#tab'+nextTab+'" data-toggle="tab">'+trigger+'</a></li>').appendTo('#tabs');
+
+                // create the tab content
+                jQuery('<div class="tab-pane" id="tab'+nextTab+'">' +data+'</div>').appendTo('.tab-content');
+
+                // make the new tab active
+                jQuery('#tabs a:last').tab('show');
+            }
+        });
+
+        return false;
+
+    });
+
+
+
 });
 

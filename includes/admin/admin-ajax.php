@@ -40,19 +40,10 @@ function buddyforms_add_form(){
     );
 
     if(!empty($_POST['create_new_form_status']))
-        $options = array_merge($options, Array('comment_status' => $_POST['create_new_form_status']));
+        $options = array_merge($options, Array('status' => $_POST['create_new_form_status']));
 
-    if(!empty($_POST['create_new_form_featured_image_required']))
-        $options = array_merge($options, Array('image_required' => $_POST['create_new_form_featured_image_required']));
-
-    if(!empty($_POST['create_new_form_revision']))
-        $options = array_merge($options, Array('revision'       => $_POST['create_new_form_revision']));
-
-    if(!empty($_POST['create_new_form_admin_bar']))
-        $options = array_merge($options, Array('admin_bar'      => $_POST['create_new_form_admin_bar']));
-
-    if(!empty($_POST['create_new_form_edit_link']))
-        $options = array_merge($options, Array('edit_link'      => $_POST['create_new_form_edit_link']));
+    if(!empty($_POST['create_new_form_comment_status']))
+        $options = array_merge($options, Array('comment_status' => $_POST['create_new_form_comment_status']));
 
 
     $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = $options;

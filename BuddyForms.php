@@ -67,6 +67,8 @@ class BuddyForms {
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
 		add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
+        add_action('plugins_loaded'			, array($this, 'translate'));
+
 		$this->init_hook();
 		$this->load_constants();
 
@@ -92,6 +94,17 @@ class BuddyForms {
 		$this->set_globals();
 		do_action('buddyforms_init');
 	}
+
+    /**
+     * Load the language file
+     *
+     * @since 	1.1
+     * @uses 	load_plugin_textdomain()
+     */
+    public function translate()	{
+        load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . "/languages" );
+    }
+
 
 	/**
 	 * Defines constants needed throughout the plugin.
@@ -147,6 +160,7 @@ class BuddyForms {
         require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
 
         require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
+        require_once (BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php');
 
 		if (is_admin()){
 
@@ -155,6 +169,7 @@ class BuddyForms {
 			require_once(BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
             require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
             require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
 
             // License Key API Class
 			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
@@ -190,8 +205,8 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	function buddyforms_admin_style($hook_suffix) {
-		
-		if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons') {
+
+		if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification') {
 				
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__) );
@@ -211,9 +226,9 @@ class BuddyForms {
 	 */
 	function buddyforms_admin_js($hook_suffix) {
 
-		if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons') {
+        if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification') {
 
-			wp_enqueue_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+            wp_enqueue_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
 			wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
 		    wp_enqueue_script('jQuery');
 		    wp_enqueue_script('jquery-ui-sortable'); 

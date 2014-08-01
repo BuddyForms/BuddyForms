@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: BuddyForms v1.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-07-22 12:17:18+0000\n"
+"PO-Revision-Date: 2014-07-26 12:47:15+0000\n"
 "Last-Translator: admin <mail@sven-lehnert.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgstr ""
 msgid "There has been an error uploading the image."
 msgstr ""
 
-#. translators: revision date format, see http://php.net/date 
+#. translators: revision date format, see http://php.net/date
 #: includes/revisions.php:42
 #: includes/revisions.php:124
 #@ default
@@ -87,14 +87,14 @@ msgctxt "revision date format"
 msgid "j F, Y @ G:i:s"
 msgstr ""
 
-#. translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date 
+#. translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date
 #: includes/revisions.php:51
 #, php-format
 #@ default
 msgid "Previously restored by %1$s %2$s, %3$s ago (%4$s)"
 msgstr ""
 
-#. translators: post revision title: 1: author avatar, 2: author name, 3: time ago, 4: date 
+#. translators: post revision title: 1: author avatar, 2: author name, 3: time ago, 4: date
 #: includes/revisions.php:134
 #, php-format
 #@ default
