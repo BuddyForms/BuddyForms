@@ -16,9 +16,9 @@ function bf_mail_notification_screen(){
 
             if (isset($_POST['buddyforms_options'])) {
 
-                $buddyforms_new = array_merge_recursive($buddyforms, $_POST['buddyforms_options']);
+                $buddyforms = array_merge_recursive($buddyforms, $_POST['buddyforms_options']);
 
-                $update_option = update_option("buddyforms_options", $buddyforms_new);
+                $update_option = update_option("buddyforms_options", $buddyforms);
 
                 if ($update_option)
                     echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
@@ -31,7 +31,7 @@ function bf_mail_notification_screen(){
                 "view" => new View_Inline
             ));
 
-            $form->addElement(new Element_HTML('<h2>' . $buddyforms['buddyforms'][$form_slug]['name'] . __(' Mail Notification Settings', 'buddyforms') . '<i><a target="_blank" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#' . $form_slug . '"> Manage this Form</a></i></h2><br>'));
+            $form->addElement(new Element_HTML('<h2>' . $buddyforms['buddyforms'][$form_slug]['name'] . __(' Mail Notification Settings', 'buddyforms') . '<i><a href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#' . $form_slug . '"> Manage this Form</a></i></h2><br>'));
 
             $form->addElement(new Element_HTML('<div id="poststuff"><div class="bf-row">'));
 
