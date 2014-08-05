@@ -7,20 +7,14 @@ global $buddyforms;
 
     $bf_form_slug = get_post_meta($post->ID, '_bf_form_slug', true );
 
-
-
-
     if(empty($bf_form_slug))
         return;
-
-
 
     if( !isset($buddyforms['mail_notification'][$bf_form_slug]) )
         return;
 
     if( !isset($buddyforms['mail_notification'][$bf_form_slug][$new_status]) )
         return;
-
 
     buddyforms_send_email_notification($post);
 
@@ -29,6 +23,7 @@ global $buddyforms;
 //add_action('publish_post',    'buddyforms_send_email_notification');
 //add_action('buddyforms_after_save_post',    'buddyforms_send_email_notification', 10, 1);
 function buddyforms_send_email_notification($post){
+
     global $buddyforms;
 
 
