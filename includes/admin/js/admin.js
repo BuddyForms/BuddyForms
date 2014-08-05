@@ -290,6 +290,7 @@ jQuery(document).ready(function(jQuery) {
 
                 // make the new tab active
                 jQuery('#tabs a:last').tab('show');
+
             }
         });
 

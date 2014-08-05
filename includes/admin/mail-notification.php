@@ -12,17 +12,26 @@ function bf_mail_notification_screen(){
 
             global $buddyforms;
 
+
+
             $form_slug = $_GET['form_slug'];
 
             if (isset($_POST['buddyforms_options'])) {
 
-                $buddyforms = array_merge_recursive($buddyforms, $_POST['buddyforms_options']);
+                foreach($_POST['buddyforms_options']['mail_notification'][$form_slug] as $key => $value){
+                    $buddyforms['mail_notification'][$form_slug][$key] = $value;
+                }
 
                 $update_option = update_option("buddyforms_options", $buddyforms);
 
                 if ($update_option)
                     echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
             }
+
+/*            echo '<pre>';
+            print_r($_POST['buddyforms_options']);
+            echo '</pre>';*/
+
 
             $form = new Form("buddyforms_notification_trigger");
             $form->configure(array(
@@ -33,19 +42,33 @@ function bf_mail_notification_screen(){
 
             $form->addElement(new Element_HTML('<h2>' . $buddyforms['buddyforms'][$form_slug]['name'] . __(' Mail Notification Settings', 'buddyforms') . '<i><a href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#' . $form_slug . '"> Manage this Form</a></i></h2><br>'));
 
-            $form->addElement(new Element_HTML('<div id="poststuff"><div class="bf-row">'));
+            $form->addElement(new Element_HTML('<div id="poststuff"><div class="bf-mail-row">'));
 
 
-                        $form->addElement(new Element_HTML('<div class="bf-col-content">
-
-                         <br>
-                        '));
-
+                        $form->addElement(new Element_HTML('<div class="bf-col-content"><br>'));
 
                         $form->addElement(new Element_HTML('Every form can have different mail notification depance on the post status change.
-                        You can create mail notification for each individual post status. Pleas see the select box and chuse the post status you want to ceata mail notification trigger for.<br><br>'));
-                        $form->addElement(new Element_Select(__("Create new Notification Trigger for", 'buddyforms'), "buddyforms_notification_trigger", array('none' => 'select condition', 'first-submission' => 'first submission', 'status-change' => 'status change', 'publish' => 'publish', 'pending' => 'pending', 'draft' => 'draft', 'delete' => 'delete'), array('class' => 'buddyforms_notification_trigger', 'shortDesc' => '')));
-                        $form->addElement(new Element_HTML('<a class="button-primary btn btn-primary" href="#" id="btnAdd"> Create Trigger</a></div>'));
+                            You can create mail notification for each individual post status. Use the select box and shuse the post status you want to ceata mail notification trigger for.<br><br>
+
+                        '));
+                        $form->addElement(new Element_Select(__("Create new Notification Trigger for", 'buddyforms'), "buddyforms_notification_trigger", bf_get_post_status_array() , array('class' => 'buddyforms_notification_trigger', 'shortDesc' => '
+<a class="button-primary btn btn-primary" href="#" id="btnAdd"> Create Trigger</a>
+                         ')));
+                        $form->addElement(new Element_HTML('<br><br><br><div class="help-trigger">
+                            <p><h4>The available post statuses are:</h4></p>
+<i>
+                            <ul>
+                                </li>publish – A published post or page.<li>
+                                </li> pending – A post pending review.<li>
+                                </li>draft – A post in draft status.<li>
+                                </li>auto-draft – A newly created post with no content.<li>
+                                </li>future – A post scheduled to publish in the future.<li>
+                                </li>private – Not visible to users who are not logged in.<li>
+                                </li>inherit – A revision or attachment.<li>
+                                </li>trash – Post is in the trash.<li>
+                            </ul>
+                            </i>
+                            </div></div>'));
 
                         $form->render();
 
@@ -64,7 +87,7 @@ function bf_mail_notification_screen(){
 
                                 $index++;
                             }
-                            echo '</ul> <div class="tab-content">';
+                            echo '</ul> <div class="tab-content" style="background-color: #fff; margin-top: -20px; padding: 20px;">';
                             $index = 1;
                             foreach ($buddyforms['mail_notification'][$form_slug] as $key => $value) {
 
@@ -138,8 +161,30 @@ function buddyforms_new_notification_trigger_form($form_slug, $trigger, $href = 
     ));
 
     $shortDesc = "
-                    you can use [username] , [user_login] , [user_nicename] , [user_email] , [first_name] , [last_name] ,[published_post_link_html] , [published_post_link_plain] , [published_post_title] , [site_name] , [site_url],[site_url_html] place holder into email body
-                    you can use [username] , [user_login] , [user_nicename] , [user_email] , [first_name] , [last_name] ,[published_post_link_html] , [published_post_link_plain] , [published_post_title] , [site_name] , [site_url],[site_url_html] place holder into email body";
+    <br>
+    <h4>User Shortcodes</h4>
+    <ul>
+        <li><p><b>[user_login] </b>Username</p></li>
+        <li><p><b>[user_nicename] </b>Username Sanitized</p><p><small> user_nicename is url sanitized version of user_login. In general, if you don't use any special characters in your login, then your nicename will always be the same as login. But if you enter email address in the login field during registration, then you will see the difference.
+            For instance, if your login is user@example.com then you will have userexample-com nicename and it will be used in author's urls (like author's archive, post permalink, etc).
+        </small></p></li>
+        <li><p><b>[user_email]</b> User email</p></li>
+        <li><p><b>[first_name]</b> User first name</p></li>
+        <li><p><b>[last_name] </b> User last name</p></li>
+    </ul>
+    <h4>Published Post Shortcodes</h4>
+    <ul>
+        <li><p><b>[published_post_link_html]</b> The published post link in html</p></li>
+        <li><p><b>[published_post_link_plain]</b> The published post link in plain</p></li>
+        <li><p><b>[published_post_title]</b> The published post title</p></li>
+    </ul>
+    <h4>Site Shortcodes</h4>
+    <ul>
+        <li><p><b>[site_name]</b> The sitename </p></li>
+        <li><p><b>[site_url]</b> The site url</p></li>
+        <li><p><b>[site_url_html]</b> The site url in html</p></li>
+    </ul>
+        ";
 
 
     $form->addElement(new Element_Hidden("buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_trigger]", $trigger));
@@ -148,10 +193,29 @@ function buddyforms_new_notification_trigger_form($form_slug, $trigger, $href = 
     $form->addElement(new Element_Textbox(__("Subject:", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_subject]", array('value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_subject'], 'required' => 1)));
     $form->addElement(new Element_Textbox(__("Email From Name:", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_from_name]", array('value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_from_name'], 'required' => 1)));
     $form->addElement(new Element_Email(__("Email From:", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_from]", array('value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_from'], 'required' => 1)));
-    $form->addElement(new Element_Textarea(__("Email Body:", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_body]", array("class" => "span9", 'value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_body'], 'required' => 1, shortDesc => $shortDesc)));
 
-    $form->addElement(new Element_HTML('<br><br><br><br>'));
+
+    $form->addElement(new Element_Checkbox(__('Sent mail to:', 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_to]",array('author' => 'The Post Author', 'admin' => 'Admin E-mail Address from Settings/General'), array('value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_to'], 'inline' => 1) ));
+    $form->addElement(new Element_HTML('<br><br>'));
+    $form->addElement(new Element_Textbox(__("Add mail to addresses separated with ',':", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_to_address]", array("class" => "span9", 'value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_to_address'], 'required' => 1)));
+
+
+    ob_start();
+    $settings = array('wpautop' => true, 'media_buttons' => false, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
+
+    wp_editor($buddyforms['mail_notification'][$form_slug][$trigger]['mail_body'], 'buddyforms_options[mail_notification][' . $form_slug . '][' . $trigger . '][mail_body]', $settings);
+
+    $wp_editor = ob_get_contents();
+    ob_clean();
+
+    $wp_editor = '<div class="bf_field_group bf_form_content"><label>'.__('Content', 'buddyforms').':</label><div class="bf_inputs">'.$wp_editor.'</div></div>';
+    $form->addElement(new Element_HTML($wp_editor));
+    $form->addElement(new Element_HTML('<br><br>'));
     $form->addElement(new Element_Button());
+  //  $form->addElement(new Element_Textarea(__("Email Body:", 'buddyforms'), "buddyforms_options[mail_notification][" . $form_slug . "][" . $trigger . "][mail_body]", array("class" => "span9", 'value' => $buddyforms['mail_notification'][$form_slug][$trigger]['mail_body'], 'required' => 1, shortDesc => 'You can use Shortcodes to adjust your mail content with dynamic content. Place Shortcodes into the email body.')));
+    $form->addElement(new Element_HTML($shortDesc));
+    $form->addElement(new Element_HTML('<br><br><br><br>'));
+
 
 
 

@@ -45,14 +45,9 @@ function buddyforms_options_content() {
 
         include('admin-credits.php');
 
-echo '<pre>';
-        print_r($buddyforms);
-        echo '</pre>';
-
-
         if($_POST['action'] == 'Apply'){
 
-            if ( isset( $_POST['bf_bulkactions'] ) && $_POST['bf_bulkactions'] == 'trash' && isset($_POST['bf_bulkactions_slugs']) ){
+            if ( isset( $_POST['bf_bulkactions'] ) && $_POST['bf_bulkactions'] == 'delete' && isset($_POST['bf_bulkactions_slugs']) ){
 
                 foreach ($_POST['bf_bulkactions_slugs'] as $key => $form_slug){
                     foreach ( $buddyforms as $key => $section) {
@@ -73,21 +68,20 @@ echo '<pre>';
 
         if ($_POST['action'] == 'Save' && isset($_POST["buddyforms_options"])) {
 
-
             $buddyforms = $_POST["buddyforms_options"];
 
             foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 
                 $slug = $buddyform['slug'];
 
-                /*if(empty($slug))
-                    $slug = $key;*/
+                if(empty($slug))
+                    $slug = $key;
 
                 if ($slug != $key) {
                     $buddyforms['buddyforms'][$slug] = $buddyform;
                     $buddyforms['buddyforms'][$slug]['slug'] = $slug;
                     unset($buddyforms['buddyforms'][$key]);
-                    $buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms_options, $slug, $key);
+                    $buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms, $slug, $key);
                 }
 
                 if (isset($buddyform['form_fields'])) {
@@ -159,7 +153,7 @@ function buddyforms_settings_page(){
         <div class="alignleft actions bulkactions">
             <select name="bf_bulkactions">
                 <option value="-1" selected="selected">Bulk Actions</option>
-                <option value="trash">Move to Trash</option>
+                <option value="delete">Delete Permanently</option>
             </select>
             <button type="submit" class="button action" name="action" value="Apply">Apply</button>
 

@@ -7,17 +7,15 @@
  * @since 0.1-beta	
 */
 function buddyforms_create_edit_form( $args = array() ) {
-	
-    global $post, $bp, $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
+    global $post, $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
 	
 	session_id('buddyforms-create-edit-form');
 
 	// if post edit screen is displayed
-	wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
+    wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
 	
 	 // hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
-	
 	extract(shortcode_atts(array(
 		'post_type' => '',
 		'the_post' => 0,
@@ -33,10 +31,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	// if post edit screen is displayed in pages
 	if(isset($wp_query->query_vars['bf_action'])){
-		
-		
-		$action = $wp_query->query_vars['bf_action'];
-		
+
 		$form_slug = '';
 		if(isset($wp_query->query_vars['bf_form_slug']))
 			$form_slug = $wp_query->query_vars['bf_form_slug'];
@@ -76,7 +71,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 		
 	}
 
-	// if post edit screen is displayed
+    // if post edit screen is displayed
 	if(!empty($post_id)) {
 		   			
 		if(!empty($revision_id)) {
@@ -104,11 +99,9 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	// If post_id == 0 a new post is created 	
 	if($post_id == 0){
-		$the_post = new stdClass;
-		$the_post->ID 			= $post_id;
-		$the_post->post_type 	= $post_type;
-		$the_post->post_title 	= '';
-	}
+        require_once(ABSPATH . 'wp-admin/includes/admin.php');
+        $the_post = get_default_post_to_edit($post_type);
+    }
  	 
    	if( empty( $post_type ) )
    	   $post_type = $the_post->post_type;
