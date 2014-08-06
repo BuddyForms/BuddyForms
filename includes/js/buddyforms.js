@@ -37,6 +37,29 @@ jQuery(document).ready(function (){
 
     });
 
+    jQuery('.bf_datetime').datetimepicker({
+        controlType: 'select',
+        timeFormat: 'hh:mm tt'
+    });
+
+    var bf_status = jQuery('select[name=status]').val();
+
+    if(bf_status == 'future'){
+        jQuery('.bf_datetime_wrap').show();
+    } else {
+        jQuery('.bf_datetime_wrap').hide();
+    }
+
+
+    jQuery('select[name=status]').change(function(){
+        var bf_status = jQuery(this).val();
+        if(bf_status == 'future'){
+            jQuery('.bf_datetime_wrap').show();
+        } else {
+            jQuery('.bf_datetime_wrap').hide();
+        }
+    });
+
 });      
 
 

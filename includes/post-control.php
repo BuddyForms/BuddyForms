@@ -105,6 +105,19 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                 case 'Status' :
                     $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
                     $form->addElement( new Element_Select($customfield['name'] , 'status', bf_get_post_status_array() , $element_attr));
+
+
+                    if (isset($_POST[$slug] )) {
+                        $schedule_val = $_POST['schedule'];
+                    } else {
+                        $schedule_val = get_post_meta($post_id, 'schedule', true);
+                    }
+
+                    $element_attr = array('value' => $schedule_val, 'class' => 'settings-input, bf_datetime');
+
+                    $form->addElement( new Element_HTML('<div class="bf_datetime_wrap">'));
+                    $form->addElement( new Element_Textbox('Schedule Time' , 'schedule', $element_attr));
+                    $form->addElement( new Element_HTML('</div>'));
                     break;
 
                 case 'Textarea' :
@@ -297,10 +310,12 @@ function bf_update_post_meta($post_id, $customfields){
 function bf_post_control($args,$hasError){
 	global $post_id;
 	extract($args);
-	
+
+
+
     // Check if post is new or edit 
     if( $action == 'update' ) {
-    
+
     	                     
 		$my_post = array(
             'ID'        		=> $_POST['new_post_id'],
@@ -319,7 +334,10 @@ function bf_post_control($args,$hasError){
 			$hasError = true;
 		
 	} else {
-		
+
+        if($_POST['status'] == 'future' && $_POST['schedule'])
+            $post_date = date('Y-m-d H:i:s',strtotime($_POST['schedule']));
+
 		  $my_post = array(
             'post_author' 		=> $post_author,
             'post_title' 		=> $_POST['editpost_title'],
@@ -327,7 +345,9 @@ function bf_post_control($args,$hasError){
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
-            'post_excerpt'		=> $post_excerpt
+            'post_excerpt'		=> $post_excerpt,
+            'post_date'         => $post_date,
+            'post_date_gmt'     => $post_date
         );   
         
         // Insert the new form

@@ -11,8 +11,10 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	session_id('buddyforms-create-edit-form');
 
-	// if post edit screen is displayed
-    wp_enqueue_style('the-form-css', plugins_url('css/the-form.css', __FILE__));
+
+
+
+
 	
 	 // hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
