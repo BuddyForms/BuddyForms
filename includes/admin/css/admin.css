@@ -1,10 +1,5 @@
-/** header **/
-
-
-
-
-.bf-mail-row{
-    max-width: 730px;
+body {
+    font-size: 16px;
 }
 
 .bf-edid-form {
@@ -116,13 +111,13 @@
 	float: left; 
 }
 #bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
-	clear: both; 
+	clear: both;
 }
 #bf_admin_wrap .create-form-box input[name=create_new_form_name],
 #bf_admin_wrap .create-form-box input[name=create_new_form_singular_name] {
 	width: 50%;
-	float: left; 
-	clear: right; 
+	float: left;
+	clear: right;
 }
 #bf_admin_wrap .accordion-body .accordion-inner {
 	padding: 30px 15px;
@@ -176,7 +171,7 @@ margin: 10px 0 15px;
 
 #bf_admin_wrap .accordion_sidebar .accordion-heading p {
 	font-size: 15px;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+
 	text-shadow: #fff 0 1px 0; 
 	padding: 7px 10px;
 	margin: 0;
@@ -251,9 +246,9 @@ clear: both;
     line-height: 2em;
 }
 #bf_admin_wrap .buddyforms_forms_builder .hero-unit p {
-    font-size: 14px;
+    font-size: 18px;
 }
-.delete .icon-remove-sign { margin-right: 5px; margin-top: 2px !important;}
+.delete .icon-remove-sign { margin-right: 5px; margin-top: 6px !important;}
 
 
 /* Create New Form View */

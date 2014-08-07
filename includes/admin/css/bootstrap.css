@@ -692,7 +692,7 @@ ol ul {
 }
 
 li {
-  line-height: 20px;
+  line-height: 21px;
 }
 
 ul.unstyled,
@@ -906,7 +906,7 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   line-height: 20px;
 }

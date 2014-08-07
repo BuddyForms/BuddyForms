@@ -1,21 +1,16 @@
 <?php
 
-
 function bf_get_post_status_array(){
     return array(
         'none'          => 'select condition',
         'publish'       => 'publish',
         'pending'       => 'pending',
         'draft'         => 'draft',
-        'auto-draft'    => 'auto-draft',
         'future'        => 'future',
         'private'       => 'private',
-        'inherit'       => 'inherit',
         'trash'         => 'trash',
-
     );
 }
-
 
 /**
  * Restricting users to view only media library items they upload.
@@ -134,7 +129,6 @@ function buddyforms_attached_page_query_vars($query_vars){
 
 	return $query_vars;
 }
-
 
 /**
  * make the template redirect
