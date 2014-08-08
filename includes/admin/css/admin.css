@@ -2,6 +2,15 @@ body {
     font-size: 16px;
 }
 
+.addon-image{
+    float: left;
+    padding: 10px;
+}
+
+.addon-content{
+    padding: 10px;
+}
+
 .bf-edid-form {
     display: none;
 }
@@ -208,7 +217,7 @@ margin: 10px 0 15px;
 }
 #bf_admin_wrap .accordion-heading-options {
 	float: right;
-	margin-top: 10px;
+	margin-top: 23px;
 	margin-right: 15px;
 }
 #bf_admin_wrap .accordion_sidebar {
@@ -267,6 +276,11 @@ clear: both;
     margin-bottom: 20px;
     width: 100%;
 }
+.bf-addon-half-col {
+    float: left;
+    margin-bottom: 20px;
+    width: 100%;
+}
 @media screen and (min-width: 1600px) {
     .bf-half-col {
         width: 49%;
@@ -278,6 +292,19 @@ clear: both;
         margin-left: 1%;
     }
 }
+
+@media screen and (min-width: 700px) {
+    .bf-addon-half-col {
+        width: 49%;
+    }
+    .bf-addon-half-col.bf-left {
+        margin-right: 1%;
+    }
+    .bf-addon-half-col.bf-right {
+        margin-left: 1%;
+    }
+}
+
 .bf-col-content {
     min-height: 180px;
     padding: 10px 20px;
@@ -285,6 +312,15 @@ clear: both;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
             box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
+
+.bf-addon-col-content {
+    min-height: 200px;
+    padding: 10px 20px;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+
 .bf-main-desc {
     margin: 20px 0;
 }

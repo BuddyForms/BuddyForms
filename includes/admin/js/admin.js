@@ -246,7 +246,7 @@ jQuery(document).ready(function(jQuery) {
         var href = jQuery(location).attr('href');
 
         if(trigger == 'none'){
-            alert('You need to select a Trigger first.');
+            alert('You have to select a trigger first.');
             return false;
         }
 

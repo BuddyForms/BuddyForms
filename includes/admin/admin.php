@@ -68,28 +68,36 @@ function buddyforms_options_content() {
 
         if ($_POST['action'] == 'Save' && isset($_POST["buddyforms_options"])) {
 
-            $buddyforms = $_POST["buddyforms_options"];
 
-            foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+
+
+
+            foreach ($_POST["buddyforms_options"]['buddyforms'] as $key => $buddyform) {
 
                 $slug = $buddyform['slug'];
 
-                if(empty($slug))
-                    $slug = $key;
+                if(isset($buddyforms['buddyforms'][$key]['mail_notification']))
+                    $buddyform['mail_notification'] = $buddyforms['buddyforms'][$key]['mail_notification'];
 
-                if ($slug != $key) {
-                    $buddyforms['buddyforms'][$slug] = $buddyform;
-                    $buddyforms['buddyforms'][$slug]['slug'] = $slug;
-                    unset($buddyforms['buddyforms'][$key]);
-                    $buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms, $slug, $key);
-                }
+
+                $buddyforms['buddyforms'][$slug] = $buddyform;
+
+
+
+
+                //$buddyforms = apply_filters('buddyforms_set_globals_new_slug', $buddyforms, $slug, $key);
 
                 if (isset($buddyform['form_fields'])) {
                     foreach ($buddyform['form_fields'] as $field_key => $field) {
+
                         if (empty($field['slug']))
-                            $buddyforms['buddyforms'][$key]['form_fields'][$field_key]['slug'] = sanitize_title($field['name']);
+                            $buddyforms['buddyforms'][$slug]['form_fields'][$field_key]['slug'] = sanitize_title($field['name']);
+
                     }
                 }
+
+                if($key != $slug)
+                    unset($buddyforms['buddyforms'][$key]);
 
             }
 
@@ -260,7 +268,7 @@ function buddyforms_settings_page(){
 							<div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
 								<div class="accordion-inner">
 
-								<a class="button-primary" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification Settings</a>
+								<a class="btn" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification Settings</a>
 								'));
 
 
@@ -297,7 +305,9 @@ function buddyforms_settings_page(){
 										<p><a href="Featured-Image/' . $buddyform['slug'] . '/unique" class="action">' . __('Featured Image', 'buddyforms') . '</a></p>
                                         <p><a href="File/' . $buddyform['slug'] . '" class="action">' . __('File', 'buddyforms') . '</a></p>
 										'));
+
             $form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
+
             $form->addElement(new Element_HTML('
 									</div>
 								</div>
@@ -327,7 +337,7 @@ function buddyforms_settings_page(){
 								<div class="accordion-inner bf-main-settings">'));
             $form->addElement(new Element_Textbox(__("<b>Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'])));
             $form->addElement(new Element_Textbox(__("<b>Singular Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'])));
-            $form->addElement(new Element_Textbox(__("<b>Overwrite Slug</b> <small>(optional)</small>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'] )));
+            $form->addElement(new Element_Textbox(__("<b>Overwrite Slug</b> <small>(optional)</small>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'])));
 
             $form->addElement(new Element_HTML('<br><hr /><br />'));
 

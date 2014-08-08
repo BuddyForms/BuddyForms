@@ -10,18 +10,13 @@ function buddyforms_transition_post_status($new_status,$old_status,$post){
     if(empty($form_slug))
         return;
 
-    if( !isset($buddyforms['mail_notification'][$form_slug]) )
-        return;
-
-    if( !isset($buddyforms['mail_notification'][$form_slug][$new_status]) )
+    if( !isset($buddyforms['buddyforms'][$form_slug]['mail_notification'][[$new_status]]) )
         return;
 
     buddyforms_send_email_notification($post);
 
 }
 
-//add_action('publish_post',    'buddyforms_send_email_notification');
-//add_action('buddyforms_after_save_post',    'buddyforms_send_email_notification', 10, 1);
 function buddyforms_send_email_notification($post){
 
     global $form_slug, $buddyforms;
@@ -39,7 +34,7 @@ function buddyforms_send_email_notification($post){
 
     $post_status = get_post_status( $post_ID );
 
-    $mail_notification_trigger = $buddyforms['mail_notification'][$form_slug][$post_status];
+    $mail_notification_trigger = $buddyforms['buddyforms'][$form_slug]['mail_notification'][$post_status];
 
 
 
