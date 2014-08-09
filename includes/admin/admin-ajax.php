@@ -306,7 +306,16 @@ function buddyforms_view_form_fields($args){
         case 'Status':
             unset($form_fields);
 
+
             $form_fields['left']['html']		= new Element_HTML(__("There are no settings needed so far. You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms'));
+
+            $post_status = 'false';
+            if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status']))
+                $post_status = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status'];
+
+            $form_fields['left']['post_status'] = new Element_Checkbox('' ,"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][post_status]",bf_get_post_status_array(),array('value' => $post_status));
+
+
             $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", 'Status');
             $form_fields['left']['type']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][type]", $field_type);
             $form_fields['left']['order']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][order]", $field_position, array('id' => 'buddyforms/' . $form_slug .'/form_fields/'. $field_id .'/order'));

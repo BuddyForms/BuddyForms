@@ -103,8 +103,35 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                     break;
 
                 case 'Status' :
+                    global $buddyforms;
+
+
                     $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
-                    $form->addElement( new Element_Select($customfield['name'] , 'status', bf_get_post_status_array() , $element_attr));
+
+
+                    if(in_array('pending', $customfield['post_status']))
+                        $post_status['pending'] = 'Pending Review';
+
+                    if(in_array('publish', $customfield['post_status']))
+                        $post_status['publish'] = 'Published';
+
+                    if(in_array('draft', $customfield['post_status']))
+                        $post_status['draft'] = 'Draft';
+
+
+                    echo 'get_post_status' . get_post_status($post_id);
+
+                    if(in_array('future', $customfield['post_status']) && empty($customfield_val) || in_array('future', $customfield['post_status']) && get_post_status($post_id) == 'future')
+                        $post_status['future'] = 'Scheduled';
+
+                    if(in_array('private', $customfield['post_status']))
+                        $post_status['private'] = 'Privately Published';
+
+                    if(in_array('private', $customfield['post_status']))
+                        $post_status['trash'] = 'Trash';
+
+
+                    $form->addElement( new Element_Select($customfield['name'] , 'status', $post_status , $element_attr));
 
 
                     if (isset($_POST[$slug] )) {

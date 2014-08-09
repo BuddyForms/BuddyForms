@@ -11,9 +11,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 	
 	session_id('buddyforms-create-edit-form');
 
-
-
-
+    wp_register_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css');
+    wp_enqueue_style( 'jquery-ui' );
 
 	
 	 // hook for plugins to overwrite the $args.

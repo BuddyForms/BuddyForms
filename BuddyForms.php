@@ -248,30 +248,19 @@ class BuddyForms {
 	function buddyform_front_js() {
 		
 		wp_enqueue_script(	'jquery');
-
         wp_enqueue_script('jquery-ui-core');
-        wp_enqueue_script('jQuery UI Slider');
         wp_enqueue_script('jquery-ui-datepicker');
 
-
-
-        wp_enqueue_script(	'buddyforms-multiple-select',		plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
-
-        wp_enqueue_script(	'buddyforms-multiple-select',		plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
-        wp_enqueue_style(	'buddyforms-multiple-select-css',	plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
+        wp_enqueue_script(	'buddyforms-multiple-select',		            plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
+        wp_enqueue_style(	'buddyforms-multiple-select-css',	            plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
 
         wp_enqueue_script(	'buddyforms-jquery-ui-timepicker-addon-js',		plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
         wp_enqueue_style(	'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
-        wp_enqueue_script(	'buddyforms-js',					plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+        wp_enqueue_script(	'buddyforms-js',					            plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 
         wp_enqueue_style(   'buddyforms-jthe-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
-        wp_enqueue_style(   'buddyforms-jthe-form-css',                        plugins_url('includes/css/the-form.css', __FILE__));
-
-        wp_register_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css');
-        wp_enqueue_style( 'jquery-ui' );
-
-
+        wp_enqueue_style(   'buddyforms-jthe-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));
 
     }
 	/**

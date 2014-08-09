@@ -1,15 +1,18 @@
 <?php
 
-function bf_get_post_status_array(){
-    return array(
-        'none'          => 'select condition',
-        'publish'       => 'publish',
-        'pending'       => 'pending',
-        'draft'         => 'draft',
-        'future'        => 'future',
-        'private'       => 'private',
-        'trash'         => 'trash',
+function bf_get_post_status_array($select_condition = false){
+
+
+    $status_array = array(
+        'publish'       => 'Published',
+        'pending'       => 'Pending Review',
+        'draft'         => 'Draft',
+        'future'        => 'Scheduled',
+        'private'       => 'Privately Published',
+        'trash'         => 'Delete',
     );
+
+return $status_array;
 }
 
 /**

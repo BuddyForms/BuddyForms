@@ -194,8 +194,7 @@ function buddyforms_settings_page(){
             if(empty($buddyform['name']))
                 $buddyform['name'] = $key;
 
-
-
+            if(!empty($key)) :
 
             $form->addElement(new Element_HTML(' <tr>
                     <th scope="row" class="check-column">
@@ -221,7 +220,7 @@ function buddyforms_settings_page(){
             $form->addElement(new Element_HTML('<td class="attached_page column-attached_page"> '));
             $form->addElement(new Element_HTML(isset($buddyform['attached_page']) ? get_the_title($buddyform['attached_page']) : '--'));
             $form->addElement(new Element_HTML('</td>'));
-
+endif;
         }
         $form->addElement(new Element_HTML('</table>'));
     } else {
@@ -239,6 +238,12 @@ function buddyforms_settings_page(){
             if(empty($buddyform['name']))
                 $buddyform['name'] = $key;
 
+            if(empty($buddyform['singular_name']))
+                $buddyform['singular_name'] = $key;
+
+
+
+            if(!empty($key)) :
             $form->addElement(new Element_HTML('<div class="subcontainer tab-pane fade in" id="subcon' . $buddyform['slug'] . '">'));
 
             $form->addElement(new Element_HTML('
@@ -280,18 +285,12 @@ function buddyforms_settings_page(){
 					    	</div>
 						</div>'));
 
-
-
-
-            apply_filters('buddyforms_admin_settings_sidebar_metabox', $form, $buddyform['slug']);
-
-            $form->addElement(new Element_HTML('
+                $form->addElement(new Element_HTML('
 						<div class="accordion-group postbox">
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_fields"> ' . __('Form Elements', 'buddyforms') . '</p></div>
 						    <div id="accordion_' . $buddyform['slug'] . '_fields" class="accordion-body collapse">
 								<div class="accordion-inner">
 									<div>
-										<p>' . __('Add new elements to your form <br>by clicking on them.', 'buddyforms') . '</p>
 										<h5>' . __('Classic Fields', 'buddyforms') . '</h5>
 										<p><a href="Text/' . $buddyform['slug'] . '" class="action">' . __('Text', 'buddyforms') . '</a></p>
 										<p><a href="Textarea/' . $buddyform['slug'] . '" class="action">' . __('Textarea', 'buddyforms') . '</a></p>
@@ -309,14 +308,18 @@ function buddyforms_settings_page(){
                                         <p><a href="File/' . $buddyform['slug'] . '" class="action">' . __('File', 'buddyforms') . '</a></p>
 										'));
 
-            $form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
+                $form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);
 
-            $form->addElement(new Element_HTML('
+                $form->addElement(new Element_HTML('
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</div>'));
+
+
+
+            apply_filters('buddyforms_admin_settings_sidebar_metabox', $form, $buddyform['slug']);
+            $form->addElement(new Element_HTML('</div>
 					<div id="buddyforms_forms_builder_' . $buddyform['slug'] . '" class="buddyforms_forms_builder">'));
             $form->addElement(new Element_HTML('
 						<div class="hero-unit">
@@ -338,9 +341,9 @@ function buddyforms_settings_page(){
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_status"><b>' . __('Form Control', 'buddyforms') . '</b></p></div>
 						    <div id="accordion_' . $buddyform['slug'] . '_status" class="accordion-body collapse">
 								<div class="accordion-inner bf-main-settings">'));
-            $form->addElement(new Element_Textbox(__("<b>Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'])));
-            $form->addElement(new Element_Textbox(__("<b>Singular Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'])));
-            $form->addElement(new Element_Textbox(__("<b>Overwrite Slug</b> <small>(optional)</small>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'])));
+            $form->addElement(new Element_Textbox(__("<b>Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'],'required' => 1)));
+            $form->addElement(new Element_Textbox(__("<b>Singular Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'],'required' => 1)));
+            $form->addElement(new Element_Textbox(__("<b>Slug</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'], 'required' => 1)));
 
             $form->addElement(new Element_HTML('<br><hr /><br />'));
 
@@ -387,7 +390,7 @@ function buddyforms_settings_page(){
             if (isset($buddyform['post_type']))
                 $post_type = $buddyform['post_type'];
 
-            $form->addElement(new Element_Select(__("<b>Post Type</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][post_type]", $post_types, array('value' => $post_type)));
+            $form->addElement(new Element_Select(__("<b>Post Type</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][post_type]", $post_types, array('value' => $post_type, 'required' => 1)));
 
             $attached_page = 'false';
             if (isset($buddyform['attached_page']))
@@ -402,7 +405,7 @@ function buddyforms_settings_page(){
                 'class' => 'postform',
                 'selected' => $attached_page
             );
-            $form->addElement( new Element_HTML("<br><br><p><b>" . __('Attach Page to this Form', 'buddyforms') . "</b></p>"));
+            $form->addElement( new Element_HTML("<br><br><p><span class='required'>* </span><b>" . __('Attach Page to this Form', 'buddyforms') . "</b></p>"));
             $form->addElement( new Element_HTML(wp_dropdown_pages($args)));
             $form->addElement( new Element_HTML('<br><span class="help-inline">The link to the backend will be changed<br>to use the frontend editing.</span>'));
 
@@ -436,6 +439,11 @@ function buddyforms_settings_page(){
                     if (empty($slug))
                         $slug = sanitize_title($customfield['name']);
 
+                    if(empty($buddyform['singular_name']))
+                        $buddyform['singular_name'] = $key;
+
+                    if (empty($slug))
+                        $slug = $key;
 
                     if ($slug != '') {
                         $args = Array(
@@ -452,7 +460,9 @@ function buddyforms_settings_page(){
                 }
             }
             $form->addElement(new Element_HTML('</ul></div></div></div>'));
-        }
+            endif;
+            }
+
     }
 
     $form = apply_filters('buddyforms_before_admin_form_render', $form);
