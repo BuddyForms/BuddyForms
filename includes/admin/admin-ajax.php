@@ -345,12 +345,12 @@ function buddyforms_view_form_fields($args){
     ob_start(); ?>
     <li id="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id.' '. $field_type ?>">
         <div class="accordion_fields">
-            <div class="accordion-group">
+            <div class="accordion-group postbox">
                 <div class="accordion-heading">
 
                     <div class="accordion-heading-options">
                         <a class="delete" id="<?php echo $field_id ?>" href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
-                            <i class="icon-remove-sign" style="margin-top:0px;"></i><b><?php _e( 'Delete', 'buddyforms' ); ?></b>
+                            <i class="icon-remove-sign" style="margin-top:0px;"></i>
                         </a>
                     </div>
 

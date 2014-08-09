@@ -138,7 +138,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
 					$form->addElement( new Element_Url($customfield['name'], $slug, $element_attr));
 					break;
-                case 'FeaturedImage':
+                case 'Featured-Image':
 
                     // Display upload field for featured image if required is selected for this form
                     if($customfield['required'] && !has_post_thumbnail( $post_id )){

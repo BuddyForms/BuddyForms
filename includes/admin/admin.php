@@ -43,6 +43,9 @@ function buddyforms_options_content() {
 
         <?php
 
+/*        echo '<pre>';
+        print_r($buddyforms);
+        echo '</pre>';*/
         include('admin-credits.php');
 
         if($_POST['action'] == 'Apply'){
@@ -240,7 +243,7 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML('
 					<div class="accordion_sidebar" id="accordion_' . $buddyform['slug'] . '">
-						<div class="accordion-group">
+						<div class="accordion-group postbox">
 							<div class="accordion-heading"><p class="accordion-toggle">' . __('Save Form Settings', 'buddyforms') . '</p></div>
 							<div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
 								<div class="accordion-inner">'));
@@ -263,7 +266,7 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML('
 
-						<div class="accordion-group">
+						<div class="accordion-group postbox">
 							<div class="accordion-heading"><p class="accordion-toggle">' . __('Mail Notification', 'buddyforms') . '</p></div>
 							<div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
 								<div class="accordion-inner">
@@ -283,7 +286,7 @@ function buddyforms_settings_page(){
             apply_filters('buddyforms_admin_settings_sidebar_metabox', $form, $buddyform['slug']);
 
             $form->addElement(new Element_HTML('
-						<div class="accordion-group">
+						<div class="accordion-group postbox">
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_fields"> ' . __('Form Elements', 'buddyforms') . '</p></div>
 						    <div id="accordion_' . $buddyform['slug'] . '_fields" class="accordion-body collapse">
 								<div class="accordion-inner">
@@ -331,7 +334,7 @@ function buddyforms_settings_page(){
                 array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $buddyform['form_fields']);
             }
             $form->addElement(new Element_HTML('
-				 		<div class="accordion-group">
+				 		<div class="accordion-group postbox">
 							<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_status"><b>' . __('Form Control', 'buddyforms') . '</b></p></div>
 						    <div id="accordion_' . $buddyform['slug'] . '_status" class="accordion-body collapse">
 								<div class="accordion-inner bf-main-settings">'));

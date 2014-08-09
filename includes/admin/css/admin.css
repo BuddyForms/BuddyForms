@@ -102,16 +102,26 @@ body {
     margin-right: 31%;
 }
 #bf_admin_wrap .accordion-group .accordion-heading {
-	border-bottom: 1px solid #dfdfdf;
-	text-shadow: #fff 0 1px 0;
-	-webkit-box-shadow: 0 1px 0 #fff;
-	box-shadow: 0 1px 0 #fff;
-	background: #f1f1f1;
-	background-image: -webkit-gradient(linear,left bottom,left top,from(#ececec),to(#f9f9f9));
-	background-image: -webkit-linear-gradient(bottom,#ececec,#f9f9f9);
-	background-image: -moz-linear-gradient(bottom,#ececec,#f9f9f9);
-	background-image: -o-linear-gradient(bottom,#ececec,#f9f9f9);
-	background-image: linear-gradient(to top,#ececec,#f9f9f9);
+    text-shadow: #fff 0 1px 0;
+    -webkit-box-shadow: 0 1px 0 #fff;
+
+}
+.sortable .accordion-group:hover {
+
+    padding-bottom: 0px;
+    border: 1px solid #222;
+    border-radius: 4px;
+
+    cursor: move;
+}
+
+.sortable .accordion-heading :hover {
+    cursor: move;
+}
+.sortable .accordion-group {
+    margin-bottom: 0px !important;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
 }
 
 #bf_admin_wrap .create-form-box label[for=create_new_form_name],
@@ -220,6 +230,11 @@ margin: 10px 0 15px;
 	margin-top: 23px;
 	margin-right: 15px;
 }
+
+#bf_admin_wrap .accordion-heading-options, #bf_admin_wrap .accordion-heading-options b, #bf_admin_wrap .accordion-heading-options i {
+    cursor: pointer;
+}
+
 #bf_admin_wrap .accordion_sidebar {
 	float: right;
 	width: 30%;
@@ -314,7 +329,7 @@ clear: both;
 }
 
 .bf-addon-col-content {
-    min-height: 200px;
+    min-height: 20px;
     padding: 10px 20px;
     background: #fff;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
@@ -344,4 +359,7 @@ clear: both;
     border: 2px solid #7ad03a;
 }
 
+.buddyforms_field_label{
+ padding: 5px;
+}
 
