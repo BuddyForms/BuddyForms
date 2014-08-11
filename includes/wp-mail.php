@@ -10,7 +10,7 @@ function buddyforms_transition_post_status($new_status,$old_status,$post){
     if(empty($form_slug))
         return;
 
-    if( !isset($buddyforms['buddyforms'][$form_slug]['mail_notification'][[$new_status]]) )
+    if( !isset($buddyforms['buddyforms'][$form_slug]['mail_notification'][$new_status]) )
         return;
 
     buddyforms_send_email_notification($post);

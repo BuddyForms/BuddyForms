@@ -259,8 +259,8 @@ class BuddyForms {
 
         wp_enqueue_script(	'buddyforms-js',					            plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 
-        wp_enqueue_style(   'buddyforms-jthe-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
-        wp_enqueue_style(   'buddyforms-jthe-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));
+        wp_enqueue_style(   'buddyforms-the-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
+        wp_enqueue_style(   'buddyforms-the-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));
 
     }
 	/**

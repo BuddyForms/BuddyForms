@@ -24,24 +24,28 @@ function bf_add_ons_screen(){
         $addon_args['buddyforms-members'] = array(
             'plugin_name'   => 'BuddyForms Members',
             'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-members-thumb-250x1703-250x170.png'
+            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-members-thumb-250x1703-250x170.png',
+            'plugin_desc'   => 'This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.'
         );
 
         $addon_args['buddyforms-attach-posts-to-groups-extension'] = array(
             'plugin_name'   => 'BuddyForms Attach Posts to Groups Extension',
             'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-groups-thumb-250x1703-250x170.png'
-        );
-        $addon_args['buddyforms-hook-fields'] = array(
-            'plugin_slug'   => 'buddyforms-members',
-            'plugin_name'   => 'BuddyForms Hook Fields',
-            'plugin_url'    => 'http://themekraft.com/hook-feelds',
+            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-groups-thumb-250x1703-250x170.png',
+            'plugin_desc'   => 'With this plugin, you’ll be able to automatically create a new BuddyPress group for pre-assigned BuddyForms post submissions and attach that group to the post. User-submitted posts with BuddyForms then become a BuddyPress group with all the included functionality and endless possibilities.'
         );
         $addon_args['buddyforms-posts-to-posts-integration'] = array(
             'plugin_name'   => 'BuddyForms Posts 2 Posts',
-            'plugin_url'    => 'http://themekraft.com/hook-feelds',
-            'plugin_image'  => 'http://ps.w.org/buddyforms-posts-to-posts-integration/assets/banner-772x250.png?rev=917118'
+            'plugin_url'    => 'http://themekraft.com/',
+            'plugin_image'  => 'http://ps.w.org/buddyforms-posts-to-posts-integration/assets/banner-772x250.png?rev=917118',
+            'plugin_desc'   => 'With BuddyForms Posts 2 Posts Integration you can create complex connections and post relationships across your site. From posts to pages or to users all the Posts 2 Posts Plugin functionality is in your BuddyForms Form Builder available.'
         );
+        $addon_args['buddyforms-hook-fields'] = array(
+            'plugin_name'   => 'BuddyForms Hook Fields',
+            'plugin_url'    => 'http://themekraft.com/',
+            'plugin_desc'   => 'With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.'
+        );
+
         buddyforms_get_addons($addon_args); ?>
 
 
@@ -63,7 +67,7 @@ function buddyforms_get_addons($addon_args){
                 </div>
                 <div class="addon-content">
                     <h4><?php echo $addon['plugin_name']; ?></h4>
-                    <p>This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.</p>
+                    <p><?php echo $addon['plugin_desc'] ?></p>
                 </div>
                 <div style="clear: left"></div>
                 <?php

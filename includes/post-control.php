@@ -119,8 +119,6 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                         $post_status['draft'] = 'Draft';
 
 
-                    echo 'get_post_status' . get_post_status($post_id);
-
                     if(in_array('future', $customfield['post_status']) && empty($customfield_val) || in_array('future', $customfield['post_status']) && get_post_status($post_id) == 'future')
                         $post_status['future'] = 'Scheduled';
 

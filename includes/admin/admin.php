@@ -43,7 +43,7 @@ function buddyforms_options_content() {
 
         <?php
 
-/*        echo '<pre>';
+/*       echo '<pre>';
         print_r($buddyforms);
         echo '</pre>';*/
         include('admin-credits.php');
@@ -213,14 +213,33 @@ function buddyforms_settings_page(){
             $form->addElement(new Element_HTML(isset($buddyform['slug']) ? $buddyform['slug'] : '--'));
             $form->addElement(new Element_HTML('</td>'));
 
-            $form->addElement(new Element_HTML('<td class="post_type column-post_type"> '));
-            $form->addElement(new Element_HTML(isset($buddyform['post_type']) ? $buddyform['post_type'] : '--'));
+            $form->addElement(new Element_HTML('<td class="post_type column-post_type bf-error-text"> '));
+
+               $post_type_html = $buddyform['post_type'];
+               $post_type = isset($buddyform['post_type']) ? $buddyform['post_type'] : 'none';
+
+                if(!post_type_exists($post_type))
+                    $post_type_html = '<p>Post Type ' . $post_type . ' not Exists</p>';
+
+                if($post_type == 'none')
+                    $post_type_html = '<p>Post Type not Selected</p>';
+
+                $form->addElement(new Element_HTML($post_type_html));
             $form->addElement(new Element_HTML('</td>'));
 
-            $form->addElement(new Element_HTML('<td class="attached_page column-attached_page"> '));
-            $form->addElement(new Element_HTML(isset($buddyform['attached_page']) ? get_the_title($buddyform['attached_page']) : '--'));
+            $form->addElement(new Element_HTML('<td class="attached_page column-attached_page bf-error-text"> '));
+
+                if( isset($buddyform['attached_page']) && empty($buddyform['attached_page']) ){
+                    $attached_page = '<p>No Page Attached</p>';
+                } elseif(isset($buddyform['attached_page']) && $attached_page_title = get_the_title($buddyform['attached_page'])) {
+                    $attached_page = $attached_page_title;
+                } else {
+                    $attached_page = '<p>Page not Exists</p>';
+                }
+
+            $form->addElement(new Element_HTML($attached_page));
             $form->addElement(new Element_HTML('</td>'));
-endif;
+        endif;
         }
         $form->addElement(new Element_HTML('</table>'));
     } else {
