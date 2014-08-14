@@ -66,83 +66,84 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 			}
 
 			switch( $customfield['type'] ) {
-				case 'Mail' :
-					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-                    $form->addElement( new Element_Email($customfield['name'], $slug, $element_attr));
-					break;
+                case 'Mail' :
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
+                    $form->addElement(new Element_Email($customfield['name'], $slug, $element_attr));
+                    break;
 
-				case 'Radiobutton' :
-					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-					if(is_array($customfield['value'])){
-						$form->addElement( new Element_Radio($customfield['name'], $slug, $customfield['value'], $element_attr));
-					}
-					break;
+                case 'Radiobutton' :
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
+                    if (is_array($customfield['value'])) {
+                        $form->addElement(new Element_Radio($customfield['name'], $slug, $customfield['value'], $element_attr));
+                    }
+                    break;
 
-				case 'Checkbox' :
-					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
-					if(is_array($customfield['value'])){
-						$form->addElement( new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr));
-					}
-					break;
+                case 'Checkbox' :
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
+                    if (is_array($customfield['value'])) {
+                        $form->addElement(new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr));
+                    }
+                    break;
 
-				case 'Dropdown' :
-					$element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input chosen', 'shortDesc' =>  $customfield['description']);
-					if(isset($customfield['value']) && is_array($customfield['value'])){
+                case 'Dropdown' :
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input chosen', 'shortDesc' => $customfield['description']);
+                    if (isset($customfield['value']) && is_array($customfield['value'])) {
                         $element = new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr);
 
-						if (isset($customfield['multiple']) && is_array( $customfield['multiple'] )) 
-							$element->setAttribute('multiple', 'multiple');
+                        if (isset($customfield['multiple']) && is_array($customfield['multiple']))
+                            $element->setAttribute('multiple', 'multiple');
 
-						bf_add_element($form, $element);
-					}
-					break;
+                        bf_add_element($form, $element);
+                    }
+                    break;
 
                 case 'Comments' :
-                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
-                    $form->addElement( new Element_Select($customfield['name'] , 'comment_status', array('open','closed'), $element_attr));
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
+                    $form->addElement(new Element_Select($customfield['name'], 'comment_status', array('open', 'closed'), $element_attr));
                     break;
 
                 case 'Status' :
                     global $buddyforms;
 
 
-                    $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
 
 
-                    if(in_array('pending', $customfield['post_status']))
-                        $post_status['pending'] = 'Pending Review';
+                    if (is_array($customfield['post_status'])){
+                        if (in_array('pending', $customfield['post_status']))
+                            $post_status['pending'] = 'Pending Review';
 
-                    if(in_array('publish', $customfield['post_status']))
-                        $post_status['publish'] = 'Published';
+                        if (in_array('publish', $customfield['post_status']))
+                            $post_status['publish'] = 'Published';
 
-                    if(in_array('draft', $customfield['post_status']))
-                        $post_status['draft'] = 'Draft';
-
-
-                    if(in_array('future', $customfield['post_status']) && empty($customfield_val) || in_array('future', $customfield['post_status']) && get_post_status($post_id) == 'future')
-                        $post_status['future'] = 'Scheduled';
-
-                    if(in_array('private', $customfield['post_status']))
-                        $post_status['private'] = 'Privately Published';
-
-                    if(in_array('private', $customfield['post_status']))
-                        $post_status['trash'] = 'Trash';
+                        if (in_array('draft', $customfield['post_status']))
+                            $post_status['draft'] = 'Draft';
 
 
-                    $form->addElement( new Element_Select($customfield['name'] , 'status', $post_status , $element_attr));
+                        if (in_array('future', $customfield['post_status']) && empty($customfield_val) || in_array('future', $customfield['post_status']) && get_post_status($post_id) == 'future')
+                            $post_status['future'] = 'Scheduled';
+
+                        if (in_array('private', $customfield['post_status']))
+                            $post_status['private'] = 'Privately Published';
+
+                        if (in_array('private', $customfield['post_status']))
+                            $post_status['trash'] = 'Trash';
+
+                        $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
+                        $form->addElement(new Element_Select($customfield['name'], 'status', $post_status, $element_attr));
 
 
-                    if (isset($_POST[$slug] )) {
-                        $schedule_val = $_POST['schedule'];
-                    } else {
-                        $schedule_val = get_post_meta($post_id, 'schedule', true);
+                        if (isset($_POST[$slug])) {
+                            $schedule_val = $_POST['schedule'];
+                        } else {
+                            $schedule_val = get_post_meta($post_id, 'schedule', true);
+                        }
+
+                        $element_attr = array('value' => $schedule_val, 'class' => 'settings-input, bf_datetime');
+
+                        $form->addElement(new Element_HTML('<div class="bf_datetime_wrap">'));
+                        $form->addElement(new Element_Textbox('Schedule Time', 'schedule', $element_attr));
+                        $form->addElement(new Element_HTML('</div>'));
                     }
-
-                    $element_attr = array('value' => $schedule_val, 'class' => 'settings-input, bf_datetime');
-
-                    $form->addElement( new Element_HTML('<div class="bf_datetime_wrap">'));
-                    $form->addElement( new Element_Textbox('Schedule Time' , 'schedule', $element_attr));
-                    $form->addElement( new Element_HTML('</div>'));
                     break;
 
                 case 'Textarea' :
@@ -287,14 +288,21 @@ function bf_update_post_meta($post_id, $customfields){
 			
 			if (isset($taxonomy->hierarchical) && $taxonomy->hierarchical == true)  {
 				
-				if(isset($_POST[ $customfield['slug'] ]))					
-					wp_set_post_terms( $post_id, $_POST[ $customfield['slug'] ], $customfield['taxonomy'], false );
+				if(isset($_POST[ $customfield['slug'] ]))
+                    $tax_item = $_POST[ $customfield['slug'] ];
+
+                if($tax_item[0] == -1)
+                    $tax_item[0] = $customfield['taxonomy_default'];
+
+				wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 			} else {
 			
 				$slug = Array();
 				
 				if(isset($_POST[ $customfield['slug'] ])) {
 					$postCategories = $_POST[ $customfield['slug'] ];
+
+                    print_r($postCategories);
 				
 					foreach ( $postCategories as $postCategory ) {
 						$term = get_term_by('id', $postCategory, $customfield['taxonomy']);

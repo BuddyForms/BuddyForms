@@ -9,7 +9,7 @@ function bf_get_post_status_array($select_condition = false){
         'draft'         => 'Draft',
         'future'        => 'Scheduled',
         'private'       => 'Privately Published',
-        'trash'         => 'Delete',
+        'trash'         => 'Trash',
     );
 
 return $status_array;

@@ -298,6 +298,17 @@ jQuery(document).ready(function(jQuery) {
 
     });
 
+    jQuery(".checkall").click(function(){
+
+        if (jQuery("input[type='checkbox']").prop("checked")) {
+            jQuery(':checkbox').prop('checked', false);
+            jQuery(this).text(' Check all');
+        } else {
+            jQuery(':checkbox').prop('checked', true);
+            jQuery(this).text(' Uncheck all');
+        }
+
+    });
 
 
 });

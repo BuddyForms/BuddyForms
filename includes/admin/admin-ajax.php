@@ -264,6 +264,43 @@ function buddyforms_view_form_fields($args){
                 $taxonomy_order = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_order'];
             $form_fields['left']['taxonomy_order'] 		= new Element_Select('<b>' .__('Taxonomy Order', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy_order]", array('ASC','DESC'), array('value' => $taxonomy_order));
 
+            $taxonomy_default = 'false';
+            if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_default']))
+                $taxonomy_default = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_default'];
+
+            if(isset($taxonomy)) {
+
+                $wp_dropdown_categories_args = array(
+                    'hide_empty'        => 0,
+                    'id'                => $key,
+                    'child_of'          => 0,
+                    'echo'              => FALSE,
+                    'selected'          => false,
+                    'hierarchical'      => 1,
+                    'name'              => "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy_default]",
+                    'class'             => 'postform chosen',
+                    'depth'             => 0,
+                    'tab_index'         => 0,
+                    'taxonomy'          => $taxonomy,
+                    'hide_if_empty'     => FALSE,
+                    'orderby'           => 'SLUG',
+                    'order'             => $taxonomy_order,
+                );
+
+
+                $dropdown = wp_dropdown_categories($wp_dropdown_categories_args);
+                $dropdown = str_replace(' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown);
+
+                $dropdown = '<div class="bf_field_group">
+                        <div class="buddyforms_field_label"><b>Taxonomy Default</b></div>
+                        <div class="bf_inputs">' . $dropdown . ' </div>
+
+                    </div>';
+
+                $form_fields['left']['taxonomy_default'] 		= new Element_HTML($dropdown);
+
+            }
+
             $multiple = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple']))
                 $multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['multiple'];
@@ -307,13 +344,13 @@ function buddyforms_view_form_fields($args){
             unset($form_fields);
 
 
-            $form_fields['left']['html']		= new Element_HTML(__("There are no settings needed so far. You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms'));
+            $form_fields['left']['html']		= new Element_HTML(__("You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms'));
 
             $post_status = 'false';
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status']))
                 $post_status = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status'];
 
-            $form_fields['left']['post_status'] = new Element_Checkbox('' ,"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][post_status]",bf_get_post_status_array(),array('value' => $post_status));
+            $form_fields['left']['post_status'] = new Element_Checkbox('<br><b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>' ,"buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][post_status]",bf_get_post_status_array(),array('value' => $post_status, 'required' => true) );
 
 
             $form_fields['left']['name']		= new Element_Hidden("buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][name]", 'Status');
