@@ -182,7 +182,7 @@ function buddyforms_view_form_fields($args){
 
 
     if(!isset($field_id))
-        $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);;
+        $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
     if(isset($field_position) =='')
         $field_position = $numItems;

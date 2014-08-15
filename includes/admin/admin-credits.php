@@ -6,7 +6,7 @@
 
         </p>
     </div>
-
+    <?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>
     <h1 style="line-height: 58px; margin-top: 20px;"><div style="font-size: 52px; margin-top: -2px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms <span class="version"><?php echo BUDDYFORMS_VERSION ?></span>
         <a href="<?php echo get_admin_url(); ?>admin.php?page=create-new-form" class="add-new-h2"><?php _e('Add New Form', 'buddyforms') ?></a>
     </h1>

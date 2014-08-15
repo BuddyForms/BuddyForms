@@ -21,17 +21,19 @@ function bf_add_ons_screen(){
         <?php
         $addon_args = array();
 
+    
+
         $addon_args['buddyforms-members'] = array(
             'plugin_name'   => 'BuddyForms Members',
             'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-members-thumb-250x1703-250x170.png',
+            'plugin_image'  => plugins_url('img/buddyforms-members-thumb-250-170.png' , __FILE__ ),
             'plugin_desc'   => 'This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.'
         );
 
         $addon_args['buddyforms-attach-posts-to-groups-extension'] = array(
             'plugin_name'   => 'BuddyForms Attach Posts to Groups Extension',
             'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => 'http://themekraft.com/wp-content/uploads/2013/09/buddyforms-groups-thumb-250x1703-250x170.png',
+            'plugin_image'  => plugins_url( 'img/buddyforms-groups-thumb-250x170' , __FILE__ ),
             'plugin_desc'   => 'With this plugin, you’ll be able to automatically create a new BuddyPress group for pre-assigned BuddyForms post submissions and attach that group to the post. User-submitted posts with BuddyForms then become a BuddyPress group with all the included functionality and endless possibilities.'
         );
         $addon_args['buddyforms-posts-to-posts-integration'] = array(
@@ -67,7 +69,7 @@ function buddyforms_get_addons($addon_args){
                 </div>
                 <div class="addon-content">
                     <h4><?php echo $addon['plugin_name']; ?></h4>
-                    <p><?php echo $addon['plugin_desc'] ?></p>
+                    <p><?php echo $addon['plugin_desc']; ?></p>
                 </div>
                 <div style="clear: left"></div>
                 <?php
