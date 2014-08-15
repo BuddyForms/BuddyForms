@@ -270,7 +270,7 @@ function buddyforms_settings_page(){
                                 <div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
                                     <div class="accordion-inner">'));
 
-                                        $form->addElement(new Element_HTML('<input type="button" class="button" onClick="history.go(0)" value="' . __('Cancel', 'buddyforms') . '" />'));
+                                        $form->addElement(new Element_HTML('<a class="button" href="'.get_admin_url().'admin.php?page=buddyforms_options_page">'.__('Cancel', 'buddyforms').'</a>'));
 
                                         $form->addElement(new Element_Button('button', 'button', array('id' => $buddyform['slug'], 'class' => 'button dele_form', 'name' => 'dele_form', 'value' => __('Delete', 'buddyforms'))));
 
@@ -290,8 +290,8 @@ function buddyforms_settings_page(){
                                 <div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
                                     <div class="accordion-inner">
 
-                                    <a style="margin-bottom: 5px;" class="btn" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification Settings</a>
-                                    <a style="margin-bottom: 5px;" class="btn" href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'"> Roles and Capabilities</a>
+                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification Settings</a>
+                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'"> Roles and Capabilities</a>
                                     '));
 
                 $form->addElement(new Element_HTML('

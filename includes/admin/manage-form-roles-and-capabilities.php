@@ -138,7 +138,7 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                                     <b>
                                         <div id="accordion_save" class="accordion-body">
                                             <div class="accordion-inner">
-                                               <a class="btn button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
+                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
                                             </div>
                                         </div>
                                     </b>

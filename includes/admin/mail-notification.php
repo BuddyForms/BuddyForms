@@ -20,7 +20,7 @@ function bf_mail_notification_screen() { ?>
                 $update_option = update_option("buddyforms_options", $buddyforms);
 
                 if ($update_option)
-                    echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
+                    echo "<div id='settings_updated' class='updated'> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
             }
 
             $form = new Form("buddyforms_notification_trigger");
@@ -71,7 +71,7 @@ function bf_mail_notification_screen() { ?>
                                     <b>
                                         <div id="accordion_save" class="accordion-body">
                                             <div class="accordion-inner">
-                                               <a class="btn button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
+                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
                                             </div>
                                         </div>
                                     </b>

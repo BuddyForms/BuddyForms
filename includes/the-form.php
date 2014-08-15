@@ -191,7 +191,7 @@ function buddyforms_create_edit_form( $args = array() ) {
     }
 
     if ( $user_can_edit == false ){
-        $error_message = __('You do not have the need user role to use this form', 'buddyforms');
+        $error_message = __('You do not have the required user role to use this form', 'buddyforms');
         echo '<div class="error alert">'.$error_message.'</div>';
         return;
     }
