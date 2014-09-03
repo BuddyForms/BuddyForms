@@ -147,7 +147,7 @@ body {
 padding-top: 18px !important;
 }
 #bf_admin_wrap .accordion-inner .innerblock {
-	overflow: auto;
+	overflow: hidden;
 	height: auto;
 	margin-bottom: 20px;
 }

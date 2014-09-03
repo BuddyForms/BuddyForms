@@ -400,13 +400,13 @@ function buddyforms_settings_page(){
                     if (isset($buddyform['edit_link']))
                         $edit_link = $buddyform['edit_link'];
 
-                    $form->addElement(new Element_Checkbox('' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link]", array('overwrite' => "<b>" . __("Overwrite 'Edit' Link in the Frontend", 'buddyforms') . "</b>"), array('value' => $edit_link, 'shortDesc' =>  __('The link to the backend will be changed', 'buddyforms') . "<br>" . __('to use the frontend editing.', 'buddyforms'))));
+                    $form->addElement(new Element_Checkbox( '<b>' . __("Overwrite Frontend 'Edit Post' Link", 'buddyforms') . '</b><br><span class="help-inline">'.__('The link to the backend will be changed', 'buddyforms') . "<br>" . __('to use the frontend editing.', 'buddyforms').'</span>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link]", array('overwrite' => "<b>" . __("in the post single view", 'buddyforms') . "</b>"), array('value' => $edit_link )));
 
                     $edit_link_single = 'false';
                     if (isset($buddyform['edit_link']))
                         $edit_link_single = $buddyform['edit_link'];
 
-                    $form->addElement(new Element_Checkbox('' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link_single]", array('overwrite' => "<b>" . __("Overwrite 'Edit' Link in the Frontend", 'buddyforms') . "</b>"), array('value' => $edit_link_single, 'shortDesc' =>  __('The link to the backend will be changed', 'buddyforms') . "<br>" . __('to use the frontend editing.', 'buddyforms'))));
+                    $form->addElement(new Element_Checkbox('' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link_single]", array('overwrite' => "<b>" . __("in the buddyforms my posts list", 'buddyforms') . "</b>"), array('value' => $edit_link_single)));
 
                 $form->addElement(new Element_HTML('</div>'));
                 $form->addElement(new Element_HTML('</div>'));
