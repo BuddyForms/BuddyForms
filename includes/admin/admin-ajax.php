@@ -254,7 +254,7 @@ function buddyforms_view_form_fields($args){
         case 'Taxonomy':
             $taxonomies = buddyforms_taxonomies($form_slug);
 
-            $taxonomy = 'false';
+            $taxonomy = false;
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy']))
                 $taxonomy = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy'];
             $form_fields['left']['taxonomy'] 		= new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][".$form_slug."][form_fields][".$field_id."][taxonomy]", $taxonomies, array('value' => $taxonomy));
@@ -268,7 +268,7 @@ function buddyforms_view_form_fields($args){
             if(isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_default']))
                 $taxonomy_default = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['taxonomy_default'];
 
-            if(isset($taxonomy)) {
+            if($taxonomy) {
 
                 $wp_dropdown_categories_args = array(
                     'hide_empty'        => 0,

@@ -1,28 +1,16 @@
 === BuddyForms  ===
 
-Contributors: Sven Lehnert, Konrad Sroka, 
+Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
-Tested up to: WordPress 3.9.1, BuddyPress 2.x
+Tested up to: WordPress 4.0, BuddyPress 2.x
 Stable tag: 1.1
 
 
 
 === Description === 
 
-// Front End Posting   
-BuddyForms enables frontend posting and editing for WordPress and BuddyPress.
 
-// Create and Edit Forms  
-With integrated drag and drop form builder.
-Create Email Forms and Post Forms for posts, pages and custom post types. 
-This enables you to post all kind of posts from the frontend, for example right out of the member profiles.    
-
-// Collaborative Publishing 
-Your custom post types are auto detected. 
-You can choose the post type that should be published with your form.
-This way you can integrate other CPT based plugins for example to BuddyPress.  
-Your users can create posts, events, products, videos, etc. right out of their member profiles.  
  
 
 
@@ -39,16 +27,47 @@ Login with your account from http://themekraft.com.
 
 // Changelook
 
-= 1.0.5 =
-Rename Hooks
-Spelling correction
+== 1.1 ==
 
-= 1.0.4 =
-Fixed a bug with the meta-box, there was an error if no form was selected.
+add language support
+add featured image as form element
+add file form element
+add ajax to delete a file
+fixed a pagination bug
+only display the post type related taxonomies in the form element options
+add translation textdomain "buddyforms"
+rebuild the add new form screen
+remove unneeded form elements from add form screen
+add mail notification settings
+add mail notification system to buddy forms
+add date time form element for post status future
+spelling session
+ui design
+Settings page Add Ons rewrite
+add new settings page for roles and capabilities
+cleanup the code
+fixed bugs
+add new default option to taxonomy form element
+add Italien language
+== 1.0.5 ==
 
-= 1.0.3 =
+rename hook buddyforms_add_form_element_in_sidebar to buddyforms_add_form_element_to_sidebar
+spelling correction
+== 1.0.4 ==
+
+remove unneeded html
+== 1.0.3 ==
+
 editing your pending/draft posts from the frontend.
 fixed some css issues
+== 1.0.2 ==
 
-= v1.0 =
-* initial release.
+remove old button for community forum
+add some new filter
+== 1.0.1 ==
+
+catch if create a new post_tag is empty
+metabox rework
+== 1.0 ==
+
+first release
