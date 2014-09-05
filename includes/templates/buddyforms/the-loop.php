@@ -44,8 +44,13 @@ if ( $the_lp_query->have_posts() ) : ?>
 					?>
 					<div class="meta">
 						<div class="item-status"><?php echo $post_status; ?></div>
-                        <?php if( current_user_can('buddyforms_'.$form_slug.'_edit') ) { ?>
-						    <a title="Edit me" href='<?php echo $permalink.'edit/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
+                        <?php if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
+
+                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') { ?>
+                                <a title="Edit me" href='<?php echo $permalink.'edit/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
+                            <?php } else { ?>
+                                <? edit_post_link('Edit'); ?>
+                            <?php } ?>
                         <?php } ?>
                         <?php if( current_user_can('buddyforms_'.$form_slug.'_delete') ) { ?>
 						    - <a title="Delete me" onclick="return confirm(__('Are you sure you want to delete this entry?', 'buddyforms'));" href='<?php echo $permalink.'delete/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>

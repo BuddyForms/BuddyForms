@@ -247,7 +247,6 @@ font-size: 14px;
 }
 
 #bf_admin_wrap .radio {
-float: left;
 padding: 5px;
 }
 #bf_admin_wrap .form_type_settings {
@@ -375,3 +374,6 @@ clear: both;
  padding: 5px;
 }
 
+.bf-mail-field{
+    width:100%;
+}

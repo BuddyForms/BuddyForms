@@ -193,9 +193,9 @@ function buddyforms_new_notification_trigger_form($form_slug, $trigger, $href = 
 
     $form->addElement(new Element_Checkbox(__('Sent mail to', 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_to]", array('author' => 'The Post Author', 'admin' => 'Admin E-mail Address from Settings/General'), array('value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_to'], 'inline' => 1)));
     $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Textbox(__("Add mail to addresses separated with ','", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_to_address]", array("class" => "span11", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_to_address'])));
+    $form->addElement(new Element_Textbox(__("Add mail to addresses separated with ','", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_to_address]", array("class" => "bf-mail-field", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_to_address'])));
     $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Textbox(__("Subject", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_subject]", array("class" => "span11", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_subject'], 'required' => 1)));
+    $form->addElement(new Element_Textbox(__("Subject", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_subject]", array("class" => "bf-mail-field", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_subject'], 'required' => 1)));
     $form->addElement(new Element_HTML('<br><br>'));
 
     ob_start();

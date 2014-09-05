@@ -69,12 +69,12 @@ function my_edit_post_link( $url, $post_ID) {
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
 
-	if ($the_post->post_author != $current_user->ID) // this needs to be modified for admins and collaborative content creation
+	if ($the_post->post_author != $current_user->ID) // @todo this needs to be modified for admins and collaborative content creation
 		return $url;
 
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 
-		if(isset($buddyform['post_type']) && $buddyform['post_type'] == $post_type && isset($buddyform['edit_link'][0])){
+		if(isset($buddyform['post_type']) && $buddyform['post_type'] == $post_type && isset($buddyform['edit_link']) && $buddyform['edit_link'] == 'all'){
 			$permalink	= get_permalink( $buddyform['attached_page'] );
 			$url = $permalink.'edit/'.$key.'/'.get_the_ID();
 			return $url;

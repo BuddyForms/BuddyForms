@@ -396,17 +396,12 @@ function buddyforms_settings_page(){
 
                 $form->addElement(new Element_Checkbox('<br>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][admin_bar]", array('Admin Bar' => "<b>" . __('Add to Admin Bar', 'buddyforms') . "</b>"), array('value' => $admin_bar)));
 
-                    $edit_link = 'false';
+                    $edit_link = 'all';
                     if (isset($buddyform['edit_link']))
                         $edit_link = $buddyform['edit_link'];
 
-                    $form->addElement(new Element_Checkbox( '<b>' . __("Overwrite Frontend 'Edit Post' Link", 'buddyforms') . '</b><br><span class="help-inline">'.__('The link to the backend will be changed', 'buddyforms') . "<br>" . __('to use the frontend editing.', 'buddyforms').'</span>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link]", array('overwrite' => "<b>" . __("in the post single view", 'buddyforms') . "</b>"), array('value' => $edit_link )));
+                    $form->addElement(new Element_Radio( '<b>' . __("Overwrite Frontend 'Edit Post' Link", 'buddyforms') . '</b><br><span class="help-inline">'.__('The link to the backend will be changed', 'buddyforms') . "<br>" . __('to use the frontend editing.', 'buddyforms').'</span>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link]", array('none' => 'None', 'all' => __("All Edit Links", 'buddyforms' ), 'my-posts-list' => __("Only in My Posts List", 'buddyforms')), array('value' => $edit_link )));
 
-                    $edit_link_single = 'false';
-                    if (isset($buddyform['edit_link']))
-                        $edit_link_single = $buddyform['edit_link'];
-
-                    $form->addElement(new Element_Checkbox('' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][edit_link_single]", array('overwrite' => "<b>" . __("in the buddyforms my posts list", 'buddyforms') . "</b>"), array('value' => $edit_link_single)));
 
                 $form->addElement(new Element_HTML('</div>'));
                 $form->addElement(new Element_HTML('</div>'));
@@ -448,7 +443,7 @@ function buddyforms_settings_page(){
                 $form->addElement( new Element_HTML("<br><br><p><span class='required'>* </span><b>" . __('Attach Page to this Form', 'buddyforms') . "</b></p>"));
                 $form->addElement( new Element_HTML(wp_dropdown_pages($args)));
 
-                $form->addElement(new Element_HTML(' <a href="' . admin_url(add_query_arg(array('post_type' => 'page'), 'post-new.php')) . '" class="button">' . __('Create  New Page', 'buddyforms') . '</a>'));
+                $form->addElement(new Element_HTML(' <a href="' . admin_url(add_query_arg(array('post_type' => 'page'), 'post-new.php')) . '" class="button">' . __('Create New', 'buddyforms') . '</a>'));
 
                 $form->addElement( new Element_HTML("<p><span class='help-inline' >".__('Needs to be a parent page')."</span></p>"));
 
