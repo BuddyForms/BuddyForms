@@ -1,0 +1,624 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BuddyForms\n"
+"POT-Creation-Date: 2014-09-15 08:52+0100\n"
+"PO-Revision-Date: 2014-09-15 15:23+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/admin/admin-ajax.php:195 includes/admin/admin-ajax.php:376
+msgid "Required"
+msgstr "Benötigt"
+
+#: includes/admin/admin-ajax.php:200 includes/admin/admin.php:187
+#: includes/admin/mail-notification.php:189
+msgid "Name"
+msgstr "Name"
+
+#: includes/admin/admin-ajax.php:204 includes/admin/admin-ajax.php:326
+#: includes/admin/admin.php:188
+msgid "Slug"
+msgstr "Slug"
+
+#: includes/admin/admin-ajax.php:204
+msgid "_name will create a hidden post meta field"
+msgstr "_name wird ein verstecktes Post Meta Feld erstellen"
+
+#: includes/admin/admin-ajax.php:210
+msgid "Description"
+msgstr "Beschreibung"
+
+#: includes/admin/admin-ajax.php:222
+msgid "Target"
+msgstr "Ziel"
+
+#: includes/admin/admin-ajax.php:229 includes/admin/admin-ajax.php:307
+msgid "Multiple"
+msgstr "Mehrere"
+
+#: includes/admin/admin-ajax.php:260 includes/admin/admin.php:329
+msgid "Taxonomy"
+msgstr "Texonomie"
+
+#: includes/admin/admin-ajax.php:265
+msgid "Taxonomy Order"
+msgstr "Taxonomie Reihenfolge"
+
+#: includes/admin/admin-ajax.php:312
+msgid "Show 'Select an Option'"
+msgstr "'Wähle eine Option' anzeigen"
+
+#: includes/admin/admin-ajax.php:317
+msgid "User can create new"
+msgstr "Benutzer darf neue erstellen"
+
+#: includes/admin/admin-ajax.php:333
+msgid "Value:"
+msgstr "Wert:"
+
+#: includes/admin/admin-ajax.php:340
+msgid ""
+"There are no settings needed so far. You can change the global comment "
+"settings in the form control section. If the 'comments' element is added to "
+"the form, the user has the possibility to overwrite the global settings and "
+"open/close 'comments' for their own post."
+msgstr ""
+
+#: includes/admin/admin-ajax.php:347
+msgid ""
+"You can change the global post status settings in the form control section. "
+"If the 'status' element is added to the form, the user has the possibility "
+"to overwrite the global settings and change the 'status' for their own post."
+msgstr ""
+
+#: includes/admin/admin-ajax.php:353
+msgid "Select the post status you want to make available in the frontend form"
+msgstr ""
+
+#: includes/admin/admin-ajax.php:366
+msgid ""
+"With the Featured Image Form Element you can add a featured image upload to "
+"your form"
+msgstr ""
+
+#: includes/admin/admin-ajax.php:372
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: includes/admin/admin-ajax.php:467
+msgid "Values"
+msgstr "Werte"
+
+#: includes/admin/admin-ajax.php:473
+msgid "Entry "
+msgstr "Eintrag"
+
+#: includes/admin/admin-ajax.php:474
+msgid "move"
+msgstr "verschieben"
+
+#: includes/admin/admin-credits.php:5
+msgid "User Front End Posting and Form Builder for WordPress."
+msgstr "Front End Posts für Benutzer und Form Ersteller für WordPress."
+
+#: includes/admin/admin-credits.php:11 includes/admin/create-new-form.php:7
+msgid "Add New Form"
+msgstr "Neue Form erstellen"
+
+#: includes/admin/admin-credits.php:15
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: includes/admin/admin-credits.php:16
+msgid "Submit a Support Ticket"
+msgstr "Support Ticket senden"
+
+#: includes/admin/admin-credits.php:18
+#, fuzzy
+msgid "Submit your Ideas"
+msgstr "Eigene Ideen einreichen"
+
+#: includes/admin/admin.php:16
+#, fuzzy
+msgid "Add New"
+msgstr "Neue hinzufügen"
+
+#: includes/admin/admin.php:17
+msgid "Add-ons"
+msgstr "Add-ons"
+
+#: includes/admin/admin.php:18 includes/admin/admin.php:301
+msgid "Mail Notification"
+msgstr "Email Benachrichtigung"
+
+#: includes/admin/admin.php:19
+msgid "Manage User Roles"
+msgstr "Benutzer Rollen verwalten"
+
+#: includes/admin/admin.php:44
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Unzureichende Berechtigungen um diese Seite zu sehen."
+
+#: includes/admin/admin.php:73 includes/admin/admin.php:115
+#: includes/admin/mail-notification.php:23
+msgid "Settings saved"
+msgstr "Einstellungen gespeichert"
+
+#: includes/admin/admin.php:184
+msgid "Select All"
+msgstr "Alles auswählen"
+
+#: includes/admin/admin.php:189
+#, fuzzy
+msgid "Attached Post Type"
+msgstr "Angehängter Post Typ"
+
+#: includes/admin/admin.php:190
+msgid "Attached Page"
+msgstr "Seite anhängen"
+
+#: includes/admin/admin.php:255
+msgid "No Forms here so far..."
+msgstr "Keine Forms bis jetzt..."
+
+#: includes/admin/admin.php:255
+msgid "Create A New Form"
+msgstr "Neue Form erstellen"
+
+#: includes/admin/admin.php:281
+msgid "Save Form Settings"
+msgstr "Form Einstellungen speichern"
+
+#: includes/admin/admin.php:285 includes/admin/create-new-form.php:79
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: includes/admin/admin.php:287 includes/templates/buddyforms/the-loop.php:56
+msgid "Delete"
+msgstr "Löschen"
+
+#: includes/admin/admin.php:316
+msgid "Form Elements"
+msgstr "Form Elemente"
+
+#: includes/admin/admin.php:320
+msgid "Classic Fields"
+msgstr "Klassische Felder"
+
+#: includes/admin/admin.php:321
+msgid "Text"
+msgstr "Text"
+
+#: includes/admin/admin.php:322
+msgid "Textarea"
+msgstr "Textbereich"
+
+#: includes/admin/admin.php:323
+msgid "Link"
+msgstr "Link"
+
+#: includes/admin/admin.php:324
+msgid "Mail"
+msgstr "Email"
+
+#: includes/admin/admin.php:325
+msgid "Dropdown"
+msgstr ""
+
+#: includes/admin/admin.php:326
+msgid "Radiobutton"
+msgstr ""
+
+#: includes/admin/admin.php:327
+msgid "Checkbox"
+msgstr ""
+
+#: includes/admin/admin.php:330
+msgid "Hidden"
+msgstr "Versteckt"
+
+#: includes/admin/admin.php:331 includes/admin/create-new-form.php:96
+msgid "Comments"
+msgstr "Kommentare"
+
+#: includes/admin/admin.php:332 includes/admin/mail-notification.php:50
+msgid "Post Status"
+msgstr "Post Status"
+
+#: includes/admin/admin.php:333
+#, fuzzy
+msgid "Featured Image"
+msgstr "Vorschaubild"
+
+#: includes/admin/admin.php:334
+msgid "File"
+msgstr "Datei"
+
+#: includes/admin/admin.php:354
+msgid "Form Settings for"
+msgstr ""
+
+#: includes/admin/admin.php:357
+msgid ""
+"This form is broken please check your required settings under Form Control "
+"and save the form"
+msgstr ""
+
+#: includes/admin/admin.php:359
+msgid "Save new order"
+msgstr ""
+
+#: includes/admin/admin.php:360
+msgid "Load new element"
+msgstr ""
+
+#: includes/admin/admin.php:373
+msgid "Form Control"
+msgstr ""
+
+#: includes/admin/admin.php:376
+msgid "<b>Name</b>"
+msgstr ""
+
+#: includes/admin/admin.php:377
+msgid "<b>Singular Name</b>"
+msgstr ""
+
+#: includes/admin/admin.php:378
+msgid "<b>Slug</b>"
+msgstr ""
+
+#: includes/admin/admin.php:391 includes/revisions.php:33
+msgid "Revision"
+msgstr ""
+
+#: includes/admin/admin.php:391
+msgid "Enable frontend revison control."
+msgstr ""
+
+#: includes/admin/admin.php:397
+msgid "Add to Admin Bar"
+msgstr ""
+
+#: includes/admin/admin.php:403
+msgid "Overwrite Frontend 'Edit Post' Link"
+msgstr ""
+
+#: includes/admin/admin.php:403
+msgid "The link to the backend will be changed"
+msgstr ""
+
+#: includes/admin/admin.php:403
+msgid "to use the frontend editing."
+msgstr ""
+
+#: includes/admin/admin.php:403
+msgid "All Edit Links"
+msgstr ""
+
+#: includes/admin/admin.php:403
+msgid "Only in My Posts List"
+msgstr ""
+
+#: includes/admin/admin.php:415
+msgid "<b>Status</b>"
+msgstr ""
+
+#: includes/admin/admin.php:421
+msgid "<b>Comment Status</b>"
+msgstr ""
+
+#: includes/admin/admin.php:427
+msgid "<b>Post Type</b>"
+msgstr ""
+
+#: includes/admin/admin.php:438 includes/admin/create-new-form.php:51
+msgid "none"
+msgstr "keine"
+
+#: includes/admin/admin.php:443
+msgid "Attach Page to this Form"
+msgstr ""
+
+#: includes/admin/admin.php:446
+msgid "Create New"
+msgstr "Neue erstellen"
+
+#: includes/admin/admin.php:448
+#, fuzzy
+msgid "Needs to be a parent page"
+msgstr "Muss eine Parent Seite sein"
+
+#: includes/admin/admin.php:464
+msgid "Form Builder"
+msgstr ""
+
+#: includes/admin/admin.php:465
+msgid ""
+"Add additional form elements from the right box \"Form Elements\". Change "
+"the order via drag and drop."
+msgstr ""
+
+#: includes/admin/create-new-form.php:37
+msgid "Enter Title here, e.g. Movies"
+msgstr ""
+
+#: includes/admin/create-new-form.php:39
+msgid "Enter Singluar Name here, e.g. Movie"
+msgstr ""
+
+#: includes/admin/create-new-form.php:44
+msgid "Post Type"
+msgstr "Post Typ"
+
+#: includes/admin/create-new-form.php:45
+msgid "Select which post type should be created on form submission."
+msgstr ""
+
+#: includes/admin/create-new-form.php:57
+msgid "Attach a page to this form"
+msgstr "Seite zu dieser Form hinzufügen"
+
+#: includes/admin/create-new-form.php:58
+msgid "Select a page for the authors, call it e.g. \"My Posts\"."
+msgstr ""
+
+#: includes/admin/create-new-form.php:62
+msgid ""
+"<br>Or you can create a new Page.<br><i>Enter the title of the new page "
+"here: </i>"
+msgstr ""
+
+#: includes/admin/create-new-form.php:62
+msgid "e.g. My Movies"
+msgstr "zB. Filme"
+
+#: includes/admin/create-new-form.php:76
+msgid "Create New Form"
+msgstr "Neue Form erstellen"
+
+#: includes/admin/create-new-form.php:80
+msgid "Create Form"
+msgstr "Form erstellen"
+
+#: includes/admin/create-new-form.php:86
+msgid "Moderation"
+msgstr "Moderation"
+
+#: includes/admin/create-new-form.php:89
+msgid "Post status on form submission:"
+msgstr "Post Status bei Form Übermittlung"
+
+#: includes/admin/create-new-form.php:99
+msgid "Comment status on form submission:"
+msgstr "Kommentar Status bei Form Übermittlung"
+
+#: includes/admin/license-registration.php:35
+#, fuzzy
+msgid "License Activation"
+msgstr "Lizenz aktivieren"
+
+#: includes/admin/license-registration.php:41
+msgid "Activate License"
+msgstr "Lizenz aktivieren"
+
+#: includes/admin/license-registration.php:41
+#, fuzzy
+msgid "License Deactivation"
+msgstr "Lizenz deaktivieren"
+
+#: includes/admin/license-registration.php:47
+msgid "BuddyForms License Activation"
+msgstr "BuddyForms Lizenz aktivieren"
+
+#: includes/admin/license-registration.php:63
+#: includes/admin/license-registration.php:68
+msgid "Save Changes"
+msgstr "Einstellungen speichern"
+
+#: includes/admin/license-registration.php:303
+msgid "Deactivates plugin license so it can be used on another blog."
+msgstr ""
+"Plug-In Lizenz deaktivieren damit sie in einem anderen Blog benutzt werden "
+"kann."
+
+#: includes/admin/mail-notification.php:41
+msgid " Mail Notification Settings for \""
+msgstr "Email Benachrichtigung einstellen für \""
+
+#: includes/admin/mail-notification.php:45
+msgid "Create new Mail Notification"
+msgstr "Neue Email Benachrichtigung erstellen"
+
+#: includes/admin/mail-notification.php:53
+msgid "(post or page is visible in the frontend)"
+msgstr "(Post oder Seite ist im Frontend sichtbar)"
+
+#: includes/admin/mail-notification.php:54
+msgid "(post or page is in review process)"
+msgstr "(Post oder Seite ist in der Nachprüfung)"
+
+#: includes/admin/mail-notification.php:55
+msgid "(post or page is not visible in the frontend for public)"
+msgstr "(Post oder Seite ist im Frontend nicht öffentlich sichtbar)"
+
+#: includes/admin/mail-notification.php:56
+msgid "(post or page is scheduled to publish in the future)"
+msgstr "(Post oder Seite wird in der Zukunft veröffentlicht)"
+
+#: includes/admin/mail-notification.php:57
+msgid "(not visible to users who are not logged in)"
+msgstr "(nur für eingeloggte Benutzer sichtbar)"
+
+#: includes/admin/mail-notification.php:58
+msgid "(post is in trash)"
+msgstr "(Post im Mülleimer)"
+
+#: includes/admin/mail-notification.php:191
+msgid "Email"
+msgstr "Email"
+
+#: includes/admin/mail-notification.php:194
+msgid "Sent mail to"
+msgstr "Email senden an"
+
+#: includes/admin/mail-notification.php:196
+msgid "Add mail to addresses separated with ','"
+msgstr "Email Adresse(n) ergänzen und mit ',' trennen"
+
+#: includes/admin/mail-notification.php:198
+msgid "Subject"
+msgstr "Betreff"
+
+#: includes/admin/mail-notification.php:209 includes/the-form.php:248
+msgid "Content"
+msgstr "Inhalt"
+
+#: includes/admin/manage-form-roles-and-capabilities.php:43
+msgid "Capabilities updated"
+msgstr "Fähigkeiten aktualisiert"
+
+#: includes/admin/manage-form-roles-and-capabilities.php:67
+msgid " Roles and Capabilities Settings for \""
+msgstr "Rollen und Fähigkeiten einstellen für \""
+
+#: includes/admin/meta-box.php:22
+msgid "Attache a BuddyForm"
+msgstr "Verknüpfen mit BuddyForm"
+
+#: includes/admin/meta-box.php:50
+msgid "Select the form"
+msgstr "Form auswählen"
+
+#: includes/functions.php:243
+msgid "View my "
+msgstr "Ansehen meiner"
+
+#: includes/functions.php:250
+msgid "New "
+msgstr "Neu"
+
+#: includes/functions.php:329
+msgid "Select the form to use"
+msgstr "Form auswählen"
+
+#: includes/functions.php:330
+msgid "Select the post type"
+msgstr "Post Typ auswählen"
+
+#: includes/functions.php:334
+msgid "Add Form Now"
+msgstr "Jetzt neue Form hinzufügen"
+
+#: includes/post-control.php:27
+msgid "You are not allowed to delete this entry! What are you doing here?"
+msgstr "Keine Berechtigung zum löschen dieses Eintrags!"
+
+#: includes/post-control.php:178
+msgid "Featured Image:"
+msgstr "Vorschaubild:"
+
+#: includes/post-control.php:260
+msgid "Create a new "
+msgstr "Erstelle neue(n)"
+
+#: includes/post-control.php:414
+msgid "There has been an error uploading the image."
+msgstr "Es ist ein Fehler beim Hochladen des Bildes aufgetreten."
+
+#. translators: revision date format, see http://php.net/date
+#: includes/revisions.php:42 includes/revisions.php:124
+msgctxt "revision date format"
+msgid "j F, Y @ G:i:s"
+msgstr ""
+
+#. translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date
+#: includes/revisions.php:51
+#, php-format
+msgid "Previously restored by %1$s %2$s, %3$s ago (%4$s)"
+msgstr ""
+
+#. translators: post revision title: 1: author avatar, 2: author name, 3: time ago, 4: date
+#: includes/revisions.php:134
+#, php-format
+msgctxt "post revision title"
+msgid "%1$s %2$s, %3$s ago (%4$s)"
+msgstr ""
+
+#: includes/revisions.php:141
+#, php-format
+msgid "%1$s [Autosave]"
+msgstr ""
+
+#: includes/revisions.php:142
+#, php-format
+msgid "%1$s [Current Revision]"
+msgstr ""
+
+#: includes/templates/buddyforms/the-loop.php:27
+msgid "Permanent Link to"
+msgstr "Permanenter Link zu"
+
+#: includes/templates/buddyforms/the-loop.php:34
+msgid "Created"
+msgstr "Erstellt"
+
+#: includes/templates/buddyforms/the-loop.php:50
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: includes/templates/buddyforms/the-loop.php:72
+msgid " Previous Entries"
+msgstr "Vorherige Einträge"
+
+#: includes/templates/buddyforms/the-loop.php:73
+msgid "Next Entries "
+msgstr "Weitere Einträge"
+
+#: includes/templates/buddyforms/the-loop.php:83
+msgid "There were no posts found."
+msgstr "Es wurden keine Posts gefunden."
+
+#: includes/the-form.php:65 includes/the-form.php:89
+msgid "You are not allowed to edit this post. What are you doing here?"
+msgstr "Keine Berechtigung zum Editieren!"
+
+#: includes/the-form.php:161 includes/the-form.php:164
+msgid "The "
+msgstr "Eintrag"
+
+#: includes/the-form.php:161
+msgid " has been successfully updated"
+msgstr "wurde erfolgreich aktualisiert"
+
+#: includes/the-form.php:164
+msgid " has been successfully created"
+msgstr "wurde erfolgreich erstellt"
+
+#: includes/the-form.php:170
+msgid "Error! There was a problem submitting the post ;-("
+msgstr "Fehler! Es ist ein Problem beim Senden des Posts aufgetreten ;-("
+
+#: includes/the-form.php:194
+msgid "You do not have the required user role to use this form"
+msgstr "Falsche Benutzerrolle für diese Form"
+
+#: includes/the-form.php:234
+msgid "Title:"
+msgstr "Titel:"
+
+#: includes/the-form.php:256
+msgid "Submit"
+msgstr "Senden"
