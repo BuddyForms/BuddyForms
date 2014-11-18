@@ -62,12 +62,11 @@ class BuddyForms {
         define('BUDDYFORMS_VERSION', $this->version);
 
         add_action('init'					, array($this, 'includes')					, 4, 1);
-		add_action('init'					, array($this, 'load_plugin_textdomain')	, 10, 1);
+		add_action('plugins_loaded'         , array($this, 'load_plugin_textdomain'));
 		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
 		add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
-        add_action('plugins_loaded'			, array($this, 'translate'));
 
 		$this->init_hook();
 		$this->load_constants();
@@ -94,17 +93,6 @@ class BuddyForms {
 		$this->set_globals();
 		do_action('buddyforms_init');
 	}
-
-    /**
-     * Load the language file
-     *
-     * @since 	1.1
-     * @uses 	load_plugin_textdomain()
-     */
-    public function translate()	{
-        load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . "/languages" );
-    }
-
 
 	/**
 	 * Defines constants needed throughout the plugin.

@@ -52,7 +52,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 	foreach ($customfields as $key => $customfield) :
 
 		if(isset($customfield['slug']))
-			$slug = sanitize_title($customfield['slug']);	
+			$slug = sanitize_title($customfield['slug']);
 			
 		if($slug == '')
 			$slug = sanitize_title($customfield['name']);
@@ -104,9 +104,6 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
                 case 'Status' :
                     global $buddyforms;
-
-
-
 
                     if (is_array($customfield['post_status'])){
                         if (in_array('pending', $customfield['post_status']))
@@ -301,8 +298,6 @@ function bf_update_post_meta($post_id, $customfields){
 				
 				if(isset($_POST[ $customfield['slug'] ])) {
 					$postCategories = $_POST[ $customfield['slug'] ];
-
-                    print_r($postCategories);
 				
 					foreach ( $postCategories as $postCategory ) {
 						$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
