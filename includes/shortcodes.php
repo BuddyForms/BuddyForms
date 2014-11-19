@@ -1,6 +1,24 @@
 <?php
 // Shortcode to add the form everywhere easily ;) the form is located in the-form.php
-add_shortcode('buddyforms_form', 'buddyforms_create_edit_form');
+add_shortcode('buddyforms_form', 'buddyforms_create_edit_form_shortcode');
+
+function buddyforms_create_edit_form_shortcode($args){
+
+    extract(shortcode_atts(array(
+        'post_type' => '',
+        'the_post' => 0,
+        'post_id' => $post_id,
+        'revision_id' => false,
+        'form_slug' => $form_slug,
+    ), $args));
+
+    ob_start();
+    buddyforms_create_edit_form($args);
+    $create_edit_form = ob_get_contents();
+    ob_clean();
+
+    return $create_edit_form;
+}
 
 function bf_get_url_var($name){
     $strURL = $_SERVER['REQUEST_URI'];

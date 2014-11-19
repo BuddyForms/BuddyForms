@@ -54,7 +54,7 @@ function buddyforms_options_content() {
         echo '</pre>';*/
         include('admin-credits.php');
 
-        if($_POST['action'] == 'Apply'){
+        if(isset($_POST['action']) && $_POST['action'] == 'Apply'){
 
             if ( isset( $_POST['bf_bulkactions'] ) && $_POST['bf_bulkactions'] == 'delete' && isset($_POST['bf_bulkactions_slugs']) ){
 
@@ -77,7 +77,7 @@ function buddyforms_options_content() {
         $old_buddyforms = $buddyforms;
         unset($buddyforms['buddyforms']);
 
-        if ($_POST['action'] == 'Save' && isset($_POST["buddyforms_options"])) {
+        if (isset($_POST['action']) && $_POST['action'] == 'Save' && isset($_POST["buddyforms_options"])) {
 
             foreach ($_POST["buddyforms_options"]['buddyforms'] as $key => $buddyform) {
 
@@ -481,7 +481,7 @@ function buddyforms_settings_page(){
                         if (empty($slug))
                             $slug = $key;
 
-                        if ($slug != '') {
+                        if ($slug != '' && isset($customfield['name'])) {
                             $args = Array(
                                 'slug' => $slug,
                                 'field_position' => $customfield['order'],

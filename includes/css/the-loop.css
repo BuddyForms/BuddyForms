@@ -52,5 +52,5 @@ ul.buddyforms-list .item-status {
 	text-shadow: -1px -1px 0px #333;
 }
 ul.buddyforms-list .publish .item-status { background: green; }
-ul.buddyforms-list .pending .item-status { background: orange; }
+ul.buddyforms-list .bf-pending .item-status { background: orange; }
 ul.buddyforms-list .draft .item-status { background: red; }

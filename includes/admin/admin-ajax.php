@@ -272,7 +272,6 @@ function buddyforms_view_form_fields($args){
 
                 $wp_dropdown_categories_args = array(
                     'hide_empty'        => 0,
-                    'id'                => $key,
                     'child_of'          => 0,
                     'echo'              => FALSE,
                     'selected'          => false,

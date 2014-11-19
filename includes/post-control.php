@@ -234,9 +234,11 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                     if (isset($customfield['required']) && is_array( $customfield['required'] ))
                         $dropdown = str_replace('id=', 'required id=', $dropdown);
 
-                    if (is_array($customfield_val)) {
-						foreach ($customfield_val as $value) {
-							$dropdown = str_replace(' value="' . $value . '"', ' value="' . $value . '" selected="selected"', $dropdown);
+                    $the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
+
+                    if (is_array($the_post_terms)) {
+						foreach ($the_post_terms as $key => $post_term) {
+							$dropdown = str_replace(' value="' . $post_term->term_id . '"', ' value="' . $post_term->term_id . '" selected="selected"', $dropdown);
 						}
 					}
                     $required = '';
