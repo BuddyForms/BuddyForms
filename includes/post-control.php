@@ -49,7 +49,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 	if (!isset($customfields))
 		return;
 
-	foreach ($customfields as $key => $customfield) :
+	foreach ($customfields as $field_id => $customfield) :
 
 		if(isset($customfield['slug']))
 			$slug = sanitize_title($customfield['slug']);
@@ -205,7 +205,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
                     $args = array(
                         'hide_empty'        => 0,
-						'id'                => $key,
+						'id'                => $field_id,
 						'child_of'          => 0,
 						'echo'              => FALSE,
 						'selected'          => false,
@@ -246,7 +246,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
                         $required = '<span class="required">* </span>';
                     }
                     $dropdown = '<div class="bf_field_group">
-                        <label for="editpost-element-' . $key . '">
+                        <label for="editpost-element-' . $field_id . '">
                             '.$required.$customfield['name'] . ':
                         </label>
                         <div class="bf_inputs">' . $dropdown . ' </div>
@@ -262,9 +262,17 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 					break;
 					
 				default:
-					
+
+                    $form_args = Array(
+                        'field_id'          => $field_id,
+                        'post_id'           => $post_id,
+                        'form_slug'         => $form_slug,
+                        'customfield'       => $customfield,
+                        'customfield_val'   => $customfield_val
+                    );
+
 					// hook to add your form element
-					apply_filters('buddyforms_create_edit_form_display_element',$form, $post_id, $form_slug, $customfield, $customfield_val);
+					apply_filters('buddyforms_create_edit_form_display_element',$form, $form_args);
 					
 					break;
 
