@@ -42,6 +42,11 @@ jQuery(document).ready(function (){
         timeFormat: 'hh:mm tt'
     });
 
+    jQuery('.bf_price_date').datepicker({
+        controlType: 'select',
+        dateFormat: 'yy-mm-dd'
+    });
+
     var bf_status = jQuery('select[name=status]').val();
 
     if(bf_status == 'future'){
@@ -58,6 +63,22 @@ jQuery(document).ready(function (){
         } else {
             jQuery('.bf_datetime_wrap').hide();
         }
+    });
+
+
+    jQuery(".ajax_chosen_select_products").ajaxChosen({
+        type: 'GET',
+        url: 'ajaxurl',
+        dataType: 'json',
+        data: {"action": "bf_json_search_products"}
+    }, function (data) {
+        var results = [];
+
+        jQuery.each(data, function (i, val) {
+            results.push({ value: val.value, text: val.text });
+        });
+
+        return results;
     });
 
 });      

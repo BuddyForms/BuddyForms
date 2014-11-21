@@ -240,8 +240,9 @@ class BuddyForms {
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-datepicker');
 
-        wp_enqueue_script(	'buddyforms-multiple-select',		            plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
-        wp_enqueue_style(	'buddyforms-multiple-select-css',	            plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
+        wp_enqueue_script(	'buddyforms-chosen-select',		            plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
+        wp_enqueue_script(	'buddyforms-ajax-chosen',		            plugins_url('includes/resources/ajax-chosen/ajax-chosen.min.js', __FILE__), array('jquery') );
+        wp_enqueue_style(	'buddyforms-chosen-select-css',	            plugins_url('includes/resources/chosen/chosen.min.css', __FILE__));
 
         wp_enqueue_script(	'buddyforms-jquery-ui-timepicker-addon-js',		plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
         wp_enqueue_style(	'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
