@@ -2,7 +2,9 @@ body {
     font-size: 16px;
 }
 
-
+.bf-hidden {
+    display: none;
+}
 
 .addon-image{
     float: left;

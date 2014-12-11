@@ -22,7 +22,7 @@ function buddyforms_create_edit_form_shortcode($args){
 
 function bf_get_url_var($name){
     $strURL = $_SERVER['REQUEST_URI'];
-    $arrVals = split("/",$strURL);
+    $arrVals = explode("/",$strURL);
     $found = 0;
     foreach ($arrVals as $index => $value)
     {

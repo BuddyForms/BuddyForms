@@ -152,8 +152,9 @@ class BuddyForms {
 
 		if (is_admin()){
 
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
+            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
             require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
             require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
@@ -248,6 +249,8 @@ class BuddyForms {
         wp_enqueue_style(	'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
         wp_enqueue_script(	'buddyforms-js',					            plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+        wp_enqueue_media();
+        wp_enqueue_script(	'media-uploader-js',					            plugins_url('includes/js/media-uploader.js', __FILE__),  array('jquery') );
 
         wp_enqueue_style(   'buddyforms-the-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
         wp_enqueue_style(   'buddyforms-the-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));

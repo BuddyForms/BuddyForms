@@ -89,3 +89,12 @@
 	padding: 0px;
 	vertical-align: middle;
 }
+
+ul.product_images.ui-sortable li img {
+    width: 100px;
+    height: 100px;
+}
+
+.bf-hidden {
+    display: none;
+}

@@ -65,22 +65,6 @@ jQuery(document).ready(function (){
         }
     });
 
-
-    jQuery(".ajax_chosen_select_products").ajaxChosen({
-        type: 'GET',
-        url: 'ajaxurl',
-        dataType: 'json',
-        data: {"action": "bf_json_search_products"}
-    }, function (data) {
-        var results = [];
-
-        jQuery.each(data, function (i, val) {
-            results.push({ value: val.value, text: val.text });
-        });
-
-        return results;
-    });
-
 });      
 
 
