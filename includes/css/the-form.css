@@ -98,3 +98,7 @@ ul.product_images.ui-sortable li img {
 .bf-hidden {
     display: none;
 }
+
+.chosen-container {
+	width: 50% !important;
+}
