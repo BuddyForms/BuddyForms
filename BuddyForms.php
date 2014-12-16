@@ -66,7 +66,8 @@ class BuddyForms {
 		add_action('wp_init'				, array($this, 'set_globals')				, 12, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')	, 1, 1);
 		add_action('admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')		, 2, 1);
-		add_action('wp_enqueue_scripts'		, array($this, 'buddyform_front_js')		, 2, 1);
+		add_action('template_redirect'		, array($this, 'buddyform_front_js_loader')		, 2, 1);
+
 
 		$this->init_hook();
 		$this->load_constants();
@@ -235,11 +236,31 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
+	function buddyform_front_js_loader(){
+		global $post, $wp_query, $buddyforms;
+
+		$found = false;
+
+		// check the post content for the short code
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'buddyforms_form') )
+			$found = true;
+
+		if(isset($wp_query->query['bf_action']))
+			$found = true;
+
+		$found = apply_filters('buddyforms_front_js_css_loader', $found);
+
+		if($found)
+			BuddyForms::buddyform_front_js();
+
+	}
 	function buddyform_front_js() {
-		
-		wp_enqueue_script(	'jquery');
-        wp_enqueue_script('jquery-ui-core');
-        wp_enqueue_script('jquery-ui-datepicker');
+
+		do_action('buddyforms_front_js_css_enqueue');
+
+		wp_enqueue_script(	'jquery' );
+        wp_enqueue_script( 'jquery-ui-core' );
+        wp_enqueue_script( 'jquery-ui-datepicker' );
 
         wp_enqueue_script(	'buddyforms-chosen-select',		            plugins_url('includes/resources/chosen/chosen.jquery.js', __FILE__), array('jquery') );
         wp_enqueue_script(	'buddyforms-ajax-chosen',		            plugins_url('includes/resources/ajax-chosen/ajax-chosen.min.js', __FILE__), array('jquery') );
@@ -249,6 +270,7 @@ class BuddyForms {
         wp_enqueue_style(	'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
         wp_enqueue_script(	'buddyforms-js',					            plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+
         wp_enqueue_media();
         wp_enqueue_script(	'media-uploader-js',					            plugins_url('includes/js/media-uploader.js', __FILE__),  array('jquery') );
 

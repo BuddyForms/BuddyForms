@@ -465,6 +465,39 @@ function buddyforms_settings_page(){
                         ' . __('Add additional form elements from the right box "Form Elements". Change the order via drag and drop.', 'buddyforms') . '
                         <ul id="sortable_' . $buddyform['slug'] . '" class="sortable sortable_' . $buddyform['slug'] . '">'));
 
+
+
+
+            $form->addElement(new Element_HTML('
+
+    <li id="buddyforms/' . $buddyform['slug'] . '/form_fields/897345/order" class="list_item 897345 title">
+        <div class="accordion_fields">
+            <div class="accordion-group postbox">
+                <div class="accordion-heading">
+
+
+                    <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_title"
+                       href="#accordion_' . $buddyform['slug'] . '_title_897345">
+                        <b>Title</b>
+                   </p>
+
+                </div>
+
+                <div id="accordion_' . $buddyform['slug'] . '_title_897345" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="buddyforms_accordion_full">
+etwas
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+    </li>'));
+
+
+
+
                 if (isset( $buddyform['form_fields'])) {
 
                     foreach ( $buddyform['form_fields'] as $field_id => $customfield) {

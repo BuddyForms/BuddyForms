@@ -26,7 +26,7 @@
 	font-weight: normal !important;
 }
 
-.the_buddyforms_form span.help-inline, 
+.the_buddyforms_form span.help-inline,
 .the_buddyforms_form span.help-block {
 	color: #888;
 	font-size: 85%;
@@ -35,9 +35,9 @@
 }
 
 .the_buddyforms_form .revision {
-	overflow: auto; 
+	overflow: auto;
 	overflow-x: hidden;
-	margin: 40px 0 20px 0;	
+	margin: 40px 0 20px 0;
 }
 
 .the_buddyforms_form ul.post-revisions {
@@ -59,11 +59,11 @@
 	width: 100%;
 }
 
-.the_buddyforms_form .standard-form textarea, 
-.the_buddyforms_form .standard-form input[type=url], 
-.the_buddyforms_form .standard-form input[type=link], 
-.the_buddyforms_form .standard-form input[type=text], 
-.the_buddyforms_form .standard-form input[type=email], 
+.the_buddyforms_form .standard-form textarea,
+.the_buddyforms_form .standard-form input[type=url],
+.the_buddyforms_form .standard-form input[type=link],
+.the_buddyforms_form .standard-form input[type=text],
+.the_buddyforms_form .standard-form input[type=email],
 .the_buddyforms_form .standard-form input[type=password] {
 	width: 75%;
 	border: 1px inset #ccc;

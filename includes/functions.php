@@ -24,13 +24,20 @@ return $status_array;
 add_action('pre_get_posts','buddyforms_restrict_media_library');
 function buddyforms_restrict_media_library( $wp_query_obj ) {
     global $current_user, $pagenow;
+
+	if(is_super_admin( $current_user->ID ))
+		return;
+
     if( !is_a( $current_user, 'WP_User') )
         return;
-    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
+
+	if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
         return;
-    if( !current_user_can('manage_media_library') )
+
+	if( !current_user_can('manage_media_library') )
         $wp_query_obj->set('author', $current_user->ID );
-    return;
+
+	return;
 }
 
 /**

@@ -300,8 +300,7 @@ function buddyforms_view_form_fields($args){
 
                 </div>
 
-                <div id="accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>"
-                     class="accordion-body collapse">
+                <div id="accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
                     <div class="accordion-inner">
                         <div class="buddyforms_accordion_full">
                             <?php
