@@ -36,22 +36,22 @@ function buddyforms_remove_submenu_page(){
 function buddyforms_options_content() {
     global $buddyforms, $bf_mod5;
 
+    //    echo '<pre>';
+    //    print_r($buddyforms);
+    //    echo '</pre>';
 
-   $bf_mod5 = substr(md5(time() * rand()), 0, 10);
+    $bf_mod5 = substr(md5(time() * rand()), 0, 10);
 
     // Check that the user is allowed to update options
-    if (!current_user_can('manage_options')) {
+    if (!current_user_can('manage_options'))
         wp_die(__('You do not have sufficient permissions to access this page.', 'buddyforms'));
-    }
+    
     ?>
 
     <div id="bf_admin_wrap" class="wrap">
 
         <?php
 
-/*      echo '<pre>';
-        print_r($buddyforms);
-        echo '</pre>';*/
         include('admin-credits.php');
 
         if(isset($_POST['action']) && $_POST['action'] == 'Apply'){
@@ -81,31 +81,18 @@ function buddyforms_options_content() {
 
             foreach ($_POST["buddyforms_options"]['buddyforms'] as $key => $buddyform) {
 
-                $slug = $buddyform['slug'];
+                $slug = sanitize_title($buddyform['slug']);
 
-                $slug = sanitize_title($slug);
                 if(empty($slug)){
                     $slug = $bf_mod5;
                 }
+
                 $buddyform['slug'] = $slug;
+
                 if(isset($old_buddyforms['buddyforms'][$key]['mail_notification']))
                     $buddyform['mail_notification'] = $old_buddyforms['buddyforms'][$key]['mail_notification'];
 
-
-
                 $buddyforms['buddyforms'][$slug] = $buddyform;
-
-/*                if (isset($buddyform['form_fields'])) {
-                    foreach ($buddyform['form_fields'] as $field_key => $field) {
-
-                        if (empty($field['slug']))
-                            $buddyforms['buddyforms'][$slug]['form_fields'][$field_key]['slug'] = sanitize_title($field['name']);
-
-                    }
-                }*/
-
-
-
 
             }
 

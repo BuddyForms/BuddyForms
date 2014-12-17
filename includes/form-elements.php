@@ -45,7 +45,14 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
                         }
 
                         ob_start();
-                        $settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
+                        $settings = array(
+                            'wpautop'       => true,
+                            'media_buttons' => isset($customfield['post_content_options']) ? in_array('media_buttons', $customfield['post_content_options']) ? false : true : true,
+                            'tinymce'       => isset($customfield['post_content_options']) ? in_array('tinymce', $customfield['post_content_options']) ? false : true : true,
+                            'quicktags'     => isset($customfield['post_content_options']) ? in_array('quicktags', $customfield['post_content_options']) ? false : true : true,
+                            'textarea_rows' => 18
+                        );
+
                         if (isset($post_id)) {
                             wp_editor($editpost_content_val, 'editpost_content', $settings);
                         } else {

@@ -8,13 +8,9 @@
 function buddyforms_settings_page(){
     global $buddyforms, $bf_mod5;
 
-
-
     // Get all needed values
     BuddyForms::set_globals();
-    echo '<pre>';
-    print_r($buddyforms);
-    echo '</pre>';
+
     // Get all post types
     $args = array(
         'public' => true,
@@ -40,7 +36,6 @@ function buddyforms_settings_page(){
 
     if (isset($buddyforms['buddyforms']) && count($buddyforms['buddyforms']) > 0) {
 
-
         $form->addElement(new Element_HTML('
         <div class="alignleft actions bulkactions">
             <select name="bf_bulkactions">
@@ -50,7 +45,6 @@ function buddyforms_settings_page(){
             <button type="submit" class="button action" name="action" value="Apply">Apply</button>
 
         </div><br class="clear"><br>'));
-
 
         $form->addElement(new Element_HTML('
         <table class="wp-list-table widefat fixed posts">
@@ -194,7 +188,6 @@ function buddyforms_settings_page(){
                                     <div class="accordion-inner">
                                         <div>
                                             <h5>' . __('Content Fields', 'buddyforms') . '</h5>
-                                            <p><a href="Title/' . $buddyform['slug'] . '/unique" class="action">' . __('Title', 'buddyforms') . '</a></p>
                                             <p><a href="Content/' . $buddyform['slug'] . '/unique" class="action">' . __('Content', 'buddyforms') . '</a></p>
                                             <h5>' . __('Classic Fields', 'buddyforms') . '</h5>
                                             <p><a href="Text/' . $buddyform['slug'] . '" class="action">' . __('Text', 'buddyforms') . '</a></p>
@@ -325,9 +318,6 @@ function buddyforms_settings_page(){
             $form->addElement(new Element_HTML(' <a href="' . admin_url(add_query_arg(array('post_type' => 'page'), 'post-new.php')) . '" class="button">' . __('Create New', 'buddyforms') . '</a>'));
 
             $form->addElement( new Element_HTML("<p><span class='help-inline' >".__('Needs to be a parent page')."</span></p>"));
-
-
-
 
             $form->addElement(new Element_HTML('</div>'));
 
