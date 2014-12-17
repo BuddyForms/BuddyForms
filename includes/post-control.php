@@ -80,7 +80,7 @@ function bf_post_meta($form, $form_slug, $post_id, $customfields){
 
                     case 'Checkbox' :
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
-                        if (is_array($customfield['value'])) {
+                        if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $form->addElement(new Element_Checkbox($customfield['name'], $slug, $customfield['value'], $element_attr));
                         }
                         break;
