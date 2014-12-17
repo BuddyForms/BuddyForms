@@ -7,21 +7,21 @@
  * @since 0.1-beta	
 */
 function buddyforms_create_edit_form( $args = array() ) {
-    global $post, $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
+    global $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
 
 	session_id('buddyforms-create-edit-form');
 
 	do_action('buddyforms_create_edit_form_loader');
 
-	 // hook for plugins to overwrite the $args.
+	// hook for plugins to overwrite the $args.
 	$args = apply_filters('buddyforms_create_edit_form_args',$args);
 
 	extract(shortcode_atts(array(
-		'post_type' => '',
-		'the_post' => 0,
-		'post_id' => $post_id,
-		'revision_id' => false,
-		'form_slug' => $form_slug,
+		'post_type' 	=> '',
+		'the_post'		=> 0,
+		'post_id'		=> $post_id,
+		'revision_id' 	=> false,
+		'form_slug' 	=> $form_slug,
 	), $args));
 
 	get_currentuserinfo();
@@ -45,7 +45,6 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$revision_id = $wp_query->query_vars['bf_rev_id'];
 
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
-
 
 		if(!empty($revision_id)) {
 			$the_post		= get_post( $revision_id );
@@ -196,20 +195,6 @@ function buddyforms_create_edit_form( $args = array() ) {
         return;
     }
 
-    if (isset($_POST['editpost_title'])) {
-        $editpost_title = stripslashes($_POST['editpost_title']);
-    } else {
-        $editpost_title = $the_post->post_title;
-    }
-
-    $editpost_content_val = false;
-    if (isset($_POST['editpost_content'])) {
-        $editpost_content_val = stripslashes($_POST['editpost_content']);
-    } else {
-        if (!empty($the_post->post_content))
-            $editpost_content_val = $the_post->post_content;
-    }
-
     $form_html .= '<div class="form_wrapper">';
 
     // Create the form object
@@ -231,26 +216,9 @@ function buddyforms_create_edit_form( $args = array() ) {
     if (isset($form_notice))
         $form->addElement(new Element_HTML($form_notice));
 
-    $form->addElement(new Element_Textbox(__('Title:', 'buddyforms'), "editpost_title", array("required" => 1, 'value' => $editpost_title)));
-
-    ob_start();
-        $settings = array('wpautop' => true, 'media_buttons' => true, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
-        if (isset($post_id)) {
-            wp_editor($editpost_content_val, 'editpost_content', $settings);
-        } else {
-            $content = false;
-            $post = 0;
-            wp_editor($content, 'editpost_content', $settings);
-        }
-        $wp_editor = ob_get_contents();
-    ob_clean();
-
-    $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . __('Content', 'buddyforms') . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
-    $form->addElement(new Element_HTML($wp_editor));
-
     // if the form have custom field to save as post meta data they get displayed here
     if (isset($customfields))
-        bf_post_meta($form, $form_slug, $post_id, $customfields);
+		bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields);
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
     $form->addElement(new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));

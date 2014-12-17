@@ -482,7 +482,7 @@ msgstr "Email Adresse(n) ergänzen und mit ',' trennen"
 msgid "Subject"
 msgstr "Betreff"
 
-#: includes/admin/mail-notification.php:209 includes/the-form.php:248
+#: includes/admin/mail-notification.php:209 includes/form.php:248
 msgid "Content"
 msgstr "Inhalt"
 
@@ -619,6 +619,6 @@ msgstr "Falsche Benutzerrolle für diese Form"
 msgid "Title:"
 msgstr "Titel:"
 
-#: includes/the-form.php:256
+#: includes/form.php:256
 msgid "Submit"
 msgstr "Senden"

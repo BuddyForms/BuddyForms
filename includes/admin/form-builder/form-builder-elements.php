@@ -212,6 +212,13 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['order'] = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             $form_fields['left']['html'] = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
 
+        case 'Title':
+            unset($form_fields);
+            $form_fields['left']['name'] = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Title');
+            $form_fields['left']['type'] = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
+            $form_fields['left']['order'] = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+            $form_fields['left']['html'] = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
+
             break;
         case 'Status':
             unset($form_fields);
@@ -284,12 +291,14 @@ function buddyforms_view_form_fields($args){
             <div class="accordion-group postbox">
                 <div class="accordion-heading">
 
-                    <div class="accordion-heading-options">
-                        <a class="delete" id="<?php echo $field_id ?>"
-                           href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
-                            <i class="icon-remove-sign" style="margin-top:0px;"></i>
-                        </a>
-                    </div>
+                    <?php if($field_type != 'Title') { ?>
+                        <div class="accordion-heading-options">
+                            <a class="delete" id="<?php echo $field_id ?>"
+                               href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
+                                <i class="icon-remove-sign" style="margin-top:0px;"></i>
+                            </a>
+                        </div>
+                    <?php } ?>
 
                     <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text"
                        href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">

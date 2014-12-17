@@ -493,7 +493,7 @@ msgid " has been successfully created"
 msgstr " è stato creato con successo"
 
 # @ buddyforms
-#: includes/admin/mail-notification.php:209 includes/the-form.php:248
+#: includes/admin/mail-notification.php:209 includes/form.php:248
 msgid "Content"
 msgstr "Contenuto"
 
@@ -503,7 +503,7 @@ msgid "Featured Image:"
 msgstr "Immagine In Evidenza:"
 
 # @ buddyforms
-#: includes/the-form.php:256
+#: includes/form.php:256
 msgid "Submit"
 msgstr "Inviare"
 

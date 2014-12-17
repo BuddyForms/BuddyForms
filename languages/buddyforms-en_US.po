@@ -500,7 +500,7 @@ msgid " has been successfully created"
 msgstr ""
 
 #: includes/admin/mail-notification.php:209
-#: includes/the-form.php:248
+#: includes/form.php:248
 #@ buddyforms
 msgid "Content"
 msgstr ""
@@ -510,7 +510,7 @@ msgstr ""
 msgid "Featured Image:"
 msgstr ""
 
-#: includes/the-form.php:256
+#: includes/form.php:256
 #@ buddyforms
 msgid "Submit"
 msgstr ""

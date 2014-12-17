@@ -1,7 +1,10 @@
 <?php
 
-function bf_get_post_status_array($select_condition = false){
+function bf_add_element($form, $element){
+	$form->addElement($element);
+}
 
+function bf_get_post_status_array($select_condition = false){
 
     $status_array = array(
         'publish'       => 'Published',
@@ -12,7 +15,7 @@ function bf_get_post_status_array($select_condition = false){
         'trash'         => 'Trash',
     );
 
-return $status_array;
+	return $status_array;
 }
 
 /**
