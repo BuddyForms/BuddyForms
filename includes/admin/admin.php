@@ -36,16 +36,16 @@ function buddyforms_remove_submenu_page(){
 function buddyforms_options_content() {
     global $buddyforms, $bf_mod5;
 
-    //    echo '<pre>';
-    //    print_r($buddyforms);
-    //    echo '</pre>';
+        echo '<pre>';
+        print_r($buddyforms);
+        echo '</pre>';
 
     $bf_mod5 = substr(md5(time() * rand()), 0, 10);
 
     // Check that the user is allowed to update options
     if (!current_user_can('manage_options'))
         wp_die(__('You do not have sufficient permissions to access this page.', 'buddyforms'));
-    
+
     ?>
 
     <div id="bf_admin_wrap" class="wrap">
