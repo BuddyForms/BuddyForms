@@ -182,60 +182,6 @@ class BuddyForms {
 					
 	}
 
-	function buddyforms_update_db_check(){
-
-
-		$curr_ver	= get_option( $this->bf_version_name );
-		$buddyforms	= get_option('buddyforms_options');
-
-		$buddyforms_options = $buddyforms;
-
-		// checks if the current plugin version is lower than the version being updated
-		if ( version_compare( $this->version, $curr_ver, '>' ) ) {
-			foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
-
-				$needs_title = true;
-				$needs_content = true;
-
-				foreach($buddyform['form_fields'] as $field_key => $form_field){
-
-					if($form_field['slug'] == 'editpost_title')
-						$needs_title = false;
-
-					if($form_field['slug'] == 'editpost_content')
-						$needs_content = false;
-				}
-
-				if($needs_title){
-
-					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
-
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '1';
-
-				}
-
-				if($needs_content){
-
-					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
-
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '2';
-
-				}
-
-			}
-			update_option("buddyforms_options", $buddyforms_options);
-		}
-
-	}
-
-
-
 	/**
 	 * Load the textdomain for the plugin
 	 *
@@ -335,6 +281,60 @@ class BuddyForms {
         wp_enqueue_style(   'buddyforms-the-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));
 
     }
+
+	function buddyforms_update_db_check(){
+
+
+		$curr_ver	= get_option( $this->bf_version_name );
+		$buddyforms	= get_option('buddyforms_options');
+
+		$buddyforms_options = $buddyforms;
+
+		// checks if the current plugin version is lower than the version being updated
+		if ( version_compare( $this->version, $curr_ver, '>' ) ) {
+			foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
+
+				$needs_title = true;
+				$needs_content = true;
+
+				foreach($buddyform['form_fields'] as $field_key => $form_field){
+
+					if($form_field['slug'] == 'editpost_title')
+						$needs_title = false;
+
+					if($form_field['slug'] == 'editpost_content')
+						$needs_content = false;
+				}
+
+				if($needs_title){
+
+					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
+
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Title';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_title';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Title';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '1';
+
+				}
+
+				if($needs_content){
+
+					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
+
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Content';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_content';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Content';
+					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '2';
+
+				}
+
+			}
+			update_option("buddyforms_options", $buddyforms_options);
+		}
+
+	}
+
+
 	/**
 	 * Check for software updates
 	 */
