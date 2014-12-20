@@ -229,7 +229,7 @@ function buddyforms_view_form_fields($args){
 
             $post_content_options_array = array( 'media_buttons' => 'media_buttons', 'tinymce' => 'tinymce', 'quicktags' => 'quicktags');
 
-            $form_fields['left']['content_opt_a']   = new Element_Checkbox('<br><b>' . __('Turn of wp editor features', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array('value' => $post_content_options, 'required' => true));
+            $form_fields['left']['content_opt_a']   = new Element_Checkbox('<br><b>' . __('Turn off wp editor features', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array('value' => $post_content_options, 'required' => true));
             $form_fields['left']['name']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Content');
             $form_fields['left']['slug']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_content');
             $form_fields['left']['type']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
