@@ -274,21 +274,20 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             break;
-        case 'Date': // just form remember needs to be reworked !!!
-            $customfield_val = get_post_meta($post_id, '_sale_price_dates_from', true);
-            $customfield_val = date_i18n('Y-m-d', (int)$customfield_val);
-            $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input bf_datetime', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '') : array('value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '');
-            $form->addElement(new Element_Textbox('Sale Price Date From', '_sale_price_dates_from', $element_attr));
+        case 'HTML':
+            unset($form_fields);
 
-            $customfield_val = get_post_meta($post_id, '_sale_price_dates_to', true);
-            $customfield_val = date_i18n('Y-m-d', (int)$customfield_val);
-            $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '') : array('value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '');
-            $form->addElement(new Element_Textbox('Sale Price Date To', '_sale_price_dates_to', $element_attr));
+            $html = '';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['html']))
+                $html = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['html'];
+
+            $form_fields['left']['description'] = new Element_Textarea('<b>' . __('HTML:', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][html]", array('value' => $html));
 
 
-            $form->addElement(new Element_HTML('<div class="bf_datetime_wrap">'));
-            $form->addElement(new Element_Textbox('Schedule Time', 'schedule', $element_attr));
-            $form->addElement(new Element_HTML('</div>'));
+            $form_fields['left']['name']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'HTML');
+            $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'html');
+            $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
+            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             break;
         default:
             $form_fields = apply_filters('buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id);

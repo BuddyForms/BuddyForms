@@ -23,6 +23,26 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
 
             if(isset($customfield['type'])){
                 switch( $customfield['type'] ) {
+                    case 'Number':
+
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
+                        $form->addElement(new Element_Number($customfield['name'], $slug, $element_attr));
+
+                        break;
+                    case 'HTML':
+
+                        $form->addElement(new Element_HTML($customfield['html']));
+
+                        break;
+                    case 'Date':
+                        // $customfield_val = get_post_meta($post_id, '_sale_price_dates_from', true);
+                        // $customfield_val = date_i18n('Y-m-d', (int)$customfield_val);
+                        // $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input bf_datetime', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '') : array('value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($customfield['description']) ? $customfield['description'] : '');
+                        // $form->addElement(new Element_Textbox('Sale Price Date From', '_sale_price_dates_from', $element_attr));
+
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
+                        $form->addElement(new Element_Date($customfield['name'], $slug, $element_attr));
+                        break;
                     case 'Title':
 
                         if (isset($_POST['editpost_title'])) {

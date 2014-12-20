@@ -187,8 +187,6 @@ function buddyforms_settings_page(){
                                 <div id="accordion_' . $buddyform['slug'] . '_fields" class="accordion-body collapse">
                                     <div class="accordion-inner">
                                         <div>
-                                            <h5>' . __('Content Fields', 'buddyforms') . '</h5>
-                                            <p><a href="Content/' . $buddyform['slug'] . '/unique" class="action">' . __('Content', 'buddyforms') . '</a></p>
                                             <h5>' . __('Classic Fields', 'buddyforms') . '</h5>
                                             <p><a href="Text/' . $buddyform['slug'] . '" class="action">' . __('Text', 'buddyforms') . '</a></p>
                                             <p><a href="Textarea/' . $buddyform['slug'] . '" class="action">' . __('Textarea', 'buddyforms') . '</a></p>
@@ -198,12 +196,19 @@ function buddyforms_settings_page(){
                                             <p><a href="Radiobutton/' . $buddyform['slug'] . '" class="action">' . __('Radiobutton', 'buddyforms') . '</a></p>
                                             <p><a href="Checkbox/' . $buddyform['slug'] . '" class="action">' . __('Checkbox', 'buddyforms') . '</a></p>
                                             <h5>Post Fields</h5>
+                                            <p><a href="Content/' . $buddyform['slug'] . '/unique" class="action">' . __('Content', 'buddyforms') . '</a></p>
                                             <p><a href="Taxonomy/' . $buddyform['slug'] . '" class="action">' . __('Taxonomy', 'buddyforms') . '</a></p>
-                                            <p><a href="Hidden/' . $buddyform['slug'] . '" class="action">' . __('Hidden', 'buddyforms') . '</a></p>
                                             <p><a href="Comments/' . $buddyform['slug'] . '/unique" class="action">' . __('Comments', 'buddyforms') . '</a></p>
                                             <p><a href="Status/' . $buddyform['slug'] . '/unique" class="action">' . __('Post Status', 'buddyforms') . '</a></p>
                                             <p><a href="Featured-Image/' . $buddyform['slug'] . '/unique" class="action">' . __('Featured Image', 'buddyforms') . '</a></p>
+
+                                            <h5>Extras</h5>
                                             <p><a href="File/' . $buddyform['slug'] . '" class="action">' . __('File', 'buddyforms') . '</a></p>
+                                            <p><a href="Hidden/' . $buddyform['slug'] . '" class="action">' . __('Hidden', 'buddyforms') . '</a></p>
+                                            <p><a href="Number/' . $buddyform['slug'] . '" class="action">' . __('Number', 'buddyforms') . '</a></p>
+                                            <p><a href="HTML/' . $buddyform['slug'] . '" class="action">' . __('HTML', 'buddyforms') . '</a></p>
+                                            <p><a href="Date/' . $buddyform['slug'] . '" class="action">' . __('Date', 'buddyforms') . '</a></p>
+
                                             '));
 
             $form = apply_filters('buddyforms_add_form_element_to_sidebar', $form, $buddyform['slug']);

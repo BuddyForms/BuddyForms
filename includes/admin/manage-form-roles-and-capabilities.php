@@ -107,11 +107,6 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                             endforeach;
 
 
-
-
-
-
-
             $form->addElement(new Element_HTML('
 
                         </div>
