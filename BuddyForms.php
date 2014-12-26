@@ -284,7 +284,6 @@ class BuddyForms {
 
 	function buddyforms_update_db_check(){
 
-
 		$curr_ver	= get_option( $this->bf_version_name );
 		$buddyforms	= get_option('buddyforms_options');
 
@@ -317,18 +316,21 @@ class BuddyForms {
 
 				}
 
-				if($needs_content){
+				if (version_compare($curr_ver, "1.1.0", "<=")) {
+					if($needs_content){
 
-					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
+						$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Content';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '2';
+						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Content';
+						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_content';
+						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Content';
+						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '2';
 
+					}
 				}
 
 			}
+			update_option( $this->bf_version_name, $this->version );
 			update_option("buddyforms_options", $buddyforms_options);
 		}
 

@@ -7,9 +7,9 @@ function buddyforms_create_edit_form_shortcode($args){
     extract(shortcode_atts(array(
         'post_type' => '',
         'the_post' => 0,
-        'post_id' => $post_id,
+        'post_id' => '',
         'revision_id' => false,
-        'form_slug' => $form_slug,
+        'form_slug' => '',
     ), $args));
 
     ob_start();
