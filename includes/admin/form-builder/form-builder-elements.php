@@ -217,7 +217,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_title');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
-            $form_fields['left']['html']    = new Element_HTML(__("There are no settings needed so far. The Title is needed and can not be removed. You can change the order of the Title via drag and drop.", 'buddyforms'));
+            $form_fields['left']['html']    = new Element_HTML(__("There are no settings needed so far. The Title is required and can not be removed. You can change the order of the title via drag and drop.", 'buddyforms'));
 
             break;
         case 'Content':
