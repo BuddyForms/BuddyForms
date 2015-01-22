@@ -59,12 +59,13 @@ function buddyforms_the_loop($args){
     $paged = bf_get_url_var('page');
 
 	$query_args = array(
-		'post_type' => $post_type,
-		'form_slug' => $form_slug,
-		'post_status' => array('publish', 'pending', 'draft'),
-		'posts_per_page' => 10,
-		'author' => get_current_user_id(),
-        'paged' => $paged
+		'post_type'         => $post_type,
+		'form_slug'         => $form_slug,
+		'post_status'       => array('publish', 'pending', 'draft'),
+		'posts_per_page'    => 10,
+        'post_parent'		=> 0,
+		'author'            => get_current_user_id(),
+        'paged'             => $paged
 	);
 
 	$the_lp_query = new WP_Query( $query_args );

@@ -107,14 +107,21 @@ function bf_update_post_meta($post_id, $customfields){
 
 }
 
-function bf_post_control($args,$hasError){
+function bf_post_control($args){
 	global $post_id;
+
+	$args = apply_filters( 'bf_post_control_args', $args );
 
 	extract($args);
 
+	echo '<pre>';
+	print_r($args);
+	echo '</pre>';
+
+
     // Check if post is new or edit 
     if( $action == 'update' ) {
-    	                     
+
 		$my_post = array(
             'ID'        		=> $_POST['new_post_id'],
             'post_title' 		=> $_POST['editpost_title'],
@@ -128,22 +135,20 @@ function bf_post_control($args,$hasError){
 		// Update the new post
         $post_id = wp_update_post( $my_post );
 		
-		if($post_id == 0 )
-			$hasError = true;
-		
 	} else {
 
         if(isset($_POST['status']) && $_POST['status'] == 'future' && $_POST['schedule'])
             $post_date = date('Y-m-d H:i:s',strtotime($_POST['schedule']));
 
-		  $my_post = array(
+			$my_post = array(
             'post_author' 		=> $post_author,
             'post_title' 		=> $_POST['editpost_title'],
             'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
-            'post_excerpt'		=> $post_excerpt,
+			'post_excerpt'		=> $post_excerpt,
+			'post_parent'		=> $post_parent,
             'post_date'         => isset($post_date)? $post_date : '',
             'post_date_gmt'     => isset($post_date)? $post_date : '',
         );   
@@ -151,14 +156,11 @@ function bf_post_control($args,$hasError){
         // Insert the new form
         $post_id = wp_insert_post( $my_post, true );
 		
-		if($post_id == 0 )
-			$hasError = true;
-		
 	}
-	return $hasError;
+	return $post_id;
 }
 
-function bf_set_post_thumbnail($post_id,$hasError){
+function bf_set_post_thumbnail($post_id){
 
     // Featured image? If yes, save via media_handle_upload and set the post thumbnail
     if( isset( $_FILES['file']['size'] ) && $_FILES['file']['size'] > 0 ) {

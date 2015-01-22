@@ -73,9 +73,9 @@ function buddyforms_create_edit_form( $args = array() ) {
     // if post edit screen is displayed
 	if(!empty($post_id)) {
 		if(!empty($revision_id)) {
-		$the_post		= get_post( $revision_id );
+			$the_post	= get_post( $revision_id );
 		} else {
-			$the_post		= get_post( $post_id );
+			$the_post	= get_post( $post_id );
 		}
 
 		$user_can_edit = false;
@@ -106,12 +106,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 	if(isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
 		$customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
 
+
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 
 		$hasError = false;
-		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
 
+		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
 		if(isset($_POST['comment_status']))
 			$comment_status = $_POST['comment_status'];
 
@@ -137,21 +138,27 @@ function buddyforms_create_edit_form( $args = array() ) {
 			'post_excerpt'		=> $post_excerpt,
 			'post_author' 		=> $current_user->ID,
 			'post_status' 		=> $post_status,
+			'post_parent' 		=> 0,
 			'comment_status'	=> $comment_status,
 		);
 
-		$hasError = bf_post_control($args, $hasError);
+		$post_id = bf_post_control($args);
 
-		// Check if the post has post meta / custom fields
-		if(isset($customfields))
-			bf_update_post_meta($post_id, $customfields);
+		if($post_id){
+			// Check if the post has post meta / custom fields
+			if(isset($customfields))
+				bf_update_post_meta($post_id, $customfields);
 
-        $hasError = bf_set_post_thumbnail($post_id, $hasError);
+			$hasError = bf_set_post_thumbnail($post_id);
 
-        $hasError = bf_media_handle_upload($post_id);
+			bf_media_handle_upload($post_id);
 
-		// Save the Form slug as post meta
-		update_post_meta($post_id, "_bf_form_slug", $form_slug);
+			// Save the Form slug as post meta
+			update_post_meta($post_id, "_bf_form_slug", $form_slug);
+
+		} else {
+			$hasError = true;
+		}
 
 		// Display the message
 		if( empty( $hasError ) ) :
