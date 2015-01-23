@@ -114,11 +114,6 @@ function bf_post_control($args){
 
 	extract($args);
 
-	echo '<pre>';
-	print_r($args);
-	echo '</pre>';
-
-
     // Check if post is new or edit 
     if( $action == 'update' ) {
 

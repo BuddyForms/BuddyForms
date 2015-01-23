@@ -15,7 +15,7 @@ function bf_get_post_status_array($select_condition = false){
         'trash'         => 'Trash',
     );
 
-	return $status_array;
+	return apply_filters( 'bf_get_post_status_array', $status_array);
 }
 
 /**
