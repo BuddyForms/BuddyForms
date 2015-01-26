@@ -63,7 +63,7 @@ function buddyforms_the_loop($args){
 		'form_slug'         => $form_slug,
 		'post_status'       => array('publish', 'pending', 'draft'),
 		'posts_per_page'    => 10,
-        'post_parent'		=> 0,
+       //'post_parent'		=> 0,
 		'author'            => get_current_user_id(),
         'paged'             => $paged
 	);
