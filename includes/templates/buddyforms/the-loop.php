@@ -11,14 +11,23 @@ if ( $the_lp_query->have_posts() ) : ?>
         $the_permalink = get_permalink();
 
 
-        $post_status = get_post_status();
+		$post_status = get_post_status();
+
+		$post_status_css =  $post_status_name  = $post_status;
 
         if( $post_status == 'pending')
-            $post_status = 'bf-pending';
+            $post_status_css = 'bf-pending';
+
+		if( $post_status == 'publish')
+			$post_status_name = 'published';
+
+
+		$post_status_css = apply_filters('bf_post_status_css',$post_status_css,$form_slug);
+
 
 		do_action( 'bp_before_blog_post' ) ?>
 
-		<li class="<?php echo $post_status; ?>">
+		<li class="<?php echo $post_status_css; ?>">
 			<div class="item-avatar">
 				
 				<?php 
@@ -42,14 +51,10 @@ if ( $the_lp_query->have_posts() ) : ?>
 				
 				<?php
 				if (get_the_author_meta('ID') ==  get_current_user_id()){
-					$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
+					$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] ); ?>
 
-                    $post_status = get_post_status();
-                    if( $post_status == 'publish')
-                        $post_status = 'published';
-                    ?>
 					<div class="meta">
-						<div class="item-status"><?php echo $post_status; ?></div>
+						<div class="item-status"><?php echo $post_status_name; ?></div>
                         <?php if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
 
                             if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') { ?>

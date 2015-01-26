@@ -68,6 +68,8 @@ function buddyforms_the_loop($args){
         'paged'             => $paged
 	);
 
+    $query_args =  apply_filters('bf_post_to_display_args',$query_args);
+
 	$the_lp_query = new WP_Query( $query_args );
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
