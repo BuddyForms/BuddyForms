@@ -50,7 +50,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$the_post = get_post( $revision_id );
 		} else {
 			$post_id = apply_filters('bf_create_edit_form_post_id', $post_id);
-			$post_id = get_post($post_id, 'OBJECT');
+			$the_post = get_post($post_id, 'OBJECT');
 		}
 
 		if($wp_query->query_vars['bf_action'] == 'edit'){
@@ -62,7 +62,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
 
 	       	if ( $user_can_edit == false ){
-	       		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
+	       		$error_message = __('You1 are not allowed to edit this post. What are you doing here?', 'buddyforms');
 				echo '<div class="error alert">'.$error_message.'</div>';
 				return;
 			}
@@ -230,7 +230,11 @@ function buddyforms_create_edit_form( $args = array() ) {
 		bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields);
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
-    $form->addElement(new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+
+	$form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+
+	if($form_button)
+		$form->addElement($form_button);
 
     // thats it! render the form!
     ob_start();
