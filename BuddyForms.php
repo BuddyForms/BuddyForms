@@ -4,7 +4,7 @@
  Plugin Name: BuddyForms
  Plugin URI:  http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- Version: 1.2
+ Version: 1.2.1
  Author: Sven Lehnert
  Author URI: http://themekraft.com/members/svenl77/
  Licence: GPLv3
@@ -40,7 +40,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '1.2';
+	public $version = '1.2.1';
 
 	/**
 	 * @var string
@@ -62,7 +62,7 @@ class BuddyForms {
         define('BUDDYFORMS_VERSION', $this->version);
 
         add_action( 'init'					, array($this, 'includes')						, 4, 1);
-		add_action( 'plugins_loaded'         , array($this, 'load_plugin_textdomain'));
+		add_action( 'plugins_loaded'        , array($this, 'load_plugin_textdomain'));
 		add_action( 'plugins_loaded'		, array($this, 'buddyforms_update_db_check'));
 		add_action( 'wp_init'				, array($this, 'set_globals')					, 12, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
@@ -203,11 +203,18 @@ class BuddyForms {
      	if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
 				
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
+
+			if ( is_rtl() ) {
+				wp_enqueue_style(  'style-rtl',  plugins_url('includes/admin/css/admin-rtl.css', __FILE__) );
+			}
+
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__) );
 			wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
 
             // load the tk_icons
             wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
+
+
 
 		}
 	}
@@ -227,8 +234,7 @@ class BuddyForms {
 		    wp_enqueue_script('jQuery');
 		    wp_enqueue_script('jquery-ui-sortable'); 
 			wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
-			
-	
+
 	    }
 	
 	}

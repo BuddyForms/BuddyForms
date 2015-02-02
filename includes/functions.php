@@ -149,15 +149,16 @@ function buddyforms_attached_page_query_vars($query_vars){
  * @package BuddyForms
  * @since 0.3 beta
  */
-add_filter('template_redirect', 'buddyforms_attached_page_content');
+add_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
 function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
 
+	remove_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
 	if(is_admin())
 		return $content;
 		
 	if(!isset($buddyforms['buddyforms']))
-		return;
+		return $content;
 
 	$new_content = $content;
     if (isset($wp_query->query_vars['bf_action'])) {
@@ -168,7 +169,10 @@ function buddyforms_attached_page_content($content){
 		$post_id = '';
 		if(isset($wp_query->query_vars['bf_post_id']))
     		$post_id = $wp_query->query_vars['bf_post_id'];
-		
+
+		if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
+				return $content;
+
 		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 		
 		$args = array(
@@ -219,8 +223,11 @@ function buddyforms_attached_page_content($content){
 		}
 		
 	}
-	if(!empty($new_content))
-		add_filter( 'the_content', create_function('', 'return "' . addcslashes($new_content, '"') . '";') );
+	$new_content = do_shortcode($new_content);
+
+	add_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
+
+	return $new_content;
 
 }
 												
@@ -337,7 +344,7 @@ global $buddyforms;
 		$the_forms[] = $buddyform['slug'];
 	}
 	$form->addElement( new Element_Select("<h3>" . __('Select the form to use', 'buddyforms') . "</h3><br>", "buddyforms_add_form", $the_forms, array('class' => 'buddyforms_add_form')));
-	$form->addElement( new Element_Select("<br /><h3>" . __('Select the post type', 'buddyforms') . "</h3><br>", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
+	//$form->addElement( new Element_Select("<br /><h3>" . __('Select the post type', 'buddyforms') . "</h3><br>", "buddyforms_posttype", $post_types, array('class' => 'buddyforms_posttype')));
 	$form->render();
   ?>
   <br /><br />
@@ -354,7 +361,7 @@ jQuery(document).ready(function (){
     jQuery('.buddyforms-button-insert').on('click',function(event){  
     	var form = jQuery('.buddyforms_add_form').val();
     	var posttype = jQuery('.buddyforms_posttype').val();
-		window.send_to_editor('[buddyforms_form form_slug="'+form +'" post_type="'+posttype+'"]');
+		window.send_to_editor('[buddyforms_form form_slug="'+form +'"]');
         });
 });
 

@@ -111,8 +111,8 @@ function buddyforms_save_item_order() {
     update_option("buddyforms_options", $buddyforms_options);
     die();
 }
-add_action('wp_ajax_item_sort', 'buddyforms_save_item_order');
-add_action('wp_ajax_nopriv_item_sort', 'buddyforms_save_item_order');
+add_action('wp_ajax_buddyforms_save_item_order', 'buddyforms_save_item_order');
+add_action('wp_ajax_nopriv_buddyforms_save_item_order', 'buddyforms_save_item_order');
 
 /**
  * Ajax call back function to delete a form element

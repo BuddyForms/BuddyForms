@@ -60,7 +60,7 @@ if ( $the_lp_query->have_posts() ) : ?>
                             if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') { ?>
                                 <a title="Edit me" href='<?php echo $permalink.'edit/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
                             <?php } else { ?>
-                                <? edit_post_link('Edit'); ?>
+                                <? echo 'sa'.$buddyforms['buddyforms'][$form_slug]['edit_link']; edit_post_link('Edit'); ?>
                             <?php } ?>
                         <?php } ?>
                         <?php if( current_user_can('buddyforms_'.$form_slug.'_delete') ) { ?>

@@ -214,7 +214,7 @@ jQuery(document).ready(function(jQuery) {
 	                cache: false,
 	                dataType: 'json',
 	                data:{
-	                    action: 'item_sort', // Tell WordPress how to handle this ajax request
+	                    action: 'buddyforms_save_item_order', // Tell WordPress how to handle this ajax request
 	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in 1,3,2 format
 	                },
 	                success: function(response) {
@@ -231,8 +231,8 @@ jQuery(document).ready(function(jQuery) {
 	                    alert('There was an error saving the order');
 	                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
 		                    return;
-		                }
-		            };
+					}
+				};
 
 		   			jQuery.ajax(opts);
 		       }

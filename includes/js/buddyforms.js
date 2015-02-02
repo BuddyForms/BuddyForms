@@ -71,8 +71,21 @@ jQuery(document).ready(function (){
         jQuery("#submitted").val(btn.attr('name'));
     });
 
-});      
 
+    jQuery('.bf_view_form').click(function(){
 
+        var form_slug = jQuery(this).attr('href');
 
-  
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_list_all_ajax", "form_slug": form_slug },
+            success: function(data){
+                jQuery('.bf_blub').append(data);
+            }
+        });
+
+        return false;
+    });
+
+});
