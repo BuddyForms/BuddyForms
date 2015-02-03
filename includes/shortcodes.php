@@ -147,34 +147,43 @@ add_shortcode('buddyforms_nav', 'buddyforms_nav');
 function buddyforms_nav($args){
 
     extract(shortcode_atts(array(
-        'form_slug' => ''
+        'form_slug'     => '',
+        'separator'     => ' | '
     ), $args));
 
-    $tmp = '<a class="button" href="/'.$form_slug.'/view/'.$form_slug.'/"> '.__('View', 'buddyforms').' </a>';
-    $tmp .= '<a class="button" href="/'.$form_slug.'/create/'.$form_slug.'/"> '.__('Add New', 'buddyforms').'</a>';
+    $tmp = buddyforms_button_view_posts($args);
+    $tmp .= $separator;
+    $tmp .= buddyforms_button_add_new($args);
 
     return $tmp;
 }
 
-add_shortcode('buddyforms_my_posts_button', 'buddyforms_my_posts_button');
-function buddyforms_my_posts_button($args){
+add_shortcode('buddyforms_button_view_posts', 'buddyforms_button_view_posts');
+function buddyforms_button_view_posts($args){
 
     extract(shortcode_atts(array(
-        'form_slug' => ''
+        'form_slug' => '',
+        'label'    => 'View',
     ), $args));
 
-    return '<a class="button" href="/'.$form_slug.'/view/'.$form_slug.'/"> '.__('View', 'buddyforms').' </a>';
+    $button = '<a class="button" href="/'.$form_slug.'/view/'.$form_slug.'/"> '.__($label, 'buddyforms').' </a>';
+
+    return apply_filters('buddyforms_button_view_posts',$button,$args);
 
 }
 
-add_shortcode('buddyforms_add_new_button', 'buddyforms_add_new_button');
-function buddyforms_add_new_button($args){
+add_shortcode('buddyforms_button_add_new', 'buddyforms_button_add_new');
+function buddyforms_button_add_new($args){
 
     extract(shortcode_atts(array(
-        'form_slug' => ''
+        'form_slug' => '',
+        'label'     => 'Add New',
     ), $args));
 
-    return '<a class="button" href="/'.$form_slug.'/create/'.$form_slug.'/"> '.__('Add New', 'buddyforms').' </a>';
+
+    $button = '<a class="button" href="/'.$form_slug.'/create/'.$form_slug.'/"> '.__($label, 'buddyforms').'</a>';
+
+    return apply_filters('buddyforms_button_add_new',$button,$args);
 
 }
 
