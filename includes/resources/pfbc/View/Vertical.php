@@ -1,7 +1,7 @@
 <?php
 class View_Vertical extends View {
 	public function render() {
-		echo '<form', $this->_form->getAttributes(), '>';
+		echo '<form data-ajax="false"', $this->_form->getAttributes(), '>';
 		$this->_form->getErrorView()->render();
 
 		$elements = $this->_form->getElements();

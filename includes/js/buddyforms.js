@@ -65,12 +65,11 @@ jQuery(document).ready(function (){
         }
     });
 
-    jQuery("#editpost").submit(function(){
+    jQuery( ".bf-submit" ).on( "click", function() {
         // Let's find the input to check
-        var btn = jQuery(this).find("input[type=submit]:focus" );
-        jQuery("#submitted").val(btn.attr('name'));
+        var btn = jQuery(this).attr('name');
+        jQuery("#submitted").val(btn);
     });
-
 
     jQuery('.bf_view_form').click(function(){
 

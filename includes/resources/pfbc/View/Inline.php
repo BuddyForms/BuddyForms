@@ -5,7 +5,7 @@ class View_Inline extends View {
 	public function render() {
 		$this->_form->appendAttribute("class", $this->class);
 
-		echo '<form', $this->_form->getAttributes(), '>';
+		echo '<form data-ajax="false"', $this->_form->getAttributes(), '>';
 		$this->_form->getErrorView()->render();
 
 		$elements = $this->_form->getElements();

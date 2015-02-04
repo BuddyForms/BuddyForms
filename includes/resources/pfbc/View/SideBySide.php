@@ -5,7 +5,7 @@ class View_SideBySide extends View {
 	public function render() {
 		$this->_form->appendAttribute("class", $this->class);
 
-		echo '<form', $this->_form->getAttributes(), '><fieldset>';
+		echo '<form data-ajax="false"', $this->_form->getAttributes(), '><fieldset>';
 		$this->_form->getErrorView()->render();
 
 		$elements = $this->_form->getElements();

@@ -231,7 +231,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
-	$form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id' => 'submitted', 'name' => 'submitted')));
+	$form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('class' => 'bf-submit', 'name' => 'submitted')));
 
 	if($form_button)
 		$form->addElement($form_button);
