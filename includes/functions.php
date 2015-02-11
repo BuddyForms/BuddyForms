@@ -364,8 +364,8 @@ global $buddyforms;
 
 	$button_type['none'] = 'Insert Navigation';
 	$button_type['buddyforms_nav'] = 'View - Add New';
-	$button_type['buddyforms_my_posts_button'] = 'My Posts';
-	$button_type['buddyforms_add_new_button'] = 'Add New';
+	$button_type['buddyforms_button_view_posts'] = 'View Posts';
+	$button_type['buddyforms_button_add_new'] = 'Add New';
 
 
 	$form->addElement( new Element_Select("<h3>" . __('Button Type', 'buddyforms') . "</h3><br>", "buddyforms_insert_nav", $button_type, array('class' => 'buddyforms_insert_nav')));
@@ -389,7 +389,7 @@ global $buddyforms;
 	$view_type['buddyforms_the_loop'] = 'Displayed User';
 
 	$form->addElement( new Element_Select("<h3>" . __('List Posts', 'buddyforms') . "</h3><br>", "buddyforms_view_posts", $view_type, array('class' => 'buddyforms_view_posts')));
-	$form->addElement( new Element_Select("", "buddyforms_select_form", $the_forms, array('class' => 'buddyforms_select_form')));
+	$form->addElement( new Element_Select("", "buddyforms_select_form_posts", $the_forms, array('class' => 'buddyforms_select_form_posts')));
 	$form->addElement( new Element_HTML('  <a href="#" class="buddyforms-button-insert-posts button">'. __('Insert into Post', 'buddyforms') .'</a>'));
 	$form->render();
 
@@ -405,6 +405,8 @@ function buddyforms_editor_button_mce_popup(){ ?>
 jQuery(document).ready(function (){
 	jQuery('.buddyforms-button-insert-form').on('click',function(event){
 		var form_slug = jQuery('.buddyforms_add_form').val();
+		if(form_slug == "none")
+			return
 
 		window.send_to_editor('[buddyforms_form form_slug="'+form_slug +'"]');
 	});
@@ -414,12 +416,31 @@ jQuery(document).ready(function (){
 		var shortcode = jQuery('.buddyforms_insert_nav').val();
 		var form_slug = jQuery('.buddyforms_select_form').val();
 
+		if(shortcode == "none"){
+			alert('Please select a Button Type')
+			return
+		}
+		if(form_slug == "none"){
+			alert('Please select a Form')
+			return
+		}
+
 		window.send_to_editor('['+shortcode+' form_slug="'+form_slug +'"]');
 	});
 
 	jQuery('.buddyforms-button-insert-posts').on('click',function(event){
 		var shortcode = jQuery('.buddyforms_view_posts').val();
-		var form_slug = jQuery('.buddyforms_select_form').val();
+		var form_slug = jQuery('.buddyforms_select_form_posts').val();
+
+		if(shortcode == "none"){
+			alert('Please select a List Type')
+			return
+		}
+		if(form_slug == "none"){
+			alert('Please select a Form')
+			return
+		}
+
 
 		window.send_to_editor('['+shortcode+' form_slug="'+form_slug +'"]');
 	});

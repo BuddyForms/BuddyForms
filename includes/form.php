@@ -62,7 +62,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
 
 	       	if ( $user_can_edit == false ){
-	       		$error_message = __('You1 are not allowed to edit this post. What are you doing here?', 'buddyforms');
+	       		$error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
 				echo '<div class="error alert">'.$error_message.'</div>';
 				return;
 			}
@@ -189,7 +189,13 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	$form_html = '<div class="the_buddyforms_form">';
 
-	if ( !is_user_logged_in() ) : wp_login_form(); return; endif;
+	if ( !is_user_logged_in() ) :
+
+		echo '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
+
+		wp_login_form();
+		return;
+	endif;
 
     $user_can_edit = false;
     if( empty($post_id) && current_user_can('buddyforms_' . $form_slug . '_create')) {
