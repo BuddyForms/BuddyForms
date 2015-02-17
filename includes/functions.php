@@ -93,6 +93,85 @@ function my_edit_post_link( $url, $post_ID) {
 }
 
 /**
+ * Retrieve edit posts link for post.
+ *
+ * Can be used within the WordPress loop or outside of it. Can be used with
+ * pages, posts, attachments, and revisions.
+ *
+ * @since 2.3.0
+ *
+ * @param int $id Optional. Post ID.
+ * @param string $context Optional, defaults to display. How to write the '&', defaults to '&amp;'.
+ * @return string The edit post link for the given post.
+ */
+function bf_get_edit_post_link( $id = 0, $context = 'display' ) {
+    if ( ! $post = get_post( $id ) )
+        return;
+
+    if ( 'revision' === $post->post_type )
+        $action = '';
+    elseif ( 'display' == $context )
+        $action = '&amp;action=edit';
+    else
+        $action = '&action=edit';
+
+    $post_type_object = get_post_type_object( $post->post_type );
+    if ( !$post_type_object )
+        return;
+
+
+    /**
+     * Filter the post edit link.
+     *
+     * @since 2.3.0
+     *
+     * @param string $link    The edit link.
+     * @param int    $post_id Post ID.
+     * @param string $context The link context. If set to 'display' then ampersands
+     *                        are encoded.
+     */
+    return apply_filters( 'get_edit_post_link', admin_url( sprintf( $post_type_object->_edit_link . $action, $post->ID ) ), $post->ID, $context );
+}
+
+/**
+ * Display edit post link for post.
+ *
+ * @since 1.0.0
+ *
+ * @param string $text Optional. Anchor text.
+ * @param string $before Optional. Display before edit link.
+ * @param string $after Optional. Display after edit link.
+ * @param int $id Optional. Post ID.
+ */
+function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
+    if ( ! $post = get_post( $id ) ) {
+        return;
+    }
+
+    if ( ! $url = bf_get_edit_post_link( $post->ID ) ) {
+        return;
+    }
+
+    if ( null === $text ) {
+        $text = __( 'Edit This' );
+    }
+
+    $link = '<a class="post-edit-link" href="' . $url . '">' . $text . '</a>';
+
+    /**
+     * Filter the post edit link anchor tag.
+     *
+     * @since 2.3.0
+     *
+     * @param string $link    Anchor tag for the edit link.
+     * @param int    $post_id Post ID.
+     * @param string $text    Anchor text.
+     */
+    echo $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
+}
+
+
+/**
  * handle custom page
  * do flush if changing rule, then reload the admin page
  *

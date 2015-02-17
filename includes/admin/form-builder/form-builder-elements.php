@@ -140,7 +140,7 @@ function buddyforms_view_form_fields($args){
                     'selected' => false,
                     'hierarchical' => 1,
                     'name' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][taxonomy_default][]",
-                    'class' => 'postform chosen',
+                    'class' => 'postform bf-select2',
                     'depth' => 0,
                     'tab_index' => 0,
                     'taxonomy' => $taxonomy,

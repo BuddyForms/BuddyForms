@@ -7,7 +7,7 @@
  * @since 0.1-beta	
 */
 function buddyforms_create_edit_form( $args = array() ) {
-    global $current_user, $buddyforms, $post_id, $wp_query, $form_slug;
+    global $current_user, $buddyforms, $post_id, $wp_query, $form_slug, $form;
 
 	session_id('buddyforms-create-edit-form');
 

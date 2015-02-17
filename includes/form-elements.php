@@ -106,7 +106,7 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
                         break;
 
                     case 'Dropdown' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input chosen', 'shortDesc' => $customfield['description']);
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input bf-select2', 'shortDesc' => $customfield['description']);
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $element = new Element_Select($customfield['name'], $slug, $customfield['value'], $element_attr);
 
@@ -231,7 +231,7 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
                             'selected'          => false,
                             'hierarchical'      => 1,
                             'name'              => $slug . '[]',
-                            'class'             => 'postform chosen',
+                            'class'             => 'postform bf-select2',
                             'depth'             => 0,
                             'tab_index'         => 0,
                             'taxonomy'          => $customfield['taxonomy'],
@@ -253,6 +253,7 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
 
                         if (isset($customfield['required']) && is_array( $customfield['required'] ))
                             $dropdown = str_replace('id=', 'required id=', $dropdown);
+
 
                         $the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
 

@@ -54,7 +54,7 @@ function bf_update_post_meta($post_id, $customfields){
 				if(isset($_POST[ $customfield['slug'] ]))
                     $tax_item = $_POST[ $customfield['slug'] ];
 
-                if($tax_item[0] == -1)
+                if($tax_item[0] == -1 && !empty($customfield['taxonomy_default']))
                     $tax_item[0] = $customfield['taxonomy_default'];
 
 				wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
