@@ -105,7 +105,6 @@ ul.product_images.ui-sortable li img {
 *
 **/
 
-
 .select2-container {
     margin: 0;
     position: relative;
@@ -505,18 +504,6 @@ html[dir=rtl] .select2-results {
 
 .select2-container.select2-container-disabled .select2-choice abbr {
     display: none
-}
-
-.select2-container-multi .select2-choices {
-    height: auto !important;
-    height: 1%;
-    margin: 0;
-    padding: 0 5px 0 0;
-    position: relative;
-    border: 1px solid #ccc;
-    cursor: text;
-    overflow: hidden;
-    background-color: #fff
 }
 
 html[dir=rtl] .select2-container-multi .select2-choices {
