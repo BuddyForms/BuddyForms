@@ -66,8 +66,8 @@ function buddyforms_allow_subscriber_uploads() {
  * @package BuddyForms
  * @since 0.3 beta
  */
-add_filter( 'get_edit_post_link', 'my_edit_post_link', 1,3 );
-function my_edit_post_link( $url, $post_ID) {
+add_filter( 'get_edit_post_link', 'bf_my_edit_post_link', 1,3 );
+function bf_my_edit_post_link( $url, $post_ID) {
 	global $buddyforms, $current_user;
 
 	if(is_admin())
@@ -320,31 +320,36 @@ function buddyforms_wp_before_admin_bar_render(){
 
 	if(!isset($buddyforms['buddyforms'] ))
 		return;
-	
+
+
+
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
 
 		if(isset($buddyform['admin_bar'][0]) && $buddyform['post_type'] != 'none' && !empty($buddyform['attached_page']) ){
-			$permalink = get_permalink( $buddyform['attached_page'] );
-			$wp_admin_bar->add_menu( array(
-				'parent' 	=> 'my-account',
-				'id'		=> 'my-account-'.$buddyform['slug'],
-				'title'		=> $buddyform['name'],
-				'href'		=> $permalink
-			));
-			$wp_admin_bar->add_menu( array(
-				'parent'	=> 'my-account-'.$buddyform['slug'],
-				'id'		=> 'my-account-'.$buddyform['slug'].'-view',
-				'title'		=> __('View my ', 'buddyforms') . $buddyform['name'],
-				'href'		=> $permalink.'/view/'.$buddyform['slug'].'/'
-			)); 
 
-			 $wp_admin_bar->add_menu( array(
-				'parent'	=> 'my-account-'.$buddyform['slug'],
-				'id'		=> 'my-account-'.$buddyform['slug'].'-new',
-				'title'		=> __('New ', 'buddyforms') . $buddyform['singular_name'],
-				'href'		=> $permalink.'create/'.$buddyform['slug'].'/'
-			));  
+            if (current_user_can('buddyforms_' . $key . '_create')) {
+                $permalink = get_permalink($buddyform['attached_page']);
+                $wp_admin_bar->add_menu(array(
+                    'parent' => 'my-account',
+                    'id' => 'my-account-' . $buddyform['slug'],
+                    'title' => $buddyform['name'],
+                    'href' => $permalink
+                ));
+                $wp_admin_bar->add_menu(array(
+                    'parent' => 'my-account-' . $buddyform['slug'],
+                    'id' => 'my-account-' . $buddyform['slug'] . '-view',
+                    'title' => __('View my ', 'buddyforms') . $buddyform['name'],
+                    'href' => $permalink . '/view/' . $buddyform['slug'] . '/'
+                ));
 
+                $wp_admin_bar->add_menu(array(
+                    'parent' => 'my-account-' . $buddyform['slug'],
+                    'id' => 'my-account-' . $buddyform['slug'] . '-new',
+                    'title' => __('New ', 'buddyforms') . $buddyform['singular_name'],
+                    'href' => $permalink . 'create/' . $buddyform['slug'] . '/'
+                ));
+
+            }
 		}
 	}
 }

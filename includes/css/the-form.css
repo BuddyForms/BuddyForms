@@ -23,6 +23,7 @@
 }
 
 .the_buddyforms_form form label {
+    display:block;
 	font-weight: normal !important;
 }
 
