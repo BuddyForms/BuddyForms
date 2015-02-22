@@ -3,8 +3,8 @@
 Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
-Tested up to: WordPress 4.0, BuddyPress 2.x
-Stable tag: 1.2
+Tested up to: WordPress 4.1.1, BuddyPress 2.2.1
+Stable tag: 1.3
 
 === Documentation & Support === 
 
@@ -18,6 +18,26 @@ You can also create support tickets there.
 Login with your account from http://themekraft.com. 
 
 // Changelook
+
+== 1.3 ==
+
+Add new check if the user has the needed rights before adding the form to the admin bar
+Create new function bf_edit_post_link to support new capabilities in the front end
+Switch from chosen to select2
+Add new error message to logged off users
+Clean up debugger notice
+Optimised the link rewrite function
+Fixed form submit not working on mobile
+Add new filter for then shortcodes button
+Add new shortcodes to tynymce
+Rewrite the Shortcodes
+Changed plugin uri
+Add new filters to manipulate the edit form id
+Add a jQuery to make different submit buttons possible
+Add post_parent as parameter
+Fixed a bug in the error handling
+Small css changes
+Clean up the code
 
 == 1.2 ==
 
