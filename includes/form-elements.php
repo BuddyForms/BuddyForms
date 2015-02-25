@@ -261,7 +261,12 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
                             foreach ($the_post_terms as $key => $post_term) {
                                 $dropdown = str_replace(' value="' . $post_term->term_id . '"', ' value="' . $post_term->term_id . '" selected="selected"', $dropdown);
                             }
+                        } else {
+                            if(isset($customfield['taxonomy_default'])){
+                                $dropdown = str_replace(' value="' . $customfield['taxonomy_default'][0] . '"', ' value="' . $customfield['taxonomy_default'][0] . '" selected="selected"', $dropdown);
+                            }
                         }
+
                         $required = '';
                         if(isset($customfield['required']) && is_array( $customfield['required'] )){
                             $required = '<span class="required">* </span>';
