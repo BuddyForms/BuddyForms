@@ -4,7 +4,7 @@ Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 1.7.x
 Tested up to: WordPress 4.1.1, BuddyPress 2.2.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 === Documentation & Support === 
 
@@ -18,6 +18,10 @@ You can also create support tickets there.
 Login with your account from http://themekraft.com. 
 
 // Changelook
+
+== 1.3.1 ==
+
+fixed a bug in the taxonomy default form element
 
 == 1.3 ==
 
@@ -80,25 +84,30 @@ cleanup the code
 fixed bugs
 add new default option to taxonomy form element
 add Italien language
+
 == 1.0.5 ==
 
 rename hook buddyforms_add_form_element_in_sidebar to buddyforms_add_form_element_to_sidebar
 spelling correction
+
 == 1.0.4 ==
 
 remove unneeded html
+
 == 1.0.3 ==
 
 editing your pending/draft posts from the frontend.
 fixed some css issues
+
 == 1.0.2 ==
 
 remove old button for community forum
 add some new filter
+
 == 1.0.1 ==
 
 catch if create a new post_tag is empty
 metabox rework
-== 1.0 ==
 
+== 1.0 ==
 first release
