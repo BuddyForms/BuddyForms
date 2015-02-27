@@ -7,12 +7,12 @@ function bf_add_element($form, $element){
 function bf_get_post_status_array($select_condition = false){
 
     $status_array = array(
-        'publish'       => 'Published',
-        'pending'       => 'Pending Review',
-        'draft'         => 'Draft',
-        'future'        => 'Scheduled',
-        'private'       => 'Privately Published',
-        'trash'         => 'Trash',
+        'publish'       => __('Published', 'buddyforms'),
+        'pending'       => __('Pending Review', 'buddyforms'),
+        'draft'         => __('Draft', 'buddyforms'),
+        'future'        => __('Scheduled', 'buddyforms'),
+        'private'       => __('Privately Published', 'buddyforms'),
+        'trash'         => __('Trash', 'buddyforms'),
     );
 
 	return apply_filters( 'bf_get_post_status_array', $status_array);
