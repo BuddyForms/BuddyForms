@@ -10,7 +10,7 @@ function bf_add_ons_screen(){
 
     // Check that the user is allowed to update options
     if (!current_user_can('manage_options')) {
-        wp_die('You do not have sufficient permissions to access this page.');
+        wp_die(__('You do not have sufficient permissions to access this page.','buddyforms'));
     } ?>
 
     <div id="bf_admin_wrap" class="wrap">
@@ -23,26 +23,26 @@ function bf_add_ons_screen(){
             'plugin_name'   => 'BuddyForms Members',
             'plugin_url'    => 'http://buddyforms.com',
             'plugin_image'  => plugins_url('img/buddyforms-members-thumb.png' , __FILE__ ),
-            'plugin_desc'   => 'This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.'
+            'plugin_desc'   => __('This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.', 'buddyforms')
         );
 
         $addon_args['buddyforms-attach-posts-to-groups-extension'] = array(
             'plugin_name'   => 'BuddyForms Attach Posts to Groups Extension',
             'plugin_url'    => 'http://buddyforms.com',
             'plugin_image'  => plugins_url( 'img/buddyforms-groups-thumb.png' , __FILE__ ),
-            'plugin_desc'   => 'With this plugin, you’ll be able to automatically create a new BuddyPress group for pre-assigned BuddyForms post submissions and attach that group to the post. User-submitted posts with BuddyForms then become a BuddyPress group with all the included functionality and endless possibilities.'
+            'plugin_desc'   => __('With this plugin, you’ll be able to automatically create a new BuddyPress group for pre-assigned BuddyForms post submissions and attach that group to the post. User-submitted posts with BuddyForms then become a BuddyPress group with all the included functionality and endless possibilities.', 'buddyforms')
         );
         $addon_args['buddyforms-posts-to-posts-integration'] = array(
             'plugin_name'   => 'BuddyForms Posts 2 Posts',
             'plugin_url'    => 'http://themekraft.com/',
             'plugin_image'  => plugins_url('img/buddyforms-posts2posts-thumb.png' , __FILE__ ),
-            'plugin_desc'   => 'With BuddyForms Posts 2 Posts Integration you can create complex connections and post relationships across your site. From posts to pages or to users all the Posts 2 Posts Plugin functionality is in your BuddyForms Form Builder available.'
+            'plugin_desc'   => __('With BuddyForms Posts 2 Posts Integration you can create complex connections and post relationships across your site. From posts to pages or to users all the Posts 2 Posts Plugin functionality is in your BuddyForms Form Builder available.', 'buddyforms')
         );
         $addon_args['buddyforms-hook-fields'] = array(
             'plugin_name'   => 'BuddyForms Hook Fields',
             'plugin_url'    => 'http://themekraft.com/',
             'plugin_image'  => plugins_url('img/buddyforms-hookfields-thumb.png' , __FILE__ ),
-            'plugin_desc'   => 'With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.'
+            'plugin_desc'   => __('With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.', 'buddyforms')
         );
 
         buddyforms_get_addons($addon_args); ?>
@@ -73,13 +73,13 @@ function buddyforms_get_addons($addon_args){
                 $buddyforms_addons = new BuddyForms_Dependency( $key, $addon['plugin_url'] );
 
                 if ( $buddyforms_addons->check_active() )
-                    echo '<br><b><p style="color: #7AD03A">Installed and activated!</p></b>';
+                    echo '<br><b><p style="color: #7AD03A">' . __('Installed and activated!', 'buddyforms') . '</p></b>';
                 else if ( $buddyforms_addons->check() )
-                    echo '<br><b><p>Installed, but not activated. <a href="'.$buddyforms_addons->activate_link().'">Click here to activate the plugin.</a></p></b>';
+                    echo '<br><b><p>' . __('Installed, but not activated.', 'buddyforms') . ' <a href="'.$buddyforms_addons->activate_link().'">' . __('Click here to activate the plugin.', 'buddyforms') . '</a></p></b>';
                 else if ( $install_link = $buddyforms_addons->install_link() )
-                    echo '<br><b><p>Not installed. <a href="'.$install_link.'">Click here to install the plugin.</a></p></b>';
+                    echo '<br><b><p>' . __('Not installed.', 'buddyforms'), ' <a href="'.$install_link.'">' . __('Click here to install the plugin.', 'buddyforms') . '</a></p></b>';
                 else
-                    echo '<br><b><p>Not installed and could not be found in the Plugin Directory. Please install this plugin manually.</p></b>';
+                    echo '<br><b><p>' . __('Not installed and could not be found in the Plugin Directory. Please install this plugin manually.', 'buddyforms') . '</p></b>';
                 ?>
             </div>
         </div>

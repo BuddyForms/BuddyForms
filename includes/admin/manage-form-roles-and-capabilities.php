@@ -40,7 +40,7 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                         }
 
                     }
-                    echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Capabilities updated', 'buddyforms') . ".</strong></p></div>";
+                    echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Capabilities updated.', 'buddyforms') . "</strong></p></div>";
                 }
 
             }
@@ -64,11 +64,11 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                             $form->addElement(new Element_HTML('
                                 <div class="bf-roles-main-desc" >
                                     <div class="bf-col-content"> '));
-                                        $form->addElement(new Element_HTML('<h2>' . __(' Roles and Capabilities Settings for "', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['name'] . '"</h2><br>
-                                        <p>In WordPress we have user roles and capabilities to manage the user rights. You can decide how to create, edit and delete posts by checking the needed capabilities for the different user roles.</p>
-                                        <p>If you want to create new user roles and manage all available capabilities I recommend you to install the Members plugin.</p>
-                                        <p>Here you can manage all BuddyForms capabilities for all available user roles of your wp install.</p><br>
-                                        <p><b>Check/Uncheck all capabilities to allow/disallow users to create edit and delete posts of this form</b><a href="#" class="checkall"> Check all</a></p>
+                                        $form->addElement(new Element_HTML('<h2>'.__(' Roles and Capabilities Settings for "', 'buddyforms').$buddyforms['buddyforms'][$form_slug]['name'].'"</h2><br>
+                                        <p>'.__('In WordPress we have user roles and capabilities to manage the user rights. You can decide how to create, edit and delete posts by checking the needed capabilities for the different user roles.', 'buddyforms').'</p>
+                                        <p>'.__('If you want to create new user roles and manage all available capabilities I recommend you to install the Members plugin.', 'buddyforms').'</p>
+                                        <p>'.__('Here you can manage all BuddyForms capabilities for all available user roles of your wp install.', 'buddyforms').'</p><br>
+                                        <p><b>'.__('Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms').'</b></p><p><a href="#" class="checkall">'.__('Uncheck all','buddyforms').'</a></p>
                             '));
 
                             $form->addElement(new Element_HTML('</div></div>'));
@@ -114,7 +114,7 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                         <div id="postbox-container-1" class="postbox-container">
                             <div class="accordion_sidebar" id="accordion_save">
                                 <div class="accordion-group postbox">
-                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>Save Roles and Capabilities</b></h5></div>
+                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>' . __('Save Roles and Capabilities', 'buddyforms') . '</b></h5></div>
                                     <b>
                                         <div id="accordion_save" class="accordion-body">
                                             <div class="accordion-inner">'));
@@ -129,11 +129,11 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                             </div>
                             <div class="accordion_sidebar" id="accordion_save">
                                 <div class="accordion-group postbox">
-                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>Form Builder</b></h5></div>
+                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>' . __('Form Builder', 'buddyforms') . '</b></h5></div>
                                     <b>
                                         <div id="accordion_save" class="accordion-body">
                                             <div class="accordion-inner">
-                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
+                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">' . __('Jump into the Form Builder', 'buddyforms') . '</a>
                                             </div>
                                         </div>
                                     </b>

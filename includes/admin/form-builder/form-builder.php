@@ -250,9 +250,9 @@ function buddyforms_settings_page(){
                                 <div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_status"><b>' . __('Form Control', 'buddyforms') . '</b></p></div>
                                 <div id="accordion_' . $buddyform['slug'] . '_status" class="accordion-body collapse">
                                     <div class="accordion-inner bf-main-settings">'));
-            $form->addElement(new Element_Textbox(__("<b>Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'],'required' => 1)));
-            $form->addElement(new Element_Textbox(__("<b>Singular Name</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'],'required' => 1)));
-            $form->addElement(new Element_Textbox(__("<b>Slug</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'], 'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'],'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Singular Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'],'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Slug", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'], 'required' => 1)));
 
             $form->addElement(new Element_HTML('<br><hr /><br />'));
 
@@ -289,19 +289,19 @@ function buddyforms_settings_page(){
             if (isset($buddyform['status']))
                 $status = $buddyform['status'];
 
-            $form->addElement(new Element_Select(__("<b>Status</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][status]", array('publish', 'pending', 'draft'), array('value' => $status)));
+            $form->addElement(new Element_Select('<b>'.__("Status", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][status]", array('publish', 'pending', 'draft'), array('value' => $status)));
 
             $comment_status = 'false';
             if (isset($buddyform['comment_status']))
                 $comment_status = $buddyform['comment_status'];
 
-            $form->addElement(new Element_Select(__("<b>Comment Status</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][comment_status]", array('open', 'closed'), array('value' => $comment_status)));
+            $form->addElement(new Element_Select('<b>'.__("Comment Status", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][comment_status]", array('open', 'closed'), array('value' => $comment_status)));
 
             $post_type = 'false';
             if (isset($buddyform['post_type']))
                 $post_type = $buddyform['post_type'];
 
-            $form->addElement(new Element_Select(__("<b>Post Type</b>", 'buddyforms'), "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][post_type]", $post_types, array('value' => $post_type, 'required' => 1)));
+            $form->addElement(new Element_Select('<b>'.__("Post Type", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][post_type]", $post_types, array('value' => $post_type, 'required' => 1)));
 
             $attached_page = 'false';
             if (isset($buddyform['attached_page']))

@@ -39,10 +39,10 @@ function bf_mail_notification_screen() { ?>
                         <div class="bf-half-col bf-left" >
                             <div class="bf-col-content"> '));
                                 $form->addElement(new Element_HTML('<h2>' . __(' Mail Notification Settings for "', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['name'] . '"</h2>'));
-                                $form->addElement(new Element_HTML('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.<br>'));
+                                $form->addElement(new Element_HTML(__('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '<br>'));
 
                                 $form->addElement(new Element_HTML('<br><br><br><div class="trigger-select">'));
-                                $form->addElement(new Element_Select('<b>' . __("Create new Mail Notification", 'buddyforms') . '</b>', "buddyforms_notification_trigger", bf_get_post_status_array(), array('class' => 'buddyforms_notification_trigger', 'shortDesc' => '<a class="button-primary btn btn-primary" href="#" id="btnAdd"> Create Trigger</a>')));
+                                $form->addElement(new Element_Select('<b>' . __("Create new Mail Notification", 'buddyforms') . '</b>', "buddyforms_notification_trigger", bf_get_post_status_array(), array('class' => 'buddyforms_notification_trigger', 'shortDesc' => '<a class="button-primary btn btn-primary" href="#" id="btnAdd">' . __('Create Trigger', 'buddyforms') . '</a>')));
                                 $form->addElement(new Element_HTML('</div>'));
 
                                 $form->addElement(new Element_HTML('<br>
@@ -50,12 +50,12 @@ function bf_mail_notification_screen() { ?>
                                     <b>' . __( 'Post Status', 'buddyforms') . '</b>
 
                                     <ul>
-                                        <li><b>publish</b> <small>' .   __('(post or page is visible in the frontend)' , 'buddyforms') .'</small></li>
-                                        <li><b>pending</b> <small>' .   __('(post or page is in review process)'    , 'buddyforms') .'</small></li>
-                                        <li><b>draft</b> <small>' .     __('(post or page is not visible in the frontend for public)'   , 'buddyforms') .'</small></li>
-                                        <li><b>future</b> <small>' .    __('(post or page is scheduled to publish in the future)'    , 'buddyforms') .'</small></li>
-                                        <li><b>private</b> <small>' .   __('(not visible to users who are not logged in)'   , 'buddyforms') .'</small></li>
-                                        <li><b>trash</b> <small>' .     __('(post is in trash)', 'buddyforms') .'</small></li>
+                                        <li><b>publish</b> <small>' . __('(post or page is visible in the frontend)' , 'buddyforms') . '</small></li>
+                                        <li><b>pending</b> <small>' . __('(post or page is in review process)'    , 'buddyforms') . '</small></li>
+                                        <li><b>draft</b> <small>' .   __('(post or page is not visible in the frontend for public)'   , 'buddyforms') . '</small></li>
+                                        <li><b>future</b> <small>' .  __('(post or page is scheduled to publish in the future)'    , 'buddyforms') . '</small></li>
+                                        <li><b>private</b> <small>' . __('(not visible to users who are not logged in)'   , 'buddyforms') . '</small></li>
+                                        <li><b>trash</b> <small>' .   __('(post is in trash)', 'buddyforms') . '</small></li>
                                     </ul>
 
                                 </div>'));
@@ -67,11 +67,11 @@ function bf_mail_notification_screen() { ?>
                         <div id="postbox-container-1" class="postbox-container">
                             <div class="accordion_sidebar" id="accordion_save">
                                 <div class="accordion-group postbox">
-                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>Form Builder</b></h5></div>
+                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>' . __('Form Builder', 'buddyforms') . '</b></h5></div>
                                     <b>
                                         <div id="accordion_save" class="accordion-body">
                                             <div class="accordion-inner">
-                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">Jump into the Form Builder</a>
+                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">' . __('Jump into the Form Builder', 'buddyforms') . '</a>
                                             </div>
                                         </div>
                                     </b>
@@ -121,12 +121,12 @@ function bf_mail_notification_screen() { ?>
                         }
                         echo '</div>';
                     } else {
-                        echo '<h2>No Mail Notification found</h2><div id="mailcontainer"></div>';
+                        echo '<h2>' . __('No Mail Notification found', 'buddyforms') . '</h2><div id="mailcontainer"></div>';
                     }
 
                 } else {
 
-                    echo 'no form selected';
+                    _e('no form selected', 'buddyforms');
 
                 } ?>
                     </div>

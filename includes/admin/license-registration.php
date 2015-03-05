@@ -32,7 +32,7 @@ class Buddyforms_Key_Registration_Menu {
 	// Add option page menu
 	public function add_menu() {
 
-		$page = add_submenu_page( 'buddyforms_options_page', 'BuddyForms', __('License Activation', 'buddyforms'), 'manage_options', 'license_registration_dashboard', array( $this, 'config_page') );
+		$page = add_submenu_page( 'buddyforms_options_page', 'BuddyForms', __('License', 'buddyforms'), 'manage_options', 'license_registration_dashboard', array( $this, 'config_page') );
 		add_action( 'admin_print_styles-' . $page, array( $this, 'css_scripts' ) );
 	}
 
@@ -44,7 +44,7 @@ class Buddyforms_Key_Registration_Menu {
 		?>
 		<div class='wrap'>
 			<?php screen_icon(); ?>
-			<h2><?php _e( 'BuddyForms License Activation', 'buddyforms' ); ?></h2>
+			<h2><?php _e( 'BuddyForms License Management', 'buddyforms' ); ?></h2>
 
 			<h2 class="nav-tab-wrapper">
 			<?php
@@ -76,14 +76,14 @@ class Buddyforms_Key_Registration_Menu {
 		register_setting( 'bf_license_manager', 'bf_license_manager', array( $this, 'validate_options' ) );
 
 		// API Key
-		add_settings_section( 'api_key', 'License Information', array( $this, 'bf_api_key_text' ), 'license_registration_dashboard' );
-		add_settings_field( 'api_key', 'API License Key', array( $this, 'bf_api_key_field' ), 'license_registration_dashboard', 'api_key' );
-		add_settings_field( 'api_email', 'License email', array( $this, 'bf_api_email_field' ), 'license_registration_dashboard', 'api_key' );
+		add_settings_section( 'api_key', __('License Information', 'buddyforms'), array( $this, 'bf_api_key_text' ), 'license_registration_dashboard' );
+		add_settings_field( 'api_key', __('API License Key', 'buddyforms'), array( $this, 'bf_api_key_field' ), 'license_registration_dashboard', 'api_key' );
+		add_settings_field( 'api_email', __('License email', 'buddyforms'), array( $this, 'bf_api_email_field' ), 'license_registration_dashboard', 'api_key' );
 
 		// Activation settings
 		register_setting( 'buddyforms_deactivate_checkbox', 'buddyforms_deactivate_checkbox', array( $this, 'bf_license_key_deactivation' ) );
-		add_settings_section( 'deactivate_button', 'Plugin License Deactivation', array( $this, 'bf_deactivate_text' ), 'buddyforms_deactivation' );
-		add_settings_field( 'deactivate_button', 'Deactivate Plugin License', array( $this, 'bf_deactivate_textarea' ), 'buddyforms_deactivation', 'deactivate_button' );
+		add_settings_section( 'deactivate_button', __('Plugin License Deactivation', 'buddyforms'), array( $this, 'bf_deactivate_text' ), 'buddyforms_deactivation' );
+		add_settings_field( 'deactivate_button', __('Deactivate Plugin License', 'buddyforms'), array( $this, 'bf_deactivate_textarea' ), 'buddyforms_deactivation', 'deactivate_button' );
 
 	}
 
@@ -300,7 +300,7 @@ class Buddyforms_Key_Registration_Menu {
 
 		?>
 		<input type="checkbox" id="buddyforms_deactivate_checkbox" name="buddyforms_deactivate_checkbox" value="on" <?php checked( $activation_status, 'on' ); ?> />
-		<span class="description"><?php _e( 'Deactivates plugin license so it can be used on another blog.', 'buddyforms' ); ?></span>
+		<span class="description"><?php _e( 'Deactivates plugin license so it can be activated on another blog.', 'buddyforms' ); ?></span>
 		<?php
 	}
 

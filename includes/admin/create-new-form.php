@@ -59,7 +59,7 @@ function bf_import_export_screen(){ ?>
 
         $form->addElement(new Element_HTML(wp_dropdown_pages($args)));
 
-        $form->addElement(new Element_Textbox(__("<br>Or you can create a new Page.<br><i>Enter the title of the new page here: </i>", 'buddyforms'), "create_new_page",array('id' => 'create_new_page', 'placeholder' => __('e.g. My Movies', 'buddyforms'))));
+        $form->addElement(new Element_Textbox('<br>'.__('Or you can create a new Page.', 'buddyforms').'<br><i>'.__('Enter the title of the new page here: ', 'buddyforms').'</i>', "create_new_page",array('id' => 'create_new_page', 'placeholder' => __('e.g. My Movies', 'buddyforms'))));
 
         $form->addElement(new Element_HTML('</div></div></div></div>'));
 
