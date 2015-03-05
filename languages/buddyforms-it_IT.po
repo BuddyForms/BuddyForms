@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyForms v1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-05 20:28+0100\n"
-"PO-Revision-Date: 2015-03-05 20:28+0100\n"
+"POT-Creation-Date: 2015-03-05 21:16+0100\n"
+"PO-Revision-Date: 2015-03-05 21:16+0100\n"
 "Last-Translator: Sol Huebner <translations@it-specialist.net>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -534,10 +534,9 @@ msgstr ""
 msgid "Revision"
 msgstr "Revisione"
 
-# @ buddyforms
 #: includes/admin/form-builder/form-builder.php:268
-msgid "Enable frontend revison control."
-msgstr "Permetter il Controllo Revisione dal Frontend."
+msgid "Enable frontend revision control."
+msgstr ""
 
 # @ buddyforms
 #: includes/admin/form-builder/form-builder.php:274
@@ -973,6 +972,10 @@ msgstr "Prossimo"
 #: includes/templates/buddyforms/the-loop.php:94
 msgid "There were no posts found."
 msgstr "Nessun Articolo trovato."
+
+# @ buddyforms
+#~ msgid "Enable frontend revison control."
+#~ msgstr "Permetter il Controllo Revisione dal Frontend."
 
 # @ buddyforms
 #~ msgid ""
