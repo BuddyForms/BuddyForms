@@ -17,7 +17,7 @@ http://support.themekraft.com/categories/20110697-BuddyForms
 You can also create support tickets there. 
 Login with your account from http://themekraft.com. 
 
-// Changelook
+// Changelog
 
 == 1.3.1 ==
 
@@ -32,8 +32,8 @@ Add new error message to logged off users
 Clean up debugger notice
 Optimised the link rewrite function
 Fixed form submit not working on mobile
-Add new filter for then shortcodes button
-Add new shortcodes to tynymce
+Add new filter for the shortcodes button
+Add new shortcodes to TinyMCE
 Rewrite the Shortcodes
 Changed plugin uri
 Add new filters to manipulate the edit form id
@@ -52,10 +52,10 @@ add german language files
 fixed editing BuddyPress js issues
 fixed the shortcode over content issue
 update chosen js to the latest version
-crate a new file form-builder-elements.php
+create a new file form-builder-elements.php
 add media uploader js
 change split to explode
-load the js css only if a buddyforms view is displayed
+load the js css only if a BuddyForms view is displayed
 css fixes
 restructure code
 create an update script for the new version
@@ -70,20 +70,20 @@ add file form element
 add ajax to delete a file
 fixed a pagination bug
 only display the post type related taxonomies in the form element options
-add translation textdomain "buddyforms"
+add translation text domain "buddyforms"
 rebuild the add new form screen
 remove unneeded form elements from add form screen
 add mail notification settings
-add mail notification system to buddy forms
+add mail notification system to BuddyForms
 add date time form element for post status future
 spelling session
 ui design
 Settings page Add Ons rewrite
 add new settings page for roles and capabilities
-cleanup the code
+clean up the code
 fixed bugs
 add new default option to taxonomy form element
-add Italien language
+add Italian language
 
 == 1.0.5 ==
 
@@ -96,7 +96,7 @@ remove unneeded html
 
 == 1.0.3 ==
 
-editing your pending/draft posts from the frontend.
+editing your pending/draft posts from the frontend
 fixed some css issues
 
 == 1.0.2 ==
