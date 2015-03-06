@@ -39,10 +39,10 @@ function buddyforms_settings_page(){
         $form->addElement(new Element_HTML('
         <div class="alignleft actions bulkactions">
             <select name="bf_bulkactions">
-                <option value="-1" selected="selected">Bulk Actions</option>
-                <option value="delete">Delete Permanently</option>
+                <option value="-1" selected="selected">'.__('Bulk Actions','buddyforms').'</option>
+                <option value="delete">'.__('Delete Permanently','buddyforms').'</option>
             </select>
-            <button type="submit" class="button action" name="action" value="Apply">Apply</button>
+            <button type="submit" class="button action" name="action" value="Apply">'.__('Apply','buddyforms').'</button>
 
         </div><br class="clear"><br>'));
 
@@ -84,7 +84,7 @@ function buddyforms_settings_page(){
                     </th>
                     <td class="name column-name">
 
-                    <div class="showhim">' . $buddyform['name'] . '<div class="showme"><a  href="#subcon' . $buddyform['slug'] . '" data-toggle="tab">Form Builder</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">Roles and Capabilities</a></div></div>
+                    <div class="showhim">'.$buddyform['name'].'<div class="showme"><a  href="#subcon'.$buddyform['slug'].'" data-toggle="tab">'.__('Form Builder','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">'.__('Roles and Capabilities','buddyforms').'</a></div></div>
                     </td>'
             ));
 
@@ -168,12 +168,12 @@ function buddyforms_settings_page(){
             $form->addElement(new Element_HTML('
 
                             <div class="accordion-group postbox">
-                                <div class="accordion-heading"><p class="accordion-toggle">' . __('Mail Notification', 'buddyforms') . '</p></div>
+                                <div class="accordion-heading"><p class="accordion-toggle">'.__('Mail Notification', 'buddyforms').'</p></div>
                                 <div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
                                     <div class="accordion-inner">
 
-                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> Mail Notification Settings</a>
-                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'"> Roles and Capabilities</a>
+                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification Settings', 'buddyforms').'</a>
+                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'"> '.__('Roles and Capabilities', 'buddyforms').'</a>
                                     '));
 
             $form->addElement(new Element_HTML('
