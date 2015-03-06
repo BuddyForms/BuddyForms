@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyForms v1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-05 21:16+0100\n"
-"PO-Revision-Date: 2015-03-05 21:16+0100\n"
+"POT-Creation-Date: 2015-03-06 17:15+0100\n"
+"PO-Revision-Date: 2015-03-06 17:15+0100\n"
 "Last-Translator: Sol Huebner <translations@it-specialist.net>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -124,7 +124,7 @@ msgid "Add-ons"
 msgstr ""
 
 # @ buddyforms
-#: includes/admin/admin.php:18
+#: includes/admin/admin.php:18 includes/admin/form-builder/form-builder.php:87
 #: includes/admin/form-builder/form-builder.php:171
 msgid "Mail Notification"
 msgstr "Notifica Email"
@@ -375,6 +375,18 @@ msgstr ""
 msgid "move"
 msgstr ""
 
+#: includes/admin/form-builder/form-builder.php:42
+msgid "Bulk Actions"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder.php:43
+msgid "Delete Permanently"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder.php:45
+msgid "Apply"
+msgstr ""
+
 # @ buddyforms
 #: includes/admin/form-builder/form-builder.php:54
 msgid "Select All"
@@ -389,6 +401,19 @@ msgstr "Allegato Tipo Articolo"
 #: includes/admin/form-builder/form-builder.php:60
 msgid "Attached Page"
 msgstr "Allegato Pagina"
+
+# @ buddyforms
+#: includes/admin/form-builder/form-builder.php:87
+#: includes/admin/form-builder/form-builder.php:338
+#: includes/admin/mail-notification.php:70
+#: includes/admin/manage-form-roles-and-capabilities.php:132
+msgid "Form Builder"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder.php:87
+#: includes/admin/form-builder/form-builder.php:176
+msgid "Roles and Capabilities"
+msgstr ""
 
 # @ buddyforms
 #: includes/admin/form-builder/form-builder.php:125
@@ -410,6 +435,10 @@ msgstr "Salvare Impostazioni Form"
 #: includes/templates/buddyforms/the-loop.php:67
 msgid "Delete"
 msgstr "Eliminare"
+
+#: includes/admin/form-builder/form-builder.php:175
+msgid "Mail Notification Settings"
+msgstr ""
 
 # @ buddyforms
 #: includes/admin/form-builder/form-builder.php:186
@@ -592,13 +621,6 @@ msgid "Needs to be a parent page"
 msgstr ""
 
 # @ buddyforms
-#: includes/admin/form-builder/form-builder.php:338
-#: includes/admin/mail-notification.php:70
-#: includes/admin/manage-form-roles-and-capabilities.php:132
-msgid "Form Builder"
-msgstr ""
-
-# @ buddyforms
 #: includes/admin/form-builder/form-builder.php:339
 msgid ""
 "Add additional form elements from the right box \"Form Elements\". Change "
@@ -713,6 +735,7 @@ msgid "Jump into the Form Builder"
 msgstr ""
 
 #: includes/admin/mail-notification.php:124
+#: includes/admin/manage-form-roles-and-capabilities.php:153
 msgid "No Mail Notification found"
 msgstr ""
 
@@ -776,6 +799,10 @@ msgstr ""
 
 #: includes/admin/manage-form-roles-and-capabilities.php:117
 msgid "Save Roles and Capabilities"
+msgstr ""
+
+#: includes/admin/manage-form-roles-and-capabilities.php:123
+msgid "Save"
 msgstr ""
 
 #: includes/admin/meta-box.php:22

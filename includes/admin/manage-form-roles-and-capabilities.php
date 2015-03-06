@@ -120,7 +120,7 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
                                             <div class="accordion-inner">'));
 
             $form->addElement(new Element_Hidden('buddyforms_roles_submit', 'buddyforms_roles_submit'));
-            $form->addElement(new Element_Button());
+            $form->addElement(new Element_Button(__('Save', 'buddyforms')));
             $form->addElement(new Element_HTML('
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@ function bf_manage_form_roles_and_capabilities_screen(){ ?>
 
         } else {
 
-            echo '<h2>No Mail Notification found</h2><div id="mailcontainer"></div>';
+            echo '<h2>'.__('No Mail Notification found', 'buddyforms').'</h2><div id="mailcontainer"></div>';
 
         }
 
