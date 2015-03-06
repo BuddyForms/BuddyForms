@@ -193,7 +193,7 @@ function buddyforms_attached_page_rewrite_rules(){
 			add_rewrite_rule($post_data['post_name'].'/view/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=view&bf_form_slug=$matches[1]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/edit/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/delete/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=delete&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
-			add_rewrite_rule($post_data['post_name'].'/revison/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revison&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
+			add_rewrite_rule($post_data['post_name'].'/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
 		}
 
 	}
@@ -258,7 +258,7 @@ function buddyforms_attached_page_content($content){
 			'post_type'	=> $post_type
 		);
 		
-    	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revison'){
+    	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revision'){
 			ob_start();
 				buddyforms_create_edit_form($args);
 				$bf_form = ob_get_contents();

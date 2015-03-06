@@ -229,7 +229,14 @@ class BuddyForms {
 
         if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
 
-            wp_enqueue_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+            wp_register_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+			$admin_text_array = array(
+				'check' => __( 'Check all', 'buddyforms' ),
+				'uncheck' => __( 'Uncheck all', 'buddyforms' )
+			);
+			wp_localize_script( 'buddyforms_admin_js', 'admin_text', $admin_text_array );
+			wp_enqueue_script( 'buddyforms_admin_js' );
+			
 			wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
 		    wp_enqueue_script('jQuery');
 		    wp_enqueue_script('jquery-ui-sortable'); 

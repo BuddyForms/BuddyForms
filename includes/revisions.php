@@ -126,7 +126,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 	$gravatar = get_avatar( $revision->post_author, 24 );
 
 	$date = date_i18n( $datef, strtotime( $revision->post_modified ) );
-	if ( $link && current_user_can( 'edit_post', $revision->ID ) && isset($permalink) && $link = $permalink.'revison/'.$form_slug.'/'.$post_id.'/'.$revision->ID )
+	if ( $link && current_user_can( 'edit_post', $revision->ID ) && isset($permalink) && $link = $permalink.'revision/'.$form_slug.'/'.$post_id.'/'.$revision->ID )
 		$date = "<a href='$link'>$date</a>";
 
 	$revision_date_author = sprintf(

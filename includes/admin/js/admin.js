@@ -302,10 +302,10 @@ jQuery(document).ready(function(jQuery) {
 
         if (jQuery("input[type='checkbox']").prop("checked")) {
             jQuery(':checkbox').prop('checked', false);
-            jQuery(this).text(' Check all');
+            jQuery(this).text(admin_text.check);
         } else {
             jQuery(':checkbox').prop('checked', true);
-            jQuery(this).text(' Uncheck all');
+            jQuery(this).text(admin_text.uncheck);
         }
 
     });

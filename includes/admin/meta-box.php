@@ -19,7 +19,7 @@ function bf_add_custom_box() {
 
         add_meta_box(
             'bf_sectionid',
-            __( 'Attache a BuddyForm', 'buddyforms' ),
+            __( 'Attach a BuddyForm', 'buddyforms' ),
             'bf_inner_custom_box',
             $screen,
             'side',
