@@ -157,6 +157,7 @@ function bf_post_control($args){
 
 function bf_set_post_thumbnail($post_id){
 
+    $hasError = false;
     // Featured image? If yes, save via media_handle_upload and set the post thumbnail
     if( isset( $_FILES['file']['size'] ) && $_FILES['file']['size'] > 0 ) {
 

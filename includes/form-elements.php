@@ -184,7 +184,7 @@ function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
                     case 'Featured-Image':
 
                         // Display upload field for featured image if required is selected for this form
-                        if($customfield['required'] && !has_post_thumbnail( $post_id )){
+                        if(isset($customfield['required']) && !has_post_thumbnail( $post_id )){
                             $file_attr = array("required" => 1, 'id' => "file", 'shortDesc' => $customfield['description'] );
                         } else {
                             $file_attr = array('id' => "file", 'shortDesc' => $customfield['description'] );
