@@ -2,9 +2,9 @@
 
 Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
-Requires at least: WordPress 3.x, BuddyPress 1.7.x
+Requires at least: WordPress 3.x, BuddyPress 2.x
 Tested up to: WordPress 4.1.1, BuddyPress 2.2.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 === Documentation & Support === 
 
@@ -18,6 +18,21 @@ You can also create support tickets there.
 Login with your account from http://themekraft.com. 
 
 // Changelog
+
+== 1.3.2 ==
+
+add missing translations. Thanks to Milena to point me on this !
+Made more strings translatable.
+Fixed some typos.
+Started making admin.js translatable. Props @rugwarrior
+Fixed typo revison -> revision. Props @rugwarrior
+Revised PO/MO files for changed source files. Props @rugwarrior
+Added German translations. Props @rugwarrior
+fixes small issues in the error handling
+small clean up of readme.txt Props @rugwarrior
+cleanup the code
+add new filter bf_form_before_render
+check if the form is broken and if some fields are missing do not add it to the adminbar
 
 == 1.3.1 ==
 
