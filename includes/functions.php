@@ -231,6 +231,7 @@ function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
 
 	remove_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
+
 	if(is_admin())
 		return $content;
 		
@@ -321,9 +322,11 @@ function buddyforms_wp_before_admin_bar_render(){
 	if(!isset($buddyforms['buddyforms'] ))
 		return;
 
-
-
 	foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+
+        if (!isset($buddyform['post_type']) || $buddyform['post_type'] == 'none'){
+            continue;
+        }
 
 		if(isset($buddyform['admin_bar'][0]) && $buddyform['post_type'] != 'none' && !empty($buddyform['attached_page']) ){
 

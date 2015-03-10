@@ -1,6 +1,8 @@
 <?php
 
-function bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields){
+function bf_form_elements($form, $args){
+
+    extract($args);
 
     if (!isset($customfields))
         return;

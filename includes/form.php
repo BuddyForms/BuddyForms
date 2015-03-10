@@ -2,10 +2,11 @@
 /**
  * Adds a form shortcode for the create and edit screen
  * @var $args = posttype, the_post, post_id
- * 
+ *
  * @package buddyforms
- * @since 0.1-beta	
+ * @since 0.1-beta
 */
+
 function buddyforms_create_edit_form( $args = array() ) {
     global $current_user, $buddyforms, $post_id, $wp_query, $form_slug, $form;
 
@@ -73,6 +74,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
     // if post edit screen is displayed
 	if(!empty($post_id)) {
+
 		if(!empty($revision_id)) {
 			$the_post	= get_post( $revision_id );
 		} else {
@@ -228,12 +230,20 @@ function buddyforms_create_edit_form( $args = array() ) {
     $form->addElement(new Element_Hidden("new_post_id", $post_id));
     $form->addElement(new Element_Hidden("redirect_to", $_SERVER['REQUEST_URI']));
 
+
     if (isset($form_notice))
         $form->addElement(new Element_HTML($form_notice));
 
+    $args = array(
+        'form_slug'     => $form_slug,
+        'post_id'       => $post_id,
+        'the_post'      => $the_post,
+        'customfields'  => $customfields
+    );
+
     // if the form have custom field to save as post meta data they get displayed here
     if (isset($customfields))
-		bf_form_elements($form, $form_slug, $post_id,$the_post, $customfields);
+		bf_form_elements($form, $args);
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
@@ -241,6 +251,8 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	if($form_button)
 		$form->addElement($form_button);
+
+    $form = apply_filters( 'bf_form_before_render', $form, $args);
 
     // thats it! render the form!
     ob_start();
