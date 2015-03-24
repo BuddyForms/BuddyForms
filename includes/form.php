@@ -272,4 +272,3 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 	echo $form_html;
 }
-?>

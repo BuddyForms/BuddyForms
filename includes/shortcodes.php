@@ -218,5 +218,3 @@ function buddyforms_list_all_ajax(){
     }
     die();
 }
-
-?>

@@ -221,4 +221,3 @@ function buddyforms_delete_attachment(){
 }
 add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
-?>

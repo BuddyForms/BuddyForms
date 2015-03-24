@@ -148,5 +148,3 @@ function buddyforms_taxonomies($form_slug){
 
     return $taxonomies;
 }
-
-?>

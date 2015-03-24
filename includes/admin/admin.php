@@ -114,5 +114,3 @@ function buddyforms_options_content() {
 
 <?php
 }
-
-?>

@@ -107,4 +107,3 @@ function buddyforms_send_email_notification($post){
     wp_mail($mail_to, $subject, $message, $mailheaders);
 
 }
-?>
