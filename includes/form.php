@@ -195,8 +195,16 @@ function buddyforms_create_edit_form( $args = array() ) {
 
 		echo '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
 
-		wp_login_form();
-		return;
+
+        $args = array(
+            'echo'           => false,
+        );
+
+        $wp_login_form = apply_filters( 'buddyforms_wp_login_form', wp_login_form($args) );
+
+        echo $wp_login_form;
+
+        return;
 	endif;
 
     $user_can_edit = false;
