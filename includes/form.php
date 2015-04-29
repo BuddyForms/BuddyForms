@@ -114,6 +114,18 @@ function buddyforms_create_edit_form( $args = array() ) {
 	// If the form is submitted we will get in action
 	if( isset( $_POST['submitted'] ) ) {
 
+        $user_can_edit = false;
+        if ($the_post->post_author == $current_user->ID){
+            $user_can_edit = true;
+        }
+        $user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+
+        if ( $user_can_edit == false ){
+            $error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
+            echo '<div class="error alert">'.$error_message.'</div>';
+            return;
+        }
+
 		$hasError = false;
 
 		$comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
