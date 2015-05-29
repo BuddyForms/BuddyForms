@@ -147,9 +147,13 @@ function bf_form_elements($form, $args){
                             if (in_array('private', $customfield['post_status']))
                                 $post_status['trash'] = 'Trash';
 
+                            $customfield_val = $the_post->post_status;
+
+                            if(isset($_POST['status']))
+                                $customfield_val = $_POST['status'];
+
                             $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
                             $form->addElement(new Element_Select($customfield['name'], 'status', $post_status, $element_attr));
-
 
                             if (isset($_POST[$slug])) {
                                 $schedule_val = $_POST['schedule'];

@@ -182,6 +182,9 @@ add_action('admin_init', 'buddyforms_attached_page_rewrite_rules');
 function buddyforms_attached_page_rewrite_rules(){
 	global $buddyforms;
 
+    if ( !is_admin() || defined( 'DOING_AJAX' ) )
+        return;
+
 	if(!isset($buddyforms['buddyforms']))
 		return;
 

@@ -2,7 +2,7 @@
 
 /*
  Plugin Name: BuddyForms
- Plugin URI:  http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
+ Plugin URI:	http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
  Version: 1.3.2
  Author: Sven Lehnert
@@ -19,12 +19,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
  *
  ****************************************************************************
  */
@@ -58,11 +58,11 @@ class BuddyForms {
 		// Run the activation function
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 
-        define('buddyforms', $this->version);
-        define('BUDDYFORMS_VERSION', $this->version);
+		define('buddyforms', $this->version);
+		define('BUDDYFORMS_VERSION', $this->version);
 
-        add_action( 'init'					, array($this, 'includes')						, 4, 1);
-		add_action( 'plugins_loaded'        , array($this, 'load_plugin_textdomain'));
+		add_action( 'init'					, array($this, 'includes')						, 4, 1);
+		add_action( 'plugins_loaded'				, array($this, 'load_plugin_textdomain'));
 		add_action( 'plugins_loaded'		, array($this, 'buddyforms_update_db_check'));
 		add_action( 'wp_init'				, array($this, 'set_globals')					, 12, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
@@ -141,31 +141,31 @@ class BuddyForms {
 	public function includes() {
 
 		if(!function_exists('PFBC_Load'))
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
 
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'functions.php');
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
 
-		require_once (BUDDYFORMS_INCLUDES_PATH . 'form.php');
-		require_once(BUDDYFORMS_INCLUDES_PATH  . 'form-elements.php');
-		require_once(BUDDYFORMS_INCLUDES_PATH  . 'form-control.php');
-        require_once (BUDDYFORMS_INCLUDES_PATH . 'revisions.php');
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form-elements.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form-control.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
-        require_once (BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php');
-        require_once (BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php');
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
 
 		if (is_admin()){
 
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder.php');
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
-            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
-			require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
-            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
-            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
-            require_once (BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
-            require_once(BUDDYFORMS_INCLUDES_PATH . '/admin/manage-form-roles-and-capabilities.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/manage-form-roles-and-capabilities.php');
 
-            // License Key API Class
+						// License Key API Class
 			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
 
 			// Plugin Updater Class
@@ -176,10 +176,8 @@ class BuddyForms {
 
 			// Load update class to update $this plugin from for example toddlahman.com
 			$this->load_plugin_self_updater();
-
-			
 		}
-					
+
 	}
 
 	/**
@@ -200,21 +198,19 @@ class BuddyForms {
 	 */
 	function buddyforms_admin_style($hook_suffix) {
 
-     	if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
-				
+		 	if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
+
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
 
 			if ( is_rtl() ) {
-				wp_enqueue_style(  'style-rtl',  plugins_url('includes/admin/css/admin-rtl.css', __FILE__) );
+				wp_enqueue_style(	'style-rtl',	plugins_url('includes/admin/css/admin-rtl.css', __FILE__) );
 			}
 
 			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__) );
 			wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
 
-            // load the tk_icons
-            wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
-
-
+			// load the tk_icons
+			wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
 
 		}
 	}
@@ -226,26 +222,22 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	function buddyforms_admin_js($hook_suffix) {
+			if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
+				wp_register_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+				$admin_text_array = array(
+					'check' => __( 'Check all', 'buddyforms' ),
+					'uncheck' => __( 'Uncheck all', 'buddyforms' )
+				);
+				wp_localize_script( 'buddyforms_admin_js', 'admin_text', $admin_text_array );
+				wp_enqueue_script( 'buddyforms_admin_js' );
 
-        if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
-
-            wp_register_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
-			$admin_text_array = array(
-				'check' => __( 'Check all', 'buddyforms' ),
-				'uncheck' => __( 'Uncheck all', 'buddyforms' )
-			);
-			wp_localize_script( 'buddyforms_admin_js', 'admin_text', $admin_text_array );
-			wp_enqueue_script( 'buddyforms_admin_js' );
-			
-			wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
-		    wp_enqueue_script('jQuery');
-		    wp_enqueue_script('jquery-ui-sortable'); 
-			wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
-
-	    }
-	
+				wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
+				wp_enqueue_script('jQuery');
+				wp_enqueue_script('jquery-ui-sortable');
+				wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
+			}
 	}
-	
+
 	/**
 	 * Enqueue the needed JS for the form in the frontend
 	 *
@@ -274,47 +266,41 @@ class BuddyForms {
 
 		do_action('buddyforms_front_js_css_enqueue');
 
-		wp_enqueue_script(	'jquery' );
-        wp_enqueue_script( 'jquery-ui-core' );
-        wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 
-        wp_enqueue_script(	'buddyforms-select2-js',		                plugins_url('includes/resources/select2/select2.min.js', __FILE__) , array( 'jquery' ), '3.5.2' );
-        wp_enqueue_style(	'buddyforms-select2-css',	                    plugins_url('includes/resources/select2/select2.css', __FILE__));
+		wp_enqueue_script( 'buddyforms-select2-js', plugins_url('includes/resources/select2/select2.min.js', __FILE__) , array( 'jquery' ), '3.5.2' );
+		wp_enqueue_style( 'buddyforms-select2-css',plugins_url('includes/resources/select2/select2.css', __FILE__));
 
-        wp_enqueue_script(	'buddyforms-jquery-ui-timepicker-addon-js',		plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
-        wp_enqueue_style(	'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
+		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
-        wp_enqueue_script(	'buddyforms-js',					            plugins_url('includes/js/buddyforms.js', __FILE__),  array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+		wp_enqueue_script( 'buddyforms-js', plugins_url('includes/js/buddyforms.js', __FILE__),	array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 
-        wp_enqueue_media();
-        wp_enqueue_script(	'media-uploader-js',					            plugins_url('includes/js/media-uploader.js', __FILE__),  array('jquery') );
+		wp_enqueue_media();
+		wp_enqueue_script( 'media-uploader-js', plugins_url('includes/js/media-uploader.js', __FILE__),	array('jquery') );
 
-        wp_enqueue_style(   'buddyforms-the-loop-css',                     plugins_url('includes/css/the-loop.css', __FILE__));
-        wp_enqueue_style(   'buddyforms-the-form-css',                     plugins_url('includes/css/the-form.css', __FILE__));
+		wp_enqueue_style(	'buddyforms-the-loop-css', plugins_url('includes/css/the-loop.css', __FILE__));
+		wp_enqueue_style(	'buddyforms-the-form-css', plugins_url('includes/css/the-form.css', __FILE__));
 
-    }
+	}
 
 	function buddyforms_update_db_check(){
 
-		$curr_ver	= get_option( $this->bf_version_name );
 		$buddyforms	= get_option('buddyforms_options');
 
 		$buddyforms_options = $buddyforms;
 
-		// checks if the current plugin version is lower than the version being updated
-		if ( version_compare( $this->version, $curr_ver, '>' ) ) {
 			foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
 
 				$needs_title = true;
-				$needs_content = true;
 
 				foreach($buddyform['form_fields'] as $field_key => $form_field){
 
 					if($form_field['slug'] == 'editpost_title')
 						$needs_title = false;
 
-					if($form_field['slug'] == 'editpost_content')
-						$needs_content = false;
 				}
 
 				if($needs_title){
@@ -328,23 +314,13 @@ class BuddyForms {
 
 				}
 
-				if (version_compare($curr_ver, "1.1", "<=")) {
-					if($needs_content){
-
-						$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
-
-						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Content';
-						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_content';
-						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Content';
-						$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '2';
-
-					}
-				}
-
 			}
-			update_option( $this->bf_version_name, $this->version );
-			update_option("buddyforms_options", $buddyforms_options);
-		}
+            if($needs_title || $needs_content){
+                update_option( $this->bf_version_name, $this->version );
+                update_option("buddyforms_options", $buddyforms_options);
+            }
+
+
 
 	}
 
