@@ -9,9 +9,7 @@ jQuery(document).ready(function (){
 
  		var delete_attachment_id = jQuery(this).attr('id');
  		var delete_attachment_href = jQuery(this).attr('href');
-
-
-		var action = jQuery(this);
+        var action = jQuery(this);
 
 		if (confirm('Delete Permanently'))
 			jQuery.ajax({
@@ -24,7 +22,6 @@ jQuery(document).ready(function (){
 			});
 
 		return false;
-
 
     });
 
@@ -56,11 +53,41 @@ jQuery(document).ready(function (){
         }
     });
 
-    jQuery( ".bf-submit" ).on( "click", function() {
-        // Let's find the input to check
-        var btn = jQuery(this).attr('name');
+
+    jQuery(document).on( "submit", '#editpost', function( event ) {
+        event.preventDefault();
+
+        tinyMCE.triggerSave();
+
+        var btn = jQuery('.bf-submit').attr('name');
         jQuery("#submitted").val(btn);
+
+        var FormData = jQuery('#editpost').serialize();
+
+        jQuery('.bf_modal').show();
+
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_ajax_edit_post", "data": FormData},
+            beforeSend :function(){
+                jQuery('.bf_modal').show();
+            },
+            success: function(data){
+                jQuery('.bf_modal').hide();
+                jQuery('.the_buddyforms_form').replaceWith(data);
+                // remove existing editor instance
+                tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
+
+                // init editor for newly appended div
+                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                try { tinymce.init( init ); } catch(e){}
+            }
+        });
+
+        return false;
     });
+
 
     jQuery('.bf_view_form').click(function(){
 

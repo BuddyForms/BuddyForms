@@ -42,7 +42,13 @@ function bf_update_post_meta($post_id, $customfields){
 
     if(!isset($customfields))
 		return;
-	
+
+    if( isset($_POST['data'])){
+        parse_str($_POST['data'], $formdata);
+    } else {
+        $formdata = $_POST;
+    }
+
 	foreach( $customfields as $key => $customfield ) : 
 	   
 		if( $customfield['type'] == 'Taxonomy' ){
@@ -51,8 +57,8 @@ function bf_update_post_meta($post_id, $customfields){
 			
 			if (isset($taxonomy->hierarchical) && $taxonomy->hierarchical == true)  {
 				
-				if(isset($_POST[ $customfield['slug'] ]))
-                    $tax_item = $_POST[ $customfield['slug'] ];
+				if(isset($formdata[ $customfield['slug'] ]))
+                    $tax_item = $formdata[ $customfield['slug'] ];
 
                 if($tax_item[0] == -1 && !empty($customfield['taxonomy_default']))
                     $tax_item[0] = $customfield['taxonomy_default'];
@@ -62,8 +68,8 @@ function bf_update_post_meta($post_id, $customfields){
 			
 				$slug = Array();
 				
-				if(isset($_POST[ $customfield['slug'] ])) {
-					$postCategories = $_POST[ $customfield['slug'] ];
+				if(isset($formdata[ $customfield['slug'] ])) {
+					$postCategories = $formdata[ $customfield['slug'] ];
 				
 					foreach ( $postCategories as $postCategory ) {
 						$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
@@ -75,8 +81,8 @@ function bf_update_post_meta($post_id, $customfields){
 
 			}
 			
-			if( isset( $_POST[$customfield['slug'].'_creat_new_tax']) && !empty($_POST[$customfield['slug'].'_creat_new_tax'] ) ){
-				$creat_new_tax =  explode(',',$_POST[$customfield['slug'].'_creat_new_tax']);
+			if( isset( $formdata[$customfield['slug'].'_creat_new_tax']) && !empty($formdata[$customfield['slug'].'_creat_new_tax'] ) ){
+				$creat_new_tax =  explode(',',$formdata[$customfield['slug'].'_creat_new_tax']);
 				if(is_array($creat_new_tax)){
 					foreach($creat_new_tax as $key => $new_tax){
 						$wp_insert_term = wp_insert_term($new_tax,$customfield['taxonomy']);
@@ -97,8 +103,8 @@ function bf_update_post_meta($post_id, $customfields){
 			$slug = sanitize_title($customfield['name']);
 		
 		// Update the post
-		if(isset($_POST[$slug] )){
-			update_post_meta($post_id, $slug, $_POST[$slug] );
+		if(isset($formdata[$slug] )){
+			update_post_meta($post_id, $slug, $formdata[$slug] );
 		} else {
 			update_post_meta($post_id, $slug, '' );
 		}
@@ -108,19 +114,23 @@ function bf_update_post_meta($post_id, $customfields){
 }
 
 function bf_post_control($args){
-	global $post_id;
 
-	$args = apply_filters( 'bf_post_control_args', $args );
+	extract($args = apply_filters( 'bf_post_control_args', $args ));
 
-	extract($args);
+    if( isset($_POST['data'])){
+        parse_str($_POST['data'], $formdata);
+    } else {
+        $formdata = $_POST;
+    }
+
 
     // Check if post is new or edit 
     if( $action == 'update' ) {
 
-		$my_post = array(
-            'ID'        		=> $_POST['new_post_id'],
-            'post_title' 		=> $_POST['editpost_title'],
-            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
+		$bf_post = array(
+            'ID'        		=> $formdata['post_id'],
+            'post_title' 		=> $formdata['editpost_title'],
+            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
@@ -128,30 +138,31 @@ function bf_post_control($args){
 		);
             
 		// Update the new post
-        $post_id = wp_update_post( $my_post );
+        $post_id = wp_update_post( $bf_post );
 		
 	} else {
 
-        if(isset($_POST['status']) && $_POST['status'] == 'future' && $_POST['schedule'])
-            $post_date = date('Y-m-d H:i:s',strtotime($_POST['schedule']));
+        if(isset($formdata['status']) && $formdata['status'] == 'future' && $formdata['schedule'])
+            $post_date = date('Y-m-d H:i:s',strtotime($formdata['schedule']));
 
-			$my_post = array(
+        $bf_post = array(
             'post_author' 		=> $post_author,
-            'post_title' 		=> $_POST['editpost_title'],
-            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
+            'post_title' 		=> $formdata['editpost_title'],
+            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
 			'post_excerpt'		=> $post_excerpt,
 			'post_parent'		=> $post_parent,
-            'post_date'         => isset($post_date)? $post_date : '',
-            'post_date_gmt'     => isset($post_date)? $post_date : '',
+            'post_date'         => isset($formdata['post_date'])? $formdata['post_date'] : '',
+            'post_date_gmt'     => isset($formdata['post_date'])? $formdata['post_date'] : '',
         );   
         
         // Insert the new form
-        $post_id = wp_insert_post( $my_post, true );
+        $post_id = wp_insert_post( $bf_post, true );
 		
 	}
+
 	return $post_id;
 }
 
@@ -202,22 +213,3 @@ function bf_media_handle_upload($post_id){
         }
     }
 }
-
-function buddyforms_delete_attachment(){
-
-    $delete_attachment_id = $_POST['delete_attachment_id'];
-    $delete_attachment_href = $_POST['delete_attachment_href'];
-
-    $delete_attachment_attr = explode('/',$delete_attachment_href);
-
-    wp_delete_attachment( $delete_attachment_id );
-
-    delete_post_meta($delete_attachment_attr[0], $delete_attachment_attr[1]);
-
-    echo $_POST['delete_attachment_id'];
-
-    die();
-
-}
-add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
-add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');

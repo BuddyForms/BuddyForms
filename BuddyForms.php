@@ -145,8 +145,10 @@ class BuddyForms {
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
 
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'form.php' );
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'form-elements.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-render.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-ajax.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-elements.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form-control.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
@@ -315,7 +317,7 @@ class BuddyForms {
 				}
 
 			}
-            if($needs_title || $needs_content){
+            if( $needs_title ){
                 update_option( $this->bf_version_name, $this->version );
                 update_option("buddyforms_options", $buddyforms_options);
             }

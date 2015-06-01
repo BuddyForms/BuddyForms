@@ -7,6 +7,17 @@ function bf_form_elements($form, $args){
     if (!isset($customfields))
         return;
 
+    if( isset($_POST['data'])){
+        parse_str($_POST['data'], $formdata);
+    } else {
+        $formdata = $_POST;
+    }
+
+
+//    echo '<pre>';
+//    print_r($args);
+//    echo '</pre>';
+
     foreach ($customfields as $field_id => $customfield) :
 
         if(isset($customfield['slug']))
@@ -17,8 +28,8 @@ function bf_form_elements($form, $args){
 
         if($slug != '') :
 
-            if (isset($_POST[$slug] )) {
-                $customfield_val = $_POST[$slug];
+            if (isset($formdata[$slug] )) {
+                $customfield_val = $formdata[$slug];
             } else {
                 $customfield_val = get_post_meta($post_id, $slug, true);
             }
@@ -47,8 +58,8 @@ function bf_form_elements($form, $args){
                         break;
                     case 'Title':
 
-                        if (isset($_POST['editpost_title'])) {
-                            $post_title = stripslashes($_POST['editpost_title']);
+                        if (isset($formdata['editpost_title'])) {
+                            $post_title = stripslashes($formdata['editpost_title']);
                         } else {
                             $post_title = $the_post->post_title;
                         }
@@ -59,8 +70,8 @@ function bf_form_elements($form, $args){
                     case 'Content':
 
                         $editpost_content_val = false;
-                        if (isset($_POST['editpost_content'])) {
-                            $editpost_content_val = stripslashes($_POST['editpost_content']);
+                        if (isset($formdata['editpost_content'])) {
+                            $editpost_content_val = stripslashes($formdata['editpost_content']);
                         } else {
                             if (!empty($the_post->post_content))
                                 $editpost_content_val = $the_post->post_content;
@@ -73,6 +84,7 @@ function bf_form_elements($form, $args){
                             'tinymce'       => isset($customfield['post_content_options']) ? in_array('tinymce', $customfield['post_content_options']) ? false : true : true,
                             'quicktags'     => isset($customfield['post_content_options']) ? in_array('quicktags', $customfield['post_content_options']) ? false : true : true,
                             'textarea_rows' => 18,
+                            'textarea_name' => 'editpost_content',
                         );
 
                         if (isset($post_id)) {
@@ -149,14 +161,14 @@ function bf_form_elements($form, $args){
 
                             $customfield_val = $the_post->post_status;
 
-                            if(isset($_POST['status']))
-                                $customfield_val = $_POST['status'];
+                            if(isset($formdata['status']))
+                                $customfield_val = $formdata['status'];
 
                             $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
                             $form->addElement(new Element_Select($customfield['name'], 'status', $post_status, $element_attr));
 
-                            if (isset($_POST[$slug])) {
-                                $schedule_val = $_POST['schedule'];
+                            if (isset($formdata[$slug])) {
+                                $schedule_val = $formdata['schedule'];
                             } else {
                                 $schedule_val = get_post_meta($post_id, 'schedule', true);
                             }

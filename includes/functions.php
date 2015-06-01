@@ -261,8 +261,8 @@ function buddyforms_attached_page_content($content){
 			'post_id'	=> $post_id,
 			'post_type'	=> $post_type
 		);
-		
-    	if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revision'){
+
+        if($wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revision'){
 			ob_start();
 				buddyforms_create_edit_form($args);
 				$bf_form = ob_get_contents();
