@@ -54,11 +54,11 @@ function buddyforms_form_html( $args ){
         "prevent" => array("bootstrap", "jQuery", "focus"),
         "action" => $redirect_to,
         "view" => new View_Vertical,
-        'class' => 'standard-form'
+        'class' => 'standard-form',
     ));
 
     $form->addElement(new Element_HTML(do_action('template_notices')));
-    $form->addElement(new Element_HTML(wp_nonce_field('client-file-upload', '_wpnonce', true, false)));
+    $form->addElement(new Element_HTML(wp_nonce_field('buddyforms_form_nonce', '_wpnonce', true, false)));
 
     $form->addElement(new Element_Hidden("redirect_to"  , $redirect_to));
 

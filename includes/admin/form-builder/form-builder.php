@@ -326,11 +326,13 @@ function buddyforms_settings_page(){
 
                     $form->addElement(new Element_HTML('<div><hr>'));
 
-                        $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
+            $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
+            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display The Form and continue editing', 'display_post' => 'Display the Post', 'rediect_page' => 'Redirect to Page', 'message_only' => 'Just display a Message'), array('value' => $after_submit )));
 
-                        $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display The Form and continue editing', 'display_post' => 'Display the Post', 'rediect_page' => 'Redirect to Page', 'message_only' => 'Just display a Message'), array('value' => $after_submit )));
+            $ajax_disabled = isset($buddyform['ajax_disabled']) ? $buddyform['ajax_disabled'] : false;
+            $form->addElement(new Element_Checkbox('<b>'.__("Disable Ajax", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][ajax_disabled]", array('ajax_disabled' => 'Disable Ajax for this Form'), array('value' => $ajax_disabled )));
 
-                        $form->addElement(new Element_HTML('</div>'));
+            $form->addElement(new Element_HTML('</div>'));
 
                 $form->addElement(new Element_HTML('</div>'));
 
