@@ -25,7 +25,7 @@ function buddyforms_ajax_edit_post(){
 
     echo buddyforms_process_post($formdata);
 
-    //  buddyforms_after_save_post_redirect(get_permalink( $post_id ));
+    //buddyforms_after_save_post_redirect(get_permalink( $formdata['post_id'] ));
 
 
     die();

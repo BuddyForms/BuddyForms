@@ -1,8 +1,11 @@
 <?php
 
-
-
-
+/**
+ * Process the post and saves or update the post and post meta does the validation
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
 
 function buddyforms_process_post( $formdata ) {
     global $current_user, $buddyforms;
@@ -20,11 +23,7 @@ function buddyforms_process_post( $formdata ) {
         'redirect_to'   => $_SERVER['REQUEST_URI'],
     ), $formdata));
 
-//    echo '<pre>';
-//    print_r($formdata);
-//    echo '</pre>';
-    // if post edit screen is displayed
-    // if post edit screen is displayed
+
     if(!empty($post_id)) {
 
         if(!empty($revision_id)) {
@@ -34,17 +33,32 @@ function buddyforms_process_post( $formdata ) {
             $the_post	= get_post( $post_id );
         }
 
+
+        // Check if the user is author of the post
         $user_can_edit = false;
         if ($the_post->post_author == $current_user->ID){
             $user_can_edit = true;
         }
         $user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
-
         if ( $user_can_edit == false ){
             $error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
             echo '<div class="error alert">'.$error_message.'</div>';
             return;
         }
+
+    }
+
+    // check if the user has the roles roles and capabilities
+    $user_can_edit = false;
+    if( empty($post_id) && current_user_can('buddyforms_' . $form_slug . '_create')) {
+        $user_can_edit = true;
+    } elseif( !empty($post_id) && current_user_can('buddyforms_' . $form_slug . '_edit')){
+        $user_can_edit = true;
+    }
+    $user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+    if ( $user_can_edit == false ){
+        $error_message = __('You do not have the required user role to use this form', 'buddyforms');
+        return '<div class="error alert">'.$error_message.'</div>';
     }
 
     // If post_id == 0 a new post is created
@@ -56,7 +70,6 @@ function buddyforms_process_post( $formdata ) {
     if(isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
         $customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
 
-
     $comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
     if(isset($formdata['comment_status']))
         $comment_status = $formdata['comment_status'];
@@ -66,7 +79,6 @@ function buddyforms_process_post( $formdata ) {
         $post_excerpt = $formdata['post_excerpt'];
 
     $action			= 'save';
-
     $post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
     if($post_id != 0){
         $action = 'update';
@@ -87,7 +99,7 @@ function buddyforms_process_post( $formdata ) {
         'comment_status'	=> $comment_status,
     );
 
-    $post_id = bf_post_control($args);
+    $post_id = buddyforms_update_post($args);
 
     if($post_id != 0){
 
@@ -105,7 +117,6 @@ function buddyforms_process_post( $formdata ) {
     } else {
         $hasError = true;
     }
-
 
     // Display the message
     if( empty( $hasError ) ) :
@@ -130,7 +141,6 @@ function buddyforms_process_post( $formdata ) {
 
     do_action('buddyforms_after_save_post', $post_id);
 
-
     $args = array(
         'post_type' 	=> $post_type,
         'the_post'		=> $the_post,
@@ -142,52 +152,67 @@ function buddyforms_process_post( $formdata ) {
         'form_notice'   => $form_notice,
     );
 
-
     $form_html = buddyforms_form_html( $args );
     return $form_html;
 
-
 }
 
+function buddyforms_update_post($args){
 
+    extract( $args = apply_filters( 'buddyforms_update_post_args', $args ) );
 
+    if( isset($_POST['data'])){
+        parse_str($_POST['data'], $formdata);
+    } else {
+        $formdata = $_POST;
+    }
 
-/**
- * Delete a post 
- *
- * @package BuddyForms
- * @since 0.3 beta
- */
-function buddyforms_delete_post(){
-	global $wp_query, $buddyforms, $current_user;
-	
-		if(isset($wp_query->query_vars['bf_action'])){
-		
-		$action = $wp_query->query_vars['bf_action'];
-		$form_slug = $wp_query->query_vars['bf_form_slug'];
-		$post_id = $wp_query->query_vars['bf_post_id'];
-		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+    $buddyforms_form_nonce_value = $formdata['_wpnonce'];
 
-		if(isset($revision_id)) {
-			$the_post		= get_post( $revision_id );
-		} else {
-			$the_post		= get_post( $post_id );
-		}
-       	
-		if($wp_query->query_vars['bf_action'] == 'delete'){
-			if ($the_post->post_author != $current_user->ID) {
-				echo '<div id="message" class="info alert"><p>'.__("You are not allowed to delete this entry! What are you doing here?","buddyforms").'</p></div>';
-				return;
-			}
-			do_action('buddyforms_delete_post',$post_id);
-			wp_delete_post( $post_id );
-		}	
-	}
-	$args = array(
-		'form_slug' => $form_slug,
-	);
-       
-	buddyforms_the_loop($args);
+    if ( !wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
+        return false;
+    }
+
+    // Check if post is new or edit
+    if( $action == 'update' ) {
+
+        $bf_post = array(
+            'ID'        		=> $formdata['post_id'],
+            'post_title' 		=> $formdata['editpost_title'],
+            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
+            'post_type' 		=> $post_type,
+            'post_status' 		=> $post_status,
+            'comment_status'	=> $comment_status,
+            'post_excerpt'		=> $post_excerpt
+        );
+
+        // Update the new post
+        $post_id = wp_update_post( $bf_post );
+
+    } else {
+
+        if(isset($formdata['status']) && $formdata['status'] == 'future' && $formdata['schedule'])
+            $post_date = date('Y-m-d H:i:s',strtotime($formdata['schedule']));
+
+        $bf_post = array(
+            'post_author' 		=> $post_author,
+            'post_title' 		=> $formdata['editpost_title'],
+            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
+            'post_type' 		=> $post_type,
+            'post_status' 		=> $post_status,
+            'comment_status'	=> $comment_status,
+            'post_excerpt'		=> $post_excerpt,
+            'post_parent'		=> $post_parent,
+            'post_date'         => isset($formdata['post_date'])? $formdata['post_date'] : '',
+            'post_date_gmt'     => isset($formdata['post_date'])? $formdata['post_date'] : '',
+        );
+
+        // Insert the new form
+        $post_id = wp_insert_post( $bf_post, true );
+
+    }
+
+    return $post_id;
 }
 
 function bf_update_post_meta($post_id, $customfields){
@@ -265,66 +290,6 @@ function bf_update_post_meta($post_id, $customfields){
 
 }
 
-function bf_post_control($args){
-
-	extract($args = apply_filters( 'bf_post_control_args', $args ));
-
-    if( isset($_POST['data'])){
-        parse_str($_POST['data'], $formdata);
-    } else {
-        $formdata = $_POST;
-    }
-
-
-    $buddyforms_form_nonce_value = $formdata['_wpnonce'];
-
-    if ( !wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
-        return false;
-    }
-
-
-    // Check if post is new or edit 
-    if( $action == 'update' ) {
-
-		$bf_post = array(
-            'ID'        		=> $formdata['post_id'],
-            'post_title' 		=> $formdata['editpost_title'],
-            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
-            'post_type' 		=> $post_type,
-            'post_status' 		=> $post_status,
-            'comment_status'	=> $comment_status,
-            'post_excerpt'		=> $post_excerpt
-		);
-            
-		// Update the new post
-        $post_id = wp_update_post( $bf_post );
-		
-	} else {
-
-        if(isset($formdata['status']) && $formdata['status'] == 'future' && $formdata['schedule'])
-            $post_date = date('Y-m-d H:i:s',strtotime($formdata['schedule']));
-
-        $bf_post = array(
-            'post_author' 		=> $post_author,
-            'post_title' 		=> $formdata['editpost_title'],
-            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
-            'post_type' 		=> $post_type,
-            'post_status' 		=> $post_status,
-            'comment_status'	=> $comment_status,
-			'post_excerpt'		=> $post_excerpt,
-			'post_parent'		=> $post_parent,
-            'post_date'         => isset($formdata['post_date'])? $formdata['post_date'] : '',
-            'post_date_gmt'     => isset($formdata['post_date'])? $formdata['post_date'] : '',
-        );   
-        
-        // Insert the new form
-        $post_id = wp_insert_post( $bf_post, true );
-		
-	}
-
-	return $post_id;
-}
-
 function bf_set_post_thumbnail($post_id){
 
     $hasError = false;
@@ -371,4 +336,42 @@ function bf_media_handle_upload($post_id){
             }
         }
     }
+}
+
+/**
+ * Delete a post
+ *
+ * @package BuddyForms
+ * @since 0.3 beta
+ */
+function buddyforms_delete_post(){
+    global $wp_query, $buddyforms, $current_user;
+
+    if(isset($wp_query->query_vars['bf_action'])){
+
+        $action = $wp_query->query_vars['bf_action'];
+        $form_slug = $wp_query->query_vars['bf_form_slug'];
+        $post_id = $wp_query->query_vars['bf_post_id'];
+        $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+
+        if(isset($revision_id)) {
+            $the_post		= get_post( $revision_id );
+        } else {
+            $the_post		= get_post( $post_id );
+        }
+
+        if($wp_query->query_vars['bf_action'] == 'delete'){
+            if ($the_post->post_author != $current_user->ID) {
+                echo '<div id="message" class="info alert"><p>'.__("You are not allowed to delete this entry! What are you doing here?","buddyforms").'</p></div>';
+                return;
+            }
+            do_action('buddyforms_delete_post',$post_id);
+            wp_delete_post( $post_id );
+        }
+    }
+    $args = array(
+        'form_slug' => $form_slug,
+    );
+
+    buddyforms_the_loop($args);
 }
