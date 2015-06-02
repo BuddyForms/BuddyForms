@@ -97,6 +97,10 @@ function bf_form_elements($form, $args){
                         $wp_editor = ob_get_contents();
                         ob_clean();
 
+
+                        echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
+
+
                         $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . __('Content', 'buddyforms') . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
                         $form->addElement(new Element_HTML($wp_editor));
                         break;

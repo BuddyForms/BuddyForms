@@ -4,9 +4,7 @@ jQuery(document).ready(function (){
         placeholder: "Select an option"
     });
 
-
     jQuery('.remove_attachment').click(function(){
-
  		var delete_attachment_id = jQuery(this).attr('id');
  		var delete_attachment_href = jQuery(this).attr('href');
         var action = jQuery(this);
@@ -43,7 +41,6 @@ jQuery(document).ready(function (){
         jQuery('.bf_datetime_wrap').hide();
     }
 
-
     jQuery('select[name=status]').change(function(){
         var bf_status = jQuery(this).val();
         if(bf_status == 'future'){
@@ -53,6 +50,8 @@ jQuery(document).ready(function (){
         }
     });
 
+    var editpost_content_val = jQuery('#editpost_content_val').html();
+    jQuery('#editpost_content').html(editpost_content_val);
 
     jQuery(document).on( "submit", '#editpost', function( event ) {
         event.preventDefault();
@@ -87,7 +86,6 @@ jQuery(document).ready(function (){
 
         return false;
     });
-
 
     jQuery('.bf_view_form').click(function(){
 

@@ -276,6 +276,13 @@ function bf_post_control($args){
     }
 
 
+    $buddyforms_form_nonce_value = $formdata['_wpnonce'];
+
+    if ( !wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
+        return false;
+    }
+
+
     // Check if post is new or edit 
     if( $action == 'update' ) {
 
