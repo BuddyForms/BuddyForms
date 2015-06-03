@@ -315,13 +315,15 @@ jQuery(document).ready(function(jQuery) {
         jQuery('.'+id).toggle(this.checked);
     });
 
-    jQuery(document.body).on('click', '.after_submit_hidden' ,function(){
+    jQuery(document.body).on('change', '.after_submit_hidden' ,function(){
         var id = jQuery(this).attr('id');
         var value = jQuery(this).attr('value');
 
         if(value == 'display_message'){
-            alert(id);
-            jQuery('.'+id).toggle(this.checked);
+            jQuery('.'+id).show();
+        }
+        if(id != 'after_submit_hiddengroups-tests-2'){
+            jQuery('.after_submit_hiddengroups-tests-2').hide();
         }
     });
 
