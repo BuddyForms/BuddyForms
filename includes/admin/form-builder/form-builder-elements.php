@@ -318,7 +318,7 @@ function buddyforms_view_form_fields($args){
 
                     <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text"
                        href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">
-                        <?php echo $field_type; ?>  <i><?php if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']) && $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'] != $field_type)
+                        <?php echo $field_type; ?><i><?php if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']) && $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'] != $field_type)
                                 echo '<b>: </b>' . $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']; ?></i>
                     </p>
 

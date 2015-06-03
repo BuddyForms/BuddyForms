@@ -56,7 +56,9 @@ jQuery(document).ready(function (){
     jQuery(document).on( "submit", '#editpost', function( event ) {
         event.preventDefault();
 
-        tinyMCE.triggerSave();
+        if (typeof(tinyMCE) != "undefined") {
+            tinyMCE.triggerSave();
+        }
 
         var btn = jQuery('.bf-submit').attr('name');
         jQuery("#submitted").val(btn);
