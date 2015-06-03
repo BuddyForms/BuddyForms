@@ -152,8 +152,7 @@ function buddyforms_process_post( $formdata ) {
         'form_notice'   => $form_notice,
     );
 
-    $form_html = buddyforms_form_html( $args );
-    return $form_html;
+    return $args;
 
 }
 

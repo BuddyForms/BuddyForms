@@ -121,7 +121,7 @@ function buddyforms_create_edit_form( $args = array() ) {
 
     // If the form is submitted we will get in action
     if( isset( $_POST['submitted'] ) )
-        buddyforms_process_post($args);
+        $args = buddyforms_process_post($args);
 
     echo buddyforms_form_html( $args );
 

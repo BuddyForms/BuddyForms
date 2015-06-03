@@ -20,13 +20,28 @@ add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment
 add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 
 function buddyforms_ajax_edit_post(){
+    global $buddyforms;
+
 
     parse_str($_POST['data'], $formdata);
 
-    echo buddyforms_process_post($formdata);
+    $args = buddyforms_process_post($formdata);
 
-    //buddyforms_after_save_post_redirect(get_permalink( $formdata['post_id'] ));
 
+    switch ($buddyforms['buddyforms'][$formdata['form_slug']]['after_submit']) {
+        case 'display_post':
+            buddyforms_after_save_post_redirect(get_permalink( $formdata['post_id'] ));
+            break;
+        case 'display_message':
+            echo $buddyforms['buddyforms'][$formdata['form_slug']]['after_submit_message_text'];
+            break;
+        case 'rediect_page':
+            buddyforms_after_save_post_redirect(get_permalink( $buddyforms['buddyforms'][$formdata['form_slug']]['after_submit_rediect_page'] ));
+            break;
+        default:
+            echo buddyforms_form_html( $args );
+
+    }
 
     die();
 

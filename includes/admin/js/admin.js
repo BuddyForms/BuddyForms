@@ -310,6 +310,20 @@ jQuery(document).ready(function(jQuery) {
 
     });
 
+    jQuery(document.body).on('click', '.ajax_disabled_hidden' ,function(){
+        var id = jQuery(this).attr('id');
+        jQuery('.'+id).toggle(this.checked);
+    });
+
+    jQuery(document.body).on('click', '.after_submit_hidden' ,function(){
+        var id = jQuery(this).attr('id');
+        var value = jQuery(this).attr('value');
+
+        if(value == 'display_message'){
+            alert(id);
+            jQuery('.'+id).toggle(this.checked);
+        }
+    });
 
 });
 

@@ -326,11 +326,22 @@ function buddyforms_settings_page(){
 
                     $form->addElement(new Element_HTML('<div><hr>'));
 
-            $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
-            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display The Form and continue editing', 'display_post' => 'Display the Post', 'rediect_page' => 'Redirect to Page', 'message_only' => 'Just display a Message'), array('value' => $after_submit )));
 
             $ajax_disabled = isset($buddyform['ajax_disabled']) ? $buddyform['ajax_disabled'] : false;
-            $form->addElement(new Element_Checkbox('<b>'.__("Disable Ajax", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][ajax_disabled]", array('ajax_disabled' => 'Disable Ajax for this Form'), array('value' => $ajax_disabled )));
+            $form->addElement(new Element_Checkbox('<b>'.__("Disable Ajax", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][ajax_disabled]", array('ajax_disabled' => 'Disable Ajax for this Form'), array('value' => $ajax_disabled, 'id' => 'ajax_disabled_hidden'.$buddyform['slug'], 'class' => 'ajax_disabled_hidden' )));
+
+            $ajax_disabled_hidden_checked = isset($buddyforms['buddyforms'][$buddyform['slug']]['ajax_disabled']) ? '' : 'style="display: none;"';
+            $form->addElement( new Element_HTML('<div ' . $ajax_disabled_hidden_checked . ' class="ajax_disabled_hidden'.$buddyform['slug'].'-0">'));
+                $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
+                $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display The Form and continue editing', 'display_post' => 'Display the Post', 'rediect_page' => 'Redirect to Page', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden'.$buddyform['slug'], 'class' => 'after_submit_hidden' )));
+            $form->addElement(new Element_HTML('</div>'));
+
+
+            $after_submit_hidden_checked = isset($buddyforms['buddyforms'][$buddyform['slug']]['after_submit']) ? '' : 'style="display: none;"';
+            $form->addElement( new Element_HTML('<div ' . $after_submit_hidden_checked . ' class="after_submit_hidden'.$buddyform['slug'].'-0">'));
+
+            $form->addElement(new Element_HTML('qweqweqeqw</div>'));
+
 
             $form->addElement(new Element_HTML('</div>'));
 
