@@ -31,8 +31,14 @@ function buddyforms_add_form(){
         $_POST['create_new_form_attached_page'] = wp_insert_post( $mew_post );
     }
 
+    $create_new_form_slug = sanitize_title($_POST['create_new_form_name']);
+    $mod5 = substr(md5(time() * rand()), 0, 10);
+
+    if(array_key_exists($create_new_form_slug, $buddyforms_options['buddyforms']))
+        $create_new_form_slug = $create_new_form_slug.'-'.$mod5;
+
      $options = Array(
-        'slug'              => sanitize_title($_POST['create_new_form_name']),
+        'slug'              => $create_new_form_slug,
         'name'              => $_POST['create_new_form_name'],
         'singular_name'     => $_POST['create_new_form_singular_name'],
         'attached_page'     => $_POST['create_new_form_attached_page'],
@@ -59,7 +65,7 @@ function buddyforms_add_form(){
     $options['form_fields'][$field_id]['type']          = 'Content';
     $options['form_fields'][$field_id]['order']         = '2';
 
-    $buddyforms_options['buddyforms'][sanitize_title($_POST['create_new_form_name'])] = $options;
+    $buddyforms_options['buddyforms'][$create_new_form_slug] = $options;
 
     update_option("buddyforms_options", $buddyforms_options);
 

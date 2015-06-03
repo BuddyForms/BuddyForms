@@ -305,17 +305,21 @@ function buddyforms_view_form_fields($args){
                 <div class="accordion-heading">
 
                         <div class="accordion-heading-options">
-                            <a class="delete" id="<?php echo $field_id ?>"
-                               href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
-                                <i class="icon-remove-sign" style="margin-top:0px;"></i>
-                            </a>
+                            <?php if(!isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug']) ||     $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug'] != 'editpost_title') { ?>
+                                <a class="delete" id="<?php echo $field_id ?>"
+                                   href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
+                                    <p><i class="icon-remove-sign" style="margin-top:7px;margin-right:2px;"></i><span>delete</span></p>
+                                </a>
+                            <?php } else { ?>
+                                <p><i class="icon-info-sign" style="margin-top:7px;margin-right:2px;"></i><span>required</span></p>
+                            <?php } ?>
                         </div>
+
 
                     <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text"
                        href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">
-                        <b><?php echo $field_type; ?></b>
-                        <i><?php  if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                                echo $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']; ?></i>
+                        <?php echo $field_type; ?>  <i><?php if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']) && $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'] != $field_type)
+                                echo '<b>: </b>' . $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']; ?></i>
                     </p>
 
                 </div>

@@ -252,7 +252,7 @@ function buddyforms_settings_page(){
                                     <div class="accordion-inner bf-main-settings">'));
             $form->addElement(new Element_Textbox('<b>'.__("Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'],'required' => 1)));
             $form->addElement(new Element_Textbox('<b>'.__("Singular Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'],'required' => 1)));
-            $form->addElement(new Element_Textbox('<b>'.__("Slug", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('value' => $buddyform['slug'], 'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Slug", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('shortDesc' => __('If you change the slug you need to reset the roles and capabilities', 'buddyforms'), 'value' => $buddyform['slug'], 'required' => 1)));
 
             $form->addElement(new Element_HTML('<br><hr /><br />'));
 
