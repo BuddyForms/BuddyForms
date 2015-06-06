@@ -1,7 +1,9 @@
 <?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo();
-
+    ?>
+    <div class="buddyforms_posts_list">
+    <?php
 if ( $the_lp_query->have_posts() ) : ?>
 
 	<ul class="buddyforms-list" role="main">
@@ -57,17 +59,19 @@ if ( $the_lp_query->have_posts() ) : ?>
 						<div class="item-status"><?php echo $post_status_name; ?></div>
                         <?php if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
 
-                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') { ?>
-                                <a title="Edit me" href='<?php echo $permalink.'edit/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Edit', 'buddyforms' ); ?></a>
-                            <?php } else { ?>
+                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') {
+                                echo '<a title="Edit me" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>';
+                             } else { ?>
                                 <? echo bf_edit_post_link('Edit'); ?>
                             <?php } ?>
                         <?php } ?>
                         <?php if( current_user_can('buddyforms_'.$form_slug.'_delete') ) { ?>
 						    - <a title="Delete me" onclick="return confirm(__('Are you sure you want to delete this entry?', 'buddyforms'));" href='<?php echo $permalink.'delete/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
 					    <?php } ?>
+                        <?php do_action('buddyforms_the_loop_actions', get_the_ID()) ?>
                     </div>
 				<?php } ?>
+
 			</div>
 
 			<div class="clear"></div>
@@ -95,3 +99,8 @@ if ( $the_lp_query->have_posts() ) : ?>
 	</div>
 
 <?php endif; ?>
+<div class="bf_modal"></div></div>
+<?php
+
+wp_reset_query();
+$the_lp_query = '';

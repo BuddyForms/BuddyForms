@@ -18,6 +18,7 @@ function buddyforms_process_post( $formdata ) {
         'post_type' 	=> '',
         'the_post'		=> 0,
         'post_id'		=> 0,
+        'post_parent'   => 0,
         'revision_id' 	=> false,
         'form_slug' 	=> 0,
         'redirect_to'   => $_SERVER['REQUEST_URI'],
@@ -95,7 +96,7 @@ function buddyforms_process_post( $formdata ) {
         'post_excerpt'		=> $post_excerpt,
         'post_author' 		=> $current_user->ID,
         'post_status' 		=> $post_status,
-        'post_parent' 		=> 0,
+        'post_parent'       => $post_parent,
         'comment_status'	=> $comment_status,
     );
 
@@ -147,6 +148,7 @@ function buddyforms_process_post( $formdata ) {
         'customfields'  => $customfields,
         'post_id'		=> $post_id,
         'revision_id' 	=> $revision_id,
+        'post_parent'   => $post_parent,
         'redirect_to'   => $redirect_to,
         'form_slug' 	=> $form_slug,
         'form_notice'   => $form_notice,
@@ -182,7 +184,8 @@ function buddyforms_update_post($args){
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
-            'post_excerpt'		=> $post_excerpt
+            'post_excerpt'		=> $post_excerpt,
+            'post_parent'       => $post_parent,
         );
 
         // Update the new post
@@ -194,6 +197,7 @@ function buddyforms_update_post($args){
             $post_date = date('Y-m-d H:i:s',strtotime($formdata['schedule']));
 
         $bf_post = array(
+            'post_parent'       => $post_parent,
             'post_author' 		=> $post_author,
             'post_title' 		=> $formdata['editpost_title'],
             'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',

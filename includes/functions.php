@@ -232,7 +232,7 @@ function buddyforms_attached_page_query_vars($query_vars){
 add_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
 function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
-
+    remove_all_filters( 'the_content' );
 	remove_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
 
 	if(is_admin())

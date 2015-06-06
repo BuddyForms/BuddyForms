@@ -1,27 +1,24 @@
 <?php
 
-function buddyforms_delete_attachment(){
+add_action('wp_ajax_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post');
+add_action('wp_ajax_nopriv_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post');
+function buddyforms_ajax_edit_post(){
+    $post_id = $_POST['post_id'];
+    $form_slug = get_post_meta($post_id, '_bf_form_slug', true);
 
-    $delete_attachment_id = $_POST['delete_attachment_id'];
-    $delete_attachment_href = $_POST['delete_attachment_href'];
-
-    $delete_attachment_attr = explode('/',$delete_attachment_href);
-
-    wp_delete_attachment( $delete_attachment_id );
-
-    delete_post_meta($delete_attachment_attr[0], $delete_attachment_attr[1]);
-
-    echo $_POST['delete_attachment_id'];
-
+    $args = Array(
+        'post_id'   => $post_id,
+        'form_slug' => $form_slug
+    );
+    echo buddyforms_create_edit_form( $args );
     die();
 
 }
-add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
-add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 
-function buddyforms_ajax_edit_post(){
+add_action('wp_ajax_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post');
+add_action('wp_ajax_nopriv_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post');
+function buddyforms_ajax_process_edit_post(){
     global $buddyforms;
-
 
     parse_str($_POST['data'], $formdata);
 
@@ -50,9 +47,25 @@ function buddyforms_ajax_edit_post(){
     die();
 
 }
-add_action('wp_ajax_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post');
-add_action('wp_ajax_nopriv_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post');
 
+add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
+add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
+function buddyforms_delete_attachment(){
+
+    $delete_attachment_id = $_POST['delete_attachment_id'];
+    $delete_attachment_href = $_POST['delete_attachment_href'];
+
+    $delete_attachment_attr = explode('/',$delete_attachment_href);
+
+    wp_delete_attachment( $delete_attachment_id );
+
+    delete_post_meta($delete_attachment_attr[0], $delete_attachment_attr[1]);
+
+    echo $_POST['delete_attachment_id'];
+
+    die();
+
+}
 
 function buddyforms_after_save_post_redirect($url){
     $string = '<script type="text/javascript">';

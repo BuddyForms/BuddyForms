@@ -9,6 +9,7 @@ function buddyforms_form_html( $args ){
         'customfields'  => false,
         'post_id'		=> false,
         'revision_id' 	=> false,
+        'post_parent'   => 0,
         'redirect_to'   => $_SERVER['REQUEST_URI'],
         'form_slug' 	=> '',
         'form_notice'   => ''
@@ -16,7 +17,7 @@ function buddyforms_form_html( $args ){
 
     session_id('buddyforms-create-edit-form');
 
-    $form_html = '<div class="the_buddyforms_form">';
+    $form_html = '<div class="the_buddyforms_form_' . $form_slug. '"">';
 
     if ( !is_user_logged_in() ) :
         $wp_login_form = '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
@@ -39,7 +40,7 @@ function buddyforms_form_html( $args ){
     $form_html .= '<div class="form_wrapper">';
 
     // Create the form object
-    $form = new Form("editpost");
+    $form = new Form("editpost_".$form_slug);
 
     // Set the form attribute
     $form->configure(array(
@@ -56,7 +57,7 @@ function buddyforms_form_html( $args ){
 
     $form->addElement(new Element_Hidden("post_id"      , $post_id));
     $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
-
+    $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
     $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
     $form->addElement(new Element_Hidden("post_type"    , $post_type));
 
@@ -69,7 +70,7 @@ function buddyforms_form_html( $args ){
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
-    $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('class' => 'bf-submit', 'name' => 'submitted')));
+    $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted')));
 
     if($form_button)
         $form->addElement($form_button);

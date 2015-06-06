@@ -53,30 +53,44 @@ jQuery(document).ready(function (){
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
 
-    jQuery(document).on( "submit", '#editpost', function( event ) {
+
+    // wie grenze ich das jetzt noch auf buddyforms forms ein?
+
+    jQuery(document).on( "submit", '.form_wrapper', function( event ) {
+
+        var btn = jQuery(document.activeElement);
+        var form_slug = btn.attr('id');
+        var submit_type = btn.attr('name');
+
+        alert(btn.attr('name'));
+
         event.preventDefault();
 
         if (typeof(tinyMCE) != "undefined") {
             tinyMCE.triggerSave();
         }
 
-        var btn = jQuery('.bf-submit').attr('name');
-        jQuery("#submitted").val(btn);
 
-        var FormData = jQuery('#editpost').serialize();
+        jQuery('#editpost_' + form_slug + ' #submitted').val(submit_type);
 
-        jQuery('.bf_modal').show();
+        var FormData = jQuery('#editpost_'+form_slug).serialize();
+
+        jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').show();
 
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {"action": "buddyforms_ajax_edit_post", "data": FormData},
+            data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
+            timeout:2000,
             beforeSend :function(){
-                jQuery('.bf_modal').show();
+                jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').show();
+            },
+            error: function(){
+                alert('vorbei');
             },
             success: function(data){
-                jQuery('.bf_modal').hide();
-                jQuery('.the_buddyforms_form').replaceWith(data);
+                jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();
+                jQuery('.the_buddyforms_form_'+ form_slug).replaceWith(data);
                 // remove existing editor instance
                 tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
 
@@ -104,5 +118,39 @@ jQuery(document).ready(function (){
 
         return false;
     });
+
+    jQuery('.bf_edit_post').on('click', function(event){
+        var post_id = jQuery(this).attr('id');
+        alert(post_id);
+
+        event.preventDefault();
+
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_ajax_edit_post", "post_id": post_id},
+            beforeSend :function(){
+                jQuery('.buddyforms_posts_list .bf_modal').show();
+            },
+            error: function(data){
+                alert('Fehler');
+            },
+            success: function(data){
+                jQuery('.buddyforms_posts_list .bf_modal').hide();
+                jQuery('.buddyforms_posts_list').replaceWith(data);
+                // remove existing editor instance
+
+                //tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
+                //tinymce.init(tinyMCEPreInit.mceInit['editpost_content']);
+                //tinymce.init( ajax_tinymce_init.mceInit['editpost_content'] );
+                // init editor for newly appended div
+                //var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                //try { tinymce.init( init ); } catch(event){}
+            }
+        });
+
+        return false;
+    });
+
 
 });

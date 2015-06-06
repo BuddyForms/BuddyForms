@@ -20,6 +20,7 @@ function buddyforms_create_edit_form( $args = array() ) {
         'post_type' 	=> '',
         'the_post'		=> 0,
         'post_id'		=> 0,
+        'post_parent'   => 0,
         'form_slug' 	=> false,
         'form_notice'   => '',
     ), $args));
@@ -113,6 +114,7 @@ function buddyforms_create_edit_form( $args = array() ) {
     $args = array(
         'post_type' 	=> $post_type,
         'the_post'		=> $the_post,
+        'post_parent'   => $post_parent,
         'customfields'  => $customfields,
         'post_id'		=> $post_id,
         'form_slug' 	=> $form_slug,

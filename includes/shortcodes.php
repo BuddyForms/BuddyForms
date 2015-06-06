@@ -44,7 +44,8 @@ function buddyforms_the_loop($args){
 
     extract(shortcode_atts(array(
         'post_type' => '',
-        'form_slug' => ''
+        'form_slug' => '',
+        'post_parent' => 0
     ), $args));
 
 	if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
@@ -63,6 +64,7 @@ function buddyforms_the_loop($args){
 
 	$query_args = array(
 		'post_type'         => $post_type,
+        'post_parent'       => $post_parent,
 		'form_slug'         => $form_slug,
 		'post_status'       => $post_status,
 		'posts_per_page'    => 10,
