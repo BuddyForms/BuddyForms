@@ -69,7 +69,9 @@ function buddyforms_the_loop($args){
 		'post_status'       => $post_status,
 		'posts_per_page'    => 10,
 		'author'            => $user_id,
-        'paged'             => $paged
+        'paged'             => $paged,
+        'meta_key'          => '_bf_form_slug',
+	    'meta_value'        => $form_slug
 	);
 
     $query_args =  apply_filters('bf_post_to_display_args',$query_args);

@@ -48,6 +48,52 @@ function buddyforms_ajax_process_edit_post(){
 
 }
 
+add_action('wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+function buddyforms_ajax_delete_post(){
+    global $current_user;
+    get_currentuserinfo();
+
+    $post_id    = $_POST['post_id'];
+    $the_post	= get_post( $post_id );
+
+    $form_slug = get_post_meta($post_id, '_bf_form_slug', true);
+    if(!$form_slug){
+        _e('You are not allowed to delete this entry! What are you doing here?', 'buddyforms');
+        return;
+    }
+
+    // Check if the user is author of the post
+    $user_can_delete = false;
+    if ($the_post->post_author == $current_user->ID){
+        $user_can_delete = true;
+    }
+    $user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete );
+    if ( $user_can_delete == false ){
+        _e('You are not allowed to delete this entry! What are you doing here?', 'buddyforms');
+        return;
+    }
+
+    // check if the user has the roles roles and capabilities
+    $user_can_delete = false;
+
+    if( current_user_can('buddyforms_' . $form_slug . '_delete')){
+        $user_can_delete = true;
+    }
+    $user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete );
+    if ( $user_can_delete == false ){
+        _e('You do not have the required user role to use this form', 'buddyforms');
+        return;
+    }
+
+    do_action('buddyforms_delete_post',$post_id);
+
+    wp_delete_post( $post_id );
+
+    echo $post_id;
+    die();
+}
+
 add_action('wp_ajax_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 add_action('wp_ajax_nopriv_buddyforms_delete_attachment', 'buddyforms_delete_attachment');
 function buddyforms_delete_attachment(){

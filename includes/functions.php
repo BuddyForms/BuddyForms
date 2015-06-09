@@ -78,7 +78,7 @@ function bf_my_edit_post_link( $url, $post_ID) {
 
 	$the_post	= get_post( $post_ID );
 	$post_type	= get_post_type( $the_post );
-	$form_slug = get_post_meta( $post_ID, '_bf_form_slug', true );
+	$form_slug  = get_post_meta( $post_ID, '_bf_form_slug', true );
 
 	if ($the_post->post_author != $current_user->ID) // @todo this needs to be modified for admins and collaborative content creation
 		return $url;
@@ -195,7 +195,6 @@ function buddyforms_attached_page_rewrite_rules(){
 			add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/view/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=view&bf_form_slug=$matches[1]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/edit/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
-			add_rewrite_rule($post_data['post_name'].'/delete/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=delete&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
 		}
 
@@ -275,13 +274,6 @@ function buddyforms_attached_page_content($content){
 				$bf_form = ob_get_contents();
 			ob_clean();
 			$new_content .= $bf_form;				
-		}
-		if($wp_query->query_vars['bf_action'] == 'delete'){
-			ob_start();
-				buddyforms_delete_post($args);
-				$bf_form = ob_get_contents();
-			ob_clean();
-			$new_content .= $bf_form;		
 		}
 		
 	} elseif(isset($wp_query->query_vars['pagename'])){

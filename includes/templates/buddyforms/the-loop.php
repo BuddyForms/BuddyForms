@@ -29,7 +29,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 
 		do_action( 'bp_before_blog_post' ) ?>
 
-		<li class="<?php echo $post_status_css; ?>">
+		<li id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
 			<div class="item-avatar">
 				
 				<?php 
@@ -57,18 +57,21 @@ if ( $the_lp_query->have_posts() ) : ?>
 
 					<div class="meta">
 						<div class="item-status"><?php echo $post_status_name; ?></div>
-                        <?php if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
+                        <?php
+                        if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
 
-                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list') {
-                                echo '<a title="Edit me" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>';
-                             } else { ?>
-                                <? echo bf_edit_post_link('Edit'); ?>
-                            <?php } ?>
-                        <?php } ?>
-                        <?php if( current_user_can('buddyforms_'.$form_slug.'_delete') ) { ?>
-						    - <a title="Delete me" onclick="return confirm(__('Are you sure you want to delete this entry?', 'buddyforms'));" href='<?php echo $permalink.'delete/'.$form_slug.'/'.get_the_ID() ?>'><?php _e( 'Delete', 'buddyforms' ); ?></a>
-					    <?php } ?>
-                        <?php do_action('buddyforms_the_loop_actions', get_the_ID()) ?>
+                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] != 'none') {
+                                echo '<a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>';
+                             } else {
+                                echo bf_edit_post_link('Edit');
+                             }
+
+                        }
+                        if( current_user_can('buddyforms_'.$form_slug.'_delete') ) {
+						    echo ' - <a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="' . $permalink.'delete/'.$form_slug.'/'.get_the_ID() . '"">' . __( 'Delete', 'buddyforms' ) . '</a>';
+					     }
+                        do_action('buddyforms_the_loop_actions', get_the_ID())
+                        ?>
                     </div>
 				<?php } ?>
 
@@ -99,8 +102,9 @@ if ( $the_lp_query->have_posts() ) : ?>
 	</div>
 
 <?php endif; ?>
-<div class="bf_modal"></div></div>
+<div class="bf_modal_content"><?php wp_editor('','editpost_content'); ?></div>
+</div>
+
 <?php
 
 wp_reset_query();
-$the_lp_query = '';

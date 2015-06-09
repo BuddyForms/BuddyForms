@@ -54,15 +54,11 @@ jQuery(document).ready(function (){
     jQuery('#editpost_content').html(editpost_content_val);
 
 
-    // wie grenze ich das jetzt noch auf buddyforms forms ein?
-
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
 
         var btn = jQuery(document.activeElement);
         var form_slug = btn.attr('id');
         var submit_type = btn.attr('name');
-
-        alert(btn.attr('name'));
 
         event.preventDefault();
 
@@ -103,27 +99,30 @@ jQuery(document).ready(function (){
         return false;
     });
 
-    jQuery('.bf_view_form').click(function(){
-
-        var form_slug = jQuery(this).attr('href');
-
-        jQuery.ajax({
-            type: 'POST',
-            url: ajaxurl,
-            data: {"action": "buddyforms_list_all_ajax", "form_slug": form_slug },
-            success: function(data){
-                jQuery('.bf_blub').append(data);
-            }
-        });
-
-        return false;
-    });
+    //jQuery('.bf_view_form').click(function(){
+    //
+    //    var form_slug = jQuery(this).attr('href');
+    //
+    //    jQuery.ajax({
+    //        type: 'POST',
+    //        url: ajaxurl,
+    //        data: {"action": "buddyforms_list_all_ajax", "form_slug": form_slug },
+    //        success: function(data){
+    //            jQuery('.bf_blub').append(data);
+    //        }
+    //    });
+    //
+    //    return false;
+    //});
 
     jQuery('.bf_edit_post').on('click', function(event){
         var post_id = jQuery(this).attr('id');
-        alert(post_id);
 
         event.preventDefault();
+
+        if (typeof(tinyMCE) != "undefined") {
+            tinyMCE.triggerSave();
+        }
 
         jQuery.ajax({
             type: 'POST',
@@ -133,24 +132,46 @@ jQuery(document).ready(function (){
                 jQuery('.buddyforms_posts_list .bf_modal').show();
             },
             error: function(data){
-                alert('Fehler');
+                alert(data);
             },
             success: function(data){
                 jQuery('.buddyforms_posts_list .bf_modal').hide();
                 jQuery('.buddyforms_posts_list').replaceWith(data);
                 // remove existing editor instance
+                tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
 
-                //tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
-                //tinymce.init(tinyMCEPreInit.mceInit['editpost_content']);
-                //tinymce.init( ajax_tinymce_init.mceInit['editpost_content'] );
                 // init editor for newly appended div
-                //var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
-                //try { tinymce.init( init ); } catch(event){}
+                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                try { tinymce.init( init ); } catch(e){}
             }
         });
 
         return false;
     });
 
+    jQuery('.bf_delete_post').on('click', function(event) {
+        var post_id = jQuery(this).attr('id');
+
+        if (confirm('Delete Permanently')){
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {"action": "buddyforms_ajax_delete_post", "post_id": post_id },
+                error: function(data){
+                    alert(data);
+                },
+                success: function(data){
+                    if(isNaN(data)){
+                        alert(data);
+                    } else {
+                        jQuery( "#bf_post_li_"+data ).remove();
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+        return false;
+    });
 
 });
