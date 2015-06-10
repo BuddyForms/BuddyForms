@@ -64,7 +64,7 @@ function bf_form_elements($form, $args){
                             $post_title = $the_post->post_title;
                         }
 
-                        $form->addElement(new Element_Textbox(__('Title:', 'buddyforms'), "editpost_title", array("required" => 1, 'value' => $post_title)));
+                        $form->addElement(new Element_Textbox($customfield['name'], "editpost_title", array("required" => 1, 'value' => $post_title)));
 
                         break;
                     case 'Content':
@@ -101,7 +101,7 @@ function bf_form_elements($form, $args){
                         echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
 
 
-                        $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . __('Content', 'buddyforms') . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
+                        $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
                         $form->addElement(new Element_HTML($wp_editor));
                         break;
                     case 'Mail' :
@@ -214,9 +214,7 @@ function bf_form_elements($form, $args){
 
                         $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
 
-                        $form->addElement(new Element_File(__('Featured Image:', 'buddyforms'), 'file', $file_attr));
-
-
+                        $form->addElement(new Element_File($customfield['name'], 'file', $file_attr));
 
                         break;
                     case 'File':

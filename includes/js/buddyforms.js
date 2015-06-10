@@ -77,12 +77,8 @@ jQuery(document).ready(function (){
             type: 'POST',
             url: ajaxurl,
             data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
-            timeout:2000,
             beforeSend :function(){
                 jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').show();
-            },
-            error: function(){
-                alert('vorbei');
             },
             success: function(data){
                 jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();

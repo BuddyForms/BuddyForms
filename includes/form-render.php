@@ -65,6 +65,10 @@ function buddyforms_form_html( $args ){
     if (isset($form_notice))
         $form->addElement(new Element_HTML($form_notice));
 
+//    echo '<pre>';
+//    print_r($args);
+//    echo '</pre>';
+
     // if the form have custom field to save as post meta data they get displayed here
     bf_form_elements($form, $args);
 

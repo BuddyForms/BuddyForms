@@ -279,7 +279,7 @@ class BuddyForms {
 		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
 		wp_enqueue_script( 'buddyforms-js', plugins_url('includes/js/buddyforms.js', __FILE__),	array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
-        
+
 		wp_enqueue_media();
 		wp_enqueue_script( 'media-uploader-js', plugins_url('includes/js/media-uploader.js', __FILE__),	array('jquery') );
 

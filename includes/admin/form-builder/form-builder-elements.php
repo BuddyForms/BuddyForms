@@ -206,14 +206,21 @@ function buddyforms_view_form_fields($args){
             break;
         case 'Comments':
             unset($form_fields);
-            $form_fields['left']['name']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Comments');
+            $name = 'Comments';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
+                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+            $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
+            $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'comments');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             $form_fields['left']['html']    = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
-
+            break;
         case 'Title':
             unset($form_fields);
-            $form_fields['left']['name']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Title');
+            $name = 'Title';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
+                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+            $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_title');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
@@ -223,21 +230,30 @@ function buddyforms_view_form_fields($args){
         case 'Content':
             unset($form_fields);
 
+            $name = 'Content';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
+                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+            $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
+
             $post_content_options = 'false';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_content_options']))
                 $post_content_options = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_content_options'];
-
             $post_content_options_array = array( 'media_buttons' => 'media_buttons', 'tinymce' => 'tinymce', 'quicktags' => 'quicktags');
-
             $form_fields['left']['content_opt_a']   = new Element_Checkbox('<br><b>' . __('Turn off wp editor features', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array('value' => $post_content_options, 'required' => true));
-            $form_fields['left']['name']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Content');
-            $form_fields['left']['slug']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_content');
-            $form_fields['left']['type']            = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']           = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+
+            $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_content');
+            $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
+            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             break;
         case 'Status':
             unset($form_fields);
+
+            $name = 'Status';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
+                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+            $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
+            $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'post_status');
 
             $form_fields['left']['html']        = new Element_HTML(__("You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms'));
 
@@ -247,14 +263,21 @@ function buddyforms_view_form_fields($args){
 
             $form_fields['left']['post_status'] = new Element_Checkbox('<br><b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'required' => true));
 
-            $form_fields['left']['name']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'Status');
+
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             break;
-        case 'Featured Image':
+        case 'Featured-Image':
 
             unset($form_fields);
+
+            $name = 'FeaturedImage';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
+                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+            $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
+
+
             $required = 'false';
 
             $form_fields['left']['html']        = new Element_HTML(__('With the Featured Image Form Element you can add a featured image upload to your form', 'buddyforms') . '<br><br>');
@@ -262,14 +285,12 @@ function buddyforms_view_form_fields($args){
             $description = '';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
                 $description = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description'];
-
             $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description:', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][description]", array('value' => $description));
 
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
                 $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
             $form_fields['left']['required']    = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required));
 
-            $form_fields['left']['name']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", 'FeaturedImage');
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
