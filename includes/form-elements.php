@@ -316,6 +316,7 @@ function bf_form_elements($form, $args){
                         $form_args = Array(
                             'field_id'          => $field_id,
                             'post_id'           => $post_id,
+                            'post_parent'       => $post_parent,
                             'form_slug'         => $form_slug,
                             'customfield'       => $customfield,
                             'customfield_val'   => $customfield_val

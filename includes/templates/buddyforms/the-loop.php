@@ -102,7 +102,7 @@ if ( $the_lp_query->have_posts() ) : ?>
 	</div>
 
 <?php endif; ?>
-<div class="bf_modal_content"><?php wp_editor('','editpost_content'); ?></div>
+<div class="bf_modal"><div style="display: none;"><?php wp_editor('','editpost_content'); ?></div></div>
 </div>
 
 <?php
