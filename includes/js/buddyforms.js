@@ -109,8 +109,7 @@ jQuery(document).ready(function (){
     //
     //    return false;
     //});
-
-    jQuery('.bf_edit_post').on('click', function(event){
+    jQuery(document).on( "click", '.bf_edit_post', function( event ) {
         var post_id = jQuery(this).attr('id');
 
         event.preventDefault();
@@ -143,8 +142,7 @@ jQuery(document).ready(function (){
 
         return false;
     });
-
-    jQuery('.bf_delete_post').on('click', function(event) {
+    jQuery(document).on( "click", '.bf_delete_post', function( event ) {
         var post_id = jQuery(this).attr('id');
 
         if (confirm('Delete Permanently')){
