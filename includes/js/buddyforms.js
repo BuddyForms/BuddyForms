@@ -66,7 +66,6 @@ jQuery(document).ready(function (){
             tinyMCE.triggerSave();
         }
 
-
         jQuery('#editpost_' + form_slug + ' #submitted').val(submit_type);
 
         var FormData = jQuery('#editpost_'+form_slug).serialize();

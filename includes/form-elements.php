@@ -136,6 +136,10 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'Comments' :
+
+                        if(isset($the_post))
+                            $customfield_val = $the_post->comment_status;
+
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input');
                         $form->addElement(new Element_Select($customfield['name'], 'comment_status', array('open', 'closed'), $element_attr));
                         break;
