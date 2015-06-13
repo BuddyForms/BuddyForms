@@ -304,7 +304,7 @@ class BuddyForms {
 
 				foreach($buddyform['form_fields'] as $field_key => $form_field){
 
-					if($form_field['slug'] == 'editpost_title')
+					if(isset($form_field['slug']) && $form_field['slug'] == 'editpost_title')
 						$needs_title = false;
 
 				}

@@ -15,37 +15,40 @@ function bf_add_ons_screen(){
 
     <div id="bf_admin_wrap" class="wrap">
 
-    <?php include('admin-credits.php');
+    <?php
 
-        $addon_args = array();
+    include('admin-credits.php');
 
-        $addon_args['buddyforms-members'] = array(
-            'plugin_name'   => 'BuddyForms Members',
-            'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => plugins_url('img/buddyforms-members-thumb.png' , __FILE__ ),
-            'plugin_desc'   => __('This is the BuddyForms Members Extension. Integrate your BuddyForms Forms into your BuddyPress Members Profile.', 'buddyforms')
-        );
+    include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
-        $addon_args['buddyforms-attach-posts-to-groups-extension'] = array(
-            'plugin_name'   => 'BuddyForms Attach Posts to Groups Extension',
-            'plugin_url'    => 'http://buddyforms.com',
-            'plugin_image'  => plugins_url( 'img/buddyforms-groups-thumb.png' , __FILE__ ),
-            'plugin_desc'   => __('With this plugin, you’ll be able to automatically create a new BuddyPress group for pre-assigned BuddyForms post submissions and attach that group to the post. User-submitted posts with BuddyForms then become a BuddyPress group with all the included functionality and endless possibilities.', 'buddyforms')
-        );
-        $addon_args['buddyforms-posts-to-posts-integration'] = array(
-            'plugin_name'   => 'BuddyForms Posts 2 Posts',
-            'plugin_url'    => 'http://themekraft.com/',
-            'plugin_image'  => plugins_url('img/buddyforms-posts2posts-thumb.png' , __FILE__ ),
-            'plugin_desc'   => __('With BuddyForms Posts 2 Posts Integration you can create complex connections and post relationships across your site. From posts to pages or to users all the Posts 2 Posts Plugin functionality is in your BuddyForms Form Builder available.', 'buddyforms')
-        );
-        $addon_args['buddyforms-hook-fields'] = array(
-            'plugin_name'   => 'BuddyForms Hook Fields',
-            'plugin_url'    => 'http://themekraft.com/',
-            'plugin_image'  => plugins_url('img/buddyforms-hookfields-thumb.png' , __FILE__ ),
-            'plugin_desc'   => __('With this plugin you will get new options added to your Form Builder "Fields" to select where you want to display the field. This makes it very easy to manage the output and can save you a lot of time modifying your templates, by just adding a hook.', 'buddyforms')
-        );
-
-        buddyforms_get_addons($addon_args); ?>
+    $call_api = plugins_api( 'query_plugins',
+        array(
+            'search' => 'buddyforms',
+            'page' => '1',
+            'per_page' => '-1',
+            'fields' => array(
+                'downloaded' => true,
+                'active_installs' => true,
+                'icons' => true,
+                'rating' => true,
+                'num_ratings' => true,
+                'description' => false,
+                'short_description' => true,
+                'donate_link' => false,
+                'tags' => false,
+                'sections' => false,
+                'homepage' => false,
+                'added' => false,
+                'last_updated' => true,
+                'compatibility' => true,
+                'tested' => true,
+                'requires' => true,
+                'downloadlink' => true,
+            )
+        )
+    );
+    add_thickbox();
+    buddyforms_get_addons($call_api); ?>
 
 
     </div>
@@ -53,95 +56,131 @@ function bf_add_ons_screen(){
 <?php
 }
 
-function buddyforms_get_addons($addon_args){
+function buddyforms_get_addons($call_api){ ?>
 
-    foreach($addon_args as $key => $addon){ ?>
+    <div class="col-12" itemscope="" itemtype="http://schema.org/SoftwareApplication">
 
-        <div class="bf-addon-half-col bf-left">
-            <div class="bf-addon-col-content">
-                <div class="addon-image">
-                    <?php if($addon['plugin_image']){ ?>
-                        <img width="250px" height="170px" height="170px" src="<?php echo $addon['plugin_image'] ?>">
-                    <?php } ?>
-                </div>
-                <div class="addon-content">
-                    <h4><?php echo $addon['plugin_name']; ?></h4>
-                    <p><?php echo $addon['plugin_desc']; ?></p>
-                </div>
-                <div style="clear: left"></div>
-                <?php
-                $buddyforms_addons = new BuddyForms_Dependency( $key, $addon['plugin_url'] );
 
-                if ( $buddyforms_addons->check_active() )
-                    echo '<br><b><p style="color: #7AD03A">' . __('Installed and activated!', 'buddyforms') . '</p></b>';
-                else if ( $buddyforms_addons->check() )
-                    echo '<br><b><p>' . __('Installed, but not activated.', 'buddyforms') . ' <a href="'.$buddyforms_addons->activate_link().'">' . __('Click here to activate the plugin.', 'buddyforms') . '</a></p></b>';
-                else if ( $install_link = $buddyforms_addons->install_link() )
-                    echo '<br><b><p>' . __('Not installed.', 'buddyforms'), ' <a href="'.$install_link.'">' . __('Click here to install the plugin.', 'buddyforms') . '</a></p></b>';
-                else
-                    echo '<br><b><p>' . __('Not installed and could not be found in the Plugin Directory. Please install this plugin manually.', 'buddyforms') . '</p></b>';
+        <p style="text-align: right"><strong style="float: left"> Showing <?php echo count($call_api->plugins)+1 ?> Extensions </strong>
+        <br class="clear"></p>
+
+        <div class="plugin-group">
+            <?php foreach($call_api->plugins as $plugin) :
+
+                $plugin = (array) $plugin;
+
+                $date_format = __( 'M j, Y @ H:i' );
+                $last_updated_timestamp = strtotime( $plugin['last_updated'] );
+
+                $details_link   = self_admin_url('plugin-install.php?tab=plugin-information&plugin=' . $plugin['slug'] . '&TB_iframe=true&width=772&height=600');
+
+                if ( !empty( $plugin['icons']['svg'] ) ) {
+                    $plugin_icon_url = $plugin['icons']['svg'];
+                } elseif ( !empty( $plugin['icons']['2x'] ) ) {
+                    $plugin_icon_url = $plugin['icons']['2x'];
+                } elseif ( !empty( $plugin['icons']['1x'] ) ) {
+                    $plugin_icon_url = $plugin['icons']['1x'];
+                } else {
+                    $plugin_icon_url = $plugin['icons']['default'];
+                }
+                $action_links = array();
+
+                // Remove any HTML from the description.
+                $description = strip_tags( $plugin['short_description'] );
+                $version = wp_kses( $plugin['version'], $plugins_allowedtags );
+                $title = wp_kses( $plugin['name'], $plugins_allowedtags );
+                $name = strip_tags( $title . ' ' . $version );
+
+                $author = wp_kses( $plugin['author'], $plugins_allowedtags );
+                if ( ! empty( $author ) ) {
+                    $author = ' <cite>' . sprintf( __( 'By %s' ), $author ) . '</cite>';
+                }
+
+                if ( current_user_can( 'install_plugins' ) || current_user_can( 'update_plugins' ) ) {
+                    $status = install_plugin_install_status( $plugin );
+
+
+                   //echo $status['status'];
+                    //echo wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . sanitize_html_class( $plugin['slug'] )), 'install-plugin_' . sanitize_html_class( $plugin['slug'] ));
+
+                    switch ( $status['status'] ) {
+                        case 'install':
+                            if ( $status['url'] ) {
+                                /* translators: 1: Plugin name and version. */
+                                $action_links[] = '<a class="install-now button" data-slug="' . esc_attr( $plugin['slug'] ) . '" href="' . esc_url( $status['url'] ) . '" aria-label="' . esc_attr( sprintf( __( 'Install %s now' ), $name ) ) . '" data-name="' . esc_attr( $name ) . '">' . __( 'Install Now' ) . '</a>';
+                            }
+
+                            break;
+                        case 'update_available':
+                            if ( $status['url'] ) {
+                                /* translators: 1: Plugin name and version */
+                                $action_links[] = '<a class="update-now button" data-plugin="' . esc_attr( $status['file'] ) . '" data-slug="' . esc_attr( $plugin['slug'] ) . '" href="' . esc_url( $status['url'] ) . '" aria-label="' . esc_attr( sprintf( __( 'Update %s now' ), $name ) ) . '" data-name="' . esc_attr( $name ) . '">' . __( 'Update Now' ) . '</a>';
+                            }
+
+                            break;
+                        case 'latest_installed':
+                        case 'newer_installed':
+                        //$action_links[] = '<a class="activate-now button" data-plugin="' . esc_attr( $status['file'] ) . '" data-slug="' . esc_attr( $plugin['slug'] ) . '" href="' . wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . sanitize_html_class( $plugin['slug'] )), 'install-plugin_' . sanitize_html_class( $plugin['slug'] )) . '" aria-label="' . esc_attr( sprintf( __( 'Update %s now' ), $name ) ) . '" data-name="' . esc_attr( $name ) . '">' . __( 'Update Now' ) . '</a>';
+
+                        $action_links[] = '<span class="button button-disabled" title="' . esc_attr__( 'This plugin is already installed and is up to date' ) . ' ">' . _x( 'Installed', 'plugin' ) . '</span>';
+                            break;
+                    }
+                }
+
                 ?>
-            </div>
+                <div class="plugin-card plugin-card-<?php echo sanitize_html_class( $plugin['slug'] ); ?>">
+                    <div class="plugin-card-top">
+                        <a href="<?php echo esc_url( $details_link ); ?>" class="thickbox plugin-icon"><img src="<?php echo esc_attr( $plugin_icon_url ) ?>" /></a>
+                        <div class="name column-name">
+                            <h4><a href="<?php echo esc_url( $details_link ); ?>" class="thickbox"><?php echo $plugin['name']; ?></a></h4>
+                        </div>
+                        <div class="action-links">
+                            <?php
+                            if ( $action_links ) {
+                                echo '<ul class="plugin-action-buttons"><li>' . implode( '</li><li>', $action_links ) . '</li></ul>';
+                            }
+                            ?>
+                        </div>
+                        <div class="desc column-description">
+                            <p><?php echo $description; ?></p>
+                            <p class="authors"><?php echo $author; ?></p>
+                        </div>
+                    </div>
+                    <div class="plugin-card-bottom">
+                        <div class="vers column-rating">
+                            <?php wp_star_rating( array( 'rating' => $plugin['rating'], 'type' => 'percent', 'number' => $plugin['num_ratings'] ) ); ?>
+                            <span class="num-ratings">(<?php echo number_format_i18n( $plugin['num_ratings'] ); ?>)</span>
+                        </div>
+                        <div class="column-updated">
+                            <strong><?php _e( 'Last Updated:' ); ?></strong> <span title="<?php echo esc_attr( date_i18n( $date_format, $last_updated_timestamp ) ); ?>">
+						<?php printf( __( '%s ago' ), human_time_diff( $last_updated_timestamp ) ); ?>
+					</span>
+                        </div>
+                        <div class="column-downloaded">
+                            <?php
+                            if ( $plugin['active_installs'] >= 1000000 ) {
+                                $active_installs_text = _x( '1+ Million', 'Active plugin installs' );
+                            } else {
+                                $active_installs_text = number_format_i18n( $plugin['active_installs'] ) . '+';
+                            }
+                            printf( __( '%s Active Installs' ), $active_installs_text );
+                            ?>
+                        </div>
+                        <div class="column-compatibility">
+                            <?php
+                            if ( ! empty( $plugin['tested'] ) && version_compare( substr( $GLOBALS['wp_version'], 0, strlen( $plugin['tested'] ) ), $plugin['tested'], '>' ) ) {
+                                echo '<span class="compatibility-untested">' . __( 'Untested with your version of WordPress' ) . '</span>';
+                            } elseif ( ! empty( $plugin['requires'] ) && version_compare( substr( $GLOBALS['wp_version'], 0, strlen( $plugin['requires'] ) ), $plugin['requires'], '<' ) ) {
+                                echo '<span class="compatibility-incompatible">' . __( '<strong>Incompatible</strong> with your version of WordPress' ) . '</span>';
+                            } else {
+                                echo '<span class="compatibility-compatible">' . __( '<strong>Compatible</strong> with your version of WordPress' ) . '</span>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    <?php
-    }
-
-}
-
-if (!class_exists('BuddyForms_Dependency')) {
-    class BuddyForms_Dependency {
-        // input information from the theme
-        var $slug;
-        var $uri;
-
-        // installed plugins and uris of them
-        private $plugins; // holds the list of plugins and their info
-        private $uris; // holds just the URIs for quick and easy searching
-
-        // both slug and PluginURI are required for checking things
-        function __construct( $slug, $uri ) {
-            $this->slug = $slug;
-            $this->uri = $uri;
-            if ( empty( $this->plugins ) )
-                $this->plugins = get_plugins();
-            if ( empty( $this->uris ) )
-                $this->uris = wp_list_pluck($this->plugins, 'PluginURI');
-        }
-
-        // return true if installed, false if not
-        function check() {
-            return in_array($this->uri, $this->uris);
-        }
-
-        // return true if installed and activated, false if not
-        function check_active() {
-            $plugin_file = $this->get_plugin_file();
-            if ($plugin_file) return is_plugin_active($plugin_file);
-            return false;
-        }
-
-        // gives a link to activate the plugin
-        function activate_link() {
-            $plugin_file = $this->get_plugin_file();
-            if ($plugin_file) return wp_nonce_url(self_admin_url('plugins.php?action=activate&plugin='.$plugin_file), 'activate-plugin_'.$plugin_file);
-            return false;
-        }
-
-        // return a nonced installation link for the plugin. checks wordpress.org to make sure it's there first.
-        function install_link() {
-            include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
-
-            $info = plugins_api('plugin_information', array('slug' => $this->slug ));
-
-            if ( is_wp_error( $info ) )
-                return false; // plugin not available from wordpress.org
-
-            return wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $this->slug), 'install-plugin_' . $this->slug);
-        }
-
-        // return array key of plugin if installed, false if not, private because this isn't needed for themes, generally
-        private function get_plugin_file() {
-            return array_search($this->uri, $this->uris);
-        }
-    }
+    </div>
+<?php
 }

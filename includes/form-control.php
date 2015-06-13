@@ -11,6 +11,7 @@ function buddyforms_process_post( $formdata ) {
     global $current_user, $buddyforms;
 
     $hasError = false;
+    $info_message = '';
 
     get_currentuserinfo();
 
@@ -108,9 +109,13 @@ function buddyforms_process_post( $formdata ) {
         if(isset($customfields))
             bf_update_post_meta($post_id, $customfields);
 
-        $hasError = bf_set_post_thumbnail($post_id);
+        if(isset($formdata['featured-image']))
+        $set_post_thumbnail =  set_post_thumbnail($post_id, $formdata['featured-image']);
 
-        bf_media_handle_upload($post_id);
+        if( $set_post_thumbnail == false){
+            $info_message .='There was an error uploading post thumbnail';
+            $hasError = true;
+        }
 
         // Save the Form slug as post meta
         update_post_meta($post_id, "_bf_form_slug", $form_slug);
@@ -123,10 +128,10 @@ function buddyforms_process_post( $formdata ) {
     if( empty( $hasError ) ) :
 
         if(isset( $formdata['post_id'] ) && ! empty( $formdata['post_id'] )){
-            $info_message = __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
-            $info_message = __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         }
 
@@ -291,52 +296,4 @@ function bf_update_post_meta($post_id, $customfields){
 			 		                   
     endforeach;
 
-}
-
-function bf_set_post_thumbnail($post_id){
-
-    $hasError = false;
-    // Featured image? If yes, save via media_handle_upload and set the post thumbnail
-    if( isset( $_FILES['file']['size'] ) && $_FILES['file']['size'] > 0 ) {
-
-        require_once(ABSPATH . 'wp-admin/includes/admin.php');
-        $id = media_handle_upload('file', $post_id ); //post id of Client Files page
-        //unset( $_FILES );
-
-        if( is_wp_error( $id ) ) {
-            $errors['upload_error'] = $id;  
-            $id = false;  
-        } 
-		
-        $set_post_thumbnail =  set_post_thumbnail($post_id, $id);
-      
-       	if( $set_post_thumbnail == false){
-           	if( $errors ) {
-	            $fileError 	= '<p>'.__( 'There has been an error uploading the image.', 'buddyforms' ).'</p>';
-	        }  
-			$hasError = true;
-       	}
-        return $hasError;
-	}
-
-}
-
-function bf_media_handle_upload($post_id){
-
-    foreach($_FILES as $key => $file){
-        if( $key != 'file') {
-            if( isset( $_FILES[$key]['size'] ) && $_FILES[$key]['size'] > 0 ) {
-
-                require_once(ABSPATH . 'wp-admin/includes/admin.php');
-                $attachment_id = media_handle_upload($key, $post_id ); //post id of Client Files page
-
-                if ( is_wp_error( $attachment_id ) ) {
-                    echo 'There was an error uploading the file.';
-                } else {
-                    update_post_meta( $post_id, 'file_'.$key, $attachment_id);
-                }
-
-            }
-        }
-    }
 }

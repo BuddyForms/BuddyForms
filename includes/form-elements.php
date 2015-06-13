@@ -216,9 +216,15 @@ function bf_form_elements($form, $args){
                             $file_attr = array('id' => "file", 'shortDesc' => $customfield['description'] );
                         }
 
+                            $str = __( 'Select File', 'frontend-media' );
+                            $str = '<img style="width:80px;" id="frontend-image" /><br><input id="frontend-button" type="button" value="' . $str . '" class="button" style="position: relative; z-index: 1;">';
+
+                        $form->addElement(new Element_HTML( $str ));
+
+
                         $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
 
-                        $form->addElement(new Element_File($customfield['name'], 'file', $file_attr));
+                        $form->addElement(new Element_Hidden('featured-image', get_post_thumbnail_id($post_id), array('id' => 'featured-image')));
 
                         break;
                     case 'File':

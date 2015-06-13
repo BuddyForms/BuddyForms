@@ -13,7 +13,7 @@ function buddyforms_settings_page(){
 
     // Get all post types
     $args = array(
-        'public' => true,
+        //'public' => true,
         'show_ui' => true
     );
     $output = 'names'; // names or objects, note: names is the default
