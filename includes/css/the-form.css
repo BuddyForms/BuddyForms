@@ -707,3 +707,21 @@ form.bf_loading {
 form.bf_loading .bf_modal {
     display: block;
 }
+
+div#bf_files_container ul {
+    list-style: none outside none !important;
+}
+div#bf_files_container ul li {
+    line-height: 14px !important;
+}
+.bf_attachment_li {
+    padding-top: 10px;
+    height: 64px;
+}
+
+.bf_attachment_li img {
+    float: left;
+    padding-right: 10px;
+    width:64px;
+    height:64px;
+}

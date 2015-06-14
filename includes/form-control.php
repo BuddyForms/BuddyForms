@@ -110,12 +110,7 @@ function buddyforms_process_post( $formdata ) {
             bf_update_post_meta($post_id, $customfields);
 
         if(isset($formdata['featured-image']))
-        $set_post_thumbnail =  set_post_thumbnail($post_id, $formdata['featured-image']);
-
-        if( $set_post_thumbnail == false){
-            $info_message .='There was an error uploading post thumbnail';
-            $hasError = true;
-        }
+            set_post_thumbnail($post_id, $formdata['featured-image']);
 
         // Save the Form slug as post meta
         update_post_meta($post_id, "_bf_form_slug", $form_slug);

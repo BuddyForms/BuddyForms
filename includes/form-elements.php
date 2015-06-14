@@ -229,26 +229,50 @@ function bf_form_elements($form, $args){
                         break;
                     case 'File':
 
-                        $attachment_id  = get_post_meta($post_id, 'file_'.$slug, true);
-                        $attachment_url = wp_get_attachment_url($attachment_id);
-                        $attachment_desc_view = $customfield['description'];
-                        $attachment_desc_view_delete = $customfield['description'];
+                        $attachment_ids = $customfield_val;
 
-                        if(!empty($attachment_id)){
-                            $attachment_desc_view .= '<div id="'.$attachment_id.'"><a href="' . $attachment_url . '" target="_new">View '. $customfield['name'] .'</a></div>';
-                            $attachment_desc_view_delete .= '<div id="'.$attachment_id.'"><a href="' . $attachment_url . '" target="_new">View '. $customfield['name'] .'</a> | <a href="'.$post_id.'/file_'.$slug .'" id="'.$attachment_id.'" class="remove_attachment">Delete '. $customfield['name'] .'</a></div>';
+                        $str = '<div id="bf_files_container"><ul class="bf_files">';
+
+
+                        $attachments = array_filter( explode( ',', $attachment_ids ) );
+
+                        if ( $attachments ) {
+                            foreach ( $attachments as $attachment_id ) {
+
+                                $attachment_metadat = get_post( $attachment_id );
+
+//                                echo '<pre>';
+//                                print_r($attachment_metadat);
+//                                echo '</pre>';
+
+                                $str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
+
+                                    <div class="bf_attachment_li">
+                                    <div class="bf_attachment_img">
+                                    '. wp_get_attachment_image( $attachment_id,  array(64,64), true) . '
+                                    </div><div class="bf_attachment_meta">
+                                    <p><b>' . __('Name: ', 'buddyforms') .'</b>'. $attachment_metadat->post_title.'<p>
+                                    <p><b>' . __('Type: ', 'buddyforms') .'</b>'. $attachment_metadat->post_mime_type.'<p>
+
+                                    <p>
+                                    <a href="#" class="delete tips" data-slug="'.$slug.'" data-tip="' . __( 'Delete image', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>
+                                    <a href="'.wp_get_attachment_url($attachment_id).'" target="_blank" class="view" data-tip="' . __( 'View', 'buddyforms' ) . '">' . __( 'View', 'buddyforms' ) . '</a>
+                                    </p>
+                                    </div></div>
+
+                                </li>';
+                            }
                         }
 
-                        // Display upload field for featured image if required is selected for this form
-                        if($customfield['required'] && empty($attachment_id)){
-                            $file_attr = array("required" => 1, 'id' => $slug, 'shortDesc' => $attachment_desc_view );
-                        } elseif($customfield['required'] && !empty($attachment_id)) {
-                            $file_attr = array('id' => $slug, 'shortDesc' => $attachment_desc_view);
-                        } else {
-                            $file_attr = array('id' => $slug, 'shortDesc' =>  $attachment_desc_view_delete );
-                        }
+                        $str .= '</ul></div>';
 
-                        $form->addElement(new Element_File($customfield['name'], $slug, $file_attr));
+                        $str .= '<p class="bf_add_files hide-if-no-js">';
+                        $str .= '<a href="#" data-slug="'.$slug.'" data-choose="' . __( 'Add files', 'buddyforms' ) . '" data-update="' . __( 'Add files', 'buddyforms' ) . '" data-delete="' . __( 'Delete file', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache files', 'buddyforms' ) . '</a>';
+                        $str .= '</p>';
+
+                        $form->addElement(new Element_HTML( $str ));
+
+                        $form->addElement(new Element_Hidden($slug, $customfield_val , array('id' => $slug)));
 
                         break;
                     case 'Taxonomy' :
