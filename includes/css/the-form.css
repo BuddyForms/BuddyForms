@@ -708,10 +708,10 @@ form.bf_loading .bf_modal {
     display: block;
 }
 
-div#bf_files_container ul {
+div.bf_files_container ul {
     list-style: none outside none !important;
 }
-div#bf_files_container ul li {
+div.bf_files_container ul li {
     line-height: 14px !important;
 }
 .bf_attachment_li {

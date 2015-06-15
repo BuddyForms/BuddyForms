@@ -209,29 +209,60 @@ function bf_form_elements($form, $args){
                         break;
                     case 'Featured-Image':
 
-                        // Display upload field for featured image if required is selected for this form
-                        if(isset($customfield['required']) && !has_post_thumbnail( $post_id )){
-                            $file_attr = array("required" => 1, 'id' => "file", 'shortDesc' => $customfield['description'] );
-                        } else {
-                            $file_attr = array('id' => "file", 'shortDesc' => $customfield['description'] );
+                        $attachment_ids = $customfield_val;
+                        $attachments = array_filter( explode( ',', $attachment_ids ) );
+
+                        $str = '<div id="bf_files_container_'.$slug.'" class="bf_files_container"><ul class="bf_files">';
+
+                        if ( $attachments ) {
+                            foreach ( $attachments as $attachment_id ) {
+
+                                $attachment_metadat = get_post( $attachment_id );
+
+//                                echo '<pre>';
+//                                print_r($attachment_metadat);
+//                                echo '</pre>';
+
+                                $str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
+
+                                    <div class="bf_attachment_li">
+                                    <div class="bf_attachment_img">
+                                    '. wp_get_attachment_image( $attachment_id,  array(64,64), true) . '
+                                    </div><div class="bf_attachment_meta">
+                                    <p><b>' . __('Name: ', 'buddyforms') .'</b>'. $attachment_metadat->post_title.'<p>
+                                    <p><b>' . __('Type: ', 'buddyforms') .'</b>'. $attachment_metadat->post_mime_type.'<p>
+
+                                    <p>
+                                    <a href="#" class="delete tips" data-slug="'.$slug.'" data-tip="' . __( 'Delete image', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>
+                                    <a href="'.wp_get_attachment_url($attachment_id).'" target="_blank" class="view" data-tip="' . __( 'View', 'buddyforms' ) . '">' . __( 'View', 'buddyforms' ) . '</a>
+                                    </p>
+                                    </div></div>
+
+                                </li>';
+                            }
                         }
 
-                            $str = __( 'Select File', 'frontend-media' );
-                            $str = '<img style="width:80px;" id="frontend-image" /><br><input id="frontend-button" type="button" value="' . $str . '" class="button" style="position: relative; z-index: 1;">';
+                        $str .= '</ul></div>';
 
-                        $form->addElement(new Element_HTML( $str ));
+                        $str .= '<p class="bf_add_files hide-if-no-js">';
+                        $str .= '<a href="#" data-slug="'.$slug.'" data-type="image/jpeg,image/gif,image/png,image/bmp,image/tiff,image/x-icon" data-multiple="false" data-choose="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-update="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $customfield['name'].'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'</a>';
+                        $str .= '</p>';
 
-
-                        $form->addElement(new Element_HTML( get_the_post_thumbnail($post_id, array(80,80))));
-
-                        $form->addElement(new Element_Hidden('featured-image', get_post_thumbnail_id($post_id), array('id' => 'featured-image')));
-
+                        $form->addElement(new Element_HTML( '
+                        <div class="bf_field_group">
+                            <label for="_'.$slug.'">'.$customfield['name'].'</label>
+                            <div class="bf_inputs">
+                            '.$str.'
+                            </div>
+                        </div>
+                        ' ));
+                        $form->addElement(new Element_Hidden('featured-image', $customfield_val , array('id' => $slug)));
                         break;
                     case 'File':
 
                         $attachment_ids = $customfield_val;
 
-                        $str = '<div id="bf_files_container"><ul class="bf_files">';
+                        $str = '<div id="bf_files_container_'.$slug.'" class="bf_files_container"><ul class="bf_files">';
 
 
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
@@ -267,11 +298,17 @@ function bf_form_elements($form, $args){
                         $str .= '</ul></div>';
 
                         $str .= '<p class="bf_add_files hide-if-no-js">';
-                        $str .= '<a href="#" data-slug="'.$slug.'" data-choose="' . __( 'Add files', 'buddyforms' ) . '" data-update="' . __( 'Add files', 'buddyforms' ) . '" data-delete="' . __( 'Delete file', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache files', 'buddyforms' ) . '</a>';
+                        $str .= '<a href="#" data-slug="'.$slug.'" data-multiple="true" data-choose="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-update="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $customfield['name'].'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache ', 'buddyforms' ) . $customfield['name'].'</a>';
                         $str .= '</p>';
 
-                        $form->addElement(new Element_HTML( $str ));
-
+                        $form->addElement(new Element_HTML( '
+                        <div class="bf_field_group">
+                            <label for="_'.$slug.'">'.$customfield['name'].'</label>
+                            <div class="bf_inputs">
+                            '.$str.'
+                            </div>
+                        </div>
+                        ' ));
                         $form->addElement(new Element_Hidden($slug, $customfield_val , array('id' => $slug)));
 
                         break;
@@ -363,4 +400,26 @@ function bf_form_elements($form, $args){
         endif;
     endforeach;
 
+}
+
+add_filter('wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter');
+function buddyforms_wp_handle_upload_prefilter($file) {
+    if (isset($_POST['allowed_type']) && !empty($_POST['allowed_type'])){
+        //this allows you to set multiple types seperated by a pipe "|"
+        $allowed = explode("|", $_POST['allowed_type']);
+
+        $ext =  substr(strrchr($file['name'],'.'),1);
+        //first check if the user uploaded the right type
+        if (!in_array($ext, (array)$allowed)){
+            $file['error'] = __("Sorry, you cannot upload this file type for this field.");
+            return $file;
+        }
+        //check if the type is allowed at all by WordPress
+        foreach (get_allowed_mime_types() as $key => $value) {
+            if (strpos($key, $ext) || $key == $ext)
+                return $file;
+        }
+        $file['error'] = __("Sorry, you cannot upload this file type for this field.");
+    }
+    return $file;
 }
