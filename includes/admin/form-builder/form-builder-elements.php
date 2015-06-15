@@ -56,7 +56,7 @@ function buddyforms_view_form_fields($args){
     $required = 'false';
     if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
         $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
-    $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required));
+    $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
 
     $name = '';
     if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
@@ -261,7 +261,7 @@ function buddyforms_view_form_fields($args){
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status']))
                 $post_status = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['post_status'];
 
-            $form_fields['left']['post_status'] = new Element_Checkbox('<br><b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'required' => true));
+            $form_fields['left']['post_status'] = new Element_Checkbox('<br><b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][post_status]"));
 
 
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);

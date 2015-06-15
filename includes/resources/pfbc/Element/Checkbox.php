@@ -19,6 +19,10 @@ class Element_Checkbox extends OptionElement {
 			$labelClass .= " inline";
 
 		$count = 0;
+
+        if(!isset( $this->_attributes["id"]))
+            $this->_attributes["id"] = $this->_attributes["name"];
+
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
 
