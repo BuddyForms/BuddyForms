@@ -80,6 +80,11 @@ jQuery(document).ready(function (){
                 jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').show();
             },
             success: function(data){
+                event.preventDefault();
+                //jQuery(".bf-select2").select2({
+                //    placeholder: "Select an option",
+                //    allowClear: true,
+                //});
                 jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();
                 jQuery('.the_buddyforms_form_'+ form_slug).replaceWith(data);
                 // remove existing editor instance

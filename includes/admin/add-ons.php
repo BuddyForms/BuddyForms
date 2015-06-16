@@ -87,11 +87,12 @@ function buddyforms_get_addons($call_api){ ?>
 
                 // Remove any HTML from the description.
                 $description = strip_tags( $plugin['short_description'] );
-                $version = wp_kses( $plugin['version'], $plugins_allowedtags );
-                $title = wp_kses( $plugin['name'], $plugins_allowedtags );
+                $version = $plugin['version'];
+                $title = $plugin['name'];
                 $name = strip_tags( $title . ' ' . $version );
 
-                $author = wp_kses( $plugin['author'], $plugins_allowedtags );
+                $author =$plugin['author'];
+
                 if ( ! empty( $author ) ) {
                     $author = ' <cite>' . sprintf( __( 'By %s' ), $author ) . '</cite>';
                 }

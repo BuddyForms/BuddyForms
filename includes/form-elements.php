@@ -373,11 +373,16 @@ function bf_form_elements($form, $args){
                         <span class="help-inline">' . $customfield['description'] . '</span>
                     </div>';
 
-                        $form->addElement( new Element_HTML($dropdown));
+                        if( isset($customfield['hidden']) ){
+                            $form->addElement( new Element_Hidden($slug.'[]',$customfield['taxonomy_default'][0]));
+                        } else {
+                            $form->addElement( new Element_HTML($dropdown));
 
-                        if(isset($customfield['creat_new_tax']) ){
-                            $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
+                            if(isset($customfield['creat_new_tax']) ){
+                                $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
+                            }
                         }
+
 
                         break;
 
