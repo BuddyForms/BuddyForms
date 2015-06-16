@@ -209,6 +209,9 @@ function bf_form_elements($form, $args){
                         break;
                     case 'Featured-Image':
 
+
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $customfield['description']);
+
                         $attachment_ids = $customfield_val;
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -250,7 +253,7 @@ function bf_form_elements($form, $args){
 
                         $form->addElement(new Element_HTML( '
                         <div class="bf_field_group">
-                            <label for="_'.$slug.'">'.$customfield['name'].'</label>
+                            <label for="_'.$slug.'"><span class="required">* </span>'.$customfield['name'].'</label>
                             <div class="bf_inputs">
                             '.$str.'
                             </div>

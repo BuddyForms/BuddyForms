@@ -5,7 +5,7 @@
         var $el = $(this);
         // Product gallery file uploads
         var product_gallery_frame;
-        alert($el.data('slug'));
+
         var $image_gallery_ids  = $('#'+$el.data('slug'));
         var bf_files            = $('#bf_files_container_'+$el.data('slug')+' ul.bf_files');
 
@@ -58,7 +58,6 @@
                     } else {
                         attachment_ids = attachment.id;
                     }
-
 
                     attachment_url = attachment.url;
                     if(attachment.type == 'image'){

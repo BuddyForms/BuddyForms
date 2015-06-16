@@ -1,5 +1,6 @@
 jQuery(document).ready(function (){
 
+
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
     });
@@ -53,12 +54,11 @@ jQuery(document).ready(function (){
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
 
-
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
 
-        var btn = jQuery(document.activeElement);
-        var form_slug = btn.attr('id');
-        var submit_type = btn.attr('name');
+        var form_name   = event.target.id;
+        var form_slug   = form_name.split("editpost_")[1];
+        var submit_type = jQuery('#' + form_name + ' #' + form_slug).attr('name');
 
         event.preventDefault();
 
