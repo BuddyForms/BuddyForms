@@ -106,6 +106,9 @@ class BuddyForms {
 	 */
 	public function load_constants() {
 
+        if (!defined('BUDDYFORMS_PLUGIN_URL'))
+            define('BUDDYFORMS_PLUGIN_URL', plugins_url('/',__FILE__));
+
 		if (!defined('BUDDYFORMS_INSTALL_PATH'))
 			define('BUDDYFORMS_INSTALL_PATH', dirname(__FILE__) . '/');
 
@@ -113,7 +116,7 @@ class BuddyForms {
 			define('BUDDYFORMS_INCLUDES_PATH', BUDDYFORMS_INSTALL_PATH . 'includes/');
 
 		if (!defined('BUDDYFORMS_TEMPLATE_PATH'))
-			define('BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INCLUDES_PATH . 'templates/');
+			define('BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/');
 
 	}
 
@@ -125,11 +128,7 @@ class BuddyForms {
 	 */
 	static function set_globals() {
 		global $buddyforms;
-
-		$buddyforms = get_option('buddyforms_options');
-
-		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);
-
+		$buddyforms = apply_filters('buddyforms_set_globals', get_option('buddyforms_options'));
 	}
 
 	/**
@@ -143,13 +142,15 @@ class BuddyForms {
 		if(!function_exists('PFBC_Load'))
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
 
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
 
-        require_once( BUDDYFORMS_INCLUDES_PATH . 'form.php' );
-        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-render.php' );
-        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-ajax.php' );
-        require_once( BUDDYFORMS_INCLUDES_PATH . 'form-elements.php' );
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'form-control.php' );
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php');
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php');
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-ajax.php');
+        require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php');
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php');
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
@@ -202,13 +203,13 @@ class BuddyForms {
 
 		 	if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
 
-			wp_enqueue_style('buddyforms_admin_css', plugins_url('includes/admin/css/admin.css', __FILE__) );
+			wp_enqueue_style('buddyforms_admin_css', plugins_url('assets/admin/css/admin.css', __FILE__) );
 
 			if ( is_rtl() ) {
-				wp_enqueue_style(	'style-rtl',	plugins_url('includes/admin/css/admin-rtl.css', __FILE__) );
+				wp_enqueue_style(	'style-rtl',	plugins_url('assets/admin/css/admin-rtl.css', __FILE__) );
 			}
 
-			wp_enqueue_style('bootstrapcss', plugins_url('includes/admin/css/bootstrap.css', __FILE__) );
+			wp_enqueue_style('bootstrapcss', plugins_url('assets/admin/css/bootstrap.css', __FILE__) );
 			wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
 
 			// load the tk_icons
@@ -225,7 +226,7 @@ class BuddyForms {
 	 */
 	function buddyforms_admin_js($hook_suffix) {
 			if($hook_suffix == 'toplevel_page_buddyforms_options_page' || $hook_suffix == 'buddyforms_page_create-new-form' || $hook_suffix == 'buddyforms_page_bf_add_ons' || $hook_suffix == 'buddyforms_page_bf_mail_notification' || $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities') {
-				wp_register_script('buddyforms_admin_js', plugins_url('includes/admin/js/admin.js', __FILE__));
+				wp_register_script('buddyforms_admin_js', plugins_url('assets/admin/js/admin.js', __FILE__));
 				$admin_text_array = array(
 					'check' => __( 'Check all', 'buddyforms' ),
 					'uncheck' => __( 'Uncheck all', 'buddyforms' )
@@ -233,7 +234,7 @@ class BuddyForms {
 				wp_localize_script( 'buddyforms_admin_js', 'admin_text', $admin_text_array );
 				wp_enqueue_script( 'buddyforms_admin_js' );
 
-				wp_enqueue_script('bootstrapjs', plugins_url('includes/admin/js/bootstrap.js', __FILE__), array('jquery') );
+				wp_enqueue_script('bootstrapjs', plugins_url('assets/admin/js/bootstrap.js', __FILE__), array('jquery') );
 				wp_enqueue_script('jQuery');
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
@@ -279,13 +280,13 @@ class BuddyForms {
 		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));
 
-		wp_enqueue_script( 'buddyforms-js', plugins_url('includes/js/buddyforms.js', __FILE__),	array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
+		wp_enqueue_script( 'buddyforms-js', plugins_url('assets/js/buddyforms.js', __FILE__),	array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 
 		wp_enqueue_media();
-		wp_enqueue_script( 'media-uploader-js', plugins_url('includes/js/media-uploader.js', __FILE__),	array('jquery') );
+		wp_enqueue_script( 'media-uploader-js', plugins_url('assets/js/media-uploader.js', __FILE__),	array('jquery') );
 
-		wp_enqueue_style(	'buddyforms-the-loop-css', plugins_url('includes/css/the-loop.css', __FILE__));
-		wp_enqueue_style(	'buddyforms-the-form-css', plugins_url('includes/css/the-form.css', __FILE__));
+		wp_enqueue_style(	'buddyforms-the-loop-css', plugins_url('assets/css/the-loop.css', __FILE__));
+		wp_enqueue_style(	'buddyforms-the-form-css', plugins_url('assets/css/the-form.css', __FILE__));
 
 	}
 
@@ -295,39 +296,31 @@ class BuddyForms {
             return;
 
 		$buddyforms	= get_option('buddyforms_options');
-
 		$buddyforms_options = $buddyforms;
 
-			foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
+        foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
 
-				$needs_title = true;
+            $needs_title = true;
+            foreach($buddyform['form_fields'] as $field_key => $form_field){
 
-				foreach($buddyform['form_fields'] as $field_key => $form_field){
-
-					if(isset($form_field['slug']) && $form_field['slug'] == 'editpost_title')
-						$needs_title = false;
-
-				}
-
-				if($needs_title){
-
-					$field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
-
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Title';
-					$buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '1';
-
-				}
-
-			}
-            if( $needs_title ){
-                update_option( $this->bf_version_name, $this->version );
-                update_option("buddyforms_options", $buddyforms_options);
+                if(isset($form_field['slug']) && $form_field['slug'] == 'editpost_title')
+                    $needs_title = false;
             }
+            if($needs_title){
 
+                $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
+                $buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['name']		= 'Title';
+                $buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['slug']		= 'editpost_title';
+                $buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['type']		= 'Title';
+                $buddyforms_options['buddyforms'][$form_key]['form_fields'][$field_id]['order']		= '1';
 
+            }
+        }
+        if( $needs_title ){
+            update_option( $this->bf_version_name, $this->version );
+            update_option("buddyforms_options", $buddyforms_options);
+        }
 	}
 
 

@@ -264,7 +264,6 @@ function buddyforms_settings_page(){
                 $revision = 'false';
                 if (isset($buddyform['revision']))
                     $revision = $buddyform['revision'];
-
                 $form->addElement(new Element_Checkbox('' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][revision]", array('Revision' => "<b>" . __('Revision', 'buddyforms') . "</b>"), array( 'shortDesc' => __('Enable frontend revision control.', 'buddyforms'), 'value' => $revision)));
 
                 $admin_bar = 'false';
@@ -346,6 +345,10 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML('</div>'));
 
+            $bf_ajax = false;
+            if (isset($buddyform['bf_ajax']))
+                $bf_ajax = $buddyform['bf_ajax'];
+            $form->addElement(new Element_Checkbox('<b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' => "<b>" . __('Enable ajax form submission.', 'buddyforms') . "</b>"), array( 'shortDesc' => __('This feature is new please test your form if you enable ajax.', 'buddyforms'), 'value' => $bf_ajax)));
 
             $form->addElement(new Element_HTML('</div>'));
 

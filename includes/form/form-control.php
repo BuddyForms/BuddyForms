@@ -124,10 +124,10 @@ function buddyforms_process_post($args = Array()) {
     if( empty( $hasError ) ) :
 
         if(isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] )){
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'/view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms'). '<a href="'.get_permalink($post_id).'">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'/view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms'). '<a href="'.get_permalink($post_id).'">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         }
 

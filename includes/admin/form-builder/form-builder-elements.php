@@ -410,9 +410,6 @@ function buddyforms_view_form_fields($args){
 }
 
 add_action('wp_ajax_buddyforms_view_form_fields', 'buddyforms_view_form_fields');
-add_action('wp_ajax_nopriv_buddyforms_view_form_fields', 'buddyforms_view_form_fields');
-
-
 function buddyforms_form_element_multiple($form_fields, $args)
 {
 

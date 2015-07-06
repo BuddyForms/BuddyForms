@@ -61,13 +61,9 @@ function buddyforms_form_html( $args ){
     $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
     $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
     $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
-    //$form->addElement(new Element_Hidden("post_type"    , $post_type));
 
-    $form->addElement(new Element_Hidden("ajax"         , 'off'));
-
-//    echo '<pre>';
-//    print_r($args);
-//    echo '</pre>';
+    if(!isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
+        $form->addElement(new Element_Hidden("ajax"     , 'off'));
 
     // if the form have custom field to save as post meta data they get displayed here
     bf_form_elements($form, $args);

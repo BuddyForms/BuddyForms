@@ -236,4 +236,3 @@ function buddyforms_new_mail_notification()
 }
 
 add_action('wp_ajax_buddyforms_new_mail_notification', 'buddyforms_new_mail_notification');
-add_action('wp_ajax_nopriv_buddyforms_new_mail_notification', 'buddyforms_new_mail_notification');

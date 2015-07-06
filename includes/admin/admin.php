@@ -99,8 +99,10 @@ function buddyforms_options_content() {
 
             $update_option = update_option("buddyforms_options", $buddyforms);
 
-            if ($update_option)
+            if ($update_option){
+                buddyforms_attached_page_rewrite_rules();
                 echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
+            }
 
         }
         ?>

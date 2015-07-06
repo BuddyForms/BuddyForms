@@ -6,7 +6,7 @@
  * @since 0.1-beta
  */
 function buddyforms_add_form(){
-    $buddyforms_options = get_option('buddyforms_options');
+    global $buddyforms;
 
     if(empty($_POST['create_new_form_name']))
         return;
@@ -34,7 +34,7 @@ function buddyforms_add_form(){
     $create_new_form_slug = sanitize_title($_POST['create_new_form_name']);
     $mod5 = substr(md5(time() * rand()), 0, 10);
 
-    if(array_key_exists($create_new_form_slug, $buddyforms_options['buddyforms']))
+    if(array_key_exists($create_new_form_slug, $buddyforms['buddyforms']))
         $create_new_form_slug = $create_new_form_slug.'-'.$mod5;
 
      $options = Array(
@@ -65,17 +65,16 @@ function buddyforms_add_form(){
     $options['form_fields'][$field_id]['type']          = 'Content';
     $options['form_fields'][$field_id]['order']         = '2';
 
-    $buddyforms_options['buddyforms'][$create_new_form_slug] = $options;
+    $buddyforms['buddyforms'][$create_new_form_slug] = $options;
 
-    update_option("buddyforms_options", $buddyforms_options);
-
+    update_option("buddyforms_options", $buddyforms);
+    buddyforms_attached_page_rewrite_rules();
     echo sanitize_title($_POST['create_new_form_name']);
 
     die();
 
 }
 add_action( 'wp_ajax_buddyforms_add_form', 'buddyforms_add_form' );
-add_action( 'wp_ajax_nopriv_buddyforms_add_form', 'buddyforms_add_form' );
 
 
 /**
@@ -89,11 +88,12 @@ function buddyforms_delete_form(){
     $buddyforms_options = get_option('buddyforms_options');
     unset( $buddyforms_options['buddyforms'][$_POST['dele_form_slug']] );
 
+    buddyforms_attached_page_rewrite_rules();
     update_option("buddyforms_options", $buddyforms_options);
     die();
 }
 add_action('wp_ajax_buddyforms_delete_form', 'buddyforms_delete_form');
-add_action('wp_ajax_nopriv_buddyforms_delete_form', 'buddyforms_delete_form');
+//add_action('wp_ajax_nopriv_buddyforms_delete_form', 'buddyforms_delete_form');
 
 /**
  * Ajax call back function to save the new form elements order
@@ -118,7 +118,6 @@ function buddyforms_save_item_order() {
     die();
 }
 add_action('wp_ajax_buddyforms_save_item_order', 'buddyforms_save_item_order');
-add_action('wp_ajax_nopriv_buddyforms_save_item_order', 'buddyforms_save_item_order');
 
 /**
  * Ajax call back function to delete a form element
@@ -137,7 +136,7 @@ function buddyforms_item_delete(){
     die();
 }
 add_action('wp_ajax_buddyforms_item_delete', 'buddyforms_item_delete');
-add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
+//add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
 
 /**
  * Get all taxonomies

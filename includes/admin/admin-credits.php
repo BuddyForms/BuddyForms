@@ -1,7 +1,7 @@
 <div id="bf_admin_wrap" class="wrap">
     <div class="credits">
         <p>
-            <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo plugins_url( 'img/buddyforms-s.png' , __FILE__ ); ?>" title="BuddyForms" /></a>
+            <a class="buddyforms" href="http://buddyforms.com" title="BuddyForms" target="_blank"><img src="<?php echo BUDDYFORMS_PLUGIN_URL . 'assets/admin/img/buddyforms-s.png'; ?>" title="BuddyForms" /></a>
             - &nbsp; <?php _e( 'User Front End Posting and Form Builder for WordPress.', 'buddyforms' ); ?>
 
         </p>
