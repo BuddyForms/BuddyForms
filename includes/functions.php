@@ -192,8 +192,8 @@ function buddyforms_attached_page_rewrite_rules(){
 		if(isset($buddyform['attached_page'])){
 			$post_data = get_post($buddyform['attached_page'], ARRAY_A);
 			//add_rewrite_rule($post_data['post_name'].'/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=$matches[1]&bf_post_type=$matches[2]&bf_form_slug=$matches[3]', 'top');
-            add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]', 'top');
             add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]&bf_parent_post_id=$matches[2]', 'top');
+            add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]', 'top');
             add_rewrite_rule($post_data['post_name'].'/view/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=view&bf_form_slug=$matches[1]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/edit/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
 			add_rewrite_rule($post_data['post_name'].'/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
@@ -235,7 +235,7 @@ function buddyforms_attached_page_content($content){
 	global $wp_query, $buddyforms;
 
 	remove_filter('the_content', 'buddyforms_attached_page_content', 10, 1);
-    remove_filter('the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1);
+    remove_filter('the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1); //this is a dirty fix and needs to be addressed
 	if(is_admin())
 		return $content;
 

@@ -201,7 +201,6 @@ function buddyforms_update_post($args){
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
             'post_excerpt'		=> $post_excerpt,
-            'post_parent'		=> $post_parent,
             'post_date'         => isset($_POST['post_date'])? $_POST['post_date'] : '',
             'post_date_gmt'     => isset($_POST['post_date'])? $_POST['post_date'] : '',
         );

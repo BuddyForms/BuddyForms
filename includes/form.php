@@ -75,6 +75,9 @@ function buddyforms_create_edit_form( $args ) {
         }
 
     }
+    echo '<pre>';
+    print_r($wp_query->query_vars);
+    echo '<pre>';
 
     // if post edit screen is displayed
     if(!empty($post_id)) {
@@ -126,7 +129,6 @@ function buddyforms_create_edit_form( $args ) {
         'form_slug' 	=> $form_slug,
         'form_notice'   => $form_notice,
     );
-
 
     // If the form is submitted we will get in action
     if( isset( $_POST['submitted'] ) )

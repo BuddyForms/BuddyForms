@@ -61,9 +61,9 @@ function buddyforms_form_html( $args ){
     $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
     $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
     $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
-//    $form->addElement(new Element_Hidden("post_type"    , $post_type));
+    //$form->addElement(new Element_Hidden("post_type"    , $post_type));
 
-    $form->addElement(new Element_Hidden("ajax"         , 'on'));
+    $form->addElement(new Element_Hidden("ajax"         , 'off'));
 
 //    echo '<pre>';
 //    print_r($args);
