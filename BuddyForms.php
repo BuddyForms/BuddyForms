@@ -269,7 +269,7 @@ class BuddyForms {
 		do_action('buddyforms_front_js_css_enqueue');
 
 		wp_enqueue_script( 'jquery' );
-        //wp_enqueue_script( 'jquery-form' );
+        wp_enqueue_script( 'jquery-form' );
         wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 

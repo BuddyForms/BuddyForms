@@ -7,7 +7,7 @@
  * @since 0.3 beta
  */
 
-function buddyforms_process_post( $formdata ) {
+function buddyforms_process_post($args = Array()) {
     global $current_user, $buddyforms;
 
     $hasError = false;
@@ -23,7 +23,7 @@ function buddyforms_process_post( $formdata ) {
         'revision_id' 	=> false,
         'form_slug' 	=> 0,
         'redirect_to'   => $_SERVER['REQUEST_URI'],
-    ), $formdata));
+    ), $args));
 
 
     if(!empty($post_id)) {
@@ -34,7 +34,6 @@ function buddyforms_process_post( $formdata ) {
             $post_id = apply_filters('bf_create_edit_form_post_id', $post_id);
             $the_post	= get_post( $post_id );
         }
-
 
         // Check if the user is author of the post
         $user_can_edit = false;
@@ -73,12 +72,12 @@ function buddyforms_process_post( $formdata ) {
         $customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
 
     $comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
-    if(isset($formdata['comment_status']))
-        $comment_status = $formdata['comment_status'];
+    if(isset($_POST['comment_status']))
+        $comment_status = $_POST['comment_status'];
 
     $post_excerpt = '';
-    if(isset($formdata['post_excerpt']))
-        $post_excerpt = $formdata['post_excerpt'];
+    if(isset($_POST['post_excerpt']))
+        $post_excerpt = $_POST['post_excerpt'];
 
     $action			= 'save';
     $post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
@@ -86,8 +85,8 @@ function buddyforms_process_post( $formdata ) {
         $action = 'update';
         $post_status = get_post_status( $post_id );
     }
-    if(isset($formdata['status']))
-        $post_status = $formdata['status'];
+    if(isset($_POST['status']))
+        $post_status = $_POST['status'];
 
     $args = Array(
         'post_id'		    => $post_id,
@@ -101,16 +100,18 @@ function buddyforms_process_post( $formdata ) {
         'comment_status'	=> $comment_status,
     );
 
-    $post_id = buddyforms_update_post($args);
+    $args = buddyforms_update_post($args);
+
+    extract($args);
 
     if($post_id != 0){
 
         // Check if the post has post meta / custom fields
         if(isset($customfields))
-            bf_update_post_meta($post_id, $customfields);
+            $customfields = bf_update_post_meta($post_id, $customfields);
 
-        if(isset($formdata['featured-image']))
-            set_post_thumbnail($post_id, $formdata['featured-image']);
+        if(isset($_POST['featured-image']))
+            set_post_thumbnail($post_id, $_POST['featured-image']);
 
         // Save the Form slug as post meta
         update_post_meta($post_id, "_bf_form_slug", $form_slug);
@@ -122,11 +123,11 @@ function buddyforms_process_post( $formdata ) {
     // Display the message
     if( empty( $hasError ) ) :
 
-        if(isset( $formdata['post_id'] ) && ! empty( $formdata['post_id'] )){
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+        if(isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] )){
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'/view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank"> View '.$buddyforms['buddyforms'][$form_slug]['singular_name'].'</a>';
+            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms'). '<a href="'.get_permalink($post_id).'" target="_blank">View '.get_the_title($post_id).'</a> - ' . '<a href="'.get_permalink($buddyforms['buddyforms'][$form_slug]['attached_page']).'view/'.$form_slug.'" target="_blank">View my '.$buddyforms['buddyforms'][$form_slug]['name'].'</a>';
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         }
 
@@ -142,6 +143,7 @@ function buddyforms_process_post( $formdata ) {
 
     do_action('buddyforms_after_save_post', $post_id);
 
+    //$the_post	= get_post( $post_id );
     $args = array(
         'post_type' 	=> $post_type,
         'the_post'		=> $the_post,
@@ -162,13 +164,7 @@ function buddyforms_update_post($args){
 
     extract( $args = apply_filters( 'buddyforms_update_post_args', $args ) );
 
-    if( isset($_POST['data'])){
-        parse_str($_POST['data'], $formdata);
-    } else {
-        $formdata = $_POST;
-    }
-
-    $buddyforms_form_nonce_value = $formdata['_wpnonce'];
+    $buddyforms_form_nonce_value = $_POST['_wpnonce'];
 
     if ( !wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
         return false;
@@ -178,9 +174,9 @@ function buddyforms_update_post($args){
     if( $action == 'update' ) {
 
         $bf_post = array(
-            'ID'        		=> $formdata['post_id'],
-            'post_title' 		=> $formdata['editpost_title'],
-            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
+            'ID'        		=> $_POST['post_id'],
+            'post_title' 		=> $_POST['editpost_title'],
+            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
@@ -193,29 +189,29 @@ function buddyforms_update_post($args){
 
     } else {
 
-        if(isset($formdata['status']) && $formdata['status'] == 'future' && $formdata['schedule'])
-            $post_date = date('Y-m-d H:i:s',strtotime($formdata['schedule']));
+        if(isset($_POST['status']) && $_POST['status'] == 'future' && $_POST['schedule'])
+            $post_date = date('Y-m-d H:i:s',strtotime($_POST['schedule']));
 
         $bf_post = array(
             'post_parent'       => $post_parent,
             'post_author' 		=> $post_author,
-            'post_title' 		=> $formdata['editpost_title'],
-            'post_content' 		=> isset($formdata['editpost_content'])? $formdata['editpost_content'] : '',
+            'post_title' 		=> $_POST['editpost_title'],
+            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
             'post_excerpt'		=> $post_excerpt,
             'post_parent'		=> $post_parent,
-            'post_date'         => isset($formdata['post_date'])? $formdata['post_date'] : '',
-            'post_date_gmt'     => isset($formdata['post_date'])? $formdata['post_date'] : '',
+            'post_date'         => isset($_POST['post_date'])? $_POST['post_date'] : '',
+            'post_date_gmt'     => isset($_POST['post_date'])? $_POST['post_date'] : '',
         );
 
         // Insert the new form
         $post_id = wp_insert_post( $bf_post, true );
 
     }
-
-    return $post_id;
+    $bf_post['post_id'] = $post_id;
+    return $bf_post;
 }
 
 function bf_update_post_meta($post_id, $customfields){
@@ -223,11 +219,6 @@ function bf_update_post_meta($post_id, $customfields){
     if(!isset($customfields))
 		return;
 
-    if( isset($_POST['data'])){
-        parse_str($_POST['data'], $formdata);
-    } else {
-        $formdata = $_POST;
-    }
 
 	foreach( $customfields as $key => $customfield ) : 
 	   
@@ -237,8 +228,8 @@ function bf_update_post_meta($post_id, $customfields){
 			
 			if (isset($taxonomy->hierarchical) && $taxonomy->hierarchical == true)  {
 				
-				if(isset($formdata[ $customfield['slug'] ]))
-                    $tax_item = $formdata[ $customfield['slug'] ];
+				if(isset($_POST[ $customfield['slug'] ]))
+                    $tax_item = $_POST[ $customfield['slug'] ];
 
                 if($tax_item[0] == -1 && !empty($customfield['taxonomy_default']))
                     $tax_item[0] = $customfield['taxonomy_default'];
@@ -248,8 +239,8 @@ function bf_update_post_meta($post_id, $customfields){
 			
 				$slug = Array();
 				
-				if(isset($formdata[ $customfield['slug'] ])) {
-					$postCategories = $formdata[ $customfield['slug'] ];
+				if(isset($_POST[ $customfield['slug'] ])) {
+					$postCategories = $_POST[ $customfield['slug'] ];
 				
 					foreach ( $postCategories as $postCategory ) {
 						$term = get_term_by('id', $postCategory, $customfield['taxonomy']);
@@ -261,8 +252,8 @@ function bf_update_post_meta($post_id, $customfields){
 
 			}
 			
-			if( isset( $formdata[$customfield['slug'].'_creat_new_tax']) && !empty($formdata[$customfield['slug'].'_creat_new_tax'] ) ){
-				$creat_new_tax =  explode(',',$formdata[$customfield['slug'].'_creat_new_tax']);
+			if( isset( $_POST[$customfield['slug'].'_creat_new_tax']) && !empty($_POST[$customfield['slug'].'_creat_new_tax'] ) ){
+				$creat_new_tax =  explode(',',$_POST[$customfield['slug'].'_creat_new_tax']);
 				if(is_array($creat_new_tax)){
 					foreach($creat_new_tax as $key => $new_tax){
 						$wp_insert_term = wp_insert_term($new_tax,$customfield['taxonomy']);
@@ -281,14 +272,18 @@ function bf_update_post_meta($post_id, $customfields){
 		
 		if(empty($slug))
 			$slug = sanitize_title($customfield['name']);
-		
+
+
 		// Update the post
-		if(isset($formdata[$slug] )){
-			update_post_meta($post_id, $slug, $formdata[$slug] );
+		if(isset($_POST[$slug] )){
+			update_post_meta($post_id, $slug, $_POST[$slug] );
+      //      $customfields[$key]['value'] = $_POST[$slug];
 		} else {
 			update_post_meta($post_id, $slug, '' );
+        //    $customfields[$key]['value'] = '';
 		}
 			 		                   
     endforeach;
 
+    return $customfields;
 }

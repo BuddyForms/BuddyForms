@@ -10,7 +10,7 @@ function buddyforms_form_html( $args ){
         'post_id'		=> false,
         'revision_id' 	=> false,
         'post_parent'   => 0,
-        'redirect_to'   => $_SERVER['REQUEST_URI'],
+        'redirect_to'   => esc_url( $_SERVER['REQUEST_URI'] ),
         'form_slug' 	=> '',
         'form_notice'   => ''
     ), $args));
@@ -34,8 +34,10 @@ function buddyforms_form_html( $args ){
 
     if ( $user_can_edit == false ){
         $error_message = __('You do not have the required user role to use this form', 'buddyforms');
-        return '<div class="error alert">'.$error_message.'</div>';
+        return '<div class="error alert">'.$error_message.'</div>'; //das sieht nicht sauber aus
     }
+
+    $form_html .= '<div id="form_message_' . $form_slug. '">'.$form_notice.'</div>';
 
     $form_html .= '<div class="form_wrapper">';
 
@@ -59,11 +61,9 @@ function buddyforms_form_html( $args ){
     $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
     $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
     $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
-    $form->addElement(new Element_Hidden("post_type"    , $post_type));
+//    $form->addElement(new Element_Hidden("post_type"    , $post_type));
 
-
-    if (isset($form_notice))
-        $form->addElement(new Element_HTML($form_notice));
+    $form->addElement(new Element_Hidden("ajax"         , 'on'));
 
 //    echo '<pre>';
 //    print_r($args);
@@ -74,7 +74,7 @@ function buddyforms_form_html( $args ){
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
-    $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array('id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted')));
+    $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array( 'id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted')));
 
     if($form_button)
         $form->addElement($form_button);
