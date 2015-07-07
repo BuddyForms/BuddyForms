@@ -15,7 +15,6 @@ function buddyforms_ajax_edit_post(){
 }
 
 add_action('wp_ajax_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post');
-//add_action('wp_ajax_nopriv_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post');
 function buddyforms_ajax_process_edit_post(){
     global $buddyforms;
 

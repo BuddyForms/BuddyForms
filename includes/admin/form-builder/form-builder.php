@@ -327,7 +327,7 @@ function buddyforms_settings_page(){
 
 
             $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
-            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display The Form and continue editing', 'display_post' => 'Display the Post', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden'.$buddyform['slug'], 'class' => 'after_submit_hidden' )));
+            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display the Form and continue editing', 'display_post' => 'Display the Post', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden'.$buddyform['slug'], 'class' => 'after_submit_hidden' )));
 
             $after_submit_hidden_checked = ($after_submit == 'display_message')  ? '' : 'style="display: none;"';
             $form->addElement( new Element_HTML('<div ' . $after_submit_hidden_checked . ' class="after_submit_hidden'.$buddyform['slug'].'-2">'));
@@ -348,7 +348,7 @@ function buddyforms_settings_page(){
             $bf_ajax = false;
             if (isset($buddyform['bf_ajax']))
                 $bf_ajax = $buddyform['bf_ajax'];
-            $form->addElement(new Element_Checkbox('<b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' => "<b>" . __('Enable ajax form submission.', 'buddyforms') . "</b>"), array( 'shortDesc' => __('This feature is new please test your form if you enable ajax.', 'buddyforms'), 'value' => $bf_ajax)));
+            $form->addElement(new Element_Checkbox('<b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' => "<b>" . __('Enable ajax form submission.', 'buddyforms') . "</b>"), array( 'shortDesc' => __('This feature is new. Please test your form if you enable ajax.', 'buddyforms'), 'value' => $bf_ajax)));
 
             $form->addElement(new Element_HTML('</div>'));
 
