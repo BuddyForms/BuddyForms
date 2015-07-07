@@ -4,7 +4,7 @@ Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 2.x
 Tested up to: WordPress 4.1.1, BuddyPress 2.2.1
-Stable tag: 1.3.2
+Stable tag: 1.4
 
 === Documentation & Support === 
 
@@ -18,6 +18,34 @@ You can also create support tickets there.
 Login with your account from http://themekraft.com. 
 
 // Changelog
+
+== 1.4 ==
+add a new filter buddyforms_wp_login_form to the form
+add check if submitter is author
+fix a bug with the form element title. in some cases with other js conflicts it was possible to delete the title tag.
+Add new options to the form builder to select the action happened after form submission
+rewrite the form.php and add ajax form submit functionality to the form
+add nonce check to the ajax form
+build a work around for the wp_editor shortcodes issue. Need to investigate deeper why the shortcodes are executed. For now I load the wp_editor content with jQuery
+fixed smaller bugs reported by users
+add help text
+fixed a types conflict in the form builder
+add post_parent support
+add ajax for post delete
+removed the old delete function
+removed the old delete rewrite roles
+only display posts created by the form
+small css changes and clean up the css
+changed the-loop.php
+Add options to change the Form Element Title
+rewrite the add ons section and load all BuddyForms Extension with a buddyforms search from wordpress.org
+changed the featured image function to work with ajax
+add file and featured image ajax upload
+add wp_handle_upload_prefilter to check for allowed file types
+fixed a checkbox issue if attribute id was empty
+start adding deep validation
+add new option hidden to the taxonomy field
+add an ajax form option to the form builder
 
 == 1.3.2 ==
 
