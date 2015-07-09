@@ -121,7 +121,7 @@ jQuery(document).ready(function (){
 
 
         var validator = jQuery('#' + form_name ).validate();
-        alert(validator.form());
+        //alert(validator.form()); new form validation in process !
 
         if(jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off'){
 

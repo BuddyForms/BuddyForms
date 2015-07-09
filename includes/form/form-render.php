@@ -17,7 +17,7 @@ function buddyforms_form_html( $args ){
 
     session_id('buddyforms-create-edit-form');
 
-    $form_html = '<div class="the_buddyforms_form_' . $form_slug. '"">';
+    $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug. '"">';
 
     if ( !is_user_logged_in() ) :
         $wp_login_form = '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
@@ -61,6 +61,7 @@ function buddyforms_form_html( $args ){
     $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
     $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
     $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
+    $form->addElement(new Element_Hidden("bf_post_type"    , $post_type));
 
     if(!isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
         $form->addElement(new Element_Hidden("ajax"     , 'off'));

@@ -251,6 +251,12 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
+            $required = 'false';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
+                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
+            $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
+
+
             break;
         case 'Status':
             unset($form_fields);

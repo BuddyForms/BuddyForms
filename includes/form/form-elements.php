@@ -85,12 +85,18 @@ function bf_form_elements($form, $args){
                         }
                         $wp_editor = ob_get_contents();
                         ob_clean();
-                        //$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
+
+                        $required = '';
+                        if(isset($customfield['required'])){
+                            $wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
+                            $required = '<span class="required">* </span>';
+                        }
+
 
                         echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
 
 
-                        $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content"><span class="required">* </span>' . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
+                        $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
                         $form->addElement(new Element_HTML($wp_editor));
                         break;
                     case 'Mail' :
@@ -346,7 +352,9 @@ function bf_form_elements($form, $args){
                             }
                         } else {
                             if(isset($customfield['taxonomy_default'])){
-                                $dropdown = str_replace(' value="' . $customfield['taxonomy_default'][0] . '"', ' value="' . $customfield['taxonomy_default'][0] . '" selected="selected"', $dropdown);
+                                foreach($customfield['taxonomy_default'] as $key => $tax){
+                                    $dropdown = str_replace(' value="' . $customfield['taxonomy_default'][$key] . '"', ' value="' . $tax . '" selected="selected"', $dropdown);
+                                }
                             }
                         }
 
@@ -363,7 +371,9 @@ function bf_form_elements($form, $args){
                     </div>';
 
                         if( isset($customfield['hidden']) ){
-                            $form->addElement( new Element_Hidden($slug.'[]',$customfield['taxonomy_default'][0]));
+                            foreach( $customfield['taxonomy_default'] as $key => $tax){
+                                $form->addElement( new Element_Hidden($slug.'['.$key.']',$tax));
+                            }
                         } else {
                             $form->addElement( new Element_HTML($dropdown));
 
@@ -371,7 +381,6 @@ function bf_form_elements($form, $args){
                                 $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
                             }
                         }
-
 
                         break;
 
@@ -397,28 +406,4 @@ function bf_form_elements($form, $args){
         endif;
     endforeach;
 
-}
-
-add_filter('wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter');
-function buddyforms_wp_handle_upload_prefilter($file) {
-    if (isset($_POST['allowed_type']) && !empty($_POST['allowed_type'])){
-        //this allows you to set multiple types seperated by a pipe "|"
-        $allowed = explode(",", $_POST['allowed_type']);
-
-        $ext =  $file['type'];
-        xdebug_break();
-        //first check if the user uploaded the right type
-        if (!in_array($ext, (array)$allowed)){
-            $file['error'] = $file['type'].__("Sorry, you cannot upload this file type for this field.");
-            return $file;
-        }
-
-        //check if the type is allowed at all by WordPress
-        foreach (get_allowed_mime_types() as $key => $value) {
-            if ( $value == $ext)
-                return $file;
-        }
-        $file['error'] = __("Sorry, you cannot upload this file type for this field.");
-    }
-    return $file;
 }

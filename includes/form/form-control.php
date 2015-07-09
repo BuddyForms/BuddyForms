@@ -25,6 +25,8 @@ function buddyforms_process_post($args = Array()) {
         'redirect_to'   => $_SERVER['REQUEST_URI'],
     ), $args));
 
+    if(isset($_POST['bf_post_type']))
+        $post_type = $_POST['bf_post_type'];
 
     if(!empty($post_id)) {
 
@@ -230,8 +232,13 @@ function bf_update_post_meta($post_id, $customfields){
 				if(isset($_POST[ $customfield['slug'] ]))
                     $tax_item = $_POST[ $customfield['slug'] ];
 
-                if($tax_item[0] == -1 && !empty($customfield['taxonomy_default']))
-                    $tax_item[0] = $customfield['taxonomy_default'];
+                if($tax_item[0] == -1 && !empty($customfield['taxonomy_default'])){
+                    //$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
+                    foreach($customfield['taxonomy_default'] as $key => $tax){
+                        $tax_item[$key] = $tax;
+                    }
+                }
+
 
 				wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 			} else {
@@ -285,4 +292,27 @@ function bf_update_post_meta($post_id, $customfields){
     endforeach;
 
     return $customfields;
+}
+
+add_filter('wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter');
+function buddyforms_wp_handle_upload_prefilter($file) {
+    if (isset($_POST['allowed_type']) && !empty($_POST['allowed_type'])){
+        //this allows you to set multiple types seperated by a pipe "|"
+        $allowed = explode(",", $_POST['allowed_type']);
+        $ext     =  $file['type'];
+
+        //first check if the user uploaded the right type
+        if (!in_array($ext, (array)$allowed)){
+            $file['error'] = $file['type'].__("Sorry, you cannot upload this file type for this field.");
+            return $file;
+        }
+
+        //check if the type is allowed at all by WordPress
+        foreach (get_allowed_mime_types() as $key => $value) {
+            if ( $value == $ext)
+                return $file;
+        }
+        $file['error'] = __("Sorry, you cannot upload this file type for this field.");
+    }
+    return $file;
 }
