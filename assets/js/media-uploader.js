@@ -40,9 +40,8 @@
             //]
         });
 
-        alert($el.data('type'));
-        //if($el.data('type'))
-        //    product_gallery_frame.uploader.options.uploader['params']['allowed_type'] = $el.data('type');
+        if($el.data('type'))
+            product_gallery_frame.uploader.options.uploader['params']['allowed_type'] = $el.data('type');
 
         // When an image is selected, run a callback.
         product_gallery_frame.on( 'select', function() {

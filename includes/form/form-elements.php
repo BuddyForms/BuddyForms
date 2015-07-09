@@ -85,12 +85,12 @@ function bf_form_elements($form, $args){
                         }
                         $wp_editor = ob_get_contents();
                         ob_clean();
-
+                        //$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 
                         echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
 
 
-                        $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
+                        $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content"><span class="required">* </span>' . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
                         $form->addElement(new Element_HTML($wp_editor));
                         break;
                     case 'Mail' :
@@ -403,17 +403,19 @@ add_filter('wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter'
 function buddyforms_wp_handle_upload_prefilter($file) {
     if (isset($_POST['allowed_type']) && !empty($_POST['allowed_type'])){
         //this allows you to set multiple types seperated by a pipe "|"
-        $allowed = explode("|", $_POST['allowed_type']);
+        $allowed = explode(",", $_POST['allowed_type']);
 
-        $ext =  substr(strrchr($file['name'],'.'),1);
+        $ext =  $file['type'];
+        xdebug_break();
         //first check if the user uploaded the right type
         if (!in_array($ext, (array)$allowed)){
-            $file['error'] = __("Sorry, you cannot upload this file type for this field.");
+            $file['error'] = $file['type'].__("Sorry, you cannot upload this file type for this field.");
             return $file;
         }
+
         //check if the type is allowed at all by WordPress
         foreach (get_allowed_mime_types() as $key => $value) {
-            if (strpos($key, $ext) || $key == $ext)
+            if ( $value == $ext)
                 return $file;
         }
         $file['error'] = __("Sorry, you cannot upload this file type for this field.");

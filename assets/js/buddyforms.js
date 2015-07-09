@@ -119,6 +119,10 @@ jQuery(document).ready(function (){
         }
         jQuery('#' + form_name + ' #submitted').val(submit_type);
 
+
+        var validator = jQuery('#' + form_name ).validate();
+        alert(validator.form());
+
         if(jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off'){
 
             event.preventDefault();
