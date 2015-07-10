@@ -52,8 +52,11 @@ function bf_form_elements($form, $args){
                         } else {
                             $post_title = $the_post->post_title;
                         }
-
-                        $form->addElement(new Element_Textbox($customfield['name'], "editpost_title", array("required" => 1, 'value' => $post_title)));
+                        if( isset($customfield['hidden']) ) {
+                            $form->addElement(new Element_Hidden('editpost_title', $post_title ));
+                        } else {
+                            $form->addElement(new Element_Textbox($customfield['name'], "editpost_title", array("required" => 1, 'value' => $post_title)));
+                        }
 
                         break;
                     case 'Content':

@@ -106,6 +106,10 @@ function buddyforms_process_post($args = Array()) {
 
     extract($args);
 
+
+    /*
+     * If $post_id is == 0 there was an error the save/update post.
+     */
     if($post_id != 0){
 
         // Check if the post has post meta / custom fields

@@ -232,6 +232,11 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             $form_fields['left']['html']    = new Element_HTML(__("There are no settings needed so far. The Title is required and can not be removed. You can change the order of the title via drag and drop.", 'buddyforms'));
 
+            $hidden = false;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hidden']))
+                $hidden = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hidden'];
+            $form_fields['left']['hidden']            = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][hidden]", array('hidden' => '<b>' . __('Make this field Hidden', 'buddyforms') . '</b>'), array('value' => $hidden));
+
             break;
         case 'Content':
             unset($form_fields);
