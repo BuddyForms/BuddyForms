@@ -74,6 +74,12 @@ function bf_my_edit_post_link( $url, $post_ID) {
     if ($the_post->post_author != $current_user->ID) // @todo this needs to be modified for admins and collaborative content creation
         return $url;
 
+    if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'none')
+        return $url;
+
+    if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list')
+        return $url;
+
     if(isset($buddyforms['buddyforms'][$form_slug]) && $buddyforms['buddyforms'][$form_slug]['post_type'] == $post_type){
         $permalink	= get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
         $url = $permalink.'edit/'.$form_slug.'/'.get_the_ID();
