@@ -55,10 +55,6 @@ jQuery(document).ready(function (){
     jQuery('#editpost_content').html(editpost_content_val);
 
 
-
-
-
-
     //jQuery('#editpost_hierarchicals').ajaxForm({
     //    data: {
     //        action : 'buddyforms_ajax_process_edit_post'
@@ -120,7 +116,7 @@ jQuery(document).ready(function (){
         jQuery('#' + form_name + ' #submitted').val(submit_type);
 
 
-        var validator = jQuery('#' + form_name ).validate();
+        //var validator = jQuery('#' + form_name ).validate();
         //alert(validator.form()); new form validation in process !
 
         if(jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off'){

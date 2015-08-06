@@ -98,10 +98,14 @@ function bf_form_elements($form, $args){
 
                         echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
 
+                        if( isset($customfield['hidden']) ) {
+                            $form->addElement(new Element_Hidden('editpost_content', $editpost_content_val ));
+                        } else {
+                            $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
+                            $form->addElement(new Element_HTML($wp_editor));
+                        }
 
-                        $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $customfield['name'] . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
-                        $form->addElement(new Element_HTML($wp_editor));
-                        break;
+                         break;
                     case 'Mail' :
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $customfield['description']);
                         $form->addElement(new Element_Email($customfield['name'], $slug, $element_attr));
@@ -230,7 +234,7 @@ function bf_form_elements($form, $args){
                                     <div class="bf_attachment_img">
                                     '. wp_get_attachment_image( $attachment_id,  array(64,64), true) . '
                                     </div><div class="bf_attachment_meta">
-                                    <p><b>' . __('Name: ', 'buddyforms') .'</b>'. $attachment_metadat->post_title.'<p>
+                                    <p><b>' . __('Name: ', 'buddyforms') .'</b>'. $attachment_metadat->post_name.'<p>
                                     <p><b>' . __('Type: ', 'buddyforms') .'</b>'. $attachment_metadat->post_mime_type.'<p>
 
                                     <p>
@@ -299,7 +303,7 @@ function bf_form_elements($form, $args){
                         $str .= '</ul></div>';
 
                         $str .= '<p class="bf_add_files hide-if-no-js">';
-                        $str .= '<a href="#" data-slug="'.$slug.'" data-multiple="true" data-choose="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-update="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $customfield['name'].'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache ', 'buddyforms' ) . $customfield['name'].'</a>';
+                        $str .= '<a href="#" data-slug="'.$slug.'" data-multiple="true" data-choose="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-update="' . __( 'Add ', 'buddyforms' ) . $customfield['name'].'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $customfield['name'].'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
                         $str .= '</p>';
 
                         $form->addElement(new Element_HTML( '

@@ -60,7 +60,7 @@ function buddyforms_view_form_fields($args){
 
     $name = '';
     if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-        $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+        $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
     $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
 
     if (empty($slug))
@@ -243,7 +243,10 @@ function buddyforms_view_form_fields($args){
 
             $name = 'Content';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+                $name = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
+
+            // echo stripslashes_deep($name); strip the slashes !!!
+
             $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
 
             $post_content_options = 'false';
@@ -261,6 +264,10 @@ function buddyforms_view_form_fields($args){
                 $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
             $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
 
+            $hidden = false;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hidden']))
+                $hidden = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['hidden'];
+            $form_fields['left']['hidden']            = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][hidden]", array('hidden' => '<b>' . __('Make this field Hidden', 'buddyforms') . '</b>'), array('value' => $hidden));
 
             break;
         case 'Status':

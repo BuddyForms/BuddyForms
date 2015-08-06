@@ -713,10 +713,11 @@ div.bf_files_container ul {
 }
 div.bf_files_container ul li {
     line-height: 14px !important;
+    margin-top: 20px;
 }
 .bf_attachment_li {
     padding-top: 10px;
-    height: 64px;
+    min-height: 64px;
 }
 
 .bf_attachment_li img {
