@@ -97,29 +97,29 @@
 
     // Remove images
     jQuery(document).on( 'click', '.bf_files a.delete', function( event ) {
+        if (confirm('Delete Permanently')) {
+            var $el = $(this);
 
-        var $el = $(this);
+            var $image_gallery_ids = $('#' + $el.data('slug'));
+            var bf_files = $('#bf_files_container_' + $el.data('slug') + ' ul.bf_files');
 
-        var $image_gallery_ids  = $('#'+$el.data('slug'));
-        var bf_files            = $('#bf_files_container_'+$el.data('slug')+' ul.bf_files');
+            var attachment_ids = $image_gallery_ids.val();
 
-        var attachment_ids = $image_gallery_ids.val();
+            $(this).closest('li.image').remove();
 
-        $(this).closest('li.image').remove();
+            var attachment_ids = '';
 
-        var attachment_ids = '';
+            $('#bf_files_container_' + $el.data('slug') + ' ul li.image').css('cursor', 'default').each(function () {
+                var attachment_id = jQuery(this).attr('data-attachment_id');
+                attachment_ids = attachment_ids + attachment_id + ',';
+            });
 
-        $('#bf_files_container_'+$el.data('slug')+' ul li.image').css('cursor','default').each(function() {
-            var attachment_id = jQuery(this).attr( 'data-attachment_id' );
-            attachment_ids = attachment_ids + attachment_id + ',';
-        });
+            $image_gallery_ids.val(attachment_ids);
 
-        $image_gallery_ids.val( attachment_ids );
-
-        // remove any lingering tooltips
-        $( '#tiptip_holder' ).removeAttr( 'style' );
-        $( '#tiptip_arrow' ).removeAttr( 'style' );
-
+            // remove any lingering tooltips
+            $('#tiptip_holder').removeAttr('style');
+            $('#tiptip_arrow').removeAttr('style');
+        }
         return false;
     });
 

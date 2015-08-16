@@ -1,27 +1,7 @@
 jQuery(document).ready(function (){
 
-
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
-    });
-
-    jQuery('.remove_attachment').click(function(){
- 		var delete_attachment_id = jQuery(this).attr('id');
- 		var delete_attachment_href = jQuery(this).attr('href');
-        var action = jQuery(this);
-
-		if (confirm('Delete Permanently'))
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "buddyforms_delete_attachment", "delete_attachment_id": delete_attachment_id, "delete_attachment_href": delete_attachment_href},
-				success: function(data){
-                    jQuery( "#"+data ).remove();
-				}
-			});
-
-		return false;
-
     });
 
     jQuery('.bf_datetime').datetimepicker({
@@ -53,48 +33,6 @@ jQuery(document).ready(function (){
 
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
-
-
-    //jQuery('#editpost_hierarchicals').ajaxForm({
-    //    data: {
-    //        action : 'buddyforms_ajax_process_edit_post'
-    //    },
-    //    dataType: 'json',
-    //    beforeSubmit: function(formData, jqForm, options) {
-    //        console.log(formData);
-    //        console.log(jqForm);
-    //        console.log(options);
-    //        // optionally process data before submitting the form via AJAX
-    //    },
-    //    success : function(responseText, statusText, xhr, $form) {
-    //        alert('asd');
-    //        // code that's executed when the request is processed successfully
-    //    },
-    //    error: function (request, status, error) {
-    //        console.log(request);
-    //        console.log(status);
-    //        console.log(error);
-    //    }
-    //});
-
-
-
-    //jQuery(document).on( "submit", '.form_wrapper', function( event ) {
-    //
-    //    var queryString = jQuery('#editpost_hierarchicals').formSerialize();
-    //
-    //    alert(queryString);
-    //    jQuery.post('buddyforms_ajax_process_edit_post', queryString);
-    //
-    //    beforeSerialize: function($form, options) {
-    //        alert('sdadas');
-    //        // return false to cancel submit
-    //    }
-    //
-    //    return false;
-    //
-    //});
-
 
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
 
@@ -218,6 +156,7 @@ jQuery(document).ready(function (){
     //
     //    return false;
     //});
+
     jQuery(document).on( "click", '.bf_delete_post', function( event ) {
         var post_id = jQuery(this).attr('id');
 

@@ -127,13 +127,6 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'Checkbox' :
-
-                        //$boom = wpcf_admin_fields_get_field('boom-check');
-                        $boom = wpcf_admin_fields_get_fields_by_group(258);
-                        echo '<pre>';
-                        print_r($boom);
-                        echo '</pre>';
-
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $form->addElement(new Element_Checkbox($name, $slug, $customfield['value'], $element_attr));

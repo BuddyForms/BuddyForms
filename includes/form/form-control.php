@@ -116,8 +116,11 @@ function buddyforms_process_post($args = Array()) {
         if(isset($customfields))
             $customfields = bf_update_post_meta($post_id, $customfields);
 
-        if(isset($_POST['featured-image']))
+        if(isset($_POST['featured-image'])){
             set_post_thumbnail($post_id, $_POST['featured-image']);
+        } else {
+            delete_post_thumbnail($post_id);
+        }
 
         // Save the Form slug as post meta
         update_post_meta($post_id, "_bf_form_slug", $form_slug);
