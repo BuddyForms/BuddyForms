@@ -11,11 +11,11 @@ Stable tag: 1.4
 You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard! 
 
 // Documentation 
-http://support.themekraft.com/categories/20110697-BuddyForms 
+http://docs.buddyforms.com
 
 // Support Tickets 
 You can also create support tickets there. 
-Login with your account from http://themekraft.com. 
+Login with your account from https://buddyforms.com/checkout/support-tickets/
 
 // Changelog
 

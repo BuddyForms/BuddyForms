@@ -67,9 +67,14 @@ function buddyforms_view_form_fields($args){
         $slug = sanitize_title($name);
     $form_fields['left']['slug']        = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b> <small>(optional)</small>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", array('shortDesc' => __('_name will create a hidden post meta field', 'buddyforms'), 'value' => $slug));
 
+//    $field_is_array = '';
+//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['field_is_array']))
+//        $field_is_array = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['field_is_array']);
+//    $form_fields['left']['field_is_array'] = new Element_Textbox('<b>' . __('field_is_array', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][field_is_array]", array('value' => $field_is_array));
+
     $description = '';
     if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
-        $description = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description'];
+        $description = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']);
 
     $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][description]", array('value' => $description));
     $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
@@ -214,7 +219,7 @@ function buddyforms_view_form_fields($args){
             unset($form_fields);
             $name = 'Comments';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+                $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
             $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'comments');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
@@ -225,7 +230,7 @@ function buddyforms_view_form_fields($args){
             unset($form_fields);
             $name = 'Title';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+                $name = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
             $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'editpost_title');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
@@ -275,7 +280,7 @@ function buddyforms_view_form_fields($args){
 
             $name = 'Status';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+                $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
             $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'post_status');
 
@@ -298,7 +303,7 @@ function buddyforms_view_form_fields($args){
 
             $name = 'FeaturedImage';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
-                $name = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'];
+                $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
             $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'featured-image');
 
@@ -309,7 +314,7 @@ function buddyforms_view_form_fields($args){
 
             $description = '';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
-                $description = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description'];
+                $description = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']);
             $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description:', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][description]", array('value' => $description));
 
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
@@ -351,7 +356,7 @@ function buddyforms_view_form_fields($args){
                 <div class="accordion-heading">
 
                         <div class="accordion-heading-options">
-                            <?php if(!isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug']) ||     $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug'] != 'editpost_title') { ?>
+                            <?php if(!isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug']) || $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug'] != 'editpost_title') { ?>
                                 <a class="delete" id="<?php echo $field_id ?>"
                                    href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
                                     <p><i class="icon-remove-sign" style="margin-top:7px;margin-right:2px;"></i><span>delete</span></p>
@@ -365,7 +370,7 @@ function buddyforms_view_form_fields($args){
                     <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text"
                        href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">
                         <?php echo $field_type; ?><i><?php if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']) && $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'] != $field_type)
-                                echo '<b>: </b>' . $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']; ?></i>
+                                echo '<b>: </b>' . stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']); ?></i>
                     </p>
 
                 </div>

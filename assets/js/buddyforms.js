@@ -139,17 +139,21 @@ jQuery(document).ready(function (){
                     jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();
 
                     jQuery.each(data, function(i, val) {
-                        if(i == 'form_notice'){
-                            //jQuery('#message').append(val);
-                            //jQuery('.the_buddyforms_form_'+ form_slug).append(val);
-                            //jQuery('.the_buddyforms_form_'+ form_slug + ' .form-actions').append(val);
-                            jQuery('#form_message_' + form_slug).html(val);
-                            //jQuery( val ).insertBefore( '.the_buddyforms_form_'+ form_slug );
-                        } else if(i == 'form_remove'){
-                            jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper').remove();
-                        } else {
-                            jQuery('input[name="' + i + '"]').val(val);
+
+                        switch(i) {
+                            case 'form_notice':
+                                jQuery('#form_message_' + form_slug).html(val);
+                                break;
+                            case 'form_remove':
+                                jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper').remove();
+                                break;
+                            case 'form_actions':
+                                jQuery('.the_buddyforms_form_'+ form_slug + ' .form-actions').html(val);
+                                break;
+                            default:
+                                jQuery('input[name="' + i + '"]').val(val);
                         }
+
                     });
 
                 },

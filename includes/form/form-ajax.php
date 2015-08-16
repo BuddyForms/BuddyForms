@@ -28,10 +28,9 @@ function buddyforms_ajax_process_edit_post(){
 
     switch ($buddyforms['buddyforms'][$_POST['form_slug']]['after_submit']) {
         case 'display_post':
-            $json = Array(
-                'form_notice' => buddyforms_after_save_post_redirect(get_permalink( $args['post_id'] )),
-            );
-            echo json_encode($json);
+
+            $json['form_notice'] = buddyforms_after_save_post_redirect(get_permalink( $args['post_id'] ));
+
             break;
         case 'display_message':
             $permalink = get_permalink( $buddyforms['buddyforms'][$args['form_slug']]['attached_page'] );
@@ -41,22 +40,23 @@ function buddyforms_ajax_process_edit_post(){
             $display_message = str_ireplace('[post_title]', get_the_title($args['post_id']), $display_message);
             $display_message = str_ireplace('[post_link]', '<a title="Display Post" href="'. get_permalink( $args['post_id'] ) .'"">' . __( 'Display Post', 'buddyforms' ) .'</a>', $display_message);
             $display_message = str_ireplace('[edit_link]', '<a title="Edit Post" href="'. $permalink.'edit/'.$args['form_slug'].'/'. $args['post_id'] .'"">' . __( 'Continue Editing', 'buddyforms' ) .'</a>', $display_message);
-            $json = Array(
-                'form_remove' => 'true',
-                'form_notice' => $display_message,
-            );
-            echo json_encode($json);
+
+            $json['form_remove'] = 'true';
+            $json['form_notice'] = $display_message;
+
             break;
         default:
-             $json = Array(
-                'post_id'     => $args['post_id'],
-                'revision_id' => $args['revision_id'],
-                'post_parent' => $args['post_parent'],
-                'form_notice' => $args['form_notice'],
-            );
-            echo json_encode($json);
+
+            $json['post_id']     = $args['post_id'];
+            $json['revision_id'] = $args['revision_id'];
+            $json['post_parent'] = $args['post_parent'];
+            $json['form_notice'] = $args['form_notice'];
+
             break;
     }
+
+    $json = apply_filters('buddyforms_ajax_process_edit_post_json_response', $json);
+    echo json_encode($json);
 
     die();
 

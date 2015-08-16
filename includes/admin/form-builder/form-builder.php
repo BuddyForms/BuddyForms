@@ -77,14 +77,14 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML(' <tr>
                     <th scope="row" class="check-column">
-                        <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . $buddyform['name'] . '</label>
+                        <label class="screen-reader-text" for="aid-' . $buddyform['slug'] . '">' . stripslashes($buddyform['name']) . '</label>
                         <input type="checkbox" name="bf_bulkactions_slugs[]" value="' . $buddyform['slug'] . '" id="aid-' . $buddyform['slug'] . '">
 
 
                     </th>
                     <td class="name column-name">
 
-                    <div class="showhim">'.$buddyform['name'].'<div class="showme"><a  href="#subcon'.$buddyform['slug'].'" data-toggle="tab">'.__('Form Builder','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">'.__('Roles and Capabilities','buddyforms').'</a></div></div>
+                    <div class="showhim">'.stripslashes($buddyform['name']).'<div class="showme"><a  href="#subcon'.$buddyform['slug'].'" data-toggle="tab">'.__('Form Builder','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">'.__('Roles and Capabilities','buddyforms').'</a></div></div>
                     </td>'
             ));
 
@@ -228,7 +228,7 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML('
                             <div class="hero-unit">
-                            <h3>' . __('Form Settings for', 'buddyforms') . ' "' . $buddyform['name'] . '"</h3>'));
+                            <h3>' . __('Form Settings for', 'buddyforms') . ' "' . stripslashes($buddyform['name']) . '"</h3>'));
 
             if(empty($buddyform['name']) || empty($buddyform['singular_name']) || empty($buddyform['slug']) || $buddyform['post_type'] == 'none' || $buddyform['attached_page'] == '')
                 $form->addElement(new Element_HTML('<div class="bf-error"><h4>'.__('This form is broken please check your required settings under Form Control and save the form').'</h4></div>'));
@@ -250,8 +250,8 @@ function buddyforms_settings_page(){
                                 <div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_' . $buddyform['slug'] . '" href="#accordion_' . $buddyform['slug'] . '_status"><b>' . __('Form Control', 'buddyforms') . '</b></p></div>
                                 <div id="accordion_' . $buddyform['slug'] . '_status" class="accordion-body collapse">
                                     <div class="accordion-inner bf-main-settings">'));
-            $form->addElement(new Element_Textbox('<b>'.__("Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => $buddyform['name'],'required' => 1)));
-            $form->addElement(new Element_Textbox('<b>'.__("Singular Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => $buddyform['singular_name'],'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][name]", array( 'value' => stripslashes($buddyform['name']),'required' => 1)));
+            $form->addElement(new Element_Textbox('<b>'.__("Singular Name", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][singular_name]", array('value' => stripslashes($buddyform['singular_name']),'required' => 1)));
             $form->addElement(new Element_Textbox('<b>'.__("Slug", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][slug]", array('shortDesc' => __('If you change the slug you need to reset the roles and capabilities', 'buddyforms'), 'value' => $buddyform['slug'], 'required' => 1)));
 
             $form->addElement(new Element_HTML('<br><hr /><br />'));
