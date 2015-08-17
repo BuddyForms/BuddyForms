@@ -128,9 +128,9 @@ function buddyforms_get_template_directory() {
  * @since 0.1 beta
  */
 function buddyforms_locate_template($file) {
-	if (locate_template(array($file), false)) {
-		locate_template(array($file), true);
-	} else {
-		include (BUDDYFORMS_TEMPLATE_PATH . $file);
-	}
+    if (locate_template(array($file), false)) {
+        locate_template(array($file), true);
+    } else {
+        include (BUDDYFORMS_TEMPLATE_PATH . $file);
+    }
 }

@@ -3,7 +3,9 @@ class Element_Checkbox extends OptionElement {
 	protected $_attributes = array("type" => "checkbox");
 	protected $inline;
 
-	public function render() { 
+	public function render() {
+		//echo $this->getAttributes();
+
 		if(isset($this->_attributes["value"])) {
 			if(!is_array($this->_attributes["value"]))
 				$this->_attributes["value"] = array($this->_attributes["value"]);
@@ -26,7 +28,12 @@ class Element_Checkbox extends OptionElement {
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
 
-			echo '<label class="', $labelClass, '"> <input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "value", "checked", "required")), ' value="', $this->filter($value), '"';
+			//echo 'da' . $labelClass;
+
+			echo '<label class="', $labelClass, '"> <input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "value", "checked")), ' value="', $this->filter($value), '"';
+
+//			if($this->isRequired())
+//				echo ' required="required"';
 			if(in_array($value, $this->_attributes["value"]))
 				echo ' checked="checked"';
 			echo '/> ', $text, ' </label> ';

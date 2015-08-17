@@ -27,8 +27,10 @@ function bf_form_elements($form, $args){
 //                $customfield_val = $customfield_val[$customfield['field_is_array']];
 //            }
 
-            $name           = stripcslashes($customfield['name']);
-            $description    = stripcslashes($customfield['description']);
+            if(isset($customfield['name']))
+                $name           = stripcslashes($customfield['name']);
+            if(isset($customfield['description']))
+                $description    = stripcslashes($customfield['description']);
 
 
             if(isset($customfield['type'])){
@@ -50,7 +52,7 @@ function bf_form_elements($form, $args){
                         // $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input bf_datetime', 'shortDesc' => isset($description) ? $description : '') : array('value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($description) ? $description : '');
                         // $form->addElement(new Element_Textbox('Sale Price Date From', '_sale_price_dates_from', $element_attr));
 
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => $slug, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         $form->addElement(new Element_Date($name, $slug, $element_attr));
                         break;
                     case 'Title':
@@ -63,12 +65,12 @@ function bf_form_elements($form, $args){
                         if( isset($customfield['hidden']) ) {
                             $form->addElement(new Element_Hidden('editpost_title', $post_title ));
                         } else {
-                            $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'value' => $post_title)));
+                            $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'id' => 'editpost_title', 'value' => $post_title)));
                         }
 
                         break;
                     case 'Content':
-
+                        add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
                         $editpost_content_val = false;
                         if (isset($_POST['editpost_content'])) {
                             $editpost_content_val = stripslashes($_POST['editpost_content']);
@@ -85,6 +87,7 @@ function bf_form_elements($form, $args){
                             'quicktags'     => isset($customfield['post_content_options']) ? in_array('quicktags', $customfield['post_content_options']) ? false : true : true,
                             'textarea_rows' => 18,
                             'textarea_name' => 'editpost_content',
+                            'editor_class'  => 'textInMce',
                         );
 
                         if (isset($post_id)) {
@@ -127,7 +130,7 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'Checkbox' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
+                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => $slug, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $form->addElement(new Element_Checkbox($name, $slug, $customfield['value'], $element_attr));
                         }
@@ -217,7 +220,7 @@ function bf_form_elements($form, $args){
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
                         $form->addElement( new Element_Url($name, $slug, $element_attr));
                         break;
-                    case 'Featured-Image':
+                    case 'Featured_Image':
 
 
                         $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array('value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
@@ -267,9 +270,10 @@ function bf_form_elements($form, $args){
                             <div class="bf_inputs">
                             '.$str.'
                             </div>
-                        </div>
-                        ' ));
-                        $form->addElement(new Element_Hidden('featured-image', $customfield_val , array('id' => $slug)));
+                        '));
+                        $form->addElement(new Element_Hidden('featured_image', $customfield_val , array('id' => $slug)));
+                        $form->addElement(new Element_HTML( '</div>' ));
+
                         break;
                     case 'File':
 
@@ -320,9 +324,10 @@ function bf_form_elements($form, $args){
                             <div class="bf_inputs">
                             '.$str.'
                             </div>
-                        </div>
-                        ' ));
+                        '));
                         $form->addElement(new Element_Hidden($slug, $customfield_val , array('id' => $slug)));
+                        $form->addElement(new Element_HTML( '</div>' ));
+
 
                         break;
                     case 'Taxonomy' :
@@ -421,4 +426,14 @@ function bf_form_elements($form, $args){
         endif;
     endforeach;
 
+}
+
+function my_tinymce_setup_function( $initArray ) {
+    $initArray['setup'] = 'function(ed){
+      ed.onChange.add(function(ed, l) {
+        tinyMCE.triggerSave();
+	    jQuery("#editpost_content").valid();
+      });
+    }';
+    return $initArray;
 }

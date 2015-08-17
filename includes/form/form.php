@@ -162,8 +162,4 @@ function buddyforms_create_edit_form( $args ) {
         echo buddyforms_form_html( $args );
     }
 
-
-
-
-
 }

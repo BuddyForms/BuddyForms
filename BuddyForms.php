@@ -270,8 +270,9 @@ class BuddyForms {
 		do_action('buddyforms_front_js_css_enqueue');
 
 		wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'jquery-form' );
-        wp_enqueue_script( 'jquery-ui-core' );
+        //wp_enqueue_script( 'jquery-form' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-widgets' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 
         wp_enqueue_script( 'jquery-validation', plugins_url('assets/resources/jquery.validate.min.js', __FILE__) , array( 'jquery' ) );

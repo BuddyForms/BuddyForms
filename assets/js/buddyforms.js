@@ -1,3 +1,59 @@
+jQuery(function() {
+    var validator = jQuery("#editpost_tryps").submit(function() {
+        // update underlying textarea before submit validation
+        tinyMCE.triggerSave();
+    }).validate({
+        ignore: "",
+        rules: {
+            editpost_title: {
+                required: true,
+                minlength: 2
+            },
+            editpost_content: {
+                required: true,
+                minlength: 10
+            },
+            featured_image: {
+                required: true,
+            }
+        },
+        messages: {
+            editpost_title: {
+                required: "PLEASE ENTER A TITLE",
+                minlength: jQuery.validator.format("At least {0} characters requyyired!")
+            },
+            editpost_content: {
+                required: "PLEASE ENTER A editpost_content",
+                minlength: jQuery.validator.format("At least {0} characters editpost_content!")
+            }
+        },
+        errorPlacement: function(label, element) {
+            // position error label after generated textarea
+            if (element.is("textarea")) {
+                jQuery("#editpost_title").prev().css('color','red');
+                label.insertBefore("#editpost_content");
+            } else {
+                label.insertAfter(element)
+            }
+        }
+    });
+    validator.focusInvalid = function() {
+        // put focus on tinymce on submit validation
+        if (this.settings.focusInvalid) {
+            try {
+                var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                if (toFocus.is("textarea")) {
+                    tinyMCE.get(toFocus.attr("id")).focus();
+                } else {
+                    toFocus.filter(":visible").focus();
+                }
+            } catch (e) {
+                // ignore IE throwing errors when focusing hidden elements
+            }
+        }
+    }
+});
+
 jQuery(document).ready(function (){
 
     jQuery(".bf-select2").select2({
@@ -31,11 +87,60 @@ jQuery(document).ready(function (){
         }
     });
 
+    //var validator = jQuery("#editpost_tryps").submit(function() {
+    //    // update underlying textarea before submit validation
+    //    tinyMCE.triggerSave();
+    //}).validate({
+    //    rules: {
+    //        editpost_title: {
+    //            required: true,
+    //            minlength: 2
+    //        },
+    //        editpost_content: {
+    //            required: true,
+    //            minlength: 10
+    //        }
+    //    },
+    //    messages: {
+    //        editpost_title: {
+    //            required: "PLEASE ENTER A TITLE",
+    //            minlength: jQuery.validator.format("At least {0} characters requyyired!")
+    //        },
+    //        editpost_content: {
+    //            required: "PLEASE ENTER A editpost_content",
+    //            minlength: jQuery.validator.format("At least {0} characters editpost_content!")
+    //        }
+    //    },
+    //    errorPlacement: function(label, element) {
+    //        // position error label after generated textarea
+    //        if (element.is("textarea")) {
+    //            label.insertAfter(element.next());
+    //        } else {
+    //            label.insertAfter(element)
+    //        }
+    //    }
+    //});
+    //validator.focusInvalid = function() {
+    //    // put focus on tinymce on submit validation
+    //    if (this.settings.focusInvalid) {
+    //        try {
+    //            var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+    //            if (toFocus.is("textarea")) {
+    //                tinyMCE.get(toFocus.attr("id")).focus();
+    //            } else {
+    //                toFocus.filter(":visible").focus();
+    //            }
+    //        } catch (e) {
+    //            // ignore IE throwing errors when focusing hidden elements
+    //        }
+    //    }
+    //}
+
+
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
 
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
-
         var form_name   = event.target.id;
         var form_slug   = form_name.split("editpost_")[1];
         var $btn = jQuery(document.activeElement);
@@ -54,9 +159,6 @@ jQuery(document).ready(function (){
         jQuery('#' + form_name + ' #submitted').val(submit_type);
 
 
-        //var validator = jQuery('#' + form_name ).validate();
-        //alert(validator.form()); new form validation in process !
-
         if(jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off'){
 
             event.preventDefault();
@@ -71,7 +173,6 @@ jQuery(document).ready(function (){
                 beforeSend :function(){
                     jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').show();
                 },
-
                 success: function(data){
 
                     jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();

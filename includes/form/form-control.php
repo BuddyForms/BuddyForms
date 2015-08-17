@@ -116,8 +116,8 @@ function buddyforms_process_post($args = Array()) {
         if(isset($customfields))
             $customfields = bf_update_post_meta($post_id, $customfields);
 
-        if(isset($_POST['featured-image'])){
-            set_post_thumbnail($post_id, $_POST['featured-image']);
+        if(isset($_POST['featured_image'])){
+            set_post_thumbnail($post_id, $_POST['featured_image']);
         } else {
             delete_post_thumbnail($post_id);
         }
