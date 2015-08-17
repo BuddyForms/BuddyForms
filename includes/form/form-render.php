@@ -19,6 +19,92 @@ function buddyforms_form_html( $args ){
 
     $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug. '"">';
 
+
+    $form_html .= '
+    <script>
+    jQuery(function() {
+        var validator = jQuery("#editpost_tryps").submit(function() {
+                // update underlying textarea before submit validation
+                tinyMCE.triggerSave();
+            }).validate({
+        ignore: "",
+        rules: {
+        ';
+
+        foreach($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key =>  $form_field ){
+            if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
+
+                $field_slug = str_replace("-", "", $form_field['slug']);
+                $form_html .= $field_slug . ': {
+                    required: true,';
+
+                if(isset($form_field['validation_min']) && $form_field['validation_min'] > 0)
+                    $form_html .= 'min: ' . $form_field['validation_min'] . ',';
+
+                if(isset($form_field['validation_max']) && $form_field['validation_max'] > 0)
+                    $form_html .= 'max: ' . $form_field['validation_max'] . ',';
+
+                if(isset($form_field['validation_minlength']) && $form_field['validation_minlength'] > 0)
+                    $form_html .= 'minlength: ' . $form_field['validation_minlength'] . ',';
+
+                if(isset($form_field['validation_maxlength']) && $form_field['validation_maxlength'] > 0)
+                    $form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
+
+
+                $form_html .= '},';
+            }
+
+        }
+
+    $form_html .= '},
+        messages: {
+            ';
+    foreach($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key =>  $form_field ){
+        if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
+
+            $validation_error_message = __('This field is required.', 'buddyforms');
+            if(isset($form_field['validation_error_message']))
+                $validation_error_message = $form_field['validation_error_message'];
+
+            $field_slug = str_replace("-", "", $form_field['slug']);
+            $form_html .= $field_slug . ': {
+                required: "' . $validation_error_message . '",
+            },';
+        }
+
+    }
+
+
+    $form_html .= '},';
+
+    $form_html .= 'errorPlacement: function(label, element) {
+            // position error label after generated textarea
+            if (element.is("textarea")) {
+                jQuery("#editpost_title").prev().css(\'color\',\'red\');
+                label.insertBefore("#editpost_content");
+            } else {
+                label.insertAfter(element)
+            }
+        }
+    });
+    validator.focusInvalid = function() {
+        // put focus on tinymce on submit validation
+        if (this.settings.focusInvalid) {
+            try {
+                var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                if (toFocus.is("textarea")) {
+                    tinyMCE.get(toFocus.attr("id")).focus();
+                } else {
+                    toFocus.filter(":visible").focus();
+                }
+            } catch (e) {
+                // ignore IE throwing errors when focusing hidden elements
+            }
+        }
+    }
+});
+</script>';
+
     if ( !is_user_logged_in() ) :
         $wp_login_form = '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
         $wp_login_form .= apply_filters( 'buddyforms_wp_login_form', wp_login_form(array('echo' => false)) );
