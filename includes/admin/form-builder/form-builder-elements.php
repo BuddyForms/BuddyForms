@@ -530,7 +530,6 @@ function buddyforms_view_form_fields($args){
                                         <?php
                                         if (isset($form_fields['addons'])) {
                                             foreach ($form_fields['addons'] as $key => $value) {
-                                                print_r($form_fields['addons'][$key]);
                                                 echo '<div class="buddyforms_field_label">' . $form_fields['addons'][$key]->getLabel() . '</div>';
                                                 echo '<div class="buddyforms_form_field">' . $form_fields['addons'][$key]->render() . '</div>';
                                             }
