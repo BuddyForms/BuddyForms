@@ -10,6 +10,8 @@
 function buddyforms_attached_page_rewrite_rules(){
     global $buddyforms;
 
+    $buddyforms = get_option('buddyforms_options', true);
+
     if ( !is_admin() )
         return;
 
@@ -25,7 +27,6 @@ function buddyforms_attached_page_rewrite_rules(){
             add_rewrite_rule($post_data['post_name'].'/edit/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top');
             add_rewrite_rule($post_data['post_name'].'/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
         }
-
     }
     flush_rewrite_rules();
 }

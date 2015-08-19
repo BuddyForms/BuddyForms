@@ -8,8 +8,14 @@
 function buddyforms_settings_page(){
     global $buddyforms, $bf_mod5;
 
+
+
     // Get all needed values
     BuddyForms::set_globals();
+
+//    echo '<pre>';
+//    print_r($buddyforms);
+//    echo '</pre>';
 
     // Get all post types
     $args = array(
@@ -38,7 +44,7 @@ function buddyforms_settings_page(){
 
         $form->addElement(new Element_HTML('
         <div class="alignleft actions bulkactions">
-            <select name="bf_bulkactions">
+            <select name="loading-animation-new">
                 <option value="-1" selected="selected">'.__('Bulk Actions','buddyforms').'</option>
                 <option value="delete">'.__('Delete Permanently','buddyforms').'</option>
             </select>
@@ -172,7 +178,7 @@ function buddyforms_settings_page(){
                                 <div id="accordion_' . $buddyform['slug'] . '_save" class="accordion-body">
                                     <div class="accordion-inner">
 
-                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification Settings', 'buddyforms').'</a>
+                                    <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification', 'buddyforms').'</a>
                                     <a style="margin-bottom: 5px;" class="button" href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'"> '.__('Roles and Capabilities', 'buddyforms').'</a>
                                     '));
 
@@ -234,8 +240,9 @@ function buddyforms_settings_page(){
                 $form->addElement(new Element_HTML('<div class="bf-error"><h4>'.__('This form is broken please check your required settings under Form Control and save the form').'</h4></div>'));
 
             $form->addElement(new Element_HTML('<p class="loading-animation-order alert alert-success">' . __('Save new order', 'buddyforms') . ' <i class="icon-ok"></i></p>'));
-            $form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">' . __('Load new element', 'buddyforms') . ' <i class="icon-ok"></i></div>
-                        '));
+            $form->addElement(new Element_HTML('<div class="loading-animation-new alert alert-success">' . __('Load new element', 'buddyforms') . ' <i class="icon-ok"></i></div>'));
+            $form->addElement(new Element_HTML('<div class="hidden loading-animation-save alert alert-success">' . __('Saving the Form', 'buddyforms') . ' <i class="icon-ok"></i></div>'));
+            $form->addElement(new Element_HTML('<div class="hidden loading-animation-error alert alert-error">' . __('Something went wrong, please try again', 'buddyforms') . ' <i class="icon-ok"></i></div>'));
 
             $sortArray = array();
 

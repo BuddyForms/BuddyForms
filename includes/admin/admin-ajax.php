@@ -67,16 +67,38 @@ function buddyforms_add_form(){
 
     $buddyforms['buddyforms'][$create_new_form_slug] = $options;
 
-    update_option("buddyforms_options", $buddyforms);
-    buddyforms_attached_page_rewrite_rules();
-    echo sanitize_title($_POST['create_new_form_name']);
+    $update_option = update_option("buddyforms_options", $buddyforms);
+
+    if($update_option){
+        buddyforms_attached_page_rewrite_rules();
+        echo sanitize_title($_POST['create_new_form_name']);
+    } else {
+        echo 'Error Saving the Form';
+    }
 
     die();
 
 }
 add_action( 'wp_ajax_buddyforms_add_form', 'buddyforms_add_form' );
 
+function buddyforms_save_options(){
+    if(empty($_POST['buddyforms_options']))
+        return;
 
+    parse_str($_POST['buddyforms_options'], $formdata);
+//    echo '<pre>';
+//    print_r($formdata['buddyforms_options']);
+//    echo '</pre>';
+
+    $update_option = update_option('buddyforms_options', $formdata['buddyforms_options']);
+
+    if($update_option){
+        buddyforms_attached_page_rewrite_rules();
+    }
+
+    die();
+}
+add_action( 'wp_ajax_buddyforms_save_options', 'buddyforms_save_options' );
 /**
  * Ajax call back function to delete a form element
  *

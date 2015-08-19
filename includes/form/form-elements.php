@@ -223,9 +223,6 @@ function bf_form_elements($form, $args){
                         break;
                     case 'Featured_Image':
 
-
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array( 'id' => str_replace("-", "", $slug),'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
-
                         $attachment_ids = $customfield_val;
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -259,16 +256,26 @@ function bf_form_elements($form, $args){
                             }
                         }
 
-                        $str .= '</ul></div>';
+                        $str .= '</ul>';
 
-                        $str .= '<p class="bf_add_files hide-if-no-js">';
+                        $str .= '<span class="bf_add_files hide-if-no-js">';
                         $str .= '<a href="#" data-slug="'.$slug.'" data-type="image/jpeg,image/gif,image/png,image/bmp,image/tiff,image/x-icon" data-multiple="false" data-choose="' . __( 'Add ', 'buddyforms' ) . $name.'" data-update="' . __( 'Add ', 'buddyforms' ) . $name.'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name.'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Add ', 'buddyforms' ) . $name.'</a>';
-                        $str .= '</p>';
+                        $str .= '</span>';
+
+                        $str .= '</div><span class="help-inline">';
+                        $str .= $description;
+                        $str .= '</span>';
+
 
                         $form->addElement(new Element_HTML( '
                         <div class="bf_field_group">
-                            <label for="_'.$slug.'"><span class="required">* </span>'.$name.'</label>
-                            <div class="bf_inputs">
+                            <label for="_'.$slug.'">'));
+
+                        if(isset($customfield['required']))
+                            $form->addElement(new Element_HTML( '<span class="required">* </span>' ));
+
+                        $form->addElement(new Element_HTML( $name.'</label>'));
+                        $form->addElement(new Element_HTML( '<div class="bf_inputs">
                             '.$str.'
                             </div>
                         '));
@@ -313,22 +320,39 @@ function bf_form_elements($form, $args){
                             }
                         }
 
-                        $str .= '</ul></div>';
+                        $str .= '</ul>';
 
-                        $str .= '<p class="bf_add_files hide-if-no-js">';
-                        $str .= '<a href="#" data-slug="'.$slug.'" data-multiple="true" data-choose="' . __( 'Add ', 'buddyforms' ) . $name.'" data-update="' . __( 'Add ', 'buddyforms' ) . $name.'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name.'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
-                        $str .= '</p>';
+                        $str .= '<span class="bf_add_files hide-if-no-js">';
+
+                        $data_type = '';
+                        if(isset($customfield['validation_data_type']))
+                            $data_type = 'data-type="' . $customfield['validation_data_type'] . '"';
+
+                        $data_multiple = 'data-multiple="false"';
+                        if(isset($customfield['validation_multiple']))
+                            $data_multiple = 'data-multiple="true"';
+
+                        $str .= '<a href="#" data-slug="'.$slug.'" '.$data_multiple.' '.$data_type.' data-choose="' . __( 'Add ', 'buddyforms' ) . $name.'" data-update="' . __( 'Add ', 'buddyforms' ) . $name.'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name.'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
+                        $str .= '</span>';
+
+                        $str .= '</div><span class="help-inline">';
+                        $str .= $description;
+                        $str .= '</span>';
 
                         $form->addElement(new Element_HTML( '
                         <div class="bf_field_group">
-                            <label for="_'.$slug.'">'.$name.'</label>
-                            <div class="bf_inputs">
+                            <label for="_'.$slug.'">'));
+
+                        if(isset($customfield['required']))
+                            $form->addElement(new Element_HTML( '<span class="required">* </span>' ));
+
+                        $form->addElement(new Element_HTML( $name.'</label>'));
+                        $form->addElement(new Element_HTML( '<div class="bf_inputs">
                             '.$str.'
                             </div>
                         '));
                         $form->addElement(new Element_Hidden($slug, $customfield_val , array('id' => $slug)));
                         $form->addElement(new Element_HTML( '</div>' ));
-
 
                         break;
                     case 'Taxonomy' :
@@ -392,8 +416,10 @@ function bf_form_elements($form, $args){
                     </div>';
 
                         if( isset($customfield['hidden']) ){
-                            foreach( $customfield['taxonomy_default'] as $key => $tax){
-                                $form->addElement( new Element_Hidden($slug.'['.$key.']',$tax));
+                            if(isset($customfield['taxonomy_default'])){
+                                foreach( $customfield['taxonomy_default'] as $key => $tax){
+                                    $form->addElement( new Element_Hidden($slug.'['.$key.']',$tax));
+                                }
                             }
                         } else {
                             $form->addElement( new Element_HTML($dropdown));

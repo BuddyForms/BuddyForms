@@ -1,21 +1,14 @@
 jQuery(document).ready(function(jQuery) {
 
-    var hash = window.location.hash;
-    if(hash) {
-        var activeTab = jQuery('[href=' + hash + ']');
-        activeTab && activeTab.tab('show');
-    }
+	var location = window.location;
+	var hash = window.location.hash;
+	if(hash)
+		hash && jQuery('.showme a[href="' + hash + '"]').tab('show');
 
-	if (typeof(Zenbox) !== "undefined") {
-		Zenbox.init({
-			dropboxID:   "20181572",
-			url:         "https://themekraft.zendesk.com",
-			tabTooltip:  "Feedback",
-			tabColor:    "black",
-			tabPosition: "Left",
-			hide_tab: true
-		});
-	}
+	jQuery('.showme a').click(function (e) {
+		jQuery(this).tab('show');
+		window.location.hash = this.hash;
+	});
 
 	jQuery('.new_form').click(function(){
 
@@ -94,6 +87,30 @@ jQuery(document).ready(function(jQuery) {
 				alert('Something went wrong.. ;-(sorry)');
 			}
 		});
+	});
+
+
+	jQuery(document).on( "submit",'#buddyforms_form', function( event ) {
+
+
+        alert('dum');
+		var FormData = jQuery('#buddyforms_form').serialize();
+
+        jQuery('.loading-animation-save').show(); // Show the animate loading gif while waiting
+		jQuery.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {"action": "buddyforms_save_options", "buddyforms_options": FormData},
+			success: function(data){
+                jQuery('.loading-animation-save').hide(); // Show the animate loading gif while waiting
+			},
+            error: function() {
+                jQuery('.loading-animation-save').hide(); // Show the animate loading gif while waiting
+                jQuery('.loading-animation-error').show(); // Show the animate loading gif while waiting
+            }
+		});
+
+		return false;
 	});
 
  	jQuery('.dele_form').click(function(){
