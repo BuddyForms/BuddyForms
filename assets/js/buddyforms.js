@@ -31,56 +31,6 @@ jQuery(document).ready(function (){
         }
     });
 
-    //var validator = jQuery("#editpost_tryps").submit(function() {
-    //    // update underlying textarea before submit validation
-    //    tinyMCE.triggerSave();
-    //}).validate({
-    //    rules: {
-    //        editpost_title: {
-    //            required: true,
-    //            minlength: 2
-    //        },
-    //        editpost_content: {
-    //            required: true,
-    //            minlength: 10
-    //        }
-    //    },
-    //    messages: {
-    //        editpost_title: {
-    //            required: "PLEASE ENTER A TITLE",
-    //            minlength: jQuery.validator.format("At least {0} characters requyyired!")
-    //        },
-    //        editpost_content: {
-    //            required: "PLEASE ENTER A editpost_content",
-    //            minlength: jQuery.validator.format("At least {0} characters editpost_content!")
-    //        }
-    //    },
-    //    errorPlacement: function(label, element) {
-    //        // position error label after generated textarea
-    //        if (element.is("textarea")) {
-    //            label.insertAfter(element.next());
-    //        } else {
-    //            label.insertAfter(element)
-    //        }
-    //    }
-    //});
-    //validator.focusInvalid = function() {
-    //    // put focus on tinymce on submit validation
-    //    if (this.settings.focusInvalid) {
-    //        try {
-    //            var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-    //            if (toFocus.is("textarea")) {
-    //                tinyMCE.get(toFocus.attr("id")).focus();
-    //            } else {
-    //                toFocus.filter(":visible").focus();
-    //            }
-    //        } catch (e) {
-    //            // ignore IE throwing errors when focusing hidden elements
-    //        }
-    //    }
-    //}
-
-
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
 
@@ -88,6 +38,11 @@ jQuery(document).ready(function (){
         var form_name   = event.target.id;
         var form_slug   = form_name.split("editpost_")[1];
         var $btn = jQuery(document.activeElement);
+
+       if(!jQuery('#' + form_name).valid()){
+           alert('Please check all errors before submiting the form!')
+           return false;
+       }
 
         if (
             /* there is an activeElement at all */

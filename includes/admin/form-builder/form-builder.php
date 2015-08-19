@@ -44,11 +44,11 @@ function buddyforms_settings_page(){
 
         $form->addElement(new Element_HTML('
         <div class="alignleft actions bulkactions">
-            <select name="loading-animation-new">
+            <select name="bf_bulkactions">
                 <option value="-1" selected="selected">'.__('Bulk Actions','buddyforms').'</option>
                 <option value="delete">'.__('Delete Permanently','buddyforms').'</option>
             </select>
-            <button type="submit" class="button action" name="action" value="Apply">'.__('Apply','buddyforms').'</button>
+            <button type="submit" class="button bf_delete" name="bf_delete" value="Apply">'.__('Apply','buddyforms').'</button>
 
         </div><br class="clear"><br>'));
 
@@ -104,10 +104,10 @@ function buddyforms_settings_page(){
             $post_type = isset($buddyform['post_type']) ? $buddyform['post_type'] : 'none';
 
             if(!post_type_exists($post_type))
-                $post_type_html = '<p>Post Type ' . $post_type . ' not Exists</p>';
+                $post_type_html = '<p>' . __('Post Type ', 'buddyforms') . $post_type . __(' not exists', 'buddyforms') . '</p>';
 
             if($post_type == 'none')
-                $post_type_html = '<p>Post Type not Selected</p>';
+                $post_type_html = '<p>' . __('No Post Type not Selected', 'buddyforms') . '</p>';
 
             $form->addElement(new Element_HTML($post_type_html));
             $form->addElement(new Element_HTML('</td>'));
@@ -163,7 +163,7 @@ function buddyforms_settings_page(){
             $form->addElement(new Element_Button('button', 'button', array('id' => $buddyform['slug'], 'class' => 'button dele_form', 'name' => 'dele_form', 'value' => __('Delete', 'buddyforms'))));
 
 
-            $form->addElement(new Element_HTML('<button type="submit" class="button-primary" style="float: right" name="action" value="Save">Save</button>'));
+            $form->addElement(new Element_HTML('<button type="submit" class="button-primary bf-save-form" style="float: right" name="action" value="Save">Save</button>'));
             //$form->addElement(new Element_Button('submit', 'submit', array('action' => 'action', 'id' => 'submited', 'name' => 'form_save_action', 'value' => __('Save', 'buddyforms'), 'class' => 'button-primary', 'style' => 'float: right;')));
 
             $form->addElement(new Element_HTML('

@@ -27,8 +27,10 @@ function bf_form_elements($form, $args){
 //                $customfield_val = $customfield_val[$customfield['field_is_array']];
 //            }
 
+            $name = '';
             if(isset($customfield['name']))
                 $name           = stripcslashes($customfield['name']);
+            $description = '';
             if(isset($customfield['description']))
                 $description    = stripcslashes($customfield['description']);
 
@@ -65,7 +67,7 @@ function bf_form_elements($form, $args){
                         if( isset($customfield['hidden']) ) {
                             $form->addElement(new Element_Hidden('editpost_title', $post_title ));
                         } else {
-                            $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'id' => 'editpost_title', 'value' => $post_title)));
+                            $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description)));
                         }
 
                         break;
@@ -112,8 +114,8 @@ function bf_form_elements($form, $args){
                         if( isset($customfield['hidden']) ) {
                             $form->addElement(new Element_Hidden('editpost_content', $editpost_content_val ));
                         } else {
-                            $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
-                            $form->addElement(new Element_HTML($wp_editor));
+                            $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . ':</label><div class="bf_inputs">' . $wp_editor . '</div><span class="help-inline">'.$description.'</span></div>';
+                            $form->addElement(new Element_HTML( $wp_editor ));
                         }
 
                          break;

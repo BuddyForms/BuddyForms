@@ -55,17 +55,14 @@ function buddyforms_options_content() {
 
         include('admin-credits.php');
 
-        if(isset($_POST['action']) && $_POST['action'] == 'Apply'){
+        if(isset($_POST['bf_delete']) && $_POST['bf_delete'] == 'Apply'){
 
             if ( isset( $_POST['bf_bulkactions'] ) && $_POST['bf_bulkactions'] == 'delete' && isset($_POST['bf_bulkactions_slugs']) ){
 
                 foreach ($_POST['bf_bulkactions_slugs'] as $key => $form_slug){
-                    foreach ( $buddyforms as $key => $section) {
 
-                        if( isset($buddyforms[$key][$form_slug]))
-                            unset($buddyforms[$key][$form_slug]);
-
-                    }
+                    if( isset($buddyforms['buddyforms'][$form_slug]))
+                        unset($buddyforms['buddyforms'][$form_slug]);
 
                 }
                 $update_option = update_option("buddyforms_options", $buddyforms);
@@ -73,37 +70,6 @@ function buddyforms_options_content() {
                 if ($update_option)
                     echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
             }
-        }
-
-        $old_buddyforms = $buddyforms;
-        unset($buddyforms['buddyforms']);
-
-        if (isset($_POST['action']) && $_POST['action'] == 'Save' && isset($_POST["buddyforms_options"])) {
-
-            foreach ($_POST["buddyforms_options"]['buddyforms'] as $key => $buddyform) {
-
-                $slug = sanitize_title($buddyform['slug']);
-
-                if(empty($slug)){
-                    $slug = $bf_mod5;
-                }
-
-                $buddyform['slug'] = $slug;
-
-                if(isset($old_buddyforms['buddyforms'][$key]['mail_notification']))
-                    $buddyform['mail_notification'] = $old_buddyforms['buddyforms'][$key]['mail_notification'];
-
-                $buddyforms['buddyforms'][$slug] = $buddyform;
-
-            }
-
-            $update_option = update_option("buddyforms_options", $buddyforms);
-
-            if ($update_option){
-                buddyforms_attached_page_rewrite_rules();
-                echo "<div id=\"settings_updated\" class=\"updated\"> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
-            }
-
         }
         ?>
         <div id="post-body">

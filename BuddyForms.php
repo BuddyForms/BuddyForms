@@ -166,7 +166,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-box.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/manage-form-roles-and-capabilities.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/roles-and-capabilities.php');
 
 						// License Key API Class
 			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');

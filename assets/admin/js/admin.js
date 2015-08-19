@@ -1,14 +1,14 @@
 jQuery(document).ready(function(jQuery) {
 
-	var location = window.location;
-	var hash = window.location.hash;
-	if(hash)
-		hash && jQuery('.showme a[href="' + hash + '"]').tab('show');
+    var location = window.location;
+    var hash = window.location.hash;
+    if(hash)
+        hash && jQuery('.showme a[href="' + hash + '"]').tab('show');
 
-	jQuery('.showme a').click(function (e) {
-		jQuery(this).tab('show');
-		window.location.hash = this.hash;
-	});
+    jQuery('.showme a').click(function (e) {
+        jQuery(this).tab('show');
+        window.location.hash = this.hash;
+    });
 
 	jQuery('.new_form').click(function(){
 
@@ -90,10 +90,8 @@ jQuery(document).ready(function(jQuery) {
 	});
 
 
-	jQuery(document).on( "submit",'#buddyforms_form', function( event ) {
+	jQuery('.bf-save-form').on( "click", function( event ) {
 
-
-        alert('dum');
 		var FormData = jQuery('#buddyforms_form').serialize();
 
         jQuery('.loading-animation-save').show(); // Show the animate loading gif while waiting
@@ -102,7 +100,7 @@ jQuery(document).ready(function(jQuery) {
 			url: ajaxurl,
 			data: {"action": "buddyforms_save_options", "buddyforms_options": FormData},
 			success: function(data){
-                jQuery('.loading-animation-save').hide(); // Show the animate loading gif while waiting
+                jQuery('.loading-animation-save').fadeOut(1500); // Show the animate loading gif while waiting
 			},
             error: function() {
                 jQuery('.loading-animation-save').hide(); // Show the animate loading gif while waiting
@@ -133,8 +131,10 @@ jQuery(document).ready(function(jQuery) {
 
 
 	jQuery('.action').click(function(){
+
 		var numItems = jQuery('.list_item').length;
 		var action = jQuery(this);
+
 		var args = action.attr('href').split("/");
 		var unique = jQuery("#sortable_"+args[1]+' .'+args[0]);
 
