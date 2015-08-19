@@ -9,56 +9,55 @@ function bf_form_elements($form, $args){
 
     foreach ($customfields as $field_id => $customfield) :
 
-        if(isset($customfield['slug']))
+        if( isset($customfield['slug'] ))
             $slug = sanitize_title($customfield['slug']);
 
-        if(empty($slug))
+        if( empty( $slug ))
             $slug = sanitize_title($customfield['name']);
 
-        if($slug != '') :
+        if( $slug != '') :
 
-            if (isset($_POST[$slug] )) {
+            if (isset($_POST[$slug])) {
                 $customfield_val = $_POST[$slug];
             } else {
                 $customfield_val = get_post_meta($post_id, $slug, true);
             }
-//            if(isset($customfield['field_is_array'])){
-//                $slug = $slug . $customfield['field_is_array'];
-//                $customfield_val = $customfield_val[$customfield['field_is_array']];
-//            }
 
             $name = '';
             if(isset($customfield['name']))
-                $name           = stripcslashes($customfield['name']);
+                $name = stripcslashes($customfield['name']);
             $description = '';
             if(isset($customfield['description']))
-                $description    = stripcslashes($customfield['description']);
+                $description = stripcslashes($customfield['description']);
 
+            $element_attr = array(
+                'id' => str_replace("-", "", $slug),
+                'value' => $customfield_val,
+                'class' => 'settings-input',
+                'shortDesc' => $description
+            );
+
+            if(isset($customfield['required']))
+                $element_attr = array_merge($element_attr, array('required' => true));
+
+            if(isset($customfield['custom_class']))
+                $element_attr['class'] = $element_attr['class'] . ' ' . $customfield['custom_class'];
 
             if(isset($customfield['type'])){
                 switch( $customfield['type'] ) {
                     case 'Number':
-
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug),'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         $form->addElement(new Element_Number($name, $slug, $element_attr));
-
                         break;
+
                     case 'HTML':
-
                         $form->addElement(new Element_HTML($customfield['html']));
-
                         break;
-                    case 'Date':
-                        // $customfield_val = get_post_meta($post_id, '_sale_price_dates_from', true);
-                        // $customfield_val = date_i18n('Y-m-d', (int)$customfield_val);
-                        // $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $customfield_val, 'class' => 'settings-input bf_datetime', 'shortDesc' => isset($description) ? $description : '') : array('value' => $customfield_val, 'class' => 'settings-input bf_price_date', 'shortDesc' => isset($description) ? $description : '');
-                        // $form->addElement(new Element_Textbox('Sale Price Date From', '_sale_price_dates_from', $element_attr));
 
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
+                    case 'Date':
                         $form->addElement(new Element_Date($name, $slug, $element_attr));
                         break;
-                    case 'Title':
 
+                    case 'Title':
                         if (isset($_POST['editpost_title'])) {
                             $post_title = stripslashes($_POST['editpost_title']);
                         } else {
@@ -69,8 +68,8 @@ function bf_form_elements($form, $args){
                         } else {
                             $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description)));
                         }
-
                         break;
+
                     case 'Content':
                         add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
                         $editpost_content_val = false;
@@ -117,31 +116,29 @@ function bf_form_elements($form, $args){
                             $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . ':</label><div class="bf_inputs">' . $wp_editor . '</div><span class="help-inline">'.$description.'</span></div>';
                             $form->addElement(new Element_HTML( $wp_editor ));
                         }
-
                          break;
+
                     case 'Mail' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true,  'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         $form->addElement(new Element_Email($name, $slug, $element_attr));
                         break;
 
                     case 'Radiobutton' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true,  'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         if (is_array($customfield['value'])) {
                             $form->addElement(new Element_Radio($name, $slug, $customfield['value'], $element_attr));
                         }
                         break;
 
                     case 'Checkbox' :
-
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description);
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $form->addElement(new Element_Checkbox($name, $slug, $customfield['value'], $element_attr));
                         }
                         break;
 
                     case 'Dropdown' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug),'value' => $customfield_val, 'class' => 'settings-input bf-select2', 'shortDesc' => $description);
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
+
+                            $element_attr['class'] = $element_attr['class'] . ' bf-select2';
+
                             $element = new Element_Select($name, $slug, $customfield['value'], $element_attr);
 
                             if (isset($customfield['multiple']) && is_array($customfield['multiple']))
@@ -152,16 +149,13 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'Comments' :
-
                         if(isset($the_post))
-                            $customfield_val = $the_post->comment_status;
+                            $customfield['value'] = $the_post->comment_status;
 
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' => $description) : array( 'id' => str_replace("-", "", $slug),'value' => $customfield_val, 'class' => 'settings-input');
                         $form->addElement(new Element_Select($name, 'comment_status', array('open', 'closed'), $element_attr));
                         break;
 
                     case 'Status' :
-                        global $buddyforms;
 
                         if(isset($customfield['post_status']) && is_array($customfield['post_status'])){
                             if (in_array('pending', $customfield['post_status']))
@@ -188,7 +182,6 @@ function bf_form_elements($form, $args){
                             if(isset($_POST['status']))
                                 $customfield_val = $_POST['status'];
 
-                            $element_attr = array('value' => $customfield_val, 'class' => 'settings-input');
                             $form->addElement(new Element_Select($name, 'status', $post_status, $element_attr));
 
                             if (isset($_POST[$slug])) {
@@ -197,16 +190,14 @@ function bf_form_elements($form, $args){
                                 $schedule_val = get_post_meta($post_id, 'schedule', true);
                             }
 
-                            $element_attr = array('value' => $schedule_val, 'class' => 'settings-input, bf_datetime');
+                            $element_attr['class'] = $element_attr['class'] . ' bf_datetime';
 
                             $form->addElement(new Element_HTML('<div class="bf_datetime_wrap">'));
                             $form->addElement(new Element_Textbox('Schedule Time', 'schedule', $element_attr));
                             $form->addElement(new Element_HTML('</div>'));
                         }
                         break;
-
                     case 'Textarea' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
                         $form->addElement( new Element_Textarea($name, $slug, $element_attr));
                         break;
 
@@ -215,16 +206,14 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'Text' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array( 'id' => str_replace("-", "", $slug),'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
                         $form->addElement( new Element_Textbox($name, $slug, $element_attr));
                         break;
 
                     case 'Link' :
-                        $element_attr = isset($customfield['required']) ? array('required' => true, 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description) : array( 'id' => str_replace("-", "", $slug), 'value' => $customfield_val, 'class' => 'settings-input', 'shortDesc' =>  $description);
                         $form->addElement( new Element_Url($name, $slug, $element_attr));
                         break;
-                    case 'Featured_Image':
 
+                    case 'Featured_Image':
                         $attachment_ids = $customfield_val;
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -234,10 +223,6 @@ function bf_form_elements($form, $args){
                             foreach ( $attachments as $attachment_id ) {
 
                                 $attachment_metadat = get_post( $attachment_id );
-
-//                                echo '<pre>';
-//                                print_r($attachment_metadat);
-//                                echo '</pre>';
 
                                 $str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
 
@@ -268,7 +253,6 @@ function bf_form_elements($form, $args){
                         $str .= $description;
                         $str .= '</span>';
 
-
                         $form->addElement(new Element_HTML( '
                         <div class="bf_field_group">
                             <label for="_'.$slug.'">'));
@@ -291,17 +275,12 @@ function bf_form_elements($form, $args){
 
                         $str = '<div id="bf_files_container_'.$slug.'" class="bf_files_container"><ul class="bf_files">';
 
-
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
                         if ( $attachments ) {
                             foreach ( $attachments as $attachment_id ) {
 
                                 $attachment_metadat = get_post( $attachment_id );
-
-//                                echo '<pre>';
-//                                print_r($attachment_metadat);
-//                                echo '</pre>';
 
                                 $str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
 
@@ -451,10 +430,8 @@ function bf_form_elements($form, $args){
 
                 }
             }
-
         endif;
     endforeach;
-
 }
 
 function my_tinymce_setup_function( $initArray ) {

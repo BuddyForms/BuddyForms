@@ -1,23 +1,24 @@
 <?php
 
-function buddyforms_form_html( $args ){
-    global  $buddyforms;
+function buddyforms_form_html( $args )
+{
+    global $buddyforms;
 
     extract(shortcode_atts(array(
-        'post_type' 	=> '',
-        'the_post'		=> 0,
-        'customfields'  => false,
-        'post_id'		=> false,
-        'revision_id' 	=> false,
-        'post_parent'   => 0,
-        'redirect_to'   => esc_url( $_SERVER['REQUEST_URI'] ),
-        'form_slug' 	=> '',
-        'form_notice'   => ''
+        'post_type' => '',
+        'the_post' => 0,
+        'customfields' => false,
+        'post_id' => false,
+        'revision_id' => false,
+        'post_parent' => 0,
+        'redirect_to' => esc_url($_SERVER['REQUEST_URI']),
+        'form_slug' => '',
+        'form_notice' => ''
     ), $args));
 
     session_id('buddyforms-create-edit-form');
 
-    $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug. '"">';
+    $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '"">';
 
 
     $form_html .= '
@@ -31,32 +32,31 @@ function buddyforms_form_html( $args ){
         rules: {
         ';
 
-        foreach($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key =>  $form_field ){
-            if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
+    foreach ($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key => $form_field) {
+        if (isset($form_field['required']) || $form_field['slug'] == 'editpost_title') {
 
-                $field_slug = str_replace("-", "", $form_field['slug']);
-                if($field_slug) :
-                    $form_html .= $field_slug . ': {
+            $field_slug = str_replace("-", "", $form_field['slug']);
+            if ($field_slug) :
+                $form_html .= $field_slug . ': {
                         required: true,';
 
-                    if(isset($form_field['validation_min']) && $form_field['validation_min'] > 0)
-                        $form_html .= 'min: ' . $form_field['validation_min'] . ',';
+                if (isset($form_field['validation_min']) && $form_field['validation_min'] > 0)
+                    $form_html .= 'min: ' . $form_field['validation_min'] . ',';
 
-                    if(isset($form_field['validation_max']) && $form_field['validation_max'] > 0)
-                        $form_html .= 'max: ' . $form_field['validation_max'] . ',';
+                if (isset($form_field['validation_max']) && $form_field['validation_max'] > 0)
+                    $form_html .= 'max: ' . $form_field['validation_max'] . ',';
 
-                    if(isset($form_field['validation_minlength']) && $form_field['validation_minlength'] > 0)
-                        $form_html .= 'minlength: ' . $form_field['validation_minlength'] . ',';
+                if (isset($form_field['validation_minlength']) && $form_field['validation_minlength'] > 0)
+                    $form_html .= 'minlength: ' . $form_field['validation_minlength'] . ',';
 
-                    if(isset($form_field['validation_maxlength']) && $form_field['validation_maxlength'] > 0)
-                        $form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
+                if (isset($form_field['validation_maxlength']) && $form_field['validation_maxlength'] > 0)
+                    $form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
 
 
-                    $form_html .= '},';
-                endif;
-            }
-
+                $form_html .= '},';
+            endif;
         }
+    }
 
     $form_html .= '},
         messages: {

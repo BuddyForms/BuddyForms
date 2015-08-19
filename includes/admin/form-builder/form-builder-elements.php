@@ -43,7 +43,6 @@ function buddyforms_view_form_fields($args){
     if (is_array($args))
         extract($args);
 
-
     if (!isset($field_id))
         $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
@@ -66,11 +65,6 @@ function buddyforms_view_form_fields($args){
         $slug = sanitize_title($name);
     $form_fields['left']['slug']        = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b> <small>(optional)</small>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", array('shortDesc' => __('_name will create a hidden post meta field', 'buddyforms'), 'value' => $slug));
 
-//    $field_is_array = '';
-//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['field_is_array']))
-//        $field_is_array = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['field_is_array']);
-//    $form_fields['left']['field_is_array'] = new Element_Textbox('<b>' . __('field_is_array', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][field_is_array]", array('value' => $field_is_array));
-
     $description = '';
     if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
         $description = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']);
@@ -84,27 +78,10 @@ function buddyforms_view_form_fields($args){
         $validation_error_message = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_error_message']);
     $form_fields['validation']['validation_error_message']    = new Element_Textbox('<b>' . __('Validation Error Message', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_error_message]", array('value' => $validation_error_message));
 
-//    $validation_minlength = 0 ;
-//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']))
-//        $validation_minlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']);
-//    $form_fields['validation']['validation_minlength']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_minlength]", array('value' => $validation_minlength));
-//
-//    $validation_maxlength = 0 ;
-//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']))
-//        $validation_maxlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']);
-//    $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
-//
-//    $validation_min = 0 ;
-//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']))
-//        $validation_min = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']);
-//    $form_fields['validation']['validation_min']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_min]", array('value' => $validation_min));
-//
-//    $validation_max = 0 ;
-//    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']))
-//        $validation_max = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']);
-//    $form_fields['validation']['validation_max']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_max]", array('value' => $validation_max));
-
-
+    $custom_class = '';
+    if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['custom_class']))
+        $custom_class = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['custom_class']);
+    $form_fields['advanced']['custom_class']    = new Element_Textbox('<b>' . __('Add custom class to the form element', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][custom_class]", array('value' => $custom_class));
 
     switch ($field_type) {
 
@@ -118,15 +95,31 @@ function buddyforms_view_form_fields($args){
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']))
                 $validation_maxlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']);
             $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
+            break;
+        case 'Textarea':
+            $validation_minlength = 0 ;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']))
+                $validation_minlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']);
+            $form_fields['validation']['validation_minlength']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_minlength]", array('value' => $validation_minlength));
+
+            $validation_maxlength = 0 ;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']))
+                $validation_maxlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']);
+            $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
+            break;
+
+        case 'Number':
+            $validation_min = 0 ;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']))
+                $validation_min = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']);
+            $form_fields['validation']['validation_min']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_min]", array('value' => $validation_min));
+
+            $validation_max = 0 ;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']))
+                $validation_max = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']);
+            $form_fields['validation']['validation_max']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_max]", array('value' => $validation_max));
 
         break;
-        case 'Link':
-            $target = 'false';
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['target']))
-                $target = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['target'];
-
-            $form_fields['left']['target'] = new Element_Select('<b>' . __('Target', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][target]", array('_self', '_blank'), array('value' => $target));
-            break;
         case 'Dropdown':
 
             $multiple = 'false';
@@ -291,13 +284,10 @@ function buddyforms_view_form_fields($args){
 
             break;
         case 'Content':
-///            unset($form_fields);
 
             $name = 'Content';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
                 $name = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
-
-            // echo stripslashes_deep($name); strip the slashes !!!
 
             $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
 
@@ -359,62 +349,23 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'featured_image');
 
-
-            $required = 'false';
-
-            $form_fields['left']['html']        = new Element_HTML(__('With the Featured Image Form Element you can add a featured image upload to your form', 'buddyforms') . '<br><br>');
-
             $description = '';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']))
                 $description = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['description']);
             $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description:', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][description]", array('value' => $description));
 
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
-                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
-            $form_fields['left']['required']    = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required));
-
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
 
-            $validation_error_message = __('This field is required.', 'buddyforms');
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_error_message']))
-                $validation_error_message = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_error_message']);
-            $form_fields['validation']['validation_error_message']    = new Element_Textbox('<b>' . __('Validation Error Message', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_error_message]", array('value' => $validation_error_message));
-
-            $validation_minlength = 0 ;
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']))
-                $validation_minlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_minlength']);
-            $form_fields['validation']['validation_minlength']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_minlength]", array('value' => $validation_minlength));
-
-            $validation_maxlength = 0 ;
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']))
-                $validation_maxlength = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_maxlength']);
-            $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
-
             break;
         case 'File':
-
-            $validation_error_message = __('This field is required.', 'buddyforms');
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_error_message']))
-                $validation_error_message = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_error_message']);
-            $form_fields['validation']['validation_error_message']    = new Element_Textbox('<b>' . __('Validation Error Message', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_error_message]", array('value' => $validation_error_message));
-
-            $validation_min = 0 ;
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']))
-                $validation_min = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_min']);
-            $form_fields['validation']['validation_min']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_min]", array('value' => $validation_min));
-
-            $validation_max = 0 ;
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']))
-                $validation_max = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_max']);
-            $form_fields['validation']['validation_max']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_max]", array('value' => $validation_max));
 
             $validation_multiple = 0 ;
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_multiple']))
                 $validation_multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_multiple'];
             $form_fields['advanced']['validation_multiple']    = new Element_Checkbox('Only one file or multiple?', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_multiple]", array('multiple' => '<b>' . __('Allow multiple file upload', 'buddyforms') . '</b>'), array('value' => $validation_multiple));
-// array('Images' => '<b>' . __('Images', 'buddyforms') . '</b>', 'pdf' => '<b>' . __('PDF', 'buddyforms') . '</b>', 'video' => '<b>' . __('Video', 'buddyforms') . '</b>', 'music' => '<b>' . __('Musik', 'buddyforms') . '</b>', 'all_types' => '<b>' . __('All', 'buddyforms') . '</b>')
+
             $validation_data_types = get_allowed_mime_types();
             $validation_data_type = 0 ;
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_data_type']))
@@ -536,6 +487,8 @@ function buddyforms_view_form_fields($args){
                                                 echo '<div class="buddyforms_field_label">' . $form_fields['validation'][$key]->getLabel() . '</div>';
                                                 echo '<div class="buddyforms_form_field">' . $form_fields['validation'][$key]->render() . '</div>';
                                             }
+                                        } else {
+                                            echo '<p>'. __('No options needed', 'buddyforms') . '</p>';
                                         }
                                         ?>
                                     </div>
@@ -563,6 +516,8 @@ function buddyforms_view_form_fields($args){
                                                 echo '<div class="buddyforms_field_label">' . $form_fields['addons'][$key]->getLabel() . '</div>';
                                                 echo '<div class="buddyforms_form_field">' . $form_fields['addons'][$key]->render() . '</div>';
                                             }
+                                        } else {
+                                            echo '<p>'. __('No options needed', 'buddyforms') . '</p>';
                                         }
                                         ?>
                                     </div>
