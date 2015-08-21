@@ -49,14 +49,14 @@ function buddyforms_attached_page_content($content){
             buddyforms_create_edit_form($args);
             $bf_form = ob_get_contents();
             ob_clean();
-            $new_content .= $bf_form;
+            $new_content = $bf_form;
         }
         if($wp_query->query_vars['bf_action'] == 'view'){
             ob_start();
             buddyforms_the_loop($args);
             $bf_form = ob_get_contents();
             ob_clean();
-            $new_content .= $bf_form;
+            $new_content = $bf_form;
         }
 
     } elseif(isset($wp_query->query_vars['pagename'])){
@@ -74,7 +74,7 @@ function buddyforms_attached_page_content($content){
                 buddyforms_the_loop($args);
                 $bf_form = ob_get_contents();
                 ob_clean();
-                $new_content .= $bf_form;
+                $new_content = $bf_form;
             }
         }
 

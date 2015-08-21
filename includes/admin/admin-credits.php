@@ -12,10 +12,8 @@
     </h1>
 
     <div id="bf_support_nav" class="button-nav">
-        <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/en-us/categories/200022561-BuddyForms" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> <?php _e('Documentation', 'buddyforms') ?></a>
-        <a onClick="script: Zenbox.show(); return false;" class="btn btn-small" href="#" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> <?php _e('Submit a Support Ticket', 'buddyforms') ?></a>
-        <!--            &nbsp; &nbsp;-->
-        <a class="btn btn-small" href="https://themekraft.zendesk.com/hc/communities/public/topics/200001402-BuddyForms-Ideas" title="Add and vote for ideas in our Ideas Forums!" target="_new"><i class="icon-plus-sign"></i> <?php _e('Submit your Ideas', 'buddyforms') ?></a>
+        <a class="btn btn-small" href="http://docs.buddyforms.com" title="BuddyForms Documentation" target="_new"><i class="icon-list-alt"></i> <?php _e('Documentation', 'buddyforms') ?></a>
+        <a class="btn btn-small" href="https://buddyforms.com/checkout/support-tickets/" target="_new" title="Write us. Bugs. Ideas. Whatever."><i class="icon-comment"></i> <?php _e('Submit a Support Ticket', 'buddyforms') ?></a>
     </div>
 
     <hr />

@@ -92,9 +92,7 @@ function buddyforms_save_options(){
 
     $update_option = update_option('buddyforms_options', $formdata['buddyforms_options']);
 
-    if($update_option){
-        buddyforms_attached_page_rewrite_rules();
-    }
+    buddyforms_attached_page_rewrite_rules();
 
     die();
 }
