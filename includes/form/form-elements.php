@@ -305,15 +305,30 @@ function bf_form_elements($form, $args){
 
                         $str .= '<span class="bf_add_files hide-if-no-js">';
 
-                        $data_type = '';
-                        if(isset($customfield['validation_data_type']))
-                            $data_type = 'data-type="' . $customfield['validation_data_type'] . '"';
+
+                        $library_types = $allowed_types = '';
+                        if(isset($customfield['data_types'])){
+
+                            $data_types_array   = Array();
+                            $allowed_mime_types = get_allowed_mime_types();
+
+                            foreach ($customfield['data_types'] as $key => $value) {
+                                $data_types_array[$value] = $allowed_mime_types[$value];
+                            }
+
+                            $library_types  = implode(",", $data_types_array);
+                            $library_types  = 'data-library_type="' . $library_types . '"';
+
+                            $allowed_types  = implode(",", $customfield['data_types']);
+                            $allowed_types  = 'data-allowed_type="' . $allowed_types . '"';
+
+                        }
 
                         $data_multiple = 'data-multiple="false"';
                         if(isset($customfield['validation_multiple']))
                             $data_multiple = 'data-multiple="true"';
 
-                        $str .= '<a href="#" data-slug="'.$slug.'" '.$data_multiple.' '.$data_type.' data-choose="' . __( 'Add ', 'buddyforms' ) . $name.'" data-update="' . __( 'Add ', 'buddyforms' ) . $name.'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name.'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
+                        $str .= '<a href="#" data-slug="'.$slug.'" '.$data_multiple.' '.$allowed_types.' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . $name.'" data-update="' . __( 'Add ', 'buddyforms' ) . $name.'" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name.'" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
                         $str .= '</span>';
 
                         $str .= '</div><span class="help-inline">';

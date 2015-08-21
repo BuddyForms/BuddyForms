@@ -366,11 +366,11 @@ function buddyforms_view_form_fields($args){
                 $validation_multiple = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_multiple'];
             $form_fields['advanced']['validation_multiple']    = new Element_Checkbox('Only one file or multiple?', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_multiple]", array('multiple' => '<b>' . __('Allow multiple file upload', 'buddyforms') . '</b>'), array('value' => $validation_multiple));
 
-            $validation_data_types = get_allowed_mime_types();
-            $validation_data_type = 0 ;
-            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_data_type']))
-                $validation_data_type = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['validation_data_type'];
-            $form_fields['advanced']['validation_data_type']    = new Element_Checkbox('Select allowed file Types', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][validation_data_type]",$validation_data_types , array('value' => $validation_data_type));
+            $allowed_mime_types = get_allowed_mime_types();
+            $data_types = '' ;
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['data_types']))
+                $data_types = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['data_types'];
+            $form_fields['advanced']['data_types']    = new Element_Checkbox('Select allowed file Types', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][data_types]",$allowed_mime_types , array('value' => $data_types));
 
             break;
         case 'HTML':

@@ -3,8 +3,8 @@
     jQuery(document).on( 'click', '.bf_add_files a', function( event ) {
 
         var $el = $(this);
-        // Product gallery file uploads
-        var product_gallery_frame;
+        // BuddyForms gallery file uploads
+        var buddyforms_gallery_frame;
 
         var $image_gallery_ids  = $('#'+$el.data('slug'));
         var bf_files            = $('#bf_files_container_'+$el.data('slug')+' ul.bf_files');
@@ -14,39 +14,31 @@
         event.preventDefault();
 
         // If the media frame already exists, reopen it.
-        if ( product_gallery_frame ) {
-            product_gallery_frame.open();
+        if ( buddyforms_gallery_frame ) {
+            buddyforms_gallery_frame.open();
             return;
         }
 
         // Create the media frame.
-        product_gallery_frame = wp.media.frames.product_gallery = wp.media({
+        buddyforms_gallery_frame = wp.media.frames.buddyfoms_gallery = wp.media({
             // Set the title of the modal.
             title: $el.data('choose'),
             button: {
                 text: $el.data('update'),
             },
             library: {
-                type: $el.data('type'),
+                type: $el.data('library_type'),
             },
             multiple: $el.data('multiple'),
-            //states : [
-            //    new wp.media.controller.Library({
-            //        title: $el.data('choose'),
-            //        filterable :	'images',
-            //        type: 'image',
-            //        multiple: $el.data('multiple'),
-            //    })
-            //]
         });
 
         if($el.data('type'))
-            product_gallery_frame.uploader.options.uploader['params']['allowed_type'] = $el.data('type');
+            buddyforms_gallery_frame.uploader.options.uploader['params']['allowed_type'] = $el.data('allowed_type');
 
         // When an image is selected, run a callback.
-        product_gallery_frame.on( 'select', function() {
+        buddyforms_gallery_frame.on( 'select', function() {
 
-            var selection = product_gallery_frame.state().get('selection');
+            var selection = buddyforms_gallery_frame.state().get('selection');
 
             selection.map( function( attachment ) {
 
@@ -92,7 +84,7 @@
         });
 
         // Finally, open the modal.
-        product_gallery_frame.open();
+        buddyforms_gallery_frame.open();
     });
 
     // Remove images
