@@ -35,6 +35,7 @@ jQuery(document).ready(function (){
     jQuery('#editpost_content').html(editpost_content_val);
 
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
+
         var form_name   = event.target.id;
         var form_slug   = form_name.split("editpost_")[1];
         var $btn = jQuery(document.activeElement);

@@ -144,16 +144,16 @@ function buddyforms_form_html( $args )
     $form->addElement(new Element_HTML(do_action('template_notices')));
     $form->addElement(new Element_HTML(wp_nonce_field('buddyforms_form_nonce', '_wpnonce', true, false)));
 
-    $form->addElement(new Element_Hidden("redirect_to"  , $redirect_to));
+    $form->addElement(new Element_Hidden("redirect_to"      , $redirect_to));
 
-    $form->addElement(new Element_Hidden("post_id"      , $post_id));
-    $form->addElement(new Element_Hidden("revision_id"  , $revision_id));
-    $form->addElement(new Element_Hidden("post_parent"  , $post_parent));
-    $form->addElement(new Element_Hidden("form_slug"    , $form_slug));
-    $form->addElement(new Element_Hidden("bf_post_type"    , $post_type));
+    $form->addElement(new Element_Hidden("post_id"          , $post_id));
+    $form->addElement(new Element_Hidden("revision_id"      , $revision_id));
+    $form->addElement(new Element_Hidden("post_parent"      , $post_parent));
+    $form->addElement(new Element_Hidden("form_slug"        , $form_slug));
+    $form->addElement(new Element_Hidden("bf_post_type"     , $post_type));
 
     if(!isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
-        $form->addElement(new Element_Hidden("ajax"     , 'off'));
+        $form->addElement(new Element_Hidden("ajax" , 'off'));
 
     // if the form have custom field to save as post meta data they get displayed here
     bf_form_elements($form, $args);

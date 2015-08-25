@@ -259,6 +259,7 @@ function buddyforms_view_form_fields($args){
             break;
         case 'Title':
 
+            unset($form_fields['right']['required']);
             $name = 'Title';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
                 $name = stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);

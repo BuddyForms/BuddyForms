@@ -162,7 +162,6 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_Button('button', 'button', array('id' => $buddyform['slug'], 'class' => 'button dele_form', 'name' => 'dele_form', 'value' => __('Delete', 'buddyforms'))));
 
-
             $form->addElement(new Element_HTML('<button type="submit" class="button-primary bf-save-form" style="float: right" name="action" value="Save">Save</button>'));
             //$form->addElement(new Element_Button('submit', 'submit', array('action' => 'action', 'id' => 'submited', 'name' => 'form_save_action', 'value' => __('Save', 'buddyforms'), 'class' => 'button-primary', 'style' => 'float: right;')));
 
@@ -234,7 +233,12 @@ function buddyforms_settings_page(){
 
             $form->addElement(new Element_HTML('
                             <div class="hero-unit">
-                            <h3>' . __('Form Settings for', 'buddyforms') . ' "' . stripslashes($buddyform['name']) . '"</h3>'));
+                            <h3>' . __('Form Settings for', 'buddyforms') . ' "' . stripslashes($buddyform['name']) . '"'));
+
+            $viwe_form_permalink = get_permalink($buddyform['attached_page']);
+
+            $form->addElement(new Element_HTML('<small style="float:right; padding:15px;"><a href="'.$viwe_form_permalink . 'view/' . $buddyform['slug'] . '/" target="_new">'.__('View Form Posts', 'buddyforms').'</a> - '));
+            $form->addElement(new Element_HTML(' <a href="'.$viwe_form_permalink . 'create/' . $buddyform['slug'] . '/" target="_new">'.__('View Form', 'buddyforms').'</a></small></h3>'));
 
             if(empty($buddyform['name']) || empty($buddyform['singular_name']) || empty($buddyform['slug']) || $buddyform['post_type'] == 'none' || $buddyform['attached_page'] == '')
                 $form->addElement(new Element_HTML('<div class="bf-error"><h4>'.__('This form is broken please check your required settings under Form Control and save the form').'</h4></div>'));
@@ -334,28 +338,24 @@ function buddyforms_settings_page(){
 
 
             $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
-            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display the Form and continue editing', 'display_post' => 'Display the Post', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden'.$buddyform['slug'], 'class' => 'after_submit_hidden' )));
+            $form->addElement(new Element_Radio('<b>'.__("After Submission", 'buddyforms').'</b>', "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit]", array('display_form' => 'Display the Form and Message and continue editing', 'display_post' => 'Display the Post', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden'.$buddyform['slug'], 'class' => 'after_submit_hidden' )));
 
-            $after_submit_hidden_checked = ($after_submit == 'display_message')  ? '' : 'style="display: none;"';
-            $form->addElement( new Element_HTML('<div ' . $after_submit_hidden_checked . ' class="after_submit_hidden'.$buddyform['slug'].'-2">'));
 
-                $after_submit_message_text = isset($buddyform['after_submit_message_text']) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
-                $form->addElement(new Element_Textarea('<br><p><b>'.__('Add your Message Text', 'buddyforms').'</b><br>
-                                    You can use special shortcodes to add dynamic content:<br>
-                                    [form_singular_name] = Singular Name<br>
-                                    [post_title] = The Post Title<br>
-                                    [post_link] = The Post Permalink<br>
-                                    [edit_link] = Link to the Post Edit Form<br>
-                                    <br>
+            $after_submit_message_text = isset($buddyform['after_submit_message_text']) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
+            $form->addElement(new Element_Textarea('<br><b>'.__('Add your Message Text', 'buddyforms').'</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit_message_text]", array( 'rows' => 3, 'style' => "width:100%", 'value' => $after_submit_message_text, 'shortDesc' => __('<p>
+                                <small>You can use special shortcodes to add dynamic content:<br>
+                                [form_singular_name] = Singular Name<br>
+                                [post_title] = The Post Title<br>
+                                [post_link] = The Post Permalink<br>
+                                [edit_link] = Link to the Post Edit Form</small><br>
 
-                </p>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][after_submit_message_text]", array( 'value' => $after_submit_message_text)));
+            </p>', 'buddyforms'))));
 
-            $form->addElement(new Element_HTML('</div>'));
 
-            $bf_ajax = false;
+            $bf_ajax = true;
             if (isset($buddyform['bf_ajax']))
                 $bf_ajax = $buddyform['bf_ajax'];
-            $form->addElement(new Element_Checkbox('<b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' => "<b>" . __('Enable ajax form submission.', 'buddyforms') . "</b>"), array( 'shortDesc' => __('This feature is new. Please test your form if you enable ajax.', 'buddyforms'), 'value' => $bf_ajax)));
+            $form->addElement(new Element_Checkbox('<br><b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' =>  __('Enable ajax form submission.', 'buddyforms')), array( 'shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax)));
 
             $form->addElement(new Element_HTML('</div>'));
 

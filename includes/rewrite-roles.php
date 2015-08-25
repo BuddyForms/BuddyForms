@@ -7,6 +7,7 @@
  * @since 0.3 beta
  */
 
+add_action('init', 'buddyforms_attached_page_rewrite_rules');
 function buddyforms_attached_page_rewrite_rules(){
     global $buddyforms;
 
@@ -83,7 +84,7 @@ function bf_my_edit_post_link( $url, $post_ID) {
 
     if(isset($buddyforms['buddyforms'][$form_slug]) && $buddyforms['buddyforms'][$form_slug]['post_type'] == $post_type){
         $permalink	= get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
-        $url = $permalink.'edit/'.$form_slug.'/'.get_the_ID();
+        $url = $permalink.'edit/'.$form_slug.'/'.$post_ID;
         return $url;
     }
 

@@ -79,7 +79,7 @@ jQuery(document).ready(function(jQuery) {
                 if(data != false){
                     var url = window.location.href;
                     url = url.slice( 0, url.indexOf('?') );
-                    window.location.href = url + '?page=buddyforms_options_page#' + data;
+                    window.location.href = url + '?page=buddyforms_options_page#subcon' + data;
                 }
 
 			},
@@ -256,7 +256,6 @@ jQuery(document).ready(function(jQuery) {
 	       });
 	   });
 
-
     jQuery('#btnAdd').click(function (e) {
 
         var trigger = jQuery('.buddyforms_notification_trigger').val();
@@ -267,21 +266,15 @@ jQuery(document).ready(function(jQuery) {
             return false;
         }
 
-
-
         var get = [];
         location.search.replace('?', '').split('&').forEach(function (val) {
             split = val.split("=", 2);
             get[split[0]] = split[1];
         });
 
-
-
         var form_slug = get["form_slug"];
 
-
         var action = jQuery(this);
-
 
         jQuery.ajax({
             type: 'POST',
@@ -325,23 +318,6 @@ jQuery(document).ready(function(jQuery) {
             jQuery(this).text(admin_text.uncheck);
         }
 
-    });
-
-    jQuery(document.body).on('click', '.ajax_disabled_hidden' ,function(){
-        var id = jQuery(this).attr('id');
-        jQuery('.'+id).toggle(this.checked);
-    });
-
-    jQuery(document.body).on('change', '.after_submit_hidden' ,function(){
-        var id = jQuery(this).attr('id');
-        var value = jQuery(this).attr('value');
-
-        if(value == 'display_message'){
-            jQuery('.'+id).show();
-        }
-        if(id != 'after_submit_hiddengroups-tests-2'){
-            jQuery('.after_submit_hiddengroups-tests-2').hide();
-        }
     });
 
 });
