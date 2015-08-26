@@ -301,6 +301,9 @@ class BuddyForms {
 		$buddyforms	= get_option('buddyforms_options');
 		$buddyforms_options = $buddyforms;
 
+		if(!isset($buddyforms['buddyforms']))
+			return;
+
         foreach($buddyforms['buddyforms'] as $form_key => $buddyform){
 
             $needs_title = true;

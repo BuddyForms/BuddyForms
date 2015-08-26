@@ -3,7 +3,7 @@
 Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 2.x
-Tested up to: WordPress 4.1.1, BuddyPress 2.2.1
+Tested up to: WordPress 4.3, BuddyPress 2.3.2.1
 Stable tag: 1.4
 
 === Documentation & Support === 
@@ -38,7 +38,7 @@ only display posts created by the form
 small css changes and clean up the css
 changed the-loop.php
 Add options to change the Form Element Title
-rewrite the add ons section and load all BuddyForms Extension with a buddyforms search from wordpress.org
+rewrite the addons section and load all BuddyForms Extension with a buddyforms search from wordpress.org
 changed the featured image function to work with ajax
 add file and featured image ajax upload
 add wp_handle_upload_prefilter to check for allowed file types
@@ -46,6 +46,29 @@ fixed a checkbox issue if attribute id was empty
 start adding deep validation
 add new option hidden to the taxonomy field
 add an ajax form option to the form builder
+start adding validation to the form
+fixed a bug with the featured image upload
+add required option to the content form element
+fixed a bug in the taxonomy hidden form element
+fixed a bug with the allowed post type in the media uploader
+fixed the after submit options. It was not working correctly
+add new option to the title to make it a hidden field
+fixed an issue with the edit link options
+changed the url to the new buddyforms.com site
+rewrite the jQuery to make the button handling work
+add stripslashes to the form elements
+rename session
+fixed delete featured image issue
+add beautiful validation to the form ;)
+smaler bug fixed
+Super nice validation options for every form element max min and message ;)
+Admin UI improvements
+removed the old zendesk support and link to the new support system
+add new option to the file element to select supported file types
+adjust the form messages
+clean up js
+clean up code
+finalise the new ui
 
 == 1.3.2 ==
 
