@@ -8,6 +8,9 @@
 function buddyforms_add_form(){
     global $buddyforms;
 
+    if(!is_array($buddyforms))
+        $buddyforms = Array();
+
     if(empty($_POST['create_new_form_name']))
         return;
     if(empty($_POST['create_new_form_singular_name']))
@@ -34,10 +37,10 @@ function buddyforms_add_form(){
     $create_new_form_slug = sanitize_title($_POST['create_new_form_name']);
     $mod5 = substr(md5(time() * rand()), 0, 10);
 
-    if(array_key_exists($create_new_form_slug, $buddyforms['buddyforms']))
+    if(isset($buddyforms['buddyforms']) && array_key_exists($create_new_form_slug, $buddyforms['buddyforms']))
         $create_new_form_slug = $create_new_form_slug.'-'.$mod5;
 
-     $options = Array(
+    $options = Array(
         'slug'              => $create_new_form_slug,
         'name'              => $_POST['create_new_form_name'],
         'singular_name'     => $_POST['create_new_form_singular_name'],

@@ -63,7 +63,7 @@ class BuddyForms {
 
 		add_action( 'init'					, array($this, 'includes')						, 4, 1);
 		add_action( 'plugins_loaded'		, array($this, 'load_plugin_textdomain'));
-		add_action( 'plugins_loaded'		, array($this, 'buddyforms_update_db_check'));
+		//add_action( 'plugins_loaded'		, array($this, 'buddyforms_update_db_check'));
 		add_action( 'wp_init'				, array($this, 'set_globals')					, 12, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')			, 2, 1);
