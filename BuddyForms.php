@@ -32,20 +32,9 @@
 class BuddyForms {
 
 	/**
-	 * Self Upgrade Values
-	 */
-	// Base URL to the remote upgrade API server
-	public $upgrade_url = 'http://themekraft.com/';
-
-	/**
 	 * @var string
 	 */
 	public $version = '1.4';
-
-	/**
-	 * @var string
-	 */
-	public $bf_version_name = 'bf_version';
 
 	/**
 	 * Initiate the class
@@ -106,7 +95,15 @@ class BuddyForms {
 	 */
 	public function load_constants() {
 
-        if (!defined('BUDDYFORMS_PLUGIN_URL'))
+
+		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
+		define( 'BUDDYFORMS_STORE_URL', 'https://buddyforms.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
+
+		// the name of your product. This should match the download name in EDD exactly
+		define( 'BUDDYFORMS_EDD_ITEM_NAME', 'BuddyForms' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
+
+
+		if (!defined('BUDDYFORMS_PLUGIN_URL'))
             define('BUDDYFORMS_PLUGIN_URL', plugins_url('/',__FILE__));
 
 		if (!defined('BUDDYFORMS_INSTALL_PATH'))
@@ -167,19 +164,15 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/roles-and-capabilities.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/license-registration.php');
 
-						// License Key API Class
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-key-api.php');
+			if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+				// load our custom updater
+				include( BUDDYFORMS_INCLUDES_PATH . '/resources/edd/EDD_SL_Plugin_Updater.php' );
+			}
 
-			// Plugin Updater Class
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-plugin-update.php');
-
-			// API License Key Registration Form
-			require_once( plugin_dir_path( __FILE__ ) . 'includes/admin/license-registration.php');
-
-			// Load update class to update $this plugin from for example toddlahman.com
-			$this->load_plugin_self_updater();
 		}
+
 
 	}
 
@@ -324,147 +317,29 @@ class BuddyForms {
             }
         }
         if( $needs_title ){
-            update_option( $this->bf_version_name, $this->version );
             update_option("buddyforms_options", $buddyforms_options);
         }
-	}
-
-
-	/**
-	 * Check for software updates
-	 */
-	public function load_plugin_self_updater() {
-		$options = get_option( 'bf_license_manager' );
-
-		// upgrade url must also be chaned in classes/class-bf-key-api.php
-		$upgrade_url = 'http://themekraft.com/'; // URL to access the Update API Manager.
-		$plugin_name = untrailingslashit( plugin_basename( __FILE__ ) ); // same as plugin slug. if a theme use a theme name like 'twentyeleven'
-		$product_id = get_option( 'buddyforms_product_id' ); // Software Title
-		$api_key = $options['api_key']; // API License Key
-		$activation_email = $options['activation_email']; // License Email
-		$renew_license_url = 'http://themekraft.com/my-account/'; // URL to renew a license
-		$instance = get_option( 'buddyforms_instance' ); // Instance ID (unique to each blog activation)
-		$domain = site_url(); // blog domain name
-		$software_version = get_option( $this->bf_version_name ); // The software version
-		$plugin_or_theme = 'plugin'; // 'theme' or 'plugin'
-
-		new Buddyforms_Plugin_Update_API_Check( $upgrade_url, $plugin_name, $product_id, $api_key, $activation_email, $renew_license_url, $instance, $domain, $software_version, $plugin_or_theme );
-	}
-
-
-	/**
-	 * Generate the default data arrays
-	 */
-	public function activation() {
-
-		$global_options = array(
-			'api_key' 			=> '',
-			'activation_email' 	=> '',
-					);
-
-		update_option( 'bf_license_manager', $global_options );
-
-		// Password Management Class
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/resources/api-manager/classes/class-bf-passwords.php');
-
-		$buddyforms_password_management = new Buddyforms_Password_Management();
-
-		// Generate a unique installation $instance id
-		$instance = $buddyforms_password_management->generate_password( 12, false );
-
-		$single_options = array(
-			'buddyforms_product_id' 			=> 'BuddyForms',
-			'buddyforms_instance' 				=> $instance,
-			'buddyforms_deactivate_checkbox' 	=> 'on',
-			'buddyforms_activated' 				=> 'Deactivated',
-			);
-
-		foreach ( $single_options as $key => $value ) {
-			update_option( $key, $value );
-		}
-
-		$curr_ver = get_option( $this->bf_version_name );
-
-		// checks if the current plugin version is lower than the version being installed
-		if ( version_compare( $this->version, $curr_ver, '>' ) ) {
-			// update the version
-			update_option( $this->bf_version_name, $this->version );
-		}
-
-	}
-
-	/**
-	 * Deletes all data if plugin deactivated
-	 * @return void
-	 */
-	public function uninstall() {
-		global $wpdb, $blog_id;
-
-		$this->license_key_deactivation();
-
-		// Remove options
-		if ( is_multisite() ) {
-
-			switch_to_blog( $blog_id );
-
-			foreach ( array(
-					'bf_license_manager',
-					'buddyforms_product_id',
-					'buddyforms_instance',
-					'buddyforms_deactivate_checkbox',
-					'buddyforms_activated',
-					'bf_version'
-					) as $option) {
-
-					delete_option( $option );
-
-					}
-
-			restore_current_blog();
-
-		} else {
-
-			foreach ( array(
-					'bf_license_manager',
-					'buddyforms_product_id',
-					'buddyforms_instance',
-					'buddyforms_deactivate_checkbox',
-					'buddyforms_activated'
-					) as $option) {
-
-					delete_option( $option );
-
-					}
-
-		}
-
-	}
-
-	/**
-	 * Deactivates the license on the API server
-	 * @return void
-	 */
-	public function license_key_deactivation() {
-
-		$buddyforms_key = new Buddyforms_Key();
-
-		$activation_status = get_option( 'buddyforms_activated' );
-
-		$default_options = get_option( 'bf_license_manager' );
-
-		$api_email = $default_options['activation_email'];
-		$api_key = $default_options['api_key'];
-
-		$args = array(
-			'email' => $api_email,
-			'licence_key' => $api_key,
-			);
-
-		if ( $activation_status == 'Activated' && $api_key != '' && $api_email != '' ) {
-			$buddyforms_key->deactivate( $args ); // reset license key activation
-		}
 	}
 
 }
 
 $GLOBALS['buddyforms_new'] = new BuddyForms();
+
+function edd_sl_sample_plugin_updater() {
+
+	// retrieve our license key from the DB
+	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
+
+	// setup the updater
+	$edd_updater = new EDD_SL_Plugin_Updater( BUDDYFORMS_STORE_URL, __FILE__, array(
+			'version' 	=> '1.4', 				// current version number
+			'license' 	=> $license_key, 		// license key (used get_option above to retrieve from DB)
+			'item_name' => BUDDYFORMS_EDD_ITEM_NAME, 	// name of this plugin
+			'author' 	=> 'Sven Lehnert',  // author of this plugin
+			'url'       => home_url()
+		)
+	);
+
+}
+add_action( 'admin_init', 'edd_sl_sample_plugin_updater', 0 );
+

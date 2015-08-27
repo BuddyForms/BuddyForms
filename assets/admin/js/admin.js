@@ -11,7 +11,7 @@ jQuery(document).ready(function(jQuery) {
     });
 
 	jQuery('.new_form').click(function(){
-		
+
 		var action = jQuery(this);
 		var create_new_form_name                    = jQuery('[name="create_new_form_name"]').val();
         var create_new_form_singular_name           = jQuery('[name="create_new_form_singular_name"]').val();
