@@ -73,7 +73,7 @@ function buddyforms_add_form(){
     $update_option = update_option("buddyforms_options", $buddyforms);
 
     if($update_option){
-        buddyforms_attached_page_rewrite_rules();
+        buddyforms_attached_page_rewrite_rules(TRUE);
         echo sanitize_title($_POST['create_new_form_name']);
     } else {
         echo 'Error Saving the Form';
@@ -95,7 +95,7 @@ function buddyforms_save_options(){
 
     $update_option = update_option('buddyforms_options', $formdata['buddyforms_options']);
 
-    buddyforms_attached_page_rewrite_rules();
+    buddyforms_attached_page_rewrite_rules(TRUE);
 
     die();
 }
@@ -111,7 +111,7 @@ function buddyforms_delete_form(){
     $buddyforms_options = get_option('buddyforms_options');
     unset( $buddyforms_options['buddyforms'][$_POST['dele_form_slug']] );
 
-    buddyforms_attached_page_rewrite_rules();
+    buddyforms_attached_page_rewrite_rules(TRUE);
     update_option("buddyforms_options", $buddyforms_options);
     die();
 }

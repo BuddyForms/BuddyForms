@@ -95,7 +95,6 @@ class BuddyForms {
 	 */
 	public function load_constants() {
 
-
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
 		define( 'BUDDYFORMS_STORE_URL', 'https://buddyforms.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 

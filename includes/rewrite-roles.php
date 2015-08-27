@@ -8,7 +8,7 @@
  */
 
 add_action('init', 'buddyforms_attached_page_rewrite_rules');
-function buddyforms_attached_page_rewrite_rules(){
+function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     global $buddyforms;
 
     $buddyforms = get_option('buddyforms_options', true);
@@ -29,7 +29,8 @@ function buddyforms_attached_page_rewrite_rules(){
             add_rewrite_rule($post_data['post_name'].'/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top');
         }
     }
-    flush_rewrite_rules();
+    if($flush_rewrite_rules)
+        flush_rewrite_rules();
 }
 
 /**
