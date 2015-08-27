@@ -107,57 +107,6 @@ jQuery(document).ready(function (){
         return true;
     });
 
-    //jQuery('.bf_view_form').click(function(){
-    //
-    //    var form_slug = jQuery(this).attr('href');
-    //
-    //    jQuery.ajax({
-    //        type: 'POST',
-    //        url: ajaxurl,
-    //        data: {"action": "buddyforms_list_all_ajax", "form_slug": form_slug },
-    //        success: function(data){
-    //            jQuery('.bf_blub').append(data);
-    //        }
-    //    });
-    //
-    //    return false;
-    //});
-    //jQuery(document).on( "click", '.bf_edit_post', function( event ) {
-    //    var post_id = jQuery(this).attr('id');
-    //
-    //    alert('sdds');
-    //
-    //    event.preventDefault();
-    //
-    //    //if (typeof(tinyMCE) != "undefined") {
-    //    //    tinyMCE.triggerSave();
-    //    //}
-    //
-    //    jQuery.ajax({
-    //        type: 'POST',
-    //        url: ajaxurl,
-    //        data: {"action": "buddyforms_ajax_edit_post", "post_id": post_id},
-    //        beforeSend :function(){
-    //            jQuery('.buddyforms_posts_list .bf_modal').show();
-    //        },
-    //        error: function(data){
-    //            alert(data);
-    //        },
-    //        success: function(data){
-    //            jQuery('.buddyforms_posts_list .bf_modal').hide();
-    //            jQuery('.buddyforms_posts_list').replaceWith(data);
-    //            // remove existing editor instance
-    //            tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
-    //
-    //            // init editor for newly appended div
-    //            var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
-    //            try { tinymce.init( init ); } catch(e){}
-    //        }
-    //    });
-    //
-    //    return false;
-    //});
-
     jQuery(document).on( "click", '.bf_delete_post', function( event ) {
         var post_id = jQuery(this).attr('id');
 
@@ -170,7 +119,10 @@ jQuery(document).ready(function (){
                     if(isNaN(data)){
                         alert(data);
                     } else {
-                        jQuery( "#bf_post_li_"+data ).remove();
+                        var id = "#bf_post_li_";
+                        var li = id + data ;
+                        li = li.replace(/\s+/g, '');
+                        jQuery(li).remove();
                     }
                 },
                 error: function (request, status, error) {
