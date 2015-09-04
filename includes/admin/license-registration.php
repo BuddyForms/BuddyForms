@@ -73,8 +73,6 @@ function buddyforms_edd_sanitize_license( $new ) {
     return $new;
 }
 
-
-
 /************************************
  * this illustrates how to activate
  * a license key

@@ -5,7 +5,6 @@ ul.buddyforms-list{
 
 ul.buddyforms-list li {
 	padding: 20px 0;
-	overflow: auto;
 	height: auto;
 	min-height: 44px;
 	position: relative;

@@ -112,5 +112,3 @@ function buddyforms_after_save_post_redirect($url){
     $string .= '</script>';
     return $string;
 }
-
-

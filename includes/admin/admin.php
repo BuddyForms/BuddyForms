@@ -47,11 +47,7 @@ function buddyforms_options_content() {
     if (!current_user_can('manage_options'))
         wp_die(__('You do not have sufficient permissions to access this page.', 'buddyforms'));
 
-    ?>
-
-    <div id="bf_admin_wrap" class="wrap">
-
-        <?php
+    ?><div id="bf_admin_wrap" class="wrap"><?php
 
         include('admin-credits.php');
 

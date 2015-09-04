@@ -85,4 +85,3 @@ function buddyforms_attached_page_content($content){
     return $new_content;
 
 }
-?>

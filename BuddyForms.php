@@ -44,9 +44,6 @@ class BuddyForms {
 	 */
 	public function __construct() {
 
-		// Run the activation function
-		register_activation_hook( __FILE__, array( $this, 'activation' ) );
-
 		define('buddyforms', $this->version);
 		define('BUDDYFORMS_VERSION', $this->version);
 
@@ -58,14 +55,8 @@ class BuddyForms {
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')			, 2, 1);
 		add_action( 'template_redirect'		, array($this, 'buddyform_front_js_loader')		, 2, 1);
 
-
 		$this->init_hook();
 		$this->load_constants();
-
-		/**
-		 * Deletes all data if plugin deactivated
-		 */
-		register_deactivation_hook( __FILE__, array( $this, 'uninstall' ) );
 
 	}
 
@@ -341,4 +332,3 @@ function edd_sl_sample_plugin_updater() {
 
 }
 add_action( 'admin_init', 'edd_sl_sample_plugin_updater', 0 );
-
