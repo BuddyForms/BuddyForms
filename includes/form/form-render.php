@@ -33,7 +33,7 @@ function buddyforms_form_html( $args )
         ';
 
     foreach ($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key => $form_field) {
-        if (isset($form_field['required']) || $form_field['slug'] == 'editpost_title') {
+        if (isset($form_field['required']) || ( $form_field['slug'] == 'editpost_title') && !isset($form_field['hidden'])) {
 
             $field_slug = str_replace("-", "", $form_field['slug']);
             if ($field_slug) :
@@ -152,7 +152,7 @@ function buddyforms_form_html( $args )
     $form->addElement(new Element_Hidden("form_slug"        , $form_slug));
     $form->addElement(new Element_Hidden("bf_post_type"     , $post_type));
 
-    if(!isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
+    if(isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
         $form->addElement(new Element_Hidden("ajax" , 'off'));
 
     // if the form have custom field to save as post meta data they get displayed here

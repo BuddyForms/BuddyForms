@@ -352,10 +352,10 @@ function buddyforms_settings_page(){
             </p>', 'buddyforms'))));
 
 
-            $bf_ajax = true;
+            $bf_ajax = false;
             if (isset($buddyform['bf_ajax']))
                 $bf_ajax = $buddyform['bf_ajax'];
-            $form->addElement(new Element_Checkbox('<br><b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' =>  __('Enable ajax form submission.', 'buddyforms')), array( 'shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax)));
+            $form->addElement(new Element_Checkbox('<br><b>AJAX</b>' , "buddyforms_options[buddyforms][" . $buddyform['slug'] . "][bf_ajax]", array('bf_ajax' =>  __('Disable ajax form submission.', 'buddyforms')), array( 'shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax)));
 
             $form->addElement(new Element_HTML('</div>'));
 

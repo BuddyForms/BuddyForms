@@ -248,9 +248,16 @@ function buddyforms_view_form_fields($args){
             break;
         case 'Comments':
             unset($form_fields);
+
+            $required = 'false';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
+                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
+            $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
+
             $name = 'Comments';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
                 $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
+
             $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][slug]", 'comments');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][type]", $field_type);
@@ -321,6 +328,11 @@ function buddyforms_view_form_fields($args){
         case 'Status':
             unset($form_fields);
 
+            $required = 'false';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
+                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
+            $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
+
             $name = 'Status';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
                 $name = stripcslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']);
@@ -343,6 +355,11 @@ function buddyforms_view_form_fields($args){
         case 'Featured_Image':
 
             unset($form_fields);
+
+            $required = 'false';
+            if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required']))
+                $required = $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['required'];
+            $form_fields['right']['required']   = new Element_Checkbox('', "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[buddyforms][" . $form_slug . "][form_fields][" . $field_id . "][required]"));
 
             $name = 'FeaturedImage';
             if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']))
