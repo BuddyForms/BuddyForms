@@ -4,7 +4,7 @@ Contributors: Sven Lehnert
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.x, BuddyPress 2.x
 Tested up to: WordPress 4.3, BuddyPress 2.3.2.1
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 
 === Documentation & Support === 
 
@@ -18,6 +18,12 @@ You can also create support tickets there.
 Login with your account from https://buddyforms.com/checkout/support-tickets/
 
 // Changelog
+
+== 1.4.1 ==
+removed overflow: auto; from the list css to avoid conflicts
+add missing required option to form elements
+fix the hidden title required issue
+clean up the code
 
 == 1.4.1 ==
 fixed small merging issues.

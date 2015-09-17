@@ -34,7 +34,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '1.4.1';
+	public $version = '1.4.2';
 
 	/**
 	 * Initiate the class
@@ -322,7 +322,7 @@ function edd_sl_sample_plugin_updater() {
 
 	// setup the updater
 	$edd_updater = new EDD_SL_Plugin_Updater( BUDDYFORMS_STORE_URL, __FILE__, array(
-			'version' 	=> '1.4.1', 				// current version number
+			'version' 	=> '1.4.2', 				// current version number
 			'license' 	=> $license_key, 		// license key (used get_option above to retrieve from DB)
 			'item_name' => BUDDYFORMS_EDD_ITEM_NAME, 	// name of this plugin
 			'author' 	=> 'Sven Lehnert',  // author of this plugin

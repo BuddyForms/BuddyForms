@@ -421,7 +421,7 @@ function bf_form_elements($form, $args){
                             $form->addElement( new Element_HTML($dropdown));
 
                             if(isset($customfield['creat_new_tax']) ){
-                                $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['taxonomy'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
+                                $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['name'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
                             }
                         }
 
