@@ -1,188 +1,221 @@
 === BuddyForms  ===
 
-Contributors: Sven Lehnert
+Contributors: svenl77
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
-Requires at least: WordPress 3.x, BuddyPress 2.x
-Tested up to: WordPress 4.3, BuddyPress 2.3.2.1
+Requires at least: WordPress 3.9, BuddyPress 2.x
+Tested up to: WordPress 4.3.1
 Stable tag: 1.4.2
+Author: Sven Lehnert
+Author URI: https://profiles.wordpress.org/svenl77
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-=== Documentation & Support === 
+WordPress Front End Editor And Form Builder For Your User Generated Content
+
+== Description ==
+
+BuddyForms enables Your users to share their own content in a way that You choose to.
+Create versatile and creative content forms that Your users can use to share content with, and become a part of the content sharing community
+
+== Frequently Asked Questions ==
 
 You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard! 
 
-// Documentation 
+<b>Search the Documentation</b>
 http://docs.buddyforms.com
 
-// Support Tickets 
-You can also create support tickets there. 
-Login with your account from https://buddyforms.com/checkout/support-tickets/
+<b>Create a new Support Ticket</b>
+Create new Support Tickets or check your existing once in your BuddyForms Account.
+https://buddyforms.com/checkout/support-tickets/
 
-// Changelog
+or write us a email: support@buddyforms.com
 
-== 1.4.1 ==
-removed overflow: auto; from the list css to avoid conflicts
-add missing required option to form elements
-fix the hidden title required issue
-clean up the code
+== Upgrade Notice ==
 
-== 1.4.1 ==
-fixed small merging issues.
+If you updated from version 1.3 please test your Form Elements "Featured Image" and "File". They have changed rapidly.
+If you encounter any issues just delete the form elements and add them to the form again. This should fix all issues.
 
-== 1.4 ==
-add a new filter buddyforms_wp_login_form to the form
-add check if submitter is author
-fix a bug with the form element title. in some cases with other js conflicts it was possible to delete the title tag.
-Add new options to the form builder to select the action happened after form submission
-rewrite the form.php and add ajax form submit functionality to the form
-add nonce check to the ajax form
-build a work around for the wp_editor shortcodes issue. Need to investigate deeper why the shortcodes are executed. For now I load the wp_editor content with jQuery
-fixed smaller bugs reported by users
-add help text
-fixed a types conflict in the form builder
-add post_parent support
-add ajax for post delete
-removed the old delete function
-removed the old delete rewrite roles
-only display posts created by the form
-small css changes and clean up the css
-changed the-loop.php
-Add options to change the Form Element Title
-rewrite the addons section and load all BuddyForms Extension with a buddyforms search from wordpress.org
-changed the featured image function to work with ajax
-add file and featured image ajax upload
-add wp_handle_upload_prefilter to check for allowed file types
-fixed a checkbox issue if attribute id was empty
-start adding deep validation
-add new option hidden to the taxonomy field
-add an ajax form option to the form builder
-start adding validation to the form
-fixed a bug with the featured image upload
-add required option to the content form element
-fixed a bug in the taxonomy hidden form element
-fixed a bug with the allowed post type in the media uploader
-fixed the after submit options. It was not working correctly
-add new option to the title to make it a hidden field
-fixed an issue with the edit link options
-changed the url to the new buddyforms.com site
-rewrite the jQuery to make the button handling work
-add stripslashes to the form elements
-rename session
-fixed delete featured image issue
-add beautiful validation to the form ;)
-smaler bug fixed
-Super nice validation options for every form element max min and message ;)
-Admin UI improvements
-removed the old zendesk support and link to the new support system
-add new option to the file element to select supported file types
-adjust the form messages
-clean up js
-clean up code
-finalise the new ui
+== Changelog ==
 
-== 1.3.2 ==
+1.4.2
+<ul>
+<li>removed overflow: auto; from the list css to avoid conflicts</li>
+<li>add missing required option to form elements</li>
+<li>fix the hidden title required issue</li>
+<li>clean up the code</li>
+</ul>
 
-add missing translations. Thanks to Milena to point me on this !
-Made more strings translatable.
-Fixed some typos.
-Started making admin.js translatable. Props @rugwarrior
-Fixed typo revison -> revision. Props @rugwarrior
-Revised PO/MO files for changed source files. Props @rugwarrior
-Added German translations. Props @rugwarrior
-fixes small issues in the error handling
-small clean up of readme.txt Props @rugwarrior
-cleanup the code
-add new filter bf_form_before_render
-check if the form is broken and if some fields are missing do not add it to the adminbar
+1.4.1
+<ul>
+<li>fixed small merging issues.</li>
+</ul>
 
-== 1.3.1 ==
+1.4
+<ul>
+	<li>add a new filter buddyforms_wp_login_form to the form</li>
+	<li>add check if submitter is author</li>
+	<li>fix a bug with the form element title. in some cases with other js conflicts it was possible to delete the title tag.</li>
+	<li>Add new options to the form builder to select the action happened after form submission</li>
+	<li>rewrite the form.php and add ajax form submit functionality to the form</li>
+	<li>add nonce check to the ajax form</li>
+	<li>build a work around for the wp_editor shortcodes issue. Need to investigate deeper why the shortcodes are executed. For now I load the wp_editor content with jQuery</li>
+	<li>fixed smaller bugs reported by users</li>
+	<li>add help text</li>
+	<li>fixed a types conflict in the form builder</li>
+	<li>add post_parent support</li>
+	<li>add ajax for post delete</li>
+	<li>removed the old delete function</li>
+	<li>removed the old delete rewrite roles</li>
+	<li>only display posts created by the form</li>
+	<li>small css changes and clean up the css</li>
+	<li>changed the-loop.php</li>
+	<li>Add options to change the Form Element Title</li>
+	<li>rewrite the addons section and load all BuddyForms Extension with a buddyforms search from wordpress.org</li>
+	<li>changed the featured image function to work with ajax</li>
+	<li>add file and featured image ajax upload</li>
+	<li>add wp_handle_upload_prefilter to check for allowed file types</li>
+	<li>fixed a checkbox issue if attribute id was empty</li>
+	<li>start adding deep validation</li>
+	<li>add new option hidden to the taxonomy field</li>
+	<li>add an ajax form option to the form builder</li>
+	<li>start adding validation to the form</li>
+	<li>fixed a bug with the featured image upload</li>
+	<li>add required option to the content form element</li>
+	<li>fixed a bug in the taxonomy hidden form element</li>
+	<li>fixed a bug with the allowed post type in the media uploader</li>
+	<li>fixed the after submit options. It was not working correctly</li>
+	<li>add new option to the title to make it a hidden field</li>
+	<li>fixed an issue with the edit link options</li>
+	<li>changed the url to the new buddyforms.com site</li>
+	<li>rewrite the jQuery to make the button handling work</li>
+	<li>add stripslashes to the form elements</li>
+	<li>fixed delete featured image issue</li>
+	<li>add beautiful validation to the form ;)</li>
+	<li>Super nice validation options for every form element max min and message ;)</li>
+	<li>Admin UI improvements</li>
+	<li>removed the old zendesk support and link to the new support system</li>
+	<li>add new option to the file element to select supported file types</li>
+	<li>adjust the form messages</li>
+	<li>clean up js</li>
+	<li>clean up code</li>
+	<li>finalise the new ui</li>
+</ul>
 
-fixed a bug in the taxonomy default form element
+1.3.2
+<ul>
+	<li>check if the form is broken and if some fields are missing do not add it to the adminbar</li>
+	<li>add new filter bf_form_before_render</li>
+	<li>cleanup the code</li>
+	<li>small clean up of readme.txt Props @rugwarrior</li>
+	<li>fixes small issues in the error handling</li>
+	<li>Added German translations. Props @rugwarrior</li>
+	<li>Revised PO/MO files for changed source files. Props @rugwarrior</li>
+	<li>Fixed typo revison -&gt; revision. Props @rugwarrior</li>
+	<li>Started making admin.js translatable. Props @rugwarrior</li>
+	<li>Fixed some typos.</li>
+	<li>Made more strings translatable.</li>
+	<li>add missing translations. Thanks to Milena to point me on this !</li>
+</ul>
 
-== 1.3 ==
+1.3.1
+<ul>
+	<li>Fixed a bug in the taxonomy default form element</li>
+</ul>
 
-Add new check if the user has the needed rights before adding the form to the admin bar
-Create new function bf_edit_post_link to support new capabilities in the front end
-Switch from chosen to select2
-Add new error message to logged off users
-Clean up debugger notice
-Optimised the link rewrite function
-Fixed form submit not working on mobile
-Add new filter for the shortcodes button
-Add new shortcodes to TinyMCE
-Rewrite the Shortcodes
-Changed plugin uri
-Add new filters to manipulate the edit form id
-Add a jQuery to make different submit buttons possible
-Add post_parent as parameter
-Fixed a bug in the error handling
-Small css changes
-Clean up the code
+1.3
+<ul>
+	<li>Add new check if the user has the needed rights before adding the form to the admin bar</li>
+	<li>Create new function bf_edit_post_link to support new capabilities in the front end</li>
+	<li>Switch from chosen to select2</li>
+	<li>Add new error message to logged off users</li>
+	<li>Clean up debugger notice</li>
+	<li>Optimised the link rewrite function</li>
+	<li>Fixed form submit not working on mobile</li>
+	<li>Add new filter for then shortcodes button</li>
+	<li>Add new shortcodes to tynymce</li>
+	<li>Rewrite the Shortcodes</li>
+	<li>Changed plugin uri</li>
+	<li>Add new filters to manipulate the edit form id</li>
+	<li>Add a jQuery to make different submit buttons possible</li>
+	<li>Add post_parent as parameter</li>
+	<li>Fixed a bug in the error handling</li>
+	<li>Small css changes</li>
+	<li>Clean up the code</li>
+</ul>
 
-== 1.2 ==
+1.2
+<ul>
+	<li>create new form elements for title and content</li>
+	<li>3 new form elements: date, number and html</li>
+	<li>add wp editor options to the form builder in the content element</li>
+	<li>fixed editing BuddyPress js issues</li>
+	<li>fixed shortcode over content issues</li>
+	<li>update chosen js to the latest version</li>
+	<li>add media uploader js</li>
+	<li>change split to explode</li>
+	<li>load the js css only if a buddyforms view is displayed</li>
+	<li>css fixes</li>
+	<li>restructure code</li>
+	<li>create an update script for the new version</li>
+	<li>make it possible to enter tags comma separated</li>
+	<li>spelling correction</li>
+	<li>add german language files</li>
+</ul>
 
-create new form elements for title and content
-3 new form elements date, number and html
-add wp editor options to the form builder form element
-add german language files
-fixed editing BuddyPress js issues
-fixed the shortcode over content issue
-update chosen js to the latest version
-create a new file form-builder-elements.php
-add media uploader js
-change split to explode
-load the js css only if a BuddyForms view is displayed
-css fixes
-restructure code
-create an update script for the new version
-make it possible to enter tags comma separated
-spelling correction
+1.1
+<ul>
+	<li>add language support</li>
+	<li>add featured image as form element</li>
+	<li>add file form element</li>
+	<li>add ajax to delete a file</li>
+	<li>fixxed a pagination bug</li>
+	<li>only display the post type related taxonomies in the form element options</li>
+	<li>add translation textdomain "buddyforms"</li>
+	<li>rebuild the add new form screen</li>
+	<li>remove unneeded form elements from add form screen</li>
+	<li>add mail notification settings</li>
+	<li>add mail notification system to buddy forms</li>
+	<li>add date time form element for post status future</li>
+	<li>spelling session</li>
+	<li>ui design</li>
+	<li>Settings page Add Ons rewrite</li>
+	<li>add new settings page for roles and capabilities</li>
+	<li>cleanup the code</li>
+	<li>fixed bugs</li>
+	<li>add new default option to taxonomy form element</li>
+	<li>add Italien language</li>
+</ul>
 
-== 1.1 ==
+1.0.5
+<ul>
+	<li>rename hook buddyforms_add_form_element_in_sidebar to buddyforms_add_form_element_to_sidebar</li>
+	<li>spelling correction</li>
+</ul>
 
-add language support
-add featured image as form element
-add file form element
-add ajax to delete a file
-fixed a pagination bug
-only display the post type related taxonomies in the form element options
-add translation text domain "buddyforms"
-rebuild the add new form screen
-remove unneeded form elements from add form screen
-add mail notification settings
-add mail notification system to BuddyForms
-add date time form element for post status future
-spelling session
-ui design
-Settings page Add Ons rewrite
-add new settings page for roles and capabilities
-clean up the code
-fixed bugs
-add new default option to taxonomy form element
-add Italian language
+1.0.4
+<ul>
+	<li>remove unneeded html</li>
+</ul>
 
-== 1.0.5 ==
+1.0.3
+<ul>
+	<li>editing your pending/draft posts from the frontend.</li>
+	<li>fixed some css issues</li>
+</ul>
 
-rename hook buddyforms_add_form_element_in_sidebar to buddyforms_add_form_element_to_sidebar
-spelling correction
+1.0.2
+<ul>
+	<li>remove old button for community forum</li>
+	<li>add some new filter</li>
+</ul>
 
-== 1.0.4 ==
+1.0.1
+<ul>
+	<li>catch if create a new post_tag is empty</li>
+	<li>metabox rework</li>
+</ul>
 
-remove unneeded html
-
-== 1.0.3 ==
-
-editing your pending/draft posts from the frontend
-fixed some css issues
-
-== 1.0.2 ==
-
-remove old button for community forum
-add some new filter
-
-== 1.0.1 ==
-
-catch if create a new post_tag is empty
-metabox rework
-
-== 1.0 ==
-first release
+1.0
+<ul>
+	<li>first release</li>
+</ul>
