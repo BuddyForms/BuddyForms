@@ -34,14 +34,19 @@ function buddyforms_add_form(){
         $_POST['create_new_form_attached_page'] = wp_insert_post( $mew_post );
     }
 
-    $create_new_form_slug = sanitize_title($_POST['create_new_form_name']);
-    $mod5 = substr(md5(time() * rand()), 0, 10);
+    $bf_forms_args = array(
+        'post_title' 		=> $_POST['create_new_form_name'],
+        'post_type' 		=> 'buddyforms',
+        'post_status' 		=> 'publish',
+    );
 
-    if(isset($buddyforms['buddyforms']) && array_key_exists($create_new_form_slug, $buddyforms['buddyforms']))
-        $create_new_form_slug = $create_new_form_slug.'-'.$mod5;
+    // Insert the new form
+    $post_id = wp_insert_post( $bf_forms_args, true );
+    $the_post =  get_post($post_id);
 
     $options = Array(
-        'slug'              => $create_new_form_slug,
+        'slug'              => $the_post->post_name,
+        'id'                => $the_post->ID,
         'name'              => $_POST['create_new_form_name'],
         'singular_name'     => $_POST['create_new_form_singular_name'],
         'attached_page'     => $_POST['create_new_form_attached_page'],
@@ -68,11 +73,10 @@ function buddyforms_add_form(){
     $options['form_fields'][$field_id]['type']          = 'Content';
     $options['form_fields'][$field_id]['order']         = '2';
 
-    $buddyforms['buddyforms'][$create_new_form_slug] = $options;
 
-    $update_option = update_option("buddyforms_options", $buddyforms);
+    update_post_meta($post_id, '_buddyforms_options', $options);
 
-    if($update_option){
+    if($post_id){
         buddyforms_attached_page_rewrite_rules(TRUE);
         echo sanitize_title($_POST['create_new_form_name']);
     } else {
@@ -85,15 +89,31 @@ function buddyforms_add_form(){
 add_action( 'wp_ajax_buddyforms_add_form', 'buddyforms_add_form' );
 
 function buddyforms_save_options(){
+    global $wpdb;
+
+    xdebug_break();
+
     if(empty($_POST['buddyforms_options']))
         return;
 
     parse_str($_POST['buddyforms_options'], $formdata);
-//    echo '<pre>';
-//    print_r($formdata['buddyforms_options']);
-//    echo '</pre>';
 
-    $update_option = update_option('buddyforms_options', $formdata['buddyforms_options']);
+
+    foreach($formdata['buddyforms_options']['buddyforms'] as $key => $meta) {
+        $form_slug = $key; // Would output "subkey" in the example array
+    }
+
+    $form_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$form_slug' and post_type = 'buddyforms'");
+
+    $bf_post = array(
+        'ID'        		=> $form_id,
+        'post_title' 		=> $formdata['buddyforms_options']['buddyforms'][$form_slug]['name'],
+    );
+
+    // Update the new post
+   $post_id = wp_update_post( $bf_post );
+
+    update_post_meta($form_id, '_buddyforms_options', $formdata['buddyforms_options']['buddyforms'][$form_slug]);
 
     buddyforms_attached_page_rewrite_rules(TRUE);
 
@@ -107,8 +127,8 @@ add_action( 'wp_ajax_buddyforms_save_options', 'buddyforms_save_options' );
  * @since 0.1-beta
  */
 function buddyforms_delete_form(){
-
-    $buddyforms_options = get_option('buddyforms_options');
+    global $buddyforms;
+    $buddyforms_options = $buddyforms;
     unset( $buddyforms_options['buddyforms'][$_POST['dele_form_slug']] );
 
     buddyforms_attached_page_rewrite_rules(TRUE);
@@ -125,9 +145,10 @@ add_action('wp_ajax_buddyforms_delete_form', 'buddyforms_delete_form');
  * @since 0.1-beta
  */
 function buddyforms_save_item_order() {
-    global $wpdb;
+    global $buddyforms;
+    $buddyforms_options = $buddyforms;
 
-    $buddyforms_options = get_option('buddyforms_options');
+
     $order = explode(',', $_POST['order']);
     $counter = 0;
 
@@ -149,9 +170,10 @@ add_action('wp_ajax_buddyforms_save_item_order', 'buddyforms_save_item_order');
  * @since 0.1-beta
  */
 function buddyforms_item_delete(){
-    $post_args = explode('/', $_POST['post_args']);
+    global $buddyforms;
+    $buddyforms_options = $buddyforms;
 
-    $buddyforms_options = get_option('buddyforms_options');
+    $post_args = explode('/', $_POST['post_args']);
 
     unset( $buddyforms_options[$post_args[0]][$post_args[1]]['form_fields'][$post_args[3]] );
 

@@ -415,29 +415,36 @@ function buddyforms_view_form_fields($args){
     $form_fields = apply_filters('buddyforms_formbuilder_fields_options', $form_fields, $form_slug, $field_id);
 
     ob_start(); ?>
-    <li id="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order"
-        class="list_item <?php echo $field_id . ' ' . $field_type ?>">
+    <li id="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id . ' ' . $field_type ?>">
         <div class="accordion_fields">
             <div class="accordion-group postbox">
                 <div class="accordion-heading">
 
+
+
                         <div class="accordion-heading-options">
-                            <?php if(!isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug']) || $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['slug'] != 'editpost_title') { ?>
-                                <a class="delete" id="<?php echo $field_id ?>"
-                                   href="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order">
-                                    <p><i class="icon-remove-sign" style="margin-top:7px;margin-right:2px;"></i><span>delete</span></p>
-                                </a>
-                            <?php } else { ?>
-                                <p><i class="icon-info-sign" style="margin-top:7px;margin-right:2px;"></i><span>required</span></p>
-                            <?php } ?>
+                            <table class="bf_ widefat">
+                                <tbody><tr>
+                                    <td class="field_order ui-sortable-handle"><span class="circle">1</span></td>
+                                    <td class="field_label">
+                                        <strong>
+                                            <a class="bf__edit_field row-title" title="Edit this Field" href="javascript:;">file</a>
+                                        </strong>
+                                        <div class="row_options">
+                                            <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">
+                                                <span><a class="bf__edit_field" title="Edit this Field" href="javascript:;">Edit</a> | </span>
+                                            </p>
+
+
+                                            <span><a class="bf__delete_field" title="Delete this Field" href="javascript:;">Delete</a></span>
+                                        </div>
+                                    </td>
+                                    <td class="field_name">file</td>
+                                    <td class="field_type">File</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-
-
-                    <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text"
-                       href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>">
-                        <?php echo $field_type; ?><i><?php if (isset($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']) && $buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name'] != $field_type)
-                                echo '<b>: </b>' . stripslashes($buddyforms_options['buddyforms'][$form_slug]['form_fields'][$field_id]['name']); ?></i>
-                    </p>
 
                 </div>
 

@@ -15,6 +15,7 @@ function buddyforms_create_menu(){
     add_menu_page('BuddyForms', 'BuddyForms', 'manage_options', 'buddyforms_options_page', 'buddyforms_options_content');
     add_submenu_page('buddyforms_options_page', __('Add New', 'buddyforms'), __('Add New', 'buddyforms'), 'manage_options', 'create-new-form', 'bf_import_export_screen');
     add_submenu_page('buddyforms_options_page', __('Add-ons', 'buddyforms'), __('Add-ons', 'buddyforms'), 'manage_options', 'bf_add_ons', 'bf_add_ons_screen');
+    add_submenu_page('buddyforms_options_page', __('Edit Form', 'buddyforms'), __('Edit Form', 'buddyforms'), 'manage_options', 'bf_edit_form', 'bf_edit_form_screen');
     add_submenu_page('buddyforms_options_page', __('Mail Notification', 'buddyforms'), __('Mail Notification', 'buddyforms'), 'manage_options', 'bf_mail_notification', 'bf_mail_notification_screen');
     add_submenu_page('buddyforms_options_page', __('Manage User Roles', 'buddyforms'), __('Manage User Roles', 'buddyforms'), 'manage_options', 'bf_manage_form_roles_and_capabilities', 'bf_manage_form_roles_and_capabilities_screen');
 

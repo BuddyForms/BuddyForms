@@ -11,8 +11,6 @@ add_action('init', 'buddyforms_attached_page_rewrite_rules');
 function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     global $buddyforms;
 
-    $buddyforms = get_option('buddyforms_options', true);
-
     if ( !is_admin() )
         return;
 
