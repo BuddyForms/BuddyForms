@@ -53,14 +53,14 @@ if ( $the_lp_query->have_posts() ) : ?>
 				
 				<?php
 				if (get_the_author_meta('ID') ==  get_current_user_id()){
-					$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] ); ?>
+					$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] ); ?>
 
 					<div class="meta">
 						<div class="item-status"><?php echo $post_status_name; ?></div>
                         <?php
                         if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
 
-                            if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] != 'none') {
+                            if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] != 'none') {
                                 echo '<a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>';
                              } else {
                                 echo bf_edit_post_link('Edit');

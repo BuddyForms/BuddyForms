@@ -8,8 +8,7 @@
 
 function buddyforms_edd_license_menu() {
 
-    add_submenu_page( 'buddyforms_options_page', 'BuddyForms', __('License', 'buddyforms'), 'manage_options', 'license_registration_dashboard', 'buddyforms_edd_license_page' );
-    add_plugins_page( 'Plugin License'          ,'Plugin License', 'manage_options', 'pluginname-license', 'buddyforms_edd_license_page' );
+    add_submenu_page( 'edit.php?post_type=buddyforms', 'BuddyForms', __('License', 'buddyforms'), 'manage_options', 'license_registration_dashboard', 'buddyforms_edd_license_page' );
 }
 add_action('admin_menu', 'buddyforms_edd_license_menu');
 

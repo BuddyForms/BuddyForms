@@ -1,5 +1,9 @@
 jQuery(document).ready(function(jQuery) {
 
+
+
+    jQuery( "#post" ).addClass( "form-inline" );
+
     var location = window.location;
     var hash = window.location.hash;
     if(hash)
@@ -89,47 +93,6 @@ jQuery(document).ready(function(jQuery) {
 		});
 	});
 
-
-	jQuery('.bf-save-form').on( "click", function( event ) {
-
-		var FormData = jQuery('#buddyforms_form').serialize();
-
-        jQuery('.loading-animation-save').show(); // Show the animate loading gif while waiting
-		jQuery.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data: {"action": "buddyforms_save_options", "buddyforms_options": FormData},
-			success: function(data){
-                jQuery('.loading-animation-save').fadeOut(1500); // Show the animate loading gif while waiting
-			},
-            error: function() {
-                jQuery('.loading-animation-save').hide(); // Show the animate loading gif while waiting
-                jQuery('.loading-animation-error').show(); // Show the animate loading gif while waiting
-            }
-		});
-
-		return false;
-	});
-
- 	jQuery('.dele_form').click(function(){
-
- 		var dele_form_slug = jQuery(this).attr('id');
-
-		var action = jQuery(this);
-		if (confirm('Delete Permanently'))
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "buddyforms_delete_form", "dele_form_slug": dele_form_slug},
-				success: function(data){
-					window.location.reload(true);
-				}
-			});
-
-		return false;
- 	});
-
-
 	jQuery('.action').click(function(){
 
 		var numItems = jQuery('.list_item').length;
@@ -157,11 +120,20 @@ jQuery(document).ready(function(jQuery) {
 					return false;
 				}
 
+				data = data.replace('accordion-body collapse','accordion-body in collapse');
+
 				var myvar = action.attr('href');
 				var arr = myvar.split('/');
 				jQuery('.sortable_' + arr[1]).append(data);
 				jQuery('.info_' + arr[1]).hide();
 				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
+				//jQuery('.sortable_' + arr[1]).collapse();
+				update_list_item_number();
+
+				jQuery('#buddyforms_form_elements').removeClass('closed');
+				jQuery("html, body").animate({ scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top }, 1000);
+
+
 
 			},
 			error: function() {
@@ -170,6 +142,15 @@ jQuery(document).ready(function(jQuery) {
 		});
 		return false;
 	});
+    //
+	//jQuery(".accordion-body").on("shown", function () {
+	//	var selected = jQuery(this);
+	//	var collapseh = jQuery(".collapse .in").height();
+	//	jQuery("html, body").animate({ scrollTop: jQuery('#title1').offset().top }, 1000);
+	//	jQuery.scrollTo(selected, 500, {
+	//		offset: -(collapseh)
+	//	});
+	//});
 
 	jQuery(document).on('click','.delete',function() {
 
@@ -194,7 +175,7 @@ jQuery(document).ready(function(jQuery) {
 		var args = action.attr('href').split("/");
 	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
 	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> + <input class="field-sortable" type="text" name="buddyforms_options[buddyforms]['+args[0]+'][form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');
+	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> + <input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');
 
     	return false;
 
@@ -217,69 +198,43 @@ jQuery(document).ready(function(jQuery) {
 		});
 	});
 
+	function update_list_item_number() {
+		jQuery(".buddyforms_forms_builder ul").each(function() {
+			jQuery(this).children("li").each(function(t) {
+				jQuery(this).find("td.field_order .circle").first().html(t + 1)
+			})
+		})
+	}
+	update_list_item_number();
+
 	jQuery(document).on('mousedown','.list_item',function() {
-
 		itemList = jQuery(this).closest('.sortable').sortable({
-
 	    	update: function(event, ui) {
-				jQuery('.loading-animation-order').show(); // Show the animate loading gif while waiting
-
-			    opts = {
-	                url: ajaxurl,
-	                type: 'POST',
-	                async: true,
-	                cache: false,
-	                dataType: 'json',
-	                data:{
-	                    action: 'buddyforms_save_item_order', // Tell WordPress how to handle this ajax request
-	                    order: itemList.sortable('toArray').toString() // Passes ID's of list items in 1,3,2 format
-	                },
-	                success: function(response) {
-
-	                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
-	                    var testst = itemList.sortable('toArray');
-	                   for (var key in testst){
-	                   	jQuery("input[id='" + testst[key] + "']").val(key);
-	                   }
-	                    return;
-	                },
-	                error: function(xhr,textStatus,e) {  // This can be expanded to provide more information
-	                    //alert(e);
-	                    alert('There was an error saving the order');
-	                    jQuery('.loading-animation-order').hide('slow'); // Hide the loading animation
-		                    return;
-					}
-				};
-
-		   			jQuery.ajax(opts);
+				update_list_item_number();
 		       }
 	       });
 	   });
 
-    jQuery('#btnAdd').click(function (e) {
+	function update_list_item_number_mail() {
+		jQuery(".panel-mail-notifications .wp-list-table").each(function(t) {
+			jQuery(this).find("td.field_order .circle").first().html(t + 1)
+		})
+	}
+	update_list_item_number_mail();
+
+    jQuery('#mail_notification_add_new').click(function (e) {
 
         var trigger = jQuery('.buddyforms_notification_trigger').val();
-        var href = jQuery(location).attr('href');
 
         if(trigger == 'none'){
             alert('You have to select a trigger first.');
             return false;
         }
 
-        var get = [];
-        location.search.replace('?', '').split('&').forEach(function (val) {
-            split = val.split("=", 2);
-            get[split[0]] = split[1];
-        });
-
-        var form_slug = get["form_slug"];
-
-        var action = jQuery(this);
-
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {"action": "buddyforms_new_mail_notification", "trigger": trigger, 'href': href, 'form_slug': form_slug},
+            data: {"action": "buddyforms_new_mail_notification", "trigger": trigger},
             success: function(data){
 
                 if(data == 0){
@@ -287,25 +242,10 @@ jQuery(document).ready(function(jQuery) {
                     return false;
                 }
 
-                var nextTab = jQuery('#tabs li').size()+1;
-
-                if(nextTab == 1){
-                    jQuery('<ul class="nav nav-tabs" id="tabs"></ul> <div class="tab-content"></div>').appendTo('#mailcontainer');
-                }
-                // create the tab
-                jQuery('<li><a href="#tab'+nextTab+'" data-toggle="tab">'+trigger+'</a></li>').appendTo('#tabs');
-
-                // create the tab content
-                jQuery('<div class="tab-pane" id="tab'+nextTab+'">' +data+'</div>').appendTo('.tab-content');
-
-                // make the new tab active
-                jQuery('#tabs a:last').tab('show');
-
+				jQuery('#mailcontainer').append(data);
             }
         });
-
         return false;
-
     });
 
     jQuery(".checkall").click(function(){

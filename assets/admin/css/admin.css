@@ -160,10 +160,10 @@ padding-top: 18px !important;
 	margin-right: 5px;
 	margin-left: 1px;
 }
-#bf_admin_wrap .form-inline .buddyforms_accordion_left select {
+#bf_admin_wrap .buddyforms_accordion_left select {
 	margin-bottom: 15px;
 }
-#bf_admin_wrap .form-inline .buddyforms_accordion_right .checkbox {
+#bf_admin_wrap .buddyforms_accordion_right .checkbox {
 	margin-bottom: 15px;
 }
 #bf_admin_wrap i.small {
@@ -266,7 +266,7 @@ clear: both;
 #bf_admin_wrap .wp-list-table tr td {
     height: 40px;
 }
-#bf_admin_wrap .bf-main-settings input[type="text"] {
+.bf-main-settings input[type="text"] {
     width: 100%;
     margin: 5px 0 10px;
     height: 2em;
@@ -378,4 +378,22 @@ clear: both;
 
 .bf-mail-field{
     width:100%;
+}
+.buddyforms_forms_builder .circle {
+    background: transparent;
+    cursor: move;
+    margin: 2px 0 0;
+    border: 1px solid #BBBBBB;
+    border-radius: 12px;
+    display: block;
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    width: 22px;
+    line-height: 23px;
+    text-indent: 0;
+    margin-left: 6px;
 }

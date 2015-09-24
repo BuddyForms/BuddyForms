@@ -70,10 +70,10 @@ function buddyforms_process_post($args = Array()) {
         $the_post = get_default_post_to_edit($post_type);
     }
 
-    if(isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
-        $customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
+    if(isset($buddyforms[$form_slug]['form_fields']))
+        $customfields = $buddyforms[$form_slug]['form_fields'];
 
-    $comment_status = $buddyforms['buddyforms'][$form_slug]['comment_status'];
+    $comment_status = $buddyforms[$form_slug]['comment_status'];
     if(isset($_POST['comment_status']))
         $comment_status = $_POST['comment_status'];
 
@@ -82,7 +82,7 @@ function buddyforms_process_post($args = Array()) {
         $post_excerpt = $_POST['post_excerpt'];
 
     $action			= 'save';
-    $post_status	= $buddyforms['buddyforms'][$form_slug]['status'];
+    $post_status	= $buddyforms[$form_slug]['status'];
     if($post_id != 0){
         $action = 'update';
         $post_status = get_post_status( $post_id );
@@ -133,10 +133,10 @@ function buddyforms_process_post($args = Array()) {
     if( empty( $hasError ) ) :
 
         if(isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] )){
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms');
+            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms');
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
-            $info_message .= __('The ', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms');
+            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms');
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         }
 

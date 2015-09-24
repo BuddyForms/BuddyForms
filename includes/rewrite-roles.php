@@ -14,10 +14,10 @@ function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     if ( !is_admin() )
         return;
 
-    if(!isset($buddyforms['buddyforms']))
+    if(!isset($buddyforms))
         return;
 
-    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+    foreach ($buddyforms as $key => $buddyform) {
         if(isset($buddyform['attached_page'])){
             $post_data = get_post($buddyform['attached_page'], ARRAY_A);
             add_rewrite_rule($post_data['post_name'].'/create/([^/]+)/([^/]+)/?', 'index.php?pagename='.$post_data['post_name'].'&bf_action=create&bf_form_slug=$matches[1]&bf_parent_post_id=$matches[2]', 'top');
@@ -65,7 +65,7 @@ function bf_my_edit_post_link( $url, $post_ID) {
     if(is_admin())
         return $url;
 
-    if(!isset($buddyforms['buddyforms']))
+    if(!isset($buddyforms))
         return $url;
 
     $the_post	= get_post( $post_ID );
@@ -75,14 +75,14 @@ function bf_my_edit_post_link( $url, $post_ID) {
     if ($the_post->post_author != $current_user->ID) // @todo this needs to be modified for admins and collaborative content creation
         return $url;
 
-    if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'none')
+    if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] == 'none')
         return $url;
 
-    if(isset($buddyforms['buddyforms'][$form_slug]['edit_link']) && $buddyforms['buddyforms'][$form_slug]['edit_link'] == 'my-posts-list')
+    if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] == 'my-posts-list')
         return $url;
 
-    if(isset($buddyforms['buddyforms'][$form_slug]) && $buddyforms['buddyforms'][$form_slug]['post_type'] == $post_type){
-        $permalink	= get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
+    if(isset($buddyforms[$form_slug]) && $buddyforms[$form_slug]['post_type'] == $post_type){
+        $permalink	= get_permalink( $buddyforms[$form_slug]['attached_page'] );
         $url = $permalink.'edit/'.$form_slug.'/'.$post_ID;
         return $url;
     }

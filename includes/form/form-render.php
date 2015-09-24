@@ -32,7 +32,7 @@ function buddyforms_form_html( $args )
         rules: {
         ';
 
-    foreach ($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key => $form_field) {
+    foreach ($buddyforms[$form_slug]['form_fields'] as $key => $form_field) {
         if (isset($form_field['required']) || ( $form_field['slug'] == 'editpost_title') && !isset($form_field['hidden'])) {
 
             $field_slug = str_replace("-", "", $form_field['slug']);
@@ -61,7 +61,7 @@ function buddyforms_form_html( $args )
     $form_html .= '},
         messages: {
             ';
-    foreach($buddyforms['buddyforms'][$form_slug]['form_fields'] as $key =>  $form_field ){
+    foreach($buddyforms[$form_slug]['form_fields'] as $key =>  $form_field ){
         if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
 
             $validation_error_message = __('This field is required.', 'buddyforms');
@@ -152,7 +152,7 @@ function buddyforms_form_html( $args )
     $form->addElement(new Element_Hidden("form_slug"        , $form_slug));
     $form->addElement(new Element_Hidden("bf_post_type"     , $post_type));
 
-    if(isset($buddyforms['buddyforms'][$form_slug]['bf_ajax']))
+    if(isset($buddyforms[$form_slug]['bf_ajax']))
         $form->addElement(new Element_Hidden("ajax" , 'off'));
 
     // if the form have custom field to save as post meta data they get displayed here
@@ -175,7 +175,7 @@ function buddyforms_form_html( $args )
 
     $form_html .= '<div class="bf_modal"></div></div>';
 
-    if (isset($buddyforms['buddyforms'][$form_slug]['revision']) && $post_id != 0) {
+    if (isset($buddyforms[$form_slug]['revision']) && $post_id != 0) {
         ob_start();
         buddyforms_wp_list_post_revisions($post_id);
         $form_html .= ob_get_contents();

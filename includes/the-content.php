@@ -15,7 +15,7 @@ function buddyforms_attached_page_content($content){
     if(is_admin())
         return $content;
 
-    if(!isset($buddyforms['buddyforms']))
+    if(!isset($buddyforms))
         return $content;
 
     $new_content = $content;
@@ -32,10 +32,10 @@ function buddyforms_attached_page_content($content){
         if(isset($wp_query->query_vars['bf_parent_post_id']))
             $parent_post_id = $wp_query->query_vars['bf_parent_post_id'];
 
-        if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
+        if(!isset($buddyforms[$form_slug]['post_type']))
             return $content;
 
-        $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+        $post_type = $buddyforms[$form_slug]['post_type'];
 
         $args = array(
             'form_slug'     => $form_slug,
@@ -61,7 +61,7 @@ function buddyforms_attached_page_content($content){
 
     } elseif(isset($wp_query->query_vars['pagename'])){
 
-        foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+        foreach ($buddyforms as $key => $buddyform) {
 
             if(isset($buddyform['attached_page']) && $wp_query->query_vars['pagename'] == $buddyform['attached_page'])
                 $post_data = get_post($buddyform['attached_page'], ARRAY_A);

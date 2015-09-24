@@ -1,160 +1,65 @@
 <?php
-function bf_mail_notification_screen() { ?>
+function bf_mail_notification_screen() {
+    global $post;
 
-    <div class="wrap">
+    $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
-        <?php include('admin-credits.php');
+    echo '<h2>' . __(' Mail Notification Settings for "', 'buddyforms') . $buddyform['name'] . '"</h2>';
+    echo '<p>' . __('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '</p><br>';
 
-        if (isset($_GET['form_slug'])) {
-
-            global $buddyforms;
-
-            $form_slug = $_GET['form_slug'];
-
-            if (isset($_POST['buddyforms_options'])) {
-
-                foreach ($_POST['buddyforms_options']['buddyforms'][$form_slug]['mail_notification'] as $key => $value) {
-                    $buddyforms['buddyforms'][$form_slug]['mail_notification'][$key] = $value;
-                }
-
-                $update_option = update_option("buddyforms_options", $buddyforms);
-
-                if ($update_option)
-                    echo "<div id='settings_updated' class='updated'> <p><strong>" . __('Settings saved', 'buddyforms') . ".</strong></p></div>";
+    if (isset($buddyform['mail_notification'])) { ?>
+        <div class="panel-mail-notifications" id="accordion" role="tablist" aria-multiselectable="true">
+            <?php
+            foreach ($buddyform['mail_notification'] as $key => $value) {
+                buddyforms_new_notification_trigger_form($buddyform['mail_notification'][$key]['mail_trigger']);
             }
-
-            $form = new Form("buddyforms_notification_trigger");
-            $form->configure(array(
-                "prevent" => array("bootstrap", "jQuery"),
-                "action" => $_SERVER['REQUEST_URI'],
-                "view" => new View_Inline
-            ));
-
-            $form->addElement(new Element_HTML('
-            <div id="poststuff">
-                <div id="post-body" class="bf-mail-columns metabox-holder columns-2">
-
-
-                    <div id="post-body-content">
-                        <div class="bf-half-col bf-left" >
-                            <div class="bf-col-content"> '));
-                                $form->addElement(new Element_HTML('<h2>' . __(' Mail Notification Settings for "', 'buddyforms') . $buddyforms['buddyforms'][$form_slug]['name'] . '"</h2>'));
-                                $form->addElement(new Element_HTML(__('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '<br>'));
-
-                                $form->addElement(new Element_HTML('<br><br><br><div class="trigger-select">'));
-                                $form->addElement(new Element_Select('<b>' . __("Create new Mail Notification", 'buddyforms') . '</b>', "buddyforms_notification_trigger", bf_get_post_status_array(), array('class' => 'buddyforms_notification_trigger', 'shortDesc' => '<a class="button-primary btn btn-primary" href="#" id="btnAdd">' . __('Create Trigger', 'buddyforms') . '</a>')));
-                                $form->addElement(new Element_HTML('</div>'));
-
-                                $form->addElement(new Element_HTML('<br>
-                                <div class="help-trigger">
-                                    <b>' . __( 'Post Status', 'buddyforms') . '</b>
-
-                                    <ul>
-                                        <li><b>publish</b> <small>' . __('(post or page is visible in the frontend)' , 'buddyforms') . '</small></li>
-                                        <li><b>pending</b> <small>' . __('(post or page is in review process)'    , 'buddyforms') . '</small></li>
-                                        <li><b>draft</b> <small>' .   __('(post or page is not visible in the frontend for public)'   , 'buddyforms') . '</small></li>
-                                        <li><b>future</b> <small>' .  __('(post or page is scheduled to publish in the future)'    , 'buddyforms') . '</small></li>
-                                        <li><b>private</b> <small>' . __('(not visible to users who are not logged in)'   , 'buddyforms') . '</small></li>
-                                        <li><b>trash</b> <small>' .   __('(post is in trash)', 'buddyforms') . '</small></li>
-                                    </ul>
-
-                                </div>'));
-
-                            $form->addElement(new Element_HTML('
-                            </div>
-                        </div>
-
-                        <div id="postbox-container-1" class="postbox-container">
-                            <div class="accordion_sidebar" id="accordion_save">
-                                <div class="accordion-group postbox">
-                                    <div class="accordion-heading"><h5 class="accordion-toggle"><b>' . __('Form Builder', 'buddyforms') . '</b></h5></div>
-                                    <b>
-                                        <div id="accordion_save" class="accordion-body">
-                                            <div class="accordion-inner">
-                                               <a class="button" href="' . get_admin_url() . 'admin.php?page=buddyforms_options_page#subcon' . $form_slug . '">' . __('Jump into the Form Builder', 'buddyforms') . '</a>
-                                            </div>
-                                        </div>
-                                    </b>
-                                </div>
-                            </div>
-                        </div>
-            '));
-            $form->render();
-
-            echo '
-            <div class="bf-half-col bf-right">
-                <div class="bf-col-content">';
-
-                    if (isset($buddyforms['buddyforms'][$form_slug]['mail_notification'])) {
-                        echo '<ul class="nav nav-tabs" id="tabs">';
-                        $index = 1;
-                        foreach ($buddyforms['buddyforms'][$form_slug]['mail_notification'] as $key => $value) {
-
-                            if ($index == 1) {
-                                echo '<li class="active" ><a data-toggle="tab" href="#tab' . $index . '">' . $key . '</a></li>';
-                            } else {
-                                echo '<li><a data-toggle="tab" href="#tab' . $index . '">' . $key . '</a></li>';
-                            }
-
-
-                            $index++;
-                        }
-                        echo '</ul> <div class="tab-content" style="background-color: #fff; margin-top: -20px; padding: 20px;">';
-                        $index = 1;
-                        foreach ($buddyforms['buddyforms'][$form_slug]['mail_notification'] as $key => $value) {
-
-
-                            ob_start();
-                                buddyforms_new_notification_trigger_form($form_slug, $buddyforms['buddyforms'][$form_slug]['mail_notification'][$key]['mail_trigger']);
-                                $trigger_form = ob_get_contents();
-                            ob_clean();
-
-
-                            if ($index == 1) {
-                                echo '<div class="tab-pane active" id="tab' . $index . '">' . $trigger_form . '</div>';
-                            } else {
-                                echo '<div class="tab-pane" id="tab' . $index . '">' . $trigger_form . '</div>';
-                            }
-
-
-                            $index++;
-                        }
-                        echo '</div>';
-                    } else {
-                        echo '<h2>' . __('No Mail Notification found', 'buddyforms') . '</h2><div id="mailcontainer"></div>';
-                    }
-
-                } else {
-
-                    _e('no form selected', 'buddyforms');
-
-                } ?>
-                    </div>
-                </div>
-            </div>
+            echo '<div id="mailcontainer"></div>';
+            ?>
         </div>
-    </div>
-    </div>
-<?php
+        <?php
+    } else {
+        echo '<div id="mailcontainer"></div>';
+    }
+
+    echo '<hr>';
+
+    $form_setup = array();
+    $form_setup[] = new Element_HTML('<div class="trigger-select">');
+    $form_setup[] = new Element_Select('<b>' . __("Create new Mail Notification", 'buddyforms') . '</b><br><br>', "buddyforms_notification_trigger", bf_get_post_status_array(), array('class' => 'buddyforms_notification_trigger', 'shortDesc' => ''));
+    $form_setup[] = new Element_HTML('<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __('Create Trigger', 'buddyforms') . '</a></div>');
+
+    $form_setup[] = new Element_HTML('<br>
+    <div class="help-trigger">
+        <b>' . __( 'Post Status', 'buddyforms') . '</b>
+
+        <ul>
+            <li><b>publish</b> <small>' . __('(post or page is visible in the frontend)' , 'buddyforms') . '</small></li>
+            <li><b>pending</b> <small>' . __('(post or page is in review process)'    , 'buddyforms') . '</small></li>
+            <li><b>draft</b> <small>' .   __('(post or page is not visible in the frontend for public)'   , 'buddyforms') . '</small></li>
+            <li><b>future</b> <small>' .  __('(post or page is scheduled to publish in the future)'    , 'buddyforms') . '</small></li>
+            <li><b>private</b> <small>' . __('(not visible to users who are not logged in)'   , 'buddyforms') . '</small></li>
+            <li><b>trash</b> <small>' .   __('(post is in trash)', 'buddyforms') . '</small></li>
+        </ul>
+
+    </div>');
+
+    foreach($form_setup as $key => $field){
+        echo $field->getLabel();
+        echo $field->getShortDesc();
+        echo $field->render();
+    }
+
+
+
+
+
 }
 
 
-function buddyforms_new_notification_trigger_form($form_slug, $trigger, $href = FALSE)
-{
-    global $buddyforms;
+function buddyforms_new_notification_trigger_form($trigger){
+    global $post;
 
-    session_start();
-    $form = new Form("buddyforms_mail_notifications");
-
-    if (!isset($href))
-        $href = $_SERVER['REQUEST_URI'];
-
-
-    $form->configure(array(
-        "prevent" => array("bootstrap", "jQuery"),
-        "action" => $href,
-        "view" => new View_Inline
-    ));
+    $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
     $shortDesc = "
     <br>
@@ -183,55 +88,83 @@ function buddyforms_new_notification_trigger_form($form_slug, $trigger, $href = 
         ";
 
 
-    $form->addElement(new Element_Hidden("buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_trigger]", $trigger));
+    $form_setup[] = new Element_Hidden("buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger);
 
 
-    $form->addElement(new Element_Textbox(__("Name", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_from_name]", array('value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_from_name'], 'required' => 1, 'shortDesc' => 'the senders name')));
-    $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Email(__("Email", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_from]", array('value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_from'], 'required' => 1,  'shortDesc' => 'the senders email')));
-    $form->addElement(new Element_HTML('<br><br>'));
+    $form_setup[] = new Element_Textbox(__("Name", 'buddyforms'), "buddyforms_options[mail_notification][" . $trigger . "][mail_from_name]", array('value' => $buddyform['mail_notification'][$trigger]['mail_from_name'], 'required' => 1, 'shortDesc' => 'the senders name'));
+    $form_setup[] = new Element_HTML('<br><br>');
+    $form_setup[] = new Element_Email(__("Email", 'buddyforms'), "buddyforms_options[mail_notification][" . $trigger . "][mail_from]", array('value' => $buddyform['mail_notification'][$trigger]['mail_from'], 'required' => 1,  'shortDesc' => 'the senders email'));
+    $form_setup[] = new Element_HTML('<br><br>');
 
-    $form->addElement(new Element_Checkbox(__('Sent mail to', 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_to]", array('author' => 'The Post Author', 'admin' => 'Admin E-mail Address from Settings/General'), array('value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_to'], 'inline' => 1)));
-    $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Textbox(__("Add mail to addresses separated with ','", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_to_address]", array("class" => "bf-mail-field", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_to_address'])));
-    $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Textbox(__("Subject", 'buddyforms'), "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_subject]", array("class" => "bf-mail-field", 'value' => $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_subject'], 'required' => 1)));
-    $form->addElement(new Element_HTML('<br><br>'));
+    $form_setup[] = new Element_Checkbox(__('Sent mail to', 'buddyforms'), "buddyforms_options[mail_notification][" . $trigger . "][mail_to]", array('author' => 'The Post Author', 'admin' => 'Admin E-mail Address from Settings/General'), array('value' => $buddyform['mail_notification'][$trigger]['mail_to'], 'inline' => 1));
+    $form_setup[] = new Element_HTML('<br><br>');
+    $form_setup[] = new Element_Textbox(__("Add mail to addresses separated with ','", 'buddyforms'), "buddyforms_options[mail_notification][" . $trigger . "][mail_to_address]", array("class" => "bf-mail-field", 'value' => $buddyform['mail_notification'][$trigger]['mail_to_address']));
+    $form_setup[] = new Element_HTML('<br><br>');
+    $form_setup[] = new Element_Textbox(__("Subject", 'buddyforms'), "buddyforms_options[mail_notification][" . $trigger . "][mail_subject]", array("class" => "bf-mail-field", 'value' => $buddyform['mail_notification'][$trigger]['mail_subject'], 'required' => 1));
+    $form_setup[] = new Element_HTML('<br><br>');
 
     ob_start();
     $settings = array('wpautop' => true, 'media_buttons' => false, 'wpautop' => true, 'tinymce' => true, 'quicktags' => true, 'textarea_rows' => 18);
 
-    wp_editor($buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]['mail_body'], "buddyforms_options[buddyforms][" . $form_slug . "][mail_notification][" . $trigger . "][mail_body]", $settings);
+    wp_editor($buddyform['mail_notification'][$trigger]['mail_body'], "buddyforms_options[mail_notification][" . $trigger . "][mail_body]", $settings);
 
     $wp_editor = ob_get_contents();
     ob_clean();
 
     $wp_editor = '<div class="bf_field_group bf_form_content"><label>' . __('Content', 'buddyforms') . ':</label><div class="bf_inputs">' . $wp_editor . '</div></div>';
-    $form->addElement(new Element_HTML($wp_editor));
-    $form->addElement(new Element_HTML('<br><br>'));
-    $form->addElement(new Element_Button());
-    $form->addElement(new Element_HTML($shortDesc));
-    $form->addElement(new Element_HTML('<br><br><br><br>'));
+    $form_setup[] = new Element_HTML($wp_editor);
+    $form_setup[] = new Element_HTML('<br><br>');
+    $form_setup[] = new Element_HTML($shortDesc);
+    ?>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading<?php echo $trigger ?>">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $trigger ?>" aria-expanded="true" aria-controls="collapse<?php echo $trigger ?>">
+                    <table class="wp-list-table widefat fixed posts">
+                        <tbody><tr>
+                            <td class="field_order ui-sortable-handle">
+                                <span class="circle">1</span>
+                            </td>
+                            <td class="field_label">
+                                <strong>
+                                    <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>" title="Edit this Field" href="#"><?php echo $trigger ?></a>
+                                </strong>
 
-
-    $form->render();
-
+                            </td>
+                            <td class="field_delete">
+                                <span><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>" title="Edit this Field" href="javascript:;">Edit</a> | </span>
+                                <span><a class="bf__delete_field" title="Delete this Field" href="javascript:;">Delete</a></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </a>
+            </h4>
+        </div>
+        <div id="collapse<?php echo $trigger ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $trigger ?>">
+            <div class="panel-body">
+                <?php
+                foreach($form_setup as $key => $field){
+                    echo '<div class="buddyforms_field_label">' . $field->getLabel() . '</div>';
+                    echo '<div class="buddyforms_field_description">' . $field->getShortDesc() . '</div>';
+                    echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 
 
-function buddyforms_new_mail_notification()
-{
+function buddyforms_new_mail_notification(){
 
-    global $buddyforms;
-
-    $form_slug = $_POST['form_slug'];
     $trigger = $_POST['trigger'];
-    $href = $_POST['href'];
 
-    if (isset($trigger, $buddyforms['buddyforms'][$form_slug]['mail_notification'][$trigger]))
+    if (isset($trigger, $buddyform['mail_notification'][$trigger]))
         return false;
 
-    buddyforms_new_notification_trigger_form($form_slug, $trigger, $href);
+    buddyforms_new_notification_trigger_form($trigger);
     die();
 }
 

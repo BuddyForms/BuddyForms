@@ -13,19 +13,20 @@ function buddyforms_create_menu(){
     @session_start();
 
     add_menu_page('BuddyForms', 'BuddyForms', 'manage_options', 'buddyforms_options_page', 'buddyforms_options_content');
-    add_submenu_page('buddyforms_options_page', __('Add New', 'buddyforms'), __('Add New', 'buddyforms'), 'manage_options', 'create-new-form', 'bf_import_export_screen');
-    add_submenu_page('buddyforms_options_page', __('Add-ons', 'buddyforms'), __('Add-ons', 'buddyforms'), 'manage_options', 'bf_add_ons', 'bf_add_ons_screen');
-    add_submenu_page('buddyforms_options_page', __('Edit Form', 'buddyforms'), __('Edit Form', 'buddyforms'), 'manage_options', 'bf_edit_form', 'bf_edit_form_screen');
-    add_submenu_page('buddyforms_options_page', __('Mail Notification', 'buddyforms'), __('Mail Notification', 'buddyforms'), 'manage_options', 'bf_mail_notification', 'bf_mail_notification_screen');
-    add_submenu_page('buddyforms_options_page', __('Manage User Roles', 'buddyforms'), __('Manage User Roles', 'buddyforms'), 'manage_options', 'bf_manage_form_roles_and_capabilities', 'bf_manage_form_roles_and_capabilities_screen');
+
+
+    add_submenu_page('edit.php?post_type=buddyforms', __('Add New', 'buddyforms'), __('Add New', 'buddyforms'), 'manage_options', 'create-new-form', 'bf_import_export_screen');
+    add_submenu_page('edit.php?post_type=buddyforms', __('Add-ons', 'buddyforms'), __('Add-ons', 'buddyforms'), 'manage_options', 'bf_add_ons', 'bf_add_ons_screen');
+    add_submenu_page('edit.php?post_type=buddyforms', __('Mail Notification', 'buddyforms'), __('Mail Notification', 'buddyforms'), 'manage_options', 'bf_mail_notification', 'bf_mail_notification_screen');
+    add_submenu_page('edit.php?post_type=buddyforms', __('Manage User Roles', 'buddyforms'), __('Manage User Roles', 'buddyforms'), 'manage_options', 'bf_manage_form_roles_and_capabilities', 'bf_manage_form_roles_and_capabilities_screen');
 
 }
 
 add_action('admin_head', 'buddyforms_remove_submenu_page', 999);
 
 function buddyforms_remove_submenu_page(){
-    remove_submenu_page( 'buddyforms_options_page', 'bf_mail_notification' );
-    remove_submenu_page( 'buddyforms_options_page', 'bf_manage_form_roles_and_capabilities' );
+    remove_submenu_page( 'edit.php?post_type=buddyforms', 'bf_mail_notification' );
+    remove_submenu_page( 'edit.php?post_type=buddyforms', 'bf_manage_form_roles_and_capabilities' );
 }
 
 /**
@@ -38,9 +39,9 @@ function buddyforms_options_content() {
     global $buddyforms, $bf_mod5;
 
 
-//    echo '<pre>';
-//    print_r($buddyforms);
-//    echo '</pre>';
+    echo '<pre>';
+    print_r($buddyforms);
+    echo '</pre>';
 
     $bf_mod5 = substr(md5(time() * rand()), 0, 10);
 
@@ -58,8 +59,8 @@ function buddyforms_options_content() {
 
                 foreach ($_POST['bf_bulkactions_slugs'] as $key => $form_slug){
 
-                    if( isset($buddyforms['buddyforms'][$form_slug]))
-                        unset($buddyforms['buddyforms'][$form_slug]);
+                    if( isset($buddyforms[$form_slug]))
+                        unset($buddyforms[$form_slug]);
 
                 }
                 $update_option = update_option("buddyforms_options", $buddyforms);

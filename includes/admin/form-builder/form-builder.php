@@ -13,7 +13,7 @@ function buddyforms_settings_page(){
 //    echo '</pre>';
 
 
-     if (isset($buddyforms['buddyforms']) && count($buddyforms['buddyforms']) > 0) {
+     if (isset($buddyforms) && count($buddyforms) > 0) {
 
         echo '
         <div class="alignleft actions bulkactions">
@@ -39,20 +39,7 @@ function buddyforms_settings_page(){
                     <th scope="col" id="attached-page" class="manage-column column-status" style="">' . __('Attached Page', 'buddyforms') . '</th>
 
             </thead>';
-        foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
-
-            $slug = $buddyform['slug'];
-            $slug = sanitize_title($slug);
-            if(empty($slug)){
-                $slug = $bf_mod5;
-            }
-            $buddyform['slug'] = $slug;
-
-            if(empty($buddyform['name']))
-                $buddyform['name'] = $slug;
-
-            if(empty($buddyform['singular_name']))
-                $buddyform['singular_name'] = $slug;
+        foreach ($buddyforms as $key => $buddyform) {
 
             echo ' <tr>
                     <th scope="row" class="check-column">
@@ -63,11 +50,11 @@ function buddyforms_settings_page(){
                     </th>
                     <td class="name column-name">
 
-                    <div class="showhim">'.stripslashes($buddyform['name']).'<div class="showme"> <a href="'.get_admin_url().'admin.php?page=bf_edit_form&form_slug='.$buddyform['slug'].'"> '.__('Edit Form','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">'.__('Roles and Capabilities','buddyforms').'</a></div></div>
+                    <div class="showhim">'.stripslashes($buddyform['name']).'<div class="showme"> <a href="'.get_admin_url().'post.php?post='.$buddyform['form_id'].'&action=edit"> '.__('Edit Form','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_mail_notification&form_slug='.$buddyform['slug'].'"> '.__('Mail Notification','buddyforms').'</a> | <a href="'.get_admin_url().'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug='.$buddyform['slug'].'">'.__('Roles and Capabilities','buddyforms').'</a></div></div>
                     </td>';
 
             echo '<td class="slug column-slug"> ';
-            echo isset($buddyform['slug']) ? $buddyform['slug'] : '--';
+                echo isset($buddyform['slug']) ? $buddyform['slug'] : '--';
             echo '</td>';
 
             echo '<td class="post_type column-post_type bf-error-text"> ';

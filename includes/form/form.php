@@ -28,7 +28,7 @@ function buddyforms_create_edit_form( $args ) {
     get_currentuserinfo();
 
     if(empty($post_type))
-        $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+        $post_type = $buddyforms[$form_slug]['post_type'];
 
     // if post edit screen is displayed in pages
     if(isset($wp_query->query_vars['bf_action'])){
@@ -49,7 +49,7 @@ function buddyforms_create_edit_form( $args ) {
         if(isset($wp_query->query_vars['bf_rev_id']))
             $revision_id = $wp_query->query_vars['bf_rev_id'];
 
-        $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+        $post_type = $buddyforms[$form_slug]['post_type'];
 
         if(!empty($revision_id)) {
             $the_post = get_post( $revision_id );
@@ -114,8 +114,8 @@ function buddyforms_create_edit_form( $args ) {
     if( empty( $form_slug ) )
         $form_slug = apply_filters('buddyforms_the_form_to_use',$form_slug, $post_type);
 
-    if(isset($buddyforms['buddyforms'][$form_slug]['form_fields']))
-        $customfields = $buddyforms['buddyforms'][$form_slug]['form_fields'];
+    if(isset($buddyforms[$form_slug]['form_fields']))
+        $customfields = $buddyforms[$form_slug]['form_fields'];
 
     if($the_post->post_parent)
         $post_parent = $the_post->post_parent;
@@ -134,11 +134,11 @@ function buddyforms_create_edit_form( $args ) {
     if( isset( $_POST['submitted'] ) ) {
         $args = buddyforms_process_post($args);
 
-        if(!empty($buddyforms['buddyforms'][$_POST['form_slug']]['after_submit_message_text'])){
-            $permalink = get_permalink($buddyforms['buddyforms'][$args['form_slug']]['attached_page']);
+        if(!empty($buddyforms[$_POST['form_slug']]['after_submit_message_text'])){
+            $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
 
-            $display_message = $buddyforms['buddyforms'][$_POST['form_slug']]['after_submit_message_text'];
-            $display_message = str_ireplace('[form_singular_name]', $buddyforms['buddyforms'][$args['form_slug']]['singular_name'], $display_message);
+            $display_message = $buddyforms[$_POST['form_slug']]['after_submit_message_text'];
+            $display_message = str_ireplace('[form_singular_name]', $buddyforms[$args['form_slug']]['singular_name'], $display_message);
             $display_message = str_ireplace('[post_title]', get_the_title($args['post_id']), $display_message);
             $display_message = str_ireplace('[post_link]', '<a title="Display Post" href="' . get_permalink($args['post_id']) . '"">' . __('Display Post', 'buddyforms') . '</a>', $display_message);
             $display_message = str_ireplace('[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $args['form_slug'] . '/' . $args['post_id'] . '"">' . __('Continue Editing', 'buddyforms') . '</a>', $display_message);
@@ -146,8 +146,8 @@ function buddyforms_create_edit_form( $args ) {
             $args['form_notice'] = $display_message;
         }
 
-        if (isset($buddyforms['buddyforms'][$form_slug]['after_submit'])) {
-            switch ($buddyforms['buddyforms'][$form_slug]['after_submit']) {
+        if (isset($buddyforms[$form_slug]['after_submit'])) {
+            switch ($buddyforms[$form_slug]['after_submit']) {
                 case 'display_form':
                     echo buddyforms_form_html($args);
                     break;

@@ -48,11 +48,11 @@ function buddyforms_the_loop($args){
         'post_parent' => 0
     ), $args));
 
-	if(!isset($buddyforms['buddyforms'][$form_slug]['post_type']))
+	if(!isset($buddyforms[$form_slug]['post_type']))
 		return;
 
 	if(empty($post_type))
-		$post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+		$post_type = $buddyforms[$form_slug]['post_type'];
 
     $user_id = get_current_user_id();
     $post_status = array('publish', 'pending', 'draft');
@@ -106,7 +106,7 @@ function buddyforms_list_all($args){
         'form_slug' => ''
     ), $args));
 
-    $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
+    $post_type = $buddyforms[$form_slug]['post_type'];
 
     if(!$post_type)
         return;
@@ -167,7 +167,7 @@ function buddyforms_button_view_posts($args){
         'label'    => 'View',
     ), $args));
 
-    $button = '<a class="button" href="/'.get_post( $buddyforms['buddyforms'][$form_slug]['attached_page'] )->post_name.'/view/'.$form_slug.'/"> '.__($label, 'buddyforms').' </a>';
+    $button = '<a class="button" href="/'.get_post( $buddyforms[$form_slug]['attached_page'] )->post_name.'/view/'.$form_slug.'/"> '.__($label, 'buddyforms').' </a>';
 
     return apply_filters('buddyforms_button_view_posts',$button,$args);
 
@@ -183,7 +183,7 @@ function buddyforms_button_add_new($args){
     ), $args));
 
 
-    $button = '<a class="button" href="/'.get_post( $buddyforms['buddyforms'][$form_slug]['attached_page'] )->post_name.'/create/'.$form_slug.'/"> '.__($label, 'buddyforms').'</a>';
+    $button = '<a class="button" href="/'.get_post( $buddyforms[$form_slug]['attached_page'] )->post_name.'/create/'.$form_slug.'/"> '.__($label, 'buddyforms').'</a>';
 
     return apply_filters('buddyforms_button_add_new',$button,$args);
 
@@ -295,7 +295,7 @@ function buddyforms_editor_button_inline_content() {
         ));
         $the_forms['none'] = 'Select Form';
 
-        foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+        foreach ($buddyforms as $key => $buddyform) {
             $the_forms[$buddyform['slug']] = $buddyform['slug'];
         }
 

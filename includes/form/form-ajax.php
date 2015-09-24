@@ -25,11 +25,11 @@ function buddyforms_ajax_process_edit_post(){
 
     $args = buddyforms_process_post($formdata);
 
-    if(!empty($buddyforms['buddyforms'][$_POST['form_slug']]['after_submit_message_text'])){
-        $permalink = get_permalink($buddyforms['buddyforms'][$args['form_slug']]['attached_page']);
+    if(!empty($buddyforms[$_POST['form_slug']]['after_submit_message_text'])){
+        $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
 
-        $display_message = $buddyforms['buddyforms'][$_POST['form_slug']]['after_submit_message_text'];
-        $display_message = str_ireplace('[form_singular_name]', $buddyforms['buddyforms'][$args['form_slug']]['singular_name'], $display_message);
+        $display_message = $buddyforms[$_POST['form_slug']]['after_submit_message_text'];
+        $display_message = str_ireplace('[form_singular_name]', $buddyforms[$args['form_slug']]['singular_name'], $display_message);
         $display_message = str_ireplace('[post_title]', get_the_title($args['post_id']), $display_message);
         $display_message = str_ireplace('[post_link]', '<a title="Display Post" href="' . get_permalink($args['post_id']) . '"">' . __('Display Post', 'buddyforms') . '</a>', $display_message);
         $display_message = str_ireplace('[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $args['form_slug'] . '/' . $args['post_id'] . '"">' . __('Continue Editing', 'buddyforms') . '</a>', $display_message);
@@ -37,8 +37,8 @@ function buddyforms_ajax_process_edit_post(){
         $args['form_notice'] = $display_message;
     }
 
-    if (isset($buddyforms['buddyforms'][$_POST['form_slug']]['after_submit'])) {
-        switch ($buddyforms['buddyforms'][$_POST['form_slug']]['after_submit']) {
+    if (isset($buddyforms[$_POST['form_slug']]['after_submit'])) {
+        switch ($buddyforms[$_POST['form_slug']]['after_submit']) {
             case 'display_post':
                 $json['form_notice'] = buddyforms_after_save_post_redirect(get_permalink( $args['post_id'] ));
                 break;

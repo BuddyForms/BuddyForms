@@ -116,8 +116,8 @@ function buddyforms_wp_post_revision_title_expanded( $revision,$post_id, $link =
 	
 	$permalink = '';
 	
-	if(isset($form_slug) && isset($buddyforms['buddyforms'][$form_slug]['attached_page']))
-		$permalink = get_permalink( $buddyforms['buddyforms'][$form_slug]['attached_page'] );
+	if(isset($form_slug) && isset($buddyforms[$form_slug]['attached_page']))
+		$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
 
 	$author = get_the_author_meta( 'display_name', $revision->post_author );
 	/* translators: revision date format, see http://php.net/date */

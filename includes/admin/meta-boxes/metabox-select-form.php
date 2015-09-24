@@ -6,11 +6,11 @@
 function bf_add_custom_box() {
     global $buddyforms;
 
-    if(!(isset($buddyforms['buddyforms']) || is_array($buddyforms['buddyforms'])))
+    if(!(isset($buddyforms) || is_array($buddyforms)))
         return;
 
     $screens = Array();
-    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+    foreach ($buddyforms as $key => $buddyform) {
         if(isset($buddyform['post_type']))
             array_push($screens, $buddyform['post_type']);
     }
@@ -53,7 +53,7 @@ function bf_inner_custom_box( $post ) {
     echo ' <p><select name="_bf_form_slug" id="_bf_form_slug">';
     echo ' <option value="none" '.$selected.' > none </option>';
 
-    foreach ($buddyforms['buddyforms'] as $key => $buddyform) {
+    foreach ($buddyforms as $key => $buddyform) {
         $selected = '';
         if($buddyform['slug'] == $value)
             $selected = 'selected';
