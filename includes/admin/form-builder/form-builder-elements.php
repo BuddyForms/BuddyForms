@@ -7,7 +7,7 @@
  * @since 0.1-beta
  */
 function buddyforms_view_form_fields($args){
-    global $buddyforms, $field_position;
+    global $buddyforms;
 
     $buddyforms_options = get_post_meta(get_the_ID(), '_buddyforms_options', true);
 
@@ -46,8 +46,10 @@ function buddyforms_view_form_fields($args){
     if (!isset($field_id))
         $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
-    if (isset($field_position) == '')
-        $field_position = $numItems;
+//    if (isset($field_position) == '')
+//        $field_position = $numItems;
+//
+//    echo $field_position;
 
     $form_fields = Array();
 
@@ -71,7 +73,7 @@ function buddyforms_view_form_fields($args){
 
     $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array('value' => $description));
     $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-    $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+    //$form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
     $validation_error_message = __('This field is required.', 'buddyforms');
     if (isset($buddyforms_options['form_fields'][$field_id]['validation_error_message']))
@@ -239,7 +241,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['name']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][name]", $slug);
             $form_fields['left']['slug']    = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array('required' => true, 'value' => $slug));
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             $value = '';
             if (isset($buddyforms_options['form_fields'][$field_id]['value']))
@@ -261,7 +263,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'comments');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             $form_fields['left']['html']    = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
             break;
         case 'Title':
@@ -273,7 +275,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'shortDesc' => 'ein test' ));
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_title');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             $hidden = false;
             if (isset($buddyforms_options['form_fields'][$field_id]['hidden']))
@@ -307,7 +309,7 @@ function buddyforms_view_form_fields($args){
 
             $form_fields['left']['slug']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_content');
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             $hidden = false;
             if (isset($buddyforms_options['form_fields'][$field_id]['hidden']))
@@ -349,7 +351,7 @@ function buddyforms_view_form_fields($args){
 
 
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
             break;
         case 'Featured_Image':
@@ -373,7 +375,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['description'] = new Element_Textbox('<b>' . __('Description:', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array('value' => $description));
 
             $form_fields['left']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']       = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
 
 
             break;
@@ -404,7 +406,7 @@ function buddyforms_view_form_fields($args){
             $form_fields['left']['name']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][name]", 'HTML');
             $form_fields['left']['slug']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'html');
             $form_fields['left']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
+//            $form_fields['left']['order']   = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][order]", $field_position, array('id' => 'buddyforms/' . $form_slug . '/form_fields/' . $field_id . '/order'));
             break;
         default:
             $form_fields = apply_filters('buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id);
@@ -415,7 +417,7 @@ function buddyforms_view_form_fields($args){
     $form_fields = apply_filters('buddyforms_formbuilder_fields_options', $form_fields, $form_slug, $field_id);
     $customfield = $buddyforms_options['form_fields'][$field_id];
     ob_start(); ?>
-    <li id="buddyforms/<?php echo $form_slug ?>/form_fields/<?php echo $field_id ?>/order" class="list_item <?php echo $field_id . ' ' . $field_type ?>">
+    <li id="field_<?php echo $field_id ?>" class="list_item <?php echo $field_id . ' ' . $field_type ?>">
         <div class="accordion_fields">
             <div class="accordion-group postbox">
 
@@ -435,7 +437,7 @@ function buddyforms_view_form_fields($args){
                                     <td class="field_type"><?php echo $customfield['type'] ?></td>
                                     <td class="field_delete">
                                         <span><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $form_slug; ?>_<?php echo $field_type . '_' . $field_id; ?>" title="Edit this Field" href="javascript:;">Edit</a> | </span>
-                                        <span><a class="bf__delete_field" title="Delete this Field" href="javascript:;">Delete</a></span>
+                                        <span><a class="bf_delete_field" id="<?php echo $field_id ?>" title="Delete this Field" href="#">Delete</a></span>
                                     </td>
                                 </tr>
                                 </tbody>

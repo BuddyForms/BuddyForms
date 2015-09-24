@@ -18,12 +18,12 @@ function bf_edit_form_screen(){
 
     $sortArray = array();
 
-    if (!empty($buddyform['form_fields'])) {
-        foreach ($buddyform['form_fields'] as $key => $array) {
-            $sortArray[$key] = $array['order'];
-        }
-        array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $buddyform['form_fields']);
-    }
+//    if (!empty($buddyform['form_fields'])) {
+//        foreach ($buddyform['form_fields'] as $key => $array) {
+//            $sortArray[$key] = $array['order'];
+//        }
+//        array_multisort($sortArray, SORT_ASC, SORT_NUMERIC, $buddyform['form_fields']);
+//    }
 
     $form_setup[] = new Element_HTML('
         <div class="fields_header">
@@ -62,7 +62,7 @@ function bf_edit_form_screen(){
                     if ($slug != '' && isset($customfield['name'])) {
                         $args = Array(
                             'slug' => $slug,
-                            'field_position' => $customfield['order'],
+                            //'field_position' => $customfield['order'],
                             'field_id' => $field_id,
                             'form_slug' => $slug,
                             'post_type' => $buddyform['post_type'],

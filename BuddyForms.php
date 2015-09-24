@@ -170,7 +170,6 @@ class BuddyForms {
 
 		if (is_admin()){
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
@@ -221,14 +220,13 @@ class BuddyForms {
 		global $post;
 
 		if(
-			($post->post_type == 'buddyforms' && $_GET['action'] == 'edit'
-				|| $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
-			|| $hook_suffix == 'buddyforms_page_bf_edit_form'
-			|| $hook_suffix == 'toplevel_page_buddyforms_options_page'
+			(isset($post) && $post->post_type == 'buddyforms'
+				&& isset($_GET['action'])
+				&& $_GET['action'] == 'edit'
+				||
+				isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
 			|| $hook_suffix == 'buddyforms_page_create-new-form'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-			|| $hook_suffix == 'buddyforms_page_bf_mail_notification'
-			|| $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities'
 		) {
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('assets/admin/css/admin.css', __FILE__) );
 
@@ -255,14 +253,13 @@ class BuddyForms {
 		global $post;
 
 			if(
-				($post->post_type == 'buddyforms' && $_GET['action'] == 'edit'
-					|| $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
-				|| $hook_suffix == 'buddyforms_page_bf_edit_form'
-				|| $hook_suffix == 'toplevel_page_buddyforms_options_page'
+				(isset($post) && $post->post_type == 'buddyforms'
+					&& isset($_GET['action']) &&  $_GET['action'] == 'edit'
+					|| isset($post) && $post->post_type == 'buddyforms'
+					&& $hook_suffix == 'post-new.php'
+				)
 				|| $hook_suffix == 'buddyforms_page_create-new-form'
 				|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-				|| $hook_suffix == 'buddyforms_page_bf_mail_notification'
-				|| $hook_suffix == 'buddyforms_page_bf_manage_form_roles_and_capabilities'
 			) {
 				wp_register_script('buddyforms_admin_js', plugins_url('assets/admin/js/admin.js', __FILE__));
 				$admin_text_array = array(

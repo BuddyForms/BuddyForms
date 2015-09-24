@@ -91,7 +91,7 @@ function buddyforms_metabox_form_setup(){
 
             $args = array(
                 'depth' => 1,
-                'id' => $key,
+                'id' => $attached_page,
                 'echo' => FALSE,
                 'sort_column' => 'post_title',
                 'show_option_none' => __('none', 'buddyforms'),
@@ -134,6 +134,7 @@ function buddyforms_metabox_form_setup(){
     <?php
     foreach($form_setup as $key => $field){
         echo '<div class="buddyforms_field_label">' . $field->getLabel() . '</div>';
+        echo '<div class="buddyforms_field_description">' . $field->getShortDesc() . '</div>';
         echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';
     }
     ?>

@@ -131,7 +131,7 @@ body {
 #bf_admin_wrap .create-form-box label[for=create_new_form_name],
 #bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
 	width: 20%;
-	float: left; 
+	float: left;
 }
 #bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
 	clear: both;
@@ -154,7 +154,7 @@ padding-top: 18px !important;
 	margin-bottom: 20px;
 }
 #bf_admin_wrap .accordion-inner .innerblock .radio {
-	padding-right: 15px;	
+	padding-right: 15px;
 }
 #bf_admin_wrap .accordion-inner .innerblock .radio input[type=radio] {
 	margin-right: 5px;
@@ -178,7 +178,7 @@ padding-top: 18px !important;
 /** form elements **/
 
 #bf_admin_wrap .element_field {
-margin: 10px 0;	
+margin: 10px 0;
 }
 
 #bf_admin_wrap .element_field li input[type="text"] {
@@ -195,7 +195,7 @@ margin: 10px 0 15px;
 #bf_admin_wrap .accordion_sidebar .accordion-heading p {
 	font-size: 15px;
 
-	text-shadow: #fff 0 1px 0; 
+	text-shadow: #fff 0 1px 0;
 	padding: 7px 10px;
 	margin: 0;
 }
@@ -216,7 +216,7 @@ margin: 10px 0 15px;
 /** the beginning **/
 
 #bf_admin_wrap .loading-animation-new, .loading-animation-order  {
-	display: none;		
+	display: none;
 }
 #bf_admin_wrap .list_item {
 	background-color: #fcfcfc;

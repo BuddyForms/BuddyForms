@@ -1,8 +1,6 @@
 jQuery(document).ready(function(jQuery) {
 
-
-
-    jQuery( "#post" ).addClass( "form-inline" );
+    //jQuery( "#post" ).addClass( "form-inline" );
 
     var location = window.location;
     var hash = window.location.hash;
@@ -142,29 +140,13 @@ jQuery(document).ready(function(jQuery) {
 		});
 		return false;
 	});
-    //
-	//jQuery(".accordion-body").on("shown", function () {
-	//	var selected = jQuery(this);
-	//	var collapseh = jQuery(".collapse .in").height();
-	//	jQuery("html, body").animate({ scrollTop: jQuery('#title1').offset().top }, 1000);
-	//	jQuery.scrollTo(selected, 500, {
-	//		offset: -(collapseh)
-	//	});
-	//});
 
-	jQuery(document).on('click','.delete',function() {
+	jQuery(document).on('click','.bf_delete_field',function() {
 
 		var del_id = jQuery(this).attr('id');
-		var action = jQuery(this);
+
 		if (confirm('Delete Permanently'))
-			jQuery.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {"action": "buddyforms_item_delete", "post_args": action.attr('href')},
-				success: function(data){
-					jQuery("." + del_id).remove();
-				}
-			});
+			jQuery("#field_" + del_id).remove();
 
 		return false;
 	});

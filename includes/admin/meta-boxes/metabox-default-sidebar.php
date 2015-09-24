@@ -10,7 +10,7 @@ function bf_metabox_sidebar()
     $buddyform = get_post_meta(get_the_ID(), '_buddyforms_options', true);
 
 
-    $form_setup = array();
+    $sidebar_elements = array();
 
     $slug = $post->post_name;
 
@@ -21,7 +21,7 @@ function bf_metabox_sidebar()
 
 
 
-    $form_setup[] = new Element_HTML('
+    $sidebar_elements[] = new Element_HTML('
 
         <h5>' . __('Classic Fields', 'buddyforms') . '</h5>
         <p><a href="Text/' . $slug . '" class="action">' . __('Text', 'buddyforms') . '</a></p>
@@ -47,7 +47,9 @@ function bf_metabox_sidebar()
 
     ');
 
-    foreach($form_setup as $key => $field){
+    $sidebar_elements = apply_filters('buddyforms_add_form_element_to_sidebar', $sidebar_elements);
+
+    foreach($sidebar_elements as $key => $field){
         echo '<div class="buddyforms_field_label">' . $field->getLabel() . '</div>';
         echo '<p class="buddyforms_field_description">' . $field->getShortDesc() . '</p>';
         echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';

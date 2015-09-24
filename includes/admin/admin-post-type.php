@@ -25,6 +25,12 @@ add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 function buddyforms_edit_form_save_meta_box_data($post_id){
     global $post;
 
+    if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+        return;
+
+    if($post->post_type != 'buddyforms')
+        return;
+
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
 
     $buddyform = $_POST['buddyforms_options'];
@@ -54,8 +60,6 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
                 foreach ($capability as $key => $cap) {
                     $role->add_cap( $cap );
                 }
-
-
             }
 
         }
@@ -70,9 +74,6 @@ add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
  */
 function buddyforms_register_post_type(){
 
-
-
-    echo $icon_url;
     // Create BuddyForms post type
     $labels = array(
         'name' => __('BuddyForms', 'buddyforms'),
@@ -172,7 +173,7 @@ function custom_buddyforms_column( $column, $post_id ) {
             if(!post_type_exists($post_type_html))
                 $post_type_html = '<p style="color: red;">' . __('Post Type ', 'buddyforms') . $post_type . __(' not exists', 'buddyforms') . '</p>';
 
-            if($post_type == 'none')
+            if(!isset($buddyform['post_type']) || $buddyform['post_type'] == 'none')
                 $post_type_html = '<p style="color: red;">' . __('No Post Type not Selected', 'buddyforms') . '</p>';
 
             echo $post_type_html;
