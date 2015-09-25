@@ -1,6 +1,6 @@
 <?php
 
-function bf_metabox_sidebar()
+function buddyforms_metabox_sidebar()
 {
     global $post;
 
@@ -9,17 +9,9 @@ function bf_metabox_sidebar()
 
     $buddyform = get_post_meta(get_the_ID(), '_buddyforms_options', true);
 
-
     $sidebar_elements = array();
 
     $slug = $post->post_name;
-
-//    $form_setup[] = new Element_HTML('
-//    <a style="margin-bottom: 5px;" class="button" href="' . get_admin_url() . 'admin.php?page=bf_mail_notification&form_slug=' . $slug . '"> ' . __('Mail Notification', 'buddyforms') . '</a>
-//    <a style="margin-bottom: 5px;" class="button" href="' . get_admin_url() . 'admin.php?page=bf_manage_form_roles_and_capabilities&form_slug=' . $slug . '"> ' . __('Roles and Capabilities', 'buddyforms') . '</a>
-//    ');
-
-
 
     $sidebar_elements[] = new Element_HTML('
 

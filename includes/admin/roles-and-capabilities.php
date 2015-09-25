@@ -6,9 +6,17 @@ function bf_manage_form_roles_and_capabilities_screen(){
 
     $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
-    if (isset($buddyform)) {
+    if($post->post_name == ''){ ?>
+        <div class="bf-roles-main-desc" >
+            <div class="bf-col-content">
+                <h2>You need to save the form before you can setup the Form Capabilities</h2>
+                Roles and Capabilities are not stored as post meta. We use the form slug to identified capabilitys
+            </div>
+        </div>
+    <?php
+    } else {
 
-        $form_slug = $buddyform['slug'];
+        $form_slug = $post->post_name;
 
         $form_setup = array();
 
@@ -16,7 +24,7 @@ function bf_manage_form_roles_and_capabilities_screen(){
         <div class="bf-roles-main-desc" >
             <div class="bf-col-content"> ');
 
-        $form_setup[] = new Element_HTML('<h2>'.__(' Roles and Capabilities Settings for "', 'buddyforms').$buddyform['name'].'"</h2><br>
+        $form_setup[] = new Element_HTML('
             <p>'.__('In WordPress we have user roles and capabilities to manage the user rights. You can decide which user is allowed to create, edit and delete posts by checking the needed capabilities for the different user roles.', 'buddyforms').'</p>
             <p>'.__('If you want to create new user roles and manage all available capabilities I recommend you to install the Members plugin.', 'buddyforms').'</p>
             <p>'.__('Here you can manage all BuddyForms capabilities for all available user roles of your wp install.', 'buddyforms').'</p><br>
@@ -66,10 +74,6 @@ function bf_manage_form_roles_and_capabilities_screen(){
             echo '<div class="buddyforms_field_description">' . $field->getShortDesc() . '</div>';
             echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';
         }
-
-        } else {
-
-            echo '<h2>'.__('No Roles and Capabilities found', 'buddyforms').'</h2><div id="mailcontainer"></div>';
 
         }
 

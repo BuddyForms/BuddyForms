@@ -15,7 +15,7 @@ class Element_Radio extends OptionElement {
 			echo '<label class="', $labelClass . '"> <input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "value", "checked")), ' value="', $this->filter($value), '"';
 			if(isset($this->_attributes["value"]) && $this->_attributes["value"] == $value)
 				echo ' checked="checked"';
-			echo '/> ', $text, ' </label> ';
+			echo '/> ', $text, ' </label><br> ';
 			++$count;
 		}	
 	}

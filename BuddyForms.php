@@ -170,23 +170,24 @@ class BuddyForms {
 
 		if (is_admin()){
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/create-new-form.php');
+			
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/roles-and-capabilities.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/license-registration.php');
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-select-form.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-form-elements.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-form-setup.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-form-header.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-form-footer.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/meta-boxes/metabox-default-sidebar.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-header.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php');
 
 
 

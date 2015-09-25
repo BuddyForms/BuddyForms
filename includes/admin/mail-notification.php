@@ -4,7 +4,6 @@ function bf_mail_notification_screen() {
 
     $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
-    echo '<h2>' . __(' Mail Notification Settings for "', 'buddyforms') . $buddyform['name'] . '"</h2>';
     echo '<p>' . __('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '</p><br>';
 
     if (isset($buddyform['mail_notification'])) { ?>

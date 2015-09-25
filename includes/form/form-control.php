@@ -184,8 +184,8 @@ function buddyforms_update_post($args){
 
         $bf_post = array(
             'ID'        		=> $_POST['post_id'],
-            'post_title' 		=> $_POST['editpost_title'],
-            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
+            'post_title' 		=> apply_filters('bf_update_editpost_title', isset($_POST['editpost_title'])? $_POST['editpost_title'] : 'none'),
+            'post_content' 		=> apply_filters('bf_update_editpost_title', isset($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
@@ -204,8 +204,8 @@ function buddyforms_update_post($args){
         $bf_post = array(
             'post_parent'       => $post_parent,
             'post_author' 		=> $post_author,
-            'post_title' 		=> $_POST['editpost_title'],
-            'post_content' 		=> isset($_POST['editpost_content'])? $_POST['editpost_content'] : '',
+            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title'])? $_POST['editpost_title'] : 'none'),
+            'post_content' 		=> apply_filters('bf_update_editpost_title', isset($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,

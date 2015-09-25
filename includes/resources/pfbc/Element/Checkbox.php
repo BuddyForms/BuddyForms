@@ -36,7 +36,7 @@ class Element_Checkbox extends OptionElement {
 //				echo ' required="required"';
 			if(in_array($value, $this->_attributes["value"]))
 				echo ' checked="checked"';
-			echo '/> ', $text, ' </label> ';
+			echo '/> ', $text, ' </label><br> ';
 			++$count;
 		}	
 	}

@@ -82,7 +82,7 @@
 .the_buddyforms_form .standard-form input[type=text],
 .the_buddyforms_form .standard-form input[type=email],
 .the_buddyforms_form .standard-form input[type=password] {
-	width: 75%;
+	width: 100%;
 	border: 1px inset #ccc;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;

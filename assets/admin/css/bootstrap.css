@@ -1109,8 +1109,8 @@ textarea::-webkit-input-placeholder {
 
 .radio input[type="radio"],
 .checkbox input[type="checkbox"] {
-  float: left;
   margin-left: -18px;
+  margin-top: -2px;
 }
 
 .controls > .radio:first-child,

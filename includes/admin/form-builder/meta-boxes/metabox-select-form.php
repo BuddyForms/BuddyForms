@@ -16,7 +16,6 @@ function bf_add_custom_box() {
     }
 
     foreach ( $screens as $screen ) {
-
         add_meta_box(
             'bf_sectionid',
             __( 'Attach a BuddyForm', 'buddyforms' ),

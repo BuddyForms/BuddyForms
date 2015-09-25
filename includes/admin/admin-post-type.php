@@ -11,10 +11,10 @@ function buddyforms_add_meta_boxes() {
         return;
 
     add_meta_box('buddyforms_form_setup', __("Form Setup",'buddyforms') . '<br><small>' . __('Setup this form ', 'buddyforms'), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high');
-    add_meta_box('buddyforms_form_elements', __("Form Builder",'buddyforms') . '<br><small>' . __(' Add additional form elements from the right box "Form Elements". Change the order via drag and drop.', 'buddyforms') . '</small>', 'bf_edit_form_screen', 'buddyforms', 'normal', 'high');
+    add_meta_box('buddyforms_form_elements', __("Form Builder",'buddyforms') . '<br><small>' . __(' Add additional form elements from the right box "Form Elements". Change the order via drag and drop.', 'buddyforms') . '</small>', 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high');
     add_meta_box('buddyforms_form_mail', __("Mail Notification",'buddyforms') . '<br><small>' . __(' Add Mail Notification for any post status change".', 'buddyforms') . '</small>', 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default');
     add_meta_box('buddyforms_form_roles', __("Roles and Capabilities",'buddyforms') . '<br><small>' . __('Manage Capabilities for every user user role ', 'buddyforms') . '</small>', 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default');
-    add_meta_box('buddyforms_form_sidebar', __("Form Elements",'buddyforms'), 'bf_metabox_sidebar', 'buddyforms', 'side', 'default');
+    add_meta_box('buddyforms_form_sidebar', __("Form Elements",'buddyforms'), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default');
 
 }
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
@@ -28,7 +28,7 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
         return;
 
-    if($post->post_type != 'buddyforms')
+    if(!isset($post->post_type) || $post->post_type != 'buddyforms')
         return;
 
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
@@ -171,7 +171,7 @@ function custom_buddyforms_column( $column, $post_id ) {
             $post_type_html = isset($buddyform['post_type']) ? $buddyform['post_type'] : 'none';
 
             if(!post_type_exists($post_type_html))
-                $post_type_html = '<p style="color: red;">' . __('Post Type ', 'buddyforms') . $post_type . __(' not exists', 'buddyforms') . '</p>';
+                $post_type_html = '<p style="color: red;">' . __('Post Type not exists', 'buddyforms') . '</p>';
 
             if(!isset($buddyform['post_type']) || $buddyform['post_type'] == 'none')
                 $post_type_html = '<p style="color: red;">' . __('No Post Type not Selected', 'buddyforms') . '</p>';
@@ -239,14 +239,6 @@ add_action('admin_head-post-new.php', 'hide_publishing_actions');
 //    }
 //});
 //
-
-function hide_add_new_custom_type()
-{
-    global $submenu;
-    // replace my_type with the name of your post type
-    unset($submenu['edit.php?post_type=buddyforms'][10]);
-}
-add_action('admin_menu', 'hide_add_new_custom_type');
 
 function add_menu_icons_styles(){ ?>
 

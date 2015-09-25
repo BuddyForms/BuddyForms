@@ -1,16 +1,76 @@
 jQuery(document).ready(function(jQuery) {
 
-    //jQuery( "#post" ).addClass( "form-inline" );
 
-    var location = window.location;
-    var hash = window.location.hash;
-    if(hash)
-        hash && jQuery('.showme a[href="' + hash + '"]').tab('show');
+	jQuery('#publish').click(function(){
 
-    jQuery('.showme a').click(function (e) {
-        jQuery(this).tab('show');
-        window.location.hash = this.hash;
-    });
+		var create_new_form_name                    = jQuery('[name="post_title"]').val();
+		var create_new_form_singular_name           = jQuery('[name="buddyforms_options[singular_name]"]').val();
+		var create_new_form_post_type               = jQuery('[name="buddyforms_options[post_type]"]').val();
+		var create_new_form_attached_page           = jQuery('[name="buddyforms_options[attached_page]"]').val();
+
+		var error = false;
+		if( create_new_form_name === ''){
+			jQuery('[name="post_title"]').removeClass('bf-ok');
+			jQuery('[name="post_title"]').addClass('bf-error');
+			error = true;
+		} else {
+			jQuery('[name="post_title"]').removeClass('bf-error');
+			jQuery('[name="post_title"]').addClass('bf-ok');
+		}
+
+
+		if( create_new_form_singular_name === ''){
+			jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-ok');
+			jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-error');
+			error = true;
+		} else {
+			jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-error');
+			jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-ok');
+		}
+
+		if( create_new_form_post_type === 'none'){
+			jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-ok');
+			jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-error');
+		} else {
+			jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-error');
+			jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-ok');
+		}
+
+		if( create_new_form_attached_page === 'none'){
+			jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-ok');
+			jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-error');
+			error = true;
+		} else {
+			jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-error');
+			jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-ok');
+		}
+
+
+		// traverse all the required elements looking for an empty one
+		jQuery("#post input[required]").each(function() {
+
+			// if the value is empty, that means that is invalid
+			if (jQuery(this).val() == "") {
+
+				// hide the currently open accordion and open the one with the required field
+				jQuery(".accordion-body.collapse.in").removeClass("in");
+				jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height","auto");
+				jQuery("html, body").animate({ scrollTop: jQuery(this).offset().top - 150 }, 1000);
+
+				// stop scrolling through the required elements
+				return false;
+			}
+		});
+
+
+		if(error === true){
+			return false;
+		}
+
+
+	});
+
+
 
 	jQuery('.new_form').click(function(){
 
@@ -110,7 +170,7 @@ jQuery(document).ready(function(jQuery) {
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data: {"action": "buddyforms_view_form_fields", "post_args": action.attr('href'), 'numItems': numItems},
+			data: {"action": "buddyforms_display_form_element", "post_args": action.attr('href'), 'numItems': numItems},
 			success: function(data){
 				if(data == 'unique'){
 					alert('This element can only be added once into each form');
