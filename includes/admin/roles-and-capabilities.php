@@ -1,10 +1,10 @@
 <?php
 function bf_manage_form_roles_and_capabilities_screen(){
-
-
     global $post;
 
-    $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
+    $form_slug = $post->post_name;
+
+    $form_setup = array();
 
     if($post->post_name == ''){ ?>
         <div class="bf-roles-main-desc" >
@@ -15,32 +15,26 @@ function bf_manage_form_roles_and_capabilities_screen(){
         </div>
     <?php
     } else {
-
-        $form_slug = $post->post_name;
-
-        $form_setup = array();
-
-        $form_setup[] = new Element_HTML('
+        ?>
         <div class="bf-roles-main-desc" >
-            <div class="bf-col-content"> ');
+            <div class="bf-col-content">
 
-        $form_setup[] = new Element_HTML('
+        <?php
+        echo '
             <p>'.__('In WordPress we have user roles and capabilities to manage the user rights. You can decide which user is allowed to create, edit and delete posts by checking the needed capabilities for the different user roles.', 'buddyforms').'</p>
             <p>'.__('If you want to create new user roles and manage all available capabilities I recommend you to install the Members plugin.', 'buddyforms').'</p>
             <p>'.__('Here you can manage all BuddyForms capabilities for all available user roles of your wp install.', 'buddyforms').'</p><br>
             <p><b>'.__('Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms').'</b></p><p><a href="#" class="checkall">'.__('Uncheck all','buddyforms').'</a></p>
-        ');
+        ';
+        ?>
 
-        $form_setup[] = new Element_HTML('
+
+
            </div>
-        </div>');
+        </div>
 
+        <?php
         foreach (get_editable_roles() as $role_name => $role_info):
-
-            $form_setup[] = new Element_HTML('
-                <div class="bf-half-col bf-left" >
-            <div class="bf-col-content" style="min-height:50px;"> ');
-
 
             $default_roles['buddyforms_' . $form_slug . '_create'] =  'buddyforms_' . $form_slug . '_create';
             $default_roles['buddyforms_' . $form_slug . '_edit']   =  'buddyforms_' . $form_slug . '_edit';
@@ -64,16 +58,41 @@ function bf_manage_form_roles_and_capabilities_screen(){
             endforeach;
 
             $form_setup[] = new Element_Checkbox('<b>' . $role_name . '</b>', 'buddyforms_roles['.$form_slug.'][' . $role_name . ']', $default_roles, array('value' => $form_user_role, 'inline' => 1));
-            $form_setup[] = new Element_HTML('<br><br>');
-            $form_setup[] = new Element_HTML('</div>');
+
         endforeach;
 
+        ?>
+        <div class="fields_heade postboxr">
+            <table class="wp-list-table widefat posts">
+                <thead>
+                <tr>
+                    <th class="field_label">Role</th>
+                    <th class="field_name">Capabilities</th>
+                </tr>
+                </thead>
+                <tbody id="the-list">
+                <?php
+                if (isset($form_setup)) {
+                    foreach ($form_setup as $key => $field) { ?>
+                        <tr id="row_form_title">
+                            <th scope="row">
+                                <label for="role_role"><?php echo $field->getLabel() ?></label>
+                            </th>
+                            <td>
+                                <?php echo $field->render() ?>
+                                <p class="description"><?php echo $field->getShortDesc() ?></p>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
 
-        foreach($form_setup as $key => $field){
-            echo '<div class="buddyforms_field_label">' . $field->getLabel() . '</div>';
-            echo '<div class="buddyforms_field_description">' . $field->getShortDesc() . '</div>';
-            echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';
-        }
+        <?php
+
 
         }
 

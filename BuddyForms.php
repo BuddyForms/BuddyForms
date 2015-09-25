@@ -54,6 +54,7 @@ class BuddyForms {
 
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')			, 2, 1);
+		add_action( 'admin_footer'	, array($this, 'buddyforms_admin_js_footer')			, 2, 1);
 		add_action( 'template_redirect'		, array($this, 'buddyform_front_js_loader')		, 2, 1);
 
 		$this->init_hook();
@@ -229,7 +230,6 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms_page_create-new-form'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 		) {
-			wp_enqueue_style('buddyforms_admin_css', plugins_url('assets/admin/css/admin.css', __FILE__) );
 
 			if ( is_rtl() ) {
 				wp_enqueue_style(	'style-rtl',	plugins_url('assets/admin/css/admin-rtl.css', __FILE__) );
@@ -237,6 +237,7 @@ class BuddyForms {
 
 			wp_enqueue_style('bootstrapcss', plugins_url('assets/admin/css/bootstrap.css', __FILE__) );
 			//wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
+			wp_enqueue_style('buddyforms_admin_css', plugins_url('assets/admin/css/admin.css', __FILE__) );
 
 			// load the tk_icons
 			wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
@@ -277,7 +278,28 @@ class BuddyForms {
 				wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
 			}
 	}
+	/**
+	 * Enqueue the needed JS for the admin screen
+	 *
+	 * @package buddyforms
+	 * @since 0.1-beta
+	 */
+	function buddyforms_admin_js_footer() {
+		global $post, $hook_suffix;
+		echo $hook_suffix;
+		if(
+			(isset($post)
+				&& $post->post_type == 'buddyforms'
+				&& isset($_GET['action']) &&  $_GET['action'] == 'edit'
+				|| isset($post) && $post->post_type == 'buddyforms'
+			)
+		) {
+		?>
+		<script>!function(e,o,n){window.HSCW=o,window.HS=n,n.beacon=n.beacon||{};var t=n.beacon;t.userConfig={},t.readyQueue=[],t.config=function(e){this.userConfig=e},t.ready=function(e){this.readyQueue.push(e)},o.config={docs:{enabled:!0,baseUrl:"http://buddyforms.helpscoutdocs.com/"},contact:{enabled:!0,formId:"44c14297-6391-11e5-8846-0e599dc12a51"}};var r=e.getElementsByTagName("script")[0],c=e.createElement("script");c.type="text/javascript",c.async=!0,c.src="https://djtflbt20bdde.cloudfront.net/",r.parentNode.insertBefore(c,r)}(document,window.HSCW||{},window.HS||{});</script>
+		<?php
+	}
 
+	}
 	/**
 	 * Enqueue the needed JS for the form in the frontend
 	 *

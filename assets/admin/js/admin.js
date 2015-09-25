@@ -55,6 +55,7 @@ jQuery(document).ready(function(jQuery) {
 				// hide the currently open accordion and open the one with the required field
 				jQuery(".accordion-body.collapse.in").removeClass("in");
 				jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height","auto");
+				jQuery('#buddyforms_form_elements').removeClass('closed');
 				jQuery("html, body").animate({ scrollTop: jQuery(this).offset().top - 150 }, 1000);
 
 				// stop scrolling through the required elements
@@ -210,6 +211,15 @@ jQuery(document).ready(function(jQuery) {
 
 		return false;
 	});
+	jQuery(document).on('click','.bf_delete_trigger',function() {
+
+		var del_id = jQuery(this).attr('id');
+
+		if (confirm('Delete Permanently'))
+			jQuery("#trigger" + del_id).remove();
+
+		return false;
+	});
 
 	jQuery(document).on('click','.add_input',function() {
 
@@ -265,13 +275,24 @@ jQuery(document).ready(function(jQuery) {
 	update_list_item_number_mail();
 
     jQuery('#mail_notification_add_new').click(function (e) {
-
+		var error = false;
         var trigger = jQuery('.buddyforms_notification_trigger').val();
 
         if(trigger == 'none'){
             alert('You have to select a trigger first.');
             return false;
         }
+
+		// traverse all the required elements looking for an empty one
+		jQuery("#buddyforms_form_mail li.bf_trigger_list_item").each(function() {
+			if(jQuery(this).attr('id') == 'trigger'+trigger){
+				alert('Trigger already exists');
+				error = true;
+			}
+		})
+
+		if(error == true)
+			return false;
 
         jQuery.ajax({
             type: 'POST',
@@ -303,4 +324,5 @@ jQuery(document).ready(function(jQuery) {
     });
 
 });
+
 

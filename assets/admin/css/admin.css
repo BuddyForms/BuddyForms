@@ -397,3 +397,9 @@ clear: both;
     text-indent: 0;
     margin-left: 6px;
 }
+
+
+.postbox-container input[type="text"], input[type="number"], input[type="email"], input[type="url"], select{
+    width: 100% !important;
+    height: 30px !important;
+}

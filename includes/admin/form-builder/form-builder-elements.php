@@ -419,8 +419,7 @@ function buddyforms_display_field_group_table($form_fields){
             foreach ($form_fields as $key => $field) { ?>
                 <tr id="row_form_title">
                     <th scope="row">
-                        <label
-                            for="form_title"><?php echo $field->getLabel() ?></label>
+                        <label for="form_title"><?php echo $field->getLabel() ?></label>
                     </th>
                     <td>
                         <?php echo $field->render() ?>
