@@ -356,6 +356,8 @@ class BuddyForms {
 		if(!$buddyforms_old)
 			return;
 
+		update_option('buddyforms_options_old', $buddyforms_old);
+		
 		foreach($buddyforms_old['buddyforms'] as $key => $form ){
 			$bf_forms_args = array(
 				'post_title' 		=> $form['name'],
@@ -370,11 +372,13 @@ class BuddyForms {
 			update_post_meta($post_id, '_buddyforms_options', $form);
 
 		}
-		delete_option('buddyforms_options');
+
 
 		update_option('buddyforms_version', BUDDYFORMS_VERSION);
 
-		//buddyforms_attached_page_rewrite_rules(TRUE);
+		delete_option('buddyforms_options');
+
+		buddyforms_attached_page_rewrite_rules(TRUE);
 	}
 
 }

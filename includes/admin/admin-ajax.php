@@ -64,14 +64,12 @@ function buddyforms_add_form(){
     $options['form_fields'][$field_id]['name']          = 'Title';
     $options['form_fields'][$field_id]['slug']          = 'editpost_title';
     $options['form_fields'][$field_id]['type']          = 'Title';
-    $options['form_fields'][$field_id]['order']         = '1';
 
     $field_id = $mod5 = substr(md5(time() * rand()), 0, 10);
 
     $options['form_fields'][$field_id]['name']          = 'Content';
     $options['form_fields'][$field_id]['slug']          = 'editpost_content';
     $options['form_fields'][$field_id]['type']          = 'Content';
-    $options['form_fields'][$field_id]['order']         = '2';
 
 
     update_post_meta($post_id, '_buddyforms_options', $options);
