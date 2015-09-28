@@ -167,10 +167,10 @@ function buddyforms_display_form_element($args){
             $multiple = isset($customfield['multiple']) ? $customfield['multiple'] : 'false';
             $form_fields['advanced']['multiple']            = new Element_Checkbox('<b>' . __('Multiple Selection', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array('multiple' => '<b>' . __('Multiple', 'buddyforms') . '</b>'), array('value' => $multiple));
 
-            $show_option_none = isset($customfield['show_option_none']) ? stripcslashes($customfield['show_option_none']) : 'false';
+            $show_option_none = isset($customfield['show_option_none']) ? $customfield['show_option_none'] : 'false';
             $form_fields['advanced']['show_option_none']    = new Element_Checkbox('<b>' . __('Display Select an Option', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array('show_select_option' => '<b>' . __("Show 'Select an Option'", 'buddyforms') . '</b>'), array('value' => $show_option_none));
 
-            $creat_new_tax = isset($customfield['creat_new_tax']) ? stripcslashes($customfield['creat_new_tax']) : 'false';
+            $creat_new_tax = isset($customfield['creat_new_tax']) ? $customfield['creat_new_tax'] : 'false';
             $form_fields['advanced']['creat_new_tax']       = new Element_Checkbox('<b>' . __('New Taxonomy Item', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array('user_can_create_new' => '<b>' . __('User can create new', 'buddyforms') . '</b>'), array('value' => $creat_new_tax));
 
             $hidden = isset($customfield['hidden']) ? $customfield['hidden'] : false;
@@ -187,7 +187,7 @@ function buddyforms_display_form_element($args){
             break;
         case 'Comments':
             unset($form_fields);
-            $required = isset($customfield['required']) ? stripcslashes($customfield['required']) : 'false';
+            $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
 
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'Comments';
@@ -203,7 +203,7 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['slug']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_title');
             $form_fields['general']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
 
-            $hidden = isset($customfield['hidden']) ? stripcslashes($customfield['hidden']) : false;
+            $hidden = isset($customfield['hidden']) ? $customfield['hidden'] : false;
             $form_fields['advanced']['hidden']  = new Element_Checkbox('<b>' . __('Hidden?', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array('hidden' => '<b>' . __('Make this field Hidden', 'buddyforms') . '</b>'), array('value' => $hidden));
 
             $validation_minlength = isset($customfield['validation_minlength']) ? stripcslashes($customfield['validation_minlength']) : 0;
@@ -216,7 +216,7 @@ function buddyforms_display_form_element($args){
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'Content';
             $form_fields['general']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1));
 
-            $post_content_options = isset($customfield['post_content_options']) ? stripcslashes($customfield['post_content_options']) : 'false';
+            $post_content_options = isset($customfield['post_content_options']) ? $customfield['post_content_options'] : 'false';
             $post_content_options_array = array( 'media_buttons' => 'media_buttons', 'tinymce' => 'tinymce', 'quicktags' => 'quicktags');
             $form_fields['advanced']['content_opt_a']   = new Element_Checkbox('<b>' . __('Turn off wp editor features', 'buddyforms') . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array('value' => $post_content_options));
 
@@ -234,14 +234,14 @@ function buddyforms_display_form_element($args){
             break;
         case 'Status':
             unset($form_fields);
-            $required = isset($customfield['required']) ? stripcslashes($customfield['required']) : 'false';
+            $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
 
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'Status';
             $form_fields['general']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1));
             $form_fields['general']['slug']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status');
 
-            $post_status = isset($customfield['post_status']) ? stripcslashes($customfield['post_status']) : 'post_status';
+            $post_status = isset($customfield['post_status']) ? $customfield['post_status'] : 'post_status';
             $form_fields['general']['post_status'] = new Element_Checkbox('<b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'id' => "buddyforms_options[form_fields][" . $field_id . "][post_status]", 'shortDesc' => __("You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms')));
             $form_fields['general']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
             break;
@@ -249,7 +249,7 @@ function buddyforms_display_form_element($args){
         case 'Featured-Image':
         case 'FeaturedImage':
             unset($form_fields);
-            $required = isset($customfield['required']) ? stripcslashes($customfield['required']) : 'false';
+            $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
 
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'FeaturedImage';
@@ -262,7 +262,7 @@ function buddyforms_display_form_element($args){
             break;
         case 'File':
 
-            $validation_multiple = isset($customfield['validation_multiple']) ? stripcslashes($customfield['validation_multiple']) : 0;
+            $validation_multiple = isset($customfield['validation_multiple']) ? $customfield['validation_multiple'] : 0;
             $form_fields['advanced']['validation_multiple']    = new Element_Checkbox('<b>' . __('Only one file or multiple?', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_multiple]", array('multiple' => '<b>' . __('Allow multiple file upload', 'buddyforms') . '</b>'), array('value' => $validation_multiple));
 
             $allowed_mime_types = get_allowed_mime_types();

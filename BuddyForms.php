@@ -59,7 +59,7 @@ class BuddyForms {
 
 		$this->init_hook();
 		$this->load_constants();
-		//add_action( 'init', array($this, 'myplugin_update_db_check') );
+		add_action( 'init', array($this, 'buddyforms_update_db_check') );
 	}
 
 	/**
@@ -350,11 +350,11 @@ class BuddyForms {
 
 	}
 
-	function myplugin_update_db_check() {
-		$buddyforms_old = get_option('buddyforms_options', true);
-// echo '<pre>';
-//	print_r($options);
-//	echo '</pre>';
+	function buddyforms_update_db_check() {
+		$buddyforms_old = get_option('buddyforms_options');
+
+		if(!$buddyforms_old)
+			return;
 
 		foreach($buddyforms_old['buddyforms'] as $key => $form ){
 			$bf_forms_args = array(
@@ -370,6 +370,9 @@ class BuddyForms {
 			update_post_meta($post_id, '_buddyforms_options', $form);
 
 		}
+		delete_option('buddyforms_options');
+
+		update_option('buddyforms_version', BUDDYFORMS_VERSION);
 
 		//buddyforms_attached_page_rewrite_rules(TRUE);
 	}
@@ -385,7 +388,7 @@ function edd_sl_sample_plugin_updater() {
 
 	// setup the updater
 	$edd_updater = new EDD_SL_Plugin_Updater( BUDDYFORMS_STORE_URL, __FILE__, array(
-			'version' 	=> '1.4.2', 				// current version number
+			'version' 	=> BUDDYFORMS_VERSION, 				// current version number
 			'license' 	=> $license_key, 		// license key (used get_option above to retrieve from DB)
 			'item_name' => BUDDYFORMS_EDD_ITEM_NAME, 	// name of this plugin
 			'author' 	=> 'Sven Lehnert',  // author of this plugin
