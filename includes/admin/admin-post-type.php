@@ -6,11 +6,10 @@
 function buddyforms_add_meta_boxes() {
     global $post;
 
-
     if($post->post_type != 'buddyforms')
         return;
 
-    add_meta_box('buddyforms_form_setup', __("Form Setup",'buddyforms') . '<br><small>' . __('Setup this form ', 'buddyforms'), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high');
+    add_meta_box('buddyforms_form_setup', __("Form Setup",'buddyforms') . '<br><small>' . __('Setup this form ', 'buddyforms') . '</small>', 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'core');
     add_meta_box('buddyforms_form_elements', __("Form Builder",'buddyforms') . '<br><small>' . __(' Add additional form elements from the right box "Form Elements". Change the order via drag and drop.', 'buddyforms') . '</small>', 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high');
     add_meta_box('buddyforms_form_mail', __("Mail Notification",'buddyforms') . '<br><small>' . __(' Add Mail Notification for any post status change".', 'buddyforms') . '</small>', 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default');
     add_meta_box('buddyforms_form_roles', __("Roles and Capabilities",'buddyforms') . '<br><small>' . __('Manage Capabilities for every user user role ', 'buddyforms') . '</small>', 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default');
@@ -76,16 +75,16 @@ function buddyforms_register_post_type(){
 
     // Create BuddyForms post type
     $labels = array(
-        'name' => __('BuddyForms', 'buddyforms'),
-        'singular_name' => __('BuddyForm', 'buddyforms'),
-        'add_new' => __('Add New', 'buddyforms'),
-        'add_new_item' => __('Add New Form', 'buddyforms'),
-        'edit_item' => __('Edit Form', 'buddyforms'),
-        'new_item' => __('New Form', 'buddyforms'),
-        'view_item' => __('View Form', 'buddyforms'),
-        'search_items' => __('Search BuddyForms', 'buddyforms'),
-        'not_found' => __('No BuddyForm found', 'buddyforms'),
-        'not_found_in_trash' => __('No Forms found in Trash', 'buddyforms'),
+        'name'                  => __('BuddyForms', 'buddyforms'),
+        'singular_name'         => __('BuddyForm', 'buddyforms'),
+        'add_new'               => __('Add New', 'buddyforms'),
+        'add_new_item'          => __('Add New Form', 'buddyforms'),
+        'edit_item'             => __('Edit Form', 'buddyforms'),
+        'new_item'              => __('New Form', 'buddyforms'),
+        'view_item'             => __('View Form', 'buddyforms'),
+        'search_items'          => __('Search BuddyForms', 'buddyforms'),
+        'not_found'             => __('No BuddyForm found', 'buddyforms'),
+        'not_found_in_trash'    => __('No Forms found in Trash', 'buddyforms'),
     );
 
     register_post_type('buddyforms', array(
@@ -112,7 +111,7 @@ add_action( 'init', 'buddyforms_register_post_type' );
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function codex_form_updated_messages( $messages ) {
+function buddyforms_form_updated_messages( $messages ) {
     global $post, $post_ID;
 
     if($post->post_type != 'buddyforms')
@@ -140,7 +139,7 @@ function codex_form_updated_messages( $messages ) {
 
     return $messages;
 }
-add_filter( 'post_updated_messages', 'codex_Form_updated_messages' );
+add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages' );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -197,7 +196,7 @@ add_action( 'manage_buddyforms_posts_custom_column' , 'custom_buddyforms_column'
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function hide_publishing_actions(){
+function buddyforms_hide_publishing_actions(){
     $my_post_type = 'buddyforms';
     global $post;
     if($post->post_type == $my_post_type){
@@ -211,54 +210,21 @@ function hide_publishing_actions(){
             ';
     }
 }
-add_action('admin_head-post.php', 'hide_publishing_actions');
-add_action('admin_head-post-new.php', 'hide_publishing_actions');
+add_action('admin_head-post.php', 'buddyforms_hide_publishing_actions');
+add_action('admin_head-post-new.php', 'buddyforms_hide_publishing_actions');
 
-//add_action( 'load-edit.php', function(){
-//
-//    $screen = get_current_screen();
-//
-////    echo '<pre>';
-////    print_r($screen);
-////echo '</pre>';
-//
-//    // Only edit post screen:
-//    if( 'edit-buddyforms' === $screen->id )
-//    {
-//        // Before:
-//        add_action( 'all_admin_notices', function(){
-//
-//            include('admin-credits.php');
-//
-//        });
-//
-//        // After:
-//        add_action( 'in_admin_footer', function(){
-//            echo '<p>Goodbye from <strong>in_admin_footer</strong>!</p>';
-//        });
-//    }
-//});
-//
 
-function add_menu_icons_styles(){ ?>
+function buddyforms_add_button_to_submit_box() {
+    global $post;
 
-    <style>
-        #adminmenu .menu-icon-buddyforms div.wp-menu-image:before {
-            content: '\f328';
-        }
-    </style>
+    if (get_post_type($post) == 'buddyforms') {
 
-    <?php
+        $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
+        $viwe_form_permalink = isset($buddyform['attached_page']) ? get_permalink($buddyform['attached_page']) : '';
+
+        echo '<a class="button button-large bf_button_action" href="'.$viwe_form_permalink . 'view/' . $post->post_name . '/" target="_new">'.__('View Form Posts', 'buddyforms').'</a>
+        <a class="button button-large bf_button_action" href="'.$viwe_form_permalink . 'create/' . $post->post_name . '/" target="_new">'.__('View Form', 'buddyforms').'</a>';
+
+    }
 }
-add_action( 'admin_head', 'add_menu_icons_styles' );
-
-
-function buddyforms_edit_form_top(){?>
-
-
-                sdd
-
-
-<?php
-}
-//add_action( 'edit_form_top', 'buddyforms_edit_form_top' );
+add_action( 'post_submitbox_start', 'buddyforms_add_button_to_submit_box' );

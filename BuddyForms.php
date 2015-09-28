@@ -59,7 +59,7 @@ class BuddyForms {
 
 		$this->init_hook();
 		$this->load_constants();
-
+		//add_action( 'init', array($this, 'myplugin_update_db_check') );
 	}
 
 	/**
@@ -236,7 +236,6 @@ class BuddyForms {
 			}
 
 			wp_enqueue_style('bootstrapcss', plugins_url('assets/admin/css/bootstrap.css', __FILE__) );
-			//wp_enqueue_style('buddyforms_zendesk_css', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.css' );
 			wp_enqueue_style('buddyforms_admin_css', plugins_url('assets/admin/css/admin.css', __FILE__) );
 
 			// load the tk_icons
@@ -275,7 +274,6 @@ class BuddyForms {
 				wp_enqueue_script('jQuery');
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('jquery-ui-accordion');
-				wp_enqueue_script('buddyforms_zendesk_js', '//assets.zendesk.com/external/zenbox/v2.6/zenbox.js');
 			}
 	}
 	/**
@@ -352,6 +350,29 @@ class BuddyForms {
 
 	}
 
+	function myplugin_update_db_check() {
+		$buddyforms_old = get_option('buddyforms_options', true);
+// echo '<pre>';
+//	print_r($options);
+//	echo '</pre>';
+
+		foreach($buddyforms_old['buddyforms'] as $key => $form ){
+			$bf_forms_args = array(
+				'post_title' 		=> $form['name'],
+				'post_type' 		=> 'buddyforms',
+				'post_status' 		=> 'publish',
+			);
+
+			// Insert the new form
+			$post_id = wp_insert_post( $bf_forms_args, true );
+			$form['id'] = $post_id;
+
+			update_post_meta($post_id, '_buddyforms_options', $form);
+
+		}
+
+		//buddyforms_attached_page_rewrite_rules(TRUE);
+	}
 
 }
 
@@ -374,3 +395,4 @@ function edd_sl_sample_plugin_updater() {
 
 }
 add_action( 'admin_init', 'edd_sl_sample_plugin_updater', 0 );
+

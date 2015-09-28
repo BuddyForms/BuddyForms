@@ -17,4 +17,4 @@ echo   '
 
 }
 
-add_action( 'edit_form_top', 'buddyforms_metabox_form_header' );
+//add_action( 'edit_form_top', 'buddyforms_metabox_form_header' );

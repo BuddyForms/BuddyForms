@@ -56,6 +56,16 @@ function buddyforms_metabox_form_setup(){
         $attached_page = $buddyform['attached_page'];
     $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => 'Associate a WordPress Page with each Form. The Page will be used to generate the form url. The Page content will not get changed. Just the url is used. This will result in a url like pagename/create/formname or pagename/view/formname. For more information read the Documentation'));
 
+    $status = 'false';
+    if (isset($buddyform['status']))
+        $status = $buddyform['status'];
+    $form_setup[] = new Element_Select('<b>' . __("Status", 'buddyforms') . '</b>', "buddyforms_options[status]", array('publish', 'pending', 'draft'), array('value' => $status));
+
+    $comment_status = 'false';
+    if (isset($buddyform['comment_status']))
+        $comment_status = $buddyform['comment_status'];
+    $form_setup[] = new Element_Select('<b>' . __("Comment Status", 'buddyforms') . '</b>', "buddyforms_options[comment_status]", array('open', 'closed'), array('value' => $comment_status));
+
     $revision = 'false';
     if (isset($buddyform['revision']))
         $revision = $buddyform['revision'];
@@ -70,16 +80,6 @@ function buddyforms_metabox_form_setup(){
     if (isset($buddyform['edit_link']))
         $edit_link = $buddyform['edit_link'];
     $form_setup[] = new Element_Radio('<b>' . __("Overwrite Frontend 'Edit Post' Link", 'buddyforms'). '</b>', "buddyforms_options[edit_link]", array('none' => 'None', 'all' => __("All Edit Links", 'buddyforms'), 'my-posts-list' => __("Only in My Posts List", 'buddyforms')), array('view' => 'vertical', 'value' => $edit_link, 'shortDesc' => __('The link to the backend will be changed to use the frontend editing.', 'buddyforms')));
-
-    $status = 'false';
-    if (isset($buddyform['status']))
-        $status = $buddyform['status'];
-    $form_setup[] = new Element_Select('<b>' . __("Status", 'buddyforms') . '</b>', "buddyforms_options[status]", array('publish', 'pending', 'draft'), array('value' => $status));
-
-    $comment_status = 'false';
-    if (isset($buddyform['comment_status']))
-        $comment_status = $buddyform['comment_status'];
-    $form_setup[] = new Element_Select('<b>' . __("Comment Status", 'buddyforms') . '</b>', "buddyforms_options[comment_status]", array('open', 'closed'), array('value' => $comment_status));
 
     $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
     $form_setup[] = new Element_Radio('<b>' . __("After Submission", 'buddyforms') . '</b>', "buddyforms_options[after_submit]", array('display_form' => 'Display the Form and Message and continue editing', 'display_post' => 'Display the Post', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden'));

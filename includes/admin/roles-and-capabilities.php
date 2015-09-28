@@ -93,7 +93,6 @@ function bf_manage_form_roles_and_capabilities_screen(){
 
         <?php
 
-
         }
 
 }

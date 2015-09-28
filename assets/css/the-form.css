@@ -742,3 +742,7 @@ div.bf_files_container ul li {
     width:64px;
     height:64px;
 }
+#poststuff {
+     padding-top: 0;
+     min-width: 0;
+}

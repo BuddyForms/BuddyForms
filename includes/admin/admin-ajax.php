@@ -88,95 +88,33 @@ function buddyforms_add_form(){
 }
 add_action( 'wp_ajax_buddyforms_add_form', 'buddyforms_add_form' );
 
-function buddyforms_save_options(){
-    global $wpdb;
-
-    xdebug_break();
-
-    if(empty($_POST['buddyforms_options']))
-        return;
-
-    parse_str($_POST['buddyforms_options'], $formdata);
-
-    $form_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$form_slug' and post_type = 'buddyforms'");
-
-    $bf_post = array(
-        'ID'        		=> $form_id,
-        'post_title' 		=> $formdata['buddyforms_options']['name'],
-    );
-
-    // Update the new post
-   $post_id = wp_update_post( $bf_post );
-
-    update_post_meta($form_id, '_buddyforms_options', $formdata['buddyforms_options']);
-
-    buddyforms_attached_page_rewrite_rules(TRUE);
-
-    die();
-}
-add_action( 'wp_ajax_buddyforms_save_options', 'buddyforms_save_options' );
-/**
- * Ajax call back function to delete a form element
- *
- * @package BuddyForms
- * @since 0.1-beta
- */
-function buddyforms_delete_form(){
-    global $buddyforms;
-    $buddyforms_options = $buddyforms;
-    unset( $buddyforms_options[$_POST['dele_form_slug']] );
-
-    buddyforms_attached_page_rewrite_rules(TRUE);
-    update_option("buddyforms_options", $buddyforms_options);
-    die();
-}
-add_action('wp_ajax_buddyforms_delete_form', 'buddyforms_delete_form');
-//add_action('wp_ajax_nopriv_buddyforms_delete_form', 'buddyforms_delete_form');
-
-/**
- * Ajax call back function to save the new form elements order
- *
- * @package BuddyForms
- * @since 0.1-beta
- */
-//function buddyforms_save_item_order() {
-//    global $buddyforms;
-//    $buddyforms_options = $buddyforms;
+//function buddyforms_save_options(){
+//    global $wpdb;
 //
+//    xdebug_break();
 //
-//    $order = explode(',', $_POST['order']);
-//    $counter = 0;
+//    if(empty($_POST['buddyforms_options']))
+//        return;
 //
-//    foreach ($order as $item_id) {
-//        $item_id = explode('/', $item_id);
-//        $buddyforms_options[$item_id[0]][$item_id[1]][$item_id[2]][$item_id[3]][$item_id[4]] = $counter;
-//        $counter++;
-//    }
+//    parse_str($_POST['buddyforms_options'], $formdata);
 //
-//    update_option("buddyforms_options", $buddyforms_options);
+//    $form_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$form_slug' and post_type = 'buddyforms'");
+//
+//    $bf_post = array(
+//        'ID'        		=> $form_id,
+//        'post_title' 		=> $formdata['buddyforms_options']['name'],
+//    );
+//
+//    // Update the new post
+//   $post_id = wp_update_post( $bf_post );
+//
+//    update_post_meta($form_id, '_buddyforms_options', $formdata['buddyforms_options']);
+//
+//    buddyforms_attached_page_rewrite_rules(TRUE);
+//
 //    die();
 //}
-//add_action('wp_ajax_buddyforms_save_item_order', 'buddyforms_save_item_order');
-
-/**
- * Ajax call back function to delete a form element
- *
- * @package BuddyForms
- * @since 0.1-beta
- */
-function buddyforms_item_delete(){
-    global $buddyforms;
-    $buddyforms_options = $buddyforms;
-
-    $post_args = explode('/', $_POST['post_args']);
-
-    unset( $buddyforms_options[$post_args[0]][$post_args[1]]['form_fields'][$post_args[3]] );
-
-    update_option("buddyforms_options", $buddyforms_options);
-    die();
-}
-add_action('wp_ajax_buddyforms_item_delete', 'buddyforms_item_delete');
-//add_action('wp_ajax_nopriv_buddyforms_item_delete', 'buddyforms_item_delete');
+//add_action( 'wp_ajax_buddyforms_save_options', 'buddyforms_save_options' );
 
 /**
  * Get all taxonomies

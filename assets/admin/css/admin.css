@@ -403,3 +403,9 @@ clear: both;
     width: 100% !important;
     height: 30px !important;
 }
+
+a.button.button-large.bf_button_action {
+    width: 100%;
+    /* margin-top: 5px; */
+    margin-bottom: 10px;
+}
