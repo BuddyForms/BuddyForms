@@ -57,24 +57,36 @@ abstract class Base {
         return $value;
     }
 
-	/*This method is used by the Form class and all Element classes to return a string of html
-	attributes.  There is an ignore parameter that allows special attributes from being included.*/
-	public function getAttributes($ignore = "") {
+    /*This method is used by the Form class and all Element classes to return a string of html
+    attributes.  There is an ignore parameter that allows special attributes from being included.*/
+    public function getAttributes($ignore = "") {
         $str = "";
-		if(!empty($this->_attributes)) {
-			if(!is_array($ignore))
-				$ignore = array($ignore);
-			$attributes = array_diff(array_keys($this->_attributes), $ignore);
-			foreach($attributes as $attribute) {
-				$str .= ' ' . $attribute;
-				if($this->_attributes[$attribute] !== "")
-					$str .= '="' . $this->filter($this->_attributes[$attribute]) . '"';
-			}	
-		}	
+        if(!empty($this->_attributes)) {
+            if(!is_array($ignore))
+                $ignore = array($ignore);
+            $attributes = array_diff(array_keys($this->_attributes), $ignore);
+            foreach($attributes as $attribute) {
+                $str .= ' ' . $attribute;
+                if($this->_attributes[$attribute] !== "")
+                    $str .= '="' . $this->filter($this->_attributes[$attribute]) . '"';
+            }
+        }
         return $str;
     }
 
-	public function appendAttribute($attribute, $value) {
+    /*This method is used by the Form class and all Element classes to return a string of html
+attributes.  There is an ignore parameter that allows special attributes from being included.*/
+    public function getAttributesArray() {
+        $array = array();
+        if(!empty($this->_attributes)) {
+
+
+            $attributes = (array)$this->_attributes;
+        }
+        return $attributes;
+    }
+
+    public function appendAttribute($attribute, $value) {
         if(isset($this->_attributes)) {
             if(!empty($this->_attributes[$attribute]))
                 $this->_attributes[$attribute] .= " " . $value;

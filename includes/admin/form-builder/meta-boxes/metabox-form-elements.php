@@ -29,7 +29,7 @@ function buddyforms_metabox_form_elements(){
          </div>
     ');
 
-    $form_setup[] = new Element_HTML('<ul id="sortable_' . $form_slug . '" class="sortable sortable_' . $form_slug . '">');
+    $form_setup[] = new Element_HTML('<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">');
 
     if (isset($buddyform['form_fields'])) {
 

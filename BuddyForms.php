@@ -171,8 +171,6 @@ class BuddyForms {
 
 		if (is_admin()){
 
-
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php');
 			
@@ -357,7 +355,7 @@ class BuddyForms {
 			return;
 
 		update_option('buddyforms_options_old', $buddyforms_old);
-		
+
 		foreach($buddyforms_old['buddyforms'] as $key => $form ){
 			$bf_forms_args = array(
 				'post_title' 		=> $form['name'],

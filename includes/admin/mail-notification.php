@@ -5,21 +5,14 @@ function bf_mail_notification_screen() {
     $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
     echo '<p>' . __('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '</p><br>';
-
-    if (isset($buddyform['mail_notification'])) { ?>
-        <ul>
-            <?php
-            foreach ($buddyform['mail_notification'] as $key => $value) {
-                buddyforms_new_notification_trigger_form($buddyform['mail_notification'][$key]['mail_trigger']);
-            }
-            echo '<div id="mailcontainer"></div>';
-            ?>
-        </ul>
-        <?php
-    } else {
-        echo '<div id="mailcontainer"></div>';
+    echo '<ul>';
+    if (isset($buddyform['mail_notification'])) {
+        foreach ($buddyform['mail_notification'] as $key => $value) {
+            buddyforms_new_notification_trigger_form($buddyform['mail_notification'][$key]['mail_trigger']);
+        }
     }
-
+    echo '<div id="mailcontainer"></div>';
+    echo '<ul>';
     echo '<hr>';
 
     $form_setup = array();

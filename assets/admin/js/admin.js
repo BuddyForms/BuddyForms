@@ -152,30 +152,51 @@ jQuery(document).ready(function(jQuery) {
 		});
 	});
 
-	jQuery('.action').click(function(){
+	var getUrlParameter = function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
 
-		var numItems = jQuery('.list_item').length;
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	};
+
+	jQuery('.bf_add_element_action').click(function(){
+
 		var action = jQuery(this);
+		var post_id = getUrlParameter('post');
 
-		var args = action.attr('href').split("/");
-		var unique = jQuery("#sortable_"+args[1]+' .'+args[0]);
+		if(post_id == undefined)
+			post_id = 0;
 
-		if(args[2] == 'unique'){
-			if (unique.length){
+
+
+		var fieldtype	= jQuery(this).data("fieldtype");
+		var unique		= jQuery(this).data("unique");
+		var fieldtype	= jQuery(this).data("fieldtype");
+
+		var exist = jQuery("#sortable_buddyforms_elements ." + fieldtype);
+
+		if(unique == 'unique'){
+			if (exist.length){
 				alert('This element can only be added once into each form');
 				return false;
 		    }
 		}
 
-		jQuery('.loading-animation-new').show(); // Show the animate loading gif while waiting
 		jQuery.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data: {"action": "buddyforms_display_form_element", "post_args": action.attr('href'), 'numItems': numItems},
+			data: {"action": "buddyforms_display_form_element", "fieldtype": fieldtype, "unique": unique, "post_id": post_id },
 			success: function(data){
 				if(data == 'unique'){
 					alert('This element can only be added once into each form');
-					jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
 					return false;
 				}
 
@@ -183,16 +204,12 @@ jQuery(document).ready(function(jQuery) {
 
 				var myvar = action.attr('href');
 				var arr = myvar.split('/');
-				jQuery('.sortable_' + arr[1]).append(data);
-				jQuery('.info_' + arr[1]).hide();
-				jQuery('.loading-animation-new').hide('slow'); // Show the animate loading gif while waiting
-				//jQuery('.sortable_' + arr[1]).collapse();
+				jQuery('#sortable_buddyforms_elements').append(data);
+
 				update_list_item_number();
 
 				jQuery('#buddyforms_form_elements').removeClass('closed');
 				jQuery("html, body").animate({ scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top }, 1000);
-
-
 
 			},
 			error: function() {

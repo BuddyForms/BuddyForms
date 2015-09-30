@@ -6,6 +6,22 @@
  * Time: 14:44
  */
 
+/**
+ * Create "BuddyForms Options" nav menu
+ *
+ * @package buddyforms
+ * @since 0.1-beta
+ */
+function buddyforms_create_addons_menu(){
+
+    if (!session_id()) ;
+    @session_start();
+
+    add_submenu_page('edit.php?post_type=buddyforms', __('Add-ons', 'buddyforms'), __('Add-ons', 'buddyforms'), 'manage_options', 'bf_add_ons', 'bf_add_ons_screen');
+
+}
+add_action('admin_menu', 'buddyforms_create_addons_menu');
+
 function bf_add_ons_screen(){
 
     // Check that the user is allowed to update options
