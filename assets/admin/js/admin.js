@@ -1,5 +1,44 @@
 jQuery(document).ready(function(jQuery) {
 
+	jQuery(".bf-select2").select2({
+		placeholder: "Select an option"
+	});
+
+
+
+
+	jQuery('.tax_select').live('change', function() {
+
+		var id 		= jQuery(this).attr('id');
+		var taxonomy 	= jQuery(this).val();
+		var taxonomy_default = jQuery("#taxonomy_default_"+id);
+
+
+		jQuery.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {"action": "buddyforms_update_taxonomy_default",
+				"taxonomy": taxonomy,
+			},
+			success: function(data){
+				if(data != false){
+					taxonomy_default.val(null).trigger("change");
+					taxonomy_default.select2({ placeholder: "Select default term" }).trigger("change");
+
+					taxonomy_default.html(data);
+				}
+
+			},
+			error: function() {
+				alert('Something went wrong.. ;-(sorry)');
+			}
+		});
+
+
+
+
+	});
+
 
 	jQuery('#publish').click(function(){
 

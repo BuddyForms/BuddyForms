@@ -175,19 +175,19 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php');
 			
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mail-notification.php');
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/roles-and-capabilities.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/license-registration.php');
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/mail-notification.php');
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/roles-and-capabilities.php');
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-header.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php');
-
 
 
 			if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -272,6 +272,10 @@ class BuddyForms {
 				wp_enqueue_script('jQuery');
 				wp_enqueue_script('jquery-ui-sortable');
 				wp_enqueue_script('jquery-ui-accordion');
+
+				wp_enqueue_script( 'buddyforms-select2-js', plugins_url('includes/resources/select2/select2.min.js', __FILE__) , array( 'jquery' ), '3.5.2' );
+				wp_enqueue_style( 'buddyforms-select2-css',plugins_url('includes/resources/select2/select2.css', __FILE__));
+
 			}
 	}
 	/**

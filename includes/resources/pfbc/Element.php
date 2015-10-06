@@ -10,7 +10,7 @@ abstract class Element extends Base {
 	protected $validation = array();
 	protected $prefillAfterValidation = 1;
 
-	public function __construct($label, $name, array $properties = null) {
+	public function __construct($label = '', $name = '', array $properties = null) {
 		$configuration = array(
 			"label" => $label,
 			"name" => $name

@@ -112,10 +112,8 @@ function buddyforms_display_form_element($args){
         case 'Taxonomy':
             $taxonomies = buddyforms_taxonomies($buddyform);
             $taxonomy = isset($customfield['taxonomy']) ? $customfield['taxonomy'] : false;
-            $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy));
+            $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy, 'class' => 'tax_select', 'id' => $field_id));
 
-            $taxonomy_order = isset($customfield['taxonomy_order']) ? $customfield['taxonomy_order'] : 'false';
-            $form_fields['general']['taxonomy_order']  = new Element_Select('<b>' . __('Taxonomy Order', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array('ASC', 'DESC'), array('value' => $taxonomy_order));
 
             $taxonomy_default = isset($customfield['taxonomy_default']) ? $customfield['taxonomy_default'] : 'false';
 
@@ -127,8 +125,9 @@ function buddyforms_display_form_element($args){
                     'echo' => FALSE,
                     'selected' => false,
                     'hierarchical' => 1,
+                    'id' => 'taxonomy_default_' . $field_id,
                     'name' => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default][]",
-                    'class' => 'postform bf-select2',
+                    'class' => 'postform bf-select2 tax_default',
                     'depth' => 0,
                     'tab_index' => 0,
                     'taxonomy' => $taxonomy,
@@ -150,24 +149,31 @@ function buddyforms_display_form_element($args){
                     $dropdown = str_replace(' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown);
                 }
 
-                $dropdown = '<div class="bf_field_group">
-                                <div class="buddyforms_field_label"><b>Taxonomy Default</b></div>
-                                <div class="bf_inputs">' . $dropdown . ' </div>
+                $dropdown = '
+                            <th scope="row">
+                                <label for="form_title"><b>Taxonomy Default</b></label>
+                            </th>
+                            <td>
+                                ' . $dropdown . '
+                                <p class="description">You can select a default category</p>
+                            </td>';
 
-                            </div>';
+                $form_fields['general']['taxonomy_default'] = new Element_HTML($dropdown);
 
-                $form_fields['advanced']['taxonomy_default'] = new Element_HTML($dropdown);
-
+            } else {
+                $form_fields['general']['taxonomy_default']  = new Element_Select('<b>' . __('Taxonomy Default', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default]", array(), array('class' => 'bf-select2', 'multiple' => 1, 'value' => '', 'id' => 'taxonomy_default_' . $field_id));
             }
+            $taxonomy_order = isset($customfield['taxonomy_order']) ? $customfield['taxonomy_order'] : 'false';
+            $form_fields['general']['taxonomy_order']  = new Element_Select('<b>' . __('Taxonomy Order', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array('ASC', 'DESC'), array('value' => $taxonomy_order));
 
             $multiple = isset($customfield['multiple']) ? $customfield['multiple'] : 'false';
-            $form_fields['advanced']['multiple']            = new Element_Checkbox('<b>' . __('Multiple Selection', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array('multiple' => '<b>' . __('Multiple', 'buddyforms') . '</b>'), array('value' => $multiple));
+            $form_fields['general']['multiple']            = new Element_Checkbox('<b>' . __('Multiple Selection', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array('multiple' => '<b>' . __('Multiple', 'buddyforms') . '</b>'), array('value' => $multiple));
 
             $show_option_none = isset($customfield['show_option_none']) ? $customfield['show_option_none'] : 'false';
-            $form_fields['advanced']['show_option_none']    = new Element_Checkbox('<b>' . __('Display Select an Option', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array('show_select_option' => '<b>' . __("Show 'Select an Option'", 'buddyforms') . '</b>'), array('value' => $show_option_none));
+            $form_fields['general']['show_option_none']    = new Element_Checkbox('<b>' . __('Display Select an Option', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array('show_select_option' => '<b>' . __("Show 'Select an Option'", 'buddyforms') . '</b>'), array('value' => $show_option_none));
 
             $creat_new_tax = isset($customfield['creat_new_tax']) ? $customfield['creat_new_tax'] : 'false';
-            $form_fields['advanced']['creat_new_tax']       = new Element_Checkbox('<b>' . __('New Taxonomy Item', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array('user_can_create_new' => '<b>' . __('User can create new', 'buddyforms') . '</b>'), array('value' => $creat_new_tax));
+            $form_fields['general']['creat_new_tax']       = new Element_Checkbox('<b>' . __('New Taxonomy Item', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array('user_can_create_new' => '<b>' . __('User can create new', 'buddyforms') . '</b>'), array('value' => $creat_new_tax));
 
             $hidden = isset($customfield['hidden']) ? $customfield['hidden'] : false;
             $form_fields['advanced']['hidden']              = new Element_Checkbox('<b>' . __('Hidden', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array('hidden' => '<b>' . __('Make this field Hidden', 'buddyforms') . '</b>'), array('value' => $hidden));
@@ -414,23 +420,33 @@ function buddyforms_display_field_group_table($form_fields){
         if (isset($form_fields)) {
             foreach ($form_fields as $key => $field) {
 
+
+
                 $attributes = $field->getAttributesArray();
+
+//                echo '<pre>';
+//                print_r($attributes);
+//                echo '</pre>';
 
                 if(!isset($attributes['type']))
                     $attributes['type'] = 'default';
 
+                $class = '';
+                if(isset($attributes['id']))
+                    $class = $attributes['id'];
+
                 switch($attributes['type']) {
                     case 'html':
-                        echo '<tr id="row_form_title"><td colspan="2">';
+                        echo '<tr id="row_form_title" class="'.$class.'">';
                         $field->render();
-                        echo '</td></tr>';
+                        echo '</tr>';
                         break;
                     case 'hidden':
                         $field->render();
                         break;
                     default :
                         ?>
-                        <tr id="row_form_title">
+                        <tr class="table_row_<?php echo $class ?>">
                             <th scope="row">
                                 <label for="form_title"><?php echo $field->getLabel() ?></label>
                             </th>

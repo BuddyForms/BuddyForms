@@ -8,7 +8,7 @@ class Element_HTML extends Element {
 		parent::__construct("", "", $properties);
 	}
 
-	public function render() { 
+	public function render() {
 		echo $this->_attributes["value"];
 	}
 }

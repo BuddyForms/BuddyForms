@@ -409,3 +409,6 @@ a.button.button-large.bf_button_action {
     /* margin-top: 5px; */
     margin-bottom: 10px;
 }
+.bf-select2 {
+    width: 100%;
+}

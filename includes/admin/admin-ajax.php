@@ -100,3 +100,31 @@ function buddyforms_taxonomies($buddyform){
 
     return $taxonomies;
 }
+
+function buddyforms_update_taxonomy_default(){
+
+    if(!isset($_POST['taxonomy']))
+        echo 'false';
+
+    $taxonomy = $_POST['taxonomy'];
+
+    $args = array(
+        'orderby'           => 'name',
+        'order'             => 'ASC',
+        'hide_empty'        => false,
+        'fields'            => 'id=>name',
+    );
+
+    $terms = get_terms($taxonomy, $args);
+
+    $tmp = '<option value="none">none</option>';
+    foreach($terms as $key => $term_name){
+        $tmp .= '<option value="'.$key.'">'.$term_name.'</option>';
+    }
+
+    echo $tmp;
+
+    die();
+
+}
+add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
