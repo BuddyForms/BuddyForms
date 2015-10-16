@@ -4,9 +4,6 @@ jQuery(document).ready(function(jQuery) {
 		placeholder: "Select an option"
 	});
 
-
-
-
 	jQuery('.tax_select').live('change', function() {
 
 		var id 		= jQuery(this).attr('id');

@@ -115,7 +115,8 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy, 'class' => 'tax_select', 'id' => $field_id));
 
 
-            $taxonomy_default = isset($customfield['taxonomy_default']) ? $customfield['taxonomy_default'] : 'false';
+            $taxonomy_default   = isset($customfield['taxonomy_default']) ? $customfield['taxonomy_default'] : 'false';
+            $taxonomy_order     = isset($customfield['taxonomy_order']) ? $customfield['taxonomy_order'] : 'false';
 
             if ($taxonomy) {
 
@@ -163,7 +164,6 @@ function buddyforms_display_form_element($args){
             } else {
                 $form_fields['general']['taxonomy_default']  = new Element_Select('<b>' . __('Taxonomy Default', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default]", array(), array('class' => 'bf-select2', 'multiple' => 1, 'value' => '', 'id' => 'taxonomy_default_' . $field_id));
             }
-            $taxonomy_order = isset($customfield['taxonomy_order']) ? $customfield['taxonomy_order'] : 'false';
             $form_fields['general']['taxonomy_order']  = new Element_Select('<b>' . __('Taxonomy Order', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array('ASC', 'DESC'), array('value' => $taxonomy_order));
 
             $multiple = isset($customfield['multiple']) ? $customfield['multiple'] : 'false';
@@ -285,7 +285,10 @@ function buddyforms_display_form_element($args){
             break;
     }
 
-    $form_fields = apply_filters('buddyforms_formbuilder_fields_options', $form_fields, $form_slug, $field_id);
+    $form_fields = apply_filters('buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id);
+
+
+    $form_fields = sortArrayByArray($form_fields, array('general', 'validation', 'advanced'));
 
     ob_start(); ?>
     <li id="field_<?php echo $field_id ?>" class="list_item <?php echo $field_id . ' ' . $field_type ?>">
@@ -316,52 +319,39 @@ function buddyforms_display_form_element($args){
                 </div>
                 <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
                     <div class="accordion-inner">
-                        <script>
-                            jQuery('#bf_field_group<?php echo $field_type . '-' . $field_id ?> a').click(function (e) {
-                                e.preventDefault();
-                                jQuery(this).tab('show');
-                            })
-                        </script>
-                        <div class="tabs-<?php echo $field_type . '-' . $field_id ?>">
-                            <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>" class="nav nav-tabs">
-                                <li class="active"><a href="#General<?php echo $field_type . '-' . $field_id ?>" data-toggle="tab">General</a></li>
-                                <?php if (isset($form_fields['validation'])) { ?>
-                                    <li><a href="#Validation<?php echo $field_type . '-' . $field_id ?>" data-toggle="tab">Validation</a></li>
-                                <?php } ?>
-                                <?php if (isset($form_fields['advanced'])) { ?>
-                                    <li><a href="#Advanced<?php echo $field_type . '-' . $field_id ?>" data-toggle="tab">Advanced</a></li>
-                                <?php } ?>
-                                <?php if (isset($form_fields['addons'])) { ?>
-                                    <li><a href="#AddOns<?php echo $field_type . '-' . $field_id ?>" data-toggle="tab">AddOns</a></li>
-                                <?php } ?>
+                        <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
+                            <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>" class="nav nav-tabs nav-pills">
+                                <?php
+                                $i = 0;
+                                foreach($form_fields as $key => $form_field){
+
+                                    $class_active = '';
+                                    if ($i == 0)
+                                        $class_active = 'active';
+
+                                    ?><li class="<?php echo $class_active ?>"><a href="#<?php echo $key . '-' . $field_type . '-' . $field_id ?>" data-toggle="tab"><?php echo str_replace('-', ' ', ucfirst($key)) ?></a></li><?php
+                                    $i++;
+                                }
+                                ?>
                             </ul>
-                            <div id="bf_field_groupContent<?php echo $field_type . '-' . $field_id ?>" class="tab-content">
-                                <div class="tab-pane fade in active" id="General<?php echo $field_type . '-' . $field_id ?>">
-                                    <div class="buddyforms_accordion_general">
-                                        <?php buddyforms_display_field_group_table($form_fields['general']) ?>
-                                    </div>
-                                </div>
-                                <?php if (isset($form_fields['validation'])) { ?>
-                                    <div class="tab-pane fade" id="Validation<?php echo $field_type . '-' . $field_id ?>">
+                            <div id="bf_field_group_content<?php echo $field_type . '-' . $field_id ?>" class="tab-content">
+                                <?php
+                                $i = 0;
+                                foreach($form_fields as $key => $form_field){
+
+                                    $class_active = '';
+                                    if ($i == 0)
+                                        $class_active = 'active';
+                                    ?>
+                                    <div class="tab-pane fade in <?php echo $class_active ?>" id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
                                         <div class="buddyforms_accordion_general">
-                                            <?php buddyforms_display_field_group_table($form_fields['validation']) ?>
+                                            <?php buddyforms_display_field_group_table( $form_field ) ?>
                                         </div>
                                     </div>
-                                <?php } ?>
-                                <?php if (isset($form_fields['advanced'])) { ?>
-                                    <div class="tab-pane fade" id="Advanced<?php echo $field_type . '-' . $field_id ?>">
-                                        <div class="buddyforms_accordion_general">
-                                            <?php buddyforms_display_field_group_table($form_fields['advanced']) ?>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                                <?php if (isset($form_fields['addons'])) { ?>
-                                    <div class="tab-pane fade" id="AddOns<?php echo $field_type . '-' . $field_id ?>">
-                                        <div class="buddyforms_accordion_general">
-                                            <?php buddyforms_display_field_group_table($form_fields['addons']) ?>
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                                    <?php
+                                    $i++;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -464,4 +454,15 @@ function buddyforms_display_field_group_table($form_fields){
         </tbody>
     </table>
     <?php
+}
+
+function sortArrayByArray(Array $array, Array $orderArray) {
+    $ordered = array();
+    foreach($orderArray as $key) {
+        if(array_key_exists($key,$array)) {
+            $ordered[$key] = $array[$key];
+            unset($array[$key]);
+        }
+    }
+    return $ordered + $array;
 }
