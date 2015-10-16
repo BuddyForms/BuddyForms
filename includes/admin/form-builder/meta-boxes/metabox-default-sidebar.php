@@ -24,6 +24,7 @@ function buddyforms_metabox_sidebar()
         <p><a href="#" data-fieldtype="Radiobutton" class="bf_add_element_action">' . __('Radiobutton', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Checkbox" class="bf_add_element_action">' . __('Checkbox', 'buddyforms') . '</a></p>
         <h5>Post Fields</h5>
+        <p><a href="#" data-fieldtype="Title" data-unique="unique" class="bf_add_element_action">' . __('Title', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Content" data-unique="unique" class="bf_add_element_action">' . __('Content', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Taxonomy" class="bf_add_element_action">' . __('Taxonomy', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Comments" data-unique="unique" class="bf_add_element_action">' . __('Comments', 'buddyforms') . '</a></p>
