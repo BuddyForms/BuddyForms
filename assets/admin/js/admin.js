@@ -4,6 +4,31 @@ jQuery(document).ready(function(jQuery) {
 		placeholder: "Select an option"
 	});
 
+	jQuery(".bf-select2").select2({
+		placeholder: "Select an option"
+	});
+
+	jQuery(document.body).on('change', '.bf_hidden_checkbox' ,function(){
+
+		var ids = jQuery(this).attr('bf_hidden_checkbox');
+
+		if(!ids)
+			return;
+
+		if(jQuery(this).is(':checked')){
+			ids = ids.split(" ");
+			ids.forEach(function(entry) {
+				jQuery('#table_row_'+entry).removeClass('hidden');
+			});
+		} else {
+			ids = ids.split(" ");
+			ids.forEach(function(entry) {
+				jQuery('#table_row_'+entry).addClass('hidden');
+			});
+		}
+
+	});
+
 	jQuery('.tax_select').live('change', function() {
 
 		var id 		= jQuery(this).attr('id');
@@ -30,9 +55,6 @@ jQuery(document).ready(function(jQuery) {
 				alert('Something went wrong.. ;-(sorry)');
 			}
 		});
-
-
-
 
 	});
 
@@ -277,18 +299,33 @@ jQuery(document).ready(function(jQuery) {
 	jQuery(document).on('click','.add_input',function() {
 
 		var action = jQuery(this);
-		var args = action.attr('href').split("/");
-	 	var	numItems = jQuery('#'+args[0]+'_field_'+args[1]+' li').size();
-	 	numItems = numItems + 1;
-	 	jQuery('#'+args[0]+'_field_'+args[1]).append('<li class="field_item field_item_'+args[1]+'_'+numItems+'"> + <input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[1]+'][value][]"> <a href="#" id="'+args[1]+'_'+numItems+'" class="delete_input">X</a> - <a href="#" id="'+args[1]+'">move</a></li>');
 
+		var args = action.attr('href').split("/");
+
+		alert(args[0]);
+
+	 	var	numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
+
+		alert(numItems);
+
+	 	numItems = numItems + 1;
+	 	jQuery('#table_row_' + args[0] + '_select_options ul').append(
+			'<li class="field_item field_item_'+args[0]+'_'+numItems+'">' +
+			'<table class="wp-list-table widefat fixed posts"><tbody><tr><td>' +
+			'<input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[0]+'][options]['+numItems+'][label]">' +
+			'</td><td>' +
+			'<input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[0]+'][options]['+numItems+'][value]">' +
+			'</td><td class="manage-column column-author">' +
+			'<a href="#" id="'+args[0]+'_'+numItems+'" class="delete_input">X</a>' +
+			'</td></tr></li></tbody></table>');
     	return false;
 
 	});
 
 	jQuery(document).on('click','.delete_input',function() {
 		var del_id = jQuery(this).attr('id');
-		jQuery(".field_item_" + del_id).remove();
+		if (confirm('Delete Permanently'))
+			jQuery(".field_item_" + del_id).remove();
 		return false;
 	});
 

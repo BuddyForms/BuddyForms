@@ -91,23 +91,23 @@ function buddyforms_display_form_element($args){
 
             $field_args = Array(
                 'field_id' => $field_id,
-                'buddyforms_options' => $buddyform
+                'buddyform' => $buddyform
             );
-            $form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
+            $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
         case 'Radiobutton':
             $field_args = Array(
                 'field_id' => $field_id,
-                'buddyforms_options' => $buddyform
+                'buddyform' => $buddyform
             );
-            $form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
+            $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
         case 'Checkbox':
             $field_args = Array(
                 'field_id' => $field_id,
-                'buddyforms_options' => $buddyform
+                'buddyform' => $buddyform
             );
-            $form_fields = buddyforms_form_element_multiple($form_fields, $field_args);
+            $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
         case 'Taxonomy':
             $taxonomies = buddyforms_taxonomies($buddyform);
@@ -345,7 +345,7 @@ function buddyforms_display_form_element($args){
                                     ?>
                                     <div class="tab-pane fade in <?php echo $class_active ?>" id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
                                         <div class="buddyforms_accordion_general">
-                                            <?php buddyforms_display_field_group_table( $form_field ) ?>
+                                            <?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
                                         </div>
                                     </div>
                                     <?php
@@ -374,43 +374,84 @@ function buddyforms_display_form_element($args){
 }
 
 add_action('wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_element');
-function buddyforms_form_element_multiple($form_fields, $args)
-{
+function buddyforms_form_element_multiple($form_fields, $args){
+    global $post;
+
+    //$buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
+
+
+//    echo '<pre>';
+//    print_r($args);
+//    echo '</pre>';
 
     extract($args);
 
-    $form_fields['general']['html_1'] = new Element_HTML('
-	<div class="element_field">
-	<b>' . __('Values', 'buddyforms') . '</b>
-		 <ul id="field_' . $field_id . '" class="element_field_sortable">');
-    if (isset($buddyform['form_fields'][$field_id]['value'])) {
+    ob_start();
+
+    echo '<div class="element_field">';
+
+    echo'
+
+            <table class="wp-list-table widefat fixed posts">
+                <thead>
+                    <tr>
+                        <th><span style="padding-left: 10px;">Label</span></th>
+                        <th><span style="padding-left: 10px;">Value</span></th>
+                        <th class="manage-column column-author"><span style="padding-left: 10px;">Action</span></th>
+                    </tr>
+                </thead>
+            </table>
+<br>
+    ';
+
+    echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
+
+
+    if(!isset($buddyform['form_fields'][$field_id]['options']) && isset($buddyform['form_fields'][$field_id]['value'])){
+        foreach($buddyform['form_fields'][$field_id]['value'] as $key => $value){
+            $buddyform['form_fields'][$field_id]['options'][$key]['label'] = $value;
+            $buddyform['form_fields'][$field_id]['options'][$key]['value'] = $value;
+        }
+    }
+
+    if (isset($buddyform['form_fields'][$field_id]['options'])) {
         $count = 1;
-        foreach ($buddyform['form_fields'][$field_id]['value'] as $key => $value) {
-            $form_fields['general']['html_li_start_' . $key] = new Element_HTML('<li class="field_item field_item_' . $field_id . '_' . $count . '">');
-            $form_fields['general']['html_value_' . $key] = new Element_Textbox('<b>' . __("Entry ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][value][]", array('value' => $value));
-            $form_fields['general']['html_li_end_' . $key] = new Element_HTML('<a href="#" id="' . $field_id . '_' . $count . '" class="delete_input" title="delete me">X</a> - <a href="#" id="' . $field_id . '" title="drag and move me!">' . __('move', 'buddyforms') . '</a></li>');
+        foreach ($buddyform['form_fields'][$field_id]['options'] as $key => $option) {
+
+
+            echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
+             echo '<table class="wp-list-table widefat fixed posts"><tbody><tr><td>';
+                $form_element = new Element_Textbox('<b>' . __("Label ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array('value' => $option['label']));
+                $form_element->render();
+            echo '</td><td>';
+                $form_element = new Element_Textbox('<b>' . __("Value ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array('value' => $option['value']));
+                $form_element->render();
+            echo '</td><td class="manage-column column-author">';
+                echo '<a href="#" id="' . $field_id . '_' . $count . '" class="delete_input" title="delete me">X</a>';
+            echo '</td></tr></li></tbody></table>';
+
             $count++;
         }
     }
-    $form_fields['general']['html_2'] = new Element_HTML('
+
+    echo '
 	    </ul>
      </div>
-     <a href="' . $field_id . '" class="button add_input">+</a>
-    ');
+     <a href="' . $field_id . '" class="button add_input">+</a>';
 
-    return $form_fields;
+    $tmp = ob_get_clean();
+
+    return $tmp;
 }
 
 
-function buddyforms_display_field_group_table($form_fields){
+function buddyforms_display_field_group_table($form_fields, $field_id ){
     ?>
     <table class="form-table">
         <tbody>
         <?php
         if (isset($form_fields)) {
             foreach ($form_fields as $key => $field) {
-
-
 
                 $attributes = $field->getAttributesArray();
 
@@ -422,21 +463,21 @@ function buddyforms_display_field_group_table($form_fields){
                     $attributes['type'] = 'default';
 
                 $class = '';
-                if(isset($attributes['id']))
-                    $class = $attributes['id'];
+                if(isset($attributes['class']))
+                    $class = $attributes['class'];
 
                 switch($attributes['type']) {
                     case 'html':
-                        echo '<tr id="row_form_title" class="'.$class.'">';
+                        echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $class . '"><td colspan="2">';
                         $field->render();
-                        echo '</tr>';
+                        echo '</td></tr>';
                         break;
                     case 'hidden':
                         $field->render();
                         break;
                     default :
                         ?>
-                        <tr class="table_row_<?php echo $class ?>">
+                        <tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $class ?>">
                             <th scope="row">
                                 <label for="form_title"><?php echo $field->getLabel() ?></label>
                             </th>

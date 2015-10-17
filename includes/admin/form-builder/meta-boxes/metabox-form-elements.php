@@ -8,6 +8,11 @@ function buddyforms_metabox_form_elements(){
 
     $buddyform = get_post_meta(get_the_ID(), '_buddyforms_options', true);
 
+
+//    echo '<pre>';
+//    print_r($buddyform);
+//    echo '</pre>';
+
     $form_slug = $post->post_name;
 
     $form_setup = array();
