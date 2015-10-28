@@ -24,12 +24,10 @@ function buddyforms_display_form_element($args){
 
     if (isset($field_unique) && $field_unique == 'unique') {
         if (isset($buddyform['form_fields'])) {
-
             foreach ($buddyform['form_fields'] as $key => $form_field) {
                 if ($form_field['type'] == $field_type)
                     return 'unique';
             }
-
         }
     }
 
@@ -43,17 +41,17 @@ function buddyforms_display_form_element($args){
     $form_fields = Array();
 
     $required = isset($customfield['required']) ? $customfield['required'] : 'false';
-    $form_fields['validation']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') .'</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Make this field a required field', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
+    $form_fields['validation']['required']  = new Element_Checkbox('<b>' . __('Required', 'buddyforms') .'</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Make this field a required field', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
 
     $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : '';
-    $form_fields['general']['name']        = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1));
+    $form_fields['general']['name']         = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('class' =>"use_as_slug",'data' => $field_id , 'value' => $name, 'required' => 1));
 
     $field_slug = isset($customfield['slug']) ? sanitize_title($customfield['slug']) : $name;
-    $form_fields['general']['slug']        = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array('shortDesc' => __('_name will create a hidden post meta field', 'buddyforms'), 'value' => $field_slug, 'required' => 1));
+    $form_fields['general']['slug']         = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array('shortDesc' => __('_name will create a hidden post meta field', 'buddyforms'), 'value' => $field_slug, 'required' => 1, 'class' => 'slug'.$field_id));
 
     $description = isset($customfield['description']) ? stripslashes($customfield['description']) : '';
-    $form_fields['general']['description'] = new Element_Textbox('<b>' . __('Description', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array('value' => $description));
-    $form_fields['general']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
+    $form_fields['general']['description']  = new Element_Textbox('<b>' . __('Description', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array('value' => $description));
+    $form_fields['general']['type']         = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
 
     $validation_error_message = isset($customfield['validation_error_message']) ? stripcslashes($customfield['validation_error_message']) : __('This field is required.', 'buddyforms');
     $form_fields['validation']['validation_error_message']    = new Element_Textbox('<b>' . __('Validation Error Message', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_error_message]", array('value' => $validation_error_message));

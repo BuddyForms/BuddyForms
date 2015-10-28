@@ -40,9 +40,14 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
 
     // Update the option _buddyforms_forms used to reduce queries
-    $buddyforms_forms = get_option('_buddyforms_forms', true);
+    $buddyforms_forms = get_option('buddyforms_forms');
+
+//    echo '<pre>';
+//    print_r($buddyforms_forms);
+//    echo '</pre>';
+
     $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
-    update_option('_buddyforms_forms', $buddyforms_forms);
+    update_option('buddyforms_forms', $buddyforms_forms);
 
     // Save the Roles and capabilities.
     $buddyform = $_POST['buddyforms_options'];
@@ -77,6 +82,8 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
         }
 
     }
+
+    buddyforms_attached_page_rewrite_rules(TRUE);
 
 }
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );

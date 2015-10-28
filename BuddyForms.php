@@ -34,7 +34,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '1.4.2';
+	public $version = '1.5';
 
 	/**
 	 * Initiate the class
@@ -54,7 +54,7 @@ class BuddyForms {
 
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_style')		, 1, 1);
 		add_action( 'admin_enqueue_scripts'	, array($this, 'buddyforms_admin_js')			, 2, 1);
-		add_action( 'admin_footer'	, array($this, 'buddyforms_admin_js_footer')			, 2, 1);
+		add_action( 'admin_footer'			, array($this, 'buddyforms_admin_js_footer')	, 2, 1);
 		add_action( 'template_redirect'		, array($this, 'buddyform_front_js_loader')		, 2, 1);
 
 	}
@@ -117,28 +117,30 @@ class BuddyForms {
 	static function set_globals() {
 		global $buddyforms;
 
-		// get acf's
-		$posts = get_posts(array(
-			'numberposts' 	=> -1,
-			'post_type' 	=> 'buddyforms',
-			'orderby' 		=> 'menu_order title',
-			'order' 		=> 'asc',
-			'suppress_filters' => false,
-			'post_status' => 'publish'
-		));
+//		// get acf's
+//		$posts = get_posts(array(
+//			'numberposts' 	=> -1,
+//			'post_type' 	=> 'buddyforms',
+//			'orderby' 		=> 'menu_order title',
+//			'order' 		=> 'asc',
+//			'suppress_filters' => false,
+//			'post_status' => 'publish'
+//		));
+//
+//		$bf_forms = Array();
+//
+//		if( $posts ){ foreach( $posts as $post ){
+//			$options = get_post_meta($post->ID,'_buddyforms_options', true);
+//			if($options){
+//				$bf_forms[$post->post_name] = get_post_meta($post->ID,'_buddyforms_options', true);
+//				$bf_forms[$post->post_name]['form_id'] = $post->ID;
+//			}
+//
+//		}}
 
-		$bf_forms = Array();
+		$buddyforms = get_option('buddyforms_forms');
 
-		if( $posts ){ foreach( $posts as $post ){
-			$options = get_post_meta($post->ID,'_buddyforms_options', true);
-			if($options){
-				$bf_forms[$post->post_name] = get_post_meta($post->ID,'_buddyforms_options', true);
-				$bf_forms[$post->post_name]['form_id'] = $post->ID;
-			}
-
-		}}
-
-		$buddyforms = apply_filters('buddyforms_set_globals', $bf_forms);
+		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);
 
 		return $buddyforms;
 	}
@@ -372,8 +374,13 @@ class BuddyForms {
 
 			update_post_meta($post_id, '_buddyforms_options', $form);
 
-		}
+			// Update the option _buddyforms_forms used to reduce queries
+			$buddyforms_forms = get_option('buddyforms_forms');
 
+			$buddyforms_forms[$form['slug']] = $form;
+			update_option('buddyforms_forms', $buddyforms_forms);
+
+		}
 
 		update_option('buddyforms_version', BUDDYFORMS_VERSION);
 
