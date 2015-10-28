@@ -221,12 +221,9 @@ class BuddyForms {
 		global $post;
 
 		if(
-			(isset($post) && $post->post_type == 'buddyforms'
-				&& isset($_GET['action'])
-				&& $_GET['action'] == 'edit'
-				||
-				isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
-			|| $hook_suffix == 'buddyforms_page_create-new-form'
+			(isset($post) && $post->post_type == 'buddyforms' && isset($_GET['action']) && $_GET['action'] == 'edit'
+			|| isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
+			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 		) {
 
@@ -241,6 +238,8 @@ class BuddyForms {
 			wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
 
 		}
+		// load the tk_icons
+		wp_enqueue_style( 'tk_icons', plugins_url('/includes/resources/tk_icons/style.css', __FILE__) );
 	}
 
 	/**
@@ -252,15 +251,12 @@ class BuddyForms {
 	function buddyforms_admin_js($hook_suffix) {
 		global $post;
 
-			if(
-				(isset($post) && $post->post_type == 'buddyforms'
-					&& isset($_GET['action']) &&  $_GET['action'] == 'edit'
-					|| isset($post) && $post->post_type == 'buddyforms'
-					&& $hook_suffix == 'post-new.php'
-				)
-				|| $hook_suffix == 'buddyforms_page_create-new-form'
-				|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-			) {
+		if(
+			(isset($post) && $post->post_type == 'buddyforms' && isset($_GET['action']) && $_GET['action'] == 'edit'
+				|| isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
+			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
+			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+		) {
 				wp_register_script('buddyforms_admin_js', plugins_url('assets/admin/js/admin.js', __FILE__));
 				$admin_text_array = array(
 					'check' => __( 'Check all', 'buddyforms' ),

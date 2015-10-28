@@ -35,16 +35,11 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     if(!isset($post->post_type) || $post->post_type != 'buddyforms')
         return;
 
-
     // First update post meta
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
 
-    // Update the option _buddyforms_forms used to reduce queries
+    // Update the option buddyforms_forms used to reduce queries
     $buddyforms_forms = get_option('buddyforms_forms');
-
-//    echo '<pre>';
-//    print_r($buddyforms_forms);
-//    echo '</pre>';
 
     $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
     update_option('buddyforms_forms', $buddyforms_forms);
@@ -121,11 +116,27 @@ function buddyforms_register_post_type(){
         'show_in_menu' => true,
         'exclude_from_search' => true,
         'publicly_queryable' => false,
-        'menu_icon' => 'dashicons-feedback',
+        'menu_icon' => 'dashicons-buddyforms',
     ));
 
 }
 add_action( 'init', 'buddyforms_register_post_type' );
+
+function menue_icon_admin_head_css(){ ?>
+    <style>
+
+        .wp-menu-image.dashicons-before.dashicons-buddyforms:before {
+        content: "\e000";
+        font-family: 'icomoon';
+        font-size: 27px;
+        padding: 0;
+        padding-right: 10px;
+        }
+
+    </style>
+
+<?php }
+add_action( 'admin_head', 'menue_icon_admin_head_css' );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -216,9 +227,9 @@ add_action( 'manage_buddyforms_posts_custom_column' , 'custom_buddyforms_column'
  * Adds a box to the main column on the Post and Page edit screens.
  */
 function buddyforms_hide_publishing_actions(){
-    $my_post_type = 'buddyforms';
+
     global $post;
-    if($post->post_type == $my_post_type){
+    if($post->post_type == 'buddyforms'){
         echo '
                 <style type="text/css">
                     #misc-publishing-actions,
@@ -227,8 +238,41 @@ function buddyforms_hide_publishing_actions(){
                     }
                 </style>
             ';
+        ?>
+        <style>
+            #message{display:none;}
+            .error {
+                display: none;
+            }
+            h1{
+                display:none;
+            }
+            .metabox-prefs label {
+                /* float: right; */
+                /* margin-top: 57px; */
+                width: 100%;
+            }
+        </style>
+
+        <script>
+            jQuery(document).ready(function(jQuery) {
+                //jQuery('#screen-meta-links').hide();
+                jQuery('body').find('h1:first').css('line-height', '58px');
+                jQuery('body').find('h1:first').css('font-size', '30px');
+                //jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
+                jQuery('body').find('h1:first').html('<div style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
+                    'BuddyForms <small style="font-size: 20px; padding-top: 23px;" >Version <?php echo BUDDYFORMS_VERSION ?></small>'
+                );
+                jQuery('h1').show();
+            });
+
+        </script>
+
+
+        <?php
     }
 }
+add_action('admin_head-edit.php', 'buddyforms_hide_publishing_actions');
 add_action('admin_head-post.php', 'buddyforms_hide_publishing_actions');
 add_action('admin_head-post-new.php', 'buddyforms_hide_publishing_actions');
 
