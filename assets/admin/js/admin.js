@@ -110,7 +110,9 @@ jQuery(document).ready(function(jQuery) {
 				// hide the currently open accordion and open the one with the required field
 				jQuery(".accordion-body.collapse.in").removeClass("in");
 				jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height","auto");
+				jQuery('#buddyforms_form_setup').removeClass('closed');
 				jQuery('#buddyforms_form_elements').removeClass('closed');
+
 				jQuery("html, body").animate({ scrollTop: jQuery(this).offset().top - 150 }, 1000);
 
 				// stop scrolling through the required elements
