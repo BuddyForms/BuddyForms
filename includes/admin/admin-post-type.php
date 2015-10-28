@@ -18,6 +18,11 @@ function buddyforms_add_meta_boxes() {
 }
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 
+add_filter("get_user_option_meta-box-order_buddyforms", function() {
+    remove_all_actions('edit_form_advanced');
+    remove_all_actions('edit_page_form');
+}, PHP_INT_MAX);
+
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
@@ -30,8 +35,16 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     if(!isset($post->post_type) || $post->post_type != 'buddyforms')
         return;
 
+
+    // First update post meta
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
 
+    // Update the option _buddyforms_forms used to reduce queries
+    $buddyforms_forms = get_option('_buddyforms_forms', true);
+    $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
+    update_option('_buddyforms_forms', $buddyforms_forms);
+
+    // Save the Roles and capabilities.
     $buddyform = $_POST['buddyforms_options'];
 
     if(isset($_POST['buddyforms_roles'])){
@@ -99,7 +112,6 @@ function buddyforms_register_post_type(){
             'title'
         ),
         'show_in_menu' => true,
-        'description' => 'MAl sehen was das soll',
         'exclude_from_search' => true,
         'publicly_queryable' => false,
         'menu_icon' => 'dashicons-feedback',

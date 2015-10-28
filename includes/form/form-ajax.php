@@ -32,7 +32,7 @@ function buddyforms_ajax_process_edit_post(){
         $display_message = str_ireplace('[form_singular_name]', $buddyforms[$args['form_slug']]['singular_name'], $display_message);
         $display_message = str_ireplace('[post_title]', get_the_title($args['post_id']), $display_message);
         $display_message = str_ireplace('[post_link]', '<a title="Display Post" href="' . get_permalink($args['post_id']) . '"">' . __('Display Post', 'buddyforms') . '</a>', $display_message);
-        $display_message = str_ireplace('[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $args['form_slug'] . '/' . $args['post_id'] . '"">' . __('Continue Editing', 'buddyforms') . '</a>', $display_message);
+        $display_message = str_ireplace('[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $args['form_slug'] . '/' . $args['post_id'] . '">' . __('Continue Editing', 'buddyforms') . '</a>', $display_message);
 
         $args['form_notice'] = $display_message;
     }
@@ -41,6 +41,11 @@ function buddyforms_ajax_process_edit_post(){
         switch ($buddyforms[$_POST['form_slug']]['after_submit']) {
             case 'display_post':
                 $json['form_notice'] = buddyforms_after_save_post_redirect(get_permalink( $args['post_id'] ));
+                break;
+            case 'display_posts_list':
+                $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
+                $post_list_link = $permalink . 'view/' . $args['form_slug'] . '/';
+                $json['form_notice'] = buddyforms_after_save_post_redirect($post_list_link);
                 break;
             case 'display_message':
                 $json['form_remove'] = 'true';

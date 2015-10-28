@@ -27,7 +27,7 @@ function buddyforms_send_email_notification($post){
     $author_id=$pub_post->post_author;
     $post_title=$pub_post->post_title;
     $postperma=get_permalink( $post_ID );
-    $user_info = get_userdata($author_id);
+    $user_info = get_userdata( $author_id );
 
     $usernameauth=$user_info->user_login;
     $user_nicename=$user_info->user_nicename;

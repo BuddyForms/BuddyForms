@@ -44,11 +44,11 @@ class BuddyForms {
 	 */
 	public function __construct() {
 
-		define('buddyforms', $this->version);
-		define('BUDDYFORMS_VERSION', $this->version);
+		$this->load_constants();
 
-		add_action( 'init'				, array($this, 'includes')						, 4, 1);
-		add_action( 'init'				, array($this, 'set_globals')					, 12,1);
+		add_action( 'init'					, array($this, 'init_hook')						, 1, 1);
+		add_action( 'init'					, array($this, 'includes')						, 4, 1);
+		add_action( 'init'					, array($this, 'buddyforms_update_db_check')	, 10  );
 
 		add_action( 'plugins_loaded'		, array($this, 'load_plugin_textdomain'));
 
@@ -57,9 +57,6 @@ class BuddyForms {
 		add_action( 'admin_footer'	, array($this, 'buddyforms_admin_js_footer')			, 2, 1);
 		add_action( 'template_redirect'		, array($this, 'buddyform_front_js_loader')		, 2, 1);
 
-		$this->init_hook();
-		$this->load_constants();
-		add_action( 'init', array($this, 'buddyforms_update_db_check') );
 	}
 
 	/**
@@ -87,6 +84,8 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function load_constants() {
+
+		define('BUDDYFORMS_VERSION', $this->version);
 
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
 		define( 'BUDDYFORMS_STORE_URL', 'https://buddyforms.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file

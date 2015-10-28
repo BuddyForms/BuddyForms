@@ -134,10 +134,3 @@ function buddyforms_locate_template($file) {
         include (BUDDYFORMS_TEMPLATE_PATH . $file);
     }
 }
-
-function bf_form_ellement_accordion_start($selected_form_slug, $label){
-    return '<div class="accordion-group postbox"><div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_form_slug.'" href="#accordion_'.$selected_form_slug.'_'.sanitize_title($label).'">'.$label.'</p></div><div id="accordion_'.$selected_form_slug.'_'.sanitize_title($label).'" class="accordion-body collapse"><div class="accordion-inner">';
-}
-function bf_form_ellement_accordion_end(){
-    return '</div></div></div>';
-}

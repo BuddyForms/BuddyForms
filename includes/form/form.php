@@ -154,6 +154,11 @@ function buddyforms_create_edit_form( $args ) {
                 case 'display_post':
                     $args['form_notice'] = buddyforms_after_save_post_redirect(get_permalink($args['post_id']));
                     break;
+                case 'display_posts_list':
+                    $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
+                    $post_list_link = $permalink . 'view/' . $args['form_slug'] . '/';
+                    $json['form_notice'] = buddyforms_after_save_post_redirect($post_list_link);
+                    break;
                 case 'display_message':
                     echo $args['form_notice'];
                     break;

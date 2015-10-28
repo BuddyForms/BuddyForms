@@ -4,10 +4,6 @@ jQuery(document).ready(function(jQuery) {
 		placeholder: "Select an option"
 	});
 
-	jQuery(".bf-select2").select2({
-		placeholder: "Select an option"
-	});
-
 	jQuery(document.body).on('change', '.bf_hidden_checkbox' ,function(){
 
 		var ids = jQuery(this).attr('bf_hidden_checkbox');
@@ -19,6 +15,7 @@ jQuery(document).ready(function(jQuery) {
 			ids = ids.split(" ");
 			ids.forEach(function(entry) {
 				jQuery('#table_row_'+entry).removeClass('hidden');
+				jQuery('#'+entry).removeClass('hidden');
 			});
 		} else {
 			ids = ids.split(" ");
