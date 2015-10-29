@@ -44,20 +44,20 @@ function bf_form_elements($form, $args){
                 $element_attr['class'] = $element_attr['class'] . ' ' . $customfield['custom_class'];
 
             if(isset($customfield['type'])){
-                switch( $customfield['type'] ) {
-                    case 'Number':
+                switch( sanitize_title($customfield['type'] ) ) {
+                    case 'number':
                         $form->addElement(new Element_Number($name, $slug, $element_attr));
                         break;
 
-                    case 'HTML':
+                    case 'html':
                         $form->addElement(new Element_HTML($customfield['html']));
                         break;
 
-                    case 'Date':
+                    case 'date':
                         $form->addElement(new Element_Date($name, $slug, $element_attr));
                         break;
 
-                    case 'Title':
+                    case 'title':
                         if (isset($_POST['editpost_title'])) {
                             $post_title = stripslashes($_POST['editpost_title']);
                         } else {
@@ -66,11 +66,16 @@ function bf_form_elements($form, $args){
                         if( isset($customfield['hidden']) ) {
                             $form->addElement(new Element_Hidden('editpost_title', $post_title ));
                         } else {
-                            $form->addElement(new Element_Textbox($name, "editpost_title", array("required" => 1, 'id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description)));
+
+                            $required = '';
+                            if(isset($customfield['required']))
+                                $required = true;
+
+                            $form->addElement(new Element_Textbox($name, "editpost_title", array( 'id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description)));
                         }
                         break;
 
-                    case 'Content':
+                    case 'content':
                         add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
                         $editpost_content_val = false;
                         if (isset($_POST['editpost_content'])) {
@@ -118,28 +123,34 @@ function bf_form_elements($form, $args){
                         }
                          break;
 
-                    case 'Mail' :
+                    case 'mail' :
                         $form->addElement(new Element_Email($name, $slug, $element_attr));
                         break;
 
-                    case 'Radiobutton' :
+                    case 'radiobutton' :
                         if (is_array($customfield['value'])) {
                             $form->addElement(new Element_Radio($name, $slug, $customfield['value'], $element_attr));
                         }
                         break;
 
-                    case 'Checkbox' :
+                    case 'checkbox' :
                         if (isset($customfield['value']) && is_array($customfield['value'])) {
                             $form->addElement(new Element_Checkbox($name, $slug, $customfield['value'], $element_attr));
                         }
                         break;
 
-                    case 'Dropdown' :
-                        if (isset($customfield['value']) && is_array($customfield['value'])) {
+                    case 'dropdown' :
+
+                        if (isset($customfield['options']) && is_array($customfield['options'])) {
+
+                            $options = Array();
+                            foreach($customfield['options'] as $key => $option){
+                                $options[$option['value']] = $option['label'];
+                            }
 
                             $element_attr['class'] = $element_attr['class'] . ' bf-select2';
 
-                            $element = new Element_Select($name, $slug, $customfield['value'], $element_attr);
+                            $element = new Element_Select($name, $slug, $options, $element_attr);
 
                             if (isset($customfield['multiple']) && is_array($customfield['multiple']))
                                 $element->setAttribute('multiple', 'multiple');
@@ -148,14 +159,14 @@ function bf_form_elements($form, $args){
                         }
                         break;
 
-                    case 'Comments' :
+                    case 'comments' :
                         if(isset($the_post))
                             $customfield['value'] = $the_post->comment_status;
 
                         $form->addElement(new Element_Select($name, 'comment_status', array('open', 'closed'), $element_attr));
                         break;
 
-                    case 'Status' :
+                    case 'status' :
 
                         if(isset($customfield['post_status']) && is_array($customfield['post_status'])){
                             if (in_array('pending', $customfield['post_status']))
@@ -197,23 +208,23 @@ function bf_form_elements($form, $args){
                             $form->addElement(new Element_HTML('</div>'));
                         }
                         break;
-                    case 'Textarea' :
+                    case 'textarea' :
                         $form->addElement( new Element_Textarea($name, $slug, $element_attr));
                         break;
 
-                    case 'Hidden' :
+                    case 'hidden' :
                         $form->addElement( new Element_Hidden($name, $customfield['value']));
                         break;
 
-                    case 'Text' :
+                    case 'text' :
                         $form->addElement( new Element_Textbox($name, $slug, $element_attr));
                         break;
 
-                    case 'Link' :
+                    case 'link' :
                         $form->addElement( new Element_Url($name, $slug, $element_attr));
                         break;
 
-                    case 'Featured_Image':
+                    case 'featured-image':
                         $attachment_ids = $customfield_val;
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -269,7 +280,7 @@ function bf_form_elements($form, $args){
                         $form->addElement(new Element_HTML( '</div>' ));
 
                         break;
-                    case 'File':
+                    case 'file':
 
                         $attachment_ids = $customfield_val;
 
@@ -351,7 +362,7 @@ function bf_form_elements($form, $args){
                         $form->addElement(new Element_HTML( '</div>' ));
 
                         break;
-                    case 'Taxonomy' :
+                    case 'taxonomy' :
 
                         $args = array(
                             'hide_empty'        => 0,

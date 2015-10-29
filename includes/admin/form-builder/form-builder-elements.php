@@ -59,16 +59,16 @@ function buddyforms_display_form_element($args){
     $custom_class = isset($customfield['custom_class']) ? stripcslashes($customfield['custom_class']) : '';
     $form_fields['advanced']['custom_class']    = new Element_Textbox('<b>' . __('Add custom class to the form element', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][custom_class]", array('value' => $custom_class));
 
-    switch ($field_type) {
+    switch (sanitize_title($field_type)) {
 
-        case 'Text':
+        case 'text':
             $validation_minlength = isset($customfield['avalidation_minlengtha']) ? stripcslashes($customfield['validation_minlength']) : 0;
             $form_fields['validation']['validation_minlength']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array('value' => $validation_minlength));
 
             $validation_maxlength = isset($customfield['validation_maxlength']) ? stripcslashes($customfield['validation_maxlength']) : 0;
             $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
             break;
-        case 'Textarea':
+        case 'textarea':
             $validation_minlength = isset($customfield['validation_minlength']) ? stripcslashes($customfield['validation_minlength']) : 0;
             $form_fields['validation']['validation_minlength']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array('value' => $validation_minlength));
 
@@ -76,14 +76,14 @@ function buddyforms_display_form_element($args){
             $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
             break;
 
-        case 'Number':
+        case 'number':
             $validation_min = isset($customfield['validation_min']) ? stripcslashes($customfield['validation_min']) : 0;
             $form_fields['validation']['validation_min']    = new Element_Number('<b>' . __('Validation Min Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_min]", array('value' => $validation_min));
 
             $validation_max = isset($customfield['validation_max']) ? stripcslashes($customfield['validation_max']) : 0;
             $form_fields['validation']['validation_max']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array('value' => $validation_max));
         break;
-        case 'Dropdown':
+        case 'dropdown':
             $multiple = isset($customfield['multiple']) ? $customfield['multiple'] : 'false';
             $form_fields['general']['multiple'] = new Element_Checkbox('<b>' . __('Multiple Selection', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array('multiple' => '<b>' . __('Multiple', 'buddyforms') . '</b>'), array('value' => $multiple));
 
@@ -93,21 +93,21 @@ function buddyforms_display_form_element($args){
             );
             $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
-        case 'Radiobutton':
+        case 'radiobutton':
             $field_args = Array(
                 'field_id' => $field_id,
                 'buddyform' => $buddyform
             );
             $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
-        case 'Checkbox':
+        case 'checkbox':
             $field_args = Array(
                 'field_id' => $field_id,
                 'buddyform' => $buddyform
             );
             $form_fields['general']['select_options'] = new Element_HTML(buddyforms_form_element_multiple($form_fields, $field_args));
             break;
-        case 'Taxonomy':
+        case 'taxonomy':
             $taxonomies = buddyforms_taxonomies($buddyform);
             $taxonomy = isset($customfield['taxonomy']) ? $customfield['taxonomy'] : false;
             $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy, 'class' => 'bf_tax_select', 'id' => $field_id));
@@ -176,7 +176,7 @@ function buddyforms_display_form_element($args){
             $hidden = isset($customfield['hidden']) ? $customfield['hidden'] : false;
             $form_fields['advanced']['hidden']              = new Element_Checkbox('<b>' . __('Hidden', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array('hidden' => '<b>' . __('Make this field Hidden', 'buddyforms') . '</b>'), array('value' => $hidden));
             break;
-        case 'Hidden':
+        case 'hidden':
             unset($form_fields);
             $form_fields['general']['name']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][name]", $field_slug);
             $form_fields['general']['slug']    = new Element_Textbox('<b>' . __('Slug', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array('required' => true, 'value' => $field_slug, 'required' => 1));
@@ -185,7 +185,7 @@ function buddyforms_display_form_element($args){
             $value = isset($customfield['value']) ? $customfield['value'] : '';
             $form_fields['general']['value']   = new Element_Textbox('<b>' . __('Value:', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][value]", array('value' => $value));
             break;
-        case 'Comments':
+        case 'comments':
             unset($form_fields);
             $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
@@ -196,7 +196,7 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
             $form_fields['general']['html']    = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
             break;
-        case 'Title':
+        case 'title':
             unset($form_fields['general']['required']);
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'Title';
             $form_fields['general']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1 ));
@@ -212,7 +212,7 @@ function buddyforms_display_form_element($args){
             $validation_maxlength = isset($customfield['validation_maxlength']) ? stripcslashes($customfield['validation_maxlength']) : '';
             $form_fields['validation']['validation_maxlength']  = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
             break;
-        case 'Content':
+        case 'content':
             $name = isset($customfield['name']) ? stripcslashes($customfield['name']) : 'Content';
             $form_fields['general']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1));
 
@@ -232,7 +232,7 @@ function buddyforms_display_form_element($args){
             $validation_maxlength = isset($customfield['validation_maxlength']) ? stripcslashes($customfield['validation_maxlength']) : 0;
             $form_fields['validation']['validation_maxlength']    = new Element_Number('<b>' . __('Validation Max Length', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array('value' => $validation_maxlength));
             break;
-        case 'Status':
+        case 'status':
             unset($form_fields);
             $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
@@ -245,9 +245,8 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['post_status'] = new Element_Checkbox('<b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'id' => "buddyforms_options[form_fields][" . $field_id . "][post_status]", 'shortDesc' => __("You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms')));
             $form_fields['general']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
             break;
-        case 'Featured_Image':
-        case 'Featured-Image':
-        case 'FeaturedImage':
+        case 'featured-image':
+        case 'featuredimage':
             unset($form_fields);
             $required = isset($customfield['required']) ? $customfield['required'] : 'false';
             $form_fields['general']['required']   = new Element_Checkbox('<b>' . __('Required', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array('required' => '<b>' . __('Required', 'buddyforms') . '</b>'), array('value' => $required, 'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"));
@@ -260,7 +259,7 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['description'] = new Element_Textbox('<b>' . __('Description:', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array('value' => $description));
             $form_fields['general']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
             break;
-        case 'File':
+        case 'file':
 
             $validation_multiple = isset($customfield['validation_multiple']) ? $customfield['validation_multiple'] : 0;
             $form_fields['advanced']['validation_multiple']    = new Element_Checkbox('<b>' . __('Only one file or multiple?', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_multiple]", array('multiple' => '<b>' . __('Allow multiple file upload', 'buddyforms') . '</b>'), array('value' => $validation_multiple));
@@ -270,7 +269,7 @@ function buddyforms_display_form_element($args){
             $data_types = isset($customfield['data_types']) ? $customfield['data_types'] : '';
             $form_fields['advanced']['data_types']    = new Element_Checkbox('<b>' . __('Select allowed file Types', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][data_types]",$allowed_mime_types , array('value' => $data_types));
             break;
-        case 'HTML':
+        case 'html':
             unset($form_fields);
             $html = isset($customfield['html']) ? stripcslashes($customfield['html']) : '';
             $form_fields['general']['description'] = new Element_Textarea('<b>' . __('HTML:', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array('value' => $html));

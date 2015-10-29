@@ -214,14 +214,8 @@ jQuery(document).ready(function(jQuery) {
 	jQuery(document).on('click','.bf_add_input',function() {
 
 		var action = jQuery(this);
-
 		var args = action.attr('href').split("/");
-
-		alert(args[0]);
-
 	 	var	numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
-
-		alert(numItems);
 
 	 	numItems = numItems + 1;
 	 	jQuery('#table_row_' + args[0] + '_select_options ul').append(
@@ -338,17 +332,18 @@ jQuery(document).ready(function(jQuery) {
 		if( field_id === '')
 			return;
 
-		var field_slug = jQuery('tr .slug'+field_id).val();
+		var field_slug_val = jQuery('tr .slug'+field_id).val();
 
 
-		if( field_slug === ''){
-			jQuery('tr .slug'+field_id).val(slug(field_name));
+		if( field_slug_val === ''){
+			jQuery('tr .slug'+field_id).val(slug(field_name, {lower: true}));
 		}
 		jQuery(this).unbind('blur');
 	});
 
 });
 
+// https://github.com/dodo/node-slug
 (function (root) {
 // lazy require symbols table
 	var _symbols, removelist;

@@ -4,6 +4,10 @@ function buddyforms_form_html( $args )
 {
     global $buddyforms;
 
+//    echo '<pre>';
+//    print_r($buddyforms);
+//    echo '</pre>';
+
     extract(shortcode_atts(array(
         'post_type' => '',
         'the_post' => 0,
@@ -23,17 +27,21 @@ function buddyforms_form_html( $args )
 
     $form_html .= '
     <script>
+    var ajaxurl = "' . admin_url('admin-ajax.php') . '";
     jQuery(function() {
         var validator_' . $form_slug . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
-                // update underlying textarea before submit validation
-                tinyMCE.triggerSave();
+                if(jQuery(\'textarea\').length > 0) {
+                    // update underlying textarea before submit validation
+                    tinyMCE.triggerSave();
+                }
+
         }).validate({
         ignore: "",
         rules: {
         ';
 
     if(isset($buddyforms[$form_slug]['form_fields'])) : foreach ($buddyforms[$form_slug]['form_fields'] as $key => $form_field) {
-        if (isset($form_field['required']) || ( $form_field['slug'] == 'editpost_title') && !isset($form_field['hidden'])) {
+        if (isset($form_field['required'])) {
 
             $field_slug = str_replace("-", "", $form_field['slug']);
             if ($field_slug) :
@@ -63,7 +71,7 @@ function buddyforms_form_html( $args )
         messages: {
             ';
     if(isset($buddyforms[$form_slug]['form_fields'])) : foreach($buddyforms[$form_slug]['form_fields'] as $key =>  $form_field ){
-        if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
+        if(isset($form_field['required'])){
 
             $validation_error_message = __('This field is required.', 'buddyforms');
             if(isset($form_field['validation_error_message']))

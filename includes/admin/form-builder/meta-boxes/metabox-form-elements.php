@@ -49,7 +49,7 @@ function buddyforms_metabox_form_elements(){
             if ($field_slug != '' && isset($customfield['name'])) {
                 $args = Array(
                     'field_id'      => $field_id,
-                    'field_type'    => $customfield['type'],
+                    'field_type'    => sanitize_title($customfield['type']),
                     'form_slug'     => $form_slug,
                     'post_type'     => $buddyform['post_type'],
                 );

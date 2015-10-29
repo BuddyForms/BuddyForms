@@ -104,6 +104,8 @@ function buddyforms_process_post($args = Array()) {
 
     $args = buddyforms_update_post($args);
 
+
+
     extract($args);
 
 
@@ -153,19 +155,19 @@ function buddyforms_process_post($args = Array()) {
     do_action('buddyforms_after_save_post', $post_id);
 
     //$the_post	= get_post( $post_id );
-    $args = array(
-        'post_type' 	=> $post_type,
-        'the_post'		=> $the_post,
+    $args2 = array(
+        //'post_type' 	=> $post_type,
+        //'the_post'		=> $the_post,
         'customfields'  => $customfields,
-        'post_id'		=> $post_id,
-        'revision_id' 	=> $revision_id,
-        'post_parent'   => $post_parent,
+        //'post_id'		=> $post_id,
+        //'revision_id' 	=> $revision_id,
+        //'post_parent'   => $post_parent,
         'redirect_to'   => $redirect_to,
         'form_slug' 	=> $form_slug,
         'form_notice'   => $form_notice,
     );
 
-    return $args;
+    return array_merge($args, $args2);;
 
 }
 
@@ -204,8 +206,8 @@ function buddyforms_update_post($args){
         $bf_post = array(
             'post_parent'       => $post_parent,
             'post_author' 		=> $post_author,
-            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title'])? $_POST['editpost_title'] : 'none'),
-            'post_content' 		=> apply_filters('bf_update_editpost_title', isset($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
+            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
+            'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
@@ -219,6 +221,7 @@ function buddyforms_update_post($args){
 
     }
     $bf_post['post_id'] = $post_id;
+
     return $bf_post;
 }
 

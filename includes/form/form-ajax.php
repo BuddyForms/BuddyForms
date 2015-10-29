@@ -25,6 +25,8 @@ function buddyforms_ajax_process_edit_post(){
 
     $args = buddyforms_process_post($formdata);
 
+    // print_r($args);
+
     if(!empty($buddyforms[$_POST['form_slug']]['after_submit_message_text'])){
         $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
 

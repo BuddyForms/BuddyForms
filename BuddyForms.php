@@ -117,29 +117,7 @@ class BuddyForms {
 	static function set_globals() {
 		global $buddyforms;
 
-//		// get acf's
-//		$posts = get_posts(array(
-//			'numberposts' 	=> -1,
-//			'post_type' 	=> 'buddyforms',
-//			'orderby' 		=> 'menu_order title',
-//			'order' 		=> 'asc',
-//			'suppress_filters' => false,
-//			'post_status' => 'publish'
-//		));
-//
-//		$bf_forms = Array();
-//
-//		if( $posts ){ foreach( $posts as $post ){
-//			$options = get_post_meta($post->ID,'_buddyforms_options', true);
-//			if($options){
-//				$bf_forms[$post->post_name] = get_post_meta($post->ID,'_buddyforms_options', true);
-//				$bf_forms[$post->post_name]['form_id'] = $post->ID;
-//			}
-//
-//		}}
-
 		$buddyforms = get_option('buddyforms_forms');
-
 		$buddyforms = apply_filters('buddyforms_set_globals', $buddyforms);
 
 		return $buddyforms;

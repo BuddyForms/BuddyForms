@@ -126,7 +126,7 @@ function buddyforms_new_notification_trigger_form($trigger){
                     </div>
                     <div id="accordion_<?php echo $trigger ?>" class="accordion-body collapse">
                         <div class="accordion-inner">
-                            <?php buddyforms_display_field_group_table($form_setup) ?>
+                            <?php buddyforms_display_field_group_table($form_setup, $trigger) ?>
                         </div>
                     </div>
                 </div>

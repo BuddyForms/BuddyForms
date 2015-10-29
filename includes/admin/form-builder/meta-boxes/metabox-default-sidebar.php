@@ -16,7 +16,7 @@ function buddyforms_metabox_sidebar()
     $sidebar_elements[] = new Element_HTML('
 
         <h5>' . __('Classic Fields', 'buddyforms') . '</h5>
-        <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __('Text', 'buddyforms') . '</a></p>
+        <p><a href="#" data-fieldtype="Text" class="bf_add_element_action">' . __('Text', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Textarea" class="bf_add_element_action">' . __('Textarea', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Link" class="bf_add_element_action">' . __('Link', 'buddyforms') . '</a></p>
         <p><a href="#" data-fieldtype="Mail" class="bf_add_element_action">' . __('Mail', 'buddyforms') . '</a></p>

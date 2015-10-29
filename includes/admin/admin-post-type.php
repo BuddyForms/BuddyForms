@@ -39,10 +39,10 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
 
     // Update the option buddyforms_forms used to reduce queries
-    $buddyforms_forms = get_option('buddyforms_forms');
+    //$buddyforms_forms = get_option('buddyforms_forms');
 
-    $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
-    update_option('buddyforms_forms', $buddyforms_forms);
+//    $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
+//    update_option('buddyforms_forms', $buddyforms_forms);
 
     // Save the Roles and capabilities.
     $buddyform = $_POST['buddyforms_options'];
@@ -77,6 +77,26 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
         }
 
     }
+
+    // get all forms and update the global
+    $posts = get_posts(array(
+        'numberposts' 	=> -1,
+        'post_type' 	=> 'buddyforms',
+        'orderby' 		=> 'menu_order title',
+        'order' 		=> 'asc',
+        'suppress_filters' => false,
+        'post_status' => 'publish'
+    ));
+
+    $buddyforms_forms = Array();
+
+    if( $posts ){ foreach( $posts as $post ){
+        $options = get_post_meta($post->ID,'_buddyforms_options', true);
+        if($options){
+            $buddyforms_forms[$post->post_name] = get_post_meta($post->ID,'_buddyforms_options', true);
+        }
+    }}
+    update_option('buddyforms_forms', $buddyforms_forms);
 
     buddyforms_attached_page_rewrite_rules(TRUE);
 
