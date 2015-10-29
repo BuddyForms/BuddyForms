@@ -218,7 +218,7 @@ margin: 10px 0 15px;
 #bf_admin_wrap .loading-animation-new, .loading-animation-order  {
 	display: none;
 }
-#bf_admin_wrap .list_item {
+#bf_admin_wrap .bf_list_item {
 	background-color: #fcfcfc;
 }
 #bf_admin_wrap .buddyforms_accordion_right {

@@ -32,7 +32,7 @@ function buddyforms_form_html( $args )
         rules: {
         ';
 
-    foreach ($buddyforms[$form_slug]['form_fields'] as $key => $form_field) {
+    if(isset($buddyforms[$form_slug]['form_fields'])) : foreach ($buddyforms[$form_slug]['form_fields'] as $key => $form_field) {
         if (isset($form_field['required']) || ( $form_field['slug'] == 'editpost_title') && !isset($form_field['hidden'])) {
 
             $field_slug = str_replace("-", "", $form_field['slug']);
@@ -57,11 +57,12 @@ function buddyforms_form_html( $args )
             endif;
         }
     }
+    endif;
 
     $form_html .= '},
         messages: {
             ';
-    foreach($buddyforms[$form_slug]['form_fields'] as $key =>  $form_field ){
+    if(isset($buddyforms[$form_slug]['form_fields'])) : foreach($buddyforms[$form_slug]['form_fields'] as $key =>  $form_field ){
         if(isset($form_field['required']) || $form_field['slug'] == 'editpost_title'){
 
             $validation_error_message = __('This field is required.', 'buddyforms');
@@ -76,6 +77,7 @@ function buddyforms_form_html( $args )
                 endif;
         }
     }
+    endif;
     $form_html .= '},';
 
     $form_html .= 'errorPlacement: function(label, element) {

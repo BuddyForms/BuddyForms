@@ -14,8 +14,9 @@ function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     if ( !is_admin() )
         return;
 
-    if(!isset($buddyforms))
+    if(!$buddyforms)
         return;
+
 
     foreach ($buddyforms as $key => $buddyform) {
         if(isset($buddyform['attached_page'])){

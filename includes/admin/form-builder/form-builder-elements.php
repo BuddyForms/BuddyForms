@@ -110,7 +110,7 @@ function buddyforms_display_form_element($args){
         case 'Taxonomy':
             $taxonomies = buddyforms_taxonomies($buddyform);
             $taxonomy = isset($customfield['taxonomy']) ? $customfield['taxonomy'] : false;
-            $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy, 'class' => 'tax_select', 'id' => $field_id));
+            $form_fields['general']['taxonomy']        = new Element_Select('<b>' . __('Taxonomy', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array('value' => $taxonomy, 'class' => 'bf_tax_select', 'id' => $field_id));
 
 
             $taxonomy_default   = isset($customfield['taxonomy_default']) ? $customfield['taxonomy_default'] : 'false';
@@ -289,7 +289,7 @@ function buddyforms_display_form_element($args){
     $form_fields = sortArrayByArray($form_fields, array('general', 'validation', 'advanced'));
 
     ob_start(); ?>
-    <li id="field_<?php echo $field_id ?>" class="list_item <?php echo $field_id . ' ' . $field_type ?>">
+    <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id . ' ' . $field_type ?>">
         <div class="accordion_fields">
             <div class="accordion-group postbox">
                 <div class="accordion-heading-options">
@@ -425,7 +425,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
                 $form_element = new Element_Textbox('<b>' . __("Value ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array('value' => $option['value']));
                 $form_element->render();
             echo '</td><td class="manage-column column-author">';
-                echo '<a href="#" id="' . $field_id . '_' . $count . '" class="delete_input" title="delete me">X</a>';
+                echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">X</a>';
             echo '</td></tr></li></tbody></table>';
 
             $count++;
@@ -435,7 +435,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
     echo '
 	    </ul>
      </div>
-     <a href="' . $field_id . '" class="button add_input">+</a>';
+     <a href="' . $field_id . '" class="button bf_add_input">+</a>';
 
     $tmp = ob_get_clean();
 

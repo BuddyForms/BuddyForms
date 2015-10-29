@@ -6,7 +6,7 @@
 function bf_add_custom_box() {
     global $buddyforms;
 
-    if(!(isset($buddyforms) || is_array($buddyforms)))
+    if(!$buddyforms)
         return;
 
     $screens = Array();

@@ -24,7 +24,7 @@ function bf_manage_form_roles_and_capabilities_screen(){
             <p>'.__('In WordPress we have user roles and capabilities to manage the user rights. You can decide which user is allowed to create, edit and delete posts by checking the needed capabilities for the different user roles.', 'buddyforms').'</p>
             <p>'.__('If you want to create new user roles and manage all available capabilities I recommend you to install the Members plugin.', 'buddyforms').'</p>
             <p>'.__('Here you can manage all BuddyForms capabilities for all available user roles of your wp install.', 'buddyforms').'</p><br>
-            <p><b>'.__('Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms').'</b></p><p><a href="#" class="checkall">'.__('Uncheck all','buddyforms').'</a></p>
+            <p><b>'.__('Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms').'</b></p><p><a href="#" class="bf_check_all">'.__('Check all','buddyforms').'</a></p>
         ';
         ?>
 

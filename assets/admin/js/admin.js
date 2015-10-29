@@ -1,12 +1,5 @@
 jQuery(document).ready(function(jQuery) {
 
-
-
-
-
-
-
-
 	jQuery(".bf-select2").select2({
 		placeholder: "Select an option"
 	});
@@ -33,7 +26,7 @@ jQuery(document).ready(function(jQuery) {
 
 	});
 
-	jQuery('.tax_select').live('change', function() {
+	jQuery('.bf_tax_select').live('change', function() {
 
 		var id 		= jQuery(this).attr('id');
 		var taxonomy 	= jQuery(this).val();
@@ -120,7 +113,7 @@ jQuery(document).ready(function(jQuery) {
 				jQuery('#buddyforms_form_setup').removeClass('closed');
 				jQuery('#buddyforms_form_elements').removeClass('closed');
 
-				jQuery("html, body").animate({ scrollTop: jQuery(this).offset().top - 150 }, 1000);
+				jQuery("html, body").animate({ scrollTop: jQuery(this).offset().top - 250 }, 1000);
 
 				// stop scrolling through the required elements
 				return false;
@@ -132,91 +125,9 @@ jQuery(document).ready(function(jQuery) {
 			return false;
 		}
 
-
 	});
 
-
-
-	jQuery('.new_form').click(function(){
-
-		var action = jQuery(this);
-		var create_new_form_name                    = jQuery('[name="create_new_form_name"]').val();
-        var create_new_form_singular_name           = jQuery('[name="create_new_form_singular_name"]').val();
-        var create_new_form_post_type               = jQuery('[name="create_new_form_post_type"]').val();
-        var create_new_form_attached_page           = jQuery('[name="create_new_form_attached_page"]').val();
-        var create_new_page                         = jQuery('[name="create_new_page"]').val();
-
-        if( create_new_form_attached_page === ''){
-            create_new_form_attached_page           = jQuery('[name="create_new_page"]').val();
-        }
-
-        if( create_new_form_name === ''){
-            jQuery('[name="create_new_form_name"]').removeClass('bf-ok');
-            jQuery('[name="create_new_form_name"]').addClass('bf-error');
-        } else {
-            jQuery('[name="create_new_form_name"]').removeClass('bf-error');
-            jQuery('[name="create_new_form_name"]').addClass('bf-ok');
-        }
-
-        if( create_new_form_singular_name === ''){
-            jQuery('[name="create_new_form_singular_name"]').removeClass('bf-ok');
-            jQuery('[name="create_new_form_singular_name"]').addClass('bf-error');
-        } else {
-            jQuery('[name="create_new_form_singular_name"]').removeClass('bf-error');
-            jQuery('[name="create_new_form_singular_name"]').addClass('bf-ok');
-        }
-
-        if( create_new_form_post_type === 'none'){
-            jQuery('[name="create_new_form_post_type"]').removeClass('bf-ok');
-            jQuery('[name="create_new_form_post_type"]').addClass('bf-error');
-        } else {
-            jQuery('[name="create_new_form_post_type"]').removeClass('bf-error');
-            jQuery('[name="create_new_form_post_type"]').addClass('bf-ok');
-        }
-
-        if( create_new_form_attached_page === ''){
-            jQuery('[name="create_new_form_attached_page"]').removeClass('bf-ok');
-            jQuery('[name="create_new_form_attached_page"]').addClass('bf-error');
-        } else {
-            jQuery('[name="create_new_form_attached_page"]').removeClass('bf-error');
-            jQuery('[name="create_new_form_attached_page"]').addClass('bf-ok');
-        }
-
-        var create_new_form_status                  = jQuery('[name="create_new_form_status"]').val();
-        var create_new_form_comment_status          = jQuery('[name="create_new_form_comment_status"]').val();
-
-        var create_new_form_revision                = jQuery('[name="create_new_form_revision"]').val();
-        var create_new_form_admin_bar               = jQuery('[name="create_new_form_admin_bar"]').val();
-        var create_new_form_edit_link               = jQuery('[name="create_new_form_edit_link"]').val();
-
-
-		jQuery.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data: {"action": "buddyforms_add_form",
-                "create_new_form_name"                      : create_new_form_name,
-                "create_new_form_singular_name"             : create_new_form_singular_name,
-                "create_new_form_attached_page"             : create_new_form_attached_page,
-                "create_new_page"                           : create_new_page,
-                "create_new_form_post_type"                 : create_new_form_post_type,
-                "create_new_form_status"                    : create_new_form_status,
-                "create_new_form_comment_status"            : create_new_form_comment_status,
-            },
-			success: function(data){
-                if(data != false){
-                    var url = window.location.href;
-                    url = url.slice( 0, url.indexOf('?') );
-                    window.location.href = url + '?page=buddyforms_options_page#subcon' + data;
-                }
-
-			},
-			error: function() {
-				alert('Something went wrong.. ;-(sorry)');
-			}
-		});
-	});
-
-	var getUrlParameter = function getUrlParameter(sParam) {
+	var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
 		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
 			sURLVariables = sPageURL.split('&'),
 			sParameterName,
@@ -234,12 +145,10 @@ jQuery(document).ready(function(jQuery) {
 	jQuery('.bf_add_element_action').click(function(){
 
 		var action = jQuery(this);
-		var post_id = getUrlParameter('post');
+		var post_id = bf_getUrlParameter('post');
 
 		if(post_id == undefined)
 			post_id = 0;
-
-
 
 		var fieldtype	= jQuery(this).data("fieldtype");
 		var unique		= jQuery(this).data("unique");
@@ -270,10 +179,10 @@ jQuery(document).ready(function(jQuery) {
 				var arr = myvar.split('/');
 				jQuery('#sortable_buddyforms_elements').append(data);
 
-				update_list_item_number();
+				bf_update_list_item_number();
 
 				jQuery('#buddyforms_form_elements').removeClass('closed');
-				jQuery("html, body").animate({ scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top }, 1000);
+				jQuery("html, body").animate({ scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200 }, 1000);
 
 			},
 			error: function() {
@@ -302,7 +211,7 @@ jQuery(document).ready(function(jQuery) {
 		return false;
 	});
 
-	jQuery(document).on('click','.add_input',function() {
+	jQuery(document).on('click','.bf_add_input',function() {
 
 		var action = jQuery(this);
 
@@ -322,20 +231,20 @@ jQuery(document).ready(function(jQuery) {
 			'</td><td>' +
 			'<input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[0]+'][options]['+numItems+'][value]">' +
 			'</td><td class="manage-column column-author">' +
-			'<a href="#" id="'+args[0]+'_'+numItems+'" class="delete_input">X</a>' +
+			'<a href="#" id="'+args[0]+'_'+numItems+'" class="bf_delete_input">X</a>' +
 			'</td></tr></li></tbody></table>');
     	return false;
 
 	});
 
-	jQuery(document).on('click','.delete_input',function() {
+	jQuery(document).on('click','.bf_delete_input',function() {
 		var del_id = jQuery(this).attr('id');
 		if (confirm('Delete Permanently'))
 			jQuery(".field_item_" + del_id).remove();
 		return false;
 	});
 
-	jQuery(document).on('mousedown','.list_item',function() {
+	jQuery(document).on('mousedown','.bf_list_item',function() {
 		jQuery(".element_field_sortable").sortable({
 			update: function(event, ui) {
 				var testst = jQuery(".element_field_sortable").sortable('toArray');
@@ -346,29 +255,29 @@ jQuery(document).ready(function(jQuery) {
 		});
 	});
 
-	function update_list_item_number() {
+	function bf_update_list_item_number() {
 		jQuery(".buddyforms_forms_builder ul").each(function() {
 			jQuery(this).children("li").each(function(t) {
 				jQuery(this).find("td.field_order .circle").first().html(t + 1)
 			})
 		})
 	}
-	update_list_item_number();
+	bf_update_list_item_number();
 
-	jQuery(document).on('mousedown','.list_item',function() {
+	jQuery(document).on('mousedown','.bf_list_item',function() {
 		itemList = jQuery(this).closest('.sortable').sortable({
 	    	update: function(event, ui) {
-				update_list_item_number();
+				bf_update_list_item_number();
 		       }
 	       });
 	   });
 
-	function update_list_item_number_mail() {
+	function bf_update_list_item_number_mail() {
 		jQuery(".panel-mail-notifications .wp-list-table").each(function(t) {
 			jQuery(this).find("td.field_order .circle").first().html(t + 1)
 		})
 	}
-	update_list_item_number_mail();
+	bf_update_list_item_number_mail();
 
     jQuery('#mail_notification_add_new').click(function (e) {
 		var error = false;
@@ -407,20 +316,19 @@ jQuery(document).ready(function(jQuery) {
         return false;
     });
 
-    jQuery(".checkall").click(function(){
+    jQuery(".bf_check_all").click(function(e){
 
-        if (jQuery("input[type='checkbox']").prop("checked")) {
-            jQuery(':checkbox').prop('checked', false);
-            jQuery(this).text(admin_text.check);
+        if (jQuery("#buddyforms_form_roles input[type='checkbox']").prop("checked")) {
+            jQuery('#buddyforms_form_roles :checkbox').prop('checked', false);
+            jQuery(this).text( admin_text.check);
         } else {
-            jQuery(':checkbox').prop('checked', true);
+            jQuery('#buddyforms_form_roles :checkbox').prop('checked', true);
             jQuery(this).text(admin_text.uncheck);
         }
-
+		e.preventDefault();
     });
 
 	jQuery('.buddyforms_forms_builder').on('blur', '.use_as_slug', function() {
-
 
 		var field_name = jQuery(this).val();
 		if( field_name === '')
@@ -440,7 +348,6 @@ jQuery(document).ready(function(jQuery) {
 	});
 
 });
-
 
 (function (root) {
 // lazy require symbols table

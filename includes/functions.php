@@ -10,7 +10,7 @@ add_action('wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render'
 function buddyforms_wp_before_admin_bar_render(){
     global $wp_admin_bar, $buddyforms;
 
-    if(!isset($buddyforms))
+    if(!$buddyforms)
         return;
 
     foreach ($buddyforms as $key => $buddyform) {
