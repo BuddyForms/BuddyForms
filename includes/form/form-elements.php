@@ -67,11 +67,12 @@ function bf_form_elements($form, $args){
                             $form->addElement(new Element_Hidden('editpost_title', $post_title ));
                         } else {
 
-                            $required = '';
-                            if(isset($customfield['required']))
-                                $required = true;
 
-                            $form->addElement(new Element_Textbox($name, "editpost_title", array( 'id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description)));
+                            $element_attr = array('id' => 'editpost_title', 'value' => $post_title, 'shortDesc' => $description);
+                            if(isset($customfield['required']))
+                                $element_attr = array_merge($element_attr, array('required' => true));
+
+                            $form->addElement(new Element_Textbox($name, "editpost_title", $element_attr));
                         }
                         break;
 

@@ -61,7 +61,7 @@ function buddyforms_attached_page_content($content){
 
     } elseif(isset($wp_query->query_vars['pagename'])){
 
-        foreach ($buddyforms as $key => $buddyform) {
+        if($buddyforms) : foreach ($buddyforms as $key => $buddyform) {
 
             if(isset($buddyform['attached_page']) && $wp_query->query_vars['pagename'] == $buddyform['attached_page'])
                 $post_data = get_post($buddyform['attached_page'], ARRAY_A);
@@ -77,7 +77,7 @@ function buddyforms_attached_page_content($content){
                 $new_content = $bf_form;
             }
         }
-
+    endif;
     }
 
     add_filter('the_content', 'buddyforms_attached_page_content', 10, 1);

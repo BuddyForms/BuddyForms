@@ -22,6 +22,8 @@ function buddyforms_form_html( $args )
 
     session_id('buddyforms-create-edit-form');
 
+    $form_slug_js = str_replace('-','_', $form_slug);
+
     $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
 
 
@@ -29,7 +31,7 @@ function buddyforms_form_html( $args )
     <script>
     var ajaxurl = "' . admin_url('admin-ajax.php') . '";
     jQuery(function() {
-        var validator_' . $form_slug . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
+        var validator_' . $form_slug_js . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
                 if(jQuery(\'textarea\').length > 0) {
                     // update underlying textarea before submit validation
                     tinyMCE.triggerSave();
@@ -98,7 +100,7 @@ function buddyforms_form_html( $args )
             }
         }
     });
-    validator_' . $form_slug . '.focusInvalid = function() {
+    validator_' . $form_slug_js . '.focusInvalid = function() {
         // put focus on tinymce on submit validation
         if (this.settings.focusInvalid) {
             try {
