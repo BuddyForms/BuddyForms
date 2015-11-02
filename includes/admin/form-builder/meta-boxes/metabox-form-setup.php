@@ -16,7 +16,10 @@ function buddyforms_metabox_form_setup(){
     $operator = 'and'; // 'and' or 'or'
     $post_types = get_post_types($args, $output, $operator);
     $post_types_none['none'] = 'none';
+
     $post_types = array_merge($post_types_none, $post_types);
+
+    unset($post_types['buddyforms']);
 
     $name = get_the_title();
     $slug = $post->post_name;

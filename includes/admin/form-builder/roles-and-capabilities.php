@@ -62,7 +62,7 @@ function bf_manage_form_roles_and_capabilities_screen(){
         endforeach;
 
         ?>
-        <div class="fields_heade postboxr">
+        <div class="fields_heade postbox">
             <table class="wp-list-table widefat posts">
                 <thead>
                 <tr>

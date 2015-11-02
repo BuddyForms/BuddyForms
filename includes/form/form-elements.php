@@ -44,7 +44,8 @@ function bf_form_elements($form, $args){
                 $element_attr['class'] = $element_attr['class'] . ' ' . $customfield['custom_class'];
 
             if(isset($customfield['type'])){
-                switch( sanitize_title($customfield['type'] ) ) {
+                
+                switch( sanitize_title( $customfield['type'] ) ) {
                     case 'number':
                         $form->addElement(new Element_Number($name, $slug, $element_attr));
                         break;
@@ -129,14 +130,31 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'radiobutton' :
-                        if (is_array($customfield['value'])) {
-                            $form->addElement(new Element_Radio($name, $slug, $customfield['value'], $element_attr));
+                        if (isset($customfield['options']) && is_array($customfield['options'])) {
+
+                            $options = Array();
+                            foreach($customfield['options'] as $key => $option){
+                                $options[$option['value']] = $option['label'];
+                            }
+                            $element = new Element_Radio($name, $slug, $options, $element_attr);
+
+                            bf_add_element($form, $element);
+
                         }
                         break;
 
                     case 'checkbox' :
-                        if (isset($customfield['value']) && is_array($customfield['value'])) {
-                            $form->addElement(new Element_Checkbox($name, $slug, $customfield['value'], $element_attr));
+
+                        if (isset($customfield['options']) && is_array($customfield['options'])) {
+
+                            $options = Array();
+                            foreach ($customfield['options'] as $key => $option) {
+                                $options[$option['value']] = $option['label'];
+                            }
+                            $element = new Element_Checkbox($name, $slug, $options, $element_attr);
+
+                            bf_add_element($form, $element);
+
                         }
                         break;
 
@@ -226,6 +244,8 @@ function bf_form_elements($form, $args){
                         break;
 
                     case 'featured-image':
+                    case 'featured_image':
+
                         $attachment_ids = $customfield_val;
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
