@@ -3,16 +3,13 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo();
     ?>
     <div class="buddyforms_posts_list">
-    <?php
-if ( $the_lp_query->have_posts() ) : ?>
+    <?php if ( $the_lp_query->have_posts() ) : ?>
 
 	<ul class="buddyforms-list" role="main">
 
     <?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 		
         $the_permalink = get_permalink();
-
-
 		$post_status = get_post_status();
 
 		$post_status_css =  $post_status_name  = $post_status;
@@ -25,7 +22,6 @@ if ( $the_lp_query->have_posts() ) : ?>
 
 
 		$post_status_css = apply_filters('bf_post_status_css',$post_status_css,$form_slug);
-
 
 		do_action( 'bp_before_blog_post' ) ?>
 
