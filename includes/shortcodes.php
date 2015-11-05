@@ -54,6 +54,9 @@ function buddyforms_the_loop($args){
 	if(empty($post_type))
 		$post_type = $buddyforms[$form_slug]['post_type'];
 
+    $list_posts_option = $buddyforms[$form_slug]['list_posts_option'];
+
+echo '$list_posts_option'.$list_posts_option;
     $user_id = get_current_user_id();
     $post_status = array('publish', 'pending', 'draft');
 
@@ -62,17 +65,49 @@ function buddyforms_the_loop($args){
 
     $paged = bf_get_url_var('page');
 
-	$query_args = array(
-		'post_type'         => $post_type,
-        'post_parent'       => $post_parent,
-		'form_slug'         => $form_slug,
-		'post_status'       => $post_status,
-		'posts_per_page'    => 10,
-		'author'            => $user_id,
-        'paged'             => $paged,
-        'meta_key'          => '_bf_form_slug',
-	    'meta_value'        => $form_slug
-	);
+    switch($list_posts_option){
+        case 'list_all':
+            $query_args = array(
+                'post_type'         => $post_type,
+                'post_parent'       => $post_parent,
+                'form_slug'         => $form_slug,
+                'post_status'       => $post_status,
+                'posts_per_page'    => 10,
+                'author'            => $user_id,
+                'paged'             => $paged,
+            );
+            break;
+        case 'list_all_taxonomy':
+            $query_args = array(
+                'post_type'         => $post_type,
+                'post_parent'       => $post_parent,
+                'form_slug'         => $form_slug,
+                'post_status'       => $post_status,
+                'posts_per_page'    => 10,
+                'author'            => $user_id,
+                'paged'             => $paged,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'product_cats',
+                    ),
+                ),
+            );
+            break;
+        default:
+            $query_args = array(
+                'post_type'         => $post_type,
+                'post_parent'       => $post_parent,
+                'form_slug'         => $form_slug,
+                'post_status'       => $post_status,
+                'posts_per_page'    => 10,
+                'author'            => $user_id,
+                'paged'             => $paged,
+                'meta_key'          => '_bf_form_slug',
+                'meta_value'        => $form_slug
+            );
+            break;
+
+    }
 
     $query_args =  apply_filters('bf_post_to_display_args',$query_args);
 

@@ -44,7 +44,7 @@ function bf_form_elements($form, $args){
                 $element_attr['class'] = $element_attr['class'] . ' ' . $customfield['custom_class'];
 
             if(isset($customfield['type'])){
-                
+
                 switch( sanitize_title( $customfield['type'] ) ) {
                     case 'number':
                         $form->addElement(new Element_Number($name, $slug, $element_attr));

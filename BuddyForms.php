@@ -152,10 +152,10 @@ class BuddyForms {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php');
-			
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/license-registration.php');
+
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/mail-notification.php');
@@ -261,7 +261,7 @@ class BuddyForms {
 	 */
 	function buddyforms_admin_js_footer() {
 		global $post, $hook_suffix;
-		echo $hook_suffix;
+
 		if(
 			(isset($post)
 				&& $post->post_type == 'buddyforms'

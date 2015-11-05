@@ -17,7 +17,6 @@ function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     if(!$buddyforms)
         return;
 
-
     foreach ($buddyforms as $key => $buddyform) {
         if(isset($buddyform['attached_page'])){
             $post_data = get_post($buddyform['attached_page'], ARRAY_A);
@@ -72,6 +71,13 @@ function bf_my_edit_post_link( $url, $post_ID) {
     $the_post	= get_post( $post_ID );
     $post_type	= get_post_type( $the_post );
     $form_slug  = get_post_meta( $post_ID, '_bf_form_slug', true );
+    $posttype_default 	= get_option( 'buddyforms_posttypes_default' );
+
+    if(!$form_slug && isset($posttype_default[$post_type]) || $form_slug == 'none' && isset($posttype_default[$post_type]))
+        $form_slug = $posttype_default[$post_type];
+
+    if($form_slug == 'none')
+        return $url;
 
     if ($the_post->post_author != $current_user->ID) // @todo this needs to be modified for admins and collaborative content creation
         return $url;
@@ -83,6 +89,7 @@ function bf_my_edit_post_link( $url, $post_ID) {
         return $url;
 
     if(isset($buddyforms[$form_slug]) && $buddyforms[$form_slug]['post_type'] == $post_type){
+
         $permalink	= get_permalink( $buddyforms[$form_slug]['attached_page'] );
         $url = $permalink.'edit/'.$form_slug.'/'.$post_ID;
         return $url;

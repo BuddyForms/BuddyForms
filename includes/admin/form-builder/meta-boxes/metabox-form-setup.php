@@ -57,7 +57,7 @@ function buddyforms_metabox_form_setup(){
     $attached_page = 'false';
     if (isset($buddyform['attached_page']))
         $attached_page = $buddyform['attached_page'];
-    $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => 'Associate a WordPress Page with each Form. The Page will be used to generate the form url. The Page content will not get changed. Just the url is used. This will result in a url like pagename/create/formname or pagename/view/formname. For more information read the Documentation'));
+    $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => 'Associate a WordPress Page with each Form. The Page will be used to generate the form url. The Page content will not get changed. Just the url is used. This will result in a url like pagename/create/formname or pagename/view/formname. Many Forms can have the same page! For more information read the Documentation'));
 
     $status = 'false';
     if (isset($buddyform['status']))
@@ -100,6 +100,12 @@ function buddyforms_metabox_form_setup(){
     if (isset($buddyform['bf_ajax']))
         $bf_ajax = $buddyform['bf_ajax'];
     $form_setup[] = new Element_Checkbox( '<b>' . __('AJAX','buddyforms') . '</b>', "buddyforms_options[bf_ajax]", array('bf_ajax' => __('Disable ajax form submission.', 'buddyforms')), array('shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax));
+
+
+    $list_posts_option = 'false';
+    if (isset($buddyform['list_posts_option']))
+        $list_posts_option = $buddyform['list_posts_option'];
+    $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all' => 'List all author posts of the PostType', 'list_all_taxonomy' => 'List all author posts of the PostType Taxonomy', 'list_all_form' => 'List all author posts created by this form'), array('value' => $list_posts_option));
 
     ?>
     <table class="form-table">
