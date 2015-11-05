@@ -42,6 +42,7 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
 
     if(isset($buddyform['form_fields'])) : foreach( $buddyform['form_fields'] as $key => $field ){
         $buddyform['form_fields'][$key]['slug'] = sanitize_title($field['slug']);
+        $buddyform['form_fields'][$key]['type'] = sanitize_title($field['type']);
     } endif;
 
     // First update post meta
