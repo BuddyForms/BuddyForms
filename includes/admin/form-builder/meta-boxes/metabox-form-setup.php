@@ -102,10 +102,10 @@ function buddyforms_metabox_form_setup(){
     $form_setup[] = new Element_Checkbox( '<b>' . __('AJAX','buddyforms') . '</b>', "buddyforms_options[bf_ajax]", array('bf_ajax' => __('Disable ajax form submission.', 'buddyforms')), array('shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax));
 
 
-    $list_posts_option = 'false';
+    $list_posts_option = 'list_all_form';
     if (isset($buddyform['list_posts_option']))
         $list_posts_option = $buddyform['list_posts_option'];
-    $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all' => 'List all author posts of the PostType', 'list_all_taxonomy' => 'List all author posts of the PostType Taxonomy', 'list_all_form' => 'List all author posts created by this form'), array('value' => $list_posts_option));
+    $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all_form' => 'List all Author Posts created with this Form', 'list_all' => 'List all Author Posts of the PostType'), array('value' => $list_posts_option, 'shortDesc' => 'You can filter the query to your needs. Reed the <a href="#">Documentation</a>'));
 
     ?>
     <table class="form-table">

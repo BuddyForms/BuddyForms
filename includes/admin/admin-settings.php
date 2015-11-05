@@ -16,9 +16,8 @@ function buddyforms_settings_page() {
     global $pagenow, $buddyforms;
     ?>
     <div class="wrap">
-        <h2><?php echo $bf_settings['Name']; ?> Theme Settings</h2>
-
         <?php
+        include(BUDDYFORMS_INCLUDES_PATH . '/admin/admin-credits.php');
         if ( 'true' == esc_attr( $_GET['updated'] ) ) echo '<div class="updated" ><p>BuddyForms...</p></div>';
 
         if ( isset ( $_GET['tab'] ) ) bf_admin_tabs($_GET['tab']); else bf_admin_tabs('homepage');

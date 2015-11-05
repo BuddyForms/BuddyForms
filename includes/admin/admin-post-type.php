@@ -35,18 +35,19 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     if(!isset($post->post_type) || $post->post_type != 'buddyforms')
         return;
 
-    // First update post meta
-    update_post_meta( $post_id, '_buddyforms_options', $_POST['buddyforms_options'] );
+    if(!isset($_POST['buddyforms_options']))
+        return;
 
-    // Update the option buddyforms_forms used to reduce queries
-    //$buddyforms_forms = get_option('buddyforms_forms');
-
-//    $buddyforms_forms[$post->post_name] = $_POST['buddyforms_options'];
-//    update_option('buddyforms_forms', $buddyforms_forms);
-
-    // Save the Roles and capabilities.
     $buddyform = $_POST['buddyforms_options'];
 
+    if(isset($buddyform['form_fields'])) : foreach( $buddyform['form_fields'] as $key => $field ){
+        $buddyform['form_fields'][$key]['slug'] = sanitize_title($field['slug']);
+    } endif;
+
+    // First update post meta
+    update_post_meta( $post_id, '_buddyforms_options', $buddyform );
+
+    // Save the Roles and capabilities.
     if(isset($_POST['buddyforms_roles'])){
 
         foreach (get_editable_roles() as $role_name => $role_info):
@@ -311,3 +312,8 @@ function buddyforms_add_button_to_submit_box() {
     }
 }
 add_action( 'post_submitbox_start', 'buddyforms_add_button_to_submit_box' );
+
+function buddyforms_remove_slugdiv() {
+    remove_meta_box( 'slugdiv' , 'buddyforms' , 'normal' );
+}
+add_action( 'admin_menu' , 'buddyforms_remove_slugdiv' );
