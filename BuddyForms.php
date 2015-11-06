@@ -367,7 +367,7 @@ class BuddyForms {
 
 $GLOBALS['buddyforms_new'] = new BuddyForms();
 
-function edd_sl_sample_plugin_updater() {
+function buddyforms_edd_plugin_updater() {
 
 	// retrieve our license key from the DB
 	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
@@ -382,6 +382,8 @@ function edd_sl_sample_plugin_updater() {
 		)
 	);
 
+	//print_r($edd_updater);
+
 }
-add_action( 'admin_init', 'edd_sl_sample_plugin_updater', 0 );
+add_action( 'admin_init', 'buddyforms_edd_plugin_updater', 0 );
 

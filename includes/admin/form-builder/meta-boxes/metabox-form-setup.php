@@ -8,6 +8,10 @@ function buddyforms_metabox_form_setup(){
 
     $buddyform = get_post_meta(get_the_ID(), '_buddyforms_options', true);
 
+//    echo '<pre>';
+//    print_r($buddyform);
+//    echo '</pre>';
+
     // Get all post types
     $args = array(
         'show_ui' => true
