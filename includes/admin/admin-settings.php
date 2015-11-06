@@ -36,15 +36,10 @@ function buddyforms_settings_page() {
                     case 'general' :
                         $buddyforms_posttypes_default 	= get_option( 'buddyforms_posttypes_default' ); ?>
                         <h2><?php _e('Post Types Default Form', 'buddyforms'); ?></h2>
-                        <p>You can select a default form for every post type. Tis will make sure posts created befor buddyforms will still have a form assisioated.
-                        If You select non the form edit button will link to the admin for podtd not created with a buddyform
+                        <p>Select a default form for every post type.</p>
 
-                        Form List Posts
-
-                            You can select the lidt podt optinos in the form builder. If you set the form settings to all you sould selext tis form as default
-
-                        </p>
-
+                        <p>This will make sure that posts created before BuddyForms will have a form associated. <br>
+                            If you select none the post edit link will point to the admin for posts not created with BuddyForms</p>
 
                         <form method="post" action="options.php">
 
