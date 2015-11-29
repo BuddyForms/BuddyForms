@@ -40,11 +40,6 @@ function bf_mail_notification_screen() {
         echo $field->getShortDesc();
         echo $field->render();
     }
-
-
-
-
-
 }
 
 
@@ -80,7 +75,6 @@ function buddyforms_new_notification_trigger_form($trigger){
         <li><p><b>[site_url_html]</b> the site url in html</p></li>
     </ul>
         ";
-
 
     $form_trigger = new Element_Hidden("buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger);
     $form_trigger->render();

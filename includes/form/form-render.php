@@ -1,13 +1,15 @@
 <?php
 
-function buddyforms_form_html( $args )
-{
-    global $buddyforms;
+function buddyforms_form_html( $args ){
+    global $buddyforms, $bf_form_error;
 
-//    echo '<pre>';
-//    print_r($buddyforms);
-//    echo '</pre>';
+    // First check if any form error exist
+    if(!empty($bf_form_error)){
+        echo '<div class="error alert">'.$bf_form_error.'</div>';
+        return;
+    }
 
+    // Extract the form args
     extract(shortcode_atts(array(
         'post_type' => '',
         'the_post' => 0,
@@ -17,15 +19,19 @@ function buddyforms_form_html( $args )
         'post_parent' => 0,
         'redirect_to' => esc_url($_SERVER['REQUEST_URI']),
         'form_slug' => '',
-        'form_notice' => ''
+        'form_notice' => '',
     ), $args));
 
     session_id('buddyforms-create-edit-form');
 
     $form_slug_js = str_replace('-','_', $form_slug);
 
+    // Form HTML Start. The Form is rendered as last step.
     $form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
 
+    // Create the needed Validation JS.
+    // To have multiple forms on one page work nicely we added the js inline for now.
+    // Todo: create a separate function and add the js correctly.
 
     $form_html .= '
     <script>
@@ -168,10 +174,12 @@ function buddyforms_form_html( $args )
     if(isset($buddyforms[$form_slug]['bf_ajax']))
         $form->addElement(new Element_Hidden("ajax" , 'off'));
 
-    // if the form have custom field to save as post meta data they get displayed here
+    // if the form has custom field to save as post meta data they get displayed here
     bf_form_elements($form, $args);
 
     $form->addElement(new Element_Hidden("submitted", 'true', array('value' => 'true', 'id' => "submitted")));
+
+    $form->addElement(new Element_Hidden("bf_submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
     $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array( 'id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted')));
 
@@ -180,7 +188,7 @@ function buddyforms_form_html( $args )
 
     $form = apply_filters( 'bf_form_before_render', $form, $args);
 
-    // thats it! render the form!
+    // That's it! render the form!
     ob_start();
     $form->render();
     $form_html .= ob_get_contents();
@@ -188,6 +196,7 @@ function buddyforms_form_html( $args )
 
     $form_html .= '<div class="bf_modal"></div></div>';
 
+    // If Form Revision is enabled Display the revision posts under the form
     if (isset($buddyforms[$form_slug]['revision']) && $post_id != 0) {
         ob_start();
         buddyforms_wp_list_post_revisions($post_id);

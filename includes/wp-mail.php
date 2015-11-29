@@ -37,7 +37,6 @@ function buddyforms_send_email_notification($post){
     $mail_notification_trigger = $buddyforms[$form_slug]['mail_notification'][$post_status];
 
 
-
     $user_email=$user_info->user_email;
 
     $mail_to = array();

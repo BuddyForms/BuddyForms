@@ -9,11 +9,6 @@ jQuery(document).ready(function (){
         timeFormat: 'hh:mm tt'
     });
 
-    jQuery('.bf_price_date').datepicker({
-        controlType: 'select',
-        dateFormat: 'yy-mm-dd'
-    });
-
     var bf_status = jQuery('select[name=status]').val();
 
     if(bf_status == 'future'){
@@ -34,30 +29,23 @@ jQuery(document).ready(function (){
     var editpost_content_val = jQuery('#editpost_content_val').html();
     jQuery('#editpost_content').html(editpost_content_val);
 
+    var clkBtn = "";
+    jQuery(document).on( "click", '.bf-submit', function( evt ) {
+        clkBtn = evt.target.name;
+    });
+
     jQuery(document).on( "submit", '.form_wrapper', function( event ) {
 
-        var form_name   = event.target.id;
-        var form_slug   = form_name.split("editpost_")[1];
-        var $btn = jQuery(document.activeElement);
+       var submit_type = clkBtn;
+       var form_name   = event.target.id;
+       var form_slug   = form_name.split("editpost_")[1];
 
        if(!jQuery('#' + form_name).valid()){
            alert('Please check all errors before submiting the form!')
            return false;
        }
 
-        if (
-            /* there is an activeElement at all */
-        $btn.length &&
-            /* it's a child of the form */
-        jQuery('#' + form_name).has($btn) &&
-            /* it's really a submit element */
-        $btn.is('button[type="submit"], input[type="submit"], input[type="image"]') &&
-            /* it has a "name" attribute */
-        $btn.is('[name]')) {
-            var submit_type = $btn.attr('name');
-        }
         jQuery('#' + form_name + ' #submitted').val(submit_type);
-
 
         if(jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off'){
 
@@ -78,7 +66,6 @@ jQuery(document).ready(function (){
                     jQuery('.the_buddyforms_form_'+ form_slug + ' .form_wrapper .bf_modal').hide();
 
                     jQuery.each(data, function(i, val) {
-
                         switch(i) {
                             case 'form_notice':
                                 jQuery('#form_message_' + form_slug).html(val);

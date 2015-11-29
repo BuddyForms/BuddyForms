@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Process the post and saves or update the post and post meta does the validation
+ * Process the post and Validate all. Saves or update the post and post meta.
  *
  * @package BuddyForms
  * @since 0.3 beta
@@ -28,7 +28,7 @@ function buddyforms_process_post($args = Array()) {
     if(isset($_POST['bf_post_type']))
         $post_type = $_POST['bf_post_type'];
 
-    if(!empty($post_id)) {
+    if($post_id != 0) {
 
         if(!empty($revision_id)) {
             $the_post	= get_post( $revision_id );
@@ -44,24 +44,29 @@ function buddyforms_process_post($args = Array()) {
         }
         $user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
         if ( $user_can_edit == false ){
-            $error_message = __('You are not allowed to edit this post. What are you doing here?', 'buddyforms');
-            echo '<div class="error alert">'.$error_message.'</div>';
-            return;
+            $args = array(
+                'hasError' 	    => true,
+                'error_message'	=> __('You are not allowed to edit this post. What are you doing here?', 'buddyforms'),
+            );
+            return $args;
         }
 
     }
 
-    // check if the user has the roles roles and capabilities
+    // check if the user has the roles and capabilities
     $user_can_edit = false;
-    if( empty($post_id) && current_user_can('buddyforms_' . $form_slug . '_create')) {
+    if( $post_id == 0 && current_user_can('buddyforms_' . $form_slug . '_create')) {
         $user_can_edit = true;
-    } elseif( !empty($post_id) && current_user_can('buddyforms_' . $form_slug . '_edit')){
+    } elseif( $post_id != 0 && current_user_can('buddyforms_' . $form_slug . '_edit')){
         $user_can_edit = true;
     }
     $user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
     if ( $user_can_edit == false ){
-        $error_message = __('You do not have the required user role to use this form', 'buddyforms');
-        return '<div class="error alert">'.$error_message.'</div>';
+        $args = array(
+            'hasError' 	    => true,
+            'error_message'	=> __('You do not have the required user role to use this form', 'buddyforms'),
+        );
+        return $args;
     }
 
     // If post_id == 0 a new post is created
@@ -102,17 +107,12 @@ function buddyforms_process_post($args = Array()) {
         'comment_status'	=> $comment_status,
     );
 
-    $args = buddyforms_update_post($args);
-
-
-
-    extract($args);
-
+    extract($args = buddyforms_update_post($args));
 
     /*
-     * If $post_id is == 0 there was an error the save/update post.
+     * Check if the update or insert was successful
      */
-    if($post_id != 0){
+    if(!is_wp_error($post_id)){
 
         // Check if the post has post meta / custom fields
         if(isset($customfields))
@@ -129,13 +129,13 @@ function buddyforms_process_post($args = Array()) {
 
     } else {
         $hasError = true;
+        $error_message = $post_id->get_error_message();
     }
 
     // Display the message
-    if( empty( $hasError ) ) :
-
+    if( !$hasError ) :
         if(isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] )){
-            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms');
+            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' 1has been successfully updated ', 'buddyforms');
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
             $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms');
@@ -143,8 +143,8 @@ function buddyforms_process_post($args = Array()) {
         }
 
     else:
-
-        $error_message = __('Error! There was a problem submitting the post ;-(', 'buddyforms');
+        if(empty($error_message))
+            $error_message = __('Error! There was a problem submitting the post ;-(', 'buddyforms');
         $form_notice = '<div class="error alert">'.$error_message.'</div>';
 
         if(!empty($fileError))
@@ -154,20 +154,18 @@ function buddyforms_process_post($args = Array()) {
 
     do_action('buddyforms_after_save_post', $post_id);
 
-    //$the_post	= get_post( $post_id );
     $args2 = array(
-        //'post_type' 	=> $post_type,
-        //'the_post'		=> $the_post,
+        'hasError' 	    => $hasError,
+        'form_notice'	=> $form_notice,
         'customfields'  => $customfields,
         //'post_id'		=> $post_id,
         //'revision_id' 	=> $revision_id,
         //'post_parent'   => $post_parent,
         'redirect_to'   => $redirect_to,
         'form_slug' 	=> $form_slug,
-        'form_notice'   => $form_notice,
     );
 
-    return array_merge($args, $args2);;
+    return array_merge($args, $args2);
 
 }
 
@@ -186,8 +184,8 @@ function buddyforms_update_post($args){
 
         $bf_post = array(
             'ID'        		=> $_POST['post_id'],
-            'post_title' 		=> apply_filters('bf_update_editpost_title', isset($_POST['editpost_title'])? $_POST['editpost_title'] : 'none'),
-            'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
+            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
+            'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
             'post_type' 		=> $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
@@ -196,7 +194,7 @@ function buddyforms_update_post($args){
         );
 
         // Update the new post
-        $post_id = wp_update_post( $bf_post );
+        $post_id = wp_update_post( $bf_post, true );
 
     } else {
 
@@ -304,7 +302,6 @@ function bf_update_post_meta($post_id, $customfields){
                                 $tax_item[$key] = $tax;
                             }
                         }
-
 
                         wp_set_post_terms($post_id, $tax_item, $customfield['taxonomy'], false);
                     } else {

@@ -288,7 +288,7 @@ function buddyforms_display_form_element($args){
     $form_fields = sortArrayByArray($form_fields, array('general', 'validation', 'advanced'));
 
     ob_start(); ?>
-    <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id . ' ' . $field_type ?>">
+    <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id  ?>">
         <div class="accordion_fields">
             <div class="accordion-group postbox">
                 <div class="accordion-heading-options">
@@ -374,13 +374,6 @@ add_action('wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_e
 function buddyforms_form_element_multiple($form_fields, $args){
     global $post;
 
-    //$buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
-
-
-//    echo '<pre>';
-//    print_r($args);
-//    echo '</pre>';
-
     extract($args);
 
     ob_start();
@@ -394,11 +387,12 @@ function buddyforms_form_element_multiple($form_fields, $args){
                     <tr>
                         <th><span style="padding-left: 10px;">Label</span></th>
                         <th><span style="padding-left: 10px;">Value</span></th>
+                        <th><span style="padding-left: 10px;">Default</span></th>
                         <th class="manage-column column-author"><span style="padding-left: 10px;">Action</span></th>
                     </tr>
                 </thead>
             </table>
-<br>
+            <br>
     ';
 
     echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
@@ -418,10 +412,13 @@ function buddyforms_form_element_multiple($form_fields, $args){
 
             echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
              echo '<table class="wp-list-table widefat fixed posts"><tbody><tr><td>';
-                $form_element = new Element_Textbox('<b>' . __("Label ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array('value' => $option['label']));
+                $form_element = new Element_Textbox('', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array('value' => $option['label']));
                 $form_element->render();
             echo '</td><td>';
-                $form_element = new Element_Textbox('<b>' . __("Value ", 'buddyforms') . $key . '</b>', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array('value' => $option['value']));
+                $form_element = new Element_Textbox('', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array('value' => $option['value']));
+                $form_element->render();
+            echo '</td><td>';
+                $form_element = new Element_Radio('', "buddyforms_options[form_fields][" . $field_id . "][default]",array($option['value']), array('value' => $buddyform['form_fields'][$field_id]['default']));
                 $form_element->render();
             echo '</td><td class="manage-column column-author">';
                 echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">X</a>';

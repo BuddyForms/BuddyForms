@@ -69,6 +69,7 @@ function buddyforms_the_loop($args){
             $query_args = array(
                 'post_type'         => $post_type,
                 'post_parent'       => $post_parent,
+                //'orderby'         => 'menu_order', // ??? ;)
                 'form_slug'         => $form_slug,
                 'post_status'       => $post_status,
                 'posts_per_page'    => 10,

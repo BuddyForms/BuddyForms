@@ -23,6 +23,9 @@ function bf_form_elements($form, $args){
                 $customfield_val = get_post_meta($post_id, $slug, true);
             }
 
+            if(empty($customfield_val) && isset($customfield['default']))
+                $customfield_val = $customfield['default'];
+
             $name = '';
             if(isset($customfield['name']))
                 $name = stripcslashes($customfield['name']);
@@ -120,7 +123,7 @@ function bf_form_elements($form, $args){
                         if( isset($customfield['hidden']) ) {
                             $form->addElement(new Element_Hidden('editpost_content', $editpost_content_val ));
                         } else {
-                            $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . ':</label><div class="bf_inputs">' . $wp_editor . '</div><span class="help-inline">'.$description.'</span></div>';
+                            $wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . '</label><div class="bf_inputs">' . $wp_editor . '</div><span class="help-inline">'.$description.'</span></div>';
                             $form->addElement(new Element_HTML( $wp_editor ));
                         }
                          break;
@@ -168,7 +171,6 @@ function bf_form_elements($form, $args){
                             }
 
                             $element_attr['class'] = $element_attr['class'] . ' bf-select2';
-
                             $element = new Element_Select($name, $slug, $options, $element_attr);
 
                             if (isset($customfield['multiple']) && is_array($customfield['multiple']))
@@ -292,7 +294,7 @@ function bf_form_elements($form, $args){
                         if(isset($customfield['required']))
                             $form->addElement(new Element_HTML( '<span class="required">* </span>' ));
 
-                        $form->addElement(new Element_HTML( $name.'</label>'));
+                        $form->addElement(new Element_HTML( $name . '</label>'));
                         $form->addElement(new Element_HTML( '<div class="bf_inputs">
                             '.$str.'
                             </div>
@@ -437,7 +439,7 @@ function bf_form_elements($form, $args){
                         }
                         $dropdown = '<div class="bf_field_group">
                         <label for="editpost-element-' . $field_id . '">
-                            '.$required.$name . ':
+                            '.$required.$name . '
                         </label>
                         <div class="bf_inputs">' . $dropdown . ' </div>
                         <span class="help-inline">' . $description . '</span>
@@ -453,7 +455,7 @@ function bf_form_elements($form, $args){
                             $form->addElement( new Element_HTML($dropdown));
 
                             if(isset($customfield['creat_new_tax']) ){
-                                $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['name'].':', $slug.'_creat_new_tax', array('class' => 'settings-input')));
+                                $form->addElement( new Element_Textbox(__('Create a new ', 'buddyforms') . $customfield['name'], $slug.'_creat_new_tax', array('class' => 'settings-input')));
                             }
                         }
 

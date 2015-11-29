@@ -80,6 +80,25 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
 
     }
 
+    buddyforms_regenerate_global_options();
+
+    buddyforms_attached_page_rewrite_rules(TRUE);
+
+}
+add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
+
+add_action('transition_post_status','buddyforms_transition_post_status_regenerate_global_options',10,3);
+function buddyforms_transition_post_status_regenerate_global_options($new_status,$old_status,$post){
+
+    if($post->post_type != 'buddyforms')
+        return;
+
+    buddyforms_regenerate_global_options();
+    buddyforms_attached_page_rewrite_rules(TRUE);
+
+}
+
+function buddyforms_regenerate_global_options(){
     // get all forms and update the global
     $posts = get_posts(array(
         'numberposts' 	=> -1,
@@ -95,15 +114,11 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     if( $posts ){ foreach( $posts as $post ){
         $options = get_post_meta($post->ID,'_buddyforms_options', true);
         if($options){
-            $buddyforms_forms[$post->post_name] = get_post_meta($post->ID,'_buddyforms_options', true);
+            $buddyforms_forms[$post->post_name] = $options;
         }
     }}
     update_option('buddyforms_forms', $buddyforms_forms);
-
-    buddyforms_attached_page_rewrite_rules(TRUE);
-
 }
-add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
