@@ -49,9 +49,11 @@ function buddyforms_ajax_process_edit_post(){
         if (isset($buddyforms[$_POST['form_slug']]['after_submit'])) {
             switch ($buddyforms[$_POST['form_slug']]['after_submit']) {
                 case 'display_post':
+                    $json['form_remove'] = 'true';
                     $json['form_notice'] = buddyforms_after_save_post_redirect(get_permalink( $args['post_id'] ));
                     break;
                 case 'display_posts_list':
+                    $json['form_remove'] = 'true';
                     $permalink = get_permalink($buddyforms[$args['form_slug']]['attached_page']);
                     $post_list_link = $permalink . 'view/' . $args['form_slug'] . '/';
                     $json['form_notice'] = buddyforms_after_save_post_redirect($post_list_link);
