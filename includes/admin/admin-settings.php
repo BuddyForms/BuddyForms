@@ -1,10 +1,6 @@
 <?php
 
-/************************************
- * the code below is just a standard
- * options page. Substitute with
- * your own.
- *************************************/
+/**select*/
 
 function buddyforms_settings_menu() {
 
@@ -48,28 +44,34 @@ function buddyforms_settings_page() {
                             <table class="form-table">
                                 <tbody>
                                 <?php
-                                $post_types_forms = Array();
-                                foreach( $buddyforms as $key => $buddyform ){
-                                    $post_types_forms[$buddyform['post_type']][$key] = $buddyform;
-                                }
+                                if(isset($buddyforms) && is_array($buddyforms)) {
+                                    $post_types_forms = Array();
+                                    foreach ($buddyforms as $key => $buddyform) {
+                                        $post_types_forms[$buddyform['post_type']][$key] = $buddyform;
+                                    }
 
-                                foreach($post_types_forms as $post_type => $post_types_form) : ?>
-                                    <tr valign="top">
-                                    <th scope="row" valign="top">
-                                        <?php
-                                        $post_type_object = get_post_type_object( $post_type );
-                                        echo $post_type_object->labels->name; ?>
-                                    </th>
-                                    <td>
-                                    <select name="buddyforms_posttypes_default[<?php echo $post_type ?>]" class="regular-radio">
-                                        <option value="none">None</option>
-                                        <?php foreach($post_types_form as $form_key => $form ){ ?>
-                                            <option <?php echo selected($buddyforms_posttypes_default[$post_type], $form_key, true) ?> value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                    foreach ($post_types_forms as $post_type => $post_types_form) : ?>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+                                                <?php
+                                                $post_type_object = get_post_type_object($post_type);
+                                                echo $post_type_object->labels->name; ?>
+                                            </th>
+                                            <td>
+                                                <select name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
+                                                        class="regular-radio">
+                                                    <option value="none">None</option>
+                                                    <?php foreach ($post_types_form as $form_key => $form) { ?>
+                                                        <option <?php echo selected($buddyforms_posttypes_default[$post_type], $form_key, true) ?>
+                                                            value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;
+                                } else {
+                                    echo '<h3>You need to create at least one form to select a post type default.</h3>';
+                                }?>
                                 </tbody>
                             </table>
                             <?php submit_button(); ?>
