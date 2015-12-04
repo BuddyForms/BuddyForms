@@ -62,6 +62,8 @@ function bf_inner_custom_box( $post ) {
     }
 
     echo '</select></p>';
+
+    do_action('buddyforms_post_edit_meta_box_select_form', $post);
 }
 
 /**

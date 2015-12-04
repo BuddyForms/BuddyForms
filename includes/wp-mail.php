@@ -21,21 +21,20 @@ function buddyforms_send_email_notification($post){
 
     global $form_slug, $buddyforms;
 
-    $pub_post = $post;
-    $post_ID = $post->ID;
+    $pub_post   = $post;
+    $post_ID    = $post->ID;
 
-    $author_id=$pub_post->post_author;
-    $post_title=$pub_post->post_title;
-    $postperma=get_permalink( $post_ID );
-    $user_info = get_userdata( $author_id );
+    $author_id  = $pub_post->post_author;
+    $post_title = $pub_post->post_title;
+    $postperma  = get_permalink( $post_ID );
+    $user_info  = get_userdata( $author_id );
 
-    $usernameauth=$user_info->user_login;
-    $user_nicename=$user_info->user_nicename;
+    $usernameauth  = $user_info->user_login;
+    $user_nicename = $user_info->user_nicename;
 
-    $post_status = get_post_status( $post_ID );
+    $post_status   = get_post_status( $post_ID );
 
     $mail_notification_trigger = $buddyforms[$form_slug]['mail_notification'][$post_status];
-
 
     $user_email=$user_info->user_email;
 
@@ -49,7 +48,6 @@ function buddyforms_send_email_notification($post){
 
             if($mail_address == 'admin')
                 array_push($mail_to,  get_option('admin_email'));
-
 
         }
     }
