@@ -1,7 +1,7 @@
 <?php
 
 function buddyforms_form_html( $args ){
-    global $buddyforms, $bf_form_error;
+    global $buddyforms, $bf_form_error, $bf_submit_button;
 
     // First check if any form error exist
     if(!empty($bf_form_error)){
@@ -181,10 +181,11 @@ function buddyforms_form_html( $args ){
 
     $form->addElement(new Element_Hidden("bf_submitted", 'true', array('value' => 'true', 'id' => "submitted")));
 
-    $form_button = apply_filters('buddyforms_create_edit_form_button',new Element_Button(__('Submit', 'buddyforms'), 'submit', array( 'id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted')));
+    $bf_submit_button = new Element_Button(__('Submit', 'buddyforms'), 'submit', array( 'id'=> $form_slug, 'class' => 'bf-submit', 'name' => 'submitted'));
+    $form = apply_filters('buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
 
-    if($form_button)
-        $form->addElement($form_button);
+    if($bf_submit_button)
+        $form->addElement($bf_submit_button);
 
     $form = apply_filters( 'bf_form_before_render', $form, $args);
 

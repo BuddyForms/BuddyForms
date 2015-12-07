@@ -439,7 +439,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
 }
 
 
-function buddyforms_display_field_group_table($form_fields, $field_id ){
+function buddyforms_display_field_group_table($form_fields, $field_id = 'global' ){
     ?>
     <table class="form-table">
         <tbody>
