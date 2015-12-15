@@ -3,8 +3,8 @@
 Contributors: svenl77
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.9, BuddyPress 2.x
-Tested up to: WordPress 4.3.1
-Stable tag: 1.4.2
+Tested up to: WordPress 4.4
+Stable tag: 1.5
 Author: Sven Lehnert
 Author URI: https://profiles.wordpress.org/svenl77
 License: GPLv2 or later
@@ -19,7 +19,7 @@ Create versatile and creative content forms that Your users can use to share con
 
 == Frequently Asked Questions ==
 
-You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard! 
+You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard!
 
 <b>Search the Documentation</b>
 http://docs.buddyforms.com
@@ -36,6 +36,76 @@ If you updated from version 1.3 please test your Form Elements "Featured Image" 
 If you encounter any issues just delete the form elements and add them to the form again. This should fix all issues.
 
 == Changelog ==
+
+1.5
+<ul>
+<li>Add new Filter buddyforms_the_loop_edit_permalink to change the loop edit permalink</li></li>
+<li>Add new filter buddyforms_after_save_post_redirect to change the redirect url</li>
+<li>Add a new do action buddyforms_process_post_start and buddyforms_process_post_end to add Multi Site Support.</li>
+<li>Add a new column shortcake to the form list</li>
+<li>Fixed a css issue. The css for the loops was not loaded if used in shortcode</li>
+<li>Add new shortcake bf</li>
+<li>change the form action logic</li>
+<li>add class button btn btn-primary to the featured image form element</li>
+<li>add new hook buddyforms_post_edit_meta_box_select_form </li>
+<li>Add error message text to the settings.</li>
+<li>fixed a small issue in the settings if no form is created</li>
+<li>restructure the-loop.php</li>
+<li>remove the form if ajax redirect</li>
+<li>adjust the error handling and make it a global</li>
+<li>add editpost_title = none as default to make save a post without a title possible</li>
+<li>remove the field type as class to avoid conflicts with other plugins and themes</li>
+<li>regenerate the global on transition_post_status</li>
+<li>simplifier the js</li>
+<li>rename function edd_sl_sample_plugin_updater to buddyforms_edd_plugin_updater</li>
+<li>Handle field types now like slugs and sanitize_title before save option</li>
+<li>fixed the taxonomy issue if single select and create new together creates two tax also if only one was allowed</li>
+<li>Create a settings page and move the license page in there</li>
+<li>Add new option to select a default form for every post type</li>
+<li>add new option to filter the list posts</li>
+<li>fixed radiobuton and checkbox and featured image... was broken from ui rewrite</li>
+<li>fixed a issue with title required</li>
+<li>fixed a issue with the validation if a - in the form slug</li>
+<li>return the merged args arrays after buddyforms_after_save_post</li>
+<li>handle form element types as slugs use sanitize_title</li>
+<li>recreate the forms global after every form edit</li>
+<li>add some checks from fresh install testing issues</li>
+<li>fixed a bug with the capabilities js select all</li>
+<li>remove old unneeded js</li>
+<li>prefix all js css classes to avoid conflicts</li>
+<li>rebuild static function set_globals() automatically generate form elements slug if empty</li>
+<li>rebuild admin credits. hook into BuddyForms edit screen</li>
+<li>Rebuild the why how the $buddyforms global is created to reduce query's</li>
+<li>Add a new option After Submission redirect to user posts list</li>
+<li>Add a new hook to wp_login_form -> buddyforms_wp_login_form</li>
+<li>restructure code to reduce query's deleted unneeded functions</li>
+<li>Add .bf_hidden_checkbox to show hide options
+rebuild the select, checkbox, radio button form builder form elements. Add new option for label. Update should work.</li>
+<li>The Title is now a normal Form Element and can be removed. If no title is se none is added as title.
+Same for the content
+
+Use
+bf_update_editpost_title
+or
+bf_update_editpost_content
+
+to set the title or content dynamically.</li>
+<li>Switched from horizontal to vertical tabs</li>
+<li>Update to the latest select2</li>
+<li>Add a new filter buddyforms_after_save_post_redirect to manipulate the redirect url</li>
+<li>taxonomy form element default term gets loaded dynamically now via ajax add select2 to the form builder</li>
+<li>Create update script for the update form 1.4x to 1.5</li>
+<li>Rewrite the complete admin ui</li>
+<li>fixing issues from the rewrite</li>
+<li>Switched from options based to post based system<li>
+<li>removed bootstrap and switched to WordPress standard elements</li>
+<li>Createv the new meta boxes for the Form Builder</li>
+<li>New readme file to work with edd</li>
+<li>clean up the code</li>
+<li>Inline documentation</li>
+<li>many small fixes and improvements</li>
+</ul>
+
 
 1.4.2
 <ul>
