@@ -49,7 +49,12 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 						<?php
 						if (get_the_author_meta('ID') ==  get_current_user_id()){
-							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] ); ?>
+							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
+
+							$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
+
+							?>
+
 
 							<div class="meta">
 								<div class="item-status"><?php echo $post_status_name; ?></div>

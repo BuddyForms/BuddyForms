@@ -1,6 +1,7 @@
 <?php
 // Shortcode to add the form everywhere easily ;) the form is located in form.php
 add_shortcode('buddyforms_form', 'buddyforms_create_edit_form_shortcode');
+add_shortcode('bf', 'buddyforms_create_edit_form_shortcode');
 
 function buddyforms_create_edit_form_shortcode($args){
 
@@ -95,6 +96,8 @@ function buddyforms_the_loop($args){
 
     $query_args =  apply_filters('bf_post_to_display_args',$query_args);
 
+    do_action('buddyforms_the_loop_start', $query_args);
+
 	$the_lp_query = new WP_Query( $query_args );
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
@@ -106,6 +109,8 @@ function buddyforms_the_loop($args){
 		wp_pagenavi( array( 'query' => $the_lp_query) );	
 	}
     wp_reset_postdata();
+
+    do_action('buddyforms_the_loop_end', $query_args);
 }
 
 /**
@@ -140,6 +145,8 @@ function buddyforms_list_all($args){
         'paged'             => $paged
     );
 
+    do_action('buddyforms_the_loop_start', $query_args);
+
     $query_args =  apply_filters('bf_post_to_display_args',$query_args);
 
     $the_lp_query = new WP_Query( $query_args );
@@ -154,6 +161,7 @@ function buddyforms_list_all($args){
         }
         $theloop = ob_get_clean();
     wp_reset_postdata();
+    do_action('buddyforms_the_loop_end', $query_args);
     return $theloop;
 }
 

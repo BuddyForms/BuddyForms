@@ -10,6 +10,8 @@
 function buddyforms_process_post($args = Array()) {
     global $current_user, $buddyforms;
 
+    do_action( 'buddyforms_process_post_start', $args );
+
     $hasError = false;
     $info_message = '';
 
@@ -165,7 +167,11 @@ function buddyforms_process_post($args = Array()) {
         'form_slug' 	=> $form_slug,
     );
 
-    return array_merge($args, $args2);
+    $args =  array_merge($args, $args2);
+
+    do_action( 'buddyforms_process_post_end', $args );
+
+    return $args;
 
 }
 

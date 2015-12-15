@@ -290,6 +290,12 @@ class BuddyForms {
 		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'buddyforms_form') )
 			$found = true;
 
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'buddyforms_list_all') )
+			$found = true;
+
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'bf') )
+			$found = true;
+
 		if(isset($wp_query->query['bf_action']))
 			$found = true;
 
@@ -386,4 +392,3 @@ function buddyforms_edd_plugin_updater() {
 
 }
 add_action( 'admin_init', 'buddyforms_edd_plugin_updater', 0 );
-

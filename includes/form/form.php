@@ -183,12 +183,14 @@ function bf_form_response_no_ajax(){
 
             if ($buddyforms[$_POST['form_slug']]['after_submit'] == 'display_post') {
                 $permalink = get_permalink($post_id);
+                $permalink = apply_filters('buddyforms_after_save_post_redirect', $permalink);
                 wp_redirect( $permalink, 302 );
                 exit;
             }
             if ($buddyforms[$_POST['form_slug']]['after_submit'] == 'display_posts_list') {
                 $permalink = get_permalink($buddyforms[$_POST['form_slug']]['attached_page']);
                 $post_list_link = $permalink . 'view/' . $_POST['form_slug'] . '/';
+                $post_list_link = apply_filters('buddyforms_after_save_post_redirect', $post_list_link);
                 wp_redirect( $post_list_link, 302 );
             }
 

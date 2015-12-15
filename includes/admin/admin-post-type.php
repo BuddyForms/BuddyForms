@@ -216,6 +216,7 @@ function set_custom_edit_buddyforms_columns($columns) {
     $columns['slug'] = __( 'Slug', 'buddyforms' );
     $columns['attached_post_type'] = __( 'Attached Post Type', 'buddyforms' );
     $columns['attached_page'] = __( 'Attached Page', 'buddyforms' );
+    $columns['shortcode'] = __( 'Shortcode', 'buddyforms' );
     return $columns;
 }
 add_filter( 'manage_buddyforms_posts_columns', 'set_custom_edit_buddyforms_columns',10,1 );
@@ -256,6 +257,9 @@ function custom_buddyforms_column( $column, $post_id ) {
             echo $attached_page;
 
         break;
+        case 'shortcode':
+            echo '[bf form_slug="'.$post->post_name.'"]';
+            break;
     }
 }
 add_action( 'manage_buddyforms_posts_custom_column' , 'custom_buddyforms_column', 10, 2 );
@@ -320,10 +324,10 @@ function buddyforms_add_button_to_submit_box() {
     if (get_post_type($post) == 'buddyforms') {
 
         $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
-        $viwe_form_permalink = isset($buddyform['attached_page']) ? get_permalink($buddyform['attached_page']) : '';
+        $attached_page_permalink = isset($buddyform['attached_page']) ? get_permalink($buddyform['attached_page']) : '';
 
-        echo '<a class="button button-large bf_button_action" href="'.$viwe_form_permalink . 'view/' . $post->post_name . '/" target="_new">'.__('View Form Posts', 'buddyforms').'</a>
-        <a class="button button-large bf_button_action" href="'.$viwe_form_permalink . 'create/' . $post->post_name . '/" target="_new">'.__('View Form', 'buddyforms').'</a>';
+        echo '<a class="button button-large bf_button_action" href="'.$attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">'.__('View Form Posts', 'buddyforms').'</a>
+        <a class="button button-large bf_button_action" href="'.$attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">'.__('View Form', 'buddyforms').'</a>';
 
     }
 }
