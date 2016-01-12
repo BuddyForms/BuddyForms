@@ -9,11 +9,11 @@ function buddyforms_add_meta_boxes() {
     if($post->post_type != 'buddyforms')
         return;
 
-    add_meta_box('buddyforms_form_setup', __("Form Setup",'buddyforms') . '<br><small>' . __('Setup this form ', 'buddyforms') . '</small>', 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high');
-    add_meta_box('buddyforms_form_elements', __("Form Builder",'buddyforms') . '<br><small>' . __(' Add additional form elements from the right box "Form Elements". Change the order via drag and drop.', 'buddyforms') . '</small>', 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high');
-    add_meta_box('buddyforms_form_mail', __("Mail Notification",'buddyforms') . '<br><small>' . __(' Add Mail Notification for any post status change".', 'buddyforms') . '</small>', 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default');
-    add_meta_box('buddyforms_form_roles', __("Roles and Capabilities",'buddyforms') . '<br><small>' . __('Manage Capabilities for every user user role ', 'buddyforms') . '</small>', 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default');
-    add_meta_box('buddyforms_form_sidebar', __("Form Elements",'buddyforms'), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default');
+    add_meta_box('buddyforms_form_setup', __("Form Setup",'buddyforms'), 'buddyforms_metabox_form_setup'    , 'buddyforms', 'normal', 'high');
+    add_meta_box('buddyforms_form_elements', __("Form Builder",'buddyforms'), 'buddyforms_metabox_form_elements' , 'buddyforms', 'normal', 'high');
+    add_meta_box('buddyforms_form_mail', __("Mail Notification",'buddyforms'), 'bf_mail_notification_screen'      , 'buddyforms', 'normal', 'default');
+    add_meta_box('buddyforms_form_roles', __("Permissions",'buddyforms'), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default');
+    add_meta_box('buddyforms_form_sidebar', __("Form Elements",'buddyforms'), 'buddyforms_metabox_sidebar'       , 'buddyforms', 'side', 'default');
 
 }
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );

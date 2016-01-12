@@ -61,7 +61,17 @@ function buddyforms_metabox_form_setup(){
     $attached_page = 'false';
     if (isset($buddyform['attached_page']))
         $attached_page = $buddyform['attached_page'];
-    $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => 'Associate a WordPress Page with each Form. The Page will be used to generate the form url. The Page content will not get changed. Just the url is used. This will result in a url like pagename/create/formname or pagename/view/formname. Many Forms can have the same page! For more information read the Documentation'));
+    $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => '
+    Associate a Page with a BuddyForm. The page you select will be used to build the forum URLs:<br>
+    Create: page_name/create/form_name<br>
+    View: page_name/view/form_name<br>
+    Edit: page_name/edit/form_name<br>
+<br><br>
+    Pro Tips:<br>
+    Different BuddyForms can be associated with the same Page.<br>
+    You don’t have to use the auto-generated URLs -- you can add a BuddyForm or list of Posts to any Page or Post using shortcodes.<br>
+
+  '));
 
     $status = 'false';
     if (isset($buddyform['status']))
@@ -76,7 +86,7 @@ function buddyforms_metabox_form_setup(){
     $revision = 'false';
     if (isset($buddyform['revision']))
         $revision = $buddyform['revision'];
-    $form_setup[] = new Element_Checkbox( '<b>' .__('Revision','buddyforms') . '</b>', "buddyforms_options[revision]", array('Revision' => __('Enable frontend revision control.', 'buddyforms')), array('value' => $revision));
+    $form_setup[] = new Element_Checkbox( '<b>' .__('Revision','buddyforms') . '</b>', "buddyforms_options[revision]", array('Revision' => __('Enable frontend revision control', 'buddyforms')), array('value' => $revision));
 
     $admin_bar = 'false';
     if (isset($buddyform['admin_bar']))
@@ -89,10 +99,10 @@ function buddyforms_metabox_form_setup(){
     $form_setup[] = new Element_Radio('<b>' . __("Overwrite Frontend 'Edit Post' Link", 'buddyforms'). '</b>', "buddyforms_options[edit_link]", array('none' => 'None', 'all' => __("All Edit Links", 'buddyforms'), 'my-posts-list' => __("Only in My Posts List", 'buddyforms')), array('view' => 'vertical', 'value' => $edit_link, 'shortDesc' => __('The link to the backend will be changed to use the frontend editing.', 'buddyforms')));
 
     $after_submit = isset($buddyform['after_submit']) ? $buddyform['after_submit'] : 'display_form';
-    $form_setup[] = new Element_Radio('<b>' . __("After Submission", 'buddyforms') . '</b>', "buddyforms_options[after_submit]", array('display_form' => 'Display the Form and Message and continue editing', 'display_post' => 'Display the Post', 'display_posts_list' => 'Display the User Post List', 'display_message' => 'Just display a Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden'));
+    $form_setup[] = new Element_Radio('<b>' . __("After Submission", 'buddyforms') . '</b>', "buddyforms_options[after_submit]", array('display_form' => 'Display the Form and Message', 'display_post' => 'Display the Post', 'display_posts_list' => 'Display the User\'s Post List', 'display_message' => 'Just display the Message'), array('value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden'));
 
     $after_submit_message_text = isset($buddyform['after_submit_message_text']) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
-    $form_setup[] = new Element_Textarea('<b>' . __('Add your Message Text', 'buddyforms') . '</b>', "buddyforms_options[after_submit_message_text]", array('rows' => 3, 'style' => "width:100%", 'value' => $after_submit_message_text, 'shortDesc' => __('<p>
+    $form_setup[] = new Element_Textarea('<b>' . __('After Submission Message', 'buddyforms') . '</b>', "buddyforms_options[after_submit_message_text]", array('rows' => 3, 'style' => "width:100%", 'value' => $after_submit_message_text, 'shortDesc' => __('<p>
         <small>You can use special shortcodes to add dynamic content:<br>
             [form_singular_name] = Singular Name<br>
             [post_title] = The Post Title<br>
@@ -103,13 +113,13 @@ function buddyforms_metabox_form_setup(){
     $bf_ajax = false;
     if (isset($buddyform['bf_ajax']))
         $bf_ajax = $buddyform['bf_ajax'];
-    $form_setup[] = new Element_Checkbox( '<b>' . __('AJAX','buddyforms') . '</b>', "buddyforms_options[bf_ajax]", array('bf_ajax' => __('Disable ajax form submission.', 'buddyforms')), array('shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax));
+    $form_setup[] = new Element_Checkbox( '<b>' . __('AJAX','buddyforms') . '</b>', "buddyforms_options[bf_ajax]", array('bf_ajax' => __('Disable ajax form submission', 'buddyforms')), array('shortDesc' => __('', 'buddyforms'), 'value' => $bf_ajax));
 
 
     $list_posts_option = 'list_all_form';
     if (isset($buddyform['list_posts_option']))
         $list_posts_option = $buddyform['list_posts_option'];
-    $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all_form' => 'List all Author Posts created with this Form', 'list_all' => 'List all Author Posts of the PostType'), array('value' => $list_posts_option, 'shortDesc' => 'You can filter the query to your needs. Reed the <a href="#">Documentation</a>'));
+    $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all_form' => 'List all Author Posts created with this Form', 'list_all' => 'List all Author Posts of the PostType'), array('value' => $list_posts_option, 'shortDesc' => ''));
 
     ?>
     <table class="form-table">

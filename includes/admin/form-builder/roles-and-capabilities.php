@@ -7,12 +7,10 @@ function bf_manage_form_roles_and_capabilities_screen(){
     $form_setup = array();
 
     if($post->post_name == ''){ ?>
-        <div class="bf-roles-main-desc" >
-            <div class="bf-col-content">
-                <h2>You need to save the form before you can setup the Form Capabilities</h2>
-                Roles and Capabilities are not stored as post meta. We use the form slug to identified capabilitys
-            </div>
-        </div>
+
+      <b>You need to save the form before you can setup the Form Capabilities</b><br>
+      Roles and Capabilities are not stored as post meta. We use the form slug to identified capabilitys
+
     <?php
     } else {
         ?>

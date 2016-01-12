@@ -225,7 +225,7 @@ jQuery(document).ready(function(jQuery) {
 			'</td><td>' +
 			'<input class="field-sortable" type="text" name="buddyforms_options[form_fields]['+args[0]+'][options]['+numItems+'][value]">' +
 			'</td><td class="manage-column column-author">' +
-			'<a href="#" id="'+args[0]+'_'+numItems+'" class="bf_delete_input">X</a>' +
+			'<a href="#" id="'+args[0]+'_'+numItems+'" class="bf_delete_input">Delete</a>' +
 			'</td></tr></li></tbody></table>');
     	return false;
 

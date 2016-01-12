@@ -148,14 +148,14 @@ function buddyforms_display_form_element($args){
                     $dropdown = str_replace(' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown);
                 }
 
-                $dropdown = '
+                $dropdown = '</tr><tr>
                             <th scope="row">
                                 <label for="form_title"><b>Taxonomy Default</b></label>
                             </th>
                             <td>
                                 ' . $dropdown . '
                                 <p class="description">You can select a default category</p>
-                            </td>';
+                            </td></tr>';
 
                 $form_fields['general']['taxonomy_default'] = new Element_HTML($dropdown);
 
@@ -421,7 +421,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
                 $form_element = new Element_Radio('', "buddyforms_options[form_fields][" . $field_id . "][default]",array($option['value']), array('value' => $buddyform['form_fields'][$field_id]['default']));
                 $form_element->render();
             echo '</td><td class="manage-column column-author">';
-                echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">X</a>';
+                echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">Delete</a>';
             echo '</td></tr></li></tbody></table>';
 
             $count++;
