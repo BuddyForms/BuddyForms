@@ -155,8 +155,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php');
 
-
-
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/mail-notification.php');
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/roles-and-capabilities.php');

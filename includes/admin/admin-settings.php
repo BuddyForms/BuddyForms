@@ -121,6 +121,9 @@ function buddyforms_settings_page() {
                         </form>
                         <?php
                         break;
+                        default:
+                          do_action('buddyforms_settings_page_tab', $tab);
+                        break;
                 }
             }
             ?>
@@ -283,6 +286,9 @@ function buddyforms_edd_check_license() {
 
 function bf_admin_tabs( $current = 'homepage' ) {
     $tabs = array( 'general' => 'General Settings', 'license' => 'License' );
+
+    $tabs = apply_filters('bf_admin_tabs', $tabs);
+
     $links = array();
 
     echo '<h2 class="nav-tab-wrapper">';
