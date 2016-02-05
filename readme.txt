@@ -4,7 +4,7 @@ Contributors: svenl77
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.9, BuddyPress 2.x
 Tested up to: WordPress 4.4
-Stable tag: 1.5
+Stable tag: 1.5.1
 Author: Sven Lehnert
 Author URI: https://profiles.wordpress.org/svenl77
 License: GPLv2 or later
@@ -36,6 +36,14 @@ If you updated from version 1.3 please test your Form Elements "Featured Image" 
 If you encounter any issues just delete the form elements and add them to the form again. This should fix all issues.
 
 == Changelog ==
+
+1.5.1
+<ul>
+<li>Fixed spelling and help text huge thanks to holden for the review and making all more easy to understand!<li>
+<li>add new action buddyforms_settings_page_tab to allow extension to add new settings tabs to the buddyforms settings page.<li>
+<li>add new filter bf_admin_tabs to register the settings tab and label<li>
+<li>fixed a conflict with userpro using the same function name sortArrayByArray changed to buddyforms_sort_array_by_array<li>
+<ul>
 
 1.5
 <ul>

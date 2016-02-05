@@ -235,10 +235,10 @@ function bf_update_post_meta($post_id, $customfields){
 		return;
 
 
-	foreach( $customfields as $key => $customfield ) : 
-	   
+	foreach( $customfields as $key => $customfield ) :
+
 		if( $customfield['type'] == 'taxonomy' ){
-				
+
 			$taxonomy = get_taxonomy($customfield['taxonomy']);
 
             if(isset($customfield['multiple'])) {
@@ -254,7 +254,6 @@ function bf_update_post_meta($post_id, $customfields){
                             $tax_item[$key] = $tax;
                         }
                     }
-
 
                     wp_set_post_terms($post_id, $tax_item, $customfield['taxonomy'], false);
                 } else {
@@ -330,13 +329,14 @@ function bf_update_post_meta($post_id, $customfields){
 
             }
 		}
-		
-		// Update meta do_action to hook into. This can be interesting if you added new form elements and want to manipulate how they get saved.
+
+		// Update meta do_action to hook into. This can be needed if you added
+    // new form elements and need to manipulate how they get saved.
 		do_action('buddyforms_update_post_meta',$customfield, $post_id);
-       
+
 	   	if(isset($customfield['slug']))
-	   		$slug = $customfield['slug'];	
-		
+	   		$slug = $customfield['slug'];
+
 		if(empty($slug))
 			$slug = sanitize_title($customfield['name']);
 
@@ -349,7 +349,7 @@ function bf_update_post_meta($post_id, $customfields){
 			update_post_meta($post_id, $slug, '' );
         //    $customfields[$key]['value'] = '';
 		}
-			 		                   
+
     endforeach;
 
     return $customfields;

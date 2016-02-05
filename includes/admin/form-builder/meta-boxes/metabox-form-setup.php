@@ -62,7 +62,7 @@ function buddyforms_metabox_form_setup(){
     if (isset($buddyform['attached_page']))
         $attached_page = $buddyform['attached_page'];
     $form_setup[] = new Element_Select( '<b>' . __("Page", 'buddyforms') . '</b>', "buddyforms_options[attached_page]", $options, array('value' => $attached_page, 'shortDesc' => '
-    Associate a Page with a BuddyForm. The page you select will be used to build the forum URLs:<br>
+    Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
     Create: page_name/create/form_name<br>
     View: page_name/view/form_name<br>
     Edit: page_name/edit/form_name<br>

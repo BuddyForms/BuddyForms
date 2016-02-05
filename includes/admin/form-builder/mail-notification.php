@@ -4,7 +4,7 @@ function bf_mail_notification_screen() {
 
     $buddyform = get_post_meta($post->ID, '_buddyforms_options', true);
 
-    echo '<p>' . __('Every form can have different mail notification depends on the post status change. You can create a mail notification for each individual post status. Use the select box and choose the post status you want to create mail notifications for.', 'buddyforms') . '</p><br>';
+    echo '<p>' . __('Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms') . '</p><br>';
     echo '<ul>';
     if (isset($buddyform['mail_notification'])) {
         foreach ($buddyform['mail_notification'] as $key => $value) {
@@ -55,9 +55,7 @@ function buddyforms_new_notification_trigger_form($trigger){
     <h4>User Shortcodes</h4>
     <ul>
         <li><p><b>[user_login] </b>Username</p></li>
-        <li><p><b>[user_nicename] </b>Username Sanitized</p><p><small> user_nicename is url sanitized version of user_login. In general, if you don't use any special characters in your login, then your nicename will always be the same as login. But if you enter email address in the login field during registration, then you will see the difference.
-            For instance, if your login is user@example.com then you will have userexample-com nicename and it will be used in author's urls (like author's archive, post permalink, etc).
-        </small></p></li>
+        <li><p><b>[user_nicename] </b>user_nicename is a url-sanitized version of user_login. For example, if a user’s login is user@example.com, their user_nicename will be userexample-com.</p></li>
         <li><p><b>[user_email]</b> user email</p></li>
         <li><p><b>[first_name]</b> user first name</p></li>
         <li><p><b>[last_name] </b> user last name</p></li>

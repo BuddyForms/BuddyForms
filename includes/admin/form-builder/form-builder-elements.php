@@ -194,7 +194,7 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['name']    = new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array('value' => $name, 'required' => 1));
             $form_fields['general']['slug']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'comments');
             $form_fields['general']['type']    = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
-            $form_fields['general']['html']    = new Element_HTML(__("There are no settings needed so far. You can change the global comment settings in the form control section. If the 'comments' element is added to the form, the user has the possibility to overwrite the global settings and open/close 'comments' for their own post.", 'buddyforms'));
+            $form_fields['general']['html']    = new Element_HTML(__("This Post Field allows users to override the global comments settings so they can open and close comments as they wish.", 'buddyforms'));
             break;
         case 'title':
             unset($form_fields['general']['required']);
@@ -242,7 +242,7 @@ function buddyforms_display_form_element($args){
             $form_fields['general']['slug']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status');
 
             $post_status = isset($customfield['post_status']) ? $customfield['post_status'] : 'post_status';
-            $form_fields['general']['post_status'] = new Element_Checkbox('<b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'id' => "buddyforms_options[form_fields][" . $field_id . "][post_status]", 'shortDesc' => __("You can change the global post status settings in the form control section. If the 'status' element is added to the form, the user has the possibility to overwrite the global settings and change the 'status' for their own post.", 'buddyforms')));
+            $form_fields['general']['post_status'] = new Element_Checkbox('<b>' . __('Select the post status you want to make available in the frontend form', 'buddyforms') . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array('value' => $post_status, 'id' => "buddyforms_options[form_fields][" . $field_id . "][post_status]", 'shortDesc' => __("This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms')));
             $form_fields['general']['type']        = new Element_Hidden("buddyforms_options[form_fields][" . $field_id . "][type]", $field_type);
             break;
         case 'featured-image':
