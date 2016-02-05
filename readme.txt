@@ -3,8 +3,8 @@
 Contributors: svenl77
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.9, BuddyPress 2.x
-Tested up to: WordPress 4.4
-Stable tag: 1.5.1
+Tested up to: WordPress 4.4.2
+Stable tag: 1.5.2
 Author: Sven Lehnert
 Author URI: https://profiles.wordpress.org/svenl77
 License: GPLv2 or later
@@ -36,6 +36,13 @@ If you updated from version 1.3 please test your Form Elements "Featured Image" 
 If you encounter any issues just delete the form elements and add them to the form again. This should fix all issues.
 
 == Changelog ==
+
+1.5.2
+<ul>
+<li>add the loop css for the shortcode buddyforms_the_loop</li>
+<li>Changed help text and layout</li>
+<li>Fixed some smaller issues</li>
+<ul>
 
 1.5.1
 <ul>
