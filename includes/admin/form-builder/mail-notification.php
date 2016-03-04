@@ -74,7 +74,7 @@ function buddyforms_new_notification_trigger_form($trigger){
     </ul>
         ";
 
-    $form_trigger = new Element_Hidden("buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger);
+    $form_trigger = new Element_Hidden("buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger, array('class' => 'trigger'.$trigger));
     $form_trigger->render();
 
     $form_setup[] = new Element_Textbox('<b>' . __("Name", 'buddyforms') . '</b>', "buddyforms_options[mail_notification][" . $trigger . "][mail_from_name]", array('value' => isset($buddyform['mail_notification'][$trigger]['mail_from_name']) ? $buddyform['mail_notification'][$trigger]['mail_from_name'] : '', 'required' => 1, 'shortDesc' => 'the senders name'));

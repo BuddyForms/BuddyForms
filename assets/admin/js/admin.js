@@ -205,8 +205,11 @@ jQuery(document).ready(function(jQuery) {
 
 		var del_id = jQuery(this).attr('id');
 
-		if (confirm('Delete Permanently'))
+		if (confirm('Delete Permanently')){
 			jQuery("#trigger" + del_id).remove();
+			jQuery(".trigger" + del_id).remove();
+		}
+
 
 		return false;
 	});
@@ -304,7 +307,7 @@ jQuery(document).ready(function(jQuery) {
                     return false;
                 }
 
-				jQuery('#mailcontainer').append(data);
+								jQuery('#mailcontainer').append(data);
             }
         });
         return false;

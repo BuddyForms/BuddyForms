@@ -46,6 +46,7 @@ function buddyforms_edit_form_save_meta_box_data($post_id){
     } endif;
 
     // First update post meta
+    //delete_post_meta( $post_id, '_buddyforms_options' );
     update_post_meta( $post_id, '_buddyforms_options', $buddyform );
 
     // Save the Roles and capabilities.
