@@ -286,7 +286,7 @@ function buddyforms_display_form_element($args){
 
 
     if(is_array($form_fields))
-      $form_fields = buddyforms_sort_array_by_Array($form_fields, array('general', 'validation', 'advanced'));
+        $form_fields = buddyforms_sort_array_by_Array($form_fields, array('general', 'validation', 'advanced'));
 
     ob_start(); ?>
     <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id  ?>">

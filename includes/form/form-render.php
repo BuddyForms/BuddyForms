@@ -44,7 +44,7 @@ function buddyforms_form_html( $args ){
                 }
 
         }).validate({
-        ignore: "",
+        ignore: ":input:hidden",
         rules: {
         ';
 
