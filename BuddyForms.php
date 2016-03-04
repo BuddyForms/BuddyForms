@@ -201,6 +201,7 @@ class BuddyForms {
 			|| isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+			|| $hook_suffix == 'buddyforms_page_bf_settings'
 		) {
 
 			if ( is_rtl() ) {
@@ -232,6 +233,7 @@ class BuddyForms {
 				|| isset($post) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php')
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+			|| $hook_suffix == 'buddyforms_page_bf_settings'
 		) {
 				wp_register_script('buddyforms_admin_js', plugins_url('assets/admin/js/admin.js', __FILE__));
 				$admin_text_array = array(

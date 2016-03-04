@@ -12,6 +12,11 @@ function buddyforms_settings_page() {
     global $pagenow, $buddyforms;
     ?>
     <div class="wrap">
+      <style>
+        table.form-table {
+            width: 50%;
+        }
+      </style>
         <?php
         include(BUDDYFORMS_INCLUDES_PATH . '/admin/admin-credits.php');
         if ( 'true' == esc_attr( $_GET['updated'] ) ) echo '<div class="updated" ><p>BuddyForms...</p></div>';

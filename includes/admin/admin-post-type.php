@@ -121,7 +121,7 @@ function buddyforms_regenerate_global_options(){
 }
 
 /**
- * Adds a box to the main column on the Post and Page edit screens.
+ * Register the post type
  */
 function buddyforms_register_post_type(){
 

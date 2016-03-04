@@ -52,7 +52,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
 
 							$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
-
+							ob_start();
 							?>
 
 
@@ -74,7 +74,10 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 								do_action('buddyforms_the_loop_actions', get_the_ID());
 								?>
 							</div>
-						<?php } ?>
+						<?php
+							$meta_tmp = ob_get_clean();
+							echo apply_filters('buddyforms_the_loop_meta_html', $meta_tmp);
+						} ?>
 
 					</div>
 						<?php do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
