@@ -4,7 +4,7 @@ Contributors: svenl77
 Tags: collaborative, publishing, buddypress, groups, custom post types, taxonomy, frontend, posting, editing, forms, form builder
 Requires at least: WordPress 3.9, BuddyPress 2.x
 Tested up to: WordPress 4.4.2
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 Author: Sven Lehnert
 Author URI: https://profiles.wordpress.org/svenl77
 License: GPLv2 or later
@@ -37,9 +37,21 @@ If you encounter any issues just delete the form elements and add them to the fo
 
 == Changelog ==
 
+1.5.3
+<ul>
+<li>Remove the required option from the status field. The required does not make sense on this field as it always has a value. A post can not have no status</li>
+<li>Add new hook_suffix to load the css on the new settings page</li>
+<li>Add a new filer buddyforms_the_loop_meta_html to allow extensions to overwrite the loop meta</li>
+<li>Fixed a small issue if now form elements have been created the array should not get sorted</li>
+<li>update Validation Plugin - v1.15.0</li>
+<li>Add an if statement to avoid empty array issues</li>
+<li>Fixed a ugly validation error where hidden values with required attribute have been validated but could never have a value because they are hidden</li>
+<li>Fixed an mail notifications delete issue. There was a empty array left if the trigger gots deleted.</li>
+</ul>
+
 1.5.2
 <ul>
-<li>add the loop css for the shortcode buddyforms_the_loop</li>
+<li>Add the loop css for the shortcode buddyforms_the_loop</li>
 <li>Changed help text and layout</li>
 <li>Fixed some smaller issues</li>
 <ul>
