@@ -448,20 +448,13 @@ function buddyforms_display_field_group_table($form_fields, $field_id = 'global'
         if (isset($form_fields)) {
             foreach ($form_fields as $key => $field) {
 
-                $attributes = $field->getAttributesArray();
 
-//                echo '<pre>';
-//                print_r($attributes);
-//                echo '</pre>';
 
-                if(!isset($attributes['type']))
-                    $attributes['type'] = 'default';
+                $type   = $field->getAttribute('type');
+                $class  = $field->getAttribute('class');
 
-                $class = '';
-                if(isset($attributes['class']))
-                    $class = $attributes['class'];
 
-                switch($attributes['type']) {
+                switch($type) {
                     case 'html':
                         echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $class . '"><td colspan="2">';
                         $field->render();

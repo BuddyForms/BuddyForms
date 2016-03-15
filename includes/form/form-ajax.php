@@ -63,11 +63,16 @@ function buddyforms_ajax_process_edit_post(){
                     $json['form_notice'] = $display_message;
                     break;
                 default:
-                    $json['post_id']      = $args['post_id'];
-                    $json['editpost_title']  = $args['post_title'];
-                    $json['revision_id']  = $args['revision_id'];
-                    $json['post_parent']  = $args['post_parent'];
-                    $json['form_notice']  = $args['form_notice'];
+                    if(isset($args['post_id']))
+                      $json['post_id'] = $args['post_id'];
+                    if(isset($args['post_title']))
+                      $json['editpost_title'] = $args['post_title'];
+                    if(isset($args['revision_id']))
+                      $json['revision_id'] = $args['revision_id'];
+                    if(isset($args['post_parent']))
+                      $json['post_parent'] = $args['post_parent'];
+                    if(isset($args['form_notice']))
+                      $json['form_notice'] = $args['form_notice'];
                     break;
             }
         }
@@ -82,9 +87,15 @@ function buddyforms_ajax_process_edit_post(){
 }
 
 add_action('wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
 function buddyforms_ajax_delete_post(){
-    global $current_user;
-    get_currentuserinfo();
+    // global $current_user;
+    // get_currentuserinfo();
+
+    echo json_encode('DA bi ihc ');
+    die();
+return;
+
 
     $post_id    = $_POST['post_id'];
     $the_post	= get_post( $post_id );
@@ -92,6 +103,7 @@ function buddyforms_ajax_delete_post(){
     $form_slug = get_post_meta($post_id, '_bf_form_slug', true);
     if(!$form_slug){
         _e('You are not allowed to delete this entry! What are you doing here?', 'buddyforms');
+    die();
         return;
     }
 
@@ -103,6 +115,7 @@ function buddyforms_ajax_delete_post(){
     $user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete );
     if ( $user_can_delete == false ){
         _e('You are not allowed to delete this entry! What are you doing here?', 'buddyforms');
+    die();
         return;
     }
 
@@ -115,6 +128,7 @@ function buddyforms_ajax_delete_post(){
     $user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete );
     if ( $user_can_delete == false ){
         _e('You do not have the required user role to use this form', 'buddyforms');
+            die();
         return;
     }
 
