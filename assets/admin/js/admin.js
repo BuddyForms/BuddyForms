@@ -152,9 +152,8 @@ jQuery(document).ready(function(jQuery) {
 
 		var fieldtype	= jQuery(this).data("fieldtype");
 		var unique		= jQuery(this).data("unique");
-		var fieldtype	= jQuery(this).data("fieldtype");
 
-		var exist = jQuery("#sortable_buddyforms_elements ." + fieldtype);
+		var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
 
 		if(unique == 'unique'){
 			if (exist.length){

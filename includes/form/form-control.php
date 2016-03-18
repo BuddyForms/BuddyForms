@@ -129,17 +129,36 @@ function buddyforms_process_post($args = Array()) {
         // Save the Form slug as post meta
         update_post_meta($post_id, "_bf_form_slug", $form_slug);
 
+        if(isset( $_POST['post_id'] ) && empty( $_POST['post_id'] )){
+          $bf_post = array(
+              'ID'        		  => $post_id,
+              'post_title'      => apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
+              'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
+              'post_type' 		  => $post_type,
+              'post_status' 		=> $post_status,
+              'comment_status'	=> $comment_status,
+              'post_excerpt'		=> $post_excerpt,
+              'post_parent'     => $post_parent,
+          );
+
+          // Update the new post
+          $post_id = wp_update_post( $bf_post, true );
+
+        }
     } else {
         $hasError = true;
         $error_message = $post_id->get_error_message();
     }
 
+
+
     // Display the message
     if( !$hasError ) :
         if(isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] )){
-            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' 1has been successfully updated ', 'buddyforms');
+            $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully updated ', 'buddyforms');
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         } else {
+          // Update the new post
             $info_message .= __('The ', 'buddyforms') . $buddyforms[$form_slug]['singular_name']. __(' has been successfully created ', 'buddyforms');
             $form_notice = '<div class="info alert">'.$info_message.'</div>';
         }
@@ -189,14 +208,14 @@ function buddyforms_update_post($args){
     if( $action == 'update' ) {
 
         $bf_post = array(
-            'ID'        		=> $_POST['post_id'],
-            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
+            'ID'        		  => $_POST['post_id'],
+            'post_title'      => apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
             'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
-            'post_type' 		=> $post_type,
+            'post_type' 		  => $post_type,
             'post_status' 		=> $post_status,
             'comment_status'	=> $comment_status,
             'post_excerpt'		=> $post_excerpt,
-            'post_parent'       => $post_parent,
+            'post_parent'     => $post_parent,
         );
 
         // Update the new post
@@ -209,13 +228,13 @@ function buddyforms_update_post($args){
 
         $bf_post = array(
             'post_parent'       => $post_parent,
-            'post_author' 		=> $post_author,
-            'post_title' 		=> apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
-            'post_content' 		=> apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
-            'post_type' 		=> $post_type,
-            'post_status' 		=> $post_status,
-            'comment_status'	=> $comment_status,
-            'post_excerpt'		=> $post_excerpt,
+            'post_author' 		  => $post_author,
+            'post_title' 		    => apply_filters('bf_update_editpost_title',isset($_POST['editpost_title']) && !empty($_POST['editpost_title']) ? $_POST['editpost_title'] : 'none'),
+            'post_content' 		  => apply_filters('bf_update_editpost_content', isset($_POST['editpost_content']) && !empty($_POST['editpost_content']) ? $_POST['editpost_content'] : ''),
+            'post_type' 		    => $post_type,
+            'post_status' 		  => $post_status,
+            'comment_status'	  => $comment_status,
+            'post_excerpt'		  => $post_excerpt,
             'post_date'         => isset($_POST['post_date'])? $_POST['post_date'] : '',
             'post_date_gmt'     => isset($_POST['post_date'])? $_POST['post_date'] : '',
         );

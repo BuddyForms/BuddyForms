@@ -248,7 +248,7 @@ function bf_form_elements($form, $args){
                     case 'featured-image':
                     case 'featured_image':
 
-                        $attachment_ids = $customfield_val;
+                        $attachment_ids = get_post_thumbnail_id($post_id);
                         $attachments = array_filter( explode( ',', $attachment_ids ) );
 
                         $str = '<div id="bf_files_container_'.$slug.'" class="bf_files_container"><ul class="bf_files">';
