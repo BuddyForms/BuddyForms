@@ -191,23 +191,23 @@ function bf_form_elements($form, $args){
 
                         if(isset($customfield['post_status']) && is_array($customfield['post_status'])){
                             if (in_array('pending', $customfield['post_status']))
-                                $post_status['pending'] = 'Pending Review';
+                                $post_status['pending'] = __('Pending Review', 'buddyforms');
 
                             if (in_array('publish', $customfield['post_status']))
-                                $post_status['publish'] = 'Published';
+                                $post_status['publish'] = __('Published', 'buddyforms');
 
                             if (in_array('draft', $customfield['post_status']))
-                                $post_status['draft'] = 'Draft';
+                                $post_status['draft'] = __('Draft', 'buddyforms');
 
 
                             if (in_array('future', $customfield['post_status']) && empty($customfield_val) || in_array('future', $customfield['post_status']) && get_post_status($post_id) == 'future')
-                                $post_status['future'] = 'Scheduled';
+                                $post_status['future'] = __('Scheduled', 'buddyforms');
 
                             if (in_array('private', $customfield['post_status']))
-                                $post_status['private'] = 'Privately Published';
+                                $post_status['private'] = __('Privately Published', 'buddyforms');
 
                             if (in_array('private', $customfield['post_status']))
-                                $post_status['trash'] = 'Trash';
+                                $post_status['trash'] = __('Trash', 'buddyforms');
 
                             $customfield_val = $the_post->post_status;
 
