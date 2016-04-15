@@ -37,6 +37,12 @@ If you encounter any issues just delete the form elements and add them to the fo
 
 == Changelog ==
 
+1.5.4
+<ul>
+<li>Fixed a bug in the form builder. The class for the unique check was missing.</li>
+<li>Update the post if successfully created and post meta or featured images is added to make the custom fields and attachments available on the normal save_post hooks. This needs to be discussed with some core dev...</li>
+</ul>
+
 1.5.3
 <ul>
 <li>Remove the required option from the status field. The required does not make sense on this field as it always has a value. A post can not have no status</li>

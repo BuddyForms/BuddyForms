@@ -7,9 +7,9 @@ class Element_Textbox extends Element {
 	public function render() {
 		$addons = array();
 		if(!empty($this->prepend))
-			$addons[] = "input-prepend";
-		if(!empty($this->append))
-			$addons[] = "input-append";
+			$addons[] = "input-group";
+		else if (!empty($this->append))
+			$addons[] = "input-group";
 		if(!empty($addons))
 			echo '<div class="', implode(" ", $addons), '">';
 
@@ -22,18 +22,19 @@ class Element_Textbox extends Element {
 	}
 
 	protected function renderAddOn($type = "prepend") {
-		if(!empty($this->$type)) {
-			$span = true;
-			if(strpos($this->$type, "<button") !== false)
-				$span = false;
+		if (empty ($this->$type)) return;
 
-			if($span)
-				echo '<span class="add-on">';
+		$span = true;
+		if(strpos ($this->$type, "<button") !== false)
+			$span = false;
 
-			echo $this->$type;
+		if($span)
+			echo '<span class="input-group-addon">';
+        else
+			echo '<span class="input-group-btn">';
 
-			if($span)
-				echo '</span>';
-		}
+		echo $this->$type;
+
+		echo '</span>';
 	}
 }

@@ -10,6 +10,8 @@ class Element_CKEditor extends Element_Textarea {
     }
 
     function renderJS() {
+        $id = $this->_form->getAttribute("id");
+        $formID = "#" . $id ." #" . $this->_attributes["id"];
         if(!empty($this->basic)) {
             echo <<<JS
 var basicConfig = {
@@ -34,21 +36,20 @@ var basicConfig = {
 };
 JS;
         }
-
-        echo 'CKEDITOR.replace("', $this->_attributes["id"], '"';
+        echo 'var pfbcCkeditor = document.querySelector("' . $formID . '");';
+        echo 'CKEDITOR.replace(pfbcCkeditor';
         if(!empty($this->basic))
             echo ', basicConfig';
         echo ');';
 
         $ajax = $this->_form->getAjax();
-        $id = $this->_form->getAttribute("id");
         if(!empty($ajax))
             echo 'jQuery("#', $id, '").bind("submit", function() { CKEDITOR.instances["', $this->_attributes["id"], '"].updateElement(); });';
     }
 
     function getJSFiles() {
         return array(
-        //    $this->_form->getResourcesPath() . "/ckeditor/ckeditor.js"
+            "//cdn.ckeditor.com/4.5.4/standard/ckeditor.js"
         );
     }
 }

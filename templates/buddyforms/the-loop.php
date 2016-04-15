@@ -41,6 +41,8 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 						<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
+						<?php do_action('buddyforms_the_loop_item_last', get_the_ID()); ?>
+
 					</div>
 
 					<div class="action">

@@ -1,54 +1,36 @@
 <?php
-class View_Vertical extends View {
-	public function render() {
-		echo '<form data-ajax="false"', $this->_form->getAttributes(), '>';
-		$this->_form->getErrorView()->render();
+class View_Vertical extends FormView {
+    private $sharedCount = 0;
 
-		$elements = $this->_form->getElements();
-        $elementSize = sizeof($elements);
-        $elementCount = 0;
-        for($e = 0; $e < $elementSize; ++$e) {
-            $element = $elements[$e];
+    public function renderElement ($element) {
+        if ($element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button) {
+            $element->render();
+            return;
+        }
+        if (!$element instanceof Element_Radio && !$element instanceof Element_Checkbox && !$element instanceof Element_File)
+            $element->appendAttribute("class", "form-control");
 
-            if($element instanceof Element_Button) {
-                if($e == 0 || !$elements[($e - 1)] instanceof Element_Button)
-                    echo '<div class="form-actions">';
-				else
-					echo ' ';
-                $element->render();
-                if(($e + 1) == $elementSize || !$elements[($e + 1)] instanceof Element_Button)
-                    echo '</div>';
-
-            } elseif($element instanceof Element_Hidden)  {
-			   $element->render();
-
-			} elseif($element instanceof Element_HTML)  {
-			   $element->render();
-
-			} else {
-            	echo '<div class="bf_field_group">';
-	                $this->renderLabel($element);
-					echo '<div class="bf_inputs">';
-	            	   $element->render();
-					echo '</div>';
-	          		$this->renderDescriptions($element);
-                echo '</div>'; 
-
-            }
-			++$elementCount;
+        if ($this->sharedCount == 0) {
+            $rowClass = $element->getShared() ? 'row' : '';
+            echo '<div class="'.$rowClass.' form-group elem-'.$element->getAttribute ("id").'"> ', $this->renderLabel($element);
         }
 
-		echo '</form>';
+        if ($element->getShared()) {
+            $colSize = $element->getShared();
+            $this->sharedCount += $colSize[strlen ($colSize) - 1];
+            echo " <div class='$colSize'> ";
+        }
+
+        $element->setAttribute('placeholder', $element->getLabel());
+        echo $element->render(), $this->renderDescriptions($element);
+        if ($element->getShared())
+            echo " </div> ";
+
+        if ($this->sharedCount == 0 || $this->sharedCount == 12) {
+            $this->sharedCount = 0;
+            echo " </div> ";
+        }
     }
 
-	protected function renderLabel(Element $element) {
-        $label = $element->getLabel();
-		echo '<label for="', $element->getAttribute("id"), '">';
-        if(!empty($label)) {
-			if($element->isRequired())
-				echo '<span class="required">* </span>';
-			echo $label;	
-        }
-		echo '</label>'; 
-    }
-}	
+    protected function renderLabel (Element $element) {}
+}

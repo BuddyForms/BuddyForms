@@ -1,10 +1,10 @@
 <?php
-class View_SideBySide extends FormView {
-    protected $class = "form-horizontal";
+class View_SideBySide4 extends FormView {
     private $sharedCount = 0;
 
     public function renderElement ($element) {
         $colSize = 'col-xs-12 col-md-8';
+        $element->bootstrapVersion = 4;
 
         if ($element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button) {
             $element->render();
@@ -20,7 +20,7 @@ class View_SideBySide extends FormView {
         }
 
         if ($this->sharedCount == 0)
-            echo '<div class="form-group elem-'.$element->getAttribute("id").'"> ', $this->renderLabel($element);
+            echo '<div class="row form-group elem-'.$element->getAttribute("id").'"> ', $this->renderLabel($element);
 
         if ($element->getShared ()) {
             $colSize = $element->getShared ();
@@ -38,10 +38,15 @@ class View_SideBySide extends FormView {
     }
 
     protected function renderLabel (Element $element) {
+        if ($this->noLabel) {
+            echo " ";
+            return;
+        }
+
         $label = $element->getLabel();
         if(empty ($label))
             $label = '';
-        echo ' <label class="text-left-xs col-xs-12 col-md-4 control-label" for="', $element->getAttribute("id"), '">';
+        echo ' <label class="text-right-lg col-xs-12 col-md-4 form-control-label" for="', $element->getAttribute("id"), '">';
         if (!$this->noLabel && $element->isRequired())
             echo '<span class="required">* </span>';
         echo $label, '</label> ';
@@ -49,6 +54,6 @@ class View_SideBySide extends FormView {
 
     public function renderCSS () {
         parent::renderCSS();
-        echo '@media (max-width: 1000px) { .text-left-xs { text-align: left !important; }}';
+        echo '@media (min-width: 760px) { .text-right-lg { text-align: right !important; }}';
     }
 }

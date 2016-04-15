@@ -1,35 +1,33 @@
 <?php
-class View_Inline extends View {
-	protected $class = "form-inline";
+class View_Inline extends FormView {
+    protected $class = "form-inline";
 
-	public function render() {
-		$this->_form->appendAttribute("class", $this->class);
+    public function renderElement ($element) {
+        if ($element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button) {
+            $element->render();
+            return;
+        }
+        if (!$element instanceof Element_Radio && !$element instanceof Element_Checkbox && !$element instanceof Element_File)
+            $element->appendAttribute("class", "form-control");
 
-		echo '<form data-ajax="false"', $this->_form->getAttributes(), '>';
-		$this->_form->getErrorView()->render();
-
-		$elements = $this->_form->getElements();
-        $elementSize = sizeof($elements);
-        $elementCount = 0;
-        for($e = 0; $e < $elementSize; ++$e) {
-			if($e > 0)
-				echo ' ';
-            $element = $elements[$e];
-			echo $this->renderLabel($element), ' ', $element->render(), $this->renderDescriptions($element);
-			++$elementCount;
+        if ($this->noLabel) {
+            $label = $element->getLabel();
+            $element->setAttribute("placeholder", $label);
+            $element->setLabel("");
         }
 
-		echo '</form>';
+        echo '<div class="form-group elem-'.$element->getAttribute("id").'"> ', $this->renderLabel($element);
+        echo $element->render(), $this->renderDescriptions($element);
+        echo "</div> ";
     }
 
-	protected function renderLabel(Element $element) {
+    protected function renderLabel (Element $element) {
         $label = $element->getLabel();
-        if(!empty($label)) {
-			echo '<label for="', $element->getAttribute("id"), '">';
-			if($element->isRequired())
-				echo '<span class="required">* </span>';
-			echo $label;	
-			echo '</label>'; 
-        }
+        if(empty ($label))
+            $label = '';
+        echo ' <label for="', $element->getAttribute("id"), '">';
+        if ($element->isRequired())
+            echo '<span class="required">* </span> ';
+        echo $label, '</label> ';
     }
-}	
+}

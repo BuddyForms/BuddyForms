@@ -6,15 +6,18 @@ jQuery(document).ready(function(jQuery) {
 
 	jQuery(document.body).on('change', '.bf_hidden_checkbox' ,function(){
 
-		var ids = jQuery(this).attr('bf_hidden_checkbox');
+		var input = jQuery(this).find("input");
+		var ids = input.attr('bf_hidden_checkbox');
 
 		if(!ids)
 			return;
 
-		if(jQuery(this).is(':checked')){
+		if(jQuery(input).is(':checked')){
 			ids = ids.split(" ");
+
 			ids.forEach(function(entry) {
 				jQuery('#table_row_'+entry).removeClass('hidden');
+				jQuery('#table_row_'+entry +' td .checkbox label').removeClass('hidden');
 				jQuery('#'+entry).removeClass('hidden');
 			});
 		} else {
@@ -155,8 +158,8 @@ jQuery(document).ready(function(jQuery) {
 
 		var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
 
-		if(unique == 'unique'){
-			if (exist.length){
+		if(unique === 'unique'){
+			if (exist !== null && typeof exist === 'object'){
 				alert('This element can only be added once into each form');
 				return false;
 		    }
