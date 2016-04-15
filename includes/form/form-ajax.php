@@ -87,15 +87,10 @@ function buddyforms_ajax_process_edit_post(){
 }
 
 add_action('wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
-add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+//add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
 function buddyforms_ajax_delete_post(){
-    // global $current_user;
-    // get_currentuserinfo();
-
-    echo json_encode('DA bi ihc ');
-    die();
-return;
-
+    global $current_user;
+    get_currentuserinfo();
 
     $post_id    = $_POST['post_id'];
     $the_post	= get_post( $post_id );
@@ -133,7 +128,6 @@ return;
     }
 
     do_action('buddyforms_delete_post',$post_id);
-
     wp_delete_post( $post_id );
 
     echo $post_id;
