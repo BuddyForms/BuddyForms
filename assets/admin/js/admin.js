@@ -18,6 +18,7 @@ jQuery(document).ready(function(jQuery) {
 			ids.forEach(function(entry) {
 				jQuery('#table_row_'+entry).removeClass('hidden');
 				jQuery('#table_row_'+entry +' td .checkbox label').removeClass('hidden');
+				jQuery('#table_row_'+entry +' td #'+entry ).removeClass('hidden');
 				jQuery('#'+entry).removeClass('hidden');
 			});
 		} else {
