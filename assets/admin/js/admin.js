@@ -160,7 +160,7 @@ jQuery(document).ready(function(jQuery) {
 		var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
 
 		if(unique === 'unique'){
-			if (exist !== null && typeof exist === 'object'){
+			if (exist !== null && typeof exist === 'object' && exist.length > 0){
 				alert('This element can only be added once into each form');
 				return false;
 		    }
