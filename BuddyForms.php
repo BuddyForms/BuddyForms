@@ -309,19 +309,23 @@ class BuddyForms {
 
 	}
 	function buddyform_front_js() {
+		global $wp_scripts;
+
+		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
 		do_action('buddyforms_front_js_css_enqueue');
 
 		wp_enqueue_script( 'jquery' );
-        //wp_enqueue_script( 'jquery-form' );
+		wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), WC_VERSION );
+
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-widgets' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 
-        wp_enqueue_script( 'jquery-validation', plugins_url('assets/resources/jquery.validate.min.js', __FILE__) , array( 'jquery' ) );
+    wp_enqueue_script( 'jquery-validation', plugins_url('assets/resources/jquery.validate.min.js', __FILE__) , array( 'jquery' ) );
 
-        wp_enqueue_script( 'buddyforms-select2-js', plugins_url('includes/resources/select2/select2.min.js', __FILE__) , array( 'jquery' ), '3.5.2' );
-        wp_enqueue_style( 'buddyforms-select2-css',plugins_url('includes/resources/select2/select2.css', __FILE__));
+    wp_enqueue_script( 'buddyforms-select2-js', plugins_url('includes/resources/select2/select2.min.js', __FILE__) , array( 'jquery' ), '3.5.2' );
+    wp_enqueue_style( 'buddyforms-select2-css',plugins_url('includes/resources/select2/select2.css', __FILE__));
 
 		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__), array('jquery-ui-core' ,'jquery-ui-datepicker', 'jquery-ui-slider') );
 		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css',	plugins_url('includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__));

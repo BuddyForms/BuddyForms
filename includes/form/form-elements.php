@@ -224,8 +224,11 @@ function bf_form_elements($form, $args){
 
                             $element_attr['class'] = $element_attr['class'] . ' bf_datetime';
 
+                            $element_attr['id'] = $element_attr['id'] . '_bf_datetime';
+
                             $form->addElement(new Element_HTML('<div class="bf_datetime_wrap">'));
                             $form->addElement(new Element_Textbox('Schedule Time', 'schedule', $element_attr));
+                            //$form->addElement(new Element_Date('Schedule Time', 'schedule', $element_attr));
                             $form->addElement(new Element_HTML('</div>'));
                         }
                         break;

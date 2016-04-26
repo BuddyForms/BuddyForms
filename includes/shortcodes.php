@@ -58,7 +58,7 @@ function buddyforms_the_loop($args){
     $list_posts_option = $buddyforms[$form_slug]['list_posts_option'];
 
     $user_id = get_current_user_id();
-    $post_status = array('publish', 'pending', 'draft');
+    $post_status = array('publish', 'pending', 'draft', 'future');
 
     if (!$user_id)
         $post_status = array('publish');
@@ -106,7 +106,7 @@ function buddyforms_the_loop($args){
 
 	// Support for wp_pagenavi
 	if(function_exists('wp_pagenavi')){
-		wp_pagenavi( array( 'query' => $the_lp_query) );	
+		wp_pagenavi( array( 'query' => $the_lp_query) );
 	}
     wp_reset_postdata();
 

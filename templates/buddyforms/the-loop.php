@@ -19,13 +19,16 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 					$post_status_css = 'bf-pending';
 
 				if( $post_status == 'publish')
-					$post_status_name = __('Published', 'buddyforms'); 
-					
+					$post_status_name = __('Published', 'buddyforms');
+
 				if( $post_status == 'draft')
-					$post_status_name = __('Draft', 'buddyforms');  
+					$post_status_name = __('Draft', 'buddyforms');
 
 				if( $post_status == 'pending')
-					$post_status_name = __('Pending Review', 'buddyforms'); 
+					$post_status_name = __('Pending Review', 'buddyforms');
+
+				if( $post_status == 'future')
+					$post_status_name = __('Scheduled', 'buddyforms'); 
 
 				$post_status_css = apply_filters('bf_post_status_css',$post_status_css,$form_slug);
 
