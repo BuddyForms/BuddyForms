@@ -154,7 +154,7 @@ function buddyforms_form_html( $args ){
 
     // Set the form attribute
     $form->configure(array(
-        "prevent" => array("bootstrap", "jQuery", "focus"),
+        //"prevent" => array("bootstrap", "jQuery", "focus"),
         "action" => $redirect_to,
         "view" => new View_Vertical,
         'class' => 'standard-form',

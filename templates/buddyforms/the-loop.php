@@ -28,7 +28,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 					$post_status_name = __('Pending Review', 'buddyforms');
 
 				if( $post_status == 'future')
-					$post_status_name = __('Scheduled', 'buddyforms'); 
+					$post_status_name = __('Scheduled', 'buddyforms');
 
 				$post_status_css = apply_filters('bf_post_status_css',$post_status_css,$form_slug);
 
@@ -57,7 +57,6 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 					<div class="action">
 						<?php _e( 'Created', 'buddyforms' ); ?> <?php the_time('F j, Y') ?>
 
-
 						<?php
 						if (get_the_author_meta('ID') ==  get_current_user_id()){
 							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
@@ -65,7 +64,6 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 							$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
 							ob_start();
 							?>
-
 
 							<div class="meta">
 								<div class="item-status"><?php echo $post_status_name; ?></div>

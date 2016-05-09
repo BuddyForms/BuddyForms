@@ -121,6 +121,11 @@ function buddyforms_metabox_form_setup(){
         $list_posts_option = $buddyform['list_posts_option'];
     $form_setup[] = new Element_Radio('<b>' . __("List Posts Options", 'buddyforms') . '</b>', "buddyforms_options[list_posts_option]", array('list_all_form' => 'List all Author Posts created with this Form', 'list_all' => 'List all Author Posts of the PostType'), array('value' => $list_posts_option, 'shortDesc' => ''));
 
+    $list_posts_style = 'list';
+    if (isset($buddyform['list_posts_style']))
+        $list_posts_style = $buddyform['list_posts_style'];
+    $form_setup[] = new Element_Radio('<b>' . __("List Style", 'buddyforms') . '</b>', "buddyforms_options[list_posts_style]", array('list' => 'List', 'table' => 'Table'), array('value' => $list_posts_style, 'shortDesc' => 'Do you want to list post in a ul li list or as table.'));
+
     ?>
     <table class="form-table">
         <tbody>

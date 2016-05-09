@@ -55,7 +55,8 @@ function buddyforms_the_loop($args){
 	if(empty($post_type))
 		$post_type = $buddyforms[$form_slug]['post_type'];
 
-    $list_posts_option = $buddyforms[$form_slug]['list_posts_option'];
+    $list_posts_option  = $buddyforms[$form_slug]['list_posts_option'];
+    $list_posts_style   = $buddyforms[$form_slug]['list_posts_style'];
 
     $user_id = get_current_user_id();
     $post_status = array('publish', 'pending', 'draft', 'future');
@@ -102,7 +103,14 @@ function buddyforms_the_loop($args){
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
-	buddyforms_locate_template('buddyforms/the-loop.php');
+
+
+  if($list_posts_style == 'table') {
+    buddyforms_locate_template('buddyforms/the-table.php');
+  } else {
+    buddyforms_locate_template('buddyforms/the-loop.php');
+  }
+
 
 	// Support for wp_pagenavi
 	if(function_exists('wp_pagenavi')){

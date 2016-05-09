@@ -29,6 +29,8 @@ function buddyforms_attached_page_rewrite_rules($flush_rewrite_rules = FALSE){
     }
     if($flush_rewrite_rules)
         flush_rewrite_rules();
+
+  do_action('buddyforms_after_attache_page_rewrite_rules', $flush_rewrite_rules);
 }
 
 /**
