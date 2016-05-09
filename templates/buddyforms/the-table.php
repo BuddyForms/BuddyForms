@@ -23,6 +23,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             </th>
           </tr>
          </thead>
+				 <tbody>
 
 			<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
@@ -50,7 +51,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 				do_action( 'bp_before_blog_post' ) ?>
 
-        <tbody>
+
           <tr id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
             <td>
               <span class="mobile-th"><?php _e( 'Created', 'buddyforms' ); ?></span>
@@ -99,7 +100,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             </td>
           </tr>
           <?php do_action('buddyforms_the_table_tr_last', get_the_ID()); ?>
-        </tbody>
+
 
 				<?php do_action( 'bf_after_loop_item' ) ?>
 
@@ -113,7 +114,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 			</div>
 
-		</ul>
+		</tbody>
   </table>
 	<?php else : ?>
 
