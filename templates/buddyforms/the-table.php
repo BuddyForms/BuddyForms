@@ -1,7 +1,7 @@
 <?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo(); ?>
-  
+
     <div class="buddyforms_posts_table"
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>

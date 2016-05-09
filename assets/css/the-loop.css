@@ -204,7 +204,7 @@ ul.buddyforms-list .draft .item-status { background: red; }
   display: block;
   text-indent: -999px;
   overflow: hidden;
-  background: url(../../images/ico-edit.png) no-repeat 0 0;
+  background: url(../images/ico-edit.png) no-repeat 0 0;
 }
 .buddyforms_posts_table .edit_links li+li a{
   background-position: -50px 0;
