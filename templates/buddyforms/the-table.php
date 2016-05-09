@@ -1,8 +1,8 @@
 <?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo(); ?>
-
-    <div class="buddyforms_posts_table">
+  
+    <div class="buddyforms_posts_table"
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>
 
@@ -70,13 +70,12 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             <div class="meta">
               <span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>
               <ul class="edit_links">
-
                 <?php
     						if (get_the_author_meta('ID') ==  get_current_user_id()){
     							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
     							$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
-    							ob_start();
 
+                  ob_start();
                     if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
                       ?><li><?php
                       if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] != 'none') {
@@ -91,23 +90,10 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
     									echo ' <li> <a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#">' . __( 'Delete', 'buddyforms' ) . '</a></li>';
     								 }
     								do_action('buddyforms_the_loop_actions', get_the_ID());
-    								?>
-    							</div>
-    						<?php
     							$meta_tmp = ob_get_clean();
-    							echo apply_filters('buddyforms_the_loop_meta_html', $meta_tmp);
+
+                  echo apply_filters('buddyforms_the_loop_meta_html', $meta_tmp);
     						} ?>
-
-
-
-
-
-
-
-
-
-
-
               </ul>
             </div>
             </td>
@@ -138,7 +124,5 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	<?php endif; ?>
 	<div class="bf_modal"><div style="display: none;"><?php wp_editor('','editpost_content'); ?></div></div>
 </div>
-
 <?php
-
 wp_reset_query();
