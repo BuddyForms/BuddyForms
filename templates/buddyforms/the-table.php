@@ -2,7 +2,7 @@
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 	get_currentuserinfo(); ?>
 
-    <div class="buddyforms_posts_table"
+    <div class="buddyforms_posts_table">
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>
 
@@ -98,7 +98,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             </div>
             </td>
           </tr>
-          <?php //do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
+          <?php do_action('buddyforms_the_table_tr_last', get_the_ID()); ?>
         </tbody>
 
 				<?php do_action( 'bf_after_loop_item' ) ?>
