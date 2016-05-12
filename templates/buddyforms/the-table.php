@@ -65,7 +65,6 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             <td>
               <span class="mobile-th"><?php _e( 'Status', 'buddyforms' ); ?></span>
               <div class="table-item-status"><?php echo $post_status_name ?></div>
-              <div class="item-status-action">published 29/04/2016</div>
             </td>
             <td>
             <div class="meta">
