@@ -43,8 +43,8 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	if ( $restored_from_meta = get_post_meta( $post->ID, '_post_restored_from', true ) ) {
 		$author = get_user_by( 'id', $restored_from_meta['restored_by_user'] );
 		/* translators: revision date format, see http://php.net/date */
-		$datef = _x( 'j F, Y @ G:i:s', 'revision date format' );
-		$date = date_i18n( $datef, strtotime( $restored_from_meta['restored_time'] ) );
+		$datef     = _x( 'j F, Y @ G:i:s', 'revision date format' );
+		$date      = date_i18n( $datef, strtotime( $restored_from_meta['restored_time'] ) );
 		$time_diff = human_time_diff( $restored_from_meta['restored_time'] );
 		?>
 		<hr/>
