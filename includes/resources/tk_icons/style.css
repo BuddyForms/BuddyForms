@@ -1,8 +1,8 @@
 /* The TK Icon Fonts! */
 @font-face {
     font-family: 'icomoon';
-    src:url('fonts/icomoon.eot');
-    src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    src: url('fonts/icomoon.eot');
+    src: url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
     url('fonts/icomoon.woff') format('woff'),
     url('fonts/icomoon.ttf') format('truetype'),
     url('fonts/icomoon.svg#icomoon') format('svg');
@@ -39,15 +39,19 @@ you can use the generic selector below, but it's slower:
     line-height: 1;
     -webkit-font-smoothing: antialiased;
 }
+
 .tk-icon-store:before {
     content: "\e002";
 }
+
 .tk-icon-support:before {
     content: "\e001";
 }
+
 .tk-icon-blog:before {
     content: "\e003";
 }
+
 .tk-icon-buddyforms:before {
     content: "\e000";
 }

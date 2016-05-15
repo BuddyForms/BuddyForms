@@ -1,10 +1,11 @@
 <?php
-function buddyforms_metabox_form_footer(){
+function buddyforms_metabox_form_footer() {
 
-    global $post;
+	global $post;
 
-    if($post->post_type != 'buddyforms')
-        return;
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
 
 
 }

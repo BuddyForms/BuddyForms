@@ -1,79 +1,80 @@
 /* --- Form A --- */
 .the_buddyforms_form .bf_field_group input.error {
-    border:1px solid red;
+    border: 1px solid red;
 }
+
 .the_buddyforms_form.bf_field_group.a textarea.error {
-    border:1px solid red;
+    border: 1px solid red;
 }
 
 .the_buddyforms_form .bf_field_group label.error {
-    color:red;
-}
-.the_buddyforms_form .bf_field_group input.error {
-    border:1px solid red;
+    color: red;
 }
 
+.the_buddyforms_form .bf_field_group input.error {
+    border: 1px solid red;
+}
 
 .the_buddyforms_form {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .the_buddyforms_form .bf_field_group {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .the_buddyforms_form .bf_field_group label {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .the_buddyforms_form .bf_field_group label p {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .the_buddyforms_form .bf_field_group .bf_inputs {
-	margin: 0;
+    margin: 0;
 }
 
 .the_buddyforms_form .bf_field_group .bf_inputs .wp-editor-container table tr {
-	background: transparent;
+    background: transparent;
 }
 
 .the_buddyforms_form form label {
-    display:block;
-	font-weight: normal !important;
+    display: block;
+    font-weight: normal !important;
 }
 
 .the_buddyforms_form span.help-inline,
 .the_buddyforms_form span.help-block {
-	color: #888;
-	font-size: 85%;
-	font-style: italic;
-	font-weight: normal;
+    color: #888;
+    font-size: 85%;
+    font-style: italic;
+    font-weight: normal;
 }
 
 .the_buddyforms_form .revision {
-	overflow: auto;
-	overflow-x: hidden;
-	margin: 40px 0 20px 0;
+    overflow: auto;
+    overflow-x: hidden;
+    margin: 40px 0 20px 0;
 }
 
 .the_buddyforms_form ul.post-revisions {
-	list-style: none outside none;
-	margin: 10px 0;
+    list-style: none outside none;
+    margin: 10px 0;
 }
 
 .the_buddyforms_form ul.post-revisions li {
-	margin: 5px 0;
+    margin: 5px 0;
 }
 
 .the_buddyforms_form ul.post-revisions li img {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .the_buddyforms_form .post-revisions li {
-	float: left;
-	padding: 5px;
-	width: 100%;
+    float: left;
+    padding: 5px;
+    width: 100%;
 }
 
 .the_buddyforms_form .standard-form textarea,
@@ -82,29 +83,29 @@
 .the_buddyforms_form .standard-form input[type=text],
 .the_buddyforms_form .standard-form input[type=email],
 .the_buddyforms_form .standard-form input[type=password] {
-	width: 100%;
-	border: 1px inset #ccc;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	color: #888;
-	font: inherit;
-	font-size: 14px;
-	padding: 6px;
+    width: 100%;
+    border: 1px inset #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #888;
+    font: inherit;
+    font-size: 14px;
+    padding: 6px;
 }
 
 .the_buddyforms_form #insert-media-button {
-	padding: 1px 7px 1px 5px;
+    padding: 1px 7px 1px 5px;
 }
 
 .the_buddyforms_form #wp-editpost_content-editor-tools .wp-switch-editor {
-	height: auto !important;
+    height: auto !important;
 }
 
 /** BuddyPress Fix for the Theme Compatibility **/
 #buddypress table tr td, #buddypress table tr th {
-	padding: 0px;
-	vertical-align: middle;
+    padding: 0px;
+    vertical-align: middle;
 }
 
 ul.product_images.ui-sortable li img {
@@ -685,33 +686,30 @@ html[dir=rtl] .select2-container-multi .select2-search-choice-close {
     }
 }
 
-
-
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
    with position:fixed. Width, height, top and left speak
    for themselves. Background we set to 80% white with
    our animation centered, and no-repeating */
 .bf_modal {
-    display:    none;
-    position:   fixed;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba( 255, 255, 255, .8 )
-    url('/wp-includes/js/thickbox/loadingAnimation.gif')
-    50% 50%
-    no-repeat;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .8) url('/wp-includes/js/thickbox/loadingAnimation.gif') 50% 50% no-repeat;
 }
+
 .bf_modal_content {
-    display:    none;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background-color: #fff;
 }
+
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
 form.bf_loading {
@@ -727,10 +725,12 @@ form.bf_loading .bf_modal {
 div.bf_files_container ul {
     list-style: none outside none !important;
 }
+
 div.bf_files_container ul li {
     line-height: 14px !important;
     margin-top: 20px;
 }
+
 .bf_attachment_li {
     padding-top: 10px;
     min-height: 64px;
@@ -739,10 +739,11 @@ div.bf_files_container ul li {
 .bf_attachment_li img {
     float: left;
     padding-right: 10px;
-    width:64px;
-    height:64px;
+    width: 64px;
+    height: 64px;
 }
+
 #poststuff {
-     padding-top: 0;
-     min-width: 0;
+    padding-top: 0;
+    min-width: 0;
 }

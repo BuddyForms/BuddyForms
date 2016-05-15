@@ -1,12 +1,13 @@
 <?php
-function buddyforms_metabox_form_header(){
+function buddyforms_metabox_form_header() {
 
-    global $post;
+	global $post;
 
-    if($post->post_type != 'buddyforms')
-        return;
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
 
-    //include(BUDDYFORMS_INCLUDES_PATH . '/admin/admin-credits.php');
+	//include(BUDDYFORMS_INCLUDES_PATH . '/admin/admin-credits.php');
 }
 
 add_action( 'edit_form_top', 'buddyforms_metabox_form_header' );

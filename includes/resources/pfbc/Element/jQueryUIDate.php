@@ -1,7 +1,8 @@
 <?php
+
 class Element_jQueryUIDate extends Element_Textbox {
 	protected $_attributes = array(
-		"type" => "text",
+		"type"         => "text",
 		"autocomplete" => "off"
 	);
 	protected $jQueryOptions;
@@ -18,13 +19,13 @@ class Element_jQueryUIDate extends Element_Textbox {
 		);
 	}
 
-    public function jQueryDocumentReady() {
-        parent::jQueryDocumentReady();
-        echo 'jQuery("#', $this->_attributes["id"], '").datepicker(', $this->jQueryOptions(), ');';
-    }
+	public function jQueryDocumentReady() {
+		parent::jQueryDocumentReady();
+		echo 'jQuery("#', $this->_attributes["id"], '").datepicker(', $this->jQueryOptions(), ');';
+	}
 
-    public function render() {
-        $this->validation[] = new Validation_Date;
-        parent::render();
-    }
+	public function render() {
+		$this->validation[] = new Validation_Date;
+		parent::render();
+	}
 }
