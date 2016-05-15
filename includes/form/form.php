@@ -31,7 +31,7 @@ function buddyforms_create_edit_form( $args ) {
         'form_notice'   => '',
     ), $args));
 
-    get_currentuserinfo();
+    $current_user = wp_get_current_user();
 
     if(empty($post_type))
         $post_type = $buddyforms[$form_slug]['post_type'];

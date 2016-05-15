@@ -48,10 +48,6 @@ function buddyforms_wp_before_admin_bar_render(){
     }
 }
 
-function bf_add_element($form, $element){
-	$form->addElement($element);
-}
-
 function bf_get_post_status_array($select_condition = false){
 
     $status_array = array(
@@ -133,4 +129,31 @@ function buddyforms_locate_template($file) {
     } else {
         include (BUDDYFORMS_TEMPLATE_PATH . $file);
     }
+}
+
+// Display the WordPress Login Form
+function buddyforms_login_form(){
+    // Get The Login Form
+    echo buddyforms_get_login_form();
+}
+
+// Create the BuddyForms Login Form
+function buddyforms_get_login_form() {
+    $wp_login_form = '<h3>' . __('You need to be logged in to use this Form', 'buddyforms') . '</h3>';
+    $wp_login_form .= wp_login_form(array('echo' => false));
+    $wp_login_form = apply_filters('buddyforms_wp_login_form', $wp_login_form);
+    return $wp_login_form;
+}
+
+// Helper Function to get the Get the REQUEST_URI Vars
+function bf_get_url_var($name){
+    $strURL = $_SERVER['REQUEST_URI'];
+    $arrVals = explode("/",$strURL);
+    $found = 0;
+    foreach ($arrVals as $index => $value)
+    {
+        if($value == $name) $found = $index;
+    }
+    $place = $found + 1;
+    return ($found == 0) ? 1 : $arrVals[$place];
 }

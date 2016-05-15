@@ -419,7 +419,7 @@ function buddyforms_form_element_multiple($form_fields, $args){
                 $form_element = new Element_Textbox('', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array('value' => $option['value']));
                 $form_element->render();
             echo '</td><td>';
-                $form_element = new Element_Radio('', "buddyforms_options[form_fields][" . $field_id . "][default]",array($option['value']), array('value' => $buddyform['form_fields'][$field_id]['default']));
+                $form_element = new Element_Radio('', "buddyforms_options[form_fields][" . $field_id . "][default]",array($option['value']), array('value' => isset($buddyform['form_fields'][$field_id]['default']) ? $buddyform['form_fields'][$field_id]['default'] : ''));
                 $form_element->render();
             echo '</td><td class="manage-column column-author">';
                 echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">Delete</a>';

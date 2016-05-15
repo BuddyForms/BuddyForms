@@ -90,7 +90,7 @@ add_action('wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post')
 //add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
 function buddyforms_ajax_delete_post(){
     global $current_user;
-    get_currentuserinfo();
+    $current_user = wp_get_current_user();
 
     $post_id    = $_POST['post_id'];
     $the_post	= get_post( $post_id );

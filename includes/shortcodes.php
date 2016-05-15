@@ -21,17 +21,6 @@ function buddyforms_create_edit_form_shortcode($args){
     return $create_edit_form;
 }
 
-function bf_get_url_var($name){
-    $strURL = $_SERVER['REQUEST_URI'];
-    $arrVals = explode("/",$strURL);
-    $found = 0;
-    foreach ($arrVals as $index => $value)
-    {
-        if($value == $name) $found = $index;
-    }
-    $place = $found + 1;
-    return ($found == 0) ? 1 : $arrVals[$place];
-}
 
 /**
  * Shortcode to display author posts of a specific post type
@@ -39,9 +28,14 @@ function bf_get_url_var($name){
  * @package BuddyForms
  * @since 0.3 beta
  */
-add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
 function buddyforms_the_loop($args){
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
+
+    if ( !is_user_logged_in() ) :
+        buddyforms_login_form();
+        return;
+    endif;
+
 
     extract(shortcode_atts(array(
         'post_type' => '',
@@ -59,6 +53,7 @@ function buddyforms_the_loop($args){
     $list_posts_style   = $buddyforms[$form_slug]['list_posts_style'];
 
     $user_id = get_current_user_id();
+
     $post_status = array('publish', 'pending', 'draft', 'future');
 
     if (!$user_id)
@@ -97,20 +92,18 @@ function buddyforms_the_loop($args){
 
     $query_args =  apply_filters('bf_post_to_display_args',$query_args);
 
+
     do_action('buddyforms_the_loop_start', $query_args);
 
 	$the_lp_query = new WP_Query( $query_args );
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
-
-
-  if($list_posts_style == 'table') {
-    buddyforms_locate_template('buddyforms/the-table.php');
-  } else {
-    buddyforms_locate_template('buddyforms/the-loop.php');
-  }
-
+    if($list_posts_style == 'table') {
+        buddyforms_locate_template('buddyforms/the-table.php');
+    } else {
+        buddyforms_locate_template('buddyforms/the-loop.php');
+    }
 
 	// Support for wp_pagenavi
 	if(function_exists('wp_pagenavi')){
@@ -120,6 +113,10 @@ function buddyforms_the_loop($args){
 
     do_action('buddyforms_the_loop_end', $query_args);
 }
+add_shortcode('buddyforms_the_loop', 'buddyforms_the_loop');
+
+
+
 
 /**
  * Shortcode to display author posts of a specific post type
@@ -128,9 +125,6 @@ function buddyforms_the_loop($args){
  * @since 0.3 beta
  */
 add_shortcode('buddyforms_list_all', 'buddyforms_list_all');
-
-
-
 function buddyforms_list_all($args){
     global $the_lp_query, $buddyforms, $form_slug, $paged;
 
@@ -176,9 +170,7 @@ function buddyforms_list_all($args){
 //
 // BuddyForms Schortcode Buttons
 //
-
 add_shortcode('buddyforms_nav', 'buddyforms_nav');
-
 function buddyforms_nav($args){
 
     extract(shortcode_atts(array(

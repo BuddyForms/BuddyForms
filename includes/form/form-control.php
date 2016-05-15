@@ -15,7 +15,7 @@ function buddyforms_process_post($args = Array()) {
     $hasError = false;
     $info_message = '';
 
-    get_currentuserinfo();
+    $current_user = wp_get_current_user();
 
     extract(shortcode_atts(array(
         'post_type' 	=> '',

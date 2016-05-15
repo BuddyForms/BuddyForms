@@ -1,6 +1,7 @@
 <?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
-	get_currentuserinfo(); ?>
+
+    $current_user = wp_get_current_user(); ?>
 
     <div class="buddyforms_posts_table">
 
@@ -23,7 +24,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
             </th>
           </tr>
          </thead>
-				 <tbody>
+          <tbody>
 
 			<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 

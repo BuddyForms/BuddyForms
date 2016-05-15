@@ -3,7 +3,7 @@ class Element_Radio extends OptionElement {
 	protected $_attributes = array("type" => "radio");
 	protected $inline;
 
-	public function render() { 
+	public function render() {
 		$labelClass = $this->getAttribute ('class');
 		if(!empty($this->inline))
 			$labelClass .= "radio-inline";
@@ -14,7 +14,7 @@ class Element_Radio extends OptionElement {
 			$value = $this->getOptionValue($value);
 
 			echo '<label class="', $labelClass . '">';
-            echo '<input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes(array("id", "class", "value", "checked")), ' value="', $this->filter($value), '"';
+            echo '<input id="', isset($this->_attributes["id"]) ? $this->_attributes["id"] : '', '-', $count, '"', $this->getAttributes(array("id", "class", "value", "checked")), ' value="', $this->filter($value), '"';
 			if(isset($this->_attributes["value"]) && $this->_attributes["value"] == $value)
 				echo ' checked="checked"';
 			echo '/> ', $text, ' </label> ';

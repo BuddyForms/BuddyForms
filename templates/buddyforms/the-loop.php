@@ -1,6 +1,7 @@
 <?php
 global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
-	get_currentuserinfo(); ?>
+
+	$current_user = wp_get_current_user(); ?>
 
     <div class="buddyforms_posts_list">
 
@@ -32,7 +33,9 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 				$post_status_css = apply_filters('bf_post_status_css',$post_status_css,$form_slug);
 
-				do_action( 'bp_before_blog_post' ) ?>
+				do_action( 'bp_before_blog_post' );
+
+				?>
 
 				<li id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
 					<div class="item-avatar">
@@ -54,42 +57,45 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 					</div>
 
-					<div class="action">
-						<?php _e( 'Created', 'buddyforms' ); ?> <?php the_time('F j, Y') ?>
+					<?php if(is_user_logged_in()) { ?>
+						<div class="action">
+							<?php _e( 'Created', 'buddyforms' ); ?> <?php the_time('F j, Y') ?>
 
-						<?php
-						if (get_the_author_meta('ID') ==  get_current_user_id()){
-							$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
+							<?php
+							if (get_the_author_meta('ID') ==  get_current_user_id()){
+								$permalink = get_permalink( $buddyforms[$form_slug]['attached_page'] );
 
-							$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
-							ob_start();
-							?>
-
-							<div class="meta">
-								<div class="item-status"><?php echo $post_status_name; ?></div>
-								<?php
-								if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
-
-									if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] != 'none') {
-										echo apply_filters( 'bf_loop_edit_post_link','<a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>', get_the_ID());
-									 } else {
-										echo apply_filters( 'bf_loop_edit_post_link', bf_edit_post_link('Edit'), get_the_ID() );
-									 }
-
-								}
-								if( current_user_can('buddyforms_'.$form_slug.'_delete') ) {
-									echo ' - <a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#">' . __( 'Delete', 'buddyforms' ) . '</a>';
-								 }
-								do_action('buddyforms_the_loop_actions', get_the_ID());
+								$permalink = apply_filters('buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[$form_slug]['attached_page']);
+								ob_start();
 								?>
-							</div>
-						<?php
-							$meta_tmp = ob_get_clean();
-							echo apply_filters('buddyforms_the_loop_meta_html', $meta_tmp);
-						} ?>
 
-					</div>
-						<?php do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
+								<div class="meta">
+									<div class="item-status"><?php echo $post_status_name; ?></div>
+									<?php
+									if( current_user_can('buddyforms_'.$form_slug.'_edit') ) {
+
+										if(isset($buddyforms[$form_slug]['edit_link']) && $buddyforms[$form_slug]['edit_link'] != 'none') {
+											echo apply_filters( 'bf_loop_edit_post_link','<a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug. '/' .get_the_ID() . '">' . __( 'Edit', 'buddyforms' ) .'</a>', get_the_ID());
+										 } else {
+											echo apply_filters( 'bf_loop_edit_post_link', bf_edit_post_link('Edit'), get_the_ID() );
+										 }
+
+									}
+									if( current_user_can('buddyforms_'.$form_slug.'_delete') ) {
+										echo ' - <a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#">' . __( 'Delete', 'buddyforms' ) . '</a>';
+									 }
+									do_action('buddyforms_the_loop_actions', get_the_ID());
+									?>
+								</div>
+
+								<?php
+								$meta_tmp = ob_get_clean();
+								echo apply_filters('buddyforms_the_loop_meta_html', $meta_tmp);
+							} ?>
+
+						</div>
+					<?php } ?>
+					<?php //do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
 					<div class="clear"></div>
 				</li>
 
