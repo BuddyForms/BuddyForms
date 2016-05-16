@@ -34,7 +34,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '1.5.3';
+	public $version = '1.6 Developer Version';
 
 	/**
 	 * Initiate the class
@@ -434,8 +434,6 @@ function buddyforms_edd_plugin_updater() {
 			'url'       => home_url()
 		)
 	);
-
-	//print_r($edd_updater);
 
 }
 
