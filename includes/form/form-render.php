@@ -25,110 +25,7 @@ function buddyforms_form_html( $args ) {
 
 	session_id( 'buddyforms-create-edit-form' );
 
-	$form_slug_js = str_replace( '-', '_', $form_slug );
 
-	// Form HTML Start. The Form is rendered as last step.
-	$form_html = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
-
-	// Create the needed Validation JS.
-	// To have multiple forms on one page work nicely we added the js inline for now.
-	// Todo: create a separate function and add the js correctly.
-
-	$form_html .= '
-    <script>
-    var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";
-    jQuery(function() {
-        var validator_' . $form_slug_js . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
-                if(jQuery(\'textarea\').length > 0) {
-                    // update underlying textarea before submit validation
-                    tinyMCE.triggerSave();
-                }
-
-        }).validate({
-        ignore: ":input:hidden",
-        rules: {
-        ';
-
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) : foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $form_field ) {
-		if ( isset( $form_field['required'] ) ) {
-
-			$field_slug = str_replace( "-", "", $form_field['slug'] );
-			if ( $field_slug ) :
-				$form_html .= $field_slug . ': {
-                        required: true,';
-
-				if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
-					$form_html .= 'min: ' . $form_field['validation_min'] . ',';
-				}
-
-				if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
-					$form_html .= 'max: ' . $form_field['validation_max'] . ',';
-				}
-
-				if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
-					$form_html .= 'minlength: ' . $form_field['validation_minlength'] . ',';
-				}
-
-				if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
-					$form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
-				}
-
-
-				$form_html .= '},';
-			endif;
-		}
-	}
-	endif;
-
-	$form_html .= '},
-        messages: {
-            ';
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) : foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $form_field ) {
-		if ( isset( $form_field['required'] ) ) {
-
-			$validation_error_message = __( 'This field is required.', 'buddyforms' );
-			if ( isset( $form_field['validation_error_message'] ) ) {
-				$validation_error_message = $form_field['validation_error_message'];
-			}
-
-			$field_slug = str_replace( "-", "", $form_field['slug'] );
-			if ( $field_slug ) :
-				$form_html .= $field_slug . ': {
-                        required: "' . $validation_error_message . '",
-                    },';
-			endif;
-		}
-	}
-	endif;
-	$form_html .= '},';
-
-	$form_html .= 'errorPlacement: function(label, element) {
-            // position error label after generated textarea
-            if (element.is("textarea")) {
-                jQuery("#editpost_title").prev().css(\'color\',\'red\');
-                label.insertBefore("#editpost_content");
-            } else {
-                label.insertAfter(element)
-            }
-        }
-    });
-    validator_' . $form_slug_js . '.focusInvalid = function() {
-        // put focus on tinymce on submit validation
-        if (this.settings.focusInvalid) {
-            try {
-                var toFocus = jQuery(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-                if (toFocus.is("textarea")) {
-                    tinyMCE.get(toFocus.attr("id")).focus();
-                } else {
-                    toFocus.filter(":visible").focus();
-                }
-            } catch (e) {
-                // ignore IE throwing errors when focusing hidden elements
-            }
-        }
-    }
-    });
-    </script>';
 
 	if ( ! is_user_logged_in() ) :
 		return buddyforms_get_login_form();
@@ -149,8 +46,9 @@ function buddyforms_form_html( $args ) {
 		return '<div class="error alert">' . $error_message . '</div>'; //das sieht nicht sauber aus
 	}
 
+	// Form HTML Start. The Form is rendered as last step.
+	$form_html  = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
 	$form_html .= '<div id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
-
 	$form_html .= '<div class="form_wrapper">';
 
 	// Create the form object
@@ -160,7 +58,7 @@ function buddyforms_form_html( $args ) {
 	$form->configure( array(
 		//"prevent" => array("bootstrap", "jQuery", "focus"),
 		"action" => $redirect_to,
-		"view"   => new View_Vertical,
+		"view"   => new View_Inline,
 		'class'  => 'standard-form',
 	) );
 

@@ -151,6 +151,7 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'jquery-validation.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
 
 		if ( is_admin() ) {
@@ -372,6 +373,8 @@ class BuddyForms {
 
 		wp_enqueue_style( 'buddyforms-the-loop-css', plugins_url( 'assets/css/the-loop.css', __FILE__ ) );
 		wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
+
+		add_action('wp_head', 'buddyforms_jquery_validation');
 
 	}
 

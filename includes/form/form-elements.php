@@ -94,7 +94,7 @@ function bf_form_elements( $form, $args ) {
 						break;
 
 					case 'content':
-						add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
+						//add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
 						$editpost_content_val = false;
 						if ( isset( $_POST['editpost_content'] ) ) {
 							$editpost_content_val = stripslashes( $_POST['editpost_content'] );
