@@ -1,6 +1,10 @@
 <?php
 
+//
 // Generate the jquery validation js
+// This function is hooked into wp_head in buddyforms/buddyforms.php function buddyform_front_js to make sure it only gets loaded if a form is displayed
+//
+
 function buddyforms_jquery_validation(){
 	global $buddyforms;
 

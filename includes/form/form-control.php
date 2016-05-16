@@ -281,8 +281,8 @@ function bf_update_post_meta( $post_id, $customfields ) {
 
 					if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
 						//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-						foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
-							$tax_item[ $key ] = $tax;
+						foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+							$tax_item[ $key_tax ] = $tax;
 						}
 					}
 
@@ -307,7 +307,7 @@ function bf_update_post_meta( $post_id, $customfields ) {
 				if ( isset( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) ) {
 					$creat_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_creat_new_tax' ] );
 					if ( is_array( $creat_new_tax ) ) {
-						foreach ( $creat_new_tax as $key => $new_tax ) {
+						foreach ( $creat_new_tax as $key_tax => $new_tax ) {
 							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
 							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 						}
@@ -319,7 +319,7 @@ function bf_update_post_meta( $post_id, $customfields ) {
 				if ( isset( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) ) {
 					$creat_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_creat_new_tax' ] );
 					if ( is_array( $creat_new_tax ) ) {
-						foreach ( $creat_new_tax as $key => $new_tax ) {
+						foreach ( $creat_new_tax as $key_tax => $new_tax ) {
 							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
 							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 						}
@@ -335,8 +335,8 @@ function bf_update_post_meta( $post_id, $customfields ) {
 
 						if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
 							//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-							foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
-								$tax_item[ $key ] = $tax;
+							foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+								$tax_item[ $key_tax ] = $tax;
 							}
 						}
 

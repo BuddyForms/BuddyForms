@@ -115,7 +115,6 @@ function buddyforms_new_notification_trigger_form( $trigger ) {
 		'textarea_name' => 'buddyforms_options[mail_notification][' . $trigger . '][mail_body]',
 		'wpautop'       => true,
 		'media_buttons' => false,
-		'wpautop'       => true,
 		'tinymce'       => true,
 		'quicktags'     => true,
 		'textarea_rows' => 18

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * add the forms to the admin bar
+ * Add the forms to the admin bar
  *
  * @package BuddyForms
  * @since 0.3 beta
@@ -49,6 +49,8 @@ function buddyforms_wp_before_admin_bar_render() {
 	}
 }
 
+// Create the buddyforms post status array.
+// Other Plugins use the filter bf_get_post_status_array to add there post status to the options array
 function bf_get_post_status_array( $select_condition = false ) {
 
 	$status_array = array(
