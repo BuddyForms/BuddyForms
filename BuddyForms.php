@@ -142,29 +142,31 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-ajax.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php' );
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php' );
 
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'jquery-validation.php' );
-		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
+
+
 
 		if ( is_admin() ) {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/mail-notification.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/roles-and-capabilities.php' );
 
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php' );
@@ -218,11 +220,10 @@ class BuddyForms {
 			wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 
 			// load the tk_icons
-			wp_enqueue_style( 'tk_icons', plugins_url( '/includes/resources/tk_icons/style.css', __FILE__ ) );
+			wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 
 		}
-		// load the tk_icons
-		wp_enqueue_style( 'tk_icons', plugins_url( '/includes/resources/tk_icons/style.css', __FILE__ ) );
+
 	}
 
 	/**
@@ -254,8 +255,8 @@ class BuddyForms {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-accordion' );
 
-			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'includes/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'includes/resources/select2/select2.css', __FILE__ ) );
+			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
+			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
 
 		}
 	}
@@ -352,15 +353,15 @@ class BuddyForms {
 
 		wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );
 
-		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'includes/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'includes/resources/select2/select2.css', __FILE__ ) );
+		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
+		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
 
-		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', plugins_url( 'includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__ ), array(
+		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__ ), array(
 			'jquery-ui-core',
 			'jquery-ui-datepicker',
 			'jquery-ui-slider'
 		) );
-		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', plugins_url( 'includes/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__ ) );
+		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__ ) );
 
 		wp_enqueue_script( 'buddyforms-js', plugins_url( 'assets/js/buddyforms.js', __FILE__ ), array(
 			'jquery-ui-core',

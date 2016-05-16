@@ -1,7 +1,7 @@
 <?php
 
 // Generate the jquery validation js
-function buddyforms_jquery_validation($form_slug){
+function buddyforms_jquery_validation(){
 	global $buddyforms;
 
 	$form_html = '<script type="text/javascript">';
@@ -50,7 +50,7 @@ function buddyforms_jquery_validation($form_slug){
 							$form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
 						}
 
-						$form_html .= 'valueNotEquals: "-1",';
+					//	$form_html .= 'valueNotEquals: "-1",'; ... 	valueNotEquals: "Please select an item!",
 
 						$form_html .= '},
 						';
@@ -74,7 +74,6 @@ function buddyforms_jquery_validation($form_slug){
 				if ( $field_slug ) :
 					$form_html .= $field_slug . ': {
 	                        required: "' . $validation_error_message . '",
-							valueNotEquals: "Please select an item!",
 	                    },';
 				endif;
 			}

@@ -56,7 +56,7 @@ function bf_add_ons_screen() {
 					'donate_link'       => false,
 					'tags'              => false,
 					'sections'          => false,
-					'homepage'          => false,
+					'homepage'          => true,
 					'added'             => false,
 					'last_updated'      => true,
 					'compatibility'     => true,
@@ -92,7 +92,7 @@ function buddyforms_get_addons( $call_api ) { ?>
 				$date_format            = __( 'M j, Y @ H:i' );
 				$last_updated_timestamp = strtotime( $plugin['last_updated'] );
 
-				$details_link = self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin['slug'] . '&TB_iframe=true&width=772&height=600' );
+				$details_link = $plugin['homepage'];
 
 				if ( ! empty( $plugin['icons']['svg'] ) ) {
 					$plugin_icon_url = $plugin['icons']['svg'];
@@ -151,11 +151,11 @@ function buddyforms_get_addons( $call_api ) { ?>
 				?>
 				<div class="plugin-card plugin-card-<?php echo sanitize_html_class( $plugin['slug'] ); ?>">
 					<div class="plugin-card-top">
-						<a href="<?php echo esc_url( $details_link ); ?>" class="thickbox plugin-icon"><img
+						<a target="_blank" href="<?php echo $details_link; ?>" class="thickbox plugin-icon"><img
 								src="<?php echo esc_attr( $plugin_icon_url ) ?>"/></a>
 						<div class="name column-name">
 							<h4><a href="<?php echo esc_url( $details_link ); ?>"
-							       class="thickbox"><?php echo $plugin['name']; ?></a></h4>
+							       class=""><?php echo $plugin['name']; ?></a></h4>
 						</div>
 						<div class="action-links">
 							<?php
