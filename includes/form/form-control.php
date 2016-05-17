@@ -264,7 +264,6 @@ function bf_update_post_meta( $post_id, $customfields ) {
 		return;
 	}
 
-
 	foreach ( $customfields as $key => $customfield ) :
 
 		if ( $customfield['type'] == 'taxonomy' ) {
