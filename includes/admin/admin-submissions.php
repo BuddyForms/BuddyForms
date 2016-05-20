@@ -75,7 +75,8 @@ function bf_submissions_screen() {
 
 			<form id="filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-				<?php $buddyforms_submissions_table->display() ?>
+
+				<?php if(isset($_GET['form_slug'])) $buddyforms_submissions_table->display(); ?>
 			</form>
 		</div>
 	</div>
@@ -89,7 +90,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	function __construct() {
-		global $status, $page;
+		global $status, $page, $buddyforms;
 
 		//Set parent defaults
 		parent::__construct( array(
@@ -98,9 +99,24 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'ajax'     => false            //does this table support ajax?
 		) );
 
+
+
+
+//		foreach ($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field) {
+//			$slug = str_replace('_', '', $field['slug'] );
+//			$slug = str_replace('-', '_', 'column_'.$slug );
+//			echo $slug .' ';
+//			$this->$slug = function() use($slug){
+//				return 'Test'.$slug;
+//			};
+//		}
+
+
+
+
 	}
 
-	function column_title( $item ) {
+	function column_ID( $item ) {
 
 		//Build row actions
 		$actions = array(
@@ -109,21 +125,25 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		);
 
 		//Return the title contents
-		return sprintf( '%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
-			/*$1%s*/
-			$item['post_title'],
-			/*$2%s*/
+		return sprintf( '<span style="color:silver">%1$s</span>%2$s',
 			$item['ID'],
-			/*$3%s*/
 			$this->row_actions( $actions )
 		);
 	}
 
-	function column_default( $item ) {
+	function column_default( $item, $column_name ) {
+		global $buddyforms;
 
-		print_r( $item );
+		$column_val = get_post_meta( $item['ID'], $column_name, true);
 
-		return 'tewas';
+		if(is_array($column_val)){
+			foreach($column_val as $key => $val){
+				echo $val;
+			}
+		} else {
+			echo $column_val;
+		}
+
 	}
 
 	function column_cb( $item ) {
@@ -137,12 +157,22 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	function get_columns() {
+		global $buddyforms;
+
+		;
 		$columns = array(
 			'cb'              => '<input type="checkbox" />', //Render a checkbox instead of text
-			'title'           => 'Title',
-			'anonymousauthor' => 'anonymousauthor',
-//			'director'  => 'Director'
+			'ID'           => 'ID',
 		);
+
+		if(isset($buddyforms[$_GET['form_slug']]['form_fields'])){
+			foreach($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field){
+
+				$columns[$field['slug']] = $field['name'];
+
+			}
+
+		}
 
 		return $columns;
 	}

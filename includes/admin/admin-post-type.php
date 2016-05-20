@@ -383,7 +383,8 @@ function buddyforms_add_button_to_submit_box() {
 		$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
 
 		echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'View Form Posts', 'buddyforms' ) . '</a>
-        <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
+        <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>
+		<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
 
 	}
 }
