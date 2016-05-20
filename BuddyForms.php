@@ -153,13 +153,11 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php' );
 
-
-
-
 		if ( is_admin() ) {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
 
@@ -173,7 +171,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-header.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php' );
-
 
 			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 				// load our custom updater

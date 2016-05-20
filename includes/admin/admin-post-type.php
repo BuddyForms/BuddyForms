@@ -166,6 +166,37 @@ function buddyforms_register_post_type() {
 		'menu_icon'           => 'dashicons-buddyforms',
 	) );
 
+	// Create BuddyForms post type
+	$labels = array(
+		'name'               => __( 'Submissions', 'buddyforms' ),
+		'singular_name'      => __( 'Submissions', 'buddyforms' ),
+//		'add_new'            => __( 'Add New', 'buddyforms' ),
+//		'add_new_item'       => __( 'Add New Form', 'buddyforms' ),
+//		'edit_item'          => __( 'Edit Form', 'buddyforms' ),
+//		'new_item'           => __( 'New Form', 'buddyforms' ),
+//		'view_item'          => __( 'View Form', 'buddyforms' ),
+//		'search_items'       => __( 'Search BuddyForms', 'buddyforms' ),
+//		'not_found'          => __( 'No BuddyForm found', 'buddyforms' ),
+//		'not_found_in_trash' => __( 'No Forms found in Trash', 'buddyforms' ),
+	);
+
+	register_post_type( 'bf_submissions', array(
+		'labels'              => $labels,
+		'public'              => false,
+		'show_ui'             => false,
+		'_builtin'            => false,
+		'capability_type'     => 'posts',
+		'hierarchical'        => false,
+		'rewrite'             => false,
+		'supports'            => array(
+			'title'
+		),
+		//'show_in_menu'        => 'edit.php?post_type=buddyforms',
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+		'menu_icon'           => 'dashicons-buddyforms',
+	) );
+
 }
 
 add_action( 'init', 'buddyforms_register_post_type' );

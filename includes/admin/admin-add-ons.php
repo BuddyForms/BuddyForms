@@ -14,11 +14,6 @@
  */
 function buddyforms_create_addons_menu() {
 
-	if ( ! session_id() ) {
-		;
-	}
-	@session_start();
-
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Add-ons', 'buddyforms' ), __( 'Add-ons', 'buddyforms' ), 'manage_options', 'bf_add_ons', 'bf_add_ons_screen' );
 
 }
