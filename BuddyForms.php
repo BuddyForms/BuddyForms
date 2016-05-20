@@ -219,11 +219,10 @@ class BuddyForms {
 			wp_enqueue_style( 'bootstrapcss', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 
-			// load the tk_icons
-			wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
-
 		}
 
+		// load the tk_icons
+		wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 	}
 
 	/**

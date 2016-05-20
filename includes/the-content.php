@@ -10,6 +10,7 @@ add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 function buddyforms_attached_page_content( $content ) {
 	global $wp_query, $buddyforms;
 
+
 	remove_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 ); //this is a dirty fix and needs to be addressed
 	if ( is_admin() ) {
@@ -87,7 +88,7 @@ function buddyforms_attached_page_content( $content ) {
 		endif;
 	}
 
-	add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+	//add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 
 	return $new_content;
 

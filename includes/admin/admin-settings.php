@@ -65,7 +65,9 @@ function buddyforms_settings_page() {
 								if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 									$post_types_forms = Array();
 									foreach ( $buddyforms as $key => $buddyform ) {
-										$post_types_forms[ $buddyform['post_type'] ][ $key ] = $buddyform;
+
+										if(isset($buddyform['post_type']))
+											$post_types_forms[ $buddyform['post_type'] ][ $key ] = $buddyform;
 									}
 
 									foreach ( $post_types_forms as $post_type => $post_types_form ) : ?>
