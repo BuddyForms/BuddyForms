@@ -160,6 +160,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-metabox.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
 
@@ -207,6 +208,7 @@ class BuddyForms {
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
+			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 		) {
 
 			if ( is_rtl() ) {
@@ -237,6 +239,7 @@ class BuddyForms {
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
+			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 		) {
 			wp_register_script( 'buddyforms_admin_js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
 			$admin_text_array = array(

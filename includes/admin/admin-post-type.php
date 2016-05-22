@@ -188,9 +188,8 @@ function buddyforms_register_post_type() {
 		'capability_type'     => 'posts',
 		'hierarchical'        => false,
 		'rewrite'             => false,
-		'supports'            => array(
-			'title'
-		),
+		'supports'            => false,
+		'show_in_menu'        => 'edit.php?post_type=buddyforms',
 		'show_in_menu'        => false,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => false,

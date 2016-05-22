@@ -52,6 +52,12 @@ function buddyforms_display_form_element( $args ) {
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 	) );
 
+	$metabox_enabled                            = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
+	$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
+		'value' => $metabox_enabled,
+		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
+	) );
+
 	$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : '';
 	$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 		'class'    => "use_as_slug",

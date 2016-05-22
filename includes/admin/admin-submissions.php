@@ -45,60 +45,178 @@ function bf_submissions_screen() {
 		//Fetch, prepare, sort, and filter our data...
 		$buddyforms_submissions_table->prepare_items();
 		?>
-		<div class="wrap">
-			<div id="icon-users" class="icon32"><br/></div>
-			<div id="buddyforms_admin_main_menu" class="">
-				<ul>
-					<li>
 
-						<b>Select the Form to show the form submissions</b>
-						<script type="text/javascript">
-							jQuery(document).ready(function (jQuery) {
-								jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
-									window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
-								});
+		<div id="icon-users" class="icon32"><br/></div>
+		<div id="buddyforms_admin_main_menu" class="">
+			<ul>
+				<li>
+
+					<b>Select the Form to show the form submissions</b>
+					<script type="text/javascript">
+						jQuery(document).ready(function (jQuery) {
+							jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
+								window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
 							});
-						</script>
-						<select id="buddyforms_admin_menu_submissions_form_select">
-							<option value="none">Select Form</option>
-							<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
+						});
+					</script>
+					<select id="buddyforms_admin_menu_submissions_form_select">
+						<option value="none">Select Form</option>
+						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
 
-								<option <?php selected( $_GET['form_slug'], $form_slug ) ?>
-									value="<?php echo $form_slug ?>"><?php echo $form['name'] ?></option>
+							<option <?php selected( $_GET['form_slug'], $form_slug ) ?>
+								value="<?php echo $form_slug ?>"><?php echo $form['name'] ?></option>
 
-							<?php } ?>
-						</select>
-
-
-					</li>
-				</ul>
-			</div>
-
-			<?php
+						<?php } ?>
+					</select>
 
 
-			if(isset($_GET['action']) && isset($_GET['entry'])) {
-
-				$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
-				$args = array(
-					'post_id'     => $_GET['entry'],
-					'form_slug'   => $form_slug,
-				);
-
-				buddyforms_create_edit_form( $args );
-
-			}
-
-
-
-			if(isset($_GET['form_slug'])) { ?>
-				<form id="filter" method="get">
-					<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-					<?php $buddyforms_submissions_table->display(); ?>
-				</form>
-			<?php } ?>
-
+				</li>
+			</ul>
 		</div>
+
+		<?php if( isset( $_GET['form_slug'] ) ) { ?>
+			<form id="filter" method="get">
+				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+				<?php $buddyforms_submissions_table->display(); ?>
+			</form>
+		<?php } ?>
+
+		<?php if(isset($_GET['action']) && isset($_GET['entry'])) {
+			$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
+			?>
+
+			<div id="poststuff">
+				<div id="post-body" class="metabox-holder columns-2">
+					<div id="post-body-content">
+
+						<div class="postbox">
+							<h3 class="hndle"><span>Entry</span></h3>
+							<div class="inside">
+								<script>
+									jQuery(document).ready(function () {
+										jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
+										jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
+										jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled','disabled');
+									});
+								</script>
+								<?php
+
+
+								session_id( 'buddyforms-memtabox' );
+
+								// Create the form object
+								$form = new Form( "metabox_" . $form_slug );
+
+								// Set the form attribute
+								$form->configure( array(
+									//"prevent" => array("bootstrap", "jQuery", "focus"),
+									//"action" => $redirect_to,
+									"view"   => new View_Inline,
+									'class'  => 'standard-form',
+								) );
+
+								$fields = $buddyforms[$form_slug]['form_fields'];
+
+								$metabox_fields = array();
+								foreach($fields as $field_key => $field  ){
+									if(isset($field['metabox_enabled'])){
+										$metabox_fields[] = $field;
+									}
+								}
+
+								$args = array(
+									'post_type'    => $buddyforms[$form_slug]['post_type'],
+									'customfields' => $fields,
+									'post_id'      => $_GET['entry'],
+									'form_slug'    => $form_slug,
+								);
+
+								// if the form has custom field to save as post meta data they get displayed here
+								bf_form_elements( $form, $args );
+
+								$form->render();
+								?>
+							</div>
+						</div>
+
+
+					</div>
+					<div id="postbox-container-1" class="postbox-container">
+						<div id="submitdiv" class="postbox">
+							<h3 class="hndle"><span>Entry Actions</span></h3>
+							<div class="inside">
+								<div class="submitbox">
+									<div id="minor-publishing" class="frm_remove_border">
+										<div class="misc-pub-section">
+											<div class="clear"></div>
+										</div>
+										<div id="misc-publishing-actions">
+
+											<div class="misc-pub-section curtime misc-pub-curtime">
+    <span id="timestamp">
+    Published on: <b>May 20, 2016 @ 10:54</b>    </span>
+											</div>
+
+											<div class="misc-pub-section">
+												<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>
+												<a href="#" onclick="window.print();return false;">Print</a>
+											</div>
+										</div>
+									</div>
+									<div id="major-publishing-actions">
+										<div id="delete-action">
+											<a href="http://buddyforms/wp-admin/admin.php?page=formidable-entries&amp;frm_action=destroy&amp;id=4&amp;form=10" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">
+												Delete				</a>
+										</div>
+
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="postbox frm_with_icons">
+							<h3 class="hndle"><span>Entry Details</span></h3>
+							<div class="inside">
+
+								<div class="misc-pub-section">
+									<span class="dashicons dashicons-id wp-media-buttons-icon"></span>
+									Entry ID:
+									<b>4</b>
+								</div>
+
+								<div class="misc-pub-section">
+									<span class="dashicons dashicons-post-status wp-media-buttons-icon"></span>
+									Entry Key:
+									<b>7lh2e</b>
+								</div>
+
+
+							</div>
+						</div>
+
+						<div class="postbox">
+							<h3 class="hndle"><span>User Information</span></h3>
+							<div class="inside">
+								<div class="misc-pub-section">
+									IP Address:
+									<b>::1</b>
+								</div>
+
+								<div class="misc-pub-section">
+									<b>Browser/OS</b>:<br>
+									Google Chrome 50.0.2661.102 / OS X        </div>
+
+								<div class="misc-pub-section">
+									<b>Referrer</b>:<br>
+									http://buddyforms/sample-page/        </div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
 	</div>
 	<?php
 }
@@ -123,13 +241,19 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	function column_ID( $item ) {
+		global $buddyforms;
 
-		//Build row actions ?=8943&action=edit
 		$actions = array(
-			'edit'   => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">Edit Inline</a>', $_REQUEST['page'], 'edit', $item['ID'] ),
-			//'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
+			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
 			'delete' => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] ),
 		);
+
+		//$actions['delete'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] );
+
+		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'bf_submissions'){
+			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">View Form</a>', $_REQUEST['page'], 'edit', $item['ID'] );
+		}
+
 
 		//Return the title contents
 		return sprintf( '<span style="color:silver">%1$s</span>%2$s',
@@ -240,4 +364,3 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		) );
 	}
 }
-
