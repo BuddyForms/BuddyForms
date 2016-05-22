@@ -69,15 +69,35 @@ function bf_submissions_screen() {
 							<?php } ?>
 						</select>
 
+
 					</li>
 				</ul>
 			</div>
 
-			<form id="filter" method="get">
-				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+			<?php
 
-				<?php if(isset($_GET['form_slug'])) $buddyforms_submissions_table->display(); ?>
-			</form>
+
+			if(isset($_GET['action']) && isset($_GET['entry'])) {
+
+				$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
+				$args = array(
+					'post_id'     => $_GET['entry'],
+					'form_slug'   => $form_slug,
+				);
+
+				buddyforms_create_edit_form( $args );
+
+			}
+
+
+
+			if(isset($_GET['form_slug'])) { ?>
+				<form id="filter" method="get">
+					<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+					<?php $buddyforms_submissions_table->display(); ?>
+				</form>
+			<?php } ?>
+
 		</div>
 	</div>
 	<?php
@@ -100,27 +120,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		) );
 
 
-
-
-//		foreach ($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field) {
-//			$slug = str_replace('_', '', $field['slug'] );
-//			$slug = str_replace('-', '_', 'column_'.$slug );
-//			echo $slug .' ';
-//			$this->$slug = function() use($slug){
-//				return 'Test'.$slug;
-//			};
-//		}
-
-
-
-
 	}
 
 	function column_ID( $item ) {
 
-		//Build row actions
+		//Build row actions ?=8943&action=edit
 		$actions = array(
-			'edit'   => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Edit</a>', $_REQUEST['page'], 'edit', $item['ID'] ),
+			'edit'   => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">Edit Inline</a>', $_REQUEST['page'], 'edit', $item['ID'] ),
+			//'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
 			'delete' => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] ),
 		);
 
@@ -233,3 +240,4 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		) );
 	}
 }
+

@@ -154,8 +154,8 @@ function buddyforms_register_post_type() {
 		'public'              => false,
 		'show_ui'             => true,
 		'_builtin'            => false,
-		'capability_type'     => 'page',
-		'hierarchical'        => true,
+		'capability_type'     => 'posts',
+		'hierarchical'        => false,
 		'rewrite'             => false,
 		'supports'            => array(
 			'title'
@@ -183,7 +183,7 @@ function buddyforms_register_post_type() {
 	register_post_type( 'bf_submissions', array(
 		'labels'              => $labels,
 		'public'              => false,
-		'show_ui'             => false,
+		'show_ui'             => true,
 		'_builtin'            => false,
 		'capability_type'     => 'posts',
 		'hierarchical'        => false,
@@ -191,7 +191,7 @@ function buddyforms_register_post_type() {
 		'supports'            => array(
 			'title'
 		),
-		//'show_in_menu'        => 'edit.php?post_type=buddyforms',
+		'show_in_menu'        => false,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => false,
 		'menu_icon'           => 'dashicons-buddyforms',
@@ -396,3 +396,38 @@ function buddyforms_remove_slugdiv() {
 }
 
 add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
+
+
+function buddyforms_add_action_buttons($actions, $post){
+
+	if(get_post_type() === 'buddyforms'){
+		$url = add_query_arg(
+			array(
+				'post_id' => $post->ID,
+				'my_action' => 'export_form',
+			)
+		);
+
+		unset($actions['inline hide-if-no-js']);
+		$actions['export'] = '<a href="' . esc_url( $url ) . '">Export Form</a>';
+
+
+		$actions['submissions'] = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">Submissions</a>';
+	}
+	return $actions;
+}
+add_filter( 'post_row_actions', 'buddyforms_add_action_buttons', 10, 2 );
+
+
+function buddyforms_export_form(){
+	if ( isset( $_REQUEST['my_action'] ) && 'export_form' == $_REQUEST['my_action']  ) {
+
+		$buddyform_options = get_post_meta( $_REQUEST['post_id'], '_buddyforms_options', true );
+
+		header('Content-Type: application/json');
+		header('Content-Disposition: attachment; filename="sample.json"');
+		echo json_encode($buddyform_options);
+		exit;
+	}
+}
+add_action( 'admin_init', 'buddyforms_export_form' );

@@ -34,9 +34,29 @@ function buddyforms_metabox_form_setup() {
 	$form_setup->render();
 	$form_setup = new Element_Hidden( 'buddyforms_options[slug]', $slug );
 	$form_setup->render();
+
 	$form_setup = array();
 
-	$form_setup[] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$form_setup['Create'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
 		'value'    => $singular_name,
 		'required' => 1
 	) );
@@ -45,7 +65,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['post_type'] ) ) {
 		$post_type = $buddyform['post_type'];
 	}
-	$form_setup[] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
+	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
 		'value'    => $post_type,
 		'required' => 'required'
 	) );
@@ -70,7 +90,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['attached_page'] ) ) {
 		$attached_page = $buddyform['attached_page'];
 	}
-	$form_setup[] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $options, array(
+	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $options, array(
 		'value'     => $attached_page,
 		'shortDesc' => '
     Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
@@ -89,7 +109,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['status'] ) ) {
 		$status = $buddyform['status'];
 	}
-	$form_setup[] = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(
+	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(
 		'publish',
 		'pending',
 		'draft'
@@ -99,7 +119,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['comment_status'] ) ) {
 		$comment_status = $buddyform['comment_status'];
 	}
-	$form_setup[] = new Element_Select( '<b>' . __( "Comment Status", 'buddyforms' ) . '</b>', "buddyforms_options[comment_status]", array(
+	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Comment Status", 'buddyforms' ) . '</b>', "buddyforms_options[comment_status]", array(
 		'open',
 		'closed'
 	), array( 'value' => $comment_status ) );
@@ -108,19 +128,19 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['revision'] ) ) {
 		$revision = $buddyform['revision'];
 	}
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ), array( 'value' => $revision ) );
+	$form_setup['Create'][] = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ), array( 'value' => $revision ) );
 
 	$admin_bar = 'false';
 	if ( isset( $buddyform['admin_bar'] ) ) {
 		$admin_bar = $buddyform['admin_bar'];
 	}
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
+	$form_setup['Create'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
 
 	$edit_link = 'all';
 	if ( isset( $buddyform['edit_link'] ) ) {
 		$edit_link = $buddyform['edit_link'];
 	}
-	$form_setup[] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
+	$form_setup['Create'][] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
 		'none'          => 'None',
 		'all'           => __( "All Edit Links", 'buddyforms' ),
 		'my-posts-list' => __( "Only in My Posts List", 'buddyforms' )
@@ -131,7 +151,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_form';
-	$form_setup[] = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
+	$form_setup['General'][] = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_form'       => 'Display the Form and Message',
 		'display_post'       => 'Display the Post',
 		'display_posts_list' => 'Display the User\'s Post List',
@@ -139,7 +159,7 @@ function buddyforms_metabox_form_setup() {
 	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
 	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
-	$form_setup[]              = new Element_Textarea( '<b>' . __( 'After Submission Message', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
+	$form_setup['General'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
 		'style'     => "width:100%",
 		'value'     => $after_submit_message_text,
@@ -156,7 +176,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['bf_ajax'] ) ) {
 		$bf_ajax = $buddyform['bf_ajax'];
 	}
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
+	$form_setup['General'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
 		'shortDesc' => __( '', 'buddyforms' ),
 		'value'     => $bf_ajax
 	) );
@@ -166,7 +186,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['list_posts_option'] ) ) {
 		$list_posts_option = $buddyform['list_posts_option'];
 	}
-	$form_setup[] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
+	$form_setup['Manage'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
 		'list_all_form' => 'List all Author Posts created with this Form',
 		'list_all'      => 'List all Author Posts of the PostType'
 	), array( 'value' => $list_posts_option, 'shortDesc' => '' ) );
@@ -175,32 +195,98 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['list_posts_style'] ) ) {
 		$list_posts_style = $buddyform['list_posts_style'];
 	}
-	$form_setup[] = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
+	$form_setup['Manage'][] = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
 		'list'  => 'List',
 		'table' => 'Table'
 	), array( 'value' => $list_posts_style, 'shortDesc' => 'Do you want to list post in a ul li list or as table.' ) );
 
+
+
+
+
+
+
+
+
+	if ( is_array( $form_setup ) ) {
+		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'General', 'Create', 'Manage' ) );
+	}
+
 	?>
-	<table class="form-table">
-		<tbody>
-		<?php
 
-		foreach ( $form_setup as $key => $field ) { ?>
 
-			<tr id="row_form_title">
-				<th scope="row">
-					<label for="form_title"><?php echo $field->getLabel() ?></label>
-				</th>
-				<td>
-					<?php echo $field->render() ?>
-					<p class="description"><?php echo $field->getShortDesc() ?></p>
-				</td>
-			</tr>
+
+	<div class="tabs tabbable tabs-left ">
+		<ul class="nav nav-tabs nav-pills">
 			<?php
-		}
-		?>
-		</tbody>
-	</table>
+			$i = 0;
+			foreach ( $form_setup as $tab => $fields ) {
+
+				$class_active = '';
+				if ( $i == 0 ) {
+					$class_active = 'active';
+				}
+
+				?>
+			<li class="<?php echo $class_active ?>"><a
+					href="#<?php echo $tab; ?>"
+					data-toggle="tab"><?php echo $tab; ?></a>
+				</li><?php
+				$i ++;
+			}
+			?>
+		</ul>
+		<div class="tab-content">
+			<?php
+			$i = 0;
+			foreach ( $form_setup as $tab => $fields ) {
+
+				$class_active = '';
+				if ( $i == 0 ) {
+					$class_active = 'active';
+				}
+				?>
+				<div class="tab-pane fade in <?php echo $class_active ?>"
+				     id="<?php echo $tab; ?>">
+					<div class="buddyforms_accordion_general">
+						<table class="form-table">
+							<tbody>
+							<?php foreach($fields as $field_key => $field ) { ?>
+								<tr id="row_form_title">
+									<th scope="row">
+										<label for="form_title"><?php echo $field->getLabel() ?></label>
+									</th>
+									<td>
+										<?php echo $field->render() ?>
+										<p class="description"><?php echo $field->getShortDesc() ?></p>
+									</td>
+								</tr>
+							<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<?php
+				$i ++;
+			}
+			?>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<?php
 
 }
