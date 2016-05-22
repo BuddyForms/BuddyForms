@@ -3,16 +3,36 @@
 function buddyforms_admin_form_metabox(){
 	global $buddyforms, $post;
 
+//	echo '<pre>';
+//	print_r($post);
+//	echo '</pre>';
+
+	echo $post->post_type;
 
 	$form_slug  = get_post_meta( $post->ID, '_bf_form_slug', true );
+	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+	if(!$form_slug){
+		$form_slug = $buddyforms_posttypes_default[$post->post_type];
+	}
 
 	if(!isset($form_slug)) return;
 	if(!isset($buddyforms[$form_slug])) return;
 
 	$form = $buddyforms[$form_slug];
 
-	add_meta_box( 'buddyforms_form_' . $form_slug, 'BuddyForms Form: ' . $form['name'] , 'buddyforms_metabox_admin_form_metabox', $form['post_type'], 'normal', 'high' );
+	$metabox_enabled = false;
+	if(isset($form['form_fields'])){
+		foreach($form['form_fields'] as $field_key => $field){
+			if($field['metabox_enabled']){
+				$metabox_enabled = true;
+			}
+		}
+	}
 
+	if($metabox_enabled){
+		add_meta_box( 'buddyforms_form_' . $form_slug, 'BuddyForms Form: ' . $form['name'] , 'buddyforms_metabox_admin_form_metabox', $form['post_type'], 'normal', 'high' );
+	}
 
 }
 
@@ -23,6 +43,12 @@ function buddyforms_metabox_admin_form_metabox(){
 	global $buddyforms, $post;
 
 	$form_slug  = get_post_meta( $post->ID, '_bf_form_slug', true );
+
+	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+	if(!$form_slug){
+		$form_slug = $buddyforms_posttypes_default[$post->post_type];
+	}
 
 	if(!isset($form_slug)) return;
 	if(!isset($buddyforms[$form_slug])) return;

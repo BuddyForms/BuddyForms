@@ -81,8 +81,16 @@ function buddyforms_settings_page() {
 												<select name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
 												        class="regular-radio">
 													<option value="none">None</option>
-													<?php foreach ( $post_types_form as $form_key => $form ) { ?>
-														<option <?php echo selected( $buddyforms_posttypes_default[ $post_type ], $form_key, true ) ?>
+													<?php foreach ( $post_types_form as $form_key => $form ) {
+
+														$default = '';
+														if(isset($buddyforms_posttypes_default[ $post_type ])){
+															$default = $buddyforms_posttypes_default[ $post_type ];
+														}
+
+
+														?>
+														<option <?php echo selected( $default, $form_key, true ) ?>
 															value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
 													<?php } ?>
 												</select>
