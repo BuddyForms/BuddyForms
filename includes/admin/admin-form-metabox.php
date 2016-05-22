@@ -3,12 +3,6 @@
 function buddyforms_admin_form_metabox(){
 	global $buddyforms, $post;
 
-//	echo '<pre>';
-//	print_r($post);
-//	echo '</pre>';
-
-	echo $post->post_type;
-
 	$form_slug  = get_post_meta( $post->ID, '_bf_form_slug', true );
 	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
@@ -35,7 +29,6 @@ function buddyforms_admin_form_metabox(){
 	}
 
 }
-
 add_action( 'add_meta_boxes', 'buddyforms_admin_form_metabox' );
 
 
@@ -89,16 +82,13 @@ function buddyforms_metabox_admin_form_metabox(){
 
 }
 
-
 function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	global $buddyforms;
-
 
 	$form_slug  = get_post_meta( $post_id, '_bf_form_slug', true );
 
 	if(!isset($form_slug)) return;
 	if(!isset($buddyforms[$form_slug])) return;
-
 
 	bf_update_post_meta($post_id, $buddyforms[$form_slug]['form_fields']);
 }

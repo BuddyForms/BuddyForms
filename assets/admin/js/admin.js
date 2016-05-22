@@ -64,9 +64,9 @@ jQuery(document).ready(function (jQuery) {
     jQuery('#publish').click(function () {
 
         var create_new_form_name = jQuery('[name="post_title"]').val();
-        var create_new_form_singular_name = jQuery('[name="buddyforms_options[singular_name]"]').val();
-        var create_new_form_post_type = jQuery('[name="buddyforms_options[post_type]"]').val();
-        var create_new_form_attached_page = jQuery('[name="buddyforms_options[attached_page]"]').val();
+        //var create_new_form_singular_name = jQuery('[name="buddyforms_options[singular_name]"]').val();
+        //var create_new_form_post_type = jQuery('[name="buddyforms_options[post_type]"]').val();
+        //var create_new_form_attached_page = jQuery('[name="buddyforms_options[attached_page]"]').val();
 
         var error = false;
         if (create_new_form_name === '') {
@@ -79,31 +79,31 @@ jQuery(document).ready(function (jQuery) {
         }
 
 
-        if (create_new_form_singular_name === '') {
-            jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-ok');
-            jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-error');
-            error = true;
-        } else {
-            jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-error');
-            jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-ok');
-        }
+        //if (create_new_form_singular_name === '') {
+        //    jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-ok');
+        //    jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-error');
+        //    error = true;
+        //} else {
+        //    jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-error');
+        //    jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-ok');
+        //}
 
-        if (create_new_form_post_type === 'none') {
-            jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-ok');
-            jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-error');
-        } else {
-            jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-error');
-            jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-ok');
-        }
+        //if (create_new_form_post_type === 'none') {
+        //    jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-ok');
+        //    jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-error');
+        //} else {
+        //    jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-error');
+        //    jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-ok');
+        //}
 
-        if (create_new_form_attached_page === 'none') {
-            jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-ok');
-            jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-error');
-            error = true;
-        } else {
-            jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-error');
-            jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-ok');
-        }
+        //if (create_new_form_attached_page === 'none') {
+        //    jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-ok');
+        //    jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-error');
+        //    error = true;
+        //} else {
+        //    jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-error');
+        //    jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-ok');
+        //}
 
 
         // traverse all the required elements looking for an empty one

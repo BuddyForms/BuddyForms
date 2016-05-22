@@ -20,9 +20,8 @@ function buddyforms_metabox_form_setup() {
 	$output                  = 'names'; // names or objects, note: names is the default
 	$operator                = 'and'; // 'and' or 'or'
 	$post_types              = get_post_types( $args, $output, $operator );
-	$post_types_none['none'] = 'none';
-
-	$post_types = array_merge( $post_types_none, $post_types );
+	$post_types['bf_submissions'] = 'none';
+	$post_types = buddyforms_sort_array_by_Array($post_types, array('bf_submissions'));
 
 	unset( $post_types['buddyforms'] );
 
@@ -37,28 +36,9 @@ function buddyforms_metabox_form_setup() {
 
 	$form_setup = array();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	$form_setup['Create'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
 		'value'    => $singular_name,
-		'required' => 1
+		//'required' => 0
 	) );
 
 	$post_type = 'false';
@@ -67,7 +47,7 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
 		'value'    => $post_type,
-		'required' => 'required'
+		//'required' => 'required'
 	) );
 
 	$args  = array(
@@ -181,7 +161,6 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $bf_ajax
 	) );
 
-
 	$list_posts_option = 'list_all_form';
 	if ( isset( $buddyform['list_posts_option'] ) ) {
 		$list_posts_option = $buddyform['list_posts_option'];
@@ -200,21 +179,11 @@ function buddyforms_metabox_form_setup() {
 		'table' => 'Table'
 	), array( 'value' => $list_posts_style, 'shortDesc' => 'Do you want to list post in a ul li list or as table.' ) );
 
-
-
-
-
-
-
-
-
 	if ( is_array( $form_setup ) ) {
 		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'General', 'Create', 'Manage' ) );
 	}
 
 	?>
-
-
 
 	<div class="tabs tabbable tabs-left ">
 		<ul class="nav nav-tabs nav-pills">

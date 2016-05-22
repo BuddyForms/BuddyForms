@@ -48,6 +48,12 @@ function bf_inner_custom_box( $post ) {
 	 */
 	$value = get_post_meta( $post->ID, '_bf_form_slug', true );
 
+	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+	if(!$value){
+		$value = $buddyforms_posttypes_default[$post->post_type];
+	}
+
 	echo '<label for="_bf_form_slug">';
 	_e( "Select the form", 'buddyforms' );
 	echo '</label> ';

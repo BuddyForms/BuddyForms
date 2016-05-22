@@ -4,16 +4,22 @@
  * Adds a box to the main column on the Post and Page edit screens.
  */
 function buddyforms_add_meta_boxes() {
-	global $post;
+	global $post, $buddyforms;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
+	$buddyform = get_post_meta($post->ID,'_buddyforms_options', true);
+
+
+	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
+		add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
+		add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
+	}
+
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
-	add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
 	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default' );
 
 }
@@ -381,9 +387,13 @@ function buddyforms_add_button_to_submit_box() {
 		$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
 		$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
 
-		echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'View Form Posts', 'buddyforms' ) . '</a>
-        <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>
-		<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
+
+		if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){
+			echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'View Form Posts', 'buddyforms' ) . '</a>
+        <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
+		}
+
+		echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
 
 	}
 }

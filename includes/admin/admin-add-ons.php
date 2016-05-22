@@ -38,7 +38,6 @@ function bf_add_ons_screen() {
 		$call_api = plugins_api( 'query_plugins',
 			array(
 				'search'   => 'buddyforms',
-				'page'     => '1',
 				'per_page' => '-1',
 				'fields'   => array(
 					'downloaded'        => true,

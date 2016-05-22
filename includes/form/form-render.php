@@ -27,9 +27,9 @@ function buddyforms_form_html( $args ) {
 
 
 
-	if ( ! is_user_logged_in() ) :
-		return buddyforms_get_login_form();
-	endif;
+//	if ( ! is_user_logged_in() ) :
+//		return buddyforms_get_login_form();
+//	endif;
 
 	$user_can_edit = false;
 	if ( empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {

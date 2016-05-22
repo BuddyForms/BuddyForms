@@ -167,3 +167,12 @@ function bf_get_url_var( $name ) {
 
 	return ( $found == 0 ) ? 1 : $arrVals[ $place ];
 }
+
+
+function contact_form_submission_no_user_can_submit($user_can_edit){
+	global $buddyforms;
+
+	//if($buddyforms)
+	return true;
+}
+add_filter('buddyforms_user_can_edit', 'contact_form_submission_no_user_can_submit', 999, 1);
