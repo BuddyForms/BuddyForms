@@ -1,14 +1,15 @@
 <?php
 
-function buddyforms_metabox_form_elements() {
-	global $post;
+function buddyforms_metabox_form_elements($post, $buddyform = '') {
+	global $post, $buddyform;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
-	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-
+	if(!$buddyform){
+		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	}
 
 //    echo '<pre>';
 //    print_r($buddyform);
@@ -19,21 +20,24 @@ function buddyforms_metabox_form_elements() {
 	$form_setup   = array();
 	$form_setup[] = new Element_HTML( '<div id="buddyforms_forms_builder_' . $form_slug . '" class="buddyforms_forms_builder">' );
 
-	$form_setup[] = new Element_HTML( '
-        <div class="fields_header">
-            <table class="wp-list-table widefat fixed posts">
-                <thead>
-                    <tr>
-                        <th class="field_order">Field Order</th>
-                        <th class="field_label">Field Label</th>
-                        <th class="field_name">Field Slug</th>
-                        <th class="field_type">Field Type</th>
-                        <th class="field_type">Action</th>
-                    </tr>
-                </thead>
-            </table>
-         </div>
-    ' );
+
+	if ( isset( $buddyform['form_fields'] ) ) {
+		$form_setup[] = new Element_HTML( '
+	        <div class="fields_header">
+	            <table class="wp-list-table widefat fixed posts">
+	                <thead>
+	                    <tr>
+	                        <th class="field_order">Field Order</th>
+	                        <th class="field_label">Field Label</th>
+	                        <th class="field_name">Field Slug</th>
+	                        <th class="field_type">Field Type</th>
+	                        <th class="field_type">Action</th>
+	                    </tr>
+	                </thead>
+	            </table>
+	        </div>
+	    ' );
+	}
 
 	$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
 
@@ -59,6 +63,8 @@ function buddyforms_metabox_form_elements() {
 				$form_setup[] = new Element_HTML( buddyforms_display_form_element( $args ) );
 			}
 		}
+	} else {
+		$form_setup[] = new Element_HTML( buddyforms_form_builder_templates() );
 	}
 
 	$form_setup[] = new Element_HTML( '</ul>' );
@@ -69,4 +75,24 @@ function buddyforms_metabox_form_elements() {
 		echo $field->getShortDesc();
 		echo $field->render();
 	}
+}
+
+function buddyforms_form_builder_templates(){
+
+	ob_start();
+
+	?>
+	<div class="buddyforms_template">
+		<h4>Select Form Fields from the Form Elements Sidebar. Use a Template form. Just Select a Button.</h4>
+
+		<button id="btn-compile" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Contact Form</button>
+		<button id="btn-compile" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Registration Form</button>
+		<button id="btn-compile" data-template="create" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Submit Post Form</button>
+	</div>
+
+	<?php
+
+	$tmp = ob_get_clean();
+
+	return $tmp;
 }

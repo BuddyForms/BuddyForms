@@ -7,14 +7,14 @@
  * @since 0.1-beta
  */
 function buddyforms_display_form_element( $args ) {
-	global $post;
+	global $post, $buddyform;
 
 	if ( ! $post && isset( $_POST['post_id'] ) && $_POST['post_id'] != 0 ) {
 		$post = get_post( $_POST['post_id'] );
 	}
-
-	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
-
+	if(!$buddyform) {
+		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+	}
 	if ( isset( $_POST['fieldtype'] ) ) {
 		$field_type = $_POST['fieldtype'];
 	}

@@ -175,4 +175,13 @@ function contact_form_submission_no_user_can_submit($user_can_edit){
 	//if($buddyforms)
 	return true;
 }
-add_filter('buddyforms_user_can_edit', 'contact_form_submission_no_user_can_submit', 999, 1);
+//add_filter('buddyforms_user_can_edit', 'contact_form_submission_no_user_can_submit', 999, 1);
+
+function display_comment_recaptcha($form, $form_slug, $post_id) {
+
+	$form->addElement( new Element_HTML('<div class="g-recaptcha" data-sitekey="' . get_option("captcha_site_key") . '"></div>
+	<input name="submit" type="submit" value="Submit Comment">'));
+
+	return $form;
+}
+//add_filter('buddyforms_create_edit_form_button', 'display_comment_recaptcha', 10, 3);

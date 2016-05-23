@@ -379,6 +379,9 @@ class BuddyForms {
 		wp_enqueue_style( 'buddyforms-the-loop-css', plugins_url( 'assets/css/the-loop.css', __FILE__ ) );
 		wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
+		wp_register_script("recaptcha", "https://www.google.com/recaptcha/api.js");
+		wp_enqueue_script("recaptcha");
+
 		add_action('wp_head', 'buddyforms_jquery_validation');
 
 	}

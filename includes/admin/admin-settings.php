@@ -107,6 +107,16 @@ function buddyforms_settings_page() {
 						</form>
 						<?php
 						break;
+					case 'recaptcha' :
+						$recaptcha = get_option( 'buddyforms_recaptcha' );?>
+						<h2><?php _e( 'Google reCaptcha Options' ); ?></h2>
+						<form method="post" action="options.php">
+							<?php settings_fields("header_section");
+							do_settings_sections("recaptcha-options");
+							submit_button(); ?>
+						</form>
+						<?php
+						break;
 					case 'license' :
 						$license = get_option( 'buddyforms_edd_license_key' );
 						$status = get_option( 'buddyforms_edd_license_status' ); ?>
@@ -341,7 +351,7 @@ function buddyforms_edd_check_license() {
 }
 
 function bf_admin_tabs( $current = 'homepage' ) {
-	$tabs = array( 'general' => 'General Settings', 'license' => 'License' );
+	$tabs = array( 'general' => 'General Settings', 'recaptcha' => 'reCaptcha', 'license' => 'License' );
 
 	$tabs = apply_filters( 'bf_admin_tabs', $tabs );
 
@@ -357,5 +367,36 @@ function bf_admin_tabs( $current = 'homepage' ) {
 
 	echo '</h2>';
 }
+
+
+
+//
+// GOOGLE RECHAPTER
+//
+
+function display_recaptcha_options() {
+	add_settings_section("header_section", "Keys", "display_recaptcha_content", "recaptcha-options");
+
+	add_settings_field("captcha_site_key", __("Site Key"), "display_captcha_site_key_element", "recaptcha-options", "header_section");
+	add_settings_field("captcha_secret_key", __("Secret Key"), "display_captcha_secret_key_element", "recaptcha-options", "header_section");
+
+	register_setting("header_section", "captcha_site_key");
+	register_setting("header_section", "captcha_secret_key");
+}
+
+function display_recaptcha_content() {
+	echo __('<p>You need to <a target="_blank" href="https://www.google.com/recaptcha/admin" rel="external">register you domain</a> and get keys to make this plugin work.</p>');
+	echo __("Enter the key details below");
+}
+
+function display_captcha_site_key_element() { ?>
+	<input type="text" name="captcha_site_key" id="captcha_site_key" value="<?php echo get_option('captcha_site_key'); ?>" />
+<?php }
+
+function display_captcha_secret_key_element() { ?>
+	<input type="text" name="captcha_secret_key" id="captcha_secret_key" value="<?php echo get_option('captcha_secret_key'); ?>" />
+<?php }
+add_action("admin_init", "display_recaptcha_options");
+
 
 ?>

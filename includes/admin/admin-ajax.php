@@ -136,5 +136,27 @@ function buddyforms_update_taxonomy_default() {
 	die();
 
 }
-
 add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
+
+function buddyforms_form_template(){
+	global $post, $buddyform;
+
+
+	$post->post_type = 'buddyforms';
+
+
+	switch($_POST['template']){
+		case 'contact' :
+			$buddyform =  json_decode('{"name":"Contact Us","slug":"contact-us","after_submit":"display_posts_list","after_submit_message_text":"The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]","singular_name":"kann weg","post_type":"bf_submissions","attached_page":"2","status":"publish","comment_status":"open","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"table","form_fields":{"bef0fd43e6":{"name":"Name","slug":"name","description":"","type":"text","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""},"2391bf0a50":{"name":"Mail","slug":"mail","description":"","type":"mail","validation_error_message":"This field is required.","custom_class":""},"544d105558":{"name":"Website","slug":"website","description":"","type":"link","validation_error_message":"This field is required.","metabox_enabled":["metabox_enabled"],"custom_class":""},"5bf35b20e3":{"name":"Subject","slug":"editpost_title","description":"","type":"title","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"a6aa43b61d":{"name":"Content","slug":"editpost_content","description":"","type":"content","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"moderation_logic":"default","moderation":{"label_submit":"Submit","label_save":"Save","label_review":"Submit for moderation","label_new_draft":"Create new Draft","label_no_edit":"This Post is waiting for approval and can not be changed until it gets approved"}}', true);
+			break;
+		case 'create' :
+			$buddyform =  json_decode('{"name":"Blog","slug":"blog","singular_name":"Blog","post_type":"post","attached_page":"2","status":"publish","comment_status":"open","revision":["Revision"],"edit_link":"all","after_submit":"display_form","after_submit_message_text":"The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]","bf_ajax":["bf_ajax"],"list_posts_option":"list_all","list_posts_style":"table","form_fields":{"b639657542":{"name":"T\u00edtulo","slug":"editpost_title","description":"","type":"title","required":["required"],"validation_error_message":"This field is required.","validation_minlength":"2","validation_maxlength":"11","custom_class":""},"7362222d77":{"name":"Laver","slug":"anonymousauthor","description":"","type":"anonymousauthor","validation_error_message":"This field is required.","custom_class":""}},"moderation_logic":"one_draft","moderation":{"label_submit":"Submit","label_save":"Save","label_review":"Submit for moderation","label_new_draft":"Create new Draft","label_no_edit":"This Post is waiting for approval and can not be changed until it gets approved"}}', true);
+			break;
+	}
+
+	buddyforms_metabox_form_elements($post, $contact_form);
+	//print_r($contact_form);
+	die();
+
+}
+add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );

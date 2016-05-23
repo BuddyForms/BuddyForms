@@ -18,8 +18,10 @@ function buddyforms_add_meta_boxes() {
 		add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
 	}
 
-	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
+	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+
 	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default' );
 
 }
@@ -195,7 +197,7 @@ function buddyforms_register_post_type() {
 		'hierarchical'        => false,
 		'rewrite'             => false,
 		'supports'            => false,
-		'show_in_menu'        => 'edit.php?post_type=buddyforms',
+		//'show_in_menu'        => 'edit.php?post_type=buddyforms',
 		'show_in_menu'        => false,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => false,
@@ -393,7 +395,9 @@ function buddyforms_add_button_to_submit_box() {
         <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
 		}
 
-		echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
+		if(isset($post->post_name) && $post->post_name != ''){
+			echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
+		}
 
 	}
 }

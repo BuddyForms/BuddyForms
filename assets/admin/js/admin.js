@@ -1,5 +1,27 @@
 jQuery(document).ready(function (jQuery) {
 
+
+
+    jQuery(document.body).on('click', '.bf_form_template', function () {
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_form_template",
+                "template": jQuery(this).data("template"),
+            },
+            success: function (data) {
+                jQuery('.buddyforms_template').html(data);
+                bf_update_list_item_number();
+            },
+            error: function () {
+                alert('Something went wrong.. ;-(sorry)');
+            }
+        });
+        return false;
+
+    });
+
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
     });
@@ -35,7 +57,6 @@ jQuery(document).ready(function (jQuery) {
         var id = jQuery(this).attr('id');
         var taxonomy = jQuery(this).val();
         var taxonomy_default = jQuery("#taxonomy_default_" + id);
-
 
         jQuery.ajax({
             type: 'POST',
@@ -181,6 +202,8 @@ jQuery(document).ready(function (jQuery) {
                     alert('This element can only be added once into each form');
                     return false;
                 }
+
+                jQuery('.buddyforms_template').remove();
 
                 data = data.replace('accordion-body collapse', 'accordion-body in collapse');
 
