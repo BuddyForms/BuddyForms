@@ -162,7 +162,7 @@ function buddyforms_register_post_type() {
 		'public'              => false,
 		'show_ui'             => true,
 		'_builtin'            => false,
-		'capability_type'     => 'posts',
+		'capability_type'     => 'post',
 		'hierarchical'        => false,
 		'rewrite'             => false,
 		'supports'            => array(
