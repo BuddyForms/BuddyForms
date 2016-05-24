@@ -59,7 +59,7 @@ function buddyforms_display_form_element( $args ) {
 	) );
 
 	$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : '';
-	$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+	$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 		'class'    => "use_as_slug",
 		'data'     => $field_id,
 		'value'    => $name,
@@ -67,8 +67,8 @@ function buddyforms_display_form_element( $args ) {
 	) );
 
 	$field_slug                     = isset( $customfield['slug'] ) ? sanitize_title( $customfield['slug'] ) : $name;
-	$form_fields['general']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
-		'shortDesc' => __( '_name will create a hidden post meta field', 'buddyforms' ),
+	$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
+		'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
 		'value'     => $field_slug,
 		'required'  => 1,
 		'class'     => 'slug' . $field_id
