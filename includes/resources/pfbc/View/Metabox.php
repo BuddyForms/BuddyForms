@@ -1,6 +1,6 @@
 <?php
 
-class View_Inline extends FormView {
+class View_Metabox extends FormView {
 	protected $class = "form-inline";
 
 	public function renderElement( $element ) {

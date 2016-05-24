@@ -130,7 +130,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' )
 	) );
 
-	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_form';
+	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_message';
 	$form_setup['General'][] = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_form'       => 'Display the Form and Message',
 		'display_post'       => 'Display the Post',

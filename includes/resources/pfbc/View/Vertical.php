@@ -15,7 +15,7 @@ class View_Vertical extends FormView {
 
 		if ( $this->sharedCount == 0 ) {
 			$rowClass = $element->getShared() ? 'row' : '';
-			echo '<div class="' . $rowClass . ' form-group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+			echo '<div class="' . $rowClass . ' bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		}
 
 		if ( $element->getShared() ) {

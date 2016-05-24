@@ -55,7 +55,7 @@ function buddyforms_metabox_admin_form_metabox(){
 	$form->configure( array(
 		//"prevent" => array("bootstrap", "jQuery", "focus"),
 		//"action" => $redirect_to,
-		"view"   => new View_Inline,
+		"view"   => new View_Metabox,
 		'class'  => 'standard-form',
 	) );
 
