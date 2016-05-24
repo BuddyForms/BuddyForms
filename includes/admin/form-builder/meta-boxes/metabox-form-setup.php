@@ -36,10 +36,7 @@ function buddyforms_metabox_form_setup() {
 
 	$form_setup = array();
 
-	$form_setup['Create'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
-		'value'    => $singular_name,
-		//'required' => 0
-	) );
+
 
 	$post_type = 'false';
 	if ( isset( $buddyform['post_type'] ) ) {
@@ -65,6 +62,10 @@ function buddyforms_metabox_form_setup() {
 	foreach ( $pages as $page ) {
 		$options[ $page->ID ] = $page->post_title;
 	}
+
+
+	$form_setup['Manage'][] = new Element_HTML('<b> Let logged-in user see and manage there submissions</b>');
+
 
 	$attached_page = 'false';
 	if ( isset( $buddyform['attached_page'] ) ) {
@@ -137,14 +138,16 @@ function buddyforms_metabox_form_setup() {
 		'redirect'    => 'Redirect to url',
 	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
-	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_message';
+
 	$form_setup['Create'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_form'       => 'Display the Form and Message',
 		'display_post'       => 'Display the Post',
-		'display_posts_list' => 'Display the User\'s Post List',
 	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
 
+	$form_setup['Manage'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
+		'display_posts_list' => 'Display the User\'s Post List',
+	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
 
 	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
@@ -187,6 +190,11 @@ function buddyforms_metabox_form_setup() {
 		'list'  => 'List',
 		'table' => 'Table'
 	), array( 'value' => $list_posts_style, 'shortDesc' => 'Do you want to list post in a ul li list or as table.' ) );
+
+	$form_setup['Create'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
+		'value'    => $singular_name,
+		'shortDesc' => 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )'
+	) );
 
 	if ( is_array( $form_setup ) ) {
 		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'General', 'Create', 'Manage' ) );

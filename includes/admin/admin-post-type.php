@@ -13,10 +13,14 @@ function buddyforms_add_meta_boxes() {
 	$buddyform = get_post_meta($post->ID,'_buddyforms_options', true);
 
 
-	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
-		add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
+//	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
 		add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
-	}
+//	}
+
+//	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
+		add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
+//	}
+
 
 
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
@@ -266,8 +270,8 @@ add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages' );
 function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['slug']               = __( 'Slug', 'buddyforms' );
-	$columns['attached_post_type'] = __( 'Attached Post Type', 'buddyforms' );
-	$columns['attached_page']      = __( 'Attached Page', 'buddyforms' );
+	$columns['attached_post_type'] = __( 'Form Type', 'buddyforms' );
+	$columns['attached_page']      = __( 'Manageable', 'buddyforms' );
 	$columns['shortcode']          = __( 'Shortcode', 'buddyforms' );
 
 	return $columns;
@@ -295,8 +299,10 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$post_type_html = '<p style="color: red;">' . __( 'Post Type not exists', 'buddyforms' ) . '</p>';
 			}
 
-			if ( ! isset( $buddyform['post_type'] ) || $buddyform['post_type'] == 'none' ) {
-				$post_type_html = '<p style="color: red;">' . __( 'No Post Type not Selected', 'buddyforms' ) . '</p>';
+			if ( ! isset( $buddyform['post_type'] ) || $buddyform['post_type'] == 'bf_submissions' ) {
+				$post_type_html = '<p>' . __( 'Contact Form', 'buddyforms' ) . '</p>';
+			} else {
+				$post_type_html = '<p>' . __( 'Post Submissions', 'buddyforms' ) . ' <br> ' . __( 'Post Type: ', 'buddyforms' ) . $buddyform['post_type'] . '</p>';
 			}
 
 			echo $post_type_html;
@@ -305,9 +311,9 @@ function custom_buddyforms_column( $column, $post_id ) {
 			if ( isset( $buddyform['attached_page'] ) && empty( $buddyform['attached_page'] ) ) {
 				$attached_page = '<p style="color: red;">No Page Attached</p>';
 			} elseif ( isset( $buddyform['attached_page'] ) && $attached_page_title = get_the_title( $buddyform['attached_page'] ) ) {
-				$attached_page = $attached_page_title;
+				$attached_page = '<p>' . __( 'On', 'buddyforms' ). '</p>';// . '<br>' . $attached_page_title . '</p>';
 			} else {
-				$attached_page = '<p style="color: red;">Page not Exists</p>';
+				$attached_page = 'Off';
 			}
 
 			echo $attached_page;
