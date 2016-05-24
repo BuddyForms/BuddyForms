@@ -51,7 +51,7 @@ function bf_submissions_screen() {
 			<ul>
 				<li>
 
-					<b>Select the Form to show the form submissions</b>
+					<h4>Select a form to display the submissions</h4>
 					<script type="text/javascript">
 						jQuery(document).ready(function (jQuery) {
 							jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {

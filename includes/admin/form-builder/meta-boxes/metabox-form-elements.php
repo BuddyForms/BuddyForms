@@ -83,7 +83,7 @@ function buddyforms_form_builder_templates(){
 
 	?>
 	<div class="buddyforms_template">
-		<h4>Select Form Fields from the Form Elements Sidebar. Use a Template form. Just Select a Button.</h4>
+		<h5>Add form fields from the sidebar or use a template. Just click one of the buttons to load all fields at once.</h5>
 
 		<button id="btn-compile" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Contact Form</button>
 		<button id="btn-compile" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Registration Form</button>
