@@ -70,7 +70,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['attached_page'] ) ) {
 		$attached_page = $buddyform['attached_page'];
 	}
-	$form_setup['Create'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $options, array(
+	$form_setup['Manage'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $options, array(
 		'value'     => $attached_page,
 		'shortDesc' => '
     Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
@@ -114,7 +114,7 @@ function buddyforms_metabox_form_setup() {
 	if ( isset( $buddyform['admin_bar'] ) ) {
 		$admin_bar = $buddyform['admin_bar'];
 	}
-	$form_setup['Create'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
+	$form_setup['Manage'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
 
 	$edit_link = 'all';
 	if ( isset( $buddyform['edit_link'] ) ) {
@@ -132,14 +132,23 @@ function buddyforms_metabox_form_setup() {
 
 	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_message';
 	$form_setup['General'][] = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
+		'display_message'    => 'Display After Submission Message',
+		'display_page'       => 'Display Page Contents',
+		'redirect'    => 'Redirect to url',
+	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
+
+	$after_submit = isset( $buddyform['after_submit'] ) ? $buddyform['after_submit'] : 'display_message';
+	$form_setup['Create'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_form'       => 'Display the Form and Message',
 		'display_post'       => 'Display the Post',
 		'display_posts_list' => 'Display the User\'s Post List',
-		'display_message'    => 'Just display the Message'
 	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
+
+
+
 	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : 'The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]';
-	$form_setup['General'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
+	$form_setup['General'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
 		'style'     => "width:100%",
 		'value'     => $after_submit_message_text,
