@@ -22,8 +22,7 @@ function bf_manage_form_roles_and_capabilities_screen() {
             <p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 
             <p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p>
-        ';
-				?>
+        '; ?>
 
 
 			</div>

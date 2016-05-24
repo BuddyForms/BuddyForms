@@ -271,7 +271,7 @@ function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['slug']               = __( 'Slug', 'buddyforms' );
 	$columns['attached_post_type'] = __( 'Form Type', 'buddyforms' );
-	$columns['attached_page']      = __( 'Manageable', 'buddyforms' );
+	$columns['attached_page']      = __( 'Accessible', 'buddyforms' );
 	$columns['shortcode']          = __( 'Shortcode', 'buddyforms' );
 
 	return $columns;

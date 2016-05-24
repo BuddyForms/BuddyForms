@@ -1,18 +1,36 @@
 jQuery(document).ready(function (jQuery) {
 
-
-
     jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({
             type: 'POST',
+            dataType: "json",
             url: ajaxurl,
             data: {
                 "action": "buddyforms_form_template",
                 "template": jQuery(this).data("template"),
             },
             success: function (data) {
-                jQuery('.buddyforms_template').html(data);
-                bf_update_list_item_number();
+
+                console.log(data);
+
+                jQuery.each(data, function (i, val) {
+                    switch (i) {
+                        case 'html':
+                            jQuery('.buddyforms_template').html(val);
+                            bf_update_list_item_number();
+                            break;
+                        case 'form_setup':
+                            jQuery.each(val, function (i2, form_setup) {
+                                jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                                jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                            });
+                            break;
+                        default:
+                            alert(val);
+                    }
+
+                });
+
             },
             error: function () {
                 alert('Something went wrong.. ;-(sorry)');

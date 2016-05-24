@@ -42,9 +42,9 @@ function bf_submissions_screen() {
 		<?php
 		include( 'admin-credits.php' );
 
-		echo '<pre>';
-		print_r($buddyforms);
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r($buddyforms);
+		// echo '</pre>';
 
 		//Fetch, prepare, sort, and filter our data...
 		$buddyforms_submissions_table->prepare_items();
