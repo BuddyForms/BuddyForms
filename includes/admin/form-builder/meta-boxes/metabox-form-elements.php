@@ -88,6 +88,7 @@ function buddyforms_form_builder_templates(){
 		<button id="btn-compile" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Contact Form</button>
 		<button id="btn-compile" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Registration Form</button>
 		<button id="btn-compile" data-template="create" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Submit Post Form</button>
+
 	</div>
 
 	<?php

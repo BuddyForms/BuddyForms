@@ -4,7 +4,7 @@
 
 function buddyforms_settings_menu() {
 
-	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'bf_settings', 'buddyforms_settings_page' );
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
 }
 
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
@@ -25,19 +25,19 @@ function buddyforms_settings_page() {
 		}
 
 		if ( isset ( $_GET['tab'] ) ) {
-			bf_admin_tabs( $_GET['tab'] );
+			buddyforms_admin_tabs( $_GET['tab'] );
 		} else {
-			bf_admin_tabs( 'homepage' );
+			buddyforms_admin_tabs( 'homepage' );
 		}
 		?>
 
 		<div id="poststuff">
 			<!--			<form method="post" action="-->
-			<?php //admin_url( 'edit.php?post_type=buddyforms&page=bf_settings' );
+			<?php //admin_url( 'edit.php?post_type=buddyforms&page=buddyforms_settings' );
 			?><!--">-->
 			<?php
 
-			if ( $pagenow == 'edit.php' && $_GET['page'] == 'bf_settings' ) {
+			if ( $pagenow == 'edit.php' && $_GET['page'] == 'buddyforms_settings' ) {
 
 				if ( isset ( $_GET['tab'] ) ) {
 					$tab = $_GET['tab'];
@@ -107,90 +107,26 @@ function buddyforms_settings_page() {
 						</form>
 						<?php
 						break;
-					case 'import-export' :
-
-
-
-
-
-
-						$options = get_option( 'pwsix_settings' ); ?>
-
-							<form method="post" action="options.php" class="options_form">
-								<?php settings_fields( 'pwsix_settings_group' ); ?>
-								<table class="form-table">
-									<tr valign="top">
-										<th scop="row">
-											<label for="pwsix_settings[text]"><?php _e( 'Plugin Text' ); ?></label>
-										</th>
-										<td>
-											<input class="regular-text" type="text" id="pwsix_settings[text]" style="width: 300px;" name="pwsix_settings[text]" value="<?php if( isset( $options['text'] ) ) { echo esc_attr( $options['text'] ); } ?>"/>
-											<p class="description"><?php _e( 'Enter some text for the plugin here.'); ?></p>
-										</td>
-									</tr>
-									<tr>
-										<th scop="row">
-											<label for="pwsix_settings[label]"><?php _e( 'Label Text' ); ?></label>
-										</th>
-										<td>
-											<input class="regular-text" type="text" id="pwsix_settings[label]" style="width: 300px;" name="pwsix_settings[label]" value="<?php if( isset( $options['label'] ) ) { echo esc_attr( $options['label'] ); } ?>"/>
-											<p class="description"><?php _e( 'Enter some text for the label here.' ); ?></p>
-										</td>
-									</tr>
-									<tr valign="top">
-										<th scop="row">
-											<span><?php _e( 'Enable Feature' ); ?></span>
-										</th>
-										<td>
-											<input class="checkbox" type="checkbox" id="pwsix_settings[enabled]" name="pwsix_settings[enabled]" value="1" <?php checked( 1, isset( $options['enabled'] ) ); ?>/>
-											<label for="pwsix_settings[enabled]"><?php _e( 'Enable some feature in this plugin?' ); ?></label>
-										</td>
-									</tr>
-								</table>
-								<?php submit_button(); ?>
-							</form>
-
+					case 'import' : ?>
 							<div class="metabox-holder">
 								<div class="postbox">
-									<h3><span><?php _e( 'Export Settings' ); ?></span></h3>
+									<h3><span><?php _e( 'Import Forms' ); ?></span></h3>
 									<div class="inside">
-										<p><?php _e( 'Export the plugin settings for this site as a .json file. This allows you to easily import the configuration into another site.' ); ?></p>
-										<form method="post">
-											<p><input type="hidden" name="pwsix_action" value="export_settings" /></p>
-											<p>
-												<?php wp_nonce_field( 'pwsix_export_nonce', 'pwsix_export_nonce' ); ?>
-												<?php submit_button( __( 'Export' ), 'secondary', 'submit', false ); ?>
-											</p>
-										</form>
-									</div><!-- .inside -->
-								</div><!-- .postbox -->
-
-								<div class="postbox">
-									<h3><span><?php _e( 'Import Settings' ); ?></span></h3>
-									<div class="inside">
-										<p><?php _e( 'Import the plugin settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.' ); ?></p>
+										<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
 										<form method="post" enctype="multipart/form-data">
 											<p>
 												<input type="file" name="import_file"/>
 											</p>
 											<p>
-												<input type="hidden" name="pwsix_action" value="import_settings" />
-												<?php wp_nonce_field( 'pwsix_import_nonce', 'pwsix_import_nonce' ); ?>
+												<input type="hidden" name="buddyforms_action" value="import_settings" />
+												<?php wp_nonce_field( 'buddyforms_import_nonce', 'buddyforms_import_nonce' ); ?>
 												<?php submit_button( __( 'Import' ), 'secondary', 'submit', false ); ?>
 											</p>
 										</form>
 									</div><!-- .inside -->
 								</div><!-- .postbox -->
 							</div><!-- .metabox-holder -->
-
-
 						<?php
-
-
-
-
-
-
 						break;
 					case 'recaptcha' :
 						$recaptcha = get_option( 'buddyforms_recaptcha' );?>
@@ -270,7 +206,7 @@ function buddyforms_register_option() {
 	// creates our settings in the options table
 	register_setting( 'buddyforms_posttypes_default', 'buddyforms_posttypes_default', 'buddyforms_posttypes_default_sanitize' );
 	register_setting( 'buddyforms_edd_license', 'buddyforms_edd_license_key', 'buddyforms_edd_sanitize_license' );
-	register_setting( 'pwsix_settings_group', 'pwsix_settings' );
+	register_setting( 'buddyforms_settings_group', 'buddyforms_settings' );
 }
 
 add_action( 'admin_init', 'buddyforms_register_option' );
@@ -436,17 +372,17 @@ function buddyforms_edd_check_license() {
 	}
 }
 
-function bf_admin_tabs( $current = 'homepage' ) {
-	$tabs = array( 'general' => 'General Settings', 'recaptcha' => 'reCaptcha', 'import-export' => 'Import Export', 'license' => 'License' );
+function buddyforms_admin_tabs( $current = 'homepage' ) {
+	$tabs = array( 'general' => 'General Settings', 'recaptcha' => 'reCaptcha', 'import' => 'Import Forms', 'license' => 'License' );
 
-	$tabs = apply_filters( 'bf_admin_tabs', $tabs );
+	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
 
 	$links = array();
 
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab => $name ) {
 		$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-		echo "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=bf_settings&tab=$tab'>$name</a>";
+		echo "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=buddyforms_settings&tab=$tab'>$name</a>";
 
 	}
 
@@ -507,46 +443,13 @@ add_action("admin_init", "display_recaptcha_options");
 
 
 
-
-
-
-
-
-
-
-
-
-//
-// Import Export
-//
-
-/**
- * Process a settings export that generates a .json file of the shop settings
- */
-function pwsix_process_settings_export() {
-	if( empty( $_POST['pwsix_action'] ) || 'export_settings' != $_POST['pwsix_action'] )
-		return;
-	if( ! wp_verify_nonce( $_POST['pwsix_export_nonce'], 'pwsix_export_nonce' ) )
-		return;
-	if( ! current_user_can( 'manage_options' ) )
-		return;
-	$settings = get_option( 'pwsix_settings' );
-	ignore_user_abort( true );
-	nocache_headers();
-	header( 'Content-Type: application/json; charset=utf-8' );
-	header( 'Content-Disposition: attachment; filename=pwsix-settings-export-' . date( 'm-d-Y' ) . '.json' );
-	header( "Expires: 0" );
-	echo json_encode( $settings );
-	exit;
-}
-add_action( 'admin_init', 'pwsix_process_settings_export' );
 /**
  * Process a settings import from a json file
  */
-function pwsix_process_settings_import() {
-	if( empty( $_POST['pwsix_action'] ) || 'import_settings' != $_POST['pwsix_action'] )
+function buddyforms_process_settings_import() {
+	if( empty( $_POST['buddyforms_action'] ) || 'import_settings' != $_POST['buddyforms_action'] )
 		return;
-	if( ! wp_verify_nonce( $_POST['pwsix_import_nonce'], 'pwsix_import_nonce' ) )
+	if( ! wp_verify_nonce( $_POST['buddyforms_import_nonce'], 'buddyforms_import_nonce' ) )
 		return;
 	if( ! current_user_can( 'manage_options' ) )
 		return;
@@ -559,9 +462,30 @@ function pwsix_process_settings_import() {
 		wp_die( __( 'Please upload a file to import' ) );
 	}
 	// Retrieve the settings from the file and convert the json object to an array.
-	$settings = (array) json_decode( file_get_contents( $import_file ) );
-	update_option( 'pwsix_settings', $settings );
-	wp_safe_redirect( admin_url( 'edit.php?post_type=buddyforms&page=bf_settings&tab=import-export' ) ); exit;
+	$buddyform = json_decode( file_get_contents( $import_file ), true );
+
+
+	// Create post object
+	$new_form = array(
+		'post_title'    => $buddyform['name'],
+		'post_status'   => 'publish',
+		'post_type'     => 'buddyforms'
+	);
+
+// Insert the post into the database
+	$new_form_id = wp_insert_post( $new_form );
+
+	// Update post meta
+	update_post_meta( $new_form_id, '_buddyforms_options', $buddyform );
+
+	// Regenerate the global $buddyforms.
+	// The global$buddyforms is sored in the option table and provides all fors and form fields
+	buddyforms_regenerate_global_options();
+
+	// Rewrite the page roles and flash permalink if needed
+	buddyforms_attached_page_rewrite_rules( true );
+
+	wp_safe_redirect( admin_url( 'post.php?post='.$new_form_id.'&action=edit' ) ); exit;
 }
-add_action( 'admin_init', 'pwsix_process_settings_import' );
+add_action( 'admin_init', 'buddyforms_process_settings_import' );
 ?>
