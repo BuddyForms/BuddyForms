@@ -278,7 +278,7 @@ function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['slug']               = __( 'Slug', 'buddyforms' );
 	$columns['attached_post_type'] = __( 'Form Type', 'buddyforms' );
-	$columns['attached_page']      = __( 'Accessible', 'buddyforms' );
+	$columns['attached_page']      = __( 'Logged In User Access', 'buddyforms' );
 	$columns['shortcode']          = __( 'Shortcode', 'buddyforms' );
 
 	return $columns;
@@ -325,6 +325,23 @@ function custom_buddyforms_column( $column, $post_id ) {
 
 			echo $attached_page;
 
+
+
+
+
+			if($attached_page != 'Off') {
+				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';?>
+				<div class="row-actions">
+					<span class="view-form">
+						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>">View Form</a> |
+					</span>
+					<span class="view-entryies">
+						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>">View Entries</a> |
+					</span>
+
+				</div>
+				<?php
+			}
 			break;
 		case 'shortcode':
 			echo '[bf form_slug="' . $post->post_name . '"]';
@@ -405,7 +422,7 @@ function buddyforms_add_button_to_submit_box() {
 
 		if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){
 			echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'View Form Posts', 'buddyforms' ) . '</a>
-        <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
+                  <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
 		}
 
 		if(isset($post->post_name) && $post->post_name != ''){
@@ -451,7 +468,7 @@ function buddyforms_export_form(){
 		$buddyform_options = get_post_meta( $_REQUEST['post_id'], '_buddyforms_options', true );
 
 		header('Content-Type: application/json');
-		header('Content-Disposition: attachment; filename="sample.json"');
+		header('Content-Disposition: attachment; filename="BuddyFormsExport.json"');
 		echo json_encode($buddyform_options);
 		exit;
 	}

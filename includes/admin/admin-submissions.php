@@ -244,7 +244,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'ajax'     => false            //does this table support ajax?
 		) );
 
-
 	}
 
 	function column_ID( $item ) {
@@ -252,17 +251,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
-			'delete' => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] ),
+			'delete' => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] ),
 		);
-
-		//$actions['delete'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&movie=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] );
 
 		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'bf_submissions'){
 			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">View Form</a>', $_REQUEST['page'], 'edit', $item['ID'] );
 		}
 
-
-		//Return the title contents
+		// Return the title contents
 		return sprintf( '<span style="color:silver">%1$s</span>%2$s',
 			$item['ID'],
 			$this->row_actions( $actions )
@@ -286,11 +282,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="%1$s[]" value="%2$s" />',
-			/*$1%s*/
-			$this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
-			/*$2%s*/
-			$item['ID']                //The value of the checkbox should be the record's id
+			'<input type="checkbox" name="%1$s[]" value="%2$s" />', $this->_args['singular'], $item['ID']
 		);
 	}
 
