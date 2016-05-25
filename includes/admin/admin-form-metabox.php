@@ -1,5 +1,8 @@
 <?php
 
+//
+// Post metabox to display form elements in the admin backend
+//
 function buddyforms_admin_form_metabox(){
 	global $buddyforms, $post;
 
@@ -31,7 +34,9 @@ function buddyforms_admin_form_metabox(){
 }
 add_action( 'add_meta_boxes', 'buddyforms_admin_form_metabox' );
 
-
+//
+// Metabox content
+//
 function buddyforms_metabox_admin_form_metabox(){
 	global $buddyforms, $post;
 
@@ -82,6 +87,9 @@ function buddyforms_metabox_admin_form_metabox(){
 
 }
 
+//
+// Save the metabox data
+//
 function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	global $buddyforms;
 

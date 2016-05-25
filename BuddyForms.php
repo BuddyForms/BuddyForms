@@ -173,11 +173,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php' );
 
-			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-				// load our custom updater
-				include( BUDDYFORMS_INCLUDES_PATH . '/resources/edd/EDD_SL_Plugin_Updater.php' );
-			}
-
 		}
 
 
@@ -425,22 +420,3 @@ class BuddyForms {
 }
 
 $GLOBALS['buddyforms_new'] = new BuddyForms();
-
-function buddyforms_edd_plugin_updater() {
-
-	// retrieve our license key from the DB
-	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
-
-	// setup the updater
-	$edd_updater = new EDD_SL_Plugin_Updater( BUDDYFORMS_STORE_URL, __FILE__, array(
-			'version'   => BUDDYFORMS_VERSION,                // current version number
-			'license'   => $license_key,        // license key (used get_option above to retrieve from DB)
-			'item_name' => BUDDYFORMS_EDD_ITEM_NAME,    // name of this plugin
-			'author'    => 'Sven Lehnert',  // author of this plugin
-			'url'       => home_url()
-		)
-	);
-
-}
-
-add_action( 'admin_init', 'buddyforms_edd_plugin_updater', 0 );

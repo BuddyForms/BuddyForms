@@ -21,15 +21,12 @@ function buddyforms_add_meta_boxes() {
 		add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
 //	}
 
-
-
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
 
 	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default' );
 
 }
-
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
@@ -110,10 +107,8 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	buddyforms_attached_page_rewrite_rules( true );
 
 }
-
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
 
-add_action( 'transition_post_status', 'buddyforms_transition_post_status_regenerate_global_options', 10, 3 );
 function buddyforms_transition_post_status_regenerate_global_options( $new_status, $old_status, $post ) {
 
 	if ( $post->post_type != 'buddyforms' ) {
@@ -124,6 +119,7 @@ function buddyforms_transition_post_status_regenerate_global_options( $new_statu
 	buddyforms_attached_page_rewrite_rules( true );
 
 }
+add_action( 'transition_post_status', 'buddyforms_transition_post_status_regenerate_global_options', 10, 3 );
 
 function buddyforms_regenerate_global_options() {
 	// get all forms and update the global
@@ -348,7 +344,6 @@ function custom_buddyforms_column( $column, $post_id ) {
 			break;
 	}
 }
-
 add_action( 'manage_buddyforms_posts_custom_column', 'custom_buddyforms_column', 10, 2 );
 
 /**
@@ -405,7 +400,6 @@ function buddyforms_hide_publishing_actions() {
 		<?php
 	}
 }
-
 add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
 add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
 add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
@@ -431,13 +425,11 @@ function buddyforms_add_button_to_submit_box() {
 
 	}
 }
-
 add_action( 'post_submitbox_start', 'buddyforms_add_button_to_submit_box' );
 
 function buddyforms_remove_slugdiv() {
 	remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
 }
-
 add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
 
 
