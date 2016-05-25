@@ -57,13 +57,17 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 
 	$buddyform = $_POST['buddyforms_options'];
 
+	// Add post title as form name and post name as form slug.
+	$buddyform['name'] = $post->post_title;
+	$buddyform['slug'] = $post->post_name;
+
+	// make sure the form fields slug and type is sanitised
 	if ( isset( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $key => $field ) {
 		$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
 		$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
 	} endif;
 
-	// First update post meta
-	//delete_post_meta( $post_id, '_buddyforms_options' );
+	// Update post meta
 	update_post_meta( $post_id, '_buddyforms_options', $buddyform );
 
 	// Save the Roles and capabilities.
@@ -98,8 +102,11 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 
 	}
 
+	// Regenerate the global $buddyforms.
+	// The global$buddyforms is sored in the option table and provides all fors and form fields
 	buddyforms_regenerate_global_options();
 
+	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
 }
