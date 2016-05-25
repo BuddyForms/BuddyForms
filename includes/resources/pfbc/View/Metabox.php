@@ -29,10 +29,10 @@ class View_Metabox extends FormView {
 		if ( empty ( $label ) ) {
 			$label = '';
 		}
-		echo ' <label for="', $element->getAttribute( "id" ), '">';
+		echo '<div class="bf-label"><label for="', $element->getAttribute( "id" ), '">';
 		if ( $element->isRequired() ) {
 			echo '<span class="required">* </span> ';
 		}
-		echo $label, '</label> ';
+		echo $label, '</label></div> ';
 	}
 }

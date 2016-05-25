@@ -137,7 +137,7 @@ function bf_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( 'editpost_content', $editpost_content_val ) );
 						} else {
-							$wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . '</label><div class="bf_inputs">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+							$wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . '</label><div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							$form->addElement( new Element_HTML( $wp_editor ) );
 						}
 						break;
@@ -325,7 +325,7 @@ function bf_form_elements( $form, $args ) {
 						}
 
 						$form->addElement( new Element_HTML( $name . '</label>' ) );
-						$form->addElement( new Element_HTML( '<div class="bf_inputs">
+						$form->addElement( new Element_HTML( '<div class="bf_inputs bf-input">
                             ' . $str . '
                             </div>
                         ' ) );
@@ -412,7 +412,7 @@ function bf_form_elements( $form, $args ) {
 						}
 
 						$form->addElement( new Element_HTML( $name . '</label>' ) );
-						$form->addElement( new Element_HTML( '<div class="bf_inputs">
+						$form->addElement( new Element_HTML( '<div class="bf_inputs bf-input">
                             ' . $str . '
                             </div>
                         ' ) );
@@ -480,7 +480,7 @@ function bf_form_elements( $form, $args ) {
                         <label for="editpost-element-' . $field_id . '">
                             ' . $required . $name . '
                         </label>
-                        <div class="bf_inputs">' . $dropdown . ' </div>
+                        <div class="bf_inputs bf-input">' . $dropdown . ' </div>
                         <span class="help-inline">' . $description . '</span>
                     </div>';
 

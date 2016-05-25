@@ -23,7 +23,7 @@ class Element_Checkbox extends OptionElement {
 		}
 
 		$count = 0;
-		echo '<div class="checkbox">';
+		echo '<div class="bf-input"><div class="checkbox">';
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
 
@@ -43,6 +43,6 @@ class Element_Checkbox extends OptionElement {
 				echo '</div><div class="checkbox">';
 			}
 		}
-		echo '</div>';
+		echo '</div></div>';
 	}
 }

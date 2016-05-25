@@ -11,7 +11,7 @@ class Element_Radio extends OptionElement {
 		}
 
 		$count = 0;
-		echo '<div class="radio">';
+		echo '<div class="bf-input"><div class="radio">';
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
 
@@ -31,6 +31,6 @@ class Element_Radio extends OptionElement {
 				echo '</div><div class="radio">';
 			}
 		}
-		echo '</div>';
+		echo '</div></div>';
 	}
 }

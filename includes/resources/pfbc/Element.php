@@ -159,7 +159,7 @@ abstract class Element extends Base {
 	the form is rendered.*/
 
 	public function render() {
-		echo '<input', $this->getAttributes(), '/>';
+		echo '<div class="bf-input"><input', $this->getAttributes(), '/></div>';
 	}
 
 	/*If an element requires javascript to be loaded, this method is used send them to the browser after
