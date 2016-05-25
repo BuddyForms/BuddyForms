@@ -272,7 +272,7 @@ add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages' );
  */
 function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
-	$columns['slug']               = __( 'Slug', 'buddyforms' );
+	//$columns['slug']               = __( 'Slug', 'buddyforms' );
 	$columns['attached_post_type'] = __( 'Form Type', 'buddyforms' );
 	$columns['attached_page']      = __( 'Logged In User Access', 'buddyforms' );
 	$columns['shortcode']          = __( 'Shortcode', 'buddyforms' );
@@ -321,10 +321,6 @@ function custom_buddyforms_column( $column, $post_id ) {
 
 			echo $attached_page;
 
-
-
-
-
 			if($attached_page != 'Off') {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';?>
 				<div class="row-actions">
@@ -332,7 +328,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>">View Form</a> |
 					</span>
 					<span class="view-entryies">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>">View Entries</a> |
+						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>">View Entries</a>
 					</span>
 
 				</div>
@@ -444,10 +440,10 @@ function buddyforms_add_action_buttons($actions, $post){
 		);
 
 		unset($actions['inline hide-if-no-js']);
-		$actions['export'] = '<a href="' . esc_url( $url ) . '">Export Form</a>';
+		$actions['export'] = '<a href="' . esc_url( $url ) . '">Export</a>';
 
 
-		$actions['submissions'] = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">Submissions</a>';
+		$actions['submissions'] = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">' . __("View Submissions", "buddyforms") . '</a>';
 	}
 	return $actions;
 }
