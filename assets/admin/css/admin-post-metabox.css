@@ -1,5 +1,5 @@
 .bf_field_group {
-  margin: 10px 0;
+  margin: 10px 0 20px;
   overflow: auto;
   clear: both;
 }
@@ -17,9 +17,11 @@
   overflow: auto;
 }
 .bf_field_group .settings-input {
-  width: 100%;
+  width: 98%;
 }
 .bf_field_group span.help-inline {
-  width: calc( 30% - 5px); /* that 5px is the padding-right, see the line below ;) */ 
-  padding: 5px 5px 20px 0;
+  width: calc(30% - 5px);
+  padding: 2px 5px 15px 0;
+  clear: none;
+  display: block;
 }
