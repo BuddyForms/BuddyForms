@@ -55,7 +55,11 @@ class BuddyForms {
 		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_admin_style' ), 1, 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_admin_js' ), 2, 1 );
 		add_action( 'admin_footer', array( $this, 'buddyforms_admin_js_footer' ), 2, 1 );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+
 		add_action( 'template_redirect', array( $this, 'buddyform_front_js_loader' ), 2, 1 );
+
+
 
 	}
 
@@ -415,6 +419,40 @@ class BuddyForms {
 		delete_option( 'buddyforms_options' );
 
 		buddyforms_attached_page_rewrite_rules( true );
+	}
+
+
+	/**
+	 * Change the admin footer text on BuddyForms admin pages.
+	 *
+	 * @since  1.6
+	 * @param  string $footer_text
+	 * @return string
+	 */
+	public function admin_footer_text( $footer_text ) {
+		global $post;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$current_screen = get_current_screen();
+		$wc_pages       = wc_get_screen_ids();
+
+
+		if ( isset( $current_screen->id ) && $current_screen->id == 'edit-buddyforms' ) {
+			// Change the footer text
+
+				$footer_text = sprintf( __( 'If you like <strong>BuddyForms</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from BuddyForms in advance!', 'buddyforms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/buddyforms?filter=5#postform" target="_blank" class="wc-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'woocommerce' ) . '">', '</a>' );
+				wc_enqueue_js( "
+					jQuery( 'a.wc-rating-link' ).click( function() {
+						jQuery.post( '" . WC()->ajax_url() . "', { action: 'woocommerce_rated' } );
+						jQuery( this ).parent().text( jQuery( this ).data( 'rated' ) );
+					});
+				" );
+
+		}
+
+		return $footer_text;
 	}
 
 }

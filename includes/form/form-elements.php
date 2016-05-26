@@ -221,6 +221,7 @@ function bf_form_elements( $form, $args ) {
 								$post_status['draft'] = __( 'Draft', 'buddyforms' );
 							}
 
+
 							if ( in_array( 'future', $customfield['post_status'] ) && empty( $customfield_val ) || in_array( 'future', $customfield['post_status'] ) && get_post_status( $post_id ) == 'future' ) {
 								$post_status['future'] = __( 'Scheduled', 'buddyforms' );
 							}
@@ -267,6 +268,7 @@ function bf_form_elements( $form, $args ) {
 
 					case 'text' :
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Captcha("Captcha", $attributes = null) );
 						break;
 
 					case 'link' :
