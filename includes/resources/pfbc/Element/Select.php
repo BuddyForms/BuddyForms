@@ -17,7 +17,7 @@ class Element_Select extends OptionElement {
 			$this->_attributes["name"] .= "[]";
 		}
 
-		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
+		echo '<div class="bf-input"><select', $this->getAttributes( array( "value", "selected" ) ), '>';
 		$selected = false;
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
@@ -31,6 +31,6 @@ class Element_Select extends OptionElement {
 			}
 			echo '>', $text, '</option>';
 		}
-		echo '</select>';
+		echo '</select></div>';
 	}
 }
