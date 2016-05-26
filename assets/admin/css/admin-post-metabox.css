@@ -41,7 +41,7 @@
 
 /* Form Setup Choose A Form Type Box */
 
-.bf-3-col {
+.bf-3-tile {
   width: 95%;
   background: #fafafa;
   border: 1px solid #e3e3e3;
@@ -55,7 +55,7 @@
   display: block;
   width: 100%;
   padding: 8px 0;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   font-size: 14px;
   line-height: 14px;
   color: #fff;
@@ -79,10 +79,17 @@
   background: #008ec2;
   border-color: #006799;
 }
+.bf-tile-title {
+  margin-bottom: 15px;
+}
+.bf-tile-desc {
+  margin-bottom: 25px;
+}
 @media (min-width: 1200px) {
-  .bf-3-col {
+  .bf-3-tile {
       width: 29%;
       display: inline-block;
-      padding: 20px 10px;
+      padding: 30px 10px 0;
+      min-height: 180px;
   }
 }

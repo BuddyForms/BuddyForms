@@ -83,24 +83,24 @@ function buddyforms_form_builder_templates(){
 
 	?>
 	<div class="buddyforms_template">
-		<h5>You can add form fields from the sidebar or simply choose a pre-configured form template:</h5>
+		<h5>You can add form fields from the sidebar or choose a pre-configured form template:</h5>
 
-		<div class="bf-3-col">
-			<h4>Contact Form</h4>
-			<p>Setup a simple contact form.</p>
-			<button id="btn-compile-contact" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Contact Form</button>
+		<div class="bf-3-tile">
+			<h4 class="bf-tile-title">Contact Form</h4>
+			<p class="bf-tile-desc">Setup a simple contact form.</p>
+			<button id="btn-compile-contact" data-template="contact" class="bf_form_template btn" onclick=""><span class="bf-plus">+</span> Contact Form</button>
 		</div>
 
-		<div class="bf-3-col">
-			<h4>Registration Form</h4>
-			<p>Setup a simple registration form.</p>
-			<button id="btn-compile-register" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Registration Form</button>
+		<div class="bf-3-tile">
+			<h4 class="bf-tile-title">Registration Form</h4>
+			<p class="bf-tile-desc">Setup a simple registration form.</p>
+			<button id="btn-compile-register" data-template="register" class="xmar bf_form_template btn" onclick=""><span class="bf-plus">+</span> Registration Form</button>
 		</div>
 
-		<div class="bf-3-col">
-			<h4>Post Form</h4>
-			<p>Setup a simple post form.</p>
-			<button id="btn-compile-posts" data-template="create" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Post Form</button>
+		<div class="bf-3-tile">
+			<h4 class="bf-tile-title">Post Form</h4>
+			<p class="bf-tile-desc">Setup a simple post form.</p>
+			<button id="btn-compile-posts" data-template="create" class="xmar bf_form_template btn" onclick=""><span class="bf-plus">+</span> Post Form</button>
 		</div>
 
 	</div>
