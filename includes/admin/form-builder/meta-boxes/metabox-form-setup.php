@@ -25,14 +25,24 @@ function buddyforms_metabox_form_setup() {
 
 	unset( $post_types['buddyforms'] );
 
+
+
+
+
 	$name          = get_the_title();
 	$slug          = $post->post_name;
 	$singular_name = isset( $buddyform['singular_name'] ) ? stripslashes( $buddyform['singular_name'] ) : '';
 
-	$form_setup = new Element_Hidden( 'buddyforms_options[name]', $name );
-	$form_setup->render();
-	$form_setup = new Element_Hidden( 'buddyforms_options[slug]', $slug );
-	$form_setup->render();
+//	$form_setup = new Element_Hidden( 'buddyforms_options[name]', $name );
+//	$form_setup->render();
+//	$form_setup = new Element_Hidden( 'buddyforms_options[slug]', $slug );
+//	$form_setup->render();
+
+
+
+
+
+
 
 	$form_setup = array();
 

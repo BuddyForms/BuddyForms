@@ -173,11 +173,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php' );
 
-			if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-				// load our custom updater
-				include( BUDDYFORMS_INCLUDES_PATH . '/resources/edd/EDD_SL_Plugin_Updater.php' );
-			}
-
 		}
 
 
@@ -221,9 +216,8 @@ class BuddyForms {
 		}
 
 		// load the tk_icons
-		wp_enqueue_style( 'bootstrapcss', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 		wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
-		wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
+		wp_enqueue_style( 'admin_post_metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 	}
 
 	/**
@@ -256,12 +250,13 @@ class BuddyForms {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-accordion' );
 
-			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
-
-
-
 		}
+
+		wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
+
+		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
+		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
+
 		wp_enqueue_media();
 		wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 
@@ -425,22 +420,3 @@ class BuddyForms {
 }
 
 $GLOBALS['buddyforms_new'] = new BuddyForms();
-
-function buddyforms_edd_plugin_updater() {
-
-	// retrieve our license key from the DB
-	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
-
-	// setup the updater
-	$edd_updater = new EDD_SL_Plugin_Updater( BUDDYFORMS_STORE_URL, __FILE__, array(
-			'version'   => BUDDYFORMS_VERSION,                // current version number
-			'license'   => $license_key,        // license key (used get_option above to retrieve from DB)
-			'item_name' => BUDDYFORMS_EDD_ITEM_NAME,    // name of this plugin
-			'author'    => 'Sven Lehnert',  // author of this plugin
-			'url'       => home_url()
-		)
-	);
-
-}
-
-add_action( 'admin_init', 'buddyforms_edd_plugin_updater', 0 );
