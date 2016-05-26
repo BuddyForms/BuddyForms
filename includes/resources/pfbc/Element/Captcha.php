@@ -11,6 +11,6 @@ class Element_Captcha extends Element {
 	public function render() {
 		$this->validation[] = new Validation_Captcha( $this->privateKey );
 		require_once( dirname( __FILE__ ) . "/../Resources/recaptchalib.php" );
-		echo recaptcha_get_html( $this->publicKey );
+		echo '<div class="bf-input">'.recaptcha_get_html( $this->publicKey ).'</div>';
 	}
 }

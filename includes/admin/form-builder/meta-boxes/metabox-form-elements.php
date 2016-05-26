@@ -83,11 +83,25 @@ function buddyforms_form_builder_templates(){
 
 	?>
 	<div class="buddyforms_template">
-		<h5>Add form fields from the sidebar or use a template. Just click one of the buttons to load all fields at once and load the form setup </h5>
+		<h5>You can add form fields from the sidebar or simply choose a pre-configured form template:</h5>
 
-		<button id="btn-compile" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Contact Form</button>
-		<button id="btn-compile" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Registration Form</button>
-		<button id="btn-compile" data-template="create" class="bf_form_template btn btn-block btn-lg btn-outline" onclick="">Submit Post Form</button>
+		<div class="bf-3-col">
+			<h4>Contact Form</h4>
+			<p>Setup a simple contact form.</p>
+			<button id="btn-compile-contact" data-template="contact" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Contact Form</button>
+		</div>
+
+		<div class="bf-3-col">
+			<h4>Registration Form</h4>
+			<p>Setup a simple registration form.</p>
+			<button id="btn-compile-register" data-template="register" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Registration Form</button>
+		</div>
+
+		<div class="bf-3-col">
+			<h4>Post Form</h4>
+			<p>Setup a simple post form.</p>
+			<button id="btn-compile-posts" data-template="create" class="bf_form_template btn btn-block btn-lg btn-outline" onclick=""><span class="bf-plus">+</span> Post Form</button>
+		</div>
 
 	</div>
 

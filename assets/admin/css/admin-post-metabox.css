@@ -19,9 +19,70 @@
 .bf_field_group .settings-input {
   width: 98%;
 }
+.bf_field_group .bf-input .select2-container-multi .select2-choices .select2-search-field input {
+    width: auto !important;
+    min-width: 200px;
+}
 .bf_field_group span.help-inline {
   width: calc(30% - 5px);
   padding: 2px 5px 15px 0;
   clear: none;
   display: block;
+}
+
+
+/* Form Builder CSS */
+.buddyforms_forms_builder .bf-input textarea {
+  width: 98%;
+}
+.buddyforms_forms_builder table {
+  width: 100%;
+}
+
+/* Form Setup Choose A Form Type Box */
+
+.bf-3-col {
+  width: 95%;
+  background: #fafafa;
+  border: 1px solid #e3e3e3;
+  display: block;
+  overflow: auto;
+  padding: 20px 10px;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+.buddyforms_template .btn {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  margin-bottom: 0px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  text-align: center;
+  text-shadow: none;
+  vertical-align: middle;
+  cursor: pointer;
+  background: #0085ba;
+  text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
+  border-color: #0073aa #006799 #006799;
+  -webkit-box-shadow: 0 1px 0 #006799;
+  box-shadow: 0 1px 0 #006799;
+  border-width: 1px;
+  border-style: solid;
+  -webkit-appearance: none;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.buddyforms_template .btn:hover,
+.buddyforms_template .btn:focus {
+  background: #008ec2;
+  border-color: #006799;
+}
+@media (min-width: 1200px) {
+  .bf-3-col {
+      width: 29%;
+      display: inline-block;
+      padding: 20px 10px;
+  }
 }
