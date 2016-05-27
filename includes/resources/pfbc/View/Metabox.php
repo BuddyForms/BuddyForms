@@ -21,18 +21,11 @@ class View_Metabox extends FormView {
 			$element->setLabel( "" );
 		}
 
-		if ( $element instanceof Element_Radio || $element instanceof Element_Checkbox || $element instanceof Element_Textarea ) {
-			echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
-			echo '<div class="bf-input">';
-			echo $element->render();
-			echo $this->renderDescriptions( $element );
-			echo "</div></div>";
-			return;
-		}
-
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
-		echo $element->render(), $this->renderDescriptions( $element );
-		echo "</div> ";
+		echo '<div class="bf-input">';
+		echo $element->render();
+		echo $this->renderDescriptions( $element );
+		echo "</div></div>";
 
 	}
 
