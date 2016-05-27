@@ -6,6 +6,10 @@
 function buddyforms_admin_form_metabox(){
 	global $buddyforms, $post;
 
+
+	if($post->post_type == 'buddyforms') return;
+
+
 	$form_slug  = get_post_meta( $post->ID, '_bf_form_slug', true );
 	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 

@@ -189,12 +189,12 @@ function buddyforms_display_form_element( $args ) {
 				$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
 
 			} else {
-				$form_fields['general']['taxonomy_default'] = new Element_Select( '<b>' . __( 'Taxonomy Default', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default]", array(), array(
-					'class'    => 'bf-select2',
-					'multiple' => 1,
-					'value'    => '',
-					'id'       => 'taxonomy_default_' . $field_id
-				) );
+//				$form_fields['general']['taxonomy_default'] = new Element_Select( '<b>' . __( 'Taxonomy Default', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default]", array(), array(
+//					'class'    => 'bf-select2',
+//					'multiple' => 1,
+//					'value'    => '',
+//					'id'       => 'taxonomy_default_' . $field_id
+//				) );
 			}
 			$form_fields['general']['taxonomy_order'] = new Element_Select( '<b>' . __( 'Taxonomy Order', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array(
 				'ASC',

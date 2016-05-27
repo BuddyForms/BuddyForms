@@ -268,6 +268,9 @@ function bf_form_elements( $form, $args ) {
 
 					case 'text' :
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+						break;
+
+					case 'captcha' :
 						$form->addElement( new Element_Captcha("Captcha", $attributes = null) );
 						break;
 

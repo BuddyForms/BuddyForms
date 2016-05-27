@@ -13,13 +13,13 @@ function buddyforms_add_meta_boxes() {
 	$buddyform = get_post_meta($post->ID,'_buddyforms_options', true);
 
 
-//	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
+	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
 		add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
-//	}
+	}
 
-//	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
+	if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
 		add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
-//	}
+	}
 
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );

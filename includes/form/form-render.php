@@ -58,7 +58,7 @@ function buddyforms_form_html( $args ) {
 	$form->configure( array(
 		"prevent" => array("bootstrap", "jQuery", "focus"),
 		"action" => $redirect_to,
-		"view"   => new View_Inline,
+		"view"   => new View_Frontend,
 		'class'  => 'standard-form',
 	) );
 

@@ -1,6 +1,6 @@
 <?php
 
-class View_Metabox extends FormView {
+class View_Frontend extends FormView {
 	protected $class = "form-inline";
 
 	public function renderElement( $element ) {
@@ -9,11 +9,9 @@ class View_Metabox extends FormView {
 
 			return;
 		}
-
-
-//		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
-//			$element->appendAttribute( "class", "form-control" );
-//		}
+		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
+			$element->appendAttribute( "class", "form-control" );
+		}
 
 		if ( $this->noLabel ) {
 			$label = $element->getLabel();
@@ -21,19 +19,10 @@ class View_Metabox extends FormView {
 			$element->setLabel( "" );
 		}
 
-		if ( $element instanceof Element_Radio || $element instanceof Element_Checkbox || $element instanceof Element_Textarea ) {
-			echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
-			echo '<div class="bf-input">';
-			echo $element->render();
-			echo $this->renderDescriptions( $element );
-			echo "</div></div>";
-			return;
-		}
-
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+		echo '<div class="bf-input">';
 		echo $element->render(), $this->renderDescriptions( $element );
-		echo "</div> ";
-
+		echo "</div></div> ";
 	}
 
 	protected function renderLabel( Element $element ) {
@@ -41,10 +30,10 @@ class View_Metabox extends FormView {
 		if ( empty ( $label ) ) {
 			$label = '';
 		}
-		echo '<div class="bf-label"><label for="', $element->getAttribute( "id" ), '">';
+		echo ' <label for="', $element->getAttribute( "id" ), '">';
 		if ( $element->isRequired() ) {
 			echo '<span class="required">* </span> ';
 		}
-		echo $label, '</label></div> ';
+		echo $label, '</label> ';
 	}
 }
