@@ -212,37 +212,26 @@ function buddyforms_metabox_form_setup() {
 
 	?>
 
-	<div class="tabs tabbable tabs-left ">
+	<div class="tabs tabbable tabs-left" id="buddyforms_formbuilder_settings"->
 		<ul class="nav nav-tabs nav-pills">
 			<?php
 			$i = 0;
-			foreach ( $form_setup as $tab => $fields ) {
-
-				$class_active = '';
-				if ( $i == 0 ) {
-					$class_active = 'active';
-				}
-
-				?>
-			<li class="<?php echo $class_active ?>"><a
+			foreach ( $form_setup as $tab => $fields ) { ?>
+			<li class="<?php echo $i == 0 ? 'active' : '' ?>"><a
 					href="#<?php echo $tab; ?>"
 					data-toggle="tab"><?php echo $tab; ?></a>
 				</li><?php
 				$i ++;
 			}
+			do_action('buddyforms_form_setup_nav_li_last');
 			?>
+
 		</ul>
 		<div class="tab-content">
 			<?php
 			$i = 0;
-			foreach ( $form_setup as $tab => $fields ) {
-
-				$class_active = '';
-				if ( $i == 0 ) {
-					$class_active = 'active';
-				}
-				?>
-				<div class="tab-pane fade in <?php echo $class_active ?>"
+			foreach ( $form_setup as $tab => $fields ) { ?>
+				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
 				     id="<?php echo $tab; ?>">
 					<div class="buddyforms_accordion_general">
 						<table class="form-table">
@@ -265,23 +254,10 @@ function buddyforms_metabox_form_setup() {
 				<?php
 				$i ++;
 			}
+			do_action('buddyforms_form_setup_tab_pane_last');
 			?>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<?php
 

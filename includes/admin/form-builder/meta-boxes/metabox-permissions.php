@@ -1,5 +1,5 @@
 <?php
-function bf_manage_form_roles_and_capabilities_screen() {
+function buddyforms_permissions_screen() {
 	global $post, $buddyform;
 
 	$form_slug = $post->post_name;
@@ -81,6 +81,14 @@ function bf_manage_form_roles_and_capabilities_screen() {
 					</tr>
 					</thead>
 					<tbody id="the-list">
+					<tr id="row_form_title">
+						<th scope="row">
+							<label for="role_role">Unregistered Users</label>
+						</th>
+						<td>
+							Icke und er
+						</td>
+					</tr>
 					<?php
 					if ( isset( $form_setup ) ) {
 						foreach ( $form_setup as $key => $field ) { ?>
@@ -110,3 +118,20 @@ function bf_manage_form_roles_and_capabilities_screen() {
 
 
 }
+
+function buddyforms_form_setup_nav_li_permission(){ ?>
+	<li><a
+		href="#permission"
+		data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
+	</li><?php
+}
+add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_permission');
+
+function buddyforms_form_setup_tab_pane_permission(){ ?>
+	<div class="tab-pane fade in" id="permission">
+	<div class="buddyforms_accordion_permission">
+		<?php buddyforms_permissions_screen() ?>
+	</div>
+	</div><?php
+}
+add_action('buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_permission');

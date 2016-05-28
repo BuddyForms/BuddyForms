@@ -4,26 +4,43 @@ function bf_mail_notification_screen() {
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
-	echo '<p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p><br>';
 	echo '<ul>';
 	if ( isset( $buddyform['mail_notification'] ) ) {
 		foreach ( $buddyform['mail_notification'] as $key => $value ) {
 			buddyforms_new_notification_trigger_form( $buddyform['mail_notification'][ $key ]['mail_trigger'] );
 		}
+	} else {
+		echo '<div id="no-trigger-mailcontainer">' . __('No Mail Notification Trigger so far. You should create at least one.') . '</div>';
 	}
 	echo '<div id="mailcontainer"></div>';
 	echo '<ul>';
 	echo '<hr>';
 
 	$form_setup   = array();
-	$form_setup[] = new Element_HTML( '<div class="trigger-select">' );
-	$form_setup[] = new Element_Select( '<b>' . __( "Create new Mail Notification", 'buddyforms' ) . '</b>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
-		'class'     => 'buddyforms_notification_trigger',
-		'shortDesc' => ''
-	) );
-	$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create Trigger', 'buddyforms' ) . '</a></div>' );
 
-	$form_setup[] = new Element_HTML( '<br>
+	if( !isset($buddyform['post_type']) || $buddyform['post_type'] == 'bf_submissions' ){
+		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>' );
+	} elseif( isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions') {
+
+
+		$form_setup[] = new Element_HTML( '
+			<h4>Mail Notifications</h4>
+			<p>Each time this form gets submitted sent out a mail notification.</p>
+			<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br>
+
+			' );
+
+
+
+		$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
+		$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
+			'class'     => 'buddyforms_notification_trigger',
+			'shortDesc' => ''
+		) );
+
+		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a></div><br>' );
+
+		$form_setup[] = new Element_HTML( '
     <div class="help-trigger">
         <b>' . __( 'Post Status', 'buddyforms' ) . '</b>
 
@@ -37,6 +54,8 @@ function bf_mail_notification_screen() {
         </ul>
 
     </div>' );
+
+	}
 
 	foreach ( $form_setup as $key => $field ) {
 		echo $field->getLabel();
@@ -78,8 +97,8 @@ function buddyforms_new_notification_trigger_form( $trigger ) {
     </ul>
         ";
 
-	$form_trigger = new Element_Hidden( "buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger, array( 'class' => 'trigger' . $trigger ) );
-	$form_trigger->render();
+	$form_setup[] = new Element_Hidden( "buddyforms_options[mail_notification][" . $trigger . "][mail_trigger]", $trigger, array( 'class' => 'trigger' . $trigger ) );
+
 
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_notification][" . $trigger . "][mail_from_name]", array(
 		'value'     => isset( $buddyform['mail_notification'][ $trigger ]['mail_from_name'] ) ? $buddyform['mail_notification'][ $trigger ]['mail_from_name'] : '',
@@ -180,3 +199,22 @@ function buddyforms_new_mail_notification() {
 }
 
 add_action( 'wp_ajax_buddyforms_new_mail_notification', 'buddyforms_new_mail_notification' );
+
+
+function buddyforms_form_setup_nav_li_notification(){ ?>
+	<li><a
+		href="#notification"
+		data-toggle="tab"><?php _e( 'Notifications', 'buddyforms' ); ?></a>
+	</li><?php
+}
+add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification');
+
+function buddyforms_form_setup_tab_pane_notification(){ ?>
+	<div class="tab-pane fade in" id="notification">
+		<div class="buddyforms_accordion_notification">
+<div class="hidden bf-hidden"><?php wp_editor('dummy', 'dummy'); ?></div>
+			<?php  bf_mail_notification_screen() ?>
+		</div>
+	</div><?php
+}
+add_action('buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_notification');

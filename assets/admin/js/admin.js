@@ -1,5 +1,21 @@
 jQuery(document).ready(function (jQuery) {
 
+    jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
+        e.preventDefault();
+        jQuery(this).tab('show');
+    });
+
+// store the currently selected tab in the hash value
+    jQuery("#buddyforms_formbuilder_settings ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+        var id = jQuery(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+// on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
+
+
     jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({
             type: 'POST',
@@ -321,7 +337,8 @@ jQuery(document).ready(function (jQuery) {
     });
 
     function bf_update_list_item_number_mail() {
-        jQuery(".panel-mail-notifications .wp-list-table").each(function (t) {
+
+        jQuery("#mailcontainer .bf_trigger_list_item").each(function (t) {
             jQuery(this).find("td.field_order .circle").first().html(t + 1)
         })
     }
@@ -329,6 +346,7 @@ jQuery(document).ready(function (jQuery) {
     bf_update_list_item_number_mail();
 
     jQuery('#mail_notification_add_new').click(function (e) {
+
         var error = false;
         var trigger = jQuery('.buddyforms_notification_trigger').val();
 
@@ -348,18 +366,24 @@ jQuery(document).ready(function (jQuery) {
         if (error == true)
             return false;
 
+
+
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
             data: {"action": "buddyforms_new_mail_notification", "trigger": trigger},
             success: function (data) {
-
                 if (data == 0) {
                     alert('trigger already exists');
                     return false;
                 }
-
+                jQuery('#no-trigger-mailcontainer').hide();
                 jQuery('#mailcontainer').append(data);
+
+                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' );
+                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
+
+                bf_update_list_item_number_mail();
             }
         });
         return false;
