@@ -78,6 +78,19 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 }
 
 function buddyforms_form_builder_templates(){
+	global $buddyforms_templates;
+
+
+	$buddyforms_templates['contact']['title'] = 'Contact Form';
+	$buddyforms_templates['contact']['desc'] = 'Setup a simple contact form.';
+
+	$buddyforms_templates['registration']['title'] = 'Registration Form';
+	$buddyforms_templates['registration']['desc'] = 'Setup a simple registration form.';
+
+	$buddyforms_templates['post']['title'] = 'Post Form';
+	$buddyforms_templates['post']['desc'] = 'Setup a simple post form.';
+
+	$buddyforms_templates = apply_filters('buddyforms_templates', $buddyforms_templates);
 
 	ob_start();
 
@@ -85,23 +98,13 @@ function buddyforms_form_builder_templates(){
 	<div class="buddyforms_template">
 		<h5>You can add form fields from the sidebar or choose a pre-configured form template:</h5>
 
+		<?php foreach($buddyforms_templates as $key => $template) { ?>
 		<div class="bf-3-tile">
-			<h4 class="bf-tile-title">Contact Form</h4>
-			<p class="bf-tile-desc">Setup a simple contact form.</p>
-			<button id="btn-compile-contact" data-template="contact" class="bf_form_template btn" onclick=""><span class="bf-plus">+</span> Contact Form</button>
+			<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+			<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+			<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>" class="bf_form_template btn" onclick=""><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 		</div>
-
-		<div class="bf-3-tile">
-			<h4 class="bf-tile-title">Registration Form</h4>
-			<p class="bf-tile-desc">Setup a simple registration form.</p>
-			<button id="btn-compile-register" data-template="register" class="xmar bf_form_template btn" onclick=""><span class="bf-plus">+</span> Registration Form</button>
-		</div>
-
-		<div class="bf-3-tile">
-			<h4 class="bf-tile-title">Post Form</h4>
-			<p class="bf-tile-desc">Setup a simple post form.</p>
-			<button id="btn-compile-posts" data-template="create" class="xmar bf_form_template btn" onclick=""><span class="bf-plus">+</span> Post Form</button>
-		</div>
+		<?php } ?>
 
 	</div>
 
