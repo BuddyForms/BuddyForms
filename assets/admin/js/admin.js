@@ -15,7 +15,6 @@ jQuery(document).ready(function (jQuery) {
     var hash = window.location.hash;
     jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
 
-
     jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({
             type: 'POST',
@@ -319,7 +318,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {"action": "buddyforms_new_mail_notification", "trigger": 'post_status_mail'},
+            data: {"action": "buddyforms_new_mail_notification"},
             success: function (data) {
                 if (data == 0) {
                     alert('trigger already exists');
@@ -362,12 +361,10 @@ jQuery(document).ready(function (jQuery) {
         if (error == true)
             return false;
 
-
-
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {"action": "buddyforms_new_mail_notification", "trigger": trigger},
+            data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
             success: function (data) {
 
                 if (data == 0) {
