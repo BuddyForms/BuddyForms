@@ -185,3 +185,18 @@ function display_comment_recaptcha($form, $form_slug, $post_id) {
 	return $form;
 }
 //add_filter('buddyforms_create_edit_form_button', 'display_comment_recaptcha', 10, 3);
+
+/**
+ * Queue some JavaScript code to be output in the footer.
+ *
+ * @param string $code
+ */
+function bf_enqueue_js( $code ) {
+	global $wc_queued_js;
+
+	if ( empty( $wc_queued_js ) ) {
+		$wc_queued_js = '';
+	}
+
+	$wc_queued_js .= "\n" . $code . "\n";
+}

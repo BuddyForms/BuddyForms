@@ -32,7 +32,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery.each(data, function (i, val) {
                     switch (i) {
                         case 'html':
-                            jQuery('.buddyforms_template').html(val);
+                            jQuery('.buddyforms_template').replaceWith(val);
                             bf_update_list_item_number();
                             break;
                         case 'form_setup':
@@ -119,9 +119,6 @@ jQuery(document).ready(function (jQuery) {
     jQuery('#publish').click(function () {
 
         var create_new_form_name = jQuery('[name="post_title"]').val();
-        //var create_new_form_singular_name = jQuery('[name="buddyforms_options[singular_name]"]').val();
-        //var create_new_form_post_type = jQuery('[name="buddyforms_options[post_type]"]').val();
-        //var create_new_form_attached_page = jQuery('[name="buddyforms_options[attached_page]"]').val();
 
         var error = false;
         if (create_new_form_name === '') {
@@ -132,34 +129,6 @@ jQuery(document).ready(function (jQuery) {
             jQuery('[name="post_title"]').removeClass('bf-error');
             jQuery('[name="post_title"]').addClass('bf-ok');
         }
-
-
-        //if (create_new_form_singular_name === '') {
-        //    jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-ok');
-        //    jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-error');
-        //    error = true;
-        //} else {
-        //    jQuery('[name="buddyforms_options[singular_name]"]').removeClass('bf-error');
-        //    jQuery('[name="buddyforms_options[singular_name]"]').addClass('bf-ok');
-        //}
-
-        //if (create_new_form_post_type === 'none') {
-        //    jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-ok');
-        //    jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-error');
-        //} else {
-        //    jQuery('[name="buddyforms_options[post_type]"]').removeClass('bf-error');
-        //    jQuery('[name="buddyforms_options[post_type]"]').addClass('bf-ok');
-        //}
-
-        //if (create_new_form_attached_page === 'none') {
-        //    jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-ok');
-        //    jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-error');
-        //    error = true;
-        //} else {
-        //    jQuery('[name="buddyforms_options[attached_page]"]').removeClass('bf-error');
-        //    jQuery('[name="buddyforms_options[attached_page]"]').addClass('bf-ok');
-        //}
-
 
         // traverse all the required elements looking for an empty one
         jQuery("#post input[required]").each(function () {
@@ -347,8 +316,35 @@ jQuery(document).ready(function (jQuery) {
 
     jQuery('#mail_notification_add_new').click(function (e) {
 
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_new_mail_notification", "trigger": 'post_status_mail'},
+            success: function (data) {
+                if (data == 0) {
+                    alert('trigger already exists');
+                    return false;
+                }
+                jQuery('#no-trigger-mailcontainer').hide();
+                jQuery('#mailcontainer').append(data);
+
+                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' );
+                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
+
+                bf_update_list_item_number_mail();
+            }
+        });
+        return false;
+    });
+
+    jQuery('#post_status_mail_notification_add_new').click(function (e) {
+
         var error = false;
-        var trigger = jQuery('.buddyforms_notification_trigger').val();
+        var trigger = jQuery('.post_status_mail_notification_trigger').val();
+
+        if(!trigger){
+            trigger = 'Mail_Notification'
+        }
 
         if (trigger == 'none') {
             alert('You have to select a trigger first.');
@@ -356,7 +352,7 @@ jQuery(document).ready(function (jQuery) {
         }
 
         // traverse all the required elements looking for an empty one
-        jQuery("#buddyforms_form_mail li.bf_trigger_list_item").each(function () {
+        jQuery("#post-status-mail-container li.bf_trigger_list_item").each(function () {
             if (jQuery(this).attr('id') == 'trigger' + trigger) {
                 alert('Trigger already exists');
                 error = true;
@@ -373,17 +369,19 @@ jQuery(document).ready(function (jQuery) {
             url: ajaxurl,
             data: {"action": "buddyforms_new_mail_notification", "trigger": trigger},
             success: function (data) {
+
                 if (data == 0) {
                     alert('trigger already exists');
                     return false;
                 }
-                jQuery('#no-trigger-mailcontainer').hide();
-                jQuery('#mailcontainer').append(data);
+                jQuery('#no-trigger-post-status-mail-container').hide();
+                jQuery('#post-status-mail-container').append(data);
 
                 tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' );
                 tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
 
                 bf_update_list_item_number_mail();
+
             }
         });
         return false;

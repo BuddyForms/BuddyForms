@@ -4,64 +4,73 @@ function bf_mail_notification_screen() {
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
-	echo '<ul>';
-	if ( isset( $buddyform['mail_notification'] ) ) {
-		foreach ( $buddyform['mail_notification'] as $key => $value ) {
-			buddyforms_new_notification_trigger_form( $buddyform['mail_notification'][ $key ]['mail_trigger'] );
-		}
-	} else {
-		echo '<div id="no-trigger-mailcontainer">' . __('No Mail Notification Trigger so far. You should create at least one.') . '</div>';
-	}
-	echo '<div id="mailcontainer"></div>';
-	echo '<ul>';
-	echo '<hr>';
+
 
 	$form_setup   = array();
 
-	if( !isset($buddyform['post_type']) || $buddyform['post_type'] == 'bf_submissions' ){
-		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>' );
-	} elseif( isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions') {
+	//$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>' );
 
-
-		$form_setup[] = new Element_HTML( '
-			<h4>Mail Notifications</h4>
-			<p>Each time this form gets submitted sent out a mail notification.</p>
-			<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br>
-
-			' );
-
-
-
-		$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
-		$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
-			'class'     => 'buddyforms_notification_trigger',
-			'shortDesc' => ''
-		) );
-
-		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a></div><br>' );
-
-		$form_setup[] = new Element_HTML( '
-    <div class="help-trigger">
-        <b>' . __( 'Post Status', 'buddyforms' ) . '</b>
-
-        <ul>
-            <li><b>publish</b> <small>' . __( '(post or page is visible in the frontend)', 'buddyforms' ) . '</small></li>
-            <li><b>pending</b> <small>' . __( '(post or page is in review process)', 'buddyforms' ) . '</small></li>
-            <li><b>draft</b> <small>' . __( '(post or page is not visible in the frontend for public)', 'buddyforms' ) . '</small></li>
-            <li><b>future</b> <small>' . __( '(post or page is scheduled to publish in the future)', 'buddyforms' ) . '</small></li>
-            <li><b>private</b> <small>' . __( '(not visible to users who are not logged in)', 'buddyforms' ) . '</small></li>
-            <li><b>trash</b> <small>' . __( '(post is in trash)', 'buddyforms' ) . '</small></li>
-        </ul>
-
-    </div>' );
-
-	}
+	$form_setup[] = new Element_HTML( '
+		<h4>Mail Notifications</h4>
+		<p>Each time this form gets submitted sent out a mail notification.</p>
+		<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br><br><br>' );
 
 	foreach ( $form_setup as $key => $field ) {
 		echo $field->getLabel();
 		echo $field->getShortDesc();
 		echo $field->render();
 	}
+
+	echo '<ul>';
+	if ( isset( $buddyform['mail_submissions'] ) ) {
+		foreach ( $buddyform['mail_submissions'] as $key => $value ) {
+			buddyforms_new_notification_trigger_form( $buddyform['mail_submissions'][ $key ]['mail_trigger'] );
+		}
+	} else {
+		echo '<div id="no-trigger-mailcontainer">' . __('No Mail Notification Trigger so far.') . '</div>';
+	}
+	echo '<div id="mailcontainer"></div>';
+	echo '<ul>';
+	echo '<hr>';
+}
+
+function bf_post_status_mail_notification_screen() {
+	global $post;
+
+	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+
+
+
+	 $form_setup   = array();
+
+		$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
+		$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
+			'class'     => 'post_status_mail_notification_trigger',
+			'shortDesc' => ''
+		) );
+
+		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a></div><br>' );
+
+
+	foreach ( $form_setup as $key => $field ) {
+		echo $field->getLabel();
+		echo $field->getShortDesc();
+		echo $field->render();
+	}
+
+	echo '<ul>';
+	if ( isset( $buddyform['mail_notification'] ) ) {
+		foreach ( $buddyform['mail_notification'] as $key => $value ) {
+			buddyforms_new_notification_trigger_form( $buddyform['mail_notification'][ $key ]['mail_trigger'] );
+		}
+	} else {
+		echo '<div id="no-trigger-post-status-mail-container">' . __('No Post Status Mail Notification Trigger so far.') . '</div>';
+	}
+	echo '<div id="post-status-mail-container"></div>';
+	echo '<ul>';
+	echo '<hr>';
+
+
 }
 
 
@@ -212,8 +221,15 @@ add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_no
 function buddyforms_form_setup_tab_pane_notification(){ ?>
 	<div class="tab-pane fade in" id="notification">
 		<div class="buddyforms_accordion_notification">
-<div class="hidden bf-hidden"><?php wp_editor('dummy', 'dummy'); ?></div>
+			<div class="hidden bf-hidden"><?php wp_editor('dummy', 'dummy'); ?></div>
+
+
 			<?php  bf_mail_notification_screen() ?>
+
+			<?php  bf_post_status_mail_notification_screen() ?>
+
+
+
 		</div>
 	</div><?php
 }

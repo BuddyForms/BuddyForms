@@ -436,20 +436,10 @@ class BuddyForms {
 			return;
 		}
 		$current_screen = get_current_screen();
-		$wc_pages       = wc_get_screen_ids();
-
 
 		if ( isset( $current_screen->id ) && $current_screen->id == 'edit-buddyforms' ) {
 			// Change the footer text
-
-				$footer_text = sprintf( __( 'If you like <strong>BuddyForms</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from BuddyForms in advance!', 'buddyforms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/buddyforms?filter=5#postform" target="_blank" class="wc-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'woocommerce' ) . '">', '</a>' );
-				wc_enqueue_js( "
-					jQuery( 'a.wc-rating-link' ).click( function() {
-						jQuery.post( '" . WC()->ajax_url() . "', { action: 'woocommerce_rated' } );
-						jQuery( this ).parent().text( jQuery( this ).data( 'rated' ) );
-					});
-				" );
-
+			$footer_text = sprintf( __( 'If you like <strong>BuddyForms</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from BuddyForms in advance!', 'buddyforms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/buddyforms?filter=5#postform" target="_blank" class="wc-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'woocommerce' ) . '">', '</a>' );
 		}
 
 		return $footer_text;
