@@ -76,7 +76,6 @@ function bf_post_status_mail_notification_screen() {
 function buddyforms_mail_notification_form($trigger = false) {
 	global $post;
 
-
 	if ( isset( $post->ID ) ) {
 		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 	}
@@ -107,9 +106,6 @@ function buddyforms_mail_notification_form($trigger = false) {
 		'required'  => 1,
 		'shortDesc' => 'the senders email'
 	) );
-
-
-	$mod5_field_id = substr( md5( time() * rand() ), 0, 10 );
 
 	$element = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
 		'admin'  => 'Admin',
@@ -155,7 +151,7 @@ function buddyforms_mail_notification_form($trigger = false) {
 		'quicktags'     => true,
 		'textarea_rows' => 18
 	);
-	wp_editor( isset( $buddyform['mail_submissions'][ $trigger ]['mail_body'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_body'] : '', "bf_mail_body", $settings );
+	wp_editor( isset( $buddyform['mail_submissions'][ $trigger ]['mail_body'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_body'] : '', "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
 	$wp_editor    = '<div style="margin-left: -10px; margin-right: -10px"class="bf_field_group bf_form_content"><label for="form_title"><b>' . __( 'Content', 'buddyforms' ) . '</b><div class="bf_inputs">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
@@ -200,6 +196,7 @@ function buddyforms_mail_notification_form($trigger = false) {
 	</li>
 
 	<?php
+	return $trigger;
 }
 
 function buddyforms_new_post_status_mail_notification_form( $trigger ) {
@@ -275,7 +272,7 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 		'quicktags'     => true,
 		'textarea_rows' => 18
 	);
-	wp_editor( isset( $buddyform['mail_notification'][ $trigger ]['mail_body'] ) ? $buddyform['mail_notification'][ $trigger ]['mail_body'] : '', "bf_mail_body", $settings );
+	wp_editor( isset( $buddyform['mail_notification'][ $trigger ]['mail_body'] ) ? $buddyform['mail_notification'][ $trigger ]['mail_body'] : '', "bf_mail_body".$trigger, $settings );
 	$wp_editor    = ob_get_clean();
 	$wp_editor    = '<div class="bf_field_group bf_form_content"><label><h2>' . __( 'Content', 'buddyforms' ) . '</h2></label><div class="bf_inputs">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
@@ -323,7 +320,15 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 }
 
 function buddyforms_new_mail_notification() {
-	echo buddyforms_mail_notification_form();
+
+	ob_start();
+		$trigger_id = buddyforms_mail_notification_form();
+	$trigger_html = ob_get_clean();
+
+	$json['trigger_id'] = $trigger_id;
+	$json['html'] = $trigger_html;
+
+	echo json_encode($json);
 	die();
 }
 

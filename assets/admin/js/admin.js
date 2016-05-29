@@ -75,13 +75,11 @@ jQuery(document).ready(function (jQuery) {
 
         } else {
 
-            jQue ry('.' + id).addClass('hidden');
+            jQuery('.' + id).addClass('hidden');
 
         }
 
-
     });
-
 
     jQuery(document.body).on('change', '.bf_hidden_checkbox', function () {
 
@@ -344,18 +342,18 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery.ajax({
             type: 'POST',
+            dataType: "json",
             url: ajaxurl,
             data: {"action": "buddyforms_new_mail_notification"},
             success: function (data) {
-                if (data == 0) {
-                    alert('trigger already exists');
-                    return false;
-                }
-                jQuery('#no-trigger-mailcontainer').hide();
-                jQuery('#mailcontainer').append(data);
 
-                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' );
-                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
+                console.log(data);
+
+                jQuery('#no-trigger-mailcontainer').hide();
+                jQuery('#mailcontainer').append(data['html']);
+
+                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id'] );
+                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' + data['trigger_id'] );
 
                 bf_update_list_item_number_mail();
 
