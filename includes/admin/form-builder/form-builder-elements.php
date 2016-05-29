@@ -535,10 +535,8 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 		if ( isset( $form_fields ) ) {
 			foreach ( $form_fields as $key => $field ) {
 
-
 				$type  = $field->getAttribute( 'type' );
 				$class = $field->getAttribute( 'class' );
-
 
 				switch ( $type ) {
 					case 'html':

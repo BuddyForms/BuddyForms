@@ -59,10 +59,34 @@ jQuery(document).ready(function (jQuery) {
         placeholder: "Select an option"
     });
 
+    jQuery(document.body).on('change', '.bf_hidden_multi_checkbox', function () {
+
+        var input = jQuery(this).find("input");
+        var id = input.attr('id');
+
+        if (jQuery(input).is(':checked')) {
+
+                jQuery('.' + id).removeClass('hidden');
+                jQuery('.' + id + ' td .checkbox label').removeClass('hidden');
+                jQuery('.' + id + ' td .' + id).removeClass('hidden');
+
+        } else {
+
+                jQuery('.' + id).addClass('hidden');
+
+        }
+
+
+    });
+
+
     jQuery(document.body).on('change', '.bf_hidden_checkbox', function () {
 
         var input = jQuery(this).find("input");
         var ids = input.attr('bf_hidden_checkbox');
+        var id = input.attr('id');
+
+        alert(id);
 
         if (!ids)
             return;
@@ -331,6 +355,7 @@ jQuery(document).ready(function (jQuery) {
                 tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
 
                 bf_update_list_item_number_mail();
+
             }
         });
         return false;

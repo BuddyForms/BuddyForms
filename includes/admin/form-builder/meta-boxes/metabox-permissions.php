@@ -10,33 +10,19 @@ function buddyforms_permissions_screen() {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
-	if( !isset( $buddyform['attached_page'] ) ) {
-		?>
+	if ( $post->post_name == '' ) {
+		return;
+	}
 
-		was auch immer
-
-		<?php
-	} else {
-
-		if ( $post->post_name == '' ) { ?>
-
-			<b>You need to save the form before you can setup the Form Capabilities</b><br>
-			Roles and Capabilities are not stored as post meta. We use the form slug to identified capabilitys
-
-			<?php
-		} else {
+	if( isset( $buddyform['attached_page'] ) ) {
 			?>
 			<div class="bf-roles-main-desc">
 				<div class="">
+					<?php echo '
+           			 <p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 
-					<?php
-					echo '
-            <p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
-
-            <p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p>
-        '; ?>
-
-
+                    <p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p>
+                    '; ?>
 				</div>
 			</div>
 
@@ -112,10 +98,6 @@ function buddyforms_permissions_screen() {
 			<?php
 
 		}
-
-	}
-
-
 
 }
 

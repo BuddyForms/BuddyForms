@@ -4,26 +4,14 @@
  * Adds a box to the main column on the Post and Page edit screens.
  */
 function buddyforms_add_meta_boxes() {
-	global $post, $buddyforms;
+	global $post;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
-	$buddyform = get_post_meta($post->ID,'_buddyforms_options', true);
-
-
-	//if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
-	//	add_meta_box( 'buddyforms_form_roles', __( "Permissions", 'buddyforms' ), 'bf_manage_form_roles_and_capabilities_screen', 'buddyforms', 'normal', 'default' );
-	//}
-
-	//if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions'){
-	//	add_meta_box( 'buddyforms_form_mail', __( "Mail Notification", 'buddyforms' ), 'bf_mail_notification_screen', 'buddyforms', 'normal', 'default' );
-	//}
-
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-
 	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default' );
 
 }
@@ -242,15 +230,12 @@ function buddyforms_form_updated_messages( $messages ) {
 		return;
 	}
 
-	$buddyform           = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-	$viwe_form_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
-
-	$messages = array(
+	$messages['buddyforms'] = array(
 		0  => '', // Unused. Messages start at index 1.
-		1  => sprintf( __( 'Form updated. <a href="%s">View Form</a>' ), $viwe_form_permalink . 'create/' . $post->post_name ),
-		2  => __( 'Custom field updated.' ),
-		3  => __( 'Custom field deleted.' ),
-		4  => __( 'Form updated.' ),
+		1  => __( 'Form updated.', 'buddyforms' ),
+		2  => __( 'Custom field updated.', 'buddyforms' ),
+		3  => __( 'Custom field deleted.', 'buddyforms' ),
+		4  => __( 'Form updated.', 'buddyforms' ),
 		/* translators: %s: date and time of the revision */
 		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Form restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		6  => sprintf( __( 'Form published. <a href="%s">View Form</a>' ), esc_url( get_permalink( $post_ID ) ) ),
@@ -265,7 +250,7 @@ function buddyforms_form_updated_messages( $messages ) {
 	return $messages;
 }
 
-add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages' );
+add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages', 999 );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -348,24 +333,19 @@ add_action( 'manage_buddyforms_posts_custom_column', 'custom_buddyforms_column',
 function buddyforms_hide_publishing_actions() {
 	global $post;
 
-	if ( get_post_type( $post ) == 'buddyforms' ) {
-		echo '
-                <style type="text/css">
-                    #misc-publishing-actions,
-                    #minor-publishing-actions{
-                        display:none;
-                    }
-                </style>
-            ';
-		?>
-		<style>
-			#message {
-				display: none;
+	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
+		<style type="text/css">
+			#misc-publishing-actions,
+			#minor-publishing-actions{
+				display:none;
 			}
+			/*#message {*/
+				/*display: none;*/
+			/*}*/
 
-			.error {
-				display: none;
-			}
+			/*.error {*/
+				/*display: none;*/
+			/*}*/
 
 			h1 {
 				display: none;
@@ -382,10 +362,13 @@ function buddyforms_hide_publishing_actions() {
 			jQuery(document).ready(function (jQuery) {
 				//jQuery('#screen-meta-links').hide();
 				jQuery('body').find('h1:first').css('line-height', '58px');
+				jQuery('body').find('h1:first').css('margin-top', '20px');
 				jQuery('body').find('h1:first').css('font-size', '30px');
 				//jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
 				jQuery('body').find('h1:first').html('<div style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
-					'BuddyForms <small style="font-size: 20px; padding-top: 23px;" >Version <?php echo BUDDYFORMS_VERSION ?></small>'
+					'BuddyForms ' +
+					'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
+					'<small style="font-size: 20px; padding-top: 23px; float:right;" >Version <?php echo BUDDYFORMS_VERSION ?></small>'
 				);
 				jQuery('h1').show();
 			});
