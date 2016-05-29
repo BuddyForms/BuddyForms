@@ -23,7 +23,7 @@ class Element_Checkbox extends OptionElement {
 		}
 
 		$count = 0;
-		echo '<div class="checkbox">';
+		echo '<div class="bf-input"><div class="checkbox">';
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
 
@@ -37,12 +37,12 @@ class Element_Checkbox extends OptionElement {
 			if ( in_array( $value, $this->_attributes["value"] ) ) {
 				echo ' checked="checked"';
 			}
-			echo '/> ', $text, ' </label> ';
+			echo '/><span> ', $text, '</span> </label> ';
 			++ $count;
 			if ( $labelClass != 'checkbox-inline' ) {
 				echo '</div><div class="checkbox">';
 			}
 		}
-		echo '</div>';
+		echo '</div></div>';
 	}
 }

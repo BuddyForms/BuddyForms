@@ -64,15 +64,18 @@ jQuery(document).ready(function (jQuery) {
         var input = jQuery(this).find("input");
         var id = input.attr('id');
 
+        if(input.val() === 'admin')
+            return;
+
         if (jQuery(input).is(':checked')) {
 
-                jQuery('.' + id).removeClass('hidden');
-                jQuery('.' + id + ' td .checkbox label').removeClass('hidden');
-                jQuery('.' + id + ' td .' + id).removeClass('hidden');
+            jQuery('.' + id).removeClass('hidden');
+            jQuery('.' + id + ' td .checkbox label').removeClass('hidden');
+            jQuery('.' + id + ' td .' + id).removeClass('hidden');
 
         } else {
 
-                jQuery('.' + id).addClass('hidden');
+            jQue ry('.' + id).addClass('hidden');
 
         }
 
