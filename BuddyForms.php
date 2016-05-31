@@ -165,6 +165,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-metabox.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-mce-editor-button.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
 
