@@ -433,11 +433,22 @@ class BuddyForms {
 		global $post;
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
+			return $footer_text;
 		}
+
 		$current_screen = get_current_screen();
 
-		if ( isset( $current_screen->id ) && $current_screen->id == 'edit-buddyforms' ) {
+		if ( ! isset( $current_screen->id ) ) {
+			return $footer_text;
+		}
+
+		if ( $current_screen->id == 'edit-buddyforms'
+		     || $current_screen->id == 'buddyforms'
+		     || $current_screen->id == 'buddyforms_page_bf_submissions'
+		     || $current_screen->id == 'buddyforms_page_buddyforms_settings'
+		     || $current_screen->id == 'buddyforms_page_bf_add_ons'
+		) {
+
 			// Change the footer text
 			$footer_text = sprintf( __( 'If you like <strong>BuddyForms</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from BuddyForms in advance!', 'buddyforms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/buddyforms?filter=5#postform" target="_blank" class="wc-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'woocommerce' ) . '">', '</a>' );
 		}
