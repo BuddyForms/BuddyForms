@@ -63,6 +63,8 @@ jQuery(document).ready(function () {
                 },
                 success: function (data) {
 
+                    // console.log(data);
+
                     jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
 
                     jQuery.each(data, function (i, val) {

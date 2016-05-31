@@ -1,19 +1,19 @@
 jQuery(document).ready(function (jQuery) {
 
-    jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
-        e.preventDefault();
-        jQuery(this).tab('show');
-    });
-
-// store the currently selected tab in the hash value
-    jQuery("#buddyforms_formbuilder_settings ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
-        var id = jQuery(e.target).attr("href").substr(1);
-        window.location.hash = id;
-    });
-
-// on load of the page: switch to the currently selected tab
-    var hash = window.location.hash;
-    jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
+    //jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
+    //    e.preventDefault();
+    //    jQuery(this).tab('show');
+    //});
+    //
+    //// store the currently selected tab in the hash value
+    //jQuery("#buddyforms_formbuilder_settings ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+    //    var id = jQuery(e.target).attr("href").substr(1);
+    //    window.location.hash = id;
+    //});
+    //
+    //// on load of the page: switch to the currently selected tab
+    //var hash = window.location.hash;
+    //jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
 
     jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({

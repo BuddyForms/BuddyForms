@@ -3,8 +3,44 @@
 class View_Frontend extends FormView {
 	protected $class = "form-inline";
 
+	public function render($onlyElement = null) {
+		if ( $this->class ) {
+			$this->_form->appendAttribute( "class", $this->class );
+		}
+
+		$this->_form->getErrorView()->render();
+		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
+		if ( $onlyElement && $onlyElement == 'open' ) {
+			return;
+		}
+
+		$elements = $this->_form->getElements();
+		$elementSize = sizeof($elements);
+		$elementCount = 0;
+		for($e = 0; $e < $elementSize; ++$e) {
+			$element = $elements[$e];
+
+			if($element instanceof Element_Button) {
+				if($e == 0 || !$elements[($e - 1)] instanceof Element_Button)
+					echo '<div class="form-actions">';
+				else
+					echo ' ';
+				$element->render();
+				if(($e + 1) == $elementSize || !$elements[($e + 1)] instanceof Element_Button)
+					echo '</div>';
+
+			} else {
+				$this->renderElement( $element );
+			}
+
+			++$elementCount;
+		}
+
+		$this->renderFormClose();
+	}
+
 	public function renderElement( $element ) {
-		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
+		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML ) {
 			$element->render();
 
 			return;
