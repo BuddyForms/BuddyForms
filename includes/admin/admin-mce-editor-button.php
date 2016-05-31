@@ -64,7 +64,7 @@ return;
 	//
 	// Insert Form
 	//
-
+	session_id( 'buddyforms-mce' );
 	$form = new Form( "buddyforms_add_form" );
 	$form->configure( array(
 		"prevent" => array( "bootstrap", "jQuery" ),
