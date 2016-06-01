@@ -44,6 +44,9 @@
 .buddyforms_forms_builder table {
   width: 100%;
 }
+.buddyforms_forms_builder table table {
+    width: auto;
+}
 
 /* Form Setup Choose A Form Type Box */
 
