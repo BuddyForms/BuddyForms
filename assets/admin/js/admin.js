@@ -86,9 +86,7 @@ jQuery(document).ready(function (jQuery) {
         var input = jQuery(this).find("input");
         var ids = input.attr('bf_hidden_checkbox');
         var id = input.attr('id');
-
-        alert(id);
-
+        
         if (!ids)
             return;
 
