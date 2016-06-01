@@ -16,12 +16,18 @@
   float: right;
   overflow: auto;
 }
-.bf_field_group .settings-input {
-  width: 98%;
+.bf-input select,
+.bf_field_group .settings-input,
+.bf_field_group input[type="text"] {
+    width: 98%;
 }
 .bf_field_group .bf-input .select2-container-multi .select2-choices .select2-search-field input {
     width: auto !important;
     min-width: 200px;
+}
+.bf-input .wp-editor-wrap {
+    overflow: hidden;
+    height: auto;
 }
 .bf_field_group span.help-inline {
   width: calc(30% - 5px);
