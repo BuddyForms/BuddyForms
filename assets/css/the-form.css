@@ -20,7 +20,7 @@
 }
 
 .the_buddyforms_form .bf_field_group {
-    margin-bottom: 20px;
+    margin: 15px 0;
 }
 
 .the_buddyforms_form .bf_field_group label {
@@ -94,6 +94,16 @@
     padding: 6px;
 }
 
+.the_buddyforms_form .bf-input .radio {
+    display: block;
+}
+
+.the_buddyforms_form .bf-input input.form-control {
+    display: block;
+}
+
+
+
 .the_buddyforms_form #insert-media-button {
     padding: 1px 7px 1px 5px;
 }
@@ -129,6 +139,11 @@ ul.product_images.ui-sortable li img {
     display: block !important;
     zoom: 1;
     vertical-align: middle
+}
+
+.bf-select2.form-control {
+    padding: 0;
+    border: none;
 }
 
 .select2-container, .select2-drop, .select2-search, .select2-search input {
@@ -457,7 +472,7 @@ html[dir=rtl] .select2-results {
 }
 
 .select2-results .select2-highlighted {
-    background: #f1f1f1;
+    background: #888;
     border-radius: 3px
 }
 
