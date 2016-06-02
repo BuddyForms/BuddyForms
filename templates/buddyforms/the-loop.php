@@ -88,7 +88,7 @@ $current_user = wp_get_current_user(); ?>
 												if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 													echo apply_filters( 'bf_loop_edit_post_link', '<li><a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span class="dashicons dashicons-edit"></span></a></li>', get_the_ID() );
 												} else {
-													echo apply_filters( 'bf_loop_edit_post_link', '<li>' . bf_edit_post_link( '<span class="dashicons dashicons-edit"></span>' ) . '</li>', get_the_ID() );
+													echo apply_filters( 'bf_loop_edit_post_link', '<li>' . bf_edit_post_link( 'Edit' ) . '</li>', get_the_ID() );
 												}
 
 											}
