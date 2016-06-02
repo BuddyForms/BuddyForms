@@ -4,7 +4,6 @@ ul.buddyforms-list {
     margin: 20px 0;
     list-style: none outside none !important;
 }
-
 ul.buddyforms-list li {
     padding: 20px 0;
     height: auto;
@@ -15,12 +14,10 @@ ul.buddyforms-list li {
     border-bottom: 1px solid #dedede;
     list-style: none outside none;
 }
-
 ul.buddyforms-list li img.avatar {
     float: left;
     margin: 3px 10px 10px 2px;
 }
-
 ul.buddyforms-list.item-list li div.item-desc {
     font-size: 100%;
     margin: 10px 0 0 0px !important;
@@ -28,42 +25,61 @@ ul.buddyforms-list.item-list li div.item-desc {
     margin: 5px 5px 5px 0;
     clear: right;
 }
-
 ul.buddyforms-list li div.action {
     clear: both;
     margin-top: 20px;
     font-size: 80%;
 }
-
 ul.buddyforms-list li div.meta {
     margin-top: 10px;
 }
-
 ul.buddyforms-list .item-status {
-    padding: 3px 5px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    font-weight: bold;
-    color: white;
-    background: #555555;
-    font-size: 11px;
-    float: left;
-    margin-right: 5px;
-    text-shadow: -1px -1px 0px #333;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0;
+  display: inline-block;
+  padding: 0 11px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  color: #fff;
+  background-color: #1ec0ed;
+  border: 1px solid #23a6cb;
 }
-
-ul.buddyforms-list .publish .item-status {
-    background: green;
+ul.buddyforms-list .draft .item-status,
+ul.buddyforms-list .edit-draft .item-status  {
+  color: #969595;
+  background-color: #e3e3e3;
+  border: 1px solid #ccc;
 }
-
 ul.buddyforms-list .bf-pending .item-status {
-    background: orange;
+  color: #fff;
+  background-color: #f3a93c;
+  border: 1px solid #d88f37;
+}
+ul.buddyforms-list .publish .item-status {
+  color: #fff;
+  background-color: #70d986;
+  border: 1px solid #6abf6a;
 }
 
-ul.buddyforms-list .draft .item-status, ul.buddyforms-list .edit-draft .item-status  {
-    background: red;
+/* Action Links - Edit and Delete */
+.buddyforms-list .meta .edit_links {
+    display: inline-block;
+    padding: 0;
+    margin: 0 0 0 10px;
 }
+.buddyforms-list .meta .edit_links li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.buddyforms-list .meta .edit_links li a {
+    padding: 10px;
+    margin: 0 5px;
+}
+
 
 
 /* --- Table --- */
@@ -123,17 +139,6 @@ ul.buddyforms-list .draft .item-status, ul.buddyforms-list .edit-draft .item-sta
 .buddyforms_posts_table .table th+th{
     padding: 0 0 0 3px;
 }
-@media screen and (min-width: 768px){
-    /*.buddyforms_posts_table .table th.created{
-        min-width: 120px;
-    }
-    .buddyforms_posts_table .table th.status{
-        min-width: 164px;
-    }*/
-}
-.buddyforms_posts_table .table th:first-child{
-
-}
 .buddyforms_posts_table .table th span{
     color:#000;
     font-size: 16px;
@@ -175,10 +180,6 @@ ul.buddyforms-list .draft .item-status, ul.buddyforms-list .edit-draft .item-sta
         padding:10px 9px 0 50%;
     }
 }
-.buddyforms_posts_table .table tbody td a{
-    color: #3a73b8;
-    font-weight: 500;
-}
 .buddyforms_posts_table .table .mobile-th{
     display: none;
     width: 50%;
@@ -192,28 +193,38 @@ ul.buddyforms-list .draft .item-status, ul.buddyforms-list .edit-draft .item-sta
     }
 }
 .buddyforms_posts_table .table-item-status{
-    color:#fff;
     font-size: 12px;
     line-height: 24px;
     letter-spacing: 0;
     display: inline-block;
     padding: 0 11px;
-    background-color: #47bbe9;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
     border-radius: 12px;
+    color: #fff;
+    background-color: #1ec0ed;
+    border: 1px solid #23a6cb;
 }
 @media screen and (min-width: 768px){
     .buddyforms_posts_table .table-item-status{
         margin: 0  0 0 3px;
     }
 }
-.buddyforms_posts_table .draft .table-item-status, .buddyforms_posts_table .edit-draft .table-item-status{
-    color: #775503;
-    background-color: #ecc71d;
+.buddyforms_posts_table .draft .table-item-status,
+.buddyforms_posts_table .edit-draft .table-item-status{
+    color: #969595;
+    background-color: #e3e3e3;
+    border: 1px solid #ccc;
 }
 .buddyforms_posts_table .bf-pending .table-item-status{
-    background-color: #ff9517;
+    color: #fff;
+    background-color: #f3a93c;
+    border: 1px solid #d88f37;
+}
+.buddyforms_posts_table .publish .table-item-status{
+  color: #fff;
+  background-color: #70d986;
+  border: 1px solid #6abf6a;
 }
 .buddyforms_posts_table .item-status-action{
     color: #585858;
