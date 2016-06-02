@@ -40,6 +40,7 @@ ul.buddyforms-list .item-status {
   letter-spacing: 0;
   display: inline-block;
   padding: 0 11px;
+  margin: 0 5px 0 0;
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;
@@ -79,6 +80,10 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms-list .meta .edit_links li a {
     padding: 5px;
     margin: 0;
+    text-decoration: none;
+}
+.buddyforms-list .edit_links .dashicons {
+    line-height: 1.2;
 }
 
 
