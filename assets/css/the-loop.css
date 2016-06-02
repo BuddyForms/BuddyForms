@@ -76,7 +76,7 @@ ul.buddyforms-list .publish .item-status {
     border: none;
 }
 .buddyforms-list .meta .edit_links li a {
-    padding: 10px;
+    padding: 5px;
     margin: 0;
 }
 
@@ -251,32 +251,4 @@ ul.buddyforms-list .publish .item-status {
 }
 .buddyforms_posts_table .edit_links li{
     display: inline-block;
-}
-.buddyforms_posts_table .edit_links li a,
-.buddyforms_posts_table .edit_links li span{
-    width: 25px;
-    height: 25px;
-    display: block;
-    text-indent: -999px;
-    overflow: hidden;
-    background: url(../images/ico-edit.png) no-repeat 0 0;
-}
-.buddyforms_posts_table .edit_links li+li a{
-    background-position: -50px 0;
-}
-.buddyforms_posts_table .edit_links li.disabled span{
-    background-position: -25px 0;
-}
-
-.buddyforms_posts_table .table td:nth-of-type(1):before{
-
-}
-.buddyforms_posts_table .table td:nth-of-type(2):before{
-
-}
-.buddyforms_posts_table .table td:nth-of-type(3):before{
-
-}
-.buddyforms_posts_table .table td:nth-of-type(4):before{
-
 }
