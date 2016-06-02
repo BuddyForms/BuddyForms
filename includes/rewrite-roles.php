@@ -181,7 +181,7 @@ function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
 		$text = __( 'Edit This' );
 	}
 
-	$link = '<a class="post-edit-link" href="' . $url . '">' . $text . '</a>';
+	$link = '<a class="post-edit-link" href="' . $url . '"><span aria-label="edit button" class="dashicons dashicons-edit"></span></a>';
 
 	/**
 	 * Filter the post edit link anchor tag.
