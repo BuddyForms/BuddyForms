@@ -14,6 +14,9 @@ ul.buddyforms-list li {
     border-bottom: 1px solid #dedede;
     list-style: none outside none;
 }
+ul.buddyforms-list li .item {
+    overflow: auto;
+}
 ul.buddyforms-list li img.avatar {
     float: left;
     margin: 3px 10px 10px 2px;
@@ -26,9 +29,7 @@ ul.buddyforms-list.item-list li div.item-desc {
     clear: right;
 }
 ul.buddyforms-list li div.action {
-    clear: both;
-    margin-top: 20px;
-    font-size: 80%;
+  font-size: 80%;
 }
 ul.buddyforms-list li div.meta {
     margin-top: 10px;
@@ -78,6 +79,28 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms-list .meta .edit_links li a {
     padding: 5px;
     margin: 0;
+}
+
+
+@media (min-width: 768px) {
+  ul.buddyforms-list li .item {
+      overflow: auto;
+      width: 50%;
+      float: left;
+  }
+  ul.buddyforms-list li div.action {
+    transition: all 0.17s ease-in;
+    opacity: 0.6;
+    max-width: 50px;
+    width: auto;
+    float: right;
+    text-align: left;
+    min-width: 200px;
+  }
+  ul.buddyforms-list li div.action:hover,
+  ul.buddyforms-list li div.action:focus {
+    opacity: 1;
+  }
 }
 
 

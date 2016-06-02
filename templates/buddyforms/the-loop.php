@@ -43,20 +43,22 @@ $current_user = wp_get_current_user(); ?>
 					?>
 
 					<li id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
-						<div class="item-avatar">
-
-							<?php
-							$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
-								70,
-								70
-							), array( 'class' => "avatar" ) );
-							$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
-							?>
-
-							<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
-						</div>
 
 						<div class="item">
+
+							<div class="item-avatar">
+
+								<?php
+								$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
+									70,
+									70
+								), array( 'class' => "avatar" ) );
+								$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
+								?>
+
+								<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
+							</div>
+
 							<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark"
 							                           title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
 							</div>
