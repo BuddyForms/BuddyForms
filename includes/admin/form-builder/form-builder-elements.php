@@ -355,7 +355,7 @@ function buddyforms_display_form_element( $args ) {
 
 
 	if ( is_array( $form_fields ) ) {
-		$form_fields = buddyforms_sort_array_by_Array( $form_fields, array( 'general', 'validation', 'advanced' ) );
+	$form_fields = buddyforms_sort_array_by_Array( $form_fields, array( 'general', 'validation', 'advanced' ) );
 	}
 
 	ob_start(); ?>

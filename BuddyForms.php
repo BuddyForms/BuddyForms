@@ -224,8 +224,6 @@ class BuddyForms {
 		wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 		wp_enqueue_style( 'admin_post_metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 
-		// load dashicons
-		wp_enqueue_style( 'dashicons' );
 
 	}
 
@@ -384,6 +382,9 @@ class BuddyForms {
 
 		wp_enqueue_style( 'buddyforms-the-loop-css', plugins_url( 'assets/css/the-loop.css', __FILE__ ) );
 		wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
+
+		// load dashicons
+		wp_enqueue_style( 'dashicons' );
 
 		add_action('wp_head', 'buddyforms_jquery_validation');
 
