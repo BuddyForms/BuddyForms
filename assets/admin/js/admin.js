@@ -410,11 +410,11 @@ jQuery(document).ready(function (jQuery) {
 
     jQuery(".bf_check_all").click(function (e) {
 
-        if (jQuery("#buddyforms_form_roles input[type='checkbox']").prop("checked")) {
-            jQuery('#buddyforms_form_roles :checkbox').prop('checked', false);
+        if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
+            jQuery('.bf_permissions :checkbox').prop('checked', false);
             jQuery(this).text(admin_text.check);
         } else {
-            jQuery('#buddyforms_form_roles :checkbox').prop('checked', true);
+            jQuery('.bf_permissions :checkbox').prop('checked', true);
             jQuery(this).text(admin_text.uncheck);
         }
         e.preventDefault();
