@@ -364,7 +364,7 @@ function buddyforms_display_form_element( $args ) {
 		<div class="accordion_fields">
 			<div class="accordion-group postbox">
 				<div class="accordion-heading-options">
-					<table class="wp-list-table widefat posts striped">
+					<table class="wp-list-table widefat fixed posts">
 						<tbody>
 						<tr>
 							<td class="field_order ui-sortable-handle">
