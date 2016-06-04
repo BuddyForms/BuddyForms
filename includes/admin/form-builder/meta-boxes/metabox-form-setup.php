@@ -234,7 +234,7 @@ function buddyforms_metabox_form_setup() {
 				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
 				     id="<?php echo $tab; ?>">
 					<div class="buddyforms_accordion_general">
-						<table class="form-table">
+						<table class="wp-list-table widefat posts striped">
 							<tbody>
 							<?php foreach($fields as $field_key => $field ) { ?>
 								<tr id="row_form_title">

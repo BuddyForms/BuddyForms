@@ -364,7 +364,7 @@ function buddyforms_display_form_element( $args ) {
 		<div class="accordion_fields">
 			<div class="accordion-group postbox">
 				<div class="accordion-heading-options">
-					<table class="wp-list-table widefat fixed posts">
+					<table class="wp-list-table widefat posts striped">
 						<tbody>
 						<tr>
 							<td class="field_order ui-sortable-handle">
@@ -470,7 +470,7 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 
 	echo '
 
-            <table class="wp-list-table widefat fixed posts">
+            <table class="wp-list-table widefat posts striped">
                 <thead>
                     <tr>
                         <th><span style="padding-left: 10px;">Label</span></th>
@@ -499,7 +499,7 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 
 
 			echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
-			echo '<table class="wp-list-table widefat fixed posts"><tbody><tr><td>';
+			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td>';
 			$form_element = new Element_Textbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array( 'value' => $option['label'] ) );
 			$form_element->render();
 			echo '</td><td>';
@@ -529,7 +529,7 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 
 function buddyforms_display_field_group_table( $form_fields, $field_id = 'global' ) {
 	?>
-	<table class="form-table">
+	<table class="wp-list-table widefat posts striped">
 		<tbody>
 		<?php
 		if ( isset( $form_fields ) ) {

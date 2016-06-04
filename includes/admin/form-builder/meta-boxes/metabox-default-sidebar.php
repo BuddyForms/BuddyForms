@@ -18,12 +18,11 @@ function buddyforms_metabox_sidebar() {
         <h5>' . __( 'Classic Fields', 'buddyforms' ) . '</h5>
         <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __( 'Text', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="textarea" class="bf_add_element_action">' . __( 'Textarea', 'buddyforms' ) . '</a></p>
-        <p><a href="#" data-fieldtype="link" class="bf_add_element_action">' . __( 'Link', 'buddyforms' ) . '</a></p>
-        <p><a href="#" data-fieldtype="mail" class="bf_add_element_action">' . __( 'Mail', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="dropdown" class="bf_add_element_action">' . __( 'Dropdown', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="radiobutton" class="bf_add_element_action">' . __( 'Radiobutton', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="checkbox" class="bf_add_element_action">' . __( 'Checkbox', 'buddyforms' ) . '</a></p>
-        <h5>Post Fields</h5>
+
+        <h5>' . __( 'Post Fields', 'buddyforms' ) . '</h5>
         <p><a href="#" data-fieldtype="title" data-unique="unique" class="bf_add_element_action">' . __( 'Title', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="content" data-unique="unique" class="bf_add_element_action">' . __( 'Content', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="taxonomy" class="bf_add_element_action">' . __( 'Taxonomy', 'buddyforms' ) . '</a></p>
@@ -31,7 +30,17 @@ function buddyforms_metabox_sidebar() {
         <p><a href="#" data-fieldtype="status" data-unique="unique" class="bf_add_element_action">' . __( 'Post Status', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="featured_image" data-unique="unique" class="bf_add_element_action">' . __( 'Featured Image', 'buddyforms' ) . '</a></p>
 
-        <h5>Extras</h5>
+        <h5>' . __( 'Contact Fields', 'buddyforms' ) . '</h5>
+        <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __( 'Name', 'buddyforms' ) . '</a></p>
+        <p><a href="#" data-fieldtype="link" class="bf_add_element_action">' . __( 'Link', 'buddyforms' ) . '</a></p>
+        <p><a href="#" data-fieldtype="mail" class="bf_add_element_action">' . __( 'Mail', 'buddyforms' ) . '</a></p>
+
+        <h5>' . __( 'Registration Fields', 'buddyforms' ) . '</h5>
+        <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __( 'Login Form', 'buddyforms' ) . '</a></p>
+        <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __( 'Registration', 'buddyforms' ) . '</a></p>
+        <p><a href="#" data-fieldtype="text" class="bf_add_element_action">' . __( 'reCAPTCHA', 'buddyforms' ) . '</a></p>
+
+        <h5>' . __( 'Extra Fields', 'buddyforms' ) . '</h5>
         <p><a href="#" data-fieldtype="file" class="bf_add_element_action">' . __( 'File', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="hidden" class="bf_add_element_action">' . __( 'Hidden', 'buddyforms' ) . '</a></p>
         <p><a href="#" data-fieldtype="number" class="bf_add_element_action">' . __( 'Number', 'buddyforms' ) . '</a></p>

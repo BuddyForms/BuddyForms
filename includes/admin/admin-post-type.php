@@ -12,10 +12,10 @@ function buddyforms_add_meta_boxes() {
 
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'default' );
+	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
 
 }
-add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
+add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' ,9999);
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );

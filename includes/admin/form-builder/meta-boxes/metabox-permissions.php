@@ -63,7 +63,7 @@ function buddyforms_permissions_screen() {
 	echo '<div class="bf-roles-main-desc">
 			<div class="">
 			<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
-			<p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p></php></php>';
+			<p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p></div></div>';
 
 
 //		$form_setup[] = new Element_HTML();
@@ -102,12 +102,12 @@ function buddyforms_permissions_screen() {
 			?>
 			<div class="fields_heade postbox">
 				<table class="wp-list-table widefat posts striped bf_permissions">
-						<thead>
+					<thead>
 						<tr>
 							<th class="field_label">Role</th>
 							<th class="field_name">Create - Edit - Delete</th>
 						</tr>
-						</thead>
+					</thead>
 					<tbody id="the-list">
 					<?php
 					if ( isset( $form_setup ) ) {
@@ -136,9 +136,7 @@ function buddyforms_permissions_screen() {
 					</tbody>
 				</table>
 			</div>
-
 			<?php
-
 
 }
 
@@ -152,10 +150,10 @@ add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_pe
 
 function buddyforms_form_setup_tab_pane_permission(){ ?>
 	<div class="tab-pane fade in" id="permission">
-	<div class="buddyforms_accordion_permission">
-		<?php buddyforms_permissions_unregistered_screen() ?>
-		<?php buddyforms_permissions_screen() ?>
-	</div>
+		<div class="buddyforms_accordion_permission">
+			<?php buddyforms_permissions_unregistered_screen() ?>
+			<?php buddyforms_permissions_screen() ?>
+		</div>
 	</div><?php
 }
 add_action('buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_permission');
