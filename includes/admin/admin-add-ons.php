@@ -37,7 +37,7 @@ function bf_add_ons_screen() {
 
 		$call_api = plugins_api( 'query_plugins',
 			array(
-				'search'   => 'buddyforms',
+				'tag'   => 'buddyforms',
 				'per_page' => '-1',
 				'fields'   => array(
 					'downloaded'        => true,
@@ -54,13 +54,18 @@ function bf_add_ons_screen() {
 					'added'             => false,
 					'last_updated'      => true,
 					'compatibility'     => true,
-					'tested'            => true,
+					//'tested'            => true,
 					'requires'          => true,
 					'downloadlink'      => true,
 				)
 			)
 		);
 		add_thickbox();
+
+//		echo '<pre>';
+//		print_r($call_api);
+//		echo '</pre>';
+
 		buddyforms_get_addons( $call_api ); ?>
 
 
