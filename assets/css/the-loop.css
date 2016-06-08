@@ -165,9 +165,6 @@ ul.buddyforms-list .publish .item-status {
     border-top: 0;
     border: 0;
 }
-.buddyforms_posts_table .table.table-inner tr td {
-    width: 40%;
-}
 .buddyforms_posts_table .table th {
     padding: 0;
 }
@@ -205,6 +202,7 @@ ul.buddyforms-list .publish .item-status {
 }
 .buddyforms_posts_table .table.table-inner td {
     padding: 10px 9px 0;
+    width: 40%;
 }
 @media screen and (max-width: 767px) {
     .buddyforms_posts_table .table.table-inner {
@@ -292,7 +290,6 @@ ul.buddyforms-list .publish .item-status {
     display: inline-block;
 }
 .buddyforms_posts_table .edit_links li a {
-    padding: 5px;
     margin: 0;
     text-decoration: none;
 }
