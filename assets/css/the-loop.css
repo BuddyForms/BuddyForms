@@ -50,12 +50,15 @@ ul.buddyforms-list .item-status {
   border: 1px solid #23a6cb;
 }
 ul.buddyforms-list .draft .item-status,
-ul.buddyforms-list .edit-draft .item-status  {
+ul.buddyforms-list .edit-draft .item-status,
+ul.buddyforms-list .publish .draft .table-item-status,
+ul.buddyforms-list .publish .edit-draft .table-item-status  {
   color: #969595;
   background-color: #e3e3e3;
   border: 1px solid #ccc;
 }
-ul.buddyforms-list .bf-pending .item-status {
+ul.buddyforms-list .bf-pending .item-status,
+ul.buddyforms-list .publish .bf-pending .item-status {
   color: #fff;
   background-color: #f3a93c;
   border: 1px solid #d88f37;
@@ -86,6 +89,10 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms-list .edit_links .dashicons {
     line-height: 1.2;
 }
+.buddyforms-list .disabled .dashicons {
+  color: #888;
+}
+
 
 
 @media (min-width: 768px) {
@@ -239,12 +246,15 @@ ul.buddyforms-list .publish .item-status {
     }
 }
 .buddyforms_posts_table .draft .table-item-status,
-.buddyforms_posts_table .edit-draft .table-item-status {
+.buddyforms_posts_table .edit-draft .table-item-status,
+.buddyforms_posts_table .publish .draft .table-item-status,
+.buddyforms_posts_table .publish .edit-draft .table-item-status {
     color: #969595;
     background-color: #e3e3e3;
     border: 1px solid #ccc;
 }
-.buddyforms_posts_table .bf-pending .table-item-status {
+.buddyforms_posts_table .bf-pending .table-item-status,
+.buddyforms_posts_table .publish .bf-pending .table-item-status {
     color: #fff;
     background-color: #f3a93c;
     border: 1px solid #d88f37;
@@ -255,11 +265,12 @@ ul.buddyforms-list .publish .item-status {
   border: 1px solid #6abf6a;
 }
 .buddyforms_posts_table .item-status-action {
-    color: #585858;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.025em;
-    font-weight: 500;
+    font-size: 0.8;
+    line-height: 1.5;
+    padding: 5px 0;
+    letter-spacing: 0;
+    font-weight: inherit;
+    opacity: 0.6;
 }
 @media screen and (min-width: 768px) {
     .buddyforms_posts_table .item-status-action {
@@ -284,4 +295,7 @@ ul.buddyforms-list .publish .item-status {
     padding: 5px;
     margin: 0;
     text-decoration: none;
+}
+.buddyforms_posts_table .disabled .dashicons {
+  opacity: 0.5;
 }
