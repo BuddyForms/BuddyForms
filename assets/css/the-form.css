@@ -755,7 +755,8 @@ div.bf_files_container ul li {
     float: left;
     padding-right: 10px;
     width: 64px;
-    height: 64px;
+    height: auto;
+    height: auto !important;
 }
 
 #poststuff {
