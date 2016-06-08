@@ -201,7 +201,7 @@ ul.buddyforms-list .publish .item-status {
     padding: 0;
 }
 .buddyforms_posts_table .table.table-inner td {
-    padding: 10px 9px 0;
+    padding: 5px 9px;
     width: 40%;
 }
 @media screen and (max-width: 767px) {
