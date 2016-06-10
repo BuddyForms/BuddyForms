@@ -102,17 +102,12 @@ ul.buddyforms-list .publish .item-status {
       float: left;
   }
   ul.buddyforms-list li div.action {
-    transition: all 0.17s ease-in;
-    opacity: 0.6;
     max-width: 50px;
     width: auto;
     float: right;
     text-align: left;
     min-width: 200px;
-  }
-  ul.buddyforms-list li div.action:hover,
-  ul.buddyforms-list li div.action:focus {
-    opacity: 1;
+    font-size: 70%;
   }
 }
 
