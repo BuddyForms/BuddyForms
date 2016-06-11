@@ -2,17 +2,21 @@
 
 ul.buddyforms-list {
     margin: 20px 0;
-    list-style: none outside none !important;
+    padding: 0;
+    list-style: none outside none;
 }
-ul.buddyforms-list li {
+ul.buddyforms-list li.bf-submission {
     padding: 20px 0;
     height: auto;
     min-height: 44px;
     position: relative;
-    padding: 15px 0 20px 0;
-    margin-left: 0;
-    border-bottom: 1px solid #dedede;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    margin-left: 0px;
     list-style: none outside none;
+}
+ul.buddyforms-list li.bf-submission:hover {
+    background: rgba(0,0,0,0.03);
 }
 ul.buddyforms-list li .item {
     overflow: auto;

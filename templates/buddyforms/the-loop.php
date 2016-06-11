@@ -42,7 +42,7 @@ $current_user = wp_get_current_user(); ?>
 
 					?>
 
-					<li id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
+					<li id="bf_post_li_<?php the_ID() ?>" class="bf-submission <?php echo $post_status_css; ?>">
 
 						<div class="item">
 
