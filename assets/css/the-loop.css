@@ -80,9 +80,10 @@ ul.buddyforms-list .publish .item-status {
     padding: 0;
     margin: 0;
     border: none;
+    min-height: 0;
 }
 .buddyforms-list .meta .edit_links li a {
-    padding: 5px;
+    padding: 0;
     margin: 0;
     text-decoration: none;
 }
@@ -282,7 +283,7 @@ ul.buddyforms-list .publish .item-status {
     }
 }
 .buddyforms_posts_table .edit_links li {
-    display: inline-block;
+    float: left;
 }
 .buddyforms_posts_table .edit_links li a {
     margin: 0;
