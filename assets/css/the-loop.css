@@ -211,6 +211,7 @@ ul.buddyforms-list .publish .item-status {
     .buddyforms_posts_table .table.table-inner td {
         position: relative;
         padding:10px 9px 0 50%;
+        width: auto;
     }
 }
 .buddyforms_posts_table .table .mobile-th {
@@ -284,6 +285,8 @@ ul.buddyforms-list .publish .item-status {
 @media screen and (max-width: 767px) {
     .buddyforms_posts_table .edit_links {
         text-align: left;
+        min-height: 30px;
+        min-width: 50px;
     }
 }
 .buddyforms_posts_table .edit_links li {
