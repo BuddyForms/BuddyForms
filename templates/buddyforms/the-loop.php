@@ -110,7 +110,7 @@ $current_user = wp_get_current_user(); ?>
 
 							</div>
 						<?php } ?>
-						<?php //do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
+						<?php do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
 						<div class="clear"></div>
 					</li>
 
