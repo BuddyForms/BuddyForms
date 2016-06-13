@@ -87,7 +87,7 @@ ul.buddyforms-list .publish .item-status {
     border: none;
     min-height: 0;
 }
-.buddyforms-list .meta .edit_links li a {
+.buddyforms-list .meta .edit_links a {
     padding: 0;
     margin: 0;
     text-decoration: none;
