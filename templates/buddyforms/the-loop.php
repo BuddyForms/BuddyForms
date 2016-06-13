@@ -3,7 +3,7 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 $current_user = wp_get_current_user(); ?>
 
-	<div class="buddyforms_posts_list">
+	<div id="buddyforms-list-view" class="buddyforms_posts_list">
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>
 
