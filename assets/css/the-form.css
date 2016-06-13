@@ -97,7 +97,8 @@
     display: block;
 }
 
-.the_buddyforms_form .bf-input input.form-control {
+.the_buddyforms_form .bf-input textarea,
+.the_buddyforms_form .bf-input .form-control {
     display: block;
     width: 100%;
     background: #fff;
