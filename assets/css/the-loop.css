@@ -122,7 +122,7 @@ ul.buddyforms-list .publish .item-status {
 @media (min-width: 768px) {
   ul.buddyforms-list li .item {
       overflow: auto;
-      width: 50%;
+      width: 70%;
       float: left;
   }
   ul.buddyforms-list li div.action {
