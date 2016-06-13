@@ -103,7 +103,8 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms-list-sub {
     clear: both;
     padding: 10px 0 5px;
-    margin: 0 0 0 20px;
+    margin: 20px 0 0 20px;
+    border-top: 1px solid rgba(0,0,0,0.1);
     list-style: none;
 }
 .buddyforms-list .buddyforms-list-sub .item {
@@ -132,6 +133,10 @@ ul.buddyforms-list .publish .item-status {
     min-width: 200px;
     font-size: 70%;
     clear: none;
+  }
+  .buddyforms-list-sub {
+      margin: 0 0 0 20px;
+      border-top: none;
   }
   .bf-submission-sub {
     padding: 0;
