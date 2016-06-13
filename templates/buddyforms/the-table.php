@@ -92,7 +92,7 @@ $current_user = wp_get_current_user(); ?>
 													if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 														echo '<li>';
 														if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-															echo apply_filters( 'bf_loop_edit_post_link', '<a title="Edit" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="edit button" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
+															echo apply_filters( 'bf_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="'. __( 'Edit', 'buddyforms' ) .'" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
 														} else {
 															echo apply_filters( 'bf_loop_edit_post_link', bf_edit_post_link( __( 'Edit', 'buddyforms' ) ) , get_the_ID() );
 														}
@@ -100,7 +100,7 @@ $current_user = wp_get_current_user(); ?>
 													}
 
 													if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) ) {
-														echo ' <li> <a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="delete button" class="dashicons dashicons-trash"></span></a></li>';
+														echo ' <li> <a title="'. __( 'Delete', 'buddyforms' ) .'"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="'. __( 'Delete', 'buddyforms' ) .'" class="dashicons dashicons-trash"></span></a></li>';
 													}
 													do_action( 'buddyforms_the_loop_actions', get_the_ID() );
 													$meta_tmp = ob_get_clean();
