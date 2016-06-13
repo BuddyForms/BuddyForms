@@ -224,7 +224,7 @@ ul.buddyforms-list .publish .item-status {
         padding-left: 50%;
     }
 }
-.buddyforms_posts_table .table tbody .table-wrapper {
+#buddyforms-table-view .table tbody .table-wrapper {
     padding: 0;
 }
 .buddyforms_posts_table .table.table-inner td {
@@ -316,10 +316,11 @@ ul.buddyforms-list .publish .item-status {
         min-width: 50px;
     }
 }
-.buddyforms_posts_table .edit_links li {
+.buddyforms_posts_table .edit_links li,
+.buddyforms_posts_table .edit_links a {
     float: left;
 }
-.buddyforms_posts_table .edit_links li a {
+.buddyforms_posts_table .edit_links a {
     margin: 0;
     text-decoration: none;
 }
