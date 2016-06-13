@@ -3,7 +3,7 @@
     border: 1px solid red;
 }
 
-.the_buddyforms_form.bf_field_group.a textarea.error {
+.the_buddyforms_form .bf_field_group.a textarea.error {
     border: 1px solid red;
 }
 
@@ -46,8 +46,7 @@
 
 .the_buddyforms_form span.help-inline,
 .the_buddyforms_form span.help-block {
-    color: #888;
-    font-size: 85%;
+    font-size: 80%;
     font-style: italic;
     font-weight: normal;
 }
@@ -100,6 +99,8 @@
 
 .the_buddyforms_form .bf-input input.form-control {
     display: block;
+    width: 100%;
+    background: #fff;
 }
 
 
@@ -112,20 +113,7 @@
     height: auto !important;
 }
 
-/** BuddyPress Fix for the Theme Compatibility **/
-#buddypress table tr td, #buddypress table tr th {
-    padding: 0px;
-    vertical-align: middle;
-}
 
-ul.product_images.ui-sortable li img {
-    width: 100px;
-    height: 100px;
-}
-
-.bf-hidden {
-    display: none;
-}
 
 /**
 *
