@@ -35,6 +35,7 @@ ul.buddyforms-list.item-list li div.item-desc {
 }
 ul.buddyforms-list li div.action {
   font-size: 80%;
+  clear: both;
 }
 ul.buddyforms-list li div.meta {
     margin-top: 10px;
@@ -55,8 +56,8 @@ ul.buddyforms-list .item-status {
 }
 ul.buddyforms-list .draft .item-status,
 ul.buddyforms-list .edit-draft .item-status,
-ul.buddyforms-list .publish .draft .table-item-status,
-ul.buddyforms-list .publish .edit-draft .table-item-status  {
+ul.buddyforms-list .publish .draft .item-status,
+ul.buddyforms-list .publish .edit-draft .item-status  {
   color: #969595;
   background-color: #e3e3e3;
   border: 1px solid #ccc;
@@ -98,7 +99,24 @@ ul.buddyforms-list .publish .item-status {
   color: #888;
 }
 
-
+/* BuddyForms Sub List */
+.buddyforms-list-sub {
+    clear: both;
+    padding: 10px 0 5px;
+    margin: 0 0 0 20px;
+    list-style: none;
+}
+.buddyforms-list .buddyforms-list-sub .item {
+    font-size: 85%;
+    padding: 0;
+}
+.buddyforms-list-sub .item-avatar {
+    width: 50px;
+    height: auto;
+}
+.bf-submission-sub {
+  padding: 10px 0;
+}
 
 @media (min-width: 768px) {
   ul.buddyforms-list li .item {
@@ -113,6 +131,10 @@ ul.buddyforms-list .publish .item-status {
     text-align: left;
     min-width: 200px;
     font-size: 70%;
+    clear: none;
+  }
+  .bf-submission-sub {
+    padding: 0;
   }
 }
 
