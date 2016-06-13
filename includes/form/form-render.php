@@ -47,7 +47,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Form HTML Start. The Form is rendered as last step.
-	$form_html  = '<div class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
+	$form_html  = '<div id="buddyforms-form" class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
 	$form_html .= '<div id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
