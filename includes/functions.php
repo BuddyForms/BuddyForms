@@ -276,3 +276,50 @@ function bf_post_entry_actions($form_slug){
 	</ul>
 	<?php
 }
+
+function bf_post_status_readable($post_status){
+	echo bf_get_post_status_readable($post_status);
+}
+
+	function bf_get_post_status_readable($post_status){
+		if ( $post_status == 'publish' ) {
+			return __( 'Published', 'buddyforms' );
+		}
+
+		if ( $post_status == 'draft' ) {
+			return __( 'Draft', 'buddyforms' );
+		}
+
+		if ( $post_status == 'pending' ) {
+			return __( 'Pending Review', 'buddyforms' );
+		}
+
+		if ( $post_status == 'future' ) {
+			return __( 'Scheduled', 'buddyforms' );
+		}
+
+		if ( $post_status == 'awaiting-review' ) {
+			return __( 'Awaiting Review', 'buddyforms' );
+		}
+
+		if ( $post_status == 'edit-draft' ) {
+			return __( 'Edit Draft', 'buddyforms' );
+		}
+
+		return apply_filters( 'bf_get_post_status_readable', $post_status );;
+	}
+
+function bf_post_status_css_class($post_status, $form_slug){
+	echo bf_get_post_status_css_class($post_status, $form_slug);
+}
+
+	function bf_get_post_status_css_class($post_status, $form_slug){
+
+		$post_status_css = $post_status;
+
+		if ( $post_status == 'pending' ) {
+			$post_status_css = 'bf-pending';
+		}
+
+		return apply_filters( 'bf_post_status_css', $post_status_css, $form_slug );
+	}

@@ -11,43 +11,19 @@ $current_user = wp_get_current_user(); ?>
 
 				<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
-					$the_permalink = get_permalink();
-					$post_status   = get_post_status();
+					$the_permalink      = get_permalink();
+					$post_status        = get_post_status();
 
-					$post_status_css = $post_status_name = $post_status;
-
-					if ( $post_status == 'pending' ) {
-						$post_status_css = 'bf-pending';
-					}
-
-					if ( $post_status == 'publish' ) {
-						$post_status_name = __( 'Published', 'buddyforms' );
-					}
-
-					if ( $post_status == 'draft' ) {
-						$post_status_name = __( 'Draft', 'buddyforms' );
-					}
-
-					if ( $post_status == 'pending' ) {
-						$post_status_name = __( 'Pending Review', 'buddyforms' );
-					}
-
-					if ( $post_status == 'future' ) {
-						$post_status_name = __( 'Scheduled', 'buddyforms' );
-					}
-
-					$post_status_css = apply_filters( 'bf_post_status_css', $post_status_css, $form_slug );
+					$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
+					$post_status_name   = bf_get_post_status_readable( $post_status );
 
 					do_action( 'bp_before_blog_post' );
 
 					?>
 
 					<li id="bf_post_li_<?php the_ID() ?>" class="bf-submission <?php echo $post_status_css; ?>">
-
 						<div class="item">
-
 							<div class="item-avatar">
-
 								<?php
 								$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
 									70,
@@ -55,7 +31,6 @@ $current_user = wp_get_current_user(); ?>
 								), array( 'class' => "avatar" ) );
 								$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
 								?>
-
 								<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
 							</div>
 
@@ -75,18 +50,13 @@ $current_user = wp_get_current_user(); ?>
 
 								<?php
 								if ( get_the_author_meta( 'ID' ) == get_current_user_id() ) {
-									$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
-
-									$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
 									ob_start();
-									?>
-
-									<div class="meta">
-										<div class="item-status"><?php echo $post_status_name; ?></div>
-										<?php bf_post_entry_actions($form_slug); ?>
-									</div>
-
-									<?php
+										?>
+										<div class="meta">
+											<div class="item-status"><?php echo $post_status_name; ?></div>
+											<?php bf_post_entry_actions($form_slug); ?>
+										</div>
+										<?php
 									$meta_tmp = ob_get_clean();
 									echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
 								} ?>
