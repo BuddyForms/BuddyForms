@@ -8,9 +8,10 @@ ul.buddyforms-list {
 ul.buddyforms-list li.bf-submission {
     padding: 20px 0;
     height: auto;
+    overflow: auto;
     min-height: 44px;
     position: relative;
-    padding: 15px 20px;
+    padding: 15px 20px 0;
     border-bottom: 1px solid rgba(0,0,0,0.15);
     margin-left: 0px;
     list-style: none outside none;
@@ -20,7 +21,8 @@ ul.buddyforms-list li.bf-submission:hover {
 }
 ul.buddyforms-list li .item {
     overflow: auto;
-    padding: 5px 0;
+    padding: 0 0 10px 0;
+    margin: 0;
 }
 ul.buddyforms-list li img.avatar {
     float: left;
