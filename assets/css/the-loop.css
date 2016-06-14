@@ -128,6 +128,7 @@ ul.buddyforms-list .publish .item-status {
   ul.buddyforms-list li div.action {
     max-width: 50px;
     width: auto;
+    margin-bottom: 10px;
     float: right;
     text-align: left;
     min-width: 200px;
