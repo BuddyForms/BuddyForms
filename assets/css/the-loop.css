@@ -1,18 +1,17 @@
 /* --- The Loop List --- */
 
 ul.buddyforms-list {
-    margin: 20px 0;
+    margin: 25px 0;
     padding: 0;
     list-style: none outside none;
 }
 ul.buddyforms-list li.bf-submission {
-    padding: 20px 0;
     height: auto;
     overflow: auto;
     min-height: 44px;
     position: relative;
-    padding: 15px 20px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+    padding: 30px 20px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     margin-left: 0px;
     list-style: none outside none;
 }
@@ -38,6 +37,7 @@ ul.buddyforms-list.item-list li div.item-desc {
 ul.buddyforms-list li div.action {
   font-size: 80%;
   clear: both;
+  margin-bottom: 20px;
 }
 ul.buddyforms-list li div.meta {
     margin-top: 10px;
@@ -93,12 +93,12 @@ ul.buddyforms-list .publish .item-status {
     padding: 0;
     margin: 0;
     text-decoration: none;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
 }
 .buddyforms-list .edit_links .dashicons {
     line-height: 1.2;
-}
-.buddyforms-list .disabled .dashicons {
-  color: #888;
 }
 
 /* BuddyForms Sub List */
@@ -118,13 +118,15 @@ ul.buddyforms-list .publish .item-status {
 }
 .bf-submission-sub {
   padding: 15px 0;
-  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 @media (min-width: 768px) {
+  ul.buddyforms-list li.bf-submission {
+      padding: 20px 20px 0;
+  }
   ul.buddyforms-list li .item {
       overflow: auto;
-      width: 70%;
+      width: calc(100% - 265px);
       float: left;
   }
   ul.buddyforms-list li div.action {
@@ -332,7 +334,4 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms_posts_table .edit_links a {
     margin: 0;
     text-decoration: none;
-}
-.buddyforms_posts_table .disabled .dashicons {
-  opacity: 0.5;
 }
