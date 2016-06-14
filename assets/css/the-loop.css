@@ -104,6 +104,9 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms-list .edit_links .dashicons {
     line-height: 1.2;
 }
+.buddyforms-list .dashicons.disabled {
+    opacity: 0.6;
+}
 
 /* BuddyForms Sub List */
 .buddyforms-list-sub {
