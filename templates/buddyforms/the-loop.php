@@ -44,25 +44,22 @@ $current_user = wp_get_current_user(); ?>
 
 						</div>
 
-						<?php if ( is_user_logged_in() ) { ?>
+						<?php
+						if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() ) {
+							ob_start();
+							?>
 							<div class="action">
-								<?php _e( 'Created', 'buddyforms' ); ?> <?php the_time( 'F j, Y' ) ?>
-
-								<?php
-								if ( get_the_author_meta( 'ID' ) == get_current_user_id() ) {
-									ob_start();
-										?>
-										<div class="meta">
-											<div class="item-status"><?php echo $post_status_name; ?></div>
-											<?php bf_post_entry_actions($form_slug); ?>
-										</div>
-										<?php
-									$meta_tmp = ob_get_clean();
-									echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
-								} ?>
-
+								<div class="meta">
+									<div class="item-status"><?php echo $post_status_name; ?></div>
+									<?php bf_post_entry_actions( $form_slug ); ?>
+									<span><?php _e( 'Created', 'buddyforms' ); ?> <?php the_time( 'F j, Y' ) ?></span>
+								</div>
 							</div>
-						<?php } ?>
+							<?php
+							$meta_tmp = ob_get_clean();
+							echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
+						}
+						?>
 						<?php do_action('buddyforms_the_loop_li_last', get_the_ID()); ?>
 						<div class="clear"></div>
 					</li>

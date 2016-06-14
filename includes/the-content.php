@@ -88,7 +88,8 @@ function buddyforms_attached_page_content( $content ) {
 		endif;
 	}
 
-	add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+	// Rebuild
+	//add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 
 	return $new_content;
 
