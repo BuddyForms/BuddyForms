@@ -200,3 +200,79 @@ function bf_enqueue_js( $code ) {
 
 	$wc_queued_js .= "\n" . $code . "\n";
 }
+
+
+/**
+ * Display edit post link for post.
+ *
+ * @since 1.0.0
+ *
+ * @param string $text Optional. Anchor text.
+ * @param string $before Optional. Display before edit link.
+ * @param string $after Optional. Display after edit link.
+ * @param int $id Optional. Post ID.
+ */
+function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
+	if ( ! $post = get_post( $id ) ) {
+		return;
+	}
+
+	if ( ! $url = bf_get_edit_post_link( $post->ID ) ) {
+		return;
+	}
+
+	if ( null === $text ) {
+		$text = __( 'Edit This' );
+	}
+
+	$link = '<a title="'. __( 'Edit', 'buddyforms' ) .'" class="post-edit-link" href="' . $url . '"><span aria-label="'. __( 'Edit', 'buddyforms' ) .'" class="dashicons dashicons-edit"></span></a>';
+
+	/**
+	 * Filter the post edit link anchor tag.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $link Anchor tag for the edit link.
+	 * @param int $post_id Post ID.
+	 * @param string $text Anchor text.
+	 */
+	echo $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
+}
+
+function bf_post_entry_actions($form_slug){
+	global $buddyforms;
+	?>
+	<ul class="edit_links">
+		<?php
+		if ( get_the_author_meta( 'ID' ) == get_current_user_id() ) {
+			$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
+			$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
+
+			ob_start();
+
+			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
+				echo '<li>';
+				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
+					echo apply_filters( 'bf_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
+				} else {
+					echo apply_filters( 'bf_loop_edit_post_link', bf_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
+				}
+				echo '</li>';
+			}
+			if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) ) {
+				echo '<li>';
+				echo '<a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"></span></a></li>';
+				echo '</li>';
+			}
+
+			// Add custom actions to the entry
+			do_action( 'buddyforms_the_loop_actions', get_the_ID() );
+
+			$meta_tmp = ob_get_clean();
+
+			// Display all actions
+			echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
+		} ?>
+	</ul>
+	<?php
+}
