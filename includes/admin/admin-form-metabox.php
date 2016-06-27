@@ -97,6 +97,9 @@ function buddyforms_metabox_admin_form_metabox(){
 function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	global $buddyforms;
 
+	if(!is_admin())
+		return;
+
 	$form_slug  = get_post_meta( $post_id, '_bf_form_slug', true );
 
 	if(!isset($form_slug)) return;

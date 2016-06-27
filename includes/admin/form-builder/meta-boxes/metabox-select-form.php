@@ -84,12 +84,10 @@ function bf_inner_custom_box( $post ) {
  */
 function bf_save_postdata( $post_id ) {
 
-	/*
-	 * We need to verify this came from the our screen and with proper authorization,
-	 * because save_post can be triggered at other times.
-	 */
+	if(!is_admin()){
+		return;
+	}
 
-	// Check if our nonce is set.
 	if ( ! isset( $_POST['bf_inner_custom_box_nonce'] ) ) {
 		return $post_id;
 	}
