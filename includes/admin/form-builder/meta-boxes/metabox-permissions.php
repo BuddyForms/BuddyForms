@@ -82,6 +82,7 @@ function buddyforms_permissions_screen() {
 				$capability_array = explode( '_', $capability );
 
 				if ( $capability_array[0] == 'buddyforms' ) {
+
 					if ( $capability_array[1] == $form_slug ) {
 
 						$form_user_role[ $capability ] = $capability;
@@ -90,13 +91,31 @@ function buddyforms_permissions_screen() {
 					}
 				}
 
+
 			endforeach;
 
-			$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
-				'value'  => $form_user_role,
-				'inline' => true,
-				'style'  => 'margin-right: 60px;'
-			) );
+
+			if($role_name == 'administrator'){
+
+				foreach($default_roles as $role_n_a => $role_a)
+					$form_user_role[$role_n_a] = $role_n_a;
+
+
+				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
+					'value'  => $form_user_role,
+					'inline' => true,
+					'style'  => 'margin-right: 60px;',
+					'shortDesc' => 'Admin rights can not get changed'
+				) );
+
+			} else {
+				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
+					'value'  => $form_user_role,
+					'inline' => true,
+					'style'  => 'margin-right: 60px;'
+				) );
+
+			}
 
 		endforeach;
 			?>
