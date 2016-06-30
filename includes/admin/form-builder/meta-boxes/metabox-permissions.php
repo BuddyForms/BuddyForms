@@ -102,9 +102,9 @@ function buddyforms_permissions_screen() {
 
 
 				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
-					'value'  => $form_user_role,
-					'inline' => true,
-					'style'  => 'margin-right: 60px;',
+					'value'     => $form_user_role,
+					'inline'    => true,
+					'style'     => 'margin-right: 60px;',
 					'shortDesc' => 'Admin rights can not get changed'
 				) );
 
