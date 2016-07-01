@@ -40,7 +40,6 @@ jQuery(document).ready(function (jQuery) {
             }
         });  //end confirm dialog
 
-
     }
 
 

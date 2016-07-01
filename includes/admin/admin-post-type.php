@@ -340,18 +340,9 @@ function buddyforms_hide_publishing_actions() {
 			.misc-pub-post-status{
 				display: none;
 			}
-			/*#message {*/
-				/*display: none;*/
-			/*}*/
-
-			/*.error {*/
-				/*display: none;*/
-			/*}*/
-
 			h1 {
 				display: none;
 			}
-
 			.metabox-prefs label {
 				/* float: right; */
 				/* margin-top: 57px; */
@@ -393,17 +384,26 @@ function buddyforms_add_button_to_submit_box() {
 		$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
 		$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
 
-
-		if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){
-			echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'View Form Posts', 'buddyforms' ) . '</a>
-                  <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'View Form', 'buddyforms' ) . '</a>';
 		}
+		?>
+		<div id="buddyforms-actions" class="misc-pub-section">
+			<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
+				<div id="frontend-action">
+					<h4>Frontend</h4>
+					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'Your Submissions', 'buddyforms' ) . '</a>
+                    <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
+				</div>
+			<?php } if(isset($post->post_name) && $post->post_name != '') { ?>
+				<div id="frontend-action">
+					<h4>Admin</h4>
+					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
+				</div>
+			<?php } ?>
+			<div class="clear"></div>
+		</div>
 
-		if(isset($post->post_name) && $post->post_name != ''){
-			echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>';
-		}
+<?php
 
-	}
 }
 add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box' );
 

@@ -67,7 +67,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup     = array();
 
 	//
-	// Form Settings General
+	// After Submission
 	//
 	$element = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_message'    => __('Display After Submission Message', 'buddyforms'),
@@ -79,7 +79,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$element->setAttribute( 'bf_hidden_checkbox', 'sadad' );
-	$form_setup['General'][] = $element;
+	$form_setup['After Submission'][] = $element;
 
 
 	// Attached Page
@@ -90,16 +90,16 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$element->setAttribute( 'hidden', 'sadad' );
-	$form_setup['General'][] = $element;
+	$form_setup['After Submission'][] = $element;
 
-	$form_setup['General'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
+	$form_setup['After Submission'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
 		'value'     => $after_submission_url,
 		'shortDesc' => __('Enter a valid URL', 'buddyforms'),
 		'class'     => 'hidden'
 	) );
 
 
-	$form_setup['General'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
+	$form_setup['After Submission'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
 		'style'     => "width:100%",
 		'value'     => $after_submit_message_text,
@@ -108,7 +108,7 @@ function buddyforms_metabox_form_setup() {
 			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
 
-	$form_setup['General'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
+	$form_setup['After Submission'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
 		'shortDesc' => __( '', 'buddyforms' ),
 		'value'     => $bf_ajax
 	) );
@@ -195,7 +195,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Check if form elements exist and sort the form elements
 	if ( is_array( $form_setup ) ) {
-		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'General', 'Create Content', 'Edit Submissions' ) );
+		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'After Submission', 'Create Content', 'Edit Submissions' ) );
 	}
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
@@ -234,10 +234,7 @@ function buddyforms_metabox_form_setup() {
 								$type  = $field->getAttribute( 'type' );
 								$class = $field->getAttribute( 'class' );
 
-
 								?>
-
-
 
 								<tr id="row_form_title" class="<?php echo $class ?>">
 									<th scope="row">

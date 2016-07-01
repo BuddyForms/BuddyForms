@@ -1,5 +1,5 @@
-body {
-    font-size: 16px;
+a{
+    text-decoration: none;
 }
 
 .bf-hidden {
@@ -652,7 +652,7 @@ a.button.button-large.bf_button_action {
 /*}*/
 
 
-#formbuilder-actions-wrap{
+#formbuilder-actions-wrap {
     padding: 10px;
     clear: both;
     border-top: 1px solid #ddd;
@@ -673,5 +673,8 @@ a.button.button-large.bf_button_action {
     float: right;
     line-height: 23px;
     margin-left: 10px;
-}
 
+}
+#buddyforms-actions {
+    margin-top: -12px;
+}
