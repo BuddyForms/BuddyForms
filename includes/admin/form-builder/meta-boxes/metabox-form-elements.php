@@ -83,12 +83,13 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 	// Metabox footer for the form elements select
 	$form_setup[] = new Element_HTML( '
 		<div id="formbuilder-actions-wrap">
-			<div id="formbuilder-action-select">
-				<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>
-			</div>
+
 			<div id="formbuilder-action-add">
 				<span class="formbuilder-spinner spinner"></span>
-				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="Add">
+				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="Add Field">
+			</div>
+			<div id="formbuilder-action-select">
+				<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -218,7 +219,7 @@ function buddyforms_form_builder_form_elements_select(){
 	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );
 
 	// Add a default value
-	$el_sel_options = '<option value="none">Field Type</option>';
+	$el_sel_options = '<option value="none">Select Field Type</option>';
 
 	// Loop The form elements array and add the options to the select box
 	if(is_array($elements_select_options)){

@@ -2,6 +2,13 @@ jQuery(document).ready(function (jQuery) {
 
 
     //
+    // No more bootstrap
+    //
+    //jQuery(".tabs, .tabs-left").tabs();
+    //jQuery("#sortable_buddyforms_elements li").accordion({ header: ".accordion-heading-options", navigation: true, content: ".accordion-body" });
+
+
+    //
     // This is uncomment as I'm not sure if we should save the latest settings tab...
     //
     //jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
@@ -41,7 +48,6 @@ jQuery(document).ready(function (jQuery) {
         });  //end confirm dialog
 
     }
-
 
     jQuery(document.body).on('click', '#formbuilder-add-element', function () {
 

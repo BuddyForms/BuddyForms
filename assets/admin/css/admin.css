@@ -665,8 +665,7 @@ a.button.button-large.bf_button_action {
     line-height: 28px;
     vertical-align: middle;
     text-align: left;
-    float: left;
-    margin-left: 60%;
+    float: right;
 }
 #formbuilder-action-add {
     text-align: right;
