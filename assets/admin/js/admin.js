@@ -19,19 +19,34 @@ jQuery(document).ready(function (jQuery) {
     //var hash = window.location.hash;
     //jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
 
+    jQuery(document.body).on('change', '#bf_add_new_form_element_modal', function () {
+        jQuery('#formbuilder-action-select-modal').dialog("close");
+        jQuery('#bf_add_new_form_element').val(jQuery('#bf_add_new_form_element_modal').val());
+        jQuery( "#formbuilder-add-element" ).trigger( "click" );
+    });
+
+    function bf_alert(alert_message){
+
+        jQuery('<div></div>').dialog({
+            modal: true,
+            title: "Info",
+            open: function() {
+                jQuery(this).html(alert_message);
+            },
+            buttons: {
+                Ok: function() {
+                    jQuery( this ).dialog( "close" );
+                }
+            }
+        });  //end confirm dialog
 
 
-
-
+    }
 
 
     jQuery(document.body).on('click', '#formbuilder-add-element', function () {
 
-
-
         jQuery('.formbuilder-spinner').addClass('is-active');
-
-
 
         var action = jQuery(this);
         var post_id = bf_getUrlParameter('post');
@@ -41,13 +56,25 @@ jQuery(document).ready(function (jQuery) {
 
         var fieldtype = jQuery('#bf_add_new_form_element').val();
 
-        var unique    = jQuery('#bf_add_new_form_element').find(':selected').data('unique')
+        if (fieldtype === 'none') {
+            jQuery('#bf_add_new_form_element_modal').val('none')
 
+            jQuery('#formbuilder-action-select-modal').dialog({
+                title: "Please Select a Field Type",
+                height: 240,
+                modal: true,
+            });
+            jQuery('.formbuilder-spinner').removeClass('is-active');
+            return false;
+        }
+
+        var unique    = jQuery('#bf_add_new_form_element').find(':selected').data('unique');
         var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
 
         if (unique === 'unique') {
             if (exist !== null && typeof exist === 'object' && exist.length > 0) {
-                alert('This element can only be added once into each form');
+                bf_alert('This element can only be added once into each form');
+                jQuery('.formbuilder-spinner').removeClass('is-active');
                 return false;
             }
         }
@@ -63,14 +90,13 @@ jQuery(document).ready(function (jQuery) {
             },
             success: function (data) {
                 if (data == 'unique') {
-                    alert('This element can only be added once into each form');
+                    bf_alert('This element can only be added once into each form');
                     return false;
                 }
 
                 jQuery('.buddyforms_template').remove();
 
                 data = data.replace('accordion-body collapse', 'accordion-body in collapse');
-
 
                 jQuery('#sortable_buddyforms_elements').append(data);
                 jQuery('.formbuilder-spinner').removeClass('is-active');
@@ -83,27 +109,26 @@ jQuery(document).ready(function (jQuery) {
             },
             error: function () {
                 jQuery('.formbuilder-spinner').removeClass('is-active');
-                alert('Something went wrong ;-(sorry)');
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
             }
         });
         return false;
 
-
-
-
-
-
-
-
-
-
-
-
     });
 
-
-
-        jQuery(document.body).on('click', '.bf_form_template', function () {
+    jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
@@ -129,14 +154,26 @@ jQuery(document).ready(function (jQuery) {
                             });
                             break;
                         default:
-                            alert(val);
+                            bf_alert(val);
                     }
 
                 });
 
             },
             error: function () {
-                alert('Something went wrong.. ;-(sorry)');
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
             }
         });
         return false;
@@ -219,7 +256,19 @@ jQuery(document).ready(function (jQuery) {
 
             },
             error: function () {
-                alert('Something went wrong.. ;-(sorry)');
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
             }
         });
 
@@ -296,7 +345,7 @@ jQuery(document).ready(function (jQuery) {
 
         if (unique === 'unique') {
             if (exist !== null && typeof exist === 'object' && exist.length > 0) {
-                alert('This element can only be added once into each form');
+                bf_alert('This element can only be added once into each form');
                 return false;
             }
         }
@@ -312,7 +361,7 @@ jQuery(document).ready(function (jQuery) {
             },
             success: function (data) {
                 if (data == 'unique') {
-                    alert('This element can only be added once into each form');
+                    bf_alert('This element can only be added once into each form');
                     return false;
                 }
 
@@ -330,8 +379,20 @@ jQuery(document).ready(function (jQuery) {
                 jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
 
             },
-            error: function () {
-                alert('Something went wrong ;-(sorry)');
+            error: function () {;
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
             }
         });
         return false;
@@ -386,16 +447,16 @@ jQuery(document).ready(function (jQuery) {
         return false;
     });
 
-    jQuery(document).on('mousedown', '.bf_list_item', function () {
-        jQuery(".element_field_sortable").sortable({
-            update: function (event, ui) {
-                var testst = jQuery(".element_field_sortable").sortable('toArray');
-                for (var key in testst) {
-                    //	alert(key); this needs to be rethinked ;-)
-                }
-            }
-        });
-    });
+    //jQuery(document).on('mousedown', '.bf_list_item', function () {
+    //    jQuery(".element_field_sortable").sortable({
+    //        update: function (event, ui) {
+    //            var testst = jQuery(".element_field_sortable").sortable('toArray');
+    //            for (var key in testst) {
+    //                //	bf_alert(key); this needs to be rethinked ;-)
+    //            }
+    //        }
+    //    });
+    //});
 
     function bf_update_list_item_number() {
         jQuery(".buddyforms_forms_builder ul").each(function () {
@@ -458,14 +519,14 @@ jQuery(document).ready(function (jQuery) {
         }
 
         if (trigger == 'none') {
-            alert('You have to select a trigger first.');
+            bf_alert('You have to select a trigger first.');
             return false;
         }
 
         // traverse all the required elements looking for an empty one
         jQuery("#post-status-mail-container li.bf_trigger_list_item").each(function () {
             if (jQuery(this).attr('id') == 'trigger' + trigger) {
-                alert('Trigger already exists');
+                bf_alert('Trigger already exists');
                 error = true;
             }
         })
@@ -480,7 +541,7 @@ jQuery(document).ready(function (jQuery) {
             success: function (data) {
 
                 if (data == 0) {
-                    alert('trigger already exists');
+                    bf_alert('trigger already exists');
                     return false;
                 }
                 jQuery('#no-trigger-post-status-mail-container').hide();

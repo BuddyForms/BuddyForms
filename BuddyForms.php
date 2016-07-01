@@ -217,7 +217,7 @@ class BuddyForms {
 
 			wp_enqueue_style( 'bootstrapcss', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
-
+			wp_enqueue_style (  'wp-jquery-ui-dialog');
 		}
 
 		// load the tk_icons
@@ -256,6 +256,7 @@ class BuddyForms {
 			wp_enqueue_script( 'jQuery' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-accordion' );
+			wp_enqueue_script( 'jquery-ui-dialog' );
 
 		}
 		wp_enqueue_script('tinymce');

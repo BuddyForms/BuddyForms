@@ -39,9 +39,11 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 	            </table>
 	        </div>
 	    ' );
+	}
+	// Start the form element sortable list
+	$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
 
-		// Start the form element sortable list
-		$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
+	if ( isset( $buddyform['form_fields'] ) ) {
 
 		// Loop all form elements
 		foreach ( $buddyform['form_fields'] as $field_id => $customfield ) {
@@ -89,6 +91,9 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="Add">
 			</div>
 			<div class="clear"></div>
+		</div>
+		<div id="formbuilder-action-select-modal" class="hidden">
+				<select id="bf_add_new_form_element_modal">' . buddyforms_form_builder_form_elements_select() . '</select>
 		</div>
 	' );
 
