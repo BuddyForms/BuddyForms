@@ -224,7 +224,6 @@ class BuddyForms {
 		wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 		wp_enqueue_style( 'admin_post_metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 
-
 	}
 
 	/**

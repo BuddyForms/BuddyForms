@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Adds a box to the main column on the Post and Page edit screens.
+ * Add the FormBuilder and Form Settings MetaBox to the edit screen
  */
 function buddyforms_add_meta_boxes() {
 	global $post;
@@ -12,7 +12,7 @@ function buddyforms_add_meta_boxes() {
 
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
+	//add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
 
 }
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' ,9999);
@@ -335,9 +335,10 @@ function buddyforms_hide_publishing_actions() {
 
 	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
 		<style type="text/css">
-			#misc-publishing-actions,
-			#minor-publishing-actions{
-				display:none;
+			.misc-pub-visibility,
+			.misc-pub-curtime,
+			.misc-pub-post-status{
+				display: none;
 			}
 			/*#message {*/
 				/*display: none;*/
@@ -379,9 +380,9 @@ function buddyforms_hide_publishing_actions() {
 		<?php
 	}
 }
-//add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
-//add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
-//add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
+add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
+add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
+add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
 
 
 function buddyforms_add_button_to_submit_box() {
@@ -404,7 +405,7 @@ function buddyforms_add_button_to_submit_box() {
 
 	}
 }
-add_action( 'post_submitbox_start', 'buddyforms_add_button_to_submit_box' );
+add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box' );
 
 function buddyforms_remove_slugdiv() {
 	remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
@@ -445,3 +446,16 @@ function buddyforms_export_form(){
 	}
 }
 add_action( 'admin_init', 'buddyforms_export_form' );
+
+// Remove other plugins scrips on the buddyforms view is they create a conflict
+add_action('media_buttons_context', 'buddyforms_dequeue_css_from_plugins', 100);
+function buddyforms_dequeue_css_from_plugins()  {
+	global $post;
+
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+
+	// Ninjaforms jQuery dialog is different from core and needs to get dequeued
+	wp_dequeue_style( "jquery-smoothness" );
+}

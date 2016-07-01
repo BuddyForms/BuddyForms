@@ -129,7 +129,7 @@ function buddyforms_form_builder_templates(){
 
 	?>
 	<div class="buddyforms_template">
-		<h5>You can add form fields from the sidebar or choose a pre-configured form template:</h5>
+		<h5>Choose a pre-configured form template or start a new one:</h5>
 
 		<?php foreach($buddyforms_templates as $key => $template) { ?>
 		<div class="bf-3-tile">
