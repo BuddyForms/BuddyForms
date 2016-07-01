@@ -379,9 +379,9 @@ function buddyforms_hide_publishing_actions() {
 		<?php
 	}
 }
-add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
-add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
-add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
+//add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
+//add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
+//add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
 
 
 function buddyforms_add_button_to_submit_box() {

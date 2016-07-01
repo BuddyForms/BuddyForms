@@ -1,5 +1,9 @@
 jQuery(document).ready(function (jQuery) {
 
+
+    //
+    // This is uncomment as I'm not sure if we should save the latest settings tab...
+    //
     //jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
     //    e.preventDefault();
     //    jQuery(this).tab('show');
@@ -15,7 +19,91 @@ jQuery(document).ready(function (jQuery) {
     //var hash = window.location.hash;
     //jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
 
-    jQuery(document.body).on('click', '.bf_form_template', function () {
+
+
+
+
+
+
+    jQuery(document.body).on('click', '#formbuilder-add-element', function () {
+
+
+
+        jQuery('.formbuilder-spinner').addClass('is-active');
+
+
+
+        var action = jQuery(this);
+        var post_id = bf_getUrlParameter('post');
+
+        if (post_id == undefined)
+            post_id = 0;
+
+        var fieldtype = jQuery('#bf_add_new_form_element').val();
+
+        var unique    = jQuery('#bf_add_new_form_element').find(':selected').data('unique')
+
+        var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
+
+        if (unique === 'unique') {
+            if (exist !== null && typeof exist === 'object' && exist.length > 0) {
+                alert('This element can only be added once into each form');
+                return false;
+            }
+        }
+
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_display_form_element",
+                "fieldtype": fieldtype,
+                "unique": unique,
+                "post_id": post_id
+            },
+            success: function (data) {
+                if (data == 'unique') {
+                    alert('This element can only be added once into each form');
+                    return false;
+                }
+
+                jQuery('.buddyforms_template').remove();
+
+                data = data.replace('accordion-body collapse', 'accordion-body in collapse');
+
+
+                jQuery('#sortable_buddyforms_elements').append(data);
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+
+                bf_update_list_item_number();
+
+                jQuery('#buddyforms_form_elements').removeClass('closed');
+                jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
+
+            },
+            error: function () {
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+                alert('Something went wrong ;-(sorry)');
+            }
+        });
+        return false;
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+
+
+
+        jQuery(document.body).on('click', '.bf_form_template', function () {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",

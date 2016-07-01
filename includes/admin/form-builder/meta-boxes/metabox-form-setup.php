@@ -32,10 +32,10 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	// Generate teh Pages Array
-	$attached_page_options = Array();
-	$attached_page_options['none'] = 'none';
+	$all_pages = Array();
+	$all_pages['none'] = 'none';
 	foreach ( $pages as $page ) {
-		$attached_page_options[ $page->ID ] = $page->post_title;
+		$all_pages[ $page->ID ] = $page->post_title;
 	}
 
 
@@ -43,6 +43,8 @@ function buddyforms_metabox_form_setup() {
 	$slug                       = $post->post_name;
 	$singular_name              = isset( $buddyform['singular_name'] )              ? stripslashes( $buddyform['singular_name'] )   : '';
 	$after_submit               = isset( $buddyform['after_submit'] )               ? $buddyform['after_submit']                    : 'display_message';
+	$after_submission_page      = isset( $buddyform['after_submission_page'] )      ? $buddyform['after_submission_page']           : 'false';
+	$after_submission_url       = isset( $buddyform['after_submission_url'] )       ? $buddyform['after_submission_url']            : '';
 	$post_type                  = isset( $buddyform['post_type'] )                  ? $buddyform['post_type']                       : 'false';
 
 	$message_text_default       = $post_type == 'false' ? 'Your Message has been Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
@@ -59,17 +61,43 @@ function buddyforms_metabox_form_setup() {
 	$list_posts_style           = isset( $buddyform['list_posts_style'] )           ? $buddyform['list_posts_style']                : 'list';
 
 
+
+
 	// Create The Form Array
 	$form_setup     = array();
 
 	//
 	// Form Settings General
 	//
-	$form_setup['General'][] = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
-		'display_message'    => 'Display After Submission Message',
-		'display_page'       => 'Display Page Contents',
-		'redirect'    => 'Redirect to url',
-	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
+	$element = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
+		'display_message'    => __('Display After Submission Message', 'buddyforms'),
+		'display_page'       => __('Display Page Contents', 'buddyforms'),
+		'redirect'           => __('Redirect to url', 'buddyforms'),
+	), array(
+		'value' => $after_submit,
+		'class' => 'bf_hidden_checkbox'
+	) );
+
+	$element->setAttribute( 'bf_hidden_checkbox', 'sadad' );
+	$form_setup['General'][] = $element;
+
+
+	// Attached Page
+	$element = new Element_Select( '<b>' . __( "After Submission Page", 'buddyforms' ) . '</b>', "buddyforms_options[after_submission_page]", $all_pages, array(
+		'value'     => $after_submission_page,
+		'shortDesc' => __('Select the Page from where the content gets displayed', 'buddyforms'),
+		'class'     => 'sadad'
+	) );
+
+	$element->setAttribute( 'hidden', 'sadad' );
+	$form_setup['General'][] = $element;
+
+	$form_setup['General'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
+		'value'     => $after_submission_url,
+		'shortDesc' => __('Enter a valid URL', 'buddyforms'),
+		'class'     => 'hidden'
+	) );
+
 
 	$form_setup['General'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
@@ -134,7 +162,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Edit Submissions'][] = new Element_HTML('<b> Let logged-in user see and manage there submissions</b>');
 
 	// Attached Page
-	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $attached_page_options, array(
+	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '
 	    Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
@@ -201,8 +229,17 @@ function buddyforms_metabox_form_setup() {
 					<div class="buddyforms_accordion_general">
 						<table class="wp-list-table widefat posts striped">
 							<tbody>
-							<?php foreach($fields as $field_key => $field ) { ?>
-								<tr id="row_form_title">
+							<?php foreach($fields as $field_key => $field ) {
+
+								$type  = $field->getAttribute( 'type' );
+								$class = $field->getAttribute( 'class' );
+
+
+								?>
+
+
+
+								<tr id="row_form_title" class="<?php echo $class ?>">
 									<th scope="row">
 										<label for="form_title"><?php echo $field->getLabel() ?></label>
 									</th>
