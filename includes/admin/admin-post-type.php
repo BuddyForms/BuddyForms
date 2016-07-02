@@ -10,9 +10,12 @@ function buddyforms_add_meta_boxes() {
 		return;
 	}
 
+	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-	//add_meta_box( 'buddyforms_form_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
+
+	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
+	bf_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10);
 
 }
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' ,9999);
@@ -389,22 +392,26 @@ function buddyforms_add_button_to_submit_box() {
 		<div id="buddyforms-actions" class="misc-pub-section">
 			<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
 				<div id="frontend-actions">
-					<h4>Frontend</h4>
+					<label for="button">Frontend</label>
 					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'Your Submissions', 'buddyforms' ) . '</a>
                     <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
 				</div>
 			<?php } if(isset($post->post_name) && $post->post_name != '') { ?>
 				<div id="admin-actions">
-					<h4>Admin</h4>
+					<label for="button">Admin</label>
 					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
 				</div>
 			<?php } ?>
 			<?php if($post->post_name) {?>
 				<div class="bf-shortcode">
 					<label for="bf-shortcode">Form Shortcode:</label>
-					<p id="bf-shortcode">The Form: [bf form_slug="<?php echo $post->post_name; ?>"]</p>
-					<p id="bf-shortcode">The Posts List: [bf form_slug="<?php echo $post->post_name; ?>"]</p>
-					<p id="bf-shortcode">The Posts List: [bf form_slug="<?php echo $post->post_name; ?>"]</p>
+					<div id="bf-shortcode">
+						<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+						<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+						<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+						<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+						<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+					</div>
 				</div>
 			<?php } ?>
 			<div class="clear"></div>
@@ -454,15 +461,3 @@ function buddyforms_export_form(){
 	}
 }
 add_action( 'admin_init', 'buddyforms_export_form' );
-
-// Remove other plugins scrips on the buddyforms view is they create a conflict
-add_action('media_buttons', 'buddyforms_dequeue_css_from_plugins', 20);
-function buddyforms_dequeue_css_from_plugins()  {
-	global $post;
-
-	if ( $post->post_type == 'buddyforms' ) {
-		// Ninjaforms jQuery dialog is different from core and needs to get dequeued
-		wp_dequeue_style( "jquery-smoothness" );
-	}
-
-}
