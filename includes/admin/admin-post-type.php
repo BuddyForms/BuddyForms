@@ -10,9 +10,12 @@ function buddyforms_add_meta_boxes() {
 		return;
 	}
 
+	add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
+
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	bf_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10);
@@ -24,6 +27,26 @@ add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
 	remove_all_actions( 'edit_page_form' );
 }, PHP_INT_MAX );
+
+
+function buddyforms_metabox_shortcodes(){
+	global $post;
+	if($post->post_name) { ?>
+	<div class="bf-shortcode">
+		<label for="bf-shortcode">Form Shortcode:</label>
+		<div id="bf-shortcode">
+			<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+			<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+			<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+			<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+			<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+		</div>
+	</div>
+<?php }
+}
+
+
+
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -403,18 +426,7 @@ function buddyforms_add_button_to_submit_box() {
 				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
 			</div>
 		<?php } ?>
-		<?php if($post->post_name) {?>
-			<div class="bf-shortcode">
-				<label for="bf-shortcode">Form Shortcode:</label>
-				<div id="bf-shortcode">
-					<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-					<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-					<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-					<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-					<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-				</div>
-			</div>
-		<?php } ?>
+
 		<div class="clear"></div>
 	</div>
 
