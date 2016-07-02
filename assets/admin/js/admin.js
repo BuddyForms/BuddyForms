@@ -149,7 +149,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery.each(data, function (i, val) {
                     switch (i) {
                         case 'html':
-                            jQuery('.buddyforms_template').replaceWith(val);
+                            jQuery('.buddyforms_forms_builder').replaceWith(val);
                             bf_update_list_item_number();
                             break;
                         case 'form_setup':

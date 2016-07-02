@@ -382,40 +382,41 @@ add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
 function buddyforms_add_button_to_submit_box() {
 	global $post;
 
-	if ( get_post_type( $post ) == 'buddyforms' ) {
+	if ( get_post_type( $post ) != 'buddyforms' )
+		return;
 
-		$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
-		$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
+	$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
+	$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
 
-		}
-		?>
-		<div id="buddyforms-actions" class="misc-pub-section">
-			<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
-				<div id="frontend-actions">
-					<label for="button">Frontend</label>
-					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'Your Submissions', 'buddyforms' ) . '</a>
-                    <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
+
+	?>
+	<div id="buddyforms-actions" class="misc-pub-section">
+		<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
+			<div id="frontend-actions">
+				<label for="button">Frontend</label>
+				<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new">' . __( 'Your Submissions', 'buddyforms' ) . '</a>
+                <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new">' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
+			</div>
+		<?php } if(isset($post->post_name) && $post->post_name != '') { ?>
+			<div id="admin-actions">
+				<label for="button">Admin</label>
+				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
+			</div>
+		<?php } ?>
+		<?php if($post->post_name) {?>
+			<div class="bf-shortcode">
+				<label for="bf-shortcode">Form Shortcode:</label>
+				<div id="bf-shortcode">
+					<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+					<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+					<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+					<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+					<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
 				</div>
-			<?php } if(isset($post->post_name) && $post->post_name != '') { ?>
-				<div id="admin-actions">
-					<label for="button">Admin</label>
-					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug='.$post->post_name.'">' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
-				</div>
-			<?php } ?>
-			<?php if($post->post_name) {?>
-				<div class="bf-shortcode">
-					<label for="bf-shortcode">Form Shortcode:</label>
-					<div id="bf-shortcode">
-						<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-						<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-						<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-						<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-						<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-					</div>
-				</div>
-			<?php } ?>
-			<div class="clear"></div>
-		</div>
+			</div>
+		<?php } ?>
+		<div class="clear"></div>
+	</div>
 
 <?php
 

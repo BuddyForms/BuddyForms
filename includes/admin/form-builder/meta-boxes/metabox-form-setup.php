@@ -159,10 +159,9 @@ function buddyforms_metabox_form_setup() {
 	//
 	// Edit Submissions
 	//
-	$form_setup['Edit Submissions'][] = new Element_HTML('<b> Let logged-in user see and manage there submissions</b>');
 
 	// Attached Page
-	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Page", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
+	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Let logged-in user see and manage there submissions ", 'buddyforms' ) . '</b>' . __( 'Page', 'buddyforms' ), "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '
 	    Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
