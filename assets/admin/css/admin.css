@@ -747,3 +747,7 @@ a.button.button-large.bf_button_action {
         min-height: 180px;
     }
 }
+
+input[readonly] {
+    cursor: pointer;
+}
