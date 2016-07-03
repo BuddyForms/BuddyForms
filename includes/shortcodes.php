@@ -10,7 +10,22 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'post_id'     => '',
 		'revision_id' => false,
 		'form_slug'   => '',
+		'slug'   => '',
+		'id'   => '',
 	), $args ) );
+
+
+	if(empty($form_slug))
+		$form_slug = $slug;
+
+	if(empty($form_slug) && !empty($id)){
+		$post = get_post($id);
+		$form_slug = $post->post_name;
+	}
+
+	$args['form_slug'] = $form_slug;
+	unset($args['slug']);
+	unset($args['id']);
 
 	ob_start();
 		buddyforms_create_edit_form( $args );
@@ -117,18 +132,35 @@ function buddyforms_the_loop( $args ) {
 	do_action( 'buddyforms_the_loop_end', $query_args );
 }
 
-add_shortcode( 'buddyforms_the_loop', 'buddyforms_the_loop' );
-add_shortcode( 'buddyforms_list_all', 'buddyforms_the_loop' );
+add_shortcode( 'buddyforms_the_loop', 'buddyforms_the_loop_shortcode' );
+add_shortcode( 'buddyforms_list_all', 'buddyforms_the_loop_shortcode' );
+add_shortcode( 'bf_user_posts_list', 'buddyforms_the_loop_shortcode' );
+add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
+
+
+//
+// buddyforms_the_loop_shortcode
+//
+function buddyforms_the_loop_shortcode($args){
+	ob_start();
+		buddyforms_the_loop($args);
+	$tmp = ob_get_clean();
+	return $tmp;
+}
+
 
 //
 // BuddyForms Schortcode Buttons
 //
 add_shortcode( 'buddyforms_nav', 'buddyforms_nav' );
+add_shortcode( 'bf_nav', 'buddyforms_nav' );
 function buddyforms_nav( $args ) {
 
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'separator' => ' | '
+		'separator' => ' | ',
+		'label_add'     => 'Add New',
+		'label_view'     => 'View',
 	), $args ) );
 
 	$tmp = buddyforms_button_view_posts( $args );
@@ -139,31 +171,33 @@ function buddyforms_nav( $args ) {
 }
 
 add_shortcode( 'buddyforms_button_view_posts', 'buddyforms_button_view_posts' );
+add_shortcode( 'bf_link_to_user_posts', 'buddyforms_button_view_posts' );
 function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label'     => 'View',
+		'label_view'     => 'View',
 	), $args ) );
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label, 'buddyforms' ) . ' </a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label_view, 'buddyforms' ) . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
 
 }
 
 add_shortcode( 'buddyforms_button_add_new', 'buddyforms_button_add_new' );
+add_shortcode( 'bf_link_to_form     ', 'buddyforms_button_add_new' );
 function buddyforms_button_add_new( $args ) {
 	global $buddyforms;
 
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label'     => 'Add New',
+		'label_add'     => 'Add New',
 	), $args ) );
 
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . __( $label, 'buddyforms' ) . '</a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . __( $label_add, 'buddyforms' ) . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 

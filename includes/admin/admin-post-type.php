@@ -10,6 +10,7 @@ function buddyforms_add_meta_boxes() {
 		return;
 	}
 
+
 	add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 
 	// Add the FormBuilder and the Form Setup Metabox
@@ -30,23 +31,28 @@ add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 
 
 function buddyforms_metabox_shortcodes(){
-	global $post;
-	if($post->post_name) { ?>
+	global $post; ?>
 	<div class="bf-shortcode">
-		<label for="bf-shortcode">Form Shortcode:</label>
 		<div id="bf-shortcode">
-			<p>The Form:       <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-			<p>User Posts List: <input type="text" value='[bf form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-			<p>Link to Form: <input type="text" value='[buddyforms_button_add_new form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-			<p>Link to Posts: <input type="text" value='[buddyforms_button_view_posts form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
-			<p>Navigation: <input type="text" value='[buddyforms_nav form_slug="<?php echo $post->post_name; ?>"]' disabled></p>
+
+			<label for="the-form"><?php _e('The Form:', 'buddyforms'); ?></label>
+			<input id="the-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf form_slug="<?php echo $post->post_name; ?>"]'>
+
+			<?php if($post->post_name) {  ?>
+				<label for="post-list"><?php _e('User Posts List', 'buddyforms'); ?></label>
+				<input id="post-list" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_user_posts_list form_slug="<?php echo $post->post_name; ?>"]'>
+
+				<label for="link-to-form"><?php _e('Link to Form', 'buddyforms'); ?></label>
+				<input id="link-to-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_form form_slug="<?php echo $post->post_name; ?>"]'>
+
+				<label for="link-to-posts"><?php _e('Link to Users Posts', 'buddyforms'); ?></label>
+				<input id="link-to-posts" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_user_posts form_slug="<?php echo $post->post_name; ?>"]'>
+			<?php } ?>
 		</div>
+		<p><a target="_blank" href="http://docs.buddyforms.com/article/141-shortcodes"><?php _e('List of all Available Shortcodes', 'buddyforms'); ?> </a></p>
 	</div>
-<?php }
+<?php
 }
-
-
-
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
