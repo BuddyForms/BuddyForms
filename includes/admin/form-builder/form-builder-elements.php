@@ -76,7 +76,7 @@ function buddyforms_display_form_element( $args ) {
 
 	$description                           = isset( $customfield['description'] ) ? stripslashes( $customfield['description'] ) : '';
 	$form_fields['general']['description'] = new Element_Textbox( '<b>' . __( 'Description', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array( 'value' => $description ) );
-	$form_fields['hidden']['type']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+	$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 	$validation_error_message                              = isset( $customfield['validation_error_message'] ) ? stripcslashes( $customfield['validation_error_message'] ) : __( 'This field is required.', 'buddyforms' );
 	$form_fields['validation']['validation_error_message'] = new Element_Textbox( '<b>' . __( 'Validation Error Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_error_message]", array( 'value' => $validation_error_message ) );
@@ -244,6 +244,8 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'title':
 			unset( $form_fields['general']['required'] );
+			unset( $form_fields['advanced']['slug'] );
+
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Title';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
@@ -276,6 +278,7 @@ function buddyforms_display_form_element( $args ) {
 			);
 			$form_fields['advanced']['content_opt_a'] = new Element_Checkbox( '<b>' . __( 'Turn off wp editor features', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array( 'value' => $post_content_options ) );
 
+			unset( $form_fields['advanced']['slug'] );
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_content' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
@@ -448,6 +451,8 @@ function buddyforms_display_form_element( $args ) {
 									<?php
 									$i ++;
 								}
+								if(!is_array($form_field))
+									_e('Please Save the form once for the form element to work.', 'buddyforms');
 								?>
 							</div>
 						</div>

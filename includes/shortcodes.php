@@ -187,7 +187,7 @@ function buddyforms_button_view_posts( $args ) {
 }
 
 add_shortcode( 'buddyforms_button_add_new', 'buddyforms_button_add_new' );
-add_shortcode( 'bf_link_to_form     ', 'buddyforms_button_add_new' );
+add_shortcode( 'bf_link_to_form', 'buddyforms_button_add_new' );
 function buddyforms_button_add_new( $args ) {
 	global $buddyforms;
 
