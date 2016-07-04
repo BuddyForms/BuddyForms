@@ -33,7 +33,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Generate teh Pages Array
 	$all_pages = Array();
-	$all_pages['none'] = 'none';
+	$all_pages['none'] = 'Select a Page to enable user post management';
 	foreach ( $pages as $page ) {
 		$all_pages[ $page->ID ] = $page->post_title;
 	}
@@ -67,7 +67,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup     = array();
 
 	//
-	// After Submission
+	// Submission
 	//
 	$element = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_message'    => __('Display After Submission Message', 'buddyforms'),
@@ -79,7 +79,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$element->setAttribute( 'bf_hidden_checkbox', 'sadad' );
-	$form_setup['After Submission'][] = $element;
+	$form_setup['Form Submission'][] = $element;
 
 
 	// Attached Page
@@ -90,16 +90,16 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$element->setAttribute( 'hidden', 'sadad' );
-	$form_setup['After Submission'][] = $element;
+	$form_setup['Form Submission'][] = $element;
 
-	$form_setup['After Submission'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
+	$form_setup['Form Submission'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
 		'value'     => $after_submission_url,
 		'shortDesc' => __('Enter a valid URL', 'buddyforms'),
 		'class'     => ''
 	) );
 
 
-	$form_setup['After Submission'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
+	$form_setup['Form Submission'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
 		'style'     => "width:100%",
 		'value'     => $after_submit_message_text,
@@ -108,7 +108,7 @@ function buddyforms_metabox_form_setup() {
 			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
 
-	$form_setup['After Submission'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
+	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
 		'shortDesc' => __( '', 'buddyforms' ),
 		'value'     => $bf_ajax
 	) );
@@ -118,7 +118,8 @@ function buddyforms_metabox_form_setup() {
 	// Create Content
 	//
 	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
-		'value'    => $post_type,
+		'value'     => $post_type,
+		'shortDesc' => 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>'
 	) );
 
 	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(
@@ -133,16 +134,6 @@ function buddyforms_metabox_form_setup() {
 	), array( 'value' => $comment_status ) );
 
 	$form_setup['Create Content'][] = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ), array( 'value' => $revision ) );
-
-	$form_setup['Create Content'][] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
-		'none'          => 'None',
-		'all'           => __( "All Edit Links", 'buddyforms' ),
-		'my-posts-list' => __( "Only in My Posts List", 'buddyforms' )
-	), array(
-		'view'      => 'vertical',
-		'value'     => $edit_link,
-		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' )
-	) );
 
 	$form_setup['Create Content'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_form'       => 'Display the Form and Message',
@@ -161,20 +152,23 @@ function buddyforms_metabox_form_setup() {
 	//
 
 	// Attached Page
-	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Let logged-in user see and manage there submissions ", 'buddyforms' ) . '</b>' . __( 'Page', 'buddyforms' ), "buddyforms_options[attached_page]", $all_pages, array(
+	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => '
-	    Associate a Page with a BuddyForm. The page you select will be used to build the form URLs:<br>
-	    Create: page_name/create/form_name<br>
-	    View: page_name/view/form_name<br>
-	    Edit: page_name/edit/form_name<br>
-		<br><br>
-	    Pro Tips:<br>
-	    Different BuddyForms can be associated with the same Page.<br>
-	    You don’t have to use the auto-generated URLs -- you can add a BuddyForm or list of Posts to any Page or Post using shortcodes.<br>'
+		'shortDesc' => 'The page you select will be used to create the endpoints to edit submissions. Its a powefull option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>'
+
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
+
+	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
+		'none'          => 'None',
+		'all'           => __( "All Edit Links", 'buddyforms' ),
+		'my-posts-list' => __( "Only in My Posts List", 'buddyforms' )
+	), array(
+		'view'      => 'vertical',
+		'value'     => $edit_link,
+		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' )
+	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
 		'display_posts_list' => 'Display the User\'s Post List',
@@ -194,7 +188,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Check if form elements exist and sort the form elements
 	if ( is_array( $form_setup ) ) {
-		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'After Submission', 'Create Content', 'Edit Submissions' ) );
+		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array( 'Form Submission', 'Create Content', 'Edit Submissions' ) );
 	}
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
