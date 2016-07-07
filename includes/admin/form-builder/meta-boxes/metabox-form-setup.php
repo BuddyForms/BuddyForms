@@ -85,7 +85,7 @@ function buddyforms_metabox_form_setup() {
 	// Attached Page
 	$element = new Element_Select( '<b>' . __( "After Submission Page", 'buddyforms' ) . '</b>', "buddyforms_options[after_submission_page]", $all_pages, array(
 		'value'     => $after_submission_page,
-		'shortDesc' => __('Select the Page from where the content gets displayed', 'buddyforms'),
+		'shortDesc' => __('Select the Page from where the content gets displayed. Will redirected to the page if ajax is disabled, otherwise display the content.', 'buddyforms'),
 		'class'     => 'sadad'
 	) );
 

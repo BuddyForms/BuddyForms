@@ -196,9 +196,20 @@ function bf_form_response_no_ajax() {
 		}
 
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
-
 			if ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_post' ) {
 				$permalink = get_permalink( $post_id );
+				$permalink = apply_filters( 'buddyforms_after_save_post_redirect', $permalink );
+				wp_redirect( $permalink, 302 );
+				exit;
+			}
+			if ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_page' ) {
+				$permalink = get_permalink( $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] );
+				$permalink = apply_filters( 'buddyforms_after_save_post_redirect', $permalink );
+				wp_redirect( $permalink, 302 );
+				exit;
+			}
+			if ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'redirect' ) {
+				$permalink = $buddyforms[ $_POST['form_slug'] ]['after_submission_url'];
 				$permalink = apply_filters( 'buddyforms_after_save_post_redirect', $permalink );
 				wp_redirect( $permalink, 302 );
 				exit;

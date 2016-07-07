@@ -55,6 +55,14 @@ function buddyforms_ajax_process_edit_post() {
 					$json['form_remove'] = 'true';
 					$json['form_notice'] = buddyforms_after_save_post_redirect( get_permalink( $args['post_id'] ) );
 					break;
+				case 'display_page':
+					$json['form_remove'] = 'true';
+					$json['form_notice'] = apply_filters('the_content', get_post_field('post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page']) );
+					break;
+				case 'redirect':
+					$json['form_remove'] = 'true';
+					$json['form_notice'] = $buddyforms[ $_POST['form_slug'] ]['after_submission_url'];
+					break;
 				case 'display_posts_list':
 					$json['form_remove'] = 'true';
 					$permalink           = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
