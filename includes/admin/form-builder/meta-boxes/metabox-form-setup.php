@@ -47,6 +47,8 @@ function buddyforms_metabox_form_setup() {
 	$after_submission_url       = isset( $buddyform['after_submission_url'] )       ? $buddyform['after_submission_url']            : '';
 	$post_type                  = isset( $buddyform['post_type'] )                  ? $buddyform['post_type']                       : 'false';
 
+	$form_type                  = isset( $buddyform['form_type'] )                  ? $buddyform['form_type']                       : 'contact';
+
 	$message_text_default       = $post_type == 'false' ? 'Your Message has been Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
 	$after_submit_message_text  = isset( $buddyform['after_submit_message_text'] )  ? $buddyform['after_submit_message_text']       : $message_text_default;
 
@@ -61,24 +63,26 @@ function buddyforms_metabox_form_setup() {
 	$list_posts_style           = isset( $buddyform['list_posts_style'] )           ? $buddyform['list_posts_style']                : 'list';
 
 
-
-
 	// Create The Form Array
 	$form_setup     = array();
 
 	//
 	// Submission
 	//
-	$element = new Element_Radio( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
-		'display_message'    => __('Display After Submission Message', 'buddyforms'),
+	$element = new Element_Select( '<b>' . __( "After Submission", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
+		'display_message'    => __('Display Message', 'buddyforms'),
+		'display_form'       => __('Display the Form and Message'),
 		'display_page'       => __('Display Page Contents', 'buddyforms'),
+		'display_post'       => __('Display the Post'),
+		'display_posts_list' => __('Display the User\'s Post List'),
 		'redirect'           => __('Redirect to url', 'buddyforms'),
+
 	), array(
 		'value' => $after_submit,
-		'class' => 'bf_hidden_checkbox'
+		'class' => 'bf-after-submission-action',
+		'id'    => 'bf-after-submission-action'
 	) );
-
-	$element->setAttribute( 'bf_hidden_checkbox', 'sadad' );
+	$element->setAttribute( 'data-hidden', 'display_page display_form display_message redirect');
 	$form_setup['Form Submission'][] = $element;
 
 
@@ -86,22 +90,20 @@ function buddyforms_metabox_form_setup() {
 	$element = new Element_Select( '<b>' . __( "After Submission Page", 'buddyforms' ) . '</b>', "buddyforms_options[after_submission_page]", $all_pages, array(
 		'value'     => $after_submission_page,
 		'shortDesc' => __('Select the Page from where the content gets displayed. Will redirected to the page if ajax is disabled, otherwise display the content.', 'buddyforms'),
-		'class'     => 'sadad'
+		'class'     => 'display_page',
 	) );
-
-	$element->setAttribute( 'hidden', 'sadad' );
 	$form_setup['Form Submission'][] = $element;
 
 	$form_setup['Form Submission'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
 		'value'     => $after_submission_url,
 		'shortDesc' => __('Enter a valid URL', 'buddyforms'),
-		'class'     => ''
+		'class'     => 'redirect'
 	) );
-
 
 	$form_setup['Form Submission'][]              = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'      => 3,
 		'style'     => "width:100%",
+		'class'     => 'display_message display_form',
 		'value'     => $after_submit_message_text,
 		'shortDesc' => $post_type == 'false'
 			? __('Add a after Submission Message', 'buddyforms')
@@ -135,10 +137,6 @@ function buddyforms_metabox_form_setup() {
 
 	$form_setup['Create Content'][] = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ), array( 'value' => $revision ) );
 
-	$form_setup['Create Content'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
-		'display_form'       => 'Display the Form and Message',
-		'display_post'       => 'Display the Post',
-	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
 	$form_setup['Create Content'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
 		'value'    => $singular_name,
@@ -154,7 +152,7 @@ function buddyforms_metabox_form_setup() {
 	// Attached Page
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => 'The page you select will be used to create the endpoints to edit submissions. Its a powefull option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>'
+		'shortDesc' => 'The page you select will be used to create the endpoints to edit submissions. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>'
 
 	) );
 
@@ -169,10 +167,6 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $edit_link,
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' )
 	) );
-
-	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "Overwrite \"General\" After Submission Options", 'buddyforms' ) . '</b>', "buddyforms_options[after_submit]", array(
-		'display_posts_list' => 'Display the User\'s Post List',
-	), array( 'value' => $after_submit, 'id' => 'after_submit_hidden' . $slug, 'class' => 'after_submit_hidden' ) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
 		'list_all_form' => 'List all Author Posts created with this Form',
@@ -193,14 +187,24 @@ function buddyforms_metabox_form_setup() {
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
 	?>
-
-	<div class="tabs tabbable tabs-left" id="buddyforms_formbuilder_settings">
+	<span class="bf-form-type-wrap"> —
+			<label for="bf-form-type-select">
+				<select id="bf-form-type-select" name="buddyforms_options[form_type]">
+					<optgroup label="Form Type">
+						<option <?php selected($form_type, 'contact') ?> value="contact">Contact Form</option>
+						<option <?php selected($form_type, 'registration') ?> value="registration">Registration Form</option>
+						<option <?php selected($form_type, 'post') ?> value="post">Post Form</option>
+					</optgroup>
+				</select>
+			</label>
+	</span>
+	<div class="tabs tabbable tabs-left">
 		<ul class="nav nav-tabs nav-pills">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title($tab); ?>
-			<li class="<?php echo $i == 0 ? 'active' : '' ?>"><a
+			<li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>"><a
 					href="#<?php echo $tab_slug; ?>"
 					data-toggle="tab"><?php echo $tab; ?></a>
 				</li><?php
@@ -220,7 +224,7 @@ function buddyforms_metabox_form_setup() {
 				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
 				     id="<?php echo $tab_slug; ?>">
 					<div class="buddyforms_accordion_general">
-						<table class="wp-list-table widefat posts striped">
+						<table class="wp-list-table widefat posts striped fixed">
 							<tbody>
 							<?php foreach($fields as $field_key => $field ) {
 

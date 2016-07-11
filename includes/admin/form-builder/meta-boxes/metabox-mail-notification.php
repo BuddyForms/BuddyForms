@@ -114,7 +114,7 @@ function buddyforms_mail_notification_form($trigger = false) {
 	), array(
 		'value'  => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : '',
 		'id'     => 'mail_submissions' . $trigger,
-		'class'  => 'mail_to_checkbox bf_hidden_multi_checkbox'
+		'class'  => 'mail_to_checkbox bf_sent_mail_to_multi_checkbox'
 	) );
 
 	$mail_to_cc = isset( $buddyform['mail_submissions'][$trigger]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][$trigger]['mail_to'] ) ? '' : 'hidden';

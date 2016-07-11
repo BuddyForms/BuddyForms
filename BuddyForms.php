@@ -238,17 +238,27 @@ class BuddyForms {
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-			|| $hook_suffix == 'buddyforms_page_bf_settings'
-			|| $hook_suffix == 'buddyforms_page_bf_submissions'
+			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
+			|| $hook_suffix == 'buddyforms-page-bf-settings'
+			|| $hook_suffix == 'buddyforms-page-bf-submissions'
 		) {
-			wp_register_script( 'buddyforms_admin_js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-deprecated-js', plugins_url( 'assets/admin/js/deprecated.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ) );
+
 			$admin_text_array = array(
 				'check'   => __( 'Check all', 'buddyforms' ),
 				'uncheck' => __( 'Uncheck all', 'buddyforms' )
 			);
-			wp_localize_script( 'buddyforms_admin_js', 'admin_text', $admin_text_array );
-			wp_enqueue_script( 'buddyforms_admin_js' );
+			wp_localize_script( 'buddyforms-admin-js', 'admin_text', $admin_text_array );
+			wp_enqueue_script( 'buddyforms-admin-js' );
+			wp_enqueue_script( 'buddyforms-admin-slugifies-js' );
+			wp_enqueue_script( 'buddyforms-admin-deprecated-js' );
+			wp_enqueue_script( 'buddyforms-admin-formbuilder-js' );
+			wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
+
 
 			wp_enqueue_script( 'bootstrapjs', plugins_url( 'assets/admin/js/bootstrap.js', __FILE__ ), array( 'jquery' ) );
 			wp_enqueue_script( 'jQuery' );

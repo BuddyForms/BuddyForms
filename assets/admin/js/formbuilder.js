@@ -1,0 +1,210 @@
+// On Load jQuery
+jQuery( function( $ ) {
+
+    // Type box.
+    $( '.bf-form-type-wrap' ).appendTo( '#buddyforms_form_setup .hndle span' );
+
+    $( function() {
+        // Prevent inputs in meta box headings opening/closing contents.
+        $( '#buddyforms_form_setup' ).find( '.hndle' ).unbind( 'click.postboxes' );
+
+        $( '#buddyforms_form_setup' ).on( 'click', '.hndle', function( event ) {
+
+            // If the user clicks on some form input inside the h3 the box should not be toggled.
+            if ( $( event.target ).filter( 'input, option, label, select' ).length ) {
+                return;
+            }
+
+            $( '#buddyforms_form_setup' ).toggleClass( 'closed' );
+        });
+    });
+});
+jQuery(document).ready(function (jQuery) {
+    //
+    // Add the value selected in the modal to the form element select box and trigger the change event to add the new form element to the sortable list
+    //
+    jQuery(document.body).on('change', '#bf_add_new_form_element_modal', function () {
+        jQuery('#formbuilder-action-select-modal').dialog("close");
+        jQuery('#bf_add_new_form_element').val(jQuery('#bf_add_new_form_element_modal').val());
+        jQuery( "#formbuilder-add-element" ).trigger( "click" );
+    });
+
+    // Helper Function to use dialog instead of alert
+    function bf_alert(alert_message){
+        jQuery('<div></div>').dialog({
+            modal: true,
+            title: "Info",
+            open: function() {
+                jQuery(this).html(alert_message);
+            },
+            buttons: {
+                Ok: function() {
+                    jQuery( this ).dialog( "close" );
+                }
+            }
+        });
+    }
+
+    //
+    // Add new form element to the form builder sortable list
+    //
+    jQuery(document.body).on('click', '#formbuilder-add-element', function () {
+
+        jQuery('.formbuilder-spinner').addClass('is-active');
+
+        var action = jQuery(this);
+        var post_id = bf_getUrlParameter('post');
+
+        if (post_id == undefined)
+            post_id = 0;
+
+        var fieldtype = jQuery('#bf_add_new_form_element').val();
+
+        if (fieldtype === 'none') {
+            jQuery('#bf_add_new_form_element_modal').val('none')
+
+            jQuery('#formbuilder-action-select-modal').dialog({
+                title: "Please Select a Field Type",
+                height: 240,
+                modal: true,
+            });
+            jQuery('.formbuilder-spinner').removeClass('is-active');
+            return false;
+        }
+
+        var unique    = jQuery('#bf_add_new_form_element').find(':selected').data('unique');
+        var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
+
+        if (unique === 'unique') {
+            if (exist !== null && typeof exist === 'object' && exist.length > 0) {
+                bf_alert('This element can only be added once into each form');
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+                return false;
+            }
+        }
+
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_display_form_element",
+                "fieldtype": fieldtype,
+                "unique": unique,
+                "post_id": post_id
+            },
+            success: function (data) {
+                if (data == 'unique') {
+                    bf_alert('This element can only be added once into each form');
+                    return false;
+                }
+
+                jQuery('.buddyforms_template').remove();
+
+                data = data.replace('accordion-body collapse', 'accordion-body in collapse');
+
+                jQuery('#sortable_buddyforms_elements').append(data);
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+
+                bf_update_list_item_number();
+
+                jQuery('#buddyforms_form_elements').removeClass('closed');
+                jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
+
+            },
+            error: function () {
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
+            }
+        });
+        return false;
+
+    });
+
+    //
+    // Load the Form From Template
+    //
+    jQuery(document.body).on('click', '.bf_form_template', function () {
+        jQuery.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_form_template",
+                "template": jQuery(this).data("template"),
+            },
+            success: function (data) {
+
+                console.log(data);
+
+                jQuery.each(data, function (i, val) {
+                    switch (i) {
+                        case 'html':
+                            jQuery('.buddyforms_forms_builder').replaceWith(val);
+                            bf_update_list_item_number();
+                            break;
+                        case 'form_setup':
+                            jQuery.each(val, function (i2, form_setup) {
+                                jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                                jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                            });
+                            break;
+                        default:
+                            bf_alert(val);
+                    }
+
+                });
+
+            },
+            error: function () {
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
+            }
+        });
+        return false;
+
+    });
+    //
+    // Generate the field slug from the label
+    //
+    jQuery('.buddyforms_forms_builder').on('blur', '.use_as_slug', function () {
+
+        var field_name = jQuery(this).val();
+        if (field_name === '')
+            return;
+
+        var field_id = jQuery(this).attr('data');
+        if (field_id === '')
+            return;
+
+        var field_slug_val = jQuery('tr .slug' + field_id).val();
+
+
+        if (field_slug_val === '') {
+            jQuery('tr .slug' + field_id).val(slug(field_name, {lower: true}));
+        }
+        jQuery(this).unbind('blur');
+    });
+});

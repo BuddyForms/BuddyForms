@@ -603,7 +603,7 @@ a.button.button-large.bf_button_action {
 
 
 
-/*.checkbox .bf_hidden_multi_checkbox {*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox {*/
     /*margin:4px;*/
     /*background-color:#888888;*/
     /*border-radius:4px;*/
@@ -613,7 +613,7 @@ a.button.button-large.bf_button_action {
 /*}*/
 
 
-/*.checkbox .bf_hidden_multi_checkbox:hover {*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox:hover {*/
     /*margin:4px;*/
     /*background-color:#EFEFEF;*/
     /*border-radius:4px;*/
@@ -623,23 +623,23 @@ a.button.button-large.bf_button_action {
     /*color:red;*/
 /*}*/
 
-/*.checkbox .bf_hidden_multi_checkbox {*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox {*/
     /*float:left;*/
     /*width:4.0em;*/
 /*}*/
 
-/*.checkbox .bf_hidden_multi_checkbox input + span{*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox input + span{*/
     /*text-align:center;*/
     /*padding:3px 0px;*/
     /*display:block;*/
 /*}*/
 
-/*.checkbox .bf_hidden_multi_checkbox input {*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox input {*/
     /*position:absolute;*/
     /*top:-20px;*/
 /*}*/
 
-/*.checkbox .bf_hidden_multi_checkbox  input:checked + span {*/
+/*.checkbox .bf_sent_mail_to_multi_checkbox  input:checked + span {*/
     /*background-color:#911;*/
     /*color:#fff;*/
 
@@ -750,4 +750,39 @@ a.button.button-large.bf_button_action {
 
 input[readonly] {
     cursor: pointer;
+}
+
+
+#buddyforms_form_setup .hndle {
+    padding: 10px;
+}
+
+#buddyforms_form_setup .hndle span span {
+    display: inline;
+    line-height: inherit;
+    vertical-align: baseline;
+}
+
+#buddyforms_form_setup .hndle label {
+    padding-right: 1em;
+    font-size: 12px;
+    vertical-align: baseline;
+}
+
+#buddyforms_form_setup .hndle input, #buddyforms-form-setup .hndle select {
+    margin: -3px 0 0 .5em;
+    vertical-align: middle;
+}
+
+#bf-form-type-select {
+    margin: -3px 0 0 .5em !important;
+    vertical-align: middle !important;
+    width: 200px !important;
+    height: 21px !important;
+    line-height: 12px !important;
+    padding: 24px !important;
+    vertical-align: top !important;
+    font-size: 12px !important;
+    margin-bottom: 2px !important;
+    margin-top: 1px !important;
 }
