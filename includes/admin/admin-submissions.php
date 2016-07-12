@@ -1,9 +1,17 @@
 <?php
 
 function buddyforms_create_submissions_page()  {
-
+	add_submenu_page(
+		'edit.php?post_type=buddyforms',
+		'BuddyForms Wizard',
+		'Form Wizard',
+		'manage_options',
+		'post-new.php?post_type=buddyforms&wizard=1'
+	);
 	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'bf_submissions_screen' );
 	add_action( "load-$hook", 'bf_submissions_add_options' );
+
+
 }
 
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );

@@ -15,7 +15,14 @@ var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
         }
     }
 };
-
+// Update ths list number 1,2,3,...
+function bf_update_list_item_number() {
+    jQuery(".buddyforms_forms_builder ul").each(function () {
+        jQuery(this).children("li").each(function (t) {
+            jQuery(this).find("td.field_order .circle").first().html(t + 1)
+        })
+    })
+}
 jQuery(document).ready(function (jQuery) {
 
     //
@@ -184,14 +191,7 @@ jQuery(document).ready(function (jQuery) {
         return false;
     });
 
-    // Update ths list number 1,2,3,...
-    function bf_update_list_item_number() {
-        jQuery(".buddyforms_forms_builder ul").each(function () {
-            jQuery(this).children("li").each(function (t) {
-                jQuery(this).find("td.field_order .circle").first().html(t + 1)
-            })
-        })
-    }
+
     bf_update_list_item_number();
 
     jQuery(document).on('mousedown', '.bf_list_item', function () {
@@ -212,8 +212,7 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    jQuery('#mail_notification_add_new').click(function (e) {
-
+    jQuery('#mail_notification_add_new').live('click', function() {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",

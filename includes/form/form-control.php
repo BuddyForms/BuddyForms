@@ -64,6 +64,9 @@ function buddyforms_process_post( $args = Array() ) {
 	} elseif ( $post_id != 0 && current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 		$user_can_edit = true;
 	}
+	if( isset($buddyforms[$form_slug]['public_submit']) && $buddyforms[$form_slug]['public_submit'][0] == 'public_submit' ){
+		$user_can_edit = true;
+	}
 	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
 	if ( $user_can_edit == false ) {
 		$args = array(

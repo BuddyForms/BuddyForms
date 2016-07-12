@@ -1,15 +1,15 @@
 <?php
 
 function buddyforms_metabox_form_elements($post, $buddyform = '') {
-	global $post, $buddyform;
+	global $post;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
-	if(!$buddyform){
-		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-	}
+
+	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+
 
 	// Generate the form slug from the post name
 	$form_slug = $post->post_name;
@@ -86,7 +86,7 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 
 			<div id="formbuilder-action-add">
 				<span class="formbuilder-spinner spinner"></span>
-				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="Add Field">
+				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="+ Add Field">
 			</div>
 			<div id="formbuilder-action-select">
 				<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>

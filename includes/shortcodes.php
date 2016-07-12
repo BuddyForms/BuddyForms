@@ -47,7 +47,6 @@ function buddyforms_the_loop( $args ) {
 
 	if ( ! is_user_logged_in() ) :
 		buddyforms_login_form();
-
 		return;
 	endif;
 
@@ -55,12 +54,22 @@ function buddyforms_the_loop( $args ) {
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'form_slug'   => '',
+		'id'   => '',
 		'post_parent' => 0
 	), $args ) );
 
-	if ( ! isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
-		return;
+
+	if(empty($form_slug) && !empty($id)){
+		$post = get_post($id);
+		$form_slug = $post->post_name;
 	}
+	$args['form_slug'] = $form_slug;
+	unset($args['id']);
+
+
+//	if ( ! isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
+//		return;
+//	}
 
 	if ( empty( $post_type ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];

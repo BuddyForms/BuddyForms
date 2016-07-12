@@ -163,12 +163,14 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-metabox.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-wizard.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-mce-editor-button.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-shortcodes.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php' );
@@ -244,6 +246,7 @@ class BuddyForms {
 		) {
 			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ) );
+			wp_register_script( 'buddyforms-admin-wizard-js', plugins_url( 'assets/admin/js/wizard.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-deprecated-js', plugins_url( 'assets/admin/js/deprecated.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ) );
@@ -255,12 +258,14 @@ class BuddyForms {
 			wp_localize_script( 'buddyforms-admin-js', 'admin_text', $admin_text_array );
 			wp_enqueue_script( 'buddyforms-admin-js' );
 			wp_enqueue_script( 'buddyforms-admin-slugifies-js' );
+			wp_enqueue_script( 'buddyforms-admin-wizard-js' );
 			wp_enqueue_script( 'buddyforms-admin-deprecated-js' );
 			wp_enqueue_script( 'buddyforms-admin-formbuilder-js' );
 			wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
-
+			wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
 			wp_enqueue_script( 'bootstrapjs', plugins_url( 'assets/admin/js/bootstrap.js', __FILE__ ), array( 'jquery' ) );
+
 			wp_enqueue_script( 'jQuery' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-accordion' );
@@ -274,7 +279,10 @@ class BuddyForms {
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
 
-			wp_enqueue_media();
+
+
+
+		wp_enqueue_media();
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 
 

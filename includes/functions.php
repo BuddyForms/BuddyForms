@@ -241,6 +241,10 @@ function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
 
 function bf_post_entry_actions($form_slug){
 	global $buddyforms;
+
+	if($buddyforms[$form_slug]['attached_page'] == 'none')
+		return;
+
 	?>
 	<ul class="edit_links">
 		<?php

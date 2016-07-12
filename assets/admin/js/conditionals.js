@@ -1,45 +1,45 @@
 jQuery(document).ready(function (jQuery) {
 
-// Check the form type and only display the relevant form setup tabs
+    // Check the form type and only display the relevant form setup tabs
     from_setup_type(jQuery('#bf-form-type-select').val());
 
-//
-//Function to show hide form setup tabs navigation
-//
+    //
+    //Function to show hide form setup tabs navigation
+    //
     function from_setup_type(value){
         if(value == 'post') {
             jQuery('.bf-after-submission-action option[value=display_form]').show();
             jQuery('.bf-after-submission-action option[value=display_post]').show();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
-            jQuery('.create-content, .edit-submissions, .permission').show();
+            jQuery('.create-content, .edit-submissions').show();
         } else {
             jQuery('.bf-after-submission-action option[value=display_form]').hide();
             jQuery('.bf-after-submission-action option[value=display_post]').hide();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').hide();
-            jQuery('.create-content, .edit-submissions, .permission').hide();
+            jQuery('.create-content, .edit-submissions').hide();
         }
     }
 
-// Form Type Select listener for the on change event
+    // Form Type Select listener for the on change event
     jQuery(document.body).on('change', '#bf-form-type-select', function () {
         from_setup_type(jQuery(this).val());
     });
 
-//
-// On Change event for the after submission action select box
-//
+    //
+    // On Change event for the after submission action select box
+    //
     jQuery(document.body).on('change', '.bf-after-submission-action', function () {
         after_submission_action(jQuery(this));
     });
 
-// Trigger the change event after page load to load refresh the ui and show hide options
+    // Trigger the change event after page load to load refresh the ui and show hide options
     jQuery('select#bf-after-submission-action').change();
 
 
-//
-// after_submission_action will show/hide form elements
-// WORK IN PROCESS!!!!
-//
+    //
+    // after_submission_action will show/hide form elements
+    // WORK IN PROCESS!!!!
+    //
     function after_submission_action(this_input) {
 
         if(this_input == null){
@@ -63,9 +63,9 @@ jQuery(document).ready(function (jQuery) {
 
     }
 
-//
-// Show Hide Form Elements depend on a select input
-//
+    //
+    // Show Hide Form Elements depend on a select input
+    //
     jQuery(document.body).on('change', '.bf_hidden_select', function () {
 
         bf_hidden_select(jQuery(this));

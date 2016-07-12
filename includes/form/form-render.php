@@ -38,6 +38,10 @@ function buddyforms_form_html( $args ) {
 		$user_can_edit = true;
 	}
 
+	if( isset($buddyforms[$form_slug]['public_submit']) && $buddyforms[$form_slug]['public_submit'][0] == 'public_submit' ){
+		$user_can_edit = true;
+	}
+
 	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
 
 	if ( $user_can_edit == false ) {
@@ -65,12 +69,11 @@ function buddyforms_form_html( $args ) {
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
 
-	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
-
-	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
-	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
-	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
-	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );
+	$form->addElement( new Element_Hidden( "redirect_to" , $redirect_to ) );
+	$form->addElement( new Element_Hidden( "post_id"     , $post_id ) );
+	$form->addElement( new Element_Hidden( "revision_id" , $revision_id ) );
+	$form->addElement( new Element_Hidden( "post_parent" , $post_parent ) );
+	$form->addElement( new Element_Hidden( "form_slug"   , $form_slug ) );
 	$form->addElement( new Element_Hidden( "bf_post_type", $post_type ) );
 
 	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
