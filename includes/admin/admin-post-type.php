@@ -15,7 +15,7 @@ function buddyforms_add_meta_boxes() {
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
-	add_meta_box( 'buddyforms_metabox_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
+//	add_meta_box( 'buddyforms_metabox_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
 
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
