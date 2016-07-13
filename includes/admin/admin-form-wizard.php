@@ -20,8 +20,6 @@ function buddyforms_form_builder_wizard_types(){
 
 	?>
 	<div class="buddyforms_wizard_types">
-		<h5>Choose a Form Type</h5>
-
 		<?php foreach($buddyforms_wizard_types as $key => $template) { ?>
 			<div class="bf-3-tile">
 				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
@@ -48,9 +46,9 @@ function buddyforms_form_builder_wizard_elements() {
 	$type = $_POST['type'];
 //	echo 'type';
 
-	$allowed_fields['contact'] = array('Basic','Contact Fields','Extra Fields');
-	$allowed_fields['registration'] = array('Basic','Contact Fields','Registration Fields','Extra Fields');
-	$allowed_fields['post'] = array('Basic','Contact Fields','Registration Fields','Post Fields','Extra Fields');
+	$allowed_fields['contact'] = array('basic','contact','extra');
+	$allowed_fields['registration'] = array('basic','contact','registration','extra');
+	$allowed_fields['post'] = array('basic','contact','registration','post','extra');
 
 
 //	echo $type;
@@ -60,66 +58,7 @@ function buddyforms_form_builder_wizard_elements() {
 //	echo '</pre>';
 
 
-	$elements_select_options = array(
-		__('Basic', 'buddyforms')   => array(
-			'text'          => __( 'Text', 'buddyforms' ),
-			'textarea'      => __( 'Textarea', 'buddyforms' ),
-			'dropdown'      => __( 'Dropdown', 'buddyforms' ),
-			'radiobutton'   => __( 'Radiobutton', 'buddyforms' ),
-			'checkbox'      => __( 'Checkbox', 'buddyforms' ),
-		),
-		__('Post Fields', 'buddyforms') => array(
-			'title' => array(
-				'label'     => __( 'Title', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'content'   => array(
-				'label'     => __( 'Content', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'taxonomy'  => array(
-				'label'     => __( 'Taxonomy', 'buddyforms' ),
-			),
-			'comments'  => array(
-				'label'     => __( 'Comments', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'status'    => array(
-				'label'     => __( 'Post Status', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'featured_image'    => array(
-				'label'     => __( 'Featured Image', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-		),
-		__('Contact Fields', 'buddyforms')   => array(
-			'text'      => __( 'Name', 'buddyforms' ),
-			'link'      => __( 'Link', 'buddyforms' ),
-			'mail'      => __( 'Mail', 'buddyforms' ),
-		),
-		__('Registration Fields', 'buddyforms') => array(
-			'login' => array(
-				'label'     => __( 'Login Form', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'registration'   => array(
-				'label'     => __( 'Registration', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'recaptcha'  => array(
-				'label'     => __( 'reCAPTCHA', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-		),
-		__('Extra Fields', 'buddyforms') => array(
-			'file'      => __( 'File', 'buddyforms' ),
-			'hidden'    => __( 'Hidden', 'buddyforms' ),
-			'number'    => __( 'Number', 'buddyforms' ),
-			'html'      => __( 'HTML', 'buddyforms' ),
-			'date'      => __( 'Date', 'buddyforms' ),
-		)
-	);
+	$elements_select_options = bf_form_elements_select_options();
 
 
 //	echo '<pre>';
@@ -138,8 +77,8 @@ function buddyforms_form_builder_wizard_elements() {
 	// Loop The form elements array and add the options to the select box
 	if(is_array($elements_select_options_new)){
 		foreach($elements_select_options_new as $optgroup_label => $optgroup){
-			$el_links .= '<h5>' . $optgroup_label . '</h5>';
-			foreach($optgroup as $es_val => $es_label){
+			$el_links .= '<h5>' . $optgroup['label'] . '</h5>';
+			foreach($optgroup['fields'] as $es_val => $es_label){
 
 				if( is_array($es_label) ){
 					$el_links .= '<a href="#" class="bf_add_element_action" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';

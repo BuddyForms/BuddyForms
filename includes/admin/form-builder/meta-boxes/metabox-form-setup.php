@@ -121,7 +121,8 @@ function buddyforms_metabox_form_setup() {
 	//
 	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
 		'value'     => $post_type,
-		'shortDesc' => 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>'
+		'shortDesc' => 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>',
+		'id'        => 'form_post_type',
 	) );
 
 	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(

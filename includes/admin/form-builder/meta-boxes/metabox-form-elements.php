@@ -153,70 +153,7 @@ function buddyforms_form_builder_templates(){
 // generate the form builder form elements select options
 //
 function buddyforms_form_builder_form_elements_select(){
-	// Create the form elements array
-	$elements_select_options = array(
-		__('Basic', 'buddyforms')   => array(
-			'text'          => __( 'Text', 'buddyforms' ),
-			'textarea'      => __( 'Textarea', 'buddyforms' ),
-			'dropdown'      => __( 'Dropdown', 'buddyforms' ),
-			'radiobutton'   => __( 'Radiobutton', 'buddyforms' ),
-			'checkbox'      => __( 'Checkbox', 'buddyforms' ),
-		),
-		__('Post Fields', 'buddyforms') => array(
-			'title' => array(
-				'label'     => __( 'Title', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'content'   => array(
-				'label'     => __( 'Content', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'taxonomy'  => array(
-				'label'     => __( 'Taxonomy', 'buddyforms' ),
-			),
-			'comments'  => array(
-				'label'     => __( 'Comments', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'status'    => array(
-				'label'     => __( 'Post Status', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'featured_image'    => array(
-				'label'     => __( 'Featured Image', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-		),
-		__('Contact Fields', 'buddyforms')   => array(
-			'text'      => __( 'Name', 'buddyforms' ),
-			'link'      => __( 'Link', 'buddyforms' ),
-			'mail'      => __( 'Mail', 'buddyforms' ),
-		),
-		__('Registration Fields', 'buddyforms') => array(
-			'login' => array(
-				'label'     => __( 'Login Form', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'registration'   => array(
-				'label'     => __( 'Registration', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-			'recaptcha'  => array(
-				'label'     => __( 'reCAPTCHA', 'buddyforms' ),
-				'unique'    => 'unique'
-			),
-		),
-		__('Extra Fields', 'buddyforms') => array(
-			'file'      => __( 'File', 'buddyforms' ),
-			'hidden'    => __( 'Hidden', 'buddyforms' ),
-			'number'    => __( 'Number', 'buddyforms' ),
-			'html'      => __( 'HTML', 'buddyforms' ),
-			'date'      => __( 'Date', 'buddyforms' ),
-		)
-	);
-
-	// Allow others to filter the array
-	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );
+	$elements_select_options = bf_form_elements_select_options();
 
 	// Add a default value
 	$el_sel_options = '<option value="none">Select Field Type</option>';
@@ -224,8 +161,8 @@ function buddyforms_form_builder_form_elements_select(){
 	// Loop The form elements array and add the options to the select box
 	if(is_array($elements_select_options)){
 		foreach($elements_select_options as $optgroup_label => $optgroup){
-			$el_sel_options .= '<optgroup label="' . $optgroup_label . '">';
-			foreach($optgroup as $es_val => $es_label){
+			$el_sel_options .= '<optgroup label="' . $optgroup['label'] . '">';
+			foreach($optgroup['fields'] as $es_val => $es_label){
 				if( is_array($es_label) ){
 					$el_sel_options .= '<option data-unique="' . $es_label['unique'] . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
 				} else {
