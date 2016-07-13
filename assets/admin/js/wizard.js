@@ -4,51 +4,73 @@ jQuery(window).bind("load", function () {
 jQuery(document).ready(function (jQuery) {
 
 
-
     var wizard = bf_getUrlParameter('wizard');
+    var type   = bf_getUrlParameter('type');
 
     // Get out of here if not the wizard view
-    if(wizard == null){
+    if (wizard == null) {
         return false;
     }
 
-    // Grab all usable and hide the rest
+
     if(wizard != null){
-
         jQuery('#post, #postbox-container-1, #postbox-container-2').hide();
-        var title                       = jQuery( '#post-body-content' );
-        var publishing_action           = jQuery( '#publishing-action' );
-        var buddyforms_form_elements    = jQuery( '#buddyforms_form_elements' );
-        var buddyforms_form_type_select = jQuery( '#bf-form-type-select' );
-        var buddyforms_template         = jQuery( '.buddyforms_template' );
-        var buddyforms_metabox_sidebar  = jQuery( '#buddyforms_metabox_sidebar' );
-        var buddyforms_notification     = jQuery( '#notification' );
-        var buddyforms_permission       = jQuery( '#permission' );
+        var title = jQuery('#post-body-content');
+        var publishing_action = jQuery('#publishing-action');
+        var buddyforms_form_elements = jQuery('#buddyforms_form_elements');
+        var buddyforms_form_type_select = jQuery('#bf-form-type-select');
+        var buddyforms_template = jQuery('.buddyforms_template');
+        var buddyforms_metabox_sidebar = jQuery('#buddyforms_metabox_sidebar');
+        var buddyforms_notification = jQuery('#notification');
+        var buddyforms_permission = jQuery('#permission');
 
+    }
+
+
+    jQuery(document.body).on('click', '.bf_wizard_types', function () {
+        URL  = document.URL;
+        type = jQuery(this).attr('data-type');
+        URL = URL.replace('wizard=1','wizard=2&type=' + type);
+        window.location = URL;
+    });
+
+
+
+
+    // STEP 1 Name your form
+    if(wizard == 1){
+        select_form_type();
+    }
+
+    // STEP 1 Name your form
+    if(wizard == 2){
+        start_wizard();
+    }
+
+    function select_form_type(){
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
             data: {"action": "buddyforms_form_builder_wizard_types"},
             success: function (data) {
-
-                jQuery('#poststuff').html(data);
                 jQuery('#post').show();
+                jQuery('#poststuff').html('<h2>BuddyForms Form Wizard</h2>');
+                jQuery( data ).appendTo( '#poststuff' );
+
+
             }
         });
-
     }
 
-
-    // STEP 1 Name your form
-    if(wizard == 1){
-
+    function start_wizard(){
+        jQuery('#post').show();
         jQuery('#poststuff').html('<h2>BuddyForms Form Wizard</h2>');
         //jQuery( title ).appendTo( '#poststuff' );
         //jQuery( '<div id="bf-hooker"></div>' ).appendTo( '#poststuff' );
         //jQuery( '<a href="#" data-wizard="2" class="wizard-next-step">Next Step</a>').appendTo( '#poststuff' );
 
 
-        jQuery( publishing_action ).appendTo( '#poststuff' );
+        jQuery( '<input id="bf-form-type-select" name="buddyforms_options[form_type]" type="hidden" value="'+type+'">' ).appendTo( '#poststuff' );
 
         jQuery( '<div id="hooker-steps"> ' +
             '<h3>Title</h3><section><div id="bf-hooker-name"></div></section>' +
@@ -58,12 +80,17 @@ jQuery(document).ready(function (jQuery) {
             '</div>').appendTo( '#poststuff' );
 
 
+
+
         jQuery( title ).appendTo( '#bf-hooker-name' );
         //jQuery( buddyforms_form_type_select ).appendTo( '#bf-hooker-name' );
         jQuery( buddyforms_metabox_sidebar ).appendTo( '#bf-hooker-formbuilder' );
         jQuery( buddyforms_form_elements ).appendTo( '#bf-hooker-formbuilder' );
         jQuery( buddyforms_notification ).appendTo( '#bf-hooker-notifications' );
         jQuery( buddyforms_permission ).appendTo( '#bf-hooker-permissions' );
+
+
+
 
 
         jQuery("#hooker-steps").steps({
@@ -129,7 +156,6 @@ jQuery(document).ready(function (jQuery) {
             onFinishing: function (event, currentIndex)
             {
                 var form = jQuery('#post');
-
                 // Submit form input
                 form.submit();
                 return true;

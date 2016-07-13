@@ -29,22 +29,6 @@ jQuery(document).ready(function (jQuery) {
         jQuery( "#formbuilder-add-element" ).trigger( "click" );
     });
 
-    // Helper Function to use dialog instead of alert
-    function bf_alert(alert_message){
-        jQuery('<div></div>').dialog({
-            modal: true,
-            title: "Info",
-            open: function() {
-                jQuery(this).html(alert_message);
-            },
-            buttons: {
-                Ok: function() {
-                    jQuery( this ).dialog( "close" );
-                }
-            }
-        });
-    }
-
     //
     // Add new form element to the form builder sortable list
     //

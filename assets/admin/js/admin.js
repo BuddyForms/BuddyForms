@@ -23,6 +23,21 @@ function bf_update_list_item_number() {
         })
     })
 }
+// Helper Function to use dialog instead of alert
+function bf_alert(alert_message){
+    jQuery('<div></div>').dialog({
+        modal: true,
+        title: "Info",
+        open: function() {
+            jQuery(this).html(alert_message);
+        },
+        buttons: {
+            Ok: function() {
+                jQuery( this ).dialog( "close" );
+            }
+        }
+    });
+}
 jQuery(document).ready(function (jQuery) {
 
     //

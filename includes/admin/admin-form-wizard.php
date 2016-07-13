@@ -26,7 +26,7 @@ function buddyforms_form_builder_wizard_types(){
 			<div class="bf-3-tile">
 				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
 				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-				<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>" class="bf_form_template btn" onclick=""><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
+				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types" ><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 			</div>
 		<?php } ?>
 
