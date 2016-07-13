@@ -132,6 +132,8 @@ jQuery(document).ready(function (jQuery) {
             transitionEffect: "slideLeft",
             autoFocus: true,
             enableFinishButton: true,
+            saveState: false,
+            startIndex: 0,
             onStepChanging: function (event, currentIndex, newIndex)
             {
 
@@ -166,6 +168,9 @@ jQuery(document).ready(function (jQuery) {
 
                            jQuery('#form_post_type').addClass('bf-error');
                            return false;
+                       } else {
+                           jQuery('#form_post_type').addClass('bf-ok');
+                           return true;
                        }
                     } else {
                         var error = false;
@@ -234,9 +239,8 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinished: function (event, currentIndex)
             {
-
                 // Submit form input
-                form.serialize().submit();
+                form.submit();
             }
         });
 
