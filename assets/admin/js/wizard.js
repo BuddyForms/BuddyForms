@@ -16,9 +16,7 @@ jQuery(document).ready(function (jQuery) {
 
         // get the parts
         var title = jQuery('#post-body-content');
-        var publishing_action = jQuery('#publishing-action');
         var buddyforms_form_elements = jQuery('#buddyforms_form_elements');
-        var buddyforms_form_type_select = jQuery('#bf-form-type-select');
         var buddyforms_template = jQuery('.buddyforms_template');
         var buddyforms_metabox_sidebar = jQuery('#buddyforms_metabox_sidebar');
         var buddyforms_notification = jQuery('#notification');
@@ -28,7 +26,7 @@ jQuery(document).ready(function (jQuery) {
 
     }
 
-    // Work around for now. change the url and reload. Would live to have this step just start the wizard. Help Needed
+    // Workaround for now. Change the url and reload. Would love to have this step just start the wizard. Help Needed from a guru
     jQuery(document.body).on('click', '.bf_wizard_types', function () {
         URL  = document.URL;
         type = jQuery(this).attr('data-type');
@@ -107,11 +105,12 @@ jQuery(document).ready(function (jQuery) {
         jQuery( buddyforms_template).hide()
 
 
+        alert(type);
         // Get all form elements for the selected form type and add them to the form builder
         jQuery.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {"action": "buddyforms_form_builder_wizard_elements"},
+            data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
             success: function (data) {
 
                 jQuery('#formbuilder-actions-wrap').html(data);
@@ -192,15 +191,16 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinishing: function (event, currentIndex)
             {
-                var form = jQuery('#post');
-                // Submit form input
-                form.submit();
+
+                event.submit();
                 return true;
             },
             onFinished: function (event, currentIndex)
             {
+
                 return true;
             }
         });
+
     }
 });

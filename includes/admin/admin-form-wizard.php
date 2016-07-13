@@ -26,7 +26,7 @@ function buddyforms_form_builder_wizard_types(){
 			<div class="bf-3-tile">
 				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
 				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types" ><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
+				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types"><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 			</div>
 		<?php } ?>
 
@@ -44,6 +44,20 @@ add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_bui
 
 
 function buddyforms_form_builder_wizard_elements() {
+
+	$type = $_POST['type'];
+//	echo 'type';
+
+	$allowed_fields['contact'] = array('Basic','Contact Fields','Extra Fields');
+	$allowed_fields['registration'] = array('Basic','Contact Fields','Registration Fields','Extra Fields');
+	$allowed_fields['post'] = array('Basic','Contact Fields','Registration Fields','Post Fields','Extra Fields');
+
+
+//	echo $type;
+//
+//	echo '<pre>';
+//	print_r($allowed_fields);
+//	echo '</pre>';
 
 
 	$elements_select_options = array(
@@ -107,14 +121,23 @@ function buddyforms_form_builder_wizard_elements() {
 		)
 	);
 
+
 //	echo '<pre>';
 //	print_r($elements_select_options);
 //	echo '</pre>';
 
+	foreach($allowed_fields[$type] as $key => $t){
+		$elements_select_options_new[$t] = $elements_select_options[$t];
+	}
+
+//	echo '<pre>';
+//	print_r($elements_select_options_new);
+//	echo '</pre>';
+
 
 	// Loop The form elements array and add the options to the select box
-	if(is_array($elements_select_options)){
-		foreach($elements_select_options as $optgroup_label => $optgroup){
+	if(is_array($elements_select_options_new)){
+		foreach($elements_select_options_new as $optgroup_label => $optgroup){
 			$el_links .= '<h5>' . $optgroup_label . '</h5>';
 			foreach($optgroup as $es_val => $es_label){
 
