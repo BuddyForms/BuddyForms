@@ -52,7 +52,7 @@ jQuery(document).ready(function (jQuery) {
             url: ajaxurl,
             data: {"action": "buddyforms_form_builder_wizard_types"},
             success: function (data) {
-                jQuery('#poststuff').html('<h2>Select the type of form you want to create to start the Wizard</h2>');
+                jQuery('#poststuff').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
                 jQuery( data ).appendTo( '#poststuff' );
                 jQuery('#post').show();
 
@@ -63,23 +63,20 @@ jQuery(document).ready(function (jQuery) {
     // Start the wizard
     function start_wizard(){
 
-        // Add a Label for the Wizard
-        jQuery( '#poststuff' ).html('<h2>BuddyForms "' + type.toUpperCase() + '" Form Wizard</h2>');
-
         // Add a hidden input with the form type for later usage
         jQuery( '<input id="bf-form-type-select" name="buddyforms_options[form_type]" type="hidden" value="'+type+'">' ).appendTo( '#poststuff' );
 
         // Create the html for the contact form steps
         jQuery(
             '<div id="hooker-steps"> ' +
-            '<h3>Title</h3><section><div id="bf-hooker-name"></div></section>' +
+            '<h3>Name Your Form</h3><section><div id="bf-hooker-name"></div></section>' +
             '</div>'
         ).appendTo( '#poststuff' );
 
         // Check if form type is post and add additional steps to the wizard
         if(type == 'post'){
-            jQuery('<h3>Create Content</h3><section><div id="bf-hooker-create-content"></div></section>' +
-                '<h3>Edit Submissions</h3><section><div id="bf-hooker-edit-submissions"></div></section>'
+            jQuery('<h3>Post Settings</h3><section><div id="bf-hooker-create-content"></div></section>' +
+                '<h3>Submissions</h3><section><div id="bf-hooker-edit-submissions"></div></section>'
             ).appendTo( '#hooker-steps' );
 
             // Add the form parts for create and edit to the wizard sections
@@ -88,8 +85,8 @@ jQuery(document).ready(function (jQuery) {
         }
 
         jQuery(
-            '<h3>Add Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
-            '<h3>Mail Notification</h3><section><div id="bf-hooker-notifications"></div></section>' +
+            '<h3>Add Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
+            '<h3>Mail Notifications</h3><section><div id="bf-hooker-notifications"></div></section>' +
             '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>'
         ).appendTo( '#hooker-steps' );
 
@@ -102,7 +99,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         // Change the Form Builder h2 Title
-        jQuery('#buddyforms_form_elements h2 span').html('Add Form Elements to your Form by clicking the form element link');
+        jQuery('#buddyforms_form_elements h2 span').html('Click or drag the form elements!');
 
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template).hide()
