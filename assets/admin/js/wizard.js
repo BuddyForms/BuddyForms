@@ -52,7 +52,7 @@ jQuery(document).ready(function (jQuery) {
             url: ajaxurl,
             data: {"action": "buddyforms_form_builder_wizard_types"},
             success: function (data) {
-                jQuery('#poststuff').html('<h2>Select the form type you want to create to start the correct Wizard</h2>');
+                jQuery('#poststuff').html('<h2>Select the type of form you want to create to start the Wizard</h2>');
                 jQuery( data ).appendTo( '#poststuff' );
                 jQuery('#post').show();
 
@@ -60,7 +60,7 @@ jQuery(document).ready(function (jQuery) {
         });
     }
 
-    // Ok now let us start the wizard
+    // Start the wizard
     function start_wizard(){
 
         // Add a Label for the Wizard
@@ -76,23 +76,21 @@ jQuery(document).ready(function (jQuery) {
             '</div>'
         ).appendTo( '#poststuff' );
 
-
-
-
         // Check if form type is post and add additional steps to the wizard
         if(type == 'post'){
             jQuery('<h3>Create Content</h3><section><div id="bf-hooker-create-content"></div></section>' +
-                '<h3>Attached Page</h3><section><div id="bf-hooker-edit-submissions"></div></section>'
-                ).appendTo( '#hooker-steps' );
+                '<h3>Edit Submissions</h3><section><div id="bf-hooker-edit-submissions"></div></section>'
+            ).appendTo( '#hooker-steps' );
 
             // Add the form parts for create and edit to the wizard sections
             jQuery( buddyforms_create_content ).appendTo( '#bf-hooker-create-content' );
             jQuery( buddyforms_edit_submissions ).appendTo( '#bf-hooker-edit-submissions' );
         }
 
-        jQuery('<h3>Add Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
-        '<h3>Mail Notification</h3><section><div id="bf-hooker-notifications"></div></section>' +
-        '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>'
+        jQuery(
+            '<h3>Add Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
+            '<h3>Mail Notification</h3><section><div id="bf-hooker-notifications"></div></section>' +
+            '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>'
         ).appendTo( '#hooker-steps' );
 
 
@@ -121,18 +119,17 @@ jQuery(document).ready(function (jQuery) {
             }
         });
 
-        // All should be in place show the wizard
+        // All should be in place. Show the wizard
         var form = jQuery('#post').show();
 
-        // Let us initial and  start the wizard Steps
-        // $("#example-basic").steps({
+        // Let us initial and start the wizard steps
         form.find('#hooker-steps' ).steps({
             headerTag: "h3",
             bodyTag: "section",
             transitionEffect: "slideLeft",
             autoFocus: true,
             enableFinishButton: true,
-            saveState: false,
+            saveState: true,
             startIndex: 0,
             onStepChanging: function (event, currentIndex, newIndex)
             {
@@ -192,9 +189,6 @@ jQuery(document).ready(function (jQuery) {
                             return false;
                         }
                     }
-
-
-
                     return true;
                 }
                 if(currentIndex == 2) {
@@ -234,7 +228,6 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinishing: function (event, currentIndex)
             {
-
                 return true;
             },
             onFinished: function (event, currentIndex)

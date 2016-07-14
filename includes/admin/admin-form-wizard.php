@@ -81,9 +81,9 @@ function buddyforms_form_builder_wizard_elements() {
 			foreach($optgroup['fields'] as $es_val => $es_label){
 
 				if( is_array($es_label) ){
-					$el_links .= '<a href="#" class="bf_add_element_action" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';
+					$el_links .= '<a href="#" class="bf_add_element_action button" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';
 				} else {
-					$el_links .= '<a href="#" class="bf_add_element_action" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ' ;
+					$el_links .= '<a href="#" class="bf_add_element_action button" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ' ;
 				}
 
 			}
