@@ -98,3 +98,22 @@ function buddyforms_form_builder_wizard_elements() {
 	die();
 }
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_elements', 'buddyforms_form_builder_wizard_elements' );
+
+add_action('save_post','redirect_page');
+function redirect_page(){
+	global $post;
+
+//	echo 'asdsad';
+//	print_r($_GET);
+
+	$type =  get_post_type();
+
+	switch ($type){
+		case "buddyforms":
+			$url=  admin_url().'post.php?post=' . $post->ID . '&action=edit&wizard=done';
+			wp_redirect($url);
+			exit;
+			break;
+	}
+}
+

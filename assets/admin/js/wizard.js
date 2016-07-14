@@ -15,7 +15,11 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#post, #postbox-container-1, #postbox-container-2').hide();
 
         // get the parts
+
         var title                       = jQuery('#post-body-content');
+        var submitdiv                  = jQuery('#submitdiv');
+        var buddyforms_form_shortcodes  = jQuery('#buddyforms_form_shortcodes');
+
         var buddyforms_form_elements    = jQuery('#buddyforms_form_elements');
         var buddyforms_template         = jQuery('.buddyforms_template');
         var buddyforms_metabox_sidebar  = jQuery('#buddyforms_metabox_sidebar');
@@ -36,13 +40,28 @@ jQuery(document).ready(function (jQuery) {
 
 
     // STEP 1 Select the Form Type
-    if(wizard == 1){
+    if( wizard == 1 ){
         select_form_type();
     }
 
     // STEP 2 Start the Wizard
-    if(wizard == 2){
+    if( wizard == 2 ){
         start_wizard();
+    }
+
+    if( wizard == 'done' ){
+
+
+        jQuery( '#poststuff' ).html( '<h2>High Five You have created the form ' + title.find('#title').val() +'</h2>' );
+
+        buddyforms_form_shortcodes.find('h2 span').html('Now can embed your form with Shortcodes in any Page or Post');
+        jQuery( buddyforms_form_shortcodes ).appendTo( '#poststuff' );
+
+
+
+        submitdiv.find('h2 span').html('Al available Form Actions - Preview your Form or Display  form Submissions ');
+        jQuery( submitdiv ).appendTo( '#poststuff' );
+        jQuery('#post').show();
     }
 
     // Get the Form Type Templates for Step 1
@@ -75,7 +94,8 @@ jQuery(document).ready(function (jQuery) {
 
         // Check if form type is post and add additional steps to the wizard
         if(type == 'post'){
-            jQuery('<h3>Post Settings</h3><section><div id="bf-hooker-create-content"></div></section>' +
+            jQuery(
+                '<h3>Post Settings</h3><section><div id="bf-hooker-create-content"></div></section>' +
                 '<h3>Submissions</h3><section><div id="bf-hooker-edit-submissions"></div></section>'
             ).appendTo( '#hooker-steps' );
 
@@ -102,7 +122,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#buddyforms_form_elements h2 span').html('Click or drag the form elements!');
 
         // Hide the normal form builder templates. They are not needed.
-        jQuery( buddyforms_template).hide()
+        jQuery( buddyforms_template ).hide()
 
         // Get all form elements for the selected form type and add them to the form builder
         jQuery.ajax({
