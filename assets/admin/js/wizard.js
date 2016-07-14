@@ -52,14 +52,14 @@ jQuery(document).ready(function (jQuery) {
     if( wizard == 'done' ){
 
 
-        jQuery( '#poststuff' ).html( '<h2>High Five You have created the form ' + title.find('#title').val() +'</h2>' );
+        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1><h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2>' );
 
-        buddyforms_form_shortcodes.find('h2 span').html('Now can embed your form with Shortcodes in any Page or Post');
+        buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
         jQuery( buddyforms_form_shortcodes ).appendTo( '#poststuff' );
 
 
 
-        submitdiv.find('h2 span').html('Al available Form Actions - Preview your Form or Display  form Submissions ');
+        submitdiv.find('h2 span').html('Links to your form and submissions');
         jQuery( submitdiv ).appendTo( '#poststuff' );
         jQuery('#post').show();
     }
@@ -119,7 +119,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         // Change the Form Builder h2 Title
-        jQuery('#buddyforms_form_elements h2 span').html('Click or drag the form elements!');
+        jQuery('#buddyforms_form_elements h2 span').html('Click on the form elements!');
 
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template ).hide()
