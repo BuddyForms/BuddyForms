@@ -997,19 +997,51 @@ div#buddyforms_metabox_sidebar p {
 .wizard.vertical > .actions > ul > li {
     margin: 0 0 0 1em;
 }
-.wizard > .actions a,
+.wizard > .actions a {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 0;
+    height: 30px;
+    line-height: 28px;
+    vertical-align: top;
+    padding: 0 12px 2px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    background: #0085ba;
+    border-color: #0073aa #006799 #006799;
+    -webkit-box-shadow: 0 1px 0 #006799;
+    box-shadow: 0 1px 0 #006799;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
+}
 .wizard > .actions a:hover,
 .wizard > .actions a:active {
-    background: #0073aa;
+    background: #008ec2;
+    border-color: #006799;
     color: #fff;
-    display: block;
-    padding: 0.5em 1em;
-    text-decoration: none;
-    border-radius: 5px;
 }
-.wizard > .actions .disabled a,
+.wizard > .actions .disabled a {
+    color: #555;
+    border-color: #ccc;
+    background: #f7f7f7;
+    -webkit-box-shadow: 0 1px 0 #aaa;
+    box-shadow: 0 1px 0 #aaa;
+    text-shadow: none;
+}
 .wizard > .actions .disabled a:hover,
 .wizard > .actions .disabled a:active {
-    background: #eee;
-    color: #aaa;
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;
 }
