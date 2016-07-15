@@ -3,6 +3,7 @@ jQuery(document).ready(function (jQuery) {
     // get the url parameter to create the UI
     var wizard = bf_getUrlParameter('wizard');
     var type   = bf_getUrlParameter('type');
+    var post_id   = bf_getUrlParameter('post');
 
     // Get out of here if not the wizard view
     if (wizard == null) {
@@ -51,8 +52,14 @@ jQuery(document).ready(function (jQuery) {
 
     if( wizard == 'done' ){
 
+        URL  = document.URL;
+        URL = URL.slice( 0, URL.indexOf('?') );
 
-        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1><h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2>' );
+        console.log(URL);
+
+
+        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1><h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2> ' +
+            '<p><a href="'+URL+'?post='+post_id+'&action=edit">Close the wizard</a></p>');
 
         buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
         jQuery( buddyforms_form_shortcodes ).appendTo( '#poststuff' );
@@ -245,12 +252,25 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinishing: function (event, currentIndex)
             {
+
+                //alert('was witziges')
                 return true;
+
             },
             onFinished: function (event, currentIndex)
             {
-                // Submit form input
-                form.submit();
+                var FormData = jQuery(form).serialize();
+                jQuery.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
+                    success: function (data) {
+                        jQuery('#post').remove();
+                        window.location = data;
+                        return true;
+                    }
+                });
+                //form.submit();
             }
         });
 
