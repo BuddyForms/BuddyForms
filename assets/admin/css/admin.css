@@ -226,69 +226,53 @@ a {
     margin-top: 10px;
     margin-right: 15px;
 }
-#bf_admin_wrap .buddyforms_accordion_left {
-
-}
-
 #bf_admin_wrap .accordion-heading-options {
     float: right;
     margin-top: 23px;
     margin-right: 15px;
 }
-
 #bf_admin_wrap .accordion-heading-options, #bf_admin_wrap .accordion-heading-options b, #bf_admin_wrap .accordion-heading-options i {
     cursor: pointer;
 }
-
 #bf_admin_wrap .accordion_sidebar {
     float: right;
     width: 30%;
 }
-
 #bf_admin_wrap .accordion_title {
     font-size: 14px;
 }
-
 #bf_admin_wrap .radio {
     padding: 5px;
 }
-
 #bf_admin_wrap .form_type_settings {
     clear: both;
 }
-
 #bf_admin_wrap .bs-sidebar {
     min-width: 150px;
     float: left;
     width: 20%;
 }
-
 #bf_admin_wrap .wp-list-table tr {
     border-bottom: 1px solid #ddd;
 }
-
 #bf_admin_wrap .wp-list-table tr td {
     height: 40px;
 }
-
 .bf-main-settings input[type="text"] {
     width: 100%;
     margin: 5px 0 10px;
     height: 2em;
     line-height: 2em;
 }
-
 #bf_admin_wrap .buddyforms_forms_builder .hero-unit p {
     font-size: 18px;
 }
-
 .delete .icon-remove-sign {
     margin-right: 5px;
     margin-top: 6px !important;
 }
 
 /* Create New Form View */
-
 #create_new_form_singular_name {
     padding: 3px 8px;
     font-size: 1em;
@@ -589,7 +573,7 @@ a.button.button-large.bf_button_action {
 
 
 
-/* Form Builder CSS */
+/* The Form Builder */
 .buddyforms_forms_builder .bf-input textarea {
     width: 98%;
 }
@@ -857,7 +841,7 @@ div#buddyforms_metabox_sidebar p {
 .wizard > .content {
     display: block;
     margin: 0;
-    min-height: 35em;
+    min-height: 15em;
     overflow: hidden;
     position: relative;
     width: auto;
@@ -969,4 +953,24 @@ div#buddyforms_metabox_sidebar p {
     background: #fafafa;
     border-color: #999;
     color: #23282d;
+}
+
+/* The Formbuilder inside the Wizard - Additions */
+.wizard #buddyforms_form_elements {
+    overflow: auto;
+}
+.wizard #sortable_buddyforms_elements {
+    width: calc(100% - 342px);
+    float: left;
+    clear: none;
+}
+.wizard #formbuilder-actions-wrap {
+    width: 310px;
+    float: right;
+    margin: 0 0 10px 0;
+    border: 1px solid #e5e5e5;
+    clear: none;
+}
+.wizard #formbuilder-actions-wrap .button {
+    margin-bottom: 10px;
 }
