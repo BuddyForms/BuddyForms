@@ -1,7 +1,7 @@
 <?php
 
 function bf_form_elements_select_options(){
-
+global $elements_select_options;
 	// Create the form elements array
 	$elements_select_options = array(
 		'basic' => array(

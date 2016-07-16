@@ -44,35 +44,16 @@ add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_bui
 function buddyforms_form_builder_wizard_elements() {
 
 	$type = $_POST['type'];
-//	echo 'type';
 
 	$allowed_fields['contact'] = array('basic','contact','extra');
 	$allowed_fields['registration'] = array('basic','contact','registration','extra');
 	$allowed_fields['post'] = array('basic','contact','registration','post','extra');
 
-
-//	echo $type;
-//
-//	echo '<pre>';
-//	print_r($allowed_fields);
-//	echo '</pre>';
-
-
 	$elements_select_options = bf_form_elements_select_options();
-
-
-//	echo '<pre>';
-//	print_r($elements_select_options);
-//	echo '</pre>';
 
 	foreach($allowed_fields[$type] as $key => $t){
 		$elements_select_options_new[$t] = $elements_select_options[$t];
 	}
-
-//	echo '<pre>';
-//	print_r($elements_select_options_new);
-//	echo '</pre>';
-
 
 	// Loop The form elements array and add the options to the select box
 	if(is_array($elements_select_options_new)){

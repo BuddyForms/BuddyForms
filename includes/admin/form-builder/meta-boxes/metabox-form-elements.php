@@ -155,6 +155,8 @@ function buddyforms_form_builder_templates(){
 function buddyforms_form_builder_form_elements_select(){
 	$elements_select_options = bf_form_elements_select_options();
 
+
+
 	// Add a default value
 	$el_sel_options = '<option value="none">Select Field Type</option>';
 

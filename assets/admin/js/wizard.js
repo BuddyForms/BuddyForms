@@ -131,17 +131,30 @@ jQuery(document).ready(function (jQuery) {
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template ).hide()
 
-        // Get all form elements for the selected form type and add them to the form builder
-        jQuery.ajax({
-            type: 'POST',
-            url: ajaxurl,
-            data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
-            success: function (data) {
 
-                jQuery('#formbuilder-actions-wrap').html(data);
 
-            }
-        });
+
+
+        function write_form_elements(){
+            // Get all form elements for the selected form type and add them to the form builder
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
+                success: function (data) {
+
+                    jQuery('#formbuilder-actions-wrap').html(data);
+
+                }
+            });
+        }
+        write_form_elements();
+
+
+
+
+
+
 
         // All should be in place. Show the wizard
         var form = jQuery('#post').show();
@@ -192,6 +205,10 @@ jQuery(document).ready(function (jQuery) {
                        } else {
                            jQuery('#form_post_type').addClass('bf-ok');
                            return true;
+
+
+
+
                        }
                     } else {
                         var error = false;
