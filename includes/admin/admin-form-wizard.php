@@ -12,7 +12,7 @@ function buddyforms_form_builder_wizard_types(){
 	$buddyforms_wizard_types['registration']['desc'] = 'Create a custom sign up form in 6 easy steps.';
 
 	$buddyforms_wizard_types['post']['title'] = 'Post Form';
-	$buddyforms_wizard_types['post']['desc'] = 'Choose this if you want your users to submit posts, products, or other content to your site.';
+	$buddyforms_wizard_types['post']['desc'] = 'Let your users submit content to your site.';
 
 	$buddyforms_wizard_types = apply_filters('buddyforms_wizard_types', $buddyforms_wizard_types);
 
