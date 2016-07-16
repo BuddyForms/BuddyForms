@@ -124,8 +124,7 @@ a {
 }
 .sortable .accordion-group:hover {
     padding-bottom: 0px;
-    border: 1px solid #222;
-    border-radius: 4px;
+    border: 1px solid #aaa;
     cursor: move;
 }
 .sortable .accordion-heading :hover {
