@@ -91,20 +91,106 @@ function buddyforms_form_builder_wizard_elements() {
 	}
 
 	echo $el_links;
-
-
-
-	echo $tmp;
 	die();
 }
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_elements', 'buddyforms_form_builder_wizard_elements' );
 
-add_action('save_post','redirect_page');
-function redirect_page(){
+
+function buddyforms_form_builder_wizard_save(){
+
+	if ( isset( $_POST['FormData'] ) ) {
+		parse_str( $_POST['FormData'], $formdata );
+		$_POST = $formdata;
+	}
+
+	$formdata['post_status'] = 'publish';
+	$formdata['ID'] = $formdata['post_ID'];
+
+	$form = wp_insert_post($formdata);
+
+	if ( ! isset( $formdata['buddyforms_options'] ) ) {
+		return;
+	}
+
+	$post = get_post($form);
+	$buddyform = $formdata['buddyforms_options'];
+
+	// Add post title as form name and post name as form slug.
+	$buddyform['name'] = $post->post_title;
+	$buddyform['slug'] = $post->post_name;
+
+	// make sure the form fields slug and type is sanitised
+	if ( isset( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $key => $field ) {
+		$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
+		$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
+	} endif;
+
+	// Update post meta
+	update_post_meta( $form, '_buddyforms_options', $buddyform );
+
+	// Save the Roles and capabilities.
+	if ( isset( $formdata['buddyforms_roles'] ) ) {
+
+		foreach ( get_editable_roles() as $role_name => $role_info ):
+			$role = get_role( $role_name );
+			foreach ( $role_info['capabilities'] as $capability => $_ ):
+
+				$capability_array = explode( '_', $capability );
+
+				if ( $capability_array[0] == 'buddyforms' ) {
+					if ( $capability_array[1] == $buddyform['slug'] ) {
+
+						$role->remove_cap( $capability );
+
+					}
+				}
+
+			endforeach;
+		endforeach;
+
+		foreach ( $formdata['buddyforms_roles'] as $form_role => $capabilities ) {
+			foreach ( $capabilities as $key => $capability ) {
+				$role = get_role( $key );
+				foreach ( $capability as $key_cap => $cap ) {
+					$role->add_cap( $cap );
+				}
+			}
+
+		}
+
+	}
+
+	// Regenerate the global $buddyforms.
+	// The global$buddyforms is sored in the option table and provides all forms and form fields
+	buddyforms_regenerate_global_options();
+
+	// Rewrite the page roles and flash permalink if needed
+	buddyforms_attached_page_rewrite_rules( true );
+
+
+	$url =  admin_url().'post.php?post=' . $form. '&action=edit&wizard=done';
+	echo $url;
+	die();
+
+}
+add_action( 'wp_ajax_buddyforms_form_builder_wizard_save', 'buddyforms_form_builder_wizard_save' );
+
+
+
+
+
+
+
+function buddyforms_wizard_done(){
 	global $post;
 
-//	echo 'asdsad';
-//	print_r($_GET);
+	echo '<pre>';
+	print_r($_POST);
+	echo '</pre>';
+
+	if(!isset($_GET['wizard'])){
+		return;
+	}
 
 	$type =  get_post_type();
 
@@ -116,4 +202,4 @@ function redirect_page(){
 			break;
 	}
 }
-
+//add_action('save_post','buddyforms_wizard_done');
