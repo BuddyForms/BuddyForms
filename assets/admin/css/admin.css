@@ -771,28 +771,28 @@ div#buddyforms_metabox_sidebar p {
 .wizard > .actions > ul > li {
     float: left;
 }
-.wizard > .steps > ul > li:after {
-  right: auto;
-	top: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(166, 126, 35, 0);
-	border-left-color: #d4d4d4;
-  border-width: 17px;
-  margin-top: -20px;
-}
-.wizard > .steps > ul > li.current:after {
-  border-left-color: #0073aa;
-}
-.wizard > .steps > ul > li.done:after {
-  border-left-color: #90c8bb;
-}
-.wizard > .steps > ul > li.error:after {
-  border-left-color: #ff3111;
+@media (min-width: 1200px) {
+  .wizard > .steps > ul > li:after {
+      right: auto;
+      top: 15px;
+      border: solid transparent;
+      content: " ";
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(166, 126, 35, 0);
+      border-left-color: #d4d4d4;
+      border-width: 17px;
+      margin-top: 0;
+  }
+  .wizard > .steps > ul > li.current:after {
+    border-left-color: #0073aa;
+  }
+  .wizard > .steps > ul > li.done:after {
+    border-left-color: #90c8bb;
+  }
+  .wizard > .steps > ul > li.error:after {
+    border-left-color: #ff3111;
+  }
 }
 .wizard.vertical > .steps > ul > li {
     float: none;
@@ -964,12 +964,14 @@ div#buddyforms_metabox_sidebar p {
     float: left;
     clear: none;
 }
-.wizard #formbuilder-actions-wrap {
-    width: 310px;
-    float: right;
-    margin: 0 0 10px 0;
-    border: 1px solid #e5e5e5;
-    clear: none;
+@media (min-width: 1200px) {
+  .wizard #formbuilder-actions-wrap {
+      width: 310px;
+      float: right;
+      margin: 0 0 10px 0;
+      border: 1px solid #e5e5e5;
+      clear: none;
+  }
 }
 .wizard #formbuilder-actions-wrap .button {
     margin-bottom: 10px;
