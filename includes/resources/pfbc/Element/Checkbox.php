@@ -27,8 +27,11 @@ class Element_Checkbox extends OptionElement {
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
 
+			// get optional ID
+			$id = isset( $this->_attributes["id"] ) ? ' id="' . $this->_attributes["id"] . '-' . $count . '"' : '';
+
 			echo '<label class="', $labelClass, '">';
-			echo '<input id="', $this->_attributes["id"], '-', $count, '"', $this->getAttributes( array(
+			echo '<input', $id, $this->getAttributes( array(
 				"id",
 				"class",
 				"value",

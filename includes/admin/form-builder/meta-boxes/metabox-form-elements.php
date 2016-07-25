@@ -166,7 +166,7 @@ function buddyforms_form_builder_form_elements_select(){
 			$el_sel_options .= '<optgroup label="' . $optgroup['label'] . '">';
 			foreach($optgroup['fields'] as $es_val => $es_label){
 				if( is_array($es_label) ){
-					$el_sel_options .= '<option data-unique="' . $es_label['unique'] . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
+					$el_sel_options .= '<option data-unique="' . ( isset( $es_label['unique'] ) ? $es_label['unique'] : '' ) . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
 				} else {
 					$el_sel_options .= '<option value="' . $es_val . '">' . $es_label . '</option>' ;
 				}
