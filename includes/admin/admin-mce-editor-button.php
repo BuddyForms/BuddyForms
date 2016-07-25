@@ -42,7 +42,7 @@ return $context;
 add_action( 'admin_footer', 'buddyforms_editor_button_inline_content' );
 function buddyforms_editor_button_inline_content() {
 global $buddyforms;
-if ( ! is_admin() ) {
+if ( ! is_admin() OR empty( $buddyforms ) ) {
 return;
 } ?>
 
