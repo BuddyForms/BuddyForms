@@ -279,30 +279,31 @@ function bf_update_post_meta( $post_id, $customfields ) {
 
 					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 						$tax_item = $_POST[ $customfield['slug'] ];
-					}
 
-					if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
-						//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-						foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-							$tax_item[ $key_tax ] = $tax;
+						if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
+							//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
+							foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+								$tax_item[ $key_tax ] = $tax;
+							}
 						}
+
+						wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 					}
 
-					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 				} else {
 
-					$slug = Array();
-
 					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
+						$slug = Array();
+
 						$postCategories = $_POST[ $customfield['slug'] ];
 
 						foreach ( $postCategories as $postCategory ) {
 							$term   = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
 							$slug[] = $term->slug;
 						}
-					}
 
-					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+					}
 
 				}
 
