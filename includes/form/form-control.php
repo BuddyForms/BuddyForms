@@ -235,10 +235,6 @@ function buddyforms_update_post( $args ) {
 
 	} else {
 
-		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
-			$post_date = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
-		}
-
 		$bf_post = array(
 			'post_parent'    => $post_parent,
 			'post_author'    => $post_author,
@@ -248,9 +244,14 @@ function buddyforms_update_post( $args ) {
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
 			'post_excerpt'   => $post_excerpt,
-			'post_date'      => $post_date,
-			'post_date_gmt'  => $post_date,
 		);
+
+		// Add optional scheduled post dates
+		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
+			$post_date = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
+			$bf_post['post_date'] = $post_date;
+			$bf_post['post_date_gmt'] = $post_date;
+		}
 
 		// Insert the new form
 		$post_id = wp_insert_post( $bf_post, true );
