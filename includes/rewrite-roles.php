@@ -11,10 +11,6 @@ add_action( 'init', 'buddyforms_attached_page_rewrite_rules' );
 function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) {
 	global $buddyforms;
 
-	if ( ! is_admin() ) {
-		return;
-	}
-
 	if ( ! $buddyforms ) {
 		return;
 	}
@@ -44,10 +40,6 @@ function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) 
  */
 add_filter( 'query_vars', 'buddyforms_attached_page_query_vars' );
 function buddyforms_attached_page_query_vars( $query_vars ) {
-
-	if ( is_admin() ) {
-		return $query_vars;
-	}
 
 	$query_vars[] = 'bf_action';
 	$query_vars[] = 'bf_form_slug';
