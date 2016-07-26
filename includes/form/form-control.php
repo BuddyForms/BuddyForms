@@ -143,7 +143,7 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 			$bf_post = array(
 				'ID'             => $post_id,
-				'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? $_POST['editpost_title'] : 'none' ),
+				'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
 				'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
@@ -221,7 +221,7 @@ function buddyforms_update_post( $args ) {
 
 		$bf_post = array(
 			'ID'             => $_POST['post_id'],
-			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? $_POST['editpost_title'] : 'none' ),
+			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
 			'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
@@ -235,22 +235,23 @@ function buddyforms_update_post( $args ) {
 
 	} else {
 
-		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
-			$post_date = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
-		}
-
 		$bf_post = array(
 			'post_parent'    => $post_parent,
 			'post_author'    => $post_author,
-			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? $_POST['editpost_title'] : 'none' ),
+			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
 			'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
 			'post_excerpt'   => $post_excerpt,
-			'post_date'      => $post_date,
-			'post_date_gmt'  => $post_date,
 		);
+
+		// Add optional scheduled post dates
+		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
+			$post_date = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
+			$bf_post['post_date'] = $post_date;
+			$bf_post['post_date_gmt'] = $post_date;
+		}
 
 		// Insert the new form
 		$post_id = wp_insert_post( $bf_post, true );
@@ -279,30 +280,31 @@ function bf_update_post_meta( $post_id, $customfields ) {
 
 					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 						$tax_item = $_POST[ $customfield['slug'] ];
-					}
 
-					if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
-						//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-						foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-							$tax_item[ $key_tax ] = $tax;
+						if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
+							//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
+							foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+								$tax_item[ $key_tax ] = $tax;
+							}
 						}
+
+						wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 					}
 
-					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 				} else {
 
-					$slug = Array();
-
 					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
+						$slug = Array();
+
 						$postCategories = $_POST[ $customfield['slug'] ];
 
 						foreach ( $postCategories as $postCategory ) {
 							$term   = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
 							$slug[] = $term->slug;
 						}
-					}
 
-					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+					}
 
 				}
 
