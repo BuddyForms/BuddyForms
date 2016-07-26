@@ -143,6 +143,7 @@ jQuery(document).ready(function (jQuery) {
                 data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
                 success: function (data) {
 
+                    alert(data);
                     jQuery('#formbuilder-actions-wrap').html(data);
 
                 }
@@ -233,6 +234,8 @@ jQuery(document).ready(function (jQuery) {
                     return true;
                 }
                 if(currentIndex == 2) {
+                    alert('ssd');
+                    write_form_elements();
                     return true;
                 }
                 if(currentIndex == 3) {

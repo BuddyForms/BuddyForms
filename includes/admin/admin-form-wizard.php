@@ -51,23 +51,33 @@ function buddyforms_form_builder_wizard_elements() {
 
 	$elements_select_options = bf_form_elements_select_options();
 
+//	print_r($elements_select_options);
+
+	echo $type;
+
 	foreach($allowed_fields[$type] as $key => $t){
 		$elements_select_options_new[$t] = $elements_select_options[$t];
 	}
 
 	// Loop The form elements array and add the options to the select box
-	if(is_array($elements_select_options_new)){
-		foreach($elements_select_options_new as $optgroup_label => $optgroup){
+	if(is_array($elements_select_options)){
+		foreach($elements_select_options as $optgroup_slug => $optgroup){
 			$el_links .= '<h5>' . $optgroup['label'] . '</h5>';
-			foreach($optgroup['fields'] as $es_val => $es_label){
 
-				if( is_array($es_label) ){
-					$el_links .= '<a href="#" class="bf_add_element_action button" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';
-				} else {
-					$el_links .= '<a href="#" class="bf_add_element_action button" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ' ;
+//			if($optgroup_slug != 'post'){
+//
+//			} else {
+				foreach($optgroup['fields'] as $es_val => $es_label){
+
+					if( is_array($es_label) ){
+						$el_links .= '<a href="#" class="bf_add_element_action button" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';
+					} else {
+						$el_links .= '<a href="#" class="bf_add_element_action button" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ' ;
+					}
+
 				}
+//			}
 
-			}
 		}
 	}
 

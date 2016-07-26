@@ -6,6 +6,7 @@ global $elements_select_options;
 	$elements_select_options = array(
 		'basic' => array(
 			'label'     => __('Basic Fields', 'buddyforms'),
+			'post_type '=> 'all',
 			'fields'    => array(
 				'text'     => array(
 					'label'     => __( 'Text', 'buddyforms' ),
