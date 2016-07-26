@@ -52,9 +52,10 @@ function buddyforms_the_loop( $args ) {
 
 
 	extract( shortcode_atts( array(
+		'author'      => '',
 		'post_type'   => '',
 		'form_slug'   => '',
-		'id'   => '',
+		'id'          => '',
 		'post_parent' => 0
 	), $args ) );
 
@@ -78,7 +79,7 @@ function buddyforms_the_loop( $args ) {
 	$list_posts_option = $buddyforms[ $form_slug ]['list_posts_option'];
 	$list_posts_style  = $buddyforms[ $form_slug ]['list_posts_style'];
 
-	$user_id = get_current_user_id();
+	$user_id = empty($author) ?  apply_filters( 'bf_user_posts_user_id', get_current_user_id() ) : $author;
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
@@ -117,7 +118,10 @@ function buddyforms_the_loop( $args ) {
 
 	}
 
-	$query_args = apply_filters( 'bf_post_to_display_args', $query_args );
+	// New
+	$query_args = apply_filters( 'bf_user_posts_query_args', $query_args );
+		// Deprecated
+		$query_args = apply_filters( 'bf_post_to_display_args', $query_args );
 
 
 	do_action( 'buddyforms_the_loop_start', $query_args );
