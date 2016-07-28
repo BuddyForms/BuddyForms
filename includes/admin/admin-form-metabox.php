@@ -25,7 +25,7 @@ function buddyforms_admin_form_metabox(){
 	$metabox_enabled = false;
 	if(isset($form['form_fields'])){
 		foreach($form['form_fields'] as $field_key => $field){
-			if($field['metabox_enabled']){
+			if(isset($field['metabox_enabled']) && $field['metabox_enabled']){
 				$metabox_enabled = true;
 			}
 		}
