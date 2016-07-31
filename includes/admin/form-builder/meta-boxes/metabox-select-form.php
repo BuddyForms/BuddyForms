@@ -59,16 +59,16 @@ function bf_inner_custom_box( $post ) {
 	echo '</label> ';
 	//echo '<input type="text" id="_bf_form_slug" name="_bf_form_slug" value="' . esc_attr( $value ) . '" size="25" />';
 	echo ' <p><select name="_bf_form_slug" id="_bf_form_slug">';
-	echo ' <option value="none" ' . $selected . ' > none </option>';
+	echo ' <option value="none">' . __( 'None', 'buddyforms' ) . '</option>';
 
 	foreach ( $buddyforms as $key => $buddyform ) {
 		$selected = '';
 		if ( $buddyform['slug'] == $value ) {
-			$selected = 'selected';
+			$selected = ' selected';
 		}
 
 		if ( $buddyform['post_type'] == get_post_type( $post ) ) {
-			echo ' <option value="' . $buddyform['slug'] . '" ' . $selected . ' >' . $buddyform['name'] . '</option>';
+			echo ' <option value="' . $buddyform['slug'] . '"' . $selected . '>' . $buddyform['name'] . '</option>';
 		}
 	}
 

@@ -333,10 +333,16 @@ function bf_form_elements( $form, $args ) {
                             ' . $str . '
                             </div>
                         ' ) );
-						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, array(
-							'id'       => $slug,
-							'required' => 'required'
-						) ) );
+
+						// always add slug
+						$featured_image_params = array( 'id' => $slug );
+
+						// add "required" if needed
+						if ( isset( $customfield['required'] ) ) {
+							$featured_image_params['required'] = 'required';
+						}
+
+						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
 						$form->addElement( new Element_HTML( '</div>' ) );
 
 						break;

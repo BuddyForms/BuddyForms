@@ -15,14 +15,17 @@ function buddyforms_jquery_validation(){
 
 		// make the slug js conform
 		$form_slug_js = str_replace( '-', '_', $form_slug );
-		// Create the needed Validation JS.
 
+		// Create the needed Validation JS.
 		$form_html .= '
 	    jQuery(function() {
 	        var validator_' . $form_slug_js . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
 	                if(jQuery(\'textarea\').length > 0) {
-	                    // update underlying textarea before submit validation
-	                    tinyMCE.triggerSave();
+	                	// if TinyMCE is enabled
+	                    if ( "undefined" !== typeof tinyMCE ) {
+		                    // update underlying textarea before submit validation
+		                    tinyMCE.triggerSave();
+		                }
 	                }
 
 	        }).validate({
