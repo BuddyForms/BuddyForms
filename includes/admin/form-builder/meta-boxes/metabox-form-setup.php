@@ -94,7 +94,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 	$form_setup['Form Submission'][] = $element;
 
-	$form_setup['Form Submission'][] = new Element_URL( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
+	$form_setup['Form Submission'][] = new Element_Url( '<b>' . __( "Redirect URL", 'buddyforms' ), "buddyforms_options[after_submission_url]", array(
 		'value'     => $after_submission_url,
 		'shortDesc' => __('Enter a valid URL', 'buddyforms'),
 		'class'     => 'redirect'
