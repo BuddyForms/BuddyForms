@@ -504,7 +504,8 @@ function bf_form_elements( $form, $args ) {
 							$form->addElement( new Element_HTML( $dropdown ) );
 
 							if ( isset( $customfield['creat_new_tax'] ) ) {
-								$form->addElement( new Element_Textbox( __( 'Create a new ', 'buddyforms' ) . $customfield['name'], $slug . '_creat_new_tax', array( 'class' => 'settings-input' ) ) );
+								$el_title = apply_filters( 'buddyforms_create_new_tax_title', sprintf( __( 'Create a new %s', 'buddyforms' ), $customfield['name'] ), $form_slug, $customfield );
+								$form->addElement( new Element_Textbox( $el_title, $slug . '_creat_new_tax', array( 'class' => 'settings-input' ) ) );
 							}
 						}
 
