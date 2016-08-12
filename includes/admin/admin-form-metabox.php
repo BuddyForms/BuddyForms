@@ -6,18 +6,19 @@
 function buddyforms_admin_form_metabox(){
 	global $buddyforms, $post;
 
-
+	// sanity check
+	if ( ! ( $post instanceof WP_Post ) ) return;
+	
 	if($post->post_type == 'buddyforms') return;
-
 
 	$form_slug  = get_post_meta( $post->ID, '_bf_form_slug', true );
 	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
 	if(!$form_slug){
-		$form_slug = $buddyforms_posttypes_default[$post->post_type];
+		$form_slug = isset( $buddyforms_posttypes_default[$post->post_type] ) ? $buddyforms_posttypes_default[$post->post_type] : null;
 	}
 
-	if(!isset($form_slug)) return;
+	if(empty($form_slug)) return;
 	if(!isset($buddyforms[$form_slug])) return;
 
 	$form = $buddyforms[$form_slug];
