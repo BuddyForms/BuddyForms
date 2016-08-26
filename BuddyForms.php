@@ -44,11 +44,14 @@ class BuddyForms {
 	 */
 	public function __construct() {
 
+		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
+
 		$this->load_constants();
 
 		add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 		add_action( 'init', array( $this, 'includes' ), 4, 1 );
 		add_action( 'init', array( $this, 'buddyforms_update_db_check' ), 10 );
+
 
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
@@ -58,6 +61,8 @@ class BuddyForms {
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 
 		add_action( 'template_redirect', array( $this, 'buddyform_front_js_loader' ), 2, 1 );
+
+		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 	}
 
@@ -74,7 +79,7 @@ class BuddyForms {
 		define( 'BUDDYFORMS_VERSION', $this->version );
 
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
-		define( 'BUDDYFORMS_STORE_URL', 'https://buddyforms.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
+		define( 'BUDDYFORMS_STORE_URL', 'https://themekraft.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 
 		// the name of your product. This should match the download name in EDD exactly
 		define( 'BUDDYFORMS_EDD_ITEM_NAME', 'BuddyForms' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
@@ -149,6 +154,7 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-preview.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-ajax.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php' );
@@ -481,6 +487,37 @@ class BuddyForms {
 		return $footer_text;
 	}
 
+
+	function plugin_activation(){
+
+		$title = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
+		$preview_page = get_page_by_title( $title );
+		if( !$preview_page ) {
+			// Create preview page object
+			$preview_post = array(
+				'post_title' => $title,
+				'post_content' => 'This is a preview of how this form will appear on your website',
+				'post_status' => 'draft',
+				'post_type' => 'page'
+			);
+
+			// Insert the page into the database
+			$page_id = wp_insert_post( $preview_post );
+		}else{
+			$page_id = $preview_page->ID;
+		}
+
+		update_option( 'buddyforms_preview_page', $page_id );
+
+	}
+
+	function plugin_deactivation(){
+		$buddyforms_preview_page = get_option('buddyforms_preview_page', true);
+
+		wp_delete_post( $buddyforms_preview_page, true );
+
+		delete_option( 'buddyforms_preview_page' );
+	}
 }
 
 $GLOBALS['buddyforms_new'] = new BuddyForms();

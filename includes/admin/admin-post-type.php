@@ -168,7 +168,7 @@ function buddyforms_register_post_type() {
 
 	register_post_type( 'buddyforms', array(
 		'labels'              => $labels,
-		'public'              => false,
+		'public'              => true,
 		'show_ui'             => true,
 		'_builtin'            => false,
 		'capability_type'     => 'post',
@@ -399,9 +399,14 @@ function buddyforms_add_button_to_submit_box() {
 	$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
 	$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
 
+	$base = home_url();
 
+	$preview_page_id = get_option( 'buddyforms_preview_page', true );
 	?>
 	<div id="buddyforms-actions" class="misc-pub-section">
+
+		<a target="_blank" href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><?php _e( 'Preview Form', 'buddyforms' ) ?></a>
+
 		<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
 			<div id="frontend-actions">
 				<label for="button">Frontend</label>
@@ -440,10 +445,17 @@ function buddyforms_add_action_buttons($actions, $post){
 		);
 
 		unset($actions['inline hide-if-no-js']);
+
+		$base = home_url();
+
+		$preview_page_id = get_option( 'buddyforms_preview_page', true );
+
 		$actions['export'] = '<a href="' . esc_url( $url ) . '">Export</a>';
 
-
 		$actions['submissions'] = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">' . __("View Submissions", "buddyforms") . '</a>';
+
+		$actions['preview_link'] = '<a target="_blank" href="' . $base . '/?page_id=' . $preview_page_id  . '&preview=true&form_slug=' . $post->post_name . '">' . __( 'Preview Form', 'buddyforms' ) . '</a>';
+
 	}
 	return $actions;
 }

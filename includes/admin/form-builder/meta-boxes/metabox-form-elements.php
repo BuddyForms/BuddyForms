@@ -83,15 +83,15 @@ function buddyforms_metabox_form_elements($post, $buddyform = '') {
 	// Metabox footer for the form elements select
 	$form_setup[] = new Element_HTML( '
 		<div id="formbuilder-actions-wrap">
-
-			<div id="formbuilder-action-add">
-				<span class="formbuilder-spinner spinner"></span>
-				<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="+ Add Field">
+			<div class="formbuilder-actions-select-wrap">
+				<div id="formbuilder-action-add">
+					<span class="formbuilder-spinner spinner"></span>
+					<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="+ Add Field">
+				</div>
+				<div id="formbuilder-action-select">
+					<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>
+				</div>
 			</div>
-			<div id="formbuilder-action-select">
-				<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>
-			</div>
-			<div class="clear"></div>
 		</div>
 		<div id="formbuilder-action-select-modal" class="hidden">
 				<select id="bf_add_new_form_element_modal">' . buddyforms_form_builder_form_elements_select() . '</select>

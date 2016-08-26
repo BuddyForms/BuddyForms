@@ -53,7 +53,7 @@ function buddyforms_form_builder_wizard_elements() {
 
 //	print_r($elements_select_options);
 
-	echo $type;
+//	echo $type;
 
 	foreach($allowed_fields[$type] as $key => $t){
 		$elements_select_options_new[$t] = $elements_select_options[$t];
@@ -81,7 +81,7 @@ function buddyforms_form_builder_wizard_elements() {
 		}
 	}
 
-	echo $el_links;
+	echo '<div class="formbuilder-actions-sidebar-wrap">' . $el_links . '</div>';
 	die();
 }
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_elements', 'buddyforms_form_builder_wizard_elements' );
@@ -160,7 +160,7 @@ function buddyforms_form_builder_wizard_save(){
 
 
 	$url =  admin_url().'post.php?post=' . $form. '&action=edit&wizard=done';
-	echo $url;
+//	echo $url;
 	die();
 
 }
@@ -175,9 +175,9 @@ add_action( 'wp_ajax_buddyforms_form_builder_wizard_save', 'buddyforms_form_buil
 function buddyforms_wizard_done(){
 	global $post;
 
-	echo '<pre>';
-	print_r($_POST);
-	echo '</pre>';
+//	echo '<pre>';
+//	print_r($_POST);
+//	echo '</pre>';
 
 	if(!isset($_GET['wizard'])){
 		return;

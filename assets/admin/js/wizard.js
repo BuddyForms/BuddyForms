@@ -1,9 +1,9 @@
 jQuery(document).ready(function (jQuery) {
 
     // get the url parameter to create the UI
-    var wizard = bf_getUrlParameter('wizard');
-    var type   = bf_getUrlParameter('type');
-    var post_id   = bf_getUrlParameter('post');
+    var wizard  = bf_getUrlParameter('wizard');
+    var type    = bf_getUrlParameter('type');
+    var post_id = bf_getUrlParameter('post');
 
     // Get out of here if not the wizard view
     if (wizard == null) {
@@ -18,7 +18,7 @@ jQuery(document).ready(function (jQuery) {
         // get the parts
 
         var title                       = jQuery('#post-body-content');
-        var submitdiv                  = jQuery('#submitdiv');
+        var submitdiv                   = jQuery('#submitdiv');
         var buddyforms_form_shortcodes  = jQuery('#buddyforms_form_shortcodes');
 
         var buddyforms_form_elements    = jQuery('#buddyforms_form_elements');
@@ -142,10 +142,7 @@ jQuery(document).ready(function (jQuery) {
                 url: ajaxurl,
                 data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
                 success: function (data) {
-
-                    alert(data);
-                    jQuery('#formbuilder-actions-wrap').html(data);
-
+                    jQuery('#formbuilder-actions-wrap').append(data);
                 }
             });
         }
@@ -234,7 +231,6 @@ jQuery(document).ready(function (jQuery) {
                     return true;
                 }
                 if(currentIndex == 2) {
-                    alert('ssd');
                     write_form_elements();
                     return true;
                 }
@@ -272,10 +268,7 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinishing: function (event, currentIndex)
             {
-
-                //alert('was witziges')
                 return true;
-
             },
             onFinished: function (event, currentIndex)
             {
