@@ -389,7 +389,9 @@ add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
 add_action( 'admin_head-post.php', 'buddyforms_hide_publishing_actions' );
 add_action( 'admin_head-post-new.php', 'buddyforms_hide_publishing_actions' );
 
-
+//
+// Add new Actions Buttons to the publish metabox
+//
 function buddyforms_add_button_to_submit_box() {
 	global $post;
 
@@ -428,12 +430,15 @@ function buddyforms_add_button_to_submit_box() {
 }
 add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box' );
 
+// remove the slugdiv metabox from buddyforms post edit screen
 function buddyforms_remove_slugdiv() {
-	remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
+	if(get_post_type() === 'buddyforms') {
+		remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
+	}
 }
 add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
 
-
+// Add the actions to list table
 function buddyforms_add_action_buttons($actions, $post){
 
 	if(get_post_type() === 'buddyforms'){
@@ -450,10 +455,8 @@ function buddyforms_add_action_buttons($actions, $post){
 
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
 
-		$actions['export'] = '<a href="' . esc_url( $url ) . '">Export</a>';
-
-		$actions['submissions'] = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">' . __("View Submissions", "buddyforms") . '</a>';
-
+		$actions['export']       = '<a href="' . esc_url( $url ) . '">Export</a>';
+		$actions['submissions']  = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">' . __("View Submissions", "buddyforms") . '</a>';
 		$actions['preview_link'] = '<a target="_blank" href="' . $base . '/?page_id=' . $preview_page_id  . '&preview=true&form_slug=' . $post->post_name . '">' . __( 'Preview Form', 'buddyforms' ) . '</a>';
 
 	}
