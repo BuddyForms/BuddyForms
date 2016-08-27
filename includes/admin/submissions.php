@@ -10,12 +10,19 @@ function buddyforms_create_submissions_page()  {
 	);
 	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'bf_submissions_screen' );
 	add_action( "load-$hook", 'bf_submissions_add_options' );
+}
 
+add_action('admin_init', 'redirect_after_delete');
+function redirect_after_delete(){
 
+	if( isset($_GET['page']) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] )){
+		if(!get_post($_GET['entry'])){
+			wp_redirect('?post_type=buddyforms&page=bf_submissions&form_slug='.$_GET['form_slug']);
+		}
+	}
 }
 
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
-
 function bf_submissions_add_options() {
 	global $buddyforms_submissions_table;
 
@@ -89,7 +96,7 @@ function bf_submissions_screen() {
 			</ul>
 		</div>
 
-		<?php if( isset( $_GET['form_slug'] ) ) { ?>
+		<?php if( isset( $_GET['form_slug'] ) && !isset( $_GET['entry'] ) ) { ?>
 			<form id="filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
 				<?php $buddyforms_submissions_table->display(); ?>
@@ -133,9 +140,12 @@ function bf_submissions_screen() {
 								$fields = $buddyforms[$form_slug]['form_fields'];
 
 								$metabox_fields = array();
-								foreach($fields as $field_key => $field  ){
-									if(isset($field['metabox_enabled'])){
-										$metabox_fields[] = $field;
+
+								if(isset($fields)){
+									foreach($fields as $field_key => $field  ){
+										if(isset($field['metabox_enabled'])){
+											$metabox_fields[] = $field;
+										}
 									}
 								}
 
@@ -181,7 +191,8 @@ function bf_submissions_screen() {
 									</div>
 									<div id="major-publishing-actions">
 										<div id="delete-action">
-											<a href="#" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">Delete</a>
+											<a href="<?php echo get_delete_post_link( $_GET['entry'] , '', true ); ?>" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">Delete</a>
+
 										</div>
 
 										<div class="clear"></div>
@@ -203,19 +214,25 @@ function bf_submissions_screen() {
 							</div>
 						</div>
 
-						<div class="postbox">
-							<h3 class="hndle"><span>User Information</span></h3>
-							<div class="inside">
-								<?php $user_data = get_post_meta( $_GET['entry'], '_bf_user_data', true ); ?>
-								<?php foreach($user_data as $uinfo => $uval) { ?>
-									<div class="misc-pub-section">
-										<?php echo $uinfo ?>:
-										<b><?php echo $uval ?></b>
-									</div>
-								<?php } ?>
+						<?php
+						$user_data = get_post_meta( $_GET['entry'], '_bf_user_data', true );
 
+						if($user_data){ ?>
+							<div class="postbox">
+								<h3 class="hndle"><span>User Information</span></h3>
+								<div class="inside">
+
+									<?php foreach($user_data as $uinfo => $uval) { ?>
+										<div class="misc-pub-section">
+											<?php echo $uinfo ?>:
+											<b><?php echo $uval ?></b>
+										</div>
+									<?php } ?>
+
+								</div>
 							</div>
-						</div>
+						<?php } ?>
+
 					</div>
 				</div>
 			</div>
@@ -247,11 +264,11 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
-			'delete' => sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['ID'] ),
+			'delete' => '<a href="' . get_delete_post_link( $item['ID'] , '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
 		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'bf_submissions'){
-			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s">View Form</a>', $_REQUEST['page'], 'edit', $item['ID'] );
+			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Form</a>', $_REQUEST['page'], 'edit', $item['ID'], $_GET['form_slug'] );
 		}
 
 		// Return the title contents
@@ -276,48 +293,21 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	}
 
-	function column_cb( $item ) {
-		return sprintf(
-			'<input type="checkbox" name="%1$s[]" value="%2$s" />', $this->_args['singular'], $item['ID']
-		);
-	}
 
 	function get_columns() {
 		global $buddyforms;
 
-		;
 		$columns = array(
-			'cb'              => '<input type="checkbox" />', //Render a checkbox instead of text
 			'ID'           => 'ID',
 		);
 
 		if(isset($buddyforms[$_GET['form_slug']]['form_fields'])){
 			foreach($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field){
-
 				$columns[$field['slug']] = $field['name'];
-
 			}
 
 		}
-
 		return $columns;
-	}
-
-	function get_bulk_actions() {
-		$actions = array(
-			'delete' => 'Delete'
-		);
-
-		return $actions;
-	}
-
-	function process_bulk_action() {
-
-		// Detect when a bulk action is being triggered...
-		if ( 'delete' === $this->current_action() ) {
-			wp_die( 'Items deleted (or they would be if we had items to delete)!' );
-		}
-
 	}
 
 	function prepare_items() {
