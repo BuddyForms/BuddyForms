@@ -10,6 +10,47 @@
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms;
 
+	$form_type = isset($form_type) ? $form_type : '';
+
+
+	switch($form_type){
+		case 'contact':
+			return;
+			break;
+		case 'registration':
+			return;
+			break;
+		default:
+			$form_type = 'post';
+			break;
+	}
+
+	$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
+	$user_data['referer']   = $_SERVER['HTTP_REFERER'];
+
+
+	// Get the browser and platform
+	$browser_data = bf_get_browser();
+
+	print_r($yourbrowser);
+
+	$user_data['browser']   = $browser_data['name'];
+	$user_data['version']   = $browser_data['version'];
+	$user_data['platform']  = $browser_data['platform'];
+	$user_data['reports']   = $browser_data['reports'];
+	$user_data['userAgent'] = $browser_data['userAgent'];
+
+//	// Save the User Data like browser ip etc
+//	update_post_meta( $post_id, "_bf_user_data", $user_data );
+
+
+
+
+
+
+
+
+
 	do_action( 'buddyforms_process_post_start', $args );
 
 	$hasError     = false;
@@ -139,6 +180,10 @@ function buddyforms_process_post( $args = Array() ) {
 
 		// Save the Form slug as post meta
 		update_post_meta( $post_id, "_bf_form_slug", $form_slug );
+
+		// Save the User Data like browser ip etc
+		update_post_meta( $post_id, "_bf_user_data", $user_data );
+
 
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 			$bf_post = array(

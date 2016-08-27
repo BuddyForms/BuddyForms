@@ -48,7 +48,7 @@ function bf_submissions_screen() {
 	<div id="bf_admin_wrap" class="wrap">
 
 		<?php
-		include( 'admin-header.php' );
+		include( 'bf-admin-header.php' );
 
 		// echo '<pre>';
 		// print_r($buddyforms);
@@ -158,6 +158,7 @@ function bf_submissions_screen() {
 					</div>
 					<div id="postbox-container-1" class="postbox-container">
 						<div id="submitdiv" class="postbox">
+
 							<h3 class="hndle"><span>Entry Actions</span></h3>
 							<div class="inside">
 								<div class="submitbox">
@@ -168,8 +169,8 @@ function bf_submissions_screen() {
 										<div id="misc-publishing-actions">
 
 											<div class="misc-pub-section curtime misc-pub-curtime">
-    <span id="timestamp">
-    Published on: <b>May 20, 2016 @ 10:54</b>    </span>
+										    <span id="timestamp">
+										    Submitted on: <b><?php echo get_the_date('l, F j, Y', $_GET['entry'] ); ?></b>    </span>
 											</div>
 
 											<div class="misc-pub-section">
@@ -180,8 +181,7 @@ function bf_submissions_screen() {
 									</div>
 									<div id="major-publishing-actions">
 										<div id="delete-action">
-											<a href="http://buddyforms/wp-admin/admin.php?page=formidable-entries&amp;frm_action=destroy&amp;id=4&amp;form=10" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">
-												Delete				</a>
+											<a href="#" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">Delete</a>
 										</div>
 
 										<div class="clear"></div>
@@ -197,15 +197,8 @@ function bf_submissions_screen() {
 								<div class="misc-pub-section">
 									<span class="dashicons dashicons-id wp-media-buttons-icon"></span>
 									Entry ID:
-									<b>4</b>
+									<b><?php echo $_GET['entry']; ?></b>
 								</div>
-
-								<div class="misc-pub-section">
-									<span class="dashicons dashicons-post-status wp-media-buttons-icon"></span>
-									Entry Key:
-									<b>7lh2e</b>
-								</div>
-
 
 							</div>
 						</div>
@@ -213,18 +206,13 @@ function bf_submissions_screen() {
 						<div class="postbox">
 							<h3 class="hndle"><span>User Information</span></h3>
 							<div class="inside">
-								<div class="misc-pub-section">
-									IP Address:
-									<b>::1</b>
-								</div>
-
-								<div class="misc-pub-section">
-									<b>Browser/OS</b>:<br>
-									Google Chrome 50.0.2661.102 / OS X        </div>
-
-								<div class="misc-pub-section">
-									<b>Referrer</b>:<br>
-									http://buddyforms/sample-page/        </div>
+								<?php $user_data = get_post_meta( $_GET['entry'], '_bf_user_data', true ); ?>
+								<?php foreach($user_data as $uinfo => $uval) { ?>
+									<div class="misc-pub-section">
+										<?php echo $uinfo ?>:
+										<b><?php echo $uval ?></b>
+									</div>
+								<?php } ?>
 
 							</div>
 						</div>
