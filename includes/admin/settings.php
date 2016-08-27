@@ -21,7 +21,7 @@ function buddyforms_settings_page() {
 		<?php
 
 		// Display the BuddyForms Header
-		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-credits.php' );
+		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 
 		// Display the Update Message
 		if ( 'true' == esc_attr( $_GET['updated'] ) ) {

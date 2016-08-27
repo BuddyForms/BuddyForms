@@ -164,13 +164,14 @@ class BuddyForms {
 		if ( is_admin() ) {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-post-type.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-submissions.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-settings.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-add-ons.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-metabox.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-form-wizard.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-mce-editor-button.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
 
@@ -511,6 +512,9 @@ class BuddyForms {
 
 		update_option( 'buddyforms_preview_page', $page_id );
 
+
+		set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
+
 	}
 
 	function plugin_deactivation(){
@@ -521,5 +525,18 @@ class BuddyForms {
 		delete_option( 'buddyforms_preview_page' );
 	}
 }
+if(PHP_VERSION < 5.3){
+	function bf_php_version_admin_notice() {
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' )  ; ?></p>
+			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+		</div>
+		<?php
+	}
+	add_action( 'admin_notices', 'bf_php_version_admin_notice' );
+} else {
+	$GLOBALS['buddyforms_new'] = new BuddyForms();
+}
 
-$GLOBALS['buddyforms_new'] = new BuddyForms();

@@ -48,7 +48,7 @@ function bf_submissions_screen() {
 	<div id="bf_admin_wrap" class="wrap">
 
 		<?php
-		include( 'admin-credits.php' );
+		include( 'admin-header.php' );
 
 		// echo '<pre>';
 		// print_r($buddyforms);

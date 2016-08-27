@@ -31,7 +31,7 @@ function bf_add_ons_screen() {
 
 		<?php
 
-		include( 'admin-credits.php' );
+		include( 'admin-header.php' );
 
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
