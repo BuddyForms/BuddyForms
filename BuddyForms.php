@@ -385,6 +385,8 @@ class BuddyForms {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 
 		wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'jquery-garlicjs', plugins_url( 'assets/resources/garlicjs/garlic.js', __FILE__ ), array( 'jquery' ) );
+
 
 		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
 		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );

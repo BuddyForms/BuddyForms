@@ -406,9 +406,9 @@ function buddyforms_add_button_to_submit_box() {
 	$preview_page_id = get_option( 'buddyforms_preview_page', true );
 	?>
 	<div id="buddyforms-actions" class="misc-pub-section">
-
-		<a target="_blank" href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><?php _e( 'Preview Form', 'buddyforms' ) ?></a>
-
+		<?php if(isset($post->post_name) && $post->post_name != '') { ?>
+			<a class="button button-large bf_button_action" target="_blank" href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><?php _e( 'Preview Form', 'buddyforms' ) ?></a>
+		<?php } ?>
 		<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
 			<div id="frontend-actions">
 				<label for="button">Frontend</label>
