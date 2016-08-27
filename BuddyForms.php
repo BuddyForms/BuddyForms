@@ -363,15 +363,19 @@ class BuddyForms {
 			$found = true;
 		}
 
+		if ( $post->ID == get_option('buddyforms_preview_page', true) ) {
+			$found = true;
+		}
+
 		$found = apply_filters( 'buddyforms_front_js_css_loader', $found );
 
 		if ( $found ) {
-			BuddyForms::buddyform_front_js();
+			BuddyForms::buddyform_front_js_css();
 		}
 
 	}
 
-	function buddyform_front_js() {
+	function buddyform_front_js_css() {
 		global $wp_scripts;
 
 		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';

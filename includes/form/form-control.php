@@ -14,7 +14,6 @@ function buddyforms_process_post( $args = Array() ) {
 
 	$form_type = isset($form_type) ? $form_type : '';
 
-
 	switch($form_type){
 		case 'contact':
 			return;

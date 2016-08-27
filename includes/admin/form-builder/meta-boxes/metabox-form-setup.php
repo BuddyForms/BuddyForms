@@ -115,6 +115,23 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $bf_ajax
 	) );
 
+	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'Local Storage', 'buddyforms' ) . '</b>', "buddyforms_options[local_storage]", array( 'disable' => __( 'Disable Local Storage', 'buddyforms' ) ), array(
+		'shortDesc' => __( 'The form elements content is stored in the browser so it not gets lost if the tab gets closed by accident', 'buddyforms' ),
+		'value'     => $local_storage
+	) );
+	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'User Data', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array(
+		'ipaddress' => __( 'ipaddress', 'buddyforms' ),
+		'referer' => __( 'referer', 'buddyforms' ),
+		'browser' => __( 'browser', 'buddyforms' ),
+		'version' => __( 'version', 'buddyforms' ),
+		'platform' => __( 'platform', 'buddyforms' ),
+		'reports' => __( 'reports', 'buddyforms' ),
+		'userAgent' => __( 'userAgent', 'buddyforms' ),
+	), array(
+		'shortDesc' => __( 'Save User Data', 'buddyforms' ),
+		'value'     => $bf_ajax
+	) );
+
 
 	//
 	// Create Content
