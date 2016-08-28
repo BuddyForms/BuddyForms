@@ -87,7 +87,7 @@ $current_user = wp_get_current_user();
 	<?php else : ?>
 
 		<div id="message" class="info">
-			<p><?php _e( 'There were no posts found.', 'buddyforms' ); ?></p>
+			<p><?php _e( 'There were no posts found. Create your first post now!', 'buddyforms' ); ?></p>
 		</div>
 
 	<?php endif; ?>

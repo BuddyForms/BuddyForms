@@ -94,10 +94,9 @@ function buddyforms_the_loop( $args ) {
 			$query_args = array(
 				'post_type'      => $post_type,
 				'post_parent'    => $post_parent,
-				//'orderby'         => 'menu_order', // ??? ;)
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => 10,
+				'posts_per_page' => apply_filters('bf_user_posts_query_args_posts_per_page', 10),
 				'author'         => $user_id,
 				'paged'          => $paged,
 			);
@@ -108,7 +107,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => 10,
+				'posts_per_page' => apply_filters('bf_user_posts_query_args_posts_per_page', 10),
 				'author'         => $user_id,
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',

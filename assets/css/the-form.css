@@ -752,3 +752,8 @@ div.bf_files_container ul li {
     padding-top: 0;
     min-width: 0;
 }
+
+/* Remove the edit attachement link from Media uploader */
+a.edit-attachment {
+    display: none !important;
+}

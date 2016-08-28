@@ -432,9 +432,7 @@ add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box'
 
 // remove the slugdiv metabox from buddyforms post edit screen
 function buddyforms_remove_slugdiv() {
-	if(get_post_type() === 'buddyforms') {
-		remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
-	}
+	remove_meta_box( 'slugdiv', 'buddyforms', 'normal' );
 }
 add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
 
