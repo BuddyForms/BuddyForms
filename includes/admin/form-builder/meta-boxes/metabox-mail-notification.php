@@ -80,6 +80,10 @@ function buddyforms_mail_notification_form($trigger = false) {
 		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 	}
 
+//	echo '<pre>';
+//	print_r($buddyform);
+//	echo '</pre>';
+
 	if ( !$trigger ) {
 		$trigger = $mod5 = substr( md5( time() * rand() ), 0, 10 );
 	}

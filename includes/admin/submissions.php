@@ -290,7 +290,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		} else {
 			echo $column_val;
 		}
-
+		if($column_name == 'Date'){
+			echo get_the_date( 'F j, Y', $item['ID'] );
+		}
 	}
 
 
@@ -299,6 +301,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$columns = array(
 			'ID'           => 'ID',
+			'Date'           => 'Date',
 		);
 
 		if(isset($buddyforms[$_GET['form_slug']]['form_fields'])){

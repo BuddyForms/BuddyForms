@@ -29,7 +29,6 @@ function buddyforms_process_post( $args = Array() ) {
 	$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 	$user_data['referer']   = $_SERVER['HTTP_REFERER'];
 
-
 	// Get the browser and platform
 	$browser_data = bf_get_browser();
 
@@ -38,17 +37,6 @@ function buddyforms_process_post( $args = Array() ) {
 	$user_data['platform']  = $browser_data['platform'];
 	$user_data['reports']   = $browser_data['reports'];
 	$user_data['userAgent'] = $browser_data['userAgent'];
-
-//	// Save the User Data like browser ip etc
-//	update_post_meta( $post_id, "_bf_user_data", $user_data );
-
-
-
-
-
-
-
-
 
 	do_action( 'buddyforms_process_post_start', $args );
 
