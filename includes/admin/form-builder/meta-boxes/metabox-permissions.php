@@ -12,7 +12,7 @@ function buddyforms_permissions_unregistered_screen() {
 
 	echo '<h4>Unregistered User</h4><br>';
 
-	$public_submit = 'public_submit';
+	$public_submit = '';
 	if ( isset( $buddyform['public_submit'] ) ) {
 		$public_submit = $buddyform['public_submit'];
 	}

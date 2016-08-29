@@ -27,9 +27,9 @@ function buddyforms_form_html( $args ) {
 
 
 
-//	if ( ! is_user_logged_in() ) :
-//		return buddyforms_get_login_form();
-//	endif;
+	if ( ! is_user_logged_in() &&  $buddyforms[$form_slug]['form_type'] == 'post') :
+		return buddyforms_get_login_form();
+	endif;
 
 	$user_can_edit = false;
 	if ( empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
@@ -45,7 +45,7 @@ function buddyforms_form_html( $args ) {
 	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
 
 	if ( $user_can_edit == false ) {
-		$error_message = __( 'You do not have the required user role to use this form', 'buddyforms' );
+		$error_message = __( 'hhYou do not have the required user role to use this form', 'buddyforms' );
 
 		return '<div class="error alert">' . $error_message . '</div>';
 	}
