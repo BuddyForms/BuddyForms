@@ -12,19 +12,53 @@
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms;
 
-	$form_type = isset($form_type) ? $form_type : '';
+
+
+	$hasError     = false;
+	$error_message = '';
+
+	$current_user = wp_get_current_user();
+
+	extract( shortcode_atts( array(
+		'post_type'   => '',
+		'the_post'    => 0,
+		'post_id'     => 0,
+		'post_parent' => 0,
+		'revision_id' => false,
+		'form_slug'   => 0,
+		'redirect_to' => $_SERVER['REQUEST_URI'],
+	), $args ) );
+
+
+
+
+
+
+	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
 	switch($form_type){
 		case 'contact':
+
 			return;
 			break;
 		case 'registration':
-			return;
+			$registration = buddyforms_add_new_member();
+
+			if(!empty($registration)) {
+				$hasError      = true;
+				if(is_array($registration)){
+					foreach($registration as $error){
+						$error_message .= $error . '<br>';
+					}
+				}
+			}
+
 			break;
 		default:
 			$form_type = 'post';
 			break;
 	}
+
 
 	$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 	$user_data['referer']   = $_SERVER['HTTP_REFERER'];
@@ -38,22 +72,15 @@ function buddyforms_process_post( $args = Array() ) {
 	$user_data['reports']   = $browser_data['reports'];
 	$user_data['userAgent'] = $browser_data['userAgent'];
 
+
+
+
 	do_action( 'buddyforms_process_post_start', $args );
 
-	$hasError     = false;
-	$info_message = '';
 
-	$current_user = wp_get_current_user();
 
-	extract( shortcode_atts( array(
-		'post_type'   => '',
-		'the_post'    => 0,
-		'post_id'     => 0,
-		'post_parent' => 0,
-		'revision_id' => false,
-		'form_slug'   => 0,
-		'redirect_to' => $_SERVER['REQUEST_URI'],
-	), $args ) );
+
+
 
 	if ( isset( $_POST['bf_post_type'] ) ) {
 		$post_type = $_POST['bf_post_type'];
@@ -535,4 +562,91 @@ function bf_get_browser()
 		'platform'  => $platform,
 		'pattern'    => $pattern
 	);
+}
+
+// register a new user
+function buddyforms_add_new_member() {
+	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) ) {
+
+		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
+
+		if ( ! wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
+			return false;
+		}
+
+
+		$user_login		= $_POST["user_login"];
+		$user_email		= $_POST["user_email"];
+		$user_first 	= $_POST["user_first"];
+		$user_last	 	= $_POST["user_last"];
+		$user_pass		= $_POST["user_pass"];
+		$pass_confirm 	= $_POST["user_pass_confirm"];
+
+		// this is required for username checks
+		require_once(ABSPATH . WPINC . '/registration.php');
+
+		if(username_exists($user_login)) {
+			// Username already registered
+			buddyforms_errors()->add('username_unavailable', __('Username already taken'));
+		}
+		if(!validate_username($user_login)) {
+			// invalid username
+			buddyforms_errors()->add('username_invalid', __('Invalid username'));
+		}
+		if($user_login == '') {
+			// empty username
+			buddyforms_errors()->add('username_empty', __('Please enter a username'));
+		}
+		if(!is_email($user_email)) {
+			//invalid email
+			buddyforms_errors()->add('email_invalid', __('Invalid email'));
+		}
+		if(email_exists($user_email)) {
+			//Email address already registered
+			buddyforms_errors()->add('email_used', __('Email already registered'));
+		}
+		if($user_pass == '') {
+			// passwords do not match
+			buddyforms_errors()->add('password_empty', __('Please enter a password'));
+		}
+		if($user_pass != $pass_confirm) {
+			// passwords do not match
+			buddyforms_errors()->add('password_mismatch', __('Passwords do not match'));
+		}
+
+		$errors = buddyforms_errors()->get_error_messages();
+
+		// only create the user in if there are no errors
+		if(empty($errors)) {
+
+			$new_user_id = wp_insert_user(array(
+					'user_login'		=> $user_login,
+					'user_pass'	 		=> $user_pass,
+					'user_email'		=> $user_email,
+					'first_name'		=> $user_first,
+					'last_name'			=> $user_last,
+					'user_registered'	=> date('Y-m-d H:i:s'),
+					'role'				=> 'subscriber'
+				)
+			);
+			if($new_user_id) {
+				// send an email to the admin alerting them of the registration
+				wp_new_user_notification($new_user_id);
+
+				// log the new user in
+//				wp_set_auth_cookie($user_login, $user_pass, true);
+//				wp_set_current_user($new_user_id, $user_login);
+//				do_action('wp_login', $user_login);
+			}
+
+		}
+		return $errors;
+	}
+}
+add_action('init', 'buddyforms_add_new_member');
+
+// used for tracking error messages
+function buddyforms_errors(){
+	static $wp_error; // Will hold global variable safely
+	return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
 }

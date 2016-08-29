@@ -93,6 +93,178 @@ function buddyforms_display_form_element( $args ) {
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
 			break;
+
+
+
+
+
+
+
+
+
+		case 'subject':
+			unset( $form_fields['advanced'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Subject';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'subject' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			$validation_minlength                              = isset( $customfield['avalidation_minlengtha'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
+			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
+
+			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
+			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+			break;
+		case 'subject':
+			unset( $form_fields['advanced'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Message';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'message' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			$validation_minlength                              = isset( $customfield['avalidation_minlengtha'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
+			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
+
+			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
+			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+			break;
+
+		case 'user_login':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Username';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_login' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			break;
+		case 'user_email':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'eMail';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_email' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			break;
+		case 'user_first':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'First Name';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_first' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			break;
+		case 'user_last':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Last Name';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_last' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			break;
+		case 'user_pass':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Password';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_pass' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			break;
+		case 'user_website':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Website';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'website' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			break;
+		case 'user_bio':
+			unset( $form_fields['advanced'] );
+			unset( $form_fields['validation'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Bio';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_bio' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		case 'textarea':
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );

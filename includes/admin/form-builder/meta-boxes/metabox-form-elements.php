@@ -178,3 +178,130 @@ function buddyforms_form_builder_form_elements_select(){
 	// Return the options
 	return $el_sel_options;
 }
+
+function bf_form_elements_select_options(){
+	global $elements_select_options;
+	// Create the form elements array
+	$elements_select_options = array(
+		'Contact' => array(
+			'label'     => __('Contact Fields', 'buddyforms'),
+			'fields'    => array(
+				'Subject'   => array(
+					'label'     => __( 'Subject', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'Message'   => array(
+					'label'     => __( 'Message', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+			),
+		),
+		'user' => array(
+			'label'     => __('User Fields', 'buddyforms'),
+			'fields'    => array(
+				'user_login'     => array(
+					'label'     => __( 'Username', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_email'   => array(
+					'label'     => __( 'User eEmail', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_first'   => array(
+					'label'     => __( 'User First Name', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_last'   => array(
+					'label'     => __( 'User Last Name', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_pass'   => array(
+					'label'     => __( 'Password', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_website'   => array(
+					'label'     => __( 'Website', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'user_bio'   => array(
+					'label'     => __( 'About / Bio', 'buddyforms' ),
+					'unique'    => 'unique'
+				)
+			),
+		),
+		'post' => array(
+			'label'     => __('Post Fields', 'buddyforms'),
+			'fields'    => array(
+				'title'     => array(
+					'label'     => __( 'Title', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'content'   => array(
+					'label'     => __( 'Content', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'taxonomy'  => array(
+					'label'     => __( 'Taxonomy', 'buddyforms' ),
+				),
+				'comments'  => array(
+					'label'     => __( 'Comments', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'status'    => array(
+					'label'     => __( 'Post Status', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+				'featured_image'    => array(
+					'label'     => __( 'Featured Image', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
+			),
+		),
+		'basic' => array(
+			'label'     => __('Basic Fields', 'buddyforms'),
+			'post_type '=> 'all',
+			'fields'    => array(
+				'text'     => array(
+					'label'     => __( 'Text', 'buddyforms' ),
+				),
+				'textarea'   => array(
+					'label'     => __( 'Textarea', 'buddyforms' ),
+				),
+				'dropdown'  => array(
+					'label'     => __( 'Dropdown', 'buddyforms' ),
+				),
+				'radiobutton'  => array(
+					'label'     => __( 'Radiobutton', 'buddyforms' ),
+				),
+				'checkbox'    => array(
+					'label'     => __( 'Checkbox', 'buddyforms' ),
+				)
+			),
+		),
+		'extra' => array(
+			'label'     => __('Extra Fields', 'buddyforms'),
+			'fields'    => array(
+				'file'     => array(
+					'label'     => __( 'File', 'buddyforms' ),
+				),
+				'hidden'   => array(
+					'label'     => __( 'Hidden', 'buddyforms' ),
+				),
+				'number'  => array(
+					'label'     => __( 'Number', 'buddyforms' ),
+				),
+				'html'  => array(
+					'label'     => __( 'HTML', 'buddyforms' ),
+				),
+				'date'  => array(
+					'label'     => __( 'Date', 'buddyforms' ),
+				),
+			),
+		),
+	);
+
+	// Allow others to filter the array
+	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );
+
+	return $elements_select_options;
+}
