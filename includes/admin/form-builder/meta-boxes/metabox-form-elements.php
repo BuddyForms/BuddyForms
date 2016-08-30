@@ -194,6 +194,10 @@ function bf_form_elements_select_options(){
 					'label'     => __( 'Message', 'buddyforms' ),
 					'unique'    => 'unique'
 				),
+				'captcha'   => array(
+					'label'     => __( 'Captcha', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
 			),
 		),
 		'user' => array(
