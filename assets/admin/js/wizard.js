@@ -112,7 +112,7 @@ jQuery(document).ready(function (jQuery) {
         }
 
         jQuery(
-            '<h3>Add Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
+            '<h3>Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
             '<h3>Mail Notifications</h3><section><div id="bf-hooker-notifications"></div></section>' +
             '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>'
         ).appendTo( '#hooker-steps' );
@@ -126,7 +126,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         // Change the Form Builder h2 Title
-        jQuery('#buddyforms_form_elements h2 span').html('Click on the form elements!');
+        jQuery('#buddyforms_form_elements h2 span').html('Choose a field type and click "Add Field"');
 
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template ).hide()
