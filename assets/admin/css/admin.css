@@ -883,9 +883,6 @@ div#buddyforms_metabox_sidebar p {
     width: 100%;
     height: 100%;
 }
-.wizard > .content > .body input {
-    border: 1px solid #ccc;
-}
 .wizard > .content > .body input[type="checkbox"] {
     display: inline-block;
 }
