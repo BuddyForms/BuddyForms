@@ -755,7 +755,7 @@ div#buddyforms_metabox_sidebar p {
     width: 30%;
 }
 .wizard > .steps .number {
-    font-size: 14px;
+    font-size: 11px;
 }
 .wizard > .steps > ul {
     text-align: left;
@@ -766,33 +766,10 @@ div#buddyforms_metabox_sidebar p {
     float: none;
     width: auto;
     text-align: right;
-    margin-right: 25px;
+    margin-right: 5px;
 }
 .wizard > .actions > ul > li {
     float: left;
-}
-@media (min-width: 1200px) {
-  .wizard > .steps > ul > li:after {
-      right: auto;
-      top: 15px;
-      border: solid transparent;
-      content: " ";
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(166, 126, 35, 0);
-      border-left-color: #d4d4d4;
-      border-width: 17px;
-      margin-top: 0;
-  }
-  .wizard > .steps > ul > li.current:after {
-    border-left-color: #0073aa;
-  }
-  .wizard > .steps > ul > li.done:after {
-    border-left-color: #90c8bb;
-  }
-  .wizard > .steps > ul > li.error:after {
-    border-left-color: #ff3111;
-  }
 }
 .wizard.vertical > .steps > ul > li {
     float: none;
@@ -803,14 +780,15 @@ div#buddyforms_metabox_sidebar p {
 .wizard > .steps a:active {
     display: block;
     width: auto;
-    min-width: 120px;
+    min-width: 0;
     margin: 0;
-    padding: 10px 15px;
+    padding: 8px 12px;
     line-height: 1;
     text-decoration: none;
     text-align: center;
     border-radius: 0;
     outline: none;
+    font-size: 11px;
 }
 .wizard > .steps .disabled a,
 .wizard > .steps .disabled a:hover,
@@ -838,6 +816,41 @@ div#buddyforms_metabox_sidebar p {
     background: #ff3111;
     color: #fff;
 }
+
+@media (min-width: 1200px) {
+  .wizard > .steps > ul > li {
+      margin-right: 25px;
+  }
+  .wizard > .steps > ul > li:after {
+      right: auto;
+      top: 15px;
+      border: solid transparent;
+      content: " ";
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(166, 126, 35, 0);
+      border-left-color: #d4d4d4;
+      border-width: 13px;
+      margin-top: 0;
+  }
+  .wizard > .steps a,
+  .wizard > .steps a:hover,
+  .wizard > .steps a:active {
+      min-width: 100px;
+      padding: 10px 15px;
+      font-size: 14px;
+  }
+  .wizard > .steps > ul > li.current:after {
+    border-left-color: #0073aa;
+  }
+  .wizard > .steps > ul > li.done:after {
+    border-left-color: #90c8bb;
+  }
+  .wizard > .steps > ul > li.error:after {
+    border-left-color: #ff3111;
+  }
+}
+
 .wizard > .content {
     display: block;
     margin: 0;
