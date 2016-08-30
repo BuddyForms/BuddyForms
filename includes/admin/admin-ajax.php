@@ -147,7 +147,7 @@ function buddyforms_form_template(){
 
 	switch($_POST['template']){
 		case 'contact' :
-			$buddyform =  json_decode( '{"form_fields":{"09bd6cc566":{"type":"user_email","slug":"user_email","name":"eMail","description":"enter mail"},"96cf656f31":{"type":"subject","slug":"subject","name":"Subject","description":"Enter a subject","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"},"19fd22fcb9":{"type":"message","slug":"message","name":"Message","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"}},"form_type":"registration","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","public_submit":["public_submit"],"name":"Contact us","slug":"contact-us"}', true );
+			$buddyform =  json_decode( '{"form_fields":{"92f6e0cb6b":{"type":"user_first","slug":"user_first","name":"First Name","description":""},"8ead289ca0":{"type":"user_last","slug":"user_last","name":"Last Name","description":""},"87e0afb2d7":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"210ef7d8a8":{"type":"subject","slug":"subject","name":"Subject","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"},"0a256db3cb":{"type":"message","slug":"message","name":"Message","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"}},"form_type":"contact","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"01bd6766e5":{"mail_trigger_id":"01bd6766e5","mail_from_name":"eMail Notification","mail_to_address":"[user_email]","mail_from":"mail@sven-lehnert.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":"Hi [user_first],\r\n\r\nthanks for getting in contact with us.\r\n\r\nYour Message has been Submitted Successfully. We will get in contact with you shortly.\r\n\r\nYour Message Text:\r\n\r\n[subject]\r\n[message]\r\n\r\n\r\n"}},"public_submit":["public_submit"],"name":"Contact Form","slug":"contact-form"}', true );
 			break;
 		case 'registration' :
 			$buddyform =  json_decode( '{"form_fields":{"5bf35b20e3":{"name":"Subject","description":"","type":"title","slug":"editpost_title","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"a6aa43b61d":{"name":"Content","description":"","type":"content","slug":"editpost_content","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"name":"Post","slug":"post","after_submit":"display_message","after_submit_message_text":"The [form_singular_name] [post_title] has been successfully updated!<br>1. [post_link]<br>2. [edit_link]","post_type":"post","status":"publish","comment_status":"open","edit_link":"all","singular_name":"","attached_page":"2","list_posts_option":"list_all_form","list_posts_style":"list"}', true );
@@ -165,7 +165,13 @@ function buddyforms_form_template(){
 	$tmp = ob_get_clean();
 
 	$json['html'] = $tmp;
+
+
+	buddyforms_mail_notification_form( $buddyform['form_slug'] );
+
+
 	unset($buddyform['form_fields']);
+
 	$json['form_setup'] = $buddyform;
 
 
