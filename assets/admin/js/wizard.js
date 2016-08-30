@@ -126,7 +126,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         // Change the Form Builder h2 Title
-        jQuery('#buddyforms_form_elements h2 span').html('Click on the form elements!');
+        jQuery('#buddyforms_form_elements h2 span').html('Choose a field type and click "Add Field"');
 
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template ).hide()
