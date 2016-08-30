@@ -58,40 +58,42 @@ function bf_form_elements( $form, $args ) {
 
 				switch ( sanitize_title( $customfield['type'] ) ) {
 
-
 					case 'subject':
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
+
 					case 'message':
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_login':
 						 $form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_email':
 						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_first':
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_last':
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_pass':
 						$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
 						$form->addElement( new Element_Password( $name . ' Confirm', $slug  . '_confirm', $element_attr ) );
 						break;
+
 					case 'user_website':
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
+
 					case 'user_bio':
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;
-
-
-
-
-
 
 					case 'number':
 						$form->addElement( new Element_Number( $name, $slug, $element_attr ) );

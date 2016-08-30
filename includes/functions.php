@@ -147,7 +147,6 @@ function buddyforms_get_login_form() {
 	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
-
 	return $wp_login_form;
 }
 

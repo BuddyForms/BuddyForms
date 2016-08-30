@@ -149,11 +149,6 @@ jQuery(document).ready(function (jQuery) {
         write_form_elements();
 
 
-
-
-
-
-
         // All should be in place. Show the wizard
         var form = jQuery('#post').show();
 
@@ -283,7 +278,7 @@ jQuery(document).ready(function (jQuery) {
                         return true;
                     }
                 });
-                //form.submit();
+                form.submit();
             }
         });
 

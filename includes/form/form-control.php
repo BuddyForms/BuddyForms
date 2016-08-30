@@ -574,13 +574,16 @@ function buddyforms_add_new_member() {
 			return false;
 		}
 
+		$user_login		= sanitize_user( $_POST["user_login"] );
+		$user_email		= sanitize_email( $_POST["user_email"] );
+		$user_first 	= sanitize_text_field( $_POST["user_first"] );
+		$user_last	 	= sanitize_text_field( $_POST["user_last"] );
+		$user_pass		= esc_attr( $_POST["user_pass"] );
+		$pass_confirm 	= esc_attr( $_POST["user_pass_confirm"] );
+		$user_url		= isset($_POST["user_website"]) ? esc_url( $_POST["user_website"] ) : '';
+		$description    = isset($_POST["user_bio"]) ? esc_textarea( $_POST["user_bio"] ) : '';
 
-		$user_login		= $_POST["user_login"];
-		$user_email		= $_POST["user_email"];
-		$user_first 	= $_POST["user_first"];
-		$user_last	 	= $_POST["user_last"];
-		$user_pass		= $_POST["user_pass"];
-		$pass_confirm 	= $_POST["user_pass_confirm"];
+
 
 		// this is required for username checks
 		require_once(ABSPATH . WPINC . '/registration.php');
@@ -626,17 +629,15 @@ function buddyforms_add_new_member() {
 					'first_name'		=> $user_first,
 					'last_name'			=> $user_last,
 					'user_registered'	=> date('Y-m-d H:i:s'),
-					'role'				=> 'subscriber'
+					'role'				=> 'subscriber',
+					'user_url'			=> $user_url,
+					'description'		=> $description
 				)
 			);
 			if($new_user_id) {
 				// send an email to the admin alerting them of the registration
 				wp_new_user_notification($new_user_id);
 
-				// log the new user in
-//				wp_set_auth_cookie($user_login, $user_pass, true);
-//				wp_set_current_user($new_user_id, $user_login);
-//				do_action('wp_login', $user_login);
 			}
 
 		}

@@ -160,7 +160,7 @@ function buddyforms_form_builder_wizard_save(){
 
 
 	$url =  admin_url().'post.php?post=' . $form. '&action=edit&wizard=done';
-//	echo $url;
+	echo $url;
 	die();
 
 }

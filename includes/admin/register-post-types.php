@@ -295,16 +295,12 @@ function custom_buddyforms_column( $column, $post_id ) {
 			break;
 		case 'attached_post_type' :
 
-			$post_type_html = isset( $buddyform['post_type'] ) ? $buddyform['post_type'] : 'none';
-
-			if ( ! post_type_exists( $post_type_html ) ) {
-				$post_type_html = '<p style="color: red;">' . __( 'Post Type not exists', 'buddyforms' ) . '</p>';
-			}
-
-			if ( ! isset( $buddyform['post_type'] ) || $buddyform['post_type'] == 'bf_submissions' ) {
+			if ( $buddyform['form_type']  == 'contact' ) {
 				$post_type_html = '<p>' . __( 'Contact Form', 'buddyforms' ) . '</p>';
-			} else {
+			} elseif($buddyform['form_type']  == 'post' ) {
 				$post_type_html = '<p>' . __( 'Post Submissions', 'buddyforms' ) . ' <br> ' . __( 'Post Type: ', 'buddyforms' ) . $buddyform['post_type'] . '</p>';
+			} elseif( $buddyform['form_type']  == 'registration' ) {
+				$post_type_html = '<p>' . __( 'Registration Form', 'buddyforms' ) . '</p>';
 			}
 
 			echo $post_type_html;
