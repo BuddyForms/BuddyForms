@@ -830,8 +830,11 @@ div#buddyforms_metabox_sidebar p {
       pointer-events: none;
       border-color: rgba(166, 126, 35, 0);
       border-left-color: #d4d4d4;
-      border-width: 13px;
+      border-width: 17px;
       margin-top: 0;
+  }
+  .wizard > .steps .number {
+      font-size: 14px;
   }
   .wizard > .steps a,
   .wizard > .steps a:hover,
