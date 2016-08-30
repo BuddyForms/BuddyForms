@@ -554,6 +554,9 @@ a.button.button-large.bf_button_action {
     margin-right: -12px;
     margin-bottom: -12px;
 }
+.formbuilder-actions-select-wrap {
+    overflow: auto;
+}
 #formbuilder-action-select {
     line-height: 28px;
     vertical-align: middle;
@@ -830,18 +833,18 @@ div#buddyforms_metabox_sidebar p {
       pointer-events: none;
       border-color: rgba(166, 126, 35, 0);
       border-left-color: #d4d4d4;
-      border-width: 17px;
+      border-width: 16px;
       margin-top: 0;
-  }
-  .wizard > .steps .number {
-      font-size: 14px;
   }
   .wizard > .steps a,
   .wizard > .steps a:hover,
   .wizard > .steps a:active {
       min-width: 100px;
-      padding: 10px 15px;
-      font-size: 14px;
+      padding: 10px 12px;
+      font-size: 12px;
+  }
+  .wizard > .steps .number {
+      font-size: 12px;
   }
   .wizard > .steps > ul > li.current:after {
     border-left-color: #0073aa;
