@@ -1,14 +1,14 @@
 <?php
 
-function buddyforms_metabox_form_elements($post, $buddyform = '') {
-	global $post;
+function buddyforms_metabox_form_elements($post, $buddyform = false) {
+	global $post, $buddyform;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
-
-	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	if(!$buddyform)
+		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
 
 	// Generate the form slug from the post name

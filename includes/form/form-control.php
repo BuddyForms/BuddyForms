@@ -12,8 +12,6 @@
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms;
 
-
-
 	$hasError     = false;
 	$error_message = '';
 
@@ -29,21 +27,13 @@ function buddyforms_process_post( $args = Array() ) {
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 	), $args ) );
 
-
-
-
-
-
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
 	switch($form_type){
 		case 'contact':
-
-			return;
 			break;
 		case 'registration':
 			$registration = buddyforms_add_new_member();
-
 			if(!empty($registration)) {
 				$hasError      = true;
 				if(is_array($registration)){
@@ -52,14 +42,12 @@ function buddyforms_process_post( $args = Array() ) {
 					}
 				}
 			}
-
 			break;
 		default:
-			$form_type = 'post';
 			break;
 	}
 
-
+	// Collect all submitter data
 	$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 	$user_data['referer']   = $_SERVER['HTTP_REFERER'];
 
@@ -72,15 +60,7 @@ function buddyforms_process_post( $args = Array() ) {
 	$user_data['reports']   = $browser_data['reports'];
 	$user_data['userAgent'] = $browser_data['userAgent'];
 
-
-
-
 	do_action( 'buddyforms_process_post_start', $args );
-
-
-
-
-
 
 	if ( isset( $_POST['bf_post_type'] ) ) {
 		$post_type = $_POST['bf_post_type'];
