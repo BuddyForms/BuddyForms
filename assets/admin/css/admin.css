@@ -975,7 +975,7 @@ div#buddyforms_metabox_sidebar p {
 .wizard #buddyforms_form_elements {
     overflow: auto;
 }
-.wizard #sortable_buddyforms_elements {
+/*.wizard #sortable_buddyforms_elements {
     width: calc(100% - 342px);
     float: left;
     clear: none;
@@ -988,7 +988,7 @@ div#buddyforms_metabox_sidebar p {
       border: 1px solid #e5e5e5;
       clear: none;
   }
-}
+}*/
 .wizard #formbuilder-actions-wrap .button {
     margin-bottom: 10px;
 }
@@ -996,10 +996,22 @@ div#buddyforms_metabox_sidebar p {
 .wizard .formbuilder-actions-sidebar-wrap {
   display: none;
 }
-
+#poststuff .wizard .accordion_fields {
+  margin-top: 6px;
+}
 #poststuff .wizard #buddyforms_form_elements .inside {
     margin: 0px 0 0;
 }
 .postbox .wizard #buddyforms_form_elements .hndle {
   border-bottom: none;
+}
+
+/* Form Wizard - Pagination */
+.wizard > .actions > ul[aria-label="Pagination"] {
+  width: 100%;
+  text-align: center;
+}
+.wizard > .actions > ul[aria-label="Pagination"] > li {
+    float: none;
+    display: inline-block;
 }
