@@ -47,7 +47,7 @@ function bud_fs() {
 			'has_paid_plans'    => true,
 			'menu'              => array(
 				'slug'       => 'edit.php?post_type=buddyforms',
-				'first-path' => 'wp-admin/index.php?page=welcome-screen-about',
+				'first-path' => 'wp-admin/edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
 				'account'    => false,
 				'contact'    => false,
 				'support'    => false,

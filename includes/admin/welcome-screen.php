@@ -12,34 +12,22 @@ add_action( 'admin_menu', 'buddyforms_welcome_screen_menu', 9999 );
 
 add_action( 'admin_init', 'buddyforms_welcome_screen_do_activation_redirect' );
 function buddyforms_welcome_screen_do_activation_redirect() {
-// Bail if no activation redirect
-if ( ! get_transient( '_buddyforms_welcome_screen_activation_redirect' ) ) {
-return;
-}
+	// Bail if no activation redirect
+	if ( ! get_transient( '_buddyforms_welcome_screen_activation_redirect' ) ) {
+		return;
+	}
 
-// Delete the redirect transient
-delete_transient( '_buddyforms_welcome_screen_activation_redirect' );
+	// Delete the redirect transient
+	delete_transient( '_buddyforms_welcome_screen_activation_redirect' );
 
-// Bail if activating from network, or bulk
-if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-return;
-}
+	// Bail if activating from network, or bulk
+	if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+		return;
+	}
 
-// Redirect to bbPress about page
-wp_safe_redirect( add_query_arg( array( 'page' => 'welcome-screen-about' ), admin_url( 'index.php' ) ) );
+	// Redirect to BuddyForms about page
+	wp_safe_redirect( add_query_arg( array( 'post_type' => 'buddyforms', 'page' => 'buddyforms_welcome_screen' ), admin_url('edit.php') ) );
 
-}
-
-add_action('admin_menu', 'buddyforms_welcome_screen_pages');
-
-function buddyforms_welcome_screen_pages() {
-add_dashboard_page(
-'Welcome To Welcome Screen',
-'Welcome To Welcome Screen',
-'read',
-'welcome-screen-about',
-'buddyforms_welcome_screen_content'
-);
 }
 
 function buddyforms_welcome_screen_content() {
@@ -252,9 +240,4 @@ function buddyforms_welcome_screen_content() {
 
 	</div>
 <?php
-}
-
-add_action( 'admin_head', 'buddyforms_welcome_screen_remove_menus' );
-function buddyforms_welcome_screen_remove_menus() {
-	remove_submenu_page( 'index.php', 'welcome-screen-about' );
 }
