@@ -29,6 +29,44 @@
  ****************************************************************************
  */
 
+// Create a helper function for easy SDK access.
+function bud_fs() {
+	global $bud_fs;
+
+	if ( ! isset( $bud_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
+
+		$bud_fs = fs_dynamic_init( array(
+			'id'                => '391',
+			'slug'              => 'buddyforms',
+			'type'              => 'plugin',
+			'public_key'        => 'pk_dea3d8c1c831caf06cfea10c7114c',
+			'is_premium'        => true,
+			'has_addons'        => true,
+			'has_paid_plans'    => true,
+			'menu'              => array(
+				'slug'       => 'edit.php?post_type=buddyforms',
+				'first-path' => 'wp-admin/index.php?page=welcome-screen-about',
+				'account'    => false,
+				'contact'    => false,
+				'support'    => false,
+			),
+			// Set the SDK to work in a sandbox mode (for development & testing).
+			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
+			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
+		) );
+	}
+
+	return $bud_fs;
+}
+
+// Init Freemius.
+bud_fs();
+
+// Not like register_uninstall_hook(), you do NOT have to use a static function.
+bud_fs()->add_action('after_uninstall', 'bud_fs_uninstall_cleanup');
+
 class BuddyForms {
 
 	/**

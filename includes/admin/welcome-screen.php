@@ -1,5 +1,15 @@
 <?php
 
+//
+// Add the Settings Page to the BuddyForms Menu
+//
+function buddyforms_welcome_screen_menu() {
+
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Info', 'buddyforms' ), __( 'Info', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content' );
+
+}
+add_action( 'admin_menu', 'buddyforms_welcome_screen_menu', 9999 );
+
 add_action( 'admin_init', 'buddyforms_welcome_screen_do_activation_redirect' );
 function buddyforms_welcome_screen_do_activation_redirect() {
 // Bail if no activation redirect
@@ -245,7 +255,6 @@ function buddyforms_welcome_screen_content() {
 }
 
 add_action( 'admin_head', 'buddyforms_welcome_screen_remove_menus' );
-
 function buddyforms_welcome_screen_remove_menus() {
 	remove_submenu_page( 'index.php', 'welcome-screen-about' );
 }
