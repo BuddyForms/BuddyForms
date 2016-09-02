@@ -167,7 +167,7 @@ function buddyforms_form_template(){
 	$json['html'] = $tmp;
 
 
-	buddyforms_mail_notification_form( $buddyform['form_slug'] );
+	//buddyforms_mail_notification_form( $buddyform['form_slug'] );
 
 
 	unset($buddyform['form_fields']);
