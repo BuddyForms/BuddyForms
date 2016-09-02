@@ -296,7 +296,9 @@ function custom_buddyforms_column( $column, $post_id ) {
 			break;
 		case 'attached_post_type' :
 
-			if ( $buddyform['form_type']  == 'contact' ) {
+			if ( !isset( $buddyform['form_type'] ) ){
+				$post_type_html = '<p>' . __( 'Contact Form', 'buddyforms' ) . '</p>';
+			} elseif($buddyform['form_type']  == 'contact' ) {
 				$post_type_html = '<p>' . __( 'Contact Form', 'buddyforms' ) . '</p>';
 			} elseif($buddyform['form_type']  == 'post' ) {
 				$post_type_html = '<p>' . __( 'Post Submissions', 'buddyforms' ) . ' <br> ' . __( 'Post Type: ', 'buddyforms' ) . $buddyform['post_type'] . '</p>';
