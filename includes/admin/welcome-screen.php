@@ -26,8 +26,8 @@ function buddyforms_welcome_screen_do_activation_redirect() {
 	}
 
 	// Redirect to BuddyForms about page
-	wp_safe_redirect( add_query_arg( array( 'post_type' => 'buddyforms', 'page' => 'buddyforms_welcome_screen' ), admin_url('edit.php') ) );
-
+//	wp_safe_redirect( add_query_arg( array( 'post_type' => 'buddyforms', 'page' => 'buddyforms_welcome_screen' ), admin_url('edit.php') ) );
+//
 }
 
 function buddyforms_welcome_screen_content() {

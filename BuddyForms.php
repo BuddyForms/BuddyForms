@@ -42,7 +42,7 @@ function buddyforms_core_fs() {
 			'slug'              => 'buddyforms',
 			'type'              => 'plugin',
 			'public_key'        => 'pk_dea3d8c1c831caf06cfea10c7114c',
-			'is_premium'        => false,
+			'is_premium'        => true,
 			'has_addons'        => true,
 			'has_paid_plans'    => true,
 			'menu'              => array(
@@ -59,8 +59,8 @@ function buddyforms_core_fs() {
 	return $buddyforms_core_fs;
 }
 
-// Init Freemius.
-buddyforms_core_fs();
+
+
 
 class BuddyForms {
 
@@ -575,5 +575,7 @@ if(PHP_VERSION < 5.3){
 	add_action( 'admin_notices', 'bf_php_version_admin_notice' );
 } else {
 	$GLOBALS['buddyforms_new'] = new BuddyForms();
+	// Init Freemius.
+	buddyforms_core_fs();
 }
 

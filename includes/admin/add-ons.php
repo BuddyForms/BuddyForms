@@ -18,7 +18,7 @@ function buddyforms_create_addons_menu() {
 
 }
 
-add_action( 'admin_menu', 'buddyforms_create_addons_menu' );
+//add_action( 'admin_menu', 'buddyforms_create_addons_menu' );
 
 function bf_add_ons_screen() {
 

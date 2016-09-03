@@ -183,7 +183,7 @@ function bf_form_elements_select_options(){
 	global $elements_select_options;
 	// Create the form elements array
 	$elements_select_options = array(
-		'Contact' => array(
+		'contact' => array(
 			'label'     => __('Contact Fields', 'buddyforms'),
 			'fields'    => array(
 				'Subject'   => array(
@@ -303,6 +303,15 @@ function bf_form_elements_select_options(){
 			),
 		),
 	);
+
+
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		$elements_select_options['contact']['fields']['test'] =
+			array(
+				'label'     => __( 'Test', 'buddyforms' ),
+		);
+	}
+
 
 	// Allow others to filter the array
 	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );
