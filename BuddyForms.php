@@ -49,10 +49,12 @@ function buddyforms_core_fs() {
 				'slug'       => 'edit.php?post_type=buddyforms',
 				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
 				'support'    => false,
+				'contact'    => false,
+				'addons'    => false,
 			),
 			// Set the SDK to work in a sandbox mode (for development & testing).
 			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
+//			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
 		) );
 	}
 
@@ -202,6 +204,8 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/contact-us.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
@@ -241,14 +245,14 @@ class BuddyForms {
 	 */
 	function buddyforms_admin_style( $hook_suffix ) {
 		global $post;
-
 		if (
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
-			|| $hook_suffix == 'buddyforms_page_bf_submissions'
+			|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
+			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		) {
 
 			if ( is_rtl() ) {
@@ -283,6 +287,7 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
 			|| $hook_suffix == 'buddyforms-page-bf-settings'
 			|| $hook_suffix == 'buddyforms-page-bf-submissions'
+			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		) {
 			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ) );
@@ -342,6 +347,7 @@ class BuddyForms {
 		  && $post->post_type == 'buddyforms'
 		  && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 		  || isset( $post ) && $post->post_type == 'buddyforms'
+		  || $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		)
 		) {
 			?>
@@ -515,7 +521,7 @@ class BuddyForms {
 
 		if ( $current_screen->id == 'edit-buddyforms'
 		     || $current_screen->id == 'buddyforms'
-		     || $current_screen->id == 'buddyforms_page_bf_submissions'
+		     || $current_screen->id == 'buddyforms_page_buddyforms_submissions'
 		     || $current_screen->id == 'buddyforms_page_buddyforms_settings'
 		     || $current_screen->id == 'buddyforms_page_bf_add_ons'
 		) {

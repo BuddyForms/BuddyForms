@@ -59,7 +59,7 @@ $current_user = wp_get_current_user(); ?>
 										<div class="table-item-status"><?php echo $post_status_name ?></div>
 									</div>
 								</td>
-								<?php if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() && $buddyforms[$form_slug]['post_type'] != 'bf_submissions') { ?>
+								<?php if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() && $buddyforms[$form_slug]['post_type'] != 'buddyforms_submissions') { ?>
 									<td>
 										<div class="meta">
 											<span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>

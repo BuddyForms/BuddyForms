@@ -14,9 +14,9 @@ function buddyforms_metabox_form_setup() {
 	$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
 
 	// Generate the Post Type Array 'none' == Contact Form
-	$post_types['bf_submissions'] = 'none';
+	$post_types['buddyforms_submissions'] = 'none';
 
-	$post_types = buddyforms_sort_array_by_Array($post_types, array('bf_submissions'));
+	$post_types = buddyforms_sort_array_by_Array($post_types, array('buddyforms_submissions'));
 
 	// Remove the 'buddyforms' post type from the post type array
 	unset( $post_types['buddyforms'] );

@@ -8,22 +8,22 @@ function buddyforms_create_submissions_page()  {
 		'manage_options',
 		'post-new.php?post_type=buddyforms&wizard=1'
 	);
-	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'bf_submissions_screen' );
-	add_action( "load-$hook", 'bf_submissions_add_options' );
+	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'buddyforms_submissions', 'buddyforms_submissions_screen' );
+	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
 
 add_action('admin_init', 'redirect_after_delete');
 function redirect_after_delete(){
 
-	if( isset($_GET['page']) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] )){
+	if( isset($_GET['page']) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] )){
 		if(!get_post($_GET['entry'])){
-			wp_redirect('?post_type=buddyforms&page=bf_submissions&form_slug='.$_GET['form_slug']);
+			wp_redirect('?post_type=buddyforms&page=buddyforms_submissions&form_slug='.$_GET['form_slug']);
 		}
 	}
 }
 
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
-function bf_submissions_add_options() {
+function buddyforms_submissions_add_options() {
 	global $buddyforms_submissions_table;
 
 	$option = 'per_page';
@@ -39,12 +39,12 @@ function bf_submissions_add_options() {
 
 }
 
-add_filter( 'set-screen-option', 'bf_submissions_set_option', 10, 3 );
-function bf_submissions_set_option( $status, $option, $value ) {
+add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
+function buddyforms_submissions_set_option( $status, $option, $value ) {
 	return $value;
 }
 
-function bf_submissions_screen() {
+function buddyforms_submissions_screen() {
 	global $buddyforms, $buddyforms_submissions_table;
 
 	// Check that the user is allowed to update options
@@ -74,7 +74,7 @@ function bf_submissions_screen() {
 					<script type="text/javascript">
 						jQuery(document).ready(function (jQuery) {
 							jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
-								window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
+								window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
 							});
 						});
 					</script>
@@ -267,7 +267,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'delete' => '<a href="' . get_delete_post_link( $item['ID'] , '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
-		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'bf_submissions'){
+		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'buddyforms_submissions'){
 			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Form</a>', $_REQUEST['page'], 'edit', $item['ID'], $_GET['form_slug'] );
 		}
 

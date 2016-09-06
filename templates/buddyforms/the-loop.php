@@ -47,7 +47,7 @@ $current_user = wp_get_current_user();
 					</div>
 
 					<?php
-					if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() && $buddyforms[$form_slug]['post_type'] != 'bf_submissions' ) {
+					if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() && $buddyforms[$form_slug]['post_type'] != 'buddyforms_submissions' ) {
 						ob_start();
 						?>
 						<div class="action">

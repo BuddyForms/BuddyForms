@@ -71,7 +71,7 @@ function buddyforms_settings_page() {
 											$post_types_forms = Array();
 											foreach ( $buddyforms as $key => $buddyform ) {
 
-												if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions' && post_type_exists($buddyform['post_type'])){
+												if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'buddyforms_submissions' && post_type_exists($buddyform['post_type'])){
 													$post_types_forms[ $buddyform['post_type'] ][ $key ] = $buddyform;
 												}
 
