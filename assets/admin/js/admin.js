@@ -73,6 +73,17 @@ jQuery(document).ready(function (jQuery) {
     //var hash = window.location.hash;
     //jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
 
+
+
+
+    // Hide all postbox metabocen exeped the buddyforms etaboxes
+    jQuery('div .postbox').not('.buddyforms-metabox').hide();
+
+    // Show the submit metabox
+    jQuery('#submitdiv').show();
+    jQuery('#buddyforms-edit-wrap').removeClass('hidden');
+
+
     //
     // / Add Select2 Support
     //

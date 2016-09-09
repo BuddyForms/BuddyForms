@@ -193,4 +193,4 @@ function buddyforms_wizard_done(){
 			break;
 	}
 }
-//add_action('save_post','buddyforms_wizard_done');
+add_action('save_post','buddyforms_wizard_done');

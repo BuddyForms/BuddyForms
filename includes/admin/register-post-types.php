@@ -34,7 +34,26 @@ add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_page_form' );
 }, PHP_INT_MAX );
 
+// Add the 'buddyforms_metabox' class to all buddyforms related metaboxes to hide the rest.
+add_filter('postbox_classes_buddyforms_buddyforms_form_elements','buddyforms_metabox_class');
+add_filter('buddyforms_metabox_sidebar','buddyforms_metabox_class');
+add_filter('postbox_classes_buddyforms_buddyforms_form_setup','buddyforms_metabox_class');
+add_filter('postbox_classes_buddyforms_buddyforms_form_shortcodes','buddyforms_metabox_class');
 
+function buddyforms_metabox_class($classes) {
+	$classes[] = 'buddyforms-metabox';
+	return $classes;
+}
+
+add_action('edit_form_top', 'buddyforms_edit_form_top');
+function buddyforms_edit_form_top(){
+	echo '<div id="buddyforms-edit-wrap" class="hidden">';
+}
+
+add_action('dbx_post_sidebar', 'buddyforms_edit_form_top');
+function buddyforms_dbx_post_sidebarp(){
+	echo '</div>';
+}
 
 
 /**

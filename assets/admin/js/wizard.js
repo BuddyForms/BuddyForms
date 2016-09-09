@@ -153,7 +153,7 @@ jQuery(document).ready(function (jQuery) {
         var form = jQuery('#post').show();
 
         // Let us initial and start the wizard steps
-        form.find('#hooker-steps' ).steps({
+        form.find( '#hooker-steps' ).steps({
             headerTag: "h3",
             bodyTag: "section",
             transitionEffect: "slideLeft",
@@ -183,7 +183,6 @@ jQuery(document).ready(function (jQuery) {
                     }
 
                     return true;
-
                 }
 
                 // Validate Step 2 the form builder form elements
