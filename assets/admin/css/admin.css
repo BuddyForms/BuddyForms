@@ -1023,15 +1023,23 @@ div#buddyforms_metabox_sidebar p {
   display: block;
   clear: both;
 }
+.bf-row {
+  overflow: auto;
+  display: block;
+  clear: both;
+}
 .bf-tile {
     overflow: auto;
-    background: #fafafa;
-    border: 1px solid #ddd;
+    background: #fff;
+    border: 1px solid #ccc;
     width: 206px;
     min-height: 144px;
-    margin: 10px 10px 10px 0;
+    margin: 10px 10px 0 0;
     padding: 15px 10px;
     float: left;
+}
+.bf-tile.alt {
+  background: #f7f7f7;
 }
 .post-type-buddyforms .postbox .bf-tile label {
   display: block;
