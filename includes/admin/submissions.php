@@ -111,7 +111,7 @@ function buddyforms_submissions_screen() {
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="post-body-content">
 
-						<div class="postbox">
+						<div class="postbox-submissions">
 							<h3 class="hndle"><span>Entry</span></h3>
 							<div class="inside">
 								<script>

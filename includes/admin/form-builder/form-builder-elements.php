@@ -521,7 +521,7 @@ function buddyforms_display_form_element( $args ) {
 		</div>
 
 		<div class="accordion_fields">
-			<div class="accordion-group postbox">
+			<div class="accordion-group">
 				<div class="accordion-heading-options">
 					<table class="wp-list-table widefat fixed posts">
 						<tbody>

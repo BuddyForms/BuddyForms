@@ -3,6 +3,7 @@
 /**
  * Add the FormBuilder and Form Settings MetaBox to the edit screen
  */
+add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 function buddyforms_add_meta_boxes() {
 	global $post, $buddyform;
 
@@ -16,45 +17,51 @@ function buddyforms_add_meta_boxes() {
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
-//	add_meta_box( 'buddyforms_metabox_sidebar', __( "Form Elements", 'buddyforms' ), 'buddyforms_metabox_sidebar', 'buddyforms', 'side', 'low' );
 
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
 
-
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	bf_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10);
 
 }
-add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' ,9999);
+
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
 	remove_all_actions( 'edit_page_form' );
 }, PHP_INT_MAX );
 
-// Add the 'buddyforms_metabox' class to all buddyforms related metaboxes to hide the rest.
+/**
+ * Add the 'buddyforms_metabox' class to all buddyforms related metaboxes to hide the rest.
+ */
 add_filter('postbox_classes_buddyforms_buddyforms_form_elements','buddyforms_metabox_class');
 add_filter('buddyforms_metabox_sidebar','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_setup','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_shortcodes','buddyforms_metabox_class');
 
+
+/**
+ * Function we use to add a extra class to all BuddyForms related metaboxes.
+ */
 function buddyforms_metabox_class($classes) {
 	$classes[] = 'buddyforms-metabox';
 	return $classes;
 }
 
-add_action('edit_form_top', 'buddyforms_edit_form_top');
-function buddyforms_edit_form_top(){
-	echo '<div id="buddyforms-edit-wrap" class="hidden">';
-}
+/**
+ * Hide the form during loading to support the wizard and remove unneded metaboxes before all get displayed.
+ */
+add_action('post_edit_form_tag', 'buddyforms_post_edit_form_tag');
+function buddyforms_post_edit_form_tag(){
+	global $post;
 
-add_action('dbx_post_sidebar', 'buddyforms_edit_form_top');
-function buddyforms_dbx_post_sidebarp(){
-	echo '</div>';
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+	echo 'class="hidden"';
 }
-
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.

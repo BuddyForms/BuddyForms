@@ -81,7 +81,7 @@ jQuery(document).ready(function (jQuery) {
 
     // Show the submit metabox
     jQuery('#submitdiv').show();
-    jQuery('#buddyforms-edit-wrap').removeClass('hidden');
+    jQuery('#post').removeClass('hidden');
 
 
     //
