@@ -8,25 +8,34 @@ function buddyforms_metabox_shortcodes(){
 	<div class="bf-shortcode">
 		<div id="bf-shortcode">
 
+			<div class="bf-tile">
+				<label for="the-form"><?php _e('The Form:', 'buddyforms'); ?></label>
+				<input id="the-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf id="<?php echo $post->ID; ?>"]'>
+				<p class="description">><?php _e('Display the form.', 'buddyforms'); ?></p>
+			</div>
 
-			<label for="the-form"><?php _e('The Form:', 'buddyforms'); ?></label>
-			<input id="the-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf id="<?php echo $post->ID; ?>"]'>
-			<p class="description">Display the form</p><br>
 			<?php if($buddyform['form_type'] == 'post') { ?>
 
-				<label for="post-list"><?php _e('User Posts List', 'buddyforms'); ?></label>
-				<input id="post-list" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_user_posts_list id="<?php echo $post->ID; ?>"]'>
-				<p class="description">Display the logged in users pots or a login form.</p><br>
+				<div class="bf-tile">
+					<label for="post-list"><?php _e('User Posts List', 'buddyforms'); ?></label>
+					<input id="post-list" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_user_posts_list id="<?php echo $post->ID; ?>"]'>
+					<p class="description"><?php _e('Display the logged in users posts or a login form.', 'buddyforms'); ?></p>
+				</div>
+
 				<?php if($buddyform['attached_page'] != 'none') { ?>
 
+					<div class="bf-tile">
+						<label for="link-to-form"><?php _e('Link to Form', 'buddyforms'); ?></label>
+						<input id="link-to-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_form id="<?php echo $post->ID; ?>"]'>
+						<p class="description"><?php _e('Display a link to the form.', 'buddyforms'); ?></p>
+					</div>
 
-					<label for="link-to-form"><?php _e('Link to Form', 'buddyforms'); ?></label>
-					<input id="link-to-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_form id="<?php echo $post->ID; ?>"]'>
-					<p class="description">Display a link to the form</p><br>
+					<div class="bf-tile">
+						<label for="link-to-posts"><?php _e('Link to Users Posts', 'buddyforms'); ?></label>
+						<input id="link-to-posts" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_user_posts id="<?php echo $post->ID; ?>"]'>
+						<p class="description"><?php _e('Display a link to the logged in users post.', 'buddyforms'); ?></p>
+					</div>
 
-					<label for="link-to-posts"><?php _e('Link to Users Posts', 'buddyforms'); ?></label>
-					<input id="link-to-posts" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_user_posts id="<?php echo $post->ID; ?>"]'>
-					<p class="description">Display a link to the loged in users post</p><br>
 				<?php } ?>
 			<?php } ?>
 
