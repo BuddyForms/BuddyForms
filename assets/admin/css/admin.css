@@ -1033,9 +1033,8 @@ div#buddyforms_metabox_sidebar p {
     background: #fff;
     border: 1px solid #ddd;
     width: 206px;
-    min-height: 124px;
     margin: 10px 10px 0 0;
-    padding: 15px 10px;
+    padding: 15px 10px 0;
     float: left;
 }
 .bf-tile.alt {
@@ -1045,4 +1044,12 @@ div#buddyforms_metabox_sidebar p {
   display: block;
   font-weight: bold;
   margin-bottom: 4px;
+}
+.bf-tile p.description {
+    margin: 0 -10px;
+    padding: 10px;
+    background: #eee;
+    border-top: 1px solid #ddd;
+    color: #777;
+    min-height: 38px;
 }
