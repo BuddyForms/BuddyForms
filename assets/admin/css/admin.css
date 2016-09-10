@@ -1031,15 +1031,15 @@ div#buddyforms_metabox_sidebar p {
 .bf-tile {
     overflow: auto;
     background: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     width: 206px;
-    min-height: 144px;
+    min-height: 124px;
     margin: 10px 10px 0 0;
     padding: 15px 10px;
     float: left;
 }
 .bf-tile.alt {
-  background: #f7f7f7;
+  background: #fff;
 }
 .post-type-buddyforms .postbox .bf-tile label {
   display: block;
