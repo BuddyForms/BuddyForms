@@ -120,7 +120,7 @@ jQuery(document).ready(function (jQuery) {
     // Load the Form From Template
     //
     jQuery(document.body).on('click', '.bf_form_template', function () {
-        
+
         var template = jQuery(this).data("template");
         load_formbuilder_template(template);
         return false;

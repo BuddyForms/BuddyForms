@@ -19,7 +19,7 @@ function buddyforms_permissions_unregistered_screen() {
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Public Submittable', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit]", array( 'public_submit' => __( 'This Form is accessible for unregistered users', 'buddyforms' ) ), array( 'value' => $public_submit, 'shortDesc' => 'Please make sure you use the reCAPTCHA form element if this option is enabled.' ) );
 
 	?>
-	<div class="fields_heade postbox">
+	<div class="fields_header">
 		<table class="wp-list-table widefat posts striped">
 			<tbody id="the-list">
 			<?php
@@ -119,7 +119,7 @@ function buddyforms_permissions_screen() {
 
 		endforeach;
 			?>
-			<div class="fields_heade postbox">
+			<div class="fields_header">
 				<table class="wp-list-table widefat posts striped bf_permissions">
 					<thead>
 						<tr>
