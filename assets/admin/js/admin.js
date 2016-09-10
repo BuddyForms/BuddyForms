@@ -15,7 +15,9 @@ var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
         }
     }
 };
-// Update ths list number 1,2,3,...
+//
+// Update ths form elements list number 1,2,3,...
+//
 function bf_update_list_item_number() {
     jQuery(".buddyforms_forms_builder ul").each(function () {
         jQuery(this).children("li").each(function (t) {
@@ -23,7 +25,9 @@ function bf_update_list_item_number() {
         })
     })
 }
+//
 // Helper Function to use dialog instead of alert
+//
 function bf_alert(alert_message){
     jQuery('<div></div>').dialog({
         modal: true,
@@ -38,6 +42,61 @@ function bf_alert(alert_message){
         }
     });
 }
+//
+// Helper Function to laod form element templates depend on the form type
+//
+function load_formbuilder_template(template){
+
+    jQuery.ajax({
+        type: 'POST',
+        dataType: "json",
+        url: ajaxurl,
+        data: {
+            "action": "buddyforms_form_template",
+            "template": template,
+        },
+        success: function (data) {
+
+            console.log(data);
+
+            jQuery.each(data, function (i, val) {
+                switch (i) {
+                    case 'html':
+                        jQuery('.buddyforms_forms_builder').replaceWith(val);
+                        bf_update_list_item_number();
+                        break;
+                    case 'form_setup':
+                        jQuery.each(val, function (i2, form_setup) {
+                            jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                            jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                        });
+                        break;
+                    default:
+                        bf_alert(val);
+                }
+
+            });
+
+        },
+        error: function () {
+            jQuery('<div></div>').dialog({
+                modal: true,
+                title: "Info",
+                open: function() {
+                    var markup = 'Something went wrong ;-(sorry)';
+                    jQuery(this).html(markup);
+                },
+                buttons: {
+                    Ok: function() {
+                        jQuery( this ).dialog( "close" );
+                    }
+                }
+            });
+        }
+    });
+    return false;
+}
+
 jQuery(document).ready(function (jQuery) {
 
     //

@@ -40,6 +40,11 @@ jQuery(document).ready(function (jQuery) {
     });
 
 
+    // Load the form elements template depend on the type
+    if(type){
+        load_formbuilder_template(type);
+    }
+
     // STEP 1 Select the Form Type
     if( wizard == 1 ){
         select_form_type();
@@ -135,7 +140,7 @@ jQuery(document).ready(function (jQuery) {
 
 
 
-        function write_form_elements(){
+        function add_form_elements_select(){
             // Get all form elements for the selected form type and add them to the form builder
             jQuery.ajax({
                 type: 'POST',
@@ -146,7 +151,7 @@ jQuery(document).ready(function (jQuery) {
                 }
             });
         }
-        write_form_elements();
+        //add_form_elements_select();
 
 
         // All should be in place. Show the wizard
@@ -225,7 +230,7 @@ jQuery(document).ready(function (jQuery) {
                     return true;
                 }
                 if(currentIndex == 2) {
-                    write_form_elements();
+                    //add_form_elements_select();
                     return true;
                 }
                 if(currentIndex == 3) {
