@@ -17,17 +17,25 @@ jQuery(document).ready(function (jQuery) {
 
         // get the parts
 
-        var title                       = jQuery('#post-body-content');
-        var submitdiv                   = jQuery('#submitdiv');
-        var buddyforms_form_shortcodes  = jQuery('#buddyforms_form_shortcodes');
+        var poststuff                   = jQuery('#poststuff');
+        //
+        var container1                  = poststuff.find('#postbox-container-1');
+        var container2                  = poststuff.find('#postbox-container-2');
 
-        var buddyforms_form_elements    = jQuery('#buddyforms_form_elements');
-        var buddyforms_template         = jQuery('.buddyforms_template');
-        var buddyforms_metabox_sidebar  = jQuery('#buddyforms_metabox_sidebar');
-        var buddyforms_notification     = jQuery('#notification');
-        var buddyforms_permission       = jQuery('#permission');
-        var buddyforms_create_content   = jQuery('#create-content');
-        var buddyforms_edit_submissions = jQuery('#edit-submissions');
+        var post_body                  = poststuff.find('#post-body');
+
+        var title                       = poststuff.find('#post-body-content');
+        var submitdiv                   = poststuff.find('#submitdiv');
+        var submitdiv_actions           = submitdiv.find('#buddyforms-actions');
+        var buddyforms_form_shortcodes  = poststuff.find('#buddyforms_form_shortcodes');
+
+        var buddyforms_form_elements    = poststuff.find('#buddyforms_form_elements');
+        var buddyforms_template         = poststuff.find('.buddyforms_template');
+        var buddyforms_metabox_sidebar  = poststuff.find('#buddyforms_metabox_sidebar');
+        var buddyforms_notification     = poststuff.find('#notification');
+        var buddyforms_permission       = poststuff.find('#permission');
+        var buddyforms_create_content   = poststuff.find('#create-content');
+        var buddyforms_edit_submissions = poststuff.find('#edit-submissions');
 
     }
 
@@ -63,14 +71,13 @@ jQuery(document).ready(function (jQuery) {
         console.log(URL);
 
 
-        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1>' +
+        post_body.prepend( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1>' +
             '<h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2>');
 
+        title.remove();
+
         submitdiv.find('#major-publishing-actions').remove();
-
         submitdiv.find('h2 span').html('Links to your form and submissions');
-
-        var submitdiv_actions = submitdiv.find('#buddyforms-actions');
 
         submitdiv_actions.append( '<ul>' +
             '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
@@ -78,16 +85,11 @@ jQuery(document).ready(function (jQuery) {
             '</ul>');
 
 
-        //jQuery( submitdiv_actions ).appendTo( '#poststuff' );
-        jQuery( submitdiv ).appendTo( '#poststuff' );
-
         buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
-        jQuery( buddyforms_form_shortcodes ).appendTo( '#poststuff' );
+        container2.html( buddyforms_form_shortcodes );
 
-
-
-
-        jQuery('#post').show();
+        jQuery( '#post' ).html( poststuff );
+        jQuery( '#post, #postbox-container-1, #postbox-container-2' ).show();
     }
 
     // Get the Form Type Templates for Step 1
@@ -141,24 +143,17 @@ jQuery(document).ready(function (jQuery) {
             jQuery( '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>').appendTo( '#hooker-steps' );
         }
 
-
-
         // Add the form parts to the steps sections
         jQuery( title ).appendTo( '#bf-hooker-name' );
         jQuery( buddyforms_form_elements ).appendTo( '#bf-hooker-formbuilder' );
         jQuery( buddyforms_notification ).appendTo( '#bf-hooker-notifications' );
         jQuery( buddyforms_permission ).appendTo( '#bf-hooker-permissions' );
 
-
         // Change the Form Builder h2 Title
         jQuery('#buddyforms_form_elements h2 span').html('Choose a field type and click "Add Field"');
 
         // Hide the normal form builder templates. They are not needed.
         jQuery( buddyforms_template ).hide()
-
-
-
-
 
         function add_form_elements_select(){
             // Get all form elements for the selected form type and add them to the form builder
@@ -171,7 +166,7 @@ jQuery(document).ready(function (jQuery) {
                 }
             });
         }
-        //add_form_elements_select();
+        add_form_elements_select();
 
 
         // All should be in place. Show the wizard
@@ -222,11 +217,8 @@ jQuery(document).ready(function (jQuery) {
                        } else {
                            jQuery('#form_post_type').addClass('bf-ok');
                            return true;
-
-
-
-
                        }
+
                     } else {
                         var error = false;
                         // traverse all the required elements looking for an empty one
@@ -297,10 +289,7 @@ jQuery(document).ready(function (jQuery) {
                     url: ajaxurl,
                     data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
                     success: function (data) {
-                        //jQuery('#post').remove();
-
                         jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2> <br> <span class="dashicons dashicons-smiley"></span>');
-
                         window.location = data;
                         return false;
                     }
