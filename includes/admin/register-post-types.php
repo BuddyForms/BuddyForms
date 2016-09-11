@@ -372,7 +372,7 @@ add_action( 'manage_buddyforms_posts_custom_column', 'custom_buddyforms_column',
 function buddyforms_hide_publishing_actions() {
 	global $post;
 
-	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
+	if ( get_post_type( $post ) == 'buddyforms') { ?>
 		<style type="text/css">
 			.misc-pub-visibility,
 			.misc-pub-curtime,
@@ -388,7 +388,7 @@ function buddyforms_hide_publishing_actions() {
 				width: 100%;
 			}
 		</style>
-
+		<?php } if ( get_post_type( $post ) == 'buddyforms'  && $_GET['wizard'] != 'done' ) { ?>
 		<script>
 			jQuery(document).ready(function (jQuery) {
 				//jQuery('#screen-meta-links').hide();
@@ -407,6 +407,14 @@ function buddyforms_hide_publishing_actions() {
 		</script>
 
 
+		<?php
+	} else {
+		?>
+		<script>
+			jQuery(document).ready(function (jQuery) {
+				jQuery('body').find('h1:first').remove();
+			});
+		</script>
 		<?php
 	}
 }
@@ -432,7 +440,9 @@ function buddyforms_add_button_to_submit_box() {
 	?>
 	<div id="buddyforms-actions" class="misc-pub-section">
 		<?php if(isset($post->post_name) && $post->post_name != '') { ?>
-			<a class="button button-large bf_button_action" target="_blank" href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?></a>
+			<div id="frontend-actions">
+				<a class="button button-large bf_button_action" target="_blank" href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?></a>
+			</div>
 		<?php } ?>
 		<?php if( isset($buddyform['attached_page']) && isset($buddyform['post_type']) && $buddyform['attached_page'] != 'none'){ ?>
 			<div id="frontend-actions">
