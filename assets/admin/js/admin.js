@@ -66,11 +66,21 @@ function load_formbuilder_template(template){
                         bf_update_list_item_number();
                         break;
                     case 'mail_notification':
+                        jQuery('.buddyforms_accordion_notification ul' ).html(val);
+
+
                         break;
                     case 'form_setup':
                         jQuery.each(val, function (i2, form_setup) {
-                            jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
-                            jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                            console.log(form_setup);
+
+                            if(form_setup instanceof Array){
+                                jQuery('input[name="buddyforms_options[' + i2 + '][]"]').val(form_setup).change();
+                            } else {
+                                jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                                jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                            }
+
                         });
                         break;
                     default:
