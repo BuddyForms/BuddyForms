@@ -61,9 +61,11 @@ function load_formbuilder_template(template){
 
             jQuery.each(data, function (i, val) {
                 switch (i) {
-                    case 'html':
+                    case 'formbuilder':
                         jQuery('.buddyforms_forms_builder').replaceWith(val);
                         bf_update_list_item_number();
+                        break;
+                    case 'mail_notification':
                         break;
                     case 'form_setup':
                         jQuery.each(val, function (i2, form_setup) {
@@ -384,6 +386,53 @@ jQuery(document).ready(function (jQuery) {
             jQuery(this).text(admin_text.uncheck);
         }
         e.preventDefault();
+    });
+
+    //
+    // #bf-create-page-modal
+    //
+    jQuery('#bf_create_page_modal').live('click', function() {
+
+        jQuery('<div></div>').dialog({
+            modal: true,
+            title: "Info",
+            open: function() {
+                var markup = 'Name your Page' +
+                    '<input id="bf_create_page_name" type="text" value="">';
+                jQuery(this).html(markup);
+            },
+            buttons: {
+                Ok: function() {
+
+                    var page_name = jQuery('#bf_create_page_name').val();
+                    jQuery(this).dialog('destroy').remove();
+
+                    jQuery.ajax({
+                        type: 'POST',
+                        dataType: "json",
+                        url: ajaxurl,
+                        data: {
+                            "action": "buddyforms_new_page",
+                            "page_name": page_name
+                        },
+                        success: function (data) {
+                            //console.log(data);
+                            if( data['error'] ){
+                                console.log(data['error']);
+                            } else {
+                                jQuery( '#form_page' ).append(jQuery('<option>', {
+                                    value: data['id'],
+                                    text: data['name']
+                                }));
+                                jQuery( '#form_page' ).val(data['id']);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        return false;
     });
 
 });

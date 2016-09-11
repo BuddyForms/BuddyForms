@@ -162,13 +162,16 @@ function buddyforms_form_template(){
 
 	ob_start();
 		buddyforms_metabox_form_elements( $post, $buddyform );
-	$tmp = ob_get_clean();
+	$formbuilder = ob_get_clean();
 
-	$json['html'] = $tmp;
+	$json['formbuilder'] = $formbuilder;
 
 
-	//buddyforms_mail_notification_form( $buddyform['form_slug'] );
+	ob_start();
+		buddyforms_mail_notification_form( $buddyform['form_slug'] );
+	$mail_notification = ob_get_clean();
 
+	$json['mail_notification'] = $mail_notification;
 
 	unset($buddyform['form_fields']);
 
@@ -181,3 +184,39 @@ function buddyforms_form_template(){
 
 }
 add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
+
+
+function buddyforms_new_page(){
+
+	if(!is_admin())
+		return;
+
+	// Check if a title is entered
+	if(empty($_POST['page_name'])){
+		$json['error'] = 'Please enter a name';
+		echo json_encode( $json ); 	die();
+	}
+
+	// Create post object
+	$new_page = array(
+		'post_title'    => wp_strip_all_tags( $_POST['page_name'] ),
+		'post_content'  => '',
+		'post_status'   => 'publish',
+		'post_type'     => 'page'
+	);
+
+	// Insert the post into the database
+	$new_page = wp_insert_post( $new_page );
+
+	// Check if page creation worked successfully
+	if(is_wp_error($new_page)){
+		$json['error'] = $new_page;
+	} else {
+		$json['id'] = $new_page;
+		$json['name'] = wp_strip_all_tags( $_POST['page_name'] );
+	}
+
+	echo json_encode( $json ); 	die();
+
+}
+add_action( 'wp_ajax_buddyforms_new_page', 'buddyforms_new_page' );
