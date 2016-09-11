@@ -57,22 +57,33 @@ jQuery(document).ready(function (jQuery) {
 
     if( wizard == 'done' ){
 
-        URL  = document.URL;
-        URL = URL.slice( 0, URL.indexOf('?') );
+        URL  = document.origin;
+        //URL = URL.slice( 0, URL.indexOf('?') );
 
         console.log(URL);
 
 
         jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1><h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2> ' +
-            '<p><a href="'+URL+'?post='+post_id+'&action=edit">Close the wizard</a></p>');
+            '<ul>' +
+            '<li><a href="'+URL+'/wp-admin/edit.php?post_type=buddyforms">Close the wizard </a></li>' +
+            '<li><a href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit">Jump in the Form Builder</a></li>' +
+            '</ul>');
+
+        submitdiv.find('#major-publishing-actions').remove();
+
+        submitdiv.find('h2 span').html('Links to your form and submissions');
+
+        var test = submitdiv.find('#buddyforms-actions');
+
+        jQuery( test ).appendTo( '#poststuff' );
+        jQuery( submitdiv ).appendTo( '#poststuff' );
 
         buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
         jQuery( buddyforms_form_shortcodes ).appendTo( '#poststuff' );
 
 
 
-        submitdiv.find('h2 span').html('Links to your form and submissions');
-        jQuery( submitdiv ).appendTo( '#poststuff' );
+
         jQuery('#post').show();
     }
 
@@ -277,13 +288,17 @@ jQuery(document).ready(function (jQuery) {
                     url: ajaxurl,
                     data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
                     success: function (data) {
-                        jQuery('#post').remove();
+                        //jQuery('#post').remove();
+
+                        jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2> ');
+
                         window.location = data;
-                        return true;
+                        return false;
                     }
                 });
-                form.submit();
+                return false;
             }
+
         });
 
     }
