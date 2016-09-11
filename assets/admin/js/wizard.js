@@ -63,19 +63,22 @@ jQuery(document).ready(function (jQuery) {
         console.log(URL);
 
 
-        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1><h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2> ' +
-            '<ul>' +
-            '<li><a href="'+URL+'/wp-admin/edit.php?post_type=buddyforms">Close the wizard </a></li>' +
-            '<li><a href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit">Jump in the Form Builder</a></li>' +
-            '</ul>');
+        jQuery( '#poststuff' ).html( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1>' +
+            '<h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2>');
 
         submitdiv.find('#major-publishing-actions').remove();
 
         submitdiv.find('h2 span').html('Links to your form and submissions');
 
-        var test = submitdiv.find('#buddyforms-actions');
+        var submitdiv_actions = submitdiv.find('#buddyforms-actions');
 
-        jQuery( test ).appendTo( '#poststuff' );
+        submitdiv_actions.append( '<ul>' +
+            '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
+            '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/edit.php?post_type=buddyforms"><span class="dashicons dashicons-yes"></span> Close the wizard </a></li>' +
+            '</ul>');
+
+
+        //jQuery( submitdiv_actions ).appendTo( '#poststuff' );
         jQuery( submitdiv ).appendTo( '#poststuff' );
 
         buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
@@ -130,8 +133,14 @@ jQuery(document).ready(function (jQuery) {
         jQuery(
             '<h3>Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
             '<h3>Mail Notifications</h3><section><div id="bf-hooker-notifications"></div></section>' +
-            '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>'
+            ''
         ).appendTo( '#hooker-steps' );
+
+
+        if(type == 'post'){
+            jQuery( '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>').appendTo( '#hooker-steps' );
+        }
+
 
 
         // Add the form parts to the steps sections
@@ -290,7 +299,7 @@ jQuery(document).ready(function (jQuery) {
                     success: function (data) {
                         //jQuery('#post').remove();
 
-                        jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2> ');
+                        jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2> <br> <span class="dashicons dashicons-smiley"></span>');
 
                         window.location = data;
                         return false;
