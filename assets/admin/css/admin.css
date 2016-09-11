@@ -1052,3 +1052,7 @@ div#buddyforms_metabox_sidebar p {
     border-top: 1px solid #ddd;
     min-height: 38px;
 }
+.bf_button_action .dashicons {
+    line-height: 1.4;
+    padding-right: 3px;
+}

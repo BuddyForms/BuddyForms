@@ -71,13 +71,13 @@ jQuery(document).ready(function (jQuery) {
         console.log(URL);
 
 
-        post_body.prepend( '<h1 style="margin: 30px 0; padding: 0; font-size: 48px;">High Five!</h1>' +
-            '<h2 style="margin: 30px 0; padding: 4px;">You have created the form ' + title.find('#title').val() +'</h2>');
+        post_body.prepend( '<h1 style="margin: 60px 0; padding: 0px; font-size: 78px; display: block;">High Five!</h1>' +
+            '<h2 style="margin: 60px 0; padding: 4px; font-size: 24px; font-weight: normal;">You have created the form ' + title.find('#title').val() +'</h2>');
 
         title.remove();
 
         submitdiv.find('#major-publishing-actions').remove();
-        submitdiv.find('h2 span').html('Links to your form and submissions');
+        submitdiv.find('h2 span').html('View Form and Submissions');
 
         submitdiv_actions.append( '<ul>' +
             '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
@@ -85,7 +85,7 @@ jQuery(document).ready(function (jQuery) {
             '</ul>');
 
 
-        buddyforms_form_shortcodes.find('h2 span').html('Now you can embed your form with shortcodes into any page or post');
+        buddyforms_form_shortcodes.find('h2 span').html('Embed Your Form via Shortcodes');
         container2.html( buddyforms_form_shortcodes );
 
         jQuery( '#post' ).html( poststuff );
