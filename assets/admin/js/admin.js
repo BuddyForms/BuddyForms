@@ -15,8 +15,9 @@ var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
         }
     }
 };
+
 //
-// Update ths form elements list number 1,2,3,...
+// Update form builder form elements list number 1,2,3,...
 //
 function bf_update_list_item_number() {
     jQuery(".buddyforms_forms_builder ul").each(function () {
@@ -25,6 +26,7 @@ function bf_update_list_item_number() {
         })
     })
 }
+
 //
 // Helper Function to use dialog instead of alert
 //
@@ -42,8 +44,9 @@ function bf_alert(alert_message){
         }
     });
 }
+
 //
-// Helper Function to laod form element templates depend on the form type
+// Helper Function to lode form element templates depend on the form type
 //
 function load_formbuilder_template(template){
 
@@ -109,43 +112,19 @@ function load_formbuilder_template(template){
     return false;
 }
 
+//
+// Lets do some stuff after the document is loaded
+//
+
 jQuery(document).ready(function (jQuery) {
 
-    //
-    // No more bootstrap! @todo There is some bootstrap left in the form builder admin for the tabs and accordion. Its time for a rewrite
-    //
-    //    jQuery(".tabs, .tabs-left, .tabbable").tabs();
-    //    jQuery("#sortable_buddyforms_elements .sortable").accordion({
-    //            collapsible: true,
-    //            animated: 'slide',
-    //            autoHeight: false,
-    //            navigation: true
-    //    });
-    // open content that matches the hash
-    //    var hash = window.location.hash;
-    //    var thash = hash.substring(hash.lastIndexOf('#'), hash.length);
-    //    jQuery('#sortable_buddyforms_elements').find('a[href*='+ thash + ']').closest('h3').trigger('click');
-
-    //
-    // This is comment out...  I'm not sure if I should save the latest settings tab...
-    //
-    //jQuery('#buddyforms_formbuilder_settings a').click(function(e) {
-    //    e.preventDefault();
-    //    jQuery(this).tab('show');
-    //});
-    //
-    //// store the currently selected tab in the hash value
-    //jQuery("#buddyforms_formbuilder_settings ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
-    //    var id = jQuery(e.target).attr("href").substr(1);
-    //    window.location.hash = id;
-    //});
-    //
-    //// on load of the page: switch to the currently selected tab
-    //var hash = window.location.hash;
-    //jQuery('#buddyforms_formbuilder_settings a[href="' + hash + '"]').tab('show');
-
-
-
+    // Prevent form submission if enter key is pressed on text fields
+    jQuery(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     // Hide all postbox metabocen exeped the buddyforms etaboxes
     jQuery('div .postbox').not('.buddyforms-metabox').hide();
@@ -301,7 +280,6 @@ jQuery(document).ready(function (jQuery) {
 
     // Update ths list number 1,2,3,... for the mail trigger
     function bf_update_list_item_number_mail() {
-
         jQuery("#mailcontainer .bf_trigger_list_item").each(function (t) {
             jQuery(this).find("td.field_order .circle").first().html(t + 1)
         })

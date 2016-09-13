@@ -1,8 +1,12 @@
 <?php
 function bf_mail_notification_screen() {
-	global $post;
+	global $post, $buddyform;
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+
+//	echo '<pre>';
+//	print_r($buddyform);
+//	echo '</pre>';
 
 	$form_setup   = array();
 
@@ -22,7 +26,7 @@ function bf_mail_notification_screen() {
 	echo '<ul>';
 	if ( isset( $buddyform['mail_submissions'] ) ) {
 		foreach ( $buddyform['mail_submissions'] as $key => $mail_submission ) {
-			buddyforms_mail_notification_form( $key );
+			buddyforms_mail_notification_form( $key, $mail_submission );
 		}
 	} else {
 		echo '<div id="no-trigger-mailcontainer">' . __('No Mail Notification Trigger so far.') . '</div>';
@@ -43,13 +47,13 @@ function bf_post_status_mail_notification_screen() {
 
 	 $form_setup   = array();
 
-		$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
-		$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
-			'class'     => 'post_status_mail_notification_trigger',
-			'shortDesc' => ''
-		) );
+	$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
+	$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
+		'class'     => 'post_status_mail_notification_trigger',
+		'shortDesc' => ''
+	) );
 
-		$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a></div><br>' );
+	$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a></div><br>' );
 
 
 	foreach ( $form_setup as $key => $field ) {
@@ -73,20 +77,13 @@ function bf_post_status_mail_notification_screen() {
 }
 
 
-function buddyforms_mail_notification_form($trigger = false) {
-	global $post;
-
-	if ( isset( $post->ID ) ) {
-		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
-	}
+function buddyforms_mail_notification_form( $trigger, $mail_submission ) {
+	global $post, $buddyform;
 
 //	echo '<pre>';
-//	print_r($buddyform);
+//	print_r($mail_submission);
 //	echo '</pre>';
 
-	if ( !$trigger ) {
-		$trigger = $mod5 = substr( md5( time() * rand() ), 0, 10 );
-	}
 
 	$shortDesc = "
     <br>
@@ -163,7 +160,7 @@ function buddyforms_mail_notification_form($trigger = false) {
 
 	<li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
 		<div class="accordion_fields">
-			<div class="accordion-group postbox">
+			<div class="accordion-group">
 				<div class="accordion-heading-options">
 					<table class="wp-list-table widefat fixed posts">
 						<tbody>
@@ -284,7 +281,7 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 
 	<li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
 		<div class="accordion_fields">
-			<div class="accordion-group postbox">
+			<div class="accordion-group">
 				<div class="accordion-heading-options">
 					<table class="wp-list-table widefat fixed posts">
 						<tbody>

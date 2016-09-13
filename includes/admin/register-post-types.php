@@ -14,6 +14,12 @@ function buddyforms_add_meta_boxes() {
 	if(!$buddyform)
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
+
+//	echo '<pre>';
+//	print_r($buddyform);
+//	echo '</pre>';
+
+
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
