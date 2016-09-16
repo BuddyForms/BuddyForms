@@ -58,11 +58,13 @@ function buddyforms_form_html( $args ) {
 	// Create the form object
 	$form = new Form( "editpost_" . $form_slug );
 
+	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
+
 	// Set the form attribute
 	$form->configure( array(
 		"prevent" => array("bootstrap", "jQuery", "focus"),
 		"action" => $redirect_to,
-		"view"   => new View_Frontend,
+		"view"   => new $buddyforms_frontend_form_template_name,
 		'class'  => 'standard-form',
 	) );
 

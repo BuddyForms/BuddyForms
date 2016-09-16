@@ -114,7 +114,6 @@ function buddyforms_metabox_form_elements($post, $buddyform = false) {
 function buddyforms_form_builder_templates(){
 	global $buddyforms_templates;
 
-
 	$buddyforms_templates['contact']['title'] = 'Contact Form';
 	$buddyforms_templates['contact']['desc'] = 'Setup a simple contact form.';
 
@@ -123,7 +122,7 @@ function buddyforms_form_builder_templates(){
 
 	$buddyforms_templates['post']['title'] = 'Post Form';
 	$buddyforms_templates['post']['desc'] = 'Setup a simple post form.';
-
+	
 	$buddyforms_templates = apply_filters('buddyforms_templates', $buddyforms_templates);
 
 	ob_start();
