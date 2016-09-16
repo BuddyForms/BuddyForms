@@ -10,7 +10,7 @@
 
 
 function buddyforms_process_post( $args = Array() ) {
-	global $current_user, $buddyforms;
+	global $current_user, $buddyforms, $form_slug;
 
 	$hasError     = false;
 	$error_message = '';
@@ -302,6 +302,7 @@ function buddyforms_update_post( $args ) {
 }
 
 function bf_update_post_meta( $post_id, $customfields ) {
+	global $buddyforms, $form_slug;
 
 	if ( ! isset( $customfields ) ) {
 		return;
@@ -309,6 +310,46 @@ function bf_update_post_meta( $post_id, $customfields ) {
 
 	foreach ( $customfields as $key => $customfield ) :
 
+		// Check if file is new and needs to get reassigned to the corect parent
+		if( $customfield['type'] == 'file' && !empty( $_POST[$customfield['slug']] ) ){
+
+			$attachement_ids = $_POST[$customfield['slug']];
+			$attachement_ids = explode( ',', $attachement_ids );
+
+			if ( is_array( $attachement_ids ) ) {
+				foreach ( $attachement_ids as $attachement_id ) {
+
+					$attachement = get_post( $attachement_id );
+
+					if($attachement->post_parent == $buddyforms[$form_slug]['attached_page'] ){
+						$attachement = array(
+							'ID' => $attachement_id,
+							'post_parent' => $post_id,
+						);
+						wp_update_post( $attachement );
+					}
+				}
+			}
+		}
+
+		// Check if featured image is new and needs to get reassigned to the corect parent
+		if ( $customfield['type'] == 'featured-image' || $customfield['type'] == 'featured_image' && isset($_POST['featured_image'])) {
+
+			$attachement_id = $_POST['featured_image'];
+
+			$attachement = get_post( $attachement_id );
+
+			if($attachement->post_parent == $buddyforms[$form_slug]['attached_page'] ){
+				$attachement = array(
+					'ID' => $attachement_id,
+					'post_parent' => $post_id,
+				);
+				wp_update_post( $attachement );
+			}
+
+		}
+
+		// Save taxonomies if needed
 		if ( $customfield['type'] == 'taxonomy' ) {
 
 			$taxonomy = get_taxonomy( $customfield['taxonomy'] );
@@ -421,10 +462,8 @@ function bf_update_post_meta( $post_id, $customfields ) {
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) ) {
 			update_post_meta( $post_id, $slug, $_POST[ $slug ] );
-			//      $customfields[$key]['value'] = $_POST[$slug];
 		} else {
 			update_post_meta( $post_id, $slug, '' );
-			//    $customfields[$key]['value'] = '';
 		}
 
 	endforeach;
