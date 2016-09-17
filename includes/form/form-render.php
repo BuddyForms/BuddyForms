@@ -58,13 +58,21 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
+	$form_class = 'standard-form';
+
+	if( isset( $buddyforms[$form_slug]['local_storage'] ) ){
+		$form_class = ' bf-garlic';
+	}
+
 	// Set the form attribute
 	$form->configure( array(
 		"prevent" => array("bootstrap", "jQuery", "focus"),
 		"action" => $redirect_to,
 		"view"   => new $buddyforms_frontend_form_template_name(),
-		'class'  => 'standard-form bf-garlic',
+		'class'  =>  apply_filters( 'bf_form_class', $form_class ),
 	) );
+
+
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
