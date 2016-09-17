@@ -402,7 +402,9 @@ class BuddyForms {
 			$found = true;
 		}
 
-		if ( $post->ID == get_option('buddyforms_preview_page', true) ) {
+		$buddyforms_preview_page = get_option( 'buddyforms_preview_page', true );
+
+		if ( isset($post->ID) && $post->ID == $buddyforms_preview_page ) {
 			$found = true;
 		}
 
