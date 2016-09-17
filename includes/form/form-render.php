@@ -25,8 +25,6 @@ function buddyforms_form_html( $args ) {
 
 	session_id( 'buddyforms-create-edit-form' );
 
-
-
 	if ( ! is_user_logged_in() &&  $buddyforms[$form_slug]['form_type'] == 'post') :
 		return buddyforms_get_login_form();
 	endif;
@@ -65,7 +63,7 @@ function buddyforms_form_html( $args ) {
 		"prevent" => array("bootstrap", "jQuery", "focus"),
 		"action" => $redirect_to,
 		"view"   => new $buddyforms_frontend_form_template_name(),
-		'class'  => 'standard-form',
+		'class'  => 'standard-form bf-garlic',
 	) );
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
@@ -93,7 +91,7 @@ function buddyforms_form_html( $args ) {
 	                                                                                       'class' => 'bf-submit',
 	                                                                                       'name'  => 'submitted'
 	) );
-	$form             = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
+	$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
 
 	if ( $bf_submit_button ) {
 		$form->addElement( $bf_submit_button );

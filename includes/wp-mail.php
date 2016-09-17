@@ -19,7 +19,6 @@ function mail_submission_trigger_sent($args){
 
 }
 
-
 function buddyforms_send_mail_submissions( $notification, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -105,7 +104,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
 
-	$mailheaders .= "MIME-Version: 1.0\n";
+	$mailheaders  = "MIME-Version: 1.0\n";
 	$mailheaders .= "X-Priority: 1\n";
 	$mailheaders .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mailheaders .= "Content-Transfer-Encoding: 7bit\n\n";

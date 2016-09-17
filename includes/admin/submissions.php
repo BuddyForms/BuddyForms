@@ -80,18 +80,12 @@ function bf_submissions_screen() {
 					</script>
 					<select id="buddyforms_admin_menu_submissions_form_select">
 						<option value="none">Select Form</option>
-						<?php foreach ( $buddyforms as $form_slug => $form ) {
-
-
-							?>
-
-							<option <?php selected( $_GET['form_slug'], $form_slug ) ?>
-								value="<?php echo $form_slug ?>"><?php echo $form['name'] ?></option>
-
+						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
+							<option <?php isset($_GET['form_slug']) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
+								<?php echo $form['name']; ?>
+							</option>
 						<?php } ?>
 					</select>
-
-
 				</li>
 			</ul>
 		</div>
@@ -304,7 +298,7 @@ class bf_submissions_List_Table extends WP_List_Table {
 			'Date'           => 'Date',
 		);
 
-		if(isset($buddyforms[$_GET['form_slug']]['form_fields'])){
+		if(isset($_GET['form_slug']) && isset($buddyforms[$_GET['form_slug']]['form_fields'])){
 			foreach($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field){
 				$columns[$field['slug']] = $field['name'];
 			}

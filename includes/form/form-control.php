@@ -7,8 +7,6 @@
  * @since 0.3 beta
  */
 
-
-
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms, $form_slug;
 
@@ -47,18 +45,32 @@ function buddyforms_process_post( $args = Array() ) {
 			break;
 	}
 
-	// Collect all submitter data
-	$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
-	$user_data['referer']   = $_SERVER['HTTP_REFERER'];
-
 	// Get the browser and platform
 	$browser_data = bf_get_browser();
 
-	$user_data['browser']   = $browser_data['name'];
-	$user_data['version']   = $browser_data['version'];
-	$user_data['platform']  = $browser_data['platform'];
-	$user_data['reports']   = $browser_data['reports'];
-	$user_data['userAgent'] = $browser_data['userAgent'];
+	// Collect all submitter data
+	$user_data = array();
+	if( !isset( $buddyforms[$form_slug]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
+		$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
+	}
+	if( !isset( $buddyforms[$form_slug]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ){
+		$user_data['referer']   = $_SERVER['HTTP_REFERER'];
+	}
+	if( !isset( $buddyforms[$form_slug]['browser'] ) && isset( $browser_data['name'] ) ){
+		$user_data['browser']   = $browser_data['name'];
+	}
+	if( !isset( $buddyforms[$form_slug]['version'] ) && isset( $browser_data['version'] ) ){
+		$user_data['version']   = $browser_data['version'];
+	}
+	if( !isset( $buddyforms[$form_slug]['platform'] ) && isset( $browser_data['platform'] ) ){
+		$user_data['platform']  = $browser_data['platform'];
+	}
+	if( !isset( $buddyforms[$form_slug]['reports'] ) && isset( $browser_data['reports'] ) ){
+		$user_data['reports']   = $browser_data['reports'];
+	}
+	if( !isset( $buddyforms[$form_slug]['useragent'] ) && isset( $browser_data['useragent'] ) ){
+		$user_data['useragent'] = $browser_data['useragent'];
+	}
 
 	do_action( 'buddyforms_process_post_start', $args );
 
@@ -202,12 +214,12 @@ function buddyforms_process_post( $args = Array() ) {
 	// Display the message
 	if ( ! $hasError ) :
 		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
-			$info_message .= __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully updated ', 'buddyforms' );
-			$form_notice = '<div class="info alert">' . $info_message . '</div>';
+			$info_message   = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully updated ', 'buddyforms' );
+			$form_notice    = '<div class="info alert">' . $info_message . '</div>';
 		} else {
 			// Update the new post
-			$info_message .= __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully created ', 'buddyforms' );
-			$form_notice = '<div class="info alert">' . $info_message . '</div>';
+			$info_message   = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully created ', 'buddyforms' );
+			$form_notice    = '<div class="info alert">' . $info_message . '</div>';
 		}
 
 	else:

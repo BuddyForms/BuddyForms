@@ -124,15 +124,15 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $local_storage
 	) );
 	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'User Data', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array(
-		'ipaddress' => __( 'ipaddress', 'buddyforms' ),
-		'referer' => __( 'referer', 'buddyforms' ),
-		'browser' => __( 'browser', 'buddyforms' ),
-		'version' => __( 'version', 'buddyforms' ),
-		'platform' => __( 'platform', 'buddyforms' ),
-		'reports' => __( 'reports', 'buddyforms' ),
-		'userAgent' => __( 'userAgent', 'buddyforms' ),
+		'ipaddress' => __( 'Disable IP Address', 'buddyforms' ),
+		'referer'   => __( 'Disable Referer', 'buddyforms' ),
+		'browser'   => __( 'Disable Browser', 'buddyforms' ),
+		'version'   => __( 'Disable Brovser Version', 'buddyforms' ),
+		'platform'  => __( 'Disable Platform', 'buddyforms' ),
+		'reports'   => __( 'Disable Reports', 'buddyforms' ),
+		'userAgent' => __( 'Disable User Agent', 'buddyforms' ),
 	), array(
-		'shortDesc' => __( 'Save User Data', 'buddyforms' ),
+		'shortDesc' => __( 'By default all above user data will be stored. In some country\'s for example in the EU you are not allowed to save the ip. Please make sure you not against the low in your country and adjust if needed', 'buddyforms' ),
 		'value'     => $bf_ajax
 	) );
 
