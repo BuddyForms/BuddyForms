@@ -24,7 +24,7 @@ function buddyforms_settings_page() {
 		include( BUDDYFORMS_INCLUDES_PATH . '/admin/bf-admin-header.php' );
 
 		// Display the Update Message
-		if ( 'true' == esc_attr( $_GET['updated'] ) ) {
+		if ( isset($_GET['updated']) && 'true' == esc_attr( $_GET['updated'] ) ) {
 			echo '<div class="updated" ><p>BuddyForms...</p></div>';
 		}
 
@@ -71,7 +71,7 @@ function buddyforms_settings_page() {
 											$post_types_forms = Array();
 											foreach ( $buddyforms as $key => $buddyform ) {
 
-												if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'buddyforms_submissions' && post_type_exists($buddyform['post_type'])){
+												if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions' && post_type_exists($buddyform['post_type'])){
 													$post_types_forms[ $buddyform['post_type'] ][ $key ] = $buddyform;
 												}
 

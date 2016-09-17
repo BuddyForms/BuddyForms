@@ -41,7 +41,7 @@ function bf_post_status_mail_notification_screen() {
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
-	if(!isset($buddyform['post_type']) || $buddyform['post_type'] == 'buddyforms_submissions'){
+	if(!isset($buddyform['post_type']) || $buddyform['post_type'] == 'bf_submissions'){
 		return;
 	}
 

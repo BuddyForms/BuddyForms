@@ -251,7 +251,7 @@ class BuddyForms {
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
-			|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
+			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		) {
 
@@ -521,7 +521,7 @@ class BuddyForms {
 
 		if ( $current_screen->id == 'edit-buddyforms'
 		     || $current_screen->id == 'buddyforms'
-		     || $current_screen->id == 'buddyforms_page_buddyforms_submissions'
+		     || $current_screen->id == 'buddyforms_page_bf_submissions'
 		     || $current_screen->id == 'buddyforms_page_buddyforms_settings'
 		     || $current_screen->id == 'buddyforms_page_bf_add_ons'
 		) {

@@ -515,9 +515,9 @@ function buddyforms_display_form_element( $args ) {
 	<li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
 
 		<div style="display:none;" class="hidden">
-			<?php foreach ( $form_fields['hidden'] as $key => $form_field ) {
+			<?php if( isset( $form_fields['hidden'] ) ){ foreach ( $form_fields['hidden'] as $key => $form_field ) {
 				$form_field->render();
-			}?>
+			} }?>
 		</div>
 
 		<div class="accordion_fields">

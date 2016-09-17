@@ -209,7 +209,7 @@ jQuery(document).ready(function (jQuery) {
 
                     if(type == 'post'){
                        var post_type = jQuery('#form_post_type').val();
-                       if( post_type == 'buddyforms_submissions' ){
+                       if( post_type == 'bf_submissions' ){
 
                            jQuery('#form_post_type').addClass('bf-error');
                            return false;

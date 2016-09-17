@@ -178,7 +178,6 @@ function buddyforms_process_post( $args = Array() ) {
 		// Save the User Data like browser ip etc
 		update_post_meta( $post_id, "_bf_user_data", $user_data );
 
-
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 			$bf_post = array(
 				'ID'             => $post_id,
@@ -199,7 +198,6 @@ function buddyforms_process_post( $args = Array() ) {
 		$hasError      = true;
 		$error_message = $post_id->get_error_message();
 	}
-
 
 	// Display the message
 	if ( ! $hasError ) :
