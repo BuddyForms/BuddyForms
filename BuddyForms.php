@@ -29,41 +29,6 @@
  ****************************************************************************
  */
 
-// Create a helper function for easy SDK access.
-function buddyforms_core_fs() {
-	global $buddyforms_core_fs;
-
-	if ( ! isset( $buddyforms_core_fs ) ) {
-		// Include Freemius SDK.
-		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
-
-		$buddyforms_core_fs = fs_dynamic_init( array(
-			'id'                => '391',
-			'slug'              => 'buddyforms',
-			'type'              => 'plugin',
-			'public_key'        => 'pk_dea3d8c1c831caf06cfea10c7114c',
-			'is_premium'        => true,
-			'has_addons'        => true,
-			'has_paid_plans'    => true,
-			'menu'              => array(
-				'slug'       => 'edit.php?post_type=buddyforms',
-				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
-				'support'    => false,
-				'contact'    => false,
-				'addons'    => false,
-			),
-			// Set the SDK to work in a sandbox mode (for development & testing).
-			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-//			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
-		) );
-	}
-
-	return $buddyforms_core_fs;
-}
-
-
-
-
 class BuddyForms {
 
 	/**
@@ -569,6 +534,37 @@ class BuddyForms {
 
 		delete_option( 'buddyforms_preview_page' );
 	}
+}
+// Create a helper function for easy SDK access.
+function buddyforms_core_fs() {
+	global $buddyforms_core_fs;
+
+	if ( ! isset( $buddyforms_core_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
+
+		$buddyforms_core_fs = fs_dynamic_init( array(
+			'id'                => '391',
+			'slug'              => 'buddyforms',
+			'type'              => 'plugin',
+			'public_key'        => 'pk_dea3d8c1c831caf06cfea10c7114c',
+			'is_premium'        => true,
+			'has_addons'        => true,
+			'has_paid_plans'    => true,
+			'menu'              => array(
+				'slug'       => 'edit.php?post_type=buddyforms',
+				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
+				'support'    => false,
+				'contact'    => false,
+				'addons'    => false,
+			),
+			// Set the SDK to work in a sandbox mode (for development & testing).
+			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
+//			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
+		) );
+	}
+
+	return $buddyforms_core_fs;
 }
 if(PHP_VERSION < 5.3){
 	function bf_php_version_admin_notice() {

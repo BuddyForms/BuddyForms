@@ -54,7 +54,7 @@ function buddyforms_metabox_class($classes) {
 	/**
 	 * Metabox show if form type is posts
 	 */
-	function buddyforms_metabox_show_if_form_type_posts($classes) {
+	function buddyforms_metabox_show_if_form_type_post($classes) {
 		$classes[] = 'buddyforms-metabox-show-if-form-type-post';
 		return $classes;
 	}

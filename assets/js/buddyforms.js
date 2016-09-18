@@ -1,5 +1,32 @@
 jQuery(document).ready(function () {
 
+    var bf_list_submissions_tmp = jQuery( ".buddyforms-list" );
+    var bf_list_submissions_list_tmp = '';
+
+    jQuery(document).on("click", '.bf-submission-modal', function (evt) {
+
+        console.log(evt);
+
+        bf_list_submissions_list_tmp = jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') );
+
+        jQuery('#buddyforms-list-view').html(bf_list_submissions_list_tmp);
+
+        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') + " :input").attr("disabled", true);
+        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).show();
+        return false;
+    });
+
+
+    jQuery(document).on("click", '.bf-close-submissions-modal', function (evt) {
+        bf_list_submissions_tmp.find( '#bf_post_li_' + jQuery(this).attr('data-id')).append(bf_list_submissions_list_tmp);
+        jQuery('#buddyforms-list-view').html(bf_list_submissions_tmp);
+        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).hide();
+        return false;
+    });
+
+
+
+
     jQuery( '.bf-garlic' ).garlic();
 
     jQuery(".bf-select2").select2({

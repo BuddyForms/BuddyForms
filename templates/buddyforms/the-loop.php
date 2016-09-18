@@ -14,6 +14,11 @@ $current_user = wp_get_current_user();
 			<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
 				$the_permalink      = get_permalink();
+
+				if($buddyforms[$form_slug]['post_type'] == 'bf_submissions')
+					$the_permalink = '#';
+
+
 				$post_status        = get_post_status();
 
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
@@ -24,6 +29,13 @@ $current_user = wp_get_current_user();
 				?>
 
 				<li id="bf_post_li_<?php the_ID() ?>" class="bf-submission <?php echo $post_status_css; ?>">
+
+					<?php if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){ ?>
+						<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
+							<?php buddyforms_submission_single(get_the_ID()) ?>
+						</div>
+					<?php } ?>
+
 					<div class="item">
 						<div class="item-avatar">
 							<?php
@@ -32,12 +44,21 @@ $current_user = wp_get_current_user();
 								70
 							), array( 'class' => "avatar" ) );
 							$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
+
+							$the_title = get_the_title();
+
+							if( $the_title == 'none' ){
+								$the_subject = get_post_meta( get_the_id(), 'subject', true );
+
+								if($the_subject)
+									$the_title = $the_subject;
+							}
 							?>
-							<a href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
+							<a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
 						</div>
 
-						<div class="item-title"><a href="<?php echo $the_permalink; ?>" rel="bookmark"
-						                           title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+						<div class="item-title"><a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
+						                           title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
 						</div>
 
 						<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
@@ -67,7 +88,6 @@ $current_user = wp_get_current_user();
 				</li>
 
 				<?php do_action( 'bf_after_loop_item' ) ?>
-
 
 			<?php endwhile; ?>
 

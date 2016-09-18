@@ -45,7 +45,7 @@ function bf_submissions_set_option( $status, $option, $value ) {
 }
 
 function bf_submissions_screen() {
-	global $buddyforms, $bf_submissions_table;
+	global $buddyforms, $bf_submissions_table, $form_slug;
 
 	// Check that the user is allowed to update options
 	if ( ! current_user_can( 'manage_options' ) ) {
@@ -101,135 +101,10 @@ function bf_submissions_screen() {
 			$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
 			?>
 
-			<div id="poststuff">
-				<div id="post-body" class="metabox-holder columns-2">
-					<div id="post-body-content">
 
-						<div class="postbox-submissions">
-							<h3 class="hndle"><span>Entry</span></h3>
-							<div class="inside">
-								<script>
-									jQuery(document).ready(function () {
-										jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
-										jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
-										jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled','disabled');
-									});
-								</script>
-								<?php
+					<?php buddyforms_submission_single($_GET['entry']); ?>
 
 
-								session_id( 'buddyforms-memtabox' );
-
-								// Create the form object
-								$form = new Form( "metabox_" . $form_slug );
-
-								// Set the form attribute
-								$form->configure( array(
-									//"prevent" => array("bootstrap", "jQuery", "focus"),
-									//"action" => $redirect_to,
-									"view"   => new View_Inline,
-									'class'  => 'standard-form',
-								) );
-
-								$fields = $buddyforms[$form_slug]['form_fields'];
-
-								$metabox_fields = array();
-
-								if(isset($fields)){
-									foreach($fields as $field_key => $field  ){
-										if(isset($field['metabox_enabled'])){
-											$metabox_fields[] = $field;
-										}
-									}
-								}
-
-								$args = array(
-									'post_type'    => $buddyforms[$form_slug]['post_type'],
-									'customfields' => $fields,
-									'post_id'      => $_GET['entry'],
-									'form_slug'    => $form_slug,
-								);
-
-								// if the form has custom field to save as post meta data they get displayed here
-								bf_form_elements( $form, $args );
-
-								$form->render();
-								?>
-							</div>
-						</div>
-
-
-					</div>
-					<div id="postbox-container-1" class="postbox-container">
-						<div id="submitdiv" class="postbox">
-
-							<h3 class="hndle"><span>Entry Actions</span></h3>
-							<div class="inside">
-								<div class="submitbox">
-									<div id="minor-publishing" class="frm_remove_border">
-										<div class="misc-pub-section">
-											<div class="clear"></div>
-										</div>
-										<div id="misc-publishing-actions">
-
-											<div class="misc-pub-section curtime misc-pub-curtime">
-										    <span id="timestamp">
-										    Submitted on: <b><?php echo get_the_date('l, F j, Y', $_GET['entry'] ); ?></b>    </span>
-											</div>
-
-											<div class="misc-pub-section">
-												<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>
-												<a href="#" onclick="window.print();return false;">Print</a>
-											</div>
-										</div>
-									</div>
-									<div id="major-publishing-actions">
-										<div id="delete-action">
-											<a href="<?php echo get_delete_post_link( $_GET['entry'] , '', true ); ?>" class="submitdelete deletion" onclick="return confirm('Are you sure you want to delete that entry?');" title="Delete">Delete</a>
-
-										</div>
-
-										<div class="clear"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="postbox frm_with_icons">
-							<h3 class="hndle"><span>Entry Details</span></h3>
-							<div class="inside">
-
-								<div class="misc-pub-section">
-									<span class="dashicons dashicons-id wp-media-buttons-icon"></span>
-									Entry ID:
-									<b><?php echo $_GET['entry']; ?></b>
-								</div>
-
-							</div>
-						</div>
-
-						<?php
-						$user_data = get_post_meta( $_GET['entry'], '_bf_user_data', true );
-
-						if($user_data){ ?>
-							<div class="postbox">
-								<h3 class="hndle"><span>User Information</span></h3>
-								<div class="inside">
-
-									<?php foreach($user_data as $uinfo => $uval) { ?>
-										<div class="misc-pub-section">
-											<?php echo $uinfo ?>:
-											<b><?php echo $uval ?></b>
-										</div>
-									<?php } ?>
-
-								</div>
-							</div>
-						<?php } ?>
-
-					</div>
-				</div>
-			</div>
 		<?php } ?>
 	</div>
 	<?php
