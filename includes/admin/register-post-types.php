@@ -15,11 +15,6 @@ function buddyforms_add_meta_boxes() {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
 
-//	echo '<pre>';
-//	print_r($buddyform);
-//	echo '</pre>';
-
-
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
@@ -55,6 +50,38 @@ function buddyforms_metabox_class($classes) {
 	$classes[] = 'buddyforms-metabox';
 	return $classes;
 }
+
+	/**
+	 * Metabox show if form type is posts
+	 */
+	function buddyforms_metabox_show_if_form_type_posts($classes) {
+		$classes[] = 'buddyforms-metabox-show-if-form-type-post';
+		return $classes;
+	}
+
+	/**
+	 * Metabox show if form type is registration
+	 */
+	function buddyforms_metabox_show_if_form_type_registration($classes) {
+		$classes[] = 'buddyforms-metabox-show-if-form-type-registration';
+		return $classes;
+	}
+
+	/**
+	 * Metabox show if attached page is selected
+	 */
+	function buddyforms_metabox_show_if_attached_page($classes) {
+		$classes[] = 'buddyforms-metabox-show-if-attached-page';
+		return $classes;
+	}
+
+	/**
+	 * Metabox show if form post type is not none ( bf_submissions )
+	 */
+	function buddyforms_metabox_show_if_post_type_none($classes) {
+		$classes[] = 'buddyforms-metabox-show-if-post-type-none';
+		return $classes;
+	}
 
 /**
  * Hide the form during loading to support the wizard and remove unneded metaboxes before all get displayed.

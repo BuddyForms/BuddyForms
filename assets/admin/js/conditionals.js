@@ -1,28 +1,64 @@
 jQuery(document).ready(function (jQuery) {
 
     // Check the form type and only display the relevant form setup tabs
-    from_setup_type(jQuery('#bf-form-type-select').val());
+    from_setup_form_type(jQuery('#bf-form-type-select').val());
 
     //
     //Function to show hide form setup tabs navigation
     //
-    function from_setup_type(value){
+    function from_setup_form_type(value){
+        if(value == 'registration') {
+            jQuery('.permission').hide();
+        } else {
+            jQuery('.permission').show();
+        }
         if(value == 'post') {
+            jQuery('.buddyforms-metabox-show-if-form-type-post').show();
+
             jQuery('.bf-after-submission-action option[value=display_form]').show();
             jQuery('.bf-after-submission-action option[value=display_post]').show();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
             jQuery('.create-content, .edit-submissions').show();
+
         } else {
+            jQuery('#form_post_type').val('bf_submissions');
+
+            jQuery('.buddyforms-metabox-show-if-form-type-post').hide();
             jQuery('.bf-after-submission-action option[value=display_form]').hide();
             jQuery('.bf-after-submission-action option[value=display_post]').hide();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').hide();
             jQuery('.create-content, .edit-submissions').hide();
+
+            // Select first tab
+            jQuery('a[href="#form-submission"]').tab('show');
+            jQuery('.activeform-submission').addClass('active');
+            jQuery('#form-submission').addClass('active in');
+
+        }
+        from_setup_post_type();
+    }
+
+
+    // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
+    function from_setup_post_type(){
+
+        var post_type = jQuery('#form_post_type').val();
+
+        if(post_type == 'bf_submissions') {
+            jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
+        } else {
+            jQuery('.buddyforms-metabox-show-if-post-type-none').show();
         }
     }
 
+    // On Change kisterner for the post type select
+    jQuery(document.body).on('change', '#form_post_type', function () {
+        from_setup_post_type();
+    });
+
     // Form Type Select listener for the on change event
     jQuery(document.body).on('change', '#bf-form-type-select', function () {
-        from_setup_type(jQuery(this).val());
+        from_setup_form_type(jQuery(this).val());
     });
 
     //
