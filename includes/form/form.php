@@ -127,9 +127,15 @@ function buddyforms_create_edit_form( $args ) {
 		$form_slug = apply_filters( 'buddyforms_the_form_to_use', $form_slug, $post_type );
 	}
 
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		$customfields = $buddyforms[ $form_slug ]['form_fields'];
+
+
+	if( !isset( $buddyforms[ $form_slug ]['form_fields'] ) ){
+		$error_message = __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' );
+		echo '<div class="error alert">' . $error_message . '</div>';
+		return;
 	}
+
+	$customfields = $buddyforms[ $form_slug ]['form_fields'];
 
 	if ( $the_post->post_parent ) {
 		$post_parent = $the_post->post_parent;

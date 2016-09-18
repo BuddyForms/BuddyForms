@@ -83,6 +83,16 @@ function buddyforms_metabox_class($classes) {
 		return $classes;
 	}
 
+	/**
+	 * Metabox show if form post type is not none ( bf_submissions )
+	 */
+	function buddyforms_metabox_hide_if_form_type_register($classes) {
+		$classes[] = 'buddyforms-metabox-hide-if-form-type-register';
+		return $classes;
+	}
+
+
+
 /**
  * Hide the form during loading to support the wizard and remove unneded metaboxes before all get displayed.
  */

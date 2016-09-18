@@ -1056,3 +1056,7 @@ div#buddyforms_metabox_sidebar p {
     line-height: 1.4;
     padding-right: 3px;
 }
+
+#screen-meta-links{
+    display: none;
+}

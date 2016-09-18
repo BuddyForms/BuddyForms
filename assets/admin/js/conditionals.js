@@ -9,8 +9,10 @@ jQuery(document).ready(function (jQuery) {
     function from_setup_form_type(value){
         if(value == 'registration') {
             jQuery('.permission').hide();
+            jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
         } else {
             jQuery('.permission').show();
+            jQuery('.buddyforms-metabox-hide-if-form-type-register').show();
         }
         if(value == 'post') {
             jQuery('.buddyforms-metabox-show-if-form-type-post').show();
@@ -36,6 +38,8 @@ jQuery(document).ready(function (jQuery) {
 
         }
         from_setup_post_type();
+        jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
+        jQuery("#screen-meta-links").remove();
     }
 
 
