@@ -60,7 +60,7 @@ function buddyforms_form_html( $args ) {
 
 	$form_class = 'standard-form';
 
-	if( isset( $buddyforms[$form_slug]['local_storage'] ) ){
+	if( !isset( $buddyforms[$form_slug]['local_storage'] ) ){
 		$form_class = ' bf-garlic';
 	}
 
