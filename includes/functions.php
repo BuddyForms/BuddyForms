@@ -13,7 +13,7 @@ function buddyforms_submission_single($post_id){
 		<div id="post-body" class="metabox-holder columns-2">
 			<div id="post-body-content">
 
-				<div class="postbox-submissions">
+				<div class="postbox-submissions postbox">
 					<h3 class="hndle"><span>Entry</span></h3>
 					<div class="inside">
 						<script>
@@ -33,7 +33,7 @@ function buddyforms_submission_single($post_id){
 						$form->configure( array(
 							//"prevent" => array("bootstrap", "jQuery", "focus"),
 							//"action" => $redirect_to,
-							"view"   => new View_Inline,
+							"view"   => new View_Metabox(),
 							'class'  => 'standard-form',
 						) );
 
