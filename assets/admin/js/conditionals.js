@@ -8,10 +8,10 @@ jQuery(document).ready(function (jQuery) {
     //
     function from_setup_form_type(value){
         if(value == 'registration') {
-            jQuery('.permission').hide();
+            jQuery('.permission, .edit-submissions').hide();
             jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
         } else {
-            jQuery('.permission').show();
+            jQuery('.permission, .edit-submissions').show();
             jQuery('.buddyforms-metabox-hide-if-form-type-register').show();
         }
         if(value == 'post') {
@@ -20,7 +20,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery('.bf-after-submission-action option[value=display_form]').show();
             jQuery('.bf-after-submission-action option[value=display_post]').show();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
-            jQuery('.create-content, .edit-submissions').show();
+            jQuery('.create-content').show();
 
         } else {
             jQuery('#form_post_type').val('bf_submissions');
@@ -29,7 +29,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery('.bf-after-submission-action option[value=display_form]').hide();
             jQuery('.bf-after-submission-action option[value=display_post]').hide();
             jQuery('.bf-after-submission-action option[value=display_posts_list]').hide();
-            jQuery('.create-content, .edit-submissions').hide();
+            jQuery('.create-content').hide();
 
             // Select first tab
             jQuery('a[href="#form-submission"]').tab('show');

@@ -18,7 +18,6 @@ $current_user = wp_get_current_user();
 				if($buddyforms[$form_slug]['post_type'] == 'bf_submissions')
 					$the_permalink = '#';
 
-
 				$post_status        = get_post_status();
 
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
@@ -57,7 +56,7 @@ $current_user = wp_get_current_user();
 							<a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
 						</div>
 
-						<div class="item-title"><a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
+						<div class="item-title"><a class="<?php echo $buddyforms[$form_slug]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> " data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
 						                           title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
 						</div>
 
