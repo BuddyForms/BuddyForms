@@ -8,9 +8,6 @@ jQuery(document).ready(function (jQuery) {
     //
     function from_setup_form_type(value){
 
-
-
-
         switch(value) {
             case 'contact':
 
@@ -54,6 +51,7 @@ jQuery(document).ready(function (jQuery) {
         }
 
         from_setup_post_type();
+        from_setup_attached_page()
 
         // Select first tab
         jQuery('a[href="#form-submission"]').tab('show');
@@ -80,9 +78,25 @@ jQuery(document).ready(function (jQuery) {
         }
     }
 
+    function from_setup_attached_page(){
+
+        var attached_page = jQuery('#attached_page').val();
+
+        if(attached_page == 'none') {
+            jQuery('.buddyforms-metabox-show-if-attached-page').hide();
+        } else {
+            jQuery('.buddyforms-metabox-show-if-attached-page').show();
+        }
+    }
+
     // On Change kisterner for the post type select
     jQuery(document.body).on('change', '#form_post_type', function () {
         from_setup_post_type();
+    });
+
+    // On Change kisterner for the post type select
+    jQuery(document.body).on('change', '#attached_page', function () {
+        from_setup_attached_page();
     });
 
     // Form Type Select listener for the on change event

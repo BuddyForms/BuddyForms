@@ -175,7 +175,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page</a></b>You can combine forms under the same page<br>The page you select will be used to create the endpoints to edit submissions. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>',
-		'id'        => 'form_page'
+		'id'        => 'attached_page'
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
