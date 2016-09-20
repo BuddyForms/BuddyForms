@@ -187,19 +187,28 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'view'      => 'vertical',
 		'value'     => $edit_link,
-		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' )
+		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
+		'class'     => 'view_if_form_type_post'
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
 		'list_all_form' => 'List all Author Posts created with this Form',
 		'list_all'      => 'List all Author Posts of the PostType'
-	), array( 'value' => $list_posts_option, 'shortDesc' => '' ) );
+	), array(
+		'value' => $list_posts_option,
+		'shortDesc' => '',
+		'class'     => 'view_if_form_type_post'
+	) );
 
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
 		'list'  => 'List',
 		'table' => 'Table'
-	), array( 'value' => $list_posts_style, 'shortDesc' => 'Do you want to list post in a ul li list or as table.' ) );
+	), array(
+		'value' => $list_posts_style,
+		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
+		'class'     => 'view_if_form_type_post'
+	) );
 
 
 	// Check if form elements exist and sort the form elements
@@ -226,7 +235,7 @@ function buddyforms_metabox_form_setup() {
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title($tab); ?>
-			<li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>"><a
+			<li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav"><a
 					href="#<?php echo $tab_slug; ?>"
 					data-toggle="tab"><?php echo $tab; ?></a>
 				</li><?php
@@ -255,7 +264,7 @@ function buddyforms_metabox_form_setup() {
 
 								?>
 
-								<tr id="row_form_title" class="<?php echo $class ?>">
+								<tr class="<?php echo $class ?>">
 									<th scope="row">
 										<label for="form_title"><?php echo $field->getLabel() ?></label>
 									</th>

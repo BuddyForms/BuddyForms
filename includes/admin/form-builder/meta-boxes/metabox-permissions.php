@@ -160,7 +160,7 @@ function buddyforms_permissions_screen() {
 }
 
 function buddyforms_form_setup_nav_li_permission(){ ?>
-	<li class="permission"><a class="permission"
+	<li class="permission_nav"><a class="permission"
 		href="#permission"
 		data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
 	</li><?php

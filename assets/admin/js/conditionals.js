@@ -7,37 +7,59 @@ jQuery(document).ready(function (jQuery) {
     //Function to show hide form setup tabs navigation
     //
     function from_setup_form_type(value){
-        if(value == 'registration') {
-            jQuery('.permission, .edit-submissions').hide();
-            jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
-        } else {
-            jQuery('.permission, .edit-submissions').show();
-            jQuery('.buddyforms-metabox-hide-if-form-type-register').show();
+
+
+
+
+        switch(value) {
+            case 'contact':
+
+                // Set post type value to bf_submissions to make sure it is a contact form if hidden
+                jQuery('#form_post_type').val('bf_submissions');
+
+                // Rename edit submissions to View
+                jQuery('.nav-tabs .edit-submissions_nav a').text('View Submissions');
+
+                // Show
+                jQuery('.permission_nav, .edit-submissions_nav').show();
+
+                // Hide
+                jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
+                jQuery('.create-content_nav, .view_if_form_type_post').hide();
+
+                break;
+            case 'registration':
+
+                // Set post type value to bf_submissions to make sure it is a contact form if hidden
+                jQuery('#form_post_type').val('bf_submissions');
+
+                // Hide
+                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav').hide();
+                jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
+
+                break;
+            case 'post':
+
+                // Rename edit submissions to Edit
+                jQuery('.nav-tabs .edit-submissions_nav a').text('Edit Submissions');
+
+                // Show
+                jQuery('.buddyforms-metabox-show-if-form-type-post').show();
+                jQuery('.bf-after-submission-action option[value=display_form]').show();
+                jQuery('.bf-after-submission-action option[value=display_post]').show();
+                jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
+                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .view_if_form_type_post').show();
+
+                break;
         }
-        if(value == 'post') {
-            jQuery('.buddyforms-metabox-show-if-form-type-post').show();
 
-            jQuery('.bf-after-submission-action option[value=display_form]').show();
-            jQuery('.bf-after-submission-action option[value=display_post]').show();
-            jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
-            jQuery('.create-content').show();
-
-        } else {
-            jQuery('#form_post_type').val('bf_submissions');
-
-            jQuery('.buddyforms-metabox-show-if-form-type-post').hide();
-            jQuery('.bf-after-submission-action option[value=display_form]').hide();
-            jQuery('.bf-after-submission-action option[value=display_post]').hide();
-            jQuery('.bf-after-submission-action option[value=display_posts_list]').hide();
-            jQuery('.create-content').hide();
-
-            // Select first tab
-            jQuery('a[href="#form-submission"]').tab('show');
-            jQuery('.activeform-submission').addClass('active');
-            jQuery('#form-submission').addClass('active in');
-
-        }
         from_setup_post_type();
+
+        // Select first tab
+        jQuery('a[href="#form-submission"]').tab('show');
+        jQuery('.activeform-submission').addClass('active');
+        jQuery('#form-submission').addClass('active in');
+
         jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
         jQuery("#screen-meta-links").remove();
     }
