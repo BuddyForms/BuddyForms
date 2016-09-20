@@ -1,5 +1,5 @@
 <?php
-global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
+global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
 $current_user = wp_get_current_user(); ?>
 
@@ -14,7 +14,12 @@ $current_user = wp_get_current_user(); ?>
 					<span><?php _e( 'Created', 'buddyforms' ); ?></span>
 				</th>
 				<th class="title">
-					<span><?php _e( 'Title', 'buddyforms' ); ?></span>
+					<?php if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){ ?>
+						<span><?php _e( 'Subject', 'buddyforms' ); ?></span>
+					<?php } else { ?>
+						<span><?php _e( 'Title', 'buddyforms' ); ?></span>
+					<?php } ?>
+
 				</th>
 				<th class="status">
 					<span><?php _e( 'Status', 'buddyforms' ); ?></span>
@@ -31,10 +36,24 @@ $current_user = wp_get_current_user(); ?>
 			<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
 				$the_permalink      = get_permalink();
+
+				if($buddyforms[$form_slug]['post_type'] == 'bf_submissions')
+					$the_permalink = '#';
+
 				$post_status        = get_post_status();
+
+				$the_title = get_the_title();
+
+				if( $the_title == 'none' ){
+					$the_subject = get_post_meta( get_the_id(), 'subject', true );
+
+					if($the_subject)
+						$the_title = $the_subject;
+				}
 
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
 				$post_status_name   = bf_get_post_status_readable( $post_status );
+				$post_id            = get_the_ID();
 
 				do_action( 'bp_before_blog_post' ) ?>
 
@@ -45,7 +64,7 @@ $current_user = wp_get_current_user(); ?>
 						<?php // Create the modal for the submissions single view
 						if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){ ?>
 							<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
-								<?php buddyforms_submission_single(get_the_ID()) ?>
+								<?php buddyforms_locate_template( 'buddyforms/submissions-single.php' ); ?>
 							</div>
 						<?php } ?>
 						<span class="mobile-th"><?php _e( 'Created', 'buddyforms' ); ?></span>
@@ -54,7 +73,7 @@ $current_user = wp_get_current_user(); ?>
 					<td>
 						<span class="mobile-th"><?php _e( 'Title', 'buddyforms' ); ?></span>
 						<a class="<?php echo $buddyforms[$form_slug]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> " data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
-						   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+						   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
 						<?php do_action( 'buddyforms_the_loop_item_last', get_the_ID() ); ?>
 					</td>
 					<td colspan="2" class="table-wrapper">

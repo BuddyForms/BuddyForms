@@ -1,10 +1,8 @@
 <?php
-global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
+global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
 $current_user = wp_get_current_user();
-
 ?>
-
 <div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
 
 	<?php if ( $the_lp_query->have_posts() ) : ?>
@@ -22,6 +20,7 @@ $current_user = wp_get_current_user();
 
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
 				$post_status_name   = bf_get_post_status_readable( $post_status );
+				$post_id            = get_the_ID();
 
 				do_action( 'bp_before_blog_post' );
 
@@ -32,7 +31,7 @@ $current_user = wp_get_current_user();
 					<?php // Create the modal for the submissions single view
 						if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){ ?>
 						<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
-							<?php buddyforms_submission_single(get_the_ID()) ?>
+							<?php buddyforms_locate_template( 'buddyforms/submissions-single.php' ); ?>
 						</div>
 					<?php } ?>
 

@@ -1,5 +1,4 @@
 <?php
-
 function buddyforms_create_submissions_page()  {
 	add_submenu_page(
 		'edit.php?post_type=buddyforms',
@@ -45,7 +44,7 @@ function bf_submissions_set_option( $status, $option, $value ) {
 }
 
 function bf_submissions_screen() {
-	global $buddyforms, $bf_submissions_table, $form_slug;
+	global $buddyforms, $bf_submissions_table, $form_slug, $post_id;
 
 	// Check that the user is allowed to update options
 	if ( ! current_user_can( 'manage_options' ) ) {
@@ -99,13 +98,9 @@ function bf_submissions_screen() {
 
 		<?php if(isset($_GET['action']) && isset($_GET['entry'])) {
 			$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
-			?>
-
-
-					<?php buddyforms_submission_single($_GET['entry']); ?>
-
-
-		<?php } ?>
+			$post_id   = $_GET['entry'];
+			buddyforms_locate_template( 'buddyforms/submissions-single.php' );
+		} ?>
 	</div>
 	<?php
 }
