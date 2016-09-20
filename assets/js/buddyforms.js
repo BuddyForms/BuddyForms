@@ -1,15 +1,15 @@
 jQuery(document).ready(function () {
 
-    var bf_list_submissions_tmp = jQuery( ".buddyforms-list" );
-    var bf_list_submissions_list_tmp = '';
+    var bf_submission_modal_content = jQuery( ".buddyforms-posts-content" );
+    var bf_submission_modal = '';
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
 
         console.log(evt);
 
-        bf_list_submissions_list_tmp = jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') );
+        bf_submission_modal = jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') );
 
-        jQuery('#buddyforms-list-view').html(bf_list_submissions_list_tmp);
+        jQuery('.buddyforms-posts-container').html(bf_submission_modal);
 
         jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') + " :input").attr("disabled", true);
         jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).show();
@@ -18,8 +18,8 @@ jQuery(document).ready(function () {
 
 
     jQuery(document).on("click", '.bf-close-submissions-modal', function (evt) {
-        bf_list_submissions_tmp.find( '#bf_post_li_' + jQuery(this).attr('data-id')).append(bf_list_submissions_list_tmp);
-        jQuery('#buddyforms-list-view').html(bf_list_submissions_tmp);
+        bf_submission_modal_content.find( '.bf_posts_' + jQuery(this).attr('data-id')).prepend(bf_submission_modal);
+        jQuery('.buddyforms-posts-container').html(bf_submission_modal_content);
         jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).hide();
         return false;
     });

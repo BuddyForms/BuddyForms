@@ -3,11 +3,11 @@ global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug;
 
 $current_user = wp_get_current_user(); ?>
 
-<div id="buddyforms-table-view" class="buddyforms_posts_table">
+<div id="buddyforms-table-view" class="buddyforms_posts_table buddyforms-posts-container">
 
 	<?php if ( $the_lp_query->have_posts() ) : ?>
 
-		<table class="table table-striped">
+		<table class="table table-striped buddyforms-posts-content">
 			<thead>
 			<tr>
 				<th class="created">
@@ -19,7 +19,7 @@ $current_user = wp_get_current_user(); ?>
 				<th class="status">
 					<span><?php _e( 'Status', 'buddyforms' ); ?></span>
 				</th>
-				<?php if ( is_user_logged_in() ) { ?>
+				<?php if ( is_user_logged_in() &&  $buddyforms[$form_slug]['post_type'] != 'bf_submissions') { ?>
 					<th class="actions">
 						<span><?php _e( 'Actions', 'buddyforms' ); ?></span>
 					</th>
@@ -38,14 +38,22 @@ $current_user = wp_get_current_user(); ?>
 
 				do_action( 'bp_before_blog_post' ) ?>
 
-				<tr id="bf_post_li_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
-					<td>
+
+
+				<tr id="bf_post_tr_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
+					<td class="bf_posts_<?php the_ID() ?>">
+						<?php // Create the modal for the submissions single view
+						if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){ ?>
+							<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
+								<?php buddyforms_submission_single(get_the_ID()) ?>
+							</div>
+						<?php } ?>
 						<span class="mobile-th"><?php _e( 'Created', 'buddyforms' ); ?></span>
 						<?php the_time( 'F j, Y' ) ?>
 					</td>
 					<td>
 						<span class="mobile-th"><?php _e( 'Title', 'buddyforms' ); ?></span>
-						<a href="<?php echo $the_permalink; ?>" rel="bookmark"
+						<a class="<?php echo $buddyforms[$form_slug]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> " data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
 						   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
 						<?php do_action( 'buddyforms_the_loop_item_last', get_the_ID() ); ?>
 					</td>
