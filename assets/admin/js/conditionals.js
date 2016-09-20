@@ -25,7 +25,7 @@ jQuery(document).ready(function (jQuery) {
 
                 // Hide
                 jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
-                jQuery('.create-content_nav, .view_if_form_type_post').hide();
+                jQuery('.create-content_nav, .bf_field_view_if_form_type_post').hide();
 
                 break;
             case 'registration':
@@ -48,7 +48,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.bf-after-submission-action option[value=display_form]').show();
                 jQuery('.bf-after-submission-action option[value=display_post]').show();
                 jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
-                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .view_if_form_type_post').show();
+                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_field_view_if_form_type_post').show();
 
                 break;
         }
@@ -72,8 +72,11 @@ jQuery(document).ready(function (jQuery) {
 
         if(post_type == 'bf_submissions') {
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
+            jQuery('.bf_field_view_if_post_type_none').hide();
+
         } else {
             jQuery('.buddyforms-metabox-show-if-post-type-none').show();
+            jQuery('.bf_field_view_if_post_type_none').show();
         }
     }
 

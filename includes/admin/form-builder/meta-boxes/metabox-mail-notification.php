@@ -172,7 +172,7 @@ function buddyforms_mail_notification_form( $trigger, $mail_submission ) {
 								<strong>
 									<a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
 									   data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
-									   title="Edit this Field" href="#"><?php echo $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ?></a>
+									   title="Edit this Field" href="#"><?php echo isset($buddyform['mail_submissions'][ $trigger ]['mail_subject']) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : ''; ?></a>
 								</strong>
 
 							</td>
@@ -367,8 +367,9 @@ function buddyforms_form_setup_tab_pane_notification(){ ?>
 
 			<?php  bf_mail_notification_screen() ?>
 
+			<div class="bf_field_view_if_form_type_post bf_field_view_if_post_type_none">
 			<?php  bf_post_status_mail_notification_screen() ?>
-
+			</div>
 
 
 		</div>

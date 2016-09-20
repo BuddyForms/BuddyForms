@@ -188,7 +188,7 @@ function buddyforms_metabox_form_setup() {
 		'view'      => 'vertical',
 		'value'     => $edit_link,
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
-		'class'     => 'view_if_form_type_post'
+		'class'     => 'bf_field_view_if_form_type_post'
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
@@ -197,7 +197,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_option,
 		'shortDesc' => '',
-		'class'     => 'view_if_form_type_post'
+		'class'     => 'bf_field_view_if_form_type_post'
 	) );
 
 
@@ -207,7 +207,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
-		'class'     => 'view_if_form_type_post'
+		'class'     => 'bf_field_view_if_form_type_post'
 	) );
 
 
