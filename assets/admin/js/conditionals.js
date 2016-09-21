@@ -24,6 +24,11 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
                 jQuery('.create-content_nav, .bf_field_view_if_form_type_post').hide();
 
+                // Show/Hide the corresponding form elements in the form select
+                jQuery('.bf_show_if_f_type_all').show();
+                jQuery('.bf_show_if_f_type_registration').show();
+                jQuery('.bf_show_if_f_type_post').hide();
+
                 break;
             case 'registration':
 
@@ -33,6 +38,11 @@ jQuery(document).ready(function (jQuery) {
                 // Hide
                 jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav').hide();
                 jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
+
+                // Show/Hide the corresponding form elements in the form select
+                jQuery('.bf_show_if_f_type_registration').show();
+                jQuery('.bf_show_if_f_type_all').hide();
+                jQuery('.bf_show_if_f_type_post').hide();
 
                 break;
             case 'post':
@@ -46,6 +56,10 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.bf-after-submission-action option[value=display_post]').show();
                 jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
                 jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_field_view_if_form_type_post').show();
+
+                // Show the corresponding form elements in the form select
+                jQuery('.bf_show_if_f_type_all').show();
+                jQuery('.bf_show_if_f_type_post').show();
 
                 break;
         }

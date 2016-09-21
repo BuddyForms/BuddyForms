@@ -154,15 +154,14 @@ function buddyforms_form_builder_templates(){
 function buddyforms_form_builder_form_elements_select(){
 	$elements_select_options = bf_form_elements_select_options();
 
-
-
 	// Add a default value
 	$el_sel_options = '<option value="none">Select Field Type</option>';
 
 	// Loop The form elements array and add the options to the select box
 	if(is_array($elements_select_options)){
 		foreach($elements_select_options as $optgroup_label => $optgroup){
-			$el_sel_options .= '<optgroup label="' . $optgroup['label'] . '">';
+			$class = isset( $optgroup['class'] ) ? $optgroup['class'] : '';
+				$el_sel_options .= '<optgroup style="display:none;" class="' . $class .'" id="' . $optgroup_label . '" label="' . $optgroup['label'] . '">';
 			foreach($optgroup['fields'] as $es_val => $es_label){
 				if( is_array($es_label) ){
 					$el_sel_options .= '<option data-unique="' . ( isset( $es_label['unique'] ) ? $es_label['unique'] : '' ) . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
@@ -184,6 +183,7 @@ function bf_form_elements_select_options(){
 	$elements_select_options = array(
 		'contact' => array(
 			'label'     => __('Contact Fields', 'buddyforms'),
+			'class'     => 'bf_show_if_f_type_all',
 			'fields'    => array(
 				'Subject'   => array(
 					'label'     => __( 'Subject', 'buddyforms' ),
@@ -201,6 +201,7 @@ function bf_form_elements_select_options(){
 		),
 		'user' => array(
 			'label'     => __('User Fields', 'buddyforms'),
+			'class'     => 'bf_show_if_f_type_registration',
 			'fields'    => array(
 				'user_login'     => array(
 					'label'     => __( 'Username', 'buddyforms' ),
@@ -234,6 +235,7 @@ function bf_form_elements_select_options(){
 		),
 		'post' => array(
 			'label'     => __('Post Fields', 'buddyforms'),
+			'class'     => 'bf_show_if_f_type_post',
 			'fields'    => array(
 				'title'     => array(
 					'label'     => __( 'Title', 'buddyforms' ),
@@ -262,6 +264,7 @@ function bf_form_elements_select_options(){
 		),
 		'basic' => array(
 			'label'     => __('Basic Fields', 'buddyforms'),
+			'class'     => 'bf_show_if_f_type_all',
 			'post_type '=> 'all',
 			'fields'    => array(
 				'text'     => array(
@@ -283,6 +286,7 @@ function bf_form_elements_select_options(){
 		),
 		'extra' => array(
 			'label'     => __('Extra Fields', 'buddyforms'),
+			'class'     => 'bf_show_if_f_type_all',
 			'fields'    => array(
 				'file'     => array(
 					'label'     => __( 'File', 'buddyforms' ),
