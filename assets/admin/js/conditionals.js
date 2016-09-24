@@ -29,7 +29,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.bf_show_if_f_type_registration').show();
                 jQuery('.bf_show_if_f_type_post').hide();
 
-                // Hide after submission post options
+                // Show/Hide after submission post options
                 jQuery('#bf-after-submission-action option[value=display_form]').hide();
                 jQuery('#bf-after-submission-action option[value=display_post]').hide();
                 jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
@@ -40,6 +40,8 @@ jQuery(document).ready(function (jQuery) {
 
                 // Set post type value to bf_submissions to make sure it is a contact form if hidden
                 jQuery('#form_post_type').val('bf_submissions');
+                jQuery('#attached_page').val('none');
+
 
                 // Hide
                 jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav').hide();
@@ -113,9 +115,11 @@ jQuery(document).ready(function (jQuery) {
         if(attached_page == 'none') {
             jQuery('.buddyforms-metabox-show-if-attached-page').hide();
             jQuery('.bf_hide_if_post_type_none').hide();
+            jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
         } else {
             jQuery('.buddyforms-metabox-show-if-attached-page').show();
             jQuery('.bf_hide_if_post_type_none').show();
+            jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
 
         }
     }
