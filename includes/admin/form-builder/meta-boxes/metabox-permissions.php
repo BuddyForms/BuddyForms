@@ -58,13 +58,10 @@ function buddyforms_permissions_screen() {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
-	echo '<br><br><h4>' . __('Logged in User', 'buddyforms') . '</h4><br>';
 
-	echo '<div class="bf-roles-main-desc">
-			<div>
-				<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
-				<p><b>' . __( 'Check/Uncheck capabilities to allow/disallow users to create, edit and/or delete posts of this form', 'buddyforms' ) . '</b></p><p><a href="#" class="bf_check_all">' . __( 'Check all', 'buddyforms' ) . '</a></p>
-				</div>
+	echo '<br><br><div class="bf-roles-main-desc">
+			<h4>' . __('Logged in User', 'buddyforms') . '</h4><br>
+			<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 			</div>';
 
 		foreach ( get_editable_roles() as $role_name => $role_info ):
@@ -84,7 +81,7 @@ function buddyforms_permissions_screen() {
 					if ( $capability_array[1] == $form_slug ) {
 
 						$form_user_role[ $capability_array[2] ] = $capability_array[2];
-						$default_roles[ $capability_array[2] ]  = '';
+						//$default_roles[ $capability_array[2] ]  = '';
 
 					}
 				}
@@ -121,7 +118,7 @@ function buddyforms_permissions_screen() {
 					<thead>
 						<tr>
 							<th class="field_label"><?php _e('Role', 'buddyforms') ?></th>
-							<th class="field_name"><?php _e('Create - Edit - Delete', 'buddyforms') ?></th>
+							<th class="field_name"><?php _e('Create - Edit - Delete', 'buddyforms') ?><a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a></th>
 						</tr>
 					</thead>
 					<tbody id="the-list">
@@ -157,7 +154,7 @@ function buddyforms_permissions_screen() {
 }
 
 function buddyforms_form_setup_nav_li_permission(){ ?>
-	<li class="permission_nav"><a class="permission"
+	<li class="permission_nav"><a class="permission bf_hide_if_post_type_none"
 		href="#permission"
 		data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
 	</li><?php
@@ -169,18 +166,7 @@ function buddyforms_form_setup_tab_pane_permission(){
 	<div class="tab-pane fade in" id="permission">
 		<div class="buddyforms_accordion_permission">
 			<?php buddyforms_permissions_unregistered_screen() ?>
-			<?php
-
-//			if( !empty($post->post_name) ) {
-//				buddyforms_permissions_screen();
-//			} else {
-//				echo '<br><br><h4>' . __('Logged in User', 'buddyforms') . '</h4><br>';
-//				echo '<p>' . __( 'Please enter a form title and save the form to creating permissions. Capabilities are created form the post name instead of the id to keep capabilities in a readable format.', 'buddyforms' ) . '</p>';
-//
-//			}
-
-			buddyforms_permissions_screen();
-			?>
+			<?php buddyforms_permissions_screen(); ?>
 		</div>
 	</div><?php
 }

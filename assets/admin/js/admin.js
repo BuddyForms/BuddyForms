@@ -375,7 +375,18 @@ jQuery(document).ready(function (jQuery) {
         }
         e.preventDefault();
     });
+    jQuery(".bf_check").click(function (e) {
 
+        if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
+            jQuery(this).text(admin_text.check);
+        } else {
+            jQuery(this).text(admin_text.uncheck);
+        }
+        e.preventDefault();
+    });
+
+
+    jQuery('.bf_check').trigger('click');
     //
     // #bf-create-page-modal
     //

@@ -367,7 +367,7 @@ function buddyforms_form_setup_tab_pane_notification(){ ?>
 
 			<?php  bf_mail_notification_screen() ?>
 
-			<div class="bf_field_view_if_form_type_post bf_field_view_if_post_type_none">
+			<div class="bf_show_if_f_type_post bf_field_view_if_post_type_none">
 			<?php  bf_post_status_mail_notification_screen() ?>
 			</div>
 

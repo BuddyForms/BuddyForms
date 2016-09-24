@@ -22,12 +22,18 @@ jQuery(document).ready(function (jQuery) {
 
                 // Hide
                 jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
-                jQuery('.create-content_nav, .bf_field_view_if_form_type_post').hide();
+                jQuery('.create-content_nav').hide();
 
                 // Show/Hide the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();
                 jQuery('.bf_show_if_f_type_registration').show();
                 jQuery('.bf_show_if_f_type_post').hide();
+
+                // Hide after submission post options
+                jQuery('#bf-after-submission-action option[value=display_form]').hide();
+                jQuery('#bf-after-submission-action option[value=display_post]').hide();
+                jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+
 
                 break;
             case 'registration':
@@ -44,6 +50,12 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.bf_show_if_f_type_all').hide();
                 jQuery('.bf_show_if_f_type_post').hide();
 
+                // Hide after submission post options
+                jQuery('#bf-after-submission-action option[value=display_form]').hide();
+                jQuery('#bf-after-submission-action option[value=display_post]').hide();
+                jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+
+
                 break;
             case 'post':
 
@@ -52,10 +64,12 @@ jQuery(document).ready(function (jQuery) {
 
                 // Show
                 jQuery('.buddyforms-metabox-show-if-form-type-post').show();
-                jQuery('.bf-after-submission-action option[value=display_form]').show();
-                jQuery('.bf-after-submission-action option[value=display_post]').show();
-                jQuery('.bf-after-submission-action option[value=display_posts_list]').show();
-                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_field_view_if_form_type_post').show();
+                jQuery('#bf-after-submission-action option[value=display_form]').show();
+                jQuery('#bf-after-submission-action option[value=display_post]').show();
+                jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
+
+                // View all post related nav items
+                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post').show();
 
                 // Show the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();
@@ -98,8 +112,11 @@ jQuery(document).ready(function (jQuery) {
 
         if(attached_page == 'none') {
             jQuery('.buddyforms-metabox-show-if-attached-page').hide();
+            jQuery('.bf_hide_if_post_type_none').hide();
         } else {
             jQuery('.buddyforms-metabox-show-if-attached-page').show();
+            jQuery('.bf_hide_if_post_type_none').show();
+
         }
     }
 

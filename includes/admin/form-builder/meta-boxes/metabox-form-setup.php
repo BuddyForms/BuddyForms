@@ -33,7 +33,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Generate teh Pages Array
 	$all_pages = Array();
-	$all_pages['none'] = 'Select a Page to enable user post management';
+	$all_pages['none'] = 'Select a Page';
 	foreach ( $pages as $page ) {
 		$all_pages[ $page->ID ] = $page->post_title;
 	}
@@ -90,7 +90,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Form Submission'][] = $element;
 
 
-	// Attached Page
+	// After Submission Page
 	$element = new Element_Select( '<b>' . __( "After Submission Page", 'buddyforms' ) . '</b>', "buddyforms_options[after_submission_page]", $all_pages, array(
 		'value'     => $after_submission_page,
 		'shortDesc' => __('Select the Page from where the content gets displayed. Will redirected to the page if ajax is disabled, otherwise display the content.', 'buddyforms'),
@@ -174,7 +174,7 @@ function buddyforms_metabox_form_setup() {
 	// Attached Page
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page</a></b>You can combine forms under the same page<br>The page you select will be used to create the endpoints to edit submissions. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>',
+		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page you select will be used to create the endpoints to view/edit submissions. You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>',
 		'id'        => 'attached_page'
 	) );
 
@@ -188,7 +188,7 @@ function buddyforms_metabox_form_setup() {
 		'view'      => 'vertical',
 		'value'     => $edit_link,
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
-		'class'     => 'bf_field_view_if_form_type_post'
+		'class'     => 'bf_show_if_f_type_post'
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
@@ -197,7 +197,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_option,
 		'shortDesc' => '',
-		'class'     => 'bf_field_view_if_form_type_post'
+		'class'     => 'bf_show_if_f_type_post'
 	) );
 
 
@@ -207,7 +207,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
-		'class'     => 'bf_field_view_if_form_type_post'
+		'class'     => 'bf_show_if_f_type_post'
 	) );
 
 
@@ -286,7 +286,5 @@ function buddyforms_metabox_form_setup() {
 			?>
 		</div>
 	</div>
-
 	<?php
-
 }
