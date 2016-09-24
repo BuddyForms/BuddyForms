@@ -69,9 +69,9 @@ function buddyforms_permissions_screen() {
 
 		foreach ( get_editable_roles() as $role_name => $role_info ):
 
-			$default_roles[ 'buddyforms_' . $form_slug . '_create' ] = '';
-			$default_roles[ 'buddyforms_' . $form_slug . '_edit' ]   = '';
-			$default_roles[ 'buddyforms_' . $form_slug . '_delete' ] = '';
+			$default_roles[ 'create' ] = '';
+			$default_roles[ 'edit' ]   = '';
+			$default_roles[ 'delete' ] = '';
 
 			$form_user_role = array();
 
@@ -83,8 +83,8 @@ function buddyforms_permissions_screen() {
 
 					if ( $capability_array[1] == $form_slug ) {
 
-						$form_user_role[ $capability ] = $capability;
-						$default_roles[ $capability ]  = '';
+						$form_user_role[ $capability_array[2] ] = $capability_array[2];
+						$default_roles[ $capability_array[2] ]  = '';
 
 					}
 				}
@@ -95,11 +95,10 @@ function buddyforms_permissions_screen() {
 
 			if($role_name == 'administrator'){
 
-				foreach($default_roles as $role_n_a => $role_a)
-					$form_user_role[$role_n_a] = $role_n_a;
+//				foreach($default_roles as $role_n_a => $role_a)
+//					$form_user_role[$role_n_a] = $role_n_a;
 
-
-				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
+				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 					'value'     => $form_user_role,
 					'inline'    => true,
 					'style'     => 'margin-right: 60px;',
@@ -107,7 +106,7 @@ function buddyforms_permissions_screen() {
 				) );
 
 			} else {
-				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $form_slug . '][' . $role_name . ']', $default_roles, array(
+				$form_setup[] = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 					'value'  => $form_user_role,
 					'inline' => true,
 					'style'  => 'margin-right: 60px;'
@@ -172,13 +171,15 @@ function buddyforms_form_setup_tab_pane_permission(){
 			<?php buddyforms_permissions_unregistered_screen() ?>
 			<?php
 
-			if( !empty($post->post_name) ) {
-				buddyforms_permissions_screen();
-			} else {
-				echo '<br><br><h4>' . __('Logged in User', 'buddyforms') . '</h4><br>';
-				echo '<p>' . __( 'Please enter a form title and save the form to creating permissions. Capabilities are created form the post name instead of the id to keep capabilities in a readable format.', 'buddyforms' ) . '</p>';
+//			if( !empty($post->post_name) ) {
+//				buddyforms_permissions_screen();
+//			} else {
+//				echo '<br><br><h4>' . __('Logged in User', 'buddyforms') . '</h4><br>';
+//				echo '<p>' . __( 'Please enter a form title and save the form to creating permissions. Capabilities are created form the post name instead of the id to keep capabilities in a readable format.', 'buddyforms' ) . '</p>';
+//
+//			}
 
-			}
+			buddyforms_permissions_screen();
 			?>
 		</div>
 	</div><?php

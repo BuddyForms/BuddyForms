@@ -160,13 +160,11 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 		endforeach;
 
 		foreach ( $_POST['buddyforms_roles'] as $form_role => $capabilities ) {
-			foreach ( $capabilities as $key => $capability ) {
-				$role = get_role( $key );
-				foreach ( $capability as $key_cap => $cap ) {
-					$role->add_cap( $cap );
-				}
+			$role = get_role( $form_role );
+			foreach ( $capabilities as $cap ) {
+				$cap_slug = 'buddyforms_' . $post->post_name . '_' . $cap;
+				$role->add_cap(  $cap_slug );
 			}
-
 		}
 
 	}
