@@ -166,12 +166,12 @@ function buddyforms_form_template(){
 
 	$json['formbuilder'] = $formbuilder;
 
-
 	ob_start();
-		buddyforms_mail_notification_form( $buddyform['form_slug'] );
-	$mail_notification = ob_get_clean();
+	$mail_trigger_id = buddyforms_mail_notification_form();
+	$mail_trigger_html = ob_get_clean();
 
-	$json['mail_notification'] = $mail_notification;
+	$json['mail_notification']['trigger_id'] = $mail_trigger_id;
+	$json['mail_notification']['html']       = $mail_trigger_html;
 
 	unset($buddyform['form_fields']);
 
@@ -179,9 +179,7 @@ function buddyforms_form_template(){
 
 
 	echo json_encode( $json );
-
 	die();
-
 }
 add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 

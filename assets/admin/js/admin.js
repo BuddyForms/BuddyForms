@@ -44,7 +44,12 @@ function bf_alert(alert_message){
         }
     });
 }
-
+// Update ths list number 1,2,3,... for the mail trigger
+function bf_update_list_item_number_mail() {
+    jQuery("#mailcontainer .bf_trigger_list_item").each(function (t) {
+        jQuery(this).find("td.field_order .circle").first().html(t + 1)
+    })
+}
 //
 // Helper Function to lode form element templates depend on the form type
 //
@@ -69,8 +74,17 @@ function load_formbuilder_template(template){
                         bf_update_list_item_number();
                         break;
                     case 'mail_notification':
-                        jQuery('.buddyforms_accordion_notification ul' ).html(val);
+                        //jQuery('.buddyforms_accordion_notification ul' ).html(val);
 
+                        console.log(val['html']);
+
+                        jQuery('#no-trigger-mailcontainer').hide();
+                        jQuery('#mailcontainer').append(val['html']);
+
+                        tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id'] );
+                        tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' + val['trigger_id'] );
+
+                        bf_update_list_item_number_mail();
 
                         break;
                     case 'form_setup':
@@ -277,13 +291,6 @@ jQuery(document).ready(function (jQuery) {
             }
         });
     });
-
-    // Update ths list number 1,2,3,... for the mail trigger
-    function bf_update_list_item_number_mail() {
-        jQuery("#mailcontainer .bf_trigger_list_item").each(function (t) {
-            jQuery(this).find("td.field_order .circle").first().html(t + 1)
-        })
-    }
 
     bf_update_list_item_number_mail();
 

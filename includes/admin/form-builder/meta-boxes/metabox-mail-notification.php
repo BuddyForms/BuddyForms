@@ -26,6 +26,7 @@ function bf_mail_notification_screen() {
 	echo '<ul>';
 	if ( isset( $buddyform['mail_submissions'] ) ) {
 		foreach ( $buddyform['mail_submissions'] as $key => $mail_submission ) {
+			//echo $key;
 			buddyforms_mail_notification_form( $key, $mail_submission );
 		}
 	} else {
@@ -41,11 +42,7 @@ function bf_post_status_mail_notification_screen() {
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
-	if(!isset($buddyform['post_type']) || $buddyform['post_type'] == 'bf_submissions'){
-		return;
-	}
-
-	 $form_setup   = array();
+	$form_setup   = array();
 
 	$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
 	$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
@@ -77,13 +74,12 @@ function bf_post_status_mail_notification_screen() {
 }
 
 
-function buddyforms_mail_notification_form( $trigger, $mail_submission ) {
+function buddyforms_mail_notification_form( $trigger ) {
 	global $post, $buddyform;
 
-//	echo '<pre>';
-//	print_r($mail_submission);
-//	echo '</pre>';
-
+	if(!isset( $trigger ) ){
+		$trigger = substr( md5( time() * rand() ), 0, 10 );
+	}
 
 	$shortDesc = "
     <br>
@@ -327,7 +323,7 @@ function buddyforms_new_mail_notification() {
 	$trigger_html = ob_get_clean();
 
 	$json['trigger_id'] = $trigger_id;
-	$json['html'] = $trigger_html;
+	$json['html']       = $trigger_html;
 
 	echo json_encode($json);
 	die();
