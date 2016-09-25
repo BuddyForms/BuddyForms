@@ -30,7 +30,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 
 	// Get the browser and platform
-	$browser_data = bf_get_browser();
+	$browser_data = buddyforms_get_browser();
 
 	// Collect all submitter data
 	$user_data = array();
@@ -194,7 +194,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 		// Check if the post has post meta / custom fields
 		if ( isset( $customfields ) ) {
-			$customfields = bf_update_post_meta( $post_id, $customfields );
+			$customfields = buddyforms_update_post_meta( $post_id, $customfields );
 		}
 
 		if ( isset( $_POST['featured_image'] ) ) {
@@ -330,7 +330,7 @@ function buddyforms_update_post( $args ) {
 	return $bf_post;
 }
 
-function bf_update_post_meta( $post_id, $customfields ) {
+function buddyforms_update_post_meta( $post_id, $customfields ) {
 	global $buddyforms, $form_slug;
 
 	if ( ! isset( $customfields ) ) {
@@ -526,7 +526,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 	return $file;
 }
 
-function bf_get_browser()
+function buddyforms_get_browser()
 {
 	$u_agent = $_SERVER['HTTP_USER_AGENT'];
 	$bname = 'Unknown';
@@ -614,7 +614,10 @@ function bf_get_browser()
 
 // register a new user
 function buddyforms_add_new_member() {
-	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) && isset( $_POST["user_pass"] ) ) {
+	global $buddyforms, $form_slug;
+
+
+	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) ) {
 
 		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
 
@@ -657,8 +660,14 @@ function buddyforms_add_new_member() {
 			buddyforms_errors()->add('email_used', __('Email already registered'));
 		}
 		if($user_pass == '') {
-			// passwords do not match
-			buddyforms_errors()->add('password_empty', __('Please enter a password'));
+
+			if( isset( $buddyforms[$form_slug]['registration']['generate_password'] ) ){
+				$user_pass = $pass_confirm = wp_generate_password( 12, true );
+			} else {
+				// passwords do not match
+				buddyforms_errors()->add('password_empty', __('Please enter a password'));
+			}
+
 		}
 		if($user_pass != $pass_confirm) {
 			// passwords do not match
@@ -682,12 +691,35 @@ function buddyforms_add_new_member() {
 				'first_name'		=> $user_first,
 				'last_name'			=> $user_last,
 				'user_registered'	=> date('Y-m-d H:i:s'),
-				'role'				=> 'subscriber',
+				'role'				=> 'pending',
 				'user_url'			=> $user_url,
 				'description'		=> $description
 			)
 		);
-		if($new_user_id) {
+
+
+		if ( $new_user_id && !is_wp_error( $new_user_id ) ) {
+			$code = sha1( $new_user_id . time() );
+
+
+			$activation_link = add_query_arg( array( 'key' => $code, 'user' => $new_user_id, 'form_slug' => $form_slug ), get_permalink( $buddyforms['registration']['activation_page'] ));
+
+			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
+
+
+
+
+
+			wp_mail( $user_email, 'ACTIVATION SUBJECT', 'CONGRATS BLA BLA BLA. HERE IS YOUR ACTIVATION LINK: ' . $activation_link );
+
+
+
+
+
+
+
+
+
 			// send an email to the admin alerting them of the registration
 			wp_new_user_notification($new_user_id);
 
@@ -696,7 +728,6 @@ function buddyforms_add_new_member() {
 	}
 	return $errors;
 }
-//add_action('init', 'buddyforms_add_new_member');
 
 // used for tracking error messages
 function buddyforms_errors(){

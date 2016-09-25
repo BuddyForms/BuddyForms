@@ -49,7 +49,7 @@ function buddyforms_metabox_form_setup() {
 
 	$form_type                  = isset( $buddyform['form_type'] )                  ? $buddyform['form_type']                       : 'contact';
 
-	$message_text_default       = $post_type == 'false' ? 'Your Message has been Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
+	$message_text_default       = $post_type == 'false' ? 'Form Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
 	$after_submit_message_text  = isset( $buddyform['after_submit_message_text'] )  ? $buddyform['after_submit_message_text']       : $message_text_default;
 
 	$attached_page              = isset( $buddyform['attached_page'] )              ? $buddyform['attached_page']                   : 'false';
@@ -109,6 +109,7 @@ function buddyforms_metabox_form_setup() {
 		'style'     => "width:100%",
 		'class'     => 'display_message display_form',
 		'value'     => $after_submit_message_text,
+		'id'        => 'after_submit_message_text',
 //		'shortDesc' => $post_type == 'false'
 //			? __('Add a after Submission Message', 'buddyforms')
 //			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )

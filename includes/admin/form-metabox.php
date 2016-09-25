@@ -106,6 +106,6 @@ function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	if(!isset($form_slug)) return;
 	if(!isset($buddyforms[$form_slug])) return;
 
-	bf_update_post_meta($post_id, $buddyforms[$form_slug]['form_fields']);
+	buddyforms_update_post_meta($post_id, $buddyforms[$form_slug]['form_fields']);
 }
 add_action( 'save_post', 'buddyforms_metabox_admin_form_metabox_save' );

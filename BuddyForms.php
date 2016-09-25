@@ -151,6 +151,7 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
@@ -179,6 +180,7 @@ class BuddyForms {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-registration-options.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-shortcodes.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php' );

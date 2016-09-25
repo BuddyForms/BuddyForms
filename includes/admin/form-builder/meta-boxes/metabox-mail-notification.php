@@ -353,7 +353,7 @@ function buddyforms_form_setup_nav_li_notification(){ ?>
 		data-toggle="tab"><?php _e( 'Notifications', 'buddyforms' ); ?></a>
 	</li><?php
 }
-add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification', 50);
+add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification' );
 
 function buddyforms_form_setup_tab_pane_notification(){ ?>
 	<div class="tab-pane fade in" id="notification">
