@@ -348,12 +348,12 @@ add_action( 'wp_ajax_buddyforms_new_post_status_mail_notification', 'buddyforms_
 
 
 function buddyforms_form_setup_nav_li_notification(){ ?>
-	<li><a
+	<li class="notifications_nav"><a
 		href="#notification"
 		data-toggle="tab"><?php _e( 'Notifications', 'buddyforms' ); ?></a>
 	</li><?php
 }
-add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification');
+add_action('buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification', 50);
 
 function buddyforms_form_setup_tab_pane_notification(){ ?>
 	<div class="tab-pane fade in" id="notification">
@@ -363,7 +363,7 @@ function buddyforms_form_setup_tab_pane_notification(){ ?>
 
 			<?php  bf_mail_notification_screen() ?>
 
-			<div class="bf_show_if_f_type_post bf_field_view_if_post_type_none">
+			<div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
 			<?php  bf_post_status_mail_notification_screen() ?>
 			</div>
 

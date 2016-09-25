@@ -27,23 +27,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
-	switch($form_type){
-		case 'contact':
-			break;
-		case 'registration':
-			$registration = buddyforms_add_new_member();
-			if(!empty($registration)) {
-				$hasError      = true;
-				if(is_array($registration)){
-					foreach($registration as $error){
-						$error_message .= $error . '<br>';
-					}
-				}
-			}
-			break;
-		default:
-			break;
-	}
+
 
 	// Get the browser and platform
 	$browser_data = bf_get_browser();
@@ -71,6 +55,41 @@ function buddyforms_process_post( $args = Array() ) {
 	if( !isset( $buddyforms[$form_slug]['useragent'] ) && isset( $browser_data['useragent'] ) ){
 		$user_data['useragent'] = $browser_data['useragent'];
 	}
+
+
+
+
+	switch($form_type){
+		case 'contact':
+			// todo: Add option to create a contact form without create a bf_submissions post. Just mail forms ;)
+			break;
+		case 'registration':
+			$registration = buddyforms_add_new_member();
+			if(!empty($registration)) {
+				$hasError      = true;
+				if(is_array($registration)){
+					foreach($registration as $error){
+						$error_message .= $error . '<br>';
+					}
+				}
+				$form_notice = '<div class="error alert">' . $error_message . '</div>';
+			}
+
+			$args = array(
+				'hasError'     => $hasError,
+				'form_notice'  => $form_notice,
+				'customfields' => $customfields,
+				'redirect_to'  => $redirect_to,
+				'form_slug'    => $form_slug,
+			);
+
+			return $args;
+			break;
+		default:
+			break;
+	}
+
+
 
 	do_action( 'buddyforms_process_post_start', $args );
 
@@ -595,7 +614,7 @@ function bf_get_browser()
 
 // register a new user
 function buddyforms_add_new_member() {
-	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) ) {
+	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) && isset( $_POST["user_pass"] ) ) {
 
 		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
 
@@ -646,34 +665,38 @@ function buddyforms_add_new_member() {
 			buddyforms_errors()->add('password_mismatch', __('Passwords do not match'));
 		}
 
-		$errors = buddyforms_errors()->get_error_messages();
+	} else {
+		buddyforms_errors()->add('form_field_missing', __('Username, eMail Address and Password are required fields. You need to add them to the form first.', 'buddyforms'));
+	}
 
-		// only create the user in if there are no errors
-		if(empty($errors)) {
+	// Let us check if we run into any error.
+	$errors = buddyforms_errors()->get_error_messages();
 
-			$new_user_id = wp_insert_user(array(
-					'user_login'		=> $user_login,
-					'user_pass'	 		=> $user_pass,
-					'user_email'		=> $user_email,
-					'first_name'		=> $user_first,
-					'last_name'			=> $user_last,
-					'user_registered'	=> date('Y-m-d H:i:s'),
-					'role'				=> 'subscriber',
-					'user_url'			=> $user_url,
-					'description'		=> $description
-				)
-			);
-			if($new_user_id) {
-				// send an email to the admin alerting them of the registration
-				wp_new_user_notification($new_user_id);
+	// only create the user in if there are no errors
+	if(empty($errors)) {
 
-			}
+		$new_user_id = wp_insert_user(array(
+				'user_login'		=> $user_login,
+				'user_pass'	 		=> $user_pass,
+				'user_email'		=> $user_email,
+				'first_name'		=> $user_first,
+				'last_name'			=> $user_last,
+				'user_registered'	=> date('Y-m-d H:i:s'),
+				'role'				=> 'subscriber',
+				'user_url'			=> $user_url,
+				'description'		=> $description
+			)
+		);
+		if($new_user_id) {
+			// send an email to the admin alerting them of the registration
+			wp_new_user_notification($new_user_id);
 
 		}
-		return $errors;
+
 	}
+	return $errors;
 }
-add_action('init', 'buddyforms_add_new_member');
+//add_action('init', 'buddyforms_add_new_member');
 
 // used for tracking error messages
 function buddyforms_errors(){

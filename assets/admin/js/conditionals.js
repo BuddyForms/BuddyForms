@@ -18,7 +18,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.nav-tabs .edit-submissions_nav a').text('View Submissions');
 
                 // Show
-                jQuery('.permission_nav, .edit-submissions_nav').show();
+                jQuery('.permission_nav, .edit-submissions_nav, .notifications_nav').show();
 
                 // Hide
                 jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
@@ -44,7 +44,7 @@ jQuery(document).ready(function (jQuery) {
 
 
                 // Hide
-                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav').hide();
+                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
                 jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
 
                 // Show/Hide the corresponding form elements in the form select
@@ -71,7 +71,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
 
                 // View all post related nav items
-                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post').show();
+                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
 
                 // Show the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();
@@ -100,11 +100,11 @@ jQuery(document).ready(function (jQuery) {
 
         if(post_type == 'bf_submissions') {
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
-            jQuery('.bf_field_view_if_post_type_none').hide();
+            jQuery('.bf_hide_if_post_type_none').hide();
 
         } else {
             jQuery('.buddyforms-metabox-show-if-post-type-none').show();
-            jQuery('.bf_field_view_if_post_type_none').show();
+            jQuery('.bf_hide_if_post_type_none').show();
         }
     }
 

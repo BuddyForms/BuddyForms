@@ -109,9 +109,9 @@ function buddyforms_metabox_form_setup() {
 		'style'     => "width:100%",
 		'class'     => 'display_message display_form',
 		'value'     => $after_submit_message_text,
-		'shortDesc' => $post_type == 'false'
-			? __('Add a after Submission Message', 'buddyforms')
-			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
+//		'shortDesc' => $post_type == 'false'
+//			? __('Add a after Submission Message', 'buddyforms')
+//			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
 
 	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
@@ -172,6 +172,9 @@ function buddyforms_metabox_form_setup() {
 	//
 
 	// Attached Page
+	$form_setup['Edit Submissions'][] = new Element_HTML('<h4>Enable your site members to view there submissions</h4>
+		<p>Select a page or create a new on if you like to turn on submission management for your logged in users.</p>
+		<br>');
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page you select will be used to create the endpoints to view/edit submissions. You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>',
@@ -255,13 +258,27 @@ function buddyforms_metabox_form_setup() {
 				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
 				     id="<?php echo $tab_slug; ?>">
 					<div class="buddyforms_accordion_general">
-						<table class="wp-list-table widefat posts striped fixed">
+
+				<?php foreach($fields as $field_key => $field ) {
+
+					$type = $field->getAttribute( 'type' );
+					$class = $field->getAttribute( 'class' );
+
+					if ( $type == 'html' ) {
+						$field->render();
+					}
+
+				}
+				?>
+
+
+					<table class="wp-list-table widefat posts striped fixed">
 							<tbody>
 							<?php foreach($fields as $field_key => $field ) {
 
 								$type  = $field->getAttribute( 'type' );
 								$class = $field->getAttribute( 'class' );
-
+								if ( $type != 'html' ) {
 								?>
 
 								<tr class="<?php echo $class ?>">
@@ -273,7 +290,8 @@ function buddyforms_metabox_form_setup() {
 										<p class="description"><?php echo $field->getShortDesc() ?></p>
 									</td>
 								</tr>
-							<?php } ?>
+							<?php }
+							} ?>
 							</tbody>
 						</table>
 					</div>
