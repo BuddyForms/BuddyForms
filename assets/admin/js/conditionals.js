@@ -72,7 +72,9 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
 
                 // View all post related nav items
-                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav, .registrations_nav').show();
+                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
+
+                jQuery('.registrations_nav').hide();
 
                 // Show the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();

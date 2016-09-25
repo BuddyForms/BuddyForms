@@ -61,6 +61,11 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 
+	$auto_loggin = '';
+	if ( isset( $buddyform['registration']['auto_loggin'] ) ) {
+		$generate_password = $buddyform['registration']['auto_loggin'];
+	}
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'auto_loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $generate_password, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
 
 	?>
 	<div class="fields_header">

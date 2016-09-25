@@ -27,8 +27,6 @@ function buddyforms_process_post( $args = Array() ) {
 
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
-
-
 	// Get the browser and platform
 	$browser_data = buddyforms_get_browser();
 
@@ -57,8 +55,6 @@ function buddyforms_process_post( $args = Array() ) {
 	}
 
 
-
-
 	switch($form_type){
 		case 'contact':
 			// todo: Add option to create a contact form without create a bf_submissions post. Just mail forms ;)
@@ -83,13 +79,16 @@ function buddyforms_process_post( $args = Array() ) {
 				'form_slug'    => $form_slug,
 			);
 
-			return $args;
+			if(isset($buddyforms['registration'][''])){
+
+				do_action( 'buddyforms_process_post_end', $args );
+
+				return $args;
+			}
 			break;
 		default:
 			break;
 	}
-
-
 
 	do_action( 'buddyforms_process_post_start', $args );
 
@@ -710,9 +709,9 @@ function buddyforms_add_new_member() {
 
 
 
-			wp_mail( $user_email, 'ACTIVATION SUBJECT', 'CONGRATS BLA BLA BLA. HERE IS YOUR ACTIVATION LINK: ' . $activation_link );
+			// wp_mail( $user_email, 'ACTIVATION SUBJECT', 'CONGRATS BLA BLA BLA. HERE IS YOUR ACTIVATION LINK: ' . $activation_link );
 
-
+			// hier muss was eigenes daher ne ;)
 
 
 
