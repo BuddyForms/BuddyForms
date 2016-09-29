@@ -61,15 +61,67 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 
+
+
+
+	// activation_message_from_subject
+	$activation_message_from_subject = isset($buddyform['registration']['activation_message_from_subject']) ? $buddyform['registration']['activation_message_from_subject'] : 'User Account Activation Mail';
+	$form_setup[] = new Element_Textbox( '<b>' . __( "Activation Message Subject", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_subject]", array(
+		'value'     => $activation_message_from_subject,
+		'shortDesc' => __('', 'buddyforms'),
+		'class'     => '',
+	) );
+	// activation_message_text
+	$activation_message_text = isset($buddyform['registration']['activation_message_text']) ? $buddyform['registration']['activation_message_text'] : 'Please click the link to activate yur account. [activation_link]';
+	$form_setup[] = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
+		'value'     => $activation_message_text,
+		'shortDesc' => __('', 'buddyforms'),
+		'class'     => '',
+		'style'     => 'width: 100%; display: inline-block;'
+	) );
+	// activation_message_from_name
+	$activation_message_from_name = isset($buddyform['registration']['activation_message_from_name']) ? $buddyform['registration']['activation_message_from_name'] : '[blog_title]';
+	$form_setup[] = new Element_Textbox( '<b>' . __( "Activation From Name", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_name]", array(
+		'value'     => $activation_message_from_name,
+		'shortDesc' => __('', 'buddyforms'),
+		'class'     => '',
+	) );
+	// activation_message_from_email
+	$activation_message_from_email = isset($buddyform['registration']['activation_message_from_email']) ? $buddyform['registration']['activation_message_from_email'] : '[admin_mail]';
+	$form_setup[] = new Element_Email( '<b>' . __( "Activation From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_email]", array(
+		'value'     => $activation_message_from_email,
+		'shortDesc' => __('', 'buddyforms'),
+		'class'     => '',
+	) );
+
 	$auto_loggin = '';
 	if ( isset( $buddyform['registration']['auto_loggin'] ) ) {
-		$generate_password = $buddyform['registration']['auto_loggin'];
+		$auto_loggin = $buddyform['registration']['auto_loggin'];
 	}
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'auto_loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $generate_password, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Auto Loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $auto_loggin, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
+
+
+
+	$new_user_rule = isset($buddyform['registration']['new_user_rule']) ? $buddyform['registration']['new_user_rule'] : 'subscriber';
+	$roles = get_editable_roles();
+	$roles_select = array();
+
+	foreach (get_editable_roles() as $role_name => $role_info){
+		$roles_select[$role_name] = $role_name;
+	}
+
+	// User Role
+	$form_setup[] = new Element_Select( '<b>' . __( "New User Rule", 'buddyforms' ) . '</b>', "buddyforms_options[registration][new_user_rule]", $roles_select, array(
+		'value'     => $new_user_rule,
+		'shortDesc' => __('Select the User Role the user should have after successful registration', 'buddyforms'),
+		'class'     => '',
+	) );
+
+
 
 	?>
 	<div class="fields_header">
-		<table class="wp-list-table widefat posts striped">
+		<table class="wp-list-table widefat posts striped fixed">
 			<tbody id="the-list">
 			<?php
 			if ( isset( $form_setup ) ) {

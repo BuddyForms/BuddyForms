@@ -46,7 +46,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.registrations_nav').show();
 
                 // Hide
-                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav').hide();
+                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
                 jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
 
                 // Show/Hide the corresponding form elements in the form select

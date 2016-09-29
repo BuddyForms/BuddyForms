@@ -12,9 +12,9 @@ function buddyforms_permissions_unregistered_screen() {
 
 	echo '<h4>' . __('Unregistered User', 'buddyforms') . '</h4><br>';
 
-	$public_submit = '';
+	$public_submit = 'public_submit';
 	if ( isset( $buddyform['public_submit'] ) ) {
-		$public_submit = $buddyform['public_submit'];
+		$public_submit = '';
 	}
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Public Submittable', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit]", array( 'public_submit' => __( 'This Form is accessible for unregistered users', 'buddyforms' ) ), array( 'value' => $public_submit, 'shortDesc' => 'Please make sure you use the reCAPTCHA form element if this option is enabled.' ) );
 

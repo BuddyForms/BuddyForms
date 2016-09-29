@@ -14,7 +14,6 @@ function buddyforms_add_meta_boxes() {
 	if(!$buddyform)
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
-
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
@@ -347,7 +346,7 @@ function set_custom_edit_buddyforms_columns( $columns ) {
 	return $columns;
 }
 
-add_filter( 'manage_buddyforms_posts_columns', 'set_custom_edit_buddyforms_columns', 10, 1 );
+ add_filter( 'manage_buddyforms_posts_columns', 'set_custom_edit_buddyforms_columns', 10, 1 );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -429,7 +428,7 @@ function buddyforms_hide_publishing_actions() {
 				width: 100%;
 			}
 		</style>
-		<?php } if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' ) { ?>
+		<?php } if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' || ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == 'buddyforms' ) ) { ?>
 		<script>
 			jQuery(document).ready(function (jQuery) {
 				//jQuery('#screen-meta-links').hide();
