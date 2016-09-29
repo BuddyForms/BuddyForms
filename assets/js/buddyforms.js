@@ -5,7 +5,7 @@ jQuery(document).ready(function () {
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
 
-        console.log(evt);
+        //console.log(evt);
 
         bf_submission_modal = jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') );
 

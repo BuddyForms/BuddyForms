@@ -72,7 +72,16 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 	// activation_message_text
-	$activation_message_text = isset($buddyform['registration']['activation_message_text']) ? $buddyform['registration']['activation_message_text'] : 'Please click the link to activate yur account. [activation_link]';
+	$activation_message_text = isset($buddyform['registration']['activation_message_text']) ? $buddyform['registration']['activation_message_text'] : '
+Hi [user_login],
+
+Great to see you come on board! Just one small step left to make your registration complete.
+<br>
+<b>Click the link below to activate your account.</b>
+<br>
+[activation_link]
+<br><br>
+[blog_title]';
 	$form_setup[] = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
 		'value'     => $activation_message_text,
 		'shortDesc' => __('', 'buddyforms'),

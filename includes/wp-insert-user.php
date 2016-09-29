@@ -66,6 +66,8 @@ function buddyforms_add_new_member() {
 	// Let us check if we run into any error.
 	$errors = buddyforms_errors()->get_error_messages();
 
+	$user_role = isset( $buddyforms[$form_slug]['registration']['new_user_rule'] ) ? $buddyforms[$form_slug]['registration']['new_user_rule'] : 'subscriber';
+
 	// only create the user in if there are no errors
 	if(empty($errors)) {
 
@@ -76,7 +78,7 @@ function buddyforms_add_new_member() {
 				'first_name'		=> $user_first,
 				'last_name'			=> $user_last,
 				'user_registered'	=> date('Y-m-d H:i:s'),
-				'role'				=> 'pending',
+				'role'				=> $user_role,
 				'user_url'			=> $user_url,
 				'description'		=> $description
 			)

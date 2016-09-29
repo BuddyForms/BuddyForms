@@ -65,7 +65,7 @@ function load_formbuilder_template(template){
         },
         success: function (data) {
 
-            console.log(data);
+            //console.log(data);
 
             jQuery.each(data, function (i, val) {
                 switch (i) {
@@ -76,7 +76,7 @@ function load_formbuilder_template(template){
                     case 'mail_notification':
                         //jQuery('.buddyforms_accordion_notification ul' ).html(val);
 
-                        console.log(val['html']);
+                        //console.log(val['html']);
 
                         jQuery('#no-trigger-mailcontainer').hide();
                         jQuery('#mailcontainer').append(val['html']);
@@ -89,13 +89,29 @@ function load_formbuilder_template(template){
                         break;
                     case 'form_setup':
                         jQuery.each(val, function (i2, form_setup) {
-                            console.log(form_setup);
+                            if( form_setup instanceof Object ){
+                                jQuery.each(form_setup, function (form_setup_key, form_setup_option) {
+                                    if( form_setup_option instanceof Object ){
+                                        jQuery.each(form_setup_option, function (form_setup_key2, form_setup_option2) {
+                                            if(form_setup instanceof Array){
+                                                alert('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"][] ' + form_setup_option2 );
+                                                jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"][]').val(form_setup_option2).change();
+                                            } else {
+                                                alert('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"] ' + form_setup_option2 );
+                                                jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]').val(form_setup_option2).change();
+                                            }
+                                        });
+                                    } else {
+                                        jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]').val(form_setup_option).change();
+                                    }
+                                });
+                            }
 
                             if(form_setup instanceof Array){
-                                jQuery('input[name="buddyforms_options[' + i2 + '][]"]').val(form_setup).change();
+                                jQuery('[name="buddyforms_options[' + i2 + '][]"]').val(form_setup).change();
                             } else {
-                                jQuery('input[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
-                                jQuery('select[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+                                alert(i2 + ' - ' + form_setup);
+                                jQuery('[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
                             }
 
                         });
@@ -302,7 +318,7 @@ jQuery(document).ready(function (jQuery) {
             data: {"action": "buddyforms_new_mail_notification"},
             success: function (data) {
 
-                console.log(data);
+                //console.log(data);
 
                 jQuery('#no-trigger-mailcontainer').hide();
                 jQuery('#mailcontainer').append(data['html']);
