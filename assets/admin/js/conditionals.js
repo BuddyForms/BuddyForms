@@ -153,8 +153,12 @@ jQuery(document).ready(function (jQuery) {
             success: function (data) {
                 console.log(data);
 
+                if(!data['form_slug']){
+                    data['form_slug'] = '<span style="color:red">form slug</slug>';
+                }
                 jQuery( '.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
                 jQuery( '.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
+
 
             },
             error: function () {
