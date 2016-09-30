@@ -168,6 +168,23 @@ function buddyforms_metabox_form_setup() {
 
 
 
+
+	$siteurl     = get_bloginfo( 'wpurl' );
+	$attached_page_url = get_permalink( $attached_page );
+
+	if(!empty($attached_page_url)){
+		$siteurl_page_html   = "<a id='siteurl_page' class='' href='" . $attached_page_url . "' target='_blank' >" . $attached_page_url . "</a>";
+		$siteurl_create_html = "<a id='siteurl_create' class='' href='" . $attached_page_url . "create/" . $slug . "' target='_blank' >" . $attached_page_url . "create/" . $slug . "</a>";
+		$siteurl_edit_html   = "<a id='siteurl_edit' class='' href='" . $attached_page_url . "view/" . $slug . "' target='_blank' >" . $attached_page_url . "view/" . $slug . "</a>";
+
+	} else {
+		$siteurl_page_html   = $siteurl . '/' . $attached_page;
+		$siteurl_create_html = $siteurl . '/' . $attached_page . '/create/' . $slug;
+		$siteurl_edit_html   = $siteurl . '/' . $attached_page . '/view/' . $slug;
+	}
+
+	$admin_email = get_option( 'admin_email' );
+
 	//
 	// Edit Submissions
 	//
@@ -175,11 +192,22 @@ function buddyforms_metabox_form_setup() {
 	// Attached Page
 	$form_setup['Edit Submissions'][] = new Element_HTML('<h4>Enable your site members to view there submissions</h4>
 		<p>Select a page or create a new on if you like to turn on submission management for your logged in users.</p>
-		<br>');
+		<div class="bf_hide_if_post_type_none">
+			<p class="description">Important!<br>
+			The original page content does not get changed. You are free to use any kind of content on the page itself. <br>
+			View a form or list the users submissions with Shortcodes. For the submissions management new endpoints get create for you.
+			<br>
+			You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>
+			</p>
+		    <h6>Form URL<br><small class="siteurl_create_html">' . $siteurl_create_html . '</small></h6>
+		    <h6>User Submissions URL<br><small class="siteurl_edit_html">' . $siteurl_edit_html . '</small></h6>
+		</div>');
+
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page you select will be used to create the endpoints to view/edit submissions. You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder?preview=55b67302e4b0e667e2a4457e">Read the Documentation</a>',
-		'id'        => 'attached_page'
+		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page is used to create the endpoints for the create - list and edit submissions views.',
+		'id'        => 'attached_page',
+		'data-slug' => $slug
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
@@ -211,7 +239,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
-		'class'     => 'bf_show_if_f_type_post'
+//		'class'     => 'bf_show_if_f_type_post'
 	) );
 
 
