@@ -72,16 +72,17 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 	// activation_message_text
-	$activation_message_text = isset($buddyform['registration']['activation_message_text']) ? $buddyform['registration']['activation_message_text'] : '
-Hi [user_login],
-
-Great to see you come on board! Just one small step left to make your registration complete.
-<br>
-<b>Click the link below to activate your account.</b>
-<br>
-[activation_link]
-<br><br>
-[blog_title]';
+	$activation_message_text = isset($buddyform['registration']['activation_message_text'])
+		? $buddyform['registration']['activation_message_text']
+		: 'Hi [user_login],
+			Great to see you come on board! Just one small step left to make your registration complete.
+			<br>
+			<b>Click the link below to activate your account.</b>
+			<br>
+			[activation_link]
+			<br><br>
+			[blog_title]
+		';
 	$form_setup[] = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
 		'value'     => $activation_message_text,
 		'shortDesc' => __('', 'buddyforms'),
@@ -97,7 +98,7 @@ Great to see you come on board! Just one small step left to make your registrati
 	) );
 	// activation_message_from_email
 	$activation_message_from_email = isset($buddyform['registration']['activation_message_from_email']) ? $buddyform['registration']['activation_message_from_email'] : '[admin_mail]';
-	$form_setup[] = new Element_Email( '<b>' . __( "Activation From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_email]", array(
+	$form_setup[] = new Element_Textbox( '<b>' . __( "Activation From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_email]", array(
 		'value'     => $activation_message_from_email,
 		'shortDesc' => __('', 'buddyforms'),
 		'class'     => '',

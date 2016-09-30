@@ -1,7 +1,7 @@
 <?php
 
 // register a new user
-function buddyforms_add_new_member() {
+function buddyforms_wp_insert_user() {
 	global $buddyforms, $form_slug;
 
 	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) ) {
@@ -100,6 +100,7 @@ function buddyforms_add_new_member() {
 
 		}
 
+		return $new_user_id;
 	}
 	return $errors;
 }

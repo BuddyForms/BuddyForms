@@ -238,8 +238,6 @@ jQuery(document).ready(function (jQuery) {
     });
 
 
-
-
     //
     // Remove form element form the form builder
     //

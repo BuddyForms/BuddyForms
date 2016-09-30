@@ -60,8 +60,8 @@ function buddyforms_process_post( $args = Array() ) {
 			// todo: Add option to create a contact form without create a bf_submissions post. Just mail forms ;)
 			break;
 		case 'registration':
-			$registration = buddyforms_add_new_member();
-			if(!empty($registration)) {
+			$registration = buddyforms_wp_insert_user();
+			if(!empty($registration) && !is_nan($registration)) {
 				$hasError      = true;
 				if(is_array($registration)){
 					foreach($registration as $error){
@@ -69,7 +69,10 @@ function buddyforms_process_post( $args = Array() ) {
 					}
 				}
 				$form_notice = '<div class="error alert">' . $error_message . '</div>';
+			} else {
+				add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 			}
+
 
 			$args = array(
 				'hasError'     => $hasError,
@@ -78,6 +81,8 @@ function buddyforms_process_post( $args = Array() ) {
 				'redirect_to'  => $redirect_to,
 				'form_slug'    => $form_slug,
 			);
+			return $args;
+
 			break;
 		default:
 			break;
