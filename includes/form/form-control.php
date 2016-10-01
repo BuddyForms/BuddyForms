@@ -88,7 +88,7 @@ function buddyforms_process_post( $args = Array() ) {
 			break;
 		case 'registration':
 			$registration = buddyforms_wp_insert_user();
-			if(!empty($registration) && !is_nan($registration)) {
+			if( !empty( $registration ) && !is_nan( $registration ) ) {
 				$hasError      = true;
 				if(is_array($registration)){
 					foreach($registration as $error){
