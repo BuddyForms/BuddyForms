@@ -195,11 +195,11 @@ function bf_form_response_no_ajax() {
 
 		extract( $bf_form_response_args );
 
-		if ( $hasError ) {
-			$bf_form_error = $error_message;
-
-			return;
-		}
+//		if ( $hasError ) {
+//			$bf_form_error = $error_message;
+//
+//			return;
+//		}
 
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
 			if ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_post' ) {

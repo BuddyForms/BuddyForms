@@ -134,7 +134,7 @@ jQuery(document).ready(function (jQuery) {
         from_setup_post_type();
     });
 
-    // On Change kisterner for the post type select
+    // On Change listener for the post type select
     jQuery(document.body).on('change', '#attached_page', function () {
 
         var attached_page   = jQuery('#attached_page').val();

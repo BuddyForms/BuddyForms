@@ -70,7 +70,7 @@ jQuery(document).ready(function () {
         var form_slug = form_name.split("editpost_")[1];
 
         if (!jQuery('#' + form_name).valid()) {
-            alert('Please check all errors before submiting the form!')
+            alert('Please check all errors before submitting the form!')
             return false;
         }
 
