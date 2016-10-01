@@ -54,18 +54,14 @@ function buddyforms_process_post( $args = Array() ) {
 		$user_data['useragent'] = $browser_data['useragent'];
 	}
 
-
-
-
 	// Servers site validation
 	$_SERVER["REQUEST_METHOD"] = "POST";
-
 
 	/* Validation
 	 * First we have browser validation. Now let us check from the server site if all is in place
 	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
 	 */
-	if( !Form::isValid("editpost_" . $form_slug)) {
+	if( !Form::isValid("editpost_" . $form_slug)) { // todo:support custom validation
 
 		$error_message = 'Please fill out all required fields! <br>';
 		if ( ! empty( $_SESSION["pfbc"][ "editpost_" . $form_slug ]["errors"] ) ) {
@@ -85,8 +81,6 @@ function buddyforms_process_post( $args = Array() ) {
 		);
 		return $args;
 	}
-
-
 
 	switch($form_type){
 		case 'contact':
