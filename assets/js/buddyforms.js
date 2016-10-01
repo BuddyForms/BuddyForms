@@ -110,6 +110,7 @@ jQuery(document).ready(function () {
                             default:
                                 jQuery('input[name="' + i + '"]').val(val);
                         }
+                        jQuery('#recaptcha_reload').trigger('click');
 
                     });
 
