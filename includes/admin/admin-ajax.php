@@ -218,3 +218,21 @@ function buddyforms_new_page(){
 
 }
 add_action( 'wp_ajax_buddyforms_new_page', 'buddyforms_new_page' );
+
+
+function buddyforms_url_builder(){
+	global $post;
+	$page_id = $_POST['attached_page'];
+	$form_slug = $_POST['form_slug'];
+	$post = get_post($page_id);
+
+	if( isset( $post->post_name ) ) {
+		$json['permalink'] = get_permalink( $page_id );
+		$json['form_slug'] = $form_slug;
+		echo json_encode( $json ); 	die();
+	}
+	echo json_encode( 'none' ); 	die();
+
+
+}
+add_action( 'wp_ajax_buddyforms_url_builder', 'buddyforms_url_builder' );

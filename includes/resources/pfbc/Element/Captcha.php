@@ -9,6 +9,7 @@ class Element_Captcha extends Element {
 	}
 
 	public function render() {
+		echo '<script type="text/javascript">var RecaptchaOptions = {theme : \'blackglass\'};</script><style>#recaptcha_table {table-layout: auto;}</style>';
 		$this->validation[] = new Validation_Captcha( $this->privateKey );
 		require_once( dirname( __FILE__ ) . "/../Resources/recaptchalib.php" );
 		echo recaptcha_get_html( $this->publicKey );

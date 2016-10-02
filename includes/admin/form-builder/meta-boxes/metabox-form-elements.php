@@ -193,10 +193,6 @@ function bf_form_elements_select_options(){
 					'label'     => __( 'Message', 'buddyforms' ),
 					'unique'    => 'unique'
 				),
-				'captcha'   => array(
-					'label'     => __( 'Captcha', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
 			),
 		),
 		'user' => array(
@@ -230,7 +226,11 @@ function bf_form_elements_select_options(){
 				'user_bio'   => array(
 					'label'     => __( 'About / Bio', 'buddyforms' ),
 					'unique'    => 'unique'
-				)
+				),
+				'captcha'   => array(
+					'label'     => __( 'Captcha', 'buddyforms' ),
+					'unique'    => 'unique'
+				),
 			),
 		),
 		'post' => array(

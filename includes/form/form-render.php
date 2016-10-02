@@ -23,8 +23,6 @@ function buddyforms_form_html( $args ) {
 		'form_notice'  => '',
 	), $args ) );
 
-	session_id( 'buddyforms-create-edit-form' );
-
 	if ( ! is_user_logged_in() &&  $buddyforms[$form_slug]['form_type'] == 'post') :
 		return buddyforms_get_login_form();
 	endif;

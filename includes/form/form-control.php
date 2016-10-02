@@ -8,8 +8,8 @@
  */
 
 function buddyforms_process_post( $args = Array() ) {
-	global $current_user, $buddyforms, $form_slug;
-
+	global $current_user, $buddyforms, $form_slug, $_SERVER;
+	session_start();
 	$hasError     = false;
 	$error_message = '';
 
@@ -54,6 +54,33 @@ function buddyforms_process_post( $args = Array() ) {
 		$user_data['useragent'] = $browser_data['useragent'];
 	}
 
+	// Servers site validation
+	$_SERVER["REQUEST_METHOD"] = "POST";
+
+	/* Validation
+	 * First we have browser validation. Now let us check from the server site if all is in place
+	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
+	 */
+	if( !Form::isValid("editpost_" . $form_slug)) { // todo:support custom validation
+
+		$error_message = 'Please fill out all required fields! <br>';
+		if ( ! empty( $_SESSION["pfbc"][ "editpost_" . $form_slug ]["errors"] ) ) {
+			$errors = $_SESSION["pfbc"][ "editpost_" . $form_slug ]["errors"];
+		}
+
+		if(is_array($errors)){
+			foreach($errors as $error){
+				$error_message .= $error[0];
+			}
+		}
+
+		$args = array(
+			'hasError'      => true,
+			'error_message'  => $error_message,
+			'form_slug'    => $form_slug,
+		);
+		return $args;
+	}
 
 	switch($form_type){
 		case 'contact':
@@ -61,7 +88,7 @@ function buddyforms_process_post( $args = Array() ) {
 			break;
 		case 'registration':
 			$registration = buddyforms_wp_insert_user();
-			if(!empty($registration) && !is_nan($registration)) {
+			if( !empty( $registration ) && !is_nan( $registration ) ) {
 				$hasError      = true;
 				if(is_array($registration)){
 					foreach($registration as $error){
@@ -72,7 +99,6 @@ function buddyforms_process_post( $args = Array() ) {
 			} else {
 				add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 			}
-
 
 			$args = array(
 				'hasError'     => $hasError,

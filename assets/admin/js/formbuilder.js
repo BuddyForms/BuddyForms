@@ -130,7 +130,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Generate the field slug from the label
     //
-    jQuery('.buddyforms_forms_builder').on('blur', '.use_as_slug', function () {
+    jQuery(document.body).on('blur', '.use_as_slug', function () {
 
         var field_name = jQuery(this).val();
         if (field_name === '')

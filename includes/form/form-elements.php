@@ -108,9 +108,10 @@ function bf_form_elements( $form, $args ) {
 						break;
 
 					case 'title':
+						$post_title = '';
 						if ( isset( $_POST['editpost_title'] ) ) {
 							$post_title = stripslashes( $_POST['editpost_title'] );
-						} else {
+						} elseif( isset( $the_post->post_title ) ) {
 							$post_title = $the_post->post_title;
 						}
 						if ( isset( $customfield['hidden'] ) ) {
@@ -272,7 +273,8 @@ function bf_form_elements( $form, $args ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
 
-							$customfield_val = $the_post->post_status;
+
+							$customfield_val = isset($the_post->post_status) ? $the_post->post_status : '' ;
 
 							if ( isset( $_POST['status'] ) ) {
 								$customfield_val = $_POST['status'];
@@ -481,7 +483,7 @@ function bf_form_elements( $form, $args ) {
 							'class'         => 'postform bf-select2',
 							'depth'         => 0,
 							'tab_index'     => 0,
-							'taxonomy'      => $customfield['taxonomy'],
+//							'taxonomy'      => isset($customfield['taxonomy']) ? $customfield['taxonomy'] : '',
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
 							'order'         => $customfield['taxonomy_order'],
@@ -505,10 +507,11 @@ function bf_form_elements( $form, $args ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
 
+						if( isset( $customfield['taxonomy'] ) ){
+							$the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
+						}
 
-						$the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
-
-						if ( is_array( $the_post_terms ) ) {
+						if ( isset( $the_post_terms ) && is_array( $the_post_terms ) ) {
 							foreach ( $the_post_terms as $key => $post_term ) {
 								$dropdown = str_replace( ' value="' . $post_term->term_id . '"', ' value="' . $post_term->term_id . '" selected="selected"', $dropdown );
 							}

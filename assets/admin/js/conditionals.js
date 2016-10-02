@@ -125,6 +125,8 @@ jQuery(document).ready(function (jQuery) {
             jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
 
         }
+        //jQuery('#siteurl_create').attr("href", "#" + attached_page);
+        //jQuery('#siteurl_create').text("#" + attached_page);
     }
 
     // On Change kisterner for the post type select
@@ -132,9 +134,49 @@ jQuery(document).ready(function (jQuery) {
         from_setup_post_type();
     });
 
-    // On Change kisterner for the post type select
+    // On Change listener for the post type select
     jQuery(document.body).on('change', '#attached_page', function () {
+
+        var attached_page   = jQuery('#attached_page').val();
+        var form_slug       = jQuery('#attached_page').attr('data-slug');
+
         from_setup_attached_page();
+        jQuery.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_url_builder",
+                "attached_page": attached_page,
+                "form_slug": form_slug
+            },
+            success: function (data) {
+                console.log(data);
+
+                if(!data['form_slug']){
+                    data['form_slug'] = '<span style="color:red">form slug</slug>';
+                }
+                jQuery( '.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
+                jQuery( '.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
+
+
+            },
+            error: function () {
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery( this ).dialog( "close" );
+                        }
+                    }
+                });
+            }
+        });
     });
 
     // Form Type Select listener for the on change event
