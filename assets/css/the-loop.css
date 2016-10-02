@@ -350,3 +350,52 @@ ul.buddyforms-list .publish .item-status {
     box-shadow: none;
     text-shadow: none;
 }
+
+
+
+
+/* Submissions Frontend - Single View (when not a post form) */
+
+/*.bf-input input.settings-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background: #f1f1f1;
+    color: #999;
+    border: 1px solid #ccc;
+}*/
+
+.postbox-submissions .settings-input {
+    display: block;
+}
+.postbox-submissions .bf-input {
+    margin-bottom: 20px;
+}
+.postbox-submissions textarea,
+.postbox-submissions .standard-form input[type=url],
+.postbox-submissions .standard-form input[type=link],
+.postbox-submissions .standard-form input[type=text],
+.postbox-submissions .standard-form input[type=email],
+.postbox-submissions .standard-form input[type=password] {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #f1f1f1;
+    color: #999;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font: inherit;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.postbox-submissions .bf-input .radio {
+    display: block;
+}
+
+.postbox-submissions .bf-input textarea,
+.postbox-submissions .bf-input .form-control {
+    display: block;
+    width: 100%;
+    background: #f1f1f1;
+}
