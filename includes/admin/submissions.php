@@ -99,7 +99,7 @@ function bf_submissions_screen() {
 		<?php if(isset($_GET['action']) && isset($_GET['entry'])) {
 			$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
 			$post_id   = $_GET['entry'];
-			buddyforms_locate_template( 'buddyforms/submissions-single.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
 		} ?>
 	</div>
 	<?php

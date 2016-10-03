@@ -394,6 +394,8 @@ class Form extends Base {
 		}
 
 		$id = $this->_attributes["id"];
+		$form_slug = str_replace('buddyforms_form_', '', $id);
+
 		/*When the form is submitted, disable all submit buttons to prevent duplicate submissions.*/
 		echo <<<JS
         jQuery(document).ready(function() {
@@ -421,20 +423,58 @@ JS;
 
 			/*Clear any existing validation errors.*/
 			$this->errorView->clear();
-
+			
 			echo <<<JS
-                $('#loading').modal('show');
+
+				if (!jQuery("#$id").valid()) {
+			        return false;
+			    }
+
+                jQuery('.bf_modal').show();
+
+                var FormData = jQuery("#$id").serialize();
+
                 jQuery.ajax({
-                    url: "{$this->_attributes["action"]}",
+                    url: ajaxurl,
                     type: "{$this->_attributes["method"]}",
-                    data: jQuery("#$id").serialize(),
+                    dataType: 'json',
+                    data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
                     error: function() {
-                        $('#loading').modal('hide');
+                        jQuery('.bf_modal').hide();
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
                     },
                     success: function(response) {
-                        $('#loading').modal('hide');
-                        if(response != undefined && typeof response == "object" && response.errors) {
+
+
+                      //  jQuery('.bf_modal').hide();
+                   	console.log(response);
+
+
+                    jQuery('.the_buddyforms_form_$form_slug .form_wrapper .bf_modal').hide();
+
+                    jQuery.each(response, function (i, val) {
+                    	console.log(val);
+
+                        switch (i) {
+                            case 'form_notice':
+                                jQuery('#form_message_$form_slug' ).html(val);
+                                break;
+                            case 'form_remove':
+                                jQuery('.the_buddyforms_form_$form_slug .form_wrapper').remove();
+                                break;
+                            case 'form_actions':
+                                jQuery('.the_buddyforms_form_$form_slug .form-actions').html(val);
+                                break;
+                            //default:
+                                //jQuery('input[name="' + i + '"]').val(val);
+                        }
+                        jQuery('#recaptcha_reload').trigger('click');
+
+                    });
+
+
+
+					if(response != undefined && typeof response == "object" && response.errors) {
 JS;
 
 			$this->errorView->applyAjaxErrorResponse();

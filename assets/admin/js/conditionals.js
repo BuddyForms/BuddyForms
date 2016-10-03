@@ -42,7 +42,6 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#form_post_type').val('bf_submissions');
                 jQuery('#attached_page').val('none');
 
-
                 jQuery('.registrations_nav').show();
 
                 // Hide

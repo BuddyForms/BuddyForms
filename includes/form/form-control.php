@@ -9,7 +9,7 @@
 
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
-	session_start();
+
 	$hasError     = false;
 	$error_message = '';
 
@@ -55,28 +55,16 @@ function buddyforms_process_post( $args = Array() ) {
 	}
 
 	// Servers site validation
-	$_SERVER["REQUEST_METHOD"] = "POST";
+	// $_SERVER["REQUEST_METHOD"] = "POST";
 
 	/* Validation
 	 * First we have browser validation. Now let us check from the server site if all is in place
 	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
 	 */
-	if( !Form::isValid("editpost_" . $form_slug)) { // todo:support custom validation
-
-		$error_message = 'Please fill out all required fields! <br>';
-		if ( ! empty( $_SESSION["pfbc"][ "editpost_" . $form_slug ]["errors"] ) ) {
-			$errors = $_SESSION["pfbc"][ "editpost_" . $form_slug ]["errors"];
-		}
-
-		if(is_array($errors)){
-			foreach($errors as $error){
-				$error_message .= $error[0];
-			}
-		}
+	if( !Form::isValid( "buddyforms_form_" . $form_slug, true ) ) {
 
 		$args = array(
 			'hasError'      => true,
-			'error_message'  => $error_message,
 			'form_slug'    => $form_slug,
 		);
 		return $args;
@@ -235,8 +223,8 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 			$bf_post = array(
 				'ID'             => $post_id,
-				'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
-				'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
+				'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+				'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
 				'comment_status' => $comment_status,
@@ -312,8 +300,8 @@ function buddyforms_update_post( $args ) {
 
 		$bf_post = array(
 			'ID'             => $_POST['post_id'],
-			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
-			'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
+			'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+			'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
@@ -329,8 +317,8 @@ function buddyforms_update_post( $args ) {
 		$bf_post = array(
 			'post_parent'    => $post_parent,
 			'post_author'    => $post_author,
-			'post_title'     => apply_filters( 'bf_update_editpost_title', isset( $_POST['editpost_title'] ) && ! empty( $_POST['editpost_title'] ) ? stripslashes( $_POST['editpost_title'] ) : 'none' ),
-			'post_content'   => apply_filters( 'bf_update_editpost_content', isset( $_POST['editpost_content'] ) && ! empty( $_POST['editpost_content'] ) ? $_POST['editpost_content'] : '' ),
+			'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+			'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,

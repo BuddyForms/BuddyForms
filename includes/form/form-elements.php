@@ -109,18 +109,18 @@ function bf_form_elements( $form, $args ) {
 
 					case 'title':
 						$post_title = '';
-						if ( isset( $_POST['editpost_title'] ) ) {
-							$post_title = stripslashes( $_POST['editpost_title'] );
+						if ( isset( $_POST['buddyforms_form_title'] ) ) {
+							$post_title = stripslashes( $_POST['buddyforms_form_title'] );
 						} elseif( isset( $the_post->post_title ) ) {
 							$post_title = $the_post->post_title;
 						}
 						if ( isset( $customfield['hidden'] ) ) {
-							$form->addElement( new Element_Hidden( 'editpost_title', $post_title ) );
+							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
 						} else {
 
 
 							$element_attr = array(
-								'id'        => 'editpost_title',
+								'id'        => 'buddyforms_form_title',
 								'value'     => $post_title,
 								'shortDesc' => $description
 							);
@@ -128,18 +128,18 @@ function bf_form_elements( $form, $args ) {
 								$element_attr = array_merge( $element_attr, array( 'required' => true ) );
 							}
 
-							$form->addElement( new Element_Textbox( $name, "editpost_title", $element_attr ) );
+							$form->addElement( new Element_Textbox( $name, "buddyforms_form_title", $element_attr ) );
 						}
 						break;
 
 					case 'content':
 						//add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
-						$editpost_content_val = false;
-						if ( isset( $_POST['editpost_content'] ) ) {
-							$editpost_content_val = stripslashes( $_POST['editpost_content'] );
+						$buddyforms_form_content_val = false;
+						if ( isset( $_POST['buddyforms_form_content'] ) ) {
+							$buddyforms_form_content_val = stripslashes( $_POST['buddyforms_form_content'] );
 						} else {
 							if ( ! empty( $the_post->post_content ) ) {
-								$editpost_content_val = $the_post->post_content;
+								$buddyforms_form_content_val = $the_post->post_content;
 							}
 						}
 
@@ -150,16 +150,16 @@ function bf_form_elements( $form, $args ) {
 							'tinymce'       => isset( $customfield['post_content_options'] ) ? in_array( 'tinymce', $customfield['post_content_options'] ) ? false : true : true,
 							'quicktags'     => isset( $customfield['post_content_options'] ) ? in_array( 'quicktags', $customfield['post_content_options'] ) ? false : true : true,
 							'textarea_rows' => 18,
-							'textarea_name' => 'editpost_content',
+							'textarea_name' => 'buddyforms_form_content',
 							'editor_class'  => 'textInMce',
 						);
 
 						if ( isset( $post_id ) ) {
-							wp_editor( $editpost_content_val, 'editpost_content', $settings );
+							wp_editor( $buddyforms_form_content_val, 'buddyforms_form_content', $settings );
 						} else {
 							$content = false;
 							$post    = 0;
-							wp_editor( $content, 'editpost_content', $settings );
+							wp_editor( $content, 'buddyforms_form_content', $settings );
 						}
 						$wp_editor = ob_get_contents();
 						ob_clean();
@@ -171,12 +171,12 @@ function bf_form_elements( $form, $args ) {
 						}
 
 
-						echo '<div id="editpost_content_val" style="display: none">' . $editpost_content_val . '</div>';
+						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
 
 						if ( isset( $customfield['hidden'] ) ) {
-							$form->addElement( new Element_Hidden( 'editpost_content', $editpost_content_val ) );
+							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
-							$wp_editor = '<div class="bf_field_group bf_form_content"><label for="editpost_content">' . $required . $name . '</label><div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+							$wp_editor = '<div class="bf_field_group bf_form_content"><label for="buddyforms_form_content">' . $required . $name . '</label><div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							$form->addElement( new Element_HTML( $wp_editor ) );
 						}
 						break;
@@ -578,7 +578,7 @@ function my_tinymce_setup_function( $initArray ) {
 	$initArray['setup'] = 'function(ed){
       ed.onChange.add(function(ed, l) {
         tinyMCE.triggerSave();
-	    jQuery("#editpost_content").valid();
+	    jQuery("#buddyforms_form_content").valid();
       });
     }';
 

@@ -26,15 +26,23 @@ function buddyforms_ajax_process_edit_post() {
 
 	$args = buddyforms_process_post( $formdata );
 
+	extract($args);
+
 	if ( $args['hasError'] ) {
 
+
 		if ( $args['form_notice'] ) {
-			$json['form_notice'] .= $args['form_notice'];
+			Form::setError('buddyforms_form_' . $form_slug, $form_notice );
 		}
 
 		if ( $args['error_message'] ) {
-			$json['form_notice'] .= $args['error_message'];
+			Form::setError('buddyforms_form_' . $form_slug, $error_message );
 		}
+
+		Form::renderAjaxErrorResponse('buddyforms_form_' . $form_slug);
+		exit;
+
+
 
 	} else {
 		if ( ! empty( $buddyforms[ $_POST['form_slug'] ]['after_submit_message_text'] ) ) {
@@ -78,7 +86,7 @@ function buddyforms_ajax_process_edit_post() {
 						$json['post_id'] = $args['post_id'];
 					}
 					if ( isset( $args['post_title'] ) ) {
-						$json['editpost_title'] = $args['post_title'];
+						$json['buddyforms_form_title'] = $args['post_title'];
 					}
 					if ( isset( $args['revision_id'] ) ) {
 						$json['revision_id'] = $args['revision_id'];
@@ -97,6 +105,7 @@ function buddyforms_ajax_process_edit_post() {
 
 
 	$json = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json );
+
 	echo json_encode( $json );
 
 	die();

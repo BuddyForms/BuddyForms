@@ -19,7 +19,7 @@ function buddyforms_jquery_validation(){
 		// Create the needed Validation JS.
 		$form_html .= '
 	    jQuery(function() {
-	        var validator_' . $form_slug_js . ' = jQuery("#editpost_' . $form_slug . '").submit(function() {
+	        var validator_' . $form_slug_js . ' = jQuery("#buddyforms_form_' . $form_slug . '").submit(function() {
 	                if(jQuery(\'textarea\').length > 0) {
 	                	// if TinyMCE is enabled
 	                    if ( "undefined" !== typeof tinyMCE ) {
@@ -91,8 +91,8 @@ function buddyforms_jquery_validation(){
 		$form_html .= 'errorPlacement: function(label, element) {
 	            // position error label after generated textarea
 	            if (element.is("textarea")) {
-	                //jQuery("#editpost_title").prev().css(\'color\',\'red\');
-	                label.insertBefore("#editpost_content");
+	                //jQuery("#buddyforms_form_title").prev().css(\'color\',\'red\');
+	                label.insertBefore("#buddyforms_form_content");
 	            } else {
 	                label.insertAfter(element)
 	            }

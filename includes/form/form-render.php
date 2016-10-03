@@ -52,7 +52,7 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="form_wrapper">';
 
 	// Create the form object
-	$form = new Form( "editpost_" . $form_slug );
+	$form = new Form( "buddyforms_form_" . $form_slug );
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
@@ -68,6 +68,8 @@ function buddyforms_form_html( $args ) {
 		"action" => $redirect_to,
 		"view"   => new $buddyforms_frontend_form_template_name(),
 		'class'  =>  apply_filters( 'bf_form_class', $form_class ),
+		'ajax'   => 'buddyforms_ajax_process_edit_post',
+		'method'   => 'post'
 	) );
 
 

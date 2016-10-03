@@ -133,7 +133,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_login':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+			//unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Username';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -148,7 +148,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_email':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'eMail';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -162,7 +162,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_first':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'First Name';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -176,7 +176,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_last':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Last Name';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -190,7 +190,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_pass':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Password';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -204,7 +204,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_website':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Website';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -218,7 +218,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_bio':
 			unset( $form_fields['advanced'] );
-			unset( $form_fields['validation'] );
+//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Bio';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -401,7 +401,7 @@ function buddyforms_display_form_element( $args ) {
 				'value'    => $name,
 				'required' => 1
 			) );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_title' );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_title' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
@@ -429,7 +429,7 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['advanced']['content_opt_a'] = new Element_Checkbox( '<b>' . __( 'Turn off wp editor features', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_content_options]", $post_content_options_array, array( 'value' => $post_content_options ) );
 
 			unset( $form_fields['advanced']['slug'] );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'editpost_content' );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_content' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;

@@ -69,13 +69,13 @@ function buddyforms_add_form() {
 	$field_id = $mod5 = substr( md5( time() * rand() ), 0, 10 );
 
 	$options['form_fields'][ $field_id ]['name'] = 'Title';
-	$options['form_fields'][ $field_id ]['slug'] = 'editpost_title';
+	$options['form_fields'][ $field_id ]['slug'] = 'buddyforms_form_title';
 	$options['form_fields'][ $field_id ]['type'] = 'Title';
 
 	$field_id = $mod5 = substr( md5( time() * rand() ), 0, 10 );
 
 	$options['form_fields'][ $field_id ]['name'] = 'Content';
-	$options['form_fields'][ $field_id ]['slug'] = 'editpost_content';
+	$options['form_fields'][ $field_id ]['slug'] = 'buddyforms_form_content';
 	$options['form_fields'][ $field_id ]['type'] = 'Content';
 
 
@@ -153,7 +153,7 @@ function buddyforms_form_template(){
 			$buddyform =  json_decode( '{"form_fields":{"a40912e1a5":{"type":"user_login","slug":"user_login","name":"Username","description":""},"82abe39ed2":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"611dc33cb2":{"type":"user_pass","slug":"user_pass","name":"Password","description":""}},"form_type":"registration","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"User Registration Successful! Please check your eMail Inbox and click the activation link to activate your account.","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"fa41389e07":{"mail_trigger_id":"fa41389e07","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail22@22.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit":["public_submit"],"registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\r\nGreat to see you come on board! Just one small step left to make your registration complete.\r\n<br>\r\n<b>Click the link below to activate your account.<\/b>\r\n<br>\r\n[activation_link]\r\n<br><br>\r\n[blog_title]","activation_message_from_name":"[blog_title]","activation_message_from_email":"dfg@dfg.fr","new_user_rule":"author"},"name":"Registration Form","slug":"registration-form"}', true );
 			break;
 		case 'post' :
-			$buddyform =  json_decode( '{"form_fields":{"51836a88da":{"type":"title","slug":"editpost_title","name":"Title","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"27ff0af6c6":{"type":"content","slug":"editpost_content","name":"Content","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"form_type":"post","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"post","status":"publish","comment_status":"open","revision":["Revision"],"singular_name":"","attached_page":"2","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","public_submit":["public_submit"],"name":"Post","slug":""}', true );
+			$buddyform =  json_decode( '{"form_fields":{"51836a88da":{"type":"title","slug":"buddyforms_form_title","name":"Title","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"27ff0af6c6":{"type":"content","slug":"buddyforms_form_content","name":"Content","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"form_type":"post","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"post","status":"publish","comment_status":"open","revision":["Revision"],"singular_name":"","attached_page":"2","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","public_submit":["public_submit"],"name":"Post","slug":""}', true );
 			break;
 		default :
 			$buddyform = json_decode( apply_filters('buddyforms_templates_json', $buddyform ) );
