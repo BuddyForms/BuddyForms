@@ -4,6 +4,8 @@
 function buddyforms_wp_insert_user() {
 	global $buddyforms, $form_slug;
 
+	$hasError = false;
+
 	if (isset( $_POST["user_login"] ) && isset( $_POST["user_email"] ) ) {
 
 		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
@@ -21,55 +23,59 @@ function buddyforms_wp_insert_user() {
 		$user_url		= isset($_POST["user_website"]) ? esc_url( $_POST["user_website"] ) : '';
 		$description    = isset($_POST["user_bio"]) ? esc_textarea( $_POST["user_bio"] ) : '';
 
-		// this is required for username checks
-		require_once(ABSPATH . WPINC . '/registration.php');
-
+		// Username already registered?
 		if(username_exists($user_login)) {
-			// Username already registered
-			buddyforms_errors()->add('username_unavailable', __('Username already taken'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Username already taken', 'buddyforms') );
 		}
+		// invalid username?
 		if(!validate_username($user_login)) {
-			// invalid username
-			buddyforms_errors()->add('username_invalid', __('Invalid username'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Invalid username', 'buddyforms') );
 		}
+		// empty username?
 		if($user_login == '') {
-			// empty username
-			buddyforms_errors()->add('username_empty', __('Please enter a username'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Please enter a username', 'buddyforms') );
 		}
+		// invalid email?
 		if(!is_email($user_email)) {
-			//invalid email
-			buddyforms_errors()->add('email_invalid', __('Invalid email'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Invalid email', 'buddyforms') );
 		}
+		// Email address already registered?
 		if(email_exists($user_email)) {
-			//Email address already registered
-			buddyforms_errors()->add('email_used', __('Email already registered'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Email already registered', 'buddyforms') );
 		}
 		if($user_pass == '') {
-
+			// Generate the password if generate_password is set
 			if( isset( $buddyforms[$form_slug]['registration']['generate_password'] ) ){
 				$user_pass = $pass_confirm = wp_generate_password( 12, true );
 			} else {
-				// passwords do not match
-				buddyforms_errors()->add('password_empty', __('Please enter a password'));
+				$hasError = true;
+				Form::setError('buddyforms_form_' . $form_slug,  __('Error: Please enter a password', 'buddyforms') );
 			}
 
 		}
+		// passwords do not match?
 		if($user_pass != $pass_confirm) {
-			// passwords do not match
-			buddyforms_errors()->add('password_mismatch', __('Passwords do not match'));
+			$hasError = true;
+			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Passwords do not match', 'buddyforms') );
 		}
 
 	} else {
-		buddyforms_errors()->add('form_field_missing', __('Username, eMail Address and Password are required fields. You need to add them to the form first.', 'buddyforms'));
+		// General error message that one of the required field sis missing
+		$hasError = true;
+		Form::setError('buddyforms_form_' . $form_slug,  __('Error: Username, eMail Address and Password are required fields. You need to add them to the form first', 'buddyforms') );
 	}
 
 	// Let us check if we run into any error.
-	$errors = buddyforms_errors()->get_error_messages();
 
 	$user_role = isset( $buddyforms[$form_slug]['registration']['new_user_rule'] ) ? $buddyforms[$form_slug]['registration']['new_user_rule'] : 'subscriber';
 
 	// only create the user in if there are no errors
-	if(empty($errors)) {
+	if(!$hasError) {
 
 		$new_user_id = wp_insert_user(array(
 				'user_login'		=> $user_login,
@@ -102,7 +108,7 @@ function buddyforms_wp_insert_user() {
 
 		return $new_user_id;
 	}
-	return $errors;
+	return false;
 }
 
 // used for tracking error messages

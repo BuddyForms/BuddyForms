@@ -76,18 +76,18 @@ function buddyforms_process_post( $args = Array() ) {
 			break;
 		case 'registration':
 			$registration = buddyforms_wp_insert_user();
-			if( !empty( $registration ) && !is_nan( $registration ) ) {
-				$hasError      = true;
-				if(is_array($registration)){
-					foreach($registration as $error){
-						$error_message .= $error . '<br>';
-					}
-				}
-				$form_notice = '<div class="error alert">' . $error_message . '</div>';
-			} else {
-				add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+
+			// Check if registration was successful
+			if( !$registration ){
+				$args = array(
+					'hasError'      => true,
+					'form_slug'    => $form_slug,
+				);
+				return $args;
 			}
 
+
+			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 			$args = array(
 				'hasError'     => $hasError,
 				'form_notice'  => $form_notice,

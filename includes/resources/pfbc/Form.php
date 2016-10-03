@@ -423,14 +423,14 @@ JS;
 
 			/*Clear any existing validation errors.*/
 			$this->errorView->clear();
-			
+
 			echo <<<JS
 
 				if (!jQuery("#$id").valid()) {
 			        return false;
 			    }
 
-                jQuery('.bf_modal').show();
+                jQuery('.the_buddyforms_form_$form_slug .form_wrapper .bf_modal').show();
 
                 var FormData = jQuery("#$id").serialize();
 
@@ -444,14 +444,7 @@ JS;
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
                     },
                     success: function(response) {
-
-
-                      //  jQuery('.bf_modal').hide();
-                   	console.log(response);
-
-
                     jQuery('.the_buddyforms_form_$form_slug .form_wrapper .bf_modal').hide();
-
                     jQuery.each(response, function (i, val) {
                     	console.log(val);
 
@@ -465,24 +458,21 @@ JS;
                             case 'form_actions':
                                 jQuery('.the_buddyforms_form_$form_slug .form-actions').html(val);
                                 break;
-                            //default:
-                                //jQuery('input[name="' + i + '"]').val(val);
+                            default:
+                                jQuery('input[name="' + i + '"]').val(val);
                         }
                         jQuery('#recaptcha_reload').trigger('click');
 
                     });
-
-
-
 					if(response != undefined && typeof response == "object" && response.errors) {
 JS;
 
 			$this->errorView->applyAjaxErrorResponse();
 
 			echo <<<JS
-                            jQuery("html, body").animate({ scrollTop: jQuery("#$id").offset().top }, 500 );
-                        }
-                        else {
+	                    jQuery("html, body").animate({ scrollTop: jQuery("#$id").offset().top }, 500 );
+	                }
+	                else {
 JS;
 			/*A callback function can be specified to handle any post submission events.*/
 			if ( ! empty( $this->ajaxCallback ) ) {
