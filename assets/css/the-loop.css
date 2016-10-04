@@ -366,19 +366,19 @@ ul.buddyforms-list .publish .item-status {
 /* --- Submissions Frontend - SINGLE View --- */
 /* only applicable for Registration & Contact Forms, otherwise it's a post ;) --- */
 
-.postbox-submissions .settings-input {
+.bf-submission-single .settings-input {
     display: block;
 }
-.postbox-submissions .bf-input {
+.bf-submission-single .bf-input {
     margin-bottom: 20px;
 }
-.postbox-submissions textarea,
-.postbox-submissions .standard-form input[type=url],
-.postbox-submissions .standard-form input[type=link],
-.postbox-submissions .standard-form input[type=text],
-.postbox-submissions .standard-form input[type=email],
-.postbox-submissions .standard-form input[type=date],
-.postbox-submissions .standard-form input[type=password] {
+.bf-submission-single textarea,
+.bf-submission-single .standard-form input[type=url],
+.bf-submission-single .standard-form input[type=link],
+.bf-submission-single .standard-form input[type=text],
+.bf-submission-single .standard-form input[type=email],
+.bf-submission-single .standard-form input[type=date],
+.bf-submission-single .standard-form input[type=password] {
     width: 100%;
     border: 1px solid #ccc;
     background: #f1f1f1;
@@ -390,14 +390,14 @@ ul.buddyforms-list .publish .item-status {
     font-size: 15px;
     padding: 10px;
 }
-.postbox-submissions .standard-form input[type=date] {
+.bf-submission-single .standard-form input[type=date] {
   width: auto;
 }
-.postbox-submissions .bf-input .radio {
+.bf-submission-single .bf-input .radio {
     display: block;
 }
-.postbox-submissions .bf-input textarea,
-.postbox-submissions .bf-input .form-control {
+.bf-submission-single .bf-input textarea,
+.bf-submission-single .bf-input .form-control {
     display: block;
     width: 100%;
     background: #f1f1f1;
@@ -418,6 +418,13 @@ ul.buddyforms-list .publish .item-status {
   padding: 20px;
   border: 1px solid rgba(0,0,0,0.1);
   box-sizing: border-box;
+}
+
+.dashicons {
+  line-height: inherit;
+  font-size: inherit;
+  width: auto;
+  height: auto;
 }
 
 /* Quick Column Grid for BuddyForms Frontend */

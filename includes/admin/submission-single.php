@@ -35,7 +35,6 @@
 
 					$fields = $buddyforms[$form_slug]['form_fields'];
 
-
 					$args = array(
 						'post_type'    => $buddyforms[$form_slug]['post_type'],
 						'customfields' => $fields,
@@ -68,15 +67,15 @@
 
 								<div class="misc-pub-section curtime misc-pub-curtime">
 										    <span id="timestamp-<?php echo $post_id; ?>">
-										    Submitted on: <b><?php echo get_the_date('l, F j, Y', $post_id ); ?></b>    </span>
+										    Submitted: <b><?php echo get_the_date('l, F j, Y', $post_id ); ?></b>    </span>
 								</div>
 
 								<div class="misc-pub-section">
-									<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span><a href="#" onclick="window.print();return false;">Print</a>
+									<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>&nbsp;<a href="#" onclick="window.print();return false;">Print</a>
 								</div>
 
 								<div class="misc-pub-section">
-									<?php if(is_admin()){ ?> <a href="?post_type=buddyforms&page=bf_submissions&form_slug=<?php echo $form_slug ?>" class="bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a> <?php } ?>
+									<a href="?post_type=buddyforms&page=bf_submissions&form_slug=<?php echo $form_slug ?>" class="button button-primary bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a>
 								</div>
 							</div>
 						</div>
@@ -117,7 +116,6 @@
 					</div>
 				<?php } ?>
 			<?php } ?>
-			<?php if(!is_admin()){ ?> <a href="#" class="bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a> <?php } ?>
 		</div>
 	</div>
 </div>
