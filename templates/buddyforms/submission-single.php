@@ -1,57 +1,57 @@
-<?php global $buddyforms, $form_slug, $post_id ?>
+<?php // Submission Single View - Front End ?>
+
+<?php global $buddyforms, $form_slug, $post_id; ?>
+
 <script>
 	jQuery(document).ready(function () {
 		jQuery(".bf_submit_form<?php echo $post_id; ?> :input").attr("disabled", true);
 		jQuery(".bf_submit_form<?php echo $post_id; ?>").show();
+		jQuery(".bf_submit_form<?php echo $post_id; ?> span.bf_add_files").remove();
 	});
 </script>
-<div id="poststuff" class="bf_submit_form<?php echo $post_id; ?>">
-	<div id="post-body" class="metabox-holder columns-2">
-		<div id="post-body-content">
 
-			<div class="postbox-submissions postbox">
-				<h3 class="hndle"><span>Entry</span></h3>
-				<div class="inside">
-					<script>
-						jQuery(document).ready(function () {
-							jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
-							jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
-							jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled','disabled');
-						});
-					</script>
-					<?php
-					session_id( 'buddyforms-submissions-modal' . $post_id );
+<div id="bf-submission-<?php echo $post_id; ?>" class="bf-submission-single bf_submit_form<?php echo $post_id; ?>">
+		<div class="inner-wrap">
+			<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss" style=""></i>&nbsp;Close</a></p>
 
-					// Create the form object
-					$form = new Form( "submissions_" . $form_slug );
+			<script>
+				jQuery(document).ready(function () {
+					jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
+					jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
+					jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled','disabled');
+				});
+			</script>
 
-					// Set the form attribute
-					$form->configure( array(
-						//"prevent" => array("bootstrap", "jQuery", "focus"),
-						//"action" => $redirect_to,
-						"view"   => new View_Metabox(),
-						'class'  => 'standard-form',
-					) );
+			<?php
+			session_id( 'buddyforms-submissions-modal' . $post_id );
 
-					$fields = $buddyforms[$form_slug]['form_fields'];
+			// Create the form object
+			$form = new Form( "submissions_" . $form_slug );
 
+			// Set the form attribute
+			$form->configure( array(
+				//"prevent" => array("bootstrap", "jQuery", "focus"),
+				//"action" => $redirect_to,
+				"view"   => new View_Metabox(),
+				'class'  => 'standard-form',
+			) );
 
-					$args = array(
-						'post_type'    => $buddyforms[$form_slug]['post_type'],
-						'customfields' => $fields,
-						'post_id'      => $post_id,
-						'form_slug'    => $form_slug,
-					);
+			$fields = $buddyforms[$form_slug]['form_fields'];
 
-					// if the form has custom field to save as post meta data they get displayed here
-					bf_form_elements( $form, $args );
+			$args = array(
+				'post_type'    => $buddyforms[$form_slug]['post_type'],
+				'customfields' => $fields,
+				'post_id'      => $post_id,
+				'form_slug'    => $form_slug,
+			);
 
-					$form->render();
+			// if the form has custom field to save as post meta data they get displayed here
+			bf_form_elements( $form, $args );
 
-					?>
+			$form->render();
 
-				</div>
-			</div>
+			?>
+
 		</div>
 
 		<div class="bf-submission-single-meta-wrap bf-row">
@@ -75,7 +75,4 @@
 
 		<p class="bf-alignright"><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss" style="line-height: inherit; font-size: inherit; width: auto; height: auto;"></i>&nbsp;Close</a></p>
 
-
-
-	</div>
 </div>
