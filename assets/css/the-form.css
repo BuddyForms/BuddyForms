@@ -727,8 +727,9 @@ form.bf_loading .bf_modal {
     display: block;
 }
 
-div.bf_files_container ul {
+ul.bf_files {
     list-style: none outside none !important;
+    padding: 0;
 }
 
 div.bf_files_container ul li {
