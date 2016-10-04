@@ -470,7 +470,7 @@ JS;
 			$this->errorView->applyAjaxErrorResponse();
 
 			echo <<<JS
-	                    jQuery("html, body").animate({ scrollTop: jQuery("#$id").offset().top }, 500 );
+	                    jQuery("html, body").animate({ scrollTop: jQuery(".the_$id").offset().top }, 500 );
 	                }
 	                else {
 JS;
@@ -482,6 +482,7 @@ JS;
 			echo <<<JS
                         }
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
+                        bf_form_errors();
                     }
                 });
                 return false;

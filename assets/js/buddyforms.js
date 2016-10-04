@@ -1,3 +1,18 @@
+function bf_form_errors(){
+
+    jQuery('input').removeClass('error');
+
+    var errors = jQuery('.bf-alert-wrap ul li span');
+    jQuery.each(errors, function (i, error) {
+        var field_id = jQuery(error).attr('data-field-id');
+        console.log(field_id);
+        if(field_id === 'user_pass'){
+            jQuery( '#' + field_id + '2').addClass('error');
+        }
+        jQuery( '#' + field_id).addClass('error');
+    });
+}
+
 jQuery(document).ready(function () {
 
     var bf_submission_modal_content = jQuery( ".buddyforms-posts-content" );
@@ -24,8 +39,11 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    jQuery(document).on("click", '.bf-alert-close', function (){
+        jQuery('.bf-alert-wrap').remove();
+    });
 
-
+    bf_form_errors();
 
     jQuery( '.bf-garlic' ).garlic();
 

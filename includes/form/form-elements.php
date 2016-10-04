@@ -84,6 +84,7 @@ function bf_form_elements( $form, $args ) {
 
 					case 'user_pass':
 						$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
+						$element_attr['id'] = $element_attr['id'] . '2';
 						$form->addElement( new Element_Password( $name . ' Confirm', $slug  . '_confirm', $element_attr ) );
 						break;
 
