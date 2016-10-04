@@ -49,55 +49,33 @@
 					$form->render();
 
 					?>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="bf-submission-single-meta-wrap bf-row">
+
+			<div id="bf-submissions-entry-actions" class="bf-submission-metabox bf-col-50">
+				<div class="inside">
+					<h3>Entry Actions</h3>
+					<p><span id="timestamp-<?php echo $post_id; ?>">Submitted on: <b><?php echo get_the_date('l, F j, Y', $post_id ); ?></b></span></p>
+					<p><span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span><a href="#" onclick="window.print();return false;">&nbsp;Print</a></p>
 				</div>
 			</div>
 
+			<div id="bf-submissions-entry-details" class="bf-submission-metabox bf-col-50">
+				<div class="inside">
+					<h3>Entry Details</h3>
+					<p><span class="dashicons dashicons-id wp-media-buttons-icon"></span>&nbsp;Entry ID: <b><?php echo $post_id; ?></b></p>
+				</div>
+			</div>
 
 		</div>
-		<div id="postbox-container-1" class="postbox-container">
-			<div id="submitdiv" class="postbox">
 
-				<h3 class="hndle"><span>Entry Actions</span></h3>
-				<div class="inside">
-					<div class="submitbox">
-						<div id="minor-publishing-<?php echo $post_id; ?>" class="frm_remove_border">
-							<div class="misc-pub-section">
-								<div class="clear"></div>
-							</div>
-							<div id="misc-publishing-actions-<?php echo $post_id; ?>">
+		<p class="bf-alignright"><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class=" fa fa-times-circle"></i>&nbsp;&nbsp;Close</a></p>
 
-								<div class="misc-pub-section curtime misc-pub-curtime">
-										    <span id="timestamp-<?php echo $post_id; ?>">
-										    Submitted on: <b><?php echo get_the_date('l, F j, Y', $post_id ); ?></b>    </span>
-								</div>
 
-								<div class="misc-pub-section">
-									<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span><a href="#" onclick="window.print();return false;">Print</a>
-								</div>
 
-								<div class="misc-pub-section">
-									<?php if(is_admin()){ ?> <a href="?post_type=buddyforms&page=bf_submissions&form_slug=<?php echo $form_slug ?>" class="bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a> <?php } ?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="postbox frm_with_icons">
-				<h3 class="hndle"><span>Entry Details</span></h3>
-				<div class="inside">
-
-					<div class="misc-pub-section">
-						<span class="dashicons dashicons-id wp-media-buttons-icon"></span>
-						Entry ID:
-						<b><?php echo $post_id; ?></b>
-					</div>
-
-				</div>
-			</div>
-
-			<a href="#" class="bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a>
-		</div>
 	</div>
 </div>
