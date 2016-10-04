@@ -26,27 +26,27 @@ function buddyforms_wp_insert_user() {
 		// Username already registered?
 		if(username_exists($user_login)) {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Username already taken', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __('Error: Username already taken', 'buddyforms') );
 		}
 		// invalid username?
 		if(!validate_username($user_login)) {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Invalid username', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __('Error: Invalid username', 'buddyforms') );
 		}
 		// empty username?
 		if($user_login == '') {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Please enter a username', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __('Error: Please enter a username', 'buddyforms') );
 		}
 		// invalid email?
 		if(!is_email($user_email)) {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Invalid email', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __('Error: Invalid email', 'buddyforms') );
 		}
 		// Email address already registered?
 		if(email_exists($user_email)) {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Email already registered', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __('Error: Email already registered', 'buddyforms') );
 		}
 		if($user_pass == '') {
 			// Generate the password if generate_password is set
@@ -54,14 +54,14 @@ function buddyforms_wp_insert_user() {
 				$user_pass = $pass_confirm = wp_generate_password( 12, true );
 			} else {
 				$hasError = true;
-				Form::setError('buddyforms_form_' . $form_slug,  __('Error: Please enter a password', 'buddyforms') );
+				Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __('Error: Please enter a password', 'buddyforms') );
 			}
 
 		}
 		// passwords do not match?
 		if($user_pass != $pass_confirm) {
 			$hasError = true;
-			Form::setError('buddyforms_form_' . $form_slug,  __('Error: Passwords do not match', 'buddyforms') );
+			Form::setError('buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __('Error: Passwords do not match', 'buddyforms') );
 		}
 
 	} else {

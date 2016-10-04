@@ -10,8 +10,8 @@ class ErrorView_Standard extends ErrorView {
         else
             var errorFormat = errorSize + " errors were";
 
-        jQuery('.alert-danger').hide();
-        var errorHTML = '<div class="alert alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><strong class="alert-heading">The following ' + errorFormat + ' found:</strong><ul>';
+        jQuery('.alert-danger').remove();
+        var errorHTML = '<div class="bf-alert-wrap alert-danger"><a class="bf-alert-close" data-dismiss="alert" href="#">×</a><strong class="alert-heading">The following ' + errorFormat + ' found:</strong><ul>';
         for(e = 0; e < errorSize; ++e)
             errorHTML += '<li>' + response.errors[e] + '</li>';
         errorHTML += '</ul></div>';
@@ -33,8 +33,8 @@ JS;
 			}
 
 			echo <<<HTML
-            <div class="alert alert-danger">
-                <a class="close" data-dismiss="alert" href="#">×</a>
+            <div class="bf-alert-wrap alert-danger">
+                <a class="bf-alert-close" data-dismiss="alert" href="#">×</a>
                 <strong class="alert-heading">The following $format found:</strong>
                 <ul><li>$errors</li></ul>
             </div>
