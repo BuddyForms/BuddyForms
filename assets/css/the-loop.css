@@ -1,4 +1,14 @@
-/* --- The Loop List --- */
+/*
+ * This is the BuddyForms Front End CSS for the views:
+ *
+ * - My Posts (List View)
+ * - My Posts (Table View)
+ * - Form Submission Single View
+ *
+ */
+
+
+/* --- BuddyForms View My Posts - LIST View --- */
 
 ul.buddyforms-list {
     margin: 25px 0;
@@ -158,7 +168,7 @@ ul.buddyforms-list .publish .item-status {
 
 
 
-/* --- The Loop Table --- */
+/* --- BuddyForms View My Posts - TABLE View --- */
 
 .table-striped > tbody > tr:nth-of-type(2n) {
     background-color: #f0f0f0;
@@ -353,17 +363,8 @@ ul.buddyforms-list .publish .item-status {
 
 
 
-
-/* Submissions Frontend - Single View (when not a post form) */
-
-/*.bf-input input.settings-input {
-    width: 100%;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    background: #f1f1f1;
-    color: #999;
-    border: 1px solid #ccc;
-}*/
+/* --- Submissions Frontend - SINGLE View --- */
+/* only applicable for Registration & Contact Forms, otherwise it's a post ;) --- */
 
 .postbox-submissions .settings-input {
     display: block;
@@ -376,6 +377,7 @@ ul.buddyforms-list .publish .item-status {
 .postbox-submissions .standard-form input[type=link],
 .postbox-submissions .standard-form input[type=text],
 .postbox-submissions .standard-form input[type=email],
+.postbox-submissions .standard-form input[type=date],
 .postbox-submissions .standard-form input[type=password] {
     width: 100%;
     border: 1px solid #ccc;
@@ -388,14 +390,55 @@ ul.buddyforms-list .publish .item-status {
     font-size: 15px;
     padding: 10px;
 }
-
+.postbox-submissions .standard-form input[type=date] {
+  width: auto;
+}
 .postbox-submissions .bf-input .radio {
     display: block;
 }
-
 .postbox-submissions .bf-input textarea,
 .postbox-submissions .bf-input .form-control {
     display: block;
     width: 100%;
     background: #f1f1f1;
+}
+. {
+  float: right;
+}
+
+
+
+
+/* ----------------------------------------- */
+/* ------------ Helper Classes ------------- */
+/* ----------------------------------------- */
+
+.bf-alignleft   { text-align: left;   }
+.bf-aligncenter { text-align: center; }
+.bf-alignright  { text-align: right;  }
+
+.bf-box {
+  padding: 20px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+/* Quick Column Grid for BuddyForms Frontend */
+.bf-row {
+  margin: 15px -15px;
+  padding: 15px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  overflow: auto;
+  display: block;
+}
+.bf-col-50 {
+  padding: 0 15px 15px;
+}
+@media (min-width: 768px) {
+  .bf-col-50 {
+    width: 50%;
+    float: left;
+    padding: 0 15px 15px;
+  }
 }
