@@ -73,6 +73,6 @@
 
 		</div>
 
-		<p class="bf-alignright"><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss"></i>&nbsp;Close</a></p>
+		<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss"></i>&nbsp;Close</a></p>
 
 </div>
