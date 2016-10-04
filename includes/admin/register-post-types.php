@@ -318,14 +318,12 @@ function buddyforms_form_updated_messages( $messages ) {
 		3  => __( 'Custom field deleted.', 'buddyforms' ),
 		4  => __( 'Form updated.', 'buddyforms' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Form restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Form published. <a href="%s">View Form</a>' ), esc_url( get_permalink( $post_ID ) ) ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Form restored to revision from %s', 'buddyforms' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => __( 'Form published.', 'buddyforms' ),
 		7  => __( 'Form saved.' ),
-		8  => sprintf( __( 'Form submitted. <a target="_blank" href="%s">Preview Form</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9  => sprintf( __( 'Form scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Form</a>' ),
-			// translators: Publish box date format, see http://php.net/date
-			date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-		10 => sprintf( __( 'Form draft updated. <a target="_blank" href="%s">Preview Form</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		8  => __( 'Form submitted.', 'buddyforms' ),
+		9  => sprintf( __( 'Form scheduled for: <strong>%1$s</strong>.' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ) ) ,
+		10 => __( 'Form draft updated.', 'buddyforms' ),
 	);
 
 	return $messages;
