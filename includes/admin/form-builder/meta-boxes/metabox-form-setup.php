@@ -198,7 +198,7 @@ function buddyforms_metabox_form_setup() {
 		    <h6>User Submissions URL<br><small class="siteurl_edit_html">' . $siteurl_edit_html . '</small></h6>
 		</div>');
 
-	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
+	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage their submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page is used to create the endpoints for the create - list and edit submissions views.',
 		'id'        => 'attached_page',
