@@ -12,8 +12,18 @@ jQuery(document).ready(function (jQuery) {
 
     // Grab all needed form parts from the dom and add it into vars for later usage.
     if(wizard != null){
+
         // first hide all so we have a consitend feeling
         jQuery('#post, #postbox-container-1, #postbox-container-2').hide();
+
+
+        jQuery('#menu-posts-buddyforms a').removeClass('current');
+        jQuery('#menu-posts-buddyforms li').removeClass('current');
+
+        jQuery('#menu-posts-buddyforms [href*="wizard"]').addClass('current');
+        jQuery('#menu-posts-buddyforms [href*="wizard"]').parent('li').addClass('current');
+
+
 
         // get the parts
 

@@ -428,34 +428,34 @@ function buddyforms_hide_publishing_actions() {
 				width: 100%;
 			}
 		</style>
-		<?php } if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' || ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == 'buddyforms' ) ) { ?>
-		<script>
-			jQuery(document).ready(function (jQuery) {
-				//jQuery('#screen-meta-links').hide();
-				jQuery('body').find('h1:first').css('line-height', '58px');
-				jQuery('body').find('h1:first').css('margin-top', '20px');
-				jQuery('body').find('h1:first').css('font-size', '30px');
-				//jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
-				jQuery('body').find('h1:first').html('<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
-					'BuddyForms ' +
-					'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
-					'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small>'
-				);
-				jQuery('h1').show();
-			});
-
-		</script>
-
-
 		<?php
-	} else {
-		?>
-		<script>
-			jQuery(document).ready(function (jQuery) {
-				jQuery('body').find('h1:first').remove();
-			});
-		</script>
+		if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' || ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == 'buddyforms' ) ) { ?>
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					//jQuery('#screen-meta-links').hide();
+					jQuery('body').find('h1:first').css('line-height', '58px');
+					jQuery('body').find('h1:first').css('margin-top', '20px');
+					jQuery('body').find('h1:first').css('font-size', '30px');
+					//jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
+					jQuery('body').find('h1:first').html('<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
+						'BuddyForms ' +
+						'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
+						'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small>'
+					);
+					jQuery('h1').show();
+				});
+
+			</script>
 		<?php
+		} else {
+			?>
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					jQuery('body').find('h1:first').remove();
+				});
+			</script>
+			<?php
+		}
 	}
 }
 add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
