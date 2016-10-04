@@ -402,9 +402,6 @@ ul.buddyforms-list .publish .item-status {
     width: 100%;
     background: #f1f1f1;
 }
-. {
-  float: right;
-}
 
 
 
@@ -425,8 +422,8 @@ ul.buddyforms-list .publish .item-status {
 
 /* Quick Column Grid for BuddyForms Frontend */
 .bf-row {
-  margin: 15px -15px;
-  padding: 15px 0;
+  margin: 30px -15px;
+  padding: 30px 0;
   border-top: 1px solid rgba(0,0,0,0.1);
   border-bottom: 1px solid rgba(0,0,0,0.1);
   overflow: auto;
