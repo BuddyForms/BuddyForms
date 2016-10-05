@@ -2,7 +2,15 @@
 
 function bf_form_elements( $form, $args ) {
 
-	extract( $args );
+//	extract( shortcode_atts( array(
+//		'post_type'     => 'bf_submissions',
+//		'customfields'  => array(),
+//		'post_id'       => '',
+//		'form_slug'     => '',
+//		'post_parent'   => 0,
+//	), $args ) );
+
+	extract($args);
 
 	if ( ! isset( $customfields ) ) {
 		return;
