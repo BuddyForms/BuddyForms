@@ -19,10 +19,7 @@ function buddyforms_permissions_unregistered_screen() {
 	$form_setup[] = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array( 'none' => __( 'None', 'buddyforms' ), 'above' => __( 'Above the Form', 'buddyforms' ), 'under' => __( 'Under the Form', 'buddyforms' ) ), array( 'value' => $public_submit_login, 'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.' ) );
 
 	$public_submit_create_account = !isset( $buddyform['public_submit_create_account'] ) ? '' : 'public_submit_create_account';
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ), array( 'value' => $public_submit_create_account, 'shortDesc' => 'Create a new user during form submission' ) );
-
-	$public_submit_username_from_email = !isset( $buddyform['public_submit_username_from_email'] ) ? '' : 'public_submit_username_from_email';
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array( 'value' => $public_submit_username_from_email, 'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.' ) );
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ), array( 'value' => $public_submit_create_account, 'shortDesc' => 'Create a new user during form submission', 'id' => 'public_submit_create_account' ) );
 
 
 	?>

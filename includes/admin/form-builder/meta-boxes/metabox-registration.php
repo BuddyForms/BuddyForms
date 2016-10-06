@@ -30,11 +30,12 @@ function buddyforms_registration_screen(){
 
 	echo '<h4>' . __('Registration Options', 'buddyforms') . '</h4><br>';
 
-	$generate_password = '';
-	if ( isset( $buddyform['registration']['generate_password'] ) ) {
-		$generate_password = $buddyform['registration']['generate_password'];
-	}
+	$generate_password =  isset( $buddyform['registration']['generate_password'] ) ? $buddyform['registration']['generate_password'] : '';
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Generate Password', 'buddyforms' ) . '</b>', "buddyforms_options[registration][generate_password]", array( 'yes' => __( 'Auto generate the password.', 'buddyforms' ) ), array( 'value' => $generate_password, 'shortDesc' => 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.' ) );
+
+	// Generate Username ?
+	$public_submit_username_from_email = !isset( $buddyform['public_submit_username_from_email'] ) ? '' : 'public_submit_username_from_email';
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array( 'value' => $public_submit_username_from_email, 'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.' ) );
 
 	// Get all Pages
 	$pages = get_pages( array(
@@ -45,7 +46,7 @@ function buddyforms_registration_screen(){
 		'post_status' => 'publish'
 	) );
 
-	// Generate teh Pages Array
+	// Generate the pages Array
 	$all_pages = Array();
 	$all_pages['none'] = 'Select a Page';
 	foreach ( $pages as $page ) {
@@ -60,9 +61,6 @@ function buddyforms_registration_screen(){
 		'shortDesc' => __('Select the Page from where the user lands if he press the activation link in the activation mail. You can create a personal page or add a other form.', 'buddyforms'),
 		'class'     => '',
 	) );
-
-
-
 
 	// activation_message_from_subject
 	$activation_message_from_subject = isset($buddyform['registration']['activation_message_from_subject']) ? $buddyform['registration']['activation_message_from_subject'] : 'User Account Activation Mail';
@@ -110,8 +108,6 @@ function buddyforms_registration_screen(){
 	}
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Auto Loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $auto_loggin, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
 
-
-
 	$new_user_rule = isset($buddyform['registration']['new_user_rule']) ? $buddyform['registration']['new_user_rule'] : 'subscriber';
 	$roles = get_editable_roles();
 	$roles_select = array();
@@ -154,6 +150,5 @@ function buddyforms_registration_screen(){
 	</div>
 
 	<?php
-
-
+	
 }

@@ -102,6 +102,24 @@ function buddyforms_process_post( $args = Array() ) {
 			break;
 	}
 
+	if( isset( $buddyforms[$form_slug]['public_submit_create_account'] ) && !is_user_logged_in() ){
+
+		// ok let us try to register a user
+		$registration = buddyforms_wp_insert_user();
+
+		// Check if registration was successful
+		if( !$registration ){
+			$args = array(
+				'hasError'      => true,
+				'form_slug'    => $form_slug,
+			);
+			return $args;
+		}
+
+		add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+
+	}
+
 	do_action( 'buddyforms_process_post_start', $args );
 
 	if ( isset( $_POST['bf_post_type'] ) ) {

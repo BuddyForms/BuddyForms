@@ -84,6 +84,7 @@ jQuery(document).ready(function (jQuery) {
 
         from_setup_post_type();
         from_setup_attached_page()
+        from_setup_create_account();
 
         // Select first tab
         jQuery('a[href="#form-submission"]').tab('show');
@@ -128,12 +129,34 @@ jQuery(document).ready(function (jQuery) {
         //jQuery('#siteurl_create').text("#" + attached_page);
     }
 
-    // On Change kisterner for the post type select
+
+
+
+
+    from_setup_create_account();
+
+    // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
+    function from_setup_create_account(){
+        if( jQuery('#public_submit_create_account-0').is(":checked") ) {
+            jQuery('.registrations_nav').show();
+        } else {
+            jQuery('.registrations_nav').hide();
+        }
+    }
+
+
+    // On Change listener for the post type select
+    jQuery(document.body).on('change', '#public_submit_create_account-0', function () {
+        from_setup_create_account();
+    });
+
+
+    // On Change listener for the post form_post_type
     jQuery(document.body).on('change', '#form_post_type', function () {
         from_setup_post_type();
     });
 
-    // On Change listener for the post type select
+    // On Change listener for the post attached_page
     jQuery(document.body).on('change', '#attached_page', function () {
 
         var attached_page   = jQuery('#attached_page').val();
