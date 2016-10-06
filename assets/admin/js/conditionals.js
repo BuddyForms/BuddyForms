@@ -7,7 +7,18 @@ jQuery(document).ready(function (jQuery) {
     //Function to show hide form setup tabs navigation
     //
     function from_setup_form_type(value){
+        from_setup_post_type();
 
+        from_setup_attached_page()
+
+
+        // Select first tab
+        jQuery('a[href="#form-submission"]').tab('show');
+        jQuery('.activeform-submission').addClass('active');
+        jQuery('#form-submission').addClass('active in');
+
+        jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
+        jQuery("#screen-meta-links").remove();
         switch(value) {
             case 'contact':
 
@@ -22,7 +33,7 @@ jQuery(document).ready(function (jQuery) {
 
                 // Hide
                 jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
-                jQuery('.create-content_nav, .registrations_nav').hide();
+                jQuery('.create-content_nav').hide();
 
                 // Show/Hide the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();
@@ -42,7 +53,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#form_post_type').val('bf_submissions');
                 jQuery('#attached_page').val('none');
 
-                jQuery('.registrations_nav').show();
+                jQuery('.registrations_nav, .bf_hide_if_attached_page_none').show();
 
                 // Hide
                 jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
@@ -73,8 +84,6 @@ jQuery(document).ready(function (jQuery) {
                 // View all post related nav items
                 jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
 
-                jQuery('.registrations_nav').hide();
-
                 // Show the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_all').show();
                 jQuery('.bf_show_if_f_type_post').show();
@@ -82,17 +91,8 @@ jQuery(document).ready(function (jQuery) {
                 break;
         }
 
-        from_setup_post_type();
-        from_setup_attached_page()
-        from_setup_create_account();
 
-        // Select first tab
-        jQuery('a[href="#form-submission"]').tab('show');
-        jQuery('.activeform-submission').addClass('active');
-        jQuery('#form-submission').addClass('active in');
 
-        jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
-        jQuery("#screen-meta-links").remove();
     }
 
 
@@ -116,24 +116,23 @@ jQuery(document).ready(function (jQuery) {
         var attached_page = jQuery('#attached_page').val();
 
         if(attached_page == 'none') {
-            jQuery('.buddyforms-metabox-show-if-attached-page').hide();
-            jQuery('.bf_hide_if_post_type_none').hide();
+            jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').hide();
+            jQuery('.bf_hide_if_post_type_none, .list_posts_style, .add_to_admin_bar, .list_posts_option, .edit_link').hide();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+            jQuery('#public_submit_create_account-0').prop('checked', false);
+
+
         } else {
-            jQuery('.buddyforms-metabox-show-if-attached-page').show();
-            jQuery('.bf_hide_if_post_type_none').show();
+            jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').show();
+            jQuery('.bf_hide_if_post_type_none, .list_posts_style, .add_to_admin_bar, .list_posts_option, .edit_link').show();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
 
         }
-        //jQuery('#siteurl_create').attr("href", "#" + attached_page);
-        //jQuery('#siteurl_create').text("#" + attached_page);
+        from_setup_create_account();
     }
 
 
 
-
-
-    from_setup_create_account();
 
     // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
     function from_setup_create_account(){
@@ -142,6 +141,7 @@ jQuery(document).ready(function (jQuery) {
         } else {
             jQuery('.registrations_nav').hide();
         }
+        
     }
 
 

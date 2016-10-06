@@ -19,30 +19,39 @@ function buddyforms_permissions_unregistered_screen() {
 	$form_setup[] = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array( 'none' => __( 'None', 'buddyforms' ), 'above' => __( 'Above the Form', 'buddyforms' ), 'under' => __( 'Under the Form', 'buddyforms' ) ), array( 'value' => $public_submit_login, 'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.' ) );
 
 	$public_submit_create_account = !isset( $buddyform['public_submit_create_account'] ) ? '' : 'public_submit_create_account';
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ), array( 'value' => $public_submit_create_account, 'shortDesc' => 'Create a new user during form submission', 'id' => 'public_submit_create_account' ) );
+	$element = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
+		array( 'value' => $public_submit_create_account,
+			'shortDesc' => 'Create a new user during form submission',
+			 ) );
 
+	$element->setAttribute('id', 'public_submit_create_account');
 
+	$form_setup[] = $element;
 	?>
 	<div class="fields_header">
 		<table class="wp-list-table widefat posts striped">
-			<tbody id="the-list">
-			<?php
-			if ( isset( $form_setup ) ) {
-				foreach ( $form_setup as $key => $field ) { ?>
-					<tr id="row_form_title">
-						<th scope="row">
-							<label for="role_role"><?php echo $field->getLabel() ?></label>
-						</th>
-						<td>
-							<?php echo $field->render() ?>
-							<p class="description"><?php echo $field->getShortDesc() ?></p>
-						</td>
-					</tr>
-					<?php
-				}
-			}
-			?>
-			</tbody>
+			<table class="wp-list-table widefat posts striped fixed">
+				<tbody>
+				<?php foreach($form_setup as $field_key => $field ) {
+
+					$type  = $field->getAttribute( 'type' );
+					$class = $field->getAttribute( 'class' );
+					if ( $type != 'html' ) {
+						?>
+
+						<tr class="<?php echo $class ?>">
+							<th scope="row">
+								<label for="form_title"><?php echo $field->getLabel() ?></label>
+							</th>
+							<td>
+								<?php echo $field->render() ?>
+								<p class="description"><?php echo $field->getShortDesc() ?></p>
+							</td>
+						</tr>
+					<?php }
+				} ?>
+				</tbody>
+			</table>
 		</table>
 	</div>
 
@@ -158,7 +167,7 @@ function buddyforms_permissions_screen() {
 }
 
 function buddyforms_form_setup_nav_li_permission(){ ?>
-	<li class="permission_nav"><a class="permission bf_hide_if_post_type_none"
+	<li class="permission_nav"><a class="permission bf_hide_if_attached_page_none"
 		href="#permission"
 		data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
 	</li><?php

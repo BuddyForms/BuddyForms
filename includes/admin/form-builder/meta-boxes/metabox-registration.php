@@ -150,5 +150,5 @@ function buddyforms_registration_screen(){
 	</div>
 
 	<?php
-	
+
 }

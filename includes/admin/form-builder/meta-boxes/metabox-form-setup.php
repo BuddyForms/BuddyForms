@@ -205,7 +205,10 @@ function buddyforms_metabox_form_setup() {
 		'data-slug' => $slug
 	) );
 
-	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
+	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array(
+		'value' => $admin_bar,
+		'class' => 'add_to_admin_bar'
+		) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
 		'none'          => 'None',
@@ -215,7 +218,7 @@ function buddyforms_metabox_form_setup() {
 		'view'      => 'vertical',
 		'value'     => $edit_link,
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
-		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'bf_show_if_f_type_post edit_link',
 	) );
 
 	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
@@ -224,7 +227,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_option,
 		'shortDesc' => '',
-		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'bf_show_if_f_type_post list_posts_option',
 	) );
 
 
@@ -234,7 +237,7 @@ function buddyforms_metabox_form_setup() {
 	), array(
 		'value' => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
-//		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'list_posts_style'
 	) );
 
 
