@@ -75,17 +75,9 @@ function buddyforms_form_html( $args ) {
 		"action"   => $redirect_to,
 		"view"     => new $buddyforms_frontend_form_template_name(),
 		'class'    =>  apply_filters( 'bf_form_class', $form_class ),
-		'ajax'     => 'buddyforms_ajax_process_edit_post',
+		'ajax'     => !isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ? 'buddyforms_ajax_process_edit_post' : false,
 		'method'   => 'post'
 	) );
-
-
-// For some reason this does not work... todo: ennable ajax turn on off 	
-//	$form->setAttribute('ajax', 'buddyforms_ajax_process_edit_post');
-//	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
-//		$form->setAttribute('', '');
-//		$form->setAttribute('', '');
-//	}
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
