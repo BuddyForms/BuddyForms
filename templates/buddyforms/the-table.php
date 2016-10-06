@@ -1,7 +1,17 @@
 <?php
-global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
-$current_user = wp_get_current_user(); ?>
+/**
+ * The users submissions table
+ *
+ * This template can be overridden by copying it to yourtheme/buddyforms/the-table.php.
+ *
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 
 <div id="buddyforms-table-view" class="buddyforms_posts_table buddyforms-posts-container">
 

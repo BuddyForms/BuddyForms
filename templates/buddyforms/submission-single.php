@@ -1,6 +1,17 @@
-<?php // Submission Single View - Front End ?>
+<?php
+/**
+ * Submission Single View
+ *
+ * This template can be overridden by copying it to yourtheme/buddyforms/submission-single.php.
+ *
+ */
 
-<?php global $buddyforms, $form_slug, $post_id; ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$post_id = get_the_ID();
+?>
 
 <script>
 	jQuery(document).ready(function () {

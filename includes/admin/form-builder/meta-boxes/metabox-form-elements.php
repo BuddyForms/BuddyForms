@@ -197,7 +197,7 @@ function bf_form_elements_select_options(){
 		),
 		'user' => array(
 			'label'     => __('User Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_registration',
+			'class'     => 'bf_show_if_f_type_all',
 			'fields'    => array(
 				'user_login'     => array(
 					'label'     => __( 'Username', 'buddyforms' ),

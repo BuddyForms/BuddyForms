@@ -430,7 +430,7 @@ JS;
 			        return false;
 			    }
 
-                jQuery('.the_buddyforms_form_$form_slug .form_wrapper .bf_modal').show();
+                jQuery('#buddyforms_form_hero_$form_slug .form_wrapper .bf_modal').show();
 
                 var FormData = jQuery("#$id").serialize();
 
@@ -444,7 +444,7 @@ JS;
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
                     },
                     success: function(response) {
-                    jQuery('.the_buddyforms_form_$form_slug .form_wrapper .bf_modal').hide();
+                    jQuery('#buddyforms_form_hero_$form_slug .form_wrapper .bf_modal').hide();
                     jQuery.each(response, function (i, val) {
                     	console.log(val);
 
@@ -453,10 +453,10 @@ JS;
                                 jQuery('#form_message_$form_slug' ).html(val);
                                 break;
                             case 'form_remove':
-                                jQuery('.the_buddyforms_form_$form_slug .form_wrapper').remove();
+                                jQuery('#buddyforms_form_hero_$form_slug .form_wrapper').remove();
                                 break;
                             case 'form_actions':
-                                jQuery('.the_buddyforms_form_$form_slug .form-actions').html(val);
+                                jQuery('#buddyforms_form_hero_$form_slug .form-actions').html(val);
                                 break;
                             default:
                                 jQuery('input[name="' + i + '"]').val(val);

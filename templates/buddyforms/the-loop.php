@@ -1,8 +1,18 @@
 <?php
-global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
-$current_user = wp_get_current_user();
+/**
+ * The users submissions loop
+ *
+ * This template can be overridden by copying it to yourtheme/buddyforms/the-loop.php.
+ *
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
+
 <div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
 
 	<?php if ( $the_lp_query->have_posts() ) : ?>
@@ -12,15 +22,13 @@ $current_user = wp_get_current_user();
 			<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
 				$the_permalink      = get_permalink();
-
-				if($buddyforms[$form_slug]['post_type'] == 'bf_submissions')
+				if($buddyforms[$form_slug]['post_type'] == 'bf_submissions'){
 					$the_permalink = '#';
+				}
 
 				$post_status        = get_post_status();
-
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
 				$post_status_name   = bf_get_post_status_readable( $post_status );
-				$post_id            = get_the_ID();
 
 				do_action( 'bp_before_blog_post' );
 

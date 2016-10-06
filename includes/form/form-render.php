@@ -23,8 +23,9 @@ function buddyforms_form_html( $args ) {
 		'form_notice'  => '',
 	), $args ) );
 
-	if ( ! is_user_logged_in() &&  $buddyforms[$form_slug]['form_type'] == 'post') :
-		return buddyforms_get_login_form();
+
+	if ( ! is_user_logged_in() && !isset($buddyforms[$form_slug]['public_submit'])) :
+		return buddyforms_get_wp_login_form();
 	endif;
 
 	$user_can_edit = false;
@@ -47,7 +48,13 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Form HTML Start. The Form is rendered as last step.
-	$form_html  = '<div id="buddyforms-form" class="the_buddyforms_form the_buddyforms_form_' . $form_slug . '">';
+	$form_html  = '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form '. apply_filters('buddyforms_form_hero_classes', '') . '" >';
+
+	// Hook above the form inside the BuddyForms form div
+	$form_html = apply_filters('buddyforms_form_hero_top_' . $form_slug, $form_html);
+	$form_html .= isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'above' ? buddyforms_get_wp_login_form() : '';
+
+
 	$form_html .= '<div id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
@@ -64,15 +71,21 @@ function buddyforms_form_html( $args ) {
 
 	// Set the form attribute
 	$form->configure( array(
-		"prevent" => array("bootstrap", "jQuery", "focus"),
-		"action" => $redirect_to,
-		"view"   => new $buddyforms_frontend_form_template_name(),
-		'class'  =>  apply_filters( 'bf_form_class', $form_class ),
-		'ajax'   => 'buddyforms_ajax_process_edit_post',
+		"prevent"  => array("bootstrap", "jQuery", "focus"),
+		"action"   => $redirect_to,
+		"view"     => new $buddyforms_frontend_form_template_name(),
+		'class'    =>  apply_filters( 'bf_form_class', $form_class ),
+		'ajax'     => 'buddyforms_ajax_process_edit_post',
 		'method'   => 'post'
 	) );
 
 
+// For some reason this does not work... todo: ennable ajax turn on off 	
+//	$form->setAttribute('ajax', 'buddyforms_ajax_process_edit_post');
+//	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
+//		$form->setAttribute('', '');
+//		$form->setAttribute('', '');
+//	}
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
@@ -122,7 +135,11 @@ function buddyforms_form_html( $args ) {
 		$form_html .= ob_get_contents();
 		ob_clean();
 	}
-	$form_html .= '</div>';
+
+	// Hook under the form inside the BuddyForms form div
+	$form_html = apply_filters('buddyforms_form_hero_last_' . $form_slug, $form_html);
+	$form_html .= isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'under' ? buddyforms_get_wp_login_form() : '';
+	$form_html .= '</div>'; // the_buddyforms_form end
 
 	return $form_html;
 }

@@ -171,7 +171,7 @@ function buddyforms_settings_page() {
 // Settings Tabs Navigation
 //
 function buddyforms_admin_tabs( $current = 'homepage' ) {
-	$tabs = array( 'general' => 'General Settings', 'recaptcha' => 'reCaptcha', 'import' => 'Import Forms' );
+	$tabs = array( 'general' => 'General Settings', 'import' => 'Import Forms' );
 
 	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
 
@@ -192,7 +192,7 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 function buddyforms_register_option() {
 	register_setting( 'buddyforms_posttypes_default', 'buddyforms_posttypes_default', 'buddyforms_posttypes_default_sanitize' );
 	register_setting( 'buddyforms_edd_license', 'buddyforms_edd_license_key', 'buddyforms_edd_sanitize_license' );
-	register_setting( 'buddyforms_google_recaptcha', 'buddyforms_google_recaptcha' );
+	//register_setting( 'buddyforms_google_recaptcha', 'buddyforms_google_recaptcha' );
 }
 
 add_action( 'admin_init', 'buddyforms_register_option' );

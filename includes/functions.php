@@ -128,21 +128,25 @@ function buddyforms_get_template_directory() {
  * @since 0.1 beta
  */
 function buddyforms_locate_template( $file ) {
+	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
+
+	$current_user = wp_get_current_user();
+
 	if ( locate_template( array( $file ), false ) ) {
-		locate_template( array( $file ), true );
+		include(locate_template( array( $file ), true ));
 	} else {
 		include( BUDDYFORMS_TEMPLATE_PATH . $file );
 	}
 }
 
 // Display the WordPress Login Form
-function buddyforms_login_form() {
+function buddyforms_wp_login_form() {
 	// Get The Login Form
-	echo buddyforms_get_login_form();
+	echo buddyforms_get_wp_login_form();
 }
 
 // Create the BuddyForms Login Form
-function buddyforms_get_login_form() {
+function buddyforms_get_wp_login_form() {
 	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );

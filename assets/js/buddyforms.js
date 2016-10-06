@@ -104,13 +104,13 @@ jQuery(document).ready(function () {
     //            url: ajaxurl,
     //            data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
     //            beforeSend: function () {
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').show();
+    //                jQuery('#buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').show();
     //            },
     //            success: function (data) {
     //
     //                // console.log(data);
     //
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
+    //                jQuery('#buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
     //
     //                jQuery.each(data, function (i, val) {
     //                    switch (i) {
@@ -118,10 +118,10 @@ jQuery(document).ready(function () {
     //                            jQuery('#form_message_' + form_slug).html(val);
     //                            break;
     //                        case 'form_remove':
-    //                            jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper').remove();
+    //                            jQuery('#buddyforms_form_' + form_slug + ' .form_wrapper').remove();
     //                            break;
     //                        case 'form_actions':
-    //                            jQuery('.the_buddyforms_form_' + form_slug + ' .form-actions').html(val);
+    //                            jQuery('#buddyforms_form_' + form_slug + ' .form-actions').html(val);
     //                            break;
     //                        default:
     //                            jQuery('input[name="' + i + '"]').val(val);
@@ -132,7 +132,7 @@ jQuery(document).ready(function () {
     //                jQuery('#' + form_name).valid();
     //            },
     //            error: function (request, status, error) {
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
+    //                jQuery('#buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
     //                alert(request.responseText);
     //            }
     //        });
