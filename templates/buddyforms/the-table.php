@@ -65,9 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$post_status_name   = bf_get_post_status_readable( $post_status );
 				$post_id            = get_the_ID();
 
-				do_action( 'bp_before_blog_post' ) ?>
-
-
+				do_action( 'bf_before_blog_post' ) ?>
 
 				<tr id="bf_post_tr_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
 					<td class="bf_posts_<?php the_ID() ?>">

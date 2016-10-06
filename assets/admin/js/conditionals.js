@@ -141,7 +141,7 @@ jQuery(document).ready(function (jQuery) {
         } else {
             jQuery('.registrations_nav').hide();
         }
-        
+
     }
 
 
