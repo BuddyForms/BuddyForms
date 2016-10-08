@@ -54,18 +54,26 @@ function buddyforms_process_post( $args = Array() ) {
 		$user_data['useragent'] = $browser_data['useragent'];
 	}
 
-	// Servers site validation
-	// $_SERVER["REQUEST_METHOD"] = "POST";
 
-	/* Validation
+	/* Servers site validation
 	 * First we have browser validation. Now let us check from the server site if all is in place
 	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
+	 *
+	 * Validation can be extended
 	 */
-	if( !Form::isValid( "buddyforms_form_" . $form_slug, true ) ) {
-
+	if( Form::isValid( "buddyforms_form_" . $form_slug, false ) ) {
+		if(!apply_filters( 'buddyforms_form_custom_validation', true, $form_slug )) {
+			$args = array(
+				'hasError'  => true,
+				'form_slug' => $form_slug,
+			);
+			return $args;
+		}
+		Form::clearValues( "buddyforms_form_" . $form_slug );
+	} else {
 		$args = array(
-			'hasError'      => true,
-			'form_slug'    => $form_slug,
+			'hasError'  => true,
+			'form_slug' => $form_slug,
 		);
 		return $args;
 	}

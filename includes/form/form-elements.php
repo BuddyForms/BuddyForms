@@ -2,14 +2,6 @@
 
 function bf_form_elements( $form, $args ) {
 
-//	extract( shortcode_atts( array(
-//		'post_type'     => 'bf_submissions',
-//		'customfields'  => array(),
-//		'post_id'       => '',
-//		'form_slug'     => '',
-//		'post_parent'   => 0,
-//	), $args ) );
-
 	extract($args);
 
 	if ( ! isset( $customfields ) ) {
@@ -142,7 +134,7 @@ function bf_form_elements( $form, $args ) {
 						break;
 
 					case 'content':
-						//add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
+						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 						$buddyforms_form_content_val = false;
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
 							$buddyforms_form_content_val = stripslashes( $_POST['buddyforms_form_content'] );
@@ -583,13 +575,15 @@ function bf_form_elements( $form, $args ) {
 	endforeach;
 }
 
-function my_tinymce_setup_function( $initArray ) {
-	$initArray['setup'] = 'function(ed){
-      ed.onChange.add(function(ed, l) {
-        tinyMCE.triggerSave();
-	    jQuery("#buddyforms_form_content").valid();
-      });
-    }';
+function buddyforms_tinymce_setup_function( $initArray ) {
+	$initArray['setup'] = 'function(editor) {
+                editor.on("change keyup", function(e){
+                    console.log(\'saving\');
+                    //tinyMCE.triggerSave(); // updates all instances
+                    editor.save(); // updates this instance\'s textarea
+                    jQuery(editor.getElement()).trigger(\'change\'); // for garlic to detect change
+                });
+            }';
 
 	return $initArray;
 }

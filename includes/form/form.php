@@ -196,9 +196,8 @@ function bf_form_response_no_ajax() {
 		extract( $bf_form_response_args );
 
 		if ( $hasError ) {
-			$bf_form_error = $error_message;
-
-			return;
+			wp_redirect( $_SERVER['HTTP_REFERER'], 302 );
+			exit;
 		}
 
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
