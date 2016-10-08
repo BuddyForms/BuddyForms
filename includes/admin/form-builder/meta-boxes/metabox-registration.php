@@ -102,13 +102,13 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 
-	$auto_loggin = '';
-	if ( isset( $buddyform['registration']['auto_loggin'] ) ) {
-		$auto_loggin = $buddyform['registration']['auto_loggin'];
-	}
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Auto Loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $auto_loggin, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
+//	$auto_loggin = '';
+//	if ( isset( $buddyform['registration']['auto_loggin'] ) ) {
+//		$auto_loggin = $buddyform['registration']['auto_loggin'];
+//	}
+//	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Auto Loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $auto_loggin, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
 
-	$new_user_rule = isset($buddyform['registration']['new_user_rule']) ? $buddyform['registration']['new_user_rule'] : 'subscriber';
+	$new_user_role = isset($buddyform['registration']['new_user_role']) ? $buddyform['registration']['new_user_role'] : 'subscriber';
 	$roles = get_editable_roles();
 	$roles_select = array();
 
@@ -117,8 +117,8 @@ function buddyforms_registration_screen(){
 	}
 
 	// User Role
-	$form_setup[] = new Element_Select( '<b>' . __( "New User Rule", 'buddyforms' ) . '</b>', "buddyforms_options[registration][new_user_rule]", $roles_select, array(
-		'value'     => $new_user_rule,
+	$form_setup[] = new Element_Select( '<b>' . __( "New User Role", 'buddyforms' ) . '</b>', "buddyforms_options[registration][new_user_role]", $roles_select, array(
+		'value'     => $new_user_role,
 		'shortDesc' => __('Select the User Role the user should have after successful registration', 'buddyforms'),
 		'class'     => '',
 	) );

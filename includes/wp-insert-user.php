@@ -79,7 +79,7 @@ function buddyforms_wp_insert_user() {
 
 	// Let us check if we run into any error.
 
-	$user_role = isset( $buddyforms[$form_slug]['registration']['new_user_rule'] ) ? $buddyforms[$form_slug]['registration']['new_user_rule'] : 'subscriber';
+	$user_role = isset( $buddyforms[$form_slug]['registration']['new_user_role'] ) ? $buddyforms[$form_slug]['registration']['new_user_role'] : 'subscriber';
 
 	// only create the user in if there are no errors
 	if(!$hasError) {
