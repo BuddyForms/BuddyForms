@@ -61,7 +61,7 @@ jQuery(document).ready(function (jQuery) {
 
                 // Show/Hide the corresponding form elements in the form select
                 jQuery('.bf_show_if_f_type_registration').show();
-                jQuery('.bf_show_if_f_type_all').hide();
+                jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
                 jQuery('.bf_show_if_f_type_post').hide();
 
                 // Hide after submission post options

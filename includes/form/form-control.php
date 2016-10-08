@@ -67,14 +67,15 @@ function buddyforms_process_post( $args = Array() ) {
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
+			Form::clearValues( "buddyforms_form_" . $form_slug );
 			return $args;
 		}
-		Form::clearValues( "buddyforms_form_" . $form_slug );
 	} else {
 		$args = array(
 			'hasError'  => true,
 			'form_slug' => $form_slug,
 		);
+		Form::clearValues( "buddyforms_form_" . $form_slug );
 		return $args;
 	}
 
@@ -93,8 +94,7 @@ function buddyforms_process_post( $args = Array() ) {
 				);
 				return $args;
 			}
-
-
+			// Save the Browser user data
 			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 			$args = array(
 				'hasError'     => $hasError,
@@ -114,6 +114,9 @@ function buddyforms_process_post( $args = Array() ) {
 
 		// ok let us try to register a user
 		$registration = buddyforms_wp_insert_user();
+
+		// Save the Browser user data
+		add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 
 		// Check if registration was successful
 		if( !$registration ){
