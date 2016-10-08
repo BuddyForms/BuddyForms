@@ -95,7 +95,7 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 	// activation_message_from_email
-	$activation_message_from_email = isset($buddyform['registration']['activation_message_from_email']) ? $buddyform['registration']['activation_message_from_email'] : '[admin_mail]';
+	$activation_message_from_email = isset($buddyform['registration']['activation_message_from_email']) ? $buddyform['registration']['activation_message_from_email'] : '[admin_email]';
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Activation From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_email]", array(
 		'value'     => $activation_message_from_email,
 		'shortDesc' => __('', 'buddyforms'),

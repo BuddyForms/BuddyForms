@@ -103,6 +103,7 @@ function buddyforms_process_post( $args = Array() ) {
 				'redirect_to'  => $redirect_to,
 				'form_slug'    => $form_slug,
 			);
+			Form::clearValues( "buddyforms_form_" . $form_slug );
 			return $args;
 
 			break;
@@ -124,6 +125,7 @@ function buddyforms_process_post( $args = Array() ) {
 				'hasError'      => true,
 				'form_slug'    => $form_slug,
 			);
+			Form::clearValues( "buddyforms_form_" . $form_slug );
 			return $args;
 		}
 
@@ -309,7 +311,7 @@ function buddyforms_process_post( $args = Array() ) {
 	$args = array_merge( $args, $args2 );
 
 	do_action( 'buddyforms_process_post_end', $args );
-
+	Form::clearValues( "buddyforms_form_" . $form_slug );
 	return $args;
 
 }
