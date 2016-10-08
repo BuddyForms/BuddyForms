@@ -79,45 +79,36 @@ function buddyforms_process_post( $args = Array() ) {
 		return $args;
 	}
 
-	switch($form_type){
-		case 'contact':
-			// todo: Add option to create a contact form without create a bf_submissions post. Just mail forms ;)
-			break;
-		case 'registration':
-			$registration = buddyforms_wp_insert_user();
+	// Check if this is a registration form only
+	if( $form_type == 'registration' ) {
 
-			// Check if registration was successful
-			if( !$registration ){
-				$args = array(
-					'hasError'      => true,
-					'form_slug'    => $form_slug,
-				);
-				return $args;
-			}
-			// Save the Browser user data
-			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+		$registration = buddyforms_wp_insert_user();
+		// Check if registration was successful
+		if( !$registration ){
 			$args = array(
-				'hasError'     => $hasError,
-				'form_notice'  => $form_notice,
-				'customfields' => $customfields,
-				'redirect_to'  => $redirect_to,
+				'hasError'      => true,
 				'form_slug'    => $form_slug,
 			);
-			Form::clearValues( "buddyforms_form_" . $form_slug );
 			return $args;
-
-			break;
-		default:
-			break;
+		}
+		// Save the Browser user data
+		add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+		$args = array(
+			'hasError'     => $hasError,
+			'form_notice'  => $form_notice,
+			'customfields' => $customfields,
+			'redirect_to'  => $redirect_to,
+			'form_slug'    => $form_slug,
+		);
+		Form::clearValues( "buddyforms_form_" . $form_slug );
+		return $args;
 	}
 
+	// Check if user is logged in and if not check if registration during submission is enabled.
 	if( isset( $buddyforms[$form_slug]['public_submit_create_account'] ) && !is_user_logged_in() ){
 
 		// ok let us try to register a user
 		$registration = buddyforms_wp_insert_user();
-
-		// Save the Browser user data
-		add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
 
 		// Check if registration was successful
 		if( !$registration ){
@@ -129,10 +120,11 @@ function buddyforms_process_post( $args = Array() ) {
 			return $args;
 		}
 
+		// Save the Browser user data
 		add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
-
 	}
 
+	// Ok let us start processing the post form
 	do_action( 'buddyforms_process_post_start', $args );
 
 	if ( isset( $_POST['bf_post_type'] ) ) {
