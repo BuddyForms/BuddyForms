@@ -245,21 +245,6 @@ function bf_form_elements_select_options(){
 					'label'     => __( 'Content', 'buddyforms' ),
 					'unique'    => 'unique'
 				),
-				'taxonomy'  => array(
-					'label'     => __( 'Taxonomy', 'buddyforms' ),
-				),
-				'comments'  => array(
-					'label'     => __( 'Comments', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
-				'status'    => array(
-					'label'     => __( 'Post Status', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
-				'featured_image'    => array(
-					'label'     => __( 'Featured Image', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
 			),
 		),
 		'basic' => array(
@@ -284,35 +269,59 @@ function bf_form_elements_select_options(){
 				)
 			),
 		),
-		'extra' => array(
-			'label'     => __('Extra Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_all',
-			'fields'    => array(
-				'file'     => array(
-					'label'     => __( 'File', 'buddyforms' ),
-				),
-				'hidden'   => array(
-					'label'     => __( 'Hidden', 'buddyforms' ),
-				),
-				'number'  => array(
-					'label'     => __( 'Number', 'buddyforms' ),
-				),
-				'html'  => array(
-					'label'     => __( 'HTML', 'buddyforms' ),
-				),
-				'date'  => array(
-					'label'     => __( 'Date', 'buddyforms' ),
-				),
-			),
-		),
+
 	);
 
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		$elements_select_options['contact']['fields']['test'] =
+
+		// Post Fields
+		$elements_select_options['post']['fields']['taxonomy'] =
 			array(
-				'label'     => __( 'Test', 'buddyforms' ),
-		);
+				'label'     => __( 'Taxonomy', 'buddyforms' ),
+			);
+		$elements_select_options['post']['fields']['comments'] =
+			array(
+				'label'     => __( 'Comments', 'buddyforms' ),
+				'unique'    => 'unique'
+			);
+		$elements_select_options['post']['fields']['status'] =
+			array(
+				'label'     => __( 'Post Status', 'buddyforms' ),
+				'unique'    => 'unique'
+			);
+		$elements_select_options['post']['fields']['featured_image'] =
+			array(
+				'label'     => __( 'Featured Image', 'buddyforms' ),
+				'unique'    => 'unique'
+			);
+
+
+		$elements_select_options['extra']['label']          = __('Extra Fields', 'buddyforms');
+		$elements_select_options['extra']['class']          = 'bf_show_if_f_type_all';
+		$elements_select_options['extra']['fields']['file'] =
+			array(
+				'label'     => __( 'File', 'buddyforms' ),
+			);
+		$elements_select_options['extra']['fields']['hidden'] =
+			array(
+				'label'     => __( 'Hidden', 'buddyforms' ),
+			);
+		$elements_select_options['extra']['fields']['number'] =
+			array(
+				'label'     => __( 'Number', 'buddyforms' ),
+			);
+		$elements_select_options['extra']['fields']['html'] =
+			array(
+				'label'     => __( 'HTML', 'buddyforms' ),
+				'unique'    => 'unique'
+			);
+		$elements_select_options['extra']['fields']['date'] =
+			array(
+				'label'     => __( 'Date', 'buddyforms' ),
+				'unique'    => 'unique'
+			);
+
 	}
 
 

@@ -1,16 +1,18 @@
 <?php
 
-/*
- Plugin Name: BuddyForms
- Plugin URI:  http://buddyforms.com
- Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- Version: 2.0 beta 1
- Author: Sven Lehnert
- Author URI: https://profiles.wordpress.org/svenl77
- Licence: GPLv3
- Network: false
-
- *****************************************************************************
+/**
+ * Plugin Name: BuddyForms
+ * Plugin URI:  http://buddyforms.com
+ * Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
+ * Version: 2.0 beta 1
+ * Author: Sven Lehnert
+ * Author URI: https://profiles.wordpress.org/svenl77
+ * Licence: GPLv3
+ * Network: false
+ *
+ * @fs_premium_only /includes/admin/form-metabox.php
+ *
+ * ****************************************************************************
  *
  * This script is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +30,10 @@
  *
  ****************************************************************************
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class BuddyForms {
 
@@ -172,7 +178,10 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/contact-us.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+
+			if ( buddyforms_core_fs()->is__premium_only() ) {
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+			}
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
 
@@ -567,9 +576,6 @@ function buddyforms_core_fs() {
 				'contact'    => false,
 				'addons'    => false,
 			),
-			// Set the SDK to work in a sandbox mode (for development & testing).
-			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-//			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
 		) );
 	}
 

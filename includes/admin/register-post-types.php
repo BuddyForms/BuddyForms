@@ -14,6 +14,10 @@ function buddyforms_add_meta_boxes() {
 	if(!$buddyform)
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
+	}
+
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
@@ -27,6 +31,44 @@ function buddyforms_add_meta_boxes() {
 
 }
 
+function buddyforms_metabox_go_pro(){
+
+	buddyforms_go_pro( '<span></span>', '', array(
+		'Premium Support',
+		'More Form Elements',
+		'More Options',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Full Control', 'buddyforms' ), array(
+		'Use your form in the backend admin edit screen like ACF',
+		'Control who can create, edit and delete content',
+		'Registration Options',
+		'Disable ajax form submission',
+		'Local Storage',
+		'More Notification Options',
+		'Import - Export Forms',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Permissions Management', 'buddyforms' ), array(
+		'Manage User Roles',
+		'Manage Capabilities',
+		'More Validation Options'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('More Post Options', 'buddyforms' ), array(
+		'All Post Types',
+		'Posts Revision',
+		'Comment Status',
+		'Enable Login on the form',
+		'Create an account during submission?',
+		'Featured Image Support'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Know Your User', 'buddyforms' ). '<p><small>' . __('Get deep Insights about your Submitter', 'buddyforms' ) . '</small></p>', array(
+		'IP Address',
+		'Referer',
+		'Browser',
+		'Platform',
+		'Reports',
+		'User Agent',
+	));
+}
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
@@ -40,6 +82,7 @@ add_filter('postbox_classes_buddyforms_buddyforms_form_elements','buddyforms_met
 add_filter('buddyforms_metabox_sidebar','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_setup','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_shortcodes','buddyforms_metabox_class');
+add_filter('postbox_classes_buddyforms_buddyforms_form_go_pro','buddyforms_metabox_class');
 
 
 /**
@@ -438,7 +481,7 @@ function buddyforms_hide_publishing_actions() {
 					jQuery('body').find('h1:first').html('<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
 						'BuddyForms ' +
 						'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
-						'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small>'
+						'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small><?php buddyforms_you_are_pro(); ?>'
 					);
 					jQuery('h1').show();
 				});
@@ -502,6 +545,11 @@ function buddyforms_add_button_to_submit_box() {
 
 }
 add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box' );
+
+
+function buddyforms_add_go_pro_metabox(){
+
+}
 
 // remove the slugdiv metabox from buddyforms post edit screen
 function buddyforms_remove_slugdiv() {
