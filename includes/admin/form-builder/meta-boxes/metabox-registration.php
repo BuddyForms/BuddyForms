@@ -31,11 +31,19 @@ function buddyforms_registration_screen(){
 	echo '<h4>' . __('Registration Options', 'buddyforms') . '</h4><br>';
 
 	$generate_password =  isset( $buddyform['registration']['generate_password'] ) ? $buddyform['registration']['generate_password'] : '';
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Generate Password', 'buddyforms' ) . '</b>', "buddyforms_options[registration][generate_password]", array( 'yes' => __( 'Auto generate the password.', 'buddyforms' ) ), array( 'value' => $generate_password, 'shortDesc' => 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.' ) );
+	$element = new Element_Checkbox( '<b>' . __( 'Generate Password', 'buddyforms' ) . '</b>', "buddyforms_options[registration][generate_password]", array( 'yes' => __( 'Auto generate the password.', 'buddyforms' ) ), array( 'value' => $generate_password, 'shortDesc' => 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.' ) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup[] = $element;
 
 	// Generate Username ?
 	$public_submit_username_from_email = !isset( $buddyform['public_submit_username_from_email'] ) ? '' : 'public_submit_username_from_email';
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array( 'value' => $public_submit_username_from_email, 'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.' ) );
+	$element = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array( 'value' => $public_submit_username_from_email, 'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.' ) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup[] = $element;
 
 	// Get all Pages
 	$pages = get_pages( array(

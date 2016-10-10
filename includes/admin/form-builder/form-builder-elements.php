@@ -284,6 +284,14 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 		case 'taxonomy':
+
+
+			if( !isset( $buddyform ) ){
+				$form_fields['general']['disabled'] = new Element_HTML('The taxonomy form element only works if the form is saved once and the post type selected. This ');
+			}
+
+
+
 			$taxonomies                         = buddyforms_taxonomies( $buddyform );
 			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
 			$form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(

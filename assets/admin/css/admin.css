@@ -1095,3 +1095,9 @@ div#buddyforms_metabox_sidebar p {
     width: 100%;
     background: #f1f1f1;
 }
+#fs_promo_tab{
+    display:none !important;
+}
+#piframe {
+    display: none;
+}

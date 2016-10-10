@@ -46,10 +46,9 @@ function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
 	if ( ! is_user_logged_in() ) :
-		buddyforms_login_form();
+		buddyforms_wp_login_form();
 		return;
 	endif;
-
 
 	extract( shortcode_atts( array(
 		'author'      => '',
@@ -59,18 +58,12 @@ function buddyforms_the_loop( $args ) {
 		'post_parent' => 0
 	), $args ) );
 
-
 	if(empty($form_slug) && !empty($id)){
 		$post = get_post($id);
 		$form_slug = $post->post_name;
 	}
 	$args['form_slug'] = $form_slug;
 	unset($args['id']);
-
-
-//	if ( ! isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
-//		return;
-//	}
 
 	if ( empty( $post_type ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];

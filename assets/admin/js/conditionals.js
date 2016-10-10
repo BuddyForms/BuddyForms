@@ -102,6 +102,7 @@ jQuery(document).ready(function (jQuery) {
         var post_type = jQuery('#form_post_type').val();
 
         if(post_type == 'bf_submissions') {
+
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
             jQuery('.bf_hide_if_post_type_none').hide();
 
@@ -117,16 +118,13 @@ jQuery(document).ready(function (jQuery) {
 
         if(attached_page == 'none') {
             jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').hide();
-            jQuery('.bf_hide_if_post_type_none, .list_posts_style, .add_to_admin_bar, .list_posts_option, .edit_link').hide();
+            jQuery('.bf_hide_if_attached_page_none').hide();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
             jQuery('#public_submit_create_account-0').prop('checked', false);
-
-
         } else {
             jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').show();
-            jQuery('.bf_hide_if_post_type_none, .list_posts_style, .add_to_admin_bar, .list_posts_option, .edit_link').show();
+            jQuery('.bf_hide_if_attached_page_none').show();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
-
         }
         from_setup_create_account();
     }

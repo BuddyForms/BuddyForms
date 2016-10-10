@@ -22,7 +22,6 @@ if(is_user_logged_in())
 		});
 	});
 </script>
-
 <div class="buddyforms-info"><?php _e( 'Returning user?', 'buddyforms' ) ?> <a href="#" class="bf-show-login"><?php _e( 'Click here to login', 'buddyforms' ) ?></a></div>
 <div class="bf-show-login-form" style="display:none"><?php wp_login_form(); ?></div>
 

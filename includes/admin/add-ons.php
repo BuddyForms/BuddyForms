@@ -15,6 +15,7 @@
 function buddyforms_create_addons_menu() {
 
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Add-ons', 'buddyforms' ), __( 'Add-ons', 'buddyforms' ), 'manage_options', 'buddyforms-addons', 'bf_add_ons_screen' );
+//	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Upgrade', 'buddyforms' ), __( 'Upgrade', 'buddyforms' ), 'manage_options', 'bbuddyforms-pricing', 'bf_add_ons_screen' );
 
 }
 
@@ -29,7 +30,13 @@ function bf_add_ons_screen() {
 
 	<style>
 		li.fs-cta a, #fs_addons h2 {
-			display: none !important;
+			display:none !important;
+		}
+		#fs_promo_tab{
+			display:none !important;
+		}
+		#piframe {
+			display:none !important;
 		}
 	</style>
 	<div id="bf_admin_wrap" class="wrap">

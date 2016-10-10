@@ -484,7 +484,6 @@ function bf_form_elements( $form, $args ) {
 							'class'         => 'postform bf-select2',
 							'depth'         => 0,
 							'tab_index'     => 0,
-//							'taxonomy'      => isset($customfield['taxonomy']) ? $customfield['taxonomy'] : '',
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
 							'order'         => $customfield['taxonomy_order'],
