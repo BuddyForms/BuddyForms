@@ -324,12 +324,12 @@ function buddyforms_display_form_element( $args ) {
 				$dropdown = str_replace( ' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown );
 			}
 
-			$dropdown = '<table id="table_row_' . $field_id . '_taxonomy_default" style="margin-left:-10px" class="wp-list-table widefat posts fixed bf_hide_if_post_type_none"><tr>
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table striped  posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
                         <label for="form_title"><b>Taxonomy Default</b></label>
                     </th>
                     <td>
-                        <div style="margin-left:10px">' . $dropdown . '
+                        <div>' . $dropdown . '
                             <p class="description">You can select a default category</p>
                         </div>
                     </td></table>';
@@ -357,19 +357,19 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden, 'class' => 'bf_hide_if_post_type_none' ) );
 
 
-
-			$js = <<<JS
+			if (defined('DOING_AJAX') && DOING_AJAX) {
+				$js = <<<JS
             	<script>
 
 				jQuery(document).ready(function (jQuery) {
-					console.log("opn load $field_id" );
+					console.log("on load $field_id" );
 
 					var post_type = jQuery('#form_post_type').val();
 
 					var tax_field_length = jQuery('#taxonomy_field_id_$field_id').children('option').length;
 
 					if(tax_field_length > 1 ){
-						console.log('form_post_type_length' + tax_field_length);
+						console.log('form_post_type_length link' + tax_field_length);
 					} else {
 
 				        jQuery.ajax({
@@ -404,11 +404,18 @@ function buddyforms_display_form_element( $args ) {
 
 					}
 
-				bf_taxonomy_input( "$field_id" );
+				//
 				});
-				</script>
 JS;
 
+				$js .= <<<JS
+
+				bf_taxonomy_input( "$field_id" );
+JS;
+
+
+				$js .= '</script>';
+			}
 			$form_fields['general']['disabled'] = new Element_HTML( $js );
 
 

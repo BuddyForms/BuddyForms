@@ -99,43 +99,13 @@ jQuery(document).ready(function (jQuery) {
         var post_type = jQuery('#form_post_type').val();
 
         if(post_type == 'bf_submissions') {
-            jQuery('.bf_tax_select').val('bf_submissions');
+            //jQuery('.bf_tax_select').val('bf_submissions');
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
             jQuery('.bf_hide_if_post_type_none').hide();
         } else {
-            jQuery('.bf_tax_select').val('none');
+            //jQuery('.bf_tax_select').val('none');
             jQuery('.buddyforms-metabox-show-if-post-type-none').show();
             jQuery('.bf_hide_if_post_type_none').show();
-                
-            jQuery.ajax({
-                type: 'POST',
-                url: ajaxurl,
-                data: {
-                    "action": "buddyforms_post_types_taxonomies",
-                    "post_type": post_type
-                },
-                success: function (data) {
-                    console.log(data);
-                    jQuery('select.bf_tax_select').html(data);
-
-                },
-                error: function () {
-                    jQuery('.formbuilder-spinner').removeClass('is-active');
-                    jQuery('<div></div>').dialog({
-                        modal: true,
-                        title: "Info",
-                        open: function() {
-                            var markup = 'Something went wrong ;-(sorry)';
-                            jQuery(this).html(markup);
-                        },
-                        buttons: {
-                            Ok: function() {
-                                jQuery( this ).dialog( "close" );
-                            }
-                        }
-                    });
-                }
-            });
         }
 
     }
@@ -177,6 +147,44 @@ jQuery(document).ready(function (jQuery) {
     // On Change listener for the post form_post_type
     jQuery(document.body).on('change', '#form_post_type', function () {
         from_setup_post_type();
+        var post_type = jQuery('#form_post_type').val();
+
+        //var tax_field_length = jQuery('select.bf_tax_select').children('option').length;
+
+        //if(tax_field_length > 1 ){
+        //    console.log('form_post_type_length neu ' + tax_field_length);
+        //} else {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {
+                    "action": "buddyforms_post_types_taxonomies",
+                    "post_type": post_type
+                },
+                success: function (data) {
+                    console.log(data);
+                    jQuery('select.bf_tax_select').html(data);
+
+                },
+                error: function () {
+                    jQuery('.formbuilder-spinner').removeClass('is-active');
+                    jQuery('<div></div>').dialog({
+                        modal: true,
+                        title: "Info",
+                        open: function () {
+                            var markup = 'Something went wrong ;-(sorry)';
+                            jQuery(this).html(markup);
+                        },
+                        buttons: {
+                            Ok: function () {
+                                jQuery(this).dialog("close");
+                            }
+                        }
+                    });
+                }
+            });
+        //}
     });
 
     // On Change listener for the post attached_page
@@ -328,7 +336,7 @@ jQuery(document).ready(function (jQuery) {
     });
 
 
-    jQuery(document.body).on('change', '.bf_tax_select', function () {
+    jQuery(document.body).on('change', 'select.bf_tax_select', function () {
 
         var id = jQuery(this).attr('field_id');
         var val = jQuery(this).val();
