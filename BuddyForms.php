@@ -297,8 +297,8 @@ class BuddyForms {
 			wp_enqueue_script('tinymce');
 			wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
 
-			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
+			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
+			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/select2.css', __FILE__ ) );
 
 
 
