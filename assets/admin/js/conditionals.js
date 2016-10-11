@@ -91,10 +91,7 @@ jQuery(document).ready(function (jQuery) {
                 break;
         }
 
-
-
     }
-
 
     // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
     function from_setup_post_type(){
@@ -102,14 +99,45 @@ jQuery(document).ready(function (jQuery) {
         var post_type = jQuery('#form_post_type').val();
 
         if(post_type == 'bf_submissions') {
-
+            jQuery('.bf_tax_select').val('bf_submissions');
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
             jQuery('.bf_hide_if_post_type_none').hide();
-
         } else {
+            jQuery('.bf_tax_select').val('none');
             jQuery('.buddyforms-metabox-show-if-post-type-none').show();
             jQuery('.bf_hide_if_post_type_none').show();
+                
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {
+                    "action": "buddyforms_post_types_taxonomies",
+                    "post_type": post_type
+                },
+                success: function (data) {
+                    console.log(data);
+                    jQuery('select.bf_tax_select').html(data);
+
+                },
+                error: function () {
+                    jQuery('.formbuilder-spinner').removeClass('is-active');
+                    jQuery('<div></div>').dialog({
+                        modal: true,
+                        title: "Info",
+                        open: function() {
+                            var markup = 'Something went wrong ;-(sorry)';
+                            jQuery(this).html(markup);
+                        },
+                        buttons: {
+                            Ok: function() {
+                                jQuery( this ).dialog( "close" );
+                            }
+                        }
+                    });
+                }
+            });
         }
+
     }
 
     function from_setup_attached_page(){
@@ -128,9 +156,6 @@ jQuery(document).ready(function (jQuery) {
         }
         from_setup_create_account();
     }
-
-
-
 
     // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
     function from_setup_create_account(){
@@ -171,7 +196,7 @@ jQuery(document).ready(function (jQuery) {
                 "form_slug": form_slug
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
 
                 if(!data['form_slug']){
                     data['form_slug'] = '<span style="color:red">form slug</slug>';
@@ -302,45 +327,80 @@ jQuery(document).ready(function (jQuery) {
 
     });
 
-    jQuery('.bf_tax_select').live('change', function () {
 
-        var id = jQuery(this).attr('id');
-        var taxonomy = jQuery(this).val();
-        var taxonomy_default = jQuery("#taxonomy_default_" + id);
+    jQuery(document.body).on('change', '.bf_tax_select', function () {
 
-        jQuery.ajax({
-            type: 'POST',
-            url: ajaxurl,
-            data: {
-                "action": "buddyforms_update_taxonomy_default",
-                "taxonomy": taxonomy,
-            },
-            success: function (data) {
-                if (data != false) {
-                    taxonomy_default.val(null).trigger("change");
-                    taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
+        var id = jQuery(this).attr('field_id');
+        var val = jQuery(this).val();
 
-                    taxonomy_default.html(data);
-                }
+        if(id != null){
+            console.log('on change ' + id);
 
-            },
-            error: function () {
-                jQuery('<div></div>').dialog({
-                    modal: true,
-                    title: "Info",
-                    open: function() {
-                        var markup = 'Something went wrong ;-(sorry)';
-                        jQuery(this).html(markup);
+            if(val != 'none'){
+                var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
+                var taxonomy_default = jQuery( "#taxonomy_default_" + id );
+                jQuery.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: {
+                        "action": "buddyforms_update_taxonomy_default",
+                        "taxonomy": taxonomy,
                     },
-                    buttons: {
-                        Ok: function() {
-                            jQuery( this ).dialog( "close" );
+                    success: function (data) {
+                        if (data != 'false') {
+                            taxonomy_default.val(null).trigger("change");
+                            taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
+                            taxonomy_default.html(data);
                         }
+                    },
+                    error: function () {
+                        jQuery('<div></div>').dialog({
+                            modal: true,
+                            title: "Info",
+                            open: function () {
+                                var markup = 'Something went wrong ;-(sorry)';
+                                jQuery(this).html(markup);
+                            },
+                            buttons: {
+                                Ok: function () {
+                                    jQuery(this).dialog("close");
+                                }
+                            }
+                        });
                     }
                 });
+
             }
-        });
-
+            bf_taxonomy_input(id);
+        }
     });
-
 });
+
+function bf_taxonomy_input(id){
+
+    var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
+
+    if(taxonomy == null)
+        return;
+
+    console.log('taxonomy: ' + taxonomy);
+
+
+    if(taxonomy == 'none'){
+
+        jQuery('#table_row_' + id + '_taxonomy_default').hide();
+        jQuery('#table_row_' + id + '_taxonomy_order').hide();
+        jQuery('#table_row_' + id + '_show_option_none').hide();
+        jQuery('#table_row_' + id + '_creat_new_tax').hide();
+        jQuery('#table_row_' + id + '_multiple').hide();
+
+    } else {
+
+        jQuery('#table_row_' + id + '_taxonomy_default').show();
+        jQuery('#table_row_' + id + '_taxonomy_order').show();
+        jQuery('#table_row_' + id + '_show_option_none').show();
+        jQuery('#table_row_' + id + '_creat_new_tax').show();
+        jQuery('#table_row_' + id + '_multiple').show();
+
+    }
+}

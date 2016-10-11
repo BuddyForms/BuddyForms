@@ -360,3 +360,24 @@ function bf_remove_filters_for_anonymous_class( $hook_name = '', $class_name =''
 
 	return false;
 }
+
+/**
+ * Get all taxonomies
+ *
+ * @package BuddyForms
+ * @since 0.1-beta
+ */
+function buddyforms_taxonomies( $post_type ) {
+
+
+	$taxonomies_array = get_object_taxonomies( $post_type, 'objects' );
+
+	$taxonomies['none'] = 'Select a Taxonomy';
+
+	foreach($taxonomies_array as $tax_slug => $tax){
+		$taxonomies[$tax->name] = $tax->label;
+	}
+
+
+	return $taxonomies;
+}

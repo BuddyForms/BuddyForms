@@ -578,7 +578,6 @@ function buddyforms_core_fs() {
 			),
 		) );
 	}
-
 	return $buddyforms_core_fs;
 }
 if(PHP_VERSION < 5.3){
