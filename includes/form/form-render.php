@@ -131,6 +131,11 @@ function buddyforms_form_html( $args ) {
 	// Hook under the form inside the BuddyForms form div
 	$form_html = apply_filters('buddyforms_form_hero_last_' . $form_slug, $form_html);
 	$form_html .= !is_user_logged_in() && isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template() : '';
+
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$form_html .= '<div style="float:right" clss="branding">Proudly brought to you by <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
+	}
+
 	$form_html .= '</div>'; // the_buddyforms_form end
 
 	return $form_html;

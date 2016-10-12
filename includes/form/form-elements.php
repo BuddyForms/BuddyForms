@@ -507,6 +507,8 @@ function bf_form_elements( $form, $args ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
 
+						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
+
 						if( isset( $customfield['taxonomy'] ) ){
 							$the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
 						}

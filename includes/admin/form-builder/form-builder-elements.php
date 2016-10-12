@@ -280,7 +280,6 @@ function buddyforms_display_form_element( $args ) {
 
 		case 'taxonomy':
 
-
 			$form_fields['general']['disabled'] = new Element_HTML( '<div class="taxonomy_no_post_type">The taxonomy form element only works if the post type is selected.</div>' );
 
 			$taxonomies                         = buddyforms_taxonomies( $post_type );
@@ -347,8 +346,93 @@ function buddyforms_display_form_element( $args ) {
 			$multiple                           = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
 			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
 
-			$show_option_none                           = isset( $customfield['show_option_none'] ) ? $customfield['show_option_none'] : 'false';
-			$form_fields['general']['show_option_none'] = new Element_Checkbox( '<b>' . __( 'Display Select an Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array( 'show_select_option' => '<b>' . __( "Show 'Select an Option'", 'buddyforms' ) . '</b>' ), array( 'value' => $show_option_none, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			$filter                           = isset( $customfield['filter'] ) ? $customfield['filter'] : 'false';
+			$form_fields['general']['multiple'] = new Element_Select( '<b>' . __( 'Filter: ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][filter]", array( 'include' => __( 'Include', 'buddyforms' ), 'exclude' => __( 'Exclude', 'buddyforms' ) ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
+
+			$taxonomy_filter = isset( $customfield['taxonomy_filter'] ) ? $customfield['taxonomy_filter'] : 'false';
+
+			$wp_dropdown_taxonomy_filter_args = array(
+				'hide_empty'    => 0,
+				'child_of'      => 0,
+				'echo'          => false,
+				'selected'      => false,
+				'hierarchical'  => 1,
+				'id'            => 'taxonomy_filter' . $field_id,
+				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_filter][]",
+				'class'         => 'postform bf-select2 tax_default',
+				'depth'         => 0,
+				'tab_index'     => 0,
+				'taxonomy'      => $taxonomy,
+				'hide_if_empty' => false,
+				'orderby'       => 'SLUG',
+				'order'         => $taxonomy_order,
+			);
+
+			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
+
+			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+
+			if ( is_array( $taxonomy_filter ) ) {
+				foreach ( $taxonomy_filter as $key => $post_term ) {
+					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+				}
+			} else {
+				$dropdown = str_replace( ' value="' . $taxonomy_filter . '"', ' value="' . $taxonomy_filter . '" selected="selected"', $dropdown );
+			}
+
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_filter" class="wp-list-table striped  posts fixed bf_hide_if_post_type_none"><tr>
+                    <th scope="row">
+                        <label for="form_title"><b>Taxonomy Filter</b></label>
+                    </th>
+                    <td>
+                        <div>' . $dropdown . '
+                            <p class="description">Filter the Taxonomy</p>
+                        </div>
+                    </td></table>';
+
+			$form_fields['general']['taxonomy_filter'] = new Element_HTML( $dropdown );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//			$show_option_none                           = isset( $customfield['show_option_none'] ) ? $customfield['show_option_none'] : 'false';
+//			$form_fields['general']['show_option_none'] = new Element_Checkbox( '<b>' . __( 'Display Select an Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array( 'show_select_option' => '<b>' . __( "Show 'Select an Option'", 'buddyforms' ) . '</b>' ), array( 'value' => $show_option_none, 'class' => 'bf_hide_if_post_type_none' ) );
 
 			$creat_new_tax                           = isset( $customfield['creat_new_tax'] ) ? $customfield['creat_new_tax'] : 'false';
 			$form_fields['general']['creat_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $creat_new_tax, 'class' => 'bf_hide_if_post_type_none' ) );
@@ -415,10 +499,8 @@ JS;
 
 
 				$js .= '</script>';
+				$form_fields['general']['disabled'] = new Element_HTML( $js );
 			}
-			$form_fields['general']['disabled'] = new Element_HTML( $js );
-
-
 
 			break;
 		case 'hidden':
