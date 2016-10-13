@@ -72,7 +72,7 @@ function buddyforms_the_loop( $args ) {
 	$list_posts_option = $buddyforms[ $form_slug ]['list_posts_option'];
 	$list_posts_style  = $buddyforms[ $form_slug ]['list_posts_style'];
 
-	$user_id = empty($author) ?  apply_filters( 'bf_user_posts_user_id', get_current_user_id() ) : $author;
+	$user_id = empty($author) ?  apply_filters( 'buddyforms_user_posts_user_id', get_current_user_id() ) : $author;
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
@@ -89,7 +89,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters('bf_user_posts_query_args_posts_per_page', 10),
+				'posts_per_page' => apply_filters('buddyforms_user_posts_query_args_posts_per_page', 10),
 				'author'         => $user_id,
 				'paged'          => $paged,
 			);
@@ -100,7 +100,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters('bf_user_posts_query_args_posts_per_page', 10),
+				'posts_per_page' => apply_filters('buddyforms_user_posts_query_args_posts_per_page', 10),
 				'author'         => $user_id,
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
@@ -111,9 +111,9 @@ function buddyforms_the_loop( $args ) {
 	}
 
 	// New
-	$query_args = apply_filters( 'bf_user_posts_query_args', $query_args );
+	$query_args = apply_filters( 'buddyforms_user_posts_query_args', $query_args );
 		// Deprecated
-		$query_args = apply_filters( 'bf_post_to_display_args', $query_args );
+		$query_args = apply_filters( 'buddyforms_post_to_display_args', $query_args );
 
 
 	do_action( 'buddyforms_the_loop_start', $query_args );

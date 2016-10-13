@@ -280,7 +280,7 @@ function buddyforms_display_form_element( $args ) {
 
 		case 'taxonomy':
 
-			$form_fields['general']['disabled'] = new Element_HTML( '<div class="taxonomy_no_post_type">The taxonomy form element only works if the post type is selected.</div>' );
+			$form_fields['general']['disabled'] = new Element_HTML( '<div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>' );
 
 			$taxonomies                         = buddyforms_taxonomies( $post_type );
 			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
@@ -323,9 +323,9 @@ function buddyforms_display_form_element( $args ) {
 				$dropdown = str_replace( ' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown );
 			}
 
-			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table striped  posts fixed bf_hide_if_post_type_none"><tr>
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
-                        <label for="form_title"><b>Taxonomy Default</b></label>
+                        <label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label>
                     </th>
                     <td>
                         <div>' . $dropdown . '
@@ -401,15 +401,16 @@ function buddyforms_display_form_element( $args ) {
 				$dropdown = str_replace( ' value="' . $taxonomy_filter . '"', ' value="' . $taxonomy_filter . '" selected="selected"', $dropdown );
 			}
 
-			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_filter" class="wp-list-table striped  posts fixed bf_hide_if_post_type_none"><tr>
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_filter" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
-                        <label for="form_title"><b>Taxonomy Filter</b></label>
+                        <label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label>
                     </th>
                     <td>
                         <div>' . $dropdown . '
-                            <p class="description">Filter the Taxonomy</p>
+                            <p class="description">You can select a default category</p>
                         </div>
                     </td></table>';
+
 
 			$form_fields['general']['taxonomy_filter'] = new Element_HTML( $dropdown );
 
@@ -436,6 +437,18 @@ function buddyforms_display_form_element( $args ) {
 
 			$creat_new_tax                           = isset( $customfield['creat_new_tax'] ) ? $customfield['creat_new_tax'] : 'false';
 			$form_fields['general']['creat_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $creat_new_tax, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+
+
+
+			$use_tag_style_input                           = isset( $customfield['use_tag_style_input'] ) ? $customfield['use_tag_style_input'] : 'tag';
+			$form_fields['general']['use_tag_style_input'] = new Element_Checkbox( '<b>' . __( 'Tag style input?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'use_tag_style_input' => '<b>' . __( 'User Tags style input field', 'buddyforms' ) . '</b>' ), array( 'value' => $use_tag_style_input, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+
+
+
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden, 'class' => 'bf_hide_if_post_type_none' ) );
@@ -499,7 +512,7 @@ JS;
 
 
 				$js .= '</script>';
-				$form_fields['general']['disabled'] = new Element_HTML( $js );
+				$form_fields['general']['js'] = new Element_HTML( $js );
 			}
 
 			break;
@@ -594,7 +607,7 @@ JS;
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status' );
 
 			$post_status                           = isset( $customfield['post_status'] ) ? $customfield['post_status'] : 'post_status';
-			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array(
+			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", buddyforms_get_post_status_array(), array(
 				'value'     => $post_status,
 				'id'        => "buddyforms_options[form_fields][" . $field_id . "][post_status]",
 				'shortDesc' => __( "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms' )

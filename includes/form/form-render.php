@@ -51,7 +51,7 @@ function buddyforms_form_html( $args ) {
 	$form_html  = '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form '. apply_filters('buddyforms_form_hero_classes', '') . '" >';
 
 	// Hook above the form inside the BuddyForms form div
-	$form_html = apply_filters('buddyforms_form_hero_top_' . $form_slug, $form_html);
+	$form_html = apply_filters('buddyforms_form_hero_top', $form_html, $form_slug);
 	$form_html .= !is_user_logged_in() && isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template() : '';
 
 
@@ -74,7 +74,7 @@ function buddyforms_form_html( $args ) {
 		"prevent"  => array("bootstrap", "jQuery", "focus"),
 		"action"   => $redirect_to,
 		"view"     => new $buddyforms_frontend_form_template_name(),
-		'class'    =>  apply_filters( 'bf_form_class', $form_class ),
+		'class'    =>  apply_filters( 'buddyforms_form_class', $form_class ),
 		'ajax'     => !isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ? 'buddyforms_ajax_process_edit_post' : false,
 		'method'   => 'post'
 	) );
@@ -110,7 +110,7 @@ function buddyforms_form_html( $args ) {
 		$form->addElement( $bf_submit_button );
 	}
 
-	$form = apply_filters( 'bf_form_before_render', $form, $args );
+	$form = apply_filters( 'buddyforms_form_before_render', $form, $args );
 
 	// That's it! render the form!
 	ob_start();
@@ -129,7 +129,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Hook under the form inside the BuddyForms form div
-	$form_html = apply_filters('buddyforms_form_hero_last_' . $form_slug, $form_html);
+	$form_html = apply_filters('buddyforms_form_hero_last', $form_html, $form_slug);
 	$form_html .= !is_user_logged_in() && isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template() : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() ) {

@@ -28,9 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$post_status        = get_post_status();
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
-				$post_status_name   = bf_get_post_status_readable( $post_status );
-
-				do_action( 'bp_before_blog_post' );
+				$post_status_name   = buddyforms_get_post_status_readable( $post_status );
 
 				?>
 
@@ -94,7 +92,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="clear"></div>
 				</li>
 
-				<?php do_action( 'bf_after_loop_item' ) ?>
+				<?php do_action( 'buddyforms_after_loop_item' ) ?>
 
 			<?php endwhile; ?>
 

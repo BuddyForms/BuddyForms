@@ -52,10 +52,7 @@ function buddyforms_permissions_unregistered_screen() {
 			</table>
 		</table>
 	</div>
-
 	<?php
-
-
 }
 
 function buddyforms_permissions_screen() {

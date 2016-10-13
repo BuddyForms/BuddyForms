@@ -102,10 +102,13 @@ jQuery(document).ready(function (jQuery) {
             //jQuery('.bf_tax_select').val('bf_submissions');
             jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
             jQuery('.bf_hide_if_post_type_none').hide();
+            jQuery('.taxonomy_no_post_type').show();
+
         } else {
             //jQuery('.bf_tax_select').val('none');
             jQuery('.buddyforms-metabox-show-if-post-type-none').show();
             jQuery('.bf_hide_if_post_type_none').show();
+            jQuery('.taxonomy_no_post_type').hide();
         }
 
     }
@@ -401,6 +404,8 @@ function bf_taxonomy_input(id){
         jQuery('#table_row_' + id + '_show_option_none').hide();
         jQuery('#table_row_' + id + '_creat_new_tax').hide();
         jQuery('#table_row_' + id + '_multiple').hide();
+        jQuery('#table_row_' + id + '_taxonomy_filter').hide();
+        jQuery('#table_row_' + id + '_use_tag_style_input').hide();
 
     } else {
 
@@ -409,6 +414,8 @@ function bf_taxonomy_input(id){
         jQuery('#table_row_' + id + '_show_option_none').show();
         jQuery('#table_row_' + id + '_creat_new_tax').show();
         jQuery('#table_row_' + id + '_multiple').show();
+        jQuery('#table_row_' + id + '_taxonomy_filter').show();
+        jQuery('#table_row_' + id + '_use_tag_style_input').show();
 
     }
 }

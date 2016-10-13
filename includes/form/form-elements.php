@@ -43,7 +43,8 @@ function bf_form_elements( $form, $args ) {
 				'id'        => str_replace( "-", "", $slug ),
 				'value'     => $customfield_val,
 				'class'     => 'settings-input',
-				'shortDesc' => $description
+				'shortDesc' => $description,
+//				"view" => "Inline"
 			);
 
 			if ( isset( $customfield['required'] ) ) {

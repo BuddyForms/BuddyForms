@@ -314,7 +314,6 @@ function bf_form_elements_select_options(){
 		$elements_select_options['extra']['fields']['html'] =
 			array(
 				'label'     => __( 'HTML', 'buddyforms' ),
-				'unique'    => 'unique'
 			);
 		$elements_select_options['extra']['fields']['date'] =
 			array(
@@ -323,7 +322,6 @@ function bf_form_elements_select_options(){
 			);
 
 	}
-
 
 	// Allow others to filter the array
 	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );

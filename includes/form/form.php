@@ -66,7 +66,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
-			$post_id  = apply_filters( 'bf_create_edit_form_post_id', $post_id );
+			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id, 'OBJECT' );
 		}
 
@@ -95,7 +95,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
-			$post_id  = apply_filters( 'bf_create_edit_form_post_id', $post_id );
+			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id );
 		}
 
