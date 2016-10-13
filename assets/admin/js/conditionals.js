@@ -1,151 +1,194 @@
+//
+//Function to show hide form setup tabs navigation
+//
+function from_setup_form_type(value){
+    from_setup_post_type();
+
+    from_setup_attached_page()
+
+
+    // Select first tab
+    jQuery('a[href="#form-submission"]').tab('show');
+    jQuery('.activeform-submission').addClass('active');
+    jQuery('#form-submission').addClass('active in');
+
+    jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
+    jQuery("#screen-meta-links").remove();
+    switch(value) {
+        case 'contact':
+
+            // Set post type value to bf_submissions to make sure it is a contact form if hidden
+            jQuery('#form_post_type').val('bf_submissions');
+
+            // Rename edit submissions to View
+            jQuery('.nav-tabs .edit-submissions_nav a').text('View Submissions');
+
+            // Show
+            jQuery('.permission_nav, .edit-submissions_nav, .notifications_nav').show();
+
+            // Hide
+            jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
+            jQuery('.create-content_nav').hide();
+
+            // Show/Hide the corresponding form elements in the form select
+            jQuery('.bf_show_if_f_type_all').show();
+            jQuery('.bf_show_if_f_type_registration').show();
+            jQuery('.bf_show_if_f_type_post').hide();
+
+            // Show/Hide after submission post options
+            jQuery('#bf-after-submission-action option[value=display_form]').hide();
+            jQuery('#bf-after-submission-action option[value=display_post]').hide();
+            jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+
+
+            break;
+        case 'registration':
+
+            // Set post type value to bf_submissions to make sure it is a contact form if hidden
+            jQuery('#form_post_type').val('bf_submissions');
+            jQuery('#attached_page').val('none');
+
+            jQuery('.registrations_nav, .bf_hide_if_attached_page_none').show();
+
+            // Hide
+            jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
+            jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
+
+            // Show/Hide the corresponding form elements in the form select
+            jQuery('.bf_show_if_f_type_registration').show();
+            jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
+            jQuery('.bf_show_if_f_type_post').hide();
+
+            // Hide after submission post options
+            jQuery('#bf-after-submission-action option[value=display_form]').hide();
+            jQuery('#bf-after-submission-action option[value=display_post]').hide();
+            jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+
+            break;
+        case 'post':
+
+            // Rename edit submissions to Edit
+            jQuery('.nav-tabs .edit-submissions_nav a').text('Edit Submissions');
+
+            // Show
+            jQuery('.buddyforms-metabox-show-if-form-type-post').show();
+            jQuery('#bf-after-submission-action option[value=display_form]').show();
+            jQuery('#bf-after-submission-action option[value=display_post]').show();
+            jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
+
+            // View all post related nav items
+            jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
+
+            // Show the corresponding form elements in the form select
+            jQuery('.bf_show_if_f_type_all').show();
+            jQuery('.bf_show_if_f_type_post').show();
+
+            break;
+    }
+
+}
+
+// Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
+function from_setup_post_type(){
+
+    var post_type = jQuery('#form_post_type').val();
+
+    if(post_type == 'bf_submissions') {
+        //jQuery('.bf_tax_select').val('bf_submissions');
+        jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
+        jQuery('.bf_hide_if_post_type_none').hide();
+        jQuery('.taxonomy_no_post_type').show();
+        jQuery('#table_row_' + id + '_disabled').hide();
+
+    } else {
+        //jQuery('.bf_tax_select').val('none');
+        jQuery('.buddyforms-metabox-show-if-post-type-none').show();
+        jQuery('.bf_hide_if_post_type_none').show();
+        jQuery('.taxonomy_no_post_type').hide();
+    }
+
+}
+
+function from_setup_attached_page(){
+
+    var attached_page = jQuery('#attached_page').val();
+
+    if(attached_page == 'none') {
+        jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').hide();
+        jQuery('.bf_hide_if_attached_page_none').hide();
+        jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+        jQuery('#public_submit_create_account-0').prop('checked', false);
+    } else {
+        jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').show();
+        jQuery('.bf_hide_if_attached_page_none').show();
+        jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
+    }
+    from_setup_create_account();
+}
+
+// Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
+function from_setup_create_account(){
+    if( jQuery('#public_submit_create_account-0').is(":checked") ) {
+        jQuery('.registrations_nav').show();
+    } else {
+        jQuery('.registrations_nav').hide();
+    }
+
+}
+
+function bf_taxonomy_input(id){
+
+    var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
+    jQuery('#table_row_' + id + '_taxonomy_default').hide();
+    jQuery('#table_row_' + id + '_taxonomy_order').hide();
+    jQuery('#table_row_' + id + '_show_option_none').hide();
+    jQuery('#table_row_' + id + '_creat_new_tax').hide();
+    jQuery('#table_row_' + id + '_multiple').hide();
+    jQuery('#table_row_' + id + '_taxonomy_filter').hide();
+    jQuery('#table_row_' + id + '_use_tag_style_input').hide();
+    if(taxonomy == null){
+
+        return;
+    }
+
+
+    console.log('taxonomy: ' + taxonomy);
+
+
+    if(taxonomy == 'none'){
+
+        jQuery('#table_row_' + id + '_taxonomy_default').hide();
+        jQuery('#table_row_' + id + '_taxonomy_order').hide();
+        jQuery('#table_row_' + id + '_show_option_none').hide();
+        jQuery('#table_row_' + id + '_creat_new_tax').hide();
+        jQuery('#table_row_' + id + '_multiple').hide();
+        jQuery('#table_row_' + id + '_taxonomy_filter').hide();
+        jQuery('#table_row_' + id + '_use_tag_style_input').hide();
+        //jQuery('#table_row_' + id + '_disabled').hide();
+
+    } else {
+
+        jQuery('#table_row_' + id + '_taxonomy_default').show();
+        jQuery('#table_row_' + id + '_taxonomy_order').show();
+        jQuery('#table_row_' + id + '_show_option_none').show();
+        jQuery('#table_row_' + id + '_creat_new_tax').show();
+        jQuery('#table_row_' + id + '_multiple').show();
+        jQuery('#table_row_' + id + '_taxonomy_filter').show();
+        jQuery('#table_row_' + id + '_use_tag_style_input').show();
+        //jQuery('#table_row_' + id + '_disabled').show();
+
+    }
+}
+
 jQuery(document).ready(function (jQuery) {
 
     // Check the form type and only display the relevant form setup tabs
     from_setup_form_type(jQuery('#bf-form-type-select').val());
 
-    //
-    //Function to show hide form setup tabs navigation
-    //
-    function from_setup_form_type(value){
-        from_setup_post_type();
-
-        from_setup_attached_page()
-
-
-        // Select first tab
-        jQuery('a[href="#form-submission"]').tab('show');
-        jQuery('.activeform-submission').addClass('active');
-        jQuery('#form-submission').addClass('active in');
-
-        jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
-        jQuery("#screen-meta-links").remove();
-        switch(value) {
-            case 'contact':
-
-                // Set post type value to bf_submissions to make sure it is a contact form if hidden
-                jQuery('#form_post_type').val('bf_submissions');
-
-                // Rename edit submissions to View
-                jQuery('.nav-tabs .edit-submissions_nav a').text('View Submissions');
-
-                // Show
-                jQuery('.permission_nav, .edit-submissions_nav, .notifications_nav').show();
-
-                // Hide
-                jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
-                jQuery('.create-content_nav').hide();
-
-                // Show/Hide the corresponding form elements in the form select
-                jQuery('.bf_show_if_f_type_all').show();
-                jQuery('.bf_show_if_f_type_registration').show();
-                jQuery('.bf_show_if_f_type_post').hide();
-
-                // Show/Hide after submission post options
-                jQuery('#bf-after-submission-action option[value=display_form]').hide();
-                jQuery('#bf-after-submission-action option[value=display_post]').hide();
-                jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
-
-
-                break;
-            case 'registration':
-
-                // Set post type value to bf_submissions to make sure it is a contact form if hidden
-                jQuery('#form_post_type').val('bf_submissions');
-                jQuery('#attached_page').val('none');
-
-                jQuery('.registrations_nav, .bf_hide_if_attached_page_none').show();
-
-                // Hide
-                jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
-                jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
-
-                // Show/Hide the corresponding form elements in the form select
-                jQuery('.bf_show_if_f_type_registration').show();
-                jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
-                jQuery('.bf_show_if_f_type_post').hide();
-
-                // Hide after submission post options
-                jQuery('#bf-after-submission-action option[value=display_form]').hide();
-                jQuery('#bf-after-submission-action option[value=display_post]').hide();
-                jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
-
-                break;
-            case 'post':
-
-                // Rename edit submissions to Edit
-                jQuery('.nav-tabs .edit-submissions_nav a').text('Edit Submissions');
-
-                // Show
-                jQuery('.buddyforms-metabox-show-if-form-type-post').show();
-                jQuery('#bf-after-submission-action option[value=display_form]').show();
-                jQuery('#bf-after-submission-action option[value=display_post]').show();
-                jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
-
-                // View all post related nav items
-                jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
-
-                // Show the corresponding form elements in the form select
-                jQuery('.bf_show_if_f_type_all').show();
-                jQuery('.bf_show_if_f_type_post').show();
-
-                break;
-        }
-
-    }
-
-    // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
-    function from_setup_post_type(){
-
-        var post_type = jQuery('#form_post_type').val();
-
-        if(post_type == 'bf_submissions') {
-            //jQuery('.bf_tax_select').val('bf_submissions');
-            jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
-            jQuery('.bf_hide_if_post_type_none').hide();
-            jQuery('.taxonomy_no_post_type').show();
-
-        } else {
-            //jQuery('.bf_tax_select').val('none');
-            jQuery('.buddyforms-metabox-show-if-post-type-none').show();
-            jQuery('.bf_hide_if_post_type_none').show();
-            jQuery('.taxonomy_no_post_type').hide();
-        }
-
-    }
-
-    function from_setup_attached_page(){
-
-        var attached_page = jQuery('#attached_page').val();
-
-        if(attached_page == 'none') {
-            jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').hide();
-            jQuery('.bf_hide_if_attached_page_none').hide();
-            jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
-            jQuery('#public_submit_create_account-0').prop('checked', false);
-        } else {
-            jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').show();
-            jQuery('.bf_hide_if_attached_page_none').show();
-            jQuery('#bf-after-submission-action option[value=display_posts_list]').show();
-        }
-        from_setup_create_account();
-    }
-
-    // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
-    function from_setup_create_account(){
-        if( jQuery('#public_submit_create_account-0').is(":checked") ) {
-            jQuery('.registrations_nav').show();
-        } else {
-            jQuery('.registrations_nav').hide();
-        }
-
-    }
-
-
     // On Change listener for the post type select
     jQuery(document.body).on('change', '#public_submit_create_account-0', function () {
         from_setup_create_account();
     });
-
 
     // On Change listener for the post form_post_type
     jQuery(document.body).on('change', '#form_post_type', function () {
@@ -386,36 +429,3 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 });
-
-function bf_taxonomy_input(id){
-
-    var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
-
-    if(taxonomy == null)
-        return;
-
-    console.log('taxonomy: ' + taxonomy);
-
-
-    if(taxonomy == 'none'){
-
-        jQuery('#table_row_' + id + '_taxonomy_default').hide();
-        jQuery('#table_row_' + id + '_taxonomy_order').hide();
-        jQuery('#table_row_' + id + '_show_option_none').hide();
-        jQuery('#table_row_' + id + '_creat_new_tax').hide();
-        jQuery('#table_row_' + id + '_multiple').hide();
-        jQuery('#table_row_' + id + '_taxonomy_filter').hide();
-        jQuery('#table_row_' + id + '_use_tag_style_input').hide();
-
-    } else {
-
-        jQuery('#table_row_' + id + '_taxonomy_default').show();
-        jQuery('#table_row_' + id + '_taxonomy_order').show();
-        jQuery('#table_row_' + id + '_show_option_none').show();
-        jQuery('#table_row_' + id + '_creat_new_tax').show();
-        jQuery('#table_row_' + id + '_multiple').show();
-        jQuery('#table_row_' + id + '_taxonomy_filter').show();
-        jQuery('#table_row_' + id + '_use_tag_style_input').show();
-
-    }
-}

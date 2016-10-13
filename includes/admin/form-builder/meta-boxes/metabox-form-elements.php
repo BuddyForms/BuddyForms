@@ -276,6 +276,14 @@ function bf_form_elements_select_options(){
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 
 		// Post Fields
+		$elements_select_options['post']['fields']['category'] =
+			array(
+				'label'     => __( 'Category', 'buddyforms' ),
+			);
+		$elements_select_options['post']['fields']['tags'] =
+			array(
+				'label'     => __( 'Tags', 'buddyforms' ),
+			);
 		$elements_select_options['post']['fields']['taxonomy'] =
 			array(
 				'label'     => __( 'Taxonomy', 'buddyforms' ),

@@ -278,9 +278,14 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 
-		case 'taxonomy':
+		case 'taxonomy':case 'category':case 'tags':
 
-			$form_fields['general']['disabled'] = new Element_HTML( '<div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>' );
+			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type"><tr>
+                    <td colspan="2">
+                        <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
+                    </td></table>';
+
+			$form_fields['general']['disabled'] = new Element_HTML( $error );
 
 			$taxonomies                         = buddyforms_taxonomies( $post_type );
 			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
@@ -323,15 +328,9 @@ function buddyforms_display_form_element( $args ) {
 				$dropdown = str_replace( ' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown );
 			}
 
-			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
-                    <th scope="row">
-                        <label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label>
-                    </th>
-                    <td>
-                        <div>' . $dropdown . '
-                            <p class="description">You can select a default category</p>
-                        </div>
-                    </td></table>';
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr><th scope="row">
+				<label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label></th>
+				<td><div>' . $dropdown . '<p class="description">You can select a default category</p></div></td></table>';
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
 
@@ -508,6 +507,7 @@ JS;
 				$js .= <<<JS
 
 				bf_taxonomy_input( "$field_id" );
+				from_setup_post_type();
 JS;
 
 
