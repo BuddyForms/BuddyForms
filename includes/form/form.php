@@ -66,7 +66,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
-			$post_id  = apply_filters( 'bf_create_edit_form_post_id', $post_id );
+			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id, 'OBJECT' );
 		}
 
@@ -95,7 +95,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
-			$post_id  = apply_filters( 'bf_create_edit_form_post_id', $post_id );
+			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id );
 		}
 
@@ -196,9 +196,8 @@ function bf_form_response_no_ajax() {
 		extract( $bf_form_response_args );
 
 		if ( $hasError ) {
-			$bf_form_error = $error_message;
-
-			return;
+			wp_redirect( $_SERVER['HTTP_REFERER'], 302 );
+			exit;
 		}
 
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {

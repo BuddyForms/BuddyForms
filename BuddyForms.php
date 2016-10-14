@@ -1,16 +1,18 @@
 <?php
 
-/*
- Plugin Name: BuddyForms
- Plugin URI:  http://buddyforms.com
- Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- Version: 1.5.3
- Author: Sven Lehnert
- Author URI: https://profiles.wordpress.org/svenl77
- Licence: GPLv3
- Network: false
-
- *****************************************************************************
+/**
+ * Plugin Name: BuddyForms
+ * Plugin URI:  http://buddyforms.com
+ * Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
+ * Version: 2.0 beta 1
+ * Author: Sven Lehnert
+ * Author URI: https://profiles.wordpress.org/svenl77
+ * Licence: GPLv3
+ * Network: false
+ *
+ * @fs_premium_only /includes/admin/form-metabox.php
+ *
+ * ****************************************************************************
  *
  * This script is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +31,16 @@
  ****************************************************************************
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class BuddyForms {
 
 	/**
 	 * @var string
 	 */
-	public $version = '1.6 Developer Version';
+	public $version = '2.0 BETA 1';
 
 	/**
 	 * Initiate the class
@@ -172,7 +178,10 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/contact-us.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+
+			if ( buddyforms_core_fs()->is__premium_only() ) {
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+			}
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
 
@@ -218,7 +227,7 @@ class BuddyForms {
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
-			|| $hook_suffix == 'buddyforms_page_bf_submissions'
+//			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		) {
 
@@ -288,8 +297,8 @@ class BuddyForms {
 			wp_enqueue_script('tinymce');
 			wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
 
-			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
+			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
+			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 
 
 
@@ -408,8 +417,8 @@ class BuddyForms {
 		// wp_enqueue_style( 'jquery-modal-css', plugins_url( 'assets/resources/jquery-modal/jquery.modal.min.css', __FILE__ ) );
 
 		// jQuery Select 2 // https://select2.github.io/
-		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/select2.min.js', __FILE__ ), array( 'jquery' ), '3.5.2' );
-		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/select2.css', __FILE__ ) );
+		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
+		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 
 		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__ ), array(
 			'jquery-ui-core',
@@ -567,12 +576,8 @@ function buddyforms_core_fs() {
 				'contact'    => false,
 				'addons'    => false,
 			),
-			// Set the SDK to work in a sandbox mode (for development & testing).
-			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-//			'secret_key'  => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
 		) );
 	}
-
 	return $buddyforms_core_fs;
 }
 if(PHP_VERSION < 5.3){

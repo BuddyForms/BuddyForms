@@ -42,9 +42,8 @@ function buddyforms_ajax_process_edit_post() {
 		Form::renderAjaxErrorResponse('buddyforms_form_' . $form_slug);
 		exit;
 
-
-
 	} else {
+
 		if ( ! empty( $buddyforms[ $_POST['form_slug'] ]['after_submit_message_text'] ) ) {
 			$permalink = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
 
@@ -102,7 +101,6 @@ function buddyforms_ajax_process_edit_post() {
 		}
 
 	}
-
 
 	$json = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json );
 

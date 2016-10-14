@@ -2,7 +2,7 @@
 
 function bf_form_elements( $form, $args ) {
 
-	extract( $args );
+	extract($args);
 
 	if ( ! isset( $customfields ) ) {
 		return;
@@ -43,7 +43,8 @@ function bf_form_elements( $form, $args ) {
 				'id'        => str_replace( "-", "", $slug ),
 				'value'     => $customfield_val,
 				'class'     => 'settings-input',
-				'shortDesc' => $description
+				'shortDesc' => $description,
+//				"view" => "Inline"
 			);
 
 			if ( isset( $customfield['required'] ) ) {
@@ -134,7 +135,7 @@ function bf_form_elements( $form, $args ) {
 						break;
 
 					case 'content':
-						//add_filter( 'tiny_mce_before_init', 'my_tinymce_setup_function' );
+						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 						$buddyforms_form_content_val = false;
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
 							$buddyforms_form_content_val = stripslashes( $_POST['buddyforms_form_content'] );
@@ -484,7 +485,6 @@ function bf_form_elements( $form, $args ) {
 							'class'         => 'postform bf-select2',
 							'depth'         => 0,
 							'tab_index'     => 0,
-//							'taxonomy'      => isset($customfield['taxonomy']) ? $customfield['taxonomy'] : '',
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
 							'order'         => $customfield['taxonomy_order'],
@@ -507,6 +507,8 @@ function bf_form_elements( $form, $args ) {
 						if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
+
+						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
 
 						if( isset( $customfield['taxonomy'] ) ){
 							$the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
@@ -558,7 +560,7 @@ function bf_form_elements( $form, $args ) {
 						$form_args = Array(
 							'field_id'        => $field_id,
 							'post_id'         => $post_id,
-							'post_parent'     => $post_parent,
+//							'post_parent'     => $post_parent,
 							'form_slug'       => $form_slug,
 							'customfield'     => $customfield,
 							'customfield_val' => $customfield_val
@@ -575,13 +577,15 @@ function bf_form_elements( $form, $args ) {
 	endforeach;
 }
 
-function my_tinymce_setup_function( $initArray ) {
-	$initArray['setup'] = 'function(ed){
-      ed.onChange.add(function(ed, l) {
-        tinyMCE.triggerSave();
-	    jQuery("#buddyforms_form_content").valid();
-      });
-    }';
+function buddyforms_tinymce_setup_function( $initArray ) {
+	$initArray['setup'] = 'function(editor) {
+                editor.on("change keyup", function(e){
+                    console.log(\'saving\');
+                    //tinyMCE.triggerSave(); // updates all instances
+                    editor.save(); // updates this instance\'s textarea
+                    jQuery(editor.getElement()).trigger(\'change\'); // for garlic to detect change
+                });
+            }';
 
 	return $initArray;
 }

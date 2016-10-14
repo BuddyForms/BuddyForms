@@ -45,7 +45,7 @@ function bf_post_status_mail_notification_screen() {
 	$form_setup   = array();
 
 	$form_setup[] = new Element_HTML( '<br><div class="trigger-select">' );
-	$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", bf_get_post_status_array(), array(
+	$form_setup[] = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", buddyforms_get_post_status_array(), array(
 		'class'     => 'post_status_mail_notification_trigger',
 		'shortDesc' => ''
 	) );

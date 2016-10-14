@@ -12,8 +12,18 @@ jQuery(document).ready(function (jQuery) {
 
     // Grab all needed form parts from the dom and add it into vars for later usage.
     if(wizard != null){
+
         // first hide all so we have a consitend feeling
         jQuery('#post, #postbox-container-1, #postbox-container-2').hide();
+
+
+        jQuery('#menu-posts-buddyforms a').removeClass('current');
+        jQuery('#menu-posts-buddyforms li').removeClass('current');
+
+        jQuery('#menu-posts-buddyforms [href*="wizard"]').addClass('current');
+        jQuery('#menu-posts-buddyforms [href*="wizard"]').parent('li').addClass('current');
+
+
 
         // get the parts
 
@@ -28,6 +38,7 @@ jQuery(document).ready(function (jQuery) {
         var submitdiv                   = poststuff.find('#submitdiv');
         var submitdiv_actions           = submitdiv.find('#buddyforms-actions');
         var buddyforms_form_shortcodes  = poststuff.find('#buddyforms_form_shortcodes');
+        var buddyforms_form_go_pro      = poststuff.find('#buddyforms_form_go_pro');
 
         var buddyforms_form_elements    = poststuff.find('#buddyforms_form_elements');
         var buddyforms_template         = poststuff.find('.buddyforms_template');
@@ -78,14 +89,22 @@ jQuery(document).ready(function (jQuery) {
         submitdiv.find('#major-publishing-actions').remove();
         submitdiv.find('h2 span').html('View Form and Submissions');
 
+        var link_to_pro = buddyforms_form_go_pro.find('.buddyforms_get_pro')
+
+        console.log(link_to_pro);
+
         submitdiv_actions.append( '<ul>' +
             '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
             '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/edit.php?post_type=buddyforms"><span class="dashicons dashicons-yes"></span> Close the wizard </a></li>' +
             '</ul>');
 
+        submitdiv_actions.append(link_to_pro);
+        buddyforms_form_go_pro.remove();
 
         buddyforms_form_shortcodes.find('h2 span').html('Embed Your Form via Shortcodes');
         container2.html( buddyforms_form_shortcodes );
+
+
 
         jQuery( '#post' ).html( poststuff );
         jQuery( '#post, #postbox-container-1, #postbox-container-2' ).show();

@@ -48,7 +48,9 @@ jQuery(document).ready(function () {
     jQuery( '.bf-garlic' ).garlic();
 
     jQuery(".bf-select2").select2({
-        placeholder: "Select an option"
+        placeholder: "Select an option",
+        tags: true,
+        tokenSeparators: [',', ' ']
     });
 
     jQuery('.bf_datetime').datetimepicker({
@@ -75,72 +77,6 @@ jQuery(document).ready(function () {
 
     var buddyforms_form_content_val = jQuery('#buddyforms_form_content_val').html();
     jQuery('#buddyforms_form_content').html(buddyforms_form_content_val);
-
-    //var clkBtn = "";
-    //jQuery(document).on("click", '.bf-submit', function (evt) {
-    //    clkBtn = evt.target.name;
-    //});
-
-    //    var submit_type = clkBtn;
-    //    var form_name = event.target.id;
-    //    var form_slug = form_name.split("buddyforms_form_")[1];
-    //
-    //    if (!jQuery('#' + form_name).valid()) {
-    //        alert('Please check all errors before submitting the form!')
-    //        return false;
-    //    }
-    //
-    //    jQuery('#' + form_name + ' #submitted').val(submit_type);
-    //
-    //    if (jQuery('#' + form_name + ' input[name="ajax"]').val() != 'off') {
-    //
-    //        event.preventDefault();
-    //
-    //        var FormData = jQuery('#' + form_name).serialize();
-    //
-    //        jQuery.ajax({
-    //            type: 'POST',
-    //            dataType: "json",
-    //            url: ajaxurl,
-    //            data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
-    //            beforeSend: function () {
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').show();
-    //            },
-    //            success: function (data) {
-    //
-    //                // console.log(data);
-    //
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
-    //
-    //                jQuery.each(data, function (i, val) {
-    //                    switch (i) {
-    //                        case 'form_notice':
-    //                            jQuery('#form_message_' + form_slug).html(val);
-    //                            break;
-    //                        case 'form_remove':
-    //                            jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper').remove();
-    //                            break;
-    //                        case 'form_actions':
-    //                            jQuery('.the_buddyforms_form_' + form_slug + ' .form-actions').html(val);
-    //                            break;
-    //                        default:
-    //                            jQuery('input[name="' + i + '"]').val(val);
-    //                    }
-    //                    jQuery('#recaptcha_reload').trigger('click');
-    //
-    //                });
-    //                jQuery('#' + form_name).valid();
-    //            },
-    //            error: function (request, status, error) {
-    //                jQuery('.the_buddyforms_form_' + form_slug + ' .form_wrapper .bf_modal').hide();
-    //                alert(request.responseText);
-    //            }
-    //        });
-    //
-    //        return false;
-    //    }
-    //    return true;
-    //});
 
     jQuery(document).on("click", '.bf_delete_post', function (event) {
         var post_id = jQuery(this).attr('id');

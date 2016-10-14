@@ -91,28 +91,41 @@ function buddyforms_add_form() {
 	die();
 
 }
-
 add_action( 'wp_ajax_buddyforms_add_form', 'buddyforms_add_form' );
 
-/**
- * Get all taxonomies
+/*
+ * Getthe post type taxonomies to load the new created form element select
  *
- * @package BuddyForms
- * @since 0.1-beta
+ *
  */
-function buddyforms_taxonomies( $buddyform ) {
+function buddyforms_post_types_taxonomies(){
 
-	$post_type = $buddyform['post_type'];
+	if ( ! isset( $_POST['post_type'] ) ) {
+		echo 'false';
+		die();
+	}
 
-	$taxonomies = get_object_taxonomies( $post_type );
+	$post_type = $_POST['post_type'];
+	$buddyforms_taxonomies = buddyforms_taxonomies($post_type);
 
-	return $taxonomies;
+	$tmp = '';
+	foreach( $buddyforms_taxonomies as $name => $label ){
+		$tmp .= '<option value="' . $name . '">' . $label . '</option>';
+	}
+
+	echo $tmp;
+	die();
+
 }
+add_action( 'wp_ajax_buddyforms_post_types_taxonomies', 'buddyforms_post_types_taxonomies' );
+
 
 function buddyforms_update_taxonomy_default() {
 
-	if ( ! isset( $_POST['taxonomy'] ) ) {
-		echo 'false';
+	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none') {
+		$tmp = '<option value="none">First you need to select a Taxonomy to select the Taxonomy defaults</option>';
+		echo $tmp;
+		die();
 	}
 
 	$taxonomy = $_POST['taxonomy'];
@@ -150,10 +163,10 @@ function buddyforms_form_template(){
 			$buddyform =  json_decode( '{"form_fields":{"92f6e0cb6b":{"type":"user_first","slug":"user_first","name":"First Name","description":""},"8ead289ca0":{"type":"user_last","slug":"user_last","name":"Last Name","description":""},"87e0afb2d7":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"210ef7d8a8":{"type":"subject","slug":"subject","name":"Subject","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"},"0a256db3cb":{"type":"message","slug":"message","name":"Message","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"}},"form_type":"contact","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"01bd6766e5":{"mail_trigger_id":"01bd6766e5","mail_from_name":"eMail Notification","mail_to_address":"[user_email]","mail_from":"mail@sven-lehnert.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":"Hi [user_first],\r\n\r\nthanks for getting in contact with us.\r\n\r\nYour Message has been Submitted Successfully. We will get in contact with you shortly.\r\n\r\nYour Message Text:\r\n\r\n[subject]\r\n[message]\r\n\r\n\r\n"}},"public_submit":["public_submit"],"name":"Contact Form","slug":"contact-form"}', true );
 			break;
 		case 'registration' :
-			$buddyform =  json_decode( '{"form_fields":{"a40912e1a5":{"type":"user_login","slug":"user_login","name":"Username","description":""},"82abe39ed2":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"611dc33cb2":{"type":"user_pass","slug":"user_pass","name":"Password","description":""}},"form_type":"registration","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"User Registration Successful! Please check your eMail Inbox and click the activation link to activate your account.","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"fa41389e07":{"mail_trigger_id":"fa41389e07","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail22@22.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit":["public_submit"],"registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\r\nGreat to see you come on board! Just one small step left to make your registration complete.\r\n<br>\r\n<b>Click the link below to activate your account.<\/b>\r\n<br>\r\n[activation_link]\r\n<br><br>\r\n[blog_title]","activation_message_from_name":"[blog_title]","activation_message_from_email":"dfg@dfg.fr","new_user_rule":"author"},"name":"Registration Form","slug":"registration-form"}', true );
+			$buddyform =  json_decode( '{"form_fields":{"a40912e1a5":{"type":"user_login","slug":"user_login","name":"Username","description":""},"82abe39ed2":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"611dc33cb2":{"type":"user_pass","slug":"user_pass","name":"Password","description":""}},"form_type":"registration","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"User Registration Successful! Please check your eMail Inbox and click the activation link to activate your account.","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"fa41389e07":{"mail_trigger_id":"fa41389e07","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail22@22.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit":["public_submit"],"registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\r\nGreat to see you come on board! Just one small step left to make your registration complete.\r\n<br>\r\n<b>Click the link below to activate your account.<\/b>\r\n<br>\r\n[activation_link]\r\n<br><br>\r\n[blog_title]","activation_message_from_name":"[blog_title]","activation_message_from_email":"dfg@dfg.fr","new_user_role":"author"},"name":"Registration Form","slug":"registration-form"}', true );
 			break;
 		case 'post' :
-			$buddyform =  json_decode( '{"form_fields":{"51836a88da":{"type":"title","slug":"buddyforms_form_title","name":"Title","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"27ff0af6c6":{"type":"content","slug":"buddyforms_form_content","name":"Content","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"form_type":"post","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"post","status":"publish","comment_status":"open","revision":["Revision"],"singular_name":"","attached_page":"2","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","public_submit":["public_submit"],"name":"Post","slug":""}', true );
+			$buddyform =  json_decode( '{"form_type":"post","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\t\t\tGreat to see you come on board! Just one small step left to make your registration complete.\r\n\t\t\t<br>\r\n\t\t\t<b>Click the link below to activate your account.<\/b>\r\n\t\t\t<br>\r\n\t\t\t[activation_link]\r\n\t\t\t<br><br>\r\n\t\t\t[blog_title]\r\n\t\t","activation_message_from_name":"[blog_title]","activation_message_from_email":"[admin_email]","new_user_role":"subscriber"},"post_type":"post","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","form_fields":{"51836a88da":{"type":"title","slug":"buddyforms_form_title","name":"Title","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"27ff0af6c6":{"type":"content","slug":"buddyforms_form_content","name":"Content","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""},"6ba0688de5":{"type":"featured_image","name":"toll","description":"","validation_error_message":"This field is required.","slug":"toll","custom_class":""}},"mail_submissions":{"fb025cc760":{"mail_trigger_id":"fb025cc760","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail22@22.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit_login":"above","name":"sdf","slug":"sdf"}', true );
 			break;
 		default :
 			$buddyform = json_decode( apply_filters('buddyforms_templates_json', $buddyform ) );

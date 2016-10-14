@@ -47,8 +47,8 @@ function buddyforms_wp_before_admin_bar_render() {
 }
 
 // Create the buddyforms post status array.
-// Other Plugins use the filter bf_get_post_status_array to add there post status to the options array
-function bf_get_post_status_array( $select_condition = false ) {
+// Other Plugins use the filter buddyforms_get_post_status_array to add there post status to the options array
+function buddyforms_get_post_status_array( $select_condition = false ) {
 
 	$status_array = array(
 		'publish' => __( 'Published', 'buddyforms' ),
@@ -59,7 +59,7 @@ function bf_get_post_status_array( $select_condition = false ) {
 		'trash'   => __( 'Trash', 'buddyforms' ),
 	);
 
-	return apply_filters( 'bf_get_post_status_array', $status_array );
+	return apply_filters( 'buddyforms_get_post_status_array', $status_array );
 }
 
 /**
@@ -128,21 +128,25 @@ function buddyforms_get_template_directory() {
  * @since 0.1 beta
  */
 function buddyforms_locate_template( $file ) {
+	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
+
+	$current_user = wp_get_current_user();
+
 	if ( locate_template( array( $file ), false ) ) {
-		locate_template( array( $file ), true );
+		include(locate_template( array( $file ), true ));
 	} else {
 		include( BUDDYFORMS_TEMPLATE_PATH . $file );
 	}
 }
 
 // Display the WordPress Login Form
-function buddyforms_login_form() {
+function buddyforms_wp_login_form() {
 	// Get The Login Form
-	echo buddyforms_get_login_form();
+	echo buddyforms_get_wp_login_form();
 }
 
 // Create the BuddyForms Login Form
-function buddyforms_get_login_form() {
+function buddyforms_get_wp_login_form() {
 	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
@@ -237,9 +241,9 @@ function bf_post_entry_actions($form_slug){
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 				echo '<li>';
 				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-					echo apply_filters( 'bf_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
 				} else {
-					echo apply_filters( 'bf_loop_edit_post_link', bf_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', bf_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
 				}
 				echo '</li>';
 			}
@@ -262,10 +266,10 @@ function bf_post_entry_actions($form_slug){
 }
 
 function bf_post_status_readable($post_status){
-	echo bf_get_post_status_readable($post_status);
+	echo buddyforms_get_post_status_readable($post_status);
 }
 
-	function bf_get_post_status_readable($post_status){
+	function buddyforms_get_post_status_readable($post_status){
 		if ( $post_status == 'publish' ) {
 			return __( 'Published', 'buddyforms' );
 		}
@@ -290,10 +294,10 @@ function bf_post_status_readable($post_status){
 			return __( 'Edit Draft', 'buddyforms' );
 		}
 
-		return apply_filters( 'bf_get_post_status_readable', $post_status );;
+		return apply_filters( 'buddyforms_get_post_status_readable', $post_status );;
 	}
 
-function bf_post_status_css_class($post_status, $form_slug){
+function buddyforms_post_status_css_class($post_status, $form_slug){
 	echo bf_get_post_status_css_class($post_status, $form_slug);
 }
 
@@ -305,7 +309,7 @@ function bf_post_status_css_class($post_status, $form_slug){
 			$post_status_css = 'bf-pending';
 		}
 
-		return apply_filters( 'bf_post_status_css', $post_status_css, $form_slug );
+		return apply_filters( 'buddyforms_post_status_css', $post_status_css, $form_slug );
 	}
 
 /**
@@ -355,4 +359,25 @@ function bf_remove_filters_for_anonymous_class( $hook_name = '', $class_name =''
 	}
 
 	return false;
+}
+
+/**
+ * Get all taxonomies
+ *
+ * @package BuddyForms
+ * @since 0.1-beta
+ */
+function buddyforms_taxonomies( $post_type ) {
+
+
+	$taxonomies_array = get_object_taxonomies( $post_type, 'objects' );
+
+	$taxonomies['none'] = 'Select a Taxonomy';
+
+	foreach($taxonomies_array as $tax_slug => $tax){
+		$taxonomies[$tax->name] = $tax->label;
+	}
+
+
+	return $taxonomies;
 }

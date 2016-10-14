@@ -27,81 +27,110 @@ function buddyforms_process_post( $args = Array() ) {
 
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
-	// Get the browser and platform
-	$browser_data = buddyforms_get_browser();
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		// Get the browser and platform
+		$browser_data = buddyforms_get_browser();
 
-	// Collect all submitter data
-	$user_data = array();
-	if( !isset( $buddyforms[$form_slug]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
-		$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
-	}
-	if( !isset( $buddyforms[$form_slug]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ){
-		$user_data['referer']   = $_SERVER['HTTP_REFERER'];
-	}
-	if( !isset( $buddyforms[$form_slug]['browser'] ) && isset( $browser_data['name'] ) ){
-		$user_data['browser']   = $browser_data['name'];
-	}
-	if( !isset( $buddyforms[$form_slug]['version'] ) && isset( $browser_data['version'] ) ){
-		$user_data['version']   = $browser_data['version'];
-	}
-	if( !isset( $buddyforms[$form_slug]['platform'] ) && isset( $browser_data['platform'] ) ){
-		$user_data['platform']  = $browser_data['platform'];
-	}
-	if( !isset( $buddyforms[$form_slug]['reports'] ) && isset( $browser_data['reports'] ) ){
-		$user_data['reports']   = $browser_data['reports'];
-	}
-	if( !isset( $buddyforms[$form_slug]['useragent'] ) && isset( $browser_data['useragent'] ) ){
-		$user_data['useragent'] = $browser_data['useragent'];
+		// Collect all submitter data
+		$user_data = array();
+		if( !isset( $buddyforms[$form_slug]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
+			$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
+		}
+		if( !isset( $buddyforms[$form_slug]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ){
+			$user_data['referer']   = $_SERVER['HTTP_REFERER'];
+		}
+		if( !isset( $buddyforms[$form_slug]['browser'] ) && isset( $browser_data['name'] ) ){
+			$user_data['browser']   = $browser_data['name'];
+		}
+		if( !isset( $buddyforms[$form_slug]['version'] ) && isset( $browser_data['version'] ) ){
+			$user_data['version']   = $browser_data['version'];
+		}
+		if( !isset( $buddyforms[$form_slug]['platform'] ) && isset( $browser_data['platform'] ) ){
+			$user_data['platform']  = $browser_data['platform'];
+		}
+		if( !isset( $buddyforms[$form_slug]['reports'] ) && isset( $browser_data['reports'] ) ){
+			$user_data['reports']   = $browser_data['reports'];
+		}
+		if( !isset( $buddyforms[$form_slug]['useragent'] ) && isset( $browser_data['useragent'] ) ){
+			$user_data['useragent'] = $browser_data['useragent'];
+		}
 	}
 
-	// Servers site validation
-	// $_SERVER["REQUEST_METHOD"] = "POST";
 
-	/* Validation
+
+	/* Servers site validation
 	 * First we have browser validation. Now let us check from the server site if all is in place
 	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
+	 *
+	 * Validation can be extended
 	 */
-	if( !Form::isValid( "buddyforms_form_" . $form_slug, true ) ) {
-
+	if( Form::isValid( "buddyforms_form_" . $form_slug, false ) ) {
+		if(!apply_filters( 'buddyforms_form_custom_validation', true, $form_slug )) {
+			$args = array(
+				'hasError'  => true,
+				'form_slug' => $form_slug,
+			);
+			Form::clearValues( "buddyforms_form_" . $form_slug );
+			return $args;
+		}
+	} else {
 		$args = array(
-			'hasError'      => true,
-			'form_slug'    => $form_slug,
+			'hasError'  => true,
+			'form_slug' => $form_slug,
 		);
+		Form::clearValues( "buddyforms_form_" . $form_slug );
 		return $args;
 	}
 
-	switch($form_type){
-		case 'contact':
-			// todo: Add option to create a contact form without create a bf_submissions post. Just mail forms ;)
-			break;
-		case 'registration':
-			$registration = buddyforms_wp_insert_user();
+	// Check if this is a registration form only
+	if( $form_type == 'registration' ) {
 
-			// Check if registration was successful
-			if( !$registration ){
-				$args = array(
-					'hasError'      => true,
-					'form_slug'    => $form_slug,
-				);
-				return $args;
-			}
-
-
-			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+		$registration = buddyforms_wp_insert_user();
+		// Check if registration was successful
+		if( !$registration ){
 			$args = array(
-				'hasError'     => $hasError,
-				'form_notice'  => $form_notice,
-				'customfields' => $customfields,
-				'redirect_to'  => $redirect_to,
+				'hasError'      => true,
 				'form_slug'    => $form_slug,
 			);
 			return $args;
-
-			break;
-		default:
-			break;
+		}
+		if ( buddyforms_core_fs()->is__premium_only() ) {
+			// Save the Browser user data
+			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+		}
+		$args = array(
+			'hasError'     => $hasError,
+			'form_notice'  => $form_notice,
+			'customfields' => $customfields,
+			'redirect_to'  => $redirect_to,
+			'form_slug'    => $form_slug,
+		);
+		Form::clearValues( "buddyforms_form_" . $form_slug );
+		return $args;
 	}
 
+	// Check if user is logged in and if not check if registration during submission is enabled.
+	if( isset( $buddyforms[$form_slug]['public_submit_create_account'] ) && !is_user_logged_in() ){
+
+		// ok let us try to register a user
+		$registration = buddyforms_wp_insert_user();
+
+		// Check if registration was successful
+		if( !$registration ){
+			$args = array(
+				'hasError'      => true,
+				'form_slug'    => $form_slug,
+			);
+			Form::clearValues( "buddyforms_form_" . $form_slug );
+			return $args;
+		}
+		if ( buddyforms_core_fs()->is__premium_only() ) {
+			// Save the Browser user data
+			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+		}
+	}
+
+	// Ok let us start processing the post form
 	do_action( 'buddyforms_process_post_start', $args );
 
 	if ( isset( $_POST['bf_post_type'] ) ) {
@@ -113,7 +142,7 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
-			$post_id  = apply_filters( 'bf_create_edit_form_post_id', $post_id );
+			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id );
 		}
 
@@ -217,8 +246,10 @@ function buddyforms_process_post( $args = Array() ) {
 		// Save the Form slug as post meta
 		update_post_meta( $post_id, "_bf_form_slug", $form_slug );
 
-		// Save the User Data like browser ip etc
-		update_post_meta( $post_id, "_bf_user_data", $user_data );
+		if ( buddyforms_core_fs()->is__premium_only() ) {
+			// Save the User Data like browser ip etc
+			update_post_meta( $post_id, "_bf_user_data", $user_data );
+		}
 
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 			$bf_post = array(
@@ -280,7 +311,7 @@ function buddyforms_process_post( $args = Array() ) {
 	$args = array_merge( $args, $args2 );
 
 	do_action( 'buddyforms_process_post_end', $args );
-
+	Form::clearValues( "buddyforms_form_" . $form_slug );
 	return $args;
 
 }

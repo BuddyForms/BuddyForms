@@ -24,6 +24,7 @@ function buddyforms_display_form_element( $args ) {
 	}
 
 	$form_slug = $post->post_name;
+	$post_type = $post->post_type;
 
 	if ( isset( $field_unique ) && $field_unique == 'unique' ) {
 		if ( isset( $buddyform['form_fields'] ) ) {
@@ -51,12 +52,13 @@ function buddyforms_display_form_element( $args ) {
 		'value' => $required,
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 	) );
-
-	$metabox_enabled                            = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
-	$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
-		'value' => $metabox_enabled,
-		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
-	) );
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		$metabox_enabled = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
+		$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
+			'value' => $metabox_enabled,
+			'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"
+		) );
+	}
 
 	$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : '';
 	$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -133,7 +135,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_login':
 			unset( $form_fields['advanced'] );
-			//unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Username';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -148,7 +149,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_email':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'eMail';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -162,7 +162,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_first':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'First Name';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -176,7 +175,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_last':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Last Name';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -190,7 +188,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_pass':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Password';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -204,7 +201,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_website':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Website';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -218,7 +214,6 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_bio':
 			unset( $form_fields['advanced'] );
-//			unset( $form_fields['validation'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Bio';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -282,86 +277,244 @@ function buddyforms_display_form_element( $args ) {
 			);
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
-		case 'taxonomy':
-			$taxonomies                         = buddyforms_taxonomies( $buddyform );
+
+		case 'taxonomy':case 'category':case 'tags':
+
+			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type"><tr>
+                    <td colspan="2">
+                        <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
+                    </td></table>';
+
+			$form_fields['general']['disabled'] = new Element_HTML( $error );
+
+			$taxonomies                         = buddyforms_taxonomies( $post_type );
 			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
 			$form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
 				'value' => $taxonomy,
-				'class' => 'bf_tax_select',
-				'id'    => $field_id
+				'class' => 'bf_tax_select bf_hide_if_post_type_none',
+				'field_id'    => $field_id,
+				'id'          => 'taxonomy_field_id_' . $field_id,
 			) );
-
 
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
 
-			if ( $taxonomy ) {
+			$wp_dropdown_categories_args = array(
+				'hide_empty'    => 0,
+				'child_of'      => 0,
+				'echo'          => false,
+				'selected'      => false,
+				'hierarchical'  => 1,
+				'id'            => 'taxonomy_default_' . $field_id,
+				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default][]",
+				'class'         => 'postform bf-select2 tax_default',
+				'depth'         => 0,
+				'tab_index'     => 0,
+				'taxonomy'      => $taxonomy,
+				'hide_if_empty' => false,
+				'orderby'       => 'SLUG',
+				'order'         => $taxonomy_order,
+			);
 
-				$wp_dropdown_categories_args = array(
-					'hide_empty'    => 0,
-					'child_of'      => 0,
-					'echo'          => false,
-					'selected'      => false,
-					'hierarchical'  => 1,
-					'id'            => 'taxonomy_default_' . $field_id,
-					'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default][]",
-					'class'         => 'postform bf-select2 tax_default',
-					'depth'         => 0,
-					'tab_index'     => 0,
-					'taxonomy'      => $taxonomy,
-					'hide_if_empty' => false,
-					'orderby'       => 'SLUG',
-					'order'         => $taxonomy_order,
-				);
+			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
+			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
-				$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
-
-				$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
-
-				if ( is_array( $taxonomy_default ) ) {
-					foreach ( $taxonomy_default as $key => $post_term ) {
-						$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
-					}
-				} else {
-					$dropdown = str_replace( ' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown );
+			if ( is_array( $taxonomy_default ) ) {
+				foreach ( $taxonomy_default as $key => $post_term ) {
+					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
 				}
-
-				$dropdown = '</tr><tr>
-                            <th scope="row">
-                                <label for="form_title"><b>Taxonomy Default</b></label>
-                            </th>
-                            <td>
-                                ' . $dropdown . '
-                                <p class="description">You can select a default category</p>
-                            </td></tr>';
-
-				$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
-
 			} else {
-//				$form_fields['general']['taxonomy_default'] = new Element_Select( '<b>' . __( 'Taxonomy Default', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_default]", array(), array(
-//					'class'    => 'bf-select2',
-//					'multiple' => 1,
-//					'value'    => '',
-//					'id'       => 'taxonomy_default_' . $field_id
-//				) );
+				$dropdown = str_replace( ' value="' . $taxonomy_default . '"', ' value="' . $taxonomy_default . '" selected="selected"', $dropdown );
 			}
+
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr><th scope="row">
+				<label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label></th>
+				<td><div>' . $dropdown . '<p class="description">You can select a default category</p></div></td></table>';
+
+			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
+
 			$form_fields['general']['taxonomy_order'] = new Element_Select( '<b>' . __( 'Taxonomy Order', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array(
 				'ASC',
 				'DESC'
-			), array( 'value' => $taxonomy_order ) );
+			), array(
+				'value' => $taxonomy_order,
+				'class' => 'bf_hide_if_post_type_none'
+			) );
 
 			$multiple                           = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
-			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple ) );
+			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
 
-			$show_option_none                           = isset( $customfield['show_option_none'] ) ? $customfield['show_option_none'] : 'false';
-			$form_fields['general']['show_option_none'] = new Element_Checkbox( '<b>' . __( 'Display Select an Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array( 'show_select_option' => '<b>' . __( "Show 'Select an Option'", 'buddyforms' ) . '</b>' ), array( 'value' => $show_option_none ) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			$filter                           = isset( $customfield['filter'] ) ? $customfield['filter'] : 'false';
+			$form_fields['general']['multiple'] = new Element_Select( '<b>' . __( 'Filter: ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][filter]", array( 'include' => __( 'Include', 'buddyforms' ), 'exclude' => __( 'Exclude', 'buddyforms' ) ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
+
+			$taxonomy_filter = isset( $customfield['taxonomy_filter'] ) ? $customfield['taxonomy_filter'] : 'false';
+
+			$wp_dropdown_taxonomy_filter_args = array(
+				'hide_empty'    => 0,
+				'child_of'      => 0,
+				'echo'          => false,
+				'selected'      => false,
+				'hierarchical'  => 1,
+				'id'            => 'taxonomy_filter' . $field_id,
+				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_filter][]",
+				'class'         => 'postform bf-select2 tax_default',
+				'depth'         => 0,
+				'tab_index'     => 0,
+				'taxonomy'      => $taxonomy,
+				'hide_if_empty' => false,
+				'orderby'       => 'SLUG',
+				'order'         => $taxonomy_order,
+			);
+
+			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
+
+			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+
+			if ( is_array( $taxonomy_filter ) ) {
+				foreach ( $taxonomy_filter as $key => $post_term ) {
+					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+				}
+			} else {
+				$dropdown = str_replace( ' value="' . $taxonomy_filter . '"', ' value="' . $taxonomy_filter . '" selected="selected"', $dropdown );
+			}
+
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_filter" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
+                    <th scope="row">
+                        <label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label>
+                    </th>
+                    <td>
+                        <div>' . $dropdown . '
+                            <p class="description">You can select a default category</p>
+                        </div>
+                    </td></table>';
+
+
+			$form_fields['general']['taxonomy_filter'] = new Element_HTML( $dropdown );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//			$show_option_none                           = isset( $customfield['show_option_none'] ) ? $customfield['show_option_none'] : 'false';
+//			$form_fields['general']['show_option_none'] = new Element_Checkbox( '<b>' . __( 'Display Select an Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][show_option_none]", array( 'show_select_option' => '<b>' . __( "Show 'Select an Option'", 'buddyforms' ) . '</b>' ), array( 'value' => $show_option_none, 'class' => 'bf_hide_if_post_type_none' ) );
 
 			$creat_new_tax                           = isset( $customfield['creat_new_tax'] ) ? $customfield['creat_new_tax'] : 'false';
-			$form_fields['general']['creat_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $creat_new_tax ) );
+			$form_fields['general']['creat_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $creat_new_tax, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+
+
+
+			$use_tag_style_input                           = isset( $customfield['use_tag_style_input'] ) ? $customfield['use_tag_style_input'] : 'tag';
+			$form_fields['general']['use_tag_style_input'] = new Element_Checkbox( '<b>' . __( 'Tag style input?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][creat_new_tax]", array( 'use_tag_style_input' => '<b>' . __( 'User Tags style input field', 'buddyforms' ) . '</b>' ), array( 'value' => $use_tag_style_input, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+
+
+
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
-			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden, 'class' => 'bf_hide_if_post_type_none' ) );
+
+
+			if (defined('DOING_AJAX') && DOING_AJAX) {
+				$js = <<<JS
+            	<script>
+
+				jQuery(document).ready(function (jQuery) {
+					console.log("on load $field_id" );
+
+					var post_type = jQuery('#form_post_type').val();
+
+					var tax_field_length = jQuery('#taxonomy_field_id_$field_id').children('option').length;
+
+					if(tax_field_length > 1 ){
+						console.log('form_post_type_length link' + tax_field_length);
+					} else {
+
+				        jQuery.ajax({
+				            type: 'POST',
+				            url: ajaxurl,
+				            data: {
+				                "action": "buddyforms_post_types_taxonomies",
+				                "post_type": post_type
+				            },
+				            success: function (data) {
+								console.log(data);
+								jQuery('#taxonomy_field_id_$field_id').html(data);
+
+				            },
+				            error: function () {
+				                jQuery('.formbuilder-spinner').removeClass('is-active');
+				                jQuery('<div></div>').dialog({
+				                    modal: true,
+				                    title: "Info",
+				                    open: function() {
+				                        var markup = 'Something went wrong ;-(sorry)';
+				                        jQuery(this).html(markup);
+				                    },
+				                    buttons: {
+				                        Ok: function() {
+				                            jQuery( this ).dialog( "close" );
+				                        }
+				                    }
+				                });
+				            }
+				        });
+
+					}
+
+				//
+				});
+JS;
+
+				$js .= <<<JS
+
+				bf_taxonomy_input( "$field_id" );
+				from_setup_post_type();
+JS;
+
+
+				$js .= '</script>';
+				$form_fields['general']['js'] = new Element_HTML( $js );
+			}
+
 			break;
 		case 'hidden':
 			unset( $form_fields );
@@ -454,7 +607,7 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status' );
 
 			$post_status                           = isset( $customfield['post_status'] ) ? $customfield['post_status'] : 'post_status';
-			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", bf_get_post_status_array(), array(
+			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", buddyforms_get_post_status_array(), array(
 				'value'     => $post_status,
 				'id'        => "buddyforms_options[form_fields][" . $field_id . "][post_status]",
 				'shortDesc' => __( "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms' )

@@ -10,19 +10,32 @@ function buddyforms_metabox_form_setup() {
 	// Get the BuddyForms Options
 	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
-	// Get all post types
-	$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
+
+	$post_types = array();
+
 
 	// Generate the Post Type Array 'none' == Contact Form
 	$post_types['bf_submissions'] = 'none';
-
-	$post_types = buddyforms_sort_array_by_Array($post_types, array('bf_submissions'));
-
-	// Remove the 'buddyforms' post type from the post type array
-	unset( $post_types['buddyforms'] );
+	$post_types['post'] = 'Post';
+	$post_types['page'] = 'Page';
 
 
-	// Get all Pages
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+
+		// Get all post types
+		$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
+
+		// Generate the Post Type Array 'none' == Contact Form
+		$post_types['bf_submissions'] = 'none';
+
+		$post_types = buddyforms_sort_array_by_Array( $post_types, array( 'bf_submissions' ) );
+
+		// Remove the 'buddyforms' post type from the post type array
+		unset( $post_types['buddyforms'] );
+
+	}
+
+	// Get all pages
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
@@ -31,7 +44,7 @@ function buddyforms_metabox_form_setup() {
 		'post_status' => 'publish'
 	) );
 
-	// Generate teh Pages Array
+	// Generate the pages array
 	$all_pages = Array();
 	$all_pages['none'] = 'Select a Page';
 	foreach ( $pages as $page ) {
@@ -115,59 +128,110 @@ function buddyforms_metabox_form_setup() {
 //			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
 
-	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
+
+
+
+	$element = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
 		'shortDesc' => __( '', 'buddyforms' ),
-		'value'     => $bf_ajax
+		'value' => $bf_ajax
 	) );
 
-	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'Local Storage', 'buddyforms' ) . '</b>', "buddyforms_options[local_storage]", array( 'disable' => __( 'Disable Local Storage', 'buddyforms' ) ), array(
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Form Submission'][] = $element;
+
+	$element = new Element_Checkbox( '<b>' . __( 'Local Storage', 'buddyforms' ) . '</b>', "buddyforms_options[local_storage]", array( 'disable' => __( 'Disable Local Storage', 'buddyforms' ) ), array(
 		'shortDesc' => __( 'The form elements content is stored in the browser so it not gets lost if the tab gets closed by accident', 'buddyforms' ),
-		'value'     => $local_storage
+		'value' => $local_storage
 	) );
-	$form_setup['Form Submission'][] = new Element_Checkbox( '<b>' . __( 'User Data', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array(
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Form Submission'][] = $element;
+
+	$element = new Element_Checkbox( '<b>' . __( 'User Data', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array(
 		'ipaddress' => __( 'Disable IP Address', 'buddyforms' ),
-		'referer'   => __( 'Disable Referer', 'buddyforms' ),
-		'browser'   => __( 'Disable Browser', 'buddyforms' ),
-		'version'   => __( 'Disable Brovser Version', 'buddyforms' ),
-		'platform'  => __( 'Disable Platform', 'buddyforms' ),
-		'reports'   => __( 'Disable Reports', 'buddyforms' ),
+		'referer' => __( 'Disable Referer', 'buddyforms' ),
+		'browser' => __( 'Disable Browser', 'buddyforms' ),
+		'version' => __( 'Disable Brovser Version', 'buddyforms' ),
+		'platform' => __( 'Disable Platform', 'buddyforms' ),
+		'reports' => __( 'Disable Reports', 'buddyforms' ),
 		'userAgent' => __( 'Disable User Agent', 'buddyforms' ),
 	), array(
 		'shortDesc' => __( 'By default all above user data will be stored. In some country\'s for example in the EU you are not allowed to save the ip. Please make sure you not against the low in your country and adjust if needed', 'buddyforms' ),
-		'value'     => $bf_ajax
+		'value' => $bf_ajax
 	) );
 
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Form Submission'][] = $element;
 
+	$shortDesc_post_type = '<b>Use any POST TYPE with the PRO Version!</b> <br><br>Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		$shortDesc_post_type = 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+	}
 	//
 	// Create Content
 	//
-	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
+	$element = new Element_Select( '<b>' . __( "Post Type", 'buddyforms' ) . '</b>', "buddyforms_options[post_type]", $post_types, array(
 		'value'     => $post_type,
-		'shortDesc' => 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>',
+		'shortDesc' => $shortDesc_post_type,
 		'id'        => 'form_post_type',
 	) );
+	$form_setup['Create Content'][] = $element;
 
-	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(
+	$element = new Element_Select( '<b>' . __( "Status", 'buddyforms' ) . '</b>', "buddyforms_options[status]", array(
 		'publish',
 		'pending',
 		'draft'
-	), array( 'value' => $status ) );
+	), array(
+		'value' => $status,
+		'class' => 'bf_hide_if_post_type_none'
+	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Create Content'][] = $element;
 
-	$form_setup['Create Content'][] = new Element_Select( '<b>' . __( "Comment Status", 'buddyforms' ) . '</b>', "buddyforms_options[comment_status]", array(
+	$element = new Element_Select( '<b>' . __( "Comment Status", 'buddyforms' ) . '</b>', "buddyforms_options[comment_status]", array(
 		'open',
 		'closed'
-	), array( 'value' => $comment_status ) );
-
-	$form_setup['Create Content'][] = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ), array( 'value' => $revision ) );
-
-
-	$form_setup['Create Content'][] = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
-		'value'    => $singular_name,
-		'shortDesc' => 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )'
+	), array(
+		'value' => $comment_status,
+		'class' => 'bf_hide_if_post_type_none'
 	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Create Content'][] = $element;
+
+	$element = new Element_Checkbox( '<b>' . __( 'Revision', 'buddyforms' ) . '</b>', "buddyforms_options[revision]", array( 'Revision' => __( 'Enable frontend revision control', 'buddyforms' ) ),
+		array(
+			'value' => $revision,
+			'class' => 'bf_hide_if_post_type_none'
+		) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Create Content'][] = $element;
 
 
+	$element = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
+		'value'     => $singular_name,
+		'shortDesc' => 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )',
+		'class'     => 'bf_hide_if_post_type_none'
+	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Create Content'][] = $element;
 
+
+	//
+	// Edit Submissions
+	//
 
 	$siteurl     = get_bloginfo( 'wpurl' );
 	$attached_page_url = get_permalink( $attached_page );
@@ -185,10 +249,6 @@ function buddyforms_metabox_form_setup() {
 
 	$admin_email = get_option( 'admin_email' );
 
-	//
-	// Edit Submissions
-	//
-
 	// Attached Page
 	$form_setup['Edit Submissions'][] = new Element_HTML('<h4>Enable your site members to view there submissions</h4>
 		<p>Select a page or create a new on if you like to turn on submission management for your logged in users.</p>
@@ -198,16 +258,24 @@ function buddyforms_metabox_form_setup() {
 		    <h6>User Submissions URL<br><small class="siteurl_edit_html">' . $siteurl_edit_html . '</small></h6>
 		</div>');
 
-	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage there submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
+	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage their submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
 		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page is used to create the endpoints for the create - list and edit submissions views.',
 		'id'        => 'attached_page',
 		'data-slug' => $slug
 	) );
 
-	$form_setup['Edit Submissions'][] = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array( 'value' => $admin_bar ) );
+	$element = new Element_Checkbox( '<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>', "buddyforms_options[admin_bar]", array( 'Admin Bar' => __( 'Add to Admin Bar', 'buddyforms' ) ), array(
+		'value' => $admin_bar,
+		'class' => 'bf_hide_if_attached_page_none'
+		) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Edit Submissions'][] = $element;
 
-	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
+
+	$element = new Element_Radio( '<b>' . __( "Overwrite Frontend 'Edit Post' Link", 'buddyforms' ) . '</b>', "buddyforms_options[edit_link]", array(
 		'none'          => 'None',
 		'all'           => __( "All Edit Links", 'buddyforms' ),
 		'my-posts-list' => __( "Only in My Posts List", 'buddyforms' )
@@ -215,27 +283,39 @@ function buddyforms_metabox_form_setup() {
 		'view'      => 'vertical',
 		'value'     => $edit_link,
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
-		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'bf_hide_if_attached_page_none',
 	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Edit Submissions'][] = $element;
 
-	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
+	$element = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
 		'list_all_form' => 'List all Author Posts created with this Form',
 		'list_all'      => 'List all Author Posts of the PostType'
 	), array(
 		'value' => $list_posts_option,
 		'shortDesc' => '',
-		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'bf_hide_if_attached_page_none',
 	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Edit Submissions'][] = $element;
 
 
-	$form_setup['Edit Submissions'][] = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
+	$element = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
 		'list'  => 'List',
 		'table' => 'Table'
 	), array(
 		'value' => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
-//		'class'     => 'bf_show_if_f_type_post'
+		'class'     => 'bf_hide_if_attached_page_none'
 	) );
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Edit Submissions'][] = $element;
 
 
 	// Check if form elements exist and sort the form elements

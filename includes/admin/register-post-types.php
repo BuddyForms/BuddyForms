@@ -14,6 +14,10 @@ function buddyforms_add_meta_boxes() {
 	if(!$buddyform)
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
+	if ( buddyforms_core_fs()->is_not_paying() ) {
+		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
+	}
+
 	if(is_array($buddyform)) {
 		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
@@ -27,6 +31,44 @@ function buddyforms_add_meta_boxes() {
 
 }
 
+function buddyforms_metabox_go_pro(){
+
+	buddyforms_go_pro( '<span></span>', '', array(
+		'Premium Support',
+		'More Form Elements',
+		'More Options',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Full Control', 'buddyforms' ), array(
+		'Use your form in the backend admin edit screen like ACF',
+		'Control who can create, edit and delete content',
+		'Registration Options',
+		'Disable ajax form submission',
+		'Local Storage',
+		'More Notification Options',
+		'Import - Export Forms',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Permissions Management', 'buddyforms' ), array(
+		'Manage User Roles',
+		'Manage Capabilities',
+		'More Validation Options'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('More Post Options', 'buddyforms' ), array(
+		'All Post Types',
+		'Posts Revision',
+		'Comment Status',
+		'Enable Login on the form',
+		'Create an account during submission?',
+		'Featured Image Support'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Know Your User', 'buddyforms' ). '<p><small>' . __('Get deep Insights about your Submitter', 'buddyforms' ) . '</small></p>', array(
+		'IP Address',
+		'Referer',
+		'Browser',
+		'Platform',
+		'Reports',
+		'User Agent',
+	));
+}
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
@@ -40,6 +82,7 @@ add_filter('postbox_classes_buddyforms_buddyforms_form_elements','buddyforms_met
 add_filter('buddyforms_metabox_sidebar','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_setup','buddyforms_metabox_class');
 add_filter('postbox_classes_buddyforms_buddyforms_form_shortcodes','buddyforms_metabox_class');
+add_filter('postbox_classes_buddyforms_buddyforms_form_go_pro','buddyforms_metabox_class');
 
 
 /**
@@ -318,14 +361,12 @@ function buddyforms_form_updated_messages( $messages ) {
 		3  => __( 'Custom field deleted.', 'buddyforms' ),
 		4  => __( 'Form updated.', 'buddyforms' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Form restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => sprintf( __( 'Form published. <a href="%s">View Form</a>' ), esc_url( get_permalink( $post_ID ) ) ),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Form restored to revision from %s', 'buddyforms' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => __( 'Form published.', 'buddyforms' ),
 		7  => __( 'Form saved.' ),
-		8  => sprintf( __( 'Form submitted. <a target="_blank" href="%s">Preview Form</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-		9  => sprintf( __( 'Form scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Form</a>' ),
-			// translators: Publish box date format, see http://php.net/date
-			date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-		10 => sprintf( __( 'Form draft updated. <a target="_blank" href="%s">Preview Form</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+		8  => __( 'Form submitted.', 'buddyforms' ),
+		9  => sprintf( __( 'Form scheduled for: <strong>%1$s</strong>.' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ) ) ,
+		10 => __( 'Form draft updated.', 'buddyforms' ),
 	);
 
 	return $messages;
@@ -428,34 +469,34 @@ function buddyforms_hide_publishing_actions() {
 				width: 100%;
 			}
 		</style>
-		<?php } if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' || ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == 'buddyforms' ) ) { ?>
-		<script>
-			jQuery(document).ready(function (jQuery) {
-				//jQuery('#screen-meta-links').hide();
-				jQuery('body').find('h1:first').css('line-height', '58px');
-				jQuery('body').find('h1:first').css('margin-top', '20px');
-				jQuery('body').find('h1:first').css('font-size', '30px');
-				//jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
-				jQuery('body').find('h1:first').html('<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
-					'BuddyForms ' +
-					'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
-					'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small>'
-				);
-				jQuery('h1').show();
-			});
-
-		</script>
-
-
 		<?php
-	} else {
-		?>
-		<script>
-			jQuery(document).ready(function (jQuery) {
-				jQuery('body').find('h1:first').remove();
-			});
-		</script>
+		if ( get_post_type( $post ) == 'buddyforms'  && !isset($_GET['wizard']) || isset($_GET['wizard']) && $_GET['wizard'] != 'done' || ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == 'buddyforms' ) ) { ?>
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					//jQuery('#screen-meta-links').hide();
+					jQuery('body').find('h1:first').css('line-height', '58px');
+					jQuery('body').find('h1:first').css('margin-top', '20px');
+					jQuery('body').find('h1:first').css('font-size', '30px');
+					//jQuery('body').find('h1:first').addClass('tk-icon-buddyforms');
+					jQuery('body').find('h1:first').html('<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> ' +
+						'BuddyForms ' +
+						'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a>' +
+						'<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">Version <?php echo BUDDYFORMS_VERSION ?></small><?php buddyforms_you_are_pro(); ?>'
+					);
+					jQuery('h1').show();
+				});
+
+			</script>
 		<?php
+		} else {
+			?>
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					jQuery('body').find('h1:first').remove();
+				});
+			</script>
+			<?php
+		}
 	}
 }
 add_action( 'admin_head-edit.php', 'buddyforms_hide_publishing_actions' );
@@ -504,6 +545,11 @@ function buddyforms_add_button_to_submit_box() {
 
 }
 add_action( 'post_submitbox_misc_actions', 'buddyforms_add_button_to_submit_box' );
+
+
+function buddyforms_add_go_pro_metabox(){
+
+}
 
 // remove the slugdiv metabox from buddyforms post edit screen
 function buddyforms_remove_slugdiv() {

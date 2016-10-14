@@ -1,7 +1,17 @@
 <?php
-global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
-$current_user = wp_get_current_user(); ?>
+/**
+ * The users submissions table
+ *
+ * This template can be overridden by copying it to yourtheme/buddyforms/the-table.php.
+ *
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 
 <div id="buddyforms-table-view" class="buddyforms_posts_table buddyforms-posts-container">
 
@@ -52,12 +62,9 @@ $current_user = wp_get_current_user(); ?>
 				}
 
 				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
-				$post_status_name   = bf_get_post_status_readable( $post_status );
+				$post_status_name   = buddyforms_get_post_status_readable( $post_status );
 				$post_id            = get_the_ID();
-
-				do_action( 'bp_before_blog_post' ) ?>
-
-
+				?>
 
 				<tr id="bf_post_tr_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
 					<td class="bf_posts_<?php the_ID() ?>">
@@ -103,7 +110,7 @@ $current_user = wp_get_current_user(); ?>
 				<?php do_action( 'buddyforms_the_table_tr_last', get_the_ID() ); ?>
 
 
-				<?php do_action( 'bf_after_loop_item' ) ?>
+				<?php do_action( 'buddyforms_after_loop_item' ) ?>
 
 			<?php endwhile; ?>
 

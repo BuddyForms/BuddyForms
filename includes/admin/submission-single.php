@@ -97,25 +97,36 @@
 			</div>
 
 			<?php
-			if(is_admin()){
-				$user_data = get_post_meta( $post_id, '_bf_user_data', true );
+			if ( buddyforms_core_fs()->is__premium_only() ) {
+				if(is_admin()){
+					$user_data = get_post_meta( $post_id, '_bf_user_data', true );
 
-				if($user_data){ ?>
-					<div class="postbox">
-						<h3 class="hndle"><span>User Information</span></h3>
-						<div class="inside">
+					if($user_data){ ?>
+						<div class="postbox">
+							<h3 class="hndle"><span>User Information</span></h3>
+							<div class="inside">
 
-							<?php foreach($user_data as $uinfo => $uval) { ?>
-								<div class="misc-pub-section">
-									<?php echo $uinfo ?>:
-									<b><?php echo $uval ?></b>
-								</div>
-							<?php } ?>
+								<?php foreach($user_data as $uinfo => $uval) { ?>
+									<div class="misc-pub-section">
+										<?php echo $uinfo ?>:
+										<b><?php echo $uval ?></b>
+									</div>
+								<?php } ?>
 
+							</div>
 						</div>
-					</div>
-				<?php } ?>
-			<?php } ?>
+					<?php } ?>
+				<?php }
+			}
+			buddyforms_go_pro( __( 'Get Insights with the Premium Version'), __('Get all insights about your user', 'buddyforms' ), array(
+				'IP Address',
+				'Referer',
+				'Browser',
+				'Platform',
+				'Reports',
+				'User Agent',
+			));
+			?>
 		</div>
 	</div>
 </div>
