@@ -12,7 +12,7 @@
 
 <div id="bf-submission-<?php echo $post_id; ?>" class="bf-submission-single bf_submit_form<?php echo $post_id; ?>">
 		<div class="inner-wrap">
-			<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss"></i>&nbsp;Close</a></p>
+			<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;Back</a></p>
 
 			<script>
 				jQuery(document).ready(function () {
@@ -73,6 +73,6 @@
 
 		</div>
 
-		<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-dismiss"></i>&nbsp;Close</a></p>
+		<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;Back To All Submissions</a></p>
 
 </div>
