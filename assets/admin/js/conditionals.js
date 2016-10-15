@@ -98,7 +98,7 @@ function from_setup_post_type(){
         jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
         jQuery('.bf_hide_if_post_type_none').hide();
         jQuery('.taxonomy_no_post_type').show();
-        jQuery('#table_row_' + id + '_disabled').hide();
+        // jQuery('#table_row_' + id + '_disabled').hide();
 
     } else {
         //jQuery('.bf_tax_select').val('none');
