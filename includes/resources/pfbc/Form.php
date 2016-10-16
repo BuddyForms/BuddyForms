@@ -399,6 +399,13 @@ class Form extends Base {
 		/*When the form is submitted, disable all submit buttons to prevent duplicate submissions.*/
 		echo <<<JS
         jQuery(document).ready(function() {
+
+		    jQuery(".bf-select2").select2({
+		        placeholder: "Select an option",
+		        tags: true,
+		        tokenSeparators: [',', ' ']
+		    });
+
             jQuery("#$id").bind("submit", function() {
                 jQuery(this).find("input[type=submit]").attr("disabled", "disabled");
             });

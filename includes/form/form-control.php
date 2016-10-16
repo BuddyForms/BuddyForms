@@ -459,10 +459,10 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 				}
 
-				if ( isset( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) ) {
-					$creat_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_creat_new_tax' ] );
-					if ( is_array( $creat_new_tax ) ) {
-						foreach ( $creat_new_tax as $key_tax => $new_tax ) {
+				if ( isset( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) ) {
+					$create_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_create_new_tax' ] );
+					if ( is_array( $create_new_tax ) ) {
+						foreach ( $create_new_tax as $key_tax => $new_tax ) {
 							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
 							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 						}
@@ -471,10 +471,10 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				}
 			} else {
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
-				if ( isset( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_creat_new_tax' ] ) ) {
-					$creat_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_creat_new_tax' ] );
-					if ( is_array( $creat_new_tax ) ) {
-						foreach ( $creat_new_tax as $key_tax => $new_tax ) {
+				if ( isset( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) ) {
+					$create_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_create_new_tax' ] );
+					if ( is_array( $create_new_tax ) ) {
+						foreach ( $create_new_tax as $key_tax => $new_tax ) {
 							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
 							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 						}

@@ -142,7 +142,7 @@ function bf_taxonomy_input(id){
     jQuery('#table_row_' + id + '_taxonomy_default').hide();
     jQuery('#table_row_' + id + '_taxonomy_order').hide();
     jQuery('#table_row_' + id + '_show_option_none').hide();
-    jQuery('#table_row_' + id + '_creat_new_tax').hide();
+    jQuery('#table_row_' + id + '_create_new_tax').hide();
     jQuery('#table_row_' + id + '_multiple').hide();
     jQuery('#table_row_' + id + '_taxonomy_filter').hide();
     jQuery('#table_row_' + id + '_use_tag_style_input').hide();
@@ -160,7 +160,7 @@ function bf_taxonomy_input(id){
         jQuery('#table_row_' + id + '_taxonomy_default').hide();
         jQuery('#table_row_' + id + '_taxonomy_order').hide();
         jQuery('#table_row_' + id + '_show_option_none').hide();
-        jQuery('#table_row_' + id + '_creat_new_tax').hide();
+        jQuery('#table_row_' + id + '_create_new_tax').hide();
         jQuery('#table_row_' + id + '_multiple').hide();
         jQuery('#table_row_' + id + '_taxonomy_filter').hide();
         jQuery('#table_row_' + id + '_use_tag_style_input').hide();
@@ -171,7 +171,7 @@ function bf_taxonomy_input(id){
         jQuery('#table_row_' + id + '_taxonomy_default').show();
         jQuery('#table_row_' + id + '_taxonomy_order').show();
         jQuery('#table_row_' + id + '_show_option_none').show();
-        jQuery('#table_row_' + id + '_creat_new_tax').show();
+        jQuery('#table_row_' + id + '_create_new_tax').show();
         jQuery('#table_row_' + id + '_multiple').show();
         jQuery('#table_row_' + id + '_taxonomy_filter').show();
         jQuery('#table_row_' + id + '_use_tag_style_input').show();

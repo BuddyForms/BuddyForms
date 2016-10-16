@@ -530,13 +530,26 @@ function bf_form_elements( $form, $args ) {
 						if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
 							$required = '<span class="required">* </span>';
 						}
-						$dropdown = '<div class="bf_field_group">
-                        <label for="editpost-element-' . $field_id . '">
-                            ' . $required . $name . '
-                        </label>
-                        <div class="bf_inputs bf-input">' . $dropdown . ' </div>
-                        <span class="help-inline">' . $description . '</span>
-                    </div>';
+
+						$button_label = empty($customfield['create_new_tax_label']) ? __('Add New', 'buddyforms') : $customfield['create_new_tax_label'];
+						$button_label = empty($customfield['create_new_tax_label']) ? __('Add New', 'buddyforms') : $customfield['create_new_tax_label'];
+
+						$dropdown = '
+						<div class="bf_field_group">
+	                        <label for="editpost-element-' . $field_id . '">
+	                            ' . $required . $name . '
+	                        </label>
+	                        <div class="bf_inputs bf-input">' . $dropdown ;
+								if ( isset( $customfield['create_new_tax'] ) ) {
+									$dropdown .= '
+									    <label for="' . $slug . '_create_new_tax' . $field_id . '">Add New</label>
+			                            <input type="text" name="' . $slug . '_create_new_tax_' . $field_id . '" class="settings-input form-control garlic-auto-save" id="' . $slug . '_create_new_tax_' . $field_id . '"></input>
+			                            <span class="help-inline"><a href="#" data-field_id="' . $field_id . '" data-field_slug="' . $slug   . '" class="button create-new-tax-item">' . $button_label . '</a></span>';
+								}
+						$dropdown .= '
+							</div>
+		                	<span class="help-inline">' . $description . '</span>
+		                </div>';
 
 						if ( isset( $customfield['hidden'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {
@@ -546,11 +559,6 @@ function bf_form_elements( $form, $args ) {
 							}
 						} else {
 							$form->addElement( new Element_HTML( $dropdown ) );
-
-							if ( isset( $customfield['creat_new_tax'] ) ) {
-								$el_title = apply_filters( 'buddyforms_create_new_tax_title', sprintf( __( 'Create a new %s', 'buddyforms' ), $customfield['name'] ), $form_slug, $customfield );
-								$form->addElement( new Element_Textbox( $el_title, $slug . '_creat_new_tax', array( 'class' => 'settings-input' ) ) );
-							}
 						}
 
 						break;

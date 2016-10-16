@@ -47,11 +47,62 @@ jQuery(document).ready(function () {
 
     jQuery( '.bf-garlic' ).garlic();
 
-    jQuery(".bf-select2").select2({
-        placeholder: "Select an option",
-        tags: true,
-        tokenSeparators: [',', ' ']
+    //jQuery(".bf-select2").select2({
+    //    placeholder: "Select an option",
+    //    tags: true,
+    //    tokenSeparators: [',', ' ']
+    //});
+
+    jQuery(document).on("click", '.create-new-tax-item', function (evt) {
+
+        var field_id = jQuery(this).attr('data-field_id');
+        var field_slug = jQuery(this).attr('data-field_slug');
+
+        var newStateVal = jQuery( "#" + field_slug + "_create_new_tax_" + field_id ).val();
+
+        // Set the value, creating a new option if necessary
+        if (jQuery("#category_create_new_tax").find("option[value='" + newStateVal + "']").length) {
+            jQuery("#category_create_new_tax").val(newStateVal).trigger("change");
+        } else {
+
+            // Create the DOM option that is pre-selected by default
+            var newState = new Option(newStateVal, newStateVal, true, true);
+
+            // Append it to the select
+            jQuery("#" + field_id ).append(newState).trigger('change');
+
+            // CLear the text field
+            jQuery( "#" + field_slug + "_create_new_tax_" + field_id ).val('');
+        }
+        return false;
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     jQuery('.bf_datetime').datetimepicker({
         controlType: 'select',

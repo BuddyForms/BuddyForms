@@ -381,3 +381,15 @@ function buddyforms_taxonomies( $post_type ) {
 
 	return $taxonomies;
 }
+
+// Helper function to dequeue woocommerce select2
+function buddyforms_dequeue_select2_version3() {
+	if ( class_exists( 'woocommerce' ) ) {
+		wp_dequeue_style( 'select2' );
+		wp_deregister_style( 'select2' );
+
+		wp_dequeue_script( 'select2');
+		wp_deregister_script('select2');
+
+	}
+}
