@@ -13,12 +13,10 @@ function buddyforms_metabox_form_setup() {
 
 	$post_types = array();
 
-
 	// Generate the Post Type Array 'none' == Contact Form
 	$post_types['bf_submissions'] = 'none';
 	$post_types['post'] = 'Post';
 	$post_types['page'] = 'Page';
-
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 

@@ -12,7 +12,7 @@ function buddyforms_permissions_unregistered_screen() {
 
 	echo '<h4>' . __('Unregistered User', 'buddyforms') . '</h4><br>';
 
-	$public_submit = isset( $buddyform['public_submit'] ) ? 'public_submit' : '';
+	$public_submit = isset( $buddyform['public_submit'] ) ? '' : 'public_submit';
 	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Public Submittable', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit]", array( 'public_submit' => __( 'Deactivate access for unregistered users.', 'buddyforms' ) ), array( 'value' => $public_submit, 'shortDesc' => 'Please use the CAPTCHA form element if this option is enabled to make sure you site is save.' ) );
 
 	$public_submit_login = isset( $buddyform['public_submit_login'] ) ? $buddyform['public_submit_login'] : 'above';
