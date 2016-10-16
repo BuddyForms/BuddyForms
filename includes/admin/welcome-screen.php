@@ -110,7 +110,7 @@ function buddyforms_welcome_screen_content() {
 
 		<div class="wrap about-wrap buddyforms-welcome">
 
-				<h1>Welcome to BuddyForms&nbsp;1.6</h1>
+				<h1>Welcome to BuddyForms&nbsp;2.0</h1>
 
 				<p class="about-text">Enjoy Groundbreaking New Features!</p>
 				<!-- <div class="wp-badge">Version 1.6</div> -->

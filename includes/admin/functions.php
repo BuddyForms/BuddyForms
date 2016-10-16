@@ -9,7 +9,9 @@ function buddyforms_go_pro($h2 = '', $h4 = '', $pros = Array(), $link = true){
 	function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ){
 		if ( buddyforms_core_fs()->is_not_paying() ) {
 
-			$tmp = !empty($h2) ? '<h2>' . $h2 . '</h2>' : '';
+			$tmp = '<div id="bf-gopro-sidebar">';
+			$tmp .= !empty($h2) ? '<h2>' . $h2 . '</h2>' : '';
+			$tmp .= '<div style="padding: 0 12px;">';
 			$tmp .= !empty($h2) ? '<h4>' . $h4 . '</h4>' : '';
 			$tmp .= '<ul>';
 				foreach( $pros as $key => $pro ) {
@@ -18,7 +20,9 @@ function buddyforms_go_pro($h2 = '', $h4 = '', $pros = Array(), $link = true){
 			$tmp .= '</ul>';
 
 			if($link)
-				$tmp .= '<a class="buddyforms_get_pro" href="' . buddyforms_core_fs()->get_upgrade_url() . '">' . __("Upgrade Now!", "buddyforms") . '</a>';
+				$tmp .= '<a class="buddyforms_get_pro button button-primary" href="' . buddyforms_core_fs()->get_upgrade_url() . '">' . __("Upgrade Now!", "buddyforms") . '</a>';
+
+			$tmp .= '</div></div>';
 
 			return $tmp;
 		}

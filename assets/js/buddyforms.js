@@ -39,10 +39,6 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    jQuery(document).on("click", '.bf-alert-close', function (){
-        jQuery('.bf-alert-wrap').remove();
-    });
-
     bf_form_errors();
 
     jQuery( '.bf-garlic' ).garlic();
