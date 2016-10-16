@@ -133,7 +133,7 @@ function buddyforms_form_html( $args ) {
 	$form_html .= !is_user_logged_in() && isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template() : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() ) {
-		$form_html .= '<div style="float:right; opacity: 0.4;" clss="branding">Proudly brought to you by <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
+		$form_html .= '<div style="text-align: right; opacity: 0.4; font-size: 12px; margin: 30px 0 0;" clss="branding">Proudly brought to you by <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
 	}
 
 	$form_html .= '</div>'; // the_buddyforms_form end
