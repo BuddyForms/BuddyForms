@@ -113,7 +113,6 @@ function buddyforms_welcome_screen_content() {
 				<h1>Welcome to BuddyForms&nbsp;2.0</h1>
 
 				<p class="about-text">Enjoy Groundbreaking New Features!</p>
-				<!-- <div class="wp-badge">Version 1.6</div> -->
 
 				<h2 class="nav-tab-wrapper wp-clearfix">
 					<a href="about.php" class="nav-tab nav-tab-active">What’s New</a>
@@ -186,12 +185,12 @@ function buddyforms_welcome_screen_content() {
 					<div class="bfw-col bfw-col-50">
 						<h2 class="bfw-title">Latest Blogpost</h2>
 						<p class="lead">Read all about this new BuddyForms version:</p>
-						<a href="" target="_new" class="button button-primary">Read Blogpost</a>
+						<a href="#" target="_new" class="button button-primary">Read Blogpost</a>
 					</div>
 					<div class="bfw-col bfw-col-50">
 						<h2 class="bfw-title">Changelog</h2>
-						<p class="lead">Check out the changelog for version 1.6</p>
-						<a href="" target="_new" class="button button-primary">View Changelog</a></p>
+						<p class="lead">Check out the changelog for version 2.0</p>
+						<a href="#" target="_new" class="button button-primary">View Changelog</a></p>
 					</div>
 				</div>
 
@@ -220,16 +219,16 @@ function buddyforms_welcome_screen_content() {
 
 				<!-- Docs, Support & Custom Work -->
 				<div class="bfw-section bfw-docs" style="margin-bottom: 100px;">
-					<div class="bfw-col bfw-col-50">
+					<!-- <div class="bfw-col bfw-col-50">
 						<h2 class="bfw-title">Support &amp; Docs</h2>
 						<p class="lead">Get quick help.</p>
 						<a class="button xbutton-primary" href="http://docs.buddyforms.com" title="" target="new">Documentation</a>
 						<a class="button xbutton-primary" href="https://themekraft.com/support" title="" target="new">Support</a>
-					</div>
+					</div> -->
 					<div class="bfw-col bfw-col-50">
-						<h2 class="bfw-title">Custom Work</h2>
+						<h1 class="bfw-title">Custom Work</h1>
 						<p class="lead">Need a custom setup?</p>
-						<a class="button xbutton-primary" href="mailto:support@buddyforms.com" title="" target="new">Enquire</a>
+						<a class="button button-primary" href="mailto:support@buddyforms.com" title="" target="new">Enquire</a>
 					</div>
 				</div>
 
