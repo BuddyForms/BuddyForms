@@ -174,7 +174,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/contact-us.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 
 			if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -333,7 +332,7 @@ class BuddyForms {
 							this.readyQueue.push(e)
 						}, o.config = {
 							docs: {enabled: !0, baseUrl: "//buddyforms.helpscoutdocs.com/"},
-							contact: {enabled: !0, formId: "1d687af3-936a-11e6-91aa-0a5fecc78a4d"}
+							contact: {enabled: 0, formId: "1d687af3-936a-11e6-91aa-0a5fecc78a4d"}
 						};
 						var r = e.getElementsByTagName("script")[0], c = e.createElement("script");
 						c.type = "text/javascript", c.async = !0, c.src = "https://djtflbt20bdde.cloudfront.net/", r.parentNode.insertBefore(c, r)
@@ -375,7 +374,7 @@ class BuddyForms {
 							'5652e4b0c697915b26a598c8', // Understand the Concept of Custom Post Types and Taxonomies in WordPress
 							'5652dff3c697915b26a598ae', // Use the Taxonomy Form Element to Display any Taxonomy like Categories or Tags form any Post Type
 						]);
-//						HS.beacon.search('workflows');
+//						HS.beacon.search('Forms');
 						HS.beacon.identify({
 							name: '<?php echo $current_user->user_login; ?>',
 							email: '<?php echo $current_user->user_email; ?>',
@@ -621,7 +620,7 @@ function buddyforms_core_fs() {
 				'slug'       => 'edit.php?post_type=buddyforms',
 				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
 				'support'    => false,
-				'contact'    => false,
+				'contact'    => true,
 				'addons'    => false,
 			),
 		) );
