@@ -421,101 +421,63 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		}
 
 		// Save taxonomies if needed
-		if ( $customfield['type'] == 'taxonomy' ) {
+		//
+		//
+		//						$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
+		//						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 
-			$taxonomy = get_taxonomy( $customfield['taxonomy'] );
+		if ( $customfield['type'] == 'taxonomy' ) :
 
-			if ( isset( $customfield['multiple'] ) ) {
+			if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 
+				$taxonomy = get_taxonomy( $customfield['taxonomy'] );
+
+				// Check if multiple selection is allowed and delete all object relationships.
+				if ( isset( $customfield['multiple'] ) ) {
+				//	wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
+				}
+
+				// Check if the taxonomy is hierarchical
 				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
 
-					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
-						$tax_item = $_POST[ $customfield['slug'] ];
+					// Get the tax items
+					$tax_item = $_POST[$customfield['slug']];
 
-						if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
-							//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-							foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-								$tax_item[ $key_tax ] = $tax;
-							}
+					// If no tax items are available check if we have some defaults we can use
+					if ( $tax_item[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
+						foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+							$tax_item[$key_tax] = $tax;
 						}
-
-						wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
 					}
 
+					// Check if new term to insert
+					foreach($tax_item as $term_key => $term){
+						$term_exist = term_exists( $term, $customfield['taxonomy'] );
+
+						if( !$term_exist ){
+							$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
+							$tax_item[$term_key] = (string)$new_term['term_id'];
+						}
+					}
+
+					// Now let us set the post terms
+					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
+
+				// If hierarchical is false only single selction is allowed
 				} else {
 
-					if ( isset( $_POST[ $customfield['slug'] ] ) ) {
-						$slug = Array();
+					$slug = Array();
 
-						$postCategories = $_POST[ $customfield['slug'] ];
+					$postCategories = $_POST[$customfield['slug']];
 
-						foreach ( $postCategories as $postCategory ) {
-							$term   = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
-							$slug[] = $term->slug;
-						}
-
-						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+					foreach ( $postCategories as $postCategory ) {
+						$term = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
+						$slug[] = $term->slug;
 					}
-
+					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
 				}
-
-				if ( isset( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) ) {
-					$create_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_create_new_tax' ] );
-					if ( is_array( $create_new_tax ) ) {
-						foreach ( $create_new_tax as $key_tax => $new_tax ) {
-							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
-							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-						}
-					}
-
-				}
-			} else {
-				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
-				if ( isset( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) && ! empty( $_POST[ $customfield['slug'] . '_create_new_tax' ] ) ) {
-					$create_new_tax = explode( ',', $_POST[ $customfield['slug'] . '_create_new_tax' ] );
-					if ( is_array( $create_new_tax ) ) {
-						foreach ( $create_new_tax as $key_tax => $new_tax ) {
-							$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
-							wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
-						}
-					}
-
-				} else {
-
-					if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
-
-						if ( isset( $_POST[ $customfield['slug'] ] ) ) {
-							$tax_item = $_POST[ $customfield['slug'] ];
-						}
-
-						if ( $tax_item[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
-							//$taxonomy_default = explode(',', $customfield['taxonomy_default'][0]);
-							foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-								$tax_item[ $key_tax ] = $tax;
-							}
-						}
-
-						wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
-					} else {
-
-						$slug = Array();
-
-						if ( isset( $_POST[ $customfield['slug'] ] ) ) {
-							$postCategories = $_POST[ $customfield['slug'] ];
-
-							foreach ( $postCategories as $postCategory ) {
-								$term   = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
-								$slug[] = $term->slug;
-							}
-						}
-
-						wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
-
-					}
-				}
-
 			}
-		}
+		endif;
 
 		// Update meta do_action to hook into. This can be needed if you added
 		// new form elements and need to manipulate how they get saved.
