@@ -30,6 +30,6 @@ function buddyforms_you_are_pro(){
 
 function buddyforms_get_you_are_pro(){
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		return '<span class="you-are-pro">' . __('You are a Pro user !', 'buddyforms') . '</span>';
+		return '<span class="you-are-pro">' . __('Pro', 'buddyforms') . '</span>';
 	}
 }
