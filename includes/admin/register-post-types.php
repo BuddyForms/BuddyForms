@@ -34,7 +34,7 @@ function buddyforms_add_meta_boxes() {
 function buddyforms_metabox_go_pro(){
 
 	buddyforms_go_pro( '<span></span>', '', array(
-		'Premium Support',
+		'Priority Support',
 		'More Form Elements',
 		'More Options',
 	), false);

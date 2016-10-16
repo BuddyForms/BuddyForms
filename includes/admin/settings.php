@@ -48,7 +48,7 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 
 	$links = array();
 
-	echo '<h2 class="nav-tab-wrapper">';
+	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
 	foreach ( $tabs as $tab => $name ) {
 		$class = ( $tab == $current ) ? ' nav-tab-active' : '';
 		echo "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=buddyforms_settings&tab=$tab'>$name</a>";
@@ -195,8 +195,10 @@ function buddyforms_settings_page_tabs_content(){
 }
 
 function buddyforms_settings_page_sidebar(){
-	buddyforms_go_pro('Awesome Premium Features', 'Premium Support', array(
-		'Admin Metabox Support',
-		'More Form Elements'
+	buddyforms_go_pro('Awesome Premium Features', '', array(
+		'Priority Support',
+		'More Post Types',
+		'More Form Elements',
+		'Admin Metabox Support'
 	));
 }
