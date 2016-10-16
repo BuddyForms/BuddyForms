@@ -24,12 +24,13 @@ function buddyforms_go_pro($h2 = '', $h4 = '', $pros = Array(), $link = true){
 		}
 }
 
-function buddyforms_you_are_pro(){
-	echo buddyforms_get_you_are_pro();
+function buddyforms_version_type(){
+	echo buddyforms_get_version_type();
 }
 
-function buddyforms_get_you_are_pro(){
+function buddyforms_get_version_type(){
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		return '<span class="you-are-pro">' . __('Pro', 'buddyforms') . '</span>';
+		return  __('Pro', 'buddyforms');
 	}
+	return  __('Free', 'buddyforms');
 }
