@@ -5,7 +5,7 @@ function buddyforms_form_html( $args ) {
 
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
-		echo '<div class="error alert">' . $bf_form_error . '</div>';
+		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
 
 		return;
 	}
@@ -44,7 +44,7 @@ function buddyforms_form_html( $args ) {
 	if ( $user_can_edit == false ) {
 		$error_message = __( 'You do not have the required user role to use this form', 'buddyforms' );
 
-		return '<div class="error alert">' . $error_message . '</div>';
+		return '<div class="bf-alert error">' . $error_message . '</div>';
 	}
 
 	// Form HTML Start. The Form is rendered as last step.

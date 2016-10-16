@@ -287,10 +287,10 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( empty( $error_message ) ) {
 			$error_message = __( 'Error! There was a problem submitting the post ;-(', 'buddyforms' );
 		}
-		$form_notice = '<div class="error alert">' . $error_message . '</div>';
+		$form_notice = '<div class="bf-alert error">' . $error_message . '</div>';
 
 		if ( ! empty( $fileError ) ) {
-			$form_notice = '<div class="error alert">' . $fileError . '</div>';
+			$form_notice = '<div class="bf-alert error">' . $fileError . '</div>';
 		}
 
 	endif;

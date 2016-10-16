@@ -13,7 +13,7 @@ function buddyforms_create_edit_form( $args ) {
 
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
-		echo '<div class="error alert">' . $bf_form_error . '</div>';
+		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
 
 		return;
 	}
@@ -80,7 +80,7 @@ function buddyforms_create_edit_form( $args ) {
 
 			if ( $user_can_edit == false ) {
 				$error_message = __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' );
-				echo '<div class="error alert">' . $error_message . '</div>';
+				echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 				return;
 			}
@@ -107,7 +107,7 @@ function buddyforms_create_edit_form( $args ) {
 
 		if ( $user_can_edit == false ) {
 			$error_message = __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' );
-			echo '<div class="error alert">' . $error_message . '</div>';
+			echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 			return;
 		}
@@ -131,7 +131,7 @@ function buddyforms_create_edit_form( $args ) {
 
 	if( !isset( $buddyforms[ $form_slug ]['form_fields'] ) ){
 		$error_message = __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' );
-		echo '<div class="error alert">' . $error_message . '</div>';
+		echo '<div class="bf-alert error">' . $error_message . '</div>';
 		return;
 	}
 
