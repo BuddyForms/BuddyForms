@@ -41,91 +41,98 @@ return $context;
 */
 add_action( 'admin_footer', 'buddyforms_editor_button_inline_content' );
 function buddyforms_editor_button_inline_content() {
-global $buddyforms;
-if ( ! is_admin() OR empty( $buddyforms ) ) {
-return;
-} ?>
+global $buddyforms, $post;
 
-<div id="buddyforms_popup_container" style="display:none;">
-	<h2></h2>
-	<?php
 
-	// Get all post types
-	$args                    = array(
-		'public'  => true,
-		'show_ui' => true
-	);
-	$output                  = 'names'; // names or objects, note names is the default
-	$operator                = 'and'; // 'and' or 'or'
-	$post_types              = get_post_types( $args, $output, $operator );
-	$post_types_none['none'] = 'none';
-	$post_types              = array_merge( $post_types_none, $post_types );
-
-	//
-	// Insert Form
-	//
-	session_id( 'buddyforms-mce' );
-	$form = new Form( "buddyforms_add_form" );
-	$form->configure( array(
-		"prevent" => array( "bootstrap", "jQuery" ),
-		"action"  => $_SERVER['REQUEST_URI'],
-		"view"    => new View_Inline
-	) );
-	$the_forms['none'] = 'Select Form';
-
-	foreach ( $buddyforms as $key => $buddyform ) {
-		$the_forms[ $buddyform['slug'] ] = $buddyform['slug'];
+	if ( ! is_admin() OR empty( $buddyforms ) ) {
+		return;
 	}
+	if($post->post_type == 'buddyforms'){
+		return;
+	}?>
+
+	<div id="buddyforms_popup_container" style="display:none;">
+		<h2></h2>
+		<?php
+
+		// Get all post types
+		$args                    = array(
+			'public'  => true,
+			'show_ui' => true
+		);
+		$output                  = 'names'; // names or objects, note names is the default
+		$operator                = 'and'; // 'and' or 'or'
+		$post_types              = get_post_types( $args, $output, $operator );
+		$post_types_none['none'] = 'none';
+		$post_types              = array_merge( $post_types_none, $post_types );
+
+		//
+		// Insert Form
+		//
+		session_id( 'buddyforms-mce' );
+		$form = new Form( "buddyforms_add_form" );
+		$form->configure( array(
+			"prevent" => array( "bootstrap", "jQuery" ),
+			"action"  => $_SERVER['REQUEST_URI'],
+			"view"    => new View_Inline
+		) );
+		$the_forms['none'] = 'Select Form';
+
+		foreach ( $buddyforms as $key => $buddyform ) {
+			$the_forms[ $buddyform['slug'] ] = $buddyform['slug'];
+		}
 
 
-	$form->addElement( new Element_Select( "<h3>" . __( 'Insert Form', 'buddyforms' ) . "</h3><br>", "buddyforms_add_form", $the_forms, array( 'class' => 'buddyforms_add_form' ) ) );
-	$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-form button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
-	$form->render();
+		$form->addElement( new Element_Select( "<h3>" . __( 'Insert Form', 'buddyforms' ) . "</h3><br>", "buddyforms_add_form", $the_forms, array( 'class' => 'buddyforms_add_form' ) ) );
+		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-form button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
+		$form->render();
 
-	//
-	// Insert Navigation
-	//
+		//
+		// Insert Posts
+		//
 
-	$form = new Form( "buddyforms_add_nav" );
-	$form->configure( array(
-		"prevent" => array( "bootstrap", "jQuery" ),
-		"action"  => $_SERVER['REQUEST_URI'],
-		"view"    => new View_Inline
-	) );
+		$form = new Form( "buddyforms_view_posts" );
+		$form->configure( array(
+			"prevent" => array( "bootstrap", "jQuery" ),
+			"action"  => $_SERVER['REQUEST_URI'],
+			"view"    => new View_Inline
+		) );
 
-	$button_type['none']                         = 'Insert Navigation';
-	$button_type['buddyforms_nav']               = 'View - Add New';
-	$button_type['buddyforms_button_view_posts'] = 'View Posts';
-	$button_type['buddyforms_button_add_new']    = 'Add New';
+		$view_type['none']                = 'Filter Posts';
+		$view_type['buddyforms_list_all'] = 'All User';
+		$view_type['buddyforms_the_loop'] = 'Displayed User';
+
+		$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
+		$form->addElement( new Element_Select( "", "buddyforms_select_form_posts", $the_forms, array( 'class' => 'buddyforms_select_form_posts' ) ) );
+		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-posts button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
+		$form->render();
 
 
-	$form->addElement( new Element_Select( "<h3>" . __( 'Button Type', 'buddyforms' ) . "</h3><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
-	$form->addElement( new Element_Select( "", "buddyforms_select_form", $the_forms, array( 'class' => 'buddyforms_select_form' ) ) );
-	$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-nav button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
-	$form->render();
+		//
+		// Insert Navigation
+		//
 
-	//
-	// Insert Posts
-	//
+		$form = new Form( "buddyforms_add_nav" );
+		$form->configure( array(
+			"prevent" => array( "bootstrap", "jQuery" ),
+			"action"  => $_SERVER['REQUEST_URI'],
+			"view"    => new View_Inline
+		) );
 
-	$form = new Form( "buddyforms_view_posts" );
-	$form->configure( array(
-		"prevent" => array( "bootstrap", "jQuery" ),
-		"action"  => $_SERVER['REQUEST_URI'],
-		"view"    => new View_Inline
-	) );
+		$button_type['none']                         = 'Insert Navigation';
+		$button_type['buddyforms_nav']               = 'View - Add New';
+		$button_type['buddyforms_button_view_posts'] = 'View Posts';
+		$button_type['buddyforms_button_add_new']    = 'Add New';
 
-	$view_type['none']                = 'Filter Posts';
-	$view_type['buddyforms_list_all'] = 'All User';
-	$view_type['buddyforms_the_loop'] = 'Displayed User';
 
-	$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
-	$form->addElement( new Element_Select( "", "buddyforms_select_form_posts", $the_forms, array( 'class' => 'buddyforms_select_form_posts' ) ) );
-	$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-posts button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
-	$form->render();
+		$form->addElement( new Element_Select( "<h3>" . __( 'Button Type', 'buddyforms' ) . "</h3><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
+		$form->addElement( new Element_Select( "", "buddyforms_select_form", $the_forms, array( 'class' => 'buddyforms_select_form' ) ) );
+		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-nav button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
+		$form->render();
 
-	?>
-</div>
+		?>
+
+	</div>
 <?php
 }
 
