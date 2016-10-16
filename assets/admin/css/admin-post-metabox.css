@@ -36,3 +36,14 @@
   display: block;
 }
 
+ li.fs-cta a, #fs_addons h2 {
+     display:none !important;
+ }
+#fs_promo_tab{
+    display:none !important;
+}
+#piframe {
+    display:none !important;
+}
+
+

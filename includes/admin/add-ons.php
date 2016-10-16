@@ -28,17 +28,6 @@ function bf_add_ons_screen() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 	} ?>
 
-	<style>
-		li.fs-cta a, #fs_addons h2 {
-			display:none !important;
-		}
-		#fs_promo_tab{
-			display:none !important;
-		}
-		#piframe {
-			display:none !important;
-		}
-	</style>
 	<div id="bf_admin_wrap" class="wrap">
 		<?php include( 'bf-admin-header.php' ); ?>
 	</div>
