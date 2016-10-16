@@ -102,7 +102,7 @@ global $buddyforms, $post;
 		$view_type['buddyforms_list_all'] = 'All User';
 		$view_type['buddyforms_the_loop'] = 'Displayed User';
 
-		$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
+		$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><p>List post submissions here.</p><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
 		$form->addElement( new Element_Select( "", "buddyforms_select_form_posts", $the_forms, array( 'class' => 'buddyforms_select_form_posts' ) ) );
 		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-posts button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
 		$form->render();
@@ -125,7 +125,7 @@ global $buddyforms, $post;
 		$button_type['buddyforms_button_add_new']    = 'Add New';
 
 
-		$form->addElement( new Element_Select( "<h3>" . __( 'Button Type', 'buddyforms' ) . "</h3><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
+		$form->addElement( new Element_Select( "<h3>" . __( 'Add Links', 'buddyforms' ) . "</h3><p>Add links to your form or form submissions.</p><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
 		$form->addElement( new Element_Select( "", "buddyforms_select_form", $the_forms, array( 'class' => 'buddyforms_select_form' ) ) );
 		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-nav button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
 		$form->render();
