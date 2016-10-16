@@ -117,7 +117,7 @@ function buddyforms_permissions_screen() {
 
 		if($role_name == 'administrator'){
 			$element->setAttribute( 'shortDesc', 'Admin rights can not get changed' );
-			$element->setAttribute( 'disabled', 'disabled' );
+//			$element->setAttribute( 'disabled', 'disabled' );
 		}
 
 		if ( buddyforms_core_fs()->is_not_paying() ) {

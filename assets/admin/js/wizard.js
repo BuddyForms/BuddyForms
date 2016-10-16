@@ -308,7 +308,7 @@ jQuery(document).ready(function (jQuery) {
                     url: ajaxurl,
                     data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
                     success: function (data) {
-                        jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2> <br> <span class="dashicons dashicons-smiley"></span>');
+                        jQuery( '#post' ).html( '<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2><br><span class="dashicons dashicons-smiley"></span>');
                         window.location = data;
                         return false;
                     }

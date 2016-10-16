@@ -458,10 +458,11 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 							$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
 							$tax_item[$term_key] = (string)$new_term['term_id'];
 						}
+
 					}
 
 					// Now let us set the post terms
-					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], false );
+					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], true );
 
 				// If hierarchical is false only single selction is allowed
 				} else {
@@ -474,7 +475,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 						$term = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
 						$slug[] = $term->slug;
 					}
-					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], false );
+					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], true );
 				}
 			}
 		endif;

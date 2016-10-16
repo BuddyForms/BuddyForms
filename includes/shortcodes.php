@@ -69,8 +69,8 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_option = $buddyforms[ $form_slug ]['list_posts_option'];
-	$list_posts_style  = $buddyforms[ $form_slug ]['list_posts_style'];
+	$list_posts_option = isset($buddyforms[ $form_slug ]['list_posts_option']) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
+	$list_posts_style  = isset($buddyforms[ $form_slug ]['list_posts_style']) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
 	$user_id = empty($author) ?  apply_filters( 'buddyforms_user_posts_user_id', get_current_user_id() ) : $author;
 
