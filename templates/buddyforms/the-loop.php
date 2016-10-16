@@ -62,8 +62,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
 						</div>
 
-						<div class="item-title"><a class="<?php echo $buddyforms[$form_slug]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> " data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
-						                           title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
+						<div class="item-title">
+							<a class="<?php echo $buddyforms[$form_slug]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
+							   data-id="<?php the_ID() ?>"
+							   href="<?php echo $the_permalink; ?>"
+							   rel="bookmark"
+							   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?>
+							</a>
 						</div>
 
 						<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
