@@ -1111,3 +1111,23 @@ div#buddyforms_metabox_sidebar p {
     padding: 20px 10px 30px;
     border: 1px solid #ddd;
 }*/
+
+tr.bf-disabled {
+    opacity: 0.5;
+}
+
+tr.bf-disabled th label b::after {
+    width: 72px;
+    height: 18px;
+    padding: 0;
+    clear: both;
+    display: block;
+    float: none;
+    content: "Pro Feature";
+    text-align: center;
+    font-size: 9px;
+    line-height: 2;
+    background: #b90638;
+    color: #fff;
+    border-radius: 20px;
+}
