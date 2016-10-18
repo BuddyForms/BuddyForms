@@ -604,7 +604,13 @@ class BuddyForms {
 function buddyforms_core_fs() {
 	global $buddyforms_core_fs;
 
+
+
+
 	if ( ! isset( $buddyforms_core_fs ) ) {
+
+		$first_path = get_option( 'buddyforms_preview_page', true ) != FALSE ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1';
+
 		// Include Freemius SDK.
 		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
 
@@ -618,7 +624,7 @@ function buddyforms_core_fs() {
 			'has_paid_plans'    => true,
 			'menu'              => array(
 				'slug'       => 'edit.php?post_type=buddyforms',
-				'first-path' => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
+				'first-path' => $first_path,
 				'support'    => false,
 				'contact'    => true,
 				'addons'    => false,
