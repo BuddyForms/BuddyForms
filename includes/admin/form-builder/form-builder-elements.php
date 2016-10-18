@@ -809,7 +809,8 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 			foreach ( $form_fields as $key => $field ) {
 
 				$type  = $field->getAttribute( 'type' );
-				$class = $field->getAttribute( 'class' );
+				$classes    = $field->getAttribute( 'class' );
+				$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
 
 				switch ( $type ) {
 					case 'html':
@@ -822,7 +823,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 						break;
 					default :
 						?>
-						<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $class ?>">
+						<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
 							<th scope="row">
 								<label for="form_title"><?php echo $field->getLabel() ?></label>
 							</th>

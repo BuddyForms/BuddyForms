@@ -139,8 +139,15 @@ function buddyforms_registration_screen(){
 			<tbody id="the-list">
 			<?php
 			if ( isset( $form_setup ) ) {
-				foreach ( $form_setup as $key => $field ) { ?>
-					<tr id="row_form_title">
+				foreach ( $form_setup as $key => $field ) {
+
+					$classes    = $field->getAttribute( 'class' );
+					$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+
+					?>
+
+
+					<tr id="row_form_title" class="<?php echo $classes ?>">
 						<th scope="row">
 							<label for="role_role"><?php echo $field->getLabel() ?></label>
 						</th>

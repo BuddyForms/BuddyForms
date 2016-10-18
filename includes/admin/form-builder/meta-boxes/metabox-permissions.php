@@ -30,26 +30,26 @@ function buddyforms_permissions_unregistered_screen() {
 	?>
 	<div class="fields_header">
 		<table class="wp-list-table widefat posts striped">
-			<table class="wp-list-table widefat posts striped fixed">
-				<tbody>
-				<?php foreach($form_setup as $field_key => $field ) {
-					$type  = $field->getAttribute( 'type' );
-					$class = $field->getAttribute( 'class' );
-					if ( $type != 'html' ) {
-						?>
-						<tr class="<?php echo $class ?>">
-							<th scope="row">
-								<label for="form_title"><?php echo $field->getLabel() ?></label>
-							</th>
-							<td>
-								<?php echo $field->render() ?>
-								<p class="description"><?php echo $field->getShortDesc() ?></p>
-							</td>
-						</tr>
-					<?php }
-				} ?>
-				</tbody>
-			</table>
+			<tbody>
+			<?php foreach($form_setup as $field_key => $field ) {
+				$type  = $field->getAttribute( 'type' );
+				$classes    = $field->getAttribute( 'class' );
+				$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+
+				if ( $type != 'html' ) {
+					?>
+					<tr class="<?php echo $classes ?>">
+						<th scope="row">
+							<label for="form_title"><?php echo $field->getLabel() ?></label>
+						</th>
+						<td>
+							<?php echo $field->render() ?>
+							<p class="description"><?php echo $field->getShortDesc() ?></p>
+						</td>
+					</tr>
+				<?php }
+			} ?>
+			</tbody>
 		</table>
 	</div>
 	<?php
@@ -141,15 +141,16 @@ function buddyforms_permissions_screen() {
 						foreach ( $form_setup as $key => $field ) {
 
 							$type  = $field->getAttribute( 'type' );
-							$class  = $field->getAttribute( 'class' );
-							$disabled  = $field->getAttribute( 'disabled' );
+							$classes    = $field->getAttribute( 'class' );
+							$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+
 
 							if($type == 'html'){
 								echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $class . '"><td colspan="2">';
 								$field->render();
 								echo '</td></tr>';
 							} else { ?>
-								<tr class=" <?php echo $disabled ?>">
+								<tr class=" <?php echo $classes ?>">
 									<th scope="row">
 										<label for="role_role"><?php echo $field->getLabel() ?></label>
 									</th>

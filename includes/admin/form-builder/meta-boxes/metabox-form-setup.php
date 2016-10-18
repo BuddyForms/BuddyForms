@@ -360,30 +360,26 @@ function buddyforms_metabox_form_setup() {
 				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
 				     id="<?php echo $tab_slug; ?>">
 					<div class="buddyforms_accordion_general">
-
-				<?php foreach($fields as $field_key => $field ) {
-
-					$type = $field->getAttribute( 'type' );
-					$class = $field->getAttribute( 'class' );
-
-					if ( $type == 'html' ) {
-						$field->render();
-					}
-
-				}
-				?>
-
-
-					<table class="wp-list-table widefat posts striped fixed">
+						<?php
+						// get all the html elements and add them above the settings
+						foreach($fields as $field_key => $field ) {
+							$type = $field->getAttribute( 'type' );
+							if ( $type == 'html' ) {
+								$field->render();
+							}
+						} ?>
+						<table class="wp-list-table widefat posts striped fixed">
 							<tbody>
 							<?php foreach($fields as $field_key => $field ) {
 
-								$type  = $field->getAttribute( 'type' );
-								$class = $field->getAttribute( 'class' );
+								$type       = $field->getAttribute( 'type' );
+								$classes    = $field->getAttribute( 'class' );
+								$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+
+								// If the form element is not html create it as table row
 								if ( $type != 'html' ) {
 								?>
-
-								<tr class="<?php echo $class ?>">
+								<tr class="<?php echo $classes ?>">
 									<th scope="row">
 										<label for="form_title"><?php echo $field->getLabel() ?></label>
 									</th>
@@ -404,7 +400,7 @@ function buddyforms_metabox_form_setup() {
 			// Allow other plugins to hook there content for there nav into the tab content
 			do_action('buddyforms_form_setup_tab_pane_last');
 			?>
-		</div>
-	</div>
+		</div>  <!-- close .tab-content -->
+	</div> <!--	close .tabs -->
 	<?php
 }

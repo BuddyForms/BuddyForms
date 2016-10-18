@@ -18,8 +18,14 @@ jQuery( function( $ ) {
             $( '#buddyforms_form_setup' ).toggleClass( 'closed' );
         });
     });
+
+    $('form').bind('submit', function () {
+        $(this).find(':input').prop('disabled', false);
+    });
+
 });
 jQuery(document).ready(function (jQuery) {
+
     //
     // Add the value selected in the modal to the form element select box and trigger the change event to add the new form element to the sortable list
     //
