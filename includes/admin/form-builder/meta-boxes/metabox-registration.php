@@ -141,8 +141,8 @@ function buddyforms_registration_screen(){
 			if ( isset( $form_setup ) ) {
 				foreach ( $form_setup as $key => $field ) {
 
-					$classes    = $field->getAttribute( 'class' );
-					$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+					$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
+					$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
 
 					?>
 

@@ -32,9 +32,9 @@ function buddyforms_permissions_unregistered_screen() {
 		<table class="wp-list-table widefat posts striped">
 			<tbody>
 			<?php foreach($form_setup as $field_key => $field ) {
-				$type  = $field->getAttribute( 'type' );
-				$classes    = $field->getAttribute( 'class' );
-				$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+				$type     = $field->getAttribute( 'type' );
+				$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
+				$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
 
 				if ( $type != 'html' ) {
 					?>
@@ -140,9 +140,9 @@ function buddyforms_permissions_screen() {
 					if ( isset( $form_setup ) ) {
 						foreach ( $form_setup as $key => $field ) {
 
-							$type  = $field->getAttribute( 'type' );
-							$classes    = $field->getAttribute( 'class' );
-							$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+							$type     = $field->getAttribute( 'type' );
+							$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
+							$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
 
 
 							if($type == 'html'){

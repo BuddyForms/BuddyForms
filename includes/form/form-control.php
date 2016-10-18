@@ -433,9 +433,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				$taxonomy = get_taxonomy( $customfield['taxonomy'] );
 
 				// Check if multiple selection is allowed and delete all object relationships.
-				if ( isset( $customfield['multiple'] ) ) {
-				//	wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
-				}
+				//if ( isset( $customfield['multiple'] ) ) {
+//				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
+				//}
 
 				// Check if the taxonomy is hierarchical
 				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
@@ -450,19 +450,26 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 						}
 					}
 
+					$new_tax_items = array();
+
 					// Check if new term to insert
 					foreach($tax_item as $term_key => $term){
 						$term_exist = term_exists( $term, $customfield['taxonomy'] );
 
 						if( !$term_exist ){
 							$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
-							$tax_item[$term_key] = (string)$new_term['term_id'];
+							$term = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
+							$new_tax_items[$new_term['term_id']] = $term->slug;
+							wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], true );
+						} else {
+							$term = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
+							$new_tax_items[$term_exist['term_id']] = $term->slug;
 						}
 
 					}
 
 					// Now let us set the post terms
-					wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], true );
+
 
 				// If hierarchical is false only single selction is allowed
 				} else {
@@ -478,6 +485,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], true );
 				}
 			}
+
 		endif;
 
 		// Update meta do_action to hook into. This can be needed if you added

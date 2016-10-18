@@ -808,13 +808,13 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 		if ( isset( $form_fields ) ) {
 			foreach ( $form_fields as $key => $field ) {
 
-				$type  = $field->getAttribute( 'type' );
-				$classes    = $field->getAttribute( 'class' );
-				$classes    .= empty($field->getAttribute( 'disabled' )) ? '' : ' bf-' . $field->getAttribute( 'disabled' );
+				$type     = $field->getAttribute( 'type' );
+				$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
+				$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
 
 				switch ( $type ) {
 					case 'html':
-						echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $class . '"><td colspan="2">';
+						echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $classes . '"><td colspan="2">';
 						$field->render();
 						echo '</td></tr>';
 						break;
