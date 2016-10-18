@@ -587,6 +587,9 @@ class BuddyForms {
 
 		update_option( 'buddyforms_preview_page', $page_id );
 
+		$options = get_option( 'buddyforms_forms', true );
+
+		update_option( 'buddyforms_first_path_after_install', is_array($options) && count($options) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1');
 
 		set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
@@ -605,11 +608,9 @@ function buddyforms_core_fs() {
 	global $buddyforms_core_fs;
 
 
-
+	$first_path = get_option('buddyforms_first_path_after_install');
 
 	if ( ! isset( $buddyforms_core_fs ) ) {
-
-		$first_path = get_option( 'buddyforms_preview_page', true ) != FALSE ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1';
 
 		// Include Freemius SDK.
 		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
