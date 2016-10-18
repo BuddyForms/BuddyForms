@@ -150,7 +150,7 @@ function buddyforms_mail_notification_form( $trigger ) {
 	);
 	wp_editor( isset( $buddyform['mail_submissions'][ $trigger ]['mail_body'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_body'] : '', "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
-	$wp_editor    = '<div style="margin-left: -10px; margin-right: -10px"class="bf_field_group bf_form_content"><label for="form_title"><b>' . __( 'Content', 'buddyforms' ) . '</b><div class="bf_inputs">' . $wp_editor . '</div></div>';
+	$wp_editor    = '<div class="bf_field_group bf_form_content"><label for="form_title"><b>' . __( 'Content', 'buddyforms' ) . '</b></label><div class="bf_inputs bf-texteditor">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
 	?>
 

@@ -190,6 +190,11 @@
 #bf_admin_wrap .buddyforms_form_field {
     margin: 10px 0 15px;
 }
+.bf-texteditor {
+    width: 100%;
+    margin: 10px 0;
+}
+
 
 /** sidebar **/
 #bf_admin_wrap .accordion_sidebar .accordion-heading p {
