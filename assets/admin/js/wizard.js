@@ -1,5 +1,18 @@
 jQuery(document).ready(function (jQuery) {
 
+    jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
+
+        if (jQuery(this).prop('checked')) {
+            jQuery('#hooker-steps').steps("insert", 6, {
+                title: "Registration",
+                content: buddyforms_registration
+            });
+        } else {
+            jQuery('#hooker-steps').steps("remove", 6 );
+        }
+
+    });
+
     // get the url parameter to create the UI
     var wizard  = bf_getUrlParameter('wizard');
     var type    = bf_getUrlParameter('type');
@@ -41,6 +54,7 @@ jQuery(document).ready(function (jQuery) {
         var buddyforms_metabox_sidebar  = poststuff.find('#buddyforms_metabox_sidebar');
         var buddyforms_notification     = poststuff.find('#notification');
         var buddyforms_permission       = poststuff.find('#permission');
+        var buddyforms_registration     = poststuff.find('#registration');
         var buddyforms_create_content   = poststuff.find('#create-content');
         var buddyforms_edit_submissions = poststuff.find('#edit-submissions');
 
@@ -147,13 +161,21 @@ jQuery(document).ready(function (jQuery) {
             jQuery( buddyforms_edit_submissions ).appendTo( '#bf-hooker-edit-submissions' );
         }
 
-        jQuery(
-            '<h3>Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>' +
-            '<h3>Mail Notifications</h3><section><div id="bf-hooker-notifications"></div></section>' +
-            ''
-        ).appendTo( '#hooker-steps' );
+        // All Forms have form elements ;) they come preloaded form he json
+        jQuery('<h3>Form Elements</h3><section><div id="bf-hooker-formbuilder"></div></section>').appendTo('#hooker-steps');
 
+        // Contact and Post form have mail Notifications
+        if(type == 'contact' || type == 'post') {
+            jQuery('<h3>Mail Notifications</h3><section><div id="bf-hooker-notifications"></div></section>'
+            ).appendTo('#hooker-steps');
+        }
+        // Registration options needed if type is == registration
+        if(type == 'registration'){
+            jQuery( '<h3>Registration</h3><section><div id="bf-hooker-registration"></div></section>').appendTo( '#hooker-steps' );
+            jQuery( buddyforms_registration ).appendTo( '#bf-hooker-registration' );
+        }
 
+        // Permissions we only make available for post forms
         if(type == 'post'){
             jQuery( '<h3>Permissions</h3><section><div id="bf-hooker-permissions"></div></section>').appendTo( '#hooker-steps' );
         }

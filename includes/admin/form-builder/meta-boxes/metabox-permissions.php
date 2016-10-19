@@ -25,34 +25,11 @@ function buddyforms_permissions_unregistered_screen() {
 			 ) );
 
 	$element->setAttribute('id', 'public_submit_create_account');
+	$element->setAttribute('class', 'public_submit_create_account');
 
 	$form_setup[] = $element;
-	?>
-	<div class="fields_header">
-		<table class="wp-list-table widefat posts striped">
-			<tbody>
-			<?php foreach($form_setup as $field_key => $field ) {
-				$type     = $field->getAttribute( 'type' );
-				$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
-				$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
 
-				if ( $type != 'html' ) {
-					?>
-					<tr class="<?php echo $classes ?>">
-						<th scope="row">
-							<label for="form_title"><?php echo $field->getLabel() ?></label>
-						</th>
-						<td>
-							<?php echo $field->render() ?>
-							<p class="description"><?php echo $field->getShortDesc() ?></p>
-						</td>
-					</tr>
-				<?php }
-			} ?>
-			</tbody>
-		</table>
-	</div>
-	<?php
+	buddyforms_display_field_group_table( $form_setup );
 }
 
 function buddyforms_permissions_screen() {

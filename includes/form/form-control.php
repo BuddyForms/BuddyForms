@@ -298,12 +298,9 @@ function buddyforms_process_post( $args = Array() ) {
 	do_action( 'buddyforms_after_save_post', $post_id );
 
 	$args2 = array(
-		'hasError'     => $hasError,
+		'haserror'     => $haserror,
 		'form_notice'  => $form_notice,
-		'customfields' => $customfields,
-		//'post_id'		=> $post_id,
-		//'revision_id' 	=> $revision_id,
-		//'post_parent'   => $post_parent,
+		'customfields' => $customfields, 
 		'redirect_to'  => $redirect_to,
 		'form_slug'    => $form_slug,
 	);

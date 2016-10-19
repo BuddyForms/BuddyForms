@@ -131,39 +131,5 @@ function buddyforms_registration_screen(){
 		'class'     => '',
 	) );
 
-
-
-	?>
-	<div class="fields_header">
-		<table class="wp-list-table widefat posts striped fixed">
-			<tbody id="the-list">
-			<?php
-			if ( isset( $form_setup ) ) {
-				foreach ( $form_setup as $key => $field ) {
-
-					$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
-					$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
-
-					?>
-
-
-					<tr id="row_form_title" class="<?php echo $classes ?>">
-						<th scope="row">
-							<label for="role_role"><?php echo $field->getLabel() ?></label>
-						</th>
-						<td>
-							<?php echo $field->render() ?>
-							<p class="description"><?php echo $field->getShortDesc() ?></p>
-						</td>
-					</tr>
-					<?php
-				}
-			}
-			?>
-			</tbody>
-		</table>
-	</div>
-
-	<?php
-
+	buddyforms_display_field_group_table($form_setup);
 }
