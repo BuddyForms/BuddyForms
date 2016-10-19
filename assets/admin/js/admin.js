@@ -157,6 +157,10 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
+
+
+
+
     // Hide all postbox metabocen exeped the buddyforms etaboxes
     jQuery('div .postbox').not('.buddyforms-metabox').hide();
 

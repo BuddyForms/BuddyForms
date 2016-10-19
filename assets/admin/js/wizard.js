@@ -13,6 +13,30 @@ jQuery(document).ready(function (jQuery) {
 
     });
 
+    //jQuery(document).on('keyup keypress', function(e) {
+    //    key13control(e);
+    //});
+
+    function key13control(e){
+        if (e.keyCode == 13) {
+
+            var all = jQuery(".steps ul li").length;
+            var current = jQuery("#hooker-steps").steps("getCurrentIndex");;
+
+            if(current === undefined)
+                return false;
+
+            if(all == (current + 1)){
+                jQuery('a[href="#finish"]').trigger('click');
+            } else {
+                jQuery('a[href="#next"]').trigger('click');
+            }
+
+            e.preventDefault();
+            return false;
+        }
+    }
+
     // get the url parameter to create the UI
     var wizard  = bf_getUrlParameter('wizard');
     var type    = bf_getUrlParameter('type');
@@ -119,6 +143,14 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery( '#post' ).html( poststuff );
         jQuery( '#post, #postbox-container-1, #postbox-container-2' ).show();
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {"action": "buddyforms_wizard_rewrite_rules"},
+            success: function (data) {
+                console.log('Done ' + data);
+            }
+        });
     }
 
     // Get the Form Type Templates for Step 1

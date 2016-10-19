@@ -154,6 +154,17 @@ function buddyforms_form_builder_wizard_save(){
 }
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_save', 'buddyforms_form_builder_wizard_save' );
 
+function buddyforms_wizard_rewrite_rules() {
+	// Regenerate the global $buddyforms.
+	// The global$buddyforms is sored in the option table and provides all fors and form fields
+	buddyforms_regenerate_global_options();
+
+	// Rewrite the page roles and flash permalink if needed
+	buddyforms_attached_page_rewrite_rules( true );
+
+	die();
+}
+add_action( 'wp_ajax_buddyforms_wizard_rewrite_rules', 'buddyforms_wizard_rewrite_rules' );
 
 function buddyforms_wizard_done(){
 	global $post;
