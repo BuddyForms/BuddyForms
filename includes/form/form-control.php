@@ -300,7 +300,7 @@ function buddyforms_process_post( $args = Array() ) {
 	$args2 = array(
 		'haserror'     => $haserror,
 		'form_notice'  => $form_notice,
-		'customfields' => $customfields, 
+		'customfields' => $customfields,
 		'redirect_to'  => $redirect_to,
 		'form_slug'    => $form_slug,
 	);
@@ -417,70 +417,57 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 		}
 
+		//
 		// Save taxonomies if needed
 		//
-		//
-		//						$wp_insert_term = wp_insert_term( $new_tax, $customfield['taxonomy'] );
-		//						wp_set_post_terms( $post_id, $wp_insert_term, $customfield['taxonomy'], true );
 
 		if ( $customfield['type'] == 'taxonomy' ) :
 
 			if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 
+				// Get the tax items
+				$tax_item = $_POST[$customfield['slug']];
 				$taxonomy = get_taxonomy( $customfield['taxonomy'] );
 
-				// Check if multiple selection is allowed and delete all object relationships.
-				//if ( isset( $customfield['multiple'] ) ) {
-//				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
-				//}
+				// Let us delete all and re assign.
+				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
 
-				// Check if the taxonomy is hierarchical
-				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
+				// Ctreate a new empty arry for our taxonomy terms
+				$new_tax_items = array();
 
-					// Get the tax items
-					$tax_item = $_POST[$customfield['slug']];
-
-					// If no tax items are available check if we have some defaults we can use
-					if ( $tax_item[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
-						foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-							$tax_item[$key_tax] = $tax;
-						}
+				// If no tax items are available check if we have some defaults we can use
+				if ( $tax_item[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
+					foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
+						$tax_item[$key_tax] = $tax;
 					}
-
-					$new_tax_items = array();
-
-					// Check if new term to insert
-					foreach($tax_item as $term_key => $term){
-						$term_exist = term_exists( $term, $customfield['taxonomy'] );
-
-						if( !$term_exist ){
-							$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
-							$term = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
-							$new_tax_items[$new_term['term_id']] = $term->slug;
-							wp_set_post_terms( $post_id, $tax_item, $customfield['taxonomy'], true );
-						} else {
-							$term = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
-							$new_tax_items[$term_exist['term_id']] = $term->slug;
-						}
-
-					}
-
-					// Now let us set the post terms
-
-
-				// If hierarchical is false only single selction is allowed
-				} else {
-
-					$slug = Array();
-
-					$postCategories = $_POST[$customfield['slug']];
-
-					foreach ( $postCategories as $postCategory ) {
-						$term = get_term_by( 'id', $postCategory, $customfield['taxonomy'] );
-						$slug[] = $term->slug;
-					}
-					wp_set_post_terms( $post_id, $slug, $customfield['taxonomy'], true );
 				}
+
+				// Check if new term to insert
+				foreach($tax_item as $term_key => $term){
+					$term_exist = term_exists( (int)$term, $customfield['taxonomy'] );
+
+					if( !$term_exist ){
+						$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
+						$term = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
+						$new_tax_items[$new_term['term_id']] = $term->slug;
+					} else {
+						$term = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
+						$new_tax_items[$term_exist['term_id']] = $term->slug;
+					}
+
+				}
+
+				// Check if the taxonomy is hierarchical and prepare the string
+				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
+					$cat_string = implode(', ', array_map(
+						function ($v, $k) { return sprintf("%s", $k); },
+						$new_tax_items,
+						array_keys($new_tax_items)
+					));
+				} else {
+					$cat_string = implode(', ', $new_tax_items);
+				}
+				wp_set_post_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 			}
 
 		endif;
