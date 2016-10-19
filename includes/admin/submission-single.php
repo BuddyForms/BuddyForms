@@ -118,15 +118,23 @@
 					<?php } ?>
 				<?php }
 			}
-			buddyforms_go_pro( __( 'Get Insights with the Premium Version'), __('Get all insights about your user', 'buddyforms' ), array(
-				'IP Address',
-				'Referer',
-				'Browser',
-				'Platform',
-				'Reports',
-				'User Agent',
-			));
-			?>
+			if ( buddyforms_core_fs()->is_not_paying() ) { ?>
+			<div class="postbox">
+				<h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
+				<div class="inside">
+					<?php
+					buddyforms_go_pro('' , __( '', 'buddyforms' ), array(
+						'IP Address',
+						'Referer',
+						'Browser',
+						'Platform',
+						'Reports',
+						'User Agent',
+					) );
+					?>
+				</div>
+			</div>
+			<?php } ?>
 		</div>
 	</div>
 </div>

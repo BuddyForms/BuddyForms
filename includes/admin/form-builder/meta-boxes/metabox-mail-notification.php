@@ -68,7 +68,6 @@ function bf_post_status_mail_notification_screen() {
 
 }
 
-
 function buddyforms_mail_notification_form( $trigger ) {
 	global $post, $buddyform;
 

@@ -393,3 +393,42 @@ function buddyforms_dequeue_select2_version3() {
 
 	}
 }
+
+function buddyforms_metabox_go_pro(){
+
+	buddyforms_go_pro( '<span></span>', '', array(
+		'Priority Support',
+		'More Form Elements',
+		'More Options',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Full Control', 'buddyforms' ), array(
+		'Use your form in the backend admin edit screen like ACF',
+		'Control who can create, edit and delete content',
+		'Registration Options',
+		'Disable ajax form submission',
+		'Local Storage',
+		'More Notification Options',
+		'Import - Export Forms',
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Permissions Management', 'buddyforms' ), array(
+		'Manage User Roles',
+		'Manage Capabilities',
+		'More Validation Options'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('More Post Options', 'buddyforms' ), array(
+		'All Post Types',
+		'Posts Revision',
+		'Comment Status',
+		'Enable Login on the form',
+		'Create an account during submission?',
+		'Featured Image Support'
+	), false);
+	buddyforms_go_pro( '<span></span>', __('Know Your User', 'buddyforms' ). '<p><small>' . __('Get deep Insights about your Submitter', 'buddyforms' ) . '</small></p>', array(
+		'IP Address',
+		'Referer',
+		'Browser',
+		'Platform',
+		'Reports',
+		'User Agent',
+	));
+}
