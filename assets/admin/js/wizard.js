@@ -14,8 +14,7 @@ jQuery(document).ready(function (jQuery) {
     if(wizard != null){
 
         // first hide all so we have a consitend feeling
-        jQuery('#post, #postbox-container-1, #postbox-container-2').hide();
-
+        jQuery('#post, #postbox-container-1, #postbox-container-2, #message, .error').hide();
 
         jQuery('#menu-posts-buddyforms a').removeClass('current');
         jQuery('#menu-posts-buddyforms li').removeClass('current');
@@ -23,10 +22,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#menu-posts-buddyforms [href*="wizard"]').addClass('current');
         jQuery('#menu-posts-buddyforms [href*="wizard"]').parent('li').addClass('current');
 
-
-
         // get the parts
-
         var poststuff                   = jQuery('#poststuff');
         //
         var container1                  = poststuff.find('#postbox-container-1');
