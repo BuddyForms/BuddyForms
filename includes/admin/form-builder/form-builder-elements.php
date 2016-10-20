@@ -347,43 +347,43 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
 
 
-			$filter                           = isset( $customfield['filter'] ) ? $customfield['filter'] : 'false';
-			$form_fields['general']['filter'] = new Element_Select( '<b>' . __( 'Filter: ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][filter]", array( 'include' => __( 'Include', 'buddyforms' ), 'exclude' => __( 'Exclude', 'buddyforms' ) ), array( 'value' => $filter, 'class' => 'bf_hide_if_post_type_none' ) );
 
-			$taxonomy_filter = isset( $customfield['taxonomy_filter'] ) ? $customfield['taxonomy_filter'] : 'false';
+		$taxonomy_include = isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : 'false';
 
-			$wp_dropdown_taxonomy_filter_args = array(
-				'hide_empty'    => 0,
-				'child_of'      => 0,
-				'echo'          => false,
-				'selected'      => false,
-				'hierarchical'  => 1,
-				'id'            => 'taxonomy_filter' . $field_id,
-				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_filter][]",
-				'class'         => 'postform bf-select2 tax_default',
-				'depth'         => 0,
-				'tab_index'     => 0,
-				'taxonomy'      => $taxonomy,
-				'hide_if_empty' => false,
-				'orderby'       => 'SLUG',
-				'order'         => $taxonomy_order,
-			);
+		$wp_dropdown_taxonomy_include_args = array(
+			'hide_empty'    => 0,
+			'child_of'      => 0,
+			'echo'          => false,
+			'selected'      => false,
+			'hierarchical'  => 1,
+			'id'            => 'taxonomy_include' . $field_id,
+			'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_include][]",
+			'class'         => 'postform bf-select2 tax_default',
+			'depth'         => 0,
+			'tab_index'     => 0,
+			'taxonomy'      => $taxonomy,
+			'hide_if_empty' => false,
+			'orderby'       => 'SLUG',
+			'order'         => $taxonomy_order,
+			'exclude'            => '',
+			'include'            => '',
+		);
 
-			$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_filter_args );
+		$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_include_args );
 
-			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+		$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
-			if ( is_array( $taxonomy_filter ) ) {
-				foreach ( $taxonomy_filter as $key => $post_term ) {
-					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
-				}
-			} else {
-				$dropdown = str_replace( ' value="' . $taxonomy_filter . '"', ' value="' . $taxonomy_filter . '" selected="selected"', $dropdown );
+		if ( is_array( $taxonomy_include ) ) {
+			foreach ( $taxonomy_include as $key => $post_term ) {
+				$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
 			}
+		} else {
+			$dropdown = str_replace( ' value="' . $taxonomy_include . '"', ' value="' . $taxonomy_include . '" selected="selected"', $dropdown );
+		}
 
-			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_filter" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
+		$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_include" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
-                        <label for="form_title"><b style="margin-left: -10px;">Taxonomy Include/Exclude Items</b></label>
+                        <label for="form_title"><b style="margin-left: -10px;">Include Items</b></label>
                     </th>
                     <td>
                         <div>' . $dropdown . '
@@ -392,16 +392,58 @@ function buddyforms_display_form_element( $args ) {
                     </td></table>';
 
 
-			$form_fields['general']['taxonomy_filter'] = new Element_HTML( $dropdown );
+		$form_fields['general']['taxonomy_include'] = new Element_HTML( $dropdown );
+
+
+
+		$taxonomy_exclude = isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : 'false';
+
+		$wp_dropdown_taxonomy_exclude_args = array(
+			'hide_empty'    => 0,
+			'child_of'      => 0,
+			'echo'          => false,
+			'selected'      => false,
+			'hierarchical'  => 1,
+			'id'            => 'taxonomy_exclude' . $field_id,
+			'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_exclude][]",
+			'class'         => 'postform bf-select2 tax_default',
+			'depth'         => 0,
+			'tab_index'     => 0,
+			'taxonomy'      => $taxonomy,
+			'hide_if_empty' => false,
+			'orderby'       => 'SLUG',
+			'order'         => $taxonomy_order,
+		);
+
+		$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_exclude_args );
+
+		$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
+
+		if ( is_array( $taxonomy_exclude ) ) {
+			foreach ( $taxonomy_exclude as $key => $post_term ) {
+				$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+			}
+		} else {
+			$dropdown = str_replace( ' value="' . $taxonomy_exclude . '"', ' value="' . $taxonomy_exclude . '" selected="selected"', $dropdown );
+		}
+
+		$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_exclude" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
+                    <th scope="row">
+                        <label for="form_title"><b style="margin-left: -10px;">Exclude Items</b></label>
+                    </th>
+                    <td>
+                        <div>' . $dropdown . '
+                            <p class="description">You can select multiple items</p>
+                        </div>
+                    </td></table>';
+
+
+		$form_fields['general']['taxonomy_exclude'] = new Element_HTML( $dropdown );
+
+
 
 			$create_new_tax                           = isset( $customfield['create_new_tax'] ) ? $customfield['create_new_tax'] : 'false';
 			$form_fields['general']['create_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $create_new_tax, 'class' => 'bf_hide_if_post_type_none' ) );
-
-			$create_new_tax_label                           = isset( $customfield['create_new_tax_label'] ) ? $customfield['create_new_tax_label'] : 'Add new';
-			$form_fields['general']['create_new_tax_label'] = new Element_Textbox( '<b>' . __( 'New Taxonomy Item Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax_label]", array( 'value' => $create_new_tax_label, 'class' => 'bf_hide_if_post_type_none' ) );
-
-			$use_tag_style_input                           = isset( $customfield['use_tag_style_input'] ) ? $customfield['use_tag_style_input'] : 'tag';
-			$form_fields['general']['use_tag_style_input'] = new Element_Checkbox( '<b>' . __( 'Tag style input?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax]", array( 'use_tag_style_input' => '<b>' . __( 'User Tags style input field', 'buddyforms' ) . '</b>' ), array( 'value' => $use_tag_style_input, 'class' => 'bf_hide_if_post_type_none' ) );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden, 'class' => 'bf_hide_if_post_type_none' ) );

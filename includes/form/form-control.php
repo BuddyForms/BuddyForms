@@ -426,7 +426,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 			if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 
 				// Get the tax items
-				$tax_item = $_POST[$customfield['slug']];
+				$tax_terms = $_POST[$customfield['slug']];
 				$taxonomy = get_taxonomy( $customfield['taxonomy'] );
 
 				// Let us delete all and re assign.
@@ -436,16 +436,19 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				$new_tax_items = array();
 
 				// If no tax items are available check if we have some defaults we can use
-				if ( $tax_item[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
+				if ( $tax_terms[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
 					foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-						$tax_item[$key_tax] = $tax;
+						$tax_terms[$key_tax] = $tax;
 					}
 				}
 
 				// Check if new term to insert
-				foreach($tax_item as $term_key => $term){
+				foreach($tax_terms as $term_key => $term){
+
+					// Check if the term exist
 					$term_exist = term_exists( (int)$term, $customfield['taxonomy'] );
 
+					// Create new term if need and add to the new tax items array
 					if( !$term_exist ){
 						$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
 						$term = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
@@ -467,6 +470,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				} else {
 					$cat_string = implode(', ', $new_tax_items);
 				}
+
+				// Add the new terms to the taxonomy
 				wp_set_post_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 			}
 

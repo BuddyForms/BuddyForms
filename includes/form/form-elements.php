@@ -482,12 +482,14 @@ function bf_form_elements( $form, $args ) {
 							'selected'      => false,
 							'hierarchical'  => 1,
 							'name'          => $slug . '[]',
-							'class'         => 'postform bf-select2',
+							'class'         => 'postform bf-select2-' . $field_id,
 							'depth'         => 0,
 							'tab_index'     => 0,
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
 							'order'         => $customfield['taxonomy_order'],
+							'exclude'            => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
+							'include'            => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
 						);
 
 						if ( isset( $customfield['show_option_none'] ) && ! isset( $customfield['multiple'] ) ) {
@@ -531,23 +533,23 @@ function bf_form_elements( $form, $args ) {
 							$required = '<span class="required">* </span>';
 						}
 
-						$button_label = empty($customfield['create_new_tax_label']) ? __('Add New', 'buddyforms') : $customfield['create_new_tax_label'];
-						$button_label = empty($customfield['create_new_tax_label']) ? __('Add New', 'buddyforms') : $customfield['create_new_tax_label'];
+						$tags = isset($customfield['create_new_tax']) ? 'tags: true,' : '';
 
 						$dropdown = '
+						<script>
+							jQuery(document).ready(function () {
+							    jQuery(".bf-select2-' . $field_id . '").select2({
+							        placeholder: "Select an option",
+							        '.$tags.'
+							        tokenSeparators: [\',\', \' \']
+							    });
+						    });
+						</script>
 						<div class="bf_field_group">
 	                        <label for="editpost-element-' . $field_id . '">
 	                            ' . $required . $name . '
 	                        </label>
-	                        <div class="bf_inputs bf-input">' . $dropdown ;
-								if ( isset( $customfield['create_new_tax'] ) ) {
-									$dropdown .= '
-									    <label for="' . $slug . '_create_new_tax' . $field_id . '">Add New</label>
-			                            <input type="text" name="' . $slug . '_create_new_tax_' . $field_id . '" class="settings-input form-control garlic-auto-save" id="' . $slug . '_create_new_tax_' . $field_id . '"></input>
-			                            <span class="help-inline"><a href="#" data-field_id="' . $field_id . '" data-field_slug="' . $slug   . '" class="button create-new-tax-item">' . $button_label . '</a></span>';
-								}
-						$dropdown .= '
-							</div>
+	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
 		                	<span class="help-inline">' . $description . '</span>
 		                </div>';
 
