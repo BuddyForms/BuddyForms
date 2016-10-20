@@ -96,6 +96,9 @@ function buddyforms_wp_insert_user() {
 				'description'		=> $description
 			)
 		);
+		if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ) {
+			add_user_to_blog( $buddyforms[$form_slug]['blog_id'], $new_user_id, $user_role );
+		}
 
 		if ( $new_user_id && !is_wp_error( $new_user_id ) ) {
 			$code = sha1( $new_user_id . time() );

@@ -14,6 +14,9 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'id'   => '',
 	), $args ) );
 
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
+	}
 
 	if(empty($form_slug))
 		$form_slug = $slug;
@@ -31,6 +34,10 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		buddyforms_create_edit_form( $args );
 		$create_edit_form = ob_get_contents();
 	ob_clean();
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		restore_current_blog();
+	}
 
 	return $create_edit_form;
 }
@@ -57,6 +64,11 @@ function buddyforms_the_loop( $args ) {
 		'id'          => '',
 		'post_parent' => 0
 	), $args ) );
+
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
+	}
 
 	if(empty($form_slug) && !empty($id)){
 		$post = get_post($id);
@@ -135,6 +147,10 @@ function buddyforms_the_loop( $args ) {
 	wp_reset_postdata();
 
 	do_action( 'buddyforms_the_loop_end', $query_args );
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		restore_current_blog();
+	}
 }
 
 add_shortcode( 'buddyforms_the_loop', 'buddyforms_the_loop_shortcode' );

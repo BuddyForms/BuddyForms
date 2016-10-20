@@ -25,6 +25,12 @@ function buddyforms_process_post( $args = Array() ) {
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 	), $args ) );
 
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
+	}
+
+
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -310,6 +316,10 @@ function buddyforms_process_post( $args = Array() ) {
 	do_action( 'buddyforms_process_post_end', $args );
 	Form::clearValues( "buddyforms_form_" . $form_slug );
 	return $args;
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		restore_current_blog();
+	}
 
 }
 

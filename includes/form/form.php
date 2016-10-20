@@ -32,6 +32,10 @@ function buddyforms_create_edit_form( $args ) {
 		'form_notice' => '',
 	), $args ) );
 
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
+	}
+
 	$current_user = wp_get_current_user();
 
 	if ( empty( $post_type ) ) {
@@ -175,6 +179,10 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 	echo buddyforms_form_html( $args );
+
+	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+		restore_current_blog();
+	}
 }
 
 /**

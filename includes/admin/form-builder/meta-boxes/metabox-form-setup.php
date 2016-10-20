@@ -73,7 +73,6 @@ function buddyforms_metabox_form_setup() {
 	$list_posts_option          = isset( $buddyform['list_posts_option'] )          ? $buddyform['list_posts_option']               : 'list_all_form';
 	$list_posts_style           = isset( $buddyform['list_posts_style'] )           ? $buddyform['list_posts_style']                : 'list';
 
-
 	$local_storage              = isset( $buddyform['local_storage'] )              ? $buddyform['local_storage']                   : '';
 
 
@@ -125,9 +124,6 @@ function buddyforms_metabox_form_setup() {
 //			? __('Add a after Submission Message', 'buddyforms')
 //			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
-
-
-
 
 	$element = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
 		'shortDesc' => __( '', 'buddyforms' ),
@@ -314,6 +310,29 @@ function buddyforms_metabox_form_setup() {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Edit Submissions'][] = $element;
+
+	//
+	// Display Multisite options if network is enabled
+	//
+
+	if(is_multisite()){
+		$sites_select = array();
+		$sites = get_sites();
+		foreach( $sites as $site_id => $site ){
+			$blog_details = get_blog_details($site->blog_id, array('blog_id', 'blogname'));
+			$sites_select[$blog_details->blog_id] = $blog_details->blogname;
+		}
+
+		$blog_id  = isset( $buddyform['blog_id'] ) ? $buddyform['blog_id'] : '';
+
+		$element = new Element_Select( '<b>' . __( "Select a Blog", 'buddyforms' ) . '</b>', "buddyforms_options[blog_id]", $sites_select, array(
+			'value'     => $blog_id,
+			'shortDesc' => 'You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place.',
+			'id'        => 'blog_id',
+		) );
+		$form_setup['Network'][] = $element;
+
+	}
 
 
 	// Check if form elements exist and sort the form elements
