@@ -151,6 +151,7 @@ class BuddyForms {
 		}
 
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
+		require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
