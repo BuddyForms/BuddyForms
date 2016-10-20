@@ -451,16 +451,17 @@ JS;
 
                         switch (i) {
                             case 'form_notice':
-                                jQuery('#form_message_$form_slug' ).html(val);
+                           		jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert success' );
+                                jQuery( '#form_message_$form_slug' ).html( val );
                                 break;
                             case 'form_remove':
-                                jQuery('#buddyforms_form_hero_$form_slug .form_wrapper').remove();
+                                jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
                                 break;
                             case 'form_actions':
-                                jQuery('#buddyforms_form_hero_$form_slug .form-actions').html(val);
+                                jQuery( '#buddyforms_form_hero_$form_slug .form-actions' ).html(val);
                                 break;
                             default:
-                                jQuery('input[name="' + i + '"]').val(val);
+                                jQuery( 'input[name="' + i + '"]').val(val);
                         }
                         jQuery('#recaptcha_reload').trigger('click');
 

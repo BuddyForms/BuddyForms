@@ -23,7 +23,6 @@ function buddyforms_form_html( $args ) {
 		'form_notice'  => '',
 	), $args ) );
 
-
 	if ( ! is_user_logged_in() && !isset($buddyforms[$form_slug]['public_submit'])) :
 		return buddyforms_get_wp_login_form();
 	endif;
@@ -54,8 +53,9 @@ function buddyforms_form_html( $args ) {
 	$form_html = apply_filters('buddyforms_form_hero_top', $form_html, $form_slug);
 	$form_html .= !is_user_logged_in() && isset($buddyforms[$form_slug]['public_submit_login']) && $buddyforms[$form_slug]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template() : '';
 
+	$notice_class = apply_filters('buddyforms_form_notice_class', $form_notice != '' ? 'bf-alert success' : '', $form_slug );
 
-	$form_html .= '<div id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
+	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
 	// Create the form object

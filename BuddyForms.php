@@ -624,6 +624,7 @@ function buddyforms_core_fs() {
 			'is_premium'        => true,
 			'has_addons'        => true,
 			'has_paid_plans'    => true,
+			'secret_key'        => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
 			'menu'              => array(
 				'slug'       => 'edit.php?post_type=buddyforms',
 				'first-path' => $first_path,
