@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Process the post and Validate all. Saves or update the post and post meta.
+ * Process the form submission. Validate all. Saves or update the post and post meta. Sent aut notifications if needed
  *
  * @package BuddyForms
  * @since 0.3 beta
@@ -25,12 +25,10 @@ function buddyforms_process_post( $args = Array() ) {
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 	), $args ) );
 
-
 	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
 		$current_blog_id = get_current_blog_id();
 		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
 	}
-
 
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 
@@ -62,8 +60,6 @@ function buddyforms_process_post( $args = Array() ) {
 			$user_data['useragent'] = $browser_data['useragent'];
 		}
 	}
-
-
 
 	/* Servers site validation
 	 * First we have browser validation. Now let us check from the server site if all is in place
@@ -246,8 +242,9 @@ function buddyforms_process_post( $args = Array() ) {
 
 		if ( isset( $_POST['featured_image'] ) ) {
 
+			$attach_id = $_POST['featured_image'];
+
 			if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ) {
-//				$featured_image_src = wp_get_post_featured_image_src( $_POST['featured_image'], $current_blog_id );
 
 				restore_current_blog();
 
@@ -296,11 +293,11 @@ function buddyforms_process_post( $args = Array() ) {
 				wp_update_attachment_metadata( $attach_id, $attach_data );
 
 				// And finally assign featured image to post
-				set_post_thumbnail( $post_id, $attach_id );
 
-			} else {
-				set_post_thumbnail( $post_id, $_POST['featured_image'] );
 			}
+
+			// Ok let us save the Attachment as post thumbnail
+			set_post_thumbnail( $post_id, $attach_id );
 
 		} else {
 			delete_post_thumbnail( $post_id );
