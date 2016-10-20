@@ -313,7 +313,9 @@ function bf_form_elements( $form, $args ) {
 						break;
 
 					case 'captcha' :
-						$form->addElement( new Element_Captcha("Captcha", $attributes = null) );
+						if(!is_user_logged_in()){
+							$form->addElement( new Element_Captcha("Captcha", $attributes = null) );
+						}
 						break;
 
 					case 'link' :
