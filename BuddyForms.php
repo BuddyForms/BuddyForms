@@ -608,7 +608,6 @@ class BuddyForms {
 function buddyforms_core_fs() {
 	global $buddyforms_core_fs;
 
-
 	$first_path = get_option('buddyforms_first_path_after_install');
 
 	if ( ! isset( $buddyforms_core_fs ) ) {
