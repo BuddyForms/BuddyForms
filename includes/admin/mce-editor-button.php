@@ -47,6 +47,9 @@ global $buddyforms, $post;
 	if ( ! is_admin() OR empty( $buddyforms ) ) {
 		return;
 	}
+	if(!isset($post->post_type)){
+		return;
+	}
 	if($post->post_type == 'buddyforms'){
 		return;
 	}?>
