@@ -1,0 +1,6 @@
+{
+  "name": "Buddyforms",
+  "tagline": "WordPress Front End Editor And Form Builder For Your User Generated Content",
+  "body": "# Welcome to the BuddyForms Wiki!\r\n\r\n**Documentation**<br>\r\nYou can find the BuddyForms Documentation in our help desc.<br>\r\n[docs.buddyforms.com](docs.buddyforms.com)\r\n\r\n**Report Issues**<br>\r\nFor issues submission please use the Github Issue tracker.\r\n[https://github.com/BuddyForms/BuddyForms/issues](https://github.com/BuddyForms/BuddyForms/issues)\r\n\r\n**Download Latest Version**<br>\r\nThe latest supported public version can be found on WordPress.\r\n[https://wordpress.org/plugins/buddyforms/](https://wordpress.org/plugins/buddyforms/)",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
