@@ -280,6 +280,8 @@ function buddyforms_display_form_element( $args ) {
 
 		case 'taxonomy':case 'category':case 'tags':
 
+			unset($form_fields['advanced']['metabox_enabled']);
+
 			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
 					<td colspan="2">
                         <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
@@ -543,6 +545,7 @@ JS;
 		case 'title':
 			unset( $form_fields['general']['required'] );
 			unset( $form_fields['advanced']['slug'] );
+			unset( $form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Title';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -562,6 +565,7 @@ JS;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
 			break;
 		case 'content':
+			unset( $form_fields['advanced']['metabox_enabled']);
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Content';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
@@ -609,8 +613,8 @@ JS;
 			) );
 			$form_fields['hidden']['type']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
-		case 'featured-image':
-		case 'featuredimage':
+		case 'featured-image': case 'featuredimage': case 'featured_image':
+
 			unset( $form_fields );
 			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
 			$form_fields['general']['required'] = new Element_Checkbox( '<b>' . __( 'Required', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array( 'required' => '<b>' . __( 'Required', 'buddyforms' ) . '</b>' ), array(

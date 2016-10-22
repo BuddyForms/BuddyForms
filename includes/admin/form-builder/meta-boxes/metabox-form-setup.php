@@ -314,31 +314,25 @@ function buddyforms_metabox_form_setup() {
 	//
 	// Display multisite options if network is enabled
 	//
-	if(is_multisite()){
-		//
-		// Display Multisite options if buddyforms_enable_multisite is enabled
-		//
-		if(apply_filters( 'buddyforms_enable_multisite', false )){
+	if( buddyforms_is_multisite() ){
 
-			$sites_select = array();
-			$sites = get_sites();
-			foreach( $sites as $site_id => $site ){
-				$blog_details = get_blog_details($site->blog_id, array('blog_id', 'blogname'));
-				$sites_select[$blog_details->blog_id] = $blog_details->blogname;
-			}
-
-			$blog_id  = isset( $buddyform['blog_id'] ) ? $buddyform['blog_id'] : '';
-
-			$element = new Element_Select( '<b>' . __( "Select a Blog", 'buddyforms' ) . '</b>', "buddyforms_options[blog_id]", $sites_select, array(
-				'value'     => $blog_id,
-				'shortDesc' => 'You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place.',
-				'id'        => 'blog_id',
-			) );
-			$form_setup['Network'][] = $element;
-
+		$sites_select = array();
+		$sites = get_sites();
+		foreach( $sites as $site_id => $site ){
+			$blog_details = get_blog_details($site->blog_id, array('blog_id', 'blogname'));
+			$sites_select[$blog_details->blog_id] = $blog_details->blogname;
 		}
-	}
 
+		$blog_id  = isset( $buddyform['blog_id'] ) ? $buddyform['blog_id'] : '';
+
+		$element = new Element_Select( '<b>' . __( "Select a Blog", 'buddyforms' ) . '</b>', "buddyforms_options[blog_id]", $sites_select, array(
+			'value'     => $blog_id,
+			'shortDesc' => 'You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place.',
+			'id'        => 'blog_id',
+		) );
+		$form_setup['Network'][] = $element;
+
+	}
 
 	// Check if form elements exist and sort the form elements
 	if ( is_array( $form_setup ) ) {

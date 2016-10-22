@@ -3,6 +3,7 @@
 add_shortcode( 'buddyforms_form', 'buddyforms_create_edit_form_shortcode' );
 add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
 function buddyforms_create_edit_form_shortcode( $args ) {
+	global $buddyforms;
 
 	extract( shortcode_atts( array(
 		'post_type'   => '',
@@ -14,20 +15,28 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'id'   => '',
 	), $args ) );
 
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
-
-		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
-	}
-
 	if(empty($form_slug))
 		$form_slug = $slug;
 
-	if(empty($form_slug) && !empty($id)){
-		$post = get_post($id);
-		$form_slug = $post->post_name;
+	// If multisite is enabled make sure we switch back to the current blog to get the correct form
+	if( buddyforms_is_multisite() ){
+		restore_current_blog();
+	}
+		// if id is used we need to get the post_name
+		if(empty($form_slug) && !empty($id)){
+			$post = get_post($id);
+			$form_slug = $post->post_name;
+		}
+
+	// Ok we have the form. let us switch back to the form blog id
+	if( buddyforms_is_multisite() ){
+		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
 	}
 
+	// add the form slug to the args array to render the form
 	$args['form_slug'] = $form_slug;
+
+	// unset slug and id they are not supported from the buddyforms_create_edit_form function.
 	unset($args['slug']);
 	unset($args['id']);
 
@@ -35,10 +44,6 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		buddyforms_create_edit_form( $args );
 		$create_edit_form = ob_get_contents();
 	ob_clean();
-
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
-		restore_current_blog();
-	}
 
 	return $create_edit_form;
 }
@@ -67,7 +72,8 @@ function buddyforms_the_loop( $args ) {
 	), $args ) );
 
 
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+	// if multisite is enabled switch to the form blog id
+	if( buddyforms_is_multisite() ){
 		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
 	}
 
@@ -149,7 +155,8 @@ function buddyforms_the_loop( $args ) {
 
 	do_action( 'buddyforms_the_loop_end', $query_args );
 
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+	// If multisite is enabled we should restore now to the current blog.
+	if( buddyforms_is_multisite() ){
 		restore_current_blog();
 	}
 }

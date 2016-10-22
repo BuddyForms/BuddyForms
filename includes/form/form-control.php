@@ -25,8 +25,11 @@ function buddyforms_process_post( $args = Array() ) {
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 	), $args ) );
 
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
-		$current_blog_id = get_current_blog_id();
+	// get the current blog id
+	$current_blog_id = get_current_blog_id();
+
+	// Check if multisite is enabled and switch to the form blog id
+	if( buddyforms_is_multisite() ){
 		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
 	}
 
@@ -244,7 +247,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 			$attach_id = $_POST['featured_image'];
 
-			if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ) {
+			if( buddyforms_is_multisite() ) {
 
 				restore_current_blog();
 
@@ -371,7 +374,7 @@ function buddyforms_process_post( $args = Array() ) {
 	Form::clearValues( "buddyforms_form_" . $form_slug );
 	return $args;
 
-	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+	if( buddyforms_is_multisite() ){
 		restore_current_blog();
 	}
 

@@ -96,7 +96,12 @@ function buddyforms_wp_insert_user() {
 				'description'		=> $description
 			)
 		);
-		if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ) {
+
+		// Add the user to the current blog
+		add_user_to_blog( get_current_blog_id(), $new_user_id, $user_role );
+
+		// if multisite is enabled we need to make sure the user will become a member of the form blog id
+		if( buddyforms_is_multisite() ) {
 			add_user_to_blog( $buddyforms[$form_slug]['blog_id'], $new_user_id, $user_role );
 		}
 
