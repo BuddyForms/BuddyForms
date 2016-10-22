@@ -311,14 +311,15 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Edit Submissions'][] = $element;
 
-
-
-	if(apply_filters( 'buddyforms_enable_multisite', false )){
+	//
+	// Display multisite options if network is enabled
+	//
+	if(is_multisite()){
 		//
-		// Display Multisite options if network is enabled
+		// Display Multisite options if buddyforms_enable_multisite is enabled
 		//
+		if(apply_filters( 'buddyforms_enable_multisite', false )){
 
-		if(is_multisite()){
 			$sites_select = array();
 			$sites = get_sites();
 			foreach( $sites as $site_id => $site ){

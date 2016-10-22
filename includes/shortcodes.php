@@ -15,6 +15,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	), $args ) );
 
 	if( is_multisite() && isset( $buddyforms[$form_slug]['blog_id'] ) ){
+
 		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
 	}
 

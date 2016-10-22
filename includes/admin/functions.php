@@ -38,3 +38,12 @@ function buddyforms_get_version_type(){
 	}
 	return  __('Free', 'buddyforms');
 }
+
+function buddyforms_is_multisite(){
+	if(is_multisite()) {
+		if ( apply_filters( 'buddyforms_enable_multisite', false ) ) {
+			if ( isset( $buddyforms[$form_slug]['blog_id'] ) ) {
+			}
+		}
+	}
+}
