@@ -29,9 +29,7 @@ function buddyforms_process_post( $args = Array() ) {
 	$current_blog_id = get_current_blog_id();
 
 	// Check if multisite is enabled and switch to the form blog id
-	if( buddyforms_is_multisite() ){
-		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
-	}
+	buddyforms_switch_to_form_blog($form_slug);
 
 	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
 

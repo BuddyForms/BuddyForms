@@ -32,9 +32,7 @@ function buddyforms_create_edit_form( $args ) {
 		'form_notice' => '',
 	), $args ) );
 
-	if( buddyforms_is_multisite() ){
-		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
-	}
+	buddyforms_switch_to_form_blog($form_slug);
 
 	$current_user = wp_get_current_user();
 

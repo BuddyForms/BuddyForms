@@ -29,9 +29,8 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		}
 
 	// Ok we have the form. let us switch back to the form blog id
-	if( buddyforms_is_multisite() ){
-		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
-	}
+	buddyforms_switch_to_form_blog( $form_slug );
+
 
 	// add the form slug to the args array to render the form
 	$args['form_slug'] = $form_slug;
@@ -73,9 +72,7 @@ function buddyforms_the_loop( $args ) {
 
 
 	// if multisite is enabled switch to the form blog id
-	if( buddyforms_is_multisite() ){
-		switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
-	}
+	buddyforms_switch_to_form_blog( $form_slug );
 
 	if(empty($form_slug) && !empty($id)){
 		$post = get_post($id);

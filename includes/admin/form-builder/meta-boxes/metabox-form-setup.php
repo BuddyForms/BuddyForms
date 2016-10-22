@@ -3,6 +3,7 @@
 function buddyforms_metabox_form_setup() {
 	global $post;
 
+
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
@@ -52,6 +53,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Get all values or set the default
 	$slug                       = $post->post_name;
+
 	$singular_name              = isset( $buddyform['singular_name'] )              ? stripslashes( $buddyform['singular_name'] )   : '';
 	$after_submit               = isset( $buddyform['after_submit'] )               ? $buddyform['after_submit']                    : 'display_message';
 	$after_submission_page      = isset( $buddyform['after_submission_page'] )      ? $buddyform['after_submission_page']           : 'false';
