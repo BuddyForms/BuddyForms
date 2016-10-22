@@ -118,8 +118,10 @@ function buddyforms_permissions_screen() {
 						foreach ( $form_setup as $key => $field ) {
 
 							$type     = $field->getAttribute( 'type' );
-							$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
-							$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
+							$class    = $field->getAttribute( 'class' );
+							$disabled = $field->getAttribute( 'disabled' );
+							$classes  = empty( $class ) ? '' : $class . ' ' ;
+							$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 
 							if($type == 'html'){

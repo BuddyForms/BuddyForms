@@ -393,8 +393,10 @@ function buddyforms_metabox_form_setup() {
 							<?php foreach($fields as $field_key => $field ) {
 
 								$type     = $field->getAttribute( 'type' );
-								$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
-								$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
+								$class    = $field->getAttribute( 'class' );
+								$disabled = $field->getAttribute( 'disabled' );
+								$classes  = empty( $class ) ? '' : $class . ' ' ;
+								$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 								// If the form element is not html create it as table row
 								if ( $type != 'html' ) {

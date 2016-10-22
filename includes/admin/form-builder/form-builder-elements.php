@@ -855,8 +855,10 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 			foreach ( $form_fields as $key => $field ) {
 
 				$type     = $field->getAttribute( 'type' );
-				$classes  = empty($field->getAttribute( 'class' )) ? '' : $field->getAttribute( 'class' ) . ' ';
-				$classes .= empty($field->getAttribute( 'disabled' )) ? '' : 'bf-' . $field->getAttribute( 'disabled' ) . ' ';
+				$class    = $field->getAttribute( 'class' );
+				$disabled = $field->getAttribute( 'disabled' );
+				$classes  = empty( $class ) ? '' : $class . ' ' ;
+				$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 				switch ( $type ) {
 					case 'html':
