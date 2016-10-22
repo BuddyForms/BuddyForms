@@ -57,7 +57,7 @@ a {
   color: #fff;
   text-align: center;
   background-color: #2ba7a7;
-  background-image: linear-gradient(120deg, #2ba7a7, #009c9c);
+  background-image: linear-gradient(120deg, #2ba7a7, #296767);
 }
 
 @media screen and (min-width: 64em) {
