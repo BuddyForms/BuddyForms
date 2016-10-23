@@ -544,7 +544,7 @@ function buddyforms_form_elements( $form, $args ) {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
 							        placeholder: "Select an option",
 							        '.$tags.'
-							        tokenSeparators: [\',\', \' \']
+							        tokenSeparators: [\',\']
 							    });
 						    });
 						</script>
