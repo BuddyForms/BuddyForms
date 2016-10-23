@@ -400,7 +400,14 @@ class Form extends Base {
 		echo <<<JS
         jQuery(document).ready(function() {
 
+			var bf_submit_type = "";
+		    jQuery(document).on("click", '.bf-submit', function (evt) {
+
+		        bf_submit_type = evt.target.name;
+		    });
+
             jQuery("#$id").bind("submit", function() {
+            	jQuery(this).find("#status").val(bf_submit_type);
                 jQuery(this).find("input[type=submit]").attr("disabled", "disabled");
             });
 JS;
@@ -458,7 +465,7 @@ JS;
                                 jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
                                 break;
                             case 'form_actions':
-                                jQuery( '#buddyforms_form_hero_$form_slug .form-actions' ).html(val);
+                                jQuery( '#buddyforms_form_$form_slug .form-actions' ).html(val);
                                 break;
                             default:
                                 jQuery( 'input[name="' + i + '"]').val(val);

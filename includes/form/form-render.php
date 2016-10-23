@@ -96,7 +96,7 @@ function buddyforms_form_html( $args ) {
 	// if the form has custom field to save as post meta data they get displayed here
 	bf_form_elements( $form, $args );
 
-	$form->addElement( new Element_Hidden( "submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
+	$form->addElement( new Element_Hidden( "status", 'draft', array( 'id' => "submitted" ) ) );
 
 	$form->addElement( new Element_Hidden( "bf_submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
 
