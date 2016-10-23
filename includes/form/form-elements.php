@@ -489,6 +489,7 @@ function buddyforms_form_elements( $form, $args ) {
 							'tab_index'     => 0,
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
+							'taxonomy'      => $customfield['taxonomy'],
 							'order'         => $customfield['taxonomy_order'],
 							'exclude'            => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
 							'include'            => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
