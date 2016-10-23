@@ -10,7 +10,10 @@
 	}
 
 	// "final class"
-	class Freemius extends Freemius_Abstract {
+/**
+ * Class Freemius
+ */
+class Freemius extends Freemius_Abstract {
 		/**
 		 * SDK Version
 		 *
@@ -228,20 +231,65 @@
 		private static $_instances = array();
 
 		// Reason IDs
+		/**
+		 *
+		 */
 		const REASON_NO_LONGER_NEEDED = 1;
+		/**
+		 *
+		 */
 		const REASON_FOUND_A_BETTER_PLUGIN = 2;
+		/**
+		 *
+		 */
 		const REASON_NEEDED_FOR_A_SHORT_PERIOD = 3;
+		/**
+		 *
+		 */
 		const REASON_BROKE_MY_SITE = 4;
+		/**
+		 *
+		 */
 		const REASON_SUDDENLY_STOPPED_WORKING = 5;
+		/**
+		 *
+		 */
 		const REASON_CANT_PAY_ANYMORE = 6;
+		/**
+		 *
+		 */
 		const REASON_OTHER = 7;
+		/**
+		 *
+		 */
 		const REASON_DIDNT_WORK = 8;
+		/**
+		 *
+		 */
 		const REASON_DONT_LIKE_TO_SHARE_MY_INFORMATION = 9;
+		/**
+		 *
+		 */
 		const REASON_COULDNT_MAKE_IT_WORK = 10;
+		/**
+		 *
+		 */
 		const REASON_GREAT_BUT_NEED_SPECIFIC_FEATURE = 11;
+		/**
+		 *
+		 */
 		const REASON_NOT_WORKING = 12;
+		/**
+		 *
+		 */
 		const REASON_NOT_WHAT_I_WAS_LOOKING_FOR = 13;
+		/**
+		 *
+		 */
 		const REASON_DIDNT_WORK_AS_EXPECTED = 14;
+		/**
+		 *
+		 */
 		const REASON_TEMPORARY_DEACTIVATION = 15;
 
 		/* Ctor
@@ -1131,6 +1179,9 @@
 			return $slug;
 		}
 
+		/**
+		 * @var bool
+		 */
 		private static $_statics_loaded = false;
 
 		/**
@@ -2395,10 +2446,22 @@
 			return ! empty( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
+		/**
+		 * @param $options
+		 * @param $key
+		 * @param bool $default
+		 * @return bool
+		 */
 		private function get_bool_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_bool( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
+		/**
+		 * @param $options
+		 * @param $key
+		 * @param bool $default
+		 * @return bool
+		 */
 		private function get_numeric_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_numeric( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
@@ -4325,6 +4388,9 @@
 
 			self::$_static_logger->info( 'plugin = ' . $plugin_file );
 
+			/**
+			 *
+			 */
 			define( 'WP_FS__UNINSTALL_MODE', true );
 
 			$fs = self::get_instance_by_file( $plugin_file );
@@ -4508,6 +4574,9 @@
 			return $this->_plugin_basename;
 		}
 
+		/**
+		 * @return string
+		 */
 		function get_plugin_folder_name() {
 			$this->_logger->entrance();
 
@@ -5997,6 +6066,10 @@
 
 		/* Security
 		------------------------------------------------------------------------------------------------------------------*/
+		/**
+		 * @param $str
+		 * @return null|string
+		 */
 		private function _encrypt( $str ) {
 			if ( is_null( $str ) ) {
 				return null;
@@ -6005,6 +6078,10 @@
 			return base64_encode( $str );
 		}
 
+		/**
+		 * @param $str
+		 * @return null|string
+		 */
 		private function _decrypt( $str ) {
 			if ( is_null( $str ) ) {
 				return null;
@@ -6765,6 +6842,9 @@
 
 		#region Admin Menu Items ------------------------------------------------------------------
 
+		/**
+		 * @var array
+		 */
 		private $_menu_items = array();
 
 		/**
@@ -9573,6 +9653,10 @@
 				wp_enqueue_script( 'plugin-install' );
 				add_thickbox();
 
+				/**
+				 * @param $classes
+				 * @return string
+				 */
 				function fs_addons_body_class( $classes ) {
 					$classes .= ' plugins-php';
 
@@ -9644,6 +9728,10 @@
 			wp_enqueue_script( 'plugin-install' );
 			add_thickbox();
 
+			/**
+			 * @param $classes
+			 * @return string
+			 */
 			function fs_addons_body_class( $classes ) {
 				$classes .= ' plugins-php';
 
@@ -9755,6 +9843,9 @@
 
 		/* SDK
 		------------------------------------------------------------------------------------------------------------------*/
+		/**
+		 * @var
+		 */
 		private $_user_api;
 
 		/**
@@ -9781,6 +9872,9 @@
 			return $this->_user_api;
 		}
 
+		/**
+		 * @var
+		 */
 		private $_site_api;
 
 		/**
@@ -9807,6 +9901,9 @@
 			return $this->_site_api;
 		}
 
+		/**
+		 * @var
+		 */
 		private $_plugin_api;
 
 		/**
@@ -9950,7 +10047,13 @@
 
 		/* Action Links
 		------------------------------------------------------------------------------------------------------------------*/
+		/**
+		 * @var bool
+		 */
 		private $_action_links_hooked = false;
+		/**
+		 * @var array
+		 */
 		private $_action_links = array();
 
 		/**

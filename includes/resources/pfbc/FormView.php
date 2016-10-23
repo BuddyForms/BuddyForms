@@ -1,14 +1,33 @@
 <?php
 
+/**
+ * Class FormView
+ */
 abstract class FormView extends Base {
+	/**
+	 * @var bool
+	 */
 	public $noLabel = false;
+	/**
+	 * @var
+	 */
 	protected $_form;
+	/**
+	 * @var null
+	 */
 	protected $class = null;
 
+	/**
+	 * FormView constructor.
+	 * @param array|null $properties
+	 */
 	public function __construct( array $properties = null ) {
 		$this->configure( $properties );
 	}
 
+	/**
+	 * @param Form $form
+	 */
 	public function _setForm( Form $form ) {
 		$this->_form = $form;
 	}
@@ -17,6 +36,9 @@ abstract class FormView extends Base {
 	public function jQueryDocumentReady() {
 	}
 
+	/**
+	 * @param null $onlyElement
+	 */
 	public function render( $onlyElement = null ) {
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
@@ -47,6 +69,9 @@ abstract class FormView extends Base {
 	public function renderJS() {
 	}
 
+	/**
+	 * @param $element
+	 */
 	protected function renderDescriptions( $element ) {
 		$shortDesc = $element->getShortDesc();
 		if ( ! empty( $shortDesc ) ) {
@@ -59,6 +84,9 @@ abstract class FormView extends Base {
 		};
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 	}
 }

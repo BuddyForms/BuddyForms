@@ -32,7 +32,11 @@
 		return $panels;
 	}
 
-	function fs_custom_status_init( $statuses ) {
+/**
+ * @param $statuses
+ * @return array
+ */
+function fs_custom_status_init( $statuses ) {
 		if ( class_exists( 'Debug_Bar_Panel' ) ) {
 			if ( FS_API__LOGGER_ON ) {
 				require_once dirname( __FILE__ ) . '/class-fs-debug-bar-panel.php';

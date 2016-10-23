@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Class Element_TinyMCE
+ */
 class Element_TinyMCE extends Element_Textarea {
+	/**
+	 * @var
+	 */
 	protected $basic;
 
 	public function render() {
@@ -28,6 +34,9 @@ class Element_TinyMCE extends Element_Textarea {
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	function getJSFiles() {
 		return array(
 			"//tinymce.cachefly.net/4.2/tinymce.min.js"

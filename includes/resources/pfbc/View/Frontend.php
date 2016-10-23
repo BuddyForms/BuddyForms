@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * Class View_Frontend
+ */
 class View_Frontend extends FormView {
+	/**
+	 * @var string
+	 */
 	protected $class = "form-inline";
 
+	/**
+	 * @param null $onlyElement
+	 */
 	public function render($onlyElement = null) {
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
@@ -39,6 +48,9 @@ class View_Frontend extends FormView {
 		$this->renderFormClose();
 	}
 
+	/**
+	 * @param $element
+	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML ) {
 			$element->render();
@@ -61,6 +73,9 @@ class View_Frontend extends FormView {
 		echo "</div></div> ";
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
 		if ( empty ( $label ) ) {

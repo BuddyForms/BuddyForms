@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * Class View_Vertical
+ */
 class View_Vertical extends FormView {
+	/**
+	 * @var int
+	 */
 	private $sharedCount = 0;
 
+	/**
+	 * @param $element
+	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
 			$element->render();
@@ -36,6 +45,9 @@ class View_Vertical extends FormView {
 		}
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 	}
 }

@@ -7,6 +7,11 @@
  */
 
 add_filter('buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );
+/**
+ * @param $valid
+ * @param $form_slug
+ * @return bool
+ */
 function buddyforms_server_validation( $valid , $form_slug){
 	global $buddyforms;
 

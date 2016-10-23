@@ -15,7 +15,10 @@
 	// Uncomment this line for testing.
 //	set_site_transient( 'update_plugins', null );
 
-	class FS_Plugin_Updater {
+/**
+ * Class FS_Plugin_Updater
+ */
+class FS_Plugin_Updater {
 
 		/**
 		 * @var Freemius
@@ -33,6 +36,10 @@
 		 */
 		private $_update_details;
 
+		/**
+		 * FS_Plugin_Updater constructor.
+		 * @param Freemius $freemius
+		 */
 		function __construct( Freemius $freemius ) {
 			$this->_fs = $freemius;
 

@@ -5,6 +5,8 @@
  *
  * @package BuddyForms
  * @since 0.1-beta
+ * @param $args
+ * @return string
  */
 function buddyforms_display_form_element( $args ) {
 	global $post, $buddyform;
@@ -780,6 +782,11 @@ JS;
 }
 
 add_action( 'wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_element' );
+/**
+ * @param $form_fields
+ * @param $args
+ * @return string
+ */
 function buddyforms_form_element_multiple( $form_fields, $args ) {
 	global $post;
 
@@ -848,6 +855,10 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 }
 
 
+/**
+ * @param $form_fields
+ * @param string $field_id
+ */
 function buddyforms_display_field_group_table( $form_fields, $field_id = 'global' ) {
 	?>
 	<table class="wp-list-table widefat posts fixed striped">
@@ -893,6 +904,11 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 	<?php
 }
 
+/**
+ * @param array $array
+ * @param array $orderArray
+ * @return array
+ */
 function buddyforms_sort_array_by_Array( Array $array, Array $orderArray ) {
 	$ordered = array();
 	foreach ( $orderArray as $key ) {

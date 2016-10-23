@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * Class Element_State
+ */
 class Element_State extends Element_Select {
+	/**
+	 * Element_State constructor.
+	 * @param $label
+	 * @param $name
+	 * @param array|null $properties
+	 */
 	public function __construct( $label, $name, array $properties = null ) {
 		$options = array(
 			""        => "--Select State--",

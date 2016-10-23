@@ -7,6 +7,10 @@
  */
 add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 
+/**
+ * @param $content
+ * @return string
+ */
 function buddyforms_attached_page_content( $content ) {
 	global $wp_query, $buddyforms;
 

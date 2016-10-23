@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class Element_Checkbox
+ */
 class Element_Checkbox extends OptionElement {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "checkbox" );
+	/**
+	 * @var
+	 */
 	protected $inline;
 
 	public function render() {

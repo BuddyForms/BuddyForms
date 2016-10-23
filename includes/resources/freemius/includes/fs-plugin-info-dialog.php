@@ -31,6 +31,10 @@
 		 */
 		private $_fs;
 
+		/**
+		 * FS_Plugin_Info_Dialog constructor.
+		 * @param Freemius $fs
+		 */
 		function __construct( Freemius $fs ) {
 			$this->_fs = $fs;
 

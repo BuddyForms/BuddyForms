@@ -1,8 +1,21 @@
 <?php
 
+/**
+ * Class OptionElement
+ */
 abstract class OptionElement extends Element {
+	/**
+	 * @var array
+	 */
 	protected $options;
 
+	/**
+	 * OptionElement constructor.
+	 * @param $label
+	 * @param $name
+	 * @param array|null $options
+	 * @param array|null $properties
+	 */
 	public function __construct( $label, $name, $options, array $properties = null ) {
 		if ( ! is_array( $options ) ) {
 			$options = Array();
@@ -15,6 +28,10 @@ abstract class OptionElement extends Element {
 		parent::__construct( $label, $name, $properties );
 	}
 
+	/**
+	 * @param $value
+	 * @return string
+	 */
 	protected function getOptionValue( $value ) {
 		$position = strpos( $value, ":pfbc" );
 		if ( $position !== false ) {

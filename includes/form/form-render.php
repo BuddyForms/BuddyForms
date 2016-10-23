@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @param $args
+ * @return mixed|string|void
+ */
 function buddyforms_form_html( $args ) {
 	global $buddyforms, $bf_form_error, $bf_submit_button;
 
@@ -142,6 +146,9 @@ function buddyforms_form_html( $args ) {
 	return $form_html;
 }
 
+/**
+ * @return string
+ */
 function buddyforms_get_login_form_template(){
 
 	ob_start();

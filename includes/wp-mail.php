@@ -1,6 +1,9 @@
 <?php
 
 add_action('buddyforms_process_post_end', 'mail_submission_trigger_sent');
+/**
+ * @param $args
+ */
 function mail_submission_trigger_sent($args){
 	global $form_slug, $buddyforms;
 
@@ -17,6 +20,10 @@ function mail_submission_trigger_sent($args){
 
 }
 
+/**
+ * @param $notification
+ * @param $post
+ */
 function buddyforms_send_mail_submissions( $notification, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -115,6 +122,11 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 
 add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
+/**
+ * @param $new_status
+ * @param $old_status
+ * @param $post
+ */
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -134,6 +146,9 @@ function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 
 }
 
+/**
+ * @param $post
+ */
 function buddyforms_send_email_notification( $post ) {
 
 	global $form_slug, $buddyforms;

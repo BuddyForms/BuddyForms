@@ -81,6 +81,7 @@ function buddyforms_inner_custom_box( $post ) {
  * When the post is saved, saves our custom data.
  *
  * @param int $post_id The ID of the post being saved.
+ * @return int
  */
 function buddyforms_save_postdata( $post_id ) {
 

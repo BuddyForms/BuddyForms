@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Plugin extends FS_Scope_Entity {
+/**
+ * Class FS_Plugin
+ */
+class FS_Plugin extends FS_Scope_Entity {
 		/**
 		 * @since 1.0.6
 		 * @var null|number
@@ -84,6 +87,9 @@
 			return isset( $this->parent_plugin_id ) && is_numeric( $this->parent_plugin_id );
 		}
 
+		/**
+		 * @return string
+		 */
 		static function get_type() {
 			return 'plugin';
 		}

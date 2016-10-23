@@ -23,6 +23,9 @@ Copyright (c) 2009-2015 Andrew Porterfield
 Version: 4.0
 */
 
+/**
+ * @param $class
+ */
 function PFBC_Load( $class ) {
 	$file = dirname( __FILE__ ) . "/" . str_replace( "_", DIRECTORY_SEPARATOR, $class ) . ".php";
 	if ( is_file( $file ) ) {
@@ -32,23 +35,69 @@ function PFBC_Load( $class ) {
 
 spl_autoload_register( "PFBC_Load" );
 
+/**
+ * Class Form
+ */
 class Form extends Base {
+	/**
+	 * @var int
+	 */
 	public static $SUBMIT = 99;
+	/**
+	 * @var null
+	 */
 	protected static $form = null;
+	/**
+	 * @var array
+	 */
 	protected $_elements = array();
+	/**
+	 * @var string
+	 */
 	protected $_prefix = "http";
+	/**
+	 * @var array
+	 */
 	protected $_values = array();
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array();
+	/**
+	 * @var
+	 */
 	protected $ajax;
+	/**
+	 * @var
+	 */
 	protected $ajaxCallback;
+	/**
+	 * @var ErrorView_Standard
+	 */
 	protected $errorView;
+	/**
+	 * @var bool
+	 */
 	protected $noLabel = false;
 	/*Prevents various automated from being automatically applied.  Current options for this array
 	included jQuery, bootstrap and focus.*/
+	/**
+	 * @var string
+	 */
 	protected $resourcesPath;
+	/**
+	 * @var array
+	 */
 	protected $prevent = array();
+	/**
+	 * @var View_SideBySide
+	 */
 	protected $view;
 
+	/**
+	 * Form constructor.
+	 * @param string $id
+	 */
 	public function __construct( $id = "pfbc" ) {
 		$this->configure( array(
 			"action" => $_SERVER['REQUEST_URI'],
@@ -86,6 +135,11 @@ class Form extends Base {
 	/*When a form is serialized and stored in the session, this function prevents any non-essential
 	information from being included.*/
 
+	/**
+	 * @param string $id
+	 * @param bool $clearValues
+	 * @return bool
+	 */
 	public static function isValid( $id = "pfbc", $clearValues = true ) {
 		$valid = true;
 		/*The form's instance is recovered (unserialized) from the session.*/
@@ -163,6 +217,10 @@ class Form extends Base {
 		return $valid;
 	}
 
+	/**
+	 * @param $id
+	 * @return mixed|string
+	 */
 	protected static function recover( $id ) {
 		if ( ! empty( $_SESSION["pfbc"][ $id ]["form"] ) ) {
 			return unserialize( $_SESSION["pfbc"][ $id ]["form"] );
@@ -174,22 +232,38 @@ class Form extends Base {
 	/*Values that have been set through the setValues method, either manually by the developer
 	or after validation errors, are applied to elements within this method.*/
 
+	/**
+	 * @param string $id
+	 */
 	public static function clearValues( $id = "pfbc" ) {
 		if ( ! empty( $_SESSION["pfbc"][ $id ]["values"] ) ) {
 			unset( $_SESSION["pfbc"][ $id ]["values"] );
 		}
 	}
 
+	/**
+	 * @param string $id
+	 */
 	public static function clearErrors( $id = "pfbc" ) {
 		if ( ! empty( $_SESSION["pfbc"][ $id ]["errors"] ) ) {
 			unset( $_SESSION["pfbc"][ $id ]["errors"] );
 		}
 	}
 
+	/**
+	 * @param $id
+	 * @param $element
+	 * @param $value
+	 */
 	public static function _setSessionValue( $id, $element, $value ) {
 		$_SESSION["pfbc"][ $id ]["values"][ $element ] = $value;
 	}
 
+	/**
+	 * @param $id
+	 * @param $errors
+	 * @param string $element
+	 */
 	public static function setError( $id, $errors, $element = "" ) {
 		if ( ! is_array( $errors ) ) {
 			$errors = array( $errors );
@@ -203,6 +277,9 @@ class Form extends Base {
 		}
 	}
 
+	/**
+	 * @param string $id
+	 */
 	public static function renderAjaxErrorResponse( $id = "pfbc" ) {
 		$form = self::recover( $id );
 		if ( ! empty( $form ) ) {
@@ -210,6 +287,12 @@ class Form extends Base {
 		}
 	}
 
+	/**
+	 * @param $formId
+	 * @param $items
+	 * @param $values
+	 * @param int $buttons
+	 */
 	public static function renderArray( $formId, $items, $values, $buttons = 1 ) {
 		$form = new Form( $formId );
 		$opts = Array();
@@ -255,6 +338,9 @@ class Form extends Base {
 		$form->render();
 	}
 
+	/**
+	 * @param $items
+	 */
 	public function addElements( $items ) {
 		foreach ( $items as $id => $props ) {
 			$elementClassName = "Element_" . $props[0];
@@ -271,6 +357,9 @@ class Form extends Base {
 		}
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	public function addElement( Element $element ) {
 		$element->_setForm( $this );
 
@@ -291,10 +380,18 @@ class Form extends Base {
 		}
 	}
 
+	/**
+	 * @param array $values
+	 */
 	public function setValues( array $values ) {
 		$this->_values = array_merge( $this->_values, $values );
 	}
 
+	/**
+	 * @param null $element
+	 * @param bool $returnHTML
+	 * @return string
+	 */
 	public function render( $element = null, $returnHTML = false ) {
 		$this->view->_setForm( $this );
 		$this->errorView->_setForm( $this );
@@ -329,6 +426,10 @@ class Form extends Base {
 		}
 	}
 
+	/**
+	 * @param string $id
+	 * @return array
+	 */
 	protected static function getSessionValues( $id = "pfbc" ) {
 		$values = array();
 		if ( ! empty( $_SESSION["pfbc"][ $id ]["values"] ) ) {
@@ -524,6 +625,12 @@ JS;
 		$_SESSION["pfbc"][ $this->_attributes["id"] ]["form"] = serialize( $this );
 	}
 
+	/**
+	 * @param $formId
+	 * @param null $values
+	 * @param null $opts
+	 * @return Form|null
+	 */
 	public static function open( $formId, $values = null, $opts = null ) {
 		$default = Array();
 		if ( $opts ) {
@@ -549,6 +656,11 @@ JS;
 		return self::$form;
 	}
 
+	/**
+	 * @param $type
+	 * @param $props
+	 * @return mixed
+	 */
 	public static function __callStatic( $type, $props ) {
 		if ( $type == 'close' ) {
 			if ( ! isset ( $props[0] ) ) {
@@ -563,6 +675,12 @@ JS;
 
 	/*The save method serialized the form's instance and saves it in the session.*/
 
+	/**
+	 * @param $form
+	 * @param $type
+	 * @param $props
+	 * @return mixed
+	 */
 	private static function _call( $form, $type, $props ) {
 		$elementClassName = "Element_$type";
 		for ( $i = 0; $i <= 3; $i ++ ) {
@@ -582,10 +700,16 @@ JS;
 	/*Valldation errors are saved in the session after the form submission, and will be displayed to the user
 	when redirected back to the form.*/
 
+	/**
+	 * @return array
+	 */
 	public function __sleep() {
 		return array( "_attributes", "_elements", "errorView" );
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getAjax() {
 		return $this->ajax;
 	}
@@ -593,26 +717,44 @@ JS;
 	/*An associative array is used to pre-populate form elements.  The keys of this array correspond with
 	the element names.*/
 
+	/**
+	 * @return array
+	 */
 	public function getElements() {
 		return $this->_elements;
 	}
 
+	/**
+	 * @return ErrorView_Standard
+	 */
 	public function getErrorView() {
 		return $this->errorView;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getPrefix() {
 		return $this->_prefix;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getPrevent() {
 		return $this->prevent;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getResourcesPath() {
 		return $this->resourcesPath;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getErrors() {
 		$errors = array();
 		if ( session_id() == "" ) {
@@ -628,6 +770,10 @@ JS;
 		return $errors;
 	}
 
+	/**
+	 * @param $type
+	 * @param $props
+	 */
 	public function __call( $type, $props ) {
 		if ( $type == 'close' ) {
 			return $this->_close( $props[0] );
@@ -636,6 +782,9 @@ JS;
 		return $this->_call( $this, $type, $props );
 	}
 
+	/**
+	 * @param int $buttons
+	 */
 	public function _close( $buttons = 1 ) {
 		$this->renderCSS();
 		$this->renderJS();

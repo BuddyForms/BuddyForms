@@ -7,6 +7,10 @@
 *
 */
 add_action( 'media_buttons_context', 'buddyforms_editor_button' );
+/**
+ * @param $context
+ * @return string
+ */
 function buddyforms_editor_button( $context ) {
 
 if ( ! is_admin() ) {

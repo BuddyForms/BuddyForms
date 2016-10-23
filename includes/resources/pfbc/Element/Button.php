@@ -1,9 +1,24 @@
 <?php
 
+/**
+ * Class Element_Button
+ */
 class Element_Button extends Element {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "submit", "value" => "Submit" );
+	/**
+	 * @var
+	 */
 	protected $icon;
 
+	/**
+	 * Element_Button constructor.
+	 * @param string $label
+	 * @param string $type
+	 * @param array|null $properties
+	 */
 	public function __construct( $label = "Submit", $type = "", array $properties = null ) {
 		if ( ! is_array( $properties ) ) {
 			$properties = array();

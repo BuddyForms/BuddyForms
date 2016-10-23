@@ -2,6 +2,10 @@
 // Shortcode to add the form everywhere easily ;) the form is located in form.php
 add_shortcode( 'buddyforms_form', 'buddyforms_create_edit_form_shortcode' );
 add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
+/**
+ * @param $args
+ * @return string
+ */
 function buddyforms_create_edit_form_shortcode( $args ) {
 	global $buddyforms;
 
@@ -53,6 +57,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
  *
  * @package BuddyForms
  * @since 0.3 beta
+ * @param $args
  */
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
@@ -167,6 +172,10 @@ add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
 //
 // buddyforms_the_loop_shortcode
 //
+/**
+ * @param $args
+ * @return string
+ */
 function buddyforms_the_loop_shortcode($args){
 	ob_start();
 		buddyforms_the_loop($args);
@@ -180,6 +189,10 @@ function buddyforms_the_loop_shortcode($args){
 //
 add_shortcode( 'buddyforms_nav', 'buddyforms_nav' );
 add_shortcode( 'bf_nav', 'buddyforms_nav' );
+/**
+ * @param $args
+ * @return mixed|string|void
+ */
 function buddyforms_nav( $args ) {
 
 	extract( shortcode_atts( array(
@@ -198,6 +211,10 @@ function buddyforms_nav( $args ) {
 
 add_shortcode( 'buddyforms_button_view_posts', 'buddyforms_button_view_posts' );
 add_shortcode( 'bf_link_to_user_posts', 'buddyforms_button_view_posts' );
+/**
+ * @param $args
+ * @return mixed|void
+ */
 function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 
@@ -214,6 +231,10 @@ function buddyforms_button_view_posts( $args ) {
 
 add_shortcode( 'buddyforms_button_add_new', 'buddyforms_button_add_new' );
 add_shortcode( 'bf_link_to_form', 'buddyforms_button_add_new' );
+/**
+ * @param $args
+ * @return mixed|void
+ */
 function buddyforms_button_add_new( $args ) {
 	global $buddyforms;
 

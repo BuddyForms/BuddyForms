@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @param $post
+ * @param bool $buddyform
+ */
 function buddyforms_metabox_form_elements($post, $buddyform = false) {
 	global $post, $buddyform;
 
@@ -111,6 +115,9 @@ function buddyforms_metabox_form_elements($post, $buddyform = false) {
 //
 // Create a list of all available form builder templates
 //
+/**
+ * @return string
+ */
 function buddyforms_form_builder_templates(){
 	global $buddyforms_templates;
 
@@ -151,6 +158,9 @@ function buddyforms_form_builder_templates(){
 //
 // generate the form builder form elements select options
 //
+/**
+ * @return string
+ */
 function buddyforms_form_builder_form_elements_select(){
 	$elements_select_options = buddyforms_form_elements_select_options();
 
@@ -177,6 +187,9 @@ function buddyforms_form_builder_form_elements_select(){
 	return $el_sel_options;
 }
 
+/**
+ * @return array
+ */
 function buddyforms_form_elements_select_options(){
 	global $elements_select_options;
 	// Create the form elements array

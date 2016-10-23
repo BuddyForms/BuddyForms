@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class Element_Radio
+ */
 class Element_Radio extends OptionElement {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "radio" );
+	/**
+	 * @var
+	 */
 	protected $inline;
 
 	public function render() {

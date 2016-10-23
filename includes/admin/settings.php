@@ -41,6 +41,9 @@ function buddyforms_settings_page() {
 //
 // Settings Tabs Navigation
 //
+/**
+ * @param string $current
+ */
 function buddyforms_admin_tabs( $current = 'homepage' ) {
 	$tabs = array( 'general' => 'General Settings', 'import' => 'Import Forms' );
 
@@ -66,6 +69,10 @@ function buddyforms_register_option() {
 
 add_action( 'admin_init', 'buddyforms_register_option' );
 
+/**
+ * @param $new
+ * @return mixed
+ */
 function buddyforms_posttypes_default_sanitize( $new ) {
 	return $new;
 }

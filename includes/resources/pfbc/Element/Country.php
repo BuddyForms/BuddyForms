@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * Class Element_Country
+ */
 class Element_Country extends Element_Select {
+	/**
+	 * Element_Country constructor.
+	 * @param $label
+	 * @param $name
+	 * @param array|null $properties
+	 */
 	public function __construct( $label, $name, array $properties = null ) {
 		$options = array(
 			""   => "--Select Country--",

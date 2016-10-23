@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Class Element_Color
+ */
 class Element_Color extends Element_Textbox {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "color" );
 
 	public function render() {

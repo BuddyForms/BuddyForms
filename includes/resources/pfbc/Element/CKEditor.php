@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Class Element_CKEditor
+ */
 class Element_CKEditor extends Element_Textarea {
+	/**
+	 * @var
+	 */
 	protected $basic;
 
 	public function render() {
@@ -51,6 +57,9 @@ JS;
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	function getJSFiles() {
 		return array(
 			"//cdn.ckeditor.com/4.5.4/standard/ckeditor.js"

@@ -1,8 +1,18 @@
 <?php
 
+/**
+ * Class ErrorView
+ */
 abstract class ErrorView extends Base {
+	/**
+	 * @var
+	 */
 	protected $_form;
 
+	/**
+	 * ErrorView constructor.
+	 * @param array|null $properties
+	 */
 	public function __construct( array $properties = null ) {
 		$this->configure( $properties );
 	}
@@ -20,6 +30,9 @@ abstract class ErrorView extends Base {
 	public function renderCSS() {
 	}
 
+	/**
+	 * @param Form $form
+	 */
 	public function _setForm( Form $form ) {
 		$this->_form = $form;
 	}

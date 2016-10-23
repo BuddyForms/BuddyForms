@@ -10,14 +10,30 @@
 		exit;
 	}
 
-	class FS_Plugin_Tag extends FS_Entity {
+/**
+ * Class FS_Plugin_Tag
+ */
+class FS_Plugin_Tag extends FS_Entity {
+		/**
+		 * @var
+		 */
 		public $version;
+		/**
+		 * @var
+		 */
 		public $url;
 
+		/**
+		 * FS_Plugin_Tag constructor.
+		 * @param bool $tag
+		 */
 		function __construct( $tag = false ) {
 			parent::__construct( $tag );
 		}
 
+		/**
+		 * @return string
+		 */
 		static function get_type() {
 			return 'tag';
 		}

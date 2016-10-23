@@ -3,10 +3,24 @@
 /*
  * Freemius helper function to display individual go pro messages for the different arias of the admin ui
  */
+/**
+ * @param string $h2
+ * @param string $h4
+ * @param array $pros
+ * @param bool $link
+ */
 function buddyforms_go_pro($h2 = '', $h4 = '', $pros = Array(), $link = true){
 	echo buddyforms_get_go_pro( $h2, $h4, $pros, $link );
 }
-	function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ){
+
+/**
+ * @param string $h2
+ * @param string $h4
+ * @param array $pros
+ * @param bool $link
+ * @return string
+ */
+function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ){
 		if ( buddyforms_core_fs()->is_not_paying() ) {
 
 			$tmp = '<div id="bf-gopro-sidebar">';
@@ -32,6 +46,9 @@ function buddyforms_version_type(){
 	echo buddyforms_get_version_type();
 }
 
+/**
+ * @return string|void
+ */
 function buddyforms_get_version_type(){
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		return  __('Pro', 'buddyforms');

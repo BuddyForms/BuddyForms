@@ -4,6 +4,8 @@
  *
  * @package BuddyForms
  * @since 0.1 beta
+ * @param int $post_id
+ * @param string $type
  */
 function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	if ( ! $post = get_post( $post_id ) ) {
@@ -67,6 +69,10 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 
 }
 
+/**
+ * @param $post
+ * @return int
+ */
 function buddyforms_wp_revisions_to_keep( $post ) {
 	$num = WP_POST_REVISIONS;
 
@@ -83,10 +89,19 @@ function buddyforms_wp_revisions_to_keep( $post ) {
 	return (int) apply_filters( 'wp_revisions_to_keep', $num, $post );
 }
 
+/**
+ * @param $post
+ * @return bool
+ */
 function buddyforms_wp_revisions_enabled( $post ) {
 	return buddyforms_wp_revisions_to_keep( $post ) != 0;
 }
 
+/**
+ * @param int $post_id
+ * @param null $args
+ * @return array
+ */
 function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 	$post = get_post( $post_id );
 	if ( ! $post || empty( $post->ID ) || ! buddyforms_wp_revisions_enabled( $post ) ) {
@@ -108,6 +123,12 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 	return $revisions;
 }
 
+/**
+ * @param $revision
+ * @param $post_id
+ * @param bool $link
+ * @return array|bool|null|string|WP_Post
+ */
 function buddyforms_wp_post_revision_title_expanded( $revision, $post_id, $link = true ) {
 	global $wp_query, $buddyforms, $form_slug;
 

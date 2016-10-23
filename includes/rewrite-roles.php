@@ -8,6 +8,9 @@
  */
 
 add_action( 'init', 'buddyforms_attached_page_rewrite_rules' );
+/**
+ * @param bool $flush_rewrite_rules
+ */
 function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) {
 	global $buddyforms;
 
@@ -39,6 +42,10 @@ function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) 
  * @since 0.3 beta
  */
 add_filter( 'query_vars', 'buddyforms_attached_page_query_vars' );
+/**
+ * @param $query_vars
+ * @return array
+ */
 function buddyforms_attached_page_query_vars( $query_vars ) {
 
 	$query_vars[] = 'bf_action';
@@ -57,6 +64,11 @@ function buddyforms_attached_page_query_vars( $query_vars ) {
  * @since 0.3 beta
  */
 add_filter( 'get_edit_post_link', 'buddyforms_my_edit_post_link', 1, 3 );
+/**
+ * @param $url
+ * @param $post_ID
+ * @return string
+ */
 function buddyforms_my_edit_post_link( $url, $post_ID ) {
 	global $buddyforms, $current_user;
 

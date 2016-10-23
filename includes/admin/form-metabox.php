@@ -95,6 +95,9 @@ function buddyforms_metabox_admin_form_metabox(){
 //
 // Save the metabox data
 //
+/**
+ * @param $post_id
+ */
 function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	global $buddyforms;
 

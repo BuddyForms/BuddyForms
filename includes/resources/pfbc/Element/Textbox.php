@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * Class Element_Textbox
+ */
 class Element_Textbox extends Element {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "text" );
+	/**
+	 * @var
+	 */
 	protected $prepend;
+	/**
+	 * @var
+	 */
 	protected $append;
 
 	public function render() {
@@ -25,6 +37,9 @@ class Element_Textbox extends Element {
 		}
 	}
 
+	/**
+	 * @param string $type
+	 */
 	protected function renderAddOn( $type = "prepend" ) {
 		if ( empty ( $this->$type ) ) {
 			return;

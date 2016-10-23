@@ -35,6 +35,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class BuddyForms
+ */
 class BuddyForms {
 
 	/**
@@ -80,28 +83,49 @@ class BuddyForms {
 	 */
 	public function load_constants() {
 
+		/**
+		 *
+		 */
 		define( 'BUDDYFORMS_VERSION', $this->version );
 
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
+		/**
+		 *
+		 */
 		define( 'BUDDYFORMS_STORE_URL', 'https://themekraft.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 
 		// the name of your product. This should match the download name in EDD exactly
+		/**
+		 *
+		 */
 		define( 'BUDDYFORMS_EDD_ITEM_NAME', 'BuddyForms' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 
 
 		if ( ! defined( 'BUDDYFORMS_PLUGIN_URL' ) ) {
+			/**
+			 *
+			 */
 			define( 'BUDDYFORMS_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_INSTALL_PATH' ) ) {
+			/**
+			 *
+			 */
 			define( 'BUDDYFORMS_INSTALL_PATH', dirname( __FILE__ ) . '/' );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_INCLUDES_PATH' ) ) {
+			/**
+			 *
+			 */
 			define( 'BUDDYFORMS_INCLUDES_PATH', BUDDYFORMS_INSTALL_PATH . 'includes/' );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_TEMPLATE_PATH' ) ) {
+			/**
+			 *
+			 */
 			define( 'BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
 		}
 
@@ -217,6 +241,7 @@ class BuddyForms {
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
+	 * @param $hook_suffix
 	 */
 	function admin_styles( $hook_suffix ) {
 		global $post;
@@ -252,6 +277,7 @@ class BuddyForms {
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
+	 * @param $hook_suffix
 	 */
 	function admin_js( $hook_suffix ) {
 		global $post;
@@ -611,6 +637,9 @@ class BuddyForms {
 	}
 }
 // Create a helper function for easy SDK access.
+/**
+ * @return Freemius
+ */
 function buddyforms_core_fs() {
 	global $buddyforms_core_fs;
 

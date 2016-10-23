@@ -1,16 +1,49 @@
 <?php
 
+/**
+ * Class Element
+ */
 abstract class Element extends Base {
+	/**
+	 * @var array
+	 */
 	protected $_errors = array();
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array();
+	/**
+	 * @var
+	 */
 	protected $_form;
 
+	/**
+	 * @var
+	 */
 	protected $label;
+	/**
+	 * @var
+	 */
 	protected $shortDesc;
+	/**
+	 * @var
+	 */
 	protected $longDesc;
+	/**
+	 * @var bool
+	 */
 	protected $shared = false;
+	/**
+	 * @var array
+	 */
 	protected $validation = array();
 
+	/**
+	 * Element constructor.
+	 * @param $label
+	 * @param $name
+	 * @param array|null $properties
+	 */
 	public function __construct( $label, $name, array $properties = null ) {
 		$configuration = array(
 			"label" => $label,
@@ -28,6 +61,9 @@ abstract class Element extends Base {
 
 	/*When an element is serialized and stored in the session, this method prevents any non-essential
 	information from being included.*/
+	/**
+	 * @return array
+	 */
 	public function __sleep() {
 		return array( "_attributes", "label", "validation" );
 	}
@@ -37,6 +73,9 @@ abstract class Element extends Base {
 	public function getCSSFiles() {
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getErrors() {
 		return $this->_errors;
 	}
@@ -46,24 +85,39 @@ abstract class Element extends Base {
 	public function getJSFiles() {
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getLabel() {
 		return $this->label;
 	}
 
+	/**
+	 * @param $label
+	 */
 	public function setLabel( $label ) {
 		$this->label = $label;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getLongDesc() {
 		return $this->longDesc;
 	}
 
 	/*This method provides a shortcut for checking if an element is required.*/
 
+	/**
+	 * @return bool
+	 */
 	public function getShared() {
 		return $this->shared;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isRequired() {
 		if ( ! empty( $this->validation ) ) {
 			foreach ( $this->validation as $validation ) {
@@ -79,6 +133,9 @@ abstract class Element extends Base {
 	/*The isValid method ensures that the provided value satisfies each of the
 	element's validation rules.*/
 
+	/**
+	 * @return mixed
+	 */
 	public function getShortDesc() {
 		return $this->shortDesc;
 	}
@@ -87,6 +144,10 @@ abstract class Element extends Base {
 	that will be applied within the jQuery(document).ready(function() {}); section after the
 	form has been rendered.*/
 
+	/**
+	 * @param $value
+	 * @return bool
+	 */
 	public function isValid( $value ) {
 		$valid = true;
 		if ( ! empty( $this->validation ) ) {
@@ -171,12 +232,18 @@ abstract class Element extends Base {
 	public function renderJS() {
 	}
 
+	/**
+	 * @param Form $form
+	 */
 	public function _setForm( Form $form ) {
 		$this->_form = $form;
 	}
 
 	/*This method provides a shortcut for applying the Required validation class to an element.*/
 
+	/**
+	 * @param $required
+	 */
 	public function setRequired( $required ) {
 		if ( ! empty( $required ) ) {
 			$this->validation[] = new Validation_Required;
@@ -186,6 +253,9 @@ abstract class Element extends Base {
 
 	/*This method applies one or more validation rules to an element.  If can accept a single concrete
 	validation class or an array of entries.*/
+	/**
+	 * @param $validation
+	 */
 	public function setValidation( $validation ) {
 		/*If a single validation class is provided, an array is created in order to reuse the same logic.*/
 		if ( ! is_array( $validation ) ) {

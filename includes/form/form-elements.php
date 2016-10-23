@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @param $form
+ * @param $args
+ */
 function buddyforms_form_elements( $form, $args ) {
 
 	extract($args);
@@ -590,6 +594,10 @@ function buddyforms_form_elements( $form, $args ) {
 	endforeach;
 }
 
+/**
+ * @param $initArray
+ * @return mixed
+ */
 function buddyforms_tinymce_setup_function( $initArray ) {
 	$initArray['setup'] = 'function(editor) {
                 editor.on("change keyup", function(e){

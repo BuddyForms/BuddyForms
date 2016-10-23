@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class Element_Checksort
+ */
 class Element_Checksort extends Element_Sort {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "checkbox" );
+	/**
+	 * @var
+	 */
 	protected $inline;
 
 	public function render() {

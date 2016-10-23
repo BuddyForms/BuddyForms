@@ -1,11 +1,23 @@
 <?php
 
+/**
+ * Class Element_Week
+ */
 class Element_Week extends Element_Textbox {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array(
 		"type"    => "week",
 		"pattern" => "\d{4}-W\d{2}"
 	);
 
+	/**
+	 * Element_Week constructor.
+	 * @param $label
+	 * @param $name
+	 * @param array|null $properties
+	 */
 	public function __construct( $label, $name, array $properties = null ) {
 		$this->_attributes["placeholder"] = "YYYY-Www (e.g. " . date( "Y-\WW" ) . ")";
 		$this->_attributes["title"]       = $this->_attributes["placeholder"];

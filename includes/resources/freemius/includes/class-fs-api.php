@@ -463,6 +463,10 @@
 			return Freemius_Api::Test( $pong );
 		}
 
+		/**
+		 * @param string $path
+		 * @return string
+		 */
 		function get_url( $path = '' ) {
 			return Freemius_Api::GetUrl( $path, $this->_api->IsSandbox() );
 		}

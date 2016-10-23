@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * Class View_SideBySide4
+ */
 class View_SideBySide4 extends FormView {
+	/**
+	 * @var int
+	 */
 	private $sharedCount = 0;
 
+	/**
+	 * @param $element
+	 */
 	public function renderElement( $element ) {
 		$colSize                   = 'col-xs-12 col-md-8';
 		$element->bootstrapVersion = 4;
@@ -41,6 +50,9 @@ class View_SideBySide4 extends FormView {
 		}
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 		if ( $this->noLabel ) {
 			echo " ";

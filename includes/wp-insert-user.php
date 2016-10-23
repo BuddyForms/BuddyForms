@@ -1,6 +1,9 @@
 <?php
 
 // register a new user
+/**
+ * @return bool|int|WP_Error
+ */
 function buddyforms_wp_insert_user() {
 	global $buddyforms, $form_slug;
 
@@ -133,11 +136,18 @@ function buddyforms_wp_insert_user() {
 }
 
 // used for tracking error messages
+/**
+ * @return WP_Error
+ */
 function buddyforms_errors(){
 	static $wp_error; // Will hold global variable safely
 	return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
 }
 
+/**
+ * @param $activation_link
+ * @param $new_user_id
+ */
 function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 	global $form_slug, $buddyforms;
 
@@ -199,6 +209,12 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 }
 
 add_filter( 'authenticate', 'buddyforms_auth_signon', 999, 3 );
+/**
+ * @param $user
+ * @param $username
+ * @param $password
+ * @return WP_Error
+ */
 function buddyforms_auth_signon( $user, $username, $password ) {
 
 	if (is_wp_error($user) ) {

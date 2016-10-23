@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Admin_Notice_Manager {
+/**
+ * Class FS_Admin_Notice_Manager
+ */
+class FS_Admin_Notice_Manager {
 		/**
 		 * @var string
 		 */
@@ -50,6 +53,11 @@
 			return self::$_instances[ $slug ];
 		}
 
+		/**
+		 * FS_Admin_Notice_Manager constructor.
+		 * @param $slug
+		 * @param string $title
+		 */
 		protected function __construct( $slug, $title = '' ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_data', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
@@ -105,6 +113,9 @@
 			fs_require_once_template( 'sticky-admin-notice-js.php', $params );
 		}
 
+		/**
+		 * @var bool
+		 */
 		private static $_added_sticky_javascript = false;
 
 		/**

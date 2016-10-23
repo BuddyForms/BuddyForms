@@ -48,47 +48,59 @@ add_filter('postbox_classes_buddyforms_buddyforms_form_go_pro','buddyforms_metab
 
 /**
  * Function we use to add a extra class to all BuddyForms related metaboxes.
+ * @param $classes
+ * @return array
  */
 function buddyforms_metabox_class($classes) {
 	$classes[] = 'buddyforms-metabox';
 	return $classes;
 }
 
-	/**
-	 * Metabox show if form type is posts
-	 */
+/**
+ * Metabox show if form type is posts
+ * @param $classes
+ * @return array
+ */
 	function buddyforms_metabox_show_if_form_type_post($classes) {
 		$classes[] = 'buddyforms-metabox-show-if-form-type-post';
 		return $classes;
 	}
 
-	/**
-	 * Metabox show if form type is registration
-	 */
+/**
+ * Metabox show if form type is registration
+ * @param $classes
+ * @return array
+ */
 	function buddyforms_metabox_show_if_form_type_registration($classes) {
 		$classes[] = 'buddyforms-metabox-show-if-form-type-registration';
 		return $classes;
 	}
 
-	/**
-	 * Metabox show if attached page is selected
-	 */
+/**
+ * Metabox show if attached page is selected
+ * @param $classes
+ * @return array
+ */
 	function buddyforms_metabox_show_if_attached_page($classes) {
 		$classes[] = 'buddyforms-metabox-show-if-attached-page';
 		return $classes;
 	}
 
-	/**
-	 * Metabox show if form post type is not none ( bf_submissions )
-	 */
+/**
+ * Metabox show if form post type is not none ( bf_submissions )
+ * @param $classes
+ * @return array
+ */
 	function buddyforms_metabox_show_if_post_type_none($classes) {
 		$classes[] = 'buddyforms-metabox-show-if-post-type-none';
 		return $classes;
 	}
 
-	/**
-	 * Metabox show if form post type is not none ( bf_submissions )
-	 */
+/**
+ * Metabox show if form post type is not none ( bf_submissions )
+ * @param $classes
+ * @return array
+ */
 	function buddyforms_metabox_hide_if_form_type_register($classes) {
 		$classes[] = 'buddyforms-metabox-hide-if-form-type-register';
 		return $classes;
@@ -111,6 +123,7 @@ function buddyforms_post_edit_form_tag(){
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
+ * @param $post_id
  */
 function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	global $post;
@@ -182,6 +195,11 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 }
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
 
+/**
+ * @param $new_status
+ * @param $old_status
+ * @param $post
+ */
 function buddyforms_transition_post_status_regenerate_global_options( $new_status, $old_status, $post ) {
 
 	if ( $post->post_type != 'buddyforms' ) {
@@ -317,6 +335,7 @@ add_action( 'admin_head', 'menue_icon_admin_head_css' );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
+ * @param $messages
  */
 function buddyforms_form_updated_messages( $messages ) {
 	global $post, $post_ID;
@@ -347,6 +366,8 @@ add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages', 999 );
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
+ * @param $columns
+ * @return
  */
 function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
@@ -362,6 +383,8 @@ function set_custom_edit_buddyforms_columns( $columns ) {
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
+ * @param $column
+ * @param $post_id
  */
 function custom_buddyforms_column( $column, $post_id ) {
 
@@ -529,6 +552,11 @@ function buddyforms_remove_slugdiv() {
 add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
 
 // Add the actions to list table
+/**
+ * @param $actions
+ * @param $post
+ * @return mixed
+ */
 function buddyforms_add_action_buttons($actions, $post){
 
 	if(get_post_type() === 'buddyforms'){

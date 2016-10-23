@@ -1,6 +1,14 @@
 <?php
 
+/**
+ * Class Element_SpanStart
+ */
 class Element_SpanStart extends Element_HTML {
+	/**
+	 * Element_SpanStart constructor.
+	 * @param $value
+	 * @param int $size
+	 */
 	public function __construct( $value, $size = 6 ) {
 		if ( empty ( $size ) ) {
 			$size = 6;

@@ -1,6 +1,13 @@
 <?php
 
+/**
+ * Class Base
+ */
 abstract class Base {
+	/**
+	 * @param array|null $properties
+	 * @return $this
+	 */
 	public function configure( array $properties = null ) {
 		if ( ! empty( $properties ) ) {
 			$class = get_class( $this );
@@ -48,6 +55,10 @@ abstract class Base {
 
 	/*This method can be used to view a class' state.*/
 
+	/**
+	 * @param $attribute
+	 * @param $value
+	 */
 	public function setAttribute( $attribute, $value ) {
 		if ( isset ( $this->_attributes ) ) {
 			$this->_attributes[ $attribute ] = $value;
@@ -60,6 +71,10 @@ abstract class Base {
 		echo "<pre>", print_r( $this, true ), "</pre>";
 	}
 
+	/**
+	 * @param $attribute
+	 * @return string
+	 */
 	public function getAttribute( $attribute ) {
 		if ( isset ( $this->_attributes[ $attribute ] ) ) {
 			return $this->_attributes[ $attribute ];
@@ -71,8 +86,7 @@ abstract class Base {
 	/**
 	 * Method is used by the Form class and all Element classes to return a string of html  attributes
 	 *
-	 * @param $ignore Parameter allows special attributes from being included.
-	 *
+	 * @param Parameter|string $ignore Parameter allows special attributes from being included.
 	 * @return string
 	 */
 	public function getAttributes( $ignore = "" ) {
@@ -93,10 +107,18 @@ abstract class Base {
 		return $str;
 	}
 
+	/**
+	 * @param $str
+	 * @return string
+	 */
 	protected function filter( $str ) {
 		return htmlspecialchars( $str );
 	}
 
+	/**
+	 * @param $attribute
+	 * @param $value
+	 */
 	public function appendAttribute( $attribute, $value ) {
 		if ( isset ( $this->_attributes ) ) {
 			if ( ! empty ( $this->_attributes[ $attribute ] ) ) {

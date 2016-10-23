@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Class Element_Select
+ */
 class Element_Select extends OptionElement {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array();
 
 	public function render() {

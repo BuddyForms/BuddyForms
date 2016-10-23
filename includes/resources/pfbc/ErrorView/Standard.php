@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class ErrorView_Standard
+ */
 class ErrorView_Standard extends ErrorView {
 	public function applyAjaxErrorResponse() {
 		$id = $this->_form->getAttribute( "id" );
@@ -41,6 +44,10 @@ HTML;
 		}
 	}
 
+	/**
+	 * @param $errors
+	 * @return array
+	 */
 	private function parse( $errors ) {
 		$list = array();
 		if ( ! empty( $errors ) ) {

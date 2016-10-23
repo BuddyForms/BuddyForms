@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * Class View_Inline
+ */
 class View_Inline extends FormView {
+	/**
+	 * @var string
+	 */
 	protected $class = "form-inline";
 
+	/**
+	 * @param $element
+	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
 			$element->render();
@@ -24,6 +33,9 @@ class View_Inline extends FormView {
 		echo "</div> ";
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
 		if ( empty ( $label ) ) {

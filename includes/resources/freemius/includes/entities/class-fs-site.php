@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Site extends FS_Scope_Entity {
+/**
+ * Class FS_Site
+ */
+class FS_Site extends FS_Scope_Entity {
 		/**
 		 * @var string
 		 */
@@ -91,10 +94,16 @@
 			}
 		}
 
+		/**
+		 * @return string
+		 */
 		static function get_type() {
 			return 'install';
 		}
 
+		/**
+		 * @return bool
+		 */
 		function is_localhost() {
 			// The server has no way to verify if localhost unless localhost appears in domain.
 			return WP_FS__IS_LOCALHOST_FOR_SERVER;

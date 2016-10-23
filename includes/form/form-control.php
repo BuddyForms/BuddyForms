@@ -5,6 +5,8 @@
  *
  * @package BuddyForms
  * @since 0.3 beta
+ * @param array $args
+ * @return array
  */
 
 function buddyforms_process_post( $args = Array() ) {
@@ -376,6 +378,10 @@ function buddyforms_process_post( $args = Array() ) {
 
 }
 
+/**
+ * @param $args
+ * @return array|bool
+ */
 function buddyforms_update_post( $args ) {
 
 	extract( $args = apply_filters( 'buddyforms_update_post_args', $args ) );
@@ -432,6 +438,10 @@ function buddyforms_update_post( $args ) {
 	return $bf_post;
 }
 
+/**
+ * @param $post_id
+ * @param $customfields
+ */
 function buddyforms_update_post_meta( $post_id, $customfields ) {
 	global $buddyforms, $form_slug;
 
@@ -566,6 +576,10 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 }
 
 add_filter( 'wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter' );
+/**
+ * @param $file
+ * @return mixed
+ */
 function buddyforms_wp_handle_upload_prefilter( $file ) {
 	if ( isset( $_POST['allowed_type'] ) && ! empty( $_POST['allowed_type'] ) ) {
 		//this allows you to set multiple types seperated by a pipe "|"
@@ -591,6 +605,9 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 	return $file;
 }
 
+/**
+ * @return array
+ */
 function buddyforms_get_browser()
 {
 	$u_agent = $_SERVER['HTTP_USER_AGENT'];

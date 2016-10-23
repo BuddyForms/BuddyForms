@@ -1,18 +1,33 @@
 <?php
 
+/**
+ * Class Element_jQueryUIDate
+ */
 class Element_jQueryUIDate extends Element_Textbox {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array(
 		"type"         => "text",
 		"autocomplete" => "off"
 	);
+	/**
+	 * @var
+	 */
 	protected $jQueryOptions;
 
+	/**
+	 * @return array
+	 */
 	public function getCSSFiles() {
 		return array(
 			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css"
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getJSFiles() {
 		return array(
 			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"

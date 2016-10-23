@@ -1,10 +1,25 @@
 <?php
 namespace PFBC\Validation;
 
+/**
+ * Class MaxLength
+ * @package PFBC\Validation
+ */
 class MaxLength extends \PFBC\Validation {
+	/**
+	 * @var
+	 */
 	protected $message;
+	/**
+	 * @var
+	 */
 	protected $limit;
 
+	/**
+	 * MaxLength constructor.
+	 * @param $limit
+	 * @param string $message
+	 */
 	public function __construct( $limit, $message = "" ) {
 		$this->limit = $limit;
 		if ( empty( $message ) ) {
@@ -13,6 +28,10 @@ class MaxLength extends \PFBC\Validation {
 		parent::__construct( $message );
 	}
 
+	/**
+	 * @param $value
+	 * @return bool
+	 */
 	public function isValid( $value ) {
 		if ( $this->isNotApplicable( $value ) || strlen( $value ) <= $this->limit ) {
 			return true;

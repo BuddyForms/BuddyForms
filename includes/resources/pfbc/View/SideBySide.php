@@ -1,9 +1,21 @@
 <?php
 
+/**
+ * Class View_SideBySide
+ */
 class View_SideBySide extends FormView {
+	/**
+	 * @var string
+	 */
 	protected $class = "form-horizontal";
+	/**
+	 * @var int
+	 */
 	private $sharedCount = 0;
 
+	/**
+	 * @param $element
+	 */
 	public function renderElement( $element ) {
 		$colSize = 'col-xs-12 col-md-8';
 
@@ -41,6 +53,9 @@ class View_SideBySide extends FormView {
 		}
 	}
 
+	/**
+	 * @param Element $element
+	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
 		if ( empty ( $label ) ) {

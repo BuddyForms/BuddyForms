@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * Class Element_Textarea
+ */
 class Element_Textarea extends Element {
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "rows" => "5" );
 
 	public function render() {

@@ -63,6 +63,10 @@ function buddyforms_post_status_mail_notification_screen() {
 
 }
 
+/**
+ * @param $trigger
+ * @return string
+ */
 function buddyforms_mail_notification_form( $trigger ) {
 	global $post, $buddyform;
 
@@ -185,6 +189,9 @@ function buddyforms_mail_notification_form( $trigger ) {
 	return $trigger;
 }
 
+/**
+ * @param $trigger
+ */
 function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 	global $post;
 
@@ -321,6 +328,9 @@ function buddyforms_new_mail_notification() {
 add_action( 'wp_ajax_buddyforms_new_mail_notification', 'buddyforms_new_mail_notification' );
 
 
+/**
+ * @return bool
+ */
 function buddyforms_new_post_status_mail_notification() {
 
 	$trigger = $_POST['trigger'];

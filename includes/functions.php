@@ -48,6 +48,10 @@ function buddyforms_wp_before_admin_bar_render() {
 
 // Create the buddyforms post status array.
 // Other Plugins use the filter buddyforms_get_post_status_array to add there post status to the options array
+/**
+ * @param bool $select_condition
+ * @return mixed|void
+ */
 function buddyforms_get_post_status_array( $select_condition = false ) {
 
 	$status_array = array(
@@ -69,6 +73,9 @@ function buddyforms_get_post_status_array( $select_condition = false ) {
  * @since 0.5 beta
  */
 add_action( 'pre_get_posts', 'buddyforms_restrict_media_library' );
+/**
+ * @param $wp_query_obj
+ */
 function buddyforms_restrict_media_library( $wp_query_obj ) {
 	global $current_user, $pagenow;
 
@@ -126,6 +133,7 @@ function buddyforms_get_template_directory() {
  *
  * @package BuddyForms
  * @since 0.1 beta
+ * @param $file
  */
 function buddyforms_locate_template( $file ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
@@ -146,6 +154,9 @@ function buddyforms_wp_login_form() {
 }
 
 // Create the BuddyForms Login Form
+/**
+ * @return mixed|string|void
+ */
 function buddyforms_get_wp_login_form() {
 	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
@@ -154,6 +165,10 @@ function buddyforms_get_wp_login_form() {
 }
 
 // Helper Function to get the Get the REQUEST_URI Vars
+/**
+ * @param $name
+ * @return int
+ */
 function buddyforms_get_url_var( $name ) {
 	$strURL  = $_SERVER['REQUEST_URI'];
 	$arrVals = explode( "/", $strURL );
@@ -223,6 +238,9 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 	echo $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
 }
 
+/**
+ * @param $form_slug
+ */
 function buddyforms_post_entry_actions($form_slug){
 	global $buddyforms;
 
@@ -283,11 +301,18 @@ function buddyforms_post_entry_actions($form_slug){
 	<?php
 }
 
+/**
+ * @param $post_status
+ */
 function buddyforms_post_status_readable($post_status){
 	echo buddyforms_get_post_status_readable($post_status);
 }
 
-	function buddyforms_get_post_status_readable($post_status){
+/**
+ * @param $post_status
+ * @return mixed|string|void
+ */
+function buddyforms_get_post_status_readable($post_status){
 		if ( $post_status == 'publish' ) {
 			return __( 'Published', 'buddyforms' );
 		}
@@ -315,11 +340,20 @@ function buddyforms_post_status_readable($post_status){
 		return apply_filters( 'buddyforms_get_post_status_readable', $post_status );;
 	}
 
+/**
+ * @param $post_status
+ * @param $form_slug
+ */
 function buddyforms_post_status_css_class($post_status, $form_slug){
 	echo buddyforms_get_post_status_css_class($post_status, $form_slug);
 }
 
-	function buddyforms_get_post_status_css_class($post_status, $form_slug){
+/**
+ * @param $post_status
+ * @param $form_slug
+ * @return mixed|void
+ */
+function buddyforms_get_post_status_css_class($post_status, $form_slug){
 
 		$post_status_css = $post_status;
 
@@ -332,6 +366,10 @@ function buddyforms_post_status_css_class($post_status, $form_slug){
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
+ * @param string $hook_name
+ * @param string $method_name
+ * @param int $priority
+ * @return bool
  */
 function buddyforms_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
@@ -354,8 +392,14 @@ function buddyforms_remove_filters_with_method_name( $hook_name = '', $method_na
 
 	return false;
 }
+
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+ * @param string $hook_name
+ * @param string $class_name
+ * @param string $method_name
+ * @param int $priority
+ * @return bool
  */
 function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
@@ -384,6 +428,8 @@ function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_
  *
  * @package BuddyForms
  * @since 0.1-beta
+ * @param $post_type
+ * @return
  */
 function buddyforms_taxonomies( $post_type ) {
 

@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class Element_File
+ */
 class Element_File extends Element_Textbox {
+	/**
+	 * @var int
+	 */
 	public $bootstrapVersion = 3;
+	/**
+	 * @var array
+	 */
 	protected $_attributes = array( "type" => "file" );
 
 	public function render() {

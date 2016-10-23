@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @return bool
+ */
 function buddyforms_is_multisite(){
 	if( is_multisite() ) {
 		if ( apply_filters( 'buddyforms_enable_multisite', false ) ) {
@@ -9,6 +12,10 @@ function buddyforms_is_multisite(){
 	return false;
 }
 
+/**
+ * @param $form_slug
+ * @return bool
+ */
 function buddyforms_switch_to_form_blog($form_slug){
 	global $buddyforms;
 

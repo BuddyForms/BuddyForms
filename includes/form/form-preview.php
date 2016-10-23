@@ -18,6 +18,10 @@ function buddyforms_preview_form() {
 	}
 }
 
+/**
+ * @param $content
+ * @return string
+ */
 function buddyforms_append_preview_page($content){
 
 	// GHet the form slug from the url parameter

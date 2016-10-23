@@ -94,6 +94,12 @@ function redirect_after_delete(){
 }
 
 add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
+/**
+ * @param $status
+ * @param $option
+ * @param $value
+ * @return mixed
+ */
 function buddyforms_submissions_set_option( $status, $option, $value ) {
 	return $value;
 }
@@ -102,8 +108,14 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
+/**
+ * Class BuddyForms_Submissions_List_Table
+ */
 class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
+	/**
+	 * BuddyForms_Submissions_List_Table constructor.
+	 */
 	function __construct() {
 		global $status, $page, $buddyforms;
 
@@ -116,6 +128,10 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	}
 
+	/**
+	 * @param $item
+	 * @return string
+	 */
 	function column_ID( $item ) {
 		global $buddyforms;
 
@@ -135,6 +151,10 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		);
 	}
 
+	/**
+	 * @param object $item
+	 * @param string $column_name
+	 */
 	function column_default( $item, $column_name ) {
 		global $buddyforms;
 
@@ -153,6 +173,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 
+	/**
+	 * @return array
+	 */
 	function get_columns() {
 		global $buddyforms;
 
