@@ -43,12 +43,20 @@ function buddyforms_metabox_form_setup() {
 		'post_status' => 'publish'
 	) );
 
-	// Generate the pages array
+	// Generate the pages array by id
 	$all_pages = Array();
 	$all_pages['none'] = 'Select a Page';
 	foreach ( $pages as $page ) {
 		$all_pages[ $page->ID ] = $page->post_title;
 	}
+
+	// All Pages saved by kname
+	$all_pages_name = Array();
+	$all_pages_name['none'] = 'Select a Page';
+	foreach ( $pages as $page ) {
+		$all_pages_name[ $page->post_name ] = $page->post_title;
+	}
+
 
 
 	// Get all values or set the default

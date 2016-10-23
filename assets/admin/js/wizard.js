@@ -124,13 +124,20 @@ jQuery(document).ready(function (jQuery) {
         submitdiv.find('#major-publishing-actions').remove();
         submitdiv.find('h2 span').html('View Form and Submissions');
 
-        var link_to_pro = buddyforms_form_go_pro.find('.buddyforms_get_pro')
 
-        console.log(link_to_pro);
+        var link_to_pro = buddyforms_form_go_pro.find('.buddyforms_get_pro');
+
+        var URL = URL.split("?");
+
+        var url_formbuilder = URL[0] + '?post=' + post_id + '&action=edit';
+
+        var url_close = URL[0].replace('post.php','edit.php');
+        url_close = url_close + '?post_type=buddyforms'
+
 
         submitdiv_actions.append( '<ul>' +
-            '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/post.php?post='+post_id+'&action=edit"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
-            '<li><a class="button button-large bf_button_action" href="'+URL+'/wp-admin/edit.php?post_type=buddyforms"><span class="dashicons dashicons-yes"></span> Close the wizard </a></li>' +
+            '<li><a class="button button-large bf_button_action" href="' + url_formbuilder + '"><span class="dashicons dashicons-edit"></span> Jump in the Form Builder</a></li>' +
+            '<li><a class="button button-large bf_button_action" href="' + url_close + '"><span class="dashicons dashicons-yes"></span> Close the wizard </a></li>' +
             '</ul>');
 
         submitdiv_actions.append(link_to_pro);
@@ -139,8 +146,6 @@ jQuery(document).ready(function (jQuery) {
         buddyforms_form_shortcodes.find('h2 span').html('Embed Your Form via Shortcodes');
         container2.html( buddyforms_form_shortcodes );
 
-
-
         jQuery( '#post' ).html( poststuff );
         jQuery( '#post, #postbox-container-1, #postbox-container-2' ).show();
         jQuery.ajax({
@@ -148,7 +153,7 @@ jQuery(document).ready(function (jQuery) {
             url: ajaxurl,
             data: {"action": "buddyforms_wizard_rewrite_rules"},
             success: function (data) {
-                console.log('Done ' + data);
+                //console.log('Done ' + data);
             }
         });
     }

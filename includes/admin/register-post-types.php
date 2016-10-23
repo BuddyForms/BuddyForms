@@ -194,6 +194,16 @@ function buddyforms_transition_post_status_regenerate_global_options( $new_statu
 }
 add_action( 'transition_post_status', 'buddyforms_transition_post_status_regenerate_global_options', 10, 3 );
 
+/**
+ * The global $buddyforms is sored in the option table and provides all forms and form fields for easy access and to save queries.
+ * Its super save as it gets regenerated just if a form gets created or updated. Forms are posts of the post type buddyforms. But in most cases the global buddyforms is used.
+ * Its one query form the options table and get cashed super great by WordPress and cashing plugins.
+ * I have tested this and have done performance checks and it is super fast. Its based on the theory that a user wil not have hundreds of forms. Let us see if this happends.
+ * If a user has 10 forms with 10 fields this will be easy if a user has 100 forms with 10 fields we are save to. If a user has 1000 forms with 10o fields we could run into a server timeout
+ * I talked to many users and I have no found a use case of so many forms. most people will have under 10. If I find the form number limit, I wil create a script to limit form creation, or rethink the code.
+ * For now I build this plugin for people with up to 100 forms in mind and thy will benefit from less query's and speedy forms.
+ */
+
 function buddyforms_regenerate_global_options() {
 	// get all forms and update the global
 	$posts = get_posts( array(
@@ -440,7 +450,7 @@ function buddyforms_hide_publishing_actions() {
 					<?php
 					$tmp = '<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms';
 					if(!isset($_GET['wizard'])){
-						$tmp .= 	'<a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a><a class="page-title-action" id="btn-open">Documentation</a><a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">Contact Us</a>';
+						$tmp .= 	' <a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a> <a class="page-title-action" id="btn-open">Documentation</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">Contact Us</a>';
 					}
 					$tmp .='<small style="line-height: 1; margin-top: -10px; margin-right: -15px; color: #888; font-size: 13px; padding-top: 23px; float:right;">' . buddyforms_get_version_type() . ' Version ' .  BUDDYFORMS_VERSION . '</small>';
 					echo "jQuery('body').find('h1:first').html('".$tmp."');";

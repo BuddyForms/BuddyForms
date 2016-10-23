@@ -9,7 +9,7 @@ function bf_mail_notification_screen() {
 	//$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>' );
 
 	$form_setup[] = new Element_HTML( '<h4>' . __('Mail Notifications', 'buddyforms') . '</h4>
-		<p>' . __('By default no notification is sent out. All submitions get stored as BuddyForms Submissions and is accessible in from the admin. You can create mail notification for the submitter or any person.', 'buddyforms') . '</p>
+		<p>' . __('By default no notification is sent out. Any submission get stored under Submissions. This makes sure you never lose any submission. Of course you can create individual mail notification for the submitter, inform your moderators or sent out a notification to any email address.', 'buddyforms') . '</p>
 		<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br><br><br>' );
 
 	buddyforms_display_field_group_table($form_setup);

@@ -495,6 +495,11 @@ class BuddyForms {
 	}
 
 	function buddyforms_update_db_check() {
+
+		if( !is_admin() ){
+			return;
+		}
+
 		$buddyforms_old = get_option( 'buddyforms_options' );
 
 		if ( ! $buddyforms_old ) {

@@ -156,7 +156,7 @@ add_action( 'wp_ajax_buddyforms_form_builder_wizard_save', 'buddyforms_form_buil
 
 function buddyforms_wizard_rewrite_rules() {
 	// Regenerate the global $buddyforms.
-	// The global$buddyforms is sored in the option table and provides all fors and form fields
+	// The global $buddyforms is sored in the option table and provides all forms and form fields for easy access and to save queries.
 	buddyforms_regenerate_global_options();
 
 	// Rewrite the page roles and flash permalink if needed
