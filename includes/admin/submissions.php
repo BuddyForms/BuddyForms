@@ -1,27 +1,10 @@
 <?php
+add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
 function buddyforms_create_submissions_page()  {
-	add_submenu_page(
-		'edit.php?post_type=buddyforms',
-		'BuddyForms Wizard',
-		'Form Wizard',
-		'manage_options',
-		'post-new.php?post_type=buddyforms&wizard=1'
-	);
 	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'buddyforms_submissions_screen' );
 	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
 
-add_action('admin_init', 'redirect_after_delete');
-function redirect_after_delete(){
-
-	if( isset($_GET['page']) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] )){
-		if(!get_post($_GET['entry'])){
-			wp_redirect('?post_type=buddyforms&page=bf_submissions&form_slug='.$_GET['form_slug']);
-		}
-	}
-}
-
-add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
 function buddyforms_submissions_add_options() {
 	global $bf_submissions_table;
 
@@ -36,11 +19,6 @@ function buddyforms_submissions_add_options() {
 	//Create an instance of our package class...
 	$bf_submissions_table = new BuddyForms_Submissions_List_Table;
 
-}
-
-add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
-function buddyforms_submissions_set_option( $status, $option, $value ) {
-	return $value;
 }
 
 function buddyforms_submissions_screen() {
@@ -103,6 +81,21 @@ function buddyforms_submissions_screen() {
 		} ?>
 	</div>
 	<?php
+}
+
+add_action('admin_init', 'redirect_after_delete');
+function redirect_after_delete(){
+
+	if( isset($_GET['page']) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] )){
+		if(!get_post($_GET['entry'])){
+			wp_redirect('?post_type=buddyforms&page=bf_submissions&form_slug='.$_GET['form_slug']);
+		}
+	}
+}
+
+add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
+function buddyforms_submissions_set_option( $status, $option, $value ) {
+	return $value;
 }
 
 if ( ! class_exists( 'WP_List_Table' ) ) {

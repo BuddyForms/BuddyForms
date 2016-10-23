@@ -187,3 +187,17 @@ function buddyforms_wizard_done(){
 	}
 }
 add_action('save_post','buddyforms_wizard_done');
+
+add_action( 'admin_menu', 'buddyforms_wizard_page' );
+function buddyforms_wizard_page()  {
+
+	// Add The Wizard to the Page
+	add_submenu_page(
+		'edit.php?post_type=buddyforms',
+		'BuddyForms Wizard',
+		'Form Wizard',
+		'manage_options',
+		'post-new.php?post_type=buddyforms&wizard=1'
+	);
+
+}

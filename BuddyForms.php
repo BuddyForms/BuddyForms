@@ -172,6 +172,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
@@ -180,7 +181,7 @@ class BuddyForms {
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
 			}
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-wizard.php' );
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
