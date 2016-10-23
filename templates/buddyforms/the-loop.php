@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 
 				$post_status        = get_post_status();
-				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
+				$post_status_css    = buddyforms_get_post_status_css_class( $post_status, $form_slug );
 				$post_status_name   = buddyforms_get_post_status_readable( $post_status );
 
 				?>
@@ -85,7 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<span><?php _e( 'Created', 'buddyforms' ); ?> <?php the_time( 'F j, Y' ) ?></span>
 							<div class="meta">
 								<div class="item-status"><?php echo $post_status_name; ?></div>
-								<?php bf_post_entry_actions( $form_slug ); ?>
+								<?php buddyforms_post_entry_actions( $form_slug ); ?>
 							</div>
 						</div>
 						<?php

@@ -86,7 +86,7 @@ function buddyforms_metabox_admin_form_metabox(){
 	);
 
 	// if the form has custom field to save as post meta data they get displayed here
-	bf_form_elements( $form, $args );
+	buddyforms_form_elements( $form, $args );
 
 	$form->render();
 

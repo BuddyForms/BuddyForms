@@ -152,7 +152,7 @@ function buddyforms_form_builder_templates(){
 // generate the form builder form elements select options
 //
 function buddyforms_form_builder_form_elements_select(){
-	$elements_select_options = bf_form_elements_select_options();
+	$elements_select_options = buddyforms_form_elements_select_options();
 
 	// Add a default value
 	$el_sel_options = '<option value="none">Select Field Type</option>';
@@ -177,7 +177,7 @@ function buddyforms_form_builder_form_elements_select(){
 	return $el_sel_options;
 }
 
-function bf_form_elements_select_options(){
+function buddyforms_form_elements_select_options(){
 	global $elements_select_options;
 	// Create the form elements array
 	$elements_select_options = array(

@@ -95,7 +95,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// if the form has custom field to save as post meta data they get displayed here
-	bf_form_elements( $form, $args );
+	buddyforms_form_elements( $form, $args );
 
 
 

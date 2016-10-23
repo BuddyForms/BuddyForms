@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$the_title = $the_subject;
 				}
 
-				$post_status_css    = bf_get_post_status_css_class( $post_status, $form_slug );
+				$post_status_css    = buddyforms_get_post_status_css_class( $post_status, $form_slug );
 				$post_status_name   = buddyforms_get_post_status_readable( $post_status );
 				$post_id            = get_the_ID();
 				?>
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<td>
 										<div class="meta">
 											<span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>
-											<?php bf_post_entry_actions($form_slug); ?>
+											<?php buddyforms_post_entry_actions($form_slug); ?>
 										</div>
 									</td>
 								<?php } ?>

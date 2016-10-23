@@ -56,8 +56,8 @@ function buddyforms_attached_page_query_vars( $query_vars ) {
  * @package BuddyForms
  * @since 0.3 beta
  */
-add_filter( 'get_edit_post_link', 'bf_my_edit_post_link', 1, 3 );
-function bf_my_edit_post_link( $url, $post_ID ) {
+add_filter( 'get_edit_post_link', 'buddyforms_my_edit_post_link', 1, 3 );
+function buddyforms_my_edit_post_link( $url, $post_ID ) {
 	global $buddyforms, $current_user;
 
 	if ( is_admin() ) {
@@ -118,7 +118,7 @@ function bf_my_edit_post_link( $url, $post_ID ) {
  *
  * @return string The edit post link for the given post.
  */
-function bf_get_edit_post_link( $id = 0, $context = 'display' ) {
+function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	if ( ! $post = get_post( $id ) ) {
 		return;
 	}

@@ -7,8 +7,8 @@ function buddyforms_create_submissions_page()  {
 		'manage_options',
 		'post-new.php?post_type=buddyforms&wizard=1'
 	);
-	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'bf_submissions_screen' );
-	add_action( "load-$hook", 'bf_submissions_add_options' );
+	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'buddyforms_submissions_screen' );
+	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
 
 add_action('admin_init', 'redirect_after_delete');
@@ -22,7 +22,7 @@ function redirect_after_delete(){
 }
 
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
-function bf_submissions_add_options() {
+function buddyforms_submissions_add_options() {
 	global $bf_submissions_table;
 
 	$option = 'per_page';
@@ -34,16 +34,16 @@ function bf_submissions_add_options() {
 	add_screen_option( $option, $args );
 
 	//Create an instance of our package class...
-	$bf_submissions_table = new bf_submissions_List_Table;
+	$bf_submissions_table = new BuddyForms_Submissions_List_Table;
 
 }
 
-add_filter( 'set-screen-option', 'bf_submissions_set_option', 10, 3 );
-function bf_submissions_set_option( $status, $option, $value ) {
+add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
+function buddyforms_submissions_set_option( $status, $option, $value ) {
 	return $value;
 }
 
-function bf_submissions_screen() {
+function buddyforms_submissions_screen() {
 	global $buddyforms, $bf_submissions_table, $form_slug, $post_id;
 
 	// Check that the user is allowed to update options
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class bf_submissions_List_Table extends WP_List_Table {
+class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	function __construct() {
 		global $status, $page, $buddyforms;

@@ -48,7 +48,7 @@ function buddyforms_form_builder_wizard_elements() {
 	$allowed_fields['registration'] = array('basic','contact','registration','extra');
 	$allowed_fields['post'] = array('basic','contact','registration','post','extra');
 
-	$elements_select_options = bf_form_elements_select_options();
+	$elements_select_options = buddyforms_form_elements_select_options();
 
 	foreach($allowed_fields[$type] as $key => $t){
 		$elements_select_options_new[$t] = $elements_select_options[$t];

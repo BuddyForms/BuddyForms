@@ -1,6 +1,6 @@
 <?php
 
-function bf_form_elements( $form, $args ) {
+function buddyforms_form_elements( $form, $args ) {
 
 	extract($args);
 

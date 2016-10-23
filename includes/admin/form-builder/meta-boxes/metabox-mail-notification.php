@@ -1,5 +1,5 @@
 <?php
-function bf_mail_notification_screen() {
+function buddyforms_mail_notification_screen() {
 	global $post, $buddyform;
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
@@ -28,7 +28,7 @@ function bf_mail_notification_screen() {
 	echo '<hr>';
 }
 
-function bf_post_status_mail_notification_screen() {
+function buddyforms_post_status_mail_notification_screen() {
 	global $post;
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
@@ -350,10 +350,10 @@ function buddyforms_form_setup_tab_pane_notification(){ ?>
 			<div class="hidden bf-hidden"><?php wp_editor('dummy', 'dummy'); ?></div>
 
 
-			<?php  bf_mail_notification_screen() ?>
+			<?php  buddyforms_mail_notification_screen() ?>
 
 			<div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
-			<?php  bf_post_status_mail_notification_screen() ?>
+			<?php  buddyforms_post_status_mail_notification_screen() ?>
 			</div>
 
 

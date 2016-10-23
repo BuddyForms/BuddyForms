@@ -96,7 +96,7 @@ function buddyforms_the_loop( $args ) {
 		$post_status = array( 'publish' );
 	}
 
-	$paged = bf_get_url_var( 'page' );
+	$paged = buddyforms_get_url_var( 'page' );
 
 	switch ( $list_posts_option ) {
 		case 'list_all':

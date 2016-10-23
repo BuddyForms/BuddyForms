@@ -154,7 +154,7 @@ function buddyforms_get_wp_login_form() {
 }
 
 // Helper Function to get the Get the REQUEST_URI Vars
-function bf_get_url_var( $name ) {
+function buddyforms_get_url_var( $name ) {
 	$strURL  = $_SERVER['REQUEST_URI'];
 	$arrVals = explode( "/", $strURL );
 	$found   = 0;
@@ -175,7 +175,7 @@ function bf_get_url_var( $name ) {
  *
  * @param string $code
  */
-function bf_enqueue_js( $code ) {
+function buddyforms_enqueue_js( $code ) {
 	global $wc_queued_js;
 
 	if ( empty( $wc_queued_js ) ) {
@@ -196,12 +196,12 @@ function bf_enqueue_js( $code ) {
  * @param string $after Optional. Display after edit link.
  * @param int $id Optional. Post ID.
  */
-function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
+function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
 	if ( ! $post = get_post( $id ) ) {
 		return;
 	}
 
-	if ( ! $url = bf_get_edit_post_link( $post->ID ) ) {
+	if ( ! $url = buddyforms_get_edit_post_link( $post->ID ) ) {
 		return;
 	}
 
@@ -223,7 +223,7 @@ function bf_edit_post_link( $text = null, $before = '', $after = '', $id = 0 ) {
 	echo $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
 }
 
-function bf_post_entry_actions($form_slug){
+function buddyforms_post_entry_actions($form_slug){
 	global $buddyforms;
 
 	if($buddyforms[$form_slug]['attached_page'] == 'none')
@@ -261,7 +261,7 @@ function bf_post_entry_actions($form_slug){
 				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
 				} else {
-					echo apply_filters( 'buddyforms_loop_edit_post_link', bf_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
 				}
 				echo '</li>';
 			}
@@ -283,7 +283,7 @@ function bf_post_entry_actions($form_slug){
 	<?php
 }
 
-function bf_post_status_readable($post_status){
+function buddyforms_post_status_readable($post_status){
 	echo buddyforms_get_post_status_readable($post_status);
 }
 
@@ -316,10 +316,10 @@ function bf_post_status_readable($post_status){
 	}
 
 function buddyforms_post_status_css_class($post_status, $form_slug){
-	echo bf_get_post_status_css_class($post_status, $form_slug);
+	echo buddyforms_get_post_status_css_class($post_status, $form_slug);
 }
 
-	function bf_get_post_status_css_class($post_status, $form_slug){
+	function buddyforms_get_post_status_css_class($post_status, $form_slug){
 
 		$post_status_css = $post_status;
 
@@ -333,7 +333,7 @@ function buddyforms_post_status_css_class($post_status, $form_slug){
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
  */
-function bf_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
+function buddyforms_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 
 	// Take only filters on right hook name and priority
@@ -357,7 +357,7 @@ function bf_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
  */
-function bf_remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
+function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 
 	// Take only filters on right hook name and priority

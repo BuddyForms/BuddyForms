@@ -641,7 +641,7 @@ function buddyforms_core_fs() {
 	return $buddyforms_core_fs;
 }
 if(PHP_VERSION < 5.3){
-	function bf_php_version_admin_notice() {
+	function buddyforms_php_version_admin_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
@@ -650,7 +650,7 @@ if(PHP_VERSION < 5.3){
 		</div>
 		<?php
 	}
-	add_action( 'admin_notices', 'bf_php_version_admin_notice' );
+	add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
 } else {
 	$GLOBALS['buddyforms_new'] = new BuddyForms();
 	// Init Freemius.

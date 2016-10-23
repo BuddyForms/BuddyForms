@@ -190,8 +190,8 @@ function buddyforms_create_edit_form( $args ) {
  * @since 1.5
  */
 
-add_action( 'wp', 'bf_form_response_no_ajax' );
-function bf_form_response_no_ajax() {
+add_action( 'wp', 'buddyforms_form_response_no_ajax' );
+function buddyforms_form_response_no_ajax() {
 	global $buddyforms, $bf_form_error, $bf_form_response_args;
 
 	// If the form is submitted we will get in action

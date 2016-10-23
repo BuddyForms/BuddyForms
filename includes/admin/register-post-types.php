@@ -27,7 +27,7 @@ function buddyforms_add_meta_boxes() {
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
-	bf_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10);
+	buddyforms_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10);
 
 }
 

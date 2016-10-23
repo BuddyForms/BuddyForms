@@ -14,14 +14,14 @@
  */
 function buddyforms_create_addons_menu() {
 
-	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Add-ons', 'buddyforms' ), __( 'Add-ons', 'buddyforms' ), 'manage_options', 'buddyforms-addons', 'bf_add_ons_screen' );
-//	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Upgrade', 'buddyforms' ), __( 'Upgrade', 'buddyforms' ), 'manage_options', 'bbuddyforms-pricing', 'bf_add_ons_screen' );
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Add-ons', 'buddyforms' ), __( 'Add-ons', 'buddyforms' ), 'manage_options', 'buddyforms-addons', 'buddyforms_add_ons_screen' );
+//	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Upgrade', 'buddyforms' ), __( 'Upgrade', 'buddyforms' ), 'manage_options', 'bbuddyforms-pricing', 'buddyforms_add_ons_screen' );
 
 }
 
 add_action( 'admin_menu', 'buddyforms_create_addons_menu', 99999999 );
 
-function bf_add_ons_screen() {
+function buddyforms_add_ons_screen() {
 
 	// Check that the user is allowed to update options
 	if ( ! current_user_can( 'manage_options' ) ) {

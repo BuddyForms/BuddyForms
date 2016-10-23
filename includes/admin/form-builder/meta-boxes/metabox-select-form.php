@@ -3,7 +3,7 @@
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function bf_add_custom_box() {
+function buddyforms_add_custom_box() {
 	global $buddyforms;
 
 	if ( ! $buddyforms ) {
@@ -21,7 +21,7 @@ function bf_add_custom_box() {
 		add_meta_box(
 			'bf_sectionid',
 			__( 'Attach a BuddyForm', 'buddyforms' ),
-			'bf_inner_custom_box',
+			'buddyforms_inner_custom_box',
 			$screen,
 			'side',
 			'high'
@@ -29,18 +29,18 @@ function bf_add_custom_box() {
 	}
 }
 
-add_action( 'add_meta_boxes', 'bf_add_custom_box' );
+add_action( 'add_meta_boxes', 'buddyforms_add_custom_box' );
 
 /**
  * Prints the box content.
  *
  * @param WP_Post $post The object for the current post/page.
  */
-function bf_inner_custom_box( $post ) {
+function buddyforms_inner_custom_box( $post ) {
 	global $buddyforms;
 
 	// Add an nonce field so we can check for it later.
-	wp_nonce_field( 'bf_inner_custom_box', 'bf_inner_custom_box_nonce' );
+	wp_nonce_field( 'buddyforms_inner_custom_box', 'buddyforms_inner_custom_box_nonce' );
 
 	/*
 	 * Use get_post_meta() to retrieve an existing value
@@ -82,20 +82,20 @@ function bf_inner_custom_box( $post ) {
  *
  * @param int $post_id The ID of the post being saved.
  */
-function bf_save_postdata( $post_id ) {
+function buddyforms_save_postdata( $post_id ) {
 
 	if(!is_admin()){
 		return;
 	}
 
-	if ( ! isset( $_POST['bf_inner_custom_box_nonce'] ) ) {
+	if ( ! isset( $_POST['buddyforms_inner_custom_box_nonce'] ) ) {
 		return $post_id;
 	}
 
-	$nonce = $_POST['bf_inner_custom_box_nonce'];
+	$nonce = $_POST['buddyforms_inner_custom_box_nonce'];
 
 	// Verify that the nonce is valid.
-	if ( ! wp_verify_nonce( $nonce, 'bf_inner_custom_box' ) ) {
+	if ( ! wp_verify_nonce( $nonce, 'buddyforms_inner_custom_box' ) ) {
 		return $post_id;
 	}
 
@@ -127,4 +127,4 @@ function bf_save_postdata( $post_id ) {
 	update_post_meta( $post_id, '_bf_form_slug', $mydata );
 }
 
-add_action( 'save_post', 'bf_save_postdata' );
+add_action( 'save_post', 'buddyforms_save_postdata' );
