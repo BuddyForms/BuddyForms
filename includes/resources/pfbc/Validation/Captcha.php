@@ -15,6 +15,7 @@ class Validation_Captcha extends Validation {
 
 	/**
 	 * Validation_Captcha constructor.
+	 *
 	 * @param string $privateKey
 	 * @param string $message
 	 */
@@ -27,6 +28,7 @@ class Validation_Captcha extends Validation {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

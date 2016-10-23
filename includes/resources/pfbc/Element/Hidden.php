@@ -11,6 +11,7 @@ class Element_Hidden extends Element {
 
 	/**
 	 * Element_Hidden constructor.
+	 *
 	 * @param $name
 	 * @param string $value
 	 * @param array|null $properties

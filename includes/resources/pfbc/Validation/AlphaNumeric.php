@@ -11,6 +11,7 @@ class Validation_AlphaNumeric extends Validation_RegExp {
 
 	/**
 	 * Validation_AlphaNumeric constructor.
+	 *
 	 * @param string $message
 	 */
 	public function __construct( $message = "" ) {

@@ -30,16 +30,16 @@ function bf_update_list_item_number() {
 //
 // Helper Function to use dialog instead of alert
 //
-function bf_alert(alert_message){
+function bf_alert(alert_message) {
     jQuery('<div></div>').dialog({
         modal: true,
         title: "Info",
-        open: function() {
+        open: function () {
             jQuery(this).html(alert_message);
         },
         buttons: {
-            Ok: function() {
-                jQuery( this ).dialog( "close" );
+            Ok: function () {
+                jQuery(this).dialog("close");
             }
         }
     });
@@ -53,7 +53,7 @@ function bf_update_list_item_number_mail() {
 //
 // Helper Function to lode form element templates depend on the form type
 //
-function load_formbuilder_template(template){
+function load_formbuilder_template(template) {
 
     jQuery.ajax({
         type: 'POST',
@@ -81,26 +81,26 @@ function load_formbuilder_template(template){
                         jQuery('#no-trigger-mailcontainer').hide();
                         jQuery('#mailcontainer').append(val['html']);
 
-                        tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id'] );
-                        tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' + val['trigger_id'] );
+                        tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id']);
+                        tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + val['trigger_id']);
 
                         bf_update_list_item_number_mail();
 
                         break;
                     case 'form_setup':
                         jQuery.each(val, function (i2, form_setup) {
-                            if( form_setup instanceof Object ){
+                            if (form_setup instanceof Object) {
                                 jQuery.each(form_setup, function (form_setup_key, form_setup_option) {
-                                    if( form_setup_option instanceof Object ){
+                                    if (form_setup_option instanceof Object) {
                                         jQuery.each(form_setup_option, function (form_setup_key2, form_setup_option2) {
-                                            if(form_setup instanceof Array){
+                                            if (form_setup instanceof Array) {
                                                 jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"][]').val(form_setup_option2).change();
                                             } else {
                                                 jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]').val(form_setup_option2).change();
                                             }
                                         });
                                     } else {
-                                        if(form_setup instanceof Array){
+                                        if (form_setup instanceof Array) {
                                             jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"][]').val(form_setup_option).change();
                                         } else {
                                             jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]').val(form_setup_option).change();
@@ -109,7 +109,7 @@ function load_formbuilder_template(template){
                                 });
                             }
 
-                            if(form_setup instanceof Array){
+                            if (form_setup instanceof Array) {
                                 jQuery('[name="buddyforms_options[' + i2 + '][]"]').val(form_setup).change();
                             } else {
                                 jQuery('[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
@@ -128,13 +128,13 @@ function load_formbuilder_template(template){
             jQuery('<div></div>').dialog({
                 modal: true,
                 title: "Info",
-                open: function() {
+                open: function () {
                     var markup = 'Something went wrong ;-(sorry)';
                     jQuery(this).html(markup);
                 },
                 buttons: {
-                    Ok: function() {
-                        jQuery( this ).dialog( "close" );
+                    Ok: function () {
+                        jQuery(this).dialog("close");
                     }
                 }
             });
@@ -150,15 +150,12 @@ function load_formbuilder_template(template){
 jQuery(document).ready(function (jQuery) {
 
     // Prevent form submission if enter key is pressed on text fields
-    jQuery(document).on('keyup keypress', 'form input[type="text"]', function(e) {
-        if(e.which == 13) {
+    jQuery(document).on('keyup keypress', 'form input[type="text"]', function (e) {
+        if (e.which == 13) {
             e.preventDefault();
             return false;
         }
     });
-
-
-
 
 
     // Hide all postbox metabocen exeped the buddyforms etaboxes
@@ -183,7 +180,7 @@ jQuery(document).ready(function (jQuery) {
         var input = jQuery(this).find("input");
         var id = input.attr('id');
 
-        if(input.val() === 'admin')
+        if (input.val() === 'admin')
             return;
 
         if (jQuery(input).is(':checked')) {
@@ -313,7 +310,7 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    jQuery('#mail_notification_add_new').live('click', function() {
+    jQuery('#mail_notification_add_new').live('click', function () {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
@@ -326,8 +323,8 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#no-trigger-mailcontainer').hide();
                 jQuery('#mailcontainer').append(data['html']);
 
-                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id'] );
-                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' + data['trigger_id'] );
+                tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id']);
+                tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + data['trigger_id']);
 
                 bf_update_list_item_number_mail();
 
@@ -344,7 +341,7 @@ jQuery(document).ready(function (jQuery) {
         var error = false;
         var trigger = jQuery('.post_status_mail_notification_trigger').val();
 
-        if(!trigger){
+        if (!trigger) {
             trigger = 'Mail_Notification'
         }
 
@@ -377,8 +374,8 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('#no-trigger-post-status-mail-container').hide();
                 jQuery('#post-status-mail-container').append(data);
 
-                tinymce.execCommand( 'mceRemoveEditor', false, 'bf_mail_body' );
-                tinymce.execCommand( 'mceAddEditor', false, 'bf_mail_body' );
+                tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body');
+                tinymce.execCommand('mceAddEditor', false, 'bf_mail_body');
 
                 bf_update_list_item_number_mail();
 
@@ -416,18 +413,18 @@ jQuery(document).ready(function (jQuery) {
     //
     // #bf-create-page-modal
     //
-    jQuery('#bf_create_page_modal').live('click', function() {
+    jQuery('#bf_create_page_modal').live('click', function () {
 
-       var dialog = jQuery('<div></div>').dialog({
+        var dialog = jQuery('<div></div>').dialog({
             modal: true,
             title: "Info",
-            open: function() {
+            open: function () {
                 var markup = 'Name your Page' +
                     '<input id="bf_create_page_name" type="text" value="">';
                 jQuery(this).html(markup);
             },
             buttons: {
-                'Add': function() {
+                'Add': function () {
 
                     var page_name = jQuery('#bf_create_page_name').val();
                     dialog.html('<span class="spinner is-active"></span>');
@@ -441,18 +438,18 @@ jQuery(document).ready(function (jQuery) {
                             "page_name": page_name
                         },
                         success: function (data) {
-                            if( data['error'] ){
+                            if (data['error']) {
                                 console.log(data['error']);
                             } else {
-                                jQuery( '#attached_page' ).append(jQuery('<option>', {
+                                jQuery('#attached_page').append(jQuery('<option>', {
                                     value: data['id'],
                                     text: data['name']
                                 }));
-                                jQuery( '#attached_page' ).val(data['id']);
+                                jQuery('#attached_page').val(data['id']);
                             }
                             dialog.dialog("close");
                         },
-                        error: function(){
+                        error: function () {
                             dialog.dialog("close");
                         }
                     });

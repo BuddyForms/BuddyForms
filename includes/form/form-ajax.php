@@ -26,20 +26,20 @@ function buddyforms_ajax_process_edit_post() {
 
 	$args = buddyforms_process_post( $formdata );
 
-	extract($args);
+	extract( $args );
 
 	if ( $args['hasError'] ) {
 
 
 		if ( $args['form_notice'] ) {
-			Form::setError('buddyforms_form_' . $form_slug, $form_notice );
+			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}
 
 		if ( $args['error_message'] ) {
-			Form::setError('buddyforms_form_' . $form_slug, $error_message );
+			Form::setError( 'buddyforms_form_' . $form_slug, $error_message );
 		}
 
-		Form::renderAjaxErrorResponse('buddyforms_form_' . $form_slug);
+		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
 		exit;
 
 	} else {
@@ -64,7 +64,7 @@ function buddyforms_ajax_process_edit_post() {
 					break;
 				case 'display_page':
 					$json['form_remove'] = 'true';
-					$json['form_notice'] = apply_filters('the_content', get_post_field('post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page']) );
+					$json['form_notice'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
 					break;
 				case 'redirect':
 					$json['form_remove'] = 'true';
@@ -162,6 +162,7 @@ function buddyforms_ajax_delete_post() {
 
 /**
  * @param $url
+ *
  * @return string
  */
 function buddyforms_after_save_post_redirect( $url ) {

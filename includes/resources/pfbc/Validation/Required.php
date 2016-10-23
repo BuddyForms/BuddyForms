@@ -11,6 +11,7 @@ class Validation_Required extends Validation {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

@@ -1,21 +1,21 @@
 // On Load jQuery
-jQuery( function( $ ) {
+jQuery(function ($) {
 
     // Type box.
-    $( '.bf-form-type-wrap' ).appendTo( '#buddyforms_form_setup .hndle span' );
+    $('.bf-form-type-wrap').appendTo('#buddyforms_form_setup .hndle span');
 
-    $( function() {
+    $(function () {
         // Prevent inputs in meta box headings opening/closing contents.
-        $( '#buddyforms_form_setup' ).find( '.hndle' ).unbind( 'click.postboxes' );
+        $('#buddyforms_form_setup').find('.hndle').unbind('click.postboxes');
 
-        $( '#buddyforms_form_setup' ).on( 'click', '.hndle', function( event ) {
+        $('#buddyforms_form_setup').on('click', '.hndle', function (event) {
 
             // If the user clicks on some form input inside the h3 the box should not be toggled.
-            if ( $( event.target ).filter( 'input, option, label, select' ).length ) {
+            if ($(event.target).filter('input, option, label, select').length) {
                 return;
             }
 
-            $( '#buddyforms_form_setup' ).toggleClass( 'closed' );
+            $('#buddyforms_form_setup').toggleClass('closed');
         });
     });
 
@@ -32,7 +32,7 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document.body).on('change', '#bf_add_new_form_element_modal', function () {
         jQuery('#formbuilder-action-select-modal').dialog("close");
         jQuery('#bf_add_new_form_element').val(jQuery('#bf_add_new_form_element_modal').val());
-        jQuery( "#formbuilder-add-element" ).trigger( "click" );
+        jQuery("#formbuilder-add-element").trigger("click");
     });
 
     //
@@ -62,7 +62,7 @@ jQuery(document).ready(function (jQuery) {
             return false;
         }
 
-        var unique    = jQuery('#bf_add_new_form_element').find(':selected').data('unique');
+        var unique = jQuery('#bf_add_new_form_element').find(':selected').data('unique');
         var exist = jQuery("#sortable_buddyforms_elements .bf_" + fieldtype);
 
         if (unique === 'unique') {
@@ -106,13 +106,13 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('<div></div>').dialog({
                     modal: true,
                     title: "Info",
-                    open: function() {
+                    open: function () {
                         var markup = 'Something went wrong ;-(sorry)';
                         jQuery(this).html(markup);
                     },
                     buttons: {
-                        Ok: function() {
-                            jQuery( this ).dialog( "close" );
+                        Ok: function () {
+                            jQuery(this).dialog("close");
                         }
                     }
                 });

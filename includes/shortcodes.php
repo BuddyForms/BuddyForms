@@ -4,6 +4,7 @@ add_shortcode( 'buddyforms_form', 'buddyforms_create_edit_form_shortcode' );
 add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
 /**
  * @param $args
+ *
  * @return string
  */
 function buddyforms_create_edit_form_shortcode( $args ) {
@@ -15,22 +16,23 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'post_id'     => '',
 		'revision_id' => false,
 		'form_slug'   => '',
-		'slug'   => '',
-		'id'   => '',
+		'slug'        => '',
+		'id'          => '',
 	), $args ) );
 
-	if(empty($form_slug))
+	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
+	}
 
 	// If multisite is enabled make sure we switch back to the current blog to get the correct form
-	if( buddyforms_is_multisite() ){
+	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
 	}
-		// if id is used we need to get the post_name
-		if(empty($form_slug) && !empty($id)){
-			$post = get_post($id);
-			$form_slug = $post->post_name;
-		}
+	// if id is used we need to get the post_name
+	if ( empty( $form_slug ) && ! empty( $id ) ) {
+		$post      = get_post( $id );
+		$form_slug = $post->post_name;
+	}
 
 	// Ok we have the form. let us switch back to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -40,12 +42,12 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	$args['form_slug'] = $form_slug;
 
 	// unset slug and id they are not supported from the buddyforms_create_edit_form function.
-	unset($args['slug']);
-	unset($args['id']);
+	unset( $args['slug'] );
+	unset( $args['id'] );
 
 	ob_start();
-		buddyforms_create_edit_form( $args );
-		$create_edit_form = ob_get_contents();
+	buddyforms_create_edit_form( $args );
+	$create_edit_form = ob_get_contents();
 	ob_clean();
 
 	return $create_edit_form;
@@ -57,6 +59,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
  *
  * @package BuddyForms
  * @since 0.3 beta
+ *
  * @param $args
  */
 function buddyforms_the_loop( $args ) {
@@ -64,6 +67,7 @@ function buddyforms_the_loop( $args ) {
 
 	if ( ! is_user_logged_in() ) :
 		buddyforms_wp_login_form();
+
 		return;
 	endif;
 
@@ -79,21 +83,21 @@ function buddyforms_the_loop( $args ) {
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
-	if(empty($form_slug) && !empty($id)){
-		$post = get_post($id);
+	if ( empty( $form_slug ) && ! empty( $id ) ) {
+		$post      = get_post( $id );
 		$form_slug = $post->post_name;
 	}
 	$args['form_slug'] = $form_slug;
-	unset($args['id']);
+	unset( $args['id'] );
 
 	if ( empty( $post_type ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_option = isset($buddyforms[ $form_slug ]['list_posts_option']) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
-	$list_posts_style  = isset($buddyforms[ $form_slug ]['list_posts_style']) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
+	$list_posts_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
+	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
-	$user_id = empty($author) ?  apply_filters( 'buddyforms_user_posts_user_id', get_current_user_id() ) : $author;
+	$user_id = empty( $author ) ? apply_filters( 'buddyforms_user_posts_user_id', get_current_user_id() ) : $author;
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
@@ -110,7 +114,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters('buddyforms_user_posts_query_args_posts_per_page', 10),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
 				'author'         => $user_id,
 				'paged'          => $paged,
 			);
@@ -121,7 +125,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters('buddyforms_user_posts_query_args_posts_per_page', 10),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
 				'author'         => $user_id,
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
@@ -133,8 +137,8 @@ function buddyforms_the_loop( $args ) {
 
 	// New
 	$query_args = apply_filters( 'buddyforms_user_posts_query_args', $query_args );
-		// Deprecated
-		$query_args = apply_filters( 'buddyforms_post_to_display_args', $query_args );
+	// Deprecated
+	$query_args = apply_filters( 'buddyforms_post_to_display_args', $query_args );
 
 
 	do_action( 'buddyforms_the_loop_start', $query_args );
@@ -158,7 +162,7 @@ function buddyforms_the_loop( $args ) {
 	do_action( 'buddyforms_the_loop_end', $query_args );
 
 	// If multisite is enabled we should restore now to the current blog.
-	if( buddyforms_is_multisite() ){
+	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
 	}
 }
@@ -174,12 +178,14 @@ add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
 //
 /**
  * @param $args
+ *
  * @return string
  */
-function buddyforms_the_loop_shortcode($args){
+function buddyforms_the_loop_shortcode( $args ) {
 	ob_start();
-		buddyforms_the_loop($args);
+	buddyforms_the_loop( $args );
 	$tmp = ob_get_clean();
+
 	return $tmp;
 }
 
@@ -191,15 +197,16 @@ add_shortcode( 'buddyforms_nav', 'buddyforms_nav' );
 add_shortcode( 'bf_nav', 'buddyforms_nav' );
 /**
  * @param $args
+ *
  * @return mixed|string|void
  */
 function buddyforms_nav( $args ) {
 
 	extract( shortcode_atts( array(
-		'form_slug' => '',
-		'separator' => ' | ',
-		'label_add'     => 'Add New',
-		'label_view'     => 'View',
+		'form_slug'  => '',
+		'separator'  => ' | ',
+		'label_add'  => 'Add New',
+		'label_view' => 'View',
 	), $args ) );
 
 	$tmp = buddyforms_button_view_posts( $args );
@@ -213,14 +220,15 @@ add_shortcode( 'buddyforms_button_view_posts', 'buddyforms_button_view_posts' );
 add_shortcode( 'bf_link_to_user_posts', 'buddyforms_button_view_posts' );
 /**
  * @param $args
+ *
  * @return mixed|void
  */
 function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 
 	extract( shortcode_atts( array(
-		'form_slug' => '',
-		'label_view'     => 'View',
+		'form_slug'  => '',
+		'label_view' => 'View',
 	), $args ) );
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label_view, 'buddyforms' ) . ' </a>';
@@ -233,6 +241,7 @@ add_shortcode( 'buddyforms_button_add_new', 'buddyforms_button_add_new' );
 add_shortcode( 'bf_link_to_form', 'buddyforms_button_add_new' );
 /**
  * @param $args
+ *
  * @return mixed|void
  */
 function buddyforms_button_add_new( $args ) {
@@ -240,7 +249,7 @@ function buddyforms_button_add_new( $args ) {
 
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label_add'     => 'Add New',
+		'label_add' => 'Add New',
 	), $args ) );
 
 

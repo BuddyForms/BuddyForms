@@ -5,14 +5,16 @@
  *
  * @package BuddyForms
  * @since 0.3 beta
+ *
  * @param array $args
+ *
  * @return array
  */
 
 function buddyforms_process_post( $args = Array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
 
-	$hasError     = false;
+	$hasError      = false;
 	$error_message = '';
 
 	$current_user = wp_get_current_user();
@@ -31,9 +33,9 @@ function buddyforms_process_post( $args = Array() ) {
 	$current_blog_id = get_current_blog_id();
 
 	// Check if multisite is enabled and switch to the form blog id
-	buddyforms_switch_to_form_blog($form_slug);
+	buddyforms_switch_to_form_blog( $form_slug );
 
-	$form_type = isset($buddyforms[$form_slug]['form_type']) ? $buddyforms[$form_slug]['form_type'] : '';
+	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		// Get the browser and platform
@@ -41,25 +43,25 @@ function buddyforms_process_post( $args = Array() ) {
 
 		// Collect all submitter data
 		$user_data = array();
-		if( !isset( $buddyforms[$form_slug]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
+		if ( ! isset( $buddyforms[ $form_slug ]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 		}
-		if( !isset( $buddyforms[$form_slug]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ){
-			$user_data['referer']   = $_SERVER['HTTP_REFERER'];
+		if ( ! isset( $buddyforms[ $form_slug ]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ) {
+			$user_data['referer'] = $_SERVER['HTTP_REFERER'];
 		}
-		if( !isset( $buddyforms[$form_slug]['browser'] ) && isset( $browser_data['name'] ) ){
-			$user_data['browser']   = $browser_data['name'];
+		if ( ! isset( $buddyforms[ $form_slug ]['browser'] ) && isset( $browser_data['name'] ) ) {
+			$user_data['browser'] = $browser_data['name'];
 		}
-		if( !isset( $buddyforms[$form_slug]['version'] ) && isset( $browser_data['version'] ) ){
-			$user_data['version']   = $browser_data['version'];
+		if ( ! isset( $buddyforms[ $form_slug ]['version'] ) && isset( $browser_data['version'] ) ) {
+			$user_data['version'] = $browser_data['version'];
 		}
-		if( !isset( $buddyforms[$form_slug]['platform'] ) && isset( $browser_data['platform'] ) ){
-			$user_data['platform']  = $browser_data['platform'];
+		if ( ! isset( $buddyforms[ $form_slug ]['platform'] ) && isset( $browser_data['platform'] ) ) {
+			$user_data['platform'] = $browser_data['platform'];
 		}
-		if( !isset( $buddyforms[$form_slug]['reports'] ) && isset( $browser_data['reports'] ) ){
-			$user_data['reports']   = $browser_data['reports'];
+		if ( ! isset( $buddyforms[ $form_slug ]['reports'] ) && isset( $browser_data['reports'] ) ) {
+			$user_data['reports'] = $browser_data['reports'];
 		}
-		if( !isset( $buddyforms[$form_slug]['useragent'] ) && isset( $browser_data['useragent'] ) ){
+		if ( ! isset( $buddyforms[ $form_slug ]['useragent'] ) && isset( $browser_data['useragent'] ) ) {
 			$user_data['useragent'] = $browser_data['useragent'];
 		}
 	}
@@ -70,13 +72,14 @@ function buddyforms_process_post( $args = Array() ) {
 	 *
 	 * Validation can be extended
 	 */
-	if( Form::isValid( "buddyforms_form_" . $form_slug, false ) ) {
-		if(!apply_filters( 'buddyforms_form_custom_validation', true, $form_slug )) {
+	if ( Form::isValid( "buddyforms_form_" . $form_slug, false ) ) {
+		if ( ! apply_filters( 'buddyforms_form_custom_validation', true, $form_slug ) ) {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
 			Form::clearValues( "buddyforms_form_" . $form_slug );
+
 			return $args;
 		}
 	} else {
@@ -85,19 +88,21 @@ function buddyforms_process_post( $args = Array() ) {
 			'form_slug' => $form_slug,
 		);
 		Form::clearValues( "buddyforms_form_" . $form_slug );
+
 		return $args;
 	}
 
 	// Check if this is a registration form only
-	if( $form_type == 'registration' ) {
+	if ( $form_type == 'registration' ) {
 
 		$registration = buddyforms_wp_insert_user();
 		// Check if registration was successful
-		if( !$registration ){
+		if ( ! $registration ) {
 			$args = array(
-				'hasError'      => true,
-				'form_slug'    => $form_slug,
+				'hasError'  => true,
+				'form_slug' => $form_slug,
 			);
+
 			return $args;
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -112,22 +117,24 @@ function buddyforms_process_post( $args = Array() ) {
 			'form_slug'    => $form_slug,
 		);
 		Form::clearValues( "buddyforms_form_" . $form_slug );
+
 		return $args;
 	}
 
 	// Check if user is logged in and if not check if registration during submission is enabled.
-	if( isset( $buddyforms[$form_slug]['public_submit_create_account'] ) && !is_user_logged_in() ){
+	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
 
 		// ok let us try to register a user
 		$registration = buddyforms_wp_insert_user();
 
 		// Check if registration was successful
-		if( !$registration ){
+		if ( ! $registration ) {
 			$args = array(
-				'hasError'      => true,
-				'form_slug'    => $form_slug,
+				'hasError'  => true,
+				'form_slug' => $form_slug,
 			);
 			Form::clearValues( "buddyforms_form_" . $form_slug );
+
 			return $args;
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -176,7 +183,7 @@ function buddyforms_process_post( $args = Array() ) {
 	} elseif ( $post_id != 0 && current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 		$user_can_edit = true;
 	}
-	if( isset($buddyforms[$form_slug]['public_submit']) && $buddyforms[$form_slug]['public_submit'][0] == 'public_submit' ){
+	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'][0] == 'public_submit' ) {
 		$user_can_edit = true;
 	}
 	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
@@ -245,23 +252,23 @@ function buddyforms_process_post( $args = Array() ) {
 
 			$attach_id = $_POST['featured_image'];
 
-			if( buddyforms_is_multisite() ) {
+			if ( buddyforms_is_multisite() ) {
 
 				restore_current_blog();
 
-				$image_url = wp_get_attachment_image_src( $_POST['featured_image'], 'full');
+				$image_url = wp_get_attachment_image_src( $_POST['featured_image'], 'full' );
 				$image_url = $image_url[0];
 
-				switch_to_blog( $buddyforms[$form_slug]['blog_id'] );
+				switch_to_blog( $buddyforms[ $form_slug ]['blog_id'] );
 
 
 				// Add Featured Image to Post
 				$upload_dir = wp_upload_dir(); // Set upload folder
-				$image_data = file_get_contents($image_url); // Get image data
-				$filename   = basename($image_url); // Create image file name
+				$image_data = file_get_contents( $image_url ); // Get image data
+				$filename   = basename( $image_url ); // Create image file name
 
 				// Check folder permission and define file location
-				if( wp_mkdir_p( $upload_dir['path'] ) ) {
+				if ( wp_mkdir_p( $upload_dir['path'] ) ) {
 					$file = $upload_dir['path'] . '/' . $filename;
 				} else {
 					$file = $upload_dir['basedir'] . '/' . $filename;
@@ -285,7 +292,7 @@ function buddyforms_process_post( $args = Array() ) {
 				$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 
 				// Include image.php
-				require_once(ABSPATH . 'wp-admin/includes/image.php');
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 				// Define attachment metadata
 				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
@@ -336,12 +343,12 @@ function buddyforms_process_post( $args = Array() ) {
 	// Display the message
 	if ( ! $hasError ) :
 		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
-			$info_message   = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully updated ', 'buddyforms' );
-			$form_notice    = '<div class="info alert">' . $info_message . '</div>';
+			$info_message = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully updated ', 'buddyforms' );
+			$form_notice  = '<div class="info alert">' . $info_message . '</div>';
 		} else {
 			// Update the new post
-			$info_message   = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully created ', 'buddyforms' );
-			$form_notice    = '<div class="info alert">' . $info_message . '</div>';
+			$info_message = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully created ', 'buddyforms' );
+			$form_notice  = '<div class="info alert">' . $info_message . '</div>';
 		}
 
 	else:
@@ -370,9 +377,10 @@ function buddyforms_process_post( $args = Array() ) {
 
 	do_action( 'buddyforms_process_post_end', $args );
 	Form::clearValues( "buddyforms_form_" . $form_slug );
+
 	return $args;
 
-	if( buddyforms_is_multisite() ){
+	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
 	}
 
@@ -380,6 +388,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 /**
  * @param $args
+ *
  * @return array|bool
  */
 function buddyforms_update_post( $args ) {
@@ -424,8 +433,8 @@ function buddyforms_update_post( $args ) {
 
 		// Add optional scheduled post dates
 		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
-			$post_date = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
-			$bf_post['post_date'] = $post_date;
+			$post_date                = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
+			$bf_post['post_date']     = $post_date;
 			$bf_post['post_date_gmt'] = $post_date;
 		}
 
@@ -452,9 +461,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 	foreach ( $customfields as $key => $customfield ) :
 
 		// Check if file is new and needs to get reassigned to the corect parent
-		if( $customfield['type'] == 'file' && !empty( $_POST[$customfield['slug']] ) ){
+		if ( $customfield['type'] == 'file' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
 
-			$attachement_ids = $_POST[$customfield['slug']];
+			$attachement_ids = $_POST[ $customfield['slug'] ];
 			$attachement_ids = explode( ',', $attachement_ids );
 
 			if ( is_array( $attachement_ids ) ) {
@@ -462,9 +471,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 					$attachement = get_post( $attachement_id );
 
-					if($attachement->post_parent == $buddyforms[$form_slug]['attached_page'] ){
+					if ( $attachement->post_parent == $buddyforms[ $form_slug ]['attached_page'] ) {
 						$attachement = array(
-							'ID' => $attachement_id,
+							'ID'          => $attachement_id,
 							'post_parent' => $post_id,
 						);
 						wp_update_post( $attachement );
@@ -474,15 +483,15 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		}
 
 		// Check if featured image is new and needs to get reassigned to the corect parent
-		if ( $customfield['type'] == 'featured-image' || $customfield['type'] == 'featured_image' && isset($_POST['featured_image'])) {
+		if ( $customfield['type'] == 'featured-image' || $customfield['type'] == 'featured_image' && isset( $_POST['featured_image'] ) ) {
 
 			$attachement_id = $_POST['featured_image'];
 
 			$attachement = get_post( $attachement_id );
 
-			if($attachement->post_parent == $buddyforms[$form_slug]['attached_page'] ){
+			if ( $attachement->post_parent == $buddyforms[ $form_slug ]['attached_page'] ) {
 				$attachement = array(
-					'ID' => $attachement_id,
+					'ID'          => $attachement_id,
 					'post_parent' => $post_id,
 				);
 				wp_update_post( $attachement );
@@ -499,8 +508,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 			if ( isset( $_POST[ $customfield['slug'] ] ) ) {
 
 				// Get the tax items
-				$tax_terms = $_POST[$customfield['slug']];
-				$taxonomy = get_taxonomy( $customfield['taxonomy'] );
+				$tax_terms = $_POST[ $customfield['slug'] ];
+				$taxonomy  = get_taxonomy( $customfield['taxonomy'] );
 
 				// Let us delete all and re assign.
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
@@ -509,39 +518,41 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				$new_tax_items = array();
 
 				// If no tax items are available check if we have some defaults we can use
-				if ( $tax_terms[0] == - 1 && !empty( $customfield['taxonomy_default'] ) ) {
+				if ( $tax_terms[0] == - 1 && ! empty( $customfield['taxonomy_default'] ) ) {
 					foreach ( $customfield['taxonomy_default'] as $key_tax => $tax ) {
-						$tax_terms[$key_tax] = $tax;
+						$tax_terms[ $key_tax ] = $tax;
 					}
 				}
 
 				// Check if new term to insert
-				foreach($tax_terms as $term_key => $term){
+				foreach ( $tax_terms as $term_key => $term ) {
 
 					// Check if the term exist
-					$term_exist = term_exists( (int)$term, $customfield['taxonomy'] );
+					$term_exist = term_exists( (int) $term, $customfield['taxonomy'] );
 
 					// Create new term if need and add to the new tax items array
-					if( !$term_exist ){
-						$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
-						$term = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
-						$new_tax_items[$new_term['term_id']] = $term->slug;
+					if ( ! $term_exist ) {
+						$new_term                              = wp_insert_term( $term, $customfield['taxonomy'] );
+						$term                                  = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
+						$new_tax_items[ $new_term['term_id'] ] = $term->slug;
 					} else {
-						$term = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
-						$new_tax_items[$term_exist['term_id']] = $term->slug;
+						$term                                    = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
+						$new_tax_items[ $term_exist['term_id'] ] = $term->slug;
 					}
 
 				}
 
 				// Check if the taxonomy is hierarchical and prepare the string
 				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
-					$cat_string = implode(', ', array_map(
-						function ($v, $k) { return sprintf("%s", $k); },
+					$cat_string = implode( ', ', array_map(
+						function ( $v, $k ) {
+							return sprintf( "%s", $k );
+						},
 						$new_tax_items,
-						array_keys($new_tax_items)
-					));
+						array_keys( $new_tax_items )
+					) );
 				} else {
-					$cat_string = implode(', ', $new_tax_items);
+					$cat_string = implode( ', ', $new_tax_items );
 				}
 
 				// Add the new terms to the taxonomy
@@ -578,6 +589,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 add_filter( 'wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter' );
 /**
  * @param $file
+ *
  * @return mixed
  */
 function buddyforms_wp_handle_upload_prefilter( $file ) {
@@ -608,88 +620,74 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 /**
  * @return array
  */
-function buddyforms_get_browser()
-{
-	$u_agent = $_SERVER['HTTP_USER_AGENT'];
-	$bname = 'Unknown';
+function buddyforms_get_browser() {
+	$u_agent  = $_SERVER['HTTP_USER_AGENT'];
+	$bname    = 'Unknown';
 	$platform = 'Unknown';
-	$version= "";
+	$version  = "";
 
 	//First get the platform?
-	if (preg_match('/linux/i', $u_agent)) {
+	if ( preg_match( '/linux/i', $u_agent ) ) {
 		$platform = 'linux';
-	}
-	elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+	} elseif ( preg_match( '/macintosh|mac os x/i', $u_agent ) ) {
 		$platform = 'mac';
-	}
-	elseif (preg_match('/windows|win32/i', $u_agent)) {
+	} elseif ( preg_match( '/windows|win32/i', $u_agent ) ) {
 		$platform = 'windows';
 	}
 
 	// Next get the name of the useragent yes seperately and for good reason
-	if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
-	{
+	if ( preg_match( '/MSIE/i', $u_agent ) && ! preg_match( '/Opera/i', $u_agent ) ) {
 		$bname = 'Internet Explorer';
-		$ub = "MSIE";
-	}
-	elseif(preg_match('/Firefox/i',$u_agent))
-	{
+		$ub    = "MSIE";
+	} elseif ( preg_match( '/Firefox/i', $u_agent ) ) {
 		$bname = 'Mozilla Firefox';
-		$ub = "Firefox";
-	}
-	elseif(preg_match('/Chrome/i',$u_agent))
-	{
+		$ub    = "Firefox";
+	} elseif ( preg_match( '/Chrome/i', $u_agent ) ) {
 		$bname = 'Google Chrome';
-		$ub = "Chrome";
-	}
-	elseif(preg_match('/Safari/i',$u_agent))
-	{
+		$ub    = "Chrome";
+	} elseif ( preg_match( '/Safari/i', $u_agent ) ) {
 		$bname = 'Apple Safari';
-		$ub = "Safari";
-	}
-	elseif(preg_match('/Opera/i',$u_agent))
-	{
+		$ub    = "Safari";
+	} elseif ( preg_match( '/Opera/i', $u_agent ) ) {
 		$bname = 'Opera';
-		$ub = "Opera";
-	}
-	elseif(preg_match('/Netscape/i',$u_agent))
-	{
+		$ub    = "Opera";
+	} elseif ( preg_match( '/Netscape/i', $u_agent ) ) {
 		$bname = 'Netscape';
-		$ub = "Netscape";
+		$ub    = "Netscape";
 	}
 
 	// finally get the correct version number
-	$known = array('Version', $ub, 'other');
-	$pattern = '#(?<browser>' . join('|', $known) .
+	$known   = array( 'Version', $ub, 'other' );
+	$pattern = '#(?<browser>' . join( '|', $known ) .
 	           ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-	if (!preg_match_all($pattern, $u_agent, $matches)) {
+	if ( ! preg_match_all( $pattern, $u_agent, $matches ) ) {
 		// we have no matching number just continue
 	}
 
 	// see how many we have
-	$i = count($matches['browser']);
-	if ($i != 1) {
+	$i = count( $matches['browser'] );
+	if ( $i != 1 ) {
 		//we will have two since we are not using 'other' argument yet
 		//see if version is before or after the name
-		if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-			$version= $matches['version'][0];
+		if ( strripos( $u_agent, "Version" ) < strripos( $u_agent, $ub ) ) {
+			$version = $matches['version'][0];
+		} else {
+			$version = $matches['version'][1];
 		}
-		else {
-			$version= $matches['version'][1];
-		}
-	}
-	else {
-		$version= $matches['version'][0];
+	} else {
+		$version = $matches['version'][0];
 	}
 
 	// check if we have a number
-	if ($version==null || $version=="") {$version="?";}
+	if ( $version == null || $version == "" ) {
+		$version = "?";
+	}
 
 	return array(
 		'userAgent' => $u_agent,
 		'name'      => $bname,
 		'version'   => $version,
 		'platform'  => $platform,
-		'pattern'    => $pattern
+		'pattern'   => $pattern
 	);
 }

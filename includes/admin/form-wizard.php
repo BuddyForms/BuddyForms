@@ -3,28 +3,29 @@
 //
 // Create a list of all available form builder templates
 //
-function buddyforms_form_builder_wizard_types(){
+function buddyforms_form_builder_wizard_types() {
 
 	$buddyforms_wizard_types['contact']['title'] = 'Contact Form';
-	$buddyforms_wizard_types['contact']['desc'] = 'Setup a contact form in 3 easy steps.';
+	$buddyforms_wizard_types['contact']['desc']  = 'Setup a contact form in 3 easy steps.';
 
 	$buddyforms_wizard_types['registration']['title'] = 'Registration Form';
-	$buddyforms_wizard_types['registration']['desc'] = 'Create a custom sign up form in 3 easy steps.';
+	$buddyforms_wizard_types['registration']['desc']  = 'Create a custom sign up form in 3 easy steps.';
 
 	$buddyforms_wizard_types['post']['title'] = 'Post Form';
-	$buddyforms_wizard_types['post']['desc'] = 'Let your users submit content to your site in 6 easy steps.';
+	$buddyforms_wizard_types['post']['desc']  = 'Let your users submit content to your site in 6 easy steps.';
 
-	$buddyforms_wizard_types = apply_filters('buddyforms_wizard_types', $buddyforms_wizard_types);
+	$buddyforms_wizard_types = apply_filters( 'buddyforms_wizard_types', $buddyforms_wizard_types );
 
 	ob_start();
 
 	?>
 	<div class="buddyforms_wizard_types">
-		<?php foreach($buddyforms_wizard_types as $key => $template) { ?>
+		<?php foreach ( $buddyforms_wizard_types as $key => $template ) { ?>
 			<div class="bf-3-tile">
 				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
 				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types"><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
+				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types"><span
+						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 			</div>
 		<?php } ?>
 
@@ -37,6 +38,7 @@ function buddyforms_form_builder_wizard_types(){
 	echo $tmp;
 	die();
 }
+
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_builder_wizard_types' );
 
 
@@ -44,26 +46,26 @@ function buddyforms_form_builder_wizard_elements() {
 
 	$type = $_POST['type'];
 
-	$allowed_fields['contact'] = array('basic','contact','extra');
-	$allowed_fields['registration'] = array('basic','contact','registration','extra');
-	$allowed_fields['post'] = array('basic','contact','registration','post','extra');
+	$allowed_fields['contact']      = array( 'basic', 'contact', 'extra' );
+	$allowed_fields['registration'] = array( 'basic', 'contact', 'registration', 'extra' );
+	$allowed_fields['post']         = array( 'basic', 'contact', 'registration', 'post', 'extra' );
 
 	$elements_select_options = buddyforms_form_elements_select_options();
 
-	foreach($allowed_fields[$type] as $key => $t){
-		$elements_select_options_new[$t] = $elements_select_options[$t];
+	foreach ( $allowed_fields[ $type ] as $key => $t ) {
+		$elements_select_options_new[ $t ] = $elements_select_options[ $t ];
 	}
 
 	// Loop The form elements array and add the options to the select box
-	if(is_array($elements_select_options)){
-		foreach($elements_select_options as $optgroup_slug => $optgroup){
+	if ( is_array( $elements_select_options ) ) {
+		foreach ( $elements_select_options as $optgroup_slug => $optgroup ) {
 			$el_links .= '<h5>' . $optgroup['label'] . '</h5>';
-			foreach($optgroup['fields'] as $es_val => $es_label){
+			foreach ( $optgroup['fields'] as $es_val => $es_label ) {
 
-				if( is_array($es_label) ){
+				if ( is_array( $es_label ) ) {
 					$el_links .= '<a href="#" class="bf_add_element_action button" data-unique="' . $es_label['unique'] . '" data-fieldtype="' . $es_val . '">' . $es_label['label'] . '</a> ';
 				} else {
-					$el_links .= '<a href="#" class="bf_add_element_action button" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ' ;
+					$el_links .= '<a href="#" class="bf_add_element_action button" data-fieldtype="' . $es_val . '">' . $es_label . '</a> ';
 				}
 
 			}
@@ -73,10 +75,11 @@ function buddyforms_form_builder_wizard_elements() {
 	echo '<div class="formbuilder-actions-sidebar-wrap">' . $el_links . '</div>';
 	die();
 }
+
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_elements', 'buddyforms_form_builder_wizard_elements' );
 
 
-function buddyforms_form_builder_wizard_save(){
+function buddyforms_form_builder_wizard_save() {
 
 	if ( isset( $_POST['FormData'] ) ) {
 		parse_str( $_POST['FormData'], $formdata );
@@ -84,15 +87,15 @@ function buddyforms_form_builder_wizard_save(){
 	}
 
 	$formdata['post_status'] = 'publish';
-	$formdata['ID'] = $formdata['post_ID'];
+	$formdata['ID']          = $formdata['post_ID'];
 
-	$form = wp_insert_post($formdata);
+	$form = wp_insert_post( $formdata );
 
 	if ( ! isset( $formdata['buddyforms_options'] ) ) {
 		return;
 	}
 
-	$post = get_post($form);
+	$post      = get_post( $form );
 	$buddyform = $formdata['buddyforms_options'];
 
 	// Add post title as form name and post name as form slug.
@@ -133,7 +136,7 @@ function buddyforms_form_builder_wizard_save(){
 			$role = get_role( $form_role );
 			foreach ( $capabilities as $cap ) {
 				$cap_slug = 'buddyforms_' . $post->post_name . '_' . $cap;
-				$role->add_cap(  $cap_slug );
+				$role->add_cap( $cap_slug );
 			}
 		}
 
@@ -147,11 +150,12 @@ function buddyforms_form_builder_wizard_save(){
 	buddyforms_attached_page_rewrite_rules( true );
 
 
-	$url =  admin_url().'post.php?post=' . $form. '&action=edit&wizard=done';
+	$url = admin_url() . 'post.php?post=' . $form . '&action=edit&wizard=done';
 	echo $url;
 	die();
 
 }
+
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_save', 'buddyforms_form_builder_wizard_save' );
 
 function buddyforms_wizard_rewrite_rules() {
@@ -164,32 +168,34 @@ function buddyforms_wizard_rewrite_rules() {
 
 	die();
 }
+
 add_action( 'wp_ajax_buddyforms_wizard_rewrite_rules', 'buddyforms_wizard_rewrite_rules' );
 
-function buddyforms_wizard_done(){
+function buddyforms_wizard_done() {
 	global $post;
 
-	if(!isset($_GET['wizard'])){
+	if ( ! isset( $_GET['wizard'] ) ) {
 		return;
 	}
 
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
-	$type =  get_post_type();
+	$type = get_post_type();
 
-	switch ($type){
+	switch ( $type ) {
 		case "buddyforms":
-			$url=  admin_url().'post.php?post=' . $post->ID . '&action=edit&wizard=done';
-			wp_redirect($url);
+			$url = admin_url() . 'post.php?post=' . $post->ID . '&action=edit&wizard=done';
+			wp_redirect( $url );
 			exit;
 			break;
 	}
 }
-add_action('save_post','buddyforms_wizard_done');
+
+add_action( 'save_post', 'buddyforms_wizard_done' );
 
 add_action( 'admin_menu', 'buddyforms_wizard_page' );
-function buddyforms_wizard_page()  {
+function buddyforms_wizard_page() {
 
 	// Add The Wizard to the Page
 	add_submenu_page(

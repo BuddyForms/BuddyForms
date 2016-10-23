@@ -32,7 +32,7 @@ function buddyforms_create_edit_form( $args ) {
 		'form_notice' => '',
 	), $args ) );
 
-	buddyforms_switch_to_form_blog($form_slug);
+	buddyforms_switch_to_form_blog( $form_slug );
 
 	$current_user = wp_get_current_user();
 
@@ -130,10 +130,10 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 
-
-	if( !isset( $buddyforms[ $form_slug ]['form_fields'] ) ){
+	if ( ! isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		$error_message = __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' );
 		echo '<div class="bf-alert error">' . $error_message . '</div>';
+
 		return;
 	}
 
@@ -178,7 +178,7 @@ function buddyforms_create_edit_form( $args ) {
 
 	echo buddyforms_form_html( $args );
 
-	if( buddyforms_is_multisite() ){
+	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
 	}
 }

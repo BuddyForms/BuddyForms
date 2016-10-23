@@ -31,7 +31,7 @@ class Element_Checksort extends Element_Sort {
 			$labelClass .= "-inline";
 		}
 
-		$count = 0;
+		$count    = 0;
 		$existing = "";
 
 		foreach ( $this->options as $value => $text ) {

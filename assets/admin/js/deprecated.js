@@ -2,7 +2,7 @@ jQuery(document).ready(function (jQuery) {
 //
 // This is the old sidbear based add form elements function. Its deprecated but let us support it till 2.0
 //
-    jQuery('.bf_add_element_action').live('click', function() {
+    jQuery('.bf_add_element_action').live('click', function () {
 
         var action = jQuery(this);
         var post_id = bf_getUrlParameter('post');
@@ -51,17 +51,18 @@ jQuery(document).ready(function (jQuery) {
                 jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
 
             },
-            error: function () {;
+            error: function () {
+                ;
                 jQuery('<div></div>').dialog({
                     modal: true,
                     title: "Info",
-                    open: function() {
+                    open: function () {
                         var markup = 'Something went wrong ;-(sorry)';
                         jQuery(this).html(markup);
                     },
                     buttons: {
-                        Ok: function() {
-                            jQuery( this ).dialog( "close" );
+                        Ok: function () {
+                            jQuery(this).dialog("close");
                         }
                     }
                 });

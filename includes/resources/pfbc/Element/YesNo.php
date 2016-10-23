@@ -6,6 +6,7 @@
 class Element_YesNo extends Element_Radio {
 	/**
 	 * Element_YesNo constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties

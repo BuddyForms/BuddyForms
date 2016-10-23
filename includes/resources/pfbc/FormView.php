@@ -19,6 +19,7 @@ abstract class FormView extends Base {
 
 	/**
 	 * FormView constructor.
+	 *
 	 * @param array|null $properties
 	 */
 	public function __construct( array $properties = null ) {

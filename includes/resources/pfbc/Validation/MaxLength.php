@@ -17,6 +17,7 @@ class MaxLength extends \PFBC\Validation {
 
 	/**
 	 * MaxLength constructor.
+	 *
 	 * @param $limit
 	 * @param string $message
 	 */
@@ -30,6 +31,7 @@ class MaxLength extends \PFBC\Validation {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

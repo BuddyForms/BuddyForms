@@ -44,6 +44,7 @@ function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) 
 add_filter( 'query_vars', 'buddyforms_attached_page_query_vars' );
 /**
  * @param $query_vars
+ *
  * @return array
  */
 function buddyforms_attached_page_query_vars( $query_vars ) {
@@ -67,6 +68,7 @@ add_filter( 'get_edit_post_link', 'buddyforms_my_edit_post_link', 1, 3 );
 /**
  * @param $url
  * @param $post_ID
+ *
  * @return string
  */
 function buddyforms_my_edit_post_link( $url, $post_ID ) {

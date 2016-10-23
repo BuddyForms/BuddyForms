@@ -1,4 +1,4 @@
-function bf_form_errors(){
+function bf_form_errors() {
 
     jQuery('input').removeClass('error');
 
@@ -6,42 +6,42 @@ function bf_form_errors(){
     jQuery.each(errors, function (i, error) {
         var field_id = jQuery(error).attr('data-field-id');
         console.log(field_id);
-        if(field_id === 'user_pass'){
-            jQuery( '#' + field_id + '2').addClass('error');
+        if (field_id === 'user_pass') {
+            jQuery('#' + field_id + '2').addClass('error');
         }
-        jQuery( '#' + field_id).addClass('error');
+        jQuery('#' + field_id).addClass('error');
     });
 }
 
 jQuery(document).ready(function () {
 
-    var bf_submission_modal_content = jQuery( ".buddyforms-posts-content" );
+    var bf_submission_modal_content = jQuery(".buddyforms-posts-content");
     var bf_submission_modal = '';
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
 
         //console.log(evt);
 
-        bf_submission_modal = jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') );
+        bf_submission_modal = jQuery("#bf-submission-modal_" + jQuery(this).attr('data-id'));
 
         jQuery('.buddyforms-posts-container').html(bf_submission_modal);
 
-        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id') + " :input").attr("disabled", true);
-        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).show();
+        jQuery("#bf-submission-modal_" + jQuery(this).attr('data-id') + " :input").attr("disabled", true);
+        jQuery("#bf-submission-modal_" + jQuery(this).attr('data-id')).show();
         return false;
     });
 
 
     jQuery(document).on("click", '.bf-close-submissions-modal', function (evt) {
-        bf_submission_modal_content.find( '.bf_posts_' + jQuery(this).attr('data-id')).prepend(bf_submission_modal);
+        bf_submission_modal_content.find('.bf_posts_' + jQuery(this).attr('data-id')).prepend(bf_submission_modal);
         jQuery('.buddyforms-posts-container').html(bf_submission_modal_content);
-        jQuery( "#bf-submission-modal_" + jQuery(this).attr('data-id')).hide();
+        jQuery("#bf-submission-modal_" + jQuery(this).attr('data-id')).hide();
         return false;
     });
 
     bf_form_errors();
 
-    jQuery( '.bf-garlic' ).garlic();
+    jQuery('.bf-garlic').garlic();
 
     //jQuery(".bf-select2").select2({
     //    placeholder: "Select an option",
@@ -54,7 +54,7 @@ jQuery(document).ready(function () {
         var field_id = jQuery(this).attr('data-field_id');
         var field_slug = jQuery(this).attr('data-field_slug');
 
-        var newStateVal = jQuery( "#" + field_slug + "_create_new_tax_" + field_id ).val();
+        var newStateVal = jQuery("#" + field_slug + "_create_new_tax_" + field_id).val();
 
         // Set the value, creating a new option if necessary
         if (jQuery("#category_create_new_tax").find("option[value='" + newStateVal + "']").length) {
@@ -65,39 +65,13 @@ jQuery(document).ready(function () {
             var newState = new Option(newStateVal, newStateVal, true, true);
 
             // Append it to the select
-            jQuery("#" + field_id ).append(newState).trigger('change');
+            jQuery("#" + field_id).append(newState).trigger('change');
 
             // CLear the text field
-            jQuery( "#" + field_slug + "_create_new_tax_" + field_id ).val('');
+            jQuery("#" + field_slug + "_create_new_tax_" + field_id).val('');
         }
         return false;
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     jQuery('.bf_datetime').datetimepicker({

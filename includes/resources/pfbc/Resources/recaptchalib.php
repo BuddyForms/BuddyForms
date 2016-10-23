@@ -216,6 +216,7 @@ function recaptcha_check_answer( $privkey, $remoteip, $challenge, $response, $ex
  *
  * @param string $domain The domain where the page is hosted
  * @param string $appname The name of your application
+ *
  * @return string
  */
 function recaptcha_get_signup_url( $domain = null, $appname = null ) {
@@ -227,6 +228,7 @@ function recaptcha_get_signup_url( $domain = null, $appname = null ) {
 
 /**
  * @param $val
+ *
  * @return string
  */
 function _recaptcha_aes_pad( $val ) {
@@ -241,6 +243,7 @@ function _recaptcha_aes_pad( $val ) {
 /**
  * @param $val
  * @param $ky
+ *
  * @return string
  */
 function _recaptcha_aes_encrypt( $val, $ky ) {
@@ -257,6 +260,7 @@ function _recaptcha_aes_encrypt( $val, $ky ) {
 
 /**
  * @param $x
+ *
  * @return string
  */
 function _recaptcha_mailhide_urlbase64( $x ) {
@@ -268,6 +272,7 @@ function _recaptcha_mailhide_urlbase64( $x ) {
  * @param $pubkey
  * @param $privkey
  * @param $email
+ *
  * @return string
  */
 function recaptcha_mailhide_url( $pubkey, $privkey, $email ) {
@@ -287,7 +292,9 @@ function recaptcha_mailhide_url( $pubkey, $privkey, $email ) {
  * gets the parts of the email to expose to the user.
  * eg, given johndoe@example,com return ["john", "example.com"].
  * the email is then displayed as john...@example.com
+ *
  * @param $email
+ *
  * @return array
  */
 function _recaptcha_mailhide_email_parts( $email ) {
@@ -312,6 +319,7 @@ function _recaptcha_mailhide_email_parts( $email ) {
  * @param $pubkey
  * @param $privkey
  * @param $email
+ *
  * @return string
  */
 function recaptcha_mailhide_html( $pubkey, $privkey, $email ) {

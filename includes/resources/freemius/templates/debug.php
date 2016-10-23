@@ -1,18 +1,18 @@
 <?php
-	/**
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
-	 * @since       1.1.1
-	 */
+/**
+ * @package     Freemius
+ * @copyright   Copyright (c) 2015, Freemius, Inc.
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.1.1
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	global $fs_active_plugins;
+global $fs_active_plugins;
 
-	$fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
+$fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
 ?>
 	<h1><?php echo __fs( 'Freemius Debug' ) . ' - ' . __fs( 'SDK' ) . ' v.' . $fs_active_plugins->newest->version ?></h1>
 	<div>
@@ -36,7 +36,7 @@
 
 						$.post(ajaxurl, {
 							action: 'fs_toggle_debug_mode',
-							is_on : ($(this).hasClass('off') ? 1 : 0)
+							is_on: ($(this).hasClass('off') ? 1 : 0)
 						}, function (response) {
 							if (1 == response) {
 								// Refresh page on success.
@@ -147,11 +147,11 @@
 	</table>
 <?php endif ?>
 <?php
-	/**
-	 * @var array $VARS
-	 * @var FS_Site[] $sites
-	 */
-	$sites = $VARS['sites'];
+/**
+ * @var array $VARS
+ * @var FS_Site[] $sites
+ */
+$sites = $VARS['sites'];
 ?>
 <?php if ( is_array( $sites ) && 0 < count( $sites ) ) : ?>
 	<h2><?php _efs( 'plugin-installs' ) ?> / <?php _efs( 'sites' ) ?></h2>
@@ -171,9 +171,9 @@
 				<td><?php echo $site->id ?></td>
 				<td><?php echo $slug ?></td>
 				<td><?php
-						echo is_object( $site->plan ) ?
-							base64_decode( $site->plan->name ) :
-							''
+					echo is_object( $site->plan ) ?
+						base64_decode( $site->plan->name ) :
+						''
 					?></td>
 				<td><?php echo $site->public_key ?></td>
 				<td><?php echo $site->secret_key ?></td>
@@ -183,7 +183,7 @@
 	</table>
 <?php endif ?>
 <?php
-	$addons = $VARS['addons'];
+$addons = $VARS['addons'];
 ?>
 <?php foreach ( $addons as $plugin_id => $plugin_addons ) : ?>
 	<h2><?php printf( __fs( 'addons-of-x' ), $plugin_id ) ?></h2>
@@ -200,27 +200,27 @@
 		</thead>
 		<tbody>
 		<?php
-			/**
-			 * @var FS_Plugin[] $plugin_addons
-			 */
-			foreach ( $plugin_addons as $addon ) : ?>
-				<tr>
-					<td><?php echo $addon->id ?></td>
-					<td><?php echo $addon->title ?></td>
-					<td><?php echo $addon->slug ?></td>
-					<td><?php echo $addon->version ?></td>
-					<td><?php echo $addon->public_key ?></td>
-					<td><?php echo $addon->secret_key ?></td>
-				</tr>
-			<?php endforeach ?>
+		/**
+		 * @var FS_Plugin[] $plugin_addons
+		 */
+		foreach ( $plugin_addons as $addon ) : ?>
+			<tr>
+				<td><?php echo $addon->id ?></td>
+				<td><?php echo $addon->title ?></td>
+				<td><?php echo $addon->slug ?></td>
+				<td><?php echo $addon->version ?></td>
+				<td><?php echo $addon->public_key ?></td>
+				<td><?php echo $addon->secret_key ?></td>
+			</tr>
+		<?php endforeach ?>
 		</tbody>
 	</table>
 <?php endforeach ?>
 <?php
-	/**
-	 * @var FS_User[] $users
-	 */
-	$users = $VARS['users'];
+/**
+ * @var FS_User[] $users
+ */
+$users = $VARS['users'];
 ?>
 <?php if ( is_array( $users ) && 0 < count( $users ) ) : ?>
 	<h2><?php _efs( 'users' ) ?></h2>
@@ -250,10 +250,10 @@
 	</table>
 <?php endif ?>
 <?php
-	/**
-	 * @var FS_Plugin_License[] $licenses
-	 */
-	$licenses = $VARS['licenses'];
+/**
+ * @var FS_Plugin_License[] $licenses
+ */
+$licenses = $VARS['licenses'];
 ?>
 <?php if ( is_array( $licenses ) && 0 < count( $licenses ) ) : ?>
 	<h2><?php _efs( 'licenses' ) ?></h2>

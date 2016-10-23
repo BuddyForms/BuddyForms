@@ -50,8 +50,8 @@ function buddyforms_inner_custom_box( $post ) {
 
 	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
-	if(!$value){
-		$value = $buddyforms_posttypes_default[$post->post_type];
+	if ( ! $value ) {
+		$value = $buddyforms_posttypes_default[ $post->post_type ];
 	}
 
 	echo '<label for="_bf_form_slug">';
@@ -81,11 +81,12 @@ function buddyforms_inner_custom_box( $post ) {
  * When the post is saved, saves our custom data.
  *
  * @param int $post_id The ID of the post being saved.
+ *
  * @return int
  */
 function buddyforms_save_postdata( $post_id ) {
 
-	if(!is_admin()){
+	if ( ! is_admin() ) {
 		return;
 	}
 

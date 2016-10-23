@@ -6,13 +6,14 @@
  *
  */
 
-add_filter('buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );
+add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );
 /**
  * @param $valid
  * @param $form_slug
+ *
  * @return bool
  */
-function buddyforms_server_validation( $valid , $form_slug){
+function buddyforms_server_validation( $valid, $form_slug ) {
 	global $buddyforms;
 
 	$form = $buddyforms[ $form_slug ];
@@ -21,34 +22,34 @@ function buddyforms_server_validation( $valid , $form_slug){
 		foreach ( $form['form_fields'] as $key => $form_field ) {
 
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
-				 if ( !is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) {
-					 $valid = false;
-					 $validation_error_message = __( 'Please enter a value greater than or equal to ', 'buddyforms' ) . $form_field['validation_min'];
-					 Form::setError('buddyforms_form_' . $form_slug, $validation_error_message);
-				 }
+				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) {
+					$valid                    = false;
+					$validation_error_message = __( 'Please enter a value greater than or equal to ', 'buddyforms' ) . $form_field['validation_min'];
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
+				}
 			}
 
 			if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
-				if ( !is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) {
-					$valid = false;
+				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) {
+					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value less than or equal to ', 'buddyforms' ) . $form_field['validation_max'];
-					Form::setError('buddyforms_form_' . $form_slug, $validation_error_message);
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
 				}
 			}
 
 			if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
-				if ( strlen(trim($_POST[$form_field['slug']])) < $form_field['validation_minlength'] ) {
-					$valid = false;
+				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) < $form_field['validation_minlength'] ) {
+					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter at least %d characters.', 'buddyforms' ), $form_field['validation_minlength'] );
-					Form::setError('buddyforms_form_' . $form_slug, $validation_error_message);
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
 				}
 			}
 
 			if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
-				if ( strlen(trim($_POST[$form_field['slug']])) > $form_field['validation_maxlength'] ) {
-					$valid = false;
+				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) > $form_field['validation_maxlength'] ) {
+					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter no more than %d characters.', 'buddyforms' ), $form_field['validation_maxlength'] );
-					Form::setError('buddyforms_form_' . $form_slug, $validation_error_message);
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
 				}
 			}
 
@@ -68,13 +69,13 @@ function buddyforms_server_validation( $valid , $form_slug){
  *
  */
 
-function buddyforms_jquery_validation(){
+function buddyforms_jquery_validation() {
 	global $buddyforms;
 
 	$form_html = '<script type="text/javascript">';
 	$form_html .= ' var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";';
 
-	foreach($buddyforms as $form_slug => $form) {
+	foreach ( $buddyforms as $form_slug => $form ) {
 
 		// make the slug js conform
 		$form_slug_js = str_replace( '-', '_', $form_slug );
@@ -120,7 +121,7 @@ function buddyforms_jquery_validation(){
 							$form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
 						}
 
-					//	$form_html .= 'valueNotEquals: "-1",'; ... 	valueNotEquals: "Please select an item!",
+						//	$form_html .= 'valueNotEquals: "-1",'; ... 	valueNotEquals: "Please select an item!",
 
 						$form_html .= '},
 						';

@@ -11,6 +11,7 @@ class Validation_Numeric extends Validation {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

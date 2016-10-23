@@ -46,6 +46,7 @@ HTML;
 
 	/**
 	 * @param $errors
+	 *
 	 * @return array
 	 */
 	private function parse( $errors ) {

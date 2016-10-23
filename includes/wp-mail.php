@@ -1,19 +1,19 @@
 <?php
 
-add_action('buddyforms_process_post_end', 'mail_submission_trigger_sent');
+add_action( 'buddyforms_process_post_end', 'mail_submission_trigger_sent' );
 /**
  * @param $args
  */
-function mail_submission_trigger_sent($args){
+function mail_submission_trigger_sent( $args ) {
 	global $form_slug, $buddyforms;
 
 	$form_slug = $args['form_slug'];
-	$post_id = $args['post_id'];
+	$post_id   = $args['post_id'];
 
-	$post = get_post($post_id);
+	$post = get_post( $post_id );
 
-	if( $buddyforms[$form_slug]['mail_submissions'] ){
-		foreach( $buddyforms[$form_slug]['mail_submissions'] as $key => $notification ){
+	if ( $buddyforms[ $form_slug ]['mail_submissions'] ) {
+		foreach ( $buddyforms[ $form_slug ]['mail_submissions'] as $key => $notification ) {
 			buddyforms_send_mail_submissions( $notification, $post );
 		}
 	}
@@ -64,8 +64,8 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 		foreach ( $mail_to_address as $key => $mail_address ) {
 
-			$user_email =  isset($_POST['user_email']) ? $_POST['user_email'] : '';
-			$mail_address  = str_replace( '[user_email]', $user_email, $mail_address );
+			$user_email   = isset( $_POST['user_email'] ) ? $_POST['user_email'] : '';
+			$mail_address = str_replace( '[user_email]', $user_email, $mail_address );
 
 			array_push( $mail_to, $mail_address );
 
@@ -84,17 +84,17 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	$from_email = $mail_notification_trigger['mail_from'];
 	$emailBody  = $mail_notification_trigger['mail_body'];
 	$emailBody  = stripslashes( $emailBody );
-	if(isset($buddyforms[$form_slug]['form_fields'])){
-		foreach($buddyforms[$form_slug]['form_fields'] as $field_id => $field){
-			$field_value =  isset($_POST[$field['slug']]) ? $_POST[$field['slug']] : '';
-			$emailBody  = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
+	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+		foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
+			$field_value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+			$emailBody   = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
 		}
 	}
-	$emailBody  = str_replace( '[user_login]', $usernameauth, $emailBody );
-	$emailBody  = str_replace( '[user_nicename]', $user_nicename, $emailBody );
-	$emailBody  = str_replace( '[user_email]', $user_email, $emailBody );
-	$emailBody  = str_replace( '[first_name]', $first_name, $emailBody );
-	$emailBody  = str_replace( '[last_name]', $last_name, $emailBody );
+	$emailBody = str_replace( '[user_login]', $usernameauth, $emailBody );
+	$emailBody = str_replace( '[user_nicename]', $user_nicename, $emailBody );
+	$emailBody = str_replace( '[user_email]', $user_email, $emailBody );
+	$emailBody = str_replace( '[first_name]', $first_name, $emailBody );
+	$emailBody = str_replace( '[last_name]', $last_name, $emailBody );
 
 	$emailBody = str_replace( '[published_post_link_plain]', $postperma, $emailBody );
 
@@ -109,7 +109,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
 
-	$mailheaders  = "MIME-Version: 1.0\n";
+	$mailheaders = "MIME-Version: 1.0\n";
 	$mailheaders .= "X-Priority: 1\n";
 	$mailheaders .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mailheaders .= "Content-Transfer-Encoding: 7bit\n\n";

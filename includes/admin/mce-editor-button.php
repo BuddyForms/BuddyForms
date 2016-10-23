@@ -1,62 +1,63 @@
 <?php
 /**
-* Add a button to the content editor, next to the media button
-* This button will show a popup that contains inline content
-* @package BuddyForms
-* @since 0.3 beta
-*
-*/
+ * Add a button to the content editor, next to the media button
+ * This button will show a popup that contains inline content
+ * @package BuddyForms
+ * @since 0.3 beta
+ *
+ */
 add_action( 'media_buttons_context', 'buddyforms_editor_button' );
 /**
  * @param $context
+ *
  * @return string
  */
 function buddyforms_editor_button( $context ) {
 
-if ( ! is_admin() ) {
-return $context;
-}
+	if ( ! is_admin() ) {
+		return $context;
+	}
 
 // Path to my icon
 // $img = plugins_url( 'admin/img/icon-buddyformsc-16.png' , __FILE__ );
 
 // The ID of the container I want to show in the popup
-$container_id = 'buddyforms_popup_container';
+	$container_id = 'buddyforms_popup_container';
 
 // Our popup's title
-$title = 'BuddyForms Shortcode Generator!';
+	$title = 'BuddyForms Shortcode Generator!';
 
 // Append the icon <a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
-$context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
+	$context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
                 href='#TB_inline?width=400&inlineId={$container_id}'>
 
 	<span class='tk-icon-buddyforms'></span> BuddyForms</a>";
 
-return $context;
+	return $context;
 }
 
 
 /**
-* Add some content to the bottom of the page for the BuddyForms shortcodes
-* This will be shown in the thickbox of the post edit screen
-*
-* @package BuddyForms
-* @since 0.1 beta
-*/
+ * Add some content to the bottom of the page for the BuddyForms shortcodes
+ * This will be shown in the thickbox of the post edit screen
+ *
+ * @package BuddyForms
+ * @since 0.1 beta
+ */
 add_action( 'admin_footer', 'buddyforms_editor_button_inline_content' );
 function buddyforms_editor_button_inline_content() {
-global $buddyforms, $post;
+	global $buddyforms, $post;
 
 
 	if ( ! is_admin() OR empty( $buddyforms ) ) {
 		return;
 	}
-	if(!isset($post->post_type)){
+	if ( ! isset( $post->post_type ) ) {
 		return;
 	}
-	if($post->post_type == 'buddyforms'){
+	if ( $post->post_type == 'buddyforms' ) {
 		return;
-	}?>
+	} ?>
 
 	<div id="buddyforms_popup_container" style="display:none;">
 		<h2></h2>
@@ -140,7 +141,7 @@ global $buddyforms, $post;
 		?>
 
 	</div>
-<?php
+	<?php
 }
 
 add_action( 'admin_footer', 'buddyforms_editor_button_mce_popup' );

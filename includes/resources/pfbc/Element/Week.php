@@ -14,6 +14,7 @@ class Element_Week extends Element_Textbox {
 
 	/**
 	 * Element_Week constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties

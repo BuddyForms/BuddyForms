@@ -8,6 +8,7 @@ function buddyforms_settings_menu() {
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
 
 }
+
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
 
 //
@@ -71,20 +72,21 @@ add_action( 'admin_init', 'buddyforms_register_option' );
 
 /**
  * @param $new
+ *
  * @return mixed
  */
 function buddyforms_posttypes_default_sanitize( $new ) {
 	return $new;
 }
 
-function buddyforms_settings_page_tabs_content(){
+function buddyforms_settings_page_tabs_content() {
 	global $pagenow, $buddyforms; ?>
 	<div id="poststuff">
 
 		<?php
 
 		// Display the Update Message
-		if ( isset($_GET['updated']) && 'true' == esc_attr( $_GET['updated'] ) ) {
+		if ( isset( $_GET['updated'] ) && 'true' == esc_attr( $_GET['updated'] ) ) {
 			echo '<div class="updated" ><p>BuddyForms...</p></div>';
 		}
 
@@ -111,8 +113,10 @@ function buddyforms_settings_page_tabs_content(){
 							<div class="inside">
 								<p>Select a default form for every post type.</p>
 
-								<p>This will make sure that posts created before BuddyForms will have a form associated. <br>
-									If you select none the post edit link will point to the admin for posts not created with
+								<p>This will make sure that posts created before BuddyForms will have a form associated.
+									<br>
+									If you select none the post edit link will point to the admin for posts not created
+									with
 									BuddyForms</p>
 
 								<form method="post" action="options.php">
@@ -126,7 +130,7 @@ function buddyforms_settings_page_tabs_content(){
 											$post_types_forms = Array();
 											foreach ( $buddyforms as $key => $buddyform ) {
 
-												if(isset($buddyform['post_type']) && $buddyform['post_type'] != 'bf_submissions' && post_type_exists($buddyform['post_type'])){
+												if ( isset( $buddyform['post_type'] ) && $buddyform['post_type'] != 'bf_submissions' && post_type_exists( $buddyform['post_type'] ) ) {
 													$post_types_forms[ $buddyform['post_type'] ][ $key ] = $buddyform;
 												}
 
@@ -140,13 +144,14 @@ function buddyforms_settings_page_tabs_content(){
 														echo $post_type_object->labels->name; ?>
 													</th>
 													<td>
-														<select name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
-														        class="regular-radio">
+														<select
+															name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
+															class="regular-radio">
 															<option value="none">None</option>
 															<?php foreach ( $post_types_form as $form_key => $form ) {
 
 																$default = '';
-																if(isset($buddyforms_posttypes_default[ $post_type ])){
+																if ( isset( $buddyforms_posttypes_default[ $post_type ] ) ) {
 																	$default = $buddyforms_posttypes_default[ $post_type ];
 																}
 																?>
@@ -181,7 +186,7 @@ function buddyforms_settings_page_tabs_content(){
 										<input type="file" name="import_file"/>
 									</p>
 									<p>
-										<input type="hidden" name="buddyforms_action" value="import_settings" />
+										<input type="hidden" name="buddyforms_action" value="import_settings"/>
 										<?php wp_nonce_field( 'buddyforms_import_nonce', 'buddyforms_import_nonce' ); ?>
 										<?php submit_button( __( 'Import' ), 'secondary', 'submit', false ); ?>
 									</p>
@@ -198,14 +203,14 @@ function buddyforms_settings_page_tabs_content(){
 		}
 		?>
 	</div> <!-- #poststuff -->
-<?php
+	<?php
 }
 
-function buddyforms_settings_page_sidebar(){
-	buddyforms_go_pro('Awesome Premium Features', '', array(
+function buddyforms_settings_page_sidebar() {
+	buddyforms_go_pro( 'Awesome Premium Features', '', array(
 		'Priority Support',
 		'More Post Types',
 		'More Form Elements',
 		'Admin Metabox Support'
-	));
+	) );
 }

@@ -6,6 +6,7 @@
 class Element_SpanStart extends Element_HTML {
 	/**
 	 * Element_SpanStart constructor.
+	 *
 	 * @param $value
 	 * @param int $size
 	 */

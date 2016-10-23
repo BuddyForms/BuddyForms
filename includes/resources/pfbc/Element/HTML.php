@@ -12,6 +12,7 @@ class Element_HTML extends Element {
 
 	/**
 	 * Element_HTML constructor.
+	 *
 	 * @param $value
 	 */
 	public function __construct( $value ) {

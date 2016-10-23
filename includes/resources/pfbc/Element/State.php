@@ -6,6 +6,7 @@
 class Element_State extends Element_Select {
 	/**
 	 * Element_State constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties

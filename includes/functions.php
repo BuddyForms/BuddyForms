@@ -50,6 +50,7 @@ function buddyforms_wp_before_admin_bar_render() {
 // Other Plugins use the filter buddyforms_get_post_status_array to add there post status to the options array
 /**
  * @param bool $select_condition
+ *
  * @return mixed|void
  */
 function buddyforms_get_post_status_array( $select_condition = false ) {
@@ -133,6 +134,7 @@ function buddyforms_get_template_directory() {
  *
  * @package BuddyForms
  * @since 0.1 beta
+ *
  * @param $file
  */
 function buddyforms_locate_template( $file ) {
@@ -141,7 +143,7 @@ function buddyforms_locate_template( $file ) {
 	$current_user = wp_get_current_user();
 
 	if ( locate_template( array( $file ), false ) ) {
-		include(locate_template( array( $file ), true ));
+		include( locate_template( array( $file ), true ) );
 	} else {
 		include( BUDDYFORMS_TEMPLATE_PATH . $file );
 	}
@@ -161,12 +163,14 @@ function buddyforms_get_wp_login_form() {
 	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
+
 	return $wp_login_form;
 }
 
 // Helper Function to get the Get the REQUEST_URI Vars
 /**
  * @param $name
+ *
  * @return int
  */
 function buddyforms_get_url_var( $name ) {
@@ -182,7 +186,6 @@ function buddyforms_get_url_var( $name ) {
 
 	return ( $found == 0 ) ? 1 : $arrVals[ $place ];
 }
-
 
 
 /**
@@ -224,7 +227,7 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 		$text = __( 'Edit This' );
 	}
 
-	$link = '<a title="'. __( 'Edit', 'buddyforms' ) .'" class="post-edit-link" href="' . $url . '"><span aria-label="'. __( 'Edit', 'buddyforms' ) .'" class="dashicons dashicons-edit"></span></a>';
+	$link = '<a title="' . __( 'Edit', 'buddyforms' ) . '" class="post-edit-link" href="' . $url . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>';
 
 	/**
 	 * Filter the post edit link anchor tag.
@@ -241,11 +244,12 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 /**
  * @param $form_slug
  */
-function buddyforms_post_entry_actions($form_slug){
+function buddyforms_post_entry_actions( $form_slug ) {
 	global $buddyforms;
 
-	if($buddyforms[$form_slug]['attached_page'] == 'none')
+	if ( $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
 		return;
+	}
 
 	?>
 	<ul class="edit_links">
@@ -255,12 +259,12 @@ function buddyforms_post_entry_actions($form_slug){
 			$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
 
 
-			if(is_multisite()) {
-				if(apply_filters( 'buddyforms_enable_multisite', false )) {
-					if ( isset( $buddyforms[$form_slug]['blog_id'] ) ) {
+			if ( is_multisite() ) {
+				if ( apply_filters( 'buddyforms_enable_multisite', false ) ) {
+					if ( isset( $buddyforms[ $form_slug ]['blog_id'] ) ) {
 
 						$current_site = get_current_site();
-						$form_blog_id = $buddyforms[$form_slug]['blog_id'];
+						$form_blog_id = $buddyforms[ $form_slug ]['blog_id'];
 
 
 						if ( $current_site->blog_id != $form_blog_id ) {
@@ -277,7 +281,7 @@ function buddyforms_post_entry_actions($form_slug){
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 				echo '<li>';
 				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="'. __( 'Edit', 'buddyforms' ) .'" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
 				} else {
 					echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
 				}
@@ -304,87 +308,92 @@ function buddyforms_post_entry_actions($form_slug){
 /**
  * @param $post_status
  */
-function buddyforms_post_status_readable($post_status){
-	echo buddyforms_get_post_status_readable($post_status);
+function buddyforms_post_status_readable( $post_status ) {
+	echo buddyforms_get_post_status_readable( $post_status );
 }
 
 /**
  * @param $post_status
+ *
  * @return mixed|string|void
  */
-function buddyforms_get_post_status_readable($post_status){
-		if ( $post_status == 'publish' ) {
-			return __( 'Published', 'buddyforms' );
-		}
-
-		if ( $post_status == 'draft' ) {
-			return __( 'Draft', 'buddyforms' );
-		}
-
-		if ( $post_status == 'pending' ) {
-			return __( 'Pending Review', 'buddyforms' );
-		}
-
-		if ( $post_status == 'future' ) {
-			return __( 'Scheduled', 'buddyforms' );
-		}
-
-		if ( $post_status == 'awaiting-review' ) {
-			return __( 'Awaiting Review', 'buddyforms' );
-		}
-
-		if ( $post_status == 'edit-draft' ) {
-			return __( 'Edit Draft', 'buddyforms' );
-		}
-
-		return apply_filters( 'buddyforms_get_post_status_readable', $post_status );;
+function buddyforms_get_post_status_readable( $post_status ) {
+	if ( $post_status == 'publish' ) {
+		return __( 'Published', 'buddyforms' );
 	}
 
-/**
- * @param $post_status
- * @param $form_slug
- */
-function buddyforms_post_status_css_class($post_status, $form_slug){
-	echo buddyforms_get_post_status_css_class($post_status, $form_slug);
+	if ( $post_status == 'draft' ) {
+		return __( 'Draft', 'buddyforms' );
+	}
+
+	if ( $post_status == 'pending' ) {
+		return __( 'Pending Review', 'buddyforms' );
+	}
+
+	if ( $post_status == 'future' ) {
+		return __( 'Scheduled', 'buddyforms' );
+	}
+
+	if ( $post_status == 'awaiting-review' ) {
+		return __( 'Awaiting Review', 'buddyforms' );
+	}
+
+	if ( $post_status == 'edit-draft' ) {
+		return __( 'Edit Draft', 'buddyforms' );
+	}
+
+	return apply_filters( 'buddyforms_get_post_status_readable', $post_status );;
 }
 
 /**
  * @param $post_status
  * @param $form_slug
+ */
+function buddyforms_post_status_css_class( $post_status, $form_slug ) {
+	echo buddyforms_get_post_status_css_class( $post_status, $form_slug );
+}
+
+/**
+ * @param $post_status
+ * @param $form_slug
+ *
  * @return mixed|void
  */
-function buddyforms_get_post_status_css_class($post_status, $form_slug){
+function buddyforms_get_post_status_css_class( $post_status, $form_slug ) {
 
-		$post_status_css = $post_status;
+	$post_status_css = $post_status;
 
-		if ( $post_status == 'pending' ) {
-			$post_status_css = 'bf-pending';
-		}
-
-		return apply_filters( 'buddyforms_post_status_css', $post_status_css, $form_slug );
+	if ( $post_status == 'pending' ) {
+		$post_status_css = 'bf-pending';
 	}
+
+	return apply_filters( 'buddyforms_post_status_css', $post_status_css, $form_slug );
+}
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
+ *
  * @param string $hook_name
  * @param string $method_name
  * @param int $priority
+ *
  * @return bool
  */
 function buddyforms_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 
 	// Take only filters on right hook name and priority
-	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
 		return false;
+	}
 
 	// Loop on filters registered
-	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
 		// Test if filter is an array ! (always for class/method)
-		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
 			// Test if object is a class and method is equal to param !
-			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && $filter_array['function'][1] == $method_name ) {
-				unset($wp_filter[$hook_name][$priority][$unique_id]);
+			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && $filter_array['function'][1] == $method_name ) {
+				unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
 			}
 		}
 
@@ -395,26 +404,29 @@ function buddyforms_remove_filters_with_method_name( $hook_name = '', $method_na
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+ *
  * @param string $hook_name
  * @param string $class_name
  * @param string $method_name
  * @param int $priority
+ *
  * @return bool
  */
-function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
+function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 
 	// Take only filters on right hook name and priority
-	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
 		return false;
+	}
 
 	// Loop on filters registered
-	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
 		// Test if filter is an array ! (always for class/method)
-		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
 			// Test if object is a class, class and method is equal to param !
-			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && get_class($filter_array['function'][0]) == $class_name && $filter_array['function'][1] == $method_name ) {
-				unset($wp_filter[$hook_name][$priority][$unique_id]);
+			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) == $class_name && $filter_array['function'][1] == $method_name ) {
+				unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
 			}
 		}
 
@@ -428,7 +440,9 @@ function buddyforms_remove_filters_for_anonymous_class( $hook_name = '', $class_
  *
  * @package BuddyForms
  * @since 0.1-beta
+ *
  * @param $post_type
+ *
  * @return
  */
 function buddyforms_taxonomies( $post_type ) {
@@ -438,8 +452,8 @@ function buddyforms_taxonomies( $post_type ) {
 
 	$taxonomies['none'] = 'Select a Taxonomy';
 
-	foreach($taxonomies_array as $tax_slug => $tax){
-		$taxonomies[$tax->name] = $tax->label;
+	foreach ( $taxonomies_array as $tax_slug => $tax ) {
+		$taxonomies[ $tax->name ] = $tax->label;
 	}
 
 
@@ -451,18 +465,18 @@ function buddyforms_dequeue_select2_version3() {
 	wp_dequeue_style( 'select2' );
 	wp_deregister_style( 'select2' );
 
-	wp_dequeue_script( 'select2');
-	wp_deregister_script('select2');
+	wp_dequeue_script( 'select2' );
+	wp_deregister_script( 'select2' );
 }
 
-function buddyforms_metabox_go_pro(){
+function buddyforms_metabox_go_pro() {
 
 	buddyforms_go_pro( '<span></span>', '', array(
 		'Priority Support',
 		'More Form Elements',
 		'More Options',
-	), false);
-	buddyforms_go_pro( '<span></span>', __('Full Control', 'buddyforms' ), array(
+	), false );
+	buddyforms_go_pro( '<span></span>', __( 'Full Control', 'buddyforms' ), array(
 		'Use your form in the backend admin edit screen like ACF',
 		'Control who can create, edit and delete content',
 		'Registration Options',
@@ -470,26 +484,26 @@ function buddyforms_metabox_go_pro(){
 		'Local Storage',
 		'More Notification Options',
 		'Import - Export Forms',
-	), false);
-	buddyforms_go_pro( '<span></span>', __('Permissions Management', 'buddyforms' ), array(
+	), false );
+	buddyforms_go_pro( '<span></span>', __( 'Permissions Management', 'buddyforms' ), array(
 		'Manage User Roles',
 		'Manage Capabilities',
 		'More Validation Options'
-	), false);
-	buddyforms_go_pro( '<span></span>', __('More Post Options', 'buddyforms' ), array(
+	), false );
+	buddyforms_go_pro( '<span></span>', __( 'More Post Options', 'buddyforms' ), array(
 		'All Post Types',
 		'Posts Revision',
 		'Comment Status',
 		'Enable Login on the form',
 		'Create an account during submission?',
 		'Featured Image Support'
-	), false);
-	buddyforms_go_pro( '<span></span>', __('Know Your User', 'buddyforms' ). '<p><small>' . __('Get deep Insights about your Submitter', 'buddyforms' ) . '</small></p>', array(
+	), false );
+	buddyforms_go_pro( '<span></span>', __( 'Know Your User', 'buddyforms' ) . '<p><small>' . __( 'Get deep Insights about your Submitter', 'buddyforms' ) . '</small></p>', array(
 		'IP Address',
 		'Referer',
 		'Browser',
 		'Platform',
 		'Reports',
 		'User Agent',
-	));
+	) );
 }

@@ -15,6 +15,7 @@ class Validation_RegExp extends Validation {
 
 	/**
 	 * Validation_RegExp constructor.
+	 *
 	 * @param string $pattern
 	 * @param string $message
 	 */
@@ -25,6 +26,7 @@ class Validation_RegExp extends Validation {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

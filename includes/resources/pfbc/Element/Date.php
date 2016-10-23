@@ -14,6 +14,7 @@ class Element_Date extends Element_Textbox {
 
 	/**
 	 * Element_Date constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties

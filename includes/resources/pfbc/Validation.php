@@ -11,6 +11,7 @@ abstract class Validation extends Base {
 
 	/**
 	 * Validation constructor.
+	 *
 	 * @param string $message
 	 */
 	public function __construct( $message = "" ) {
@@ -28,6 +29,7 @@ abstract class Validation extends Base {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isNotApplicable( $value ) {
@@ -40,6 +42,7 @@ abstract class Validation extends Base {
 
 	/**
 	 * @param $value
+	 *
 	 * @return mixed
 	 */
 	public abstract function isValid( $value );

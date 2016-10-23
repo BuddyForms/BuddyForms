@@ -40,6 +40,7 @@ abstract class Element extends Base {
 
 	/**
 	 * Element constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties
@@ -146,6 +147,7 @@ abstract class Element extends Base {
 
 	/**
 	 * @param $value
+	 *
 	 * @return bool
 	 */
 	public function isValid( $value ) {

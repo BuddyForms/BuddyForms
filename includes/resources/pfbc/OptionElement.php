@@ -11,6 +11,7 @@ abstract class OptionElement extends Element {
 
 	/**
 	 * OptionElement constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $options
@@ -30,6 +31,7 @@ abstract class OptionElement extends Element {
 
 	/**
 	 * @param $value
+	 *
 	 * @return string
 	 */
 	protected function getOptionValue( $value ) {

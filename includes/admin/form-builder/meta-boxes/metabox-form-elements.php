@@ -4,22 +4,23 @@
  * @param $post
  * @param bool $buddyform
  */
-function buddyforms_metabox_form_elements($post, $buddyform = false) {
+function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	global $post, $buddyform;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
-	if(!$buddyform)
+	if ( ! $buddyform ) {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	}
 
 
 	// Generate the form slug from the post name
 	$form_slug = $post->post_name;
 
 	// Create the form elements array
-	$form_setup   = array();
+	$form_setup = array();
 
 	// Start the form builder #buddyforms_forms_builder
 	$form_setup[] = new Element_HTML( '<div id="buddyforms_forms_builder" class="buddyforms_forms_builder">' );
@@ -66,7 +67,7 @@ function buddyforms_metabox_form_elements($post, $buddyform = false) {
 			if ( $field_slug != '' && isset( $customfield['name'] ) ) {
 
 				// Create the field arguments array
-				$args         = Array(
+				$args = Array(
 					'field_id'   => $field_id,
 					'field_type' => sanitize_title( $customfield['type'] ),
 					'form_slug'  => $form_slug,
@@ -118,19 +119,19 @@ function buddyforms_metabox_form_elements($post, $buddyform = false) {
 /**
  * @return string
  */
-function buddyforms_form_builder_templates(){
+function buddyforms_form_builder_templates() {
 	global $buddyforms_templates;
 
 	$buddyforms_templates['contact']['title'] = 'Contact Form';
-	$buddyforms_templates['contact']['desc'] = 'Setup a simple contact form.';
+	$buddyforms_templates['contact']['desc']  = 'Setup a simple contact form.';
 
 	$buddyforms_templates['registration']['title'] = 'Registration Form';
-	$buddyforms_templates['registration']['desc'] = 'Setup a simple registration form.';
+	$buddyforms_templates['registration']['desc']  = 'Setup a simple registration form.';
 
 	$buddyforms_templates['post']['title'] = 'Post Form';
-	$buddyforms_templates['post']['desc'] = 'Setup a simple post form.';
+	$buddyforms_templates['post']['desc']  = 'Setup a simple post form.';
 
-	$buddyforms_templates = apply_filters('buddyforms_templates', $buddyforms_templates);
+	$buddyforms_templates = apply_filters( 'buddyforms_templates', $buddyforms_templates );
 
 	ob_start();
 
@@ -138,12 +139,14 @@ function buddyforms_form_builder_templates(){
 	<div class="buddyforms_template">
 		<h5>Choose a pre-configured form template or start a new one:</h5>
 
-		<?php foreach($buddyforms_templates as $key => $template) { ?>
-		<div class="bf-3-tile">
-			<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-			<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-			<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>" class="bf_form_template btn" onclick=""><span class="bf-plus">+</span> <?php echo $template['title'] ?></button>
-		</div>
+		<?php foreach ( $buddyforms_templates as $key => $template ) { ?>
+			<div class="bf-3-tile">
+				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+				<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>"
+				        class="bf_form_template btn" onclick=""><span
+						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
+			</div>
 		<?php } ?>
 
 	</div>
@@ -161,22 +164,22 @@ function buddyforms_form_builder_templates(){
 /**
  * @return string
  */
-function buddyforms_form_builder_form_elements_select(){
+function buddyforms_form_builder_form_elements_select() {
 	$elements_select_options = buddyforms_form_elements_select_options();
 
 	// Add a default value
 	$el_sel_options = '<option value="none">Select Field Type</option>';
 
 	// Loop The form elements array and add the options to the select box
-	if(is_array($elements_select_options)){
-		foreach($elements_select_options as $optgroup_label => $optgroup){
+	if ( is_array( $elements_select_options ) ) {
+		foreach ( $elements_select_options as $optgroup_label => $optgroup ) {
 			$class = isset( $optgroup['class'] ) ? $optgroup['class'] : '';
-				$el_sel_options .= '<optgroup style="display:none;" class="' . $class .'" id="' . $optgroup_label . '" label="' . $optgroup['label'] . '">';
-			foreach($optgroup['fields'] as $es_val => $es_label){
-				if( is_array($es_label) ){
+			$el_sel_options .= '<optgroup style="display:none;" class="' . $class . '" id="' . $optgroup_label . '" label="' . $optgroup['label'] . '">';
+			foreach ( $optgroup['fields'] as $es_val => $es_label ) {
+				if ( is_array( $es_label ) ) {
 					$el_sel_options .= '<option data-unique="' . ( isset( $es_label['unique'] ) ? $es_label['unique'] : '' ) . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
 				} else {
-					$el_sel_options .= '<option value="' . $es_val . '">' . $es_label . '</option>' ;
+					$el_sel_options .= '<option value="' . $es_val . '">' . $es_label . '</option>';
 				}
 			}
 			$el_sel_options .= '</optgroup>';
@@ -190,95 +193,95 @@ function buddyforms_form_builder_form_elements_select(){
 /**
  * @return array
  */
-function buddyforms_form_elements_select_options(){
+function buddyforms_form_elements_select_options() {
 	global $elements_select_options;
 	// Create the form elements array
 	$elements_select_options = array(
 		'contact' => array(
-			'label'     => __('Contact Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_all',
-			'fields'    => array(
-				'Subject'   => array(
-					'label'     => __( 'Subject', 'buddyforms' ),
-					'unique'    => 'unique'
+			'label'  => __( 'Contact Fields', 'buddyforms' ),
+			'class'  => 'bf_show_if_f_type_all',
+			'fields' => array(
+				'Subject' => array(
+					'label'  => __( 'Subject', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'Message'   => array(
-					'label'     => __( 'Message', 'buddyforms' ),
-					'unique'    => 'unique'
+				'Message' => array(
+					'label'  => __( 'Message', 'buddyforms' ),
+					'unique' => 'unique'
 				),
 			),
 		),
-		'user' => array(
-			'label'     => __('User Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_all',
-			'fields'    => array(
-				'user_login'     => array(
-					'label'     => __( 'Username', 'buddyforms' ),
-					'unique'    => 'unique'
+		'user'    => array(
+			'label'  => __( 'User Fields', 'buddyforms' ),
+			'class'  => 'bf_show_if_f_type_all',
+			'fields' => array(
+				'user_login'   => array(
+					'label'  => __( 'Username', 'buddyforms' ),
+					'unique' => 'unique'
 				),
 				'user_email'   => array(
-					'label'     => __( 'User eEmail', 'buddyforms' ),
-					'unique'    => 'unique'
+					'label'  => __( 'User eEmail', 'buddyforms' ),
+					'unique' => 'unique'
 				),
 				'user_first'   => array(
-					'label'     => __( 'User First Name', 'buddyforms' ),
-					'unique'    => 'unique'
+					'label'  => __( 'User First Name', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'user_last'   => array(
-					'label'     => __( 'User Last Name', 'buddyforms' ),
-					'unique'    => 'unique'
+				'user_last'    => array(
+					'label'  => __( 'User Last Name', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'user_pass'   => array(
-					'label'     => __( 'Password', 'buddyforms' ),
-					'unique'    => 'unique'
+				'user_pass'    => array(
+					'label'  => __( 'Password', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'user_website'   => array(
-					'label'     => __( 'Website', 'buddyforms' ),
-					'unique'    => 'unique'
+				'user_website' => array(
+					'label'  => __( 'Website', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'user_bio'   => array(
-					'label'     => __( 'About / Bio', 'buddyforms' ),
-					'unique'    => 'unique'
+				'user_bio'     => array(
+					'label'  => __( 'About / Bio', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'captcha'   => array(
-					'label'     => __( 'Captcha', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
-			),
-		),
-		'post' => array(
-			'label'     => __('Post Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_post',
-			'fields'    => array(
-				'title'     => array(
-					'label'     => __( 'Title', 'buddyforms' ),
-					'unique'    => 'unique'
-				),
-				'content'   => array(
-					'label'     => __( 'Content', 'buddyforms' ),
-					'unique'    => 'unique'
+				'captcha'      => array(
+					'label'  => __( 'Captcha', 'buddyforms' ),
+					'unique' => 'unique'
 				),
 			),
 		),
-		'basic' => array(
-			'label'     => __('Basic Fields', 'buddyforms'),
-			'class'     => 'bf_show_if_f_type_all',
-			'post_type '=> 'all',
-			'fields'    => array(
-				'text'     => array(
-					'label'     => __( 'Text', 'buddyforms' ),
+		'post'    => array(
+			'label'  => __( 'Post Fields', 'buddyforms' ),
+			'class'  => 'bf_show_if_f_type_post',
+			'fields' => array(
+				'title'   => array(
+					'label'  => __( 'Title', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'textarea'   => array(
-					'label'     => __( 'Textarea', 'buddyforms' ),
+				'content' => array(
+					'label'  => __( 'Content', 'buddyforms' ),
+					'unique' => 'unique'
 				),
-				'dropdown'  => array(
-					'label'     => __( 'Dropdown', 'buddyforms' ),
+			),
+		),
+		'basic'   => array(
+			'label'      => __( 'Basic Fields', 'buddyforms' ),
+			'class'      => 'bf_show_if_f_type_all',
+			'post_type ' => 'all',
+			'fields'     => array(
+				'text'        => array(
+					'label' => __( 'Text', 'buddyforms' ),
 				),
-				'radiobutton'  => array(
-					'label'     => __( 'Radiobutton', 'buddyforms' ),
+				'textarea'    => array(
+					'label' => __( 'Textarea', 'buddyforms' ),
+				),
+				'dropdown'    => array(
+					'label' => __( 'Dropdown', 'buddyforms' ),
+				),
+				'radiobutton' => array(
+					'label' => __( 'Radiobutton', 'buddyforms' ),
 				),
 				'checkbox'    => array(
-					'label'     => __( 'Checkbox', 'buddyforms' ),
+					'label' => __( 'Checkbox', 'buddyforms' ),
 				)
 			),
 		),
@@ -289,57 +292,57 @@ function buddyforms_form_elements_select_options(){
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 
 		// Post Fields
-		$elements_select_options['post']['fields']['category'] =
+		$elements_select_options['post']['fields']['category']       =
 			array(
-				'label'     => __( 'Category', 'buddyforms' ),
+				'label' => __( 'Category', 'buddyforms' ),
 			);
-		$elements_select_options['post']['fields']['tags'] =
+		$elements_select_options['post']['fields']['tags']           =
 			array(
-				'label'     => __( 'Tags', 'buddyforms' ),
+				'label' => __( 'Tags', 'buddyforms' ),
 			);
-		$elements_select_options['post']['fields']['taxonomy'] =
+		$elements_select_options['post']['fields']['taxonomy']       =
 			array(
-				'label'     => __( 'Taxonomy', 'buddyforms' ),
+				'label' => __( 'Taxonomy', 'buddyforms' ),
 			);
-		$elements_select_options['post']['fields']['comments'] =
+		$elements_select_options['post']['fields']['comments']       =
 			array(
-				'label'     => __( 'Comments', 'buddyforms' ),
-				'unique'    => 'unique'
+				'label'  => __( 'Comments', 'buddyforms' ),
+				'unique' => 'unique'
 			);
-		$elements_select_options['post']['fields']['status'] =
+		$elements_select_options['post']['fields']['status']         =
 			array(
-				'label'     => __( 'Post Status', 'buddyforms' ),
-				'unique'    => 'unique'
+				'label'  => __( 'Post Status', 'buddyforms' ),
+				'unique' => 'unique'
 			);
 		$elements_select_options['post']['fields']['featured_image'] =
 			array(
-				'label'     => __( 'Featured Image', 'buddyforms' ),
-				'unique'    => 'unique'
+				'label'  => __( 'Featured Image', 'buddyforms' ),
+				'unique' => 'unique'
 			);
 
 
-		$elements_select_options['extra']['label']          = __('Extra Fields', 'buddyforms');
-		$elements_select_options['extra']['class']          = 'bf_show_if_f_type_all';
-		$elements_select_options['extra']['fields']['file'] =
+		$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
+		$elements_select_options['extra']['class']            = 'bf_show_if_f_type_all';
+		$elements_select_options['extra']['fields']['file']   =
 			array(
-				'label'     => __( 'File', 'buddyforms' ),
+				'label' => __( 'File', 'buddyforms' ),
 			);
 		$elements_select_options['extra']['fields']['hidden'] =
 			array(
-				'label'     => __( 'Hidden', 'buddyforms' ),
+				'label' => __( 'Hidden', 'buddyforms' ),
 			);
 		$elements_select_options['extra']['fields']['number'] =
 			array(
-				'label'     => __( 'Number', 'buddyforms' ),
+				'label' => __( 'Number', 'buddyforms' ),
 			);
-		$elements_select_options['extra']['fields']['html'] =
+		$elements_select_options['extra']['fields']['html']   =
 			array(
-				'label'     => __( 'HTML', 'buddyforms' ),
+				'label' => __( 'HTML', 'buddyforms' ),
 			);
-		$elements_select_options['extra']['fields']['date'] =
+		$elements_select_options['extra']['fields']['date']   =
 			array(
-				'label'     => __( 'Date', 'buddyforms' ),
-				'unique'    => 'unique'
+				'label'  => __( 'Date', 'buddyforms' ),
+				'unique' => 'unique'
 			);
 
 	}

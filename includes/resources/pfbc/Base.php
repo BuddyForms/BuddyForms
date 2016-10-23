@@ -6,6 +6,7 @@
 abstract class Base {
 	/**
 	 * @param array|null $properties
+	 *
 	 * @return $this
 	 */
 	public function configure( array $properties = null ) {
@@ -73,6 +74,7 @@ abstract class Base {
 
 	/**
 	 * @param $attribute
+	 *
 	 * @return string
 	 */
 	public function getAttribute( $attribute ) {
@@ -87,6 +89,7 @@ abstract class Base {
 	 * Method is used by the Form class and all Element classes to return a string of html  attributes
 	 *
 	 * @param Parameter|string $ignore Parameter allows special attributes from being included.
+	 *
 	 * @return string
 	 */
 	public function getAttributes( $ignore = "" ) {
@@ -109,6 +112,7 @@ abstract class Base {
 
 	/**
 	 * @param $str
+	 *
 	 * @return string
 	 */
 	protected function filter( $str ) {

@@ -6,6 +6,7 @@
 class Element_Country extends Element_Select {
 	/**
 	 * Element_Country constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties

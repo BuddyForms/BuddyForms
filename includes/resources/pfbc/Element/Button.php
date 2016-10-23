@@ -15,6 +15,7 @@ class Element_Button extends Element {
 
 	/**
 	 * Element_Button constructor.
+	 *
 	 * @param string $label
 	 * @param string $type
 	 * @param array|null $properties

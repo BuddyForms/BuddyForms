@@ -1,6 +1,6 @@
 <?php
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
-function buddyforms_create_submissions_page()  {
+function buddyforms_create_submissions_page() {
 	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'buddyforms_submissions_screen' );
 	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
@@ -58,7 +58,8 @@ function buddyforms_submissions_screen() {
 					<select id="buddyforms_admin_menu_submissions_form_select">
 						<option value="none">Select Form</option>
 						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-							<option <?php isset($_GET['form_slug']) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
+							<option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
+								value="<?php echo $form_slug ?>">
 								<?php echo $form['name']; ?>
 							</option>
 						<?php } ?>
@@ -67,15 +68,15 @@ function buddyforms_submissions_screen() {
 			</ul>
 		</div>
 
-		<?php if( isset( $_GET['form_slug'] ) && !isset( $_GET['entry'] ) ) { ?>
+		<?php if ( isset( $_GET['form_slug'] ) && ! isset( $_GET['entry'] ) ) { ?>
 			<form id="filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
 				<?php $bf_submissions_table->display(); ?>
 			</form>
 		<?php } ?>
 
-		<?php if(isset($_GET['action']) && isset($_GET['entry'])) {
-			$form_slug = get_post_meta($_GET['entry'], '_bf_form_slug', true);
+		<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
+			$form_slug = get_post_meta( $_GET['entry'], '_bf_form_slug', true );
 			$post_id   = $_GET['entry'];
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
 		} ?>
@@ -83,12 +84,12 @@ function buddyforms_submissions_screen() {
 	<?php
 }
 
-add_action('admin_init', 'redirect_after_delete');
-function redirect_after_delete(){
+add_action( 'admin_init', 'redirect_after_delete' );
+function redirect_after_delete() {
 
-	if( isset($_GET['page']) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] )){
-		if(!get_post($_GET['entry'])){
-			wp_redirect('?post_type=buddyforms&page=bf_submissions&form_slug='.$_GET['form_slug']);
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] ) ) {
+		if ( ! get_post( $_GET['entry'] ) ) {
+			wp_redirect( '?post_type=buddyforms&page=bf_submissions&form_slug=' . $_GET['form_slug'] );
 		}
 	}
 }
@@ -98,6 +99,7 @@ add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
  * @param $status
  * @param $option
  * @param $value
+ *
  * @return mixed
  */
 function buddyforms_submissions_set_option( $status, $option, $value ) {
@@ -130,17 +132,18 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	/**
 	 * @param $item
+	 *
 	 * @return string
 	 */
 	function column_ID( $item ) {
 		global $buddyforms;
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>',  $item['ID'], 'edit' ),
-			'delete' => '<a href="' . get_delete_post_link( $item['ID'] , '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
+			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item['ID'], 'edit' ),
+			'delete' => '<a href="' . get_delete_post_link( $item['ID'], '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
-		if(isset($buddyforms[$_GET['form_slug']]['post_type']) && $buddyforms[$_GET['form_slug']]['post_type'] == 'bf_submissions'){
+		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && $buddyforms[ $_GET['form_slug'] ]['post_type'] == 'bf_submissions' ) {
 			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Submission</a>', $_REQUEST['page'], 'edit', $item['ID'], $_GET['form_slug'] );
 		}
 
@@ -158,39 +161,18 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	function column_default( $item, $column_name ) {
 		global $buddyforms;
 
-		$column_val = get_post_meta( $item['ID'], $column_name, true);
+		$column_val = get_post_meta( $item['ID'], $column_name, true );
 
-		if(is_array($column_val)){
-			foreach($column_val as $key => $val){
+		if ( is_array( $column_val ) ) {
+			foreach ( $column_val as $key => $val ) {
 				echo $val;
 			}
 		} else {
 			echo $column_val;
 		}
-		if($column_name == 'Date'){
+		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item['ID'] );
 		}
-	}
-
-
-	/**
-	 * @return array
-	 */
-	function get_columns() {
-		global $buddyforms;
-
-		$columns = array(
-			'ID'           => 'ID',
-			'Date'           => 'Date',
-		);
-
-		if(isset($_GET['form_slug']) && isset($buddyforms[$_GET['form_slug']]['form_fields'])){
-			foreach($buddyforms[$_GET['form_slug']]['form_fields'] as $key => $field){
-				$columns[$field['slug']] = $field['name'];
-			}
-
-		}
-		return $columns;
 	}
 
 	function prepare_items() {
@@ -230,5 +212,26 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
 			'total_pages' => ceil( $total_items / $per_page )   //WE have to calculate the total number of pages
 		) );
+	}
+
+	/**
+	 * @return array
+	 */
+	function get_columns() {
+		global $buddyforms;
+
+		$columns = array(
+			'ID'   => 'ID',
+			'Date' => 'Date',
+		);
+
+		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $_GET['form_slug'] ]['form_fields'] as $key => $field ) {
+				$columns[ $field['slug'] ] = $field['name'];
+			}
+
+		}
+
+		return $columns;
 	}
 }

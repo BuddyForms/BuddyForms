@@ -21,12 +21,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA    02111-1307    USA
  *
  ****************************************************************************
  */
@@ -241,6 +241,7 @@ class BuddyForms {
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
+	 *
 	 * @param $hook_suffix
 	 */
 	function admin_styles( $hook_suffix ) {
@@ -248,8 +249,8 @@ class BuddyForms {
 
 		if (
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
-		    || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
-//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
+			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
+			//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
 			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
@@ -262,7 +263,7 @@ class BuddyForms {
 
 			wp_enqueue_style( 'bootstrapcss', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
-			wp_enqueue_style ( 'wp-jquery-ui-dialog' );
+			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 		} else {
 			wp_enqueue_style( 'admin_post_metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
@@ -277,6 +278,7 @@ class BuddyForms {
 	 *
 	 * @package buddyforms
 	 * @since 0.1-beta
+	 *
 	 * @param $hook_suffix
 	 */
 	function admin_js( $hook_suffix ) {
@@ -323,11 +325,11 @@ class BuddyForms {
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 		}
-			wp_enqueue_script('tinymce');
-			wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'tinymce' );
+		wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
 
-			wp_enqueue_media();
-			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_media();
+		wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 	}
 
 	/**
@@ -339,81 +341,81 @@ class BuddyForms {
 	function admin_js_footer() {
 		global $post, $hook_suffix;
 
-			if (
-				( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
-				|| isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
-				|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
-				|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
-				|| $hook_suffix == 'buddyforms_page_bf_submissions'
-				|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
-			) {
-				$current_user = wp_get_current_user();
+		if (
+			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
+			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
+			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
+			|| $hook_suffix == 'buddyforms_page_bf_submissions'
+			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+		) {
+			$current_user = wp_get_current_user();
 
 			?>
-				<script>!function (e, o, n) {
-						window.HSCW = o, window.HS = n, n.beacon = n.beacon || {};
-						var t = n.beacon;
-						t.userConfig = {}, t.readyQueue = [], t.config = function (e) {
-							this.userConfig = e
-						}, t.ready = function (e) {
-							this.readyQueue.push(e)
-						}, o.config = {
-							docs: {enabled: !0, baseUrl: "//buddyforms.helpscoutdocs.com/"},
-							contact: {enabled: 0, formId: "1d687af3-936a-11e6-91aa-0a5fecc78a4d"}
-						};
-						var r = e.getElementsByTagName("script")[0], c = e.createElement("script");
-						c.type = "text/javascript", c.async = !0, c.src = "https://djtflbt20bdde.cloudfront.net/", r.parentNode.insertBefore(c, r)
-					}(document, window.HSCW || {}, window.HS || {});
+			<script>!function (e, o, n) {
+					window.HSCW = o, window.HS = n, n.beacon = n.beacon || {};
+					var t = n.beacon;
+					t.userConfig = {}, t.readyQueue = [], t.config = function (e) {
+						this.userConfig = e
+					}, t.ready = function (e) {
+						this.readyQueue.push(e)
+					}, o.config = {
+						docs: {enabled: !0, baseUrl: "//buddyforms.helpscoutdocs.com/"},
+						contact: {enabled: 0, formId: "1d687af3-936a-11e6-91aa-0a5fecc78a4d"}
+					};
+					var r = e.getElementsByTagName("script")[0], c = e.createElement("script");
+					c.type = "text/javascript", c.async = !0, c.src = "https://djtflbt20bdde.cloudfront.net/", r.parentNode.insertBefore(c, r)
+				}(document, window.HSCW || {}, window.HS || {});
 
-					// Configure the help beacon
-					HS.beacon.config({
-						color: '#2ba7a7',
-						'icon': 'question',
-						'modal': true,
-						'poweredBy': false,
-						topics: [
-							{ val: 'need-help', label: 'Need help with the product' },
-							{ val: 'bug', label: 'I think I found a bug'}
-						],
-						attachment: true,
-						instructions:'This is instructional text that goes above the form.'
+				// Configure the help beacon
+				HS.beacon.config({
+					color: '#2ba7a7',
+					'icon': 'question',
+					'modal': true,
+					'poweredBy': false,
+					topics: [
+						{val: 'need-help', label: 'Need help with the product'},
+						{val: 'bug', label: 'I think I found a bug'}
+					],
+					attachment: true,
+					instructions: 'This is instructional text that goes above the form.'
 
-					});
-					// In the upcoming version we will add this to the different form elements as quick help ;)
-					HS.beacon.ready(function() {
-						HS.beacon.suggest([
-							'55b6754ae4b0e667e2a4458a', // Installation & Activation
-							'57c582e8c6979156e4f1f523', // Create a Contact Form with the Form Wizard
-							'57c58d43903360649f6e2f33', // Create a Registration Form with the Form Wizard
-							'57c58b3ec69791083999dc6a', // Create a Post Form with the Form Wizard
-							'57c59065903360649f6e2f43', // Form Field Types
-							'58009c269033603f76794fe1', // Preview a Form
-							'57d70de69033602163657ec1', // View Form Submissions
-							'57fe05539033600277a6943d', // Edit Form Submissions
-							'57d70fd89033602163657ed3', // Delete Form Submissions
-							'57c58db4c69791083999dc81', // Publishing a Form
-							'55b675bce4b0616b6f270139', // Install Extensions
-							'56faab4cc6979115a340a7d5', // Locate the Post Meta needed by other Plugins
-							'55b68228e4b089486cad605e', // Post Status Change Mail Notifications
-							'55b68258e4b01fdb81eadcda', // Roles and Capabilities
-							'55b67302e4b0e667e2a4457e', // Select a Page in the FormBuilder to enable Post Management
-							'55b67484e4b0616b6f270133', // Shortcodes Overview
-							'5652e4b0c697915b26a598c8', // Understand the Concept of Custom Post Types and Taxonomies in WordPress
-							'5652dff3c697915b26a598ae', // Use the Taxonomy Form Element to Display any Taxonomy like Categories or Tags form any Post Type
-						]);
+				});
+				// In the upcoming version we will add this to the different form elements as quick help ;)
+				HS.beacon.ready(function () {
+					HS.beacon.suggest([
+						'55b6754ae4b0e667e2a4458a', // Installation & Activation
+						'57c582e8c6979156e4f1f523', // Create a Contact Form with the Form Wizard
+						'57c58d43903360649f6e2f33', // Create a Registration Form with the Form Wizard
+						'57c58b3ec69791083999dc6a', // Create a Post Form with the Form Wizard
+						'57c59065903360649f6e2f43', // Form Field Types
+						'58009c269033603f76794fe1', // Preview a Form
+						'57d70de69033602163657ec1', // View Form Submissions
+						'57fe05539033600277a6943d', // Edit Form Submissions
+						'57d70fd89033602163657ed3', // Delete Form Submissions
+						'57c58db4c69791083999dc81', // Publishing a Form
+						'55b675bce4b0616b6f270139', // Install Extensions
+						'56faab4cc6979115a340a7d5', // Locate the Post Meta needed by other Plugins
+						'55b68228e4b089486cad605e', // Post Status Change Mail Notifications
+						'55b68258e4b01fdb81eadcda', // Roles and Capabilities
+						'55b67302e4b0e667e2a4457e', // Select a Page in the FormBuilder to enable Post Management
+						'55b67484e4b0616b6f270133', // Shortcodes Overview
+						'5652e4b0c697915b26a598c8', // Understand the Concept of Custom Post Types and Taxonomies in WordPress
+						'5652dff3c697915b26a598ae', // Use the Taxonomy Form Element to Display any Taxonomy like Categories or Tags form any Post Type
+					]);
 //						HS.beacon.search('Forms');
-						HS.beacon.identify({
-							name: '<?php echo $current_user->user_login; ?>',
-							email: '<?php echo $current_user->user_email; ?>',
-						});
+					HS.beacon.identify({
+						name: '<?php echo $current_user->user_login; ?>',
+						email: '<?php echo $current_user->user_email; ?>',
 					});
-					jQuery(document).ready(function (jQuery) {
-						jQuery('#btn-open').click(function () {
-							HS.beacon.open();
-						});
+				});
+				jQuery(document).ready(function (jQuery) {
+					jQuery('#btn-open').click(function () {
+						HS.beacon.open();
 					});
-				</script>
+				});
+			</script>
 			<?php
 		}
 
@@ -453,7 +455,7 @@ class BuddyForms {
 
 		$buddyforms_preview_page = get_option( 'buddyforms_preview_page', true );
 
-		if ( isset($post->ID) && $post->ID == $buddyforms_preview_page ) {
+		if ( isset( $post->ID ) && $post->ID == $buddyforms_preview_page ) {
 			$found = true;
 		}
 
@@ -517,13 +519,13 @@ class BuddyForms {
 		// load dashicons
 		wp_enqueue_style( 'dashicons' );
 
-		add_action('wp_head', 'buddyforms_jquery_validation');
+		add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
 	}
 
 	function update_db_check() {
 
-		if( !is_admin() ){
+		if ( ! is_admin() ) {
 			return;
 		}
 
@@ -568,7 +570,9 @@ class BuddyForms {
 	 * Change the admin footer text on BuddyForms admin pages.
 	 *
 	 * @since  1.6
+	 *
 	 * @param  string $footer_text
+	 *
 	 * @return string
 	 */
 	public function admin_footer_text( $footer_text ) {
@@ -599,22 +603,22 @@ class BuddyForms {
 	}
 
 
-	function plugin_activation(){
+	function plugin_activation() {
 
-		$title = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
+		$title        = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
 		$preview_page = get_page_by_title( $title );
-		if( !$preview_page ) {
+		if ( ! $preview_page ) {
 			// Create preview page object
 			$preview_post = array(
-				'post_title' => $title,
+				'post_title'   => $title,
 				'post_content' => 'This is a preview of how this form will appear on your website',
-				'post_status' => 'draft',
-				'post_type' => 'page'
+				'post_status'  => 'draft',
+				'post_type'    => 'page'
 			);
 
 			// Insert the page into the database
 			$page_id = wp_insert_post( $preview_post );
-		}else{
+		} else {
 			$page_id = $preview_page->ID;
 		}
 
@@ -622,20 +626,21 @@ class BuddyForms {
 
 		$options = get_option( 'buddyforms_forms', true );
 
-		update_option( 'buddyforms_first_path_after_install', is_array($options) && count($options) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1');
+		update_option( 'buddyforms_first_path_after_install', is_array( $options ) && count( $options ) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1' );
 
 		set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
 	}
 
-	function plugin_deactivation(){
-		$buddyforms_preview_page = get_option('buddyforms_preview_page', true);
+	function plugin_deactivation() {
+		$buddyforms_preview_page = get_option( 'buddyforms_preview_page', true );
 
 		wp_delete_post( $buddyforms_preview_page, true );
 
 		delete_option( 'buddyforms_preview_page' );
 	}
 }
+
 // Create a helper function for easy SDK access.
 /**
  * @return Freemius
@@ -643,43 +648,46 @@ class BuddyForms {
 function buddyforms_core_fs() {
 	global $buddyforms_core_fs;
 
-	$first_path = get_option('buddyforms_first_path_after_install');
+	$first_path = get_option( 'buddyforms_first_path_after_install' );
 
 	if ( ! isset( $buddyforms_core_fs ) ) {
 
 		// Include Freemius SDK.
-		require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
+		require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
 		$buddyforms_core_fs = fs_dynamic_init( array(
-			'id'                => '391',
-			'slug'              => 'buddyforms',
-			'type'              => 'plugin',
-			'public_key'        => 'pk_dea3d8c1c831caf06cfea10c7114c',
-			'is_premium'        => true,
-			'has_addons'        => true,
-			'has_paid_plans'    => true,
-			'secret_key'        => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
-			'menu'              => array(
+			'id'             => '391',
+			'slug'           => 'buddyforms',
+			'type'           => 'plugin',
+			'public_key'     => 'pk_dea3d8c1c831caf06cfea10c7114c',
+			'is_premium'     => true,
+			'has_addons'     => true,
+			'has_paid_plans' => true,
+			'secret_key'     => 'sk_Zb!EPD=[JrR!45n03@?w8.Iys1bB*',
+			'menu'           => array(
 				'slug'       => 'edit.php?post_type=buddyforms',
 				'first-path' => $first_path,
 				'support'    => false,
 				'contact'    => true,
-				'addons'    => false,
+				'addons'     => false,
 			),
 		) );
 	}
+
 	return $buddyforms_core_fs;
 }
-if(PHP_VERSION < 5.3){
+
+if ( PHP_VERSION < 5.3 ) {
 	function buddyforms_php_version_admin_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' )  ; ?></p>
+			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
 			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
 		</div>
 		<?php
 	}
+
 	add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
 } else {
 	$GLOBALS['buddyforms_new'] = new BuddyForms();

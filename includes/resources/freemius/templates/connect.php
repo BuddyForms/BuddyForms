@@ -1,65 +1,65 @@
 <?php
-	/**
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
-	 * @since       1.0.7
-	 */
+/**
+ * @package     Freemius
+ * @copyright   Copyright (c) 2015, Freemius, Inc.
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.7
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	/**
-	 * @var array $VARS
-	 */
-	$slug                  = $VARS['slug'];
-	$fs                    = freemius( $slug );
-	$is_pending_activation = $fs->is_pending_activation();
-	$is_premium_only       = $fs->is_only_premium();
-	$has_paid_plans        = $fs->has_paid_plan();
-	$is_premium_code       = $fs->is_premium();
-	$is_freemium           = $fs->is_freemium();
+/**
+ * @var array $VARS
+ */
+$slug                  = $VARS['slug'];
+$fs                    = freemius( $slug );
+$is_pending_activation = $fs->is_pending_activation();
+$is_premium_only       = $fs->is_only_premium();
+$has_paid_plans        = $fs->has_paid_plan();
+$is_premium_code       = $fs->is_premium();
+$is_freemium           = $fs->is_freemium();
 
-	$fs->_enqueue_connect_essentials();
+$fs->_enqueue_connect_essentials();
 
-	$current_user = Freemius::_get_current_wp_user();
+$current_user = Freemius::_get_current_wp_user();
 
-	$first_name = $current_user->user_firstname;
-	if ( empty( $first_name ) ) {
-		$first_name = $current_user->nickname;
-	}
+$first_name = $current_user->user_firstname;
+if ( empty( $first_name ) ) {
+	$first_name = $current_user->nickname;
+}
 
-	$site_url     = get_site_url();
-	$protocol_pos = strpos( $site_url, '://' );
-	if ( false !== $protocol_pos ) {
-		$site_url = substr( $site_url, $protocol_pos + 3 );
-	}
+$site_url     = get_site_url();
+$protocol_pos = strpos( $site_url, '://' );
+if ( false !== $protocol_pos ) {
+	$site_url = substr( $site_url, $protocol_pos + 3 );
+}
 
-	$freemius_site_url = $fs->has_paid_plan() ?
-		'https://freemius.com/wordpress/' :
-		// Insights platform information.
-		'https://freemius.com/wordpress/usage-tracking/';
+$freemius_site_url = $fs->has_paid_plan() ?
+	'https://freemius.com/wordpress/' :
+	// Insights platform information.
+	'https://freemius.com/wordpress/usage-tracking/';
 
-	$freemius_site_url .= '?' . http_build_query( array(
-			'id'   => $fs->get_id(),
-			'slug' => $slug,
-		) );
+$freemius_site_url .= '?' . http_build_query( array(
+		'id'   => $fs->get_id(),
+		'slug' => $slug,
+	) );
 
-	$freemius_link = '<a href="' . $freemius_site_url . '" target="_blank" tabindex="1">freemius.com</a>';
+$freemius_link = '<a href="' . $freemius_site_url . '" target="_blank" tabindex="1">freemius.com</a>';
 
-	$error = fs_request_get( 'error' );
+$error = fs_request_get( 'error' );
 
-	$require_license_key = $is_premium_only ||
-	                       ( $is_freemium && $is_premium_code && fs_request_get_bool( 'require_license', true ) );
+$require_license_key = $is_premium_only ||
+                       ( $is_freemium && $is_premium_code && fs_request_get_bool( 'require_license', true ) );
 
-	if ( $is_pending_activation ) {
-		$require_license_key = false;
-	}
+if ( $is_pending_activation ) {
+	$require_license_key = false;
+}
 
-	if ( $require_license_key ) {
-		$fs->_require_license_activation_dialog();
-	}
+if ( $require_license_key ) {
+	$fs->_require_license_activation_dialog();
+}
 ?>
 <div id="fs_connect"
      class="wrap<?php if ( ! $fs->is_enable_anonymous() || $is_pending_activation || $require_license_key ) {
@@ -69,8 +69,8 @@
 		<b class="fs-site-icon"><i class="dashicons dashicons-wordpress"></i></b>
 		<i class="dashicons dashicons-plus fs-first"></i>
 		<?php
-			$vars = array( 'slug' => $slug );
-			fs_require_once_template( 'plugin-icon.php', $vars );
+		$vars = array( 'slug' => $slug );
+		fs_require_once_template( 'plugin-icon.php', $vars );
 		?>
 		<i class="dashicons dashicons-plus fs-second"></i>
 		<img class="fs-connect-logo" width="80" height="80" src="//img.freemius.com/connect-logo.png"/>
@@ -80,61 +80,61 @@
 			<p class="fs-error"><?php echo $error ?></p>
 		<?php endif ?>
 		<p><?php
-				$button_label = 'opt-in-connect';
+			$button_label = 'opt-in-connect';
 
-				if ( $is_pending_activation ) {
-					$button_label = 'resend-activation-email';
+			if ( $is_pending_activation ) {
+				$button_label = 'resend-activation-email';
 
-					echo $fs->apply_filters( 'pending_activation_message', sprintf(
-						__fs( 'thanks-x', $slug ) . '<br>' .
-						__fs( 'pending-activation-message', $slug ),
+				echo $fs->apply_filters( 'pending_activation_message', sprintf(
+					__fs( 'thanks-x', $slug ) . '<br>' .
+					__fs( 'pending-activation-message', $slug ),
+					$first_name,
+					'<b>' . $fs->get_plugin_name() . '</b>',
+					'<b>' . $current_user->user_email . '</b>'
+				) );
+			} else if ( $require_license_key ) {
+				$button_label = 'agree-activate-license';
+
+				echo $fs->apply_filters( 'connect-message_on-premium',
+					sprintf( __fs( 'hey-x', $slug ), $first_name ) . '<br>' .
+					sprintf( __fs( 'thanks-for-purchasing', $slug ), '<b>' . $fs->get_plugin_name() . '</b>' ),
+					$first_name,
+					$fs->get_plugin_name()
+				);
+			} else {
+				$filter                = 'connect_message';
+				$default_optin_message = 'connect-message';
+
+				if ( $fs->is_plugin_update() ) {
+					// If Freemius was added on a plugin update, set different
+					// opt-in message.
+					$default_optin_message = 'connect-message_on-update';
+
+					// If user customized the opt-in message on update, use
+					// that message. Otherwise, fallback to regular opt-in
+					// custom message if exist.
+					if ( $fs->has_filter( 'connect_message_on_update' ) ) {
+						$filter = 'connect_message_on_update';
+					}
+				}
+
+				echo $fs->apply_filters( $filter,
+					sprintf(
+						__fs( 'hey-x', $slug ) . '<br>' .
+						__fs( $default_optin_message, $slug ),
 						$first_name,
 						'<b>' . $fs->get_plugin_name() . '</b>',
-						'<b>' . $current_user->user_email . '</b>'
-					) );
-				} else if ( $require_license_key ) {
-					$button_label = 'agree-activate-license';
-
-					echo $fs->apply_filters( 'connect-message_on-premium',
-						sprintf( __fs( 'hey-x', $slug ), $first_name ) . '<br>' .
-						sprintf( __fs( 'thanks-for-purchasing', $slug ), '<b>' . $fs->get_plugin_name() . '</b>' ),
-						$first_name,
-						$fs->get_plugin_name()
-					);
-				} else {
-					$filter                = 'connect_message';
-					$default_optin_message = 'connect-message';
-
-					if ( $fs->is_plugin_update() ) {
-						// If Freemius was added on a plugin update, set different
-						// opt-in message.
-						$default_optin_message = 'connect-message_on-update';
-
-						// If user customized the opt-in message on update, use
-						// that message. Otherwise, fallback to regular opt-in
-						// custom message if exist.
-						if ( $fs->has_filter( 'connect_message_on_update' ) ) {
-							$filter = 'connect_message_on_update';
-						}
-					}
-
-					echo $fs->apply_filters( $filter,
-						sprintf(
-							__fs( 'hey-x', $slug ) . '<br>' .
-							__fs( $default_optin_message, $slug ),
-							$first_name,
-							'<b>' . $fs->get_plugin_name() . '</b>',
-							'<b>' . $current_user->user_login . '</b>',
-							'<a href="' . $site_url . '" target="_blank">' . $site_url . '</a>',
-							$freemius_link
-						),
-						$first_name,
-						$fs->get_plugin_name(),
-						$current_user->user_login,
+						'<b>' . $current_user->user_login . '</b>',
 						'<a href="' . $site_url . '" target="_blank">' . $site_url . '</a>',
 						$freemius_link
-					);
-				}
+					),
+					$first_name,
+					$fs->get_plugin_name(),
+					$current_user->user_login,
+					'<a href="' . $site_url . '" target="_blank">' . $site_url . '</a>',
+					$freemius_link
+				);
+			}
 			?></p>
 		<?php if ( $require_license_key ) : ?>
 			<div class="fs-license-key-container">
@@ -176,72 +176,72 @@
 		<?php endif ?>
 	</div><?php
 
-		// Set core permission list items.
-		$permissions = array(
-			'profile' => array(
-				'icon-class' => 'dashicons dashicons-admin-users',
-				'label'      => __fs( 'permissions-profile' ),
-				'desc'       => __fs( 'permissions-profile_desc' ),
-				'priority'   => 5,
-			),
-			'site'    => array(
-				'icon-class' => 'dashicons dashicons-admin-settings',
-				'label'      => __fs( 'permissions-site' ),
-				'desc'       => __fs( 'permissions-site_desc' ),
-				'priority'   => 10,
-			),
-			'events'  => array(
-				'icon-class' => 'dashicons dashicons-admin-plugins',
-				'label'      => __fs( 'permissions-events' ),
-				'desc'       => __fs( 'permissions-events_desc' ),
-				'priority'   => 20,
-			),
+	// Set core permission list items.
+	$permissions = array(
+		'profile' => array(
+			'icon-class' => 'dashicons dashicons-admin-users',
+			'label'      => __fs( 'permissions-profile' ),
+			'desc'       => __fs( 'permissions-profile_desc' ),
+			'priority'   => 5,
+		),
+		'site'    => array(
+			'icon-class' => 'dashicons dashicons-admin-settings',
+			'label'      => __fs( 'permissions-site' ),
+			'desc'       => __fs( 'permissions-site_desc' ),
+			'priority'   => 10,
+		),
+		'events'  => array(
+			'icon-class' => 'dashicons dashicons-admin-plugins',
+			'label'      => __fs( 'permissions-events' ),
+			'desc'       => __fs( 'permissions-events_desc' ),
+			'priority'   => 20,
+		),
 //			'plugins_themes' => array(
 //				'icon-class' => 'dashicons dashicons-admin-settings',
 //				'label'      => __fs( 'permissions-plugins_themes' ),
 //				'desc'       => __fs( 'permissions-plugins_themes_desc' ),
 //				'priority'   => 30,
 //			),
+	);
+
+	// Add newsletter permissions if enabled.
+	if ( $fs->is_permission_requested( 'newsletter' ) ) {
+		$permissions['newsletter'] = array(
+			'icon-class' => 'dashicons dashicons-email-alt',
+			'label'      => __fs( 'permissions-newsletter' ),
+			'desc'       => __fs( 'permissions-newsletter_desc' ),
+			'priority'   => 15,
 		);
+	}
 
-		// Add newsletter permissions if enabled.
-		if ( $fs->is_permission_requested( 'newsletter' ) ) {
-			$permissions['newsletter'] = array(
-				'icon-class' => 'dashicons dashicons-email-alt',
-				'label'      => __fs( 'permissions-newsletter' ),
-				'desc'       => __fs( 'permissions-newsletter_desc' ),
-				'priority'   => 15,
-			);
-		}
+	// Allow filtering of the permissions list.
+	$permissions = $fs->apply_filters( 'permission_list', $permissions );
 
-		// Allow filtering of the permissions list.
-		$permissions = $fs->apply_filters( 'permission_list', $permissions );
+	// Sort by priority.
+	uasort( $permissions, 'fs_sort_by_priority' );
 
-		// Sort by priority.
-		uasort( $permissions, 'fs_sort_by_priority' );
+	if ( ! empty( $permissions ) ) : ?>
+		<div class="fs-permissions">
+			<?php if ( $require_license_key ) : ?>
+				<p class="fs-license-sync-disclaimer"><?php printf( __fs( 'license-sync-disclaimer', $slug ), $freemius_link ) ?></p>
+			<?php endif ?>
+			<a class="fs-trigger" href="#" tabindex="1"><?php _efs( 'what-permissions', $slug ) ?></a>
+			<ul><?php
+				foreach ( $permissions as $id => $permission ) : ?>
+					<li id="fs-permission-<?php esc_attr_e( $id ); ?>"
+					    class="fs-permission fs-<?php esc_attr_e( $id ); ?>">
+						<i class="<?php esc_attr_e( $permission['icon-class'] ); ?>"></i>
 
-		if ( ! empty( $permissions ) ) : ?>
-			<div class="fs-permissions">
-				<?php if ( $require_license_key ) : ?>
-					<p class="fs-license-sync-disclaimer"><?php printf( __fs( 'license-sync-disclaimer', $slug ), $freemius_link ) ?></p>
-				<?php endif ?>
-				<a class="fs-trigger" href="#" tabindex="1"><?php _efs( 'what-permissions', $slug ) ?></a>
-				<ul><?php
-						foreach ( $permissions as $id => $permission ) : ?>
-							<li id="fs-permission-<?php esc_attr_e( $id ); ?>"
-							    class="fs-permission fs-<?php esc_attr_e( $id ); ?>">
-								<i class="<?php esc_attr_e( $permission['icon-class'] ); ?>"></i>
+						<div>
+							<span><?php esc_html_e( $permission['label'] ); ?></span>
 
-								<div>
-									<span><?php esc_html_e( $permission['label'] ); ?></span>
-
-									<p><?php esc_html_e( $permission['desc'] ); ?></p>
-								</div>
-							</li>
-						<?php endforeach; ?>
-				</ul>
-			</div>
-		<?php endif ?>
+							<p><?php esc_html_e( $permission['desc'] ); ?></p>
+						</div>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif ?>
 	<?php if ( $is_premium_code && $is_freemium ) : ?>
 		<div class="fs-freemium-licensing">
 			<p>
@@ -265,10 +265,10 @@
 <script type="text/javascript">
 	(function ($) {
 		var $primaryCta = $('.fs-actions .button.button-primary'),
-		    $form = $('.fs-actions form'),
-		    requireLicenseKey = <?php echo $require_license_key ? 'true' : 'false' ?>,
-		    $licenseSecret,
-		    $licenseKeyInput = $('#fs_license_key');
+			$form = $('.fs-actions form'),
+			requireLicenseKey = <?php echo $require_license_key ? 'true' : 'false' ?>,
+			$licenseSecret,
+			$licenseKeyInput = $('#fs_license_key');
 
 		$('.fs-actions .button').on('click', function () {
 			// Set loading mode.
@@ -295,7 +295,7 @@
 
 		$primaryCta.on('click', function () {
 			$(this).addClass('fs-loading');
-			$(this).html('<?php _efs( $is_pending_activation ? 'sending-email' : 'activating' , $slug ) ?>...').css({'cursor': 'wait'});
+			$(this).html('<?php _efs( $is_pending_activation ? 'sending-email' : 'activating', $slug ) ?>...').css({'cursor': 'wait'});
 		});
 
 		$('.fs-permissions .fs-trigger').on('click', function () {

@@ -1,20 +1,20 @@
 <?php
-	/**
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
-	 * @since       1.0.6
-	 */
+/**
+ * @package     Freemius
+ * @copyright   Copyright (c) 2015, Freemius, Inc.
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.6
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Class FS_License_Manager
  */
 class FS_License_Manager /*extends FS_Abstract_Manager*/
-	{
+{
 //
 //
 //		/**
@@ -85,23 +85,23 @@ class FS_License_Manager /*extends FS_Abstract_Manager*/
 //
 //		}
 
-		/**
-		 * @param FS_Plugin_License[] $licenses
-		 *
-		 * @return bool
-		 */
-		static function has_premium_license( $licenses ) {
-			if ( is_array( $licenses ) ) {
-				foreach ( $licenses as $license ) {
-					/**
-					 * @var FS_Plugin_License $license
-					 */
-					if ( ! $license->is_utilized() && $license->is_features_enabled() ) {
-						return true;
-					}
+	/**
+	 * @param FS_Plugin_License[] $licenses
+	 *
+	 * @return bool
+	 */
+	static function has_premium_license( $licenses ) {
+		if ( is_array( $licenses ) ) {
+			foreach ( $licenses as $license ) {
+				/**
+				 * @var FS_Plugin_License $license
+				 */
+				if ( ! $license->is_utilized() && $license->is_features_enabled() ) {
+					return true;
 				}
 			}
-
-			return false;
 		}
+
+		return false;
 	}
+}

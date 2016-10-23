@@ -96,6 +96,7 @@ class Form extends Base {
 
 	/**
 	 * Form constructor.
+	 *
 	 * @param string $id
 	 */
 	public function __construct( $id = "pfbc" ) {
@@ -138,6 +139,7 @@ class Form extends Base {
 	/**
 	 * @param string $id
 	 * @param bool $clearValues
+	 *
 	 * @return bool
 	 */
 	public static function isValid( $id = "pfbc", $clearValues = true ) {
@@ -219,6 +221,7 @@ class Form extends Base {
 
 	/**
 	 * @param $id
+	 *
 	 * @return mixed|string
 	 */
 	protected static function recover( $id ) {
@@ -390,6 +393,7 @@ class Form extends Base {
 	/**
 	 * @param null $element
 	 * @param bool $returnHTML
+	 *
 	 * @return string
 	 */
 	public function render( $element = null, $returnHTML = false ) {
@@ -428,6 +432,7 @@ class Form extends Base {
 
 	/**
 	 * @param string $id
+	 *
 	 * @return array
 	 */
 	protected static function getSessionValues( $id = "pfbc" ) {
@@ -494,8 +499,8 @@ class Form extends Base {
 			$element->renderJS();
 		}
 
-		$id = $this->_attributes["id"];
-		$form_slug = str_replace('buddyforms_form_', '', $id);
+		$id        = $this->_attributes["id"];
+		$form_slug = str_replace( 'buddyforms_form_', '', $id );
 
 		/*When the form is submitted, disable all submit buttons to prevent duplicate submissions.*/
 		echo <<<JS
@@ -629,6 +634,7 @@ JS;
 	 * @param $formId
 	 * @param null $values
 	 * @param null $opts
+	 *
 	 * @return Form|null
 	 */
 	public static function open( $formId, $values = null, $opts = null ) {
@@ -659,6 +665,7 @@ JS;
 	/**
 	 * @param $type
 	 * @param $props
+	 *
 	 * @return mixed
 	 */
 	public static function __callStatic( $type, $props ) {
@@ -679,6 +686,7 @@ JS;
 	 * @param $form
 	 * @param $type
 	 * @param $props
+	 *
 	 * @return mixed
 	 */
 	private static function _call( $form, $type, $props ) {

@@ -1,32 +1,32 @@
 <?php
-	/**
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
-	 * @since       1.0.3
-	 */
+/**
+ * @package     Freemius
+ * @copyright   Copyright (c) 2015, Freemius, Inc.
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.3
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <div<?php if ( ! empty( $VARS['id'] ) ) : ?> data-id="<?php echo $VARS['id'] ?>"<?php endif ?><?php if ( ! empty( $VARS['slug'] ) ) : ?> data-slug="<?php echo $VARS['slug'] ?>"<?php endif ?>
 	class="<?php
-		switch ( $VARS['type'] ) {
-			case 'error':
-				echo 'error form-invalid';
-				break;
-			case 'promotion':
-				echo 'updated promotion';
-				break;
-			case 'update':
+	switch ( $VARS['type'] ) {
+		case 'error':
+			echo 'error form-invalid';
+			break;
+		case 'promotion':
+			echo 'updated promotion';
+			break;
+		case 'update':
 //			echo 'update-nag update';
 //			break;
-			case 'success':
-			default:
-				echo 'updated success';
-				break;
-		}
+		case 'success':
+		default:
+			echo 'updated success';
+			break;
+	}
 	?> fs-notice<?php if ( ! empty( $VARS['sticky'] ) ) {
 		echo ' fs-sticky';
 	} ?><?php if ( ! empty( $VARS['plugin'] ) ) {

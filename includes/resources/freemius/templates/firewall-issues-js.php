@@ -1,18 +1,18 @@
 <?php
-	/**
-	 * API connectivity issues (CloudFlare's firewall) handler for handling different
-	 * scenarios selected by the user after connectivity issue is detected, by sending
-	 * AJAX call to the server in order to make the actual actions.
-	 *
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
-	 * @since       1.0.9
-	 */
+/**
+ * API connectivity issues (CloudFlare's firewall) handler for handling different
+ * scenarios selected by the user after connectivity issue is detected, by sending
+ * AJAX call to the server in order to make the actual actions.
+ *
+ * @package     Freemius
+ * @copyright   Copyright (c) 2015, Freemius, Inc.
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.9
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function ($) {
@@ -23,8 +23,8 @@
 				slug = notice.attr('data-slug');
 
 			var data = {
-				action    : 'fs_resolve_firewall_issues_' + slug,
-				slug      : slug,
+				action: 'fs_resolve_firewall_issues_' + slug,
+				slug: slug,
 				error_type: error_type
 			};
 

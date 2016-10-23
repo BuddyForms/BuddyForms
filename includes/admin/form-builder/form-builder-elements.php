@@ -5,7 +5,9 @@
  *
  * @package BuddyForms
  * @since 0.1-beta
+ *
  * @param $args
+ *
  * @return string
  */
 function buddyforms_display_form_element( $args ) {
@@ -14,7 +16,7 @@ function buddyforms_display_form_element( $args ) {
 	if ( ! $post && isset( $_POST['post_id'] ) && $_POST['post_id'] != 0 ) {
 		$post = get_post( $_POST['post_id'] );
 	}
-	if(!$buddyform) {
+	if ( ! $buddyform ) {
 		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 	}
 	if ( isset( $_POST['fieldtype'] ) ) {
@@ -55,10 +57,10 @@ function buddyforms_display_form_element( $args ) {
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 	) );
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		$metabox_enabled = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
+		$metabox_enabled                            = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
 		$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
 			'value' => $metabox_enabled,
-			'id' => "buddyforms_options[form_fields][" . $field_id . "][required]"
+			'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 		) );
 	}
 
@@ -70,7 +72,7 @@ function buddyforms_display_form_element( $args ) {
 		'required' => 1
 	) );
 
-	$field_slug                     = isset( $customfield['slug'] ) ? sanitize_title( $customfield['slug'] ) : $name;
+	$field_slug                      = isset( $customfield['slug'] ) ? sanitize_title( $customfield['slug'] ) : $name;
 	$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
 		'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
 		'value'     => $field_slug,
@@ -107,8 +109,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'subject' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'subject' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$validation_minlength                              = isset( $customfield['avalidation_minlengtha'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
@@ -126,8 +128,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'message' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'message' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$validation_minlength                              = isset( $customfield['avalidation_minlengtha'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
@@ -145,8 +147,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_login' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_login' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			break;
 		case 'user_email':
@@ -159,8 +161,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_email' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_email' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'user_first':
 			unset( $form_fields['advanced'] );
@@ -172,8 +174,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_first' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_first' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'user_last':
 			unset( $form_fields['advanced'] );
@@ -185,8 +187,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_last' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_last' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'user_pass':
 			unset( $form_fields['advanced'] );
@@ -198,8 +200,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_pass' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_pass' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'user_website':
 			unset( $form_fields['advanced'] );
@@ -211,8 +213,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'website' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'website' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'user_bio':
 			unset( $form_fields['advanced'] );
@@ -224,8 +226,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_bio' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_bio' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'captcha':
 			unset( $form_fields['advanced'] );
@@ -238,10 +240,10 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$form_fields['general']['html']  = new Element_HTML('<p><b>reCaptcha is only visible to logged off users. Logged in users not need to get checked.<b><p>');
+			$form_fields['general']['html'] = new Element_HTML( '<p><b>reCaptcha is only visible to logged off users. Logged in users not need to get checked.<b><p>' );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
-			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'textarea':
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
@@ -282,9 +284,11 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 
-		case 'taxonomy':case 'category':case 'tags':
+		case 'taxonomy':
+		case 'category':
+		case 'tags':
 
-			unset($form_fields['advanced']['metabox_enabled']);
+			unset( $form_fields['advanced']['metabox_enabled'] );
 
 			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
 					<td colspan="2">
@@ -297,10 +301,10 @@ function buddyforms_display_form_element( $args ) {
 			$taxonomies                         = buddyforms_taxonomies( $post_type );
 			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
 			$form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
-				'value' => $taxonomy,
-				'class' => 'bf_tax_select bf_hide_if_post_type_none',
-				'field_id'    => $field_id,
-				'id'          => 'taxonomy_field_id_' . $field_id,
+				'value'    => $taxonomy,
+				'class'    => 'bf_tax_select bf_hide_if_post_type_none',
+				'field_id' => $field_id,
+				'id'       => 'taxonomy_field_id_' . $field_id,
 			) );
 
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
@@ -350,44 +354,46 @@ function buddyforms_display_form_element( $args ) {
 			) );
 
 			$multiple                           = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
-			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple, 'class' => 'bf_hide_if_post_type_none' ) );
+			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array(
+				'value' => $multiple,
+				'class' => 'bf_hide_if_post_type_none'
+			) );
 
 
+			$taxonomy_include = isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : 'false';
 
-		$taxonomy_include = isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : 'false';
+			$wp_dropdown_taxonomy_include_args = array(
+				'hide_empty'    => 0,
+				'child_of'      => 0,
+				'echo'          => false,
+				'selected'      => false,
+				'hierarchical'  => 1,
+				'id'            => 'taxonomy_include' . $field_id,
+				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_include][]",
+				'class'         => 'postform bf-select2 tax_default',
+				'depth'         => 0,
+				'tab_index'     => 0,
+				'taxonomy'      => $taxonomy,
+				'hide_if_empty' => false,
+				'orderby'       => 'SLUG',
+				'order'         => $taxonomy_order,
+				'exclude'       => '',
+				'include'       => '',
+			);
 
-		$wp_dropdown_taxonomy_include_args = array(
-			'hide_empty'    => 0,
-			'child_of'      => 0,
-			'echo'          => false,
-			'selected'      => false,
-			'hierarchical'  => 1,
-			'id'            => 'taxonomy_include' . $field_id,
-			'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_include][]",
-			'class'         => 'postform bf-select2 tax_default',
-			'depth'         => 0,
-			'tab_index'     => 0,
-			'taxonomy'      => $taxonomy,
-			'hide_if_empty' => false,
-			'orderby'       => 'SLUG',
-			'order'         => $taxonomy_order,
-			'exclude'            => '',
-			'include'            => '',
-		);
+			$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_include_args );
 
-		$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_include_args );
+			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
-		$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
-
-		if ( is_array( $taxonomy_include ) ) {
-			foreach ( $taxonomy_include as $key => $post_term ) {
-				$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+			if ( is_array( $taxonomy_include ) ) {
+				foreach ( $taxonomy_include as $key => $post_term ) {
+					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+				}
+			} else {
+				$dropdown = str_replace( ' value="' . $taxonomy_include . '"', ' value="' . $taxonomy_include . '" selected="selected"', $dropdown );
 			}
-		} else {
-			$dropdown = str_replace( ' value="' . $taxonomy_include . '"', ' value="' . $taxonomy_include . '" selected="selected"', $dropdown );
-		}
 
-		$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_include" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_include" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
                         <label for="form_title"><b style="margin-left: -10px;">Include Items</b></label>
                     </th>
@@ -398,42 +404,41 @@ function buddyforms_display_form_element( $args ) {
                     </td></table>';
 
 
-		$form_fields['general']['taxonomy_include'] = new Element_HTML( $dropdown );
+			$form_fields['general']['taxonomy_include'] = new Element_HTML( $dropdown );
 
 
+			$taxonomy_exclude = isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : 'false';
 
-		$taxonomy_exclude = isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : 'false';
+			$wp_dropdown_taxonomy_exclude_args = array(
+				'hide_empty'    => 0,
+				'child_of'      => 0,
+				'echo'          => false,
+				'selected'      => false,
+				'hierarchical'  => 1,
+				'id'            => 'taxonomy_exclude' . $field_id,
+				'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_exclude][]",
+				'class'         => 'postform bf-select2 tax_default',
+				'depth'         => 0,
+				'tab_index'     => 0,
+				'taxonomy'      => $taxonomy,
+				'hide_if_empty' => false,
+				'orderby'       => 'SLUG',
+				'order'         => $taxonomy_order,
+			);
 
-		$wp_dropdown_taxonomy_exclude_args = array(
-			'hide_empty'    => 0,
-			'child_of'      => 0,
-			'echo'          => false,
-			'selected'      => false,
-			'hierarchical'  => 1,
-			'id'            => 'taxonomy_exclude' . $field_id,
-			'name'          => "buddyforms_options[form_fields][" . $field_id . "][taxonomy_exclude][]",
-			'class'         => 'postform bf-select2 tax_default',
-			'depth'         => 0,
-			'tab_index'     => 0,
-			'taxonomy'      => $taxonomy,
-			'hide_if_empty' => false,
-			'orderby'       => 'SLUG',
-			'order'         => $taxonomy_order,
-		);
+			$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_exclude_args );
 
-		$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_exclude_args );
+			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
-		$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
-
-		if ( is_array( $taxonomy_exclude ) ) {
-			foreach ( $taxonomy_exclude as $key => $post_term ) {
-				$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+			if ( is_array( $taxonomy_exclude ) ) {
+				foreach ( $taxonomy_exclude as $key => $post_term ) {
+					$dropdown = str_replace( ' value="' . $post_term . '"', ' value="' . $post_term . '" selected="selected"', $dropdown );
+				}
+			} else {
+				$dropdown = str_replace( ' value="' . $taxonomy_exclude . '"', ' value="' . $taxonomy_exclude . '" selected="selected"', $dropdown );
 			}
-		} else {
-			$dropdown = str_replace( ' value="' . $taxonomy_exclude . '"', ' value="' . $taxonomy_exclude . '" selected="selected"', $dropdown );
-		}
 
-		$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_exclude" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
+			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_exclude" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
                         <label for="form_title"><b style="margin-left: -10px;">Exclude Items</b></label>
                     </th>
@@ -444,18 +449,23 @@ function buddyforms_display_form_element( $args ) {
                     </td></table>';
 
 
-		$form_fields['general']['taxonomy_exclude'] = new Element_HTML( $dropdown );
-
+			$form_fields['general']['taxonomy_exclude'] = new Element_HTML( $dropdown );
 
 
 			$create_new_tax                           = isset( $customfield['create_new_tax'] ) ? $customfield['create_new_tax'] : 'false';
-			$form_fields['general']['create_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array( 'value' => $create_new_tax, 'class' => 'bf_hide_if_post_type_none' ) );
+			$form_fields['general']['create_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array(
+				'value' => $create_new_tax,
+				'class' => 'bf_hide_if_post_type_none'
+			) );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
-			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden, 'class' => 'bf_hide_if_post_type_none' ) );
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array(
+				'value' => $hidden,
+				'class' => 'bf_hide_if_post_type_none'
+			) );
 
 
-			if (defined('DOING_AJAX') && DOING_AJAX) {
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 				$js = <<<JS
             	<script>
 
@@ -519,12 +529,12 @@ JS;
 			break;
 		case 'hidden':
 			unset( $form_fields );
-			$form_fields['hidden']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $field_slug );
+			$form_fields['hidden']['name']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $field_slug );
 			$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
 				'required' => true,
 				'value'    => $field_slug,
 			) );
-			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['type']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$value                           = isset( $customfield['value'] ) ? $customfield['value'] : '';
 			$form_fields['general']['value'] = new Element_Textbox( '<b>' . __( 'Value:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][value]", array( 'value' => $value ) );
@@ -542,22 +552,22 @@ JS;
 				'value'    => $name,
 				'required' => 1
 			) );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'comments' );
-			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'comments' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			$form_fields['general']['html'] = new Element_HTML( __( "This Post Field allows users to override the global comments settings so they can open and close comments as they wish.", 'buddyforms' ) );
 			break;
 		case 'title':
 			unset( $form_fields['general']['required'] );
 			unset( $form_fields['advanced']['slug'] );
-			unset( $form_fields['advanced']['metabox_enabled']);
+			unset( $form_fields['advanced']['metabox_enabled'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Title';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
 				'required' => 1
 			) );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_title' );
-			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_title' );
+			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
@@ -569,7 +579,7 @@ JS;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
 			break;
 		case 'content':
-			unset( $form_fields['advanced']['metabox_enabled']);
+			unset( $form_fields['advanced']['metabox_enabled'] );
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'Content';
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
@@ -607,7 +617,7 @@ JS;
 				'value'    => $name,
 				'required' => 0
 			) );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status' );
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_status' );
 
 			$post_status                           = isset( $customfield['post_status'] ) ? $customfield['post_status'] : 'post_status';
 			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", buddyforms_get_post_status_array(), array(
@@ -615,9 +625,11 @@ JS;
 				'id'        => "buddyforms_options[form_fields][" . $field_id . "][post_status]",
 				'shortDesc' => __( "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms' )
 			) );
-			$form_fields['hidden']['type']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
-		case 'featured-image': case 'featuredimage': case 'featured_image':
+		case 'featured-image':
+		case 'featuredimage':
+		case 'featured_image':
 
 			unset( $form_fields );
 			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
@@ -631,11 +643,11 @@ JS;
 				'value'    => $name,
 				'required' => 1
 			) );
-			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
+			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
 
 			$description                           = isset( $customfield['description'] ) ? stripcslashes( $customfield['description'] ) : '';
 			$form_fields['general']['description'] = new Element_Textbox( '<b>' . __( 'Description:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array( 'value' => $description ) );
-			$form_fields['hidden']['type']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'file':
 
@@ -651,9 +663,9 @@ JS;
 			unset( $form_fields );
 			$html                                  = isset( $customfield['html'] ) ? stripcslashes( $customfield['html'] ) : '';
 			$form_fields['general']['description'] = new Element_Textarea( '<b>' . __( 'HTML:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html ) );
-			$form_fields['hidden']['name']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", 'HTML' );
-			$form_fields['hidden']['slug']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'html' );
-			$form_fields['hidden']['type']        = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+			$form_fields['hidden']['name']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", 'HTML' );
+			$form_fields['hidden']['slug']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'html' );
+			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );
@@ -664,16 +676,19 @@ JS;
 
 
 	if ( is_array( $form_fields ) ) {
-	$form_fields = buddyforms_sort_array_by_Array( $form_fields, array( 'general', 'validation', 'advanced' ) );
+		$form_fields = buddyforms_sort_array_by_Array( $form_fields, array( 'general', 'validation', 'advanced' ) );
 	}
 
 	ob_start(); ?>
-	<li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
+	<li id="field_<?php echo $field_id ?>"
+	    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
 
 		<div style="display:none;" class="hidden">
-			<?php if( isset( $form_fields['hidden'] ) ){ foreach ( $form_fields['hidden'] as $key => $form_field ) {
-				$form_field->render();
-			} }?>
+			<?php if ( isset( $form_fields['hidden'] ) ) {
+				foreach ( $form_fields['hidden'] as $key => $form_field ) {
+					$form_field->render();
+				}
+			} ?>
 		</div>
 
 		<div class="accordion_fields">
@@ -717,8 +732,9 @@ JS;
 								$i = 0;
 								foreach ( $form_fields as $key => $form_field ) {
 
-									if($key == 'hidden')
+									if ( $key == 'hidden' ) {
 										continue;
+									}
 
 									$class_active = '';
 									if ( $i == 0 ) {
@@ -740,8 +756,9 @@ JS;
 								$i = 0;
 								foreach ( $form_fields as $key => $form_field ) {
 
-									if($key == 'hidden')
+									if ( $key == 'hidden' ) {
 										continue;
+									}
 
 									$class_active = '';
 									if ( $i == 0 ) {
@@ -757,8 +774,9 @@ JS;
 									<?php
 									$i ++;
 								}
-								if(!is_array($form_field))
-									_e('Please Save the form once for the form element to work.', 'buddyforms');
+								if ( ! is_array( $form_field ) ) {
+									_e( 'Please Save the form once for the form element to work.', 'buddyforms' );
+								}
 								?>
 							</div>
 						</div>
@@ -785,6 +803,7 @@ add_action( 'wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_
 /**
  * @param $form_fields
  * @param $args
+ *
  * @return string
  */
 function buddyforms_form_element_multiple( $form_fields, $args ) {
@@ -870,7 +889,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 				$type     = $field->getAttribute( 'type' );
 				$class    = $field->getAttribute( 'class' );
 				$disabled = $field->getAttribute( 'disabled' );
-				$classes  = empty( $class ) ? '' : $class . ' ' ;
+				$classes  = empty( $class ) ? '' : $class . ' ';
 				$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 				switch ( $type ) {
@@ -907,6 +926,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 /**
  * @param array $array
  * @param array $orderArray
+ *
  * @return array
  */
 function buddyforms_sort_array_by_Array( Array $array, Array $orderArray ) {

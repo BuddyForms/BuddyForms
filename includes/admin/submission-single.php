@@ -16,7 +16,7 @@
 						jQuery(document).ready(function () {
 							jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
 							jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
-							jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled','disabled');
+							jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled', 'disabled');
 						});
 					</script>
 					<?php
@@ -29,14 +29,14 @@
 					$form->configure( array(
 						//"prevent" => array("bootstrap", "jQuery", "focus"),
 						//"action" => $redirect_to,
-						"view"   => new View_Metabox(),
-						'class'  => 'standard-form',
+						"view"  => new View_Metabox(),
+						'class' => 'standard-form',
 					) );
 
-					$fields = $buddyforms[$form_slug]['form_fields'];
+					$fields = $buddyforms[ $form_slug ]['form_fields'];
 
 					$args = array(
-						'post_type'    => $buddyforms[$form_slug]['post_type'],
+						'post_type'    => $buddyforms[ $form_slug ]['post_type'],
 						'customfields' => $fields,
 						'post_id'      => $post_id,
 						'form_slug'    => $form_slug,
@@ -67,15 +67,18 @@
 
 								<div class="misc-pub-section curtime misc-pub-curtime">
 										    <span id="timestamp-<?php echo $post_id; ?>">
-										    Submitted: <b><?php echo get_the_date('l, F j, Y', $post_id ); ?></b>    </span>
+										    Submitted: <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b>    </span>
 								</div>
 
 								<div class="misc-pub-section">
-									<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>&nbsp;<a href="#" onclick="window.print();return false;">Print</a>
+									<span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>&nbsp;<a
+										href="#" onclick="window.print();return false;">Print</a>
 								</div>
 
 								<div class="misc-pub-section">
-									<a href="?post_type=buddyforms&page=bf_submissions&form_slug=<?php echo $form_slug ?>" class="button button-primary bf-close-submissions-modal" data-id="<?php the_ID() ?>">Close</a>
+									<a href="?post_type=buddyforms&page=bf_submissions&form_slug=<?php echo $form_slug ?>"
+									   class="button button-primary bf-close-submissions-modal"
+									   data-id="<?php the_ID() ?>">Close</a>
 								</div>
 							</div>
 						</div>
@@ -98,15 +101,15 @@
 
 			<?php
 			if ( buddyforms_core_fs()->is__premium_only() ) {
-				if(is_admin()){
+				if ( is_admin() ) {
 					$user_data = get_post_meta( $post_id, '_bf_user_data', true );
 
-					if($user_data){ ?>
+					if ( $user_data ) { ?>
 						<div class="postbox">
 							<h3 class="hndle"><span>User Information</span></h3>
 							<div class="inside">
 
-								<?php foreach($user_data as $uinfo => $uval) { ?>
+								<?php foreach ( $user_data as $uinfo => $uval ) { ?>
 									<div class="misc-pub-section">
 										<?php echo $uinfo ?>:
 										<b><?php echo $uval ?></b>
@@ -119,21 +122,21 @@
 				<?php }
 			}
 			if ( buddyforms_core_fs()->is_not_paying() ) { ?>
-			<div class="postbox">
-				<h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
-				<div class="inside">
-					<?php
-					buddyforms_go_pro('' , __( '', 'buddyforms' ), array(
-						'IP Address',
-						'Referer',
-						'Browser',
-						'Platform',
-						'Reports',
-						'User Agent',
-					) );
-					?>
+				<div class="postbox">
+					<h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
+					<div class="inside">
+						<?php
+						buddyforms_go_pro( '', __( '', 'buddyforms' ), array(
+							'IP Address',
+							'Referer',
+							'Browser',
+							'Platform',
+							'Reports',
+							'User Agent',
+						) );
+						?>
+					</div>
 				</div>
-			</div>
 			<?php } ?>
 		</div>
 	</div>

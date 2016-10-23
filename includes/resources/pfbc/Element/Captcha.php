@@ -15,6 +15,7 @@ class Element_Captcha extends Element {
 
 	/**
 	 * Element_Captcha constructor.
+	 *
 	 * @param string $label
 	 * @param array|null $properties
 	 */

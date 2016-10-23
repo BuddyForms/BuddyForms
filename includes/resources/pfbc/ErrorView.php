@@ -11,6 +11,7 @@ abstract class ErrorView extends Base {
 
 	/**
 	 * ErrorView constructor.
+	 *
 	 * @param array|null $properties
 	 */
 	public function __construct( array $properties = null ) {

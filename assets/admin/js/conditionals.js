@@ -1,7 +1,7 @@
 //
 //Function to show hide form setup tabs navigation
 //
-function from_setup_form_type(value){
+function from_setup_form_type(value) {
     from_setup_post_type();
 
     from_setup_attached_page()
@@ -14,7 +14,7 @@ function from_setup_form_type(value){
 
     jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
     jQuery("#screen-meta-links").remove();
-    switch(value) {
+    switch (value) {
         case 'contact':
 
             // Set post type value to bf_submissions to make sure it is a contact form if hidden
@@ -89,11 +89,11 @@ function from_setup_form_type(value){
 }
 
 // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
-function from_setup_post_type(){
+function from_setup_post_type() {
 
     var post_type = jQuery('#form_post_type').val();
 
-    if(post_type == 'bf_submissions') {
+    if (post_type == 'bf_submissions') {
         //jQuery('.bf_tax_select').val('bf_submissions');
         jQuery('.buddyforms-metabox-show-if-post-type-none').hide();
         jQuery('.bf_hide_if_post_type_none').hide();
@@ -109,11 +109,11 @@ function from_setup_post_type(){
 
 }
 
-function from_setup_attached_page(){
+function from_setup_attached_page() {
 
     var attached_page = jQuery('#attached_page').val();
 
-    if(attached_page == 'none') {
+    if (attached_page == 'none') {
         jQuery('.buddyforms-metabox-show-if-attached-page,.bf_hide_if_attached_page_none').hide();
         jQuery('.bf_hide_if_attached_page_none').hide();
         jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
@@ -127,8 +127,8 @@ function from_setup_attached_page(){
 }
 
 // Post Type Select function for the metabox visibility buddyforms-metabox-show-if-post-type-none
-function from_setup_create_account(){
-    if( jQuery('#public_submit_create_account-0').is(":checked") ) {
+function from_setup_create_account() {
+    if (jQuery('#public_submit_create_account-0').is(":checked")) {
         jQuery('.registrations_nav').show();
     } else {
         jQuery('.registrations_nav').hide();
@@ -136,9 +136,9 @@ function from_setup_create_account(){
 
 }
 
-function bf_taxonomy_input(id){
+function bf_taxonomy_input(id) {
 
-    var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
+    var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
     jQuery('#table_row_' + id + '_taxonomy_default').hide();
     jQuery('#table_row_' + id + '_taxonomy_order').hide();
     jQuery('#table_row_' + id + '_show_option_none').hide();
@@ -146,7 +146,7 @@ function bf_taxonomy_input(id){
     jQuery('#table_row_' + id + '_multiple').hide();
     jQuery('#table_row_' + id + '_taxonomy_filter').hide();
     jQuery('#table_row_' + id + '_use_tag_style_input').hide();
-    if(taxonomy == null){
+    if (taxonomy == null) {
 
         return;
     }
@@ -155,7 +155,7 @@ function bf_taxonomy_input(id){
     console.log('taxonomy: ' + taxonomy);
 
 
-    if(taxonomy == 'none'){
+    if (taxonomy == 'none') {
 
         jQuery('#table_row_' + id + '_taxonomy_default').hide();
         jQuery('#table_row_' + id + '_taxonomy_order').hide();
@@ -201,43 +201,43 @@ jQuery(document).ready(function (jQuery) {
         //    console.log('form_post_type_length neu ' + tax_field_length);
         //} else {
 
-            jQuery.ajax({
-                type: 'POST',
-                url: ajaxurl,
-                data: {
-                    "action": "buddyforms_post_types_taxonomies",
-                    "post_type": post_type
-                },
-                success: function (data) {
-                    console.log(data);
-                    jQuery('select.bf_tax_select').html(data);
+        jQuery.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: {
+                "action": "buddyforms_post_types_taxonomies",
+                "post_type": post_type
+            },
+            success: function (data) {
+                console.log(data);
+                jQuery('select.bf_tax_select').html(data);
 
-                },
-                error: function () {
-                    jQuery('.formbuilder-spinner').removeClass('is-active');
-                    jQuery('<div></div>').dialog({
-                        modal: true,
-                        title: "Info",
-                        open: function () {
-                            var markup = 'Something went wrong ;-(sorry)';
-                            jQuery(this).html(markup);
-                        },
-                        buttons: {
-                            Ok: function () {
-                                jQuery(this).dialog("close");
-                            }
+            },
+            error: function () {
+                jQuery('.formbuilder-spinner').removeClass('is-active');
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function () {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function () {
+                            jQuery(this).dialog("close");
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }
+        });
         //}
     });
 
     // On Change listener for the post attached_page
     jQuery(document.body).on('change', '#attached_page', function () {
 
-        var attached_page   = jQuery('#attached_page').val();
-        var form_slug       = jQuery('#attached_page').attr('data-slug');
+        var attached_page = jQuery('#attached_page').val();
+        var form_slug = jQuery('#attached_page').attr('data-slug');
 
         from_setup_attached_page();
         jQuery.ajax({
@@ -252,11 +252,11 @@ jQuery(document).ready(function (jQuery) {
             success: function (data) {
                 //console.log(data);
 
-                if(!data['form_slug']){
+                if (!data['form_slug']) {
                     data['form_slug'] = '<span style="color:red">form slug</slug>';
                 }
-                jQuery( '.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
-                jQuery( '.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
+                jQuery('.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
+                jQuery('.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
 
 
             },
@@ -264,13 +264,13 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('<div></div>').dialog({
                     modal: true,
                     title: "Info",
-                    open: function() {
+                    open: function () {
                         var markup = 'Something went wrong ;-(sorry)';
                         jQuery(this).html(markup);
                     },
                     buttons: {
-                        Ok: function() {
-                            jQuery( this ).dialog( "close" );
+                        Ok: function () {
+                            jQuery(this).dialog("close");
                         }
                     }
                 });
@@ -300,15 +300,15 @@ jQuery(document).ready(function (jQuery) {
     //
     function after_submission_action(this_input) {
 
-        if(this_input == null){
+        if (this_input == null) {
             this_input = jQuery('.bf-after-submission-action');
 
             alert(input_value)
         }
 
         var input_value = this_input.val();
-        var ids         = this_input.attr('data-hidden');
-        var id          = this_input.attr('id');
+        var ids = this_input.attr('data-hidden');
+        var id = this_input.attr('id');
 
         if (!ids)
             return;
@@ -332,10 +332,10 @@ jQuery(document).ready(function (jQuery) {
 
     function bf_hidden_inputs(this_input) {
 
-        var input       = this_input.find("input");
+        var input = this_input.find("input");
         var input_value = this_input.find(":checked").val();
-        var ids         = input.attr('data-hidden');
-        var id          = input.attr('id');
+        var ids = input.attr('data-hidden');
+        var id = input.attr('id');
 
         if (!ids)
             return;
@@ -387,12 +387,12 @@ jQuery(document).ready(function (jQuery) {
         var id = jQuery(this).attr('field_id');
         var val = jQuery(this).val();
 
-        if(id != null){
+        if (id != null) {
             console.log('on change ' + id);
 
-            if(val != 'none'){
-                var taxonomy = jQuery('#taxonomy_field_id_' + id ).val();
-                var taxonomy_default = jQuery( "#taxonomy_default_" + id );
+            if (val != 'none') {
+                var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
+                var taxonomy_default = jQuery("#taxonomy_default_" + id);
                 jQuery.ajax({
                     type: 'POST',
                     url: ajaxurl,

@@ -6,7 +6,7 @@
  */
 function buddyforms_form_elements( $form, $args ) {
 
-	extract($args);
+	extract( $args );
 
 	if ( ! isset( $customfields ) ) {
 		return;
@@ -72,7 +72,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						 $form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_email':
@@ -90,7 +90,7 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'user_pass':
 						$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
 						$element_attr['id'] = $element_attr['id'] . '2';
-						$form->addElement( new Element_Password( $name . ' Confirm', $slug  . '_confirm', $element_attr ) );
+						$form->addElement( new Element_Password( $name . ' Confirm', $slug . '_confirm', $element_attr ) );
 						break;
 
 					case 'user_website':
@@ -117,7 +117,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$post_title = '';
 						if ( isset( $_POST['buddyforms_form_title'] ) ) {
 							$post_title = stripslashes( $_POST['buddyforms_form_title'] );
-						} elseif( isset( $the_post->post_title ) ) {
+						} elseif ( isset( $the_post->post_title ) ) {
 							$post_title = $the_post->post_title;
 						}
 						if ( isset( $customfield['hidden'] ) ) {
@@ -280,7 +280,7 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 
 
-							$customfield_val = isset($the_post->post_status) ? $the_post->post_status : '' ;
+							$customfield_val = isset( $the_post->post_status ) ? $the_post->post_status : '';
 
 							if ( isset( $_POST['status'] ) ) {
 								$customfield_val = $_POST['status'];
@@ -317,8 +317,8 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'captcha' :
-						if(!is_user_logged_in()){
-							$form->addElement( new Element_Captcha("Captcha", $attributes = null) );
+						if ( ! is_user_logged_in() ) {
+							$form->addElement( new Element_Captcha( "Captcha", $attributes = null ) );
 						}
 						break;
 
@@ -495,8 +495,8 @@ function buddyforms_form_elements( $form, $args ) {
 							'orderby'       => 'SLUG',
 							'taxonomy'      => $customfield['taxonomy'],
 							'order'         => $customfield['taxonomy_order'],
-							'exclude'            => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
-							'include'            => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
+							'exclude'       => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
+							'include'       => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
 						);
 
 						if ( isset( $customfield['show_option_none'] ) && ! isset( $customfield['multiple'] ) ) {
@@ -519,7 +519,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
 
-						if( isset( $customfield['taxonomy'] ) ){
+						if ( isset( $customfield['taxonomy'] ) ) {
 							$the_post_terms = get_the_terms( $post_id, $customfield['taxonomy'] );
 						}
 
@@ -540,14 +540,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$required = '<span class="required">* </span>';
 						}
 
-						$tags = isset($customfield['create_new_tax']) ? 'tags: true,' : '';
+						$tags = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
 
 						$dropdown = '
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
 							        placeholder: "Select an option",
-							        '.$tags.'
+							        ' . $tags . '
 							        tokenSeparators: [\',\']
 							    });
 						    });
@@ -596,6 +596,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 /**
  * @param $initArray
+ *
  * @return mixed
  */
 function buddyforms_tinymce_setup_function( $initArray ) {

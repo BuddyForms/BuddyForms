@@ -14,6 +14,7 @@ class Element_Month extends Element_Textbox {
 
 	/**
 	 * Element_Month constructor.
+	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties
