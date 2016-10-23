@@ -57,6 +57,7 @@ function buddyforms_registration_screen(){
 	// Generate the pages Array
 	$all_pages = Array();
 	$all_pages['none'] = 'Select a Page';
+	$all_pages['home'] = 'Homepage';
 	foreach ( $pages as $page ) {
 		$all_pages[ $page->ID ] = $page->post_title;
 	}

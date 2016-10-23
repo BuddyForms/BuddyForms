@@ -108,7 +108,12 @@ function buddyforms_wp_insert_user() {
 		if ( $new_user_id && !is_wp_error( $new_user_id ) ) {
 			$code = sha1( $new_user_id . time() );
 
-			$activation_page = get_permalink( $buddyforms[$form_slug]['registration']['activation_page'] );
+
+			if( !isset($buddyforms[$form_slug]['registration']['activation_page']) || $buddyforms[$form_slug]['registration']['activation_page'] == 'home'){
+				$activation_page = get_home_url();
+			} else {
+				$activation_page = get_permalink( $buddyforms[$form_slug]['registration']['activation_page'] );
+			}
 			$activation_link = add_query_arg( array( 'key' => $code, 'user' => $new_user_id, 'form_slug' => $form_slug ), $activation_page);
 
 			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
