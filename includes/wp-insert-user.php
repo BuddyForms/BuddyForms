@@ -114,7 +114,7 @@ function buddyforms_wp_insert_user() {
 			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
 
 			// send an activation link to the user asking them to activate there account
-			buddyforms_activate_account_mail( $activation_link );
+			buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
 			// send an email to the admin alerting them of the registration
 			wp_new_user_notification($new_user_id);
@@ -132,7 +132,7 @@ function buddyforms_errors(){
 	return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
 }
 
-function buddyforms_activate_account_mail( $activation_link ) {
+function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 	global $form_slug, $buddyforms;
 
 
@@ -140,7 +140,13 @@ function buddyforms_activate_account_mail( $activation_link ) {
 	$siteurl     = get_bloginfo( 'wpurl' );
 	$siteurlhtml = "<a href='$siteurl' target='_blank' >$siteurl</a>";
 	$admin_email = get_option( 'admin_email' );
+	$user_info   = get_userdata( $author_id );
 
+	$usernameauth  = $user_info->user_login;
+	$user_nicename = $user_info->user_nicename;
+	$user_email    = $user_info->user_email;
+	$first_name    = $user_info->user_firstname;
+	$last_name     = $user_info->user_lastname;
 
 	$subject    = isset($buddyforms[$form_slug]['registration']['activation_message_from_subject']) ? $buddyforms[$form_slug]['registration']['activation_message_from_subject'] : '';
 	$emailBody  = isset($buddyforms[$form_slug]['registration']['activation_message_text']) ? $buddyforms[$form_slug]['registration']['activation_message_text'] : '';
@@ -150,16 +156,18 @@ function buddyforms_activate_account_mail( $activation_link ) {
 
 	$from_email = isset($buddyforms[$form_slug]['registration']['activation_message_from_email']) ? $buddyforms[$form_slug]['registration']['activation_message_from_email'] : '';
 	$from_email = str_replace( '[admin_email]', $admin_email, $from_email );
-
-	$user_email = isset( $_POST["user_email"] ) ? $_POST["user_email"] : '';
-
-
-
+	
 	$emailBody = str_replace( '[activation_link]', $activation_link, $emailBody );
 	$emailBody = str_replace( '[blog_title]', $blog_title, $emailBody );
 	$emailBody = str_replace( '[siteurl]', $siteurl, $emailBody );
 	$emailBody = str_replace( '[siteurlhtml]', $siteurlhtml, $emailBody );
 	$emailBody = str_replace( '[admin_email]', $admin_email, $emailBody );
+
+	$emailBody  = str_replace( '[user_login]', $usernameauth, $emailBody );
+	$emailBody  = str_replace( '[user_nicename]', $user_nicename, $emailBody );
+	$emailBody  = str_replace( '[user_email]', $user_email, $emailBody );
+	$emailBody  = str_replace( '[first_name]', $first_name, $emailBody );
+	$emailBody  = str_replace( '[last_name]', $last_name, $emailBody );
 
 	if(!$user_email)
 		return;
