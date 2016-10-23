@@ -213,9 +213,7 @@ function buddyforms_process_post( $args = Array() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
-	if ( isset( $_POST['status'] ) ) {
-		$post_status = $_POST['status'];
-	}
+	$post_status = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
 
 	$args = Array(
 		'post_id'        => $post_id,
