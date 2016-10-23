@@ -113,11 +113,12 @@ function buddyforms_wp_insert_user() {
 
 			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
 
+			// send an email to the admin alerting them of the registration
+			wp_new_user_notification($new_user_id);
+
 			// send an activation link to the user asking them to activate there account
 			buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
-			// send an email to the admin alerting them of the registration
-			wp_new_user_notification($new_user_id);
 
 		}
 
@@ -156,7 +157,7 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 
 	$from_email = isset($buddyforms[$form_slug]['registration']['activation_message_from_email']) ? $buddyforms[$form_slug]['registration']['activation_message_from_email'] : '';
 	$from_email = str_replace( '[admin_email]', $admin_email, $from_email );
-	
+
 	$emailBody = str_replace( '[activation_link]', $activation_link, $emailBody );
 	$emailBody = str_replace( '[blog_title]', $blog_title, $emailBody );
 	$emailBody = str_replace( '[siteurl]', $siteurl, $emailBody );
