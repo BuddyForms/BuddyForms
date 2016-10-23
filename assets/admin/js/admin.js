@@ -418,7 +418,7 @@ jQuery(document).ready(function (jQuery) {
     //
     jQuery('#bf_create_page_modal').live('click', function() {
 
-        jQuery('<div></div>').dialog({
+       var dialog = jQuery('<div></div>').dialog({
             modal: true,
             title: "Info",
             open: function() {
@@ -427,10 +427,10 @@ jQuery(document).ready(function (jQuery) {
                 jQuery(this).html(markup);
             },
             buttons: {
-                Ok: function() {
+                'Add': function() {
 
                     var page_name = jQuery('#bf_create_page_name').val();
-                    jQuery(this).dialog('destroy').remove();
+                    dialog.html('<span class="spinner is-active"></span>');
 
                     jQuery.ajax({
                         type: 'POST',
@@ -441,23 +441,28 @@ jQuery(document).ready(function (jQuery) {
                             "page_name": page_name
                         },
                         success: function (data) {
-                            //console.log(data);
                             if( data['error'] ){
                                 console.log(data['error']);
                             } else {
-                                jQuery( '#form_page' ).append(jQuery('<option>', {
+                                jQuery( '#attached_page' ).append(jQuery('<option>', {
                                     value: data['id'],
                                     text: data['name']
                                 }));
-                                jQuery( '#form_page' ).val(data['id']);
+                                jQuery( '#attached_page' ).val(data['id']);
                             }
+                            dialog.dialog("close");
+                        },
+                        error: function(){
+                            dialog.dialog("close");
                         }
                     });
+
                 }
             }
         });
 
         return false;
+
     });
 
 });
