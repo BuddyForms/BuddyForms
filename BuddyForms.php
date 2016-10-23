@@ -56,16 +56,16 @@ class BuddyForms {
 
 		add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 		add_action( 'init', array( $this, 'includes' ), 4, 1 );
-		add_action( 'init', array( $this, 'buddyforms_update_db_check' ), 10 );
+		add_action( 'init', array( $this, 'update_db_check' ), 10 );
 
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_admin_style' ), 102, 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'buddyforms_admin_js' ), 102, 1 );
-		add_action( 'admin_footer', array( $this, 'buddyforms_admin_js_footer' ), 2, 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ), 102, 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
+		add_action( 'admin_footer', array( $this, 'admin_js_footer' ), 2, 1 );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'buddyform_front_js_loader' ), 102, 1 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 102, 1 );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 	}
@@ -217,7 +217,7 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-	function buddyforms_admin_style( $hook_suffix ) {
+	function admin_styles( $hook_suffix ) {
 		global $post;
 
 		if (
@@ -252,7 +252,7 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-	function buddyforms_admin_js( $hook_suffix ) {
+	function admin_js( $hook_suffix ) {
 		global $post;
 
 		if (
@@ -309,7 +309,7 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-	function buddyforms_admin_js_footer() {
+	function admin_js_footer() {
 		global $post, $hook_suffix;
 
 			if (
@@ -398,7 +398,7 @@ class BuddyForms {
 	 * @package buddyforms
 	 * @since 0.1-beta
 	 */
-	function buddyform_front_js_loader() {
+	function front_js_loader() {
 		global $post, $wp_query, $buddyforms;
 
 		$found = false;
@@ -433,12 +433,12 @@ class BuddyForms {
 		$found = apply_filters( 'buddyforms_front_js_css_loader', $found );
 
 		if ( $found ) {
-			BuddyForms::buddyform_front_js_css();
+			BuddyForms::front_js_css();
 		}
 
 	}
 
-	function buddyform_front_js_css() {
+	function front_js_css() {
 		global $wp_scripts;
 
 		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
@@ -494,7 +494,7 @@ class BuddyForms {
 
 	}
 
-	function buddyforms_update_db_check() {
+	function update_db_check() {
 
 		if( !is_admin() ){
 			return;
