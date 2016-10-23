@@ -84,47 +84,35 @@ class BuddyForms {
 	public function load_constants() {
 
 		/**
-		 *
+		 * Define the plugin version
 		 */
 		define( 'BUDDYFORMS_VERSION', $this->version );
-
-		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
-		/**
-		 *
-		 */
-		define( 'BUDDYFORMS_STORE_URL', 'https://themekraft.com/' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
-
-		// the name of your product. This should match the download name in EDD exactly
-		/**
-		 *
-		 */
-		define( 'BUDDYFORMS_EDD_ITEM_NAME', 'BuddyForms' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 
 
 		if ( ! defined( 'BUDDYFORMS_PLUGIN_URL' ) ) {
 			/**
-			 *
+			 * Define the plugin url
 			 */
 			define( 'BUDDYFORMS_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_INSTALL_PATH' ) ) {
 			/**
-			 *
+			 * Define the install path
 			 */
 			define( 'BUDDYFORMS_INSTALL_PATH', dirname( __FILE__ ) . '/' );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_INCLUDES_PATH' ) ) {
 			/**
-			 *
+			 * Define the include path
 			 */
 			define( 'BUDDYFORMS_INCLUDES_PATH', BUDDYFORMS_INSTALL_PATH . 'includes/' );
 		}
 
 		if ( ! defined( 'BUDDYFORMS_TEMPLATE_PATH' ) ) {
 			/**
-			 *
+			 * Define the template path
 			 */
 			define( 'BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
 		}
@@ -156,8 +144,13 @@ class BuddyForms {
 	static function set_globals() {
 		global $buddyforms;
 
-		$buddyforms = get_option( 'buddyforms_forms' );
-		$buddyforms = apply_filters( 'buddyforms_set_globals', $buddyforms );
+		/*
+		 * Get BuddyForms options
+		 *
+		 * @filter: buddyforms_set_globals
+		 *
+		 */
+		$buddyforms = apply_filters( 'buddyforms_set_globals', get_option( 'buddyforms_forms' ) );
 
 		return $buddyforms;
 	}
@@ -422,10 +415,10 @@ class BuddyForms {
 	}
 
 	/**
-	 * Enqueue the needed JS for the form in the frontend
+	 * Check if a buddyforms view is displayed and load the needed styles and scripts
 	 *
 	 * @package buddyforms
-	 * @since 0.1-beta
+	 * @since 1.0
 	 */
 	function front_js_loader() {
 		global $post, $wp_query, $buddyforms;
@@ -467,6 +460,12 @@ class BuddyForms {
 
 	}
 
+	/**
+	 * Enqueue the needed JS for the form in the frontend
+	 *
+	 * @package buddyforms
+	 * @since 1.0
+	 */
 	function front_js_css() {
 		global $wp_scripts;
 
@@ -523,6 +522,13 @@ class BuddyForms {
 
 	}
 
+
+	/**
+	 * Update form 1.x version
+	 *
+	 * @package buddyforms
+	 * @since 2.0
+	 */
 	function update_db_check() {
 
 		if ( ! is_admin() ) {
@@ -570,7 +576,6 @@ class BuddyForms {
 	 * Change the admin footer text on BuddyForms admin pages.
 	 *
 	 * @since  1.6
-	 *
 	 * @param  string $footer_text
 	 *
 	 * @return string
@@ -602,7 +607,10 @@ class BuddyForms {
 		return $footer_text;
 	}
 
-
+	/**
+	 * Plugin activation
+	 * @since  2.0
+	 */
 	function plugin_activation() {
 
 		$title        = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
@@ -632,6 +640,10 @@ class BuddyForms {
 
 	}
 
+	/**
+	 * Plugin deactivation
+	 * @since  2.0
+	 */
 	function plugin_deactivation() {
 		$buddyforms_preview_page = get_option( 'buddyforms_preview_page', true );
 
@@ -641,8 +653,10 @@ class BuddyForms {
 	}
 }
 
-// Create a helper function for easy SDK access.
+
 /**
+ * Create a helper function for easy SDK access.
+ *
  * @return Freemius
  */
 function buddyforms_core_fs() {
@@ -677,6 +691,7 @@ function buddyforms_core_fs() {
 	return $buddyforms_core_fs;
 }
 
+// BuddyForms requires php version 5.3 or higher.
 if ( PHP_VERSION < 5.3 ) {
 	function buddyforms_php_version_admin_notice() {
 		?>
@@ -687,10 +702,12 @@ if ( PHP_VERSION < 5.3 ) {
 		</div>
 		<?php
 	}
-
 	add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
 } else {
+
+	// Init BuddyForms.
 	$GLOBALS['buddyforms_new'] = new BuddyForms();
+
 	// Init Freemius.
 	buddyforms_core_fs();
 }
