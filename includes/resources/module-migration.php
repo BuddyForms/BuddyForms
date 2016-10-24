@@ -192,7 +192,7 @@
 		/**
 		 * @var \Freemius $fs
 		 */
-		$fs = buddyforms_freemius();
+		$fs = buddyforms_core_fs();
 
 		if ( ! $fs->has_api_connectivity() ) {
 			// No connectivity to Freemius API, it's up to you what to do.
@@ -306,7 +306,7 @@
 
 	if ( ! defined( 'DOING_AJAX' ) && ! defined( 'DOING_CRON' ) ) {
 		// Pull license key from storage.
-		$license_key = trim( get_option( 'edd_sample_license_key' ) );
+		$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
 
 		if ( empty( $license_key ) ) {
 			// No license key, therefore, no migration required.
