@@ -226,7 +226,8 @@
 			// Initiate license migration in a non-blocking request.
 			return spawn_buddyforms_edd2fs_license_migration( $edd_download_id );
 		} else {
-			if ( $migration_uid === get_query_var( 'fsm_edd_' . $edd_download_id, false ) &&
+			if ( $migration_uid === ! empty( $_REQUEST[ 'fsm_edd_' . $edd_download_id ] ) &&
+			     $migration_uid === $_REQUEST[ 'fsm_edd_' . $edd_download_id ] &&
 			     'POST' === $_SERVER['REQUEST_METHOD']
 			) {
 				$success = do_buddyforms_edd2fs_license_migration( $edd_download_id, $edd_license_key, $edd_store_url );
