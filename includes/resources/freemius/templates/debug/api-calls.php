@@ -1,40 +1,40 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2015, Freemius, Inc.
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.1.7.3
- */
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.1.7.3
+	 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-if ( class_exists( 'Freemius_Api' ) ) {
-	$logger = Freemius_Api::GetLogger();
-} else {
-	$logger = array();
-}
-
-$counters = array(
-	'GET'    => 0,
-	'POST'   => 0,
-	'PUT'    => 0,
-	'DELETE' => 0
-);
-
-$show_body = false;
-foreach ( $logger as $log ) {
-	$counters[ $log['method'] ] ++;
-
-	if ( ! is_null( $log['body'] ) ) {
-		$show_body = true;
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
 	}
-}
 
-$pretty_print = $show_body && defined( 'JSON_PRETTY_PRINT' ) && version_compare( phpversion(), '5.3', '>=' );
+	if ( class_exists( 'Freemius_Api' ) ) {
+		$logger = Freemius_Api::GetLogger();
+	} else {
+		$logger = array();
+	}
 
-$root_path_len = strlen( ABSPATH );
+	$counters = array(
+		'GET'    => 0,
+		'POST'   => 0,
+		'PUT'    => 0,
+		'DELETE' => 0
+	);
+
+	$show_body = false;
+	foreach ( $logger as $log ) {
+		$counters[ $log['method'] ] ++;
+
+		if ( ! is_null( $log['body'] ) ) {
+			$show_body = true;
+		}
+	}
+
+	$pretty_print = $show_body && defined( 'JSON_PRETTY_PRINT' ) && version_compare( phpversion(), '5.3', '>=' );
+
+	$root_path_len = strlen( ABSPATH );
 ?>
 <h1><?php _efs( 'API' ) ?></h1>
 
@@ -69,9 +69,9 @@ $root_path_len = strlen( ABSPATH );
 			<td><?php echo number_format( 100 * $log['total'], 2 ) . ' ' . __fs( 'ms' ) ?></td>
 			<td>
 				<?php
-				printf( '<a href="#" onclick="jQuery(this).parent().find(\'table\').toggle(); return false;">%s</a>',
-					$log['path']
-				);
+					printf( '<a href="#" onclick="jQuery(this).parent().find(\'table\').toggle(); return false;">%s</a>',
+						$log['path']
+					);
 				?>
 				<table class="widefat" style="display: none">
 					<tbody>
@@ -108,25 +108,25 @@ $root_path_len = strlen( ABSPATH );
 			<?php endif ?>
 			<td>
 				<?php
-				$result = $log['result'];
+					$result = $log['result'];
 
-				$is_not_empty_result = ( is_string( $result ) && ! empty( $result ) );
+					$is_not_empty_result = ( is_string( $result ) && ! empty( $result ) );
 
-				if ( $is_not_empty_result ) {
-					printf(
-						'<a href="#" onclick="jQuery(this).parent().find(\'pre\').toggle(); return false;">%s</a>',
-						substr( $result, 0, 32 ) . ( 32 < strlen( $result ) ? '...' : '' )
-					);
-				}
-
-				if ( $is_not_empty_result && $pretty_print ) {
-					$decoded = json_decode( $result );
-					if ( ! is_null( $decoded ) ) {
-						$result = json_encode( $decoded, JSON_PRETTY_PRINT );
+					if ( $is_not_empty_result ) {
+						printf(
+							'<a href="#" onclick="jQuery(this).parent().find(\'pre\').toggle(); return false;">%s</a>',
+							substr( $result, 0, 32 ) . ( 32 < strlen( $result ) ? '...' : '' )
+						);
 					}
-				} else {
-					$result = is_string( $result ) ? $result : json_encode( $result );
-				}
+
+					if ( $is_not_empty_result && $pretty_print ) {
+						$decoded = json_decode( $result );
+						if ( ! is_null( $decoded ) ) {
+							$result = json_encode( $decoded, JSON_PRETTY_PRINT );
+						}
+					} else {
+						$result = is_string( $result ) ? $result : json_encode( $result );
+					}
 				?>
 				<pre<?php if ( $is_not_empty_result ) : ?> style="display: none"<?php endif ?>><code><?php echo esc_html( $result ) ?></code></pre>
 			</td>

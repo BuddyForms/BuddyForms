@@ -1,18 +1,18 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2015, Freemius, Inc.
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.1.1
- */
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.1.1
+	 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
 
-global $fs_active_plugins;
+	global $fs_active_plugins;
 
-$fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
+	$fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
 ?>
 	<h1><?php echo __fs( 'Freemius Debug' ) . ' - ' . __fs( 'SDK' ) . ' v.' . $fs_active_plugins->newest->version ?></h1>
 	<div>
@@ -36,7 +36,7 @@ $fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true 
 
 						$.post(ajaxurl, {
 							action: 'fs_toggle_debug_mode',
-							is_on: ($(this).hasClass('off') ? 1 : 0)
+							is_on : ($(this).hasClass('off') ? 1 : 0)
 						}, function (response) {
 							if (1 == response) {
 								// Refresh page on success.
@@ -76,6 +76,58 @@ $fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true 
 				</form>
 			</td>
 		</tr>
+		</tbody>
+	</table>
+<?php
+	if ( ! defined( 'FS_API__ADDRESS' ) ) {
+		define( 'FS_API__ADDRESS', '://api.freemius.com' );
+	}
+	if ( ! defined( 'FS_API__SANDBOX_ADDRESS' ) ) {
+		define( 'FS_API__SANDBOX_ADDRESS', '://sandbox-api.freemius.com' );
+	}
+
+	$defines = array(
+		array(
+			'key' => 'WP_FS__REMOTE_ADDR',
+			'val' => WP_FS__REMOTE_ADDR,
+		),
+		array(
+			'key' => 'WP_FS__ADDRESS_PRODUCTION',
+			'val' => WP_FS__ADDRESS_PRODUCTION,
+		),
+		array(
+			'key' => 'FS_API__ADDRESS',
+			'val' => FS_API__ADDRESS,
+		),
+		array(
+			'key' => 'FS_API__SANDBOX_ADDRESS',
+			'val' => FS_API__SANDBOX_ADDRESS,
+		),
+		array(
+			'key' => 'WP_FS__DIR',
+			'val' => WP_FS__DIR,
+		),
+	)
+?>
+	<br>
+	<table class="widefat">
+		<thead>
+		<tr>
+			<th><?php _efs( 'key' ) ?></th>
+			<th><?php _efs( 'value' ) ?></th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php $alternate = false;
+			foreach ( $defines as $p ) : ?>
+				<tr<?php if ( $alternate ) {
+					echo ' class="alternate"';
+				} ?>>
+					<td><?php echo $p['key'] ?></td>
+					<td><?php echo $p['val'] ?></td>
+				</tr>
+				<?php $alternate = ! $alternate ?>
+			<?php endforeach ?>
 		</tbody>
 	</table>
 	<h2><?php _efs( 'sdk-versions' ) ?></h2>
@@ -147,11 +199,11 @@ $fs_options = FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true 
 	</table>
 <?php endif ?>
 <?php
-/**
- * @var array $VARS
- * @var FS_Site[] $sites
- */
-$sites = $VARS['sites'];
+	/**
+	 * @var array     $VARS
+	 * @var FS_Site[] $sites
+	 */
+	$sites = $VARS['sites'];
 ?>
 <?php if ( is_array( $sites ) && 0 < count( $sites ) ) : ?>
 	<h2><?php _efs( 'plugin-installs' ) ?> / <?php _efs( 'sites' ) ?></h2>
@@ -171,9 +223,9 @@ $sites = $VARS['sites'];
 				<td><?php echo $site->id ?></td>
 				<td><?php echo $slug ?></td>
 				<td><?php
-					echo is_object( $site->plan ) ?
-						base64_decode( $site->plan->name ) :
-						''
+						echo is_object( $site->plan ) ?
+							base64_decode( $site->plan->name ) :
+							''
 					?></td>
 				<td><?php echo $site->public_key ?></td>
 				<td><?php echo $site->secret_key ?></td>
@@ -183,7 +235,7 @@ $sites = $VARS['sites'];
 	</table>
 <?php endif ?>
 <?php
-$addons = $VARS['addons'];
+	$addons = $VARS['addons'];
 ?>
 <?php foreach ( $addons as $plugin_id => $plugin_addons ) : ?>
 	<h2><?php printf( __fs( 'addons-of-x' ), $plugin_id ) ?></h2>
@@ -200,27 +252,27 @@ $addons = $VARS['addons'];
 		</thead>
 		<tbody>
 		<?php
-		/**
-		 * @var FS_Plugin[] $plugin_addons
-		 */
-		foreach ( $plugin_addons as $addon ) : ?>
-			<tr>
-				<td><?php echo $addon->id ?></td>
-				<td><?php echo $addon->title ?></td>
-				<td><?php echo $addon->slug ?></td>
-				<td><?php echo $addon->version ?></td>
-				<td><?php echo $addon->public_key ?></td>
-				<td><?php echo $addon->secret_key ?></td>
-			</tr>
-		<?php endforeach ?>
+			/**
+			 * @var FS_Plugin[] $plugin_addons
+			 */
+			foreach ( $plugin_addons as $addon ) : ?>
+				<tr>
+					<td><?php echo $addon->id ?></td>
+					<td><?php echo $addon->title ?></td>
+					<td><?php echo $addon->slug ?></td>
+					<td><?php echo $addon->version ?></td>
+					<td><?php echo $addon->public_key ?></td>
+					<td><?php echo $addon->secret_key ?></td>
+				</tr>
+			<?php endforeach ?>
 		</tbody>
 	</table>
 <?php endforeach ?>
 <?php
-/**
- * @var FS_User[] $users
- */
-$users = $VARS['users'];
+	/**
+	 * @var FS_User[] $users
+	 */
+	$users = $VARS['users'];
 ?>
 <?php if ( is_array( $users ) && 0 < count( $users ) ) : ?>
 	<h2><?php _efs( 'users' ) ?></h2>
@@ -250,10 +302,10 @@ $users = $VARS['users'];
 	</table>
 <?php endif ?>
 <?php
-/**
- * @var FS_Plugin_License[] $licenses
- */
-$licenses = $VARS['licenses'];
+	/**
+	 * @var FS_Plugin_License[] $licenses
+	 */
+	$licenses = $VARS['licenses'];
 ?>
 <?php if ( is_array( $licenses ) && 0 < count( $licenses ) ) : ?>
 	<h2><?php _efs( 'licenses' ) ?></h2>

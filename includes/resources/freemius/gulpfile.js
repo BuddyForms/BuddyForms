@@ -9,22 +9,22 @@ gulp.task('default', function () {
     // Create POT out of i18n.php. 
     gulp.src('includes/i18n.php')
         .pipe(sort())
-        .pipe(wpPot({
-            destFile: 'freemius.pot',
+        .pipe(wpPot( {
+            destFile:'freemius.pot',
             package: 'freemius',
             bugReport: 'https://github.com/Freemius/wordpress-sdk/issues',
             lastTranslator: 'Vova Feldman <vova@freemius.com>',
             team: 'Freemius Team <admin@freemius.com>'
-        }))
+        } ))
         .pipe(gulp.dest('languages/'));
 
     // Create English PO out of the POT.
     gulp.src('languages/freemius.pot')
         .pipe(pofill({
-            items: function (item) {
+            items: function(item) {
                 // If msgstr is empty, use identity translation 
                 if (!item.msgstr.length) {
-                    item.msgstr = [''];
+                  item.msgstr = [''];
                 }
                 if (!item.msgstr[0]) {
                     item.msgstr[0] = item.msgid;

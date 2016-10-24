@@ -1,27 +1,27 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2015, Freemius, Inc.
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.2.0
- */
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.2.0
+	 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
 
-/**
- * @var array $VARS
- */
-$slug = $VARS['slug'];
-$fs   = freemius( $slug );
+	/**
+	 * @var array $VARS
+	 */
+	$slug = $VARS['slug'];
+	$fs   = freemius( $slug );
 
-$message_above_input_field = __fs( 'ask-for-upgrade-email-address', $slug );
-$send_button_text          = __fs( 'send-license-key', $slug );
-$cancel_button_text        = __fs( 'deactivation-modal-button-cancel', $slug );
-$email_address_placeholder = __fs( 'email-address', $slug );
+	$message_above_input_field = __fs( 'ask-for-upgrade-email-address', $slug );
+	$send_button_text          = __fs( 'send-license-key', $slug );
+	$cancel_button_text        = __fs( 'deactivation-modal-button-cancel', $slug );
+	$email_address_placeholder = __fs( 'email-address', $slug );
 
-$modal_content_html = <<< HTML
+	$modal_content_html = <<< HTML
 	<div class="notice notice-error inline license-resend-message"><p></p></div>
 	<p>{$message_above_input_field}</p>
 	<div class="input-container">
@@ -34,30 +34,30 @@ $modal_content_html = <<< HTML
     </div>
 HTML;
 
-fs_enqueue_local_style( 'dialog-boxes', '/admin/dialog-boxes.css' );
+	fs_enqueue_local_style( 'dialog-boxes', '/admin/dialog-boxes.css' );
 ?>
 <script type="text/javascript">
 	(function ($) {
 		$(document).ready(function () {
 			var modalContentHtml = <?php echo json_encode( $modal_content_html ); ?>,
-				modalHtml =
-					'<div class="fs-modal fs-modal-license-key-resend">'
-					+ '	<div class="fs-modal-dialog">'
-					+ '		<div class="fs-modal-header">'
-					+ '		    <h4><?php echo $send_button_text ?></h4>'
-					+ '         <a href="#!" class="fs-close" tabindex="3" title="Close"><i class="dashicons dashicons-no" title="<?php _efs( 'dismiss' ) ?>"></i></a>'
-					+ '		</div>'
-					+ '		<div class="fs-modal-body">'
-					+ '			<div class="fs-modal-panel active">' + modalContentHtml + '</div>'
-					+ '		</div>'
-					+ '	</div>'
-					+ '</div>',
-				$modal = $(modalHtml),
-				$sendLicenseKeyButton = $modal.find('.button-send-license-key'),
-				$emailAddressInput = $modal.find('input.email-address'),
-				$licenseResendMessage = $modal.find('.license-resend-message'),
-				moduleSlug = '<?php echo $slug; ?>',
-				isChild = false;
+			    modalHtml =
+				    '<div class="fs-modal fs-modal-license-key-resend">'
+				    + '	<div class="fs-modal-dialog">'
+				    + '		<div class="fs-modal-header">'
+				    + '		    <h4><?php echo $send_button_text ?></h4>'
+				    + '         <a href="#!" class="fs-close" tabindex="3" title="Close"><i class="dashicons dashicons-no" title="<?php _efs( 'dismiss' ) ?>"></i></a>'
+				    + '		</div>'
+				    + '		<div class="fs-modal-body">'
+				    + '			<div class="fs-modal-panel active">' + modalContentHtml + '</div>'
+				    + '		</div>'
+				    + '	</div>'
+				    + '</div>',
+			    $modal = $(modalHtml),
+			    $sendLicenseKeyButton = $modal.find('.button-send-license-key'),
+			    $emailAddressInput = $modal.find('input.email-address'),
+			    $licenseResendMessage = $modal.find('.license-resend-message'),
+			    moduleSlug = '<?php echo $slug; ?>',
+			    isChild = false;
 
 			$modal.appendTo($('body'));
 
@@ -93,7 +93,7 @@ fs_enqueue_local_style( 'dialog-boxes', '/admin/dialog-boxes.css' );
 					}
 				});
 
-				$modal.on('click', '.fs-close', function () {
+				$modal.on('click', '.fs-close', function (){
 					closeModal();
 					return false;
 				});
@@ -114,17 +114,17 @@ fs_enqueue_local_style( 'dialog-boxes', '/admin/dialog-boxes.css' );
 					}
 
 					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: {
+						url       : ajaxurl,
+						method    : 'POST',
+						data      : {
 							action: '<?php echo $fs->get_action_tag( 'resend_license_key' ) ?>',
-							slug: moduleSlug,
-							email: emailAddress
+							slug  : moduleSlug,
+							email : emailAddress
 						},
 						beforeSend: function () {
 							$sendLicenseKeyButton.text('<?php _efs( 'sending-license-key', $slug ) ?>...');
 						},
-						success: function (result) {
+						success   : function (result) {
 							var resultObj = $.parseJSON(result);
 							if (resultObj.success) {
 								closeModal();

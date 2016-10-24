@@ -1,29 +1,26 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2015, Freemius, Inc.
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.1.1
- */
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.1.1
+	 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
 
-/**
- * @var array $VARS
- */
-$sections = $VARS['sections'];
+	/**
+	 * @var array $VARS
+	 */
+	$sections = $VARS['sections'];
 ?>
 <table>
 	<?php
 	foreach ( $sections as $section_id => $section ) {
 		?>
 		<thead>
-		<tr>
-			<th colspan="2"
-			    style="text-align: left; background: #333; color: #fff; padding: 5px;"><?php echo $section['title']; ?></th>
-		</tr>
+			<tr><th colspan="2" style="text-align: left; background: #333; color: #fff; padding: 5px;"><?php echo $section['title']; ?></th></tr>
 		</thead>
 		<tbody>
 		<?php

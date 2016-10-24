@@ -1,39 +1,39 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2016, Freemius, Inc.
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.2.0
- */
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2016, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.2.0
+	 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
 
-/**
- * @var array $VARS
- */
-$slug = $VARS['slug'];
-/**
- * @var Freemius $fs
- */
-$fs = freemius( $slug );
+	/**
+	 * @var array $VARS
+	 */
+	$slug = $VARS['slug'];
+	/**
+	 * @var Freemius $fs
+	 */
+	$fs = freemius( $slug );
 
-/**
- * @var FS_Plugin_Tag $update
- */
-$update = $fs->get_update( false, false );
+	/**
+	 * @var FS_Plugin_Tag $update
+	 */
+	$update = $fs->get_update( false, false );
 
-$is_paying              = $fs->is_paying();
-$user                   = $fs->get_user();
-$site                   = $fs->get_site();
-$name                   = $user->get_name();
-$license                = $fs->_get_license();
-$subscription           = $fs->_get_subscription();
-$plan                   = $fs->get_plan();
-$is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
-$is_paid_trial          = $fs->is_paid_trial();
-$show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
+	$is_paying              = $fs->is_paying();
+	$user                   = $fs->get_user();
+	$site                   = $fs->get_site();
+	$name                   = $user->get_name();
+	$license                = $fs->_get_license();
+	$subscription           = $fs->_get_subscription();
+	$plan                   = $fs->get_plan();
+	$is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
+	$is_paid_trial          = $fs->is_paid_trial();
+	$show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
 ?>
 
 	<div id="fs_account" class="wrap">
@@ -64,7 +64,7 @@ $show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
 							<h3><?php _efs( 'payments', $slug ) ?></h3>
 
 							<?php
-							$payments = $fs->_fetch_payments();
+								$payments  = $fs->_fetch_payments();
 							?>
 
 							<div class="inside">
@@ -85,8 +85,7 @@ $show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
 											<td><?php echo $payment->id ?></td>
 											<td><?php echo date( 'M j, Y', strtotime( $payment->created ) ) ?></td>
 											<td>$<?php echo $payment->gross ?></td>
-											<td><a href="<?php echo $fs->_get_invoice_api_url( $payment->id ) ?>"
-											       class="button button-small"
+											<td><a href="<?php echo $fs->_get_invoice_api_url($payment->id) ?>" class="button button-small"
 											       target="_blank"><?php _efs( 'invoice', $slug ) ?></a></td>
 										</tr>
 										<?php $odd = ! $odd; endforeach ?>
@@ -100,11 +99,11 @@ $show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
 		</div>
 	</div>
 <?php
-$params = array(
-	'page'           => 'account',
-	'module_id'      => $fs->get_id(),
-	'module_slug'    => $slug,
-	'module_version' => $fs->get_plugin_version(),
-);
-fs_require_template( 'powered-by.php', $params );
+	$params = array(
+		'page'           => 'account',
+		'module_id'      => $fs->get_id(),
+		'module_slug'    => $slug,
+		'module_version' => $fs->get_plugin_version(),
+	);
+	fs_require_template( 'powered-by.php', $params );
 ?>
