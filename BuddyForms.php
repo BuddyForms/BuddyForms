@@ -710,5 +710,8 @@ if ( PHP_VERSION < 5.3 ) {
 
 	// Init Freemius.
 	buddyforms_core_fs();
+
+	require_once( dirname( __FILE__ ) . '/includes/resources/module-migration.php' );
+
 }
 
