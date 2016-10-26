@@ -297,7 +297,7 @@ function buddyforms_edd_activate_license( $license_key ) {
 
 	if ( 'valid' === $license_data->license ) {
 		// Store EDD license key.
-		update_option( 'edd_sample_license_key', $license_key );
+		update_option( 'buddyforms_edd_license_key', $license_key );
 	} else {
 		return false;
 	}
@@ -427,7 +427,7 @@ if ( ! function_exists( 'fs_get_transient' ) ) {
 
 if ( ! defined( 'DOING_CRON' ) ) {
 	// Pull EDD license key from storage.
-	$license_key = trim( get_option( 'edd_sample_license_key' ) );
+	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
 
 	if ( empty( $license_key ) ) {
 		/**
@@ -446,7 +446,8 @@ if ( ! defined( 'DOING_CRON' ) ) {
 			buddyforms_non_blocking_edd2fs_license_migration(
 				TK__EDD_DOWNLOAD_ID,
 				$license_key,
-				TK__EDD_STORE_URL
+				TK__EDD_STORE_URL,
+				true
 			);
 		}
 	}
