@@ -22,9 +22,7 @@
 	 */
 	abstract class Freemius_Abstract {
 
-		#----------------------------------------------------------------------------------
-		#region Identity
-		#----------------------------------------------------------------------------------
+		#region Identity ------------------------------------------------------------------
 
 		/**
 		 * Check if user registered with Freemius by connecting his account.
@@ -52,11 +50,9 @@
 		 */
 		abstract function is_activation_mode();
 
-		#endregion
+		#endregion Identity ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Permissions
-		#----------------------------------------------------------------------------------
+		#region Permissions ------------------------------------------------------------------
 
 		/**
 		 * Check if plugin must be WordPress.org compliant.
@@ -79,7 +75,7 @@
 			return ( $this->is_premium() || ! $this->is_org_repo_compliant() );
 		}
 
-		#endregion
+		#endregion Permissions ------------------------------------------------------------------
 
 		/**
 		 * Check if user in trial or in free plan (not paying).
@@ -123,9 +119,7 @@
 		 */
 		abstract function can_use_premium_code();
 
-		#----------------------------------------------------------------------------------
-		#region Premium Only
-		#----------------------------------------------------------------------------------
+		#region Premium Only ------------------------------------------------------------------
 
 		/**
 		 * All logic wrapped in methods with "__premium_only()" suffix will be only
@@ -231,11 +225,9 @@
 			return $this->is_premium() && $this->can_use_premium_code();
 		}
 
-		#endregion
+		#endregion Premium Only ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Trial
-		#----------------------------------------------------------------------------------
+		#region Trial ------------------------------------------------------------------
 
 		/**
 		 * Check if the user in a trial.
@@ -255,11 +247,9 @@
 		 */
 		abstract function is_trial_utilized();
 
-		#endregion
+		#endregion Trial ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Plans
-		#----------------------------------------------------------------------------------
+		#region Plans ------------------------------------------------------------------
 
 		/**
 		 * Check if plugin using the free plan.
@@ -354,7 +344,7 @@
 			       $this->has_free_plan();
 		}
 
-		#endregion
+		#endregion Plans ------------------------------------------------------------------
 
 		/**
 		 * Check if running payments in sandbox mode.
@@ -417,9 +407,7 @@
 		 */
 		abstract function is_plugin_new_install();
 
-		#----------------------------------------------------------------------------------
-		#region Marketing
-		#----------------------------------------------------------------------------------
+		#region Marketing ------------------------------------------------------------------
 
 		/**
 		 * Check if current user purchased any other plugins before.
@@ -461,5 +449,5 @@
 		 */
 		abstract function is_business();
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 	}

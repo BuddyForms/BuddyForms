@@ -227,8 +227,7 @@
 		 */
 		private static $_instances = array();
 
-		#region Uninstall Reasons IDs
-
+		// Reason IDs
 		const REASON_NO_LONGER_NEEDED = 1;
 		const REASON_FOUND_A_BETTER_PLUGIN = 2;
 		const REASON_NEEDED_FOR_A_SHORT_PERIOD = 3;
@@ -244,8 +243,6 @@
 		const REASON_NOT_WHAT_I_WAS_LOOKING_FOR = 13;
 		const REASON_DIDNT_WORK_AS_EXPECTED = 14;
 		const REASON_TEMPORARY_DEACTIVATION = 15;
-
-		#endregion
 
 		/* Ctor
 ------------------------------------------------------------------------------------------------------------------*/
@@ -630,9 +627,7 @@
 		}
 
 
-		#----------------------------------------------------------------------------------
-		#region Deactivation Feedback Form
-		#----------------------------------------------------------------------------------
+		#region Deactivation Feedback Form ------------------------------------------------------------------
 
 		/**
 		 * Displays a confirmation and feedback dialog box when the user clicks on the "Deactivate" link on the plugins
@@ -878,11 +873,9 @@
 			exit;
 		}
 
-		#endregion
+		#endregion Deactivation Feedback Form ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Instance
-		#----------------------------------------------------------------------------------
+		#region Instance ------------------------------------------------------------------
 
 		/**
 		 * Main singleton instance.
@@ -1171,10 +1164,6 @@
 			self::$_statics_loaded = true;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Localization
-		#----------------------------------------------------------------------------------
-
 		/**
 		 * Load framework's text domain.
 		 *
@@ -1197,11 +1186,7 @@
 			// @todo Load for themes.
 		}
 
-		#endregion
-
-		#----------------------------------------------------------------------------------
-		#region Debugging
-		#----------------------------------------------------------------------------------
+		#region Debugging ------------------------------------------------------------------
 
 		/**
 		 * @author Vova Feldman (@svovaf)
@@ -1297,11 +1282,9 @@
 			fs_require_once_template( 'debug.php', $vars );
 		}
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Connectivity Issues
-		#----------------------------------------------------------------------------------
+		#region Connectivity Issues ------------------------------------------------------------------
 
 		/**
 		 * Check if Freemius should be turned on for the current plugin install.
@@ -1444,11 +1427,8 @@
 				$this->_has_api_connection = $this->_storage->connectivity_test['is_connected'];
 				/**
 				 * @since 1.1.6 During dev mode, if there's connectivity - turn Freemius on regardless the configuration.
-				 *
-				 * @since 1.2.2 If the user running the premium version then ignore the 'is_active' flag and turn Freemius on to enable license key activation.
 				 */
 				$this->_is_on = $this->_storage->connectivity_test['is_active'] ||
-				                $this->is_premium() ||
 				                ( WP_FS__DEV_MODE && $this->_has_api_connection && ! WP_FS__SIMULATE_FREEMIUS_OFF );
 
 				return $this->_has_api_connection;
@@ -1899,11 +1879,9 @@
 			fs_require_once_template( 'firewall-issues-js.php', $params );
 		}
 
-		#endregion
+		#endregion Connectivity Issues ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Email
-		#----------------------------------------------------------------------------------
+		#region Email ------------------------------------------------------------------
 
 		/**
 		 * Generates and sends an HTML email with customizable sections.
@@ -2052,11 +2030,9 @@
 			return $sections;
 		}
 
-		#endregion
+		#endregion Email ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Initialization
-		#----------------------------------------------------------------------------------
+		#region Initialization ------------------------------------------------------------------
 
 		/**
 		 * Init plugin's Freemius instance.
@@ -2583,11 +2559,9 @@
 			$this->_storage->prev_is_premium = $this->_plugin->is_premium;
 		}
 
-		#endregion
+		#endregion Initialization ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Add-ons
-		#----------------------------------------------------------------------------------
+		#region Add-ons -------------------------------------------------------------------------
 
 		/**
 		 * Check if add-on installed and activated on site.
@@ -2807,11 +2781,9 @@
 			return false;
 		}
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Sandbox
-		#----------------------------------------------------------------------------------
+		#region Sandbox ------------------------------------------------------------------
 
 		/**
 		 * Set Freemius into sandbox mode for debugging.
@@ -2840,7 +2812,7 @@
 			return ( ! $this->is_live() ) || isset( $this->_plugin->secret_key );
 		}
 
-		#endregion
+		#endregion Sandbox ------------------------------------------------------------------
 
 		/**
 		 * Check if running test vs. live plugin.
@@ -2905,9 +2877,7 @@
 			return $this->_is_org_compliant;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Daily Sync Cron
-		#----------------------------------------------------------------------------------
+		#region Daily Sync Cron ------------------------------------------------------------------
 
 		/**
 		 * @author Vova Feldman (@svovaf)
@@ -3091,9 +3061,7 @@
 
 		#endregion Daily Sync Cron ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Async Install Sync
-		#----------------------------------------------------------------------------------
+		#region Async Install Sync ------------------------------------------------------------------
 
 		/**
 		 * @author Vova Feldman (@svovaf)
@@ -3512,18 +3480,6 @@
 		function is_plugin_new_install() {
 			return isset( $this->_storage->is_plugin_new_install ) &&
 			       $this->_storage->is_plugin_new_install;
-		}
-
-		/**
-		 * Check if it's the first plugin release that is running Freemius.
-		 *
-		 * @author Vova Feldman (@svovaf)
-		 * @since  1.2.2
-		 *
-		 * @return bool
-		 */
-		function is_first_freemius_powered_version() {
-			return empty( $this->_storage->plugin_last_version );
 		}
 
 		/**
@@ -4389,9 +4345,7 @@
 			}
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Plugin Information
-		#----------------------------------------------------------------------------------
+		#region Plugin Information ------------------------------------------------------------------
 
 		/**
 		 * Load WordPress core plugin.php essential module.
@@ -4871,9 +4825,7 @@
 			return false;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Plans & Licensing
-		#----------------------------------------------------------------------------------
+		#region Plans & Licensing ------------------------------------------------------------------
 
 		/**
 		 * Check if running premium plugin code.
@@ -5571,9 +5523,7 @@
 			exit;
 		}
 
-		#----------------------------------------------------------------------------------
 		#region URL Generators
-		#----------------------------------------------------------------------------------
 
 		/**
 		 * Alias to pricing_url().
@@ -6179,9 +6129,7 @@
 			return false;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Account (Loading, Updates & Activation)
-		#----------------------------------------------------------------------------------
+		#region Account (Loading, Updates & Activation) ------------------------------------------------------------------
 
 		/***
 		 * Load account information (user + site).
@@ -6317,9 +6265,6 @@
 				'php_version'       => phpversion(),
 				'language'          => get_bloginfo( 'language' ),
 				'charset'           => get_bloginfo( 'charset' ),
-				'is_premium'        => $this->is_premium(),
-				'is_active'         => true,
-				'is_uninstalled'    => false,
 			);
 
 			if ( WP_FS__SKIP_EMAIL_ACTIVATION && $this->has_secret_key() ) {
@@ -6816,11 +6761,9 @@
 			$this->_activate_license( true );
 		}
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Admin Menu Items
-		#----------------------------------------------------------------------------------
+		#region Admin Menu Items ------------------------------------------------------------------
 
 		private $_menu_items = array();
 
@@ -8993,9 +8936,7 @@
 			return ( is_object( $tag ) && isset( $tag->version ) ) ? $tag : false;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Download Plugin
-		#----------------------------------------------------------------------------------
+		#region Download Plugin ------------------------------------------------------------------
 
 		/**
 		 * Download latest plugin version, based on plan.
@@ -9753,9 +9694,7 @@
 			}
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Contact Us
-		#----------------------------------------------------------------------------------
+		#region Contact Us ------------------------------------------------------------------
 
 		/**
 		 * Render contact-us page.
@@ -9770,7 +9709,7 @@
 			fs_require_once_template( 'contact.php', $vars );
 		}
 
-		#endregion ------------------------------------------------------------------------
+		#endregion ------------------------------------------------------------------
 
 		/**
 		 * Hide all admin notices to prevent distractions.
@@ -10355,9 +10294,7 @@
 			return $update;
 		}
 
-		#----------------------------------------------------------------------------------
-		#region Versioning
-		#----------------------------------------------------------------------------------
+		#region Versioning ------------------------------------------------------------------
 
 		/**
 		 * Check if Freemius in SDK upgrade mode.
@@ -10411,11 +10348,9 @@
 			$this->_storage->plugin_upgrade_mode = false;
 		}
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Permissions
-		#----------------------------------------------------------------------------------
+		#region Permissions ------------------------------------------------------------------
 
 		/**
 		 * Check if specific permission requested.
@@ -10431,11 +10366,9 @@
 			return isset( $this->_permissions[ $permission ] ) && ( true === $this->_permissions[ $permission ] );
 		}
 
-		#endregion
+		#endregion Permissions ------------------------------------------------------------------
 
-		#----------------------------------------------------------------------------------
-		#region Marketing
-		#----------------------------------------------------------------------------------
+		#region Marketing ------------------------------------------------------------------
 
 		/**
 		 * Check if current user purchased any other plugins before.
@@ -10485,5 +10418,5 @@
 			// TODO: Implement is_business() method.
 		}
 
-		#endregion
+		#endregion ------------------------------------------------------------------
 	}
