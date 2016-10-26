@@ -1,18 +1,5 @@
 jQuery(document).ready(function (jQuery) {
 
-    jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
-
-        if (jQuery(this).prop('checked')) {
-            jQuery('#hooker-steps').steps("insert", 6, {
-                title: "Registration",
-                content: buddyforms_registration
-            });
-        } else {
-            jQuery('#hooker-steps').steps("remove", 6);
-        }
-
-    });
-
     //jQuery(document).on('keyup keypress', function(e) {
     //    key13control(e);
     //});
@@ -50,6 +37,19 @@ jQuery(document).ready(function (jQuery) {
 
     // Grab all needed form parts from the dom and add it into vars for later usage.
     if (wizard != null) {
+
+        jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
+
+            if (jQuery(this).prop('checked')) {
+                jQuery('#hooker-steps').steps("insert", 6, {
+                    title: "Registration",
+                    content: buddyforms_registration
+                });
+            } else {
+                jQuery('#hooker-steps').steps("remove", 6);
+            }
+
+        });
 
         // first hide all so we have a consitend feeling
         jQuery('#post, #postbox-container-1, #postbox-container-2, #message, .error').hide();
