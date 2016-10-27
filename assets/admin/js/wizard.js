@@ -78,6 +78,8 @@ jQuery(document).ready(function (jQuery) {
         var buddyforms_template = poststuff.find('.buddyforms_template');
         var buddyforms_metabox_sidebar = poststuff.find('#buddyforms_metabox_sidebar');
         var buddyforms_notification = poststuff.find('#notification');
+        buddyforms_notification.find('#no-trigger-mailcontainer').hide();
+
         var buddyforms_permission = poststuff.find('#permission');
         var buddyforms_registration = poststuff.find('#registration');
         var buddyforms_create_content = poststuff.find('#create-content');
