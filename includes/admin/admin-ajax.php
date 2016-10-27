@@ -163,7 +163,7 @@ function buddyforms_form_template() {
 
 	switch ( $_POST['template'] ) {
 		case 'contact' :
-			$buddyform = json_decode( '{"form_fields":{"92f6e0cb6b":{"type":"user_first","slug":"user_first","name":"First Name","description":""},"8ead289ca0":{"type":"user_last","slug":"user_last","name":"Last Name","description":""},"87e0afb2d7":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"210ef7d8a8":{"type":"subject","slug":"subject","name":"Subject","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"},"0a256db3cb":{"type":"message","slug":"message","name":"Message","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"}},"form_type":"contact","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"01bd6766e5":{"mail_trigger_id":"01bd6766e5","mail_from_name":"eMail Notification","mail_to_address":"[user_email]","mail_from":"mail@sven-lehnert.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":"Hi [user_first],\r\n\r\nthanks for getting in contact with us.\r\n\r\nYour Message has been Submitted Successfully. We will get in contact with you shortly.\r\n\r\nYour Message Text:\r\n\r\n[subject]\r\n[message]\r\n\r\n\r\n"}},"public_submit":["public_submit"],"name":"Contact Form","slug":"contact-form"}', true );
+			$buddyform = json_decode( '{"form_fields":{"92f6e0cb6b":{"type":"user_first","slug":"user_first","name":"First Name","description":"","validation_error_message":"This field is required."},"8ead289ca0":{"type":"user_last","slug":"user_last","name":"Last Name","description":"","validation_error_message":"This field is required."},"87e0afb2d7":{"type":"user_email","slug":"user_email","name":"eMail","description":"","required":["required"],"validation_error_message":"This field is required."},"210ef7d8a8":{"type":"subject","slug":"subject","name":"Subject","description":"","required":["required"],"validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"},"0a256db3cb":{"type":"message","slug":"message","name":"Message","description":"","required":["required"],"validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0"}},"form_type":"contact","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfullyss","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","public_submit":["public_submit"],"public_submit_login":"above","registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\t\t\tGreat to see you come on board! Just one small step left to make your registration complete.\r\n\t\t\t<br>\r\n\t\t\t<b>Click the link below to activate your account.<\/b>\r\n\t\t\t<br>\r\n\t\t\t[activation_link]\r\n\t\t\t<br><br>\r\n\t\t\t[blog_title]\r\n\t\t","activation_message_from_name":"[blog_title]","activation_message_from_email":"[admin_email]","new_user_role":"subscriber"},"moderation_logic":"default","moderation":{"label_submit":"Submit","label_save":"Save","label_review":"Submit for moderation","label_new_draft":"Create new Draft","label_no_edit":"This Post is waiting for approval and can not be changed until it gets approved"},"name":"ssaSAS","slug":""}', true );
 			break;
 		case 'registration' :
 			$buddyform = json_decode( '{"form_fields":{"a40912e1a5":{"type":"user_login","slug":"user_login","name":"Username","description":""},"82abe39ed2":{"type":"user_email","slug":"user_email","name":"eMail","description":""},"611dc33cb2":{"type":"user_pass","slug":"user_pass","name":"Password","description":""}},"form_type":"registration","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"User Registration Successful! Please check your eMail Inbox and click the activation link to activate your account.","post_type":"bf_submissions","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"fa41389e07":{"mail_trigger_id":"fa41389e07","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail22@22.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit":["public_submit"],"registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\r\nGreat to see you come on board! Just one small step left to make your registration complete.\r\n<br>\r\n<b>Click the link below to activate your account.<\/b>\r\n<br>\r\n[activation_link]\r\n<br><br>\r\n[blog_title]","activation_message_from_name":"[blog_title]","activation_message_from_email":"dfg@dfg.fr","new_user_role":"author"},"name":"Registration Form","slug":"registration-form"}', true );
@@ -180,17 +180,28 @@ function buddyforms_form_template() {
 	buddyforms_metabox_form_elements( $post, $buddyform );
 	$formbuilder = ob_get_clean();
 
+
+	// Add the form elements to the form builder
 	$json['formbuilder'] = $formbuilder;
 
-	ob_start();
-	$mail_trigger_id   = buddyforms_mail_notification_form();
-	$mail_trigger_html = ob_get_clean();
+//	if( isset( $buddyform['mail_submissions'] ) ) {
+//
+//		foreach($buddyform['mail_submissions'] as $key => $notification){
+//			ob_start();
+//			$mail_trigger_id   = buddyforms_mail_notification_form($key);
+//			$mail_trigger_html = ob_get_clean();
+//
+//			// Add the mail trigger to the json
+//			$json['mail_submissions'][$mail_trigger_id] = $mail_trigger_html;
+//		}
+//
+//	}
 
-	$json['mail_notification']['trigger_id'] = $mail_trigger_id;
-	$json['mail_notification']['html']       = $mail_trigger_html;
-
+	// Unset the form fields
 	unset( $buddyform['form_fields'] );
+	unset( $buddyform['mail_submissions'] );
 
+	// Add the form setup to the json
 	$json['form_setup'] = $buddyform;
 
 

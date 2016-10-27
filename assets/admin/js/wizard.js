@@ -1,15 +1,10 @@
 jQuery(document).ready(function (jQuery) {
 
-    //jQuery(document).on('keyup keypress', function(e) {
-    //    key13control(e);
-    //});
-
     function key13control(e) {
         if (e.keyCode == 13) {
 
             var all = jQuery(".steps ul li").length;
             var current = jQuery("#hooker-steps").steps("getCurrentIndex");
-            ;
 
             if (current === undefined)
                 return false;
@@ -37,6 +32,11 @@ jQuery(document).ready(function (jQuery) {
 
     // Grab all needed form parts from the dom and add it into vars for later usage.
     if (wizard != null) {
+
+        // Load the form elements template depend on the type
+        if (type) {
+            load_formbuilder_template(type);
+        }
 
         jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
 
@@ -92,12 +92,6 @@ jQuery(document).ready(function (jQuery) {
         URL = URL.replace('wizard=1', 'wizard=2&type=' + type);
         window.location = URL;
     });
-
-
-    // Load the form elements template depend on the type
-    if (type) {
-        load_formbuilder_template(type);
-    }
 
     // STEP 1 Select the Form Type
     if (wizard == 1) {
