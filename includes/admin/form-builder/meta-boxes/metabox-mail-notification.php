@@ -24,7 +24,7 @@ function buddyforms_mail_notification_screen() {
 		echo '<div id="no-trigger-mailcontainer">' . __( 'No Mail Notification Trigger so far.' ) . '</div>';
 	}
 	echo '<div id="mailcontainer"></div>';
-	echo '<ul>';
+	echo '</ul>';
 	echo '<hr>';
 }
 
@@ -35,14 +35,14 @@ function buddyforms_post_status_mail_notification_screen() {
 
 	$form_setup = array();
 
-	$disabled = '';
+	$shortDesc = '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a>';
 	if ( buddyforms_core_fs()->is_not_paying() ) {
-		$disabled = 'disabled';
+		$shortDesc = '<b>' . __('Get the Pro version to add Post Status Change Mail Notification', 'buddyforms') . '</b>';
 	}
 
 	$element = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", buddyforms_get_post_status_array(), array(
 		'class'     => 'post_status_mail_notification_trigger',
-		'shortDesc' => '<a ' . $disabled . ' class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a>'
+		'shortDesc' => $shortDesc,
 	) );
 	if ( buddyforms_core_fs()->is_not_paying() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
@@ -58,7 +58,7 @@ function buddyforms_post_status_mail_notification_screen() {
 		echo '<div id="no-trigger-post-status-mail-container">' . __( 'No Post Status Mail Notification Trigger so far.' ) . '</div>';
 	}
 	echo '<div id="post-status-mail-container"></div>';
-	echo '<ul>';
+	echo '</ul>';
 	echo '<hr>';
 
 }

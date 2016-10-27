@@ -79,6 +79,8 @@ jQuery(document).ready(function (jQuery) {
         var buddyforms_metabox_sidebar = poststuff.find('#buddyforms_metabox_sidebar');
         var buddyforms_notification = poststuff.find('#notification');
         buddyforms_notification.find('#no-trigger-mailcontainer').hide();
+        buddyforms_notification.find('#no-trigger-post-status-mail-container').hide();
+
 
         var buddyforms_permission = poststuff.find('#permission');
         var buddyforms_registration = poststuff.find('#registration');
