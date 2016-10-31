@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Plugin Name: BuddyForms
+ * Plugin Name: Form Builder & Front End Editor - BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
- * Description: Form Magic and Collaborative Publishing for WordPress. With Frontend Editing and Drag-and-Drop Form Builder.
- * Version: 2.0
+ * Description: A simple, yet powerful form builder which allows users to submit contact forms or content via front end to your webpage and contribute to a larger project.
+ * Version: 2.0.1
  * Author: Sven Lehnert
  * Author URI: https://profiles.wordpress.org/svenl77
  * Licence: GPLv3
@@ -43,7 +43,7 @@ class BuddyForms {
 	/**
 	 * @var string
 	 */
-	public $version = '2.0 BETA 1';
+	public $version = '2.0 BETA 2';
 
 	/**
 	 * Initiate the class
