@@ -429,26 +429,26 @@ if ( ! defined( 'DOING_CRON' ) ) {
 	// Pull EDD license key from storage.
 	$license_key = trim( get_option( 'buddyforms_edd_license_key' ) );
 
-	if ( empty( $license_key ) ) {
 		/**
 		 * If no EDD license is set it might be one of the following:
 		 *  1. User purchased module directly from Freemius.
 		 *  2. User did purchase from EDD, but has never activated the license on this site.
 		 *  3. User got access to the code without ever purchasing.
 		 *
-		 * In case it's reason #2, hook to Freemius `after_install_failure` event, and if
-		 * the installation failure resulted due to an issue with the license, try to
-		 * activate the license on EDD first, and if works, migrate to Freemius right after.
+		 * In case it's reason #2 or if the license key is wrong, the migration will not work.
+		 * Since we do want to support EDD licenses, hook to Freemius `after_install_failure`
+		 * event. That way, if a license activation fails, try activating the license on EDD
+		 * first, and if works, migrate to Freemius right after.
 		 */
 		buddyforms_core_fs()->add_filter( 'after_install_failure', 'buddyforms_try_migrate_on_activation', 10, 2 );
-	} else {
-		if ( ! defined( 'DOING_AJAX' ) ) {
-			buddyforms_non_blocking_edd2fs_license_migration(
-				TK__EDD_DOWNLOAD_ID,
-				$license_key,
-				TK__EDD_STORE_URL,
-				true
-			);
-		}
-	}
+
+		if ( ! empty( $license_key ) ) {
+			if ( ! defined( 'DOING_AJAX' ) ) {
+				buddyforms_non_blocking_edd2fs_license_migration(
+					TK__EDD_DOWNLOAD_ID,
+					$license_key,
+					TK__EDD_STORE_URL
+				);
+			}
+		}	
 }
