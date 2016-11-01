@@ -215,7 +215,12 @@ ul.buddyforms-list .publish .item-status {
         left: -9999px;
     }
 
-    table, thead, tbody, th, td, tr {
+    .buddyforms_posts_table table,
+    .buddyforms_posts_table thead,
+    .buddyforms_posts_table tbody,
+    .buddyforms_posts_table th,
+    .buddyforms_posts_table td,
+    .buddyforms_posts_table tr {
         display: block;
     }
 }
