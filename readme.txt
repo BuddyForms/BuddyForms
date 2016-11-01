@@ -137,18 +137,19 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Screenshots ==
 
-1. It’s that easy to create a form from templates!
-2. Form Wizard
-3. Form submissions
-4. Form Permissions
-5. Contact Form Example
-7. Registration Form Example
-8. Post Form Example
-9. Moderation
-10. BuddyPress Profile Example
-11. Ultimate Member Profile Example
+1. Form Wizard - The easy way to create forms
+2. Form Builder - Expert view to setup individual forms with endless possibilities
+3. Form Settings -  Form Builder Settings View
+4. Forms Overview in Admin
+5. EmbedForm the form in Pages via Shortcodes
+6. Frontend Form Example of a Simple Post Form
+7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.0.1 =
+Freemius SDK update
+smaller changes
 
 = 2.0 =
 First public version
