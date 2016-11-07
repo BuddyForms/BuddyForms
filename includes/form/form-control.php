@@ -505,7 +505,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 		if ( $customfield['type'] == 'taxonomy' ) :
 
-			if ( isset( $_POST[ $customfield['slug'] ] ) ) {
+			if ( $customfield['taxonomy'] != 'none' &&isset( $_POST[ $customfield['slug'] ] ) ) {
 
 				// Get the tax items
 				$tax_terms = $_POST[ $customfield['slug'] ];
