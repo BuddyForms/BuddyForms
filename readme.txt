@@ -148,9 +148,20 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 == Changelog ==
 
 = 2.0.3 =
+Remove old select2 dependencies
+Fixed a firefox admin ui css issue with the form type select box
+Make sure the taxonomy form element only get saved during form processing if a taxonomy is selected in the form element
+Separate starter and professional plans in the pro version. They have been accidentally the same.
+New labels for the free starter professional and business plans
+Rebuild the mail notifications. Its not needed to add any message text. BuddyForms will automatically use the subject and message form elements if they are available.
+If no message text is available BuddyForms will add all form element valuers as table into the eMail.
+Add new option to select the submitter as Sent to address
+Create a new function buddyforms_mail_notification_form_elements_as_table to add a form elements table via tags or if no mail message content exists
+Documentation for the new features
+Fixed smaller issues and css fixes reported by users.
 
 = 2.0.2 =
-smaler submissions loop table css fixes
+smaller submissions loop table css fixes
 fixed an issue with the update form the 1.5.3 version
 
 = 2.0.1 =
