@@ -147,6 +147,8 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
+= 2.0.3 =
+
 = 2.0.2 =
 smaler submissions loop table css fixes
 fixed an issue with the update form the 1.5.3 version

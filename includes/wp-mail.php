@@ -142,24 +142,15 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
 		$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
 
+		$emailBody = str_replace( '[form_elements_table]', buddyforms_mail_notification_form_elements_as_table($form_slug), $emailBody );
+
 		$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
 	}
 
 	// If we do not have any valid eMail Body let us try to create the content from teh from elements as table
 	if( empty($emailBody) ) {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-
-			$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
-			$striped_c = 0;
-			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
-				$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
-				// Check if the form element exist and have a value. This is just a fallback
-				if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
-					$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $_POST[ $field['slug'] ] . "</td></tr>";
-				}
-			}
-			$message .= "</table>";
-			$emailBody = $message;
+			$emailBody = buddyforms_mail_notification_form_elements_as_table($form_slug);
 		}
 	}
 
@@ -297,4 +288,27 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	wp_mail( $mail_to, $subject, $message, $mailheader );
 
+}
+
+
+
+function buddyforms_mail_notification_form_elements_as_table($form_slug){
+	global $buddyforms;
+	$striped_c = 0;
+
+	// Table start
+	$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
+	// Loop all form elements and add as table row
+	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
+		$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
+		// Check if the form element exist and have is not empty.
+		if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
+			$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $_POST[ $field['slug'] ] . "</td></tr>";
+		}
+	}
+	// Table end
+	$message .= "</table>";
+
+	// Let us return the form elements table
+	return $message;
 }

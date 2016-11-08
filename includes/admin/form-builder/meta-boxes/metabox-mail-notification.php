@@ -102,8 +102,8 @@ function buddyforms_mail_notification_form( $trigger ) {
 	$element = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
 		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
-		'cc'        => __('CC', 'buddyforms'),
-		'bcc'       => __('BCC', 'buddyforms'),
+		'cc'        => __( 'CC', 'buddyforms' ),
+		'bcc'       => __( 'BCC', 'buddyforms' ),
 	), array(
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : '',
 		'id'    => 'mail_submissions' . $trigger,
@@ -128,7 +128,6 @@ function buddyforms_mail_notification_form( $trigger ) {
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] : ''
 	) );
 
-
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Subject", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_subject]", array(
 		"class"    => "bf-mail-field",
 		'value'    => isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : 'Form Submission Notification',
@@ -148,10 +147,11 @@ function buddyforms_mail_notification_form( $trigger ) {
 	wp_editor( isset( $buddyform['mail_submissions'][ $trigger ]['mail_body'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_body'] : '', "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
 	$wp_editor    = '<div class="bf_field_group bf_form_content">
-	<label for="form_title"><b>' . __( 'Content', 'buddyforms' ) . '</b><br>
-		<p>If you use the "message" form element you can leave this empty and the form element value will be used.<br>
-		If you enter any content in here, this content will overwrite the "message" form element.<br>
-		You can add any form element with tags [] e.g.[message] will be replaced with the form element message</p>
+	<label for="form_title"><b>' . __( 'eMail Message Content', 'buddyforms' ) . '</b><br>
+
+		<p><strong>Important: </strong>If you use the "Message" form element you can leave this field empty and the "Message" form element value will be used. If you enter content in here, this content will overwrite the "Message" form element.</p>
+		<p>You can add any form element with tags [] e.g.[message] will be replaced with the form element "Message" [form_elements_table] will add a table of all form elements.</p>
+		<p>If no "Message" form element is uses and "no content" is added a table with all form elements will get auto generated.</p>
 	</label>
 	<div class="bf_inputs bf-texteditor">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
