@@ -21,6 +21,9 @@ function mail_submission_trigger_sent( $args ) {
 }
 
 /**
+ *
+ * Sent mail notifications for contact forms
+ *
  * @param $notification
  * @param $post
  */
@@ -40,14 +43,15 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$mail_notification_trigger = $notification;
 
-	$user_email = $user_info->user_email;
+	$user_email = isset( $_POST['user_email'] ) ? $_POST['user_email'] : $user_info->user_email;
 
 	$mail_to = array();
 
+	// Check the Sent mail to checkbox
 	if ( isset( $mail_notification_trigger['mail_to'] ) ) {
 		foreach ( $mail_notification_trigger['mail_to'] as $key => $mail_address ) {
 
-			if ( $mail_address == 'author' ) {
+			if ( $mail_address == 'submitter' ) {
 				array_push( $mail_to, $user_email );
 			}
 
@@ -58,6 +62,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		}
 	}
 
+	// Check if mail to addresses
 	if ( isset( $mail_notification_trigger['mail_to_address'] ) ) {
 
 		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_address'] ) );
@@ -67,66 +72,118 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			$user_email   = isset( $_POST['user_email'] ) ? $_POST['user_email'] : '';
 			$mail_address = str_replace( '[user_email]', $user_email, $mail_address );
 
-			array_push( $mail_to, $mail_address );
+			if( ! empty($mail_address) ){
+				array_push( $mail_to, $mail_address );
+			}
+
 
 		}
 	}
 
-	$first_name = $user_info->user_firstname;
-	$last_name  = $user_info->user_lastname;
+	// Check if CC
+	if ( isset( $mail_notification_trigger['mail_to_bcc_address'] ) ) {
+		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_bcc_address'] ) );
+		foreach ( $mail_to_address as $key => $mail_address ) {
+			if( ! empty($mail_address) ){
+				array_push( $mail_to, $mail_address );
+			}
+		}
+	}
+
+	// Check if BCC
+	if ( isset( $mail_notification_trigger['mail_to_bcc_address'] ) ) {
+		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_bcc_address'] ) );
+		foreach ( $mail_to_address as $key => $mail_address ) {
+			if( ! empty($mail_address) ){
+				array_push( $mail_to, $mail_address );
+			}
+		}
+	}
+
+	$first_name = isset( $_POST['user_first'] ) ? $_POST['user_first'] : $user_info->user_firstname;
+	$last_name  = isset( $_POST['user_last'] ) ? $_POST['user_first'] : $user_info->user_lastname;
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
 	$siteurlhtml = "<a href='$siteurl' target='_blank' >$siteurl</a>";
 
-	$subject    = $mail_notification_trigger['mail_subject'];
+	$subject = isset( $_POST['subject'] ) ? $_POST['subject'] : $mail_notification_trigger['mail_subject'];
+
 	$from_name  = $mail_notification_trigger['mail_from_name'];
 	$from_email = $mail_notification_trigger['mail_from'];
-	$emailBody  = $mail_notification_trigger['mail_body'];
-	$emailBody  = stripslashes( $emailBody );
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
-			$field_value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
-			$emailBody   = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
+
+	$emailBody  = isset( $_POST['message'] ) ? $_POST['message'] : $mail_notification_trigger['mail_body'];
+
+	// If we have content let us check if there are any tags we need to replace with the correct values.
+	if( ! empty($emailBody)){
+
+		$emailBody = stripslashes( $emailBody );
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
+				$field_value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+				$emailBody   = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
+			}
+		}
+
+		$emailBody = str_replace( '[user_login]', $usernameauth, $emailBody );
+		$emailBody = str_replace( '[user_nicename]', $user_nicename, $emailBody );
+		$emailBody = str_replace( '[user_email]', $user_email, $emailBody );
+		$emailBody = str_replace( '[first_name]', $first_name, $emailBody );
+		$emailBody = str_replace( '[last_name]', $last_name, $emailBody );
+
+		$emailBody = str_replace( '[published_post_link_plain]', $postperma, $emailBody );
+
+		$postlinkhtml = "<a href='$postperma' target='_blank'>$postperma</a>";
+
+		$emailBody = str_replace( '[published_post_link_html]', $postlinkhtml, $emailBody );
+
+		$emailBody = str_replace( '[published_post_title]', $post_title, $emailBody );
+		$emailBody = str_replace( '[site_name]', $blog_title, $emailBody );
+		$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
+		$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
+
+		$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
+	}
+
+	// If we do not have any valid eMail Body let us try to create the content from teh from elements as table
+	if( empty($emailBody) ) {
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+
+			$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
+			$striped_c = 0;
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
+				$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
+				// Check if the form element exist and have a value. This is just a fallback
+				if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
+					$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $_POST[ $field['slug'] ] . "</td></tr>";
+				}
+			}
+			$message .= "</table>";
+			$emailBody = $message;
 		}
 	}
-	$emailBody = str_replace( '[user_login]', $usernameauth, $emailBody );
-	$emailBody = str_replace( '[user_nicename]', $user_nicename, $emailBody );
-	$emailBody = str_replace( '[user_email]', $user_email, $emailBody );
-	$emailBody = str_replace( '[first_name]', $first_name, $emailBody );
-	$emailBody = str_replace( '[last_name]', $last_name, $emailBody );
 
-	$emailBody = str_replace( '[published_post_link_plain]', $postperma, $emailBody );
-
-	$postlinkhtml = "<a href='$postperma' target='_blank'>$postperma</a>";
-
-	$emailBody = str_replace( '[published_post_link_html]', $postlinkhtml, $emailBody );
-
-	$emailBody = str_replace( '[published_post_title]', $post_title, $emailBody );
-	$emailBody = str_replace( '[site_name]', $blog_title, $emailBody );
-	$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
-	$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
-
-	$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
-
-	$mailheaders = "MIME-Version: 1.0\n";
-	$mailheaders .= "X-Priority: 1\n";
-	$mailheaders .= "Content-Type: text/html; charset=\"UTF-8\"\n";
-	$mailheaders .= "Content-Transfer-Encoding: 7bit\n\n";
-	$mailheaders .= "From: $from_name <$from_email>" . "\r\n";
+	// Create the email header
+	$mailheader = "MIME-Version: 1.0\n";
+	$mailheader .= "X-Priority: 1\n";
+	$mailheader .= "Content-Type: text/html; charset=\"UTF-8\"\n";
+	$mailheader .= "Content-Transfer-Encoding: 7bit\n\n";
+	$mailheader .= "From: $from_name <$from_email>" . "\r\n";
 	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
 
-	wp_mail( $mail_to, $subject, $message, $mailheaders );
-
+	// OK Let us sent the mail
+	wp_mail( $mail_to, $subject, $message, $mailheader );
 }
 
-
-add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
 /**
+ *
+ *  Lets us check for post status change and sent notifications if on transition_post_status
+ *
  * @param $new_status
  * @param $old_status
  * @param $post
  */
+add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -142,14 +199,17 @@ function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 		return;
 	}
 
-	buddyforms_send_email_notification( $post );
+	buddyforms_send_post_status_change_notification( $post );
 
 }
 
 /**
+ *
+ * Create the mail content and sent it with wp_mail
+ *
  * @param $post
  */
-function buddyforms_send_email_notification( $post ) {
+function buddyforms_send_post_status_change_notification( $post ) {
 
 	global $form_slug, $buddyforms;
 
@@ -228,13 +288,13 @@ function buddyforms_send_email_notification( $post ) {
 
 	$emailBody = stripslashes( htmlspecialchars_decode( $emailBody ) );
 
-	$mailheaders .= "MIME-Version: 1.0\n";
-	$mailheaders .= "X-Priority: 1\n";
-	$mailheaders .= "Content-Type: text/html; charset=\"UTF-8\"\n";
-	$mailheaders .= "Content-Transfer-Encoding: 7bit\n\n";
-	$mailheaders .= "From: $from_name <$from_email>" . "\r\n";
+	$mailheader .= "MIME-Version: 1.0\n";
+	$mailheader .= "X-Priority: 1\n";
+	$mailheader .= "Content-Type: text/html; charset=\"UTF-8\"\n";
+	$mailheader .= "Content-Transfer-Encoding: 7bit\n\n";
+	$mailheader .= "From: $from_name <$from_email>" . "\r\n";
 	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
 
-	wp_mail( $mail_to, $subject, $message, $mailheaders );
+	wp_mail( $mail_to, $subject, $message, $mailheader );
 
 }
