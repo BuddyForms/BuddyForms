@@ -20,18 +20,18 @@ function buddyforms_metabox_form_setup() {
 	$post_types['page']           = 'Page';
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			// Get all post types
+			$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
 
-		// Get all post types
-		$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
+			// Generate the Post Type Array 'none' == Contact Form
+			$post_types['bf_submissions'] = 'none';
 
-		// Generate the Post Type Array 'none' == Contact Form
-		$post_types['bf_submissions'] = 'none';
+			$post_types = buddyforms_sort_array_by_Array( $post_types, array( 'bf_submissions' ) );
 
-		$post_types = buddyforms_sort_array_by_Array( $post_types, array( 'bf_submissions' ) );
-
-		// Remove the 'buddyforms' post type from the post type array
-		unset( $post_types['buddyforms'] );
-
+			// Remove the 'buddyforms' post type from the post type array
+			unset( $post_types['buddyforms'] );
+		}
 	}
 
 	// Get all pages
@@ -172,7 +172,9 @@ function buddyforms_metabox_form_setup() {
 
 	$shortDesc_post_type = '<b>Use any POST TYPE with the PRO Version!</b> <br><br>Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		$shortDesc_post_type = 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			$shortDesc_post_type = 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+		}
 	}
 	//
 	// Create Content

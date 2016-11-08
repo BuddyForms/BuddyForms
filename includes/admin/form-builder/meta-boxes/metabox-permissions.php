@@ -63,11 +63,13 @@ function buddyforms_permissions_screen() {
 		</div>';
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		$shortDesc_permission = '<br><br>
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			$shortDesc_permission = '<br><br>
 			<div class="bf-roles-main-desc">
 				<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
 				<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 			</div>';
+		}
 	}
 
 	// User Roles Description

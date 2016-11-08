@@ -52,9 +52,18 @@ function buddyforms_version_type() {
  * @return string|void
  */
 function buddyforms_get_version_type() {
+
+
+	// This "if" block will be auto removed from the Free version.
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		return __( 'Pro', 'buddyforms' );
+		if ( buddyforms_core_fs()->is_plan( 'starter', true ) ) {
+			return '<b>' . __( 'Starter', 'buddyforms' ) . '</b>';
+		} else if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			return '<b>' . __( 'Professional', 'buddyforms' ) . '</b>';
+		} else if( buddyforms_core_fs()->is_plan( 'business' ) ) {
+			return '<b>' . __( 'Business', 'buddyforms' ) . '</b>';
+		}
 	}
 
-	return __( 'Free', 'buddyforms' );
+	return '<b>' . __( 'Free', 'buddyforms' ) . '</b>';
 }
