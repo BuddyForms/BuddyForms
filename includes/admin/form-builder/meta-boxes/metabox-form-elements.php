@@ -351,7 +351,7 @@ function buddyforms_form_elements_select_options() {
 	}
 
 	// Allow others to filter the array
-	$elements_select_options = apply_filters( 'buddyforms_add_form_element_to_select', $elements_select_options );
+	$elements_select_options = apply_filters( 'buddyforms_add_form_element_select_option', $elements_select_options );
 
 	return $elements_select_options;
 }
