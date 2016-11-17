@@ -21,6 +21,7 @@ function buddyforms_metabox_form_setup() {
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+
 			// Get all post types
 			$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
 
@@ -31,6 +32,9 @@ function buddyforms_metabox_form_setup() {
 
 			// Remove the 'buddyforms' post type from the post type array
 			unset( $post_types['buddyforms'] );
+
+			$post_types = apply_filters( 'buddyforms_form_builder_post_type', $post_types );
+
 		}
 	}
 

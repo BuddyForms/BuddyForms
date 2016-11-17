@@ -347,6 +347,8 @@ class BuddyForms {
 		) {
 			$current_user = wp_get_current_user();
 
+			do_action('buddyforms_admin_js_footer');
+
 			?>
 			<script>!function (e, o, n) {
 					window.HSCW = o, window.HS = n, n.beacon = n.beacon || {};

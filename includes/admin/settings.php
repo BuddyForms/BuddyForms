@@ -183,6 +183,14 @@ function buddyforms_settings_page_tabs_content() {
 								<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
 								<form method="post" enctype="multipart/form-data">
 									<p>
+										<b>Type:</b>
+										<select name="import-type" class="regular-radio">
+											<?php echo do_action('buddyforms_import_type_options'); ?>
+											<option value="buddyforms">BuddyForms</option>
+											<option value="custom">Custom</option>
+										</select>
+									</p>
+									<p>
 										<input type="file" name="import_file"/>
 									</p>
 									<p>
@@ -214,3 +222,34 @@ function buddyforms_settings_page_sidebar() {
 		'Admin Metabox Support'
 	) );
 }
+
+/**
+ * Process a settings import from a json file
+ */
+function buddyforms_process_settings_import() {
+	if( empty( $_POST['buddyforms_action'] ) || 'import_settings' != $_POST['buddyforms_action'] )
+		return;
+	if( ! wp_verify_nonce( $_POST['buddyforms_import_nonce'], 'buddyforms_import_nonce' ) )
+		return;
+	if( ! current_user_can( 'manage_options' ) )
+		return;
+	$extension = end( explode( '.', $_FILES['import_file']['name'] ) );
+	if( $extension != 'json' ) {
+		wp_die( __( 'Please upload a valid .json file' ) );
+	}
+	$import_file = $_FILES['import_file']['tmp_name'];
+	if( empty( $import_file ) ) {
+		wp_die( __( 'Please upload a file to import' ) );
+	}
+	// Retrieve the settings from the file and convert the json object to an array.
+	$settings = (array) json_decode( file_get_contents( $import_file ) );
+
+
+	print_r($settings);
+
+
+	return $settings;
+//	update_option( 'buddyforms_settings', $settings );
+//	wp_safe_redirect( admin_url( 'options-general.php?page=buddyforms_settings' ) ); exit;
+}
+add_action( 'admin_init', 'buddyforms_process_settings_import' );
