@@ -781,6 +781,8 @@ JS;
 	/**
 	 * @param $type
 	 * @param $props
+	 *
+	 * @return mixed|void
 	 */
 	public function __call( $type, $props ) {
 		if ( $type == 'close' ) {

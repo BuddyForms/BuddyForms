@@ -87,7 +87,7 @@ function buddyforms_inner_custom_box( $post ) {
 function buddyforms_save_postdata( $post_id ) {
 
 	if ( ! is_admin() ) {
-		return;
+		return $post_id;
 	}
 
 	if ( ! isset( $_POST['buddyforms_inner_custom_box_nonce'] ) ) {
