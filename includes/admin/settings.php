@@ -228,11 +228,11 @@ function buddyforms_settings_page_sidebar() {
  */
 function buddyforms_process_settings_import() {
 	if( empty( $_POST['buddyforms_action'] ) || 'import_settings' != $_POST['buddyforms_action'] )
-		return;
+		return false;
 	if( ! wp_verify_nonce( $_POST['buddyforms_import_nonce'], 'buddyforms_import_nonce' ) )
-		return;
+		return false;
 	if( ! current_user_can( 'manage_options' ) )
-		return;
+		return false;
 	$extension = end( explode( '.', $_FILES['import_file']['name'] ) );
 	if( $extension != 'json' ) {
 		wp_die( __( 'Please upload a valid .json file' ) );
@@ -245,11 +245,12 @@ function buddyforms_process_settings_import() {
 	$settings = (array) json_decode( file_get_contents( $import_file ) );
 
 
-	print_r($settings);
+	// todo: Not working form import screeen
+	// print_r($settings);
 
 
-	return $settings;
-//	update_option( 'buddyforms_settings', $settings );
-//	wp_safe_redirect( admin_url( 'options-general.php?page=buddyforms_settings' ) ); exit;
+
+	//	update_option( 'buddyforms_settings', $settings );
+	//	wp_safe_redirect( admin_url( 'options-general.php?page=buddyforms_settings' ) ); exit;
 }
 add_action( 'admin_init', 'buddyforms_process_settings_import' );

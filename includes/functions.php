@@ -135,18 +135,20 @@ function buddyforms_get_template_directory() {
  * @package BuddyForms
  * @since 0.1 beta
  *
- * @param $file
+ * @param $slug
  */
-function buddyforms_locate_template( $file ) {
+function buddyforms_locate_template( $slug ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
-	$current_user = wp_get_current_user();
+	$current_user  = wp_get_current_user();
+	$template_path = BUDDYFORMS_TEMPLATE_PATH .'buddyforms/'. $slug . '.php';
 
-	if ( locate_template( array( $file ), false ) ) {
-		include( locate_template( array( $file ), true ) );
-	} else {
-		include( BUDDYFORMS_TEMPLATE_PATH . $file );
+	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false)) {
+		$template_path = $template_file;
 	}
+
+	include( $template_path );
+
 }
 
 // Display the WordPress Login Form

@@ -12,7 +12,7 @@ function buddyforms_form_html( $args ) {
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
 
-		return;
+		return $args;
 	}
 
 	// Extract the form args
@@ -153,7 +153,7 @@ function buddyforms_form_html( $args ) {
 function buddyforms_get_login_form_template() {
 
 	ob_start();
-	buddyforms_locate_template( 'buddyforms/login-form.php' );
+	buddyforms_locate_template( 'login-form' );
 	$login_form = ob_get_clean();
 
 	return $login_form;

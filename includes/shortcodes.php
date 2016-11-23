@@ -148,9 +148,9 @@ function buddyforms_the_loop( $args ) {
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
 	if ( $list_posts_style == 'table' ) {
-		buddyforms_locate_template( 'buddyforms/the-table.php' );
+		buddyforms_locate_template( 'the-table' );
 	} else {
-		buddyforms_locate_template( 'buddyforms/the-loop.php' );
+		buddyforms_locate_template( 'the-loop' );
 	}
 
 	// Support for wp_pagenavi

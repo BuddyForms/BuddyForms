@@ -134,7 +134,7 @@ function buddyforms_my_edit_post_link( $url, $post_ID ) {
  */
 function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	if ( ! $post = get_post( $id ) ) {
-		return;
+		return $id;
 	}
 
 	if ( 'revision' === $post->post_type ) {
@@ -147,7 +147,7 @@ function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 
 	$post_type_object = get_post_type_object( $post->post_type );
 	if ( ! $post_type_object ) {
-		return;
+		return $id;
 	}
 
 

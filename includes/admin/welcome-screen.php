@@ -1,17 +1,16 @@
 <?php
-
 //
 // Add the Settings Page to the BuddyForms Menu
 //
 function buddyforms_welcome_screen_menu() {
-
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Info', 'buddyforms' ), __( 'Info', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content' );
-
 }
-
 add_action( 'admin_menu', 'buddyforms_welcome_screen_menu', 9999 );
 
-add_action( 'admin_init', 'buddyforms_welcome_screen_do_activation_redirect' );
+
+//
+// Welcome Screen redirect
+//
 function buddyforms_welcome_screen_do_activation_redirect() {
 	// Bail if no activation redirect
 	if ( ! get_transient( '_buddyforms_welcome_screen_activation_redirect' ) ) {
@@ -26,10 +25,11 @@ function buddyforms_welcome_screen_do_activation_redirect() {
 		return;
 	}
 
-	// Redirect to BuddyForms about page
-//	wp_safe_redirect( add_query_arg( array( 'post_type' => 'buddyforms', 'page' => 'buddyforms_welcome_screen' ), admin_url('edit.php') ) );
-//
+	// Redirect to BuddyForms about page is done by freemuis for now.
+	// wp_safe_redirect( add_query_arg( array( 'post_type' => 'buddyforms', 'page' => 'buddyforms_welcome_screen' ), admin_url('edit.php') ) );
+
 }
+add_action( 'admin_init', 'buddyforms_welcome_screen_do_activation_redirect' );
 
 function buddyforms_welcome_screen_content() {
 	?>

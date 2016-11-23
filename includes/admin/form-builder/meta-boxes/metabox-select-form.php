@@ -127,6 +127,8 @@ function buddyforms_save_postdata( $post_id ) {
 
 	// Update the meta field in the database.
 	update_post_meta( $post_id, '_bf_form_slug', $mydata );
+
+	return $post_id;
 }
 
 add_action( 'save_post', 'buddyforms_save_postdata' );

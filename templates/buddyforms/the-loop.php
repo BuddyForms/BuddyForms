@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php // Create the modal for the submissions single view
 						if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
 							<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
-								<?php buddyforms_locate_template( 'buddyforms/submission-single.php' ); ?>
+								<?php buddyforms_locate_template( 'submission-single' ); ?>
 							</div>
 						<?php } ?>
 
