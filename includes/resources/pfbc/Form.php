@@ -795,6 +795,8 @@ JS;
 
 	/**
 	 * @param int $buttons
+	 *
+	 * @return bool|void
 	 */
 	public function _close( $buttons = 1 ) {
 		$this->renderCSS();

@@ -10,9 +10,15 @@
 		exit;
 	}
 
-	define( 'WP_FS__SECURITY_PARAMS_PREFIX', 's_' );
+/**
+ *
+ */
+define( 'WP_FS__SECURITY_PARAMS_PREFIX', 's_' );
 
-	class FS_Security {
+/**
+ * Class FS_Security
+ */
+class FS_Security {
 		/**
 		 * @var FS_Security
 		 * @since 1.0.3
@@ -24,7 +30,10 @@
 		 */
 		private static $_logger;
 
-		public static function instance() {
+	/**
+	 * @return FS_Security
+	 */
+	public static function instance() {
 			if ( ! isset( self::$_instance ) ) {
 				self::$_instance = new FS_Security();
 				self::$_logger   = FS_Logger::get_logger(
@@ -37,7 +46,10 @@
 			return self::$_instance;
 		}
 
-		private function __construct() {
+	/**
+	 * FS_Security constructor.
+	 */
+	private function __construct() {
 		}
 
 		/**

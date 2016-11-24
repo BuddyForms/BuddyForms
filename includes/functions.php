@@ -53,7 +53,7 @@ function buddyforms_wp_before_admin_bar_render() {
  *
  * @return mixed|void
  */
-function buddyforms_get_post_status_array( $select_condition = false ) {
+function buddyforms_get_post_status_array() {
 
 	$status_array = array(
 		'publish' => __( 'Published', 'buddyforms' ),

@@ -67,10 +67,10 @@ function buddyforms_post_status_mail_notification_screen() {
  *
  * @return string
  */
-function buddyforms_mail_notification_form( $trigger ) {
+function buddyforms_mail_notification_form( $trigger = false ) {
 	global $buddyform;
 
-	if ( ! isset( $trigger ) ) {
+	if ( $trigger == false) {
 		$trigger = substr( md5( time() * rand() ), 0, 10 );
 	}
 

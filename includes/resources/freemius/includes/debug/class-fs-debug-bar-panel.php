@@ -23,6 +23,9 @@
 			$this->title( 'Freemius' );
 		}
 
+		/**
+		 * @return string
+		 */
 		static function requests_count() {
 			if ( class_exists( 'Freemius_Api' ) ) {
 				$logger = Freemius_Api::GetLogger();
@@ -33,6 +36,9 @@
 			return number_format( count( $logger ) );
 		}
 
+		/**
+		 * @return string
+		 */
 		static function total_time() {
 			if ( class_exists( 'Freemius_Api' ) ) {
 				$logger = Freemius_Api::GetLogger();

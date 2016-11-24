@@ -16,8 +16,14 @@
 	 */
 
 	define( 'FS_API__VERSION', '1' );
-	define( 'FS_SDK__PATH', dirname( __FILE__ ) );
-	define( 'FS_SDK__EXCEPTIONS_PATH', FS_SDK__PATH . '/Exceptions/' );
+/**
+ *
+ */
+define( 'FS_SDK__PATH', dirname( __FILE__ ) );
+/**
+ *
+ */
+define( 'FS_SDK__EXCEPTIONS_PATH', FS_SDK__PATH . '/Exceptions/' );
 
 	if ( ! function_exists( 'json_decode' ) ) {
 		throw new Exception( 'Freemius needs the JSON PHP extension.' );
@@ -36,15 +42,39 @@
 		require_once FS_SDK__EXCEPTIONS_PATH . $e . '.php';
 	}
 
-	abstract class Freemius_Api_Base {
-		const VERSION = '1.0.4';
-		const FORMAT = 'json';
+/**
+ * Class Freemius_Api_Base
+ */
+abstract class Freemius_Api_Base {
+	/**
+	 *
+	 */
+	const VERSION = '1.0.4';
+	/**
+	 *
+	 */
+	const FORMAT = 'json';
 
-		protected $_id;
-		protected $_public;
-		protected $_secret;
-		protected $_scope;
-		protected $_isSandbox;
+	/**
+	 * @var
+	 */
+	protected $_id;
+	/**
+	 * @var
+	 */
+	protected $_public;
+	/**
+	 * @var
+	 */
+	protected $_secret;
+	/**
+	 * @var
+	 */
+	protected $_scope;
+	/**
+	 * @var
+	 */
+	protected $_isSandbox;
 
 		/**
 		 * @param string $pScope     'app', 'developer', 'plugin', 'user' or 'install'.
@@ -65,7 +95,13 @@
 			return $this->_isSandbox;
 		}
 
-		function CanonizePath( $pPath ) {
+	/**
+	 * @param $pPath
+	 *
+	 * @return string
+	 * @throws Freemius_Exception
+	 */
+	function CanonizePath( $pPath ) {
 			$pPath     = trim( $pPath, '/' );
 			$query_pos = strpos( $pPath, '?' );
 			$query     = '';
@@ -107,7 +143,14 @@
 			       ( ( false === strpos( $pPath, '.' ) ) ? '.' . self::FORMAT : '' ) . $query;
 		}
 
-		abstract function MakeRequest( $pCanonizedPath, $pMethod = 'GET', $pParams = array() );
+	/**
+	 * @param $pCanonizedPath
+	 * @param string $pMethod
+	 * @param array $pParams
+	 *
+	 * @return mixed
+	 */
+	abstract function MakeRequest( $pCanonizedPath, $pMethod = 'GET', $pParams = array() );
 
 		/**
 		 * @param string $pPath
@@ -139,7 +182,15 @@
 			return $result;
 		}
 
-		public function Api( $pPath, $pMethod = 'GET', $pParams = array() ) {
+	/**
+	 * @param $pPath
+	 * @param string $pMethod
+	 * @param array $pParams
+	 *
+	 * @return null|object|object[]
+	 * @throws Freemius_Exception
+	 */
+	public function Api( $pPath, $pMethod = 'GET', $pParams = array() ) {
 			return $this->_Api( $this->CanonizePath( $pPath ), $pMethod, $pParams );
 		}
 

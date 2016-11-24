@@ -153,9 +153,8 @@ function buddyforms_errors() {
  * @param $activation_link
  * @param $new_user_id
  */
-function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
+function buddyforms_activate_account_mail( $activation_link ) {
 	global $form_slug, $buddyforms;
-
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
@@ -222,7 +221,7 @@ add_filter( 'authenticate', 'buddyforms_auth_signon', 999, 3 );
  *
  * @return WP_Error
  */
-function buddyforms_auth_signon( $user, $username, $password ) {
+function buddyforms_auth_signon( $user ) {
 
 	if ( is_wp_error( $user ) ) {
 		return $user;

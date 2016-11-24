@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Site extends FS_Scope_Entity {
+/**
+ * Class FS_Site
+ */
+class FS_Site extends FS_Scope_Entity {
 		/**
 		 * @var string
 		 */
@@ -91,11 +94,17 @@
 			}
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'install';
 		}
 
-		function is_localhost() {
+	/**
+	 * @return bool
+	 */
+	function is_localhost() {
 			// The server has no way to verify if localhost unless localhost appears in domain.
 			return WP_FS__IS_LOCALHOST_FOR_SERVER;
 //			return (substr($_SERVER['REMOTE_ADDR'], 0, 4) == '127.' || $_SERVER['REMOTE_ADDR'] == '::1');

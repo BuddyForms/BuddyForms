@@ -1,10 +1,16 @@
 <?php
 if ( ! defined( 'TK__EDD_STORE_URL' ) ) {
 	// This should point to your EDD install.
+	/**
+	 *
+	 */
 	define( 'TK__EDD_STORE_URL', 'https://themekraft.com' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 }
 
 // The EDD download ID of your product.
+/**
+ *
+ */
 define( 'TK__EDD_DOWNLOAD_ID', '12867' ); // you should use your own CONSTANT name, and be sure to replace it throughout this file
 
 /**

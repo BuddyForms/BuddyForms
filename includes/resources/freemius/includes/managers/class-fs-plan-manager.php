@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Plan_Manager {
+/**
+ * Class FS_Plan_Manager
+ */
+class FS_Plan_Manager {
 		/**
 		 * @var FS_Plan_Manager
 		 */
@@ -27,7 +30,10 @@
 			return self::$_instance;
 		}
 
-		private function __construct() {
+	/**
+	 * FS_Plan_Manager constructor.
+	 */
+	private function __construct() {
 		}
 
 		/**

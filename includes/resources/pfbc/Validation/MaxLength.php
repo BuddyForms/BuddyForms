@@ -1,11 +1,10 @@
 <?php
-namespace PFBC\Validation;
 
 /**
  * Class MaxLength
  * @package PFBC\Validation
  */
-class MaxLength extends \PFBC\Validation {
+class MaxLength extends Validation {
 	/**
 	 * @var
 	 */

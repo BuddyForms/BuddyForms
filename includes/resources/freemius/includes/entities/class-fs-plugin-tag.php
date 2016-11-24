@@ -10,15 +10,32 @@
 		exit;
 	}
 
-	class FS_Plugin_Tag extends FS_Entity {
-		public $version;
-		public $url;
+/**
+ * Class FS_Plugin_Tag
+ */
+class FS_Plugin_Tag extends FS_Entity {
+	/**
+	 * @var
+	 */
+	public $version;
+	/**
+	 * @var
+	 */
+	public $url;
 
-		function __construct( $tag = false ) {
+	/**
+	 * FS_Plugin_Tag constructor.
+	 *
+	 * @param bool $tag
+	 */
+	function __construct( $tag = false ) {
 			parent::__construct( $tag );
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'tag';
 		}
 	}

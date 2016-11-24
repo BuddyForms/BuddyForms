@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Plugin_Manager {
+/**
+ * Class FS_Plugin_Manager
+ */
+class FS_Plugin_Manager {
 		/**
 		 * @var string
 		 */
@@ -42,18 +45,29 @@
 			return self::$_instances[ $slug ];
 		}
 
-		protected function __construct( $slug ) {
+	/**
+	 * FS_Plugin_Manager constructor.
+	 *
+	 * @param $slug
+	 */
+	protected function __construct( $slug ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_' . 'plugins', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
 			$this->_slug = $slug;
 			$this->load();
 		}
 
-		protected function get_option_manager() {
+	/**
+	 * @return FS_Option_Manager
+	 */
+	protected function get_option_manager() {
 			return FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
 		}
 
-		protected function get_all_plugins() {
+	/**
+	 * @return mixed
+	 */
+	protected function get_all_plugins() {
 			return $this->get_option_manager()->get_option( 'plugins', array() );
 		}
 

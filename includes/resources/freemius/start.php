@@ -257,6 +257,9 @@
 	if ( ! class_exists( 'Freemius' ) ) {
 
 		if ( ! defined( 'WP_FS__SDK_VERSION' ) ) {
+			/**
+			 *
+			 */
 			define( 'WP_FS__SDK_VERSION', $this_sdk_version );
 		}
 

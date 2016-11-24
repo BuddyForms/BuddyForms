@@ -3,4 +3,7 @@
 		exit;
 	}
 
-    class Freemius_EmptyArgumentException extends Freemius_InvalidArgumentException { }
+/**
+ * Class Freemius_EmptyArgumentException
+ */
+class Freemius_EmptyArgumentException extends Freemius_InvalidArgumentException { }

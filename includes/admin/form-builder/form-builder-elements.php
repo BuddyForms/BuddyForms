@@ -808,8 +808,7 @@ add_action( 'wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_
  *
  * @return string
  */
-function buddyforms_form_element_multiple( $form_fields, $args ) {
-	global $post;
+function buddyforms_form_element_multiple( $args ) {
 
 	extract( $args );
 

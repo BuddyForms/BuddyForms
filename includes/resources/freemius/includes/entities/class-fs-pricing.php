@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Pricing extends FS_Entity {
+/**
+ * Class FS_Pricing
+ */
+class FS_Pricing extends FS_Entity {
 
 		#region Properties
 
@@ -44,7 +47,10 @@
 			parent::__construct( $pricing );
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'pricing';
 		}
 

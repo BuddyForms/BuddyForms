@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_User extends FS_Scope_Entity {
+/**
+ * Class FS_User
+ */
+class FS_User extends FS_Scope_Entity {
 
 		#region Properties
 
@@ -48,15 +51,24 @@
 			parent::__construct( $user );
 		}
 
-		function get_name() {
+	/**
+	 * @return string
+	 */
+	function get_name() {
 			return trim( ucfirst( trim( is_string( $this->first ) ? $this->first : '' ) ) . ' ' . ucfirst( trim( is_string( $this->last ) ? $this->last : '' ) ) );
 		}
 
-		function is_verified() {
+	/**
+	 * @return bool
+	 */
+	function is_verified() {
 			return ( isset( $this->is_verified ) && true === $this->is_verified );
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'user';
 		}
 	}

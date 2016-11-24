@@ -5,8 +5,17 @@
     */
     class Freemius_Exception extends Exception
     {
+	    /**
+         * @var array
+         */
         protected $_result;
+	    /**
+         * @var string
+         */
         protected $_type;
+	    /**
+         * @var int
+         */
         protected $_code;
         
         /**
@@ -48,11 +57,17 @@
             return $this->_result;
         }
 
+	    /**
+         * @return int
+         */
         public function getStringCode()
         {
             return $this->_code;
         }
-        
+
+	    /**
+         * @return string
+         */
         public function getType()
         {
             return $this->_type;

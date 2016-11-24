@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Admin_Menu_Manager {
+/**
+ * Class FS_Admin_Menu_Manager
+ */
+class FS_Admin_Menu_Manager {
 
 		#region Properties
 
@@ -95,7 +98,17 @@
 			return self::$_instances[ $plugin_slug ];
 		}
 
-		protected function __construct( $plugin_slug ) {
+		/**
+		 * FS_Admin_Menu_Manager constructor.
+		 *
+		 * @param $plugin_slug
+		 */
+	/**
+	 * FS_Admin_Menu_Manager constructor.
+	 *
+	 * @param $plugin_slug
+	 */
+	protected function __construct( $plugin_slug ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $plugin_slug . '_admin_menu', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
 			$this->_plugin_slug = $plugin_slug;
@@ -105,11 +118,32 @@
 
 		#region Helpers
 
-		private function get_option( &$options, $key, $default = false ) {
+		/**
+		 * @param $options
+		 * @param $key
+		 * @param bool $default
+		 *
+		 * @return bool
+		 */
+	/**
+	 * @param $options
+	 * @param $key
+	 * @param bool $default
+	 *
+	 * @return bool
+	 */
+	private function get_option( &$options, $key, $default = false ) {
 			return ! empty( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
-		private function get_bool_option( &$options, $key, $default = false ) {
+	/**
+	 * @param $options
+	 * @param $key
+	 * @param bool $default
+	 *
+	 * @return bool
+	 */
+	private function get_bool_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_bool( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 

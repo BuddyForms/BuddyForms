@@ -17,21 +17,36 @@
 
 	require_once( dirname( __FILE__ ) . '/FreemiusBase.php' );
 
-	define( 'FS_SDK__USER_AGENT', 'fs-php-' . Freemius_Api_Base::VERSION );
+/**
+ *
+ */
+define( 'FS_SDK__USER_AGENT', 'fs-php-' . Freemius_Api_Base::VERSION );
 
 	if ( ! defined( 'FS_SDK__SIMULATE_NO_CURL' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_SDK__SIMULATE_NO_CURL', false );
 	}
 
 	if ( ! defined( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE', false );
 	}
 
 	if ( ! defined( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL', false );
 	}
 
-	define( 'FS_SDK__HAS_CURL', ! FS_SDK__SIMULATE_NO_CURL && function_exists( 'curl_version' ) );
+/**
+ *
+ */
+define( 'FS_SDK__HAS_CURL', ! FS_SDK__SIMULATE_NO_CURL && function_exists( 'curl_version' ) );
 
 	if ( ! FS_SDK__HAS_CURL ) {
 		$curl_version = array( 'version' => '7.0.0' );
@@ -39,21 +54,39 @@
 		$curl_version = curl_version();
 	}
 
-	define( 'FS_API__PROTOCOL', version_compare( $curl_version['version'], '7.37', '>=' ) ? 'https' : 'http' );
+/**
+ *
+ */
+define( 'FS_API__PROTOCOL', version_compare( $curl_version['version'], '7.37', '>=' ) ? 'https' : 'http' );
 
 	if ( ! defined( 'FS_API__LOGGER_ON' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_API__LOGGER_ON', false );
 	}
 
 	if ( ! defined( 'FS_API__ADDRESS' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_API__ADDRESS', '://api.freemius.com' );
 	}
 	if ( ! defined( 'FS_API__SANDBOX_ADDRESS' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_API__SANDBOX_ADDRESS', '://sandbox-api.freemius.com' );
 	}
 
-	class Freemius_Api extends Freemius_Api_Base {
-		private static $_logger = array();
+/**
+ * Class Freemius_Api
+ */
+class Freemius_Api extends Freemius_Api_Base {
+	/**
+	 * @var array
+	 */
+	private static $_logger = array();
 
 		/**
 		 * @param string      $pScope   'app', 'developer', 'user' or 'install'.
@@ -71,7 +104,13 @@
 			parent::Init( $pScope, $pID, $pPublic, $pSecret, $pSandbox );
 		}
 
-		public static function GetUrl( $pCanonizedPath = '', $pIsSandbox = false ) {
+	/**
+	 * @param string $pCanonizedPath
+	 * @param bool $pIsSandbox
+	 *
+	 * @return string
+	 */
+	public static function GetUrl( $pCanonizedPath = '', $pIsSandbox = false ) {
 			$address = ( $pIsSandbox ? FS_API__SANDBOX_ADDRESS : FS_API__ADDRESS );
 
 			if ( ':' === $address[0] ) {

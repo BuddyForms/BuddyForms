@@ -80,9 +80,15 @@
 	</table>
 <?php
 	if ( ! defined( 'FS_API__ADDRESS' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_API__ADDRESS', '://api.freemius.com' );
 	}
 	if ( ! defined( 'FS_API__SANDBOX_ADDRESS' ) ) {
+		/**
+		 *
+		 */
 		define( 'FS_API__SANDBOX_ADDRESS', '://sandbox-api.freemius.com' );
 	}
 

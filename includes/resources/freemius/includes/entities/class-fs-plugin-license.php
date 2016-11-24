@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Plugin_License extends FS_Entity {
+/**
+ * Class FS_Plugin_License
+ */
+class FS_Plugin_License extends FS_Entity {
 
 		#region Properties
 
@@ -74,7 +77,10 @@
 			parent::__construct( $license );
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'license';
 		}
 

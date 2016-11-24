@@ -22,6 +22,11 @@
 				return wp_normalize_path( $path );
 			}
 		} else {
+			/**
+			 * @param $path
+			 *
+			 * @return mixed
+			 */
 			function fs_normalize_path( $path ) {
 				$path = str_replace( '\\', '/', $path );
 				$path = preg_replace( '|/+|', '/', $path );

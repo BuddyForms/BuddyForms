@@ -15,7 +15,10 @@
 	// Uncomment this line for testing.
 //	set_site_transient( 'update_plugins', null );
 
-	class FS_Plugin_Updater {
+/**
+ * Class FS_Plugin_Updater
+ */
+class FS_Plugin_Updater {
 
 		/**
 		 * @var Freemius
@@ -33,7 +36,12 @@
 		 */
 		private $_update_details;
 
-		function __construct( Freemius $freemius ) {
+	/**
+	 * FS_Plugin_Updater constructor.
+	 *
+	 * @param Freemius $freemius
+	 */
+	function __construct( Freemius $freemius ) {
 			$this->_fs = $freemius;
 
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $freemius->get_slug() . '_updater', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );

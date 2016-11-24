@@ -220,7 +220,7 @@ add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
  * @param $old_status
  * @param $post
  */
-function buddyforms_transition_post_status_regenerate_global_options( $new_status, $old_status, $post ) {
+function buddyforms_transition_post_status_regenerate_global_options( $post ) {
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
@@ -358,6 +358,8 @@ add_action( 'admin_head', 'menue_icon_admin_head_css' );
  * Adds a box to the main column on the Post and Page edit screens.
  *
  * @param $messages
+ *
+ * @return bool
  */
 function buddyforms_form_updated_messages( $messages ) {
 	global $post, $post_ID;

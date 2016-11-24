@@ -10,16 +10,46 @@
 		exit;
 	}
 
-	class FS_Plugin_Info extends FS_Entity {
-		public $plugin_id;
-		public $description;
-		public $short_description;
-		public $banner_url;
-		public $card_banner_url;
-		public $selling_point_0;
-		public $selling_point_1;
-		public $selling_point_2;
-		public $screenshots;
+/**
+ * Class FS_Plugin_Info
+ */
+class FS_Plugin_Info extends FS_Entity {
+	/**
+	 * @var
+	 */
+	public $plugin_id;
+	/**
+	 * @var
+	 */
+	public $description;
+	/**
+	 * @var
+	 */
+	public $short_description;
+	/**
+	 * @var
+	 */
+	public $banner_url;
+	/**
+	 * @var
+	 */
+	public $card_banner_url;
+	/**
+	 * @var
+	 */
+	public $selling_point_0;
+	/**
+	 * @var
+	 */
+	public $selling_point_1;
+	/**
+	 * @var
+	 */
+	public $selling_point_2;
+	/**
+	 * @var
+	 */
+	public $screenshots;
 
 		/**
 		 * @param stdClass|bool $plugin_info
@@ -28,7 +58,10 @@
 			parent::__construct( $plugin_info );
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'plugin';
 		}
 	}

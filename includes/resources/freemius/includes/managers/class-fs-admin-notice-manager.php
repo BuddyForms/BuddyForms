@@ -10,7 +10,10 @@
 		exit;
 	}
 
-	class FS_Admin_Notice_Manager {
+/**
+ * Class FS_Admin_Notice_Manager
+ */
+class FS_Admin_Notice_Manager {
 		/**
 		 * @var string
 		 */
@@ -50,7 +53,13 @@
 			return self::$_instances[ $slug ];
 		}
 
-		protected function __construct( $slug, $title = '' ) {
+	/**
+	 * FS_Admin_Notice_Manager constructor.
+	 *
+	 * @param $slug
+	 * @param string $title
+	 */
+	protected function __construct( $slug, $title = '' ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_data', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
 			$this->_slug           = $slug;
@@ -105,7 +114,10 @@
 			fs_require_once_template( 'sticky-admin-notice-js.php', $params );
 		}
 
-		private static $_added_sticky_javascript = false;
+	/**
+	 * @var bool
+	 */
+	private static $_added_sticky_javascript = false;
 
 		/**
 		 * Hook to the admin_footer to add sticky message dismiss JavaScript handler.

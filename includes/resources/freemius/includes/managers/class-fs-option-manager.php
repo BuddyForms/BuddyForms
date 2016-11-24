@@ -83,6 +83,9 @@
 			return self::$_MANAGERS[ $id ];
 		}
 
+		/**
+		 * @return string
+		 */
 		private function _get_option_manager_name() {
 //			return WP_FS__SLUG . '_' . $this->_id;
 			return $this->_id;

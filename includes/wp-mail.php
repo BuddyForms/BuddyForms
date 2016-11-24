@@ -175,6 +175,11 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param $post
  */
 add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
+/**
+ * @param $new_status
+ * @param $old_status
+ * @param $post
+ */
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -291,7 +296,11 @@ function buddyforms_send_post_status_change_notification( $post ) {
 }
 
 
-
+/**
+ * @param $form_slug
+ *
+ * @return string
+ */
 function buddyforms_mail_notification_form_elements_as_table($form_slug){
 	global $buddyforms;
 	$striped_c = 0;

@@ -24,7 +24,10 @@
 		return get_object_vars( $object );
 	}
 
-	class FS_Entity {
+/**
+ * Class FS_Entity
+ */
+class FS_Entity {
 		/**
 		 * @var number
 		 */
@@ -55,7 +58,10 @@
 			}
 		}
 
-		static function get_type() {
+	/**
+	 * @return string
+	 */
+	static function get_type() {
 			return 'type';
 		}
 
@@ -80,7 +86,10 @@
 			}
 		}
 
-		private $_is_updated = false;
+	/**
+	 * @var bool
+	 */
+	private $_is_updated = false;
 
 		/**
 		 * Update object property.

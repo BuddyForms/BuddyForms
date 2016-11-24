@@ -271,7 +271,7 @@ jQuery(document).ready(function (jQuery) {
                         jQuery('[name="post_title"]').removeClass('bf-error');
                         jQuery('[name="post_title"]').addClass('bf-ok');
                     }
-                    if (error == true) {
+                    if (error === true) {
                         return false;
                     }
 

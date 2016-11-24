@@ -94,7 +94,7 @@ function redirect_after_delete() {
 	}
 }
 
-add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
+add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 1 );
 /**
  * @param $status
  * @param $option
@@ -102,7 +102,7 @@ add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
  *
  * @return mixed
  */
-function buddyforms_submissions_set_option( $status, $option, $value ) {
+function buddyforms_submissions_set_option( $value ) {
 	return $value;
 }
 
