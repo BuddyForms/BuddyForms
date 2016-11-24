@@ -227,13 +227,13 @@ function buddyforms_welcome_screen_content() {
 			<div class="bfw-section bfw-getting-started">
 				<div class="bfw-col bfw-col-50">
 					<div class="well">
-						<h2 class="bfw-title">First Time Here?</h3>
+						<h3 class="bfw-title">First Time Here?</h3>
 							<a class="button xbutton-primary" href="#" title="" target="new">Getting Started</a>
 					</div>
 				</div>
 				<div class="bfw-col bfw-col-50">
 					<div class="well">
-						<h2 class="bfw-title">How To Create New Forms</h3>
+						<h3 class="bfw-title">How To Create New Forms</h3>
 							<a class="button xbutton-primary" href="#" title="" target="new">Contact Form</a>
 							<a class="button xbutton-primary" href="#" title="" target="new">Registration Form</a>
 							<a class="button xbutton-primary" href="#" title="" target="new">Post Form</a>

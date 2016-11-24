@@ -147,7 +147,20 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
-= 2.0.3 =
+= 2.0.4 =
+Fixed an issue in the form import function.
+Add a new do action buddyforms_admin_js_footer to add custom extension js to the admin footer
+Add a new filter buddyforms_form_builder_post_type to add new options into the post type select
+Rebuild buddyforms_locate_template function to fix a issue loosing the variables if used locate_template
+Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
+Add Text Domain and Domain Path in the header
+Remove indeed function parameter and variables
+Add dynamic version to the welcome screen
+Subject and message have not been unique
+Clean up the code
+Code smell fixes
+Delete unneeded files
+Update translations
 
 = 2.0.3 =
 Remove old select2 dependencies
