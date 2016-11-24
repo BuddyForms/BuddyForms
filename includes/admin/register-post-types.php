@@ -220,7 +220,7 @@ add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
  * @param $old_status
  * @param $post
  */
-function buddyforms_transition_post_status_regenerate_global_options( $post ) {
+function buddyforms_transition_post_status_regenerate_global_options( $new_status, $old_status, $post ) {
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
@@ -600,6 +600,7 @@ add_action( 'admin_menu', 'buddyforms_remove_slugdiv' );
 function buddyforms_add_action_buttons( $actions, $post ) {
 
 	if ( get_post_type() === 'buddyforms' ) {
+
 		$url = add_query_arg(
 			array(
 				'post_id'   => $post->ID,

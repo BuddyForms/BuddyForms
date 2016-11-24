@@ -179,14 +179,14 @@ function buddyforms_settings_page_tabs_content() {
 							<div class="inside">
 								<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
 								<form method="post" enctype="multipart/form-data">
-									<p>
-										<b>Type:</b>
-										<select name="import-type" class="regular-radio">
-											<?php echo do_action('buddyforms_import_type_options'); ?>
-											<option value="buddyforms">BuddyForms</option>
-											<option value="custom">Custom</option>
-										</select>
-									</p>
+<!--									<p>-->
+<!--										<b>Type:</b>-->
+<!--										<select name="import-type" class="regular-radio">-->
+<!--											--><?php //echo do_action('buddyforms_import_type_options'); ?>
+<!--											<option value="buddyforms">BuddyForms</option>-->
+<!--											<option value="custom">Custom</option>-->
+<!--										</select>-->
+<!--									</p>-->
 									<p>
 										<input type="file" name="import_file"/>
 									</p>
@@ -230,24 +230,48 @@ function buddyforms_process_settings_import() {
 		return false;
 	if( ! current_user_can( 'manage_options' ) )
 		return false;
-	$extension = end( explode( '.', $_FILES['import_file']['name'] ) );
+
+	$name = explode( '.', $_FILES['import_file']['name'] );
+	$extension =  end( $name );
+
 	if( $extension != 'json' ) {
 		wp_die( __( 'Please upload a valid .json file' ) );
 	}
+
 	$import_file = $_FILES['import_file']['tmp_name'];
 	if( empty( $import_file ) ) {
 		wp_die( __( 'Please upload a file to import' ) );
 	}
 	// Retrieve the settings from the file and convert the json object to an array.
-	$settings = (array) json_decode( file_get_contents( $import_file ) );
+	$settings = json_decode( file_get_contents( $import_file ), true );
 
+	$form_id = buddyforms_create_form_from_json( $settings );
 
-	// todo: Not working form import screeen
-	 print_r($settings);
-
-
-
-	//	update_option( 'buddyforms_settings', $settings );
-	//	wp_safe_redirect( admin_url( 'options-general.php?page=buddyforms_settings' ) ); exit;
+	wp_safe_redirect( admin_url( 'post.php?post=' . $form_id . '&action=edit' ) ); exit;
 }
 add_action( 'admin_init', 'buddyforms_process_settings_import' );
+
+
+function buddyforms_create_form_from_json( $json_array ) {
+
+	$bf_forms_args = array(
+		'post_title'  => $json_array['name'],
+		'post_type'   => 'buddyforms',
+		'post_status' => 'publish',
+	);
+
+	// Insert the new form
+	$post_id  = wp_insert_post( $bf_forms_args, true );
+	$the_post = get_post( $post_id );
+
+	$json_array['slug' ] = $the_post->post_name;
+
+	update_post_meta( $post_id, '_buddyforms_options', $json_array );
+
+	if ( $post_id ) {
+			buddyforms_attached_page_rewrite_rules( true );
+	}
+
+	return $post_id;
+
+}
