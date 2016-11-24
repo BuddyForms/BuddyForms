@@ -243,7 +243,7 @@ function buddyforms_process_settings_import() {
 
 
 	// todo: Not working form import screeen
-	// print_r($settings);
+	 print_r($settings);
 
 
 
