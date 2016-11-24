@@ -201,11 +201,11 @@ function buddyforms_form_elements_select_options() {
 			'label'  => __( 'Contact Fields', 'buddyforms' ),
 			'class'  => 'bf_show_if_f_type_all',
 			'fields' => array(
-				'Subject' => array(
+				'subject' => array(
 					'label'  => __( 'Subject', 'buddyforms' ),
 					'unique' => 'unique'
 				),
-				'Message' => array(
+				'message' => array(
 					'label'  => __( 'Message', 'buddyforms' ),
 					'unique' => 'unique'
 				),
