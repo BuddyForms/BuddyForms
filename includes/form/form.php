@@ -192,7 +192,7 @@ function buddyforms_create_edit_form( $args ) {
 
 add_action( 'wp', 'buddyforms_form_response_no_ajax' );
 function buddyforms_form_response_no_ajax() {
-	global $buddyforms, $bf_form_error, $bf_form_response_args;
+	global $buddyforms, $bf_form_response_args;
 
 	// If the form is submitted we will get in action
 	if ( isset( $_POST['bf_submitted'] ) ) {

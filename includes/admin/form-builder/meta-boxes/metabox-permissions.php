@@ -1,8 +1,6 @@
 <?php
 function buddyforms_permissions_unregistered_screen() {
-	global $post, $buddyform;
-
-	$form_slug = $post->post_name;
+	global $buddyform;
 
 	$form_setup = array();
 
@@ -174,8 +172,7 @@ function buddyforms_form_setup_nav_li_permission() { ?>
 
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_permission' );
 
-function buddyforms_form_setup_tab_pane_permission() {
-	global $post; ?>
+function buddyforms_form_setup_tab_pane_permission() { ?>
 	<div class="tab-pane fade in" id="permission">
 	<div class="buddyforms_accordion_permission">
 		<?php buddyforms_permissions_unregistered_screen() ?>

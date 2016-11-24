@@ -356,7 +356,7 @@ jQuery(document).ready(function (jQuery) {
                 bf_alert('Trigger already exists');
                 error = true;
             }
-        })
+        });
 
         if (error == true)
             return false;

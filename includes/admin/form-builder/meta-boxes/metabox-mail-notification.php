@@ -17,7 +17,7 @@ function buddyforms_mail_notification_screen() {
 	echo '<ul>';
 	if ( isset( $buddyform['mail_submissions'] ) ) {
 		foreach ( $buddyform['mail_submissions'] as $key => $mail_submission ) {
-			buddyforms_mail_notification_form( $key, $mail_submission );
+			buddyforms_mail_notification_form( $key );
 		}
 	} else {
 		echo '<div id="no-trigger-mailcontainer">' . __( 'No Mail Notification Trigger so far.' ) . '</div>';
@@ -68,7 +68,7 @@ function buddyforms_post_status_mail_notification_screen() {
  * @return string
  */
 function buddyforms_mail_notification_form( $trigger ) {
-	global $post, $buddyform;
+	global $buddyform;
 
 	if ( ! isset( $trigger ) ) {
 		$trigger = substr( md5( time() * rand() ), 0, 10 );

@@ -4,7 +4,7 @@
 function from_setup_form_type(value) {
     from_setup_post_type();
 
-    from_setup_attached_page()
+    from_setup_attached_page();
 
 
     // Select first tab

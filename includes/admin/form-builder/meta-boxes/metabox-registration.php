@@ -22,8 +22,6 @@ add_action( 'buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pa
 function buddyforms_registration_screen() {
 	global $post, $buddyform;
 
-	$form_slug = $post->post_name;
-
 	$form_setup = array();
 
 	if ( ! $buddyform ) {
@@ -126,7 +124,6 @@ function buddyforms_registration_screen() {
 //	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Auto Loggin', 'buddyforms' ) . '</b>', "buddyforms_options[registration][auto_loggin]", array( 'yes' => __( 'Auto loggin the user.', 'buddyforms' ) ), array( 'value' => $auto_loggin, 'shortDesc' => 'Make sure you have the recharter form element...' ) );
 
 	$new_user_role = isset( $buddyform['registration']['new_user_role'] ) ? $buddyform['registration']['new_user_role'] : 'subscriber';
-	$roles         = get_editable_roles();
 	$roles_select  = array();
 
 	foreach ( get_editable_roles() as $role_name => $role_info ) {

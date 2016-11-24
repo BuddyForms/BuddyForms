@@ -140,13 +140,18 @@ function buddyforms_get_template_directory() {
 function buddyforms_locate_template( $slug ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
+	// Get the current user so its not needed in the templates
 	$current_user  = wp_get_current_user();
+
+	// create the plugin template path
 	$template_path = BUDDYFORMS_TEMPLATE_PATH .'buddyforms/'. $slug . '.php';
 
+	// Check if template exist in the child or parent theme and use this path if available
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false)) {
 		$template_path = $template_file;
 	}
 
+	// Do the include
 	include( $template_path );
 
 }
@@ -344,7 +349,7 @@ function buddyforms_get_post_status_readable( $post_status ) {
 		return __( 'Edit Draft', 'buddyforms' );
 	}
 
-	return apply_filters( 'buddyforms_get_post_status_readable', $post_status );;
+	return apply_filters( 'buddyforms_get_post_status_readable', $post_status );
 }
 
 /**

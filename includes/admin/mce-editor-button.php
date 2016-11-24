@@ -62,18 +62,6 @@ function buddyforms_editor_button_inline_content() {
 	<div id="buddyforms_popup_container" style="display:none;">
 		<h2></h2>
 		<?php
-
-		// Get all post types
-		$args                    = array(
-			'public'  => true,
-			'show_ui' => true
-		);
-		$output                  = 'names'; // names or objects, note names is the default
-		$operator                = 'and'; // 'and' or 'or'
-		$post_types              = get_post_types( $args, $output, $operator );
-		$post_types_none['none'] = 'none';
-		$post_types              = array_merge( $post_types_none, $post_types );
-
 		//
 		// Insert Form
 		//
@@ -152,7 +140,7 @@ function buddyforms_editor_button_mce_popup() { ?>
 			jQuery('.buddyforms-button-insert-form').on('click', function (event) {
 				var form_slug = jQuery('.buddyforms_add_form').val();
 				if (form_slug == "none")
-					return
+					return;
 
 				window.send_to_editor('[buddyforms_form form_slug="' + form_slug + '"]');
 			});
@@ -163,11 +151,11 @@ function buddyforms_editor_button_mce_popup() { ?>
 				var form_slug = jQuery('.buddyforms_select_form').val();
 
 				if (shortcode == "none") {
-					alert('Please select a Button Type')
+					alert('Please select a Button Type');
 					return
 				}
 				if (form_slug == "none") {
-					alert('Please select a Form')
+					alert('Please select a Form');
 					return
 				}
 
@@ -179,11 +167,11 @@ function buddyforms_editor_button_mce_popup() { ?>
 				var form_slug = jQuery('.buddyforms_select_form_posts').val();
 
 				if (shortcode == "none") {
-					alert('Please select a List Type')
+					alert('Please select a List Type');
 					return
 				}
 				if (form_slug == "none") {
-					alert('Please select a Form')
+					alert('Please select a Form');
 					return
 				}
 

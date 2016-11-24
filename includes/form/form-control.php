@@ -29,9 +29,6 @@ function buddyforms_process_post( $args = Array() ) {
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 	), $args ) );
 
-	// get the current blog id
-	$current_blog_id = get_current_blog_id();
-
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
@@ -199,7 +196,7 @@ function buddyforms_process_post( $args = Array() ) {
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
 		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		$the_post = get_default_post_to_edit( $post_type );
+		// $the_post = get_default_post_to_edit( $post_type );
 	}
 
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
@@ -378,12 +375,11 @@ function buddyforms_process_post( $args = Array() ) {
 	do_action( 'buddyforms_process_post_end', $args );
 	Form::clearValues( "buddyforms_form_" . $form_slug );
 
-	return $args;
-
 	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
 	}
 
+	return $args;
 }
 
 /**
@@ -455,7 +451,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 	global $buddyforms, $form_slug;
 
 	if ( ! isset( $customfields ) ) {
-		return;
+		return $post_id;
 	}
 
 	foreach ( $customfields as $key => $customfield ) :

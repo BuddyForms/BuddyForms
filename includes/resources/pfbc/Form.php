@@ -428,6 +428,7 @@ class Form extends Base {
 
 			return $html;
 		}
+		return false;
 	}
 
 	/**
@@ -815,5 +816,6 @@ JS;
 		$this->Button( "Cancel", "button", array( "onclick" => "history.go(-1);" ) );
 		echo '</div></div>';
 		$this->view->renderFormClose();
+		return true;
 	}
 }

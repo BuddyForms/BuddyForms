@@ -363,7 +363,7 @@ function buddyforms_form_updated_messages( $messages ) {
 	global $post, $post_ID;
 
 	if ( $post->post_type != 'buddyforms' ) {
-		return;
+		return false;
 	}
 
 	$messages['buddyforms'] = array(

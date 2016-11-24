@@ -9,6 +9,8 @@
  * Author URI: https://profiles.wordpress.org/svenl77
  * Licence: GPLv3
  * Network: false
+ * Text Domain: buddyforms
+ * Domain Path: /languages
  *
  * @fs_premium_only /includes/admin/form-metabox.php
  *
@@ -60,8 +62,7 @@ class BuddyForms {
 		add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 		add_action( 'init', array( $this, 'includes' ), 4, 1 );
 		add_action( 'init', array( $this, 'update_db_check' ), 10 );
-
-		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ), 102, 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
@@ -130,7 +131,6 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function init_hook() {
-		global $buddyforms;
 		$this->set_globals();
 		do_action( 'buddyforms_init' );
 	}

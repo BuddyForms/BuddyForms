@@ -122,8 +122,6 @@ function buddyforms_ajax_delete_post() {
 	if ( ! $form_slug ) {
 		_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
 		die();
-
-		return;
 	}
 
 	// Check if the user is author of the post
@@ -135,8 +133,6 @@ function buddyforms_ajax_delete_post() {
 	if ( $user_can_delete == false ) {
 		_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
 		die();
-
-		return;
 	}
 
 	// check if the user has the roles roles and capabilities
@@ -149,8 +145,6 @@ function buddyforms_ajax_delete_post() {
 	if ( $user_can_delete == false ) {
 		_e( 'You do not have the required user role to use this form', 'buddyforms' );
 		die();
-
-		return;
 	}
 
 	do_action( 'buddyforms_delete_post', $post_id );

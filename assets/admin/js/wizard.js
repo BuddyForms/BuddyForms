@@ -131,7 +131,7 @@ jQuery(document).ready(function (jQuery) {
         var url_formbuilder = URL[0] + '?post=' + post_id + '&action=edit';
 
         var url_close = URL[0].replace('post.php', 'edit.php');
-        url_close = url_close + '?post_type=buddyforms'
+        url_close = url_close + '?post_type=buddyforms';
 
 
         submitdiv_actions.append('<ul>' +
@@ -226,7 +226,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#buddyforms_form_elements h2 span').html('Choose a field type and click "Add Field"');
 
         // Hide the normal form builder templates. They are not needed.
-        jQuery(buddyforms_template).hide()
+        jQuery(buddyforms_template).hide();
 
         function add_form_elements_select() {
             // Get all form elements for the selected form type and add them to the form builder
@@ -271,7 +271,7 @@ jQuery(document).ready(function (jQuery) {
                         jQuery('[name="post_title"]').removeClass('bf-error');
                         jQuery('[name="post_title"]').addClass('bf-ok');
                     }
-                    if (error === true) {
+                    if (error == true) {
                         return false;
                     }
 

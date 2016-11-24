@@ -51,7 +51,7 @@ jQuery(document).ready(function (jQuery) {
         var fieldtype = jQuery('#bf_add_new_form_element').val();
 
         if (fieldtype === 'none') {
-            jQuery('#bf_add_new_form_element_modal').val('none')
+            jQuery('#bf_add_new_form_element_modal').val('none');
 
             jQuery('#formbuilder-action-select-modal').dialog({
                 title: "Please Select a Field Type",

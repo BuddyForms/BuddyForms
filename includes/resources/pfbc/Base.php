@@ -133,5 +133,3 @@ abstract class Base {
 		}
 	}
 }
-
-?>

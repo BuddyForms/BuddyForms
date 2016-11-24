@@ -210,7 +210,7 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 	$mailheaders .= "From: $from_name <$from_email>" . "\r\n";
 	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
 
-	$wp_mail = wp_mail( $user_email, $subject, $message, $mailheaders );
+	wp_mail( $user_email, $subject, $message, $mailheaders );
 
 }
 

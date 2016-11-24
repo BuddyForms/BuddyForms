@@ -8,7 +8,6 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  * @return string
  */
 function buddyforms_create_edit_form_shortcode( $args ) {
-	global $buddyforms;
 
 	extract( shortcode_atts( array(
 		'post_type'   => '',

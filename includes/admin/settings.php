@@ -14,8 +14,7 @@ add_action( 'admin_menu', 'buddyforms_settings_menu' );
 //
 // Settings Page Content
 //
-function buddyforms_settings_page() {
-	global $pagenow, $buddyforms; ?>
+function buddyforms_settings_page() { ?>
 
 	<div class="wrap">
 
@@ -49,8 +48,6 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	$tabs = array( 'general' => 'General Settings', 'import' => 'Import Forms' );
 
 	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
-
-	$links = array();
 
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
 	foreach ( $tabs as $tab => $name ) {

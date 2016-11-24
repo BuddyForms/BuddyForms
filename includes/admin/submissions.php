@@ -119,7 +119,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * BuddyForms_Submissions_List_Table constructor.
 	 */
 	function __construct() {
-		global $status, $page, $buddyforms;
 
 		//Set parent defaults
 		parent::__construct( array(
@@ -159,8 +158,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
-		global $buddyforms;
-
 		$column_val = get_post_meta( $item['ID'], $column_name, true );
 
 		if ( is_array( $column_val ) ) {
@@ -194,11 +191,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			$sql_select = implode( ', ', $sql_args );
 
 			$customkey   = '_bf_form_slug'; // set to your custom key
-			$customvalue = '';
-			$customvalue = $_GET['form_slug'];
+			$customvalue = !empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
 			$data        = $wpdb->get_results( "SELECT $sql_select FROM $wpdb->posts, $wpdb->postmeta WHERE ID = $wpdb->postmeta.post_id AND meta_key = '$customkey' AND meta_value = '$customvalue' ORDER BY post_date DESC", ARRAY_A );
 		}
-
 
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $data );

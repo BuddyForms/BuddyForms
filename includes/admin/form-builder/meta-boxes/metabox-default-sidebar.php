@@ -7,11 +7,7 @@ function buddyforms_metabox_sidebar() {
 		return;
 	}
 
-	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-
 	$sidebar_elements = array();
-
-	$slug = $post->post_name;
 
 	$sidebar_elements[] = new Element_HTML( '
 

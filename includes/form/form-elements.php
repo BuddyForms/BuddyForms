@@ -164,7 +164,7 @@ function buddyforms_form_elements( $form, $args ) {
 							wp_editor( $buddyforms_form_content_val, 'buddyforms_form_content', $settings );
 						} else {
 							$content = false;
-							$post    = 0;
+							$post    = 0; // todo: Not sure $post = 0 is needed.
 							wp_editor( $content, 'buddyforms_form_content', $settings );
 						}
 						$wp_editor = ob_get_contents();
@@ -175,7 +175,6 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 							$required  = '<span class="required">* </span>';
 						}
-
 
 						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
 
@@ -266,7 +265,6 @@ function buddyforms_form_elements( $form, $args ) {
 								$post_status['draft'] = __( 'Draft', 'buddyforms' );
 							}
 
-
 							if ( in_array( 'future', $customfield['post_status'] ) && empty( $customfield_val ) || in_array( 'future', $customfield['post_status'] ) && get_post_status( $post_id ) == 'future' ) {
 								$post_status['future'] = __( 'Scheduled', 'buddyforms' );
 							}
@@ -278,7 +276,6 @@ function buddyforms_form_elements( $form, $args ) {
 							if ( in_array( 'private', $customfield['post_status'] ) ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
-
 
 							$customfield_val = isset( $the_post->post_status ) ? $the_post->post_status : '';
 

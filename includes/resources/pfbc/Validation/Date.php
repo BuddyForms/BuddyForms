@@ -16,7 +16,7 @@ class Validation_Date extends Validation {
 	 */
 	public function isValid( $value ) {
 		try {
-			$date = new DateTime( $value );
+			// $date = new DateTime( $value ); // todo: validate date and time with custom settings
 
 			return true;
 		} catch ( Exception $e ) {
