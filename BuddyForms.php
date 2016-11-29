@@ -64,6 +64,8 @@ class BuddyForms {
 		add_action( 'init', array( $this, 'update_db_check' ), 10 );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'remove_admin_scripts' ), 1, 1 );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ), 102, 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
 		add_action( 'admin_footer', array( $this, 'admin_js_footer' ), 2, 1 );
@@ -229,6 +231,29 @@ class BuddyForms {
 	 */
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+
+	/**
+	 * Remove Scripts and Styles loaded by other plugins and themes if the BuddyForms Vies is displayed.
+	 *
+	 * @package buddyforms
+	 * @since 2.0.5
+	 */
+	function remove_admin_scripts($hook_suffix){
+		global $post;
+
+		if (
+			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
+			//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
+			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+			|| $hook_suffix == 'buddyforms_page_bf_settings'
+			|| $hook_suffix == 'buddyforms_page_bf_submissions'
+			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+		) {
+			// The Kleo Theme comes with custom CPM Boxes CSS and mess up our admin ui. So let us remove Kleo kleo_cmb_scripts
+			remove_action( 'admin_enqueue_scripts', 'kleo_cmb_scripts' );
+		}
 	}
 
 	/**
