@@ -240,17 +240,7 @@ class BuddyForms {
 	function remove_admin_scripts($hook_suffix){
 		global $wp_scripts, $wp_styles, $post;
 
-		foreach( $wp_styles->registered as $handle ) :
-			if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
-				if($handle->src != 1){
-					if( substr($handle->handle, 0, 10) != 'buddyforms' ){
-						wp_deregister_style( $handle->handle );
-//						echo $handle->handle . ' - ' . $handle->src . '<br> ';
-					}
-				}
-			}
-		endforeach;
-
+		// Let us clean the BuddyForms admin views from unneeded styles and css
 		if (
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
@@ -260,8 +250,32 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 		) {
-			// The Kleo Theme comes with custom CPM Boxes CSS and mess up our admin ui. So let us remove Kleo kleo_cmb_scripts
-			remove_action( 'admin_enqueue_scripts', 'kleo_cmb_scripts' );
+
+			// Remove all code from the admin_head added by other plugins. We not need it on the BuddyForms Views
+			remove_all_actions( 'admin_head', 10  );
+
+			// Remove ass js added by other plugins. We want to keep the conflicts out of our world ;)
+			foreach( $wp_scripts->registered as $handle ) :
+				if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
+					if($handle->src != 1){
+						if( substr($handle->handle, 0, 10) != 'buddyforms' ){
+							wp_deregister_script( $handle->handle );
+						}
+					}
+				}
+			endforeach;
+
+			// Same for the css WordPress edit screen is a mess of meta overwrites. So let us deregister any style left over from other plugins
+			foreach( $wp_styles->registered as $handle ) :
+				if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
+					if($handle->src != 1){
+						if( substr($handle->handle, 0, 10) != 'buddyforms' ){
+							wp_deregister_style( $handle->handle );
+						}
+					}
+				}
+			endforeach;
+
 		}
 	}
 
@@ -342,7 +356,7 @@ class BuddyForms {
 			wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
 			wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
-			wp_enqueue_script( 'bootstrapjs', plugins_url( 'assets/admin/js/bootstrap.js', __FILE__ ), array( 'jquery' ) );
+			wp_enqueue_script( 'buddyforms-bootstrap-js', plugins_url( 'assets/admin/js/bootstrap.js', __FILE__ ), array( 'jquery' ) );
 
 			wp_enqueue_script( 'jQuery' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
@@ -355,7 +369,7 @@ class BuddyForms {
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 		}
 		wp_enqueue_script( 'tinymce' );
-		wp_enqueue_script( 'buddyforms_admin_all_js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'buddyforms-admin-all-js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
 
 		wp_enqueue_media();
 		wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );

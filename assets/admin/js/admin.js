@@ -269,6 +269,7 @@ jQuery(document).ready(function (jQuery) {
     //
     jQuery(document).on('click', '.bf_add_input', function () {
 
+
         var action = jQuery(this);
         var args = action.attr('href').split("/");
         var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
