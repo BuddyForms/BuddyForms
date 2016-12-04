@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post,Frontend Publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
 Tested up to: 4.6.1
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -147,41 +147,51 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
+= 2.0.5 =
+* Add a new function remove_admin_scripts to remove styles and scripts added by other plugins and themes
+* Add Kleo Theme Support
+* Fixed an issue with the dependencies management. If pro was activatedit still ask for the free. Fixed now with a new default BUDDYFORMS_PRO_VERSION in the core to check if the pro is active.
+* Make sure any css from other plugins is deregistered if the BuddyForms view is displayed
+* Add suffix "buddyforms to all js handle
+* remove_all_actions( 'admin_head', 10  ) if BuddyForms is viewed
+* To strict remove of all other plugin and theme relevant js and css is the only solution to avoid conflicts if the edit screen is used.
+* Fixed a  missing attribute in the  buddyforms_form_element_multiple function cursing the form element checkbox and select to break.
+
 = 2.0.4 =
-Fixed an issue in the form import function.
-Add a new do action buddyforms_admin_js_footer to add custom extension js to the admin footer
-Add a new filter buddyforms_form_builder_post_type to add new options into the post type select
-Rebuild buddyforms_locate_template function to fix a issue loosing the variables if used locate_template
-Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
-Add Text Domain and Domain Path in the header
-Remove indeed function parameter and variables
-Add dynamic version to the welcome screen
-Subject and message have not been unique
-Clean up the code
-Code smell fixes
-Delete unneeded files
-Update translations
+* Fixed an issue in the form import function.
+* Add a new do action buddyforms_admin_js_footer to add custom extension js to the admin footer
+* Add a new filter buddyforms_form_builder_post_type to add new options into the post type select
+* Rebuild buddyforms_locate_template function to fix a issue loosing the variables if used locate_template
+* Rename buddyforms_add_form_element_to_select to buddyforms_add_form_element_select_option
+* Add Text Domain and Domain Path in the header
+* Remove indeed function parameter and variables
+* Add dynamic version to the welcome screen
+* Subject and message have not been unique
+* Clean up the code
+* Code smell fixes
+* Delete unneeded files
+* Update translations
 
 = 2.0.3 =
-Remove old select2 dependencies
-Fixed a firefox admin ui css issue with the form type select box
-Make sure the taxonomy form element only get saved during form processing if a taxonomy is selected in the form element
-Separate starter and professional plans in the pro version. They have been accidentally the same.
-New labels for the free starter professional and business plans
-Rebuild the mail notifications. Its not needed to add any message text. BuddyForms will automatically use the subject and message form elements if they are available.
-If no message text is available BuddyForms will add all form element valuers as table into the eMail.
-Add new option to select the submitter as Sent to address
-Create a new function buddyforms_mail_notification_form_elements_as_table to add a form elements table via tags or if no mail message content exists
-Documentation for the new features
-Fixed smaller issues and css fixes reported by users.
+* Remove old select2 dependencies
+* Fixed a firefox admin ui css issue with the form type select box
+* Make sure the taxonomy form element only get saved during form processing if a taxonomy is selected in the form element
+* Separate starter and professional plans in the pro version. They have been accidentally the same.
+* New labels for the free starter professional and business plans
+* Rebuild the mail notifications. Its not needed to add any message text. BuddyForms will automatically use the subject and message form elements if they are available.
+* If no message text is available BuddyForms will add all form element valuers as table into the eMail.
+* Add new option to select the submitter as Sent to address
+* Create a new function buddyforms_mail_notification_form_elements_as_table to add a form elements table via tags or if no mail message content exists
+* Documentation for the new features
+* Fixed smaller issues and css fixes reported by users.
 
 = 2.0.2 =
-smaller submissions loop table css fixes
-fixed an issue with the update form the 1.5.3 version
+* smaller submissions loop table css fixes
+* fixed an issue with the update form the 1.5.3 version
 
 = 2.0.1 =
-Freemius SDK update
-smaller changes
+* Freemius SDK update
+* smaller changes
 
 = 2.0 =
-First public version
+* First public version
