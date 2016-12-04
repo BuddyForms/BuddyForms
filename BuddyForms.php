@@ -64,7 +64,7 @@ class BuddyForms {
 		add_action( 'init', array( $this, 'update_db_check' ), 10 );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'remove_admin_scripts' ), 1, 1 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'remove_admin_scripts' ), 9999999, 1 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ), 102, 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
@@ -219,8 +219,6 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-default-sidebar.php' );
 
 		}
-
-
 	}
 
 	/**
@@ -240,7 +238,18 @@ class BuddyForms {
 	 * @since 2.0.5
 	 */
 	function remove_admin_scripts($hook_suffix){
-		global $post;
+		global $wp_scripts, $wp_styles, $post;
+
+		foreach( $wp_styles->registered as $handle ) :
+			if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
+				if($handle->src != 1){
+					if( substr($handle->handle, 0, 10) != 'buddyforms' ){
+						wp_deregister_style( $handle->handle );
+//						echo $handle->handle . ' - ' . $handle->src . '<br> ';
+					}
+				}
+			}
+		endforeach;
 
 		if (
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
@@ -278,18 +287,18 @@ class BuddyForms {
 		) {
 
 			if ( is_rtl() ) {
-				wp_enqueue_style( 'style-rtl', plugins_url( 'assets/admin/css/admin-rtl.css', __FILE__ ) );
+				wp_enqueue_style( 'buddyforms-style-rtl', plugins_url( 'assets/admin/css/admin-rtl.css', __FILE__ ) );
 			}
 
-			wp_enqueue_style( 'bootstrapcss', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
-			wp_enqueue_style( 'buddyforms_admin_css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
+			wp_enqueue_style( 'buddyforms-bootstrap-css', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
+			wp_enqueue_style( 'buddyforms-admin-css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 		} else {
-			wp_enqueue_style( 'admin_post_metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
+			wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 		}
 		// load the tk_icons everywhere
-		wp_enqueue_style( 'tk_icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
+		wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 
 	}
 
@@ -503,7 +512,7 @@ class BuddyForms {
 		do_action( 'buddyforms_front_js_css_enqueue' );
 
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
+		wp_enqueue_style( 'buddyforms-jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
 
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-widgets' );
@@ -738,6 +747,10 @@ if ( PHP_VERSION < 5.3 ) {
 
 	// Init Freemius.
 	buddyforms_core_fs();
+
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		define( 'BUDDYFORMS_PRO_VERSION', '' );
+	}
 
 	require_once( dirname( __FILE__ ) . '/includes/resources/module-migration.php' );
 
