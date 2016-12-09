@@ -130,7 +130,7 @@ function buddyforms_welcome_screen_content() {
 
 			<h2 class="nav-tab-wrapper wp-clearfix">
 				<a href="about.php" class="nav-tab nav-tab-active">What’s New</a>
-				<a href="https://themekraft.com/buddyforms/#extensions" target="_new" title="Browse BuddyForms Add-ons"
+				<a href="edit.php?post_type=buddyforms&page=buddyforms-addons" target="_new" title="Browse BuddyForms Add-ons"
 				   class="nav-tab">BuddyForms Add-ons</a>
 			</h2>
 
@@ -148,7 +148,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="https://1l1jrk1lr1oc1721v72mdabi-wpengine.netdna-ssl.com/wp-content/themes/themekraft-2017/includes/img/buddyforms-form-wizard-screenshot-small.jpg"
+						     src="http://d33v4339jhl8k0.cloudfront.net/docs/assets/55b4a8bae4b0b0593824fb02/images/57fba99d9033600277a68676/file-CD3oQ7PIU8.png"
 						     alt="BuddyForms Form Wizard Screenshot">
 					</div>
 				</div>
