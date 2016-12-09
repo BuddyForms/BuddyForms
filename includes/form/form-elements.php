@@ -476,6 +476,8 @@ function buddyforms_form_elements( $form, $args ) {
 
 						break;
 					case 'taxonomy' :
+					case 'category' :
+					case 'tags' :
 
 						$args = array(
 							'hide_empty'    => 0,
