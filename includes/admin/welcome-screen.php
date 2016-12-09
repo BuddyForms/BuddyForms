@@ -171,7 +171,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="https://1l1jrk1lr1oc1721v72mdabi-wpengine.netdna-ssl.com/wp-content/themes/themekraft-2017/includes/img/buddyforms-formbuilder-screenshot-01.jpg"
+						     src="http://themekraft.com/wp-content/uploads/2016/10/FormWizardBuddyForms.png"
 						     alt="BuddyForms Form Wizard Screenshot">
 					</div>
 				</div>
@@ -197,8 +197,8 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="https://1l1jrk1lr1oc1721v72mdabi-wpengine.netdna-ssl.com/wp-content/themes/themekraft-2017/includes/img/buddyforms-formbuilder-screenshot-01.jpg"
-						     alt="BuddyForms Form Wizard Screenshot">
+						     src="http://themekraft.com/wp-content/uploads/2016/12/metabox-support.png"
+						     alt="BuddyForms Admin Metaboxt">
 					</div>
 				</div>
 
@@ -209,13 +209,13 @@ function buddyforms_welcome_screen_content() {
 			<div class="bfw-section bfw-news" style="margin-top: 30px;">
 				<div class="bfw-col bfw-col-50">
 					<h2 class="bfw-title">Latest Blogpost</h2>
-					<p class="lead">Read all about this new BuddyForms version:</p>
-					<a href="#" target="_new" class="button button-primary">Read Blogpost</a>
+					<p class="lead">Read all about this new BuddyForms version Tips and Tricksw:</p>
+					<a href="https://themekraft.com/buddyforms-news/" target="_new" class="button button-primary">Read Blogpost</a>
 				</div>
 				<div class="bfw-col bfw-col-50">
 					<h2 class="bfw-title">Changelog</h2>
 					<p class="lead">Check out the changelog for version 2.0</p>
-					<a href="#" target="_new" class="button button-primary">View Changelog</a></p>
+					<a href="https://wordpress.org/plugins/buddyforms/changelog/" target="_new" class="button button-primary">View Changelog</a></p>
 				</div>
 			</div>
 
@@ -228,33 +228,16 @@ function buddyforms_welcome_screen_content() {
 				<div class="bfw-col bfw-col-50">
 					<div class="well">
 						<h3 class="bfw-title">First Time Here?</h3>
-							<a class="button xbutton-primary" href="#" title="" target="new">Getting Started</a>
+							<a class="button xbutton-primary" href="http://docs.buddyforms.com/collection/108-getting-started" title="" target="new">Getting Started</a>
 					</div>
 				</div>
 				<div class="bfw-col bfw-col-50">
 					<div class="well">
 						<h3 class="bfw-title">How To Create New Forms</h3>
-							<a class="button xbutton-primary" href="#" title="" target="new">Contact Form</a>
-							<a class="button xbutton-primary" href="#" title="" target="new">Registration Form</a>
-							<a class="button xbutton-primary" href="#" title="" target="new">Post Form</a>
+							<a class="button xbutton-primary" href="http://docs.buddyforms.com/article/383-creating-a-contact-form-with-the-form-wizard" title="" target="new">Contact Form</a>
+							<a class="button xbutton-primary" href="http://docs.buddyforms.com/article/385-creating-a-registration-form-with-the-form-wizard" title="" target="new">Registration Form</a>
+							<a class="button xbutton-primary" href="http://docs.buddyforms.com/article/384-creating-a-post-form-with-the-form-wizard" title="" target="new">Post Form</a>
 					</div>
-				</div>
-			</div>
-
-
-			<!-- Docs, Support & Custom Work -->
-			<div class="bfw-section bfw-docs" style="margin-bottom: 100px;">
-				<!-- <div class="bfw-col bfw-col-50">
-					<h2 class="bfw-title">Support &amp; Docs</h2>
-					<p class="lead">Get quick help.</p>
-					<a class="button xbutton-primary" href="http://docs.buddyforms.com" title="" target="new">Documentation</a>
-					<a class="button xbutton-primary" href="https://themekraft.com/support" title="" target="new">Support</a>
-				</div> -->
-				<div class="bfw-col bfw-col-50">
-					<h1 class="bfw-title">Custom Work</h1>
-					<p class="lead">Need a custom setup?</p>
-					<a class="button button-primary" href="mailto:support@buddyforms.com" title=""
-					   target="new">Enquire</a>
 				</div>
 			</div>
 
