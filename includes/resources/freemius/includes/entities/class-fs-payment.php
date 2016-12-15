@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Payment
- */
-class FS_Payment extends FS_Entity {
+	class FS_Payment extends FS_Entity {
 
 		#region Properties
 
@@ -81,10 +78,7 @@ class FS_Payment extends FS_Entity {
 			parent::__construct( $payment );
 		}
 
-	/**
-	 * @return string
-	 */
-	static function get_type() {
+		static function get_type() {
 			return 'payment';
 		}
 

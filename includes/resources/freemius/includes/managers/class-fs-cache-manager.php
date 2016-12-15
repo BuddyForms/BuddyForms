@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Cache_Manager
- */
-class FS_Cache_Manager {
+	class FS_Cache_Manager {
 		/**
 		 * @var FS_Option_Manager
 		 */

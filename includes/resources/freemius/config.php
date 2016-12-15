@@ -11,15 +11,9 @@
 	}
 
 	if ( ! defined( 'WP_FS__SLUG' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SLUG', 'freemius' );
 	}
 	if ( ! defined( 'WP_FS__DEV_MODE' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DEV_MODE', false );
 	}
 
@@ -28,54 +22,30 @@
 	#--------------------------------------------------------------------------------
 
 	if ( ! defined( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY', false );
 	}
 	if ( ! defined( 'WP_FS__SIMULATE_NO_CURL' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SIMULATE_NO_CURL', false );
 	}
 	if ( ! defined( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE', false );
 	}
 	if ( ! defined( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL', false );
 	}
 	if ( WP_FS__SIMULATE_NO_CURL ) {
-		/**
-		 *
-		 */
 		define( 'FS_SDK__SIMULATE_NO_CURL', true );
 	}
 	if ( WP_FS__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE ) {
-		/**
-		 *
-		 */
 		define( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE', true );
 	}
 	if ( WP_FS__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL ) {
-		/**
-		 *
-		 */
 		define( 'FS_SDK__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL', true );
 	}
 
 	#endregion
 
 	if ( ! defined( 'WP_FS__SIMULATE_FREEMIUS_OFF' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SIMULATE_FREEMIUS_OFF', false );
 	}
 
@@ -100,9 +70,6 @@
 	 */
 	if ( ! defined( 'WP_FS__LOCALHOST_IP' ) ) {
 		// VVV default public network IP.
-		/**
-		 *
-		 */
 		define( 'WP_FS__VVV_DEFAULT_PUBLIC_IP', '192.168.50.4' );
 
 //		define( 'WP_FS__LOCALHOST_IP', WP_FS__VVV_DEFAULT_PUBLIC_IP );
@@ -121,9 +88,6 @@
 	 *      CLOCK IS SYNCED.
 	 */
 	if ( ! defined( 'WP_FS__SKIP_EMAIL_ACTIVATION' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SKIP_EMAIL_ACTIVATION', false );
 	}
 
@@ -133,51 +97,27 @@
 	#--------------------------------------------------------------------------------
 
 	if ( ! defined( 'WP_FS__DIR' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR', dirname( __FILE__ ) );
 	}
 	if ( ! defined( 'WP_FS__DIR_INCLUDES' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_INCLUDES', WP_FS__DIR . '/includes' );
 	}
 	if ( ! defined( 'WP_FS__DIR_TEMPLATES' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_TEMPLATES', WP_FS__DIR . '/templates' );
 	}
 	if ( ! defined( 'WP_FS__DIR_ASSETS' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_ASSETS', WP_FS__DIR . '/assets' );
 	}
 	if ( ! defined( 'WP_FS__DIR_CSS' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_CSS', WP_FS__DIR_ASSETS . '/css' );
 	}
 	if ( ! defined( 'WP_FS__DIR_JS' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_JS', WP_FS__DIR_ASSETS . '/js' );
 	}
 	if ( ! defined( 'WP_FS__DIR_IMG' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_IMG', WP_FS__DIR_ASSETS . '/img' );
 	}
 	if ( ! defined( 'WP_FS__DIR_SDK' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DIR_SDK', WP_FS__DIR_INCLUDES . '/sdk' );
 	}
 
@@ -187,28 +127,16 @@
 	 * Domain / URL / Address
 	 */
 	define( 'WP_FS__DOMAIN_PRODUCTION', 'wp.freemius.com' );
-/**
- *
- */
-define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
+	define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 
 	if ( ! defined( 'WP_FS__DOMAIN_LOCALHOST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DOMAIN_LOCALHOST', 'wp.freemius' );
 	}
 	if ( ! defined( 'WP_FS__ADDRESS_LOCALHOST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__ADDRESS_LOCALHOST', 'http://' . WP_FS__DOMAIN_LOCALHOST . ':8080' );
 	}
 
 	if ( ! defined( 'WP_FS__TESTING_DOMAIN' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__TESTING_DOMAIN', 'fswp' );
 	}
 
@@ -217,16 +145,10 @@ define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 	#--------------------------------------------------------------------------------
 
 	if ( ! defined( 'WP_FS__IS_HTTP_REQUEST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__IS_HTTP_REQUEST', isset( $_SERVER['HTTP_HOST'] ) );
 	}
 
 	if ( ! defined( 'WP_FS__IS_HTTPS' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__IS_HTTPS', ( WP_FS__IS_HTTP_REQUEST &&
 		                             // Checks if CloudFlare's HTTPS (Flexible SSL support).
 		                             isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) &&
@@ -239,30 +161,18 @@ define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 	}
 
 	if ( ! defined( 'WP_FS__IS_POST_REQUEST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__IS_POST_REQUEST', ( WP_FS__IS_HTTP_REQUEST &&
 		                                    strtoupper( $_SERVER['REQUEST_METHOD'] ) == 'POST' ) );
 	}
 
 	if ( ! defined( 'WP_FS__REMOTE_ADDR' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__REMOTE_ADDR', fs_get_ip() );
 	}
 
 	if ( ! defined( 'WP_FS__IS_LOCALHOST' ) ) {
 		if ( defined( 'WP_FS__LOCALHOST_IP' ) ) {
-			/**
-			 *
-			 */
 			define( 'WP_FS__IS_LOCALHOST', ( WP_FS__LOCALHOST_IP === WP_FS__REMOTE_ADDR ) );
 		} else {
-			/**
-			 *
-			 */
 			define( 'WP_FS__IS_LOCALHOST', WP_FS__IS_HTTP_REQUEST &&
 			                               is_string( WP_FS__REMOTE_ADDR ) &&
 			                               ( substr( WP_FS__REMOTE_ADDR, 0, 4 ) === '127.' ||
@@ -272,9 +182,6 @@ define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 	}
 
 	if ( ! defined( 'WP_FS__IS_LOCALHOST_FOR_SERVER' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__IS_LOCALHOST_FOR_SERVER', ( ! WP_FS__IS_HTTP_REQUEST ||
 		                                            false !== strpos( $_SERVER['HTTP_HOST'], 'localhost' ) ) );
 	}
@@ -283,16 +190,10 @@ define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 
 	if ( ! defined( 'WP_FS__IS_PRODUCTION_MODE' ) ) {
 		// By default, run with Freemius production servers.
-		/**
-		 *
-		 */
 		define( 'WP_FS__IS_PRODUCTION_MODE', true );
 	}
 
 	if ( ! defined( 'WP_FS__ADDRESS' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__ADDRESS', ( WP_FS__IS_PRODUCTION_MODE ? WP_FS__ADDRESS_PRODUCTION : WP_FS__ADDRESS_LOCALHOST ) );
 	}
 
@@ -302,104 +203,59 @@ define( 'WP_FS__ADDRESS_PRODUCTION', 'https://' . WP_FS__DOMAIN_PRODUCTION );
 	#--------------------------------------------------------------------------------
 
 	if ( ! defined( 'WP_FS__API_ADDRESS_LOCALHOST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__API_ADDRESS_LOCALHOST', 'http://api.freemius:8080' );
 	}
 	if ( ! defined( 'WP_FS__API_SANDBOX_ADDRESS_LOCALHOST' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__API_SANDBOX_ADDRESS_LOCALHOST', 'http://sandbox-api.freemius:8080' );
 	}
 
 	// Set API address for local testing.
 	if ( ! WP_FS__IS_PRODUCTION_MODE ) {
 		if ( ! defined( 'FS_API__ADDRESS' ) ) {
-			/**
-			 *
-			 */
 			define( 'FS_API__ADDRESS', WP_FS__API_ADDRESS_LOCALHOST );
 		}
 		if ( ! defined( 'FS_API__SANDBOX_ADDRESS' ) ) {
-			/**
-			 *
-			 */
 			define( 'FS_API__SANDBOX_ADDRESS', WP_FS__API_SANDBOX_ADDRESS_LOCALHOST );
 		}
 	}
 
 	#endregion
 
-/**
- *
- */
-define( 'WP_FS___OPTION_PREFIX', 'fs' . ( WP_FS__IS_PRODUCTION_MODE ? '' : '_dbg' ) . '_' );
+	define( 'WP_FS___OPTION_PREFIX', 'fs' . ( WP_FS__IS_PRODUCTION_MODE ? '' : '_dbg' ) . '_' );
 
 	if ( ! defined( 'WP_FS__ACCOUNTS_OPTION_NAME' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__ACCOUNTS_OPTION_NAME', WP_FS___OPTION_PREFIX . 'accounts' );
 	}
 	if ( ! defined( 'WP_FS__API_CACHE_OPTION_NAME' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__API_CACHE_OPTION_NAME', WP_FS___OPTION_PREFIX . 'api_cache' );
 	}
-/**
- *
- */
-define( 'WP_FS__OPTIONS_OPTION_NAME', WP_FS___OPTION_PREFIX . 'options' );
+	define( 'WP_FS__OPTIONS_OPTION_NAME', WP_FS___OPTION_PREFIX . 'options' );
 
 	/**
 	 * Billing Frequencies
 	 */
 	define( 'WP_FS__PERIOD_ANNUALLY', 'annual' );
-/**
- *
- */
-define( 'WP_FS__PERIOD_MONTHLY', 'monthly' );
-/**
- *
- */
-define( 'WP_FS__PERIOD_LIFETIME', 'lifetime' );
+	define( 'WP_FS__PERIOD_MONTHLY', 'monthly' );
+	define( 'WP_FS__PERIOD_LIFETIME', 'lifetime' );
 
 	/**
 	 * Plans
 	 */
 	define( 'WP_FS__PLAN_DEFAULT_PAID', false );
-/**
- *
- */
-define( 'WP_FS__PLAN_FREE', 'free' );
-/**
- *
- */
-define( 'WP_FS__PLAN_TRIAL', 'trial' );
+	define( 'WP_FS__PLAN_FREE', 'free' );
+	define( 'WP_FS__PLAN_TRIAL', 'trial' );
 
 	/**
 	 * Times in seconds
 	 */
 	if ( ! defined( 'WP_FS__TIME_5_MIN_IN_SEC' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__TIME_5_MIN_IN_SEC', 300 );
 	}
 	if ( ! defined( 'WP_FS__TIME_10_MIN_IN_SEC' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__TIME_10_MIN_IN_SEC', 600 );
 	}
 //	define( 'WP_FS__TIME_15_MIN_IN_SEC', 900 );
 	if ( ! defined( 'WP_FS__TIME_24_HOURS_IN_SEC' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__TIME_24_HOURS_IN_SEC', 86400 );
 	}
 
@@ -415,55 +271,31 @@ define( 'WP_FS__PLAN_TRIAL', 'trial' );
 			add_option( 'fs_debug_mode', $debug_mode );
 		}
 
-		/**
-		 *
-		 */
 		define( 'WP_FS__DEBUG_SDK', is_numeric( $debug_mode ) ? ( 0 < $debug_mode ) : WP_FS__DEV_MODE );
 	}
 
 	if ( ! defined( 'WP_FS__ECHO_DEBUG_SDK' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__ECHO_DEBUG_SDK', WP_FS__DEV_MODE && ! empty( $_GET['fs_dbg_echo'] ) );
 	}
 	if ( ! defined( 'WP_FS__LOG_DATETIME_FORMAT' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__LOG_DATETIME_FORMAT', 'Y-m-d H:i:s' );
 	}
 	if ( ! defined( 'FS_API__LOGGER_ON' ) ) {
-		/**
-		 *
-		 */
 		define( 'FS_API__LOGGER_ON', WP_FS__DEBUG_SDK );
 	}
 
 	if ( WP_FS__ECHO_DEBUG_SDK ) {
 		error_reporting( E_ALL );
-		ini_set( 'error_reporting', E_ALL );
-		ini_set( 'display_errors', true );
-		ini_set( 'html_errors', true );
 	}
 
 	#endregion
 
 	if ( ! defined( 'WP_FS__SCRIPT_START_TIME' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__SCRIPT_START_TIME', time() );
 	}
 	if ( ! defined( 'WP_FS__DEFAULT_PRIORITY' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__DEFAULT_PRIORITY', 10 );
 	}
 	if ( ! defined( 'WP_FS__LOWEST_PRIORITY' ) ) {
-		/**
-		 *
-		 */
 		define( 'WP_FS__LOWEST_PRIORITY', 999999999 );
 	}

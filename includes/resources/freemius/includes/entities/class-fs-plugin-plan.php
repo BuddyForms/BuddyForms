@@ -102,9 +102,6 @@
 			}
 		}
 
-		/**
-		 * @return string
-		 */
 		static function get_type() {
 			return 'plan';
 		}

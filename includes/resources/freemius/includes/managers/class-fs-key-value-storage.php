@@ -79,12 +79,6 @@
 			return self::$_instances[ $key ];
 		}
 
-		/**
-		 * FS_Key_Value_Storage constructor.
-		 *
-		 * @param $id
-		 * @param $slug
-		 */
 		protected function __construct( $id, $slug ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_' . $id, WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
@@ -93,16 +87,10 @@
 			$this->load();
 		}
 
-		/**
-		 * @return FS_Option_Manager
-		 */
 		protected function get_option_manager() {
 			return FS_Option_Manager::get_manager( WP_FS__ACCOUNTS_OPTION_NAME, true );
 		}
 
-		/**
-		 * @return mixed
-		 */
 		protected function get_all_data() {
 			return $this->get_option_manager()->get_option( $this->_id, array() );
 		}
@@ -228,45 +216,22 @@
 
 		/* ArrayAccess + Magic Access (better for refactoring)
         -----------------------------------------------------------------------------------*/
-		/**
-		 * @param $k
-		 * @param $v
-		 */
 		function __set( $k, $v ) {
 			$this->store( $k, $v );
 		}
 
-		/**
-		 * @param $k
-		 *
-		 * @return bool
-		 */
 		function __isset( $k ) {
 			return array_key_exists( $k, $this->_data );
 		}
 
-		/**
-		 * @param $k
-		 */
 		function __unset( $k ) {
 			$this->remove( $k );
 		}
 
-		/**
-		 * @param $k
-		 *
-		 * @return bool|FS_Plugin
-		 */
 		function __get( $k ) {
 			return $this->get( $k, null );
 		}
 
-		/**
-		 * @param mixed $k
-		 * @param mixed $v
-		 *
-		 * @throws Exception
-		 */
 		function offsetSet( $k, $v ) {
 			if ( is_null( $k ) ) {
 				throw new Exception( 'Can\'t append value to request params.' );
@@ -275,27 +240,14 @@
 			}
 		}
 
-		/**
-		 * @param mixed $k
-		 *
-		 * @return bool
-		 */
 		function offsetExists( $k ) {
 			return array_key_exists( $k, $this->_data );
 		}
 
-		/**
-		 * @param mixed $k
-		 */
 		function offsetUnset( $k ) {
 			unset( $this->$k );
 		}
 
-		/**
-		 * @param mixed $k
-		 *
-		 * @return bool|FS_Plugin
-		 */
 		function offsetGet( $k ) {
 			return $this->get( $k, null );
 		}

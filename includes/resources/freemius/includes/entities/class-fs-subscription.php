@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Subscription
- */
-class FS_Subscription extends FS_Entity {
+	class FS_Subscription extends FS_Entity {
 
 		#region Properties
 
@@ -87,10 +84,7 @@ class FS_Subscription extends FS_Entity {
 			parent::__construct( $subscription );
 		}
 
-	/**
-	 * @return string
-	 */
-	static function get_type() {
+		static function get_type() {
 			return 'subscription';
 		}
 

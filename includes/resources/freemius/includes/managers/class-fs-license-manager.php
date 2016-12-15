@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_License_Manager
- */
-class FS_License_Manager /*extends FS_Abstract_Manager*/
+	class FS_License_Manager /*extends FS_Abstract_Manager*/
 	{
 //
 //

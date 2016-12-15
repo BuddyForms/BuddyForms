@@ -19,88 +19,44 @@
 		}
 	}
 
-	if ( ! function_exists( 'starts_with' ) ) {
-		/**
-		 * @param $haystack
-		 * @param $needle
-		 *
-		 * @return bool
-		 */
-		function starts_with( $haystack, $needle ) {
-			$length = strlen( $needle );
-
-			return ( substr( $haystack, 0, $length ) === $needle );
-		}
-	}
-
 	/* Url.
 	--------------------------------------------------------------------------------------------*/
-/**
- * @return bool|string
- */
-function fs_get_url_daily_cache_killer() {
+	function fs_get_url_daily_cache_killer() {
 		return date( '\YY\Mm\Dd' );
 	}
 
 	/* Templates / Views.
 	--------------------------------------------------------------------------------------------*/
 	if ( ! function_exists( 'fs_get_template_path' ) ) {
-		/**
-		 * @param $path
-		 *
-		 * @return string
-		 */
 		function fs_get_template_path( $path ) {
 			return WP_FS__DIR_TEMPLATES . '/' . trim( $path, '/' );
 		}
 
-		/**
-		 * @param $path
-		 * @param null $params
-		 */
 		function fs_include_template( $path, &$params = null ) {
 			$VARS = &$params;
 			include( fs_get_template_path( $path ) );
 		}
 
-		/**
-		 * @param $path
-		 * @param null $params
-		 */
 		function fs_include_once_template( $path, &$params = null ) {
 			$VARS = &$params;
 			include_once( fs_get_template_path( $path ) );
 		}
 
-		/**
-		 * @param $path
-		 * @param null $params
-		 */
 		function fs_require_template( $path, &$params = null ) {
 			$VARS = &$params;
 			require( fs_get_template_path( $path ) );
 		}
 
-		/**
-		 * @param $path
-		 * @param null $params
-		 */
 		function fs_require_once_template( $path, &$params = null ) {
 			$VARS = &$params;
 			require_once( fs_get_template_path( $path ) );
 		}
 
-		/**
-		 * @param $path
-		 * @param null $params
-		 *
-		 * @return string
-		 */
 		function fs_get_template( $path, &$params = null ) {
 			ob_start();
 
 			$VARS = &$params;
-			require_once( fs_get_template_path( $path ) );
+			require( fs_get_template_path( $path ) );
 
 			return ob_get_clean();
 		}
@@ -108,14 +64,7 @@ function fs_get_url_daily_cache_killer() {
 
 	/* Scripts and styles including.
 	--------------------------------------------------------------------------------------------*/
-/**
- * @param $handle
- * @param $path
- * @param array $deps
- * @param bool $ver
- * @param string $media
- */
-function fs_enqueue_local_style( $handle, $path, $deps = array(), $ver = false, $media = 'all' ) {
+	function fs_enqueue_local_style( $handle, $path, $deps = array(), $ver = false, $media = 'all' ) {
 		global $fs_core_logger;
 		if ( $fs_core_logger->is_on() ) {
 			$fs_core_logger->info( 'handle = ' . $handle . '; path = ' . $path . ';' );
@@ -126,14 +75,7 @@ function fs_enqueue_local_style( $handle, $path, $deps = array(), $ver = false, 
 		wp_enqueue_style( $handle, plugins_url( plugin_basename( WP_FS__DIR_CSS . '/' . trim( $path, '/' ) ) ), $deps, $ver, $media );
 	}
 
-/**
- * @param $handle
- * @param $path
- * @param array $deps
- * @param bool $ver
- * @param string $in_footer
- */
-function fs_enqueue_local_script( $handle, $path, $deps = array(), $ver = false, $in_footer = 'all' ) {
+	function fs_enqueue_local_script( $handle, $path, $deps = array(), $ver = false, $in_footer = 'all' ) {
 		global $fs_core_logger;
 		if ( $fs_core_logger->is_on() ) {
 			$fs_core_logger->info( 'handle = ' . $handle . '; path = ' . $path . ';' );
@@ -144,13 +86,7 @@ function fs_enqueue_local_script( $handle, $path, $deps = array(), $ver = false,
 		wp_enqueue_script( $handle, plugins_url( plugin_basename( WP_FS__DIR_JS . '/' . trim( $path, '/' ) ) ), $deps, $ver, $in_footer );
 	}
 
-/**
- * @param $path
- * @param string $img_dir
- *
- * @return string
- */
-function fs_img_url( $path, $img_dir = WP_FS__DIR_IMG ) {
+	function fs_img_url( $path, $img_dir = WP_FS__DIR_IMG ) {
 		return plugins_url( plugin_basename( $img_dir . '/' . trim( $path, '/' ) ) );
 	}
 
@@ -166,22 +102,11 @@ function fs_img_url( $path, $img_dir = WP_FS__DIR_IMG ) {
 		return isset( $_REQUEST[ $key ] ) ? $_REQUEST[ $key ] : $def;
 	}
 
-/**
- * @param $key
- *
- * @return bool
- */
-function fs_request_has( $key ) {
+	function fs_request_has( $key ) {
 		return isset( $_REQUEST[ $key ] );
 	}
 
-/**
- * @param $key
- * @param bool $def
- *
- * @return bool
- */
-function fs_request_get_bool( $key, $def = false ) {
+	function fs_request_get_bool( $key, $def = false ) {
 		if ( ! isset( $_REQUEST[ $key ] ) ) {
 			return $def;
 		}
@@ -197,26 +122,15 @@ function fs_request_get_bool( $key, $def = false ) {
 		return $def;
 	}
 
-/**
- * @return bool
- */
-function fs_request_is_post() {
+	function fs_request_is_post() {
 		return ( 'post' === strtolower( $_SERVER['REQUEST_METHOD'] ) );
 	}
 
-/**
- * @return bool
- */
-function fs_request_is_get() {
+	function fs_request_is_get() {
 		return ( 'get' === strtolower( $_SERVER['REQUEST_METHOD'] ) );
 	}
 
-/**
- * @param string $action_key
- *
- * @return bool|string
- */
-function fs_get_action( $action_key = 'action' ) {
+	function fs_get_action( $action_key = 'action' ) {
 		if ( ! empty( $_REQUEST[ $action_key ] ) ) {
 			return strtolower( $_REQUEST[ $action_key ] );
 		}
@@ -232,22 +146,45 @@ function fs_get_action( $action_key = 'action' ) {
 		return false;
 	}
 
-/**
- * @param $action
- * @param string $action_key
- *
- * @return bool
- */
-function fs_request_is_action( $action, $action_key = 'action' ) {
+	function fs_request_is_action( $action, $action_key = 'action' ) {
 		return ( strtolower( $action ) === fs_get_action( $action_key ) );
 	}
 
-/**
- * @param $menu_slug
- *
- * @return bool
- */
-function fs_is_plugin_page( $menu_slug ) {
+	/**
+	 * @author Vova Feldman (@svovaf)
+	 * @since  1.0.0
+	 *
+	 * @since  1.2.1.5 Allow nonce verification.
+	 *
+	 * @param string $action
+	 * @param string $action_key
+	 * @param string $nonce_key
+	 *
+	 * @return bool
+	 */
+	function fs_request_is_action_secure(
+		$action,
+		$action_key = 'action',
+		$nonce_key = 'nonce'
+	) {
+		if ( strtolower( $action ) !== fs_get_action( $action_key ) ) {
+			return false;
+		}
+
+		$nonce = ! empty( $_REQUEST[ $nonce_key ] ) ?
+			$_REQUEST[ $nonce_key ] :
+			'';
+
+		if ( empty( $nonce ) ||
+		     ( false === wp_verify_nonce( $nonce, $action ) )
+		) {
+			return false;
+		}
+
+		return true;
+	}
+
+	function fs_is_plugin_page( $menu_slug ) {
 		return ( is_admin() && $_REQUEST['page'] === $menu_slug );
 	}
 
@@ -348,14 +285,7 @@ function fs_is_plugin_page( $menu_slug ) {
 		}
 	}
 
-/**
- * @param $slug
- * @param $page
- * @param $action
- * @param $title
- * @param array $params
- */
-function fs_ui_action_link( $slug, $page, $action, $title, $params = array() ) {
+	function fs_ui_action_link( $slug, $page, $action, $title, $params = array() ) {
 		?><a class=""
 		     href="<?php echo wp_nonce_url( freemius( $slug )->_get_admin_page_url( $page, array_merge( $params, array( 'fs_action' => $action ) ) ), $action ) ?>"><?php echo $title ?></a><?php
 	}
@@ -383,16 +313,26 @@ function fs_ui_action_link( $slug, $page, $action, $title, $params = array() ) {
 
 	set_error_handler('fs_error_handler');*/
 
-/**
- * @param $actionurl
- * @param int $action
- * @param string $name
- *
- * @return string
- */
-function fs_nonce_url( $actionurl, $action = - 1, $name = '_wpnonce' ) {
-//		$actionurl = str_replace( '&amp;', '&', $actionurl );
-		return add_query_arg( $name, wp_create_nonce( $action ), $actionurl );
+	if ( ! function_exists( 'fs_nonce_url' ) ) {
+		/**
+		 * Retrieve URL with nonce added to URL query.
+		 *
+		 * Originally was using `wp_nonce_url()` but the new version
+		 * changed the return value to escaped URL, that's not the expected
+		 * behaviour.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  ~1.1.3
+		 *
+		 * @param string     $actionurl URL to add nonce action.
+		 * @param int|string $action    Optional. Nonce action name. Default -1.
+		 * @param string     $name      Optional. Nonce name. Default '_wpnonce'.
+		 *
+		 * @return string Escaped URL with nonce action added.
+		 */
+		function fs_nonce_url( $actionurl, $action = - 1, $name = '_wpnonce' ) {
+			return add_query_arg( $name, wp_create_nonce( $action ), $actionurl );
+		}
 	}
 
 	if ( ! function_exists( 'fs_starts_with' ) ) {
@@ -476,7 +416,7 @@ function fs_nonce_url( $actionurl, $action = - 1, $name = '_wpnonce' ) {
 
 				// Skip ignore params.
 				if ( in_array( $lower_param, $ignore_params ) ||
-				     ( false !== $params_prefix && starts_with( $lower_param, $params_prefix ) )
+				     ( false !== $params_prefix && fs_starts_with( $lower_param, $params_prefix ) )
 				) {
 					continue;
 				}
@@ -523,11 +463,7 @@ function fs_nonce_url( $actionurl, $action = - 1, $name = '_wpnonce' ) {
 
 	#endregion Url Canonization ------------------------------------------------------------------
 
-/**
- * @param $from
- * @param $to
- */
-function fs_download_image( $from, $to ) {
+	function fs_download_image( $from, $to ) {
 		$ch = curl_init( $from );
 		$fp = fopen( fs_normalize_path( $to ), 'wb' );
 		curl_setopt( $ch, CURLOPT_FILE, $fp );
@@ -567,4 +503,3 @@ function fs_download_image( $from, $to ) {
 		// If both have priority return the winner.
 		return ( $a['priority'] < $b['priority'] ) ? - 1 : 1;
 	}
-

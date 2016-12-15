@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Site
- */
-class FS_Site extends FS_Scope_Entity {
+	class FS_Site extends FS_Scope_Entity {
 		/**
 		 * @var string
 		 */
@@ -55,6 +52,15 @@ class FS_Site extends FS_Scope_Entity {
 		 */
 		public $platform_version;
 		/**
+		 * Freemius SDK version
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.2
+		 *
+		 * @var string SDK version (e.g.: 1.2.2)
+		 */
+		public $sdk_version;
+		/**
 		 * @var string Programming language version (e.g PHP version).
 		 */
 		public $programming_language_version;
@@ -80,6 +86,14 @@ class FS_Site extends FS_Scope_Entity {
 		 * @var bool
 		 */
 		public $is_premium = false;
+		/**
+		 * @author Leo Fajardo (@leorw)
+		 *
+		 * @since  1.2.1.5
+		 *
+		 * @var bool
+		 */
+		public $is_disconnected = false;
 
 		/**
 		 * @param stdClass|bool $site
@@ -92,19 +106,17 @@ class FS_Site extends FS_Scope_Entity {
 			if ( is_object( $site ) ) {
 				$this->plan->id = $site->plan_id;
 			}
+
+			if ( ! is_bool( $this->is_disconnected ) ) {
+				$this->is_disconnected = false;
+			}
 		}
 
-	/**
-	 * @return string
-	 */
-	static function get_type() {
+		static function get_type() {
 			return 'install';
 		}
 
-	/**
-	 * @return bool
-	 */
-	function is_localhost() {
+		function is_localhost() {
 			// The server has no way to verify if localhost unless localhost appears in domain.
 			return WP_FS__IS_LOCALHOST_FOR_SERVER;
 //			return (substr($_SERVER['REMOTE_ADDR'], 0, 4) == '127.' || $_SERVER['REMOTE_ADDR'] == '::1');

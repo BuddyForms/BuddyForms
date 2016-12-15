@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Scope_Entity
- */
-class FS_Scope_Entity extends FS_Entity {
+	class FS_Scope_Entity extends FS_Entity {
 		/**
 		 * @var string
 		 */

@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Admin_Menu_Manager
- */
-class FS_Admin_Menu_Manager {
+	class FS_Admin_Menu_Manager {
 
 		#region Properties
 
@@ -98,17 +95,7 @@ class FS_Admin_Menu_Manager {
 			return self::$_instances[ $plugin_slug ];
 		}
 
-		/**
-		 * FS_Admin_Menu_Manager constructor.
-		 *
-		 * @param $plugin_slug
-		 */
-	/**
-	 * FS_Admin_Menu_Manager constructor.
-	 *
-	 * @param $plugin_slug
-	 */
-	protected function __construct( $plugin_slug ) {
+		protected function __construct( $plugin_slug ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $plugin_slug . '_admin_menu', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
 			$this->_plugin_slug = $plugin_slug;
@@ -118,32 +105,11 @@ class FS_Admin_Menu_Manager {
 
 		#region Helpers
 
-		/**
-		 * @param $options
-		 * @param $key
-		 * @param bool $default
-		 *
-		 * @return bool
-		 */
-	/**
-	 * @param $options
-	 * @param $key
-	 * @param bool $default
-	 *
-	 * @return bool
-	 */
-	private function get_option( &$options, $key, $default = false ) {
+		private function get_option( &$options, $key, $default = false ) {
 			return ! empty( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
-	/**
-	 * @param $options
-	 * @param $key
-	 * @param bool $default
-	 *
-	 * @return bool
-	 */
-	private function get_bool_option( &$options, $key, $default = false ) {
+		private function get_bool_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_bool( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
@@ -536,7 +502,6 @@ class FS_Admin_Menu_Manager {
 		}
 
 		/**
-		 *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.4
 		 *
@@ -577,6 +542,29 @@ class FS_Admin_Menu_Manager {
 			}
 
 			return $hookname;
+		}
+
+		/**
+		 * Adds a counter to the module's top level menu item.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param int    $counter
+		 * @param string $class
+		 */
+		function add_counter_to_menu_item( $counter = 1, $class = '' ) {
+			global $menu;
+
+			// Find main menu item.
+			$found_menu = $this->find_top_level_menu();
+
+			if ( false === $menu ) {
+				return;
+			}
+
+			// Override menu label.
+			$menu[ $found_menu['position'] ][0] = $found_menu['menu'][0] . ' <span class="update-plugins ' . $class . ' count-' . $counter . '"><span>' . $counter . '</span></span>';
 		}
 
 		#endregion Top level menu Override

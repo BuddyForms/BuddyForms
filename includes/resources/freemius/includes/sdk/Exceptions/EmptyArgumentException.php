@@ -3,7 +3,7 @@
 		exit;
 	}
 
-/**
- * Class Freemius_EmptyArgumentException
- */
-class Freemius_EmptyArgumentException extends Freemius_InvalidArgumentException { }
+	if ( ! class_exists( 'Freemius_EmptyArgumentException' ) ) {
+		class Freemius_EmptyArgumentException extends Freemius_InvalidArgumentException {
+		}
+	}

@@ -10,10 +10,7 @@
 	}
 
 	// "final class"
-/**
- * Class Freemius
- */
-class Freemius extends Freemius_Abstract {
+	class Freemius extends Freemius_Abstract {
 		/**
 		 * SDK Version
 		 *
@@ -116,6 +113,19 @@ class Freemius extends Freemius_Abstract {
 		 * @var bool Hints the SDK if the plugin has any paid plans.
 		 */
 		private $_has_paid_plans;
+
+		/**
+		 * @since 1.2.1.5
+		 * @var int Hints the SDK if the plugin offers a trial period. If negative, no trial, if zero - has a trial but
+		 *      without a specified period, if positive - the number of trial days.
+		 */
+		private $_trial_days = - 1;
+
+		/**
+		 * @since 1.2.1.5
+		 * @var bool Hints the SDK if the trial requires a payment method or not.
+		 */
+		private $_is_trial_require_payment = false;
 
 		/**
 		 * @since 1.0.7
@@ -232,66 +242,21 @@ class Freemius extends Freemius_Abstract {
 
 		#region Uninstall Reasons IDs
 
-	/**
-	 *
-	 */
-	const REASON_NO_LONGER_NEEDED = 1;
-	/**
-	 *
-	 */
-	const REASON_FOUND_A_BETTER_PLUGIN = 2;
-	/**
-	 *
-	 */
-	const REASON_NEEDED_FOR_A_SHORT_PERIOD = 3;
-	/**
-	 *
-	 */
-	const REASON_BROKE_MY_SITE = 4;
-	/**
-	 *
-	 */
-	const REASON_SUDDENLY_STOPPED_WORKING = 5;
-	/**
-	 *
-	 */
-	const REASON_CANT_PAY_ANYMORE = 6;
-	/**
-	 *
-	 */
-	const REASON_OTHER = 7;
-	/**
-	 *
-	 */
-	const REASON_DIDNT_WORK = 8;
-	/**
-	 *
-	 */
-	const REASON_DONT_LIKE_TO_SHARE_MY_INFORMATION = 9;
-	/**
-	 *
-	 */
-	const REASON_COULDNT_MAKE_IT_WORK = 10;
-	/**
-	 *
-	 */
-	const REASON_GREAT_BUT_NEED_SPECIFIC_FEATURE = 11;
-	/**
-	 *
-	 */
-	const REASON_NOT_WORKING = 12;
-	/**
-	 *
-	 */
-	const REASON_NOT_WHAT_I_WAS_LOOKING_FOR = 13;
-	/**
-	 *
-	 */
-	const REASON_DIDNT_WORK_AS_EXPECTED = 14;
-	/**
-	 *
-	 */
-	const REASON_TEMPORARY_DEACTIVATION = 15;
+		const REASON_NO_LONGER_NEEDED = 1;
+		const REASON_FOUND_A_BETTER_PLUGIN = 2;
+		const REASON_NEEDED_FOR_A_SHORT_PERIOD = 3;
+		const REASON_BROKE_MY_SITE = 4;
+		const REASON_SUDDENLY_STOPPED_WORKING = 5;
+		const REASON_CANT_PAY_ANYMORE = 6;
+		const REASON_OTHER = 7;
+		const REASON_DIDNT_WORK = 8;
+		const REASON_DONT_LIKE_TO_SHARE_MY_INFORMATION = 9;
+		const REASON_COULDNT_MAKE_IT_WORK = 10;
+		const REASON_GREAT_BUT_NEED_SPECIFIC_FEATURE = 11;
+		const REASON_NOT_WORKING = 12;
+		const REASON_NOT_WHAT_I_WAS_LOOKING_FOR = 13;
+		const REASON_DIDNT_WORK_AS_EXPECTED = 14;
+		const REASON_TEMPORARY_DEACTIVATION = 15;
 
 		#endregion
 
@@ -498,12 +463,25 @@ class Freemius extends Freemius_Abstract {
 		 * @since  1.0.9
 		 */
 		private function _register_hooks() {
+			$this->_logger->entrance();
+
 			if ( is_admin() ) {
-				// Hook to plugin activation
-				register_activation_hook( $this->_plugin_main_file_path, array(
-					&$this,
-					'_activate_plugin_event_hook'
-				) );
+				$plugin_dir = dirname( $this->_plugin_dir_path ) . '/';
+
+				/**
+				 * @since 1.2.2
+				 *
+				 * Hook to both free and premium version activations to support
+				 * auto deactivation on the other version activation.
+				 */
+				register_activation_hook(
+					$plugin_dir . $this->_free_plugin_basename,
+					array( &$this, '_activate_plugin_event_hook' )
+				);
+				register_activation_hook(
+					$plugin_dir . $this->premium_plugin_basename(),
+					array( &$this, '_activate_plugin_event_hook' )
+				);
 
 				/**
 				 * Part of the mechanism to identify new plugin install vs. plugin update.
@@ -532,9 +510,29 @@ class Freemius extends Freemius_Abstract {
 
 			add_action( 'init', array( &$this, '_redirect_on_clicked_menu_link' ), WP_FS__LOWEST_PRIORITY );
 
+			add_action( 'admin_init', array( &$this, '_add_tracking_links' ) );
+			add_action( 'admin_init', array( &$this, '_add_license_activation' ) );
+			$this->add_ajax_action( 'update_billing', array( &$this, '_update_billing_ajax_action' ) );
+			$this->add_ajax_action( 'start_trial', array( &$this, '_start_trial_ajax_action' ) );
+
 			$this->add_action( 'after_plans_sync', array( &$this, '_check_for_trial_plans' ) );
 
 			$this->add_action( 'sdk_version_update', array( &$this, '_data_migration' ), WP_FS__DEFAULT_PRIORITY, 2 );
+
+			add_action( 'admin_init', array( &$this, '_add_trial_notice' ) );
+			add_action( 'admin_init', array( &$this, '_enqueue_common_css' ) );
+
+			/**
+			 * Handle request to reset anonymous mode for `get_reconnect_url()`.
+			 *
+			 * @author Vova Feldman (@svovaf)
+			 * @since  1.2.1.5
+			 */
+			if ( fs_request_is_action( 'reset_anonymous_mode' ) &&
+			     $this->_slug === fs_request_get( 'fs_slug' )
+			) {
+				add_action( 'admin_init', array( &$this, 'connect_again' ) );
+			}
 		}
 
 		/**
@@ -565,11 +563,15 @@ class Freemius extends Freemius_Abstract {
 				return;
 			}
 
+			$plugin_main_file = clone $this->_storage->plugin_main_file;
+
 			// Store cached path (2nd layer cache).
-			$this->_storage->plugin_main_file->prev_path = $this->_storage->plugin_main_file->path;
+			$plugin_main_file->prev_path = $plugin_main_file->path;
 
 			// Clear cached path.
-			unset( $this->_storage->plugin_main_file->path );
+			unset( $plugin_main_file->path );
+
+			$this->_storage->plugin_main_file = $plugin_main_file;
 		}
 
 		/**
@@ -578,21 +580,6 @@ class Freemius extends Freemius_Abstract {
 		 */
 		private function _register_account_hooks() {
 			if ( is_admin() ) {
-				if ( ! $this->is_ajax() ) {
-					if ( $this->apply_filters( 'show_trial', true ) && $this->has_trial_plan() ) {
-						$last_time_trial_promotion_shown = $this->_storage->get( 'trial_promotion_shown', false );
-						if ( ! $this->_site->is_trial_utilized() &&
-						     (
-							     // Show promotion if never shown it yet and 24 hours after initial activation.
-							     ( false === $last_time_trial_promotion_shown && $this->_storage->activation_timestamp < ( time() - WP_FS__TIME_24_HOURS_IN_SEC ) ) ||
-							     // Show promotion in every 30 days.
-							     ( is_numeric( $last_time_trial_promotion_shown ) && 30 * WP_FS__TIME_24_HOURS_IN_SEC < time() - $last_time_trial_promotion_shown ) )
-						) {
-							$this->add_action( 'after_init_plugin_registered', array( &$this, '_add_trial_notice' ) );
-						}
-					}
-				}
-
 				// If user is paying or in trial and have the free version installed,
 				// assume that the deactivation is for the upgrade process.
 				if ( ! $this->is_paying_or_trial() || $this->is_premium() ) {
@@ -601,8 +588,7 @@ class Freemius extends Freemius_Abstract {
 						array( &$this, '_submit_uninstall_reason_action' )
 					);
 
-					global $pagenow;
-					if ( 'plugins.php' === $pagenow ) {
+					if ( $this->is_plugins_page() ) {
 						add_action( 'admin_footer', array( &$this, '_add_deactivation_feedback_dialog_box' ) );
 					}
 				}
@@ -630,7 +616,8 @@ class Freemius extends Freemius_Abstract {
 		private function _find_caller_plugin_file( $is_init = false ) {
 			// Try to load the cached value of the file path.
 			if ( isset( $this->_storage->plugin_main_file ) ) {
-				if ( file_exists( $this->_storage->plugin_main_file->path ) ) {
+				$plugin_main_file = $this->_storage->plugin_main_file;
+				if ( isset( $plugin_main_file->path ) && file_exists( $plugin_main_file->path ) ) {
 					return $this->_storage->plugin_main_file->path;
 				}
 			}
@@ -1186,10 +1173,7 @@ class Freemius extends Freemius_Abstract {
 			return $slug;
 		}
 
-	/**
-	 * @var bool
-	 */
-	private static $_statics_loaded = false;
+		private static $_statics_loaded = false;
 
 		/**
 		 * Load static resources.
@@ -1313,10 +1297,22 @@ class Freemius extends Freemius_Abstract {
 			if ( fs_request_is_action( 'restart_freemius' ) ) {
 				check_admin_referer( 'restart_freemius' );
 
+				// Clear accounts data.
 				self::$_accounts->clear( true );
 
+				// Clear SDK reference cache.
+				delete_option( 'fs_active_plugins' );
+			} else if ( fs_request_is_action( 'simulate_trial' ) ) {
+				check_admin_referer( 'simulate_trial' );
 
-				return;
+				$slug = fs_request_get( 'slug' );
+
+				$fs = freemius( $slug );
+
+				// Update SDK install to at least 24 hours before.
+				$fs->_storage->install_timestamp = ( time() - WP_FS__TIME_24_HOURS_IN_SEC );
+				// Unset the trial shown timestamp.
+				unset( $fs->_storage->trial_promotion_shown );
 			}
 		}
 
@@ -1496,7 +1492,7 @@ class Freemius extends Freemius_Abstract {
 				/**
 				 * @since 1.1.6 During dev mode, if there's connectivity - turn Freemius on regardless the configuration.
 				 *
-				 * @since 1.2.2 If the user running the premium version then ignore the 'is_active' flag and turn Freemius on to enable license key activation.
+				 * @since 1.2.1.5 If the user running the premium version then ignore the 'is_active' flag and turn Freemius on to enable license key activation.
 				 */
 				$this->_is_on = $this->_storage->connectivity_test['is_active'] ||
 				                $this->is_premium() ||
@@ -1636,8 +1632,8 @@ class Freemius extends Freemius_Abstract {
 		 * @param bool  $is_first_failure
 		 */
 		function _add_connectivity_issue_message( $api_result, $is_first_failure = true ) {
-			if ( $this->_enable_anonymous ) {
-				// Don't add message if can run anonymously.
+			if ( ! $this->is_premium() && $this->_enable_anonymous ) {
+				// Don't add message if it's the free version and can run anonymously.
 				return;
 			}
 
@@ -2161,7 +2157,7 @@ class Freemius extends Freemius_Abstract {
 						if ( $this->_admin_notices->has_sticky( 'failed_connect_api_first' ) ||
 						     $this->_admin_notices->has_sticky( 'failed_connect_api' )
 						) {
-							if ( ! $this->_enable_anonymous ) {
+							if ( ! $this->_enable_anonymous || $this->is_premium() ) {
 								// If anonymous mode is disabled, add firewall admin-notice message.
 								add_action( 'admin_footer', array( 'Freemius', '_add_firewall_issues_javascript' ) );
 
@@ -2213,7 +2209,7 @@ class Freemius extends Freemius_Abstract {
 					 *
 					 */
 					if ( $this->is_registered() ) {
-						if ( ! $this->is_sync_cron_on() ) {
+						if ( ! $this->is_sync_cron_on() && $this->is_tracking_allowed() ) {
 							$this->schedule_sync_cron();
 						}
 					}
@@ -2242,8 +2238,7 @@ class Freemius extends Freemius_Abstract {
 			}
 
 			if ( $this->is_user_in_admin() ) {
-				global $pagenow;
-				if ( 'plugins.php' === $pagenow ) {
+				if ( $this->is_plugins_page() ) {
 					$this->hook_plugin_action_links();
 				}
 
@@ -2344,26 +2339,168 @@ class Freemius extends Freemius_Abstract {
 					$this->do_action( 'after_init_addon_pending_activations' );
 				}
 			}
+		}
 
-			// Add license activation link and AJAX request handler.
-			if ( $this->has_paid_plan() ) {
-				global $pagenow;
-				if ( 'plugins.php' === $pagenow ) {
-					/**
-					 * @since 1.2.0 Add license action link only on plugins page.
-					 */
-					$this->_add_license_action_link();
-					$this->_require_license_activation_dialog();
-				}
+		/**
+		 * @author Leo Fajardo (@leorw)
+		 *
+		 * @since  1.2.1.5
+		 */
+		function _stop_tracking_callback() {
+			$result = $this->stop_tracking();
 
-				if ( $this->is_ajax_action( array(
-					'activate_license',
-					'resend_license_key'
-				) )
-				) {
-					// Hook license activation and resend AJAX callbacks.
-					$this->_require_license_activation_dialog();
-				}
+			if ( true === $result ) {
+				$this->shoot_ajax_success();
+			}
+
+			$this->_logger->api_error( $result );
+
+			$this->shoot_ajax_failure(
+				__fs( 'unexpected-api-error', $this->_slug ) .
+				( $this->is_api_error( $result ) && isset( $result->error ) ?
+					$result->error->message :
+					var_export( $result, true ) )
+			);
+		}
+
+		/**
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 */
+		function _allow_tracking_callback() {
+			$result = $this->allow_tracking();
+
+			if ( true === $result ) {
+				$this->shoot_ajax_success();
+			}
+
+			$this->_logger->api_error( $result );
+
+			$this->shoot_ajax_failure(
+				__fs( 'unexpected-api-error', $this->_slug ) .
+				( $this->is_api_error( $result ) && isset( $result->error ) ?
+					$result->error->message :
+					var_export( $result, true ) )
+			);
+		}
+
+		/**
+		 * Opt-out from usage tracking.
+		 *
+		 * Note: This will not delete the account information but will stop all tracking.
+		 *
+		 * Returns:
+		 *  1. FALSE  - If the user never opted-in.
+		 *  2. TRUE   - If successfully opted-out.
+		 *  3. object - API result on failure.
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 *
+		 * @return bool|object
+		 */
+		function stop_tracking() {
+			$this->_logger->entrance();
+
+			if ( ! $this->is_registered() ) {
+				// User never opted-in.
+				return false;
+			}
+
+			if ( $this->is_tracking_prohibited() ) {
+				// Already disconnected.
+				return true;
+			}
+
+			// Send update to FS.
+			$result = $this->get_api_site_scope()->call( '/?fields=is_disconnected', 'put', array(
+				'is_disconnected' => true
+			) );
+
+			if ( ! $this->is_api_result_entity( $result ) ||
+			     ! isset( $result->is_disconnected ) ||
+			     ! $result->is_disconnected
+			) {
+				$this->_logger->api_error( $result );
+
+				return $result;
+			}
+
+			$this->_site->is_disconnected = $result->is_disconnected;
+			$this->_store_site();
+
+			$this->clear_sync_cron();
+
+			// Successfully disconnected.
+			return true;
+		}
+
+		/**
+		 * Opt-in back into usage tracking.
+		 *
+		 * Note: This will only work if the user opted-in previously.
+		 *
+		 * Returns:
+		 *  1. FALSE  - If the user never opted-in.
+		 *  2. TRUE   - If successfully opted-in back to usage tracking.
+		 *  3. object - API result on failure.
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 *
+		 * @return bool|object
+		 */
+		function allow_tracking() {
+			$this->_logger->entrance();
+
+			if ( ! $this->is_registered() ) {
+				// User never opted-in.
+				return false;
+			}
+
+			if ( $this->is_tracking_allowed() ) {
+				// Tracking already allowed.
+				return true;
+			}
+
+			$result = $this->get_api_site_scope()->call( '/?is_disconnected', 'put', array(
+				'is_disconnected' => false
+			) );
+
+			if ( ! $this->is_api_result_entity( $result ) ||
+			     ! isset( $result->is_disconnected ) ||
+			     $result->is_disconnected
+			) {
+				$this->_logger->api_error( $result );
+
+				return $result;
+			}
+
+			$this->_site->is_disconnected = $result->is_disconnected;
+			$this->_store_site();
+
+			$this->schedule_sync_cron();
+
+			// Successfully reconnected.
+			return true;
+		}
+
+		/**
+		 * If user opted-in and later disabled usage-tracking,
+		 * re-allow tracking for licensing and updates.
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 *
+		 * @since  1.2.1.5
+		 */
+		private function reconnect_locally() {
+			$this->_logger->entrance();
+
+			if ( $this->is_tracking_prohibited() &&
+			     $this->is_registered()
+			) {
+				$this->_site->is_disconnected = false;
+				$this->_store_site();
 			}
 		}
 
@@ -2398,7 +2535,7 @@ class Freemius extends Freemius_Abstract {
 				$parent_id = $this->get_numeric_option( $plugin_info['parent'], 'id', null );
 //				$parent_slug       = $this->get_option( $plugin_info['parent'], 'slug', null );
 //				$parent_public_key = $this->get_option( $plugin_info['parent'], 'public_key', null );
-				$parent_name = $this->get_option( $plugin_info['parent'], 'name', null );
+//				$parent_name = $this->get_option( $plugin_info['parent'], 'name', null );
 			}
 
 			if ( false === $id ) {
@@ -2457,6 +2594,17 @@ class Freemius extends Freemius_Abstract {
 				$this->_anonymous_mode   = $this->get_bool_option( $plugin_info, 'anonymous_mode', false );
 			}
 			$this->_permissions = $this->get_option( $plugin_info, 'permissions', array() );
+
+			if ( ! empty( $plugin_info['trial'] ) ) {
+				$this->_trial_days = $this->get_numeric_option(
+					$plugin_info['trial'],
+					'days',
+					// Default to 0 - trial without days specification.
+					0
+				);
+
+				$this->_is_trial_require_payment = $this->get_bool_option( $plugin_info['trial'], 'is_require_payment', false );
+			}
 		}
 
 		/**
@@ -2470,25 +2618,11 @@ class Freemius extends Freemius_Abstract {
 			return ! empty( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
-	/**
-	 * @param $options
-	 * @param $key
-	 * @param bool $default
-	 *
-	 * @return bool
-	 */
-	private function get_bool_option( &$options, $key, $default = false ) {
+		private function get_bool_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_bool( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
-	/**
-	 * @param $options
-	 * @param $key
-	 * @param bool $default
-	 *
-	 * @return bool
-	 */
-	private function get_numeric_option( &$options, $key, $default = false ) {
+		private function get_numeric_option( &$options, $key, $default = false ) {
 			return isset( $options[ $key ] ) && is_numeric( $options[ $key ] ) ? $options[ $key ] : $default;
 		}
 
@@ -2592,11 +2726,9 @@ class Freemius extends Freemius_Abstract {
 		function _plugin_code_type_changed() {
 			$this->_logger->entrance();
 
-			// Schedule code type changes event.
-//			$this->sync_install();
-			$this->schedule_install_sync();
-
 			if ( $this->is_premium() ) {
+				$this->reconnect_locally();
+
 				// Activated premium code.
 				$this->do_action( 'after_premium_version_activation' );
 
@@ -2605,6 +2737,7 @@ class Freemius extends Freemius_Abstract {
 					'trial_started',
 					'plan_upgraded',
 					'plan_changed',
+					'license_activated',
 				) );
 
 				$this->_admin_notices->add_sticky(
@@ -2630,6 +2763,9 @@ class Freemius extends Freemius_Abstract {
 					);
 				}
 			}
+
+			// Schedule code type changes event.
+			$this->schedule_install_sync();
 
 			/**
 			 * Unregister the uninstall hook for the other version of the plugin (with different code type) to avoid
@@ -2849,8 +2985,8 @@ class Freemius extends Freemius_Abstract {
 					$this->_parent->_admin_notices->add_sticky(
 						sprintf(
 							__fs( ( $is_after_trial_cancel ?
-									'addon-trial-cancelled-message' :
-									'addon-no-license-message' ),
+								'addon-trial-cancelled-message' :
+								'addon-no-license-message' ),
 								$this->_parent->_slug
 							),
 							'<b>' . $this->_plugin->title . '</b>'
@@ -3283,8 +3419,9 @@ class Freemius extends Freemius_Abstract {
 		 * @since  1.0.7
 		 *
 		 * @param bool|string $email
+		 * @param bool        $is_pending_trial Since 1.2.1.5
 		 */
-		function _add_pending_activation_notice( $email = false ) {
+		function _add_pending_activation_notice( $email = false, $is_pending_trial = false ) {
 			if ( ! is_string( $email ) ) {
 				$current_user = self::_get_current_wp_user();
 				$email        = $current_user->user_email;
@@ -3294,7 +3431,8 @@ class Freemius extends Freemius_Abstract {
 				sprintf(
 					__fs( 'pending-activation-message', $this->_slug ),
 					'<b>' . $this->get_plugin_name() . '</b>',
-					'<b>' . $email . '</b>'
+					'<b>' . $email . '</b>',
+					__fs( $is_pending_trial ? 'start-the-trial' : 'complete-the-install', $this->_slug )
 				),
 				'activation_pending',
 				'Thanks!'
@@ -3341,9 +3479,7 @@ class Freemius extends Freemius_Abstract {
 
 				$this->skip_connection();
 
-				if ( fs_redirect( $this->get_after_activation_url( 'after_skip_url' ) ) ) {
-					exit();
-				}
+				fs_redirect( $this->get_after_activation_url( 'after_skip_url' ) );
 			}
 
 			if ( ! $this->is_addon() && ! $this->is_registered() && ! $this->is_anonymous() ) {
@@ -3432,11 +3568,11 @@ class Freemius extends Freemius_Abstract {
 				jQuery(document).ready(function ($) {
 					if ('undefined' !== typeof(jQuery().pointer)) {
 
-						var element = <?php echo $this->apply_filters('optin_pointer_element', '$("#non_existing_element");') ?>;
+						var element = <?php echo $this->apply_filters( 'optin_pointer_element', '$("#non_existing_element");' ) ?>;
 
 						if (element.length > 0) {
 							var optin = $(element).pointer($.extend(true, {}, {
-								content     : <?php echo json_encode($pointer_content) ?>,
+								content     : <?php echo json_encode( $pointer_content ) ?>,
 								position    : {
 									edge : 'left',
 									align: 'center'
@@ -3446,10 +3582,10 @@ class Freemius extends Freemius_Abstract {
 									return '';
 								},
 								pointerWidth: 482
-							}, <?php echo $this->apply_filters('optin_pointer_options_json', '{}') ?>));
+							}, <?php echo $this->apply_filters( 'optin_pointer_options_json', '{}' ) ?>));
 
 							<?php
-							echo $this->apply_filters('optin_pointer_execute', "
+							echo $this->apply_filters( 'optin_pointer_execute', "
 
 							optin.pointer('open');
 
@@ -3458,12 +3594,12 @@ class Freemius extends Freemius_Abstract {
 								.parents('.wp-pointer.wp-pointer-top')
 								.addClass('fs-opt-in-pointer');
 
-							", 'element', 'optin') ?>
+							", 'element', 'optin' ) ?>
 						}
 					}
 				});
 				// ]]></script>
-		<?php
+			<?php
 		}
 
 		/**
@@ -3583,7 +3719,7 @@ class Freemius extends Freemius_Abstract {
 		 * Check if it's the first plugin release that is running Freemius.
 		 *
 		 * @author Vova Feldman (@svovaf)
-		 * @since  1.2.2
+		 * @since  1.2.1.5
 		 *
 		 * @return bool
 		 */
@@ -3612,17 +3748,32 @@ class Freemius extends Freemius_Abstract {
 			FS_Api::clear_cache();
 
 			if ( $this->is_registered() ) {
+				$this->reconnect_locally();
+
 				// Schedule re-activation event and sync.
 //				$this->sync_install( array(), true );
 				$this->schedule_install_sync();
 
-				/**
-				 * @todo Work on automatic deactivation of the Free plugin version. It doesn't work since the slug of the free & premium versions is identical. Therefore, only one instance of Freemius is created and the activation hook of the premium version is not being added.
-				 */
-				if ( $this->_plugin_basename !== $this->_free_plugin_basename ) {
-					// Deactivate Free plugin version on premium plugin activation.
-					deactivate_plugins( $this->_free_plugin_basename );
+				$is_premium_version_activation = ( current_filter() !== ( 'activate_' . $this->_free_plugin_basename ) );
 
+				// 1. If running in the activation of the FREE module, get the basename of the PREMIUM.
+				// 2. If running in the activation of the PREMIUM module, get the basename of the FREE.
+				$other_version_basename = $is_premium_version_activation ?
+					$this->_free_plugin_basename :
+					$this->premium_plugin_basename();
+
+				/**
+				 * If the other module version is activate, deactivate it.
+				 *
+				 * @author Leo Fajardo (@leorw)
+				 * @since  1.2.2
+				 */
+				if ( is_plugin_active( $other_version_basename ) ) {
+					deactivate_plugins( $other_version_basename );
+				}
+
+				// If activating the premium module version, add an admin noitce to congratulate for an upgrade completion.
+				if ( $is_premium_version_activation ) {
 					$this->_admin_notices->add(
 						sprintf( __fs( 'successful-version-upgrade-message', $this->_slug ), sprintf( '<b>%s</b>', $this->_plugin->title ) ),
 						__fs( 'woot', $this->_slug ) . '!'
@@ -3833,9 +3984,7 @@ class Freemius extends Freemius_Abstract {
 
 			$this->reset_anonymous_mode();
 
-			if ( fs_redirect( $this->get_activation_url() ) ) {
-				exit();
-			}
+			fs_redirect( $this->get_activation_url() );
 		}
 
 		/**
@@ -4161,11 +4310,13 @@ class Freemius extends Freemius_Abstract {
 				'language'                     => get_bloginfo( 'language' ),
 				'charset'                      => get_bloginfo( 'charset' ),
 				'platform_version'             => get_bloginfo( 'version' ),
+				'sdk_version'                  => $this->version,
 				'programming_language_version' => phpversion(),
 				'title'                        => get_bloginfo( 'name' ),
 				'url'                          => get_site_url(),
 				// Special params.
 				'is_active'                    => true,
+				'is_disconnected'              => $this->is_tracking_prohibited(),
 				'is_uninstalled'               => false,
 			), $override );
 		}
@@ -4195,7 +4346,7 @@ class Freemius extends Freemius_Abstract {
 
 				foreach ( $check_properties as $p => $v ) {
 					if ( property_exists( $this->_site, $p ) ) {
-						if ( ! empty( $this->_site->{$p} ) &&
+						if ( ( is_bool( $this->_site->{$p} ) || ! empty( $this->_site->{$p} ) ) &&
 						     $this->_site->{$p} != $v
 						) {
 							$this->_site->{$p} = $v;
@@ -4231,7 +4382,7 @@ class Freemius extends Freemius_Abstract {
 				// Send updated values to FS.
 				$site = $this->get_api_site_scope()->call( '/', 'put', $params );
 
-				if ( ! $this->is_api_error( $site ) ) {
+				if ( $this->is_api_result_entity( $site ) ) {
 					// I successfully sent install update, clear scheduled sync if exist.
 					$this->clear_install_sync_cron();
 				}
@@ -4250,8 +4401,6 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @param string[] string $override
 		 * @param bool     $flush
-		 *
-		 * @return false|object|string
 		 */
 		private function sync_install( $override = array(), $flush = false ) {
 			$this->_logger->entrance();
@@ -4263,7 +4412,7 @@ class Freemius extends Freemius_Abstract {
 				return;
 			}
 
-			if ( $this->is_api_error( $site ) ) {
+			if ( ! $this->is_api_result_entity( $site ) ) {
 				// Failed to sync, don't update locally.
 				return;
 			}
@@ -4434,9 +4583,6 @@ class Freemius extends Freemius_Abstract {
 
 			self::$_static_logger->info( 'plugin = ' . $plugin_file );
 
-			/**
-			 *
-			 */
 			define( 'WP_FS__UNINSTALL_MODE', true );
 
 			$fs = self::get_instance_by_file( $plugin_file );
@@ -4469,6 +4615,8 @@ class Freemius extends Freemius_Abstract {
 		 */
 		private static function require_plugin_essentials() {
 			if ( ! function_exists( 'get_plugins' ) ) {
+				self::$_static_logger->log( 'Including wp-admin/includes/plugin.php...' );
+
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			}
 		}
@@ -4531,6 +4679,28 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function get_id() {
 			return $this->_plugin->id;
+		}
+
+		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @return string Freemius SDK version
+		 */
+		function get_sdk_version() {
+			return $this->version;
+		}
+
+		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @return number Parent plugin ID (if parent exist).
+		 */
+		function get_parent_id() {
+			return $this->is_addon() ?
+				$this->get_parent_instance()->get_id() :
+				$this->_plugin->id;
 		}
 
 		/**
@@ -4622,10 +4792,7 @@ class Freemius extends Freemius_Abstract {
 			return $this->_plugin_basename;
 		}
 
-	/**
-	 * @return string
-	 */
-	function get_plugin_folder_name() {
+		function get_plugin_folder_name() {
 			$this->_logger->entrance();
 
 			$plugin_folder = $this->_plugin_basename;
@@ -4760,7 +4927,7 @@ class Freemius extends Freemius_Abstract {
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.6
 		 *
-		 * @return FS_Plugin[]|false
+		 * @return array<number,FS_Plugin[]>|false
 		 */
 		private static function get_all_addons() {
 			$addons = self::$_accounts->get_option( 'addons', array() );
@@ -4797,6 +4964,18 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function is_registered() {
 			return is_object( $this->_user );
+		}
+
+		/**
+		 * Returns TRUE if the user opted-in and didn't disconnect (opt-out).
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 *
+		 * @return bool
+		 */
+		function is_tracking_allowed() {
+			return ( is_object( $this->_site ) && true !== $this->_site->is_disconnected );
 		}
 
 		/**
@@ -4837,16 +5016,18 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @since  1.1.7.3 If not yet loaded, fetch data from the API.
 		 *
+		 * @param bool $flush
+		 *
 		 * @return FS_Plugin[]|false
 		 */
-		function get_addons() {
+		function get_addons( $flush = false ) {
 			$this->_logger->entrance();
 
 			if ( ! $this->_has_addons ) {
 				return false;
 			}
 
-			$addons = $this->_sync_addons();
+			$addons = $this->_sync_addons( $flush );
 
 			return ( ! is_array( $addons ) || empty( $addons ) ) ?
 				false :
@@ -4924,12 +5105,14 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @param string $slug
 		 *
+		 * @param bool   $flush
+		 *
 		 * @return FS_Plugin|false
 		 */
-		function get_addon_by_slug( $slug ) {
+		function get_addon_by_slug( $slug, $flush = false ) {
 			$this->_logger->entrance();
 
-			$addons = $this->get_addons();
+			$addons = $this->get_addons( $flush );
 
 			if ( is_array( $addons ) ) {
 				foreach ( $addons as $addon ) {
@@ -4986,10 +5169,12 @@ class Freemius extends Freemius_Abstract {
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.9
 		 *
-		 * @return FS_Plugin_Plan
+		 * @return FS_Plugin_Plan|false
 		 */
 		function get_plan() {
-			return is_object( $this->_site->plan ) ? $this->_site->plan : false;
+			return is_object( $this->_site->plan ) ?
+				$this->_site->plan :
+				false;
 		}
 
 		/**
@@ -5137,7 +5322,7 @@ class Freemius extends Freemius_Abstract {
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.5
 		 *
-		 * @return FS_Plugin_License
+		 * @return FS_Plugin_License|false
 		 */
 		function _get_available_premium_license() {
 			$this->_logger->entrance();
@@ -5167,7 +5352,8 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function _sync_plans() {
 			$plans = $this->_fetch_plugin_plans();
-			if ( ! $this->is_api_error( $plans ) ) {
+
+			if ( $this->is_array_instanceof( $plans, 'FS_Plugin_Plan' ) ) {
 				$this->_plans = $plans;
 				$this->_store_plans();
 			}
@@ -5183,7 +5369,7 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @param number $id
 		 *
-		 * @return FS_Plugin_Plan
+		 * @return FS_Plugin_Plan|false
 		 */
 		function _get_plan_by_id( $id ) {
 			$this->_logger->entrance();
@@ -5237,7 +5423,8 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function _sync_licenses( $site_license_id = false ) {
 			$licenses = $this->_fetch_licenses( false, $site_license_id );
-			if ( ! $this->is_api_error( $licenses ) ) {
+
+			if ( $this->is_array_instanceof( $licenses, 'FS_Plugin_License' ) ) {
 				$this->_licenses = $licenses;
 				$this->_store_licenses();
 			}
@@ -5256,7 +5443,7 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @param number $id
 		 *
-		 * @return FS_Plugin_License
+		 * @return FS_Plugin_License|false
 		 */
 		function _get_license_by_id( $id ) {
 			$this->_logger->entrance();
@@ -5481,6 +5668,17 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function has_trial_plan() {
 			if ( ! $this->is_registered() ) {
+				/**
+				 * @author Vova Feldman(@svovaf)
+				 * @since  1.2.1.5
+				 *
+				 * Allow setting a trial from the SDK without calling the API.
+				 * But, if the user did opt-in, continue using the real data from the API.
+				 */
+				if ( $this->_trial_days >= 0 ) {
+					return true;
+				}
+
 				return false;
 			}
 
@@ -5519,29 +5717,55 @@ class Freemius extends Freemius_Abstract {
 		}
 
 		/**
+		 * Displays the opt-out dialog box when the user clicks on the "Opt Out" link on the "Plugins"
+		 * page.
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 */
+		function _add_optout_dialog() {
+			$vars = array(
+				'slug' => $this->_slug,
+			);
+
+			fs_require_template( 'forms/optout.php', $vars );
+		}
+
+		/**
 		 * Prepare page to include all required UI and logic for the license activation dialog.
 		 *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.2.0
 		 */
-		function _require_license_activation_dialog() {
-			if ( $this->is_ajax() ) {
-				if ( $this->is_ajax_action( 'activate_license' ) ) {
-					// Add license activation AJAX callback.
-					$this->add_ajax_action( 'activate_license', array( &$this, '_activate_license_ajax_action' ) );
-				}
-
-				if ( $this->is_ajax_action( 'resend_license_key' ) ) {
-					// Add resend license AJAX callback.
-					$this->add_ajax_action( 'resend_license_key', array(
-						&$this,
-						'_resend_license_key_ajax_action'
-					) );
-				}
-			} else {
-				// Inject license activation dialog UI and client side code.
-				add_action( 'admin_footer', array( &$this, '_add_license_activation_dialog_box' ) );
+		function _add_license_activation() {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				// Only admins can activate a license.
+				return;
 			}
+
+			if ( ! $this->has_paid_plan() ) {
+				// Module doesn't have any paid plans.
+				return;
+			}
+
+			if ( ! $this->is_premium() ) {
+				// Only add license activation logic to the premium version.
+				return;
+			}
+
+			// Add license activation link and AJAX request handler.
+			if ( $this->is_plugins_page() ) {
+				/**
+				 * @since 1.2.0 Add license action link only on plugins page.
+				 */
+				$this->_add_license_action_link();
+			}
+
+			// Add license activation AJAX callback.
+			$this->add_ajax_action( 'activate_license', array( &$this, '_activate_license_ajax_action' ) );
+
+			// Add resend license AJAX callback.
+			$this->add_ajax_action( 'resend_license_key', array( &$this, '_resend_license_key_ajax_action' ) );
 		}
 
 		/**
@@ -5563,7 +5787,7 @@ class Freemius extends Freemius_Abstract {
 			if ( $this->is_registered() ) {
 				$api     = $fs->get_api_site_scope();
 				$install = $api->call( '/', 'put', array(
-					'license_key' => $license_key
+					'license_key' => $this->apply_filters( 'license_key', $license_key )
 				) );
 
 				if ( isset( $install->error ) ) {
@@ -5574,6 +5798,8 @@ class Freemius extends Freemius_Abstract {
 						$this;
 
 					$next_page = $fs->_get_sync_license_url( $this->get_id(), true );
+
+					$this->reconnect_locally();
 				}
 			} else {
 				$next_page = $this->opt_in( false, false, false, $license_key );
@@ -5596,6 +5822,75 @@ class Freemius extends Freemius_Abstract {
 			echo json_encode( $result );
 
 			exit;
+		}
+
+		/**
+		 * Billing update AJAX callback.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 */
+		function _update_billing_ajax_action() {
+			check_ajax_referer( $this->get_action_tag( 'update_billing' ), 'security' );
+
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				// Only for admins.
+				$this->shoot_ajax_failure();
+			}
+
+			$billing = fs_request_get( 'billing' );
+
+			$api    = $this->get_api_user_scope();
+			$result = $api->call( '/billing.json', 'put', array_merge( $billing, array(
+				'plugin_id' => $this->get_parent_id(),
+			) ) );
+
+			if ( ! $this->is_api_result_entity( $result ) ) {
+				$this->shoot_ajax_failure();
+			}
+
+			// Purge cached billing.
+			$this->get_api_user_scope()->purge_cache( 'billing.json' );
+
+			$this->shoot_ajax_success();
+		}
+
+		/**
+		 * Trial start for anonymous users (AJAX callback).
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 */
+		function _start_trial_ajax_action() {
+			check_ajax_referer( $this->get_action_tag( 'start_trial' ), 'security' );
+
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				// Only for admins.
+				$this->shoot_ajax_failure();
+			}
+
+			$trial_data = fs_request_get( 'trial' );
+
+			$next_page = $this->opt_in(
+				false,
+				false,
+				false,
+				false,
+				false,
+				$trial_data['plan_id']
+			);
+
+			if ( is_object( $next_page ) && $this->is_api_error( $next_page ) ) {
+				$this->shoot_ajax_failure(
+					isset( $next_page->error ) ?
+						$next_page->error->message :
+						var_export( $next_page, true )
+				);
+			}
+
+			$this->shoot_ajax_success( array(
+				'next_page' => $next_page,
+			) );
 		}
 
 		/**
@@ -5645,6 +5940,20 @@ class Freemius extends Freemius_Abstract {
 			echo json_encode( $licenses );
 
 			exit;
+		}
+
+		/**
+		 * Helper method to check if user in the plugins page.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @return bool
+		 */
+		private function is_plugins_page() {
+			global $pagenow;
+
+			return ( 'plugins.php' === $pagenow );
 		}
 
 		#----------------------------------------------------------------------------------
@@ -6030,7 +6339,7 @@ class Freemius extends Freemius_Abstract {
 			self::require_pluggable_essentials();
 
 			return ( $add_action_nonce && is_string( $action ) ) ?
-				wp_nonce_url( $this->_get_admin_page_url( 'account', $params ), $action ) :
+				fs_nonce_url( $this->_get_admin_page_url( 'account', $params ), $action ) :
 				$this->_get_admin_page_url( 'account', $params );
 		}
 
@@ -6123,12 +6432,7 @@ class Freemius extends Freemius_Abstract {
 
 		/* Security
 		------------------------------------------------------------------------------------------------------------------*/
-	/**
-	 * @param $str
-	 *
-	 * @return null|string
-	 */
-	private function _encrypt( $str ) {
+		private function _encrypt( $str ) {
 			if ( is_null( $str ) ) {
 				return null;
 			}
@@ -6136,12 +6440,7 @@ class Freemius extends Freemius_Abstract {
 			return base64_encode( $str );
 		}
 
-	/**
-	 * @param $str
-	 *
-	 * @return null|string
-	 */
-	private function _decrypt( $str ) {
+		private function _decrypt( $str ) {
 			if ( is_null( $str ) ) {
 				return null;
 			}
@@ -6235,9 +6534,7 @@ class Freemius extends Freemius_Abstract {
 				$this->_set_account( $user, $site, $plans );
 
 				// Reload the page with the keys.
-				if ( fs_redirect( $this->_get_admin_page_url() ) ) {
-					exit();
-				}
+				fs_redirect( $this->_get_admin_page_url() );
 			}
 		}
 
@@ -6378,35 +6675,49 @@ class Freemius extends Freemius_Abstract {
 
 			$current_user = self::_get_current_wp_user();
 
-			$params = array(
-				'user_firstname'    => $current_user->user_firstname,
-				'user_lastname'     => $current_user->user_lastname,
-				'user_nickname'     => $current_user->user_nicename,
-				'user_email'        => $current_user->user_email,
-				'user_ip'           => WP_FS__REMOTE_ADDR,
-				'plugin_slug'       => $this->_slug,
-				'plugin_id'         => $this->get_id(),
-				'plugin_public_key' => $this->get_public_key(),
-				'plugin_version'    => $this->get_plugin_version(),
-				'return_url'        => wp_nonce_url( $this->_get_admin_page_url(
+			$activation_action = $this->_slug . '_activate_new';
+			$return_url        = $this->is_anonymous() ?
+				// If skipped already, then return to the account page.
+				$this->get_account_url( $activation_action, array(), false ) :
+				// Return to the module's main page.
+				$this->_get_admin_page_url(
 					'',
-					array( 'fs_action' => $this->_slug . '_activate_new' )
-				), $this->_slug . '_activate_new' ),
-				'account_url'       => wp_nonce_url( $this->_get_admin_page_url(
+					array( 'fs_action' => $activation_action )
+				);
+
+			$params = array(
+				'user_firstname'               => $current_user->user_firstname,
+				'user_lastname'                => $current_user->user_lastname,
+				'user_nickname'                => $current_user->user_nicename,
+				'user_email'                   => $current_user->user_email,
+				'user_ip'                      => WP_FS__REMOTE_ADDR,
+				'plugin_slug'                  => $this->_slug,
+				'plugin_id'                    => $this->get_id(),
+				'plugin_public_key'            => $this->get_public_key(),
+				'plugin_version'               => $this->get_plugin_version(),
+				'return_url'                   => fs_nonce_url( $return_url, $activation_action ),
+				'account_url'                  => fs_nonce_url( $this->_get_admin_page_url(
 					'account',
 					array( 'fs_action' => 'sync_user' )
 				), 'sync_user' ),
-				'site_uid'          => $this->get_anonymous_id(),
-				'site_url'          => get_site_url(),
-				'site_name'         => get_bloginfo( 'name' ),
-				'platform_version'  => get_bloginfo( 'version' ),
-				'php_version'       => phpversion(),
-				'language'          => get_bloginfo( 'language' ),
-				'charset'           => get_bloginfo( 'charset' ),
-				'is_premium'        => $this->is_premium(),
-				'is_active'         => true,
-				'is_uninstalled'    => false,
+				'site_uid'                     => $this->get_anonymous_id(),
+				'site_url'                     => get_site_url(),
+				'site_name'                    => get_bloginfo( 'name' ),
+				'platform_version'             => get_bloginfo( 'version' ),
+				'sdk_version'                  => $this->version,
+				'programming_language_version' => phpversion(),
+				'language'                     => get_bloginfo( 'language' ),
+				'charset'                      => get_bloginfo( 'charset' ),
+				'is_premium'                   => $this->is_premium(),
+				'is_active'                    => true,
+				'is_uninstalled'               => false,
 			);
+
+			if ( $this->is_pending_activation() &&
+			     ! empty( $this->_storage->pending_license_key )
+			) {
+				$params['license_key'] = $this->_storage->pending_license_key;
+			}
 
 			if ( WP_FS__SKIP_EMAIL_ACTIVATION && $this->has_secret_key() ) {
 				// Even though rand() is known for its security issues,
@@ -6427,10 +6738,8 @@ class Freemius extends Freemius_Abstract {
 		}
 
 		/**
-		 * 1. If successful opt-in returns the next page that the user should be redirected to.
-		 * 2. If pending activation, return `true`.
-		 * 3. If had any HTTP issue, return `false`.
-		 * 4. If there was an API error, return the API result.
+		 * 1. If successful opt-in or pending activation returns the next page that the user should be redirected to.
+		 * 2. If there was an API error, return the API result.
 		 *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.7.4
@@ -6442,9 +6751,9 @@ class Freemius extends Freemius_Abstract {
 		 * @param bool        $is_uninstall       If "true", this means that the module is currently being uninstalled.
 		 *                                        In this case, the user and site info will be sent to the server but no
 		 *                                        data will be saved to the WP installation's database.
+		 * @param number|bool $trial_plan_id
 		 *
-		 * @return mixed
-		 *
+		 * @return string|object
 		 * @use    WP_Error
 		 */
 		function opt_in(
@@ -6452,7 +6761,8 @@ class Freemius extends Freemius_Abstract {
 			$first = false,
 			$last = false,
 			$license_key = false,
-			$is_uninstall = false
+			$is_uninstall = false,
+			$trial_plan_id = false
 		) {
 			$this->_logger->entrance();
 
@@ -6466,10 +6776,13 @@ class Freemius extends Freemius_Abstract {
 			 *              since the user will be automatically loaded from the license.
 			 */
 			if ( empty( $license_key ) ) {
+				// Clean up pending license if opt-ing in again.
+				$this->_storage->remove( 'pending_license_key' );
+
 				if ( ! $is_uninstall ) {
 					$fs_user = Freemius::_get_user_by_email( $email );
 					if ( is_object( $fs_user ) && ! $this->is_pending_activation() ) {
-						return $this->install_with_current_user( false );
+						return $this->install_with_current_user( false, $trial_plan_id );
 					}
 				}
 			}
@@ -6487,8 +6800,12 @@ class Freemius extends Freemius_Abstract {
 
 			$params = $this->get_opt_in_params( $user_info );
 
+			$filtered_license_key = false;
 			if ( is_string( $license_key ) ) {
-				$params['license_key'] = $license_key;
+				$filtered_license_key  = $this->apply_filters( 'license_key', $license_key );
+				$params['license_key'] = $filtered_license_key;
+			} else if ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
+				$params['trial_plan_id'] = $trial_plan_id;
 			}
 
 			if ( $is_uninstall ) {
@@ -6514,26 +6831,40 @@ class Freemius extends Freemius_Abstract {
 			if ( $response instanceof WP_Error ) {
 				if ( 'https://' === substr( $url, 0, 8 ) &&
 				     isset( $response->errors ) &&
-				     isset( $response->errors['http_request_failed'] ) &&
-				     false !== strpos( $response->errors['http_request_failed'][0], 'sslv3 alert handshake' )
+				     isset( $response->errors['http_request_failed'] )
 				) {
-					// Failed due to old version of cURL or Open SSL (SSLv3 is not supported by CloudFlare).
-					$url = 'http://' . substr( $url, 8 );
+					$http_error = strtolower( $response->errors['http_request_failed'][0] );
 
-					$response = wp_remote_post( $url, array(
-						'method'  => 'POST',
-						'body'    => $params,
-						'timeout' => 15,
-					) );
-				}
+					if ( false !== strpos( $http_error, 'ssl' ) ) {
+						// Failed due to old version of cURL or Open SSL (SSLv3 is not supported by CloudFlare).
+						$url = 'http://' . substr( $url, 8 );
 
-				if ( $response instanceof WP_Error ) {
-					return false;
+						$response = wp_remote_post( $url, array(
+							'method'  => 'POST',
+							'body'    => $params,
+							'timeout' => 15,
+						) );
+					}
 				}
 			}
 
 			if ( is_wp_error( $response ) ) {
-				return false;
+				/**
+				 * @var WP_Error $response
+				 */
+				$result = new stdClass();
+
+				$error_code = $response->get_error_code();
+				$error_type = str_replace( ' ', '', ucwords( str_replace( '_', ' ', $error_code ) ) );
+
+				$result->error = (object) array(
+					'type'    => $error_type,
+					'message' => $response->get_error_message(),
+					'code'    => $error_code,
+					'http'    => 402
+				);
+
+				return $result;
 			}
 
 			// Module is being uninstalled, don't handle the returned data.
@@ -6547,15 +6878,23 @@ class Freemius extends Freemius_Abstract {
 				return false;
 			}
 
-			if ( $this->is_api_error( $decoded ) ) {
+			if ( ! $this->is_api_result_object( $decoded ) ) {
+				if ( ! empty( $params['license_key'] ) ) {
+					// Pass the fully entered license key to the failure handler.
+					$params['license_key'] = $license_key;
+				}
+
 				return $is_uninstall ?
 					$decoded :
 					$this->apply_filters( 'after_install_failure', $decoded, $params );
 			} else if ( isset( $decoded->pending_activation ) && $decoded->pending_activation ) {
 				// Pending activation, add message.
-				$this->set_pending_confirmation( false, false );
-
-				return true;
+				return $this->set_pending_confirmation(
+					true,
+					false,
+					$filtered_license_key,
+					! empty( $params['trial_plan_id'] )
+				);
 			} else if ( isset( $decoded->install_secret_key ) ) {
 				return $this->install_with_new_user(
 					$decoded->user_id,
@@ -6616,7 +6955,7 @@ class Freemius extends Freemius_Abstract {
 				// Remove plugin from pending activation mode.
 				unset( $this->_storage->is_pending_activation );
 
-				if ( ! $this->is_paying() ) {
+				if ( ! $this->is_paying_or_trial() ) {
 					$this->_admin_notices->add_sticky(
 						sprintf( __fs( 'plugin-x-activation-message', $this->_slug ), '<b>' . $this->get_plugin_name() . '</b>' ),
 						'activation_complete'
@@ -6624,15 +6963,30 @@ class Freemius extends Freemius_Abstract {
 				}
 			}
 
-			if ( $this->is_paying() && ! $this->is_premium() ) {
-				$this->_admin_notices->add_sticky(
-					sprintf(
-						__fs( 'activation-with-plan-x-message', $this->_slug ),
-						$this->_site->plan->title
-					) . $this->get_complete_upgrade_instructions(),
-					'plan_upgraded',
-					__fs( 'yee-haw', $this->_slug ) . '!'
-				);
+			if ( $this->is_paying_or_trial() && ! $this->is_premium() ) {
+				if ( $this->is_paying() ) {
+					$this->_admin_notices->add_sticky(
+						sprintf(
+							__fs( 'activation-with-plan-x-message', $this->_slug ),
+							$this->_site->plan->title
+						) . $this->get_complete_upgrade_instructions(),
+						'plan_upgraded',
+						__fs( 'yee-haw', $this->_slug ) . '!'
+					);
+				} else {
+					$this->_admin_notices->add_sticky(
+						sprintf(
+							__fs( 'trial-started-message', $this->_slug ),
+							'<i>' . $this->get_plugin_name() . '</i>'
+						) . $this->get_complete_upgrade_instructions( $this->_storage->trial_plan->title ),
+						'trial_started',
+						__fs( 'yee-haw', $this->_slug ) . '!'
+					);
+				}
+
+				$this->_admin_notices->remove_sticky( array(
+					'trial_promotion',
+				) );
 			}
 
 			$plugin_id = fs_request_get( 'plugin_id', false );
@@ -6659,13 +7013,14 @@ class Freemius extends Freemius_Abstract {
 				}
 
 				// Reload the page with the keys.
-				$next_page = $this->get_after_activation_url( 'after_connect_url' );
+				$next_page = $this->is_anonymous() ?
+					// If user previously skipped, redirect to account page.
+					$this->get_account_url() :
+					$this->get_after_activation_url( 'after_connect_url' );
 			}
 
-			if ( ! empty( $next_page ) &&
-			     $redirect && fs_redirect( $next_page )
-			) {
-				exit();
+			if ( ! empty( $next_page ) && $redirect ) {
+				fs_redirect( $next_page );
 			}
 
 			return $next_page;
@@ -6754,19 +7109,42 @@ class Freemius extends Freemius_Abstract {
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.7.4
 		 *
-		 * @param bool $email
-		 * @param bool $redirect
+		 * @param string|bool $email
+		 * @param bool        $redirect
+		 * @param string|bool $license_key      Since 1.2.1.5
+		 * @param bool        $is_pending_trial Since 1.2.1.5
+		 *
+		 * @return string Since 1.2.1.5 if $redirect is `false`, return the pending activation page.
 		 */
-		private function set_pending_confirmation( $email = false, $redirect = true ) {
+		private function set_pending_confirmation(
+			$email = false,
+			$redirect = true,
+			$license_key = false,
+			$is_pending_trial = false
+		) {
 			// Install must be activated via email since
 			// user with the same email already exist.
 			$this->_storage->is_pending_activation = true;
-			$this->_add_pending_activation_notice( $email );
+			$this->_add_pending_activation_notice( $email, $is_pending_trial );
+
+			if ( ! empty( $license_key ) ) {
+				$this->_storage->pending_license_key = $license_key;
+			}
+
+			// Remove the opt-in sticky notice.
+			$this->_admin_notices->remove_sticky( array(
+				'connect_account',
+				'trial_promotion',
+			) );
+
+			$next_page = $this->get_after_activation_url( 'after_pending_connect_url' );
 
 			// Reload the page with with pending activation message.
-			if ( $redirect && fs_redirect( $this->get_after_activation_url( 'after_pending_connect_url' ) ) ) {
-				exit();
+			if ( $redirect ) {
+				fs_redirect( $next_page );
 			}
+
+			return $next_page;
 		}
 
 		/**
@@ -6785,7 +7163,13 @@ class Freemius extends Freemius_Abstract {
 			if ( fs_request_is_action( $this->_slug . '_activate_existing' ) && fs_request_is_post() ) {
 //				check_admin_referer( 'activate_existing_' . $this->_plugin->public_key );
 
-				$this->install_with_current_user();
+				/**
+				 * @author Vova Feldman (@svovaf)
+				 * @since  1.1.9 Add license key if given.
+				 */
+				$license_key = fs_request_get( 'license_secret_key' );
+
+				$this->install_with_current_user( $license_key );
 			}
 		}
 
@@ -6794,11 +7178,18 @@ class Freemius extends Freemius_Abstract {
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.7.4
 		 *
-		 * @param bool $redirect
+		 * @param string|bool $license_key
+		 * @param number|bool $trial_plan_id
+		 * @param bool        $redirect
 		 *
-		 * @return object|string
+		 * @return string|object If redirect is `false`, returns the next page the user should be redirected to, or the
+		 *                       API error object if failed to install.
 		 */
-		private function install_with_current_user( $redirect = true ) {
+		private function install_with_current_user(
+			$license_key = false,
+			$trial_plan_id = false,
+			$redirect = true
+		) {
 			// Get current logged WP user.
 			$current_user = self::_get_current_wp_user();
 
@@ -6812,14 +7203,11 @@ class Freemius extends Freemius_Abstract {
 				'uid' => $this->get_anonymous_id(),
 			);
 
-			/**
-			 * @author Vova Feldman (@svovaf)
-			 * @since  1.1.9 Add license key if given.
-			 */
-			$license_key = fs_request_get( 'license_secret_key' );
-
 			if ( ! empty( $license_key ) ) {
-				$extra_install_params['license_key'] = $license_key;
+				$filtered_license_key                = $this->apply_filters( 'license_key', $license_key );
+				$extra_install_params['license_key'] = $filtered_license_key;
+			} else if ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
+				$extra_install_params['trial_plan_id'] = $trial_plan_id;
 			}
 
 			$args = $this->get_install_data_for_api( $extra_install_params, false, false );
@@ -6831,7 +7219,12 @@ class Freemius extends Freemius_Abstract {
 				$args
 			);
 
-			if ( $this->is_api_error($install) ) {
+			if ( ! $this->is_api_result_entity( $install ) ) {
+				if ( ! empty( $args['license_key'] ) ) {
+					// Pass full the fully entered license key to the failure handler.
+					$args['license_key'] = $license_key;
+				}
+
 				$install = $this->apply_filters( 'after_install_failure', $install, $args );
 
 				$this->_admin_notices->add(
@@ -6841,9 +7234,8 @@ class Freemius extends Freemius_Abstract {
 					'error'
 				);
 
-				if ( $redirect && fs_redirect( $this->get_activation_url( array( 'error' => $install->error->message ) ) )
-				) {
-					exit();
+				if ( $redirect ) {
+					fs_redirect( $this->get_activation_url( array( 'error' => $install->error->message ) ) );
 				}
 
 				return $install;
@@ -6852,9 +7244,7 @@ class Freemius extends Freemius_Abstract {
 			$site        = new FS_Site( $install );
 			$this->_site = $site;
 
-			$this->setup_account( $this->_user, $this->_site, $redirect );
-
-			return $install;
+			return $this->setup_account( $this->_user, $this->_site, $redirect );
 		}
 
 		/**
@@ -6919,10 +7309,7 @@ class Freemius extends Freemius_Abstract {
 		#region Admin Menu Items
 		#----------------------------------------------------------------------------------
 
-	/**
-	 * @var array
-	 */
-	private $_menu_items = array();
+		private $_menu_items = array();
 
 		/**
 		 * @author Vova Feldman (@svovaf)
@@ -6978,8 +7365,6 @@ class Freemius extends Freemius_Abstract {
 		/**
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.1
-		 *
-		 * @return string
 		 */
 		function _redirect_on_clicked_menu_link() {
 			$this->_logger->entrance();
@@ -6991,7 +7376,7 @@ class Freemius extends Freemius_Abstract {
 			foreach ( $this->_menu_items as $priority => $items ) {
 				foreach ( $items as $item ) {
 					if ( isset( $item['url'] ) ) {
-						if ( $page === strtolower( $item['menu_slug'] ) ) {
+						if ( $page === $this->_menu->get_slug( strtolower( $item['menu_slug'] ) ) ) {
 							$this->_logger->log( 'Redirecting to ' . $item['url'] );
 
 							fs_redirect( $item['url'] );
@@ -7172,16 +7557,32 @@ class Freemius extends Freemius_Abstract {
 					// to support add-ons checkout but don't add the submenu item.
 					// || (isset( $_GET['page'] ) && $this->_menu->get_slug( 'pricing' ) == $_GET['page']);
 
+					$pricing_cta_slug = 'upgrade';
+					$pricing_class    = 'upgrade-mode';
+					if ( $show_pricing ) {
+						if ( $this->_admin_notices->has_sticky( 'trial_promotion' ) &&
+						     ! $this->is_paying_or_trial()
+						) {
+							// If running a trial promotion, modify the pricing to load the trial.
+							$pricing_cta_slug = 'start-trial';
+							$pricing_class    = 'trial-mode';
+						} else if ( $this->is_paying() ) {
+							$pricing_cta_slug = 'pricing';
+							$pricing_class    = '';
+						}
+					}
+
 					// Add upgrade/pricing page.
 					$this->add_submenu_item(
-						( $this->is_paying() ? __fs( 'pricing', $this->_slug ) : __fs( 'upgrade', $this->_slug ) . '&nbsp;&nbsp;&#x27a4;' ),
+						__fs( $pricing_cta_slug, $this->_slug ) . '&nbsp;&nbsp;&#x27a4;',
 						array( &$this, '_pricing_page_render' ),
 						$this->get_plugin_name() . ' &ndash; ' . __fs( 'pricing', $this->_slug ),
 						'manage_options',
 						'pricing',
 						'Freemius::_clean_admin_content_section',
 						WP_FS__LOWEST_PRIORITY,
-						$show_pricing
+						$show_pricing,
+						$pricing_class
 					);
 				}
 			}
@@ -7210,8 +7611,8 @@ class Freemius extends Freemius_Abstract {
 		 */
 		private function embed_submenu_items() {
 			$item_template = $this->_menu->is_top_level() ?
-				'<span class="fs-submenu-item">%s</span>' :
-				'<span class="fs-submenu-item fs-sub">%s</span>';
+				'<span class="fs-submenu-item %s %s %s">%s</span>' :
+				'<span class="fs-submenu-item fs-sub %s %s %s">%s</span>';
 
 			$top_level_menu_capability = $this->get_top_level_menu_capability();
 
@@ -7221,15 +7622,25 @@ class Freemius extends Freemius_Abstract {
 				foreach ( $items as $item ) {
 					$capability = ( ! empty( $item['capability'] ) ? $item['capability'] : $top_level_menu_capability );
 
+					$menu_item = sprintf(
+						$item_template,
+						$this->_slug,
+						$item['menu_slug'],
+						! empty( $item['class'] ) ? $item['class'] : '',
+						$item['menu_title']
+					);
+
+					$menu_slug = $this->_menu->get_slug( $item['menu_slug'] );
+
 					if ( ! isset( $item['url'] ) ) {
 						$hook = add_submenu_page(
 							$item['show_submenu'] ?
 								$this->get_top_level_menu_slug() :
 								null,
 							$item['page_title'],
-							sprintf( $item_template, $item['menu_title'] ),
+							$menu_item,
 							$capability,
-							$item['menu_slug'],
+							$menu_slug,
 							$item['render_function']
 						);
 
@@ -7240,9 +7651,9 @@ class Freemius extends Freemius_Abstract {
 						add_submenu_page(
 							$this->get_top_level_menu_slug(),
 							$item['page_title'],
-							sprintf( $item_template, $item['menu_title'] ),
+							$menu_item,
 							$capability,
-							$item['menu_slug'],
+							$menu_slug,
 							array( $this, '' )
 						);
 					}
@@ -7354,6 +7765,7 @@ class Freemius extends Freemius_Abstract {
 		 * @param bool|callable $before_render_function
 		 * @param int           $priority
 		 * @param bool          $show_submenu
+		 * @param string        $class Since 1.2.1.5 can add custom classes to menu items.
 		 */
 		function add_submenu_item(
 			$menu_title,
@@ -7363,7 +7775,8 @@ class Freemius extends Freemius_Abstract {
 			$menu_slug = false,
 			$before_render_function = false,
 			$priority = WP_FS__DEFAULT_PRIORITY,
-			$show_submenu = true
+			$show_submenu = true,
+			$class = ''
 		) {
 			$this->_logger->entrance( 'Title = ' . $menu_title );
 
@@ -7379,7 +7792,8 @@ class Freemius extends Freemius_Abstract {
 						$menu_slug,
 						$before_render_function,
 						$priority,
-						$show_submenu
+						$show_submenu,
+						$class
 					);
 
 					return;
@@ -7394,10 +7808,11 @@ class Freemius extends Freemius_Abstract {
 				'page_title'             => is_string( $page_title ) ? $page_title : $menu_title,
 				'menu_title'             => $menu_title,
 				'capability'             => $capability,
-				'menu_slug'              => $this->_menu->get_slug( is_string( $menu_slug ) ? $menu_slug : strtolower( $menu_title ) ),
+				'menu_slug'              => is_string( $menu_slug ) ? $menu_slug : strtolower( $menu_title ),
 				'render_function'        => $render_function,
 				'before_render_function' => $before_render_function,
 				'show_submenu'           => $show_submenu,
+				'class'                  => $class,
 			);
 		}
 
@@ -7444,7 +7859,7 @@ class Freemius extends Freemius_Abstract {
 			$this->_menu_items[ $priority ][] = array(
 				'menu_title'             => $menu_title,
 				'capability'             => $capability,
-				'menu_slug'              => $this->_menu->get_slug( is_string( $menu_slug ) ? $menu_slug : strtolower( $menu_title ) ),
+				'menu_slug'              => is_string( $menu_slug ) ? $menu_slug : strtolower( $menu_title ),
 				'url'                    => $url,
 				'page_title'             => $menu_title,
 				'render_function'        => 'fs_dummy',
@@ -7534,11 +7949,62 @@ class Freemius extends Freemius_Abstract {
 		 * @param int      $accepted_args
 		 *
 		 * @uses   add_action()
+		 *
+		 * @return bool True if action added, false if no need to add the action since the AJAX call isn't matching.
 		 */
 		function add_ajax_action( $tag, $function_to_add, $priority = WP_FS__DEFAULT_PRIORITY, $accepted_args = 1 ) {
 			$this->_logger->entrance( $tag );
 
+			if ( ! $this->is_ajax_action( $tag ) ) {
+				return false;
+			}
+
 			add_action( $this->get_ajax_action_tag( $tag ), $function_to_add, $priority, $accepted_args );
+
+			$this->_logger->info( "$tag AJAX callback action added." );
+
+			return true;
+		}
+
+		/**
+		 * Send a JSON response back to an Ajax request.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed $response
+		 */
+		function shoot_ajax_response( $response ) {
+			wp_send_json( $response );
+		}
+
+		/**
+		 * Send a JSON response back to an Ajax request, indicating success.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed $data Data to encode as JSON, then print and exit.
+		 */
+		function shoot_ajax_success( $data = null ) {
+			wp_send_json_success( $data );
+		}
+
+		/**
+		 * Send a JSON response back to an Ajax request, indicating failure.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed $error Optional error message.
+		 */
+		function shoot_ajax_failure( $error = '' ) {
+			$result = array( 'success' => false );
+			if ( ! empty( $error ) ) {
+				$result['error'] = $error;
+			}
+
+			wp_send_json( $result );
 		}
 
 		/**
@@ -7628,6 +8094,12 @@ class Freemius extends Freemius_Abstract {
 		private function _store_site( $store = true ) {
 			$this->_logger->entrance();
 
+			if ( empty( $this->_site->id ) ) {
+				$this->_logger->error( "Empty install ID, can't store site." );
+
+				return;
+			}
+
 			$encrypted_site       = clone $this->_site;
 			$encrypted_site->plan = $this->_encrypt_entity( $this->_site->plan );
 
@@ -7698,6 +8170,12 @@ class Freemius extends Freemius_Abstract {
 		 */
 		private function _store_user( $store = true ) {
 			$this->_logger->entrance();
+
+			if ( empty( $this->_user->id ) ) {
+				$this->_logger->error( "Empty user ID, can't store user." );
+
+				return;
+			}
 
 			$users                     = self::get_all_users();
 			$users[ $this->_user->id ] = $this->_user;
@@ -7862,9 +8340,7 @@ class Freemius extends Freemius_Abstract {
 				 * @link   https://github.com/Freemius/wordpress-sdk/issues/6
 				 */
 				if ( ! $is_menu_item_account_visible ) {
-					if ( fs_redirect( $this->_get_admin_page_url() ) ) {
-						exit();
-					}
+					fs_redirect( $this->_get_admin_page_url() );
 				}
 			}
 		}
@@ -7975,7 +8451,7 @@ class Freemius extends Freemius_Abstract {
 
 			$result = $api->get( '/plans.json', true );
 
-			if ( ! $this->is_api_error( $result ) ) {
+			if ( $this->is_api_result_object( $result, 'plans' ) && is_array( $result->plans ) ) {
 				for ( $i = 0, $len = count( $result->plans ); $i < $len; $i ++ ) {
 					$result->plans[ $i ] = new FS_Plugin_Plan( $result->plans[ $i ] );
 				}
@@ -8009,7 +8485,11 @@ class Freemius extends Freemius_Abstract {
 
 			$is_site_license_synced = false;
 
-			if ( ! isset( $result->error ) ) {
+			$api_errors = array();
+
+			if ( $this->is_api_result_object( $result, 'licenses' ) &&
+			     is_array( $result->licenses )
+			) {
 				for ( $i = 0, $len = count( $result->licenses ); $i < $len; $i ++ ) {
 					$result->licenses[ $i ] = new FS_Plugin_License( $result->licenses[ $i ] );
 
@@ -8019,6 +8499,9 @@ class Freemius extends Freemius_Abstract {
 				}
 
 				$result = $result->licenses;
+			} else {
+				$api_errors[] = $result;
+				$result       = array();
 			}
 
 			if ( ! $is_site_license_synced ) {
@@ -8028,24 +8511,41 @@ class Freemius extends Freemius_Abstract {
 					// Try to retrieve a foreign license that is linked to the install.
 					$api_result = $api->call( '/licenses.json' );
 
-					if ( ! isset( $api_result->error ) ) {
+					if ( $this->is_api_result_object( $api_result, 'licenses' ) &&
+					     is_array( $api_result->licenses )
+					) {
 						$licenses = $api_result->licenses;
 
 						if ( ! empty( $licenses ) ) {
 							$result[] = new FS_Plugin_License( $licenses[0] );
 						}
+					} else {
+						$api_errors[] = $api_result;
 					}
 				} else if ( is_object( $this->_license ) ) {
 					// Fetch foreign license by ID and license key.
 					$license = $api->get( "/licenses/{$this->_license->id}.json?license_key=" .
 					                      urlencode( $this->_license->secret_key ) );
 
-					if ( ! isset( $license->error ) ) {
+					if ( $this->is_api_result_entity( $license ) ) {
 						$result[] = new FS_Plugin_License( $license );
+					} else {
+						$api_errors[] = $license;
 					}
 				}
 			}
 
+			if ( is_array( $result ) && 0 < count( $result ) ) {
+				// If found at least one license, return license collection even if there are errors.
+				return $result;
+			}
+
+			if ( ! empty( $api_errors ) ) {
+				// If found any errors and no licenses, return first error.
+				return $api_errors[0];
+			}
+
+			// Fallback to empty licenses list.
 			return $result;
 		}
 
@@ -8077,6 +8577,25 @@ class Freemius extends Freemius_Abstract {
 			}
 
 			return $result;
+		}
+
+		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 * @uses   FS_Api
+		 *
+		 * @return \FS_Billing|mixed
+		 */
+		function _fetch_billing() {
+			require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-billing.php';
+
+			$billing = $this->get_api_user_scope()->call( 'billing.json' );
+
+			if ( $this->is_api_result_entity( $billing ) ) {
+				$billing = new FS_Billing( $billing );
+			}
+
+			return $billing;
 		}
 
 		/**
@@ -8293,7 +8812,7 @@ class Freemius extends Freemius_Abstract {
 			$licenses = $this->_fetch_licenses( $addon->id );
 
 			// Sync add-on licenses.
-			if ( ! isset( $licenses->error ) ) {
+			if ( $this->is_array_instanceof( $licenses, 'FS_Plugin_License' ) ) {
 				$this->_update_licenses( $licenses, $addon->slug );
 
 				if ( ! $this->is_addon_installed( $addon->slug ) && FS_License_Manager::has_premium_license( $licenses ) ) {
@@ -8352,7 +8871,7 @@ class Freemius extends Freemius_Abstract {
 
 			$plan_change = 'none';
 
-			if ( $this->is_api_error( $site ) ) {
+			if ( ! $this->is_api_result_entity( $site ) ) {
 				// Show API messages only if not background sync or if paying customer.
 				if ( ! $background || $this->is_paying() ) {
 					// Try to ping API to see if not blocked.
@@ -8669,19 +9188,19 @@ class Freemius extends Freemius_Abstract {
 			$api     = $this->get_api_site_scope();
 			$license = $api->call( "/licenses/{$premium_license->id}.json", 'put', $api_request_params );
 
-			if ( $this->is_api_error( $license ) ) {
+			if ( ! $this->is_api_result_entity( $license ) ) {
 				if ( ! $background ) {
 					$this->_admin_notices->add( sprintf(
-							'%s %s',
-							__fs( 'license-activation-failed-message', $this->_slug ),
-							( is_object( $license ) && isset( $license->error ) ?
-								$license->error->message :
-								sprintf( '%s<br><code>%s</code>',
-									__fs( 'server-error-message', $this->_slug ),
-									var_export( $license, true )
-								)
+						'%s %s',
+						__fs( 'license-activation-failed-message', $this->_slug ),
+						( is_object( $license ) && isset( $license->error ) ?
+							$license->error->message :
+							sprintf( '%s<br><code>%s</code>',
+								__fs( 'server-error-message', $this->_slug ),
+								var_export( $license, true )
 							)
-						),
+						)
+					),
 						__fs( 'hmm', $this->_slug ) . '...',
 						'error'
 					);
@@ -8694,7 +9213,7 @@ class Freemius extends Freemius_Abstract {
 
 			// Updated site plan.
 			$site = $this->get_api_site_scope()->get( '/', true );
-			if ( ! $this->is_api_error( $site ) ) {
+			if ( $this->is_api_result_entity( $site ) ) {
 				$this->_site = new FS_Site( $site );
 			}
 			$this->_update_site_license( $premium_license );
@@ -8794,7 +9313,7 @@ class Freemius extends Freemius_Abstract {
 
 			$plan_downgraded = false;
 			$plan            = false;
-			if ( ! isset( $site->error ) ) {
+			if ( $this->is_api_result_entity( $site ) ) {
 				$prev_plan_id = $this->_site->plan->id;
 
 				// Update new site plan id.
@@ -8910,7 +9429,7 @@ class Freemius extends Freemius_Abstract {
 			$api  = $this->get_api_site_scope();
 			$plan = $api->call( "plans/{$plan->id}/trials.json", 'post' );
 
-			if ( $this->is_api_error( $plan ) ) {
+			if ( ! $this->is_api_result_entity( $plan ) ) {
 				// Some API error while trying to start the trial.
 				$this->_admin_notices->add(
 					__fs( 'unexpected-api-error', $this->_slug ) . ' ' . var_export( $plan, true ),
@@ -8953,7 +9472,7 @@ class Freemius extends Freemius_Abstract {
 
 			$trial_cancelled = false;
 
-			if ( ! $this->is_api_error( $site ) ) {
+			if ( $this->is_api_result_entity( $site ) ) {
 				$prev_trial_ends = $this->_site->trial_ends;
 
 				if ( $this->is_paid_trial() ) {
@@ -8987,9 +9506,6 @@ class Freemius extends Freemius_Abstract {
 				// Store site updates.
 				$this->_store_site();
 
-				// Clear trial plan information.
-				unset( $this->_storage->trial_plan );
-
 				if ( ! $this->is_addon() ||
 				     ! $this->deactivate_premium_only_addon_without_license( true )
 				) {
@@ -8997,6 +9513,9 @@ class Freemius extends Freemius_Abstract {
 						sprintf( __fs( 'trial-cancel-message', $this->_slug ), $this->_storage->trial_plan->title )
 					);
 				}
+
+				// Clear trial plan information.
+				unset( $this->_storage->trial_plan );
 			} else {
 				$this->_admin_notices->add(
 					__fs( 'trial-cancel-failure-message', $this->_slug ),
@@ -9271,7 +9790,9 @@ class Freemius extends Freemius_Abstract {
 			$result = $api->get( '/addons.json?enriched=true', $flush );
 
 			$addons = array();
-			if ( ! $this->is_api_error( $result ) ) {
+			if ( $this->is_api_result_object( $result, 'plugins' ) &&
+			     is_array( $result->plugins )
+			) {
 				for ( $i = 0, $len = count( $result->plugins ); $i < $len; $i ++ ) {
 					$addons[ $i ] = new FS_Plugin( $result->plugins[ $i ] );
 				}
@@ -9318,6 +9839,10 @@ class Freemius extends Freemius_Abstract {
 			return $user;
 		}
 
+		#----------------------------------------------------------------------------------
+		#region API Error Handling
+		#----------------------------------------------------------------------------------
+
 		/**
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.1.1
@@ -9327,8 +9852,53 @@ class Freemius extends Freemius_Abstract {
 		 * @return bool Is API result contains an error.
 		 */
 		private function is_api_error( $result ) {
-			return ( is_object( $result ) && isset( $result->error ) ) ||
-			       is_string( $result );
+			return FS_Api::is_api_error( $result );
+		}
+
+		/**
+		 * Checks if given API result is a non-empty and not an error object.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed       $result
+		 * @param string|null $required_property Optional property we want to verify that is set.
+		 *
+		 * @return bool
+		 */
+		function is_api_result_object( $result, $required_property = null ) {
+			return FS_Api::is_api_result_object( $result, $required_property );
+		}
+
+		/**
+		 * Checks if given API result is a non-empty entity object with non-empty ID.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed $result
+		 *
+		 * @return bool
+		 */
+		private function is_api_result_entity( $result ) {
+			return FS_Api::is_api_result_entity( $result );
+		}
+
+		#endregion
+
+		/**
+		 * Make sure a given argument is an array of a specific type.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed  $array
+		 * @param string $class
+		 *
+		 * @return bool
+		 */
+		private function is_array_instanceof( $array, $class ) {
+			return ( is_array( $array ) && ( empty( $array ) || $array[0] instanceof $class ) );
 		}
 
 		/**
@@ -9471,6 +10041,21 @@ class Freemius extends Freemius_Abstract {
 		}
 
 		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param array $params
+		 *
+		 * @return string
+		 */
+		function get_reconnect_url( $params = array() ) {
+			$params['fs_action'] = 'reset_anonymous_mode';
+			$params['fs_slug']   = $this->_slug;
+
+			return $this->apply_filters( 'connect_url', $this->_get_admin_page_url( '', $params ) );
+		}
+
+		/**
 		 * Get the URL of the page that should be loaded after the user connect or skip in the opt-in screen.
 		 *
 		 * @author Vova Feldman (@svovaf)
@@ -9517,17 +10102,13 @@ class Freemius extends Freemius_Abstract {
 						$this->_site = null;
 						$this->_user = null;
 
-						if ( fs_redirect( $this->get_activation_url() ) ) {
-							exit();
-						}
+						fs_redirect( $this->get_activation_url() );
 					} else {
 						if ( $this->is_addon_activated( $plugin_id ) ) {
 							$fs_addon = self::get_instance_by_id( $plugin_id );
 							$fs_addon->delete_account_event();
 
-							if ( fs_redirect( $this->_get_admin_page_url( 'account' ) ) ) {
-								exit();
-							}
+							fs_redirect( $this->_get_admin_page_url( 'account' ) );
 						}
 					}
 
@@ -9535,7 +10116,13 @@ class Freemius extends Freemius_Abstract {
 
 				case 'downgrade_account':
 					check_admin_referer( $action );
-					$this->_downgrade_site();
+
+					if ( $plugin_id == $this->get_id() ) {
+						$this->_downgrade_site();
+					} else if ( $this->is_addon_activated( $plugin_id ) ) {
+						$fs_addon = self::get_instance_by_id( $plugin_id );
+						$fs_addon->_downgrade_site();
+					}
 
 					return;
 
@@ -9732,11 +10319,6 @@ class Freemius extends Freemius_Abstract {
 				wp_enqueue_script( 'plugin-install' );
 				add_thickbox();
 
-				/**
-				 * @param $classes
-				 *
-				 * @return string
-				 */
 				function fs_addons_body_class( $classes ) {
 					$classes .= ' plugins-php';
 
@@ -9748,7 +10330,8 @@ class Freemius extends Freemius_Abstract {
 
 			if ( $this->has_paid_plan() &&
 			     ! $this->has_any_license() &&
-			     ! $this->is_sync_executed()
+			     ! $this->is_sync_executed() &&
+			     $this->is_tracking_allowed()
 			) {
 				/**
 				 * If no licenses found and no sync job was executed during the last 24 hours,
@@ -9808,11 +10391,6 @@ class Freemius extends Freemius_Abstract {
 			wp_enqueue_script( 'plugin-install' );
 			add_thickbox();
 
-			/**
-			 * @param $classes
-			 *
-			 * @return string
-			 */
 			function fs_addons_body_class( $classes ) {
 				$classes .= ' plugins-php';
 
@@ -9926,10 +10504,7 @@ class Freemius extends Freemius_Abstract {
 
 		/* SDK
 		------------------------------------------------------------------------------------------------------------------*/
-	/**
-	 * @var
-	 */
-	private $_user_api;
+		private $_user_api;
 
 		/**
 		 *
@@ -9955,10 +10530,7 @@ class Freemius extends Freemius_Abstract {
 			return $this->_user_api;
 		}
 
-	/**
-	 * @var
-	 */
-	private $_site_api;
+		private $_site_api;
 
 		/**
 		 *
@@ -9984,10 +10556,7 @@ class Freemius extends Freemius_Abstract {
 			return $this->_site_api;
 		}
 
-	/**
-	 * @var
-	 */
-	private $_plugin_api;
+		private $_plugin_api;
 
 		/**
 		 * Get plugin public API scope.
@@ -10038,106 +10607,185 @@ class Freemius extends Freemius_Abstract {
 		}
 
 		/**
+		 * During trial promotion the "upgrade" submenu item turns to
+		 * "start trial" to encourage the trial. Since we want to keep
+		 * the same menu item handler and there's no robust way to
+		 * add new arguments to the menu item link's querystring,
+		 * use JavaScript to find the menu item and update the href of
+		 * the link.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 */
+		function _fix_start_trial_menu_item_url() {
+			$template_args = array( 'slug' => $this->_slug );
+			fs_require_template( 'add-trial-to-pricing.php', $template_args );
+		}
+
+		/**
 		 * Show trial promotional notice (if any trial exist).
 		 *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.9
+		 *
+		 * @return bool If trial notice added.
 		 */
 		function _add_trial_notice() {
-			// Check if trial already utilized.
-			if ( $this->_site->is_trial_utilized() ) {
-				return;
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return false;
 			}
 
-			// Check if already paying.
-			if ( $this->is_paying() ) {
-				return;
+			if ( ! $this->is_user_in_admin() ) {
+				return false;
 			}
 
 			// Check if trial message is already shown.
 			if ( $this->_admin_notices->has_sticky( 'trial_promotion' ) ) {
-				return;
+				add_action( 'admin_footer', array( &$this, '_fix_start_trial_menu_item_url' ) );
+
+				$this->_menu->add_counter_to_menu_item( 1, 'fs-trial' );
+
+				return false;
 			}
 
-			$trial_plans       = FS_Plan_Manager::instance()->get_trial_plans( $this->_plans );
-			$trial_plans_count = count( $trial_plans );
-
-			// Check if any of the plans contains trial.
-			if ( 0 === $trial_plans_count ) {
-				return;
+			if ( $this->is_premium() && ! WP_FS__DEV_MODE ) {
+				// Don't show trial if running the premium code, unless running in DEV mode.
+				return false;
 			}
 
-			/**
-			 * @var FS_Plugin_Plan $paid_plan
-			 */
-			$paid_plan            = $trial_plans[0];
-			$require_subscription = $paid_plan->is_require_subscription;
-			$upgrade_url          = $this->get_trial_url();
-			$cc_string            = $require_subscription ?
-				sprintf( __fs( 'no-commitment-for-x-days', $this->_slug ), $paid_plan->trial_period ) :
+			if ( ! $this->has_trial_plan() ) {
+				// No plans with trial.
+				return false;
+			}
+
+			if ( ! $this->apply_filters( 'show_trial', true ) ) {
+				// Developer explicitly asked not to show the trial promo.
+				return false;
+			}
+
+			if ( $this->is_registered() ) {
+				// Check if trial already utilized.
+				if ( $this->_site->is_trial_utilized() ) {
+					return false;
+				}
+
+				if ( $this->is_paying_or_trial() ) {
+					// Don't show trial if paying or already in trial.
+					return false;
+				}
+			}
+
+			if ( $this->is_activation_mode() || $this->is_pending_activation() ) {
+				// If not yet opted-in/skipped, or pending activation, don't show trial.
+				return false;
+			}
+
+			$last_time_trial_promotion_shown = $this->_storage->get( 'trial_promotion_shown', false );
+			$was_promotion_shown_before      = ( false !== $last_time_trial_promotion_shown );
+
+			// Show promotion if never shown before and 24 hours after initial activation with FS.
+			if ( ! $was_promotion_shown_before &&
+			     $this->_storage->install_timestamp > ( time() - WP_FS__TIME_24_HOURS_IN_SEC )
+			) {
+				return false;
+			}
+
+			// OR if promotion was shown before, try showing it every 30 days.
+			if ( $was_promotion_shown_before &&
+			     30 * WP_FS__TIME_24_HOURS_IN_SEC > time() - $last_time_trial_promotion_shown
+			) {
+				return false;
+			}
+
+			$trial_period    = $this->_trial_days;
+			$require_payment = $this->_is_trial_require_payment;
+			$trial_url       = $this->get_trial_url();
+			$plans_string    = strtolower( __fs( 'awesome', $this->_slug ) );
+
+			if ( $this->is_registered() ) {
+				// If opted-in, override trial with up to date data from API.
+				$trial_plans       = FS_Plan_Manager::instance()->get_trial_plans( $this->_plans );
+				$trial_plans_count = count( $trial_plans );
+
+				if ( 0 === $trial_plans_count ) {
+					// If there's no plans with a trial just exit.
+					return false;
+				}
+
+				/**
+				 * @var FS_Plugin_Plan $paid_plan
+				 */
+				$paid_plan       = $trial_plans[0];
+				$require_payment = $paid_plan->is_require_subscription;
+				$trial_period    = $paid_plan->trial_period;
+
+				$total_paid_plans = count( $this->_plans ) - ( FS_Plan_Manager::instance()->has_free_plan( $this->_plans ) ? 1 : 0 );
+
+				if ( $total_paid_plans !== $trial_plans_count ) {
+					// Not all paid plans have a trial - generate a string of those that have it.
+					for ( $i = 0; $i < $trial_plans_count; $i ++ ) {
+						$plans_string .= sprintf(
+							'<a href="%s">%s</a>',
+							$trial_url,
+							$trial_plans[ $i ]->title
+						);
+
+						if ( $i < $trial_plans_count - 2 ) {
+							$plans_string .= ', ';
+						} else if ( $i == $trial_plans_count - 2 ) {
+							$plans_string .= ' and ';
+						}
+					}
+				}
+			}
+
+			$message = sprintf(
+				__fs( 'hey', $this->_slug ) . '! ' . __fs( 'trial-x-promotion-message', $this->_slug ),
+				sprintf( '<b>%s</b>', $this->get_plugin_name() ),
+				$plans_string,
+				$trial_period
+			);
+
+			// "No Credit-Card Required" or "No Commitment for N Days".
+			$cc_string = $require_payment ?
+				sprintf( __fs( 'no-commitment-for-x-days', $this->_slug ), $trial_period ) :
 				__fs( 'no-cc-required', $this->_slug ) . '!';
 
 
-			$total_paid_plans = count( $this->_plans ) - ( FS_Plan_Manager::instance()->has_free_plan( $this->_plans ) ? 1 : 0 );
-
-			if ( $total_paid_plans === $trial_plans_count ) {
-				// All paid plans have trials.
-				$message = sprintf(
-					__fs( 'hey', $this->_slug ) . '! ' . __fs( 'trial-x-promotion-message', $this->_slug ),
-					sprintf( '<b>%s</b>', $this->get_plugin_name() ),
-					strtolower( __fs( 'awesome', $this->_slug ) ),
-					$paid_plan->trial_period
-				);
-			} else {
-				$plans_string = '';
-				for ( $i = 0; $i < $trial_plans_count; $i ++ ) {
-					$plans_string .= sprintf( '<a href="%s">%s</a>', $upgrade_url, $trial_plans[ $i ]->title );
-
-					if ( $i < $trial_plans_count - 2 ) {
-						$plans_string .= ', ';
-					} else if ( $i == $trial_plans_count - 2 ) {
-						$plans_string .= ' and ';
-					}
-				}
-
-				// Not all paid plans have trials.
-				$message = sprintf(
-					__fs( 'hey', $this->_slug ) . '! ' . __fs( 'trial-x-promotion-message', $this->_slug ),
-					sprintf( '<b>%s</b>', $this->get_plugin_name() ),
-					$plans_string,
-					$paid_plan->trial_period
-				);
-			}
-
-			$message .= ' ' . $cc_string;
-
-			// Add start trial button.
-			$message .= ' ' . sprintf(
+			// Start trial button.
+			$button = ' ' . sprintf(
 					'<a style="margin-left: 10px; vertical-align: super;" href="%s"><button class="button button-primary">%s &nbsp;&#10140;</button></a>',
-					$upgrade_url,
+					$trial_url,
 					__fs( 'start-free-trial', $this->_slug )
 				);
 
 			$this->_admin_notices->add_sticky(
-				$this->apply_filters( 'trial_promotion_message', $message ),
+				$this->apply_filters( 'trial_promotion_message', "{$message} {$cc_string} {$button}" ),
 				'trial_promotion',
 				'',
 				'promotion'
 			);
 
 			$this->_storage->trial_promotion_shown = WP_FS__SCRIPT_START_TIME;
+
+			return true;
+		}
+
+		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 */
+		function _enqueue_common_css() {
+			if ( $this->has_paid_plan() && ! $this->is_paying() ) {
+				// Add basic CSS for admin-notices and menu-item colors.
+				fs_enqueue_local_style( 'fs_common', '/admin/common.css' );
+			}
 		}
 
 		/* Action Links
 		------------------------------------------------------------------------------------------------------------------*/
-	/**
-	 * @var bool
-	 */
-	private $_action_links_hooked = false;
-	/**
-	 * @var array
-	 */
-	private $_action_links = array();
+		private $_action_links_hooked = false;
+		private $_action_links = array();
 
 		/**
 		 * Hook to plugin action links filter.
@@ -10239,6 +10887,11 @@ class Freemius extends Freemius_Abstract {
 				return;
 			}
 
+			if ( ! $this->is_ajax() ) {
+				// Inject license activation dialog UI and client side code.
+				add_action( 'admin_footer', array( &$this, '_add_license_activation_dialog_box' ) );
+			}
+
 			$link_text = __fs(
 				$this->is_free_plan() ? 'activate-license' : 'change-license',
 				$this->_slug
@@ -10250,6 +10903,77 @@ class Freemius extends Freemius_Abstract {
 				false,
 				11,
 				( 'activate-license ' . $this->_slug )
+			);
+		}
+
+		/**
+		 * Adds "Opt in" or "Opt out" link to the main "Plugins" page link actions collection.
+		 *
+		 * @author Leo Fajardo (@leorw)
+		 * @since  1.2.1.5
+		 */
+		function _add_tracking_links() {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
+
+			$this->_logger->entrance();
+
+			if ( ! $this->is_enable_anonymous() ) {
+				// Don't allow to opt-out if anonymous mode is disabled.
+				return;
+			}
+
+			if ( ! $this->is_free_plan() ) {
+				// Don't allow to opt-out if running in paid plan.
+				return;
+			}
+
+			if ( $this->add_ajax_action( 'stop_tracking', array( &$this, '_stop_tracking_callback' ) ) ) {
+				return;
+			}
+
+			if ( $this->add_ajax_action( 'allow_tracking', array( &$this, '_allow_tracking_callback' ) ) ) {
+				return;
+			}
+
+			if ( fs_request_is_action_secure( $this->_slug . '_reconnect' ) ) {
+				if ( ! $this->is_registered() && $this->is_anonymous() ) {
+					$this->connect_again();
+
+					return;
+				}
+			}
+
+			$url = '#';
+
+			if ( $this->is_registered() ) {
+				if ( $this->is_tracking_allowed() ) {
+					$link_text_id = 'opt-out';
+				} else {
+					$link_text_id = 'opt-in';
+				}
+
+				add_action( 'admin_footer', array( &$this, '_add_optout_dialog' ) );
+			} else {
+				$link_text_id = 'opt-in';
+
+				$params = ! $this->is_anonymous() ?
+					array() :
+					array(
+						'nonce'     => wp_create_nonce( $this->_slug . '_reconnect' ),
+						'fs_action' => ( $this->_slug . '_reconnect' ),
+					);
+
+				$url = $this->get_activation_url( $params );
+			}
+
+			$this->add_plugin_action_link(
+				__fs( $link_text_id, $this->_slug ),
+				$url,
+				false,
+				13,
+				"opt-in-or-opt-out {$this->_slug}"
 			);
 		}
 
@@ -10303,7 +11027,6 @@ class Freemius extends Freemius_Abstract {
 
 			if ( is_string( $url ) ) {
 				fs_redirect( $url );
-				exit();
 			}
 		}
 
@@ -10415,14 +11138,19 @@ class Freemius extends Freemius_Abstract {
 				$plan_title = $this->_site->plan->title;
 			}
 
+			// @since 1.2.1.5 The free version is auto deactivated.
+			$deactivation_step = version_compare( $this->version, '1.2.1.5', '<' ) ?
+				( '<li>' . __fs( 'deactivate-free-version', $this->_slug ) . '.</li>' ) :
+				'';
+
 			return sprintf(
-				' %s: <ol><li>%s.</li><li>%s.</li><li>%s (<a href="%s" target="_blank">%s</a>).</li></ol>',
+				' %s: <ol><li>%s.</li>%s<li>%s (<a href="%s" target="_blank">%s</a>).</li></ol>',
 				__fs( 'follow-steps-to-complete-upgrade', $this->_slug ),
 				$this->_get_latest_download_link( sprintf(
 					__fs( 'download-latest-x-version', $this->_slug ),
 					$plan_title
 				) ),
-				__fs( 'deactivate-free-version', $this->_slug ),
+				$deactivation_step,
 				__fs( 'upload-and-activate', $this->_slug ),
 				'//bit.ly/upload-wp-plugin',
 				__fs( 'howto-upload-activate', $this->_slug )
@@ -10503,8 +11231,6 @@ class Freemius extends Freemius_Abstract {
 		 *
 		 * @author Vova Feldman (@svovaf)
 		 * @since  1.0.9
-		 *
-		 * @return bool
 		 */
 		function set_sdk_upgrade_complete() {
 			$this->_storage->sdk_upgrade_mode = false;
@@ -10572,6 +11298,7 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function has_purchased_before() {
 			// TODO: Implement has_purchased_before() method.
+			throw new Exception( 'not implemented' );
 		}
 
 		/**
@@ -10584,6 +11311,7 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function is_agency() {
 			// TODO: Implement is_agency() method.
+			throw new Exception( 'not implemented' );
 		}
 
 		/**
@@ -10596,6 +11324,7 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function is_developer() {
 			// TODO: Implement is_developer() method.
+			throw new Exception( 'not implemented' );
 		}
 
 		/**
@@ -10608,6 +11337,7 @@ class Freemius extends Freemius_Abstract {
 		 */
 		function is_business() {
 			// TODO: Implement is_business() method.
+			throw new Exception( 'not implemented' );
 		}
 
 		#endregion

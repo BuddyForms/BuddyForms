@@ -10,10 +10,7 @@
 		exit;
 	}
 
-/**
- * Class FS_Admin_Notice_Manager
- */
-class FS_Admin_Notice_Manager {
+	class FS_Admin_Notice_Manager {
 		/**
 		 * @var string
 		 */
@@ -53,13 +50,7 @@ class FS_Admin_Notice_Manager {
 			return self::$_instances[ $slug ];
 		}
 
-	/**
-	 * FS_Admin_Notice_Manager constructor.
-	 *
-	 * @param $slug
-	 * @param string $title
-	 */
-	protected function __construct( $slug, $title = '' ) {
+		protected function __construct( $slug, $title = '' ) {
 			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_data', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 
 			$this->_slug           = $slug;
@@ -114,10 +105,7 @@ class FS_Admin_Notice_Manager {
 			fs_require_once_template( 'sticky-admin-notice-js.php', $params );
 		}
 
-	/**
-	 * @var bool
-	 */
-	private static $_added_sticky_javascript = false;
+		private static $_added_sticky_javascript = false;
 
 		/**
 		 * Hook to the admin_footer to add sticky message dismiss JavaScript handler.
@@ -291,6 +279,9 @@ class FS_Admin_Notice_Manager {
 		 * @param bool   $all_admin
 		 */
 		function add_sticky( $message, $id, $title = '', $type = 'success', $all_admin = false ) {
+			$message = fs_apply_filter( $this->_slug, "sticky_message_{$id}", $message );
+			$title   = fs_apply_filter( $this->_slug, "sticky_title_{$id}", $title );
+
 			$this->add( $message, $title, $type, true, $all_admin, $id );
 		}
 

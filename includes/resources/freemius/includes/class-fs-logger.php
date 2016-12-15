@@ -10,52 +10,18 @@
 		exit;
 	}
 
-/**
- * Class FS_Logger
- */
-class FS_Logger {
-	/**
-	 * @var
-	 */
-	private $_id;
-	/**
-	 * @var bool
-	 */
-	private $_on = false;
-	/**
-	 * @var bool
-	 */
-	private $_echo = false;
-	/**
-	 * @var bool|int
-	 */
-	private $_file_start = 0;
+	class FS_Logger {
+		private $_id;
+		private $_on = false;
+		private $_echo = false;
+		private $_file_start = 0;
 
-	/**
-	 * @var array
-	 */
-	private static $LOGGERS = array();
-	/**
-	 * @var array
-	 */
-	private static $LOG = array();
-	/**
-	 * @var int
-	 */
-	private static $CNT = 0;
-	/**
-	 * @var bool
-	 */
-	private static $_HOOKED_FOOTER = false;
+		private static $LOGGERS = array();
+		private static $LOG = array();
+		private static $CNT = 0;
+		private static $_HOOKED_FOOTER = false;
 
-	/**
-	 * FS_Logger constructor.
-	 *
-	 * @param $id
-	 * @param bool $on
-	 * @param bool $echo
-	 */
-	private function __construct( $id, $on = false, $echo = false ) {
+		private function __construct( $id, $on = false, $echo = false ) {
 			$this->_id = $id;
 
 			$bt     = debug_backtrace();
@@ -100,10 +66,7 @@ class FS_Logger {
 			}
 		}
 
-	/**
-	 * @return bool
-	 */
-	function is_on() {
+		function is_on() {
 			return $this->_on;
 		}
 
@@ -119,10 +82,7 @@ class FS_Logger {
 			$this->_echo = true;
 		}
 
-	/**
-	 * @return bool
-	 */
-	function is_echo_on() {
+		function is_echo_on() {
 			return $this->_echo;
 		}
 
@@ -130,19 +90,11 @@ class FS_Logger {
 			return $this->_id;
 		}
 
-	/**
-	 * @return bool|int
-	 */
-	function get_file() {
+		function get_file() {
 			return $this->_file_start;
 		}
 
-	/**
-	 * @param $message
-	 * @param string $type
-	 * @param $wrapper
-	 */
-	private function _log( &$message, $type = 'log', $wrapper ) {
+		private function _log( &$message, $type = 'log', $wrapper ) {
 			if ( ! $this->is_on() ) {
 				return;
 			}
@@ -170,75 +122,66 @@ class FS_Logger {
 			}
 		}
 
-	/**
-	 * @param $message
-	 * @param bool $wrapper
-	 */
-	function log( $message, $wrapper = false ) {
+		function log( $message, $wrapper = false ) {
 			$this->_log( $message, 'log', $wrapper );
 		}
 
-	/**
-	 * @param $message
-	 * @param bool $wrapper
-	 */
-	function info( $message, $wrapper = false ) {
+		function info( $message, $wrapper = false ) {
 			$this->_log( $message, 'info', $wrapper );
 		}
 
-	/**
-	 * @param $message
-	 * @param bool $wrapper
-	 */
-	function warn( $message, $wrapper = false ) {
+		function warn( $message, $wrapper = false ) {
 			$this->_log( $message, 'warn', $wrapper );
 		}
 
-	/**
-	 * @param $message
-	 * @param bool $wrapper
-	 */
-	function error( $message, $wrapper = false ) {
+		function error( $message, $wrapper = false ) {
 			$this->_log( $message, 'error', $wrapper );
 		}
 
-	/**
-	 * @param string $message
-	 * @param bool $wrapper
-	 */
-	function entrance( $message = '', $wrapper = false ) {
+		/**
+		 * Log API error.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.5
+		 *
+		 * @param mixed $api_result
+		 * @param bool  $wrapper
+		 */
+		function api_error( $api_result, $wrapper = false ) {
+			$message = '';
+			if ( is_object( $api_result ) && isset( $api_result->error ) ) {
+				$message = $api_result->error->message;
+			} else if ( is_object( $api_result ) ) {
+				$message = var_export( $api_result, true );
+			} else if ( is_string( $api_result ) ) {
+				$message = $api_result;
+			} else if ( empty( $api_result ) ) {
+				$message = 'Empty API result.';
+			}
+
+			$message = 'API Error: ' . $message;
+
+			$this->_log( $message, 'error', $wrapper );
+		}
+
+		function entrance( $message = '', $wrapper = false ) {
 			$msg = 'Entrance' . ( empty( $message ) ? '' : ' > ' ) . $message;
 
 			$this->_log( $msg, 'log', $wrapper );
 		}
 
-	/**
-	 * @param string $message
-	 * @param bool $wrapper
-	 */
-	function departure( $message = '', $wrapper = false ) {
+		function departure( $message = '', $wrapper = false ) {
 			$msg = 'Departure' . ( empty( $message ) ? '' : ' > ' ) . $message;
 
 			$this->_log( $msg, 'log', $wrapper );
 		}
 
-	/**
-	 * @param $log
-	 * @param bool $show_type
-	 *
-	 * @return string
-	 */
-	private static function format( $log, $show_type = true ) {
+		private static function format( $log, $show_type = true ) {
 			return '[' . str_pad( $log['cnt'], strlen( self::$CNT ), '0', STR_PAD_LEFT ) . '] [' . $log['logger']->_id . '] ' . ( $show_type ? '[' . $log['type'] . ']' : '' ) . $log['function'] . ' >> ' . $log['msg'] . ( isset( $log['file'] ) ? ' (' . substr( $log['file'], $log['logger']->_file_start ) . ' ' . $log['line'] . ') ' : '' ) . ' [' . $log['timestamp'] . ']';
 		}
 
-	/**
-	 * @param $log
-	 *
-	 * @return string
-	 */
-	private static function format_html( $log ) {
-			return '<div style="font-size: 11px; padding: 3px; background: #ccc; margin-bottom: 3px;">[' . $log['cnt'] . '] [' . $log['logger']->_id . '] [' . $log['type'] . '] <b><code style="color: blue;">' . $log['function'] . '</code> >> <b style="color: darkorange;">' . $log['msg'] . '</b></b>' . ( isset( $log['file'] ) ? ' (' . substr( $log['file'], $log['logger']->_file_start ) . ' ' . $log['line'] . ')' : '' ) . ' [' . $log['timestamp'] . ']</div>';
+		private static function format_html( $log ) {
+			return '<div style="font-size: 13px; font-family: monospace; color: #7da767; padding: 8px 3px; background: #000; border-bottom: 1px solid #555;">[' . $log['cnt'] . '] [' . $log['logger']->_id . '] [' . $log['type'] . '] <b><code style="color: #c4b1e0;">' . $log['function'] . '</code> >> <b style="color: #f59330;">' . esc_html($log['msg']) . '</b></b>' . ( isset( $log['file'] ) ? ' (' . substr( $log['file'], $log['logger']->_file_start ) . ' ' . $log['line'] . ')' : '' ) . ' [' . $log['timestamp'] . ']</div>';
 		}
 
 		static function dump() {
@@ -256,10 +199,7 @@ class FS_Logger {
 		<?php
 		}
 
-	/**
-	 * @return array
-	 */
-	static function get_log() {
+		static function get_log() {
 			return self::$LOG;
 		}
 	}
