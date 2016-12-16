@@ -1,20 +1,25 @@
 === Form Builder & Front End Editor BuddyForms ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, ProjectKarol
-Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post,Frontend Publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
+Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, yet powerful form builder which allows users to submit contact forms or content via front end to your webpage and contribute to a larger project.
+A simple, yet powerful Form Builder. Submit Contact, Registration and POST FORMS. Ideal for User Submitted Content. Get all Insights! Extend with Addons!
 
 == Description ==
 
 <h4>Contact Forms - Registration Forms -  Post Forms - Intuitive & easy to use</h4>
+A Form Builder that saves you more time with ready-to-use form templates and smarter options.
 
-BuddyForms uses the common structure of a form to receive, collect and publish user submitted content from website users and large communities. From gathering content to publishing it – BuddyForms takes care of the whole process with an intelligent moderation and revision logic.
+---
 
+<h4>A Form Builder For The Next Generation.</h4>
+BuddyForms uses the common structure of a form to receive, collect, process and publish user submitted content. From gathering content to publishing it – BuddyForms takes care of the whole process with an intelligent easy to use system. Its the perfect choice from smaller sites to large communities. Create intelligent - contact - registration and post forms. No other Form Builder needed. Use one Form Builder to create all the form needed on your site will save resources and boost your site performance.
+
+---
 
 > #### Typical Use-Cases that our users create with BuddyForms
 > * Blog posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
@@ -72,6 +77,38 @@ BuddyForms uses the common structure of a form to receive, collect and publish u
 > * BuddyForms Hierarchical Post – Let users create hierarchical content that automatically displays underneath a certain post
 > * BuddyForms Attach Post with Group - Create a Group during Post Submission
 > * BuddyForms Hook Fields - Have full control of your fields output. Hook your BuddyForms Form Fields via options and display them everywhere on your site
+
+
+> #### Get the PROFESSIONAL Version!
+> * Priority Email & Help Center Support
+> * Collect User Data
+> * All Post Types
+> * More Form Elements
+> * More Options
+> * More Validation Options
+> * Manage User Roles
+> * Manage Capabilities
+> * E-Mail Notifications
+> * Disable ajax form submission
+> * Posts Revision
+> * Comment Settings
+> * Post Form Admin Metaboxes
+> * Enable Login on the form
+> * Create an account during submission?
+> * Local Storage
+> * More After Submission Options
+> * Frontend Revision Control
+> * Post Status Change Mail Notifications
+> * Logged in User Permissions
+> * Import - Export Forms
+> * Featured Image Support
+> * Registration Options
+> * Category, Tags, Custom Taxonomies
+> * Comments Options
+> * Post Status Control
+> * File Upload
+> * Special Form Elements Like Hidden, Number, HTML, Date
+> * More exiting features and extensions coming all the time ;)
 
 
 ---
@@ -147,10 +184,15 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
+= 2.0.7 =
+* Check if a mail notification exist to avoid php notice if debugger is enabled
+* Update the freemius SDK.
+
+
 = 2.0.6 =
-Fixed an issue with categories and tax. The form element was only working as taxonomy form element.
-Fixed the admin header for WordPress 4.7
-Update the welcome screen links and screenshots
+* Fixed an issue with categories and tax. The form element was only working as taxonomy form element.
+* Fixed the admin header for WordPress 4.7
+* Update the welcome screen links and screenshots
 
 
 = 2.0.5 =
