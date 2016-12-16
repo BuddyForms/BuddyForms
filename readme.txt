@@ -7,7 +7,7 @@ Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, yet powerful Form Builder. Submit Contact, Registration and POST FORMS. Ideal for User Submitted Content. Get all Insights! Extend with Addons!
+A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for User Submitted Content. Get all Insights! Extend with Addons!
 
 == Description ==
 
@@ -17,16 +17,19 @@ A Form Builder that saves you more time with ready-to-use form templates and sma
 ---
 
 <h4>A Form Builder For The Next Generation.</h4>
-BuddyForms uses the common structure of a form to receive, collect, process and publish user submitted content. From gathering content to publishing it – BuddyForms takes care of the whole process with an intelligent easy to use system. Its the perfect choice from smaller sites to large communities. Create intelligent - contact - registration and post forms. No other Form Builder needed. Use one Form Builder to create all the form needed on your site will save resources and boost your site performance.
+BuddyForms uses the common structure of a form to receive, collect, process and publish user submitted content. From gathering content to publishing it – BuddyForms takes care of the whole process with an intelligent easy to use system. Its the perfect choice from smaller sites to large communities. Create intelligent - contact - registration and post forms. No other Form Builder needed. Use one Form Builder to create all the forms needed on your site will save resources and boost your site performance.
+
 
 ---
 
+
+
 > #### Typical Use-Cases that our users create with BuddyForms
 > * Blog posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
+> * Online Directories – Crowdsource categorized data from your community
 > * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
-> * News Magazines – Create single articles through collabarotive writing among a team of editors
+> * News Magazines – Create single articles through collaborative writing among a team of editors
 > * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
-> * Online directories – Crowdsource categorized data from your community
 > * Marketplace – Sell and purchase products from different vendors and list all the product features
 
 
@@ -77,6 +80,10 @@ BuddyForms uses the common structure of a form to receive, collect, process and 
 > * BuddyForms Hierarchical Post – Let users create hierarchical content that automatically displays underneath a certain post
 > * BuddyForms Attach Post with Group - Create a Group during Post Submission
 > * BuddyForms Hook Fields - Have full control of your fields output. Hook your BuddyForms Form Fields via options and display them everywhere on your site
+
+
+---
+
 
 
 > #### Get the PROFESSIONAL Version!
