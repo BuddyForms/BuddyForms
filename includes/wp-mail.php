@@ -12,7 +12,7 @@ function mail_submission_trigger_sent( $args ) {
 
 	$post = get_post( $post_id );
 
-	if ( $buddyforms[ $form_slug ]['mail_submissions'] ) {
+	if ( isset( $buddyforms[ $form_slug ]['mail_submissions'] ) && is_array( $buddyforms[ $form_slug ]['mail_submissions'] ) ) {
 		foreach ( $buddyforms[ $form_slug ]['mail_submissions'] as $key => $notification ) {
 			buddyforms_send_mail_submissions( $notification, $post );
 		}
