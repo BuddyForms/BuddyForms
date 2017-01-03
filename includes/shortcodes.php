@@ -1,4 +1,5 @@
 <?php
+
 // Shortcode to add the form everywhere easily ;) the form is located in form.php
 add_shortcode( 'buddyforms_form', 'buddyforms_create_edit_form_shortcode' );
 add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );

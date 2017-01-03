@@ -160,7 +160,7 @@ function buddyforms_metabox_form_setup() {
 		'ipaddress' => __( 'Disable IP Address', 'buddyforms' ),
 		'referer'   => __( 'Disable Referer', 'buddyforms' ),
 		'browser'   => __( 'Disable Browser', 'buddyforms' ),
-		'version'   => __( 'Disable Brovser Version', 'buddyforms' ),
+		'version'   => __( 'Disable Browser Version', 'buddyforms' ),
 		'platform'  => __( 'Disable Platform', 'buddyforms' ),
 		'reports'   => __( 'Disable Reports', 'buddyforms' ),
 		'userAgent' => __( 'Disable User Agent', 'buddyforms' ),

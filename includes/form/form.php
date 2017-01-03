@@ -78,10 +78,10 @@ function buddyforms_create_edit_form( $args ) {
 			if ( $the_post->post_author == $current_user->ID ) {
 				$user_can_edit = true;
 			}
-			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
 
 			if ( $user_can_edit == false ) {
-				$error_message = __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' );
+				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 				return;
@@ -105,10 +105,10 @@ function buddyforms_create_edit_form( $args ) {
 		if ( $the_post->post_author == $current_user->ID ) {
 			$user_can_edit = true;
 		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
 
 		if ( $user_can_edit == false ) {
-			$error_message = __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' );
+			$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 			echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 			return;
@@ -131,7 +131,7 @@ function buddyforms_create_edit_form( $args ) {
 
 
 	if ( ! isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		$error_message = __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' );
+		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 		return;

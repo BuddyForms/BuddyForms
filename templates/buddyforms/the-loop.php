@@ -85,7 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							ob_start();
 							?>
 							<div class="action">
-								<span><?php _e( 'Created', 'buddyforms' ); ?><?php the_time( 'F j, Y' ) ?></span>
+								<span><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'F j, Y' ) ?></span>
 								<div class="meta">
 									<div class="item-status"><?php echo $post_status_name; ?></div>
 									<?php buddyforms_post_entry_actions( $form_slug ); ?>

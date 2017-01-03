@@ -43,10 +43,11 @@ function buddyforms_form_html( $args ) {
 		$user_can_edit = true;
 	}
 
-	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
 
 	if ( $user_can_edit == false ) {
-		$error_message = __( 'You do not have the required user role to use this form', 'buddyforms' );
+
+		$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) );
 
 		return '<div class="bf-alert error">' . $error_message . '</div>';
 	}

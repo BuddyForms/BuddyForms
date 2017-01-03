@@ -161,11 +161,11 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( $the_post->post_author == $current_user->ID ) {
 			$user_can_edit = true;
 		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
 		if ( $user_can_edit == false ) {
 			$args = array(
 				'hasError'      => true,
-				'error_message' => __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ),
+				'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
 			);
 
 			return $args;
@@ -183,11 +183,11 @@ function buddyforms_process_post( $args = Array() ) {
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'][0] == 'public_submit' ) {
 		$user_can_edit = true;
 	}
-	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit );
+	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
 	if ( $user_can_edit == false ) {
 		$args = array(
 			'hasError'      => true,
-			'error_message' => __( 'You do not have the required user role to use this form', 'buddyforms' ),
+			'error_message' => apply_filters( 'buddyforms_user_role_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
 		);
 
 		return $args;
@@ -350,7 +350,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 	else:
 		if ( empty( $error_message ) ) {
-			$error_message = __( 'Error! There was a problem submitting the post ;-(', 'buddyforms' );
+			$error_message = apply_filters( 'buddyforms_error_submitting_form', __( 'Error! There was a problem submitting the post ;-(', 'buddyforms' ) );
 		}
 		$form_notice = '<div class="bf-alert error">' . $error_message . '</div>';
 

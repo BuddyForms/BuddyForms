@@ -234,7 +234,7 @@ function buddyforms_transition_post_status_regenerate_global_options( $new_statu
 add_action( 'transition_post_status', 'buddyforms_transition_post_status_regenerate_global_options', 10, 3 );
 
 /**
- * The global $buddyforms is sored in the option table and provides all forms and form fields for easy access and to save queries.
+ * The global $buddyforms is stored in the option table and provides all forms and form fields for easy access and to save queries.
  * Its super save as it gets regenerated just if a form gets created or updated. Forms are posts of the post type buddyforms. But in most cases the global buddyforms is used.
  * Its one query form the options table and get cashed super great by WordPress and cashing plugins.
  * I have tested this and have done performance checks and it is super fast. Its based on the theory that a user wil not have hundreds of forms. Let us see if this happends.

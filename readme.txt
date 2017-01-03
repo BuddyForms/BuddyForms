@@ -7,7 +7,7 @@ Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for User Submitted Content. Get all Insights! Extend with Addons!
+A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for User Submitted Content. Get all Insights! Extendable with Addons!
 
 == Description ==
 

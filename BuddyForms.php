@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Form Builder & Front End Editor BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
- * Description: A simple, yet powerful form builder which allows users to submit contact forms or content via front end to your webpage and contribute to a larger project.
+ * Description: A simple yet powerful form builder. Create contact forms - register forms - post forms - user submitted content - User Registration - Front end Forms - Frontend Editor
  * Version: 2.0.7
  * Author: Sven Lehnert
  * Author URI: https://profiles.wordpress.org/svenl77
