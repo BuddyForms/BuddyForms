@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,13 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.0.8 =
+Enable Advanced options for the contact form fields
+Spelling correction
+Add some isset checks to prevent nonce in the form select meta box
+Add new parameter to the buddyforms_user_can_edit filter to enable limit user submissions by user role.
+Add all error messages in filter to allow the overwrite from other plugins
 
 = 2.0.7 =
 * Check if a mail notification exist to avoid php notice if debugger is enabled
