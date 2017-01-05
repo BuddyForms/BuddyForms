@@ -11,18 +11,35 @@ A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for 
 
 == Description ==
 
-<h4>Contact Forms - Registration Forms -  Post Forms - Intuitive & easy to use</h4>
-A Form Builder that saves you more time with ready-to-use form templates and smarter options.
+<h4>Build all kind of forms - no coding required.</h4>
+Contact forms, post forms and registration forms are now easily build in minutes. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
+BuddyForms has proven to be an invaluable plugin for communities and networks. With simple forms it is very easy to encourage members, users and community to contribute and engage with your site. This makes the plugin priceless valuable as it supports organic traffic to your site.
 
 ---
 
-<h4>A Form Builder For The Next Generation.</h4>
-BuddyForms uses the common structure of a form to receive, collect, process and publish user submitted content. From gathering content to publishing it – BuddyForms takes care of the whole process with an intelligent easy to use system. Its the perfect choice from smaller sites to large communities. Create intelligent - contact - registration and post forms. No other Form Builder needed. Use one Form Builder to create all the forms needed on your site will save resources and boost your site performance.
-
+> #### Features of BuddyForms
+> * Customize your own forms via Drag and Drop or benefit from our pre-configured forms
+> * Choose between over 20 field types (text, numbers, check boxes, buttons, comments, media files, post status, taxonomies, CAPTCHA, ...)
+> * Set custom validation rules to prevent users from submitting false data
+> * Full moderation control of the submitted content by predefining the status: pending, draft, published
+> * Define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
+> * Submit your form by reloading the page or asynchronously with AJAX
+> * Select which kind of content is submitted: page, post, attachment or no specific
+> * Easily embed forms anywhere on your site via shortcodes or create a new form straight from your admin bar
+> * Enable/Disable comments related to the submitted content
+> * Enable/Disable Frontend Revision for users
+> * Choose if unregistered users are able to see and submit content via forms or not
+> * Control who can create, edit and delete content that is created from a form and even prevent 404 error messages when a published post is set back to draft mode
+> * Set-up email notifications to notify admins when content is submitted
+> * Set-up email notifications to notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation)
 
 ---
 
+Upgrade to the ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
 
+→ Get more information and upgrade at buddyforms.com
+
+---
 
 > #### Typical Use-Cases that our users create with BuddyForms
 > * Blog posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
@@ -31,40 +48,14 @@ BuddyForms uses the common structure of a form to receive, collect, process and 
 > * News Magazines – Create single articles through collaborative writing among a team of editors
 > * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 > * Marketplace – Sell and purchase products from different vendors and list all the product features
-
-
-> #### Of course, you can do simple forms, too like
+> * Of course, you can do simple forms, too like
 > * Contact Forms – Collect leads and customer support data
 > * Registration Forms – Sign-up users to your webpage
 > * Login Forms – Grant users access to restricted content
 
 ---
 
-
-
-<h4>Form Wizard</h4>
-[youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
-
-> #### Features of BuddyForms
-> * Use pre-configured forms (contact form, registration form, post form) or quickly customize your own form via our easy-to-use Drag and Drop form builder
-> * Choose between over 20 field types (text, numbers, check boxes, buttons, comments, media files, post status, taxonomies, CAPTCHA, ...)
-> * Set custom validation rules to prevent users from submitting false data
-> * Define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
-> * Submit your form by reloading the page or asynchronously with AJAX
-> * Select which kind of content is submitted: page, post, attachment or no specific
-> * Control moderation of the submitted content by predefining the status: pending, draft, published
-> * Embed forms via short codes anywhere on your site or create a new form straight from your admin bar
-> * Enable/Disable comments related to the submitted content
-> * Enable/Disble Frontend Revision for users
-> * Choose if unregistered users are able to see and submit content via forms or not
-> * Control who can create, edit and delete content that is created from a form and even prevent 404 error messages when a published post is set back to draft mode
-> * Set-up email notifications to notify admins when content is submitted
-> * Set-up email notifications to notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation)
-
----
-
-
-> #### BuddyForms works well with other Plug-Ins. Enhance its capabilities with the following
+> #### BuddyForms works great with other Plug-Ins. Enhance its capabilities with the following
 > * BuddyPress – Enable all publishing features of BuddyForms in BuddyPress
 > * Ultimate Member – Submit and manage posts from your Ultimate Member profile
 > * WooCommerce – Build your own marketplace with user-submitted products
@@ -73,57 +64,13 @@ BuddyForms uses the common structure of a form to receive, collect, process and 
 > * Posts 2 Posts - Efficient many-to-many connections between posts, pages, custom post types, users.
 > * WC Vendors - BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products
 
-
-> #### Also we offer add-ons to further enhance your forms created with BuddyForms
-> * BuddyForms Moderation ( Former: Review Logic ) - Create new drafts or pending reviews from new or published posts without changing the live version.
-> * BuddyForms Remote – Embed and display your forms on any webpage (which doesn’t have to run on WordPress)
-> * BuddyForms Hierarchical Post – Let users create hierarchical content that automatically displays underneath a certain post
-> * BuddyForms Attach Post with Group - Create a Group during Post Submission
-> * BuddyForms Hook Fields - Have full control of your fields output. Hook your BuddyForms Form Fields via options and display them everywhere on your site
-
-
----
-
-
-
-> #### Get the PROFESSIONAL Version!
-> * Priority Email & Help Center Support
-> * Collect User Data
-> * All Post Types
-> * More Form Elements
-> * More Options
-> * More Validation Options
-> * Manage User Roles
-> * Manage Capabilities
-> * E-Mail Notifications
-> * Disable ajax form submission
-> * Posts Revision
-> * Comment Settings
-> * Post Form Admin Metaboxes
-> * Enable Login on the form
-> * Create an account during submission?
-> * Local Storage
-> * More After Submission Options
-> * Frontend Revision Control
-> * Post Status Change Mail Notifications
-> * Logged in User Permissions
-> * Import - Export Forms
-> * Featured Image Support
-> * Registration Options
-> * Category, Tags, Custom Taxonomies
-> * Comments Options
-> * Post Status Control
-> * File Upload
-> * Special Form Elements Like Hidden, Number, HTML, Date
-> * More exiting features and extensions coming all the time ;)
-
-
 ---
 
 > #### Docs & Support
 > * Find our Getting Started, How-to and Developer Docs on [docs.buddyforms.com](http://docs.buddyforms.com/)
 > * or watch one of our Video Tutorials [Videos](https://themekraft.com/buddyforms-videos/)
 
+---
 
 > #### Submit Issues - Contribute
 > * Pull request are welcome. BuddyForms is community driven and developed on [Github](https://buddyforms.github.io/BuddyForms/)
@@ -133,9 +80,6 @@ BuddyForms uses the common structure of a form to receive, collect, process and 
 > #### Demo Site
 > * Feel free to test BuddyForms on our Demo Site: [BuddyForms Demo](https://addendio.com/try-plugin/?slug=buddyforms)
 
-<h4>Video from Webzio Showcase the Plugin Moderation Logic!</h4>
-[youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
-
 ---
 
 > #### Follow Us
@@ -143,10 +87,18 @@ BuddyForms uses the common structure of a form to receive, collect, process and 
 
 ---
 
+> #### Videos
+> Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+> Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
+
+---
+
 > **Powered with ❤ by [ThemeKraft](https://themekraft.com)**
 
+---
+
 #### Tags
-form, forms, frontend forms, contact form, contact forms, content form, content forms,registration form, registration forms, custom form, custom forms, form, form administration, form builder, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
+form, forms, frontend forms, contact form, contact forms, content form, post form, post forms, content forms, registration form, registration forms, custom form, custom forms, form, form administration, form builder, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, post, posts, public, publish, share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 
 ---
 
