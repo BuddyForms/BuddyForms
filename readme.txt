@@ -13,6 +13,9 @@ A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for 
 
 <h4>Build all kind of forms - no coding required.</h4>
 Contact forms, post forms and registration forms are now easily build in minutes. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
+
+---
+
 BuddyForms has proven to be an invaluable plugin for communities and networks. With simple forms it is very easy to encourage members, users and community to contribute and engage with your site. This makes the plugin priceless valuable as it supports organic traffic to your site.
 
 ---
@@ -37,7 +40,7 @@ BuddyForms has proven to be an invaluable plugin for communities and networks. W
 
 Upgrade to the ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
 
-→ Get more information and upgrade at buddyforms.com
+→ Get more information and upgrade at [BuddyForms](https://themekraft.com/buddyforms)
 
 ---
 
@@ -82,14 +85,14 @@ Upgrade to the ‘Professional’ to skyrocket the engagement around your websit
 
 ---
 
-> #### Follow Us
-> [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/buddyforms) | [Facebook](https://www.facebook.com/buddyforms/) | [Google+](https://plus.google.com/u/0/b/100975390423636463712/?pageId=100975390423636463712) | [YouTube](https://www.youtube.com/playlist?list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb)
+<h4>Videos</h4>
+Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
 
 ---
 
-> #### Videos
-> Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
-> Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
+> #### Follow Us
+> [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/buddyforms) | [Facebook](https://www.facebook.com/buddyforms/) | [Google+](https://plus.google.com/u/0/b/100975390423636463712/?pageId=100975390423636463712) | [YouTube](https://www.youtube.com/playlist?list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb)
 
 ---
 
