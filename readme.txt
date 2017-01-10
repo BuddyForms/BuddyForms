@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,7 +38,7 @@ BuddyForms has proven to be an invaluable plugin for communities and networks. W
 
 ---
 
-Upgrade to the ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
+Upgrade to ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
 
 → Get more information and upgrade at [BuddyForms](https://themekraft.com/buddyforms)
 
@@ -51,7 +51,7 @@ Upgrade to the ‘Professional’ to skyrocket the engagement around your websit
 > * News Magazines – Create single articles through collaborative writing among a team of editors
 > * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 > * Marketplace – Sell and purchase products from different vendors and list all the product features
-> * Of course, you can do simple forms, too like
+> #### Of course, you can do simple forms, too like
 > * Contact Forms – Collect leads and customer support data
 > * Registration Forms – Sign-up users to your webpage
 > * Login Forms – Grant users access to restricted content
@@ -69,6 +69,12 @@ Upgrade to the ‘Professional’ to skyrocket the engagement around your websit
 
 ---
 
+<h4>Videos</h4>
+Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
+
+---
+
 > #### Docs & Support
 > * Find our Getting Started, How-to and Developer Docs on [docs.buddyforms.com](http://docs.buddyforms.com/)
 > * or watch one of our Video Tutorials [Videos](https://themekraft.com/buddyforms-videos/)
@@ -82,12 +88,6 @@ Upgrade to the ‘Professional’ to skyrocket the engagement around your websit
 
 > #### Demo Site
 > * Feel free to test BuddyForms on our Demo Site: [BuddyForms Demo](https://addendio.com/try-plugin/?slug=buddyforms)
-
----
-
-<h4>Videos</h4>
-Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
-Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
 
 ---
 
@@ -146,12 +146,16 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
+= 2.0.9 =
+* Fixed a issue in the mail notification. Array elements like checkboxes and taxonomies got displayed as 'Array'
+* Add a new function to display Checkboxes, eMails, Websites and Taxonomies in mail notifications.
+
 = 2.0.8 =
-Enable Advanced options for the contact form fields
-Spelling correction
-Add some isset checks to prevent nonce in the form select meta box
-Add new parameter to the buddyforms_user_can_edit filter to enable limit user submissions by user role.
-Add all error messages in filter to allow the overwrite from other plugins
+* Enable Advanced options for the contact form fields
+* Spelling correction
+* Add some isset checks to prevent nonce in the form select meta box
+* Add new parameter to the buddyforms_user_can_edit filter to enable limit user submissions by user role.
+* Add all error messages in filter to allow the overwrite from other plugins
 
 = 2.0.7 =
 * Check if a mail notification exist to avoid php notice if debugger is enabled

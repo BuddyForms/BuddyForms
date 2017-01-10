@@ -28,7 +28,7 @@ function mail_submission_trigger_sent( $args ) {
  * @param $post
  */
 function buddyforms_send_mail_submissions( $notification, $post ) {
-	global $form_slug, $buddyforms;
+	global $form_slug, $buddyforms, $post;
 
 	$pub_post = $post;
 	$post_ID  = $post->ID;
@@ -120,7 +120,39 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		$emailBody = stripslashes( $emailBody );
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
-				$field_value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+
+				$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+
+				// Check if is array
+				if ( is_array( $value ) ) {
+					$field_value = implode( ',', $value );
+				} else {
+					$field_value = $value;
+				}
+
+
+				switch ( $field['type'] ) {
+					case 'taxonomy':
+						if ( is_array( $value ) ) {
+							foreach($value as $cat ){
+								$term = get_term( $cat, $field['taxonomy'] );
+								$terms[] = $term->name;
+							}
+							$field_value = implode( ',', $terms );
+						} else {
+							$term = get_term( $value, $field['taxonomy'] );
+							$field_value = $term->name;
+						}
+						break;
+					case 'link':
+						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
+						break;
+					case 'user_website':
+						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
+						break;
+				}
+
+
 				$emailBody   = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
 			}
 		}
@@ -302,17 +334,49 @@ function buddyforms_send_post_status_change_notification( $post ) {
  * @return string
  */
 function buddyforms_mail_notification_form_elements_as_table($form_slug){
-	global $buddyforms;
+	global $buddyforms, $post;
 	$striped_c = 0;
 
 	// Table start
 	$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
+
+		$value = $_POST[ $field['slug'] ];
+
+		// Check if is array
+		if ( is_array( $value ) ) {
+			$field_value = implode( ',', $value );
+		} else {
+			$field_value = $value;
+		}
+
+		switch ( $field['type'] ) {
+			case 'taxonomy':
+				if ( is_array( $value ) ) {
+					foreach($value as $cat ){
+						$term = get_term( $cat, $field['taxonomy'] );
+						$terms[] = $term->name;
+					}
+					$field_value = implode( ',', $terms );
+				} else {
+					$term = get_term( $value, $field['taxonomy'] );
+					$field_value = $term->name;
+				}
+				break;
+			case 'link':
+				$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
+				break;
+			case 'user_website':
+				$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
+				break;
+		}
+
+
 		$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
 		if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
-			$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $_POST[ $field['slug'] ] . "</td></tr>";
+			$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
 		}
 	}
 	// Table end
