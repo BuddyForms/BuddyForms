@@ -475,6 +475,23 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_HTML( '</div>' ) );
 
 						break;
+					case 'post_formats' :
+
+						$post_formats                       = get_theme_support( 'post-formats' );
+						$post_formats                       = isset( $post_formats[0] ) ? $post_formats[0] : false;
+						array_unshift($post_formats, 'Select a Post Format');
+
+						if( empty( $element_attr['value'] ) ){
+							$element_attr['value'] = $customfield['post_formats_default'];
+						}
+
+						if ( isset( $customfield['hidden'] ) ) {
+							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
+						} else {
+							$form->addElement( new Element_Select( $name, $slug, $post_formats, $element_attr ));
+						}
+
+						break;
 					case 'taxonomy' :
 					case 'category' :
 					case 'tags' :

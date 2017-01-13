@@ -307,6 +307,11 @@ function buddyforms_form_elements_select_options() {
 				array(
 					'label' => __( 'Taxonomy', 'buddyforms' ),
 				);
+			$elements_select_options['post']['fields']['post_formats']       =
+				array(
+					'label' => __( 'Post Formats', 'buddyforms' ),
+					'unique' => 'unique'
+				);
 			$elements_select_options['post']['fields']['comments']       =
 				array(
 					'label'  => __( 'Comments', 'buddyforms' ),

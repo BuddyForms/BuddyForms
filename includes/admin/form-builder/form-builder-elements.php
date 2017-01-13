@@ -276,11 +276,38 @@ function buddyforms_display_form_element( $args ) {
 			);
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
+		case 'post_formats':
+			unset( $form_fields['advanced']['slug'] );
+			unset( $form_fields['advanced']['metabox_enabled'] );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_formats' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			$post_formats                       = get_theme_support( 'post-formats' );
+			$post_formats                       = isset( $post_formats[0] ) ? $post_formats[0] : false;
+			array_unshift($post_formats, 'none');
+
+
+			$post_formats_default                 = isset( $customfield['post_formats_default'] ) ? $customfield['post_formats_default'] : false;
+
+			$form_fields['general']['post_formats_default'] = new Element_Select( '<b>' . __( 'Post Formats Default', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][post_formats_default]", $post_formats, array(
+				'value'    => $post_formats_default,
+				'class'    => 'bf_hide_if_post_type_none',
+				'field_id' => $field_id,
+				'id'       => 'post_formats_field_id_' . $field_id,
+			) );
+
+			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array(
+				'value' => $hidden,
+				'class' => 'bf_hide_if_post_type_none'
+			) );
+
+			break;
 
 		case 'taxonomy':
 		case 'category':
 		case 'tags':
-
+			
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
 			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">

@@ -496,6 +496,15 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		}
 
 		//
+		// Save post format if needed
+		//
+
+		if ( $customfield['type'] == 'post_formats' && isset($_POST[ 'post_formats' ]) && $_POST[ 'post_formats' ] != 'none' ) :
+			set_post_format( $post_id, $_POST[ 'post_formats' ] );
+		endif;
+
+
+		//
 		// Save taxonomies if needed
 		//
 
