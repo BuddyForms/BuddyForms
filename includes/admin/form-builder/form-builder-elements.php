@@ -307,7 +307,7 @@ function buddyforms_display_form_element( $args ) {
 		case 'taxonomy':
 		case 'category':
 		case 'tags':
-			
+
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
 			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">

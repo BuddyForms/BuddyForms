@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, ProjectKarol
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
-Tested up to: 4.7
-Stable tag: 2.0.9
+Tested up to: 4.7.1
+Stable tag: 2.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,11 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.0.10 =
+* Add Post Formats support
+* Tested WordPress Version 4.7.1
+* New Pro Feature: Create a new form element for the post formats
 
 = 2.0.9 =
 * Fixed a issue in the mail notification. Array elements like checkboxes and taxonomies got displayed as 'Array'
