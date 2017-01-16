@@ -161,7 +161,7 @@ function buddyforms_process_post( $args = Array() ) {
 		if ( $the_post->post_author == $current_user->ID ) {
 			$user_can_edit = true;
 		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
+		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 		if ( $user_can_edit == false ) {
 			$args = array(
 				'hasError'      => true,
@@ -183,7 +183,7 @@ function buddyforms_process_post( $args = Array() ) {
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'][0] == 'public_submit' ) {
 		$user_can_edit = true;
 	}
-	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
+	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 	if ( $user_can_edit == false ) {
 		$args = array(
 			'hasError'      => true,

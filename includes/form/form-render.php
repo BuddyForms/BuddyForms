@@ -43,7 +43,7 @@ function buddyforms_form_html( $args ) {
 		$user_can_edit = true;
 	}
 
-	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
+	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
 	if ( $user_can_edit == false ) {
 

@@ -78,7 +78,7 @@ function buddyforms_create_edit_form( $args ) {
 			if ( $the_post->post_author == $current_user->ID ) {
 				$user_can_edit = true;
 			}
-			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
+			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
 			if ( $user_can_edit == false ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
@@ -105,7 +105,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( $the_post->post_author == $current_user->ID ) {
 			$user_can_edit = true;
 		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug );
+		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
 		if ( $user_can_edit == false ) {
 			$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
