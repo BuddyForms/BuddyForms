@@ -149,6 +149,21 @@ function load_formbuilder_template(template) {
 
 jQuery(document).ready(function (jQuery) {
 
+    // Hide all post box metaboxes except the buddyforms meta boxes
+    jQuery('div .postbox').not('.buddyforms-metabox').hide();
+
+    // Show the submit metabox
+    jQuery('#submitdiv').show();
+    jQuery('#post').removeClass('hidden');
+
+    // Add Select2 Support
+    jQuery(".bf-select2").select2({
+        placeholder: "Select an option"
+    });
+
+    // Remove all Visual Composer elements form BuddyForms View
+    jQuery('*[class^="vc_"]').remove();
+
     // Prevent form submission if enter key is pressed on text fields
     jQuery(document).on('keyup keypress', 'form input[type="text"]', function (e) {
         if (e.which == 13) {
@@ -156,23 +171,6 @@ jQuery(document).ready(function (jQuery) {
             return false;
         }
     });
-
-
-    // Hide all postbox metabocen exeped the buddyforms etaboxes
-    jQuery('div .postbox').not('.buddyforms-metabox').hide();
-
-    // Show the submit metabox
-    jQuery('#submitdiv').show();
-    jQuery('#post').removeClass('hidden');
-
-
-    //
-    // / Add Select2 Support
-    //
-    jQuery(".bf-select2").select2({
-        placeholder: "Select an option"
-    });
-
 
     // Mail Notifications sent to display only if selected
     jQuery(document.body).on('change', '.bf_sent_mail_to_multi_checkbox', function () {
@@ -192,9 +190,8 @@ jQuery(document).ready(function (jQuery) {
         } else {
 
             jQuery('.' + id).addClass('hidden');
-
+            
         }
-
     });
 
     // Validate the form before publish

@@ -72,6 +72,10 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 function buddyforms_jquery_validation() {
 	global $buddyforms;
 
+	if( ! isset($buddyforms)){
+		return;
+	}
+
 	$form_html = '<script type="text/javascript">';
 	$form_html .= ' var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";';
 

@@ -288,7 +288,7 @@ function buddyforms_register_post_type() {
 
 	register_post_type( 'buddyforms', array(
 		'labels'              => $labels,
-		'public'              => true,
+		'public'              => false,
 		'show_ui'             => true,
 		'_builtin'            => false,
 		'capability_type'     => 'post',
