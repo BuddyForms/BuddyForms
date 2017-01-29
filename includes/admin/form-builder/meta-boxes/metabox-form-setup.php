@@ -38,13 +38,17 @@ function buddyforms_metabox_form_setup() {
 		}
 	}
 
+	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
+	$page_on_front = get_option('page_on_front');
+
 	// Get all pages
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
 		'parent'      => 0,
 		'post_type'   => 'page',
-		'post_status' => 'publish'
+		'post_status' => 'publish',
+		'exclude'     => isset($page_on_front) ? $page_on_front : 0
 	) );
 
 	// Generate the pages array by id
