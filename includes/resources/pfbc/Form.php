@@ -511,6 +511,10 @@ class Form extends Base {
 		    jQuery(document).on("click", '.bf-submit', function (evt) {
 
 		        bf_submit_type = evt.target.name;
+			// scrollto message after submit
+			jQuery('html, body').animate({
+                    		scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
+                	}, 2000);
 		    });
 
             jQuery("#$id").bind("submit", function() {
