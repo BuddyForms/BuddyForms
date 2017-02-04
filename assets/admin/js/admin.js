@@ -44,12 +44,14 @@ function bf_alert(alert_message) {
         }
     });
 }
+
 // Update ths list number 1,2,3,... for the mail trigger
 function bf_update_list_item_number_mail() {
     jQuery("#mailcontainer .bf_trigger_list_item").each(function (t) {
         jQuery(this).find("td.field_order .circle").first().html(t + 1)
     })
 }
+
 //
 // Helper Function to lode form element templates depend on the form type
 //
@@ -146,7 +148,6 @@ function load_formbuilder_template(template) {
 //
 // Lets do some stuff after the document is loaded
 //
-
 jQuery(document).ready(function (jQuery) {
 
     // Hide all post box metaboxes except the buddyforms meta boxes
@@ -160,9 +161,6 @@ jQuery(document).ready(function (jQuery) {
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
     });
-
-    // Remove all Visual Composer elements form BuddyForms View
-    jQuery('*[class^="vc_"]').remove();
 
     // Prevent form submission if enter key is pressed on text fields
     jQuery(document).on('keyup keypress', 'form input[type="text"]', function (e) {
@@ -458,5 +456,12 @@ jQuery(document).ready(function (jQuery) {
         return false;
 
     });
+
+    //
+    // At last let as remove elements added by other plugins we could not remove with the default functions.
+    //
+
+    // Remove all Visual Composer elements form BuddyForms View
+    jQuery('*[class^="vc_"]').remove();
 
 });

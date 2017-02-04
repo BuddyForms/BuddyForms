@@ -64,14 +64,14 @@ class BuddyForms {
 		add_action( 'init', array( $this, 'update_db_check' ), 10 );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'remove_admin_scripts' ), 9999999, 1 );
+		add_action( 'admin_head'            , array( $this, 'remove_admin_scripts' ), 999999, 1 );
+		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_styles' ), 102, 1 );
+		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_js' ), 102, 1 );
+		add_action( 'admin_footer'          , array( $this, 'admin_js_footer' ), 2, 1 );
+		add_filter( 'admin_footer_text'     , array( $this, 'admin_footer_text' ), 1 );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ), 102, 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
-		add_action( 'admin_footer', array( $this, 'admin_js_footer' ), 2, 1 );
-		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+		add_action( 'wp_enqueue_scripts'    , array( $this, 'front_js_loader' ), 102, 1 );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 102, 1 );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 	}
