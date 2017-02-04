@@ -365,6 +365,13 @@ function buddyforms_display_form_element( $args ) {
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
 
+			$taxonomy_placeholder = isset( $customfield['taxonomy_placeholder'] ) ? stripcslashes( $customfield['taxonomy_placeholder'] ) : 'Select an Option';
+			$form_fields['general']['taxonomy_placeholder'] = new Element_Textbox( '<b>' . __( 'Taxonomy Placeholder', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_placeholder]", array(
+				'data'      => $field_id,
+				'value'     => $taxonomy_placeholder,
+				'shortDesc' => __('You can change the placeholder to something meaningful like Select a Category or what make sense for your taxonomy.')
+			) );
+
 			$form_fields['general']['taxonomy_order'] = new Element_Select( '<b>' . __( 'Taxonomy Order', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array(
 				'ASC',
 				'DESC'

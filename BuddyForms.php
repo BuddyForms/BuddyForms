@@ -544,7 +544,7 @@ class BuddyForms {
 
 		buddyforms_dequeue_select2_version3();
 
-		// jQuery Select 2 // https://select2.github.io/
+		// jQuery Select2 // https://select2.github.io/
 		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 

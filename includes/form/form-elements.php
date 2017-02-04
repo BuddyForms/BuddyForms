@@ -512,11 +512,12 @@ function buddyforms_form_elements( $form, $args ) {
 							'taxonomy'      => $customfield['taxonomy'],
 							'order'         => $customfield['taxonomy_order'],
 							'exclude'       => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
-							'include'       => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
+							'include'           => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
 						);
 
-						if ( isset( $customfield['show_option_none'] ) && ! isset( $customfield['multiple'] ) ) {
-							$args = array_merge( $args, Array( 'show_option_none' => 'Nothing Selected' ) );
+						$placeholder = isset( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
+						if ( ! isset( $customfield['multiple'] ) ) {
+							$args = array_merge( $args, Array( 'show_option_none' => $placeholder ) );
 						}
 
 						if ( isset( $customfield['multiple'] ) ) {
@@ -532,6 +533,12 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
+
+
+					// if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
+							$dropdown = str_replace( 'id=', 'data-placeholder="' . $placeholder . '" id=', $dropdown );
+					// }
+
 
 						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
 
@@ -562,7 +569,11 @@ function buddyforms_form_elements( $form, $args ) {
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
-							        placeholder: "Select an option",
+							            minimumResultsForSearch: -1,
+										    placeholder: function(){
+										        jQuery(this).data("placeholder");
+										    },
+                                     allowClear: true,
 							        ' . $tags . '
 							        tokenSeparators: [\',\']
 							    });
