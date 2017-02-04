@@ -456,7 +456,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 	foreach ( $customfields as $key => $customfield ) :
 
+		//
 		// Check if file is new and needs to get reassigned to the corect parent
+		//
 		if ( $customfield['type'] == 'file' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
 
 			$attachement_ids = $_POST[ $customfield['slug'] ];
@@ -478,7 +480,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 			}
 		}
 
+		//
 		// Check if featured image is new and needs to get reassigned to the corect parent
+		//
 		if ( $customfield['type'] == 'featured-image' || $customfield['type'] == 'featured_image' && isset( $_POST['featured_image'] ) ) {
 
 			$attachement_id = $_POST['featured_image'];
@@ -498,7 +502,6 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		//
 		// Save post format if needed
 		//
-
 		if ( $customfield['type'] == 'post_formats' && isset($_POST[ 'post_formats' ]) && $_POST[ 'post_formats' ] != 'none' ) :
 			set_post_format( $post_id, $_POST[ 'post_formats' ] );
 		endif;
@@ -507,7 +510,6 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		//
 		// Save taxonomies if needed
 		//
-
 		if ( $customfield['type'] == 'taxonomy' ) :
 
 			if ( $customfield['taxonomy'] != 'none' &&isset( $_POST[ $customfield['slug'] ] ) ) {
@@ -582,8 +584,10 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) ) {
 			update_post_meta( $post_id, $slug, $_POST[ $slug ] );
-		} else {
-			update_post_meta( $post_id, $slug, '' );
+		} else { // todo: is this else really needed?
+			if(!is_admin()){
+				update_post_meta( $post_id, $slug, '' );
+			}
 		}
 
 	endforeach;

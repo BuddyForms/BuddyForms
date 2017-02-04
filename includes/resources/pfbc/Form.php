@@ -560,6 +560,9 @@ JS;
                     },
                     success: function(response) {
                     jQuery('#buddyforms_form_hero_$form_slug .form_wrapper .bf_modal').hide();
+
+                    console.log(response)
+
                     jQuery.each(response, function (i, val) {
                     	console.log(val);
 
