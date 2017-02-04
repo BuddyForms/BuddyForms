@@ -67,3 +67,4 @@ function buddyforms_get_version_type() {
 
 	return '<b>' . __( 'Free', 'buddyforms' ) . '</b>';
 }
+

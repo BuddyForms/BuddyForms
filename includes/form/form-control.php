@@ -326,7 +326,7 @@ function buddyforms_process_post( $args = Array() ) {
 				$title_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
 				$post_title = $title_field['generate_title'];
 
-				$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields);
+				$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields, $post_id );
 
 			}
 
@@ -337,14 +337,14 @@ function buddyforms_process_post( $args = Array() ) {
 				$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
 				$post_content = $content_field['generate_content'];
 
-				$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields);
+				$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields, $post_id );
 
 			}
 
 			$bf_post = array(
 				'ID'             => $post_id,
 				'post_title'     => $post_title,
-				'post_content'   =>$post_content,
+				'post_content'   => $post_content,
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
 				'comment_status' => $comment_status,
@@ -725,13 +725,28 @@ function buddyforms_get_browser() {
 	);
 }
 
-function buddyforms_str_replace_form_fields_val_by_slug($post_title, $customfields ){
+function buddyforms_str_replace_form_fields_val_by_slug($string, $customfields, $post_id ){
 	if( isset($customfields) ) {
 		foreach ( $customfields as $f_slug => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ){
-				$post_title = str_replace( '[' . $t_field['slug'] . ']', $_POST[ $t_field['slug'] ], $post_title );
+
+				$field_val = $_POST[ $t_field['slug'] ];
+
+				switch ( $t_field['type'] ) {
+					case 'taxonomy':
+						$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<p>", ' - ', "</p>" );
+						break;
+					case 'user_website':
+						$string_tmp = "<p><a href='" . $field_val . "' " . $t_field['name'] . ">" . $field_val . " </a></p>";
+						break;
+					default:
+						$string_tmp = $field_val;
+						break;
+				}
+
+				$string = str_replace( '[' . $t_field['slug'] . ']', $string_tmp, $string );
 			}
 		}
 	}
-	return $post_title;
+	return $string;
 }
