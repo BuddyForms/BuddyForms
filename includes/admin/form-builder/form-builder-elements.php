@@ -609,9 +609,9 @@ JS;
 					'shortDesc' => 'If you want to generate the title you can set the title to hidden. If the title is visible and a title is entered the entered tiltle is stronger than the generated title. If you want to make sure the generated title is used hide the title field'
 				) );
 
-			$generate_title_text = isset( $customfield['generate_title_text'] ) ? stripcslashes( $customfield['generate_title_text'] ) : '';
-			$form_fields['advanced']['generate_title_text'] = new Element_Textbox( '<b>' . __( 'Generate Title text', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_title_text]", array(
-				'value'     => $generate_title_text,
+			$generate_title = isset( $customfield['generate_title'] ) ? $customfield['generate_title'] : '';
+			$form_fields['advanced']['generate_title'] = new Element_Textbox( '<b>' . __( 'Generate Title', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_title]", array(
+				'value'     => $generate_title,
 				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
 			) );
 
@@ -636,14 +636,21 @@ JS;
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_content' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
-			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
-			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
-
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
 
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+
+			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
+
+			$generate_content = isset( $customfield['generate_content'] ) ? $customfield['generate_content']  : '';
+			$form_fields['advanced']['generate_content'] = new Element_Textarea( '<b>' . __( 'Generate Content', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_content]", array(
+				'value'     => $generate_content,
+				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
+			) );
+
 			break;
 		case 'status':
 			unset( $form_fields );

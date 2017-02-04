@@ -324,16 +324,27 @@ function buddyforms_process_post( $args = Array() ) {
 			if( $post_title == 'none' ){
 
 				$title_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
-				$post_title = $title_field['generate_title_text'];
+				$post_title = $title_field['generate_title'];
 
-				$post_title = buddyforms_str_replace_form_fields_val_by_slug($post_title, $customfields);
+				$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields);
+
+			}
+
+
+			$post_content = apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' );
+			if( empty( $post_content ) ){
+
+				$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
+				$post_content = $content_field['generate_content'];
+
+				$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields);
 
 			}
 
 			$bf_post = array(
 				'ID'             => $post_id,
 				'post_title'     => $post_title,
-				'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
+				'post_content'   =>$post_content,
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
 				'comment_status' => $comment_status,
