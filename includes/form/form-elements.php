@@ -534,12 +534,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
 
-
-					// if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
-							$dropdown = str_replace( 'id=', 'data-placeholder="' . $placeholder . '" id=', $dropdown );
-					// }
-
-
+						$dropdown = str_replace( 'id=', 'data-placeholder="' . $placeholder . '" id=', $dropdown );
 						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
 
 						if ( isset( $customfield['taxonomy'] ) ) {
@@ -617,6 +612,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 				}
 			}
+
 		endif;
 	endforeach;
 }

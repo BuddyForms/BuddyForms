@@ -596,14 +596,25 @@ JS;
 			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'buddyforms_form_title' );
 			$form_fields['hidden']['type']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
-			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
-			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
-
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
 
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : '';
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+
+			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ),
+				array(
+					'value'     => $hidden,
+					'shortDesc' => 'If you want to generate the title you can set the title to hidden. If the title is visible and a title is entered the entered tiltle is stronger than the generated title. If you want to make sure the generated title is used hide the title field'
+				) );
+
+			$generate_title_text = isset( $customfield['generate_title_text'] ) ? stripcslashes( $customfield['generate_title_text'] ) : '';
+			$form_fields['advanced']['generate_title_text'] = new Element_Textbox( '<b>' . __( 'Generate Title text', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_title_text]", array(
+				'value'     => $generate_title_text,
+				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
+			) );
+
 			break;
 		case 'content':
 			unset( $form_fields['advanced']['metabox_enabled'] );

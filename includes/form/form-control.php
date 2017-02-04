@@ -317,9 +317,22 @@ function buddyforms_process_post( $args = Array() ) {
 		}
 
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
+
+
+			$post_title = apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' );
+
+			if( $post_title == 'none' ){
+
+				$title_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
+				$post_title = $title_field['generate_title_text'];
+
+				$post_title = buddyforms_str_replace_form_fields_val_by_slug($post_title, $customfields);
+
+			}
+
 			$bf_post = array(
 				'ID'             => $post_id,
-				'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+				'post_title'     => $post_title,
 				'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
@@ -699,4 +712,15 @@ function buddyforms_get_browser() {
 		'platform'  => $platform,
 		'pattern'   => $pattern
 	);
+}
+
+function buddyforms_str_replace_form_fields_val_by_slug($post_title, $customfields ){
+	if( isset($customfields) ) {
+		foreach ( $customfields as $f_slug => $t_field ) {
+			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ){
+				$post_title = str_replace( '[' . $t_field['slug'] . ']', $_POST[ $t_field['slug'] ], $post_title );
+			}
+		}
+	}
+	return $post_title;
 }
