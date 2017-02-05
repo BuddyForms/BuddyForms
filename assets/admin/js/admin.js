@@ -331,7 +331,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Add new mail notification
     //
-    jQuery('#post_status_mail_notification_add_new').click(function (e) {
+    jQuery('#post_status_mail_notification_add_new').live('click', function () {
 
         var error = false;
         var trigger = jQuery('.post_status_mail_notification_trigger').val();

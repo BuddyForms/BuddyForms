@@ -544,7 +544,10 @@ JS;
 			        return false;
 			    }
 
-                jQuery('#buddyforms_form_hero_$form_slug .form_wrapper .bf_modal').show();
+				jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("show", {
+				fade  : [2000, 1000]
+				});
+
 
                 var FormData = jQuery("#$id").serialize();
 
@@ -558,7 +561,6 @@ JS;
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
                     },
                     success: function(response) {
-                    jQuery('#buddyforms_form_hero_$form_slug .form_wrapper .bf_modal').hide();
 
                     console.log(response)
 
@@ -570,7 +572,11 @@ JS;
                                 jQuery( '#form_message_$form_slug' ).html( val );
                                 break;
                             case 'form_remove':
-                                jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
+
+							    jQuery("#buddyforms_form_hero_$form_slug .form_wrapper").fadeOut("normal", function() {
+
+							        jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
+							    });
                                 break;
                             case 'form_actions':
                                 jQuery( '#buddyforms_form_$form_slug .form-actions' ).html(val);
@@ -587,10 +593,7 @@ JS;
 			$this->errorView->applyAjaxErrorResponse();
 
 			echo <<<JS
-	                    // scrollto message after submit
-						 jQuery('html, body').animate({
-			            	 scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
-		                 }, 2000);
+
 
 	                } else {
 JS;
@@ -603,6 +606,13 @@ JS;
                         }
                         jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
                         bf_form_errors();
+                        jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("hide");
+
+                        // scrollto message after submit
+						 jQuery('html, body').animate({
+			            	 scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
+		                 }, 2000);
+
                     }
                 });
                 return false;

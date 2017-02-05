@@ -570,6 +570,10 @@ class BuddyForms {
 		// load dashicons
 		wp_enqueue_style( 'dashicons' );
 
+		wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
+
+		wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
+
 		add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
 	}

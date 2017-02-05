@@ -125,7 +125,7 @@ function buddyforms_form_html( $args ) {
 	$form_html .= ob_get_contents();
 	ob_clean();
 
-	$form_html .= '<div class="bf_modal"></div></div>';
+	$form_html .= '<div class="bf_modal">Sind Wir jetzt angekommen?</div></div>';
 
 	// If Form Revision is enabled Display the revision posts under the form
 	if ( isset( $buddyforms[ $form_slug ]['revision'] ) && $post_id != 0 ) {
