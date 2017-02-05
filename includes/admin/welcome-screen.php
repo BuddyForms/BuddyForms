@@ -148,7 +148,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="http://d33v4339jhl8k0.cloudfront.net/docs/assets/55b4a8bae4b0b0593824fb02/images/57fba99d9033600277a68676/file-CD3oQ7PIU8.png"
+						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/wizard.png'?>"
 						     alt="BuddyForms Form Wizard Screenshot">
 					</div>
 				</div>
@@ -171,7 +171,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="http://themekraft.com/wp-content/uploads/2016/10/FormWizardBuddyForms.png"
+						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/FormWizardBuddyForms.png'?>"
 						     alt="BuddyForms Form Wizard Screenshot">
 					</div>
 				</div>
@@ -197,7 +197,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="http://themekraft.com/wp-content/uploads/2016/12/metabox-support.png"
+						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/metabox-support.png'?>"
 						     alt="BuddyForms Admin Metaboxt">
 					</div>
 				</div>
