@@ -509,12 +509,7 @@ class Form extends Base {
 
 			var bf_submit_type = "";
 		    jQuery(document).on("click", '.bf-submit', function (evt) {
-
 		        bf_submit_type = evt.target.name;
-			// scrollto message after submit
-			jQuery('html, body').animate({
-                    		scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
-                	}, 2000);
 		    });
 
             jQuery("#$id").bind("submit", function() {
@@ -568,7 +563,6 @@ JS;
                     console.log(response)
 
                     jQuery.each(response, function (i, val) {
-                    	console.log(val);
 
                         switch (i) {
                             case 'form_notice':
@@ -593,9 +587,12 @@ JS;
 			$this->errorView->applyAjaxErrorResponse();
 
 			echo <<<JS
-	                    jQuery("html, body").animate({ scrollTop: jQuery(".the_$id").offset().top }, 500 );
-	                }
-	                else {
+	                    // scrollto message after submit
+						 jQuery('html, body').animate({
+			            	 scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
+		                 }, 2000);
+
+	                } else {
 JS;
 			/*A callback function can be specified to handle any post submission events.*/
 			if ( ! empty( $this->ajaxCallback ) ) {

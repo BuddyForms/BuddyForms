@@ -556,21 +556,23 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				}
 
 				// Check if new term to insert
-				foreach ( $tax_terms as $term_key => $term ) {
+				if(isset($tax_terms) && is_array($tax_terms)) {
+					foreach ( $tax_terms as $term_key => $term ) {
 
-					// Check if the term exist
-					$term_exist = term_exists( (int) $term, $customfield['taxonomy'] );
+						// Check if the term exist
+						$term_exist = term_exists( (int) $term, $customfield['taxonomy'] );
 
-					// Create new term if need and add to the new tax items array
-					if ( ! $term_exist ) {
-						$new_term                              = wp_insert_term( $term, $customfield['taxonomy'] );
-						$term                                  = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
-						$new_tax_items[ $new_term['term_id'] ] = $term->slug;
-					} else {
-						$term                                    = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
-						$new_tax_items[ $term_exist['term_id'] ] = $term->slug;
+						// Create new term if need and add to the new tax items array
+						if ( ! $term_exist ) {
+							$new_term                              = wp_insert_term( $term, $customfield['taxonomy'] );
+							$term                                  = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
+							$new_tax_items[ $new_term['term_id'] ] = $term->slug;
+						} else {
+							$term                                    = get_term_by( 'id', $term_exist['term_id'], $customfield['taxonomy'] );
+							$new_tax_items[ $term_exist['term_id'] ] = $term->slug;
+						}
+
 					}
-
 				}
 
 				// Check if the taxonomy is hierarchical and prepare the string

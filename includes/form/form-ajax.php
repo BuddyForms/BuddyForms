@@ -15,7 +15,7 @@ function buddyforms_ajax_edit_post() {
 }
 
 add_action( 'wp_ajax_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post' );
-//add_action( 'wp_ajax_nopriv_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post' );
+add_action( 'wp_ajax_nopriv_buddyforms_ajax_process_edit_post', 'buddyforms_ajax_process_edit_post' );
 function buddyforms_ajax_process_edit_post() {
 	global $buddyforms;
 
@@ -75,6 +75,7 @@ function buddyforms_ajax_process_edit_post() {
 					$permalink           = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
 					$post_list_link      = $permalink . 'view/' . $args['form_slug'] . '/';
 					$json['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
+					$json['form_notice'] .= $display_message;
 					break;
 				case 'display_message':
 					$json['form_remove'] = 'true';
