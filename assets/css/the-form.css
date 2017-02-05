@@ -146,3 +146,11 @@
 .the_buddyforms_form #wp-buddyforms_form_content-editor-tools .wp-switch-editor {
     height: auto !important;
 }
+#wp-buddyforms_form_content-editor-container {
+    border: 1px solid rgba(0,0,0,0.2) !important;
+
+}
+
+#wp-buddyforms_form_content-editor-container iframe {
+    width: 99% !important;
+}

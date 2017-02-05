@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, ProjectKarol
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
-Tested up to: 4.7.1
-Stable tag: 2.0.10
+Tested up to: 4.7.2
+Stable tag: 2.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,8 +71,13 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 
 <h4>Videos</h4>
 Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
-Video from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
 
+> #### Works great with BuddyPress or Ultimate Member
+
+BuddyPress Integration [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+Ultimate Member Integration Integration [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+---
+User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
 ---
 
 > #### Docs & Support
@@ -145,6 +150,26 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+
+= 2.0.11 =
+* Add full support for Visual Composer
+* Add new loading overlay animation
+* Fix a issue in the form wizard. Creating Mail Notification Trigger was not working. Works now.
+* Fixed a ugly issue where the submit button stopped working
+* Make sure the after submission message gets displayed if redirect is enabled and form is set to ajax
+* Scroll to top after form submit ajax success
+* Add some field type management. this should get improved. Its a starting point
+* Add new options to generate the content
+* Create a new function to replace form fields easily by slug and shortcode [field_slug]
+* Add a new option to the title to auto generate it from other form elements
+* Create a new option in the taxonomy form element to select a placeholder text
+* Add an is_admin check to the post meta save function to avoid delete meta during save from the admin edit screen.
+* Get the page_on_front and exclude it from the query. This page should not get used for the endpoints
+* Add new js to remove virtual composer elements from BuddyForms edit screen
+* Add a extra check to make sure validation js is only running if at least one form exist.
+* Set the BuddyForms post type public to false. No need to access BuddyForms directly
+* Add the post id to the buddyforms_user_can_edit filter If we need more attributes its time for a arguments array
 
 = 2.0.10 =
 * Add Post Formats support
