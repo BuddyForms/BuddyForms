@@ -72,12 +72,18 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 <h4>Videos</h4>
 Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
 
-> #### Works great with BuddyPress or Ultimate Member
+<h4>Works great with BuddyPress or Ultimate Member</h4>
 
-BuddyPress Integration [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
-Ultimate Member Integration Integration [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+BuddyPress Integration [youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A&list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb&index=7e]
+Ultimate Member Integration [youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb&index=1]
+
+
+[More Videos](https://themekraft.com/buddyforms-videos/)
+
 ---
+
 User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
+
 ---
 
 > #### Docs & Support
@@ -153,23 +159,23 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 
 = 2.0.11 =
-* Add full support for Visual Composer
+* Full support for the Visual Composer
 * Add new loading overlay animation
-* Fix a issue in the form wizard. Creating Mail Notification Trigger was not working. Works now.
-* Fixed a ugly issue where the submit button stopped working
-* Make sure the after submission message gets displayed if redirect is enabled and form is set to ajax
-* Scroll to top after form submit ajax success
-* Add some field type management. this should get improved. Its a starting point
-* Add new options to generate the content
+* We fixed creating mail notification triggers in the form wizard.
+* We fixed the submit button from stopped being working
+* If the redirect is enabled and the form is set to ajax, we make sure that the ‘after submission message’ gets displayed
+* Scroll to the top after submitting a successful form with ajax
+* Add some field type management. This will get improved soon. It’s a starting point
+* Add new options to generate content
 * Create a new function to replace form fields easily by slug and shortcode [field_slug]
 * Add a new option to the title to auto generate it from other form elements
 * Create a new option in the taxonomy form element to select a placeholder text
-* Add an is_admin check to the post meta save function to avoid delete meta during save from the admin edit screen.
-* Get the page_on_front and exclude it from the query. This page should not get used for the endpoints
-* Add new js to remove virtual composer elements from BuddyForms edit screen
-* Add a extra check to make sure validation js is only running if at least one form exist.
-* Set the BuddyForms post type public to false. No need to access BuddyForms directly
-* Add the post id to the buddyforms_user_can_edit filter If we need more attributes its time for a arguments array
+* Add an ‘is_admin’ check to the post meta saving function, to avoid deleting meta while saving from the admin editing screen.
+* Get the page_on_front and exclude it from the query. This page should not be used for the endpoints
+* We removed visual composer elements from the BuddyForms editing screen
+* Add an extra check to make sure JavaScript validation is only running if at least one form exist.
+* Set the BuddyForms post type public to false. There is no need to access BuddyForms directly
+* Add the post id to the buddyforms_user_can_edit filter. If we need more attributes it’s time for a arguments array
 
 = 2.0.10 =
 * Add Post Formats support
