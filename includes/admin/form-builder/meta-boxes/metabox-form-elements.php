@@ -275,6 +275,9 @@ function buddyforms_form_elements_select_options() {
 				'textarea'    => array(
 					'label' => __( 'Textarea', 'buddyforms' ),
 				),
+				'number' => array(
+                    'label' => __( 'Number', 'buddyforms' ),
+                ),
 				'dropdown'    => array(
 					'label' => __( 'Dropdown', 'buddyforms' ),
 				),
@@ -330,7 +333,7 @@ function buddyforms_form_elements_select_options() {
 
 
 			$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
-			$elements_select_options['extra']['class']            = 'bf_show_if_f_type_all';
+			$elements_select_options['extra']['class']            = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
 			$elements_select_options['extra']['fields']['file']   =
 				array(
 					'label' => __( 'File', 'buddyforms' ),
@@ -338,10 +341,6 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['extra']['fields']['hidden'] =
 				array(
 					'label' => __( 'Hidden', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['number'] =
-				array(
-					'label' => __( 'Number', 'buddyforms' ),
 				);
 			$elements_select_options['extra']['fields']['html']   =
 				array(
