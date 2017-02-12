@@ -104,13 +104,13 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the Browser user data
-			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true ); // todo: proper validation
+			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
 
 		if(isset($buddyforms[$form_slug]['form_fields'])){
 			foreach($buddyforms[$form_slug]['form_fields'] as $field_key => $r_field) {
 				if(isset($_POST[$r_field['slug']])){
-					update_user_meta( $new_user_id, $r_field['slug'], $_POST[$r_field['slug']] ); // todo: proper validation
+					update_user_meta( $new_user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[$r_field['slug']] ) );
 				}
 			}
 
@@ -619,8 +619,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) ) {
-			update_post_meta( $post_id, $slug, $_POST[ $slug ] ); // todo: proper validation
-		} else { // todo: is this else really needed?
+			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
+		} else { 
 			if(!is_admin()){
 				update_post_meta( $post_id, $slug, '' );
 			}

@@ -123,10 +123,10 @@ function buddyforms_save_postdata( $post_id ) {
 	/* OK, its safe for us to save the data now. */
 
 	// Sanitize user input.
-	$mydata = sanitize_text_field( $_POST['_bf_form_slug'] );
+	$form_slug = sanitize_text_field( $_POST['_bf_form_slug'] );
 
-	// Update the meta field in the database.
-	update_post_meta( $post_id, '_bf_form_slug', $mydata );
+	// Update the form slug for this post
+	update_post_meta( $post_id, '_bf_form_slug', $form_slug );
 
 	return $post_id;
 }

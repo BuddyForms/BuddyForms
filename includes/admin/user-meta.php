@@ -149,7 +149,7 @@ function update_extra_profile_fields( $user_id ) {
 
 							$value = isset($_POST[ $slug ]) ? $_POST[ $slug ] : '';
 
-							update_user_meta( $user_id, $slug, $value ); // todo: proper validation
+							update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
 
 						}
 

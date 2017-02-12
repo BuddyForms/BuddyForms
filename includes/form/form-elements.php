@@ -606,7 +606,7 @@ function buddyforms_form_elements( $form, $args ) {
 						);
 
 						// hook to add your form element
-						apply_filters( 'buddyforms_create_edit_form_display_element', $form, $form_args );
+						$form = apply_filters( 'buddyforms_create_edit_form_display_element', $form, $form_args );
 
 						break;
 

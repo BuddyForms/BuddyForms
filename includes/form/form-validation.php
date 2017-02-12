@@ -171,3 +171,62 @@ function buddyforms_jquery_validation() {
 	$form_html .= '</script>';
 	echo $form_html;
 }
+
+function buddyforms_sanitize( $type, $value){
+
+	switch( $type ){
+		case 'subject':
+			$value = sanitize_text_field( $value );
+			break;
+		case 'message':
+			$value = esc_textarea( $value );
+			break;
+		case 'user_login':
+			$value = sanitize_user( $value );
+			break;
+		case 'user_email':
+			$value = sanitize_email( $value );
+			break;
+		case 'user_first':
+			$value = sanitize_text_field( $value );
+			break;
+		case 'user_last':
+			$value = sanitize_text_field( $value );
+			break;
+		case 'user_pass':
+			$value = esc_attr( $value );
+			break;
+		case 'user_website':
+			$value = esc_url( $value );
+			break;
+		case 'user_bio':
+			$value = esc_textarea( $value );
+			break;
+		case 'number':
+			$value = is_numeric( $value ) ? $value : 0;
+			break;
+		case 'title':
+			$value = sanitize_title( $value );
+			break;
+		case 'content':
+			$value = esc_textarea( $value );
+			break;
+		case 'mail':
+			$value = sanitize_email( $value );
+			break;
+		case 'textarea':
+			$value = esc_textarea( $value );
+			break;
+		case 'text':
+			$value = sanitize_text_field( $value );
+			break;
+		case 'link':
+			$value = esc_url( $value );
+			break;
+		default :
+			$value  = apply_filters( 'buddyforms_sanitize', $value, $type );
+			break;
+
+	}
+	return $value;
+}
