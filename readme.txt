@@ -1,9 +1,9 @@
 === Form Builder & Front End Editor BuddyForms ===
-Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, ProjectKarol
+Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
 Tested up to: 4.7.2
-Stable tag: 2.0.11
+Stable tag: 2.0.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,15 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
+= 2.0.12 =
+* Add new file user-meta.php to display user meta fields in the admin user views
+* There was an issue during registration. add_user_to_blog only works on multi site.
+* Add missing parameter to the buddyforms_activate_account_mail for the new_user_id
+* Rename_process_post to process_submissions
+* Remove old unneeded functions
+* Add new centralised sanitize function buddyforms_sanitize()
+* Move the number form element to the basic fields
+* Small jQuery fix. Make sure the correct fields get displayed for the field types
 
 = 2.0.11 =
 * Full support for the Visual Composer
