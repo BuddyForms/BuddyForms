@@ -195,6 +195,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 
 			if ( buddyforms_core_fs()->is__premium_only() ) {

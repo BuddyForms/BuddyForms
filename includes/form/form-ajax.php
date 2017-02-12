@@ -24,7 +24,7 @@ function buddyforms_ajax_process_edit_post() {
 		$_POST = $formdata;
 	}
 
-	$args = buddyforms_process_post( $formdata );
+	$args = buddyforms_process_submission( $formdata );
 
 	extract( $args );
 

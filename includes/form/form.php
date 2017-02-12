@@ -197,7 +197,7 @@ function buddyforms_form_response_no_ajax() {
 	// If the form is submitted we will get in action
 	if ( isset( $_POST['bf_submitted'] ) ) {
 
-		$bf_form_response_args = buddyforms_process_post( $_POST );
+		$bf_form_response_args = buddyforms_process_submission( $_POST );
 
 		extract( $bf_form_response_args );
 

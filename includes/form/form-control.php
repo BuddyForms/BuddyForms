@@ -11,7 +11,7 @@
  * @return array
  */
 
-function buddyforms_process_post( $args = Array() ) {
+function buddyforms_process_submission( $args = Array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
 
 	$hasError      = false;
@@ -92,9 +92,9 @@ function buddyforms_process_post( $args = Array() ) {
 	// Check if this is a registration form only
 	if ( $form_type == 'registration' ) {
 
-		$registration = buddyforms_wp_insert_user();
+		$new_user_id = buddyforms_wp_insert_user();
 		// Check if registration was successful
-		if ( ! $registration ) {
+		if ( ! $new_user_id ) {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
@@ -104,12 +104,22 @@ function buddyforms_process_post( $args = Array() ) {
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the Browser user data
-			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true ); // todo: proper validation
 		}
+
+		if(isset($buddyforms[$form_slug]['form_fields'])){
+			foreach($buddyforms[$form_slug]['form_fields'] as $field_key => $r_field) {
+				if(isset($_POST[$r_field['slug']])){
+					update_user_meta( $new_user_id, $r_field['slug'], $_POST[$r_field['slug']] ); // todo: proper validation
+				}
+			}
+
+		}
+
 		$args = array(
 			'hasError'     => $hasError,
-			'form_notice'  => $form_notice,
-			'customfields' => $customfields,
+			'form_notice'  => isset($form_notice) ? $form_notice : false,
+			'customfields' => isset($customfields) ? $customfields : false,
 			'redirect_to'  => $redirect_to,
 			'form_slug'    => $form_slug,
 		);
@@ -122,10 +132,10 @@ function buddyforms_process_post( $args = Array() ) {
 	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
 
 		// ok let us try to register a user
-		$registration = buddyforms_wp_insert_user();
+		$new_user_id = buddyforms_wp_insert_user();
 
 		// Check if registration was successful
-		if ( ! $registration ) {
+		if ( ! $new_user_id ) {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
@@ -136,12 +146,12 @@ function buddyforms_process_post( $args = Array() ) {
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the Browser user data
-			add_user_meta( $registration, 'buddyforms_browser_user_data', $user_data, true );
+			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
 	}
 
 	// Ok let us start processing the post form
-	do_action( 'buddyforms_process_post_start', $args );
+	do_action( 'buddyforms_process_submission_start', $args );
 
 	if ( isset( $_POST['bf_post_type'] ) ) {
 		$post_type = $_POST['bf_post_type'];
@@ -396,7 +406,7 @@ function buddyforms_process_post( $args = Array() ) {
 
 	$args = array_merge( $args, $args2 );
 
-	do_action( 'buddyforms_process_post_end', $args );
+	do_action( 'buddyforms_process_submission_end', $args );
 	Form::clearValues( "buddyforms_form_" . $form_slug );
 
 	if ( buddyforms_is_multisite() ) {
@@ -609,7 +619,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) ) {
-			update_post_meta( $post_id, $slug, $_POST[ $slug ] );
+			update_post_meta( $post_id, $slug, $_POST[ $slug ] ); // todo: proper validation
 		} else { // todo: is this else really needed?
 			if(!is_admin()){
 				update_post_meta( $post_id, $slug, '' );

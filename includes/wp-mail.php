@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'buddyforms_process_post_end', 'mail_submission_trigger_sent' );
+add_action( 'buddyforms_process_submission_end', 'mail_submission_trigger_sent' );
 /**
  * @param $args
  */
