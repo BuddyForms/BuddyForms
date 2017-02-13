@@ -514,3 +514,17 @@ function buddyforms_metabox_go_pro() {
 		'User Agent',
 	) );
 }
+
+// Get field by slug
+function buddyforms_get_form_field_by_slug($form_slug, $slug)
+{
+	global $buddyforms;
+
+	if (isset($buddyforms[$form_slug]['form_fields'])) : foreach ($buddyforms[$form_slug]['form_fields'] as $field_key => $field) {
+		if ($field['slug'] == $slug) {
+			return $field;
+		}
+	} endif;
+
+	return false;
+}
