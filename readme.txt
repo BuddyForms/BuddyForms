@@ -70,14 +70,18 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 ---
 
 <h4>Videos</h4>
-Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
 
+Contact Forms [youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
+Registration Forms [youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
+---
+Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+---
 <h4>Works great with BuddyPress or Ultimate Member</h4>
 
 BuddyPress Integration [youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A&list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb&index=7e]
 Ultimate Member Integration [youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb&index=1]
 
-
+---
 [More Videos](https://themekraft.com/buddyforms-videos/)
 
 ---
@@ -158,7 +162,7 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 == Changelog ==
 
 = 2.0.12.1 =
-Add missing function buddyforms_get_form_field_by_slug. Was removed from merge conflict
+* Add missing function buddyforms_get_form_field_by_slug. Was removed from merge conflict
 
 = 2.0.12 =
 * Add new file user-meta.php to display user meta fields in the admin user views
