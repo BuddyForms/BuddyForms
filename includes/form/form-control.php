@@ -397,9 +397,9 @@ function buddyforms_process_submission( $args = Array() ) {
 	do_action( 'buddyforms_after_save_post', $post_id );
 
 	$args2 = array(
-		'haserror'     => $haserror,
-		'form_notice'  => $form_notice,
-		'customfields' => $customfields,
+		'haserror'     => isset( $haserror ) ? $haserror : false,
+		'form_notice'  => empty( $form_notice ) ? '' : $form_notice,
+		'customfields' => is_array( $customfields ) ? $customfields : array(),
 		'redirect_to'  => $redirect_to,
 		'form_slug'    => $form_slug,
 	);
@@ -523,7 +523,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 			$attachement = get_post( $attachement_id );
 
-			if ( $attachement->post_parent == $buddyforms[ $form_slug ]['attached_page'] ) {
+			if ( is_object( $attachement ) && $attachement->post_parent == $buddyforms[ $form_slug ]['attached_page'] ) {
 				$attachement = array(
 					'ID'          => $attachement_id,
 					'post_parent' => $post_id,
@@ -746,13 +746,13 @@ function buddyforms_str_replace_form_fields_val_by_slug($string, $customfields, 
 
 				switch ( $t_field['type'] ) {
 					case 'taxonomy':
-						$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<p>", ' - ', "</p>" );
+						$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
 						break;
 					case 'user_website':
-						$string_tmp = "<p><a href='" . $field_val . "' " . $t_field['name'] . ">" . $field_val . " </a></p>";
+						$string_tmp = "<span class='" . $t_field['slug'] . "'><a href='" . $field_val . "' " . $t_field['name'] . ">" . $field_val . " </a></span>";
 						break;
 					default:
-						$string_tmp = $field_val;
+						$string_tmp = "<span class='" . $t_field['slug'] . "'>" . $field_val . "</span>";
 						break;
 				}
 

@@ -73,9 +73,13 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 
 Contact Forms [youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
 Registration Forms [youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
+
 ---
-Form Wizard [youtube https://www.youtube.com/watch?v=nYb5ZBFrQmg&feature=youtu.be]
+
+<h4>Post Forms</h4> [youtube https://www.youtube.com/watch?v=iHhDO_zFmbc&feature=youtu.be]
+
 ---
+
 <h4>Works great with BuddyPress or Ultimate Member</h4>
 
 BuddyPress Integration [youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A&list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb&index=7e]

@@ -2,8 +2,6 @@
 
 /*
  * The default validation is already covert. Let us do some extra work and also do the advanced validation server site.
- *
- *
  */
 
 add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );

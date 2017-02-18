@@ -201,7 +201,7 @@ function buddyforms_form_response_no_ajax() {
 
 		extract( $bf_form_response_args );
 
-		if ( $hasError ) {
+		if ( isset( $hasError ) ) {
 			wp_redirect( $_SERVER['HTTP_REFERER'], 302 );
 			exit;
 		}
@@ -230,6 +230,7 @@ function buddyforms_form_response_no_ajax() {
 				$post_list_link = $permalink . 'view/' . $_POST['form_slug'] . '/';
 				$post_list_link = apply_filters( 'buddyforms_after_save_post_redirect', $post_list_link );
 				wp_redirect( $post_list_link, 302 );
+				exit;
 			}
 
 		}
