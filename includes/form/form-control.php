@@ -353,7 +353,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 			$bf_post = array(
 				'ID'             => $post_id,
-				'post_title'     => $post_title,
+				'post_title'     => strip_tags($post_title),
 				'post_content'   => $post_content,
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
