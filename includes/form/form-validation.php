@@ -157,7 +157,6 @@ function buddyforms_jquery_validation() {
 		$form_html .= 'errorPlacement: function(label, element) {
 	            // position error label after generated textarea
 	            if (element.is("textarea")) {
-	                //jQuery("#buddyforms_form_title").prev().css('color','red');
 	                label.insertBefore("#buddyforms_form_content");
 	            } else if(element.is("input[type=\"radio\"]")) {
 	                label.insertBefore(element)

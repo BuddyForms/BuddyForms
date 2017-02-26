@@ -94,7 +94,7 @@ function buddyforms_attached_page_content( $content ) {
 	}
 
 	// Rebuild
-	//add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+	add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 
 	return $new_content;
 

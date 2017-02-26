@@ -252,7 +252,7 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
  * @param $form_slug
  */
 function buddyforms_post_entry_actions( $form_slug ) {
-	global $buddyforms;
+	global $buddyforms, $post;
 
 	if ( $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
 		return;
@@ -284,6 +284,12 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			}
 
 			ob_start();
+
+			$post_form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
+
+			if( $post_form_slug ){
+				$form_slug = $post_form_slug;
+            }
 
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 				echo '<li>';

@@ -260,6 +260,7 @@ function buddyforms_regenerate_global_options() {
 		foreach ( $posts as $post ) {
 			$options = get_post_meta( $post->ID, '_buddyforms_options', true );
 			if ( $options ) {
+				$options['slug'] = $post->post_name;
 				$buddyforms_forms[ $post->post_name ] = $options;
 			}
 		}

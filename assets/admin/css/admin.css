@@ -473,7 +473,7 @@ a.button.button-large.bf_button_action {
 }
 
 .bf-select2 {
-    width: 100%;
+    width: auto;
 }
 
 /* custom inclusion of right, left and below tabs */
