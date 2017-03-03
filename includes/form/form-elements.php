@@ -564,7 +564,7 @@ function buddyforms_form_elements( $form, $args ) {
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
-							            minimumResultsForSearch: -1,
+//							            minimumResultsForSearch: -1,
 										    placeholder: function(){
 										        jQuery(this).data("placeholder");
 										    },
