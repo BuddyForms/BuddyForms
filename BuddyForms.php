@@ -366,7 +366,7 @@ class BuddyForms {
 			wp_enqueue_script( 'jquery-ui-tabs' );
 
 			buddyforms_dequeue_select2_version3();
-			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
+			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ) );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 		}
 		wp_enqueue_script( 'tinymce' );
@@ -546,7 +546,6 @@ class BuddyForms {
 		// wp_enqueue_style( 'jquery-modal-css', plugins_url( 'assets/resources/jquery-modal/jquery.modal.min.css', __FILE__ ) );
 
 		buddyforms_dequeue_select2_version3();
-
 		// jQuery Select2 // https://select2.github.io/
 		wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 		wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );

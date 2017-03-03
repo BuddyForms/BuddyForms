@@ -342,7 +342,7 @@ function buddyforms_mail_notification_form_elements_as_table($form_slug){
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
 
-		$value = $_POST[ $field['slug'] ];
+		$value = isset($_POST[ $field['slug'] ]) ? $_POST[ $field['slug'] ] : '';
 
 		// Check if is array
 		if ( is_array( $value ) ) {
