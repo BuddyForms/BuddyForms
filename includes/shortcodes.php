@@ -71,6 +71,9 @@ function buddyforms_the_loop( $args ) {
 		return;
 	endif;
 
+	// Enable other plugins to manipulate the arguments used for query the posts
+	$args = apply_filters( 'buddyforms_the_loop_args', $args );
+
 	extract( shortcode_atts( array(
 		'author'      => '',
 		'post_type'   => '',
@@ -78,7 +81,6 @@ function buddyforms_the_loop( $args ) {
 		'id'          => '',
 		'post_parent' => 0
 	), $args ) );
-
 
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );

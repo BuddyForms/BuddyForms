@@ -28,20 +28,10 @@ function buddyforms_attached_page_content( $content ) {
 
 	$new_content = $content;
 	if ( isset( $wp_query->query_vars['bf_action'] ) ) {
-		$form_slug = '';
-		if ( isset( $wp_query->query_vars['bf_form_slug'] ) ) {
-			$form_slug = $wp_query->query_vars['bf_form_slug'];
-		}
 
-		$post_id = '';
-		if ( isset( $wp_query->query_vars['bf_post_id'] ) ) {
-			$post_id = $wp_query->query_vars['bf_post_id'];
-		}
-
-		$parent_post_id = '';
-		if ( isset( $wp_query->query_vars['bf_parent_post_id'] ) ) {
-			$parent_post_id = $wp_query->query_vars['bf_parent_post_id'];
-		}
+		$form_slug      = isset( $wp_query->query_vars['bf_form_slug'] )      ? $wp_query->query_vars['bf_form_slug']       : '';
+		$post_id        = isset( $wp_query->query_vars['bf_post_id'] )        ? $wp_query->query_vars['bf_post_id']         : '';
+		$parent_post_id = isset( $wp_query->query_vars['bf_parent_post_id'] ) ? $wp_query->query_vars['bf_parent_post_id']  : 0;
 
 		if ( ! isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
 			return $content;

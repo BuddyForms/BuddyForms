@@ -106,7 +106,6 @@ function buddyforms_metabox_form_setup() {
 		'display_post'       => __( 'Display the Post' ),
 		'display_posts_list' => __( 'Display the User\'s Post List' ),
 		'redirect'           => __( 'Redirect to url', 'buddyforms' ),
-
 	), array(
 		'value' => $after_submit,
 		'class' => 'bf-after-submission-action',
