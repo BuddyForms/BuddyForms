@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
 Requires at least: 3.9
-Tested up to: 4.7.2
-Stable tag: 2.0.13
+Tested up to: 4.7.3
+Stable tag: 2.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,19 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+
+= 2.0.14 - 07.02.2017 =
+* Added new Filter buddyforms_the_loop_args to manipulate the loop args
+* Fixed a jQuery issue if the taxonomy select was not set to single it was not able to create a new tag.
+* Added strip_tags for the auto generated title title.
+* Better position error message on radiobuttons
+* Enquire jQuery dialog and switch to jQuery dialog for all dialogs
+* Select2 fields have not been responsive. Set the css width to auto
+* Try to grab the form slug from the post to support form overwrite and also fallback to default
+* Hook the form to the content why was this comment out?
+* Make sure the form slug is accessible in the global
+* Added a extra check in the e-mail to make sure we not fire any notice
 
 = 2.0.13 =
 * Add some checks if is object to avoid notice
