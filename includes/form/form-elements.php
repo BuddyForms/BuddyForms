@@ -38,10 +38,15 @@ function buddyforms_form_elements( $form, $args ) {
 			if ( isset( $customfield['name'] ) ) {
 				$name = stripcslashes( $customfield['name'] );
 			}
+
+			$name = apply_filters('buddyforms_form_field_name', $name, $post_id );
+
 			$description = '';
 			if ( isset( $customfield['description'] ) ) {
 				$description = stripcslashes( $customfield['description'] );
 			}
+
+			$description = apply_filters('buddyforms_form_field_description', $description, $post_id );
 
 			$element_attr = array(
 				'id'        => str_replace( "-", "", $slug ),
@@ -524,6 +529,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
 						}
 
+						$args = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id);
 						$dropdown = wp_dropdown_categories( $args );
 
 						if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
