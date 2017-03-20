@@ -552,6 +552,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				$tax_terms = $_POST[ $customfield['slug'] ];
 				$taxonomy  = get_taxonomy( $customfield['taxonomy'] );
 
+				// Get the term list before delete all term relations
+				$term_list = wp_get_post_terms( $post_id, $customfield['taxonomy'], array("fields" => "ids"));
+
 				// Let us delete all and re assign.
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
 
@@ -598,8 +601,19 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 					$cat_string = implode( ', ', $new_tax_items );
 				}
 
+				// We need to check if an excluded term was added via the backend edit screen.
+				// If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from teh frontend
+				if( isset( $customfield['taxonomy_exclude'] ) && is_array( $customfield['taxonomy_exclude'] ) ){
+					foreach( $customfield['taxonomy_exclude'] as  $exclude ){
+						if( in_array( $exclude, $term_list ) ){
+							$cat_string .= ', ' . $exclude;
+						}
+					}
+				}
+
 				// Add the new terms to the taxonomy
 				wp_set_post_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
+
 			}
 
 		endif;
