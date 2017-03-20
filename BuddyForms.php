@@ -10,7 +10,6 @@
  * Licence: GPLv3
  * Network: false
  * Text Domain: buddyforms
- * Domain Path: /languages
  *
  * @fs_premium_only /includes/admin/form-metabox.php
  *
