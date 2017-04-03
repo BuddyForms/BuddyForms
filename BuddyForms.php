@@ -5,8 +5,8 @@
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: A simple yet powerful form builder. Create contact forms - register forms - post forms - user submitted content - User Registration - Front end Forms - Frontend Editor
  * Version: 2.0.15
- * Author: Sven Lehnert
- * Author URI: https://profiles.wordpress.org/svenl77
+ * Author: ThemeKraft
+ * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
  * Network: false
  * Text Domain: buddyforms
@@ -53,7 +53,8 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
-		session_start();
+
+	    session_start();
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 		$this->load_constants();
@@ -765,7 +766,9 @@ if ( PHP_VERSION < 5.3 ) {
 	$GLOBALS['buddyforms_new'] = new BuddyForms();
 
 	// Init Freemius.
-	buddyforms_core_fs();
+    buddyforms_core_fs();
+	// Signal that parent SDK was initiated.
+	do_action( 'buddyforms_core_fs_loaded' );
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
