@@ -1,6 +1,6 @@
 === Form Builder & Front End Editor BuddyForms ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
-Tags: form, forms, form builder, contact form, contact forms, post forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
+Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
 Tested up to: 4.7.3
 Stable tag: 2.0.15
@@ -12,7 +12,7 @@ A simple yet powerful Form Builder. Contact, Register and POST FORMS. Ideal for 
 == Description ==
 
 <h4>Build all kind of forms - no coding required.</h4>
-Contact forms, post forms and registration forms are now easily build in minutes. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
+Contact forms, post forms for user-generated content and registration forms are now easily build in minutes. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
 
 ---
 
@@ -51,6 +51,7 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 > * News Magazines – Create single articles through collaborative writing among a team of editors
 > * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 > * Marketplace – Sell and purchase products from different vendors and list all the product features
+> * Any kind of user generated content, user submitted posts
 > #### Of course, you can do simple forms, too like
 > * Contact Forms – Collect leads and customer support data
 > * Registration Forms – Sign-up users to your webpage
@@ -120,7 +121,7 @@ User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://ww
 ---
 
 #### Tags
-form, forms, frontend forms, contact form, contact forms, content form, post form, post forms, content forms, registration form, registration forms, custom form, custom forms, form, form administration, form builder, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, post, posts, public, publish, share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content
+form, forms, frontend forms, contact form, contact forms, content form, post form, post forms, content forms, registration form, registration forms, custom form, custom forms, form, form administration, form builder, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, post, posts, public, publish, share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit, user-generated content, user generated content, WP User Frontend, User Submitted Posts, user generated posts, user-generated posts
 
 ---
 

@@ -49,7 +49,7 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	// Start the form element sortable list
 	$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
 
-	if ( isset( $buddyform['form_fields'] ) ) {
+	if ( isset( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
 
 		// Loop all form elements
 		foreach ( $buddyform['form_fields'] as $field_id => $customfield ) {
