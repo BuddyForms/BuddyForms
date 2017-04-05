@@ -166,8 +166,16 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 
 == Changelog ==
 
-= 2.0.15 - 16.03.2017 =
+= 2.0.15 - 05.04.2017 =
 * Fixed a taxonomy issue with excluded terms. Added a check if an excluded term was added via the backend edit screen. If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from the frontend
+* Remove the languages. We use the .org translation from now on
+* added post_id as global to the buddyforms_form_html function.
+* Fixed a taxonomy issue with excluded. Added a check if an excluded term was added via the backend edit screen. If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from the frontend
+* Added new filter buddyforms_form_field_name and buddyforms_form_field_description to make the form label and description translatable.
+* Added new filter buddyforms_wp_dropdown_categories_args to allow add new attributes to the arguments array.
+* Added a new hook buddyforms_core_fs_loaded for other plugins to check if freemius sdk is loaded
+* smaller fixes and css improvements
+
 
 = 2.0.14 - 07.02.2017 =
 * Added new Filter buddyforms_the_loop_args to manipulate the loop args
