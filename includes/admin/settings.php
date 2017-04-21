@@ -202,12 +202,7 @@ function buddyforms_settings_page_tabs_content() {
 					</div><!-- .metabox-holder -->
 					<?php
 					break;
-				case 'layout' :
-
-					$buddyforms_layout_options = get_option( 'buddyforms_layout_options' );
-
-					print_r($buddyforms_layout_options);
-					?>
+				case 'layout' : ?>
 
                     <div class="metabox-holder">
                         <div class="postbox">
@@ -228,6 +223,7 @@ function buddyforms_settings_page_tabs_content() {
 					break;
 				default:
 					do_action( 'buddyforms_settings_page_tab', $tab );
+
 					break;
 			}
 		}
