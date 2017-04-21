@@ -257,14 +257,13 @@ function buddyforms_post_entry_actions( $form_slug ) {
 	if ( $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
 		return;
 	}
-
 	?>
 	<ul class="edit_links">
 		<?php
-		if ( get_the_author_meta( 'ID' ) == get_current_user_id() ) {
+		if ( buddyforms_can_edit( $post->ID ) ) {
+
 			$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 			$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
-
 
 			if ( is_multisite() ) {
 				if ( apply_filters( 'buddyforms_enable_multisite', false ) ) {
@@ -532,4 +531,14 @@ function buddyforms_get_form_field_by_slug($form_slug, $slug) {
 	} endif;
 
 	return false;
+}
+
+function buddyforms_can_edit( $post_id ){
+
+	$the_author_id = apply_filters('buddyforms_the_author_id', get_post_field( 'post_author', $post_id ), $post_id );
+
+	if( $the_author_id == get_current_user_id()){
+		return true;
+	}
+	return true;
 }

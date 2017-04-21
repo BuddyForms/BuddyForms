@@ -13,6 +13,14 @@ class View_Frontend extends FormView {
 	 * @param null $onlyElement
 	 */
 	public function render( $onlyElement = null ) {
+		global $buddyforms, $form_slug;
+
+//		echo '<pre>';
+//		print_r($this->_form);
+//		echo '<pre>';
+
+//		echo $this->_form->getAttribute('id');
+
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
 		}

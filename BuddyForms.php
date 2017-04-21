@@ -54,7 +54,9 @@ class BuddyForms {
 	 */
 	public function __construct() {
 
-	    session_start();
+	    if( !session_id('buddyforms')) {
+	        session_start(array('buddyforms'));
+	    }
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 		$this->load_constants();
@@ -210,6 +212,7 @@ class BuddyForms {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-layout.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-registration.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-shortcodes.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php' );

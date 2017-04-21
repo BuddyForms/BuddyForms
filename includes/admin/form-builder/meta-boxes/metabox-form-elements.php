@@ -40,6 +40,7 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	                        <th class="field_name">Field Slug</th>
 	                        <th class="field_type">Field Type</th>
 	                        <th class="field_type">Action</th>
+	                        <th class="field_type">Layout</th>
 	                    </tr>
 	                </thead>
 	            </table>
@@ -350,6 +351,10 @@ function buddyforms_form_elements_select_options() {
 				array(
 					'label'  => __( 'Date', 'buddyforms' ),
 					'unique' => 'unique'
+				);
+			$elements_select_options['extra']['fields']['range']   =
+				array(
+					'label'  => __( 'Range', 'buddyforms' ),
 				);
 		}
 

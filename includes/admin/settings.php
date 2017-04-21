@@ -45,7 +45,7 @@ function buddyforms_settings_page() { ?>
  * @param string $current
  */
 function buddyforms_admin_tabs( $current = 'homepage' ) {
-	$tabs = array( 'general' => 'General Settings', 'import' => 'Import Forms' );
+	$tabs = array( 'general' => 'General Settings', 'layout' => 'Form Layout', 'import' => 'Import Forms' );
 
 	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
 
@@ -62,7 +62,8 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 // Register Settings Options
 //
 function buddyforms_register_option() {
-	register_setting( 'buddyforms_posttypes_default', 'buddyforms_posttypes_default', 'buddyforms_posttypes_default_sanitize' );
+	register_setting( 'buddyforms_posttypes_default', 'buddyforms_posttypes_default', 'buddyforms_default_sanitize' );
+	register_setting( 'buddyforms_layout_options', 'buddyforms_layout_options', 'buddyforms_default_sanitize' );
 }
 
 add_action( 'admin_init', 'buddyforms_register_option' );
@@ -72,7 +73,7 @@ add_action( 'admin_init', 'buddyforms_register_option' );
  *
  * @return mixed
  */
-function buddyforms_posttypes_default_sanitize( $new ) {
+function buddyforms_default_sanitize( $new ) {
 	return $new;
 }
 
@@ -199,6 +200,28 @@ function buddyforms_settings_page_tabs_content() {
 							</div><!-- .inside -->
 						</div><!-- .postbox -->
 					</div><!-- .metabox-holder -->
+					<?php
+					break;
+				case 'layout' :
+
+					$buddyforms_layout_options = get_option( 'buddyforms_layout_options' );
+
+					print_r($buddyforms_layout_options);
+					?>
+
+                    <div class="metabox-holder">
+                        <div class="postbox">
+                            <h3><span><?php _e( 'Form Layout', 'buddyforms' ); ?></span></h3>
+                            <div class="inside">
+                                <p><?php _e( 'Adjust the form layout' ); ?></p>
+                                <form method="post" action="options.php">
+	                                <?php settings_fields( 'buddyforms_layout_options' ); ?>
+                                    <?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
+	                                <?php submit_button( __( 'Save' ), 'secondary', 'submit', false ); ?>
+                                </form>
+                            </div><!-- .inside -->
+                        </div><!-- .postbox -->
+                    </div><!-- .metabox-holder -->
 					<?php
 					break;
 				default:

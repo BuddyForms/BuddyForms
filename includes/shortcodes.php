@@ -99,11 +99,11 @@ function buddyforms_the_loop( $args ) {
 	$list_posts_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
-	$user_id = empty( $author ) ? apply_filters( 'buddyforms_user_posts_user_id', get_current_user_id() ) : $author;
+	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', get_current_user_id(), $form_slug );
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
-	if ( ! $user_id ) {
+	if ( ! $the_author_id ) {
 		$post_status = array( 'publish' );
 	}
 
@@ -117,7 +117,7 @@ function buddyforms_the_loop( $args ) {
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
-				'author'         => $user_id,
+				'author'         => $the_author_id,
 				'paged'          => $paged,
 			);
 			break;
@@ -128,7 +128,7 @@ function buddyforms_the_loop( $args ) {
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
-				'author'         => $user_id,
+				'author'         => $the_author_id,
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
 				'meta_value'     => $form_slug

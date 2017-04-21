@@ -229,7 +229,8 @@ function buddyforms_process_submission( $args = Array() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
-	$post_status = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
+	$post_status    = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
+	$the_author_id  = apply_filters('buddyforms_the_author_id', $current_user->ID, $form_slug, $post_id );
 
 	$args = Array(
 		'post_id'        => $post_id,
@@ -237,7 +238,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'form_slug'      => $form_slug,
 		'post_type'      => $post_type,
 		'post_excerpt'   => $post_excerpt,
-		'post_author'    => $current_user->ID,
+		'post_author'    => $the_author_id,
 		'post_status'    => $post_status,
 		'post_parent'    => $post_parent,
 		'comment_status' => $comment_status,
@@ -436,6 +437,7 @@ function buddyforms_update_post( $args ) {
 
 		$bf_post = array(
 			'ID'             => $_POST['post_id'],
+			'post_author'    => $post_author,
 			'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
 			'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 			'post_type'      => $post_type,

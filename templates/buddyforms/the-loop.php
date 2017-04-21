@@ -10,7 +10,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 ?>
 
 	<div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
@@ -81,7 +80,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 
 						<?php
-						if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() ) {
+
+                        $the_author_id = apply_filters('buddyforms_the_loop_item_author_id', get_the_author_meta( 'ID' ), $form_slug, get_the_ID() );
+
+						if ( is_user_logged_in() && buddyforms_can_edit( get_the_ID() ) ) {
+
 							ob_start();
 							?>
 							<div class="action">
