@@ -213,12 +213,14 @@ function buddyforms_settings_page_tabs_content() {
                         <div class="postbox">
                             <h3><span><?php _e( 'Form Layout', 'buddyforms' ); ?></span></h3>
                             <div class="inside">
-                                <p><?php _e( 'Adjust the form layout' ); ?></p>
+                                <p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ' ); ?></p>
+
                                 <form method="post" action="options.php">
 	                                <?php settings_fields( 'buddyforms_layout_options' ); ?>
                                     <?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
 	                                <?php submit_button( __( 'Save' ), 'secondary', 'submit', false ); ?>
                                 </form>
+
                             </div><!-- .inside -->
                         </div><!-- .postbox -->
                     </div><!-- .metabox-holder -->
