@@ -79,7 +79,7 @@ class View_Frontend extends FormView {
 			$element->appendAttribute( "class", "form-control" );
 		}
 
-		if ( $this->noLabel ) {
+		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout'] == 'inline') {
 			$label = $element->getLabel();
 			$element->setAttribute( "placeholder", $label );
 			$element->setLabel( "" );
