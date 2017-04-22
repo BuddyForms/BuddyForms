@@ -85,7 +85,6 @@ class View_Frontend extends FormView {
 			$element->setLabel( "" );
 		}
 
-
 		echo '<div class="' .  $layout_style . '">';
 		echo '<div class="bf_field_group     elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
@@ -117,19 +116,19 @@ function buddyforms_layout_style( $field_id ){
 
 	switch ($layout_style){
 		case '1' :
-			$layout_style = 'col-md-12';
+			$layout_style = 'col-xs-12';
 			break;
 		case '2' :
-			$layout_style = 'col-md-6';
+			$layout_style = 'col-xs-12 col-md-6';
 			break;
 		case '3' :
-			$layout_style = 'col-md-4';
+			$layout_style = 'col-xs-12 col-md-4';
 			break;
 		case '4' :
-			$layout_style = 'col-md-3';
+			$layout_style = 'col-xs-12 col-md-3';
 			break;
 		default:
-			$layout_style = 'col-md-12';
+			$layout_style = 'col-xs-12';
 			break;
 	}
 
