@@ -87,7 +87,7 @@ class View_Frontend extends FormView {
 
 
 		echo '<div class="' .  $layout_style . '">';
-		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+		echo '<div class="bf_field_group     elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
 		echo $element->render(), $this->renderDescriptions( $element );
 		echo "</div></div></div>";
