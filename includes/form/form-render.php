@@ -6,7 +6,7 @@
  * @return mixed|string|void
  */
 function buddyforms_form_html( $args ) {
-	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id;
+	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id, $form_slug;
 
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
@@ -64,7 +64,23 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
-	// Create the form object
+	ob_start();?>
+
+	<style>
+
+
+
+
+
+	</style>
+
+
+	<?php
+	$layout = ob_get_clean();
+
+	$form_html .= $layout;
+
+		// Create the form object
 	$form = new Form( "buddyforms_form_" . $form_slug );
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
