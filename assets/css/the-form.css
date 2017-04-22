@@ -53,6 +53,10 @@
     margin-top: 20px;
 }
 
+.the_buddyforms_form form {
+  margin: 0 -15px;
+}
+
 .bf_field_group {
     margin: 15px 0;
 }
@@ -128,7 +132,7 @@
     padding: 6px;
 }
 
-.the_buddyforms_form .bf-input .radio {
+/*.the_buddyforms_form .bf-input .radio {
     display: block;
 }
 
@@ -137,6 +141,27 @@
     display: block;
     width: 100%;
     background: #fff;
+}*/
+
+.the_buddyforms_form form fieldset .col-xs-12 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  float: left;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .the_buddyforms_form form fieldset .col-md-6 {
+    width: 50%;
+  }
+  .the_buddyforms_form form fieldset .col-md-4 {
+    width: 33.33%;
+  }
+  .the_buddyforms_form form fieldset .col-md-3 {
+    width: 25%;
+  }
 }
 
 .the_buddyforms_form #insert-media-button {
