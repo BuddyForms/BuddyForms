@@ -106,101 +106,19 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	// ) );
 
 
-	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Field Design</h4>' );
 
-	$field_padding = isset( $options['layout']['field_padding'] ) ? $options['layout']['field_padding'] : '15';
-	$form_setup[]        = new Element_Number('<b>' . __( 'Field Padding', 'buddyforms' ) . '</b>', $option_name . "[field_padding]", array(
-		'value'     => $field_padding,
-		'shortDesc' => 'just enter a number, in px, default is 15'
-	) );
-
-	$field_background_color = isset( $options['layout']['field_background_color'] ) ? $options['layout']['field_background_color'] : '#FFFFFF';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Background Color ', 'buddyforms' ) . '</b>', $option_name . "[field_background_color]", array(
-		'value'     => $field_background_color,
-		'shortDesc' => 'default is #FFFFFF'
-	) );
-
-	$field_border_color = isset( $options['layout']['field_border_color'] ) ? $options['layout']['field_border_color'] : 'rgba(0,0,0,0.1)';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Border Color', 'buddyforms' ) . '</b>', $option_name . "[field_border_color]", array(
-		'value'     => $field_border_color,
-		'shortDesc' => 'default is rgba(0,0,0,0.1)'
-	) );
-
-	$field_border_width = isset( $options['layout']['field_border_width'] ) ? $options['layout']['field_border_width'] : '1';
-	$form_setup[]        = new Element_Number('<b>' . __( 'Field Border Width', 'buddyforms' ) . '</b>', $option_name . "[field_border_width]", array(
-		'value'     => $field_border_width,
-		'shortDesc' => 'just enter a number, in px, default is 15'
-	) );
-
-	// $field_box_shadow = isset( $options['layout']['field_box_shadow'] ) ? $options['layout']['field_box_shadow'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Box Shadow', 'buddyforms' ) . '</b>', $option_name . "[field_box_shadow]", array(
-	// 	'value'     => $field_box_shadow,
-	// 	'shortDesc' => ''
-	// ) );
-
-
-	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Field Typography</h4>' );
-
- 	$field_font_size = isset( $options['layout']['field_font_size'] ) ? $options['layout']['field_font_size'] : '16';
-	$form_setup[]        = new Element_Number('<b>' . __( 'Field Font Size', 'buddyforms' ) . '</b>', $option_name . "[field_font_size]", array(
-		'value'     => $field_font_size,
-		'shortDesc' => 'just enter a number, in px, default is 16'
-	) );
-
-	$field_font_color = isset( $options['layout']['field_font_color'] ) ? $options['layout']['field_font_color'] : '#3F3F3F';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_font_color]", array(
-		'value'     => $field_font_color,
-		'shortDesc' => 'default is #3F3F3F'
-	) );
-
-	$field_placeholder_font_color = isset( $options['layout']['field_placeholder_font_color'] ) ? $options['layout']['field_placeholder_font_color'] : '#AAAAAA';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Placeholder Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_placeholder_font_color]", array(
-		'value'     => $field_placeholder_font_color,
-		'shortDesc' => 'default is #AAAAAA'
-	) );
-
-	// $field_font_weight = isset( $options['layout']['field_font_weight'] ) ? $options['layout']['field_font_weight'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[field_font_weight]", array(
-	// 	'value'     => $field_font_weight,
-	// 	'shortDesc' => ''
-	// ) );
-	//
-	// $field_font_style = isset( $options['layout']['field_font_style'] ) ? $options['layout']['field_font_style'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Style', 'buddyforms' ) . '</b>', $option_name . "[field_font_style]", array(
-	// 	'value'     => $field_font_style,
-	// 	'shortDesc' => ''
-	// ) );
-
-	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Field ACTIVE</h4>' );
-
-	$field_active_background_color = isset( $options['layout']['field_active_background_color'] ) ? $options['layout']['field_active_background_color'] : '#FFFFFF';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Background Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_background_color]", array(
-		'value'     => $field_active_background_color,
-		'shortDesc' => 'default is #FFFFFF'
-	) );
-
-	$field_active_border_color = isset( $options['layout']['field_active_border_color'] ) ? $options['layout']['field_active_border_color'] : 'rgba(0,0,0,0.1)';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Border Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_border_color]", array(
-		'value'     => $field_active_border_color,
-		'shortDesc' => 'default is rgba(0,0,0,0.1)'
-	) );
-
-	$field_active_font_color = isset( $options['layout']['field_active_font_color'] ) ? $options['layout']['field_active_font_color'] : '#3F3F3F';
-	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_font_color]", array(
-		'value'     => $field_active_font_color,
-		'shortDesc' => 'default is #3F3F3F'
-	) );
+	// Labels
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Labels</h4>' );
 
-	// $labels_layout = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : 'block';
-	// $form_setup[]        = new Element_Radio( '<b>' . __( 'Labels Inline or Block?', 'buddyforms' ) . '</b>', $option_name . "[labels_layout]", array(
-	// 	'block'  => __( 'Block', 'buddyforms' ),
-	// 	'inline' => __( 'Inline', 'buddyforms' ),
-	// ), array(
-	// 	'value'     => $labels_layout,
-	// 	'shortDesc' => 'Display Labels inside the form element ( Inline ) or over the element ( Block )'
-	// ) );
+	$labels_layout = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : 'inline';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Show labels or use as placeholders?', 'buddyforms' ) . '</b>', $option_name . "[labels_layout]", array(
+		'label'  => __( 'Show labels', 'buddyforms' ),
+		'inline' => __( 'Use as placeholder', 'buddyforms' ),
+	), array(
+		'value'     => $labels_layout,
+		'shortDesc' => '<b>Use as placeholder</b>: Hide labels and display as placeholder text inside the form element; <br><b>Show labels</b>: display the labels above the form fields'
+	) );
 
 	// $label_padding = isset( $options['layout']['label_padding'] ) ? $options['layout']['label_padding'] : '';
 	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Padding', 'buddyforms' ) . '</b>', $option_name . "[label_padding]", array(
@@ -243,6 +161,115 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	// 	'shortDesc' => ''
 	// ) );
 
+
+
+
+
+
+
+
+	// Form Fields
+
+	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Fields</h4>' );
+
+	$field_padding = isset( $options['layout']['field_padding'] ) ? $options['layout']['field_padding'] : '15';
+	$form_setup[]        = new Element_Number('<b>' . __( 'Field Padding', 'buddyforms' ) . '</b>', $option_name . "[field_padding]", array(
+		'value'     => $field_padding,
+		'shortDesc' => 'just enter a number, in px, default is 15'
+	) );
+
+	$field_background_color = isset( $options['layout']['field_background_color'] ) ? $options['layout']['field_background_color'] : '#FFFFFF';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Background Color ', 'buddyforms' ) . '</b>', $option_name . "[field_background_color]", array(
+		'value'     => $field_background_color,
+		'shortDesc' => 'default is #FFFFFF'
+	) );
+
+	$field_border_color = isset( $options['layout']['field_border_color'] ) ? $options['layout']['field_border_color'] : 'rgba(0,0,0,0.1)';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Border Color', 'buddyforms' ) . '</b>', $option_name . "[field_border_color]", array(
+		'value'     => $field_border_color,
+		'shortDesc' => 'default is rgba(0,0,0,0.1)'
+	) );
+
+	$field_border_width = isset( $options['layout']['field_border_width'] ) ? $options['layout']['field_border_width'] : '1';
+	$form_setup[]        = new Element_Number('<b>' . __( 'Field Border Width', 'buddyforms' ) . '</b>', $option_name . "[field_border_width]", array(
+		'value'     => $field_border_width,
+		'shortDesc' => 'just enter a number, in px, default is 15'
+	) );
+
+	// $field_box_shadow = isset( $options['layout']['field_box_shadow'] ) ? $options['layout']['field_box_shadow'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Box Shadow', 'buddyforms' ) . '</b>', $option_name . "[field_box_shadow]", array(
+	// 	'value'     => $field_box_shadow,
+	// 	'shortDesc' => ''
+	// ) );
+
+
+
+
+
+	// Form Field Text
+
+	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Field Text</h4>' );
+
+ 	$field_font_size = isset( $options['layout']['field_font_size'] ) ? $options['layout']['field_font_size'] : '16';
+	$form_setup[]        = new Element_Number('<b>' . __( 'Field Font Size', 'buddyforms' ) . '</b>', $option_name . "[field_font_size]", array(
+		'value'     => $field_font_size,
+		'shortDesc' => 'just enter a number, in px, default is 16'
+	) );
+
+	$field_font_color = isset( $options['layout']['field_font_color'] ) ? $options['layout']['field_font_color'] : '#3F3F3F';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_font_color]", array(
+		'value'     => $field_font_color,
+		'shortDesc' => 'default is #3F3F3F'
+	) );
+
+	$field_placeholder_font_color = isset( $options['layout']['field_placeholder_font_color'] ) ? $options['layout']['field_placeholder_font_color'] : '#AAAAAA';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Placeholder Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_placeholder_font_color]", array(
+		'value'     => $field_placeholder_font_color,
+		'shortDesc' => 'default is #AAAAAA'
+	) );
+
+	// $field_font_weight = isset( $options['layout']['field_font_weight'] ) ? $options['layout']['field_font_weight'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[field_font_weight]", array(
+	// 	'value'     => $field_font_weight,
+	// 	'shortDesc' => ''
+	// ) );
+	//
+	// $field_font_style = isset( $options['layout']['field_font_style'] ) ? $options['layout']['field_font_style'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Style', 'buddyforms' ) . '</b>', $option_name . "[field_font_style]", array(
+	// 	'value'     => $field_font_style,
+	// 	'shortDesc' => ''
+	// ) );
+
+
+
+
+	// Form Fields - Active
+
+	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Form Fields - Active</h4>' );
+
+	$field_active_background_color = isset( $options['layout']['field_active_background_color'] ) ? $options['layout']['field_active_background_color'] : '#FFFFFF';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Background Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_background_color]", array(
+		'value'     => $field_active_background_color,
+		'shortDesc' => 'default is #FFFFFF'
+	) );
+
+	$field_active_border_color = isset( $options['layout']['field_active_border_color'] ) ? $options['layout']['field_active_border_color'] : 'rgba(0,0,0,0.1)';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Border Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_border_color]", array(
+		'value'     => $field_active_border_color,
+		'shortDesc' => 'default is rgba(0,0,0,0.1)'
+	) );
+
+	$field_active_font_color = isset( $options['layout']['field_active_font_color'] ) ? $options['layout']['field_active_font_color'] : '#3F3F3F';
+	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_font_color]", array(
+		'value'     => $field_active_font_color,
+		'shortDesc' => 'default is #3F3F3F'
+	) );
+
+
+
+
+
+	// Buttons
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );
 
