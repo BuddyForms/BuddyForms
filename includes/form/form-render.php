@@ -74,11 +74,10 @@ function buddyforms_form_html( $args ) {
 
 	<style>
 
-
+	/* BuddyForms Options - Form Fields */
 	.the_buddyforms_form .bf-input .radio {
-	    display: block;
+	    display: block; /* here option value! */
 	}
-
 	.the_buddyforms_form .bf-input textarea,
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
@@ -89,6 +88,15 @@ function buddyforms_form_html( $args ) {
 			border-width: <?php echo $bfdesign['field_border_width']; ?>px;
 			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
 			color: <?php echo $bfdesign['field_font_color']; ?>;
+	}
+
+	/* BuddyForms Options - Labels */
+	.the_buddyforms_form .bf_field_group label {
+	    margin-right: 10px;
+			font-size: <?php echo $bfdesign['label_font_size']; ?>px;
+			color: <?php echo $bfdesign['label_font_color']; ?>;
+			font-weight: <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) { echo 'bold'; } else { echo 'normal'; } ?>;
+			font-style:  <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{ echo 'italic'; } else { echo 'normal'; } ?>;
 	}
 
 

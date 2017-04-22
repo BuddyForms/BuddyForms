@@ -193,26 +193,25 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Labels</h4>' );
 
-	$labels_layout = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : 'block';
-	$form_setup[]        = new Element_Radio( '<b>' . __( 'Labels Inline or Block?', 'buddyforms' ) . '</b>', $option_name . "[labels_layout]", array(
-		'block'  => __( 'Block', 'buddyforms' ),
-		'inline' => __( 'Inline', 'buddyforms' ),
-	), array(
-		'value'     => $labels_layout,
-		'shortDesc' => 'Display Labels inside the form element ( Inline ) or over the element ( Block )'
-	) );
+	// $labels_layout = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : 'block';
+	// $form_setup[]        = new Element_Radio( '<b>' . __( 'Labels Inline or Block?', 'buddyforms' ) . '</b>', $option_name . "[labels_layout]", array(
+	// 	'block'  => __( 'Block', 'buddyforms' ),
+	// 	'inline' => __( 'Inline', 'buddyforms' ),
+	// ), array(
+	// 	'value'     => $labels_layout,
+	// 	'shortDesc' => 'Display Labels inside the form element ( Inline ) or over the element ( Block )'
+	// ) );
 
-	$label_padding = isset( $options['layout']['label_padding'] ) ? $options['layout']['label_padding'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Label Padding', 'buddyforms' ) . '</b>', $option_name . "[label_padding]", array(
-		'value'     => $label_padding,
-		'shortDesc' => ''
-	) );
+	// $label_padding = isset( $options['layout']['label_padding'] ) ? $options['layout']['label_padding'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Padding', 'buddyforms' ) . '</b>', $option_name . "[label_padding]", array(
+	// 	'value'     => $label_padding,
+	// 	'shortDesc' => ''
+	// ) );
 
-
-	$label_font_size = isset( $options['layout']['label_font_size'] ) ? $options['layout']['label_font_size'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Size', 'buddyforms' ) . '</b>', $option_name . "[label_font_size]", array(
+	$label_font_size = isset( $options['layout']['label_font_size'] ) ? $options['layout']['label_font_size'] : '13';
+	$form_setup[]        = new Element_Number('<b>' . __( 'Label Font Size', 'buddyforms' ) . '</b>', $option_name . "[label_font_size]", array(
 		'value'     => $label_font_size,
-		'shortDesc' => ''
+		'shortDesc' => 'just enter a number, default is 13'
 	) );
 
 	$label_font_color = isset( $options['layout']['label_font_color'] ) ? $options['layout']['label_font_color'] : '';
@@ -221,17 +220,28 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	$label_ont_weight = isset( $options['layout']['label_ont_weight'] ) ? $options['layout']['label_ont_weight'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[label_ont_weight]", array(
-		'value'     => $label_ont_weight,
+	$label_font_style = isset( $options['layout']['label_font_style'] ) ? $options['layout']['label_font_style'] : 'bold';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Label font style', 'buddyforms' ) . '</b>', $option_name . "[label_font_style]", array(
+		'normal' => __( 'Normal', 'buddyforms' ),
+		'bold'  => '<b>' . __( 'Bold', 'buddyforms' ) . '</b>',
+		'italic'  => '<i>' . __( 'Italic', 'buddyforms' ) . '</i>',
+		'bolditalic'  => '<b><i>' . __( 'Bold Italic', 'buddyforms' ) . '</i></b>',
+	), array(
+		'value'     => $label_font_style,
 		'shortDesc' => ''
 	) );
 
-	$label_ont_style = isset( $options['layout']['label_ont_style'] ) ? $options['layout']['label_ont_style'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Style', 'buddyforms' ) . '</b>', $option_name . "[label_ont_style]", array(
-		'value'     => $label_ont_style,
-		'shortDesc' => ''
-	) );
+	// $label_font_weight = isset( $options['layout']['label_font_weight'] ) ? $options['layout']['label_font_weight'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[label_font_weight]", array(
+	// 	'value'     => $label_font_weight,
+	// 	'shortDesc' => ''
+	// ) );
+
+	// $label_font_style = isset( $options['layout']['label_font_style'] ) ? $options['layout']['label_font_style'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Style', 'buddyforms' ) . '</b>', $option_name . "[label_font_style]", array(
+	// 	'value'     => $label_ont_style,
+	// 	'shortDesc' => ''
+	// ) );
 
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );

@@ -61,14 +61,6 @@
     margin: 15px 0;
 }
 
-.the_buddyforms_form .bf_field_group label {
-    margin-right: 10px;
-}
-
-.the_buddyforms_form .bf_field_group label p {
-    margin-bottom: 10px;
-}
-
 .the_buddyforms_form .bf_field_group .bf_inputs {
     margin: 0;
 }
@@ -79,7 +71,6 @@
 
 .the_buddyforms_form form label {
     display: block;
-    font-weight: normal !important;
 }
 
 .the_buddyforms_form span.help-inline,
