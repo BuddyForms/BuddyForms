@@ -79,16 +79,23 @@ class View_Frontend extends FormView {
 			$element->appendAttribute( "class", "form-control" );
 		}
 
-		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout'] == 'inline') {
+		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout']  == 'inline') {
 			$label = $element->getLabel();
+
+			if ( $element->isRequired() ) {
+				$label = '* ' . $label;
+			}
+
 			$element->setAttribute( "placeholder", $label );
 			$element->setLabel( "" );
 		}
 
 		echo '<div class="' .  $layout_style . '">';
-		echo '<div class="bf_field_group     elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
-		echo $element->render(), $this->renderDescriptions( $element );
+
+		echo $element->render();
+		echo $this->renderDescriptions( $element );
 		echo "</div></div></div>";
 	}
 
@@ -96,13 +103,19 @@ class View_Frontend extends FormView {
 	 * @param Element $element
 	 */
 	protected function renderLabel( Element $element ) {
+		global $form_slug, $buddyforms;
+
 		$label = $element->getLabel();
 		if ( empty ( $label ) ) {
 			$label = '';
 		}
 		echo ' <label for="', $element->getAttribute( "id" ), '">';
-		if ( $element->isRequired() ) {
-			echo '<span class="required">* </span> ';
+
+		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout']  != 'inline') {
+
+			if ( $element->isRequired() ) {
+				echo '<span class="required">* </span> ';
+			}
 		}
 		echo $label, '</label> ';
 	}
