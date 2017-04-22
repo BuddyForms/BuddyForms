@@ -312,11 +312,17 @@ class BuddyForms {
 			wp_enqueue_style( 'buddyforms-admin-css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
+			// Remove Kleo Theme Styles. This theme is often used but the css conflicts with the form builder. So we remove it if the form builder is viewed
+			wp_deregister_style('cmb-styles' );
+            
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 		}
 		// load the tk_icons everywhere
 		wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
+
+
+
 
 	}
 
