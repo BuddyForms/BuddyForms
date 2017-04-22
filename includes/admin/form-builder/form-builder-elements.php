@@ -775,7 +775,7 @@ JS;
 
                             <td class="field_layout">
                                 <select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
-                                    <option <?php selected( $layout, '1'); ?> value="1">Full With</option>
+                                    <option <?php selected( $layout, '1'); ?> value="1">Full Width</option>
                                     <option <?php selected( $layout, '2'); ?> value="2">1/2</option>
                                     <option <?php selected( $layout, '3'); ?> value="3">1/3</option>
                                     <option <?php selected( $layout, '4'); ?> value="4">1/4</option>
