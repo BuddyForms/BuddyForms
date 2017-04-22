@@ -64,12 +64,32 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
+	$bfdesign = $buddyforms[$form_slug]['layout'];
+
+
+
+
+
 	ob_start();?>
 
 	<style>
 
 
+	.the_buddyforms_form .bf-input .radio {
+	    display: block;
+	}
 
+	.the_buddyforms_form .bf-input textarea,
+	.the_buddyforms_form .bf-input .form-control {
+	    display: block;
+	    width: 100%;
+			padding: <?php echo $bfdesign['field_padding']; ?>px;
+			background: <?php echo $bfdesign['field_background_color']; ?>;
+			border-color: <?php echo $bfdesign['field_border_color']; ?>;
+			border-width: <?php echo $bfdesign['field_border_width']; ?>px;
+			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
+			color: <?php echo $bfdesign['field_font_color']; ?>;
+	}
 
 
 	</style>
