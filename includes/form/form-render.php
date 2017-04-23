@@ -125,11 +125,11 @@ function buddyforms_form_html( $args ) {
 		}
 		// Button Background Color
 		if( $bfdesign['button_background_color'] != '' ) {
-			echo 'background-color: ' . $bfdesign['button_background_color'];
+			echo 'background-color: ' . $bfdesign['button_background_color'] . ';';
 		}
 		// Button Font Color
 		if( $bfdesign['button_font_color'] != '' ) {
-			echo 'background-color: ' . $bfdesign['button_font_color'];
+			echo 'color: ' . $bfdesign['button_font_color'] . ';';
 		}
 		// Button Border Radius
 		if( $bfdesign['button_border_radius'] != '' ) {
@@ -146,14 +146,33 @@ function buddyforms_form_html( $args ) {
 		?>
 	}
 
-<?php if( $bfdesign['button_width'] != 'block' ) {
-	echo '@media (min-width: 768px) {
-					.the_buddyforms_form .form-actions button.bf-submit {
-						display: inline;
-						width: auto;
-					}
-				}';
-	} ?>
+	<?php if( $bfdesign['button_width'] != 'block' ) {
+		echo '@media (min-width: 768px) {
+						.the_buddyforms_form .form-actions button.bf-submit {
+							display: inline;
+							width: auto;
+						}
+					}';
+		} ?>
+
+	/* BuddyForms Options - Buttons Hover State */
+	.the_buddyforms_form .form-actions button.bf-submit:hover,
+	.the_buddyforms_form .form-actions button.bf-submit:focus {
+		<?php
+		// Button Background Color
+		if( $bfdesign['button_background_color_hover'] != '' ) {
+			echo 'background-color: ' . $bfdesign['button_background_color_hover'] . ';';
+		}
+		// Button Font Color
+		if( $bfdesign['button_font_color_hover'] != '' ) {
+			echo 'color: ' . $bfdesign['button_font_color_hover'] . ';';
+		}
+		// Button Border Color
+		if( $bfdesign['button_border_color_hover'] != '' ) {
+			echo 'border-color: ' . $bfdesign['button_border_color_hover'];
+		}
+		?>
+	}
 
 
 
