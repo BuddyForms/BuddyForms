@@ -109,19 +109,45 @@ function buddyforms_form_html( $args ) {
 
 	/* BuddyForms Options - Buttons */
 	.the_buddyforms_form .form-actions button.bf-submit {
-		display: <?php if( $bfdesign['button_width'] != 'inline' ) { echo 'block'; } ?>;
-		width: 100%;
+		<?php
+		// Button Width
+		if( $bfdesign['button_width'] != 'inline' ) {
+			echo 'display: block; width: 100%;'; }
+		else {
+			echo 'display: inline; width: auto;';
+		}
+		// Button Size
+		if( $bfdesign['button_size'] == 'large' ) {
+			echo 'padding: 12px 25px; font-size: 17px;';
+		}
+		if( $bfdesign['button_size'] == 'xlarge' ) {
+			echo 'padding: 15px 32px; font-size: 19px;';
+		}
+		// Button Border Radius
+		if( $bfdesign['button_border_radius'] != '' ) {
+			echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
+		}
+		// Button Border Width
+		if( $bfdesign['button_border_width'] != '' ) {
+			echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
+		}
+		// Button Border Color
+		if( $bfdesign['button_border_color'] != '' ) {
+			echo 'border-color: ' . $bfdesign['button_border_color'];
+		}
+		?>
 	}
 
 <?php if( $bfdesign['button_width'] != 'block' ) {
-	echo '
-	@media (min-width: 768px) {
-		.the_buddyforms_form .form-actions button.bf-submit {
-			display: inline;
-			width: auto;
-		}
-	}
-	'; } ?>
+	echo '@media (min-width: 768px) {
+					.the_buddyforms_form .form-actions button.bf-submit {
+						display: inline;
+						width: auto;
+					}
+				}';
+	} ?>
+
+
 
 
 	</style>
