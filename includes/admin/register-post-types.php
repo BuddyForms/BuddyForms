@@ -26,6 +26,7 @@ function buddyforms_add_meta_boxes() {
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	buddyforms_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
@@ -43,6 +44,7 @@ add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_elements', 'buddyforms_metabox_class' );
 add_filter( 'buddyforms_metabox_sidebar', 'buddyforms_metabox_class' );
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_setup', 'buddyforms_metabox_class' );
+add_filter( 'postbox_classes_buddyforms_buddyforms_form_designer', 'buddyforms_metabox_class' );
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_shortcodes', 'buddyforms_metabox_class' );
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_go_pro', 'buddyforms_metabox_class' );
 
