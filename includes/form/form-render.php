@@ -73,8 +73,7 @@ function buddyforms_form_html( $args ) {
 	ob_start();?>
 
 	<style>
-
-	/* BuddyForms Options - Labels */
+	/* Design Options - Labels */
 	.the_buddyforms_form .bf_field_group label {
 	    margin-right: 10px;
 			<?php // Font Size
@@ -85,11 +84,29 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['label_font_color'] != 'auto' ) {
 				echo 'color: ' . $bfdesign['label_font_color'] . ';';
 			} ?>
-			font-weight: <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) { echo 'bold'; } else { echo 'normal'; } ?>;
-			font-style:  <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{ echo 'italic'; } else { echo 'normal'; } ?>;
+			<?php // Font Weight
+			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) {
+				echo 'font-weight: bold;';
+			} else {
+				echo 'font-weight: normal;';
+			} ?>
+			<?php // Font Style
+			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{
+				echo 'font-style: italic;';
+			} else {
+				echo 'font-style: normal;';
+			} ?>;
 	}
 
-	/* BuddyForms Options - Form Fields & Form Field Text */
+	/* BuddyForms Options - Form Elements */
+	.the_buddyforms_form .bf-input .radio {
+	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
+	}
+	.the_buddyforms_form .bf-input .checkbox {
+	    display: <?php echo $bfdesign['checkbox_alignment']; ?>;
+	}
+
+	/* Design Options - Text Fields */
 	.the_buddyforms_form .bf-input textarea,
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
@@ -98,7 +115,7 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_padding'] != '' ) {
 				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
 			} ?>
-			<?php // Text Field Padding
+			<?php // Text Field Background Color
 			if( $bfdesign['field_background_color'] != 'auto' ) {
 				echo 'background: ' . $bfdesign['field_background_color'] . ';';
 			} ?>
@@ -106,19 +123,44 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_border_color'] != 'auto' ) {
 				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
 			} ?>
-			border-color: <?php echo $bfdesign['field_border_color']; ?>;
-			border-width: <?php echo $bfdesign['field_border_width']; ?>px;
-			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
-			color: <?php echo $bfdesign['field_font_color']; ?>;
+			<?php // Text Field Border Width
+			if( $bfdesign['field_border_width'] != '' ) {
+				echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
+			} ?>
+			<?php // Font Size
+			if( $bfdesign['field_font_size'] != '' ) {
+				echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
+			} ?>
+			<?php // Font Color
+			if( $bfdesign['field_font_color'] != 'auto' ) {
+				echo 'color: ' . $bfdesign['field_font_color'] . ';';
+			} ?>
 	}
 
-	/* BuddyForms Options - Form Fields Active */
+	/* Design Options - Text Fields Active */
 	.the_buddyforms_form .bf-input textarea:focus,
 	.the_buddyforms_form .bf-input .form-control:focus {
-			background: <?php echo $bfdesign['field_active_background_color']; ?>;
-			border-color: <?php echo $bfdesign['field_active_border_color']; ?>;
-			color: <?php echo $bfdesign['field_active_font_color']; ?>;
+			<?php // Text Field Background Color
+			if( $bfdesign['field_active_background_color'] != 'auto' ) {
+				echo 'background: ' . $bfdesign['field_background_color'] . ';';
+			} ?>
+			<?php // Text Field Border Color
+			if( $bfdesign['field_active_border_color'] != 'auto' ) {
+				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
+			} ?>
+			<?php // Font Color
+			if( $bfdesign['field_active_font_color'] != 'auto' ) {
+				echo 'color: ' . $bfdesign['field_font_color'] . ';';
+			} ?>
 	}
+
+	<?php // Placeholder Font Color
+	if( $bfdesign['field_placeholder_font_color'] != 'auto' ) {
+		echo '.the_buddyforms_form .bf-input textarea::placeholder,
+					.the_buddyforms_form .bf-input .form-control::placeholder { {
+							color: ' . $bfdesign['field_placeholder_font_color'] . ';
+						}';
+		} ?>
 
 	/* BuddyForms Options - Buttons */
 	.the_buddyforms_form .form-actions button.bf-submit {
@@ -137,11 +179,11 @@ function buddyforms_form_html( $args ) {
 			echo 'padding: 15px 32px; font-size: 19px;';
 		}
 		// Button Background Color
-		if( $bfdesign['button_background_color'] != '' ) {
+		if( $bfdesign['button_background_color'] != 'auto' ) {
 			echo 'background-color: ' . $bfdesign['button_background_color'] . ';';
 		}
 		// Button Font Color
-		if( $bfdesign['button_font_color'] != '' ) {
+		if( $bfdesign['button_font_color'] != 'auto' ) {
 			echo 'color: ' . $bfdesign['button_font_color'] . ';';
 		}
 		// Button Border Radius
@@ -153,7 +195,7 @@ function buddyforms_form_html( $args ) {
 			echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
 		}
 		// Button Border Color
-		if( $bfdesign['button_border_color'] != '' ) {
+		if( $bfdesign['button_border_color'] != 'auto' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color'];
 		}
 		?>
@@ -173,33 +215,21 @@ function buddyforms_form_html( $args ) {
 	.the_buddyforms_form .form-actions button.bf-submit:focus {
 		<?php
 		// Button Background Color
-		if( $bfdesign['button_background_color_hover'] != '' ) {
+		if( $bfdesign['button_background_color_hover'] != 'auto' ) {
 			echo 'background-color: ' . $bfdesign['button_background_color_hover'] . ';';
 		}
 		// Button Font Color
-		if( $bfdesign['button_font_color_hover'] != '' ) {
+		if( $bfdesign['button_font_color_hover'] != 'auto' ) {
 			echo 'color: ' . $bfdesign['button_font_color_hover'] . ';';
 		}
 		// Button Border Color
-		if( $bfdesign['button_border_color_hover'] != '' ) {
+		if( $bfdesign['button_border_color_hover'] != 'auto' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color_hover'];
 		}
 		?>
 	}
-
-	/* BuddyForms Options - Other */
-	.the_buddyforms_form .bf-input .radio {
-	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
-	}
-	.the_buddyforms_form .bf-input .checkbox {
-	    display: <?php echo $bfdesign['checkbox_alignment']; ?>;
-	}
-
-
-
 	</style>
-
-
+	
 	<?php
 	$layout = ob_get_clean();
 
