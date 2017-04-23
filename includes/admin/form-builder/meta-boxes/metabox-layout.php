@@ -94,16 +94,8 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		echo  '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner  spinner"></span> Load Layout Settings</a></p>';
     };
 
-	// $form_setup[]        = new Element_HTML('<h4>Form Layout Style</h4>' );
-	//
-	// $layout_style = isset( $options['layout']['layout_style'] ) ? $options['layout']['layout_style'] : 'block';
-	// $form_setup[]        = new Element_Radio( '<b>' . __( 'Inline or Block?', 'buddyforms' ) . '</b>', $option_name . "[layout_style]", array(
-	// 	'block'  => __( 'Block', 'buddyforms' ),
-	// 	'inline' => __( 'Inline', 'buddyforms' ),
-	// ), array(
-	// 	'value'     => $layout_style,
-	// 	'shortDesc' => 'Display Labels inside the form element ( Inline ) or over the element ( Block )'
-	// ) );
+
+
 
 
 
@@ -119,12 +111,6 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'value'     => $labels_layout,
 		'shortDesc' => '<b>Use as placeholder</b>: Hide labels and display as placeholder text inside the form element; <br><b>Show labels</b>: display the labels above the form fields'
 	) );
-
-	// $label_padding = isset( $options['layout']['label_padding'] ) ? $options['layout']['label_padding'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Padding', 'buddyforms' ) . '</b>', $option_name . "[label_padding]", array(
-	// 	'value'     => $label_padding,
-	// 	'shortDesc' => ''
-	// ) );
 
 	$label_font_size = isset( $options['layout']['label_font_size'] ) ? $options['layout']['label_font_size'] : '13';
 	$form_setup[]        = new Element_Number('<b>' . __( 'Label Font Size', 'buddyforms' ) . '</b>', $option_name . "[label_font_size]", array(
@@ -148,18 +134,6 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'value'     => $label_font_style,
 		'shortDesc' => ''
 	) );
-
-	// $label_font_weight = isset( $options['layout']['label_font_weight'] ) ? $options['layout']['label_font_weight'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[label_font_weight]", array(
-	// 	'value'     => $label_font_weight,
-	// 	'shortDesc' => ''
-	// ) );
-
-	// $label_font_style = isset( $options['layout']['label_font_style'] ) ? $options['layout']['label_font_style'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Label Font Style', 'buddyforms' ) . '</b>', $option_name . "[label_font_style]", array(
-	// 	'value'     => $label_ont_style,
-	// 	'shortDesc' => ''
-	// ) );
 
 
 
@@ -196,11 +170,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'just enter a number, in px, default is 15'
 	) );
 
-	// $field_box_shadow = isset( $options['layout']['field_box_shadow'] ) ? $options['layout']['field_box_shadow'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Box Shadow', 'buddyforms' ) . '</b>', $option_name . "[field_box_shadow]", array(
-	// 	'value'     => $field_box_shadow,
-	// 	'shortDesc' => ''
-	// ) );
+
 
 
 
@@ -228,17 +198,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'default is #AAAAAA'
 	) );
 
-	// $field_font_weight = isset( $options['layout']['field_font_weight'] ) ? $options['layout']['field_font_weight'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Weight ', 'buddyforms' ) . '</b>', $option_name . "[field_font_weight]", array(
-	// 	'value'     => $field_font_weight,
-	// 	'shortDesc' => ''
-	// ) );
-	//
-	// $field_font_style = isset( $options['layout']['field_font_style'] ) ? $options['layout']['field_font_style'] : '';
-	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Field Font Style', 'buddyforms' ) . '</b>', $option_name . "[field_font_style]", array(
-	// 	'value'     => $field_font_style,
-	// 	'shortDesc' => ''
-	// ) );
+
 
 
 
@@ -269,19 +229,30 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 
 
+
 	// Buttons
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );
 
-	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Add a custom class to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
-		'value'     => $button_class,
+	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : '';
+	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
+		'value'     => $submit_text,
 		'shortDesc' => ''
 	) );
 
-	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Default Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
-		'value'     => $submit_text,
+	$button_width = isset( $options['layout']['button_width'] ) ? $options['layout']['button_width'] : 'blockmobile';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Button Width', 'buddyforms' ) . '</b>', $option_name . "[button_width]", array(
+		'blockmobile'  => __( 'Full width button on mobile only', 'buddyforms' ),
+		'block' => __( 'Always full width button', 'buddyforms' ),
+		'inline' => __( 'Normal width button', 'buddyforms' ),
+	), array(
+		'value'     => $button_width,
+		'shortDesc' => __( 'We recommend full width buttons on mobile, looks neater.', 'buddyforms' )
+	) );
+
+	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : '';
+	$form_setup[]        = new Element_Textbox('<b>' . __( 'Add a custom class to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
+		'value'     => $button_class,
 		'shortDesc' => ''
 	) );
 
