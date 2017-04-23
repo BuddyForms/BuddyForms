@@ -77,19 +77,18 @@ class View_Frontend extends FormView {
 
 		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
 			$element->appendAttribute( "class", "form-control" );
-		}
 
-		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout']  == 'inline') {
-			$label = $element->getLabel();
+			if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] == 'inline' ) {
+				$label = $element->getLabel();
 
-			if ( $element->isRequired() ) {
-				$label = '* ' . $label;
+				if ( $element->isRequired() ) {
+					$label = '* ' . $label;
+				}
+
+				$element->setAttribute( "placeholder", $label );
+				$element->setLabel( "" );
 			}
-
-			$element->setAttribute( "placeholder", $label );
-			$element->setLabel( "" );
 		}
-
 		echo '<div class="' .  $layout_style . '">';
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
