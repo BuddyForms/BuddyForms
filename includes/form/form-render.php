@@ -130,7 +130,7 @@ function buddyforms_form_html( $args ) {
 			} ?>
 	}
 
-	/* BuddyForms Options - Form Fields Active */
+	/* Design Options - Text Fields Active */
 	.the_buddyforms_form .bf-input textarea:focus,
 	.the_buddyforms_form .bf-input .form-control:focus {
 			<?php // Text Field Background Color
@@ -146,6 +146,14 @@ function buddyforms_form_html( $args ) {
 				echo 'color: ' . $bfdesign['field_font_color'] . ';';
 			} ?>
 	}
+
+	<?php // Placeholder Font Color
+	if( $bfdesign['field_placeholder_font_color'] != 'auto' ) {
+		echo '.the_buddyforms_form .bf-input textarea::placeholder,
+					.the_buddyforms_form .bf-input .form-control::placeholder { {
+							color: ' . $bfdesign['field_placeholder_font_color'] . ';
+						}';
+		} ?>
 
 	/* BuddyForms Options - Buttons */
 	.the_buddyforms_form .form-actions button.bf-submit {
