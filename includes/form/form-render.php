@@ -77,8 +77,14 @@ function buddyforms_form_html( $args ) {
 	/* BuddyForms Options - Labels */
 	.the_buddyforms_form .bf_field_group label {
 	    margin-right: 10px;
-			font-size: <?php echo $bfdesign['label_font_size']; ?>px;
-			color: <?php echo $bfdesign['label_font_color']; ?>;
+			<?php // Font Size
+			if( $bfdesign['label_font_size'] != '' ) {
+				echo 'font-size: ' . $bfdesign['label_font_size'] . 'px;';
+			} ?>
+			<?php // Font Color
+			if( $bfdesign['label_font_color'] != 'auto' ) {
+				echo 'color: ' . $bfdesign['label_font_color'] . ';';
+			} ?>
 			font-weight: <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) { echo 'bold'; } else { echo 'normal'; } ?>;
 			font-style:  <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{ echo 'italic'; } else { echo 'normal'; } ?>;
 	}
@@ -88,8 +94,18 @@ function buddyforms_form_html( $args ) {
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
 	    width: 100%;
-			padding: <?php echo $bfdesign['field_padding']; ?>px;
-			background: <?php echo $bfdesign['field_background_color']; ?>;
+			<?php // Text Field Padding
+			if( $bfdesign['field_padding'] != '' ) {
+				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
+			} ?>
+			<?php // Text Field Padding
+			if( $bfdesign['field_background_color'] != 'auto' ) {
+				echo 'background: ' . $bfdesign['field_background_color'] . ';';
+			} ?>
+			<?php // Text Field Border Color
+			if( $bfdesign['field_border_color'] != 'auto' ) {
+				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
+			} ?>
 			border-color: <?php echo $bfdesign['field_border_color']; ?>;
 			border-width: <?php echo $bfdesign['field_border_width']; ?>px;
 			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
