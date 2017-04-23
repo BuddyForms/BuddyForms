@@ -46,13 +46,13 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$form_setup = array();
 
-	$options = get_option( 'buddyforms_layout_options' );
+	// $options = get_option( 'buddyforms_layout_options' );
 
-	$form_options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	$options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
-	if ( $form_options ) {
-        $options = $form_options;
-    }
+	// if ( $form_options ) {
+  //       $options = $form_options;
+  //   }
 
 	if( get_post_type() == 'buddyforms' ) {?>
         <script>
@@ -121,14 +121,14 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	$label_font_color = isset( $options['layout']['label_font_color'] ) ? $options['layout']['label_font_color'] : '';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Label Font Color', 'buddyforms' ) . '</b>', $option_name . "[label_font_color]", array(
 		'value'     => $label_font_color,
-		'shortDesc' => ''
+		'shortDesc' => 'Default is auto.'
 	) );
 
 	$label_font_style = isset( $options['layout']['label_font_style'] ) ? $options['layout']['label_font_style'] : 'bold';
 	$form_setup[]        = new Element_Radio( '<b>' . __( 'Label Font Style', 'buddyforms' ) . '</b>', $option_name . "[label_font_style]", array(
 		'normal' => __( 'Normal', 'buddyforms' ),
-		'bold'  => '<b>' . __( 'Bold', 'buddyforms' ) . '</b>',
 		'italic'  => '<i>' . __( 'Italic', 'buddyforms' ) . '</i>',
+		'bold'  => '<b>' . __( 'Bold', 'buddyforms' ) . '</b>',
 		'bolditalic'  => '<b><i>' . __( 'Bold Italic', 'buddyforms' ) . '</i></b>',
 	), array(
 		'value'     => $label_font_style,
@@ -213,10 +213,10 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'default is #FFFFFF'
 	) );
 
-	$field_active_border_color = isset( $options['layout']['field_active_border_color'] ) ? $options['layout']['field_active_border_color'] : 'rgba(0,0,0,0.1)';
+	$field_active_border_color = isset( $options['layout']['field_active_border_color'] ) ? $options['layout']['field_active_border_color'] : '#DDDDDD';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Field Active Border Color', 'buddyforms' ) . '</b>', $option_name . "[field_active_border_color]", array(
 		'value'     => $field_active_border_color,
-		'shortDesc' => 'default is rgba(0,0,0,0.1)'
+		'shortDesc' => 'default is #DDDDDD'
 	) );
 
 	$field_active_font_color = isset( $options['layout']['field_active_font_color'] ) ? $options['layout']['field_active_font_color'] : '#3F3F3F';
@@ -234,10 +234,10 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );
 
-	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : '';
+	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : 'Submit';
 	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
 		'value'     => $submit_text,
-		'shortDesc' => ''
+		'shortDesc' => 'Default text for the submit button. Default is "Submit".'
 	) );
 
 	$button_width = isset( $options['layout']['button_width'] ) ? $options['layout']['button_width'] : 'blockmobile';
@@ -266,16 +266,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	$button_background_color = isset( $options['layout']['button_background_color'] ) ? $options['layout']['button_background_color'] : '';
+	$button_background_color = isset( $options['layout']['button_background_color'] ) ? $options['layout']['button_background_color'] : '#3F3F3F';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Button Background Color', 'buddyforms' ) . '</b>', $option_name . "[button_background_color]", array(
 		'value'     => $button_background_color,
-		'shortDesc' => ''
+		'shortDesc' => 'Default is #3F3F3F'
 	) );
 
-	$button_font_color = isset( $options['layout']['button_font_color'] ) ? $options['layout']['button_font_color'] : '';
+	$button_font_color = isset( $options['layout']['button_font_color'] ) ? $options['layout']['button_font_color'] : '#FFFFFF';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Button Font Color', 'buddyforms' ) . '</b>', $option_name . "[button_font_color]", array(
 		'value'     => $button_font_color,
-		'shortDesc' => ''
+		'shortDesc' => 'Default is #FFFFFF'
 	) );
 
 	$button_border_radius = isset( $options['layout']['button_border_radius'] ) ? $options['layout']['button_border_radius'] : '';
@@ -290,10 +290,10 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'Border width in pixels. Just enter a number. Leave empty for auto setting.'
 	) );
 
-	$button_border_color = isset( $options['layout']['button_border_color'] ) ? $options['layout']['button_border_color'] : '';
+	$button_border_color = isset( $options['layout']['button_border_color'] ) ? $options['layout']['button_border_color'] : 'rgba(0,0,0,0.1)';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Button Border Color', 'buddyforms' ) . '</b>', $option_name . "[button_border_color]", array(
 		'value'     => $button_border_color,
-		'shortDesc' => ''
+		'shortDesc' => 'Default is rgba(0,0,0,0.1)'
 	) );
 
 
