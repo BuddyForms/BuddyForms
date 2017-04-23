@@ -76,21 +76,22 @@ function buddyforms_form_html( $args ) {
 	/* Design Options - Labels */
 	.the_buddyforms_form .bf_field_group label {
 	    margin-right: 10px;
-			<?php // Font Size
+			<?php
+			// Font Size
 			if( $bfdesign['label_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['label_font_size'] . 'px;';
-			} ?>
-			<?php // Font Color
+			}
+			// Font Color
 			if( $bfdesign['label_font_color'] != 'auto' ) {
 				echo 'color: ' . $bfdesign['label_font_color'] . ';';
-			} ?>
-			<?php // Font Weight
+			}
+			// Font Weight
 			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) {
 				echo 'font-weight: bold;';
 			} else {
 				echo 'font-weight: normal;';
-			} ?>
-			<?php // Font Style
+			}
+			// Font Style
 			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{
 				echo 'font-style: italic;';
 			} else {
@@ -98,7 +99,7 @@ function buddyforms_form_html( $args ) {
 			} ?>;
 	}
 
-	/* BuddyForms Options - Form Elements */
+	/* Design Options - Form Elements */
 	.the_buddyforms_form .bf-input .radio {
 	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
 	}
@@ -159,14 +160,16 @@ function buddyforms_form_html( $args ) {
 	<?php // Placeholder Font Color
 	if( $bfdesign['field_placeholder_font_color'] != 'auto' ) {
 		echo '.the_buddyforms_form .bf-input textarea::placeholder,
-					.the_buddyforms_form .bf-input .form-control::placeholder { {
+					.the_buddyforms_form .bf-input .form-control::placeholder {
 							color: ' . $bfdesign['field_placeholder_font_color'] . ';
 						}';
 	} ?>
 
 	/* Design Options - Descriptions */
-	.the_buddyforms_form span.help-inline {
+	.the_buddyforms_form span.help-inline,
+	.the_buddyforms_form span.help-block {
 			<?php
+			echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
 			// Font Size
 			if( $bfdesign['desc_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
@@ -183,7 +186,7 @@ function buddyforms_form_html( $args ) {
 			} ?>;
 	}
 
-	/* BuddyForms Options - Buttons */
+	/* Design Options - Buttons */
 	.the_buddyforms_form .form-actions button.bf-submit {
 		<?php
 		// Button Width
@@ -199,23 +202,23 @@ function buddyforms_form_html( $args ) {
 		if( $bfdesign['button_size'] == 'xlarge' ) {
 			echo 'padding: 15px 32px; font-size: 19px;';
 		}
-		// Button Background Color
+		// Background Color
 		if( $bfdesign['button_background_color'] != 'auto' ) {
 			echo 'background-color: ' . $bfdesign['button_background_color'] . ';';
 		}
-		// Button Font Color
+		// Font Color
 		if( $bfdesign['button_font_color'] != 'auto' ) {
 			echo 'color: ' . $bfdesign['button_font_color'] . ';';
 		}
-		// Button Border Radius
+		// Border Radius
 		if( $bfdesign['button_border_radius'] != '' ) {
 			echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
 		}
-		// Button Border Width
+		// Border Width
 		if( $bfdesign['button_border_width'] != '' ) {
 			echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
 		}
-		// Button Border Color
+		// Border Color
 		if( $bfdesign['button_border_color'] != 'auto' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color'];
 		} ?>
@@ -231,19 +234,19 @@ function buddyforms_form_html( $args ) {
 					}';
 		} ?>
 
-	/* BuddyForms Options - Buttons Hover State */
+	/* Design Options - Buttons Hover State */
 	.the_buddyforms_form .form-actions button.bf-submit:hover,
 	.the_buddyforms_form .form-actions button.bf-submit:focus {
 		<?php
-		// Button Background Color
+		// Background Color
 		if( $bfdesign['button_background_color_hover'] != 'auto' ) {
 			echo 'background-color: ' . $bfdesign['button_background_color_hover'] . ';';
 		}
-		// Button Font Color
+		// Font Color
 		if( $bfdesign['button_font_color_hover'] != 'auto' ) {
 			echo 'color: ' . $bfdesign['button_font_color_hover'] . ';';
 		}
-		// Button Border Color
+		// Border Color
 		if( $bfdesign['button_border_color_hover'] != 'auto' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color_hover'];
 		}
