@@ -250,12 +250,6 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'We recommend full width buttons on mobile, looks neater.'
 	) );
 
-	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Add a custom class to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
-		'value'     => $button_class,
-		'shortDesc' => ''
-	) );
-
 	$button_size = isset( $options['layout']['button_size'] ) ? $options['layout']['button_size'] : 'blockmobile';
 	$form_setup[]        = new Element_Radio( '<b>' . __( 'Button Size', 'buddyforms' ) . '</b>', $option_name . "[button_size]", array(
 		'auto'  => __( 'Auto', 'buddyforms' ),
@@ -263,6 +257,12 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'xlarge' => __( 'Extra Large', 'buddyforms' ),
 	), array(
 		'value'     => $button_size,
+		'shortDesc' => ''
+	) );
+
+	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : '';
+	$form_setup[]        = new Element_Textbox('<b>' . __( 'Add a custom class to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
+		'value'     => $button_class,
 		'shortDesc' => ''
 	) );
 
@@ -323,12 +323,19 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
+	// Other
 
+	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Other</h4>' );
 
+	$radio_button_alignment = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : 'inline';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
+		'inline'  => __( 'Inline', 'buddyforms' ),
+		'block' => __( 'List', 'buddyforms' ),
+	), array(
+		'value'     => $radio_button_alignment,
+		'shortDesc' => 'Want to display your radio buttons in a row (inline) or in a vertical list?'
+	) );
 
-	// custom CSS
-
-	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Custom CSS</h4>' );
 	$custom_css = isset( $options['layout']['custom_css'] ) ? $options['layout']['custom_css'] : '';
 	$form_setup[] = new Element_Textarea( '<b>' . __( 'Custom CSS', 'buddyforms' ) . '</b>', $option_name . "[custom_css]", array(
 		'rows'  => 3,

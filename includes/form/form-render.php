@@ -85,7 +85,7 @@ function buddyforms_form_html( $args ) {
 
 	/* BuddyForms Options - Form Fields & Form Field Text */
 	.the_buddyforms_form .bf-input .radio {
-	    display: block; /* here option value! */
+	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
 	}
 	.the_buddyforms_form .bf-input textarea,
 	.the_buddyforms_form .bf-input .form-control {
