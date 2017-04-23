@@ -59,9 +59,7 @@ function buddyforms_load_form_layout(){
     }
 
 	if( $form_slug == 'reset' ) {
-
         $json = buddyforms_layout_defaults();
-
 		echo json_encode( $json );
 		die();
     }
