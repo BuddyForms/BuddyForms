@@ -74,7 +74,7 @@ function buddyforms_form_html( $args ) {
 
 	<style>
 
-	/* BuddyForms Options - Labels */
+	/* Design Options - Labels */
 	.the_buddyforms_form .bf_field_group label {
 	    margin-right: 10px;
 			<?php // Font Size
@@ -85,11 +85,21 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['label_font_color'] != 'auto' ) {
 				echo 'color: ' . $bfdesign['label_font_color'] . ';';
 			} ?>
-			font-weight: <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) { echo 'bold'; } else { echo 'normal'; } ?>;
-			font-style:  <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{ echo 'italic'; } else { echo 'normal'; } ?>;
+			<?php // Font Weight
+			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) {
+				echo 'font-weight: bold;';
+			} else {
+				echo 'font-weight: normal;';
+			} ?>
+			<?php // Font Style
+			if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{
+				echo 'font-style: italic;';
+			} else {
+				echo 'font-style: normal;';
+			} ?>;
 	}
 
-	/* BuddyForms Options - Form Fields & Form Field Text */
+	/* Design Options - Text Fields */
 	.the_buddyforms_form .bf-input textarea,
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
@@ -98,7 +108,7 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_padding'] != '' ) {
 				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
 			} ?>
-			<?php // Text Field Padding
+			<?php // Text Field Background Color
 			if( $bfdesign['field_background_color'] != 'auto' ) {
 				echo 'background: ' . $bfdesign['field_background_color'] . ';';
 			} ?>
@@ -106,7 +116,6 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_border_color'] != 'auto' ) {
 				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
 			} ?>
-			border-color: <?php echo $bfdesign['field_border_color']; ?>;
 			border-width: <?php echo $bfdesign['field_border_width']; ?>px;
 			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
 			color: <?php echo $bfdesign['field_font_color']; ?>;
