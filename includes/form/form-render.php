@@ -83,7 +83,7 @@ function buddyforms_form_html( $args ) {
 			font-style:  <?php if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{ echo 'italic'; } else { echo 'normal'; } ?>;
 	}
 
-	/* BuddyForms Options - Form Fields */
+	/* BuddyForms Options - Form Fields & Form Field Text */
 	.the_buddyforms_form .bf-input .radio {
 	    display: block; /* here option value! */
 	}
@@ -98,12 +98,14 @@ function buddyforms_form_html( $args ) {
 			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
 			color: <?php echo $bfdesign['field_font_color']; ?>;
 	}
+	/* BuddyForms Options - Form Fields Active */
 	.the_buddyforms_form .bf-input textarea:focus,
 	.the_buddyforms_form .bf-input .form-control:focus {
 			background: <?php echo $bfdesign['field_active_background_color']; ?>;
 			border-color: <?php echo $bfdesign['field_active_border_color']; ?>;
 			color: <?php echo $bfdesign['field_active_font_color']; ?>;
 	}
+
 
 
 
@@ -115,7 +117,8 @@ function buddyforms_form_html( $args ) {
 
 	$form_html .= $layout;
 
-		// Create the form object
+
+	// Create the form object
 	$form = new Form( "buddyforms_form_" . $form_slug );
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
@@ -157,9 +160,12 @@ function buddyforms_form_html( $args ) {
 
 	$form->addElement( new Element_Hidden( "bf_submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
 
-	$bf_submit_button = new Element_Button( __( 'Submit', 'buddyforms' ), 'submit', array(
+	$bf_button_classes 	= 'bf-submit ' . $bfdesign['button_class'];
+	$bf_button_text			= $bfdesign['submit_text'];
+
+	$bf_submit_button = new Element_Button( $bf_button_text, 'submit', array(
 		'id'    => $form_slug,
-		'class' => 'bf-submit',
+		'class' => $bf_button_classes,
 		'name'  => 'submitted'
 	) );
 	$form             = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
