@@ -73,7 +73,6 @@ function buddyforms_form_html( $args ) {
 	ob_start();?>
 
 	<style>
-
 	/* Design Options - Labels */
 	.the_buddyforms_form .bf_field_group label {
 	    margin-right: 10px;
@@ -97,6 +96,14 @@ function buddyforms_form_html( $args ) {
 			} else {
 				echo 'font-style: normal;';
 			} ?>;
+	}
+
+	/* BuddyForms Options - Form Elements */
+	.the_buddyforms_form .bf-input .radio {
+	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
+	}
+	.the_buddyforms_form .bf-input .checkbox {
+	    display: <?php echo $bfdesign['checkbox_alignment']; ?>;
 	}
 
 	/* Design Options - Text Fields */
@@ -221,20 +228,8 @@ function buddyforms_form_html( $args ) {
 		}
 		?>
 	}
-
-	/* BuddyForms Options - Other */
-	.the_buddyforms_form .bf-input .radio {
-	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
-	}
-	.the_buddyforms_form .bf-input .checkbox {
-	    display: <?php echo $bfdesign['checkbox_alignment']; ?>;
-	}
-
-
-
 	</style>
-
-
+	
 	<?php
 	$layout = ob_get_clean();
 

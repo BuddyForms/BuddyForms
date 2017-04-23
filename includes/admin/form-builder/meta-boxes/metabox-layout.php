@@ -79,6 +79,33 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 
 
+
+	// Form Elements
+
+	$form_setup['Form Elements'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Other Elements</h4>' );
+
+	$radio_button_alignment = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : 'inline';
+	$form_setup['Form Elements'][]        = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
+		'inline-block'  => __( 'Inline', 'buddyforms' ),
+		'block' => __( 'List', 'buddyforms' ),
+	), array(
+		'value'     => $radio_button_alignment,
+		'shortDesc' => 'Want to display your radio buttons in a row (inline) or in a vertical list?'
+	) );
+
+	$checkbox_alignment = isset( $options['layout']['checkbox_alignment'] ) ? $options['layout']['checkbox_alignment'] : 'inline';
+	$form_setup['Form Elements'][]        = new Element_Radio( '<b>' . __( 'Checkbox Option Alignment', 'buddyforms' ) . '</b>', $option_name . "[checkbox_alignment]", array(
+		'inline-block'  => __( 'Inline', 'buddyforms' ),
+		'block' => __( 'List', 'buddyforms' ),
+	), array(
+		'value'     => $checkbox_alignment,
+		'shortDesc' => 'Want to display your checkbox options in a row (inline) or in a vertical list?'
+	) );
+
+
+
+
+
 	// Text Fields
 
 	$form_setup['Text Fields'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Text Fields</h4>' );
@@ -144,6 +171,19 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
+
+	// Descriptions
+
+	$form_setup['Descriptions'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );
+
+	$desc_position = isset( $options['layout']['desc_position'] ) ? $options['layout']['desc_position'] : 'blockmobile';
+	$form_setup['Descriptions'][]        = new Element_Radio( '<b>' . __( 'Description Position', 'buddyforms' ) . '</b>', $option_name . "[desc_position]", array(
+		'above_field'  => __( 'Above form field', 'buddyforms' ),
+		'below_field' => __( 'Below form field', 'buddyforms' ),
+	), array(
+		'value'     => $desc_position,
+		'shortDesc' => ''
+	) );
 
 
 
@@ -232,31 +272,6 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'Default is auto'
 	) );
 
-
-
-
-
-	// Other Elements
-
-	$form_setup['Other Elements'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Other Elements</h4>' );
-
-	$radio_button_alignment = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : 'inline';
-	$form_setup['Other Elements'][]        = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
-		'inline-block'  => __( 'Inline', 'buddyforms' ),
-		'block' => __( 'List', 'buddyforms' ),
-	), array(
-		'value'     => $radio_button_alignment,
-		'shortDesc' => 'Want to display your radio buttons in a row (inline) or in a vertical list?'
-	) );
-
-	$checkbox_alignment = isset( $options['layout']['checkbox_alignment'] ) ? $options['layout']['checkbox_alignment'] : 'inline';
-	$form_setup['Other Elements'][]        = new Element_Radio( '<b>' . __( 'Checkbox Option Alignment', 'buddyforms' ) . '</b>', $option_name . "[checkbox_alignment]", array(
-		'inline-block'  => __( 'Inline', 'buddyforms' ),
-		'block' => __( 'List', 'buddyforms' ),
-	), array(
-		'value'     => $checkbox_alignment,
-		'shortDesc' => 'Want to display your checkbox options in a row (inline) or in a vertical list?'
-	) );
 
 
 
