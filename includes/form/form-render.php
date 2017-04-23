@@ -111,27 +111,28 @@ function buddyforms_form_html( $args ) {
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
 	    width: 100%;
-			<?php // Text Field Padding
+			<?php
+			// Padding
 			if( $bfdesign['field_padding'] != '' ) {
 				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
-			} ?>
-			<?php // Text Field Background Color
+			}
+			// Background Color
 			if( $bfdesign['field_background_color'] != 'auto' ) {
 				echo 'background: ' . $bfdesign['field_background_color'] . ';';
-			} ?>
-			<?php // Text Field Border Color
+			}
+			// Border Color
 			if( $bfdesign['field_border_color'] != 'auto' ) {
 				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
-			} ?>
-			<?php // Text Field Border Width
+			}
+			// Border Width
 			if( $bfdesign['field_border_width'] != '' ) {
 				echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
-			} ?>
-			<?php // Font Size
+			}
+			// Font Size
 			if( $bfdesign['field_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
-			} ?>
-			<?php // Font Color
+			}
+			// Font Color
 			if( $bfdesign['field_font_color'] != 'auto' ) {
 				echo 'color: ' . $bfdesign['field_font_color'] . ';';
 			} ?>
@@ -140,15 +141,16 @@ function buddyforms_form_html( $args ) {
 	/* Design Options - Text Fields Active */
 	.the_buddyforms_form .bf-input textarea:focus,
 	.the_buddyforms_form .bf-input .form-control:focus {
-			<?php // Text Field Background Color
+			<?php
+			// Background Color
 			if( $bfdesign['field_active_background_color'] != 'auto' ) {
 				echo 'background: ' . $bfdesign['field_background_color'] . ';';
-			} ?>
-			<?php // Text Field Border Color
+			}
+			// Border Color
 			if( $bfdesign['field_active_border_color'] != 'auto' ) {
 				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
-			} ?>
-			<?php // Font Color
+			}
+			// Font Color
 			if( $bfdesign['field_active_font_color'] != 'auto' ) {
 				echo 'color: ' . $bfdesign['field_font_color'] . ';';
 			} ?>
@@ -160,7 +162,26 @@ function buddyforms_form_html( $args ) {
 					.the_buddyforms_form .bf-input .form-control::placeholder { {
 							color: ' . $bfdesign['field_placeholder_font_color'] . ';
 						}';
-		} ?>
+	} ?>
+
+	/* Design Options - Descriptions */
+	.the_buddyforms_form span.help-inline {
+			<?php
+			// Font Size
+			if( $bfdesign['desc_font_size'] != '' ) {
+				echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
+			}
+			// Font Color
+			if( $bfdesign['desc_font_color'] != 'auto' ) {
+				echo 'color: ' . $bfdesign['desc_font_color'] . ';';
+			}
+			// Font Style
+			if( $bfdesign['desc_font_style'] == 'italic' ) 	{
+				echo 'font-style: italic;';
+			} else {
+				echo 'font-style: normal;';
+			} ?>;
+	}
 
 	/* BuddyForms Options - Buttons */
 	.the_buddyforms_form .form-actions button.bf-submit {
@@ -197,11 +218,11 @@ function buddyforms_form_html( $args ) {
 		// Button Border Color
 		if( $bfdesign['button_border_color'] != 'auto' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color'];
-		}
-		?>
+		} ?>
 	}
 
-	<?php if( $bfdesign['button_width'] != 'block' ) {
+	<?php // Button Width Behaviour -- if always on block
+	if( $bfdesign['button_width'] != 'block' ) {
 		echo '@media (min-width: 768px) {
 						.the_buddyforms_form .form-actions button.bf-submit {
 							display: inline;
@@ -229,7 +250,7 @@ function buddyforms_form_html( $args ) {
 		?>
 	}
 	</style>
-	
+
 	<?php
 	$layout = ob_get_clean();
 
