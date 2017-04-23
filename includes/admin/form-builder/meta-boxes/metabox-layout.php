@@ -329,7 +329,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$radio_button_alignment = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : 'inline';
 	$form_setup[]        = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
-		'inline'  => __( 'Inline', 'buddyforms' ),
+		'inline-block'  => __( 'Inline', 'buddyforms' ),
 		'block' => __( 'List', 'buddyforms' ),
 	), array(
 		'value'     => $radio_button_alignment,
@@ -338,7 +338,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$checkbox_alignment = isset( $options['layout']['checkbox_alignment'] ) ? $options['layout']['checkbox_alignment'] : 'inline';
 	$form_setup[]        = new Element_Radio( '<b>' . __( 'Checkbox Option Alignment', 'buddyforms' ) . '</b>', $option_name . "[checkbox_alignment]", array(
-		'inline'  => __( 'Inline', 'buddyforms' ),
+		'inline-block'  => __( 'Inline', 'buddyforms' ),
 		'block' => __( 'List', 'buddyforms' ),
 	), array(
 		'value'     => $checkbox_alignment,
