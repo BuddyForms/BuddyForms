@@ -98,6 +98,7 @@ function buddyforms_form_html( $args ) {
 			font-size: <?php echo $bfdesign['field_font_size']; ?>px;
 			color: <?php echo $bfdesign['field_font_color']; ?>;
 	}
+
 	/* BuddyForms Options - Form Fields Active */
 	.the_buddyforms_form .bf-input textarea:focus,
 	.the_buddyforms_form .bf-input .form-control:focus {
@@ -106,7 +107,21 @@ function buddyforms_form_html( $args ) {
 			color: <?php echo $bfdesign['field_active_font_color']; ?>;
 	}
 
+	/* BuddyForms Options - Buttons */
+	.the_buddyforms_form .form-actions button.bf-submit {
+		display: <?php if( $bfdesign['button_width'] != 'inline' ) { echo 'block'; } ?>;
+		width: 100%;
+	}
 
+<?php if( $bfdesign['button_width'] != 'block' ) {
+	echo '
+	@media (min-width: 768px) {
+		.the_buddyforms_form .form-actions button.bf-submit {
+			display: inline;
+			width: auto;
+		}
+	}
+	'; } ?>
 
 
 	</style>

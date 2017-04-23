@@ -247,7 +247,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'inline' => __( 'Normal width button', 'buddyforms' ),
 	), array(
 		'value'     => $button_width,
-		'shortDesc' => __( 'We recommend full width buttons on mobile, looks neater.', 'buddyforms' )
+		'shortDesc' => 'We recommend full width buttons on mobile, looks neater.'
 	) );
 
 	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : '';
