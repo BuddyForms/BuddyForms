@@ -185,6 +185,29 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
+	$desc_font_color = isset( $options['layout']['desc_font_color'] ) ? $options['layout']['desc_font_color'] : 'auto';
+	$form_setup['Descriptions'][]        = new Element_Color('<b>' . __( 'Description Font Color', 'buddyforms' ) . '</b>', $option_name . "[desc_font_color]", array(
+		'value'     => $desc_font_color,
+		'shortDesc' => 'Default is auto'
+	) );
+
+	$desc_font_size = isset( $options['layout']['desc_font_size'] ) ? $options['layout']['desc_font_size'] : '';
+	$form_setup['Descriptions'][]        = new Element_Number('<b>' . __( 'Description Font Size', 'buddyforms' ) . '</b>', $option_name . "[desc_font_size]", array(
+		'value'     => $desc_font_size,
+		'shortDesc' => 'in px, just enter a number. Leave empty = auto'
+	) );
+
+	$desc_font_style = isset( $options['layout']['desc_font_style'] ) ? $options['layout']['desc_font_style'] : 'bold';
+	$form_setup['Descriptions'][]        = new Element_Radio( '<b>' . __( 'Description Font Style', 'buddyforms' ) . '</b>', $option_name . "[desc_font_style]", array(
+		'normal' => __( 'Normal', 'buddyforms' ),
+		'italic'  => '<i>' . __( 'Italic', 'buddyforms' ) . '</i>',
+	), array(
+		'value'     => $desc_font_style,
+		'shortDesc' => ''
+	) );
+
+
+
 
 
 
