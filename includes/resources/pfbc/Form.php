@@ -610,7 +610,7 @@ JS;
 
                         // scrollto message after submit
 						 jQuery('html, body').animate({
-			            	 scrollTop: (jQuery(".the_buddyforms_form").offset().top - 200)
+			            	 scrollTop: (jQuery("#buddyforms_form_hero_$form_slug").offset().top)
 		                 }, 2000);
 
                     }

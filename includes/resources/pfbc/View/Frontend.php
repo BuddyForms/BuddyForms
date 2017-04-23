@@ -75,11 +75,18 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
+
+
+
+		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File    ) {
+
 			$element->appendAttribute( "class", "form-control" );
 
 			if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] == 'inline' ) {
-				$label = $element->getLabel();
+
+				if( empty($label) ){
+					$label = $element->getLabel();
+				}
 
 				if ( $element->isRequired() ) {
 					$label = '* ' . $label;
@@ -95,6 +102,7 @@ class View_Frontend extends FormView {
 
 		echo $element->render();
 		echo $this->renderDescriptions( $element );
+
 		echo "</div></div></div>";
 	}
 
