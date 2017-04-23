@@ -84,9 +84,6 @@ function buddyforms_form_html( $args ) {
 	}
 
 	/* BuddyForms Options - Form Fields & Form Field Text */
-	.the_buddyforms_form .bf-input .radio {
-	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
-	}
 	.the_buddyforms_form .bf-input textarea,
 	.the_buddyforms_form .bf-input .form-control {
 	    display: block;
@@ -174,6 +171,13 @@ function buddyforms_form_html( $args ) {
 		?>
 	}
 
+	/* BuddyForms Options - Other */
+	.the_buddyforms_form .bf-input .radio {
+	    display: <?php echo $bfdesign['radio_button_alignment']; ?>;
+	}
+	.the_buddyforms_form .bf-input .checkbox {
+	    display: <?php echo $bfdesign['checkbox_alignment']; ?>;
+	}
 
 
 

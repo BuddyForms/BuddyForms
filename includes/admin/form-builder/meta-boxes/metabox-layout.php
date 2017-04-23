@@ -336,6 +336,15 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'Want to display your radio buttons in a row (inline) or in a vertical list?'
 	) );
 
+	$checkbox_alignment = isset( $options['layout']['checkbox_alignment'] ) ? $options['layout']['checkbox_alignment'] : 'inline';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Checkbox Option Alignment', 'buddyforms' ) . '</b>', $option_name . "[checkbox_alignment]", array(
+		'inline'  => __( 'Inline', 'buddyforms' ),
+		'block' => __( 'List', 'buddyforms' ),
+	), array(
+		'value'     => $checkbox_alignment,
+		'shortDesc' => 'Want to display your checkbox options in a row (inline) or in a vertical list?'
+	) );
+
 	$custom_css = isset( $options['layout']['custom_css'] ) ? $options['layout']['custom_css'] : '';
 	$form_setup[] = new Element_Textarea( '<b>' . __( 'Custom CSS', 'buddyforms' ) . '</b>', $option_name . "[custom_css]", array(
 		'rows'  => 3,
