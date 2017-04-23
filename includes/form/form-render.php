@@ -123,6 +123,14 @@ function buddyforms_form_html( $args ) {
 		if( $bfdesign['button_size'] == 'xlarge' ) {
 			echo 'padding: 15px 32px; font-size: 19px;';
 		}
+		// Button Background Color
+		if( $bfdesign['button_background_color'] != '' ) {
+			echo 'background-color: ' . $bfdesign['button_background_color'];
+		}
+		// Button Font Color
+		if( $bfdesign['button_font_color'] != '' ) {
+			echo 'background-color: ' . $bfdesign['button_font_color'];
+		}
 		// Button Border Radius
 		if( $bfdesign['button_border_radius'] != '' ) {
 			echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
