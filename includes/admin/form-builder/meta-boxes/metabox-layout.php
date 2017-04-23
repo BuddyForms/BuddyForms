@@ -186,10 +186,10 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'just enter a number, in px, default is 16'
 	) );
 
-	$field_font_color = isset( $options['layout']['field_font_color'] ) ? $options['layout']['field_font_color'] : '#3F3F3F';
+	$field_font_color = isset( $options['layout']['field_font_color'] ) ? $options['layout']['field_font_color'] : '#6F6F6F';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Field Font Color', 'buddyforms' ) . '</b>', $option_name . "[field_font_color]", array(
 		'value'     => $field_font_color,
-		'shortDesc' => 'default is #3F3F3F'
+		'shortDesc' => 'default is #6F6F6F'
 	) );
 
 	$field_placeholder_font_color = isset( $options['layout']['field_placeholder_font_color'] ) ? $options['layout']['field_placeholder_font_color'] : '#AAAAAA';
@@ -244,7 +244,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	$form_setup[]        = new Element_Radio( '<b>' . __( 'Button Width', 'buddyforms' ) . '</b>', $option_name . "[button_width]", array(
 		'blockmobile'  => __( 'Full width button on mobile only', 'buddyforms' ),
 		'block' => __( 'Always full width button', 'buddyforms' ),
-		'inline' => __( 'Normal width button', 'buddyforms' ),
+		'inline' => __( 'Always normal width button', 'buddyforms' ),
 	), array(
 		'value'     => $button_width,
 		'shortDesc' => 'We recommend full width buttons on mobile, looks neater.'
@@ -256,11 +256,21 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	$button_padding = isset( $options['layout']['button_padding'] ) ? $options['layout']['button_padding'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Padding', 'buddyforms' ) . '</b>', $option_name . "[button_padding]", array(
-		'value'     => $button_padding,
+	$button_size = isset( $options['layout']['button_size'] ) ? $options['layout']['button_size'] : 'blockmobile';
+	$form_setup[]        = new Element_Radio( '<b>' . __( 'Button Size', 'buddyforms' ) . '</b>', $option_name . "[button_size]", array(
+		'auto'  => __( 'Auto', 'buddyforms' ),
+		'large' => __( 'Large', 'buddyforms' ),
+		'xlarge' => __( 'Extra Large', 'buddyforms' ),
+	), array(
+		'value'     => $button_size,
 		'shortDesc' => ''
 	) );
+
+	// $button_padding = isset( $options['layout']['button_padding'] ) ? $options['layout']['button_padding'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Button Padding', 'buddyforms' ) . '</b>', $option_name . "[button_padding]", array(
+	// 	'value'     => $button_padding,
+	// 	'shortDesc' => 'Example: 10px 20px <br>First value is for top and bottom padding, <br>second value for left and right padding. <br>Leave empty for auto padding.'
+	// ) );
 
 	$button_background_color = isset( $options['layout']['button_background_color'] ) ? $options['layout']['button_background_color'] : '';
 	$form_setup[]        = new Element_Color('<b>' . __( 'Button Background Color', 'buddyforms' ) . '</b>', $option_name . "[button_background_color]", array(
@@ -274,16 +284,22 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	$button_font_size = isset( $options['layout']['button_font_size'] ) ? $options['layout']['button_font_size'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Font Color', 'buddyforms' ) . '</b>', $option_name . "[button_font_size]", array(
-		'value'     => $button_font_size,
-		'shortDesc' => ''
+	// $button_font_size = isset( $options['layout']['button_font_size'] ) ? $options['layout']['button_font_size'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Button Font Color', 'buddyforms' ) . '</b>', $option_name . "[button_font_size]", array(
+	// 	'value'     => $button_font_size,
+	// 	'shortDesc' => ''
+	// ) );
+
+	$button_border_radius = isset( $options['layout']['button_border_radius'] ) ? $options['layout']['button_border_radius'] : '';
+	$form_setup[]        = new Element_Number('<b>' . __( 'Button Border Radius', 'buddyforms' ) . '</b>', $option_name . "[button_border_radius]", array(
+		'value'     => $button_border_radius,
+		'shortDesc' => 'Border radius in pixels. Just enter a number. Leave empty for auto setting.'
 	) );
 
 	$button_border_width = isset( $options['layout']['button_border_width'] ) ? $options['layout']['button_border_width'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Border Width', 'buddyforms' ) . '</b>', $option_name . "[button_border_width]", array(
+	$form_setup[]        = new Element_Number('<b>' . __( 'Button Border Width', 'buddyforms' ) . '</b>', $option_name . "[button_border_width]", array(
 		'value'     => $button_border_width,
-		'shortDesc' => ''
+		'shortDesc' => 'Border width in pixels. Just enter a number. Leave empty for auto setting.'
 	) );
 
 	$button_border_color = isset( $options['layout']['button_border_color'] ) ? $options['layout']['button_border_color'] : '';
@@ -292,17 +308,17 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	$button_text_shadow = isset( $options['layout']['button_text_shadow'] ) ? $options['layout']['button_text_shadow'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Text Shadow', 'buddyforms' ) . '</b>', $option_name . "[button_text_shadow]", array(
-		'value'     => $button_text_shadow,
-		'shortDesc' => ''
-	) );
-
-	$button_box_shadow = isset( $options['layout']['button_box_shadow'] ) ? $options['layout']['button_box_shadow'] : '';
-	$form_setup[]        = new Element_Textbox('<b>' . __( 'Button Box Shadow', 'buddyforms' ) . '</b>', $option_name . "[button_box_shadow]", array(
-		'value'     => $button_box_shadow,
-		'shortDesc' => ''
-	) );
+	// $button_text_shadow = isset( $options['layout']['button_text_shadow'] ) ? $options['layout']['button_text_shadow'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Button Text Shadow', 'buddyforms' ) . '</b>', $option_name . "[button_text_shadow]", array(
+	// 	'value'     => $button_text_shadow,
+	// 	'shortDesc' => ''
+	// ) );
+	//
+	// $button_box_shadow = isset( $options['layout']['button_box_shadow'] ) ? $options['layout']['button_box_shadow'] : '';
+	// $form_setup[]        = new Element_Textbox('<b>' . __( 'Button Box Shadow', 'buddyforms' ) . '</b>', $option_name . "[button_box_shadow]", array(
+	// 	'value'     => $button_box_shadow,
+	// 	'shortDesc' => ''
+	// ) );
 
 	$form_setup[]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons Hover Status</h4>' );
 
