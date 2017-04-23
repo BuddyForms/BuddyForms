@@ -8,32 +8,32 @@ function buddyforms_metabox_form_designer(){
 function buddyforms_layout_defaults(){
 	$json['labels_layout']   = 'inline';
 	$json['label_font_size'] = '';
-	$json['label_font_color'] = '';
+	$json['label_font_color'] = 'auto';
 	$json['label_font_style'] = 'bold';
 
 	$json['field_padding'] = '15';
-	$json['field_background_color'] = '#FFFFFF';
-	$json['field_border_color'] = 'rgba(0,0,0,0.1)';
-	$json['field_border_width'] = '1';
-	$json['field_font_size'] = '16';
-	$json['field_font_color'] = '#6F6F6F';
-	$json['field_placeholder_font_color'] = '#AAAAAA';
-	$json['field_active_background_color'] = '#FFFFFF';
-	$json['field_active_border_color'] = '#DDDDDD';
-	$json['field_active_font_color'] = '#3F3F3F';
+	$json['field_background_color'] = 'auto';
+	$json['field_border_color'] = 'auto';
+	$json['field_border_width'] = '';
+	$json['field_font_size'] = '15';
+	$json['field_font_color'] = 'auto';
+	$json['field_placeholder_font_color'] = 'auto';
+	$json['field_active_background_color'] = 'auto';
+	$json['field_active_border_color'] = 'auto';
+	$json['field_active_font_color'] = 'auto';
 
 	$json['submit_text'] = __('Submit', 'buddyforms');
 	$json['button_width'] = 'blockmobile';
-	$json['button_size'] = 'blockmobile';
+	$json['button_size'] = 'large';
 	$json['button_class'] = '';
 	$json['button_border_radius'] = '';
-	$json['button_background_color'] = '#3F3F3F';
-	$json['button_font_color'] = '#FFFFFF';
+	$json['button_background_color'] = 'auto';
+	$json['button_font_color'] = 'auto';
+	$json['button_border_color'] = 'auto';
 
-	$json['button_border_color'] = 'rgba(0,0,0,0.1)';
-	$json['button_background_color_hover'] = '';
-	$json['button_font_color_hover'] = '';
-	$json['button_border_color_hover'] = '';
+	$json['button_background_color_hover'] = 'auto';
+	$json['button_font_color_hover'] = 'auto';
+	$json['button_border_color_hover'] = 'auto';
 
 
 	$json['radio_button_alignment'] = 'inline';
