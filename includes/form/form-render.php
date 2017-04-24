@@ -261,6 +261,9 @@ function buddyforms_form_html( $args ) {
 		}
 		?>
 	}
+
+	<?php echo $bfdesign['custom_css']; ?>
+
 	</style>
 
 	<?php
