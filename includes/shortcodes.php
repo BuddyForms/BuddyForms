@@ -152,7 +152,7 @@ function buddyforms_the_loop( $args ) {
 	if ( $list_posts_style == 'table' ) {
 		buddyforms_locate_template( 'the-table' );
 	} elseif( $list_posts_style == 'list') {
-		buddyforms_locate_template( 'the-list' );
+		buddyforms_locate_template( 'the-loop' );
 	} else {
 		buddyforms_locate_template( $list_posts_style );
 	}
