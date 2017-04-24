@@ -15,6 +15,7 @@ function buddyforms_layout_defaults(){
 	$json['field_background_color'] = 'auto';
 	$json['field_border_color'] = 'auto';
 	$json['field_border_width'] = '';
+	$json['field_border_radius'] = '';
 	$json['field_font_size'] = '15';
 	$json['field_font_color'] = 'auto';
 	$json['field_placeholder_font_color'] = 'auto';
@@ -217,6 +218,12 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	$form_setup['Text Fields'][]        = new Element_Number('<b>' . __( 'Field Border Width', 'buddyforms' ) . '</b>', $option_name . "[field_border_width]", array(
 		'value'     => $field_border_width,
 		'shortDesc' => 'Just enter a number, in px. Leave empty = auto'
+	) );
+
+	$field_border_radius = isset( $options['layout']['field_border_radius'] ) ? $options['layout']['field_border_radius'] : $defaults['field_border_radius'];
+	$form_setup['Text Fields'][]        = new Element_Number('<b>' . __( 'Field Corner Radius', 'buddyforms' ) . '</b>', $option_name . "[field_border_radius]", array(
+		'value'     => $field_border_radius,
+		'shortDesc' => 'Rounded corners. Just enter a number. Leave empty = auto'
 	) );
 
  	$field_font_size = isset( $options['layout']['field_font_size'] ) ? $options['layout']['field_font_size'] : $defaults['field_font_size'];

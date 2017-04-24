@@ -129,6 +129,10 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_border_width'] != '' ) {
 				echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
 			}
+			// Border Radius
+			if( $bfdesign['field_border_radius'] != '' ) {
+				echo 'border-radius: ' . $bfdesign['field_border_radius'] . 'px;';
+			}
 			// Font Size
 			if( $bfdesign['field_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
