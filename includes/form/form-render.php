@@ -229,6 +229,10 @@ function buddyforms_form_html( $args ) {
 		} ?>
 	}
 
+	.the_buddyforms_form form .form-actions {
+		text-align: <?php echo $bfdesign['button_alignment']; ?>;
+	}
+
 	<?php // Button Width Behaviour -- if always on block
 	if( $bfdesign['button_width'] != 'block' ) {
 		echo '@media (min-width: 768px) {
