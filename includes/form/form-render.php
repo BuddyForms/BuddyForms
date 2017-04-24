@@ -172,9 +172,8 @@ function buddyforms_form_html( $args ) {
 	/* Design Options - Descriptions */
 	.the_buddyforms_form span.help-inline,
 	.the_buddyforms_form span.help-block {
-			padding-top: 8px;
+			padding: 5px 0;
 			<?php
-			echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
 			// Font Size
 			if( $bfdesign['desc_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
