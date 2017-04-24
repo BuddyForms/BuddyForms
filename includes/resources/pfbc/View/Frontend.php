@@ -63,6 +63,9 @@ class View_Frontend extends FormView {
 		global $form_slug, $buddyforms;
 
 		$field_id = $element->getAttribute( "field_id" );
+
+		echo $field_id;
+
 		$layout_style = buddyforms_layout_style( $field_id );
 
 		if ( $element instanceof Element_Hidden ) {
@@ -70,10 +73,11 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		if ( $element instanceof Element_HTML ) {
-			$element->render();
-			return;
-		}
+		echo '<div class="' .  $layout_style . '">';
+//		if ( $element instanceof Element_HTML ) {
+//			$element->render();
+//			return;
+//		}
 
 
 
@@ -96,7 +100,7 @@ class View_Frontend extends FormView {
 				$element->setLabel( "" );
 			}
 		}
-		echo '<div class="' .  $layout_style . '">';
+
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
 

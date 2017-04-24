@@ -16,11 +16,17 @@ class Element_HTML extends Element {
 	 * @param $value
 	 */
 	public function __construct( $value ) {
-		$properties = array( "value" => $value );
+		$properties = array(
+			"value" => $value,
+			"field_id"  => 'asd'
+		);
 		parent::__construct( "", "", $properties );
 	}
 
 	public function render() {
+
+//		print_r($this->_attributes);
+		echo $this->_attributes["field_id"];
 		echo $this->_attributes["value"];
 	}
 }

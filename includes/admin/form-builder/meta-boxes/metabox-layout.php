@@ -86,7 +86,9 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$defaults = buddyforms_layout_defaults();
 
-
+	echo '<pre>';
+    print_r($options['layout']);
+	echo '</pre>';
 
 	// Labels
 
@@ -107,7 +109,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'Just enter a number. Leave empty = auto'
 	) );
 
-	$label_font_color = isset( $options['layout']['label_font_color'] ) ? $options['layout']['label_font_color'] : $defaults['label_font_color'];
+	$label_font_color = isset( $options['layout']['label_font_color']['color'] ) ? $options['layout']['label_font_color']['color'] : $defaults['label_font_color']['color'];
 	$form_setup['Labels'][]        = new Element_Color('<b>' . __( 'Label Font Color', 'buddyforms' ) . '</b>', $option_name . "[label_font_color]", array(
 		'value'     => $label_font_color,
 		'shortDesc' => 'Default is auto'
