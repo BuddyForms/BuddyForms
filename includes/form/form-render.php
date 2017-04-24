@@ -129,6 +129,10 @@ function buddyforms_form_html( $args ) {
 			if( $bfdesign['field_border_width'] != '' ) {
 				echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
 			}
+			// Border Radius
+			if( $bfdesign['field_border_radius'] != '' ) {
+				echo 'border-radius: ' . $bfdesign['field_border_radius'] . 'px;';
+			}
 			// Font Size
 			if( $bfdesign['field_font_size'] != '' ) {
 				echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
@@ -225,6 +229,10 @@ function buddyforms_form_html( $args ) {
 		} ?>
 	}
 
+	.the_buddyforms_form form .form-actions {
+		text-align: <?php echo $bfdesign['button_alignment']; ?>;
+	}
+
 	<?php // Button Width Behaviour -- if always on block
 	if( $bfdesign['button_width'] != 'block' ) {
 		echo '@media (min-width: 768px) {
@@ -253,6 +261,9 @@ function buddyforms_form_html( $args ) {
 		}
 		?>
 	}
+
+	<?php echo $bfdesign['custom_css']; ?>
+
 	</style>
 
 	<?php

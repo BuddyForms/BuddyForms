@@ -15,6 +15,7 @@ function buddyforms_layout_defaults(){
 	$json['field_background_color'] = 'auto';
 	$json['field_border_color'] = 'auto';
 	$json['field_border_width'] = '';
+	$json['field_border_radius'] = '';
 	$json['field_font_size'] = '15';
 	$json['field_font_color'] = 'auto';
 	$json['field_placeholder_font_color'] = 'auto';
@@ -24,6 +25,7 @@ function buddyforms_layout_defaults(){
 
 	$json['submit_text'] = __('Submit', 'buddyforms');
 	$json['button_width'] = 'blockmobile';
+	$json['button_alignment'] = 'left';
 	$json['button_size'] = 'large';
 	$json['button_class'] = '';
 	$json['button_border_radius'] = '';
@@ -221,6 +223,12 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'Just enter a number, in px. Leave empty = auto'
 	) );
 
+	$field_border_radius = isset( $options['layout']['field_border_radius'] ) ? $options['layout']['field_border_radius'] : $defaults['field_border_radius'];
+	$form_setup['Text Fields'][]        = new Element_Number('<b>' . __( 'Field Corner Radius', 'buddyforms' ) . '</b>', $option_name . "[field_border_radius]", array(
+		'value'     => $field_border_radius,
+		'shortDesc' => 'Rounded corners. Just enter a number. Leave empty = auto'
+	) );
+
  	$field_font_size = isset( $options['layout']['field_font_size'] ) ? $options['layout']['field_font_size'] : $defaults['field_font_size'];
 	$form_setup['Text Fields'][]        = new Element_Number('<b>' . __( 'Field Font Size', 'buddyforms' ) . '</b>', $option_name . "[field_font_size]", array(
 		'value'     => $field_font_size,
@@ -264,16 +272,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	// Buttons
 
-	$form_setup['Buttons'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Buttons</h4>' );
+	$form_setup['Submit Button'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Submit Button</h4>' );
 
 	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
-	$form_setup['Buttons'][]        = new Element_Textbox('<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
+	$form_setup['Submit Button'][]        = new Element_Textbox('<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
 		'value'     => $submit_text,
 		'shortDesc' => 'Default text for the submit button. Default is "Submit". <br>HTML is allowed, so you can embed icons.'
 	) );
 
 	$button_width = isset( $options['layout']['button_width'] ) ? $options['layout']['button_width'] : $defaults['button_width'];
-	$form_setup['Buttons'][]        = new Element_Radio( '<b>' . __( 'Button Width', 'buddyforms' ) . '</b>', $option_name . "[button_width]", array(
+	$form_setup['Submit Button'][]        = new Element_Radio( '<b>' . __( 'Button Width', 'buddyforms' ) . '</b>', $option_name . "[button_width]", array(
 		'blockmobile'  => __( 'Full width button on mobile only', 'buddyforms' ),
 		'block' => __( 'Always full width button', 'buddyforms' ),
 		'inline' => __( 'Always normal width button', 'buddyforms' ),
@@ -282,8 +290,18 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'We recommend full width buttons on mobile, looks neater.'
 	) );
 
+	$button_alignment = isset( $options['layout']['button_alignment'] ) ? $options['layout']['button_alignment'] : $defaults['button_alignment'];
+	$form_setup['Submit Button'][]        = new Element_Radio( '<b>' . __( 'Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[button_alignment]", array(
+		'left'  => __( 'Left', 'buddyforms' ),
+		'center' => __( 'Center', 'buddyforms' ),
+		'right' => __( 'Right', 'buddyforms' ),
+	), array(
+		'value'     => $button_alignment,
+		'shortDesc' => 'How to align your submit button?'
+	) );
+
 	$button_size = isset( $options['layout']['button_size'] ) ? $options['layout']['button_size'] : $defaults['button_size'];
-	$form_setup['Buttons'][]        = new Element_Radio( '<b>' . __( 'Button Size', 'buddyforms' ) . '</b>', $option_name . "[button_size]", array(
+	$form_setup['Submit Button'][]        = new Element_Radio( '<b>' . __( 'Button Size', 'buddyforms' ) . '</b>', $option_name . "[button_size]", array(
 		'auto'  => __( 'Auto', 'buddyforms' ),
 		'large' => __( 'Large', 'buddyforms' ),
 		'xlarge' => __( 'Extra Large', 'buddyforms' ),
@@ -293,55 +311,55 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 	$button_class = isset( $options['layout']['button_class'] ) ? $options['layout']['button_class'] : $defaults['button_class'];
-	$form_setup['Buttons'][]        = new Element_Textbox('<b>' . __( 'Add custom CSS classes to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
+	$form_setup['Submit Button'][]        = new Element_Textbox('<b>' . __( 'Add custom CSS classes to button', 'buddyforms' ) . '</b>', $option_name . "[button_class]", array(
 		'value'     => $button_class,
 		'shortDesc' => 'For example: "btn btn-primary" '
 	) );
 
 	$button_border_radius = isset( $options['layout']['button_border_radius'] ) ? $options['layout']['button_border_radius'] : $defaults['button_border_radius'];
-	$form_setup['Buttons'][]        = new Element_Number('<b>' . __( 'Button Corner Radius', 'buddyforms' ) . '</b>', $option_name . "[button_border_radius]", array(
+	$form_setup['Submit Button'][]        = new Element_Number('<b>' . __( 'Button Corner Radius', 'buddyforms' ) . '</b>', $option_name . "[button_border_radius]", array(
 		'value'     => $button_border_radius,
 		'shortDesc' => 'Rounded corners. Just enter a number. Leave empty = auto'
 	) );
 
 	$button_border_width = isset( $options['layout']['button_border_width'] ) ? $options['layout']['button_border_width'] : '';
-	$form_setup['Buttons'][]        = new Element_Number('<b>' . __( 'Button Border Width', 'buddyforms' ) . '</b>', $option_name . "[button_border_width]", array(
+	$form_setup['Submit Button'][]        = new Element_Number('<b>' . __( 'Button Border Width', 'buddyforms' ) . '</b>', $option_name . "[button_border_width]", array(
 		'value'     => $button_border_width,
 		'shortDesc' => 'Border width in pixels. Just enter a number. Leave empty = auto'
 	) );
 
 	$button_background_color = isset( $options['layout']['button_background_color'] ) ? $options['layout']['button_background_color'] : $defaults['button_background_color'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Background Color', 'buddyforms' ) . '</b>', $option_name . "[button_background_color]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Background Color', 'buddyforms' ) . '</b>', $option_name . "[button_background_color]", array(
 		'value'     => $button_background_color,
 		'shortDesc' => 'Default is auto'
 	) );
 
 	$button_font_color = isset( $options['layout']['button_font_color'] ) ? $options['layout']['button_font_color'] : $defaults['button_font_color'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Font Color', 'buddyforms' ) . '</b>', $option_name . "[button_font_color]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Font Color', 'buddyforms' ) . '</b>', $option_name . "[button_font_color]", array(
 		'value'     => $button_font_color,
 		'shortDesc' => 'Default is auto'
 	) );
 
 	$button_border_color = isset( $options['layout']['button_border_color'] ) ? $options['layout']['button_border_color'] : $defaults['button_border_color'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Border Color', 'buddyforms' ) . '</b>', $option_name . "[button_border_color]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Border Color', 'buddyforms' ) . '</b>', $option_name . "[button_border_color]", array(
 		'value'     => $button_border_color,
 		'shortDesc' => 'Default is auto'
 	) );
 
 	$button_background_color_hover = isset( $options['layout']['button_background_color_hover'] ) ? $options['layout']['button_background_color_hover'] : $defaults['button_background_color_hover'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Background Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_background_color_hover]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Background Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_background_color_hover]", array(
 		'value'     => $button_background_color_hover,
 		'shortDesc' => 'Default is auto'
 	) );
 
 	$button_font_color_hover = isset( $options['layout']['button_font_color_hover'] ) ? $options['layout']['button_font_color_hover'] : $defaults['button_font_color_hover'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Font Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_font_color_hover]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Font Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_font_color_hover]", array(
 		'value'     => $button_font_color_hover,
 		'shortDesc' => 'Default is auto'
 	) );
 
 	$button_border_color_hover = isset( $options['layout']['button_border_color_hover'] ) ? $options['layout']['button_border_color_hover'] : $defaults['button_border_color_hover'];
-	$form_setup['Buttons'][]        = new Element_Color('<b>' . __( 'Button Border Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_border_color_hover]", array(
+	$form_setup['Submit Button'][]        = new Element_Color('<b>' . __( 'Button Border Color Hover', 'buddyforms' ) . '</b>', $option_name . "[button_border_color_hover]", array(
 		'value'     => $button_border_color_hover,
 		'shortDesc' => 'Default is auto'
 	) );
