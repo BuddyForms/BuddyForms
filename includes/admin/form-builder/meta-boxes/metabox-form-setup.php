@@ -314,11 +314,7 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Edit Submissions'][] = $element;
 
-
-	$element = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", array(
-		'list'  => 'List',
-		'table' => 'Table'
-	), array(
+	$element = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", apply_filters( 'buddyforms_loop_template_name', array( 'list'  => 'List', 'table' => 'Table' ) ), array(
 		'value'     => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
 		'class'     => 'bf_hide_if_attached_page_none'
