@@ -170,10 +170,10 @@ function buddyforms_form_html( $args ) {
 	}
 
 	<?php // Placeholder Font Color
-	if( $bfdesign['field_placeholder_font_color'] == 'color' ) {
+	if( $bfdesign['field_placeholder_font_color']['style'] == 'color' ) {
 		echo '.the_buddyforms_form .bf-input textarea::placeholder,
 					.the_buddyforms_form .bf-input .form-control::placeholder {
-							color: ' . $bfdesign['field_placeholder_font_color'] . ';
+							color: ' . $bfdesign['field_placeholder_font_color']['color'] . ';
 						}';
 	} ?>
 
@@ -221,8 +221,8 @@ function buddyforms_form_html( $args ) {
 			echo 'background-color: transparent;';
 		}
 		// Font Color
-		if( $bfdesign['button_font_color'] == 'color' ) {
-			echo 'color: ' . $bfdesign['button_font_color'] . ';';
+		if( $bfdesign['button_font_color']['style'] == 'color' ) {
+			echo 'color: ' . $bfdesign['button_font_color']['color'] . ';';
 		}
 		// Border Radius
 		if( $bfdesign['button_border_radius'] != '' ) {
@@ -265,8 +265,8 @@ function buddyforms_form_html( $args ) {
 			echo 'background-color: transparent;';
 		}
 		// Font Color
-		if( $bfdesign['button_font_color_hover'] == 'color' ) {
-			echo 'color: ' . $bfdesign['button_font_color_hover'] . ';';
+		if( $bfdesign['button_font_color_hover']['style'] == 'color' ) {
+			echo 'color: ' . $bfdesign['button_font_color_hover']['color'] . ';';
 		}
 		// Border Color
 		if( $bfdesign['button_border_color_hover']['style'] == 'color' ) {
