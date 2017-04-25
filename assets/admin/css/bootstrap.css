@@ -952,15 +952,6 @@ input[type="color"],
     border-radius: 3px;
 }
 
-input[type="color"] {
-  padding: 0;
-  margin: -25px 0 0 0;
-  height: 60px;
-  width: 90px;
-  box-shadow: none !important;
-  border: none !important;
-}
-
 input,
 textarea,
 .uneditable-input {

@@ -1275,6 +1275,30 @@ tr.bf-disabled th label b::after {
     border-radius: 20px;
 }
 
-.bf-color-hidden{
+.bf-color-hidden {
     display: none;
+}
+
+input[type="color"] {
+  padding: 0;
+  margin: -25px 0 0 0;
+  height: 60px;
+  width: 90px;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.wp-picker-open+.wp-picker-input-wrap {
+    display: block;
+    vertical-align: top;
+    /*width: 117px;*/
+}
+.wp-picker-container input[type="text"].wp-color-picker {
+  width: 65px !important;
+  height: 25px !important;
+  display: inline-block;
+}
+.wp-picker-container input[type="button"].wp-picker-clear {
+    display: inline-block;
+    height: 25px !important;
 }
