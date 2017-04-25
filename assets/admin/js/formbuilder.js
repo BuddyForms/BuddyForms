@@ -28,8 +28,9 @@ jQuery(function ($) {
 });
 jQuery(document).ready(function (jQuery) {
 
-
-
+    //
+    // Show Hide Color Picker
+    //
     jQuery(document.body).on('change', '.bf-color-radio', function () {
 
         var style = jQuery(this).val();

@@ -418,16 +418,19 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
                                 if( typeof type === 'undefined' || !type){
 
                                     type = jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").attr('type');
-                                    console.log(type);
+
+                                    if(val.color){
+                                        jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color);
+                                    }
+
+                                    if(val.style){
+                                        jQuery("input[name='<?php echo $option_name ?>[" + i + "][style]'][value='" + val.style + "']").prop("checked",true).trigger('change');
+                                    }
+
                                 }
-
-
 
                                 if( type == 'text' || type == 'number'){
                                     jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
-                                } else if( type == 'color' ) {
-                                    console.log(val);
-                                    jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color);
                                 } else {
                                     jQuery("input[name='<?php echo $option_name ?>[" + i + "]'][value='" + val + "']").prop("checked",true);
                                 }
