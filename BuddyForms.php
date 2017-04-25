@@ -311,6 +311,8 @@ class BuddyForms {
 			wp_enqueue_style( 'buddyforms-bootstrap-css', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms-admin-css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
+			wp_enqueue_style( 'wp-color-picker' );
+
 
 			// Remove Kleo Theme Styles. This theme is often used but the css conflicts with the form builder. So we remove it if the form builder is viewed
 			wp_deregister_style('cmb-styles' );

@@ -118,12 +118,12 @@ function buddyforms_form_html( $args ) {
 				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
 			}
 			// Background Color
-			if( $bfdesign['field_background_color'] != 'auto' ) {
-				echo 'background: ' . $bfdesign['field_background_color'] . ';';
+			if( $bfdesign['field_background_color']['style'] == 'color' ) {
+				echo 'background: ' . $bfdesign['field_background_color']['color']. ';';
 			}
 			// Border Color
-			if( $bfdesign['field_border_color'] != 'auto' ) {
-				echo 'border-color: ' . $bfdesign['field_border_color'] . ';';
+			if( $bfdesign['field_border_color']['style'] == 'transparent' ) {
+				echo 'border-color: ' . $bfdesign['field_border_color']['style'] . ';';
 			}
 			// Border Width
 			if( $bfdesign['field_border_width'] != '' ) {

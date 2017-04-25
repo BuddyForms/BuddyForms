@@ -8,20 +8,20 @@ function buddyforms_metabox_form_designer(){
 function buddyforms_layout_defaults(){
 	$json['labels_layout']   = 'inline';
 	$json['label_font_size'] = '';
-	$json['label_font_color'] = 'auto';
+	$json['label_font_color'] = array('color' => '#ff9900', 'style' => 'auto');
 	$json['label_font_style'] = 'bold';
 
 	$json['field_padding'] = '15';
-	$json['field_background_color'] = 'auto';
-	$json['field_border_color'] = 'auto';
+	$json['field_background_color'] = array('color' => '', 'style' => 'auto');
+	$json['field_border_color'] = array('color' => '', 'style' => 'auto');
 	$json['field_border_width'] = '';
 	$json['field_border_radius'] = '';
 	$json['field_font_size'] = '15';
-	$json['field_font_color'] = 'auto';
-	$json['field_placeholder_font_color'] = 'auto';
-	$json['field_active_background_color'] = 'auto';
-	$json['field_active_border_color'] = 'auto';
-	$json['field_active_font_color'] = 'auto';
+	$json['field_font_color'] = array('color' => '', 'style' => 'auto');
+	$json['field_placeholder_font_color'] = array('color' => '', 'style' => 'auto');
+	$json['field_active_background_color'] = array('color' => '', 'style' => 'auto');
+	$json['field_active_border_color'] = array('color' => '', 'style' => 'auto');
+	$json['field_active_font_color'] = array('color' => '', 'style' => 'auto');
 
 	$json['submit_text'] = __('Submit', 'buddyforms');
 	$json['button_width'] = 'blockmobile';
@@ -29,13 +29,13 @@ function buddyforms_layout_defaults(){
 	$json['button_size'] = 'large';
 	$json['button_class'] = '';
 	$json['button_border_radius'] = '';
-	$json['button_background_color'] = 'auto';
-	$json['button_font_color'] = 'auto';
-	$json['button_border_color'] = 'auto';
+	$json['button_background_color'] = array('color' => '', 'style' => 'auto');
+	$json['button_font_color'] = array('color' => '', 'style' => 'auto');
+	$json['button_border_color'] = array('color' => '', 'style' => 'auto');
 
-	$json['button_background_color_hover'] = 'auto';
-	$json['button_font_color_hover'] = 'auto';
-	$json['button_border_color_hover'] = 'auto';
+	$json['button_background_color_hover'] = array('color' => '', 'style' => 'auto');
+	$json['button_font_color_hover'] = array('color' => '', 'style' => 'auto');
+	$json['button_border_color_hover'] = array('color' => '', 'style' => 'auto');
 
 
 	$json['radio_button_alignment'] = 'inline';
@@ -415,8 +415,19 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
                                 var type = jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").attr('type');
 
-                                if( type == 'text' || type == 'number' || type == 'color'){
+                                if( typeof type === 'undefined' || !type){
+
+                                    type = jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").attr('type');
+                                    console.log(type);
+                                }
+
+
+
+                                if( type == 'text' || type == 'number'){
                                     jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
+                                } else if( type == 'color' ) {
+                                    console.log(val);
+                                    jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color);
                                 } else {
                                     jQuery("input[name='<?php echo $option_name ?>[" + i + "]'][value='" + val + "']").prop("checked",true);
                                 }

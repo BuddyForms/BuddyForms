@@ -37,6 +37,7 @@ class Element_Color extends Element {
 
 		echo '
 		<p style="display: inline-block; font-size: 11px; line-height: 2.5;">
+		<input ' . checked( $value_style, 'color', false ) . ' id="" type="radio" name="' . $style . '" value="color"> Color <br>
 		<input ' . checked( $value_style, 'auto', false ) . ' id="" type="radio" name="' . $style . '" value="auto"> Auto <br>
 		<input ' . checked( $value_style, 'transparent', false) . ' id="" type="radio" name="' . $style . '" value="transparent"> Transparent
 		</p>';
