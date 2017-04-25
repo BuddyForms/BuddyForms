@@ -150,6 +150,12 @@ function buddyforms_layout_style( $field_id ){
 		case '4' :
 			$layout_style = 'col-xs-12 col-md-3';
 			break;
+		case '5' :
+			$layout_style = 'col-xs-12 col-md-8';
+			break;
+		case '6' :
+			$layout_style = 'col-xs-12 col-md-9';
+			break;
 		default:
 			$layout_style = 'col-xs-12';
 			break;

@@ -779,6 +779,8 @@ JS;
                                     <option <?php selected( $layout, '2'); ?> value="2">1/2</option>
                                     <option <?php selected( $layout, '3'); ?> value="3">1/3</option>
                                     <option <?php selected( $layout, '4'); ?> value="4">1/4</option>
+																		<option <?php selected( $layout, '5'); ?> value="5">2/3</option>
+																		<option <?php selected( $layout, '6'); ?> value="6">3/4</option>
                                 </select>
                             </td>
 						</tr>
