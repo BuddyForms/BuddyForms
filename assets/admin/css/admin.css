@@ -1274,3 +1274,7 @@ tr.bf-disabled th label b::after {
     color: #fff;
     border-radius: 20px;
 }
+
+.bf-color-hidden{
+    display: none;
+}

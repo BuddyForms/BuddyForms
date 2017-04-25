@@ -1,7 +1,7 @@
 // On Load jQuery
 jQuery(function ($) {
 
-    $('color').wpColorPicker();
+    $('.bf-color').wpColorPicker();
 
     // Type box.
     $('.bf-form-type-wrap').appendTo('#buddyforms_form_setup .hndle span');
