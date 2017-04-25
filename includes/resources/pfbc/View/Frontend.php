@@ -64,8 +64,6 @@ class View_Frontend extends FormView {
 
 		$field_id = $element->getAttribute( "field_id" );
 
-		echo $field_id;
-
 		$layout_style = buddyforms_layout_style( $field_id );
 
 		if ( $element instanceof Element_Hidden ) {
@@ -74,13 +72,12 @@ class View_Frontend extends FormView {
 		}
 
 		echo '<div class="' .  $layout_style . '">';
-//		if ( $element instanceof Element_HTML ) {
-//			$element->render();
-//			return;
-//		}
 
-
-
+		if ( $element instanceof Element_HTML ) {
+				$element->render();
+			echo "</div>";
+			return;
+		}
 
 		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File    ) {
 
@@ -101,18 +98,14 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
-		echo '<div class="bf-input">';
-
-
-		if ( $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-			echo $this->renderDescriptions( $element );
-			echo $element->render();
-		} else {
-			echo $element->render();
-			echo $this->renderDescriptions( $element );
-		}
-
+		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
+			if ( $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+				echo $this->renderDescriptions( $element );
+				echo $element->render();
+			} else {
+				echo $element->render();
+				echo $this->renderDescriptions( $element );
+			}
 		echo "</div></div></div>";
 	}
 

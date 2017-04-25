@@ -5,6 +5,7 @@
  * @param $args
  */
 function buddyforms_form_elements( $form, $args ) {
+	global $field_id;
 
 	extract( $args );
 
