@@ -21,6 +21,7 @@ class Element_Color extends Element {
 	}
 
 	public function render() {
+		global $field_id;
 
 		$value_style = '';
 		if(isset($this->_attributes["value_style"])){
@@ -38,14 +39,14 @@ class Element_Color extends Element {
 
 		echo '
 		<p style="display: inline; font-size: 11px; line-height: 2.5;">
-		<input ' . checked( $value_style, 'auto', false ) . ' id="" type="radio" name="' . $style . '" value="auto"> Auto 
-		<input ' . checked( $value_style, 'transparent', false) . ' id="" type="radio" name="' . $style . '" value="transparent"> Transparent 
-		<input ' . checked( $value_style, 'color', false ) . ' id="" type="radio" name="' . $style . '" value="color"> Color
+		<input data-field_id="' . $field_id . '" class="bf-color-radio" ' . checked( $value_style, 'auto', false ) . ' id="" type="radio" name="' . $style . '" value="auto"> Auto 
+		<input data-field_id="' . $field_id . '" class="bf-color-radio" ' . checked( $value_style, 'transparent', false) . ' id="" type="radio" name="' . $style . '" value="transparent"> Transparent 
+		<input data-field_id="' . $field_id . '" class="bf-color-radio" ' . checked( $value_style, 'color', false ) . ' id="" type="radio" name="' . $style . '" value="color"> Color
 		</p><br><br>
 		';
 
 		$hidden = $value_style != "color" ? "bf-color-hidden" : "";
-		echo '<div class="' . $hidden . '">';
+		echo '<div id="bf_color_container_' . $field_id . '" class="' . $hidden . '">';
 			parent::render();
 		echo '</div>';
 

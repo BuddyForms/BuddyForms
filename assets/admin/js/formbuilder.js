@@ -28,6 +28,21 @@ jQuery(function ($) {
 });
 jQuery(document).ready(function (jQuery) {
 
+
+
+    jQuery(document.body).on('change', '.bf-color-radio', function () {
+
+        var style = jQuery(this).val();
+        var field_id = jQuery(this).attr('data-field_id');
+
+        if( style == 'color' ){
+            jQuery('#bf_color_container_' + field_id ).removeClass('bf-color-hidden');
+        } else {
+            jQuery('#bf_color_container_' + field_id ).addClass('bf-color-hidden');
+        }
+
+    });
+
     //
     // Add the value selected in the modal to the form element select box and trigger the change event to add the new form element to the sortable list
     //
