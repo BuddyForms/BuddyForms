@@ -8,7 +8,7 @@ function buddyforms_metabox_form_designer(){
 function buddyforms_layout_defaults(){
 	$json['labels_layout']   = 'inline';
 	$json['label_font_size'] = '';
-	$json['label_font_color'] = array('color' => '#ff9900', 'style' => 'auto');
+	$json['label_font_color'] = array('color' => '', 'style' => 'auto');
 	$json['label_font_style'] = 'bold';
 
 	$json['field_padding'] = '15';
