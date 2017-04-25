@@ -85,6 +85,12 @@
 }
 
 @media (min-width: 992px) {
+  .the_buddyforms_form form fieldset .col-md-9 {
+    width: 75%;
+  }
+  .the_buddyforms_form form fieldset .col-md-8 {
+    width: 66.66%;
+  }
   .the_buddyforms_form form fieldset .col-md-6 {
     width: 50%;
   }
