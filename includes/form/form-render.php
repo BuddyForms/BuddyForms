@@ -229,9 +229,9 @@ function buddyforms_form_html( $args ) {
 			echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
 		}
 		// Border Width
-		// if( $bfdesign['button_border_width'] != '' ) {
-		// 	echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
-		// }
+		if( $bfdesign['button_border_width'] != '' ) {
+			echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
+		}
 		// Border Color
 		if( $bfdesign['button_border_color']['style'] == 'color' ) {
 			echo 'border-color: ' . $bfdesign['button_border_color']['color'] . ';';
