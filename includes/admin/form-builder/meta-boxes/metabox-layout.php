@@ -78,7 +78,7 @@ function buddyforms_load_form_layout(){
 add_action( 'wp_ajax_buddyforms_load_form_layout', 'buddyforms_load_form_layout' );
 
 function buddyforms_layout_screen( $option_name = "buddyforms_options") {
-    global $post, $buddyforms;
+    global $buddyforms;
 
 	$option_name = $option_name. '[layout]';
 
@@ -86,10 +86,11 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
+
 	$defaults = buddyforms_layout_defaults();
 
-	// Labels
 
+	// Labels
 	$form_setup['Labels'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Labels</h4>' );
 
 	$labels_layout = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : $defaults['labels_layout'];
@@ -124,8 +125,8 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => ''
 	) );
 
-	// Descriptions
 
+	// Descriptions
 	$form_setup['Descriptions'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Descriptions</h4>' );
 
 	$desc_position = isset( $options['layout']['desc_position'] ) ? $options['layout']['desc_position'] : 'blockmobile';
@@ -143,7 +144,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 		'shortDesc' => 'in px, just enter a number. Leave empty = auto'
 	) );
 
-	$desc_font_color = isset( $options['layout']['desc_font_color'] ) ? $options['layout']['desc_font_color'] : 'auto';
+	$desc_font_color = isset( $options['layout']['desc_font_color'] ) ? $options['layout']['desc_font_color'] : '';
 	$form_setup['Descriptions'][]        = new Element_Color('<b>' . __( 'Description Font Color', 'buddyforms' ) . '</b>', $option_name . "[desc_font_color]", array(
 		'value'     => $desc_font_color,
 		'shortDesc' => 'Default is auto'
@@ -159,11 +160,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
-
-
-
 	// Form Elements
-
 	$form_setup['Form Elements'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Other Elements</h4>' );
 
 	$radio_button_alignment = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : $defaults['radio_button_alignment'];
@@ -185,10 +182,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
-
-
 	// Text Fields
-
 	$form_setup['Text Fields'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Text Fields</h4>' );
 
 	$field_padding = isset( $options['layout']['field_padding'] ) ? $options['layout']['field_padding'] : $defaults['field_padding'];
@@ -258,12 +252,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
-
-
-
-
 	// Buttons
-
 	$form_setup['Submit Button'][]        = new Element_HTML('<h4 style="margin-top: 30px; text-transform: uppercase;">Submit Button</h4>' );
 
 	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
@@ -357,11 +346,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 	) );
 
 
-
-
-
 	// Custom CSS
-
 	$custom_css = isset( $options['layout']['custom_css'] ) ? $options['layout']['custom_css'] : $defaults['custom_css'];
 	$form_setup['Custom CSS'][] = new Element_Textarea( '<b>' . __( 'Custom CSS', 'buddyforms' ) . '</b>', $option_name . "[custom_css]", array(
 		'rows'  => 3,
@@ -483,8 +468,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
-				$tab_slug = sanitize_title( $tab );
-				?>
+				$tab_slug = sanitize_title( $tab ); ?>
                 <div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
                      id="<?php echo $tab_slug; ?>">
                     <div class="buddyforms_accordion_general">
