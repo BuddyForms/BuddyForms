@@ -34,8 +34,10 @@
 	$this_sdk_relative_path = plugin_basename( dirname( __FILE__ ) );
 
 	if ( ! isset( $fs_active_plugins ) ) {
-		// Require SDK essentials.
-		require_once dirname( __FILE__ ) . '/includes/fs-essential-functions.php';
+		if ( ! function_exists( '__fs' ) ) {
+			// Require SDK essentials.
+			require_once dirname( __FILE__ ) . '/includes/fs-essential-functions.php';
+		}
 
 		// Load all Freemius powered active plugins.
 		$fs_active_plugins = get_option( 'fs_active_plugins', new stdClass() );
