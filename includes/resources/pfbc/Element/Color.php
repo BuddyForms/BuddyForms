@@ -15,7 +15,11 @@ class Element_Color extends Element {
 			$props["value_style"] = $props['value']['style'];
 		}
 
-		$props["value"] = $props['value']['color'];
+		if(isset($props['value']['color'])){
+			$props["value"] = $props['value']['color'];
+		} else {
+			$props["value"] = '';
+		}
 
 		parent::__construct( $label, $name, $props );
 	}
@@ -30,10 +34,9 @@ class Element_Color extends Element {
 
 		$this->_attributes["name"] = $this->_attributes["name"] . '[color]';
 		$this->_attributes["pattern"] = "#[a-g0-9]{6}";
-		$this->_attributes["class"] = $this->_attributes["class"] . "bf-color";
+		$this->_attributes["class"] = isset($this->_attributes["class"]) ? $this->_attributes["class"] . " bf-color" :  "bf-color";
 		$this->_attributes["title"]   = "6-digit hexidecimal color (e.g. #000000)";
 		$this->validation[]           = new Validation_RegExp( "/" . $this->_attributes["pattern"] . "/", "Error: The %element% field must contain a " . $this->_attributes["title"] );
-
 
 		$style = str_replace( '[color]', '[style]', $this->_attributes["name"] );
 

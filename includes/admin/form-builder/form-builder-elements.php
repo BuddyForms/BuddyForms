@@ -327,8 +327,13 @@ function buddyforms_display_form_element( $args ) {
 				'id'       => 'taxonomy_field_id_' . $field_id,
 			) );
 
+
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
+
+            if( $customfield['taxonomy'] == 'none' ){
+                $taxonomy = 'category';
+            }
 
 			$wp_dropdown_categories_args = array(
 				'hide_empty'    => 0,
@@ -346,7 +351,7 @@ function buddyforms_display_form_element( $args ) {
 				'orderby'       => 'SLUG',
 				'order'         => $taxonomy_order,
 			);
-
+            
 			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
