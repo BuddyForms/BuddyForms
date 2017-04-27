@@ -31,6 +31,10 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	// if id is used we need to get the post_name
 	if ( empty( $form_slug ) && ! empty( $id ) ) {
 		$post      = get_post( $id );
+
+		if( ! isset( $post->post_name ) ){
+			return;
+		}
 		$form_slug = $post->post_name;
 	}
 
