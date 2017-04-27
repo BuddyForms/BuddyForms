@@ -298,14 +298,11 @@ function buddyforms_form_elements( $form, $args ) {
 								$schedule_val = get_post_meta( $post_id, 'schedule', true );
 							}
 
-							$element_attr['class'] = $element_attr['class'] . ' bf_datetime';
-
+							$element_attr['class'] = $element_attr['class'] . ' bf_datetime bf_datetime_wrap';
 							$element_attr['id'] = $element_attr['id'] . '_bf_datetime';
+							$element_attr['placeholder'] = __('Schedule Time', 'buddyforms');
+							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr ) );
 
-							$form->addElement( new Element_HTML( '<div class="bf_datetime_wrap">' ) );
-							$form->addElement( new Element_Textbox( 'Schedule Time', 'schedule', $element_attr ) );
-							//$form->addElement(new Element_Date('Schedule Time', 'schedule', $element_attr));
-							$form->addElement( new Element_HTML( '</div>' ) );
 						}
 						break;
 					case 'textarea' :

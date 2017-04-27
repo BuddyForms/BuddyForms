@@ -71,6 +71,11 @@ class View_Frontend extends FormView {
 			return;
 		}
 
+		if ( $element instanceof Element_INLINE_HTML ) {
+			$element->render();
+			return;
+		}
+
 		echo '<div class="' .  $layout_style . '">';
 
 		if ( $element instanceof Element_HTML ) {
@@ -78,6 +83,9 @@ class View_Frontend extends FormView {
 			echo "</div>";
 			return;
 		}
+
+
+
 
 		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File    ) {
 
