@@ -351,7 +351,7 @@ function buddyforms_display_form_element( $args ) {
 				'orderby'       => 'SLUG',
 				'order'         => $taxonomy_order,
 			);
-            
+
 			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );

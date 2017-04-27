@@ -347,7 +347,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 								$attachment_metadat = get_post( $attachment_id );
 
-								$str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
+								$str .= '<li class="image bf-image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
 
                                     <div class="bf_attachment_li">
                                     <div class="bf_attachment_img">
@@ -376,19 +376,21 @@ function buddyforms_form_elements( $form, $args ) {
 						$str .= $description;
 						$str .= '</span>';
 
-						$form->addElement( new Element_HTML( '
+						$fimage_element = '
                         <div class="bf_field_group">
-                            <label for="_' . $slug . '">' ) );
+                            <label for="_' . $slug . '">';
 
 						if ( isset( $customfield['required'] ) ) {
-							$form->addElement( new Element_HTML( '<span class="required">* </span>' ) );
+							$fimage_element .= '<span class="required">* </span>';
 						}
 
-						$form->addElement( new Element_HTML( $name . '</label>' ) );
-						$form->addElement( new Element_HTML( '<div class="bf_inputs bf-input">
+						$fimage_element .= $name . '</label>';
+						$fimage_element .= '<div class="bf_inputs bf-input">
                             ' . $str . '
-                            </div>
-                        ' ) );
+                            </div></div>
+                        ';
+
+						$form->addElement( new Element_HTML( $fimage_element ) );
 
 						// always add slug
 						$featured_image_params = array( 'id' => $slug );
@@ -399,7 +401,7 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
-						$form->addElement( new Element_HTML( '</div>' ) );
+
 
 						break;
 					case 'file':
@@ -415,7 +417,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 								$attachment_metadat = get_post( $attachment_id );
 
-								$str .= '<li class="image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
+								$str .= '<li class="image bf_image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
 
                                     <div class="bf_attachment_li">
                                     <div class="bf_attachment_img">
@@ -462,28 +464,26 @@ function buddyforms_form_elements( $form, $args ) {
 							$data_multiple = 'data-multiple="true"';
 						}
 
-						$str .= '<a href="#" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . $name . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
+						$str .= '<a href="#" class="button btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . $name . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
 						$str .= '</span>';
 
 						$str .= '</div><span class="help-inline">';
 						$str .= $description;
 						$str .= '</span>';
 
-						$form->addElement( new Element_HTML( '
-                        <div class="bf_field_group">
-                            <label for="_' . $slug . '">' ) );
-
-						if ( isset( $customfield['required'] ) ) {
-							$form->addElement( new Element_HTML( '<span class="required">* </span>' ) );
-						}
-
-						$form->addElement( new Element_HTML( $name . '</label>' ) );
-						$form->addElement( new Element_HTML( '<div class="bf_inputs bf-input">
+						$file_element = '<div class="bf_field_group"><label for="_' . $slug . '">';
+							if ( isset( $customfield['required'] ) ) {
+								$file_element .= '<span class="required">* </span>';
+							}
+						$file_element .= '</label>';
+						$file_element .= '<div class="bf_inputs bf-input">
                             ' . $str . '
-                            </div>
-                        ' ) );
+                            </div></div>
+                        ';
+						$form->addElement( new Element_HTML( $file_element ) );
+
 						$form->addElement( new Element_Hidden( $slug, $customfield_val, array( 'id' => $slug ) ) );
-						$form->addElement( new Element_HTML( '</div>' ) );
+
 
 						break;
 					case 'post_formats' :

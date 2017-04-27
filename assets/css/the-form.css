@@ -168,3 +168,11 @@
     background-color: #d9edf7;
     border-color: #bce8f1;
 }
+li.image.bf_image {
+    list-style-type: none;
+    float: left;
+    padding-right: 10px;
+}
+ul.bf_files {
+    padding: 0;
+}
