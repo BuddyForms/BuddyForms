@@ -40,11 +40,12 @@ class Element_Button extends Element {
 			$properties["class"] = $class;
 		}
 
-		if ( empty( $properties["value"] ) ) {
+		$properties["value"] = __('Submit', 'buddyforms');
+		if ( !empty( $label ) ) {
 			$properties["value"] = $label;
 		}
 
-		parent::__construct( "", "", $properties );
+		parent::__construct( $label, "", $properties );
 	}
 
 	public function render() {
