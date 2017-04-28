@@ -542,3 +542,37 @@ function buddyforms_can_edit( $post_id ){
 	}
 	return true;
 }
+
+
+//
+// Add Placeholder support top the wp editor
+//
+
+add_filter( 'mce_external_plugins', 'buddyforms_add_mce_placeholder_plugin' );
+function buddyforms_add_mce_placeholder_plugin( $plugins ){
+
+	if(is_admin()){
+		return $plugins;
+    }
+
+ 	$plugins[ 'placeholder' ] = BUDDYFORMS_PLUGIN_URL .'assets/resources/wp-tinymce-placeholder/mce.placeholder.js';
+
+	return $plugins;
+}
+
+/**
+ * Add garlic support to the wp editor for local save the content of the textarea
+ *
+ * @param $initArray
+ *
+ * @return mixed
+ */
+function buddyforms_tinymce_setup_function( $initArray ) {
+	$initArray['setup'] = 'function(editor) {
+                editor.on("change keyup", function(e){
+                    editor.save(); 
+                    jQuery(editor.getElement()).trigger(\'change\');
+                });
+            }';
+	return $initArray;
+}

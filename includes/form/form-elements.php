@@ -5,7 +5,7 @@
  * @param $args
  */
 function buddyforms_form_elements( $form, $args ) {
-	global $field_id;
+	global $buddyforms, $field_id;
 
 	extract( $args );
 
@@ -183,12 +183,22 @@ function buddyforms_form_elements( $form, $args ) {
 							$required  = '<span class="required">* </span>';
 						}
 
+
+						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+
+						$wp_editor_label = '';
+						if($labels_layout == 'inline' ){
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"{$name}\"", $wp_editor    );
+						} else {
+							$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
+						}
+
 						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
 
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
-							$wp_editor = '<div class="bf_field_group bf_form_content"><label for="buddyforms_form_content">' . $required . $name . '</label><div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+							$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							$form->addElement( new Element_HTML( $wp_editor ) );
 						}
 						break;
@@ -624,22 +634,4 @@ function buddyforms_form_elements( $form, $args ) {
 
 		endif;
 	endforeach;
-}
-
-/**
- * @param $initArray
- *
- * @return mixed
- */
-function buddyforms_tinymce_setup_function( $initArray ) {
-	$initArray['setup'] = 'function(editor) {
-                editor.on("change keyup", function(e){
-                    console.log(\'saving\');
-                    //tinyMCE.triggerSave(); // updates all instances
-                    editor.save(); // updates this instance\'s textarea
-                    jQuery(editor.getElement()).trigger(\'change\'); // for garlic to detect change
-                });
-            }';
-
-	return $initArray;
 }
