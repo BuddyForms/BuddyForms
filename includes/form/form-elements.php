@@ -183,12 +183,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$required  = '<span class="required">* </span>';
 						}
 
-
 						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
 
 						$wp_editor_label = '';
 						if($labels_layout == 'inline' ){
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"{$name}\"", $wp_editor    );
+							if ( isset( $customfield['required'] ) ) {
+								$required = '* ';
+							}
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
 						} else {
 							$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
 						}
@@ -375,23 +377,33 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$str .= '</ul>';
 
+
+						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+
+						$name_inline = __('Add Image', 'buddyforms');
+						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
+							$name_inline = '* ' . $name;
+						}
+
 						$str .= '<span class="bf_add_files hide-if-no-js">';
-						$str .= '<a class="button btn btn-primary" href="#" data-slug="' . $slug . '" data-type="image/jpeg,image/gif,image/png,image/bmp,image/tiff,image/x-icon" data-multiple="false" data-choose="' . __( 'Add ', 'buddyforms' ) . $name . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Add ', 'buddyforms' ) . $name . '</a>';
+						$str .= '<a class="button btn btn-primary" href="#" data-slug="' . $slug . '" data-type="image/jpeg,image/gif,image/png,image/bmp,image/tiff,image/x-icon" data-multiple="false" data-choose="' . __( 'Add ', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</a>';
 						$str .= '</span>';
 
 						$str .= '</div><span class="help-inline">';
 						$str .= $description;
 						$str .= '</span>';
 
-						$fimage_element = '
-                        <div class="bf_field_group">
-                            <label for="_' . $slug . '">';
+						$fimage_element = '<div class="bf_field_group">';
+						if( $labels_layout != 'inline' ){
+							$fimage_element .= '<label for="_' . $slug . '">';
 
-						if ( isset( $customfield['required'] ) ) {
-							$fimage_element .= '<span class="required">* </span>';
+							if ( isset( $customfield['required'] ) ) {
+								$fimage_element .= '<span class="required">* </span>';
+							}
+
+							$fimage_element .= $name . '</label>';
 						}
 
-						$fimage_element .= $name . '</label>';
 						$fimage_element .= '<div class="bf_inputs bf-input">
                             ' . $str . '
                             </div></div>
@@ -471,18 +483,32 @@ function buddyforms_form_elements( $form, $args ) {
 							$data_multiple = 'data-multiple="true"';
 						}
 
-						$str .= '<a href="#" class="button btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . $name . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . $name . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Attache File', 'buddyforms' ) . '</a>';
+
+
+						$name_inline = __( 'Attache File', 'buddyforms' );
+						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
+							$name_inline = '* ' . $name;
+						}
+
+						$str .= '<a href="#" class="button btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</a>';
 						$str .= '</span>';
 
 						$str .= '</div><span class="help-inline">';
 						$str .= $description;
 						$str .= '</span>';
 
-						$file_element = '<div class="bf_field_group"><label for="_' . $slug . '">';
+
+						$file_element = '<div class="bf_field_group">';
+						if( $labels_layout != 'inline' ){
+							$file_element .= '<label for="_' . $slug . '">';
+
 							if ( isset( $customfield['required'] ) ) {
 								$file_element .= '<span class="required">* </span>';
 							}
-						$file_element .= '</label>';
+
+							$file_element .= $name . '</label>';
+						}
+
 						$file_element .= '<div class="bf_inputs bf-input">
                             ' . $str . '
                             </div></div>
