@@ -150,6 +150,9 @@ function buddyforms_the_loop( $args ) {
 	do_action( 'buddyforms_the_loop_start', $query_args );
 
 	$the_lp_query = new WP_Query( $query_args );
+	$the_lp_query = apply_filters('buddyforms_the_lp_query', $the_lp_query );
+
+
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
