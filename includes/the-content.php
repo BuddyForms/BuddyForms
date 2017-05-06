@@ -1,23 +1,44 @@
 <?php
-/**
- * make the template redirect
- *
- * @package BuddyForms
- * @since 0.3 beta
- */
-add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+
+// We need this function to support yoast seo. For a strange reason yoast seo remove the dashicons
+add_action( 'template_include', 'buddyforms_template_include' );
+function buddyforms_template_include($template){
+
+	$form_slug  = get_query_var('bf_form_slug');
+	$action     = get_query_var('bf_action');
+
+	if ( !empty( $form_slug ) ) {
+
+		if ( $action == 'view' || $action == 'create' || $action == 'edit' || $action == 'revision' ) {
+			remove_all_actions('wpseo_head');
+		}
+
+	}
+
+	return $template;
+}
 
 /**
+ *
+ * Check if a BuddyForms rewrite endpoint is displayed and overwrite the content with the correct content for the view
+ *
  * @param $content
  *
  * @return string
  */
+add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 function buddyforms_attached_page_content( $content ) {
-	global $wp_query, $buddyforms;
+	global $buddyforms;
 
+	$form_slug      = get_query_var('bf_form_slug');
+	$post_id        = get_query_var('bf_post_id');
+	$parent_post_id = get_query_var('bf_parent_post_id', 0);
+	$action         = get_query_var('bf_action');
 
+	// Remove the filter to make sure it not end up in a infinity loop
 	remove_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
-	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 ); //this is a dirty fix and needs to be addressed
+	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 );
+
 	if ( is_admin() ) {
 		return $content;
 	}
@@ -27,11 +48,7 @@ function buddyforms_attached_page_content( $content ) {
 	}
 
 	$new_content = $content;
-	if ( isset( $wp_query->query_vars['bf_action'] ) ) {
-
-		$form_slug      = isset( $wp_query->query_vars['bf_form_slug'] )      ? $wp_query->query_vars['bf_form_slug']       : '';
-		$post_id        = isset( $wp_query->query_vars['bf_post_id'] )        ? $wp_query->query_vars['bf_post_id']         : '';
-		$parent_post_id = isset( $wp_query->query_vars['bf_parent_post_id'] ) ? $wp_query->query_vars['bf_parent_post_id']  : 0;
+	if ( ! empty( $action ) ) {
 
 		if ( ! isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
 			return $content;
@@ -46,14 +63,14 @@ function buddyforms_attached_page_content( $content ) {
 			'post_type'   => $post_type
 		);
 
-		if ( $wp_query->query_vars['bf_action'] == 'create' || $wp_query->query_vars['bf_action'] == 'edit' || $wp_query->query_vars['bf_action'] == 'revision' ) {
+		if ( $action == 'create' || $action == 'edit' || $action == 'revision' ) {
 			ob_start();
 			buddyforms_create_edit_form( $args );
 			$bf_form = ob_get_contents();
 			ob_clean();
 			$new_content = $bf_form;
 		}
-		if ( $wp_query->query_vars['bf_action'] == 'view' ) {
+		if ( $action == 'view' ) {
 			ob_start();
 			buddyforms_the_loop( $args );
 			$bf_form = ob_get_contents();
@@ -61,29 +78,9 @@ function buddyforms_attached_page_content( $content ) {
 			$new_content = $bf_form;
 		}
 
-	} elseif ( isset( $wp_query->query_vars['pagename'] ) ) {
-
-		if ( $buddyforms ) : foreach ( $buddyforms as $key => $buddyform ) {
-
-			if ( isset( $buddyform['attached_page'] ) && $wp_query->query_vars['pagename'] == $buddyform['attached_page'] ) {
-				$post_data = get_post( $buddyform['attached_page'], ARRAY_A );
-			}
-
-			if ( isset( $post_data['post_name'] ) && $post_data['post_name'] == $wp_query->query_vars['pagename'] ) {
-				$args = array(
-					'form_slug' => $buddyform['slug'],
-				);
-				ob_start();
-				buddyforms_the_loop( $args );
-				$bf_form = ob_get_contents();
-				ob_clean();
-				$new_content = $bf_form;
-			}
-		}
-		endif;
 	}
 
-	// Rebuild
+	// Rebuild the removed filters
 	add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 
 	return $new_content;
