@@ -96,14 +96,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 											<div class="table-item-status"><?php echo $post_status_name ?></div>
 										</div>
 									</td>
-									<?php if ( is_user_logged_in() && get_the_author_meta( 'ID' ) == get_current_user_id() ) { ?>
-										<td>
-											<div class="meta">
-												<span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>
-												<?php buddyforms_post_entry_actions( $form_slug ); ?>
-											</div>
-										</td>
-									<?php } ?>
+                                    <td>
+                                        <div class="meta">
+                                            <span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>
+                                            <?php buddyforms_post_entry_actions( $form_slug ); ?>
+                                        </div>
+                                    </td>
 								</tr>
 								<?php do_action( 'buddyforms_the_table_inner_tr_last', get_the_ID() ); ?>
 								</tbody>

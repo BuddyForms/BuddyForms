@@ -260,7 +260,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 	?>
 	<ul class="edit_links">
 		<?php
-		if ( buddyforms_can_edit( $post->ID ) ) {
+		if ( buddyforms_is_author( $post->ID ) ) {
 
 			$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 			$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
@@ -315,6 +315,21 @@ function buddyforms_post_entry_actions( $form_slug ) {
 		} ?>
 	</ul>
 	<?php
+}
+
+function buddyforms_is_author( $post_id ){
+
+	$is_author = false;
+
+	if( get_post_field( 'post_author', $post_id ) == get_current_user_id() ){
+		$is_author = true;
+	}
+
+	$form_slug = get_post_field( '_bf_form_slug', $post_id );
+
+	$is_author = apply_filters('buddyforms_user_can_edit', $is_author, $form_slug,  $post_id );
+
+	return $is_author;
 }
 
 /**
@@ -533,21 +548,9 @@ function buddyforms_get_form_field_by_slug($form_slug, $slug) {
 	return false;
 }
 
-function buddyforms_can_edit( $post_id ){
-
-	$the_author_id = apply_filters('buddyforms_the_author_id', get_post_field( 'post_author', $post_id ), $post_id );
-
-	if( $the_author_id == get_current_user_id()){
-		return true;
-	}
-	return true;
-}
-
-
 //
 // Add Placeholder support top the wp editor
 //
-
 add_filter( 'mce_external_plugins', 'buddyforms_add_mce_placeholder_plugin' );
 function buddyforms_add_mce_placeholder_plugin( $plugins ){
 

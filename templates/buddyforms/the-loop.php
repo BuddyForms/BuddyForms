@@ -80,26 +80,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 
 						<?php
-
                         $the_author_id = apply_filters('buddyforms_the_loop_item_author_id', get_the_author_meta( 'ID' ), $form_slug, get_the_ID() );
+                        ob_start();
+                        ?>
 
-						if ( is_user_logged_in() && buddyforms_can_edit( get_the_ID() ) ) {
+                        <div class="action">
+                            <span class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'F j, Y' ) ?></span>
+                                <div class="meta">
+                                    <div class="item-status"><?php echo $post_status_name; ?></div>
+                                    <?php buddyforms_post_entry_actions( $form_slug ); ?>
+                                </div>
+                        </div>
 
-							ob_start();
-							?>
-							<div class="action">
-								<span class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'F j, Y' ) ?></span>
-								<div class="meta">
-									<div class="item-status"><?php echo $post_status_name; ?></div>
-									<?php buddyforms_post_entry_actions( $form_slug ); ?>
-								</div>
-							</div>
-							<?php
-							$meta_tmp = ob_get_clean();
-							echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
-						}
-						?>
-						<?php do_action( 'buddyforms_the_loop_li_last', get_the_ID() ); ?>
+                        <?php echo apply_filters( 'buddyforms_the_loop_meta_html', ob_get_clean() ); ?>
+                        <?php do_action( 'buddyforms_the_loop_li_last', get_the_ID() ); ?>
+
 						<div class="clear"></div>
 					</li>
 
