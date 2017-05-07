@@ -10953,8 +10953,10 @@
 				} else {
 					$link_text_id = 'opt-in';
 				}
-
-				add_action( 'admin_footer', array( &$this, '_add_optout_dialog' ) );
+				global $pagenow;
+				if ( 'plugins.php' === $pagenow ) {
+					add_action( 'admin_footer', array( &$this, '_add_optout_dialog' ) );
+				}
 			} else {
 				$link_text_id = 'opt-in';
 
