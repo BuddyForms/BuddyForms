@@ -545,8 +545,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 		//
 		// Save taxonomies if needed
-		//
-		if ( $customfield['type'] == 'taxonomy' ) :
+		// taxonomy, category, tags
+		if ( $customfield['type'] == 'taxonomy' || $customfield['type'] == 'category' || $customfield['type'] == 'tags' ) :
 
 			if ( $customfield['taxonomy'] != 'none' &&isset( $_POST[ $customfield['slug'] ] ) ) {
 
