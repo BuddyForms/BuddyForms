@@ -64,7 +64,7 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
-	$bfdesign = $buddyforms[$form_slug]['layout'];
+	$bfdesign = isset($buddyforms[$form_slug]['layout']) ? $buddyforms[$form_slug]['layout'] : 'inline';
 
 
 
@@ -328,8 +328,8 @@ function buddyforms_form_html( $args ) {
 
 	$form->addElement( new Element_Hidden( "bf_submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
 
-	$bf_button_classes 	= 'bf-submit ' . $bfdesign['button_class'];
-	$bf_button_text			= $bfdesign['submit_text'];
+	$bf_button_classes 	= 'bf-submit ' .  isset( $bfdesign['button_class'] ) && !empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
+	$bf_button_text			= isset( $bfdesign['submit_text'] ) && !empty( $bfdesign['submit_text'] ) ? $bfdesign['submit_text'] : __('Submit', 'buddyforms');
 
 	$bf_submit_button = new Element_Button( $bf_button_text, 'submit', array(
 		'id'    => $form_slug,
