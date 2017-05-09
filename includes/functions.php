@@ -166,8 +166,13 @@ function buddyforms_wp_login_form() {
 /**
  * @return mixed|string|void
  */
-function buddyforms_get_wp_login_form() {
-	$wp_login_form = '<h3>' . __( 'You need to be logged in to use this Form', 'buddyforms' ) . '</h3>';
+function buddyforms_get_wp_login_form( $title = '' ) {
+
+    if( empty( $title ) ){
+	    $title = __( 'You need to be logged in to view this page', 'buddyforms' );
+    }
+
+	$wp_login_form = '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
