@@ -23,12 +23,18 @@ function buddyforms_layout_defaults(){
 	$json['field_active_border_color'] = array('color' => '', 'style' => 'auto');
 	$json['field_active_font_color'] = array('color' => '', 'style' => 'auto');
 
+	$json['desc_position'] = 'above_field';
+	$json['desc_font_size'] = '';
+	$json['desc_font_color'] = array('color' => '', 'style' => 'auto');
+	$json['desc_font_style'] = 'italic';
+
 	$json['submit_text'] = __('Submit', 'buddyforms');
 	$json['button_width'] = 'blockmobile';
 	$json['button_alignment'] = 'left';
 	$json['button_size'] = 'large';
 	$json['button_class'] = '';
 	$json['button_border_radius'] = '';
+	$json['button_border_width'] = '';
 	$json['button_background_color'] = array('color' => '', 'style' => 'auto');
 	$json['button_font_color'] = array('color' => '', 'style' => 'auto');
 	$json['button_border_color'] = array('color' => '', 'style' => 'auto');

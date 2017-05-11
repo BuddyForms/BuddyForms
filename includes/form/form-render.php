@@ -64,11 +64,58 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
-	$bfdesign = isset($buddyforms[$form_slug]['layout']) ? $buddyforms[$form_slug]['layout'] : 'inline';
+	$bfdesign = isset($buddyforms[$form_slug]['layout']) ? $buddyforms[$form_slug]['layout'] : array();
 
 
+	// Alright, let's some defaults
 
+	// Labels
+	isset($bfdesign['labels_layout']) ? $bfdesign['labels_layout'] 																													: 'inline';
+	isset($bfdesign['label_font_size']) ? $bfdesign['label_font_size'] 																											: '';
+	isset($bfdesign['label_font_color']['style']) ? $bfdesign['label_font_color']['style'] 																	: 'auto';
+	isset($bfdesign['label_font_style']) ? $bfdesign['label_font_style'] 																										: 'bold';
 
+	// Form Elements
+	isset($bfdesign['radio_button_alignment']) ? $bfdesign['radio_button_alignment'] 																				: 'inline';
+	isset($bfdesign['checkbox_alignment']) ? $bfdesign['checkbox_alignment'] 																								: 'inline';
+
+	// Text Fields
+	isset($bfdesign['field_padding']) ? $bfdesign['field_padding'] 																													: '15';
+	isset($bfdesign['field_background_color']['style']) ? $bfdesign['field_background_color']['style'] 											: 'auto';
+	isset($bfdesign['field_border_color']['style']) ? $bfdesign['field_border_color']['style'] 															: 'auto';
+	isset($bfdesign['field_border_width']) ? $bfdesign['field_border_width'] 																								: '';
+	isset($bfdesign['field_border_radius']) ? $bfdesign['field_border_radius'] 																							: '';
+	isset($bfdesign['field_font_size']) ? $bfdesign['field_font_size'] 																											: '15';
+	isset($bfdesign['field_font_color']['style']) ? $bfdesign['field_font_color']['style'] 																	: 'auto';
+
+	// Text Fields :Active
+	isset($bfdesign['field_active_background_color']['style']) ? $bfdesign['field_active_background_color']['style'] 				: 'auto';
+	isset($bfdesign['field_active_border_color']['style']) ? $bfdesign['field_active_border_color']['style'] 								: 'auto';
+	isset($bfdesign['field_active_font_color']['style']) ? $bfdesign['field_active_font_color']['style'] 										: 'auto';
+	isset($bfdesign['field_placeholder_font_color']['style']) ? $bfdesign['field_placeholder_font_color']['style'] 					: 'auto';
+
+	// Descriptions
+	isset($bfdesign['desc_font_size']) ? $bfdesign['desc_font_size'] 																												: '';
+	isset($bfdesign['desc_font_color']['style']) ? $bfdesign['desc_font_color']['style'] 																		: 'auto';
+	isset($bfdesign['desc_font_style']) ? $bfdesign['desc_font_style'] 																											: 'italic';
+
+	// Submit Button
+	isset($bfdesign['button_width']) ? $bfdesign['button_width'] 																														: 'blockmobile';
+	isset($bfdesign['button_size']) ? $bfdesign['button_size'] 																															: 'large';
+	isset($bfdesign['button_background_color']['style']) ? $bfdesign['button_background_color']['style'] 										: 'auto';
+	isset($bfdesign['button_font_color']['style']) ? $bfdesign['button_font_color']['style'] 																: 'auto';
+	isset($bfdesign['button_border_radius']) ? $bfdesign['button_border_radius'] 																						: '';
+	isset($bfdesign['button_border_width']) ? $bfdesign['button_border_width'] 																							: '';
+	isset($bfdesign['button_border_color']['style']) ? $bfdesign['button_border_color']['style'] 														: 'auto';
+	isset($bfdesign['button_alignment']) ? $bfdesign['button_alignment'] 																										: 'left';
+
+	// Submit Button :Active
+	isset($bfdesign['button_background_color_hover']['style']) ? $bfdesign['button_background_color_hover']['style'] 				: 'auto';
+	isset($bfdesign['button_border_color_hover']['style']) ? $bfdesign['button_border_color_hover']['style'] 								: 'auto';
+	isset($bfdesign['button_font_color_hover']['style']) ? $bfdesign['button_font_color_hover']['style'] 										: 'auto';
+
+	// Custom CSS
+	isset($bfdesign['custom_css']) ? $bfdesign['custom_css'] 																																: '';
 
 	ob_start();?>
 
