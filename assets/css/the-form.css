@@ -82,6 +82,7 @@
   padding-right: 15px;
   float: left;
   width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 992px) {
