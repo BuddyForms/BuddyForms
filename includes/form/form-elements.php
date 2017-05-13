@@ -200,7 +200,12 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
-							$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+							if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
+							} else {
+								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+							}
+
 							$form->addElement( new Element_HTML( $wp_editor ) );
 						}
 						break;

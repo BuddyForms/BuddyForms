@@ -70,8 +70,8 @@ function buddyforms_form_html( $args ) {
 	// Alright, let's some defaults
 
 	// Labels
-	$bfdesign['labels_layout']      = isset($bfdesign['labels_layout']) ? $bfdesign['labels_layout'] : 'inline';
-	$bfdesign['label_font_size']    = isset($bfdesign['label_font_size']) ? $bfdesign['label_font_size'] : '';
+	$bfdesign['labels_layout']              = isset($bfdesign['labels_layout']) ? $bfdesign['labels_layout'] : 'inline';
+	$bfdesign['label_font_size']            = isset($bfdesign['label_font_size']) ? $bfdesign['label_font_size'] : '';
 	$bfdesign['label_font_color']['style']   = isset($bfdesign['label_font_color']['style']) ? $bfdesign['label_font_color']['style'] : 'auto';
 	$bfdesign['label_font_style']   = isset($bfdesign['label_font_style']) ? $bfdesign['label_font_style'] : 'bold';
 
