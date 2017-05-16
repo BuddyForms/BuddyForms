@@ -447,6 +447,8 @@ function buddyforms_update_post( $args ) {
 			'post_parent'    => $post_parent,
 		);
 
+		$bf_post = apply_filters( 'buddyforms_wp_update_post_args', $bf_post, $form_slug );
+
 		// Update the new post
 		$post_id = wp_update_post( $bf_post, true );
 
@@ -469,6 +471,8 @@ function buddyforms_update_post( $args ) {
 			$bf_post['post_date']     = $post_date;
 			$bf_post['post_date_gmt'] = $post_date;
 		}
+
+		$bf_post = apply_filters( 'buddyforms_wp_insert_post_args', $bf_post, $form_slug );
 
 		// Insert the new form
 		$post_id = wp_insert_post( $bf_post, true );
