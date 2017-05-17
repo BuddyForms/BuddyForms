@@ -206,6 +206,8 @@ function buddyforms_form_elements( $form, $args ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
+							$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor, $post_id );
+
 							$form->addElement( new Element_HTML( $wp_editor ) );
 						}
 						break;
