@@ -584,3 +584,26 @@ function buddyforms_tinymce_setup_function( $initArray ) {
             }';
 	return $initArray;
 }
+
+/**
+ *
+ * Will return the form slug from post meta or the default. none if no form is attached
+ * 
+ * @param $post_id
+ *
+ * @return mixed
+ */
+function buddyforms_get_form_slug_by_post_id( $post_id ){
+
+	$value = get_post_meta( $post_id, '_bf_form_slug', true );
+
+	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+	$post_type = get_post_type( $post_id );
+
+	if ( ! $value && isset( $buddyforms_posttypes_default[ $post_type ] ) || isset( $value ) && $value == 'none' ) {
+		$value = $buddyforms_posttypes_default[ $post_type ];
+	}
+
+	return $value;
+}
