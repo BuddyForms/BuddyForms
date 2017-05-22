@@ -8,6 +8,10 @@
 function buddyforms_form_html( $args ) {
 	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id, $form_slug;
 
+	if( !session_id('buddyforms' ) ) {
+		session_start( array( 'buddyforms' ) );
+	}
+
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';

@@ -588,7 +588,7 @@ function buddyforms_tinymce_setup_function( $initArray ) {
 /**
  *
  * Will return the form slug from post meta or the default. none if no form is attached
- * 
+ *
  * @param $post_id
  *
  * @return mixed

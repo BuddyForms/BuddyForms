@@ -54,9 +54,6 @@ class BuddyForms {
 	 */
 	public function __construct() {
 
-	    if( !session_id('buddyforms' ) ) {
-           session_start( array( 'buddyforms' ) );
-	    }
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 		$this->load_constants();
