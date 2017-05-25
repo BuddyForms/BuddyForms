@@ -320,9 +320,6 @@ class BuddyForms {
 		// load the tk_icons everywhere
 		wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
 
-
-
-
 	}
 
 	/**
