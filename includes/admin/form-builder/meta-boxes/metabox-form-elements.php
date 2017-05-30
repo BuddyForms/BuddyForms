@@ -272,6 +272,9 @@ function buddyforms_form_elements_select_options() {
 				'text'        => array(
 					'label' => __( 'Text', 'buddyforms' ),
 				),
+				'email'        => array(
+					'label' => __( 'eMail', 'buddyforms' ),
+				),
 				'textarea'    => array(
 					'label' => __( 'Textarea', 'buddyforms' ),
 				),

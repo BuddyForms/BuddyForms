@@ -239,11 +239,42 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'textarea':
+
+			$post_textarea_options                     = isset( $customfield['post_textarea_options'] ) ? $customfield['post_textarea_options'] : 'false';
+			$post_textarea_options_array               = array(
+				'media_buttons' => 'media_buttons',
+				'tinymce'       => 'tinymce',
+				'quicktags'     => 'quicktags'
+			);
+			$form_fields['advanced']['textarea_opt_a'] = new Element_Checkbox( '<b>' . __( 'Turn on wp editor features', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_textarea_options]", $post_textarea_options_array, array( 'value' => $post_textarea_options ) );
+
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
 			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
 
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+
+			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
+
+			$generate_textarea = isset( $customfield['generate_textarea'] ) ? $customfield['generate_textarea']  : '';
+			$form_fields['advanced']['generate_textarea'] = new Element_Textarea( '<b>' . __( 'Generate textarea', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_textarea]", array(
+				'value'     => $generate_textarea,
+				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
+			) );
+
+			break;
+		case 'email':
+			unset( $form_fields['advanced']['slug'] );
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : 'eMail';
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_email' );
 			break;
 		case 'number':
 			$validation_min                              = isset( $customfield['validation_min'] ) ? stripcslashes( $customfield['validation_min'] ) : 0;
