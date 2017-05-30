@@ -92,25 +92,30 @@ function buddyforms_process_submission( $args = Array() ) {
 	// Check if this is a registration form only
 	if ( $form_type == 'registration' ) {
 
-		$new_user_id = buddyforms_wp_insert_user();
-		// Check if registration was successful
-		if ( ! $new_user_id ) {
+		if( ! is_user_logged_in() ){
+			$user_id = buddyforms_wp_insert_user();
+		} else {
+			$user_id = buddyforms_wp_update_user();
+		}
+
+		// Check if registration or update was successful
+		if ( ! $user_id ) {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
-
 			return $args;
 		}
+
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the Browser user data
-			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true );
+			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
 
 		if(isset($buddyforms[$form_slug]['form_fields'])){
 			foreach($buddyforms[$form_slug]['form_fields'] as $field_key => $r_field) {
 				if(isset($_POST[$r_field['slug']])){
-					update_user_meta( $new_user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[$r_field['slug']] ) );
+					update_user_meta( $user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[$r_field['slug']] ) );
 				}
 			}
 
@@ -132,10 +137,10 @@ function buddyforms_process_submission( $args = Array() ) {
 	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
 
 		// ok let us try to register a user
-		$new_user_id = buddyforms_wp_insert_user();
+		$user_id = buddyforms_wp_insert_user();
 
 		// Check if registration was successful
-		if ( ! $new_user_id ) {
+		if ( ! $user_id ) {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
@@ -146,7 +151,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the Browser user data
-			add_user_meta( $new_user_id, 'buddyforms_browser_user_data', $user_data, true );
+			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
 	}
 

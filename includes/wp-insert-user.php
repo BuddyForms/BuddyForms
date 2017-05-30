@@ -4,6 +4,96 @@
 /**
  * @return bool|int|WP_Error
  */
+function buddyforms_wp_update_user() {
+	global $buddyforms, $form_slug;
+
+	$hasError = false;
+
+	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
+
+	if ( ! wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
+		return false;
+	}
+
+//	$user_login   = sanitize_user( $_POST["user_login"] );
+	$user_email   = sanitize_email( $_POST["user_email"] );
+	$user_first   = sanitize_text_field( $_POST["user_first"] );
+	$user_last    = sanitize_text_field( $_POST["user_last"] );
+	$user_pass    = esc_attr( $_POST["user_pass"] );
+	$pass_confirm = esc_attr( $_POST["user_pass_confirm"] );
+	$user_url     = isset( $_POST["user_website"] ) ? esc_url( $_POST["user_website"] ) : '';
+	$description  = isset( $_POST["user_bio"] ) ? esc_textarea( $_POST["user_bio"] ) : '';
+
+	// invalid email?
+	if ( ! is_email( $user_email ) ) {
+		$hasError = true;
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __( 'Error: Invalid email', 'buddyforms' ) );
+	}
+
+//	// invalid username?
+//	if ( ! validate_username( $user_login ) ) {
+//		$hasError = true;
+//		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+//	}
+//	// empty username?
+//	if ( $user_login == '' ) {
+//		$hasError = true;
+//		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+//	}
+
+	if ( $user_pass == '' ) {
+		$hasError = true;
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
+	}
+	// passwords do not match?
+	if ( $user_pass != $pass_confirm ) {
+		$hasError = true;
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Passwords do not match', 'buddyforms' ) );
+	}
+
+
+	// Let us check if we run into any error.
+
+
+	// only create the user in if there are no errors
+	if ( ! $hasError ) {
+
+		$user_id = wp_update_user( array(
+				'ID'            => get_current_user_id(),
+//				'user_login'    => $user_login,
+				'user_pass'     => $user_pass,
+				'user_email'    => $user_email,
+				'first_name'    => $user_first,
+				'last_name'     => $user_last,
+				'user_url'      => $user_url,
+				'description'   => $description
+			)
+		);
+
+		// if multisite is enabled we need to make sure the user will become a member of the form blog id
+		if ( buddyforms_is_multisite() ) {
+			if( isset( $buddyforms[ $form_slug ]['blog_id'] ) ){
+				// Add the user to the blog selected in the form builder
+				add_user_to_blog( $buddyforms[ $form_slug ]['blog_id'], $user_id, $user_role );
+			} else {
+				// Add the user to the current blog
+				add_user_to_blog( get_current_blog_id() , $user_id, $user_role );
+			}
+		}
+
+		if ( $user_id && ! is_wp_error( $user_id ) ) {
+			// todo: send an activation
+		}
+
+		return $user_id;
+	}
+
+	return false;
+}
+// register a new user
+/**
+ * @return bool|int|WP_Error
+ */
 function buddyforms_wp_insert_user() {
 	global $buddyforms, $form_slug;
 
@@ -142,7 +232,6 @@ function buddyforms_wp_insert_user() {
 
 	return false;
 }
-
 // used for tracking error messages
 /**
  * @return WP_Error
@@ -245,9 +334,9 @@ add_action( 'template_redirect', 'buddyforms_activate_user' );
 function buddyforms_activate_user() {
 	global $buddyforms;
 
-	if ( ! is_page() ) {
-		return;
-	}
+//	if ( ! is_page() ) {
+//		return;
+//	}
 
 	if ( ! isset( $_GET['form_slug'] ) ) {
 		return;
@@ -257,14 +346,20 @@ function buddyforms_activate_user() {
 		return;
 	}
 
-	if ( get_the_ID() == $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) {
+//	if ( get_the_ID() == $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) {
 		$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
 		if ( $user_id ) {
 			// get user meta activation hash field
 			$code = get_user_meta( $user_id, 'has_to_be_activated', true );
 			if ( $code == filter_input( INPUT_GET, 'key' ) ) {
 				delete_user_meta( $user_id, 'has_to_be_activated' );
+
+				if( isset( $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) ){
+					$url = get_permalink($buddyforms[ $_GET['form_slug'] ]['registration']['activation_page']);
+					wp_redirect($url);
+				}
+
 			}
 		}
-	}
+//	}
 }

@@ -28,7 +28,16 @@ function buddyforms_form_elements( $form, $args ) {
 			if ( isset( $_POST[ $slug ] ) ) {
 				$customfield_val = $_POST[ $slug ];
 			} else {
-				$customfield_val = get_post_meta( $post_id, $slug, true );
+
+				if( $buddyforms[$form_slug]['form_type'] == 'registration' ){
+
+					$current_user = get_userdata( get_current_user_id() );
+					$customfield_val = get_user_meta( $current_user->ID , $slug, true );
+
+				} else {
+					$customfield_val = get_post_meta( $post_id, $slug, true );
+				}
+
 			}
 
 			if ( empty( $customfield_val ) && isset( $customfield['default'] ) ) {
@@ -79,18 +88,29 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+							if( $buddyforms[$form_slug]['form_type'] != 'registration' && ! is_user_logged_in() ) {
+								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+							}
 						break;
 
 					case 'user_email':
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+							$element_attr['value'] = $current_user->user_email;
+						}
 						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_first':
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+							$element_attr['value'] = $current_user->user_firstname;
+						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_last':
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+							$element_attr['value'] = $current_user->user_lastname;
+						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
@@ -101,10 +121,16 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_website':
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+							$element_attr['value'] = $current_user->user_url;
+						}
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_bio':
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+							$element_attr['value'] = $current_user->user_description;
+						}
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;
 

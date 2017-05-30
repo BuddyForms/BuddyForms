@@ -687,6 +687,10 @@ function buddyforms_notice_if_broken_form(){
 		return;
 	}
 
+	if( $buddyform['form_type'] != 'post'){
+		return;
+    }
+
     //
 	// OK let us start with the form validation
     //
