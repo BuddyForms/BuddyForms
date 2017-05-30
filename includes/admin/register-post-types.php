@@ -661,3 +661,72 @@ function buddyforms_export_form() {
 }
 
 add_action( 'admin_init', 'buddyforms_export_form' );
+
+
+add_action( 'admin_notices', 'buddyforms_notice_if_broken_form' );
+
+function buddyforms_notice_if_broken_form(){
+	global $post, $buddyform;
+
+	// Get the current screen
+	$screen = get_current_screen();
+
+	if ( ! ($screen->parent_base == 'edit' && isset( $_GET[ 'action' ] ) ) ) {
+		return;
+	}
+
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+
+	if ( ! $buddyform ) {
+		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	}
+
+	if( ! is_array( $buddyform ) ){
+		return;
+	}
+
+    //
+	// OK let us start with the form validation
+    //
+
+	if( ! isset( $buddyform['post_type'] )  ){
+		$messages[] = __( 'No Post Type Selected. Please select a post type', 'buddyforms' );
+	}
+	if( isset( $buddyform['post_type'] )  ){
+
+		$post_types = buddyforms_get_post_types();
+
+		if( ! in_array( $buddyform['post_type'], $post_types ) ){
+			$pt_messages = __( 'You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types', 'buddyforms' );
+		}
+		if ( buddyforms_core_fs()->is__premium_only() ) {
+			if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+				if ( ! in_array( $buddyform['post_type'], $post_types ) ) {
+					$pt_messages = __( 'The Selected Post Type does not exist', 'buddyforms' );
+				}
+			}
+		}
+
+		if( ! empty($pt_messages ) ){
+			$messages[] = $pt_messages;
+        }
+
+	}
+	$messages = apply_filters( 'buddyforms_broken_form_error_messages', $messages );
+
+	if( ! is_array( $messages ) ) {
+		return;
+    }
+
+	?>
+    <div class="notice notice-error">
+    <font color="#b22222"><?php _e( 'This Form is Broken!', 'buddyforms' ); ?></font>
+        <?php
+            foreach( $messages as $message ){
+                echo '<p>' . $message . '</p>';
+            }
+        ?>
+    </div><?php
+}

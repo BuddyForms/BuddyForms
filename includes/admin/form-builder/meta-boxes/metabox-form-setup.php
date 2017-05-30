@@ -12,31 +12,7 @@ function buddyforms_metabox_form_setup() {
 	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
 
-	$post_types = array();
-
-	// Generate the Post Type Array 'none' == Contact Form
-	$post_types['bf_submissions'] = 'none';
-	$post_types['post']           = 'Post';
-	$post_types['page']           = 'Page';
-
-	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
-
-			// Get all post types
-			$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
-
-			// Generate the Post Type Array 'none' == Contact Form
-			$post_types['bf_submissions'] = 'none';
-
-			$post_types = buddyforms_sort_array_by_Array( $post_types, array( 'bf_submissions' ) );
-
-			// Remove the 'buddyforms' post type from the post type array
-			unset( $post_types['buddyforms'] );
-
-			$post_types = apply_filters( 'buddyforms_form_builder_post_type', $post_types );
-
-		}
-	}
+	$post_types = buddyforms_get_post_types();
 
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
 	$page_on_front = get_option('page_on_front');
