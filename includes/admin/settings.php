@@ -106,7 +106,7 @@ function buddyforms_settings_page_tabs_content() {
 				case 'general' :
 					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' ); ?>
 					<div class="metabox-holder">
-						<div class="postbox">
+                        <div class="postbox buddyforms-metabox">
 							<h3><span><?php _e( 'Post Types Default Form', 'buddyforms' ); ?></span></h3>
 							<div class="inside">
 								<p>Select a default form for every post type.</p>
@@ -175,7 +175,7 @@ function buddyforms_settings_page_tabs_content() {
 					break;
 				case 'import' : ?>
 					<div class="metabox-holder">
-						<div class="postbox">
+                        <div class="postbox buddyforms-metabox">
 							<h3><span><?php _e( 'Import Forms', 'buddyforms' ); ?></span></h3>
 							<div class="inside">
 								<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
@@ -205,7 +205,7 @@ function buddyforms_settings_page_tabs_content() {
 				case 'layout' : ?>
 
                     <div class="metabox-holder">
-                        <div class="postbox">
+                        <div class="postbox buddyforms-metabox">
                             <h3><span><?php _e( 'Form Layout', 'buddyforms' ); ?></span></h3>
                             <div class="inside">
                                 <p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ' ); ?></p>

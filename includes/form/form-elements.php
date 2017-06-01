@@ -355,18 +355,17 @@ function buddyforms_form_elements( $form, $args ) {
 
 						ob_start();
 							$settings = array(
-								'wpautop'       => true,
+								'wpautop'       => false,
 								'media_buttons' => isset( $customfield['post_textarea_options'] ) ? in_array( 'media_buttons', $customfield['post_textarea_options'] ) ? true : false : false,
-								'tinymce'       =>
-									isset( $customfield['post_textarea_options'] ) ? in_array( 'tinymce', $customfield['post_textarea_options'] ) ? true : false : false,
+								'tinymce'       => isset( $customfield['post_textarea_options'] ) ? in_array( 'tinymce', $customfield['post_textarea_options'] ) ? true : false : false,
 								'quicktags'     => isset( $customfield['post_textarea_options'] ) ? in_array( 'quicktags', $customfield['post_textarea_options'] ) ? true : false : false,
 								'textarea_rows' => 18,
 								'textarea_name' => $slug,
 								'editor_class'  => 'textInMce',
 							);
 
-							wp_editor( $customfield_val, $name, $settings );
-						$wp_editor = ob_get_contents();
+							wp_editor( stripslashes( $customfield_val ), $name, $settings );
+							$wp_editor = ob_get_contents();
 						ob_clean();
 
 

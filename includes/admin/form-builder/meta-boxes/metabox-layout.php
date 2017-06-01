@@ -84,14 +84,19 @@ function buddyforms_load_form_layout(){
 add_action( 'wp_ajax_buddyforms_load_form_layout', 'buddyforms_load_form_layout' );
 
 function buddyforms_layout_screen( $option_name = "buddyforms_options") {
-    global $buddyforms;
+    global $buddyforms, $form_slug;
 
 	$option_name = $option_name. '[layout]';
 
+	if( isset( $_POST['action'] ) ) {
+		$options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	} else {
+		$options = get_option( 'buddyforms_layout_options' );
+    }
+
+
+
 	$form_setup = array();
-
-	$options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-
 
 	$defaults = buddyforms_layout_defaults();
 

@@ -68,7 +68,7 @@ class BuddyForms {
 		add_action( 'admin_head'            , array( $this, 'remove_admin_scripts' ), 999999, 1 );
 		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_styles' ), 102, 1 );
 		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_js' ), 102, 1 );
-		add_action( 'admin_footer'          , array( $this, 'admin_js_footer' ), 2, 1 );
+//		add_action( 'admin_footer'          , array( $this, 'admin_js_footer' ), 2, 1 );
 		add_filter( 'admin_footer_text'     , array( $this, 'admin_footer_text' ), 1 );
 
 		add_action( 'wp_enqueue_scripts'    , array( $this, 'front_js_loader' ), 102, 1 );
@@ -252,6 +252,7 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 
 			// Remove all code from the admin_head added by other plugins. We not need it on the BuddyForms Views
@@ -301,6 +302,7 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 
 			if ( is_rtl() ) {
@@ -343,6 +345,7 @@ class BuddyForms {
 			|| $hook_suffix == 'buddyforms-page-bf-settings'
 			|| $hook_suffix == 'buddyforms-page-bf-submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
 			wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ) );
