@@ -12,18 +12,18 @@
 
 	$log_book = FS_Logger::get_log();
 ?>
-<h1><?php _efs( 'Log' ) ?></h1>
+<h1><?php fs_echo( 'Log' ) ?></h1>
 
 <table class="widefat" style="font-size: 11px;">
 	<thead>
 	<tr>
 		<th>#</th>
-		<th><?php _efs( 'id' ) ?></th>
-		<th><?php _efs( 'type' ) ?></th>
-		<th><?php _efs( 'function' ) ?></th>
-		<th><?php _efs( 'message' ) ?></th>
-		<th><?php _efs( 'file' ) ?></th>
-		<th><?php _efs( 'timestamp' ) ?></th>
+		<th><?php fs_echo( 'id' ) ?></th>
+		<th><?php fs_echo( 'type' ) ?></th>
+		<th><?php fs_echo( 'function' ) ?></th>
+		<th><?php fs_echo( 'message' ) ?></th>
+		<th><?php fs_echo( 'file' ) ?></th>
+		<th><?php fs_echo( 'timestamp' ) ?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -41,8 +41,8 @@
 			} ?>>
 				<td><?php echo $log['cnt'] ?>.</td>
 				<td><?php echo $logger->get_id() ?></td>
-				<td><?php echo $log['type'] ?></td>
-				<td><b><code style="color: blue;"><?php echo $log['function'] ?></code></b></td>
+				<td><?php echo $log['log_type'] ?></td>
+				<td><b><code style="color: blue;"><?php echo ( ! empty( $log['class'] ) ? $log['class'] . $log['type'] : '' ) . $log['function'] ?></code></b></td>
 				<td>
 					<?php
 						printf(
@@ -56,10 +56,10 @@
 				</td>
 				<td><?php
 						if ( isset( $log['file'] ) ) {
-							echo substr( $log['file'], $logger->get_file() ) . ':' . $log['line'] . ')';
+							echo substr( $log['file'], $logger->get_file() ) . ':' . $log['line'];
 						}
 					?></td>
-				<td><?php echo number_format( 100 * ( $log['timestamp'] - WP_FS__SCRIPT_START_TIME ), 2 ) . ' ' . __fs( 'ms' ) ?></td>
+				<td><?php echo number_format( 100 * ( $log['timestamp'] - WP_FS__SCRIPT_START_TIME ), 2 ) . ' ' . fs_text( 'ms' ) ?></td>
 			</tr>
 			<?php $i ++; endforeach ?>
 	</tbody>

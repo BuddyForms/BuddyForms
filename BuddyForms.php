@@ -53,9 +53,7 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
-		if( !session_id('buddyforms' ) ) {
-			session_start( array( 'buddyforms' ) );
-		}
+
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 		$this->load_constants();
@@ -520,6 +518,9 @@ class BuddyForms {
 		$found = apply_filters( 'buddyforms_front_js_css_loader', $found );
 
 		if ( $found ) {
+			if( !session_id('buddyforms' ) ) {
+				session_start( array( 'buddyforms' ) );
+			}
 			BuddyForms::front_js_css();
 		}
 

@@ -702,7 +702,7 @@ function buddyforms_notice_if_broken_form(){
 
 		$post_types = buddyforms_get_post_types();
 
-		if( ! in_array( $buddyform['post_type'], $post_types ) ){
+		if( ! isset( $post_types[$buddyform['post_type']] ) ){
 			$pt_messages = __( 'You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types', 'buddyforms' );
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
