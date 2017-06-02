@@ -334,10 +334,10 @@ jQuery(document).ready(function (jQuery) {
     jQuery('#post_status_mail_notification_add_new').live('click', function () {
 
         var error = false;
-        var trigger = jQuery('.post_status_mail_notification_trigger').val();
+        var trigger = jQuery('.post_status_mail_notification_trigger select').val();
 
         if (!trigger) {
-            trigger = 'Mail_Notification'
+            return false;
         }
 
         if (trigger == 'none') {
