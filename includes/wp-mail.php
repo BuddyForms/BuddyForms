@@ -109,8 +109,48 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$subject = isset( $_POST['subject'] ) ? $_POST['subject'] : $mail_notification_trigger['mail_subject'];
 
-	$from_name  = $mail_notification_trigger['mail_from_name'];
-	$from_email = $mail_notification_trigger['mail_from'];
+
+	$from_name = isset( $mail_notification_trigger['mail_from_name'] ) ? $mail_notification_trigger['mail_from_name'] : 'blog_title';
+
+	switch ( $from_name ){
+		case 'user_login':
+			$from_name = $usernameauth;
+			break;
+		case 'user_first':
+			$from_name = $first_name;
+			break;
+		case 'user_last':
+			$from_name = $last_name;
+			break;
+		case 'user_first_last':
+			$from_name = $first_name . ' ' . $last_name;
+			break;
+		case 'custom':
+			$from_name = $mail_notification_trigger['mail_from_name_custom'];
+			break;
+		default:
+			$from_name = $blog_title;
+			break;
+	}
+
+
+
+	$from_email = isset( $mail_notification_trigger['mail_from'] ) ? $mail_notification_trigger['mail_from'] : 'admin';
+
+	switch ( $from_email ){
+		case 'submitter':
+			$from_email = $user_email;
+			break;
+		case 'admin':
+			$from_email = get_option( 'admin_email' );
+			break;
+		case 'custom':
+			$from_email = isset($mail_notification_trigger['mail_from_custom']) ? $mail_notification_trigger['mail_from_custom'] : $from_email;
+			break;
+		default:
+			$from_email = $user_email;
+			break;
+	}
 
 	$emailBody  = isset( $_POST['message'] ) ? $_POST['message'] : $mail_notification_trigger['mail_body'];
 
@@ -152,8 +192,11 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 						break;
 				}
 
+				// Replace From name Shortcodes with form element values
+				$from_name = str_replace( '[' . $field['slug'] . ']', $field_value, $from_name );
 
-				$emailBody   = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
+				// Replace Buddytext Shortcodes with form element values
+				$emailBody = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
 			}
 		}
 
@@ -371,7 +414,6 @@ function buddyforms_mail_notification_form_elements_as_table($form_slug){
 				$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
 				break;
 		}
-
 
 		$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.

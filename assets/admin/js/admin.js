@@ -170,26 +170,43 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
-    // Mail Notifications sent to display only if selected
-    jQuery(document.body).on('change', '.bf_sent_mail_to_multi_checkbox', function () {
+    // Mail Notifications from email display only if selected
+    jQuery(document.body).on('change', '.bf_mail_from_name_multi_checkbox input', function () {
 
-        var input = jQuery(this).find("input");
-        var id = input.attr('id');
+        var val = jQuery(this).val();
 
-        if (input.val() === 'admin')
-            return;
-
-        if (jQuery(input).is(':checked')) {
-
-            jQuery('.' + id).removeClass('hidden');
-            jQuery('.' + id + ' td .checkbox label').removeClass('hidden');
-            jQuery('.' + id + ' td .' + id).removeClass('hidden');
-
+        if (val === 'custom') {
+            jQuery('.mail_from_name_custom' ).removeClass('hidden');
         } else {
-
-            jQuery('.' + id).addClass('hidden');
-            
+            jQuery('.mail_from_name_custom' ).addClass('hidden');
         }
+
+    });
+
+    // Mail Notifications from email display only if selected
+    jQuery(document.body).on('change', '.bf_mail_from_multi_checkbox input', function () {
+
+        var val = jQuery(this).val();
+
+        if (val === 'custom') {
+            jQuery('.mail_from_custom' ).removeClass('hidden');
+        } else {
+            jQuery('.mail_from_custom' ).addClass('hidden');
+        }
+
+    });
+
+    // Mail Notifications sent to display only if selected
+    jQuery(document.body).on('change', '.bf_sent_mail_to_multi_checkbox input', function () {
+
+        var val = jQuery(this).val();
+
+        if (jQuery(this).is(':checked')) {
+            jQuery('.mail_to_' + val + '_address').removeClass('hidden');
+        } else {
+            jQuery('.mail_to_' + val + '_address').addClass('hidden');
+        }
+
     });
 
     // Validate the form before publish

@@ -977,9 +977,9 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
  * @param $form_fields
  * @param string $field_id
  */
-function buddyforms_display_field_group_table( $form_fields, $field_id = 'global' ) {
+function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped' ) {
 	?>
-	<table class="wp-list-table widefat posts fixed striped">
+	<table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
 		<tbody>
 		<?php
 		if ( isset( $form_fields ) ) {

@@ -81,18 +81,47 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 
 	$form_setup[] = new Element_Hidden( "buddyforms_options[mail_submissions][" . $trigger . "][mail_trigger_id]", $trigger, array( 'class' => 'trigger' . $trigger ) );
 
-	$blog_title  = get_bloginfo( 'name' );
+	// From Name
+	$element = new Element_Radio( '<b>' . __( 'From Name', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name]", array(
+		'user_login'      => __( 'Username', 'buddyforms' ),
+		'user_first'      => __( 'First Name', 'buddyforms' ),
+		'user_last'       => __( 'Last Name', 'buddyforms' ),
+		'user_first_last' => __( 'Firs and Last Name', 'buddyforms' ),
+		'blog_title'      => __( 'Blog Title', 'buddyforms' ),
+        'custom'          => __( 'Custom', 'buddyforms' )
+	), array(
+		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] : 'blog_title',
+		'class'     => 'mail_from_checkbox bf_mail_from_name_multi_checkbox',
+	) );
+	$form_setup[] = $element;
 
-	$form_setup[] = new Element_Textbox( '<b>' . __( "From Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name]", array(
-		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] : $blog_title,
-		'required'  => 1,
-		'shortDesc' => 'The senders name e.g. John Doe '
+	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ==  'custom' ? '' : 'hidden';
+	$form_setup[] = new Element_Email( '<b>' . __( "Custom Mail From Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name_custom]", array(
+		"class" => 'mail_from_name_custom ' . $mail_to_cc,
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] : '',
+        'shortDesc' => 'The senders name e.g. John Doe. You can use any form element slug as shortcode [FIELD SLUG]. '
 	) );
-	$form_setup[] = new Element_Email( '<b>' . __( "From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
-		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from'] : get_option( 'admin_email' ),
-		'required'  => 1,
-		'shortDesc' => 'The senders eMail e.g. john@mail.com'
+
+
+    // From eMail
+	$element = new Element_Radio( '<b>' . __( 'From eMail', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
+		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
+		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
+		'custom'    => __( 'Custom', 'buddyforms' )
+	), array(
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from'] : 'submitter',
+		'class' => 'mail_from_checkbox bf_mail_from_multi_checkbox'
 	) );
+	$form_setup[] = $element;
+
+	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from'] == 'custom' ? '' : 'hidden';
+	$form_setup[] = new Element_Email( '<b>' . __( "Custom Mail From Address", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_custom]", array(
+		"class" => 'mail_from_custom ' . $mail_to_cc,
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_custom'] : ''
+	) );
+
+
+	// to eMail
 	$form_setup[] = new Element_Textbox( '<b>' . __( "To eMails", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_address]", array(
 		"class" => "bf-mail-field",
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] : '',
@@ -103,31 +132,27 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
 		'cc'        => __( 'CC', 'buddyforms' ),
-		'bcc'       => __( 'BCC', 'buddyforms' ),
+		'bcc'       => __( 'BCC', 'buddyforms' )
 	), array(
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : '',
 		'id'    => 'mail_submissions' . $trigger,
 		'class' => 'mail_to_checkbox bf_sent_mail_to_multi_checkbox'
 	) );
-
-	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
-
 	$form_setup[] = $element;
 
+	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
 	$form_setup[] = new Element_Email( '<b>' . __( "CC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_cc_address]", array(
-		'id'    => 'mail_submissions' . $trigger . '-1',
-		"class" => 'mail_submissions' . $trigger . '-1 ' . $mail_to_cc,
+		"class" => 'mail_to_cc_address ' . $mail_to_cc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
 	) );
 
 	$mail_to_bcc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'bcc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
-
 	$form_setup[] = new Element_Email( '<b>' . __( "BCC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_bcc_address]", array(
-		'id'    => 'mail_submissions' . $trigger . '-2',
-		"class" => 'mail_submissions' . $trigger . '-2 ' . $mail_to_bcc,
+		"class" => 'mail_to_bcc_address ' . $mail_to_bcc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] : ''
 	) );
 
+	// Subject
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Subject", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_subject]", array(
 		"class"    => "bf-mail-field",
 		'value'    => isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : 'Form Submission Notification',
@@ -191,7 +216,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 					     echo 'in';
 				     } ?> collapse">
 					<div class="accordion-inner">
-						<?php buddyforms_display_field_group_table( $form_setup, $trigger ) ?>
+						<?php buddyforms_display_field_group_table( $form_setup, $trigger, '' ) ?>
 					</div>
 				</div>
 			</div>
