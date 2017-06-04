@@ -15,7 +15,6 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
-
 	// Generate the form slug from the post name
 	$form_slug = $post->post_name;
 

@@ -76,12 +76,11 @@ function load_formbuilder_template(template) {
                         bf_update_list_item_number();
                         break;
                     case 'mail_notification':
-                        //jQuery('.buddyforms_accordion_notification ul' ).html(val);
 
-                        //console.log(val['html']);
+                        // console.log(val);
 
+                        jQuery('.buddyforms_accordion_notification' ).html(val);
                         jQuery('#no-trigger-mailcontainer').hide();
-                        jQuery('#mailcontainer').append(val['html']);
 
                         tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id']);
                         tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + val['trigger_id']);

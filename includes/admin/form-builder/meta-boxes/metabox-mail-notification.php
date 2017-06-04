@@ -2,8 +2,9 @@
 function buddyforms_mail_notification_screen() {
 	global $post, $buddyform;
 
-	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
-
+	if ( ! $buddyform ) {
+		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+	}
 	$form_setup = array();
 
 	//$form_setup[] = new Element_HTML( '<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>' );
@@ -28,9 +29,11 @@ function buddyforms_mail_notification_screen() {
 }
 
 function buddyforms_post_status_mail_notification_screen() {
-	global $post;
+	global $post, $buddyform;
 
-	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+	if ( ! $buddyform ) {
+		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+	}
 
 	$form_setup = array();
 
