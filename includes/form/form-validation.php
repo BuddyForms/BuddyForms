@@ -70,7 +70,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 function buddyforms_jquery_validation() {
 	global $buddyforms;
 
-	if( ! isset($buddyforms)){
+	if( ! isset( $buddyforms ) || ! is_array( $buddyforms ) ){
 		return;
 	}
 
