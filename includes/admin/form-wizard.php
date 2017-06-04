@@ -5,19 +5,9 @@
 //
 function buddyforms_form_builder_wizard_types() {
 
-	$buddyforms_wizard_types['contact']['title'] = 'Contact Form';
-	$buddyforms_wizard_types['contact']['desc']  = 'Setup a contact form in 3 easy steps.';
-
-	$buddyforms_wizard_types['registration']['title'] = 'Registration Form';
-	$buddyforms_wizard_types['registration']['desc']  = 'Create a custom sign up form in 3 easy steps.';
-
-	$buddyforms_wizard_types['post']['title'] = 'Post Form';
-	$buddyforms_wizard_types['post']['desc']  = 'Let your users submit content to your site in 6 easy steps.';
-
-	$buddyforms_wizard_types = apply_filters( 'buddyforms_wizard_types', $buddyforms_wizard_types );
+	$buddyforms_wizard_types = buddyforms_form_builder_register_templates();
 
 	ob_start();
-
 	?>
 	<div class="buddyforms_wizard_types">
 		<?php foreach ( $buddyforms_wizard_types as $key => $template ) { ?>
@@ -28,9 +18,7 @@ function buddyforms_form_builder_wizard_types() {
 						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 			</div>
 		<?php } ?>
-
 	</div>
-
 	<?php
 
 	$tmp = ob_get_clean();
@@ -148,7 +136,6 @@ function buddyforms_form_builder_wizard_save() {
 
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
-
 
 	$url = admin_url() . 'post.php?post=' . $form . '&action=edit&wizard=done';
 	echo $url;

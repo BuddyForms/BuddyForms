@@ -1,11 +1,9 @@
 <?php
 
-
 //
-// Create a list of all available form builder templates
+// Create a array of all available form builder templates
 //
-function buddyforms_form_builder_templates() {
-	global $buddyforms_templates;
+function buddyforms_form_builder_register_templates() {
 
 	$buddyforms_templates['contact']['title'] = 'Contact Form';
 	$buddyforms_templates['contact']['desc']  = 'Setup a simple contact form.';
@@ -19,7 +17,16 @@ function buddyforms_form_builder_templates() {
 	$buddyforms_templates['post']['title'] = 'Post Form';
 	$buddyforms_templates['post']['desc']  = 'Setup a simple post form.';
 
-	$buddyforms_templates = apply_filters( 'buddyforms_templates', $buddyforms_templates );
+	return apply_filters( 'buddyforms_form_builder_templates', $buddyforms_templates );
+
+}
+
+//
+// Template HTML Loop the array of all available form builder templates
+//
+function buddyforms_form_builder_templates() {
+
+	$buddyforms_templates = buddyforms_form_builder_register_templates();
 
 	ob_start();
 
@@ -32,7 +39,7 @@ function buddyforms_form_builder_templates() {
 				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
 				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
 				<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>"
-				        class="bf_form_template btn" onclick=""><span
+				        class="bf_wizard_types bf_form_template btn" onclick=""><span
 						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
 			</div>
 		<?php } ?>
@@ -46,7 +53,10 @@ function buddyforms_form_builder_templates() {
 	return $tmp;
 }
 
-
+//
+// json string of the form export top generate the Form from template
+//
+add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 function buddyforms_form_template() {
 	global $post, $buddyform;
 
@@ -68,14 +78,13 @@ function buddyforms_form_template() {
 			$buddyform = json_decode( '{"form_fields":{"51836a88da":{"type":"title","slug":"buddyforms_form_title","name":"Title","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"","custom_class":""},"27ff0af6c6":{"type":"content","slug":"buddyforms_form_content","name":"Content","description":"","validation_error_message":"This field is required.","validation_minlength":"0","validation_maxlength":"0","custom_class":""}},"form_type":"post","after_submit":"display_message","after_submission_page":"none","after_submission_url":"","after_submit_message_text":"Your Message has been Submitted Successfully","post_type":"post","status":"publish","comment_status":"open","singular_name":"","attached_page":"none","edit_link":"all","list_posts_option":"list_all_form","list_posts_style":"list","mail_submissions":{"03aa1b8b80":{"mail_trigger_id":"03aa1b8b80","mail_from_name":"eMail Notification","mail_to_address":"","mail_from":"mail@sven-lehnert.de","mail_to_cc_address":"","mail_to_bcc_address":"","mail_subject":"Form Submission Notification","mail_body":""}},"public_submit":["public_submit"],"public_submit_login":"above","registration":{"activation_page":"none","activation_message_from_subject":"User Account Activation Mail","activation_message_text":"Hi [user_login],\r\n\t\t\tGreat to see you come on board! Just one small step left to make your registration complete.\r\n\t\t\t<br>\r\n\t\t\t<b>Click the link below to activate your account.<\/b>\r\n\t\t\t<br>\r\n\t\t\t[activation_link]\r\n\t\t\t<br><br>\r\n\t\t\t[blog_title]\r\n\t\t","activation_message_from_name":"[blog_title]","activation_message_from_email":"[admin_email]","new_user_role":"subscriber"},"name":"Posts","slug":""}', true );
 			break;
 		default :
-			$buddyform = json_decode( apply_filters( 'buddyforms_templates_json', $buddyform ), true );
+			$buddyform = json_decode( apply_filters( 'buddyforms_form_builder_templates_json', $buddyform ), true );
 			break;
 	}
 
 	ob_start();
 	buddyforms_metabox_form_elements( $post, $buddyform );
 	$formbuilder = ob_get_clean();
-
 
 	// Add the form elements to the form builder
 	$json['formbuilder'] = $formbuilder;
@@ -87,9 +96,6 @@ function buddyforms_form_template() {
 	// Add the form setup to the json
 	$json['form_setup'] = $buddyform;
 
-
 	echo json_encode( $json );
 	die();
 }
-
-add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
