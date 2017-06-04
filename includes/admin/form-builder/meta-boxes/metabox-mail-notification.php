@@ -86,7 +86,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 		'user_login'      => __( 'Username', 'buddyforms' ),
 		'user_first'      => __( 'First Name', 'buddyforms' ),
 		'user_last'       => __( 'Last Name', 'buddyforms' ),
-		'user_first_last' => __( 'Firs and Last Name', 'buddyforms' ),
+		'user_first_last' => __( 'First and Last Name', 'buddyforms' ),
 		'blog_title'      => __( 'Blog Title', 'buddyforms' ),
         'custom'          => __( 'Custom', 'buddyforms' )
 	), array(

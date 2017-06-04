@@ -115,51 +115,6 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 }
 
 //
-// Create a list of all available form builder templates
-//
-/**
- * @return string
- */
-function buddyforms_form_builder_templates() {
-	global $buddyforms_templates;
-
-	$buddyforms_templates['contact']['title'] = 'Contact Form';
-	$buddyforms_templates['contact']['desc']  = 'Setup a simple contact form.';
-
-	$buddyforms_templates['registration']['title'] = 'Registration Form';
-	$buddyforms_templates['registration']['desc']  = 'Setup a simple registration form.';
-
-	$buddyforms_templates['post']['title'] = 'Post Form';
-	$buddyforms_templates['post']['desc']  = 'Setup a simple post form.';
-
-	$buddyforms_templates = apply_filters( 'buddyforms_templates', $buddyforms_templates );
-
-	ob_start();
-
-	?>
-	<div class="buddyforms_template">
-		<h5>Choose a pre-configured form template or start a new one:</h5>
-
-		<?php foreach ( $buddyforms_templates as $key => $template ) { ?>
-			<div class="bf-3-tile">
-				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-				<button id="btn-compile-<?php echo $key ?>" data-template="<?php echo $key ?>"
-				        class="bf_form_template btn" onclick=""><span
-						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
-			</div>
-		<?php } ?>
-
-	</div>
-
-	<?php
-
-	$tmp = ob_get_clean();
-
-	return $tmp;
-}
-
-//
 // generate the form builder form elements select options
 //
 /**
