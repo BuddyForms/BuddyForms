@@ -801,13 +801,7 @@ JS;
                                          href="#">Delete</a></span>
 							</td>
 
-							<?php
-
-
-
-							$layout = isset( $buddyform['layout']['cords'][$field_id] ) ? $buddyform['layout']['cords'][$field_id]  : '1';
-
-							?>
+							<?php $layout = isset( $buddyform['layout']['cords'][$field_id] ) ? $buddyform['layout']['cords'][$field_id]  : '1'; ?>
 
                             <td class="field_layout">
                                 <select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
@@ -815,8 +809,8 @@ JS;
                                     <option <?php selected( $layout, '2'); ?> value="2">1/2</option>
                                     <option <?php selected( $layout, '3'); ?> value="3">1/3</option>
                                     <option <?php selected( $layout, '4'); ?> value="4">1/4</option>
-																		<option <?php selected( $layout, '5'); ?> value="5">2/3</option>
-																		<option <?php selected( $layout, '6'); ?> value="6">3/4</option>
+                                    <option <?php selected( $layout, '5'); ?> value="5">2/3</option>
+                                    <option <?php selected( $layout, '6'); ?> value="6">3/4</option>
                                 </select>
                             </td>
 						</tr>
