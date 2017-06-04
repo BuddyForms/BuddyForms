@@ -188,6 +188,9 @@ class BuddyForms {
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php' );
 
 		if ( is_admin() ) {
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-wizard.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
@@ -206,9 +209,7 @@ class BuddyForms {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-wizard.php' );
+
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
