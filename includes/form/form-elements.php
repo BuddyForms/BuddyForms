@@ -243,6 +243,10 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
 
+					case 'phone' :
+						$form->addElement( new Element_Phone( $name, $slug, $element_attr ) );
+						break;
+
 					case 'radiobutton' :
 						if ( isset( $customfield['options'] ) && is_array( $customfield['options'] ) ) {
 

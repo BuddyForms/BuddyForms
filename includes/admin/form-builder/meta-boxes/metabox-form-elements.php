@@ -233,6 +233,9 @@ function buddyforms_form_elements_select_options() {
 				'textarea'    => array(
 					'label' => __( 'Textarea', 'buddyforms' ),
 				),
+				'phone'    => array(
+					'label' => __( 'Phone', 'buddyforms' ),
+				),
 				'number' => array(
                     'label' => __( 'Number', 'buddyforms' ),
                 ),
