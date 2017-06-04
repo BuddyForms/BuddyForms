@@ -134,7 +134,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 		'cc'        => __( 'CC', 'buddyforms' ),
 		'bcc'       => __( 'BCC', 'buddyforms' )
 	), array(
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : '',
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : 'admin',
 		'id'    => 'mail_submissions' . $trigger,
 		'class' => 'mail_to_checkbox bf_sent_mail_to_multi_checkbox'
 	) );
