@@ -399,7 +399,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Permissions Section - select all roles and caps
     //
-    jQuery(".bf_check_all").click(function (e) {
+    jQuery(document).on('click', '.bf_check_all', function (e) {
 
         if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
             jQuery('.bf_permissions :checkbox').prop('checked', false);
@@ -410,7 +410,8 @@ jQuery(document).ready(function (jQuery) {
         }
         e.preventDefault();
     });
-    jQuery(".bf_check").click(function (e) {
+
+    jQuery(document).on('click', '.bf_check', function (e) {
 
         if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
             jQuery(this).text(admin_text.check);
