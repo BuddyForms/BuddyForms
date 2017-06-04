@@ -88,7 +88,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options") {
 
 	$option_name = $option_name. '[layout]';
 
-	if( isset( $_POST['action'] ) ) {
+	if( isset( $_GET['action'] ) ) {
 		$options = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	} else {
 		$options = get_option( 'buddyforms_layout_options' );
