@@ -695,6 +695,7 @@ function buddyforms_notice_if_broken_form(){
 	// OK let us start with the form validation
     //
 
+	$messages = Array();
 	if( ! isset( $buddyform['post_type'] )  ){
 		$messages[] = __( 'No Post Type Selected. Please select a post type', 'buddyforms' );
 	}
@@ -718,9 +719,10 @@ function buddyforms_notice_if_broken_form(){
         }
 
 	}
+
 	$messages = apply_filters( 'buddyforms_broken_form_error_messages', $messages );
 
-	if( ! is_array( $messages ) ) {
+	if( count( $messages ) < 1) {
 		return;
     }
 

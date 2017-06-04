@@ -183,50 +183,52 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 						}
 
-						ob_start();
-						$settings = array(
-							'wpautop'       => true,
-							'media_buttons' => isset( $customfield['post_content_options'] ) ? in_array( 'media_buttons', $customfield['post_content_options'] ) ? false : true : true,
-							'tinymce'       => isset( $customfield['post_content_options'] ) ? in_array( 'tinymce', $customfield['post_content_options'] ) ? false : true : true,
-							'quicktags'     => isset( $customfield['post_content_options'] ) ? in_array( 'quicktags', $customfield['post_content_options'] ) ? false : true : true,
-							'textarea_rows' => 18,
-							'textarea_name' => 'buddyforms_form_content',
-							'editor_class'  => 'textInMce',
-						);
-
-						if ( isset( $post_id ) ) {
-							wp_editor( $buddyforms_form_content_val, 'buddyforms_form_content', $settings );
-						} else {
-							$content = false;
-							$post    = 0; // todo: Not sure $post = 0 is needed.
-							wp_editor( $content, 'buddyforms_form_content', $settings );
-						}
-						$wp_editor = ob_get_contents();
-						ob_clean();
-
-						$required = '';
-						if ( isset( $customfield['required'] ) ) {
-							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
-							$required  = '<span class="required">* </span>';
-						}
-
-						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
-
-						$wp_editor_label = '';
-						if($labels_layout == 'inline' ){
-							if ( isset( $customfield['required'] ) ) {
-								$required = '* ';
-							}
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
-						} else {
-							$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
-						}
-
-//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
-
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
+
+							ob_start();
+							$settings = array(
+								'wpautop'       => true,
+								'media_buttons' => isset( $customfield['post_content_options'] ) ? in_array( 'media_buttons', $customfield['post_content_options'] ) ? false : true : true,
+								'tinymce'       => isset( $customfield['post_content_options'] ) ? in_array( 'tinymce', $customfield['post_content_options'] ) ? false : true : true,
+								'quicktags'     => isset( $customfield['post_content_options'] ) ? in_array( 'quicktags', $customfield['post_content_options'] ) ? false : true : true,
+								'textarea_rows' => 18,
+								'textarea_name' => 'buddyforms_form_content',
+								'editor_class'  => 'textInMce',
+							);
+
+							if ( isset( $post_id ) ) {
+								wp_editor( $buddyforms_form_content_val, 'buddyforms_form_content', $settings );
+							} else {
+								$content = false;
+								$post    = 0; // todo: Not sure $post = 0 is needed.
+								wp_editor( $content, 'buddyforms_form_content', $settings );
+							}
+							$wp_editor = ob_get_contents();
+							ob_clean();
+
+							$required = '';
+							if ( isset( $customfield['required'] ) ) {
+								$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
+								$required  = '<span class="required">* </span>';
+							}
+
+							$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+
+							$wp_editor_label = '';
+							if($labels_layout == 'inline' ){
+								if ( isset( $customfield['required'] ) ) {
+									$required = '* ';
+								}
+								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
+							} else {
+								$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
+							}
+
+	//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
+
+
 							if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
