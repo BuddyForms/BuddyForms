@@ -25,9 +25,10 @@ function buddyforms_form_elements( $form, $args ) {
 
 		if ( $slug != '' ) :
 
+			$customfield_val = '';
 			if ( isset( $_POST[ $slug ] ) ) {
 				$customfield_val = $_POST[ $slug ];
-			} else {
+			} elseif( is_user_logged_in() ) {
 
 				if( $buddyforms[$form_slug]['form_type'] == 'registration' ){
 
@@ -95,21 +96,21 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_email':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_email;
 						}
 						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_first':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_firstname;
 						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_last':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_lastname;
 						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
@@ -122,14 +123,14 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_website':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_url;
 						}
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_bio':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' ) {
+						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_description;
 						}
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
@@ -157,7 +158,6 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
 						} else {
-
 
 							$element_attr = array(
 								'id'        => 'buddyforms_form_title',

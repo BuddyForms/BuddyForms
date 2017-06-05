@@ -334,10 +334,6 @@ add_action( 'template_redirect', 'buddyforms_activate_user' );
 function buddyforms_activate_user() {
 	global $buddyforms;
 
-//	if ( ! is_page() ) {
-//		return;
-//	}
-
 	if ( ! isset( $_GET['form_slug'] ) ) {
 		return;
 	}
@@ -346,7 +342,7 @@ function buddyforms_activate_user() {
 		return;
 	}
 
-//	if ( get_the_ID() == $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) {
+	if ( get_the_ID() == $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) {
 		$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
 		if ( $user_id ) {
 			// get user meta activation hash field
@@ -361,5 +357,5 @@ function buddyforms_activate_user() {
 
 			}
 		}
-//	}
+	}
 }
