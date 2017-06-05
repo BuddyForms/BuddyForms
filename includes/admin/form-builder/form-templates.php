@@ -21,7 +21,7 @@ function buddyforms_form_builder_register_templates() {
 	$buddyforms_templates['enquiry']['desc']  = 'Setup a simple enquiry form.';
 
 	$buddyforms_templates['enquiry2']['title'] = 'Create Your Own Template';
-	$buddyforms_templates['enquiry2']['desc']  = 'Learn how to save your own templates!';
+	$buddyforms_templates['enquiry2']['desc']  = 'Learn how to add your own templates.';
 
 
 	return apply_filters( 'buddyforms_form_builder_templates', $buddyforms_templates );
