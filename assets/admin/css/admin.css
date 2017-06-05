@@ -23,6 +23,10 @@
     display: block;
 }
 
+.center {
+  text-align: center;
+}
+
 #wpbody #bf_admin_wrap h1 {
     float: none;
 }
@@ -709,7 +713,7 @@ a.button.button-large.bf_button_action {
 
 .bf-3-tile button,
 .bf-3-tile .btn {
-    display: block;
+    display: inline-block;
     width: 100%;
     padding: 8px 0;
     margin-bottom: 5px;
@@ -738,12 +742,18 @@ a.button.button-large.bf_button_action {
     border-color: #006799;
 }
 
+.bf-3-tile .dashicons {
+    font-size: inherit;
+    height: auto;
+    line-height: inherit;
+}
+
 .bf-tile-title {
     margin-bottom: 15px;
 }
 
 .bf-tile-desc {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 @media (min-width: 1200px) {
