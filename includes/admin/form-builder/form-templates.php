@@ -66,11 +66,27 @@ function buddyforms_form_builder_template_get_dependencies($template){
 
     }
 
+
+
+
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field) {
 		if ($field->slug == '_woocommerce') {
-			if( $field->product_type_default == 'auction'){
+
+			if ( ! class_exists( 'bf_woo_elem' ) ) {
 				$deps .= empty( $deps ) ? '' : ', ';
-				$deps .= 'WC Simple Auctions';
+				$deps .= 'BuddyForms WooElements';
+			}
+
+			if ( ! class_exists( 'bf_woo_simple_auction' ) ) {
+				$deps .= empty( $deps ) ? '' : ', ';
+				$deps .= 'BuddyForms Simple Auction';
+			}
+
+			if( $field->product_type_default == 'auction'){
+				if (!class_exists('WooCommerce_simple_auction')) {
+					$deps .= empty( $deps ) ? '' : ', ';
+					$deps .= 'WC Simple Auctions';
+				}
             }
 		}
 	} endif;
