@@ -99,32 +99,33 @@ function buddyforms_form_builder_templates() {
 
 		<?php add_thickbox(); ?>
 
-        <?php foreach ( $buddyforms_templates as $key => $template ) { ?>
-			<div class="bf-3-tile">
-				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-				<div class="bf-tile-desc">
-					<p><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
-                    <p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>" data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>" title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span class="dashicons dashicons-visibility"></span> Preview</a></p>
-				</div>
-				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" data-template="<?php echo $key ?>"
-				        class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick=""><span
-						class="dashicons dashicons-plus"></span> <?php echo $template['title'] ?></button>
-<!--                    <a href="#TB_inline?width=600&height=550&inlineId=template---><?php //echo $key ?><!--" title="--><?php //echo $template['title'] ?><!--" class="thickbox button  btn-primary btn-50"><span class="dashicons dashicons-visibility"></span> Preview</a>-->
-                <div id="template-<?php echo $key ?>" style="display:none;">
-                    <p>
-                    <div class="bf-tile-desc">
-                        <p><?php echo $template['desc'] ?></p>
-
-                    </div>
-                <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="no" frameborder="0" style="background: transparent; height: 639px;"></iframe>
-                    <button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" data-template="<?php echo $key ?>"
-                            class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
-                        <span class="dashicons dashicons-plus"></span> Use this Template
-                    </button>
-                    </p>
-                </div>
-
+    <?php foreach ( $buddyforms_templates as $key => $template ) { ?>
+				<div class="bf-3-tile">
+					<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+					<div class="xbf-col-50 bf-tile-desc-wrap">
+						<p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
+					</div>
+					<div class="bf-tile-preview-wrap">
+						<p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>" data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>" title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span class="dashicons dashicons-visibility"></span> Preview</a></p>
+					</div>
+					<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" data-template="<?php echo $key ?>" class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
+						<!-- <span class="dashicons dashicons-plus"></span>  -->
+						Use This Template
+						<?php // echo $template['title'] ?>
+					</button>
+					<!-- <a href="#TB_inline?width=600&height=550&inlineId=template---><?php //echo $key ?><!--" title="--><?php //echo $template['title'] ?><!--" class="thickbox button  btn-primary btn-50"><span class="dashicons dashicons-visibility"></span> Preview</a>-->
+          <div id="template-<?php echo $key ?>" style="display:none;">
+            <div class="bf-tile-desc-wrap">
+                <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
             </div>
+            <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="no" frameborder="0" style="background: transparent; height: 639px;"></iframe>
+            <button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" data-template="<?php echo $key ?>" class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
+                <!-- <span class="dashicons dashicons-plus"></span>  -->
+								Use This Template
+            </button>
+          </div>
+
+        </div>
 		<?php } ?>
 
 	</div>

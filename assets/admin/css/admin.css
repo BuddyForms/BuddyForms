@@ -761,19 +761,39 @@ a.button.button-large.bf_button_action {
 
 .bf-tile-title {
     margin-bottom: 15px;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.bf-tile-desc-wrap {
+    overflow: auto;
+    margin-bottom: 20px;
+    width: calc( 100% - 100px );
+    display: inline-block;
+    float: left;
 }
 
 .bf-tile-desc {
-    margin-bottom: 20px;
+    height: 30px;
+    min-height: 30px;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 15px;
+}
+
+.bf-col-50 {
+  width: 50%;
+  float: left;
+  display: inline-block;
 }
 
 @media (min-width: 1200px) {
-    .bf-3-tile {
-        width: 29%;
-        display: inline-block;
-        padding: 30px 10px 0;
-        min-height: 180px;
-    }
+  .bf-3-tile {
+    width: 29%;
+    display: inline-block;
+    padding: 10px 15px 5px;
+    min-height: 150px;
+  }
 }
 
 input[readonly] {
