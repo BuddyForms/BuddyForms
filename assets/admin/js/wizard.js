@@ -93,6 +93,8 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document.body).on('click', '.bf_wizard_types', function () {
         URL = document.URL;
         type = jQuery(this).attr('data-type');
+        type = type.split('_')[0];
+
         URL = URL.replace('wizard=1', 'wizard=2&type=' + type);
         window.location = URL;
     });

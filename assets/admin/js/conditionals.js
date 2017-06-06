@@ -13,7 +13,7 @@ function from_setup_form_type(value) {
     jQuery('#form-submission').addClass('active in');
 
     jQuery("#adv-settings input[type='checkbox']").prop("checked", true);
-    jQuery("#screen-meta-links").remove();
+    // jQuery("#screen-meta-links").remove();
     switch (value) {
         case 'contact':
 

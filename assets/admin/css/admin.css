@@ -1,3 +1,11 @@
+#TB_window{
+    width: auto !important;
+    height: auto !important;
+}
+#TB_ajaxContent{
+    width: 100% !important;
+    height: 100% !important;
+}
 .bf-hidden {
     display: none;
 }
@@ -1207,7 +1215,7 @@ div#buddyforms_metabox_sidebar p {
 }
 
 #screen-meta-links {
-    display: none;
+    /*display: none;*/
 }
 
 /* --- Submission Single View --- */

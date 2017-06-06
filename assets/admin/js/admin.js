@@ -123,6 +123,7 @@ function load_formbuilder_template(template) {
                 }
 
             });
+            tb_remove();
 
         },
         error: function () {
@@ -167,6 +168,17 @@ jQuery(document).ready(function (jQuery) {
             e.preventDefault();
             return false;
         }
+    });
+
+    jQuery(document.body).on('click', '.bf-preview', function () {
+
+        var key = jQuery(this).attr('data-key');
+        var src = jQuery(this).attr('data-src');
+        
+        jQuery('#iframe-' + key).attr('src', src);
+        jQuery('#iframe-' + key).attr('width', 750);
+        jQuery('#iframe-' + key).attr('height', 600);
+
     });
 
     // Mail Notifications from email display only if selected

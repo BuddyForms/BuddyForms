@@ -174,6 +174,8 @@ function buddyforms_get_wp_login_form( $title = '' ) {
 
 	$wp_login_form = '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
+
+	$wp_login_form .= '<p><a href="#">Register</a></p>';
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
 	return $wp_login_form;

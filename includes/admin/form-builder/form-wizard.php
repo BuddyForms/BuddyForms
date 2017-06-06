@@ -5,25 +5,7 @@
 //
 function buddyforms_form_builder_wizard_types() {
 
-	$buddyforms_wizard_types = buddyforms_form_builder_register_templates();
-
-	ob_start();
-	?>
-	<div class="buddyforms_wizard_types">
-		<?php foreach ( $buddyforms_wizard_types as $key => $template ) { ?>
-			<div class="bf-3-tile">
-				<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-				<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-				<button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" class="bf_wizard_types"><span
-						class="bf-plus">+</span> <?php echo $template['title'] ?></button>
-			</div>
-		<?php } ?>
-	</div>
-	<?php
-
-	$tmp = ob_get_clean();
-
-	echo $tmp;
+	echo buddyforms_form_builder_templates();
 	die();
 }
 
@@ -33,6 +15,8 @@ add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_bui
 function buddyforms_form_builder_wizard_elements() {
 
 	$type = $_POST['type'];
+//	$type = explode("_", $type);
+//	$type = $type[0];
 
 	$allowed_fields['contact']      = array( 'basic', 'contact', 'extra' );
 	$allowed_fields['registration'] = array( 'basic', 'contact', 'registration', 'extra' );
