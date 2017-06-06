@@ -48,20 +48,38 @@ function buddyforms_form_builder_template_get_dependencies($template){
 	$buddyform = json_decode($template['json']);
 
 	$dependencies = 'None';
-    
-    if($buddyform->post_type == 'product'){
-	    $dependencies = 'BuddyForms Professional, WooCommerce';
+	$deps = '';
 
-	    if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field) {
-		    if ($field->slug == '_woocommerce') {
-		        if( $field->product_type_default == 'auction')
-			        $dependencies = 'BuddyForms Professional, WooCommerce, WC Simple Auctions';
-		    }
-	    } endif;
+	if( !($buddyform->post_type == 'post' || $buddyform->post_type == 'page' || $buddyform->post_type == 'bf_submissions') ){
+		$deps .= 'BuddyForms Professional';
+    }
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			$deps = '';
+		}
+	}
+
+    if( $buddyform->post_type == 'product' && ! post_type_exists('product' ) ){
+
+	    $deps .= empty( $deps ) ? '' : ', ';
+	    $deps .= 'WooCommerce';
 
     }
 
-	return apply_filters('buddyforms_form_builder_template_get_dependencies', $dependencies , $template );
+	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field) {
+		if ($field->slug == '_woocommerce') {
+			if( $field->product_type_default == 'auction'){
+				$deps .= empty( $deps ) ? '' : ', ';
+				$deps .= 'WC Simple Auctions';
+            }
+		}
+	} endif;
+
+    if( ! empty( $deps ) ){
+	    $dependencies = $deps;
+    }
+
+	return $dependencies;
 
 }
 
