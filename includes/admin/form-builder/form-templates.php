@@ -11,27 +11,57 @@ function buddyforms_form_builder_register_templates() {
 	// Decode the json
 	$buddyforms = json_decode( $response['body'] );
 
+	$sort = array();
+	foreach ($buddyforms as $form_s => $form){
+		$sort[$form->form_type][$form_s] = $form;
+	}
 	// Loop all forms from the demo and create the form templates
-	foreach ( $buddyforms as $form_slug => $buddyform ) {
+	foreach ( $sort as $sort_key => $sort_item ) {
+		foreach ( $sort_item as $form_slug => $buddyform ) {
+			$desc = '';
+			foreach ( $buddyform->form_fields as $form_field ) {
+				if ( empty( $desc ) ) {
+					$desc .= $form_field->name;
+				} else {
+					$desc .= ', ' . $form_field->name;
+				}
 
-		$desc = '';
-		foreach ( $buddyform->form_fields as $form_field ) {
-			if ( empty( $desc ) ) {
-				$desc .= $form_field->slug;
-			} else {
-				$desc .= ', ' . $form_field->slug;
 			}
-
+			$buddyforms_templates[$sort_key][ $form_slug ]['title'] = $buddyform->name;
+			$buddyforms_templates[$sort_key][ $form_slug ]['url']   = 'http://demo.buddyforms.com/remote/remote-create/' . $form_slug;
+			$buddyforms_templates[$sort_key][ $form_slug ]['desc']  = $desc;
+			$buddyforms_templates[$sort_key][ $form_slug ]['json']  = json_encode( $buddyform );
 		}
-
-		$buddyforms_templates[ $form_slug ]['title'] = $buddyform->name;
-		$buddyforms_templates[ $form_slug ]['url']   = 'http://demo.buddyforms.com/remote/remote-create/' . $form_slug;
-		$buddyforms_templates[ $form_slug ]['desc']  = $desc;
-		$buddyforms_templates[ $form_slug ]['json']  = json_encode( $buddyform );
-
 	}
 
-	return apply_filters( 'buddyforms_form_builder_templates', $buddyforms_templates );
+	$templates = Array();
+	$templates['contact']       = $buddyforms_templates['contact'];
+	$templates['registration']  = $buddyforms_templates['registration'];
+	$templates['post']          = $buddyforms_templates['post'];
+
+	return apply_filters( 'buddyforms_form_builder_templates', $templates );
+
+}
+
+function buddyforms_form_builder_template_get_dependencies($template){
+
+	$buddyform = json_decode($template['json']);
+
+	$dependencies = 'None';
+    
+    if($buddyform->post_type == 'product'){
+	    $dependencies = 'BuddyForms Professional, WooCommerce';
+
+	    if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field) {
+		    if ($field->slug == '_woocommerce') {
+		        if( $field->product_type_default == 'auction')
+			        $dependencies = 'BuddyForms Professional, WooCommerce, WC Simple Auctions';
+		    }
+	    } endif;
+
+    }
+
+	return apply_filters('buddyforms_form_builder_template_get_dependencies', $dependencies , $template );
 
 }
 
@@ -42,6 +72,7 @@ function buddyforms_form_builder_templates() {
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
 
+
 	ob_start();
 
 	?>
@@ -50,43 +81,57 @@ function buddyforms_form_builder_templates() {
 
 		<?php add_thickbox(); ?>
 
-		<?php foreach ( $buddyforms_templates as $key => $template ) { ?>
-            <div class="bf-3-tile">
-                <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-                <div class="xbf-col-50 bf-tile-desc-wrap">
-                    <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
-                </div>
-                <div class="bf-tile-preview-wrap">
-                    <p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
-                          data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>"
-                          title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span
-                                    class="dashicons dashicons-visibility"></span> Preview</a></p>
-                </div>
-                <button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
-                        data-template="<?php echo $key ?>"
-                        class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
-                    <!-- <span class="dashicons dashicons-plus"></span>  -->
-                    Use This Template
-					<?php // echo $template['title'] ?>
-                </button>
-                <!-- <a href="#TB_inline?width=600&height=550&inlineId=template---><?php //echo $key ?><!--" title="-->
-				<?php //echo $template['title'] ?><!--" class="thickbox button  btn-primary btn-50"><span class="dashicons dashicons-visibility"></span> Preview</a>-->
-                <div id="template-<?php echo $key ?>" style="display:none;">
-                    <div class="bf-tile-desc-wrap">
-                        <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+		<?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
+
+            <h2><?php echo strtoupper($sort_key) ?> FORMS</h2>
+
+            <?php foreach ( $sort_item as $key => $template ) {
+
+                $dependencies = buddyforms_form_builder_template_get_dependencies( $template );
+
+                $disabled = $dependencies != 'None' ? 'disabled' : '';
+
+                ?>
+                <div class="bf-3-tile">
+                    <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+                    <div class="xbf-col-50 bf-tile-desc-wrap">
+                        <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
+                        <?php if( $dependencies != 'None' ){ ?>
+                            <p class="bf-tile-dep">Dependencies: <?php echo $dependencies ?></p>
+                        <?php } ?>
                     </div>
-                    <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="no" frameborder="0"
-                            style="background: transparent; height: 639px;"></iframe>
-                    <button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
+                    <div class="bf-tile-preview-wrap">
+                        <p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
+                              data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>"
+                              title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span
+                                        class="dashicons dashicons-visibility"></span> Preview</a></p>
+                    </div>
+                    <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
                             data-template="<?php echo $key ?>"
                             class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
                         <!-- <span class="dashicons dashicons-plus"></span>  -->
                         Use This Template
+                        <?php // echo $template['title'] ?>
                     </button>
-                </div>
+                    <!-- <a href="#TB_inline?width=600&height=550&inlineId=template---><?php //echo $key ?><!--" title="-->
+                    <?php //echo $template['title'] ?><!--" class="thickbox button  btn-primary btn-50"><span class="dashicons dashicons-visibility"></span> Preview</a>-->
+                    <div id="template-<?php echo $key ?>" style="display:none;">
+                        <div class="bf-tile-desc-wrap">
+                            <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+                        </div>
+                        <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="no" frameborder="0"
+                                style="background: transparent; height: 639px;"></iframe>
+                        <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
+                                data-template="<?php echo $key ?>"
+                                class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
+                            <!-- <span class="dashicons dashicons-plus"></span>  -->
+                            Use This Template
+                        </button>
+                    </div>
 
-            </div>
-		<?php } ?>
+                </div>
+            <?php }
+        }?>
 
     </div>
 
@@ -119,21 +164,18 @@ function buddyforms_form_template() {
 
 	// Add the form elements to the form builder
 	$json['formbuilder'] = $formbuilder;
-    
+
 	ob_start();
 
 	?>
     <div class="buddyforms_accordion_notification">
         <div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 
-
 		<?php buddyforms_mail_notification_screen() ?>
 
         <div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
 			<?php buddyforms_post_status_mail_notification_screen() ?>
         </div>
-
-
     </div>
 	<?php
 	$mail_notification = ob_get_clean();

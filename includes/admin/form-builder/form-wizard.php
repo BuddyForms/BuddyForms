@@ -3,20 +3,15 @@
 //
 // Create a list of all available form builder templates
 //
+add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_builder_wizard_types' );
 function buddyforms_form_builder_wizard_types() {
-
 	echo buddyforms_form_builder_templates();
 	die();
 }
 
-add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_builder_wizard_types' );
-
-
 function buddyforms_form_builder_wizard_elements() {
 
 	$type = $_POST['type'];
-//	$type = explode("_", $type);
-//	$type = $type[0];
 
 	$allowed_fields['contact']      = array( 'basic', 'contact', 'extra' );
 	$allowed_fields['registration'] = array( 'basic', 'contact', 'registration', 'extra' );
