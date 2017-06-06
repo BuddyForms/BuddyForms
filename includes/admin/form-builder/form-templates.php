@@ -114,8 +114,9 @@ function buddyforms_form_builder_templates() {
                     <p>
                     <div class="bf-tile-desc">
                         <p><?php echo $template['desc'] ?></p>
-                        <iframe id="iframe-<?php echo $key ?>"></iframe>
+
                     </div>
+                <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="no" frameborder="0" style="background: transparent; height: 639px;"></iframe>
                     <button id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>" data-template="<?php echo $key ?>"
                             class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
                         <span class="dashicons dashicons-plus"></span> Use this Template

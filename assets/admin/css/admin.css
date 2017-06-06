@@ -1,8 +1,11 @@
 #TB_window{
-    width: auto !important;
+    left: 5%;
+    margin-left: 0!important;
+    width: 90% !important;
     height: auto !important;
 }
 #TB_ajaxContent{
+    padding: 0 !important;
     width: 100% !important;
     height: 100% !important;
 }

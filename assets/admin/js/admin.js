@@ -174,10 +174,10 @@ jQuery(document).ready(function (jQuery) {
 
         var key = jQuery(this).attr('data-key');
         var src = jQuery(this).attr('data-src');
-        
+
         jQuery('#iframe-' + key).attr('src', src);
-        jQuery('#iframe-' + key).attr('width', 750);
-        jQuery('#iframe-' + key).attr('height', 600);
+        // jQuery('#iframe-' + key).attr('width', 750);
+        // jQuery('#iframe-' + key).attr('height', 600);
 
     });
 
