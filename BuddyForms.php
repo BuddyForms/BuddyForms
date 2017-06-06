@@ -170,6 +170,8 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
 		}
 
+		require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
+
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
 		require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
@@ -194,7 +196,7 @@ class BuddyForms {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );

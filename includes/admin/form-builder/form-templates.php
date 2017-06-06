@@ -5,6 +5,24 @@
 //
 function buddyforms_form_builder_register_templates() {
 
+	$response = wp_remote_get( 'http://demo.buddyforms.com/wp-json/wp/v2/buddyforms' );
+
+	$response = json_decode($response['body']);
+
+//    echo '<pre>';
+//    print_r($response);
+//	echo '</pre>';
+
+	foreach ( $response as $item  ) {
+
+
+
+	    echo '<pre>';
+	    print_r($item->title->rendered);
+		echo '</pre>';
+
+    }
+
 	$buddyforms_templates['contact_simple']['title'] = 'Contact Simple';
 	$buddyforms_templates['contact_simple']['url']   = 'http://demo.buddyforms.com/remote/remote-create/simple-contact-form/';
 	$buddyforms_templates['contact_simple']['desc']  = 'Name, Email, Message';
