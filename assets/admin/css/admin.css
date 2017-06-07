@@ -1,13 +1,27 @@
-#TB_window{
+#TB_window {
     left: 5% !important;;
     margin-left: 0!important;
     width: 90% !important;
     height: auto !important;
 }
-#TB_ajaxContent{
-    padding: 0 !important;
+#TB_ajaxContent {
+    padding: 0 10px !important;
     width: 100% !important;
     height: 100% !important;
+}
+#TB_ajaxContent .bf-tile-desc {
+    font-size: 14px;
+}
+#TB_ajaxContent .bf-tile-desc-wrap {
+    width: calc( 100% - 30px );
+    padding: 30px 15px 15px;
+    margin: 0;
+    display: block;
+    clear: both;
+    float: none;
+    max-width: 100%;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
 }
 .bf-hidden {
     display: none;
