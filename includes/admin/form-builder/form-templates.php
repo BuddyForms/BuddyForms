@@ -66,9 +66,6 @@ function buddyforms_form_builder_template_get_dependencies($template){
 
     }
 
-
-
-
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field) {
 		if ($field->slug == '_woocommerce') {
 
@@ -187,6 +184,15 @@ function buddyforms_form_template() {
 	$post->post_type = 'buddyforms';
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
+
+	$forms = Array();
+	foreach( $buddyforms_templates as $type => $form_temps){
+        foreach($form_temps as $forms_slug => $form ){
+	        $forms[$forms_slug] = $form;
+        }
+    }
+
+    $buddyforms_templates = $forms;
 
 	$buddyform = $buddyforms_templates[ $_POST['template'] ];
 
