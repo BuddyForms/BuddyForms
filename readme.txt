@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
-Tested up to: 4.7.3
-Stable tag: 2.0.15
+Tested up to: 4.7.5
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -236,6 +236,79 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1 - 07.06.2017 =
+
+* This is a major update with lots of changes. Not all commits are listed here. For a detailed list of all changes please see the GitHub Commits https://github.com/BuddyForms/BuddyForms
+
+Main New Features:
+* Form Designer: New Metabox Form Designer to design your forms in detail.
+* Form Grid: Add new Options to the Form Builder to set the grid
+* Form Templates System to create any kind of Form from template
+* Added the functionality to update registration forms from the front to allow existing users to change there user data and meta fields
+
+Summary of changes:
+* Added a new form element Phone, eMail and Range
+* Create a new file metabox-layout.php for the form layout
+* Added new options to adjust the form layout
+* Added a new function buddyforms_can_edit to make anonymous and multi author posts possible
+* Create a new global settings page for the form layout options
+* Added a new option to the form element list in the form builder to define the grid
+* Make the author id filterable
+* Added functionality to load the layout form from other forms or the global settings
+* Create a new function buddyforms_layout_style to determine the style and support bootstrap or other frameworks
+* Added a new filer buddyforms_layout_style to overwrite the form grid classes
+* Added CSS for form grid options
+* Add a Grid builder to the Form ELements.
+* Fixed a issue with session start if the server was restarted without deleting the session
+* Added a new filter buddyforms_loop_template_name to register new loop templates
+* Make sure we have a $post->post_name in the shortcode. It created a conflict with draft posts and edits and run the form twice if a post id exist but no post name.
+* Update freemius to prevent function exist
+* Create a new Element_InlineHTML to have an HTML form element without grid
+* Fixed the schedule time. It was broken because the browser close the divs and render not work.
+* Added a new filter buddyforms_the_lp_query to adjust the query result
+* Clean up the content filter for the rewrite endpoints
+* Add a function to support yoast seo
+* Added new function buddyforms_is_author to make BuddyForms better work with multiple authors
+* Added two new attributes $form_slug, $post_id to the buddyforms_user_can_delete filter
+* Remove is user logged in and buddyforms_can_edit functions from the loop and table templates and move this checks to the buddyforms_post_entry_actions function
+* Fixed a freemium issue where the freebies was displayed on gravity forms edit screen.
+* Category and tags never worked ;( they never got saved… What a stupid issue! We switched the naming from taxonomy to taxonomy, category, tags but forgot to check during save for the new types.
+* Added https support to google recaptcha
+* Added a new shortcode bf_login_form to add a simple login/logout form
+* Added new filters to manipulate the insert and update arguments buddyforms_wp_insert_post_args buddyforms_wp_update_post_args
+* Add a new filter to enable the deactivation of the wp_editor. http://docs.buddyforms.com/article/473-site-origin-page-builder-support?auth=true
+* Create a new helper function buddyforms_get_form_slug_by_post_id to get the form slug from post id Will return the form slug from post meta or the default. none if no form is attached
+* Move the session back to the constructor. Otherwise we get issue if the form is used in shortcodes
+* Created a new function buddyforms_get_post_types to get the allowed posts types of BuddyForms
+* Created a new function buddyforms_notice_if_broken_form to check if the form is broken #94
+* Added the functionality to update registration forms from the front to allow existing users to change there user data and meta fields
+* Added a new function buddyforms_wp_update_user to update existing users
+* Adjust the process form script to support update post data and meta
+* Added wp_editor support to the textarea
+* Load js and css on BuddyForms settings page
+* No footer scripts needed at the moment comment out the action for now.
+* Added buddyforms-metabox class to settings metaboxes
+* Fixed an issue in the global layout options. CSS and JS save was broken after rewrite the meta.
+* Fixed an issue where the mail notification was not send if post status changed
+* Fixed an issues in the mail buddy. line brakes have not been recognised
+* Added new options for mail_from_name and mail_from
+* Added the show hide js for new mail notification options
+* Added a new attribute to $striped to the buddyforms_display_field_group_table to allow the disable of table striped
+* New from options: user_login, user_firs, user_last, userfirst_last, blog_title or custom. Custom can use anf form element via shortcodes
+* Added new file form-templates for the form builder and wizard templates
+* Created a new function to create the templates array buddyforms_form_builder_register_templates
+* Make Form Builder default Label values translatable
+* Fixed Wizard -> Permissions -> Check all not working #60
+* Last test with smaller fixes to check if the layout is working in the templates
+* Fixed an issue in the mail notification settings in the form builder templates
+* Strip the content in the submissions view #75
+* Fixed hidden content mce toolbar #69
+* Move the register post type out of the admin to make it accessible for the rest api
+* Make use of the wp rest api for the form builder templates and load the json from the demo.
+* Add Kleo Theme Support
+* Fixed tons of smaller and bigger issues
+* Clean up the code
 
 = 2.0.15 - 05.04.2017 =
 * Fixed a taxonomy issue with excluded terms. Added a check if an excluded term was added via the backend edit screen. If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from the frontend
