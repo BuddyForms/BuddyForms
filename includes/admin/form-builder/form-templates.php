@@ -150,15 +150,15 @@ function buddyforms_form_builder_templates() {
                     <div id="template-<?php echo $key ?>" style="display:none;">
                         <div class="bf-tile-desc-wrap">
                             <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+														<button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
+															data-template="<?php echo $key ?>"
+															class="bf_wizard_types bf_form_template button button-primary" onclick="">
+															<!-- <span class="dashicons dashicons-plus"></span>  -->
+															Use This Template
+														</button>
                         </div>
-                        <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes" frameborder="0"
-                                style="background: transparent; height: 639px;"></iframe>
-                        <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
-                                data-template="<?php echo $key ?>"
-                                class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
-                            <!-- <span class="dashicons dashicons-plus"></span>  -->
-                            Use This Template
-                        </button>
+                        <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes" frameborder="0" class="bf-frame"
+                                style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0;"></iframe>
                     </div>
 
                 </div>

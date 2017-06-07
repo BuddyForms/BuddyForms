@@ -5,7 +5,7 @@
     height: auto !important;
 }
 #TB_ajaxContent {
-    padding: 0 10px !important;
+    padding: 0 !important;
     width: 100% !important;
     height: 100% !important;
 }
@@ -23,7 +23,19 @@
     background: #f4f4f4;
     border-bottom: 1px solid #ddd;
 }
-#TB_window .btn-primary {
+#TB_ajaxContent fieldset {
+    border: none;
+}
+.bf-frame {
+    /*-ms-zoom: 0.75;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.75);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.75);
+    -webkit-transform-origin: 0 0;*/
+}
+#TB_window .button-primary {
     position: absolute;
     top: 56px;
     right: 20px;
