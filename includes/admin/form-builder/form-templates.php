@@ -123,13 +123,10 @@ function buddyforms_form_builder_templates() {
                 $disabled = $dependencies != 'None' ? 'disabled' : '';
 
                 ?>
-                <div class="bf-3-tile">
+                <div class="bf-3-tile bf-tile <?php if( $dependencies != 'None' ){ echo 'disabled '; } ?>">
                     <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
                     <div class="xbf-col-50 bf-tile-desc-wrap">
                         <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
-                        <?php if( $dependencies != 'None' ){ ?>
-                            <p class="bf-tile-dep">Dependencies: <?php echo $dependencies ?></p>
-                        <?php } ?>
                     </div>
                     <div class="bf-tile-preview-wrap">
                         <p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
@@ -137,13 +134,17 @@ function buddyforms_form_builder_templates() {
                               title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span
                                         class="dashicons dashicons-visibility"></span> Preview</a></p>
                     </div>
-                    <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
-                            data-template="<?php echo $key ?>"
-                            class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
-                        <!-- <span class="dashicons dashicons-plus"></span>  -->
-                        Use This Template
-                        <?php // echo $template['title'] ?>
-                    </button>
+										<?php if( $dependencies != 'None' ){ ?>
+												<p class="bf-tile-dependencies">Dependencies: <?php echo $dependencies ?></p>
+										<?php } else { ?>
+		                    <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>" data-type="<?php echo $key ?>"
+		                            data-template="<?php echo $key ?>"
+		                            class="bf_wizard_types bf_form_template btn btn-primary btn-50" onclick="">
+		                        <!-- <span class="dashicons dashicons-plus"></span>  -->
+		                        Use This Template
+		                        <?php // echo $template['title'] ?>
+		                    </button>
+										<?php } ?>
                     <!-- <a href="#TB_inline?width=600&height=550&inlineId=template---><?php //echo $key ?><!--" title="-->
                     <?php //echo $template['title'] ?><!--" class="thickbox button  btn-primary btn-50"><span class="dashicons dashicons-visibility"></span> Preview</a>-->
                     <div id="template-<?php echo $key ?>" style="display:none;">
