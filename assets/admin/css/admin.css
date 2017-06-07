@@ -23,6 +23,11 @@
     background: #f4f4f4;
     border-bottom: 1px solid #ddd;
 }
+#TB_window .btn-primary {
+    position: absolute;
+    top: 56px;
+    right: 20px;
+}
 .bf-hidden {
     display: none;
 }
