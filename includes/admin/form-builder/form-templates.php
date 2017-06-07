@@ -158,7 +158,7 @@ function buddyforms_form_builder_templates() {
 														</button>
                         </div>
                         <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes" frameborder="0" class="bf-frame"
-                                style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0;"></iframe>
+                                style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
                     </div>
 
                 </div>
