@@ -101,7 +101,7 @@ function buddyforms_get_post_types(){
 add_action( 'admin_notices', 'buddyforms_rating_admin_notice' );
 function buddyforms_rating_admin_notice() {
 
-    if( defined(BUDDYFORMS_PRO_VERSION ) ){
+    if( defined( 'BUDDYFORMS_PRO_VERSION' ) ){
         return;
     }
 
