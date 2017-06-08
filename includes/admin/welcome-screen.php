@@ -114,9 +114,9 @@ function buddyforms_welcome_screen_content() {
 			<div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
 
 				<div class="xcol col-big">
-					<h2>A Revolutionary Form Wizard</h2>
+					<h2>A new Form Designer for Beautiful Forms</h2>
 					<p class="lead">
-						<b>Never feel lost again.</b> Setting up your custom forms will be a breeze.
+						Create Individual Forms to Match your Website Layout and Design!
 					</p>
 				</div>
 
@@ -124,7 +124,7 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/wizard.png'?>"
+						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/form-designer.png'?>"
 						     alt="BuddyForms Form Wizard Screenshot">
 					</div>
 				</div>
@@ -147,34 +147,8 @@ function buddyforms_welcome_screen_content() {
 					<div class="imgframe">
 						<img class="nopad"
 						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/FormWizardBuddyForms.png'?>"
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/form-templates.png'?>"
 						     alt="BuddyForms Form Wizard Screenshot">
-					</div>
-				</div>
-
-			</div>
-
-			<hr>
-
-			<div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-				<div class="xcol col-big">
-					<h2>Admin Metabox Support</h2>
-					<p class="lead">
-						Speed up your workflow for post moderation.
-					</p>
-					<p class="lead">
-						Edit user submitted posts quickly within the backend and find all special form fields in an
-						extra metabox - easy to edit!
-					</p>
-				</div>
-
-				<div class="xcol col-small">
-					<div class="imgframe">
-						<img class="nopad"
-						     style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-						     src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/images/metabox-support.png'?>"
-						     alt="BuddyForms Admin Metaboxt">
 					</div>
 				</div>
 
@@ -185,7 +159,7 @@ function buddyforms_welcome_screen_content() {
 			<div class="bfw-section bfw-news" style="margin-top: 30px;">
 				<div class="bfw-col bfw-col-50">
 					<h2 class="bfw-title">Latest Blogpost</h2>
-					<p class="lead">Read all about this new BuddyForms version Tips and Tricksw:</p>
+					<p class="lead">Read all about this new BuddyForms version Tips and Tricks:</p>
 					<a href="https://themekraft.com/buddyforms-news/" target="_new" class="button button-primary">Read Blogpost</a>
 				</div>
 				<div class="bfw-col bfw-col-50">
@@ -204,7 +178,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bfw-col bfw-col-50">
 					<div class="well">
 						<h3 class="bfw-title">First Time Here?</h3>
-							<a class="button xbutton-primary" href="http://docs.buddyforms.com/collection/108-getting-started" title="" target="new">Getting Started</a>
+							<a class="button xbutton-primary" href="http://docs.buddyforms.com/category/122-form-creation" title="" target="new">Getting Started</a>
 					</div>
 				</div>
 				<div class="bfw-col bfw-col-50">

@@ -242,6 +242,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added a ask for rating notice
 * Fixed several smaller issues
 * Remove freemius module migration. Its not needed anymore
+* Update the Welcome Screen to the new features
 
 = 2.1 - 07.06.2017 =
 
