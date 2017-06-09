@@ -328,7 +328,7 @@ function buddyforms_auth_signon( $user ) {
 	return $user;
 }
 
-add_action( 'template_redirect', 'buddyforms_activate_user' );
+add_action( 'template_redirect', 'buddyforms_activate_user', 0, 0  );
 function buddyforms_activate_user() {
 	global $buddyforms;
 
