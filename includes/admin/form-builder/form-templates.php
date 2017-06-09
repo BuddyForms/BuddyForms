@@ -79,7 +79,7 @@ function buddyforms_form_builder_template_get_dependencies($template){
 				$deps .= 'BuddyForms WooElements';
 			}
 
-			if ( ! class_exists( 'bf_woo_simple_auction' ) ) {
+			if ( $field->product_type_default == 'auction' && ! class_exists( 'bf_woo_simple_auction' ) ) {
 				$deps .= empty( $deps ) ? '' : ', ';
 				$deps .= 'BuddyForms Simple Auction';
 			}

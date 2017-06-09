@@ -113,7 +113,7 @@ function buddyforms_registration_screen() {
 	$activation_message_from_email = isset( $buddyform['registration']['activation_message_from_email'] ) ? $buddyform['registration']['activation_message_from_email'] : '[admin_email]';
 	$form_setup[]                  = new Element_Textbox( '<b>' . __( "Activation From eMail", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_email]", array(
 		'value'     => $activation_message_from_email,
-		'shortDesc' => __( '', 'buddyforms' ),
+		'shortDesc' => __( 'You can set the "From Email Address" to [admin_email] to use the admin Email from the general WordPress settings', 'buddyforms' ),
 		'class'     => '',
 	) );
 

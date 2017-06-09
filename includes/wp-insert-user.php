@@ -204,10 +204,8 @@ function buddyforms_wp_insert_user() {
 		if ( $new_user_id && ! is_wp_error( $new_user_id ) ) {
 			$code = sha1( $new_user_id . time() );
 
-
-			if ( ! isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) || $buddyforms[ $form_slug ]['registration']['activation_page'] == 'home' ) {
-				$activation_page = get_home_url();
-			} else {
+			$activation_page = get_home_url();
+			if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) && $buddyforms[ $form_slug ]['registration']['activation_page'] != 'home' ) {
 				$activation_page = get_permalink( $buddyforms[ $form_slug ]['registration']['activation_page'] );
 			}
 			$activation_link = add_query_arg( array(
@@ -334,28 +332,35 @@ add_action( 'template_redirect', 'buddyforms_activate_user' );
 function buddyforms_activate_user() {
 	global $buddyforms;
 
+	if ( ! isset( $_GET['key'] ) ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['user'] ) ) {
+		return;
+	}
+
 	if ( ! isset( $_GET['form_slug'] ) ) {
 		return;
 	}
 
-	if ( ! isset( $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) ) {
-		return;
-	}
+	$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
+	if ( $user_id ) {
+		// get user meta activation hash field
+		$code = get_user_meta( $user_id, 'has_to_be_activated', true );
+		if ( $code == filter_input( INPUT_GET, 'key' ) ) {
+			delete_user_meta( $user_id, 'has_to_be_activated' );
 
-	if ( get_the_ID() == $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) {
-		$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
-		if ( $user_id ) {
-			// get user meta activation hash field
-			$code = get_user_meta( $user_id, 'has_to_be_activated', true );
-			if ( $code == filter_input( INPUT_GET, 'key' ) ) {
-				delete_user_meta( $user_id, 'has_to_be_activated' );
+			if( isset( $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) ){
 
-				if( isset( $buddyforms[ $_GET['form_slug'] ]['registration']['activation_page'] ) ){
-					$url = get_permalink($buddyforms[ $_GET['form_slug'] ]['registration']['activation_page']);
-					wp_redirect($url);
+				$url = get_home_url();
+				if ( isset( $buddyforms[ filter_input( INPUT_GET, 'form_slug' ) ]['registration']['activation_page'] ) && $buddyforms[ filter_input( INPUT_GET, 'form_slug' ) ]['registration']['activation_page'] != 'home' ) {
+					$url = get_permalink( $buddyforms[ filter_input( INPUT_GET, 'form_slug' ) ]['registration']['activation_page'] );
 				}
 
+				wp_redirect($url);
 			}
+
 		}
 	}
 }
