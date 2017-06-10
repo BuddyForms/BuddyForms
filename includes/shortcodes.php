@@ -275,7 +275,6 @@ function buddyforms_view_login_form($args){
 	global $wp;
 	$current_url = home_url(add_query_arg(array(),$wp->request));
 
-
 	extract( shortcode_atts( array(
 		'title'  => 'Loggin',
 	), $args ) );

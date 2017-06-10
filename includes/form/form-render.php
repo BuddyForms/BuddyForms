@@ -28,8 +28,8 @@ function buddyforms_form_html( $args ) {
 		'form_notice'  => '',
 	), $args ) );
 
-	if ( ! is_user_logged_in() && ! isset( $buddyforms[ $form_slug ]['public_submit'] ) ) :
-		return buddyforms_get_wp_login_form();
+	if ( ! is_user_logged_in() && $buddyforms[ $form_slug ]['form_type'] != 'registration' && isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] != 'public_submit' )  :
+        return buddyforms_get_wp_login_form( $form_slug );
 	endif;
 
 	$user_can_edit = false;
@@ -39,7 +39,8 @@ function buddyforms_form_html( $args ) {
 		$user_can_edit = true;
 	}
 
-	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'][0] == 'public_submit' ) {
+	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration'
+         || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
 		$user_can_edit = true;
 	}
 

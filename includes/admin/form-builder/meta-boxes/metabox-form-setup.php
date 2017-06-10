@@ -11,36 +11,11 @@ function buddyforms_metabox_form_setup() {
 	// Get the BuddyForms Options
 	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
-
+	// Get all allowed post types
 	$post_types = buddyforms_get_post_types();
 
-	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
-	$page_on_front = get_option('page_on_front');
-
-	// Get all pages
-	$pages = get_pages( array(
-		'sort_order'  => 'asc',
-		'sort_column' => 'post_title',
-		'parent'      => 0,
-		'post_type'   => 'page',
-		'post_status' => 'publish',
-		'exclude'     => isset($page_on_front) ? $page_on_front : 0
-	) );
-
-	// Generate the pages array by id
-	$all_pages         = Array();
-	$all_pages['none'] = 'Select a Page';
-	foreach ( $pages as $page ) {
-		$all_pages[ $page->ID ] = $page->post_title;
-	}
-
-	// All Pages saved by kname
-	$all_pages_name         = Array();
-	$all_pages_name['none'] = 'Select a Page';
-	foreach ( $pages as $page ) {
-		$all_pages_name[ $page->post_name ] = $page->post_title;
-	}
-
+	// Get all allowed pages
+	$all_pages      = buddyforms_get_all_pages('id');
 
 	// Get all values or set the default
 	$slug = $post->post_name;

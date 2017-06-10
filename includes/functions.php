@@ -166,7 +166,8 @@ function buddyforms_wp_login_form() {
 /**
  * @return mixed|string|void
  */
-function buddyforms_get_wp_login_form( $title = '' ) {
+function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
+    global $buddyforms;
 
     if( empty( $title ) ){
 	    $title = __( 'You need to be logged in to view this page', 'buddyforms' );
@@ -175,7 +176,17 @@ function buddyforms_get_wp_login_form( $title = '' ) {
 	$wp_login_form = '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 
-//	$wp_login_form .= '<p><a href="#">Register</a></p>';
+	if( $form_slug != 'none' ){
+
+	    if($buddyforms[$form_slug]['public_submit'] == 'registration_form' && $buddyforms[$form_slug]['logged_in_only_reg_form'] != 'none' ){
+		    $reg_form_slug = $buddyforms[$form_slug]['logged_in_only_reg_form'];
+
+            set_query_var('bf_form_slug', $reg_form_slug);
+
+			$wp_login_form = do_shortcode('[bf form_slug="' . $reg_form_slug . '"]');
+		}
+    }
+
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
 	return $wp_login_form;
@@ -608,4 +619,40 @@ function buddyforms_get_form_slug_by_post_id( $post_id ){
 	}
 
 	return $value;
+}
+
+function buddyforms_get_all_pages($type = 'id'){
+
+	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
+	$page_on_front = get_option('page_on_front');
+
+	$pages = get_pages( array(
+		'sort_order'  => 'asc',
+		'sort_column' => 'post_title',
+		'parent'      => 0,
+		'post_type'   => 'page',
+		'post_status' => 'publish',
+		'exclude'     => isset($page_on_front) ? $page_on_front : 0
+	) );
+
+
+	$all_pages         = Array();
+	$all_pages['none'] = 'Select a Page';
+
+	if($type == 'id'){
+		// Generate the pages array by id
+		foreach ( $pages as $page ) {
+			$all_pages[ $page->ID ] = $page->post_title;
+		}
+    }
+
+
+    if($type == 'name'){
+	    foreach ( $pages as $page ) {
+		    $all_pages[ $page->post_name ] = $page->post_title;
+	    }
+
+    }
+
+	return $all_pages;
 }
