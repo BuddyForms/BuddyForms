@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 2.1.0.1
+Stable tag: 2.1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -237,15 +237,29 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.1.0.1 - 08.06.2017 =
+= 2.1.0.2 - Jun 12.2017 =
+* Make sure registration activation does work all over the site and if no option is set the home is used
+* Make sure registration activation code check is fired on all pages
+* Allow to add admin mail as from email in the register account activation message
+* Dependencies for WooCommerce Simple Auction added to the form templates
+* Make sure the buddyforms_activate_user template redirect is before any other redirect can take place
+* Added a new option to select a registration form for for the login form.
+* Created a new function buddyforms_get_all_pages to get all pares as id's array or by name
+* Fixed issues in the Registration and Activation Logic. Done some deeply testing and changing some logic.
+* Auto Login user after click the activation link.
+* Added some jQuery to to show hide permission options according to the public_submit settings
+* Added referrer as after activation redirect
+* Check if session is writable and change session to the WordPress upload dir if not writable.
+* Fixed multiple issues
+
+= 2.1.0.1 - Jun 08.2017 =
 * Added a check is_wp_error for the form builder templates and load defaults if request failed.
 * Added a ask for rating notice
 * Fixed several smaller issues
 * Remove freemius module migration. Its not needed anymore
 * Update the Welcome Screen to the new features
 
-= 2.1 - 07.06.2017 =
-
+= 2.1 - Jun 07.2017 =
 * This is a major update with lots of changes. Not all commits are listed here. For a detailed list of all changes please see the GitHub Commits https://github.com/BuddyForms/BuddyForms
 
 Main New Features:
