@@ -53,10 +53,19 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
+        
+		$bf_session_save_path =  session_save_path();
+		if( ! is_writable( $bf_session_save_path ) ) {
+			$upload_dir = wp_upload_dir();
+			$bf_session_save_path = $upload_dir['basedir'].'/bf_session';
+			if ( ! file_exists( $bf_session_save_path ) ) {
+				wp_mkdir_p( $bf_session_save_path );
+			}
+			session_save_path($bf_session_save_path);
+		}
 
-		session_save_path("/tmp");
 		if (isset($_COOKIE[session_name()])) {
-			if(!is_writable("/tmp/sess_".$_COOKIE[session_name()])) {
+			if(!is_writable($bf_session_save_path ."/sess_".$_COOKIE[session_name()])) {
 				setcookie(session_name(), '', time()-42000, '/');
 				header("Location: ./");
 			}
