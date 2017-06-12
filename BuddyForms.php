@@ -53,9 +53,15 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
-        if( !session_id('buddyforms' ) ) {
-            session_start( array( 'buddyforms' ) );
-        }
+
+		session_save_path("/tmp");
+		if (isset($_COOKIE[session_name()])) {
+			if(!is_writable("/tmp/sess_".$_COOKIE[session_name()])) {
+				setcookie(session_name(), '', time()-42000, '/');
+				header("Location: ./");
+			}
+		}
+		session_start();
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 		$this->load_constants();
