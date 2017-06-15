@@ -223,9 +223,12 @@ function buddyforms_process_submission( $args = Array() ) {
 		$comment_status = $_POST['comment_status'];
 	}
 
-	$post_excerpt = '';
-	if ( isset( $_POST['post_excerpt'] ) ) {
-		$post_excerpt = $_POST['post_excerpt'];
+	// Check if post_excerpt form element exist and if has values if empty check for default
+	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', isset( $_POST['post_excerpt'] ) && ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
+	if( empty( $post_excerpt ) ){
+		$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
+		$post_excerpt = $content_field['generate_post_excerpt'];
+		$post_excerpt = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
 
 	$action      = 'save';
@@ -335,7 +338,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
 
 
-			$post_title = apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' );
+			$post_title = apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' );
 
 			if( $post_title == 'none' ){
 
@@ -346,8 +349,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 			}
 
-
-			$post_content = apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' );
+			$post_content = apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' );
 			if( empty( $post_content ) ){
 
 				$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
@@ -443,8 +445,8 @@ function buddyforms_update_post( $args ) {
 		$bf_post = array(
 			'ID'             => $_POST['post_id'],
 			'post_author'    => $post_author,
-			'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
-			'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
+			'post_title'     => apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
@@ -462,8 +464,8 @@ function buddyforms_update_post( $args ) {
 		$bf_post = array(
 			'post_parent'    => $post_parent,
 			'post_author'    => $post_author,
-			'post_title'     => apply_filters( 'bf_update_buddyforms_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
-			'post_content'   => apply_filters( 'bf_update_buddyforms_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
+			'post_title'     => apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' ),
+			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
@@ -501,8 +503,43 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 	foreach ( $customfields as $key => $customfield ) :
 
+		if ( isset( $customfield['slug'] ) ) {
+			$slug = $customfield['slug'];
+		}
+
+		if ( empty( $slug ) ) {
+			$slug = sanitize_title( $customfield['name'] );
+		}
+
+		// Update the post
+		if ( isset( $_POST[ $slug ] ) ) {
+			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
+		} else {
+			if(!is_admin()){
+				update_post_meta( $post_id, $slug, '' );
+			}
+		}
+
 		//
-		// Check if file is new and needs to get reassigned to the corect parent
+		// Check if file is new and needs to get reassigned to the correct parent
+		//
+		if ( $customfield['type'] == 'textarea' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
+
+			$textarea = apply_filters( 'buddyforms_update_form_textarea', isset( $_POST[ $customfield['slug'] ] ) && ! empty( $customfield['slug'] ) ? $_POST[ $customfield['slug'] ] : '' );
+			if ( empty( $textarea ) ) {
+
+				$this_customfield = buddyforms_get_form_field_by_slug( $form_slug, $customfield['slug'] );
+				$textarea = $this_customfield['generate_textarea'];
+
+				$textarea = buddyforms_str_replace_form_fields_val_by_slug( $textarea, $customfields, $post_id );
+
+				update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $textarea ) );
+
+			}
+		}
+
+		//
+		// Check if file is new and needs to get reassigned to the correct parent
 		//
 		if ( $customfield['type'] == 'file' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
 
@@ -632,24 +669,6 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		// Update meta do_action to hook into. This can be needed if you added
 		// new form elements and need to manipulate how they get saved.
 		do_action( 'buddyforms_update_post_meta', $customfield, $post_id );
-
-		if ( isset( $customfield['slug'] ) ) {
-			$slug = $customfield['slug'];
-		}
-
-		if ( empty( $slug ) ) {
-			$slug = sanitize_title( $customfield['name'] );
-		}
-
-
-		// Update the post
-		if ( isset( $_POST[ $slug ] ) ) {
-			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
-		} else { 
-			if(!is_admin()){
-				update_post_meta( $post_id, $slug, '' );
-			}
-		}
 
 	endforeach;
 

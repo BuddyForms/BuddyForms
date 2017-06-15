@@ -264,6 +264,42 @@ function buddyforms_display_form_element( $args ) {
 			) );
 
 			break;
+		case 'post_excerpt':
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Post Excerpt', 'buddyforms' );
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'value'    => $name,
+				'required' => 1
+			) );
+
+			$post_excerpt_options                     = isset( $customfield['post_excerpt_options'] ) ? $customfield['post_excerpt_options'] : 'false';
+			$post_excerpt_options_array               = array(
+				'media_buttons' => 'media_buttons',
+				'tinymce'       => 'tinymce',
+				'quicktags'     => 'quicktags'
+			);
+			$form_fields['advanced']['post_excerpt_opt_a'] = new Element_Checkbox( '<b>' . __( 'Turn on wp editor features', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_excerpt_options]", $post_excerpt_options_array, array( 'value' => $post_excerpt_options ) );
+
+			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
+			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
+
+			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
+			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+
+			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
+			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
+
+			$generate_post_excerpt = isset( $customfield['generate_post_excerpt'] ) ? $customfield['generate_post_excerpt']  : '';
+			$form_fields['advanced']['generate_post_excerpt'] = new Element_Textarea( '<b>' . __( 'Generate Post Excerpt', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_post_excerpt]", array(
+				'value'     => $generate_post_excerpt,
+				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
+			) );
+
+			unset( $form_fields['advanced']['slug'] );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_excerpt' );
+
+			break;
 		case 'email':
 			unset( $form_fields['advanced']['slug'] );
 

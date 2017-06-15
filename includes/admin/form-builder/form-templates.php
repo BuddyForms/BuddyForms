@@ -8,13 +8,17 @@ function buddyforms_form_builder_register_templates() {
 	// Get the templates form demo.buddyforms.com as json string
 	$response = wp_remote_get( 'http://demo.buddyforms.com/wp-json/buddyforms/v1/all/' );
 
-	if( is_wp_error( $response ) ){
+	if( is_wp_error( $response ) || $response['response']['code'] != 200){
 		$response = Array();
 		$response['body'] = buddyforms_default_form_templates_json();
 	}
 
 	// Decode the json
 	$buddyforms = json_decode( $response['body'] );
+
+	if( ! is_object( $buddyforms ) ){
+	    return;
+    }
 
 	$sort = array();
 	foreach ($buddyforms as $form_s => $form){

@@ -216,6 +216,10 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'Content', 'buddyforms' ),
 					'unique' => 'unique'
 				),
+				'post_excerpt' => array(
+					'label'  => __( 'Excerpt', 'buddyforms' ),
+					'unique' => 'unique'
+				),
 			),
 		),
 		'basic'   => array(

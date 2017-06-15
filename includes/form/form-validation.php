@@ -155,9 +155,10 @@ function buddyforms_jquery_validation() {
 		$form_html .= '},';
 
 		$form_html .= 'errorPlacement: function(label, element) {
+		console.log(label, element);
 	            // position error label after generated textarea
 	            if (element.is("textarea")) {
-	                label.insertBefore("#buddyforms_form_content");
+	                label.find(".wp-editor-area").insertBefore(element);
 	            } else if(element.is("input[type=\"radio\"]")) {
 	                label.insertBefore(element)
 	            } else {
