@@ -100,6 +100,9 @@ class Form extends Base {
 	 * @param string $id
 	 */
 	public function __construct( $id = "pfbc" ) {
+		global $wp_session;
+		$wp_session = WP_Session::get_instance();
+
 		$this->configure( array(
 			"action" => $_SERVER['REQUEST_URI'],
 			"id"     => preg_replace( "/\W/", "-", $id ),
@@ -225,8 +228,8 @@ class Form extends Base {
 	 * @return mixed|string
 	 */
 	protected static function recover( $id ) {
-		if ( ! empty( $_SESSION["pfbc"][ $id ]["form"] ) ) {
-			return unserialize( $_SESSION["pfbc"][ $id ]["form"] );
+		if ( ! empty( $wp_session["pfbc"][ $id ]["form"] ) ) {
+			return unserialize( $wp_session["pfbc"][ $id ]["form"] );
 		} else {
 			return "";
 		}
@@ -239,8 +242,9 @@ class Form extends Base {
 	 * @param string $id
 	 */
 	public static function clearValues( $id = "pfbc" ) {
-		if ( ! empty( $_SESSION["pfbc"][ $id ]["values"] ) ) {
-			unset( $_SESSION["pfbc"][ $id ]["values"] );
+		global $wp_session;
+		if ( ! empty( $wp_session["pfbc"][ $id ]["values"] ) ) {
+			unset( $wp_session["pfbc"][ $id ]["values"] );
 		}
 	}
 
@@ -248,8 +252,9 @@ class Form extends Base {
 	 * @param string $id
 	 */
 	public static function clearErrors( $id = "pfbc" ) {
-		if ( ! empty( $_SESSION["pfbc"][ $id ]["errors"] ) ) {
-			unset( $_SESSION["pfbc"][ $id ]["errors"] );
+		global $wp_session;
+		if ( ! empty( $wp_session["pfbc"][ $id ]["errors"] ) ) {
+			unset( $wp_session["pfbc"][ $id ]["errors"] );
 		}
 	}
 
@@ -259,7 +264,8 @@ class Form extends Base {
 	 * @param $value
 	 */
 	public static function _setSessionValue( $id, $element, $value ) {
-		$_SESSION["pfbc"][ $id ]["values"][ $element ] = $value;
+		global $wp_session;
+		$wp_session["pfbc"][ $id ]["values"][ $element ] = $value;
 	}
 
 	/**
@@ -268,15 +274,16 @@ class Form extends Base {
 	 * @param string $element
 	 */
 	public static function setError( $id, $errors, $element = "" ) {
+		global $wp_session;
 		if ( ! is_array( $errors ) ) {
 			$errors = array( $errors );
 		}
-		if ( empty( $_SESSION["pfbc"][ $id ]["errors"][ $element ] ) ) {
-			$_SESSION["pfbc"][ $id ]["errors"][ $element ] = array();
+		if ( empty( $wp_session["pfbc"][ $id ]["errors"][ $element ] ) ) {
+			$wp_session["pfbc"][ $id ]["errors"][ $element ] = array();
 		}
 
 		foreach ( $errors as $error ) {
-			$_SESSION["pfbc"][ $id ]["errors"][ $element ][] = $error;
+			$wp_session["pfbc"][ $id ]["errors"][ $element ][] = $error;
 		}
 	}
 
@@ -437,9 +444,10 @@ class Form extends Base {
 	 * @return array
 	 */
 	protected static function getSessionValues( $id = "pfbc" ) {
+		global $wp_session;
 		$values = array();
-		if ( ! empty( $_SESSION["pfbc"][ $id ]["values"] ) ) {
-			$values = $_SESSION["pfbc"][ $id ]["values"];
+		if ( ! empty( $wp_session["pfbc"][ $id ]["values"] ) ) {
+			$values = $wp_session["pfbc"][ $id ]["values"];
 		}
 
 		return $values;
@@ -642,7 +650,9 @@ JS;
 	}
 
 	protected function save() {
-		$_SESSION["pfbc"][ $this->_attributes["id"] ]["form"] = serialize( $this );
+		global $wp_session;
+		$wp_session = WP_Session::get_instance();
+		$wp_session["pfbc"][ $this->_attributes["id"] ]["form"] = serialize( $this );
 	}
 
 	/**
@@ -779,14 +789,15 @@ JS;
 	 * @return array
 	 */
 	public function getErrors() {
+		global $wp_session;
 		$errors = array();
 		if ( session_id() == "" ) {
 			$errors[""] = array( "Error: The pfbc project requires an active session to function properly.  Simply add session_start() to your script before any output has been sent to the browser." );
 		} else {
 			$errors = array();
 			$id     = $this->_attributes["id"];
-			if ( ! empty( $_SESSION["pfbc"][ $id ]["errors"] ) ) {
-				$errors = $_SESSION["pfbc"][ $id ]["errors"];
+			if ( ! empty( $wp_session["pfbc"][ $id ]["errors"] ) ) {
+				$errors = $wp_session["pfbc"][ $id ]["errors"];
 			}
 		}
 

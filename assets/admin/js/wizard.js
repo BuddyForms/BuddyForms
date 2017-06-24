@@ -21,8 +21,8 @@ jQuery(document).ready(function (jQuery) {
     }
 
     // get the url parameter to create the UI
-    var wizard = bf_getUrlParameter('wizard');
-    var type = bf_getUrlParameter('type');
+    var wizard  = bf_getUrlParameter('wizard');
+    var type    = bf_getUrlParameter('type');
     var post_id = bf_getUrlParameter('post');
 
     // Get out of here if not the wizard view
@@ -34,8 +34,8 @@ jQuery(document).ready(function (jQuery) {
     if (wizard != null) {
 
         // Load the form elements template depend on the type
-        if (type) {
-            load_formbuilder_template(type);
+        if ( type ) {
+            load_formbuilder_template( type );
         }
 
         jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
@@ -166,8 +166,10 @@ jQuery(document).ready(function (jQuery) {
             url: ajaxurl,
             data: {"action": "buddyforms_form_builder_wizard_types"},
             success: function (data) {
-                jQuery('#poststuff').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
-                jQuery(data).appendTo('#poststuff');
+                jQuery('#poststuff #post-body-content').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
+                jQuery(data).appendTo('#poststuff #post-body-content');
+
+                jQuery('#poststuff .buddyforms_wizard_types h5:first').hide();
                 jQuery('#post').show();
 
             }
