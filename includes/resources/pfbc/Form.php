@@ -228,8 +228,9 @@ class Form extends Base {
 	 * @return mixed|string
 	 */
 	protected static function recover( $id ) {
-		if ( ! empty( $wp_session["pfbc"][ $id ]["form"] ) ) {
-			return unserialize( $wp_session["pfbc"][ $id ]["form"] );
+		$wp_session = WP_Session::get_instance();
+		if ( ! empty( $wp_session["pfbc"] ) && ! empty( $wp_session["pfbc"][ $id ] ) ) {
+			return json_decode( $wp_session["pfbc"][ $id ] );
 		} else {
 			return "";
 		}
@@ -652,7 +653,7 @@ JS;
 	protected function save() {
 		global $wp_session;
 		$wp_session = WP_Session::get_instance();
-		$wp_session["pfbc"][ $this->_attributes["id"] ]["form"] = serialize( $this );
+		$wp_session["pfbc"] = array( $this->_attributes["id"] => wp_json_encode( $this ));
 	}
 
 	/**
