@@ -736,3 +736,15 @@ function buddyforms_notice_if_broken_form(){
         ?>
     </div><?php
 }
+
+add_filter( 'hidden_meta_boxes', 'custom_hidden_meta_boxes' );
+function custom_hidden_meta_boxes( $hidden ) {
+	global $post;
+
+	if ( get_post_type( $post ) != 'buddyforms' ) {
+		return $hidden;
+	}
+
+	$hidden = array();
+	return $hidden;
+}
