@@ -143,7 +143,7 @@ class Form extends Base {
 	 *
 	 * @return bool
 	 */
-	public static function isValid( $id = "pfbc_form", $clearValues = true ) {
+	public static function isValid( $id, $clearValues = true ) {
 		$valid = true;
 		/*The form's instance is recovered (unserialized) from the session.*/
 		$form = self::recover( $id );
@@ -241,7 +241,7 @@ class Form extends Base {
 	/**
 	 * @param string $id
 	 */
-	public static function clearValues( $id = "pfbc_values" ) {
+	public static function clearValues( $id ) {
 		$wp_session = WP_Session::get_instance();
 		if ( ! empty( $wp_session[ $id . "_values" ] ) ) {
 			unset( $wp_session[ $id . "_values" ] );
@@ -277,12 +277,18 @@ class Form extends Base {
 		$wp_session = WP_Session::get_instance();
 
 		if ( ! is_array( $errors ) ) {
-			$errors = array( $errors );
+			$errors_array = array();
+			$errors_array[] = $errors;
+			$errors = $errors_array;
 		}
 
-		$element_errors = $wp_session[ $id . "_errors"];
-		$element_errors[$element] = $errors;
-		$wp_session[ $id . "_errors"] = $element_errors;
+		$element_errors = json_decode($wp_session[ $id . "_errors" ]);
+
+		foreach ( $errors as $key => $error ) {
+			$element_errors[] = $element . ' ' . $error;
+		}
+
+		$wp_session[ $id . "_errors"] = json_encode($element_errors);
 	}
 
 	/**
@@ -793,12 +799,10 @@ JS;
 		$id     = $this->_attributes["id"];
 
 		if ( isset( $wp_session[ $id  . "_errors" ] ) ) {
-
-			$errors = $wp_session[ $id  . "_errors" ];
+			$errors = json_decode($wp_session[ $id  . "_errors" ]);
 			if ( ! is_array( $errors ) ) {
-				$errors[] = array( $errors );
+				$errors[] = $errors;
 			}
-			return $errors;
 		}
 
 		return $errors;

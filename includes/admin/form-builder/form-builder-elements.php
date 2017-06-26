@@ -778,9 +778,6 @@ JS;
                 'value'    => $button_label,
             ) );
 
-
-
-
 			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
 
 			$description                           = isset( $customfield['description'] ) ? stripcslashes( $customfield['description'] ) : '';

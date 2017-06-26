@@ -23,7 +23,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value greater than or equal to ', 'buddyforms' ) . $form_field['validation_min'];
-					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
 
@@ -31,7 +31,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value less than or equal to ', 'buddyforms' ) . $form_field['validation_max'];
-					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
 
@@ -39,7 +39,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) < $form_field['validation_minlength'] ) {
 					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter at least %d characters.', 'buddyforms' ), $form_field['validation_minlength'] );
-					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
 
@@ -47,7 +47,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) > $form_field['validation_maxlength'] ) {
 					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter no more than %d characters.', 'buddyforms' ), $form_field['validation_maxlength'] );
-					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message );
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
 
