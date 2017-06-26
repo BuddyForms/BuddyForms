@@ -53,24 +53,7 @@ class BuddyForms {
 	 * @since 0.1-beta
 	 */
 	public function __construct() {
-
-		$bf_session_save_path =  session_save_path();
-		if( ! is_writable( $bf_session_save_path ) ) {
-			$upload_dir = wp_upload_dir();
-			$bf_session_save_path = $upload_dir['basedir'].'/bf_session';
-			if ( ! file_exists( $bf_session_save_path ) ) {
-				wp_mkdir_p( $bf_session_save_path );
-			}
-			session_save_path($bf_session_save_path);
-		}
-
-		if (isset($_COOKIE[session_name()])) {
-			if(!is_writable($bf_session_save_path ."/sess_".$_COOKIE[session_name()])) {
-				setcookie(session_name(), '', time()-42000, '/');
-				header("Location: ./");
-			}
-		}
-		session_start();
+	    global $wp_session;
 
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
@@ -81,7 +64,6 @@ class BuddyForms {
 		add_action( 'init', array( $this, 'update_db_check' ), 10 );
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		add_action( 'admin_head'            , array( $this, 'remove_admin_scripts' ), 999999, 1 );
 		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_styles' ), 102, 1 );
 		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_js' ), 102, 1 );
 //		add_action( 'admin_footer'          , array( $this, 'admin_js_footer' ), 2, 1 );
@@ -90,6 +72,7 @@ class BuddyForms {
 		add_action( 'wp_enqueue_scripts'    , array( $this, 'front_js_loader' ), 102, 1 );
 
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
+
 
 	}
 
@@ -182,6 +165,8 @@ class BuddyForms {
 	 */
 	public function includes() {
 
+		require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
+
 		if ( ! function_exists( 'PFBC_Load' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
 		}
@@ -218,6 +203,7 @@ class BuddyForms {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/add-ons.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
 
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
@@ -226,8 +212,6 @@ class BuddyForms {
 			}
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
-
-
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
@@ -252,54 +236,6 @@ class BuddyForms {
 		load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
-	/**
-	 * Remove Scripts and Styles loaded by other plugins and themes if the BuddyForms Vies is displayed.
-	 *
-	 * @package buddyforms
-	 * @since 2.0.5
-	 */
-	function remove_admin_scripts($hook_suffix){
-		global $wp_scripts, $wp_styles, $post;
-
-		// Let us clean the BuddyForms admin views from unneeded styles and css
-		if (
-			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
-			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
-			//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
-			|| $hook_suffix == 'buddyforms_page_bf_settings'
-			|| $hook_suffix == 'buddyforms_page_bf_submissions'
-			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
-			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
-		) {
-
-			// Remove all code from the admin_head added by other plugins. We not need it on the BuddyForms Views
-			remove_all_actions( 'admin_head', 10  );
-
-			// Remove ass js added by other plugins. We want to keep the conflicts out of our world ;)
-			foreach( $wp_scripts->registered as $handle ) :
-				if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
-					if($handle->src != 1){
-						if( substr($handle->handle, 0, 10) != 'buddyforms' ){
-							wp_deregister_script( $handle->handle );
-						}
-					}
-				}
-			endforeach;
-
-			// Same for the css WordPress edit screen is a mess of meta overwrites. So let us deregister any style left over from other plugins
-			foreach( $wp_styles->registered as $handle ) :
-				if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
-					if($handle->src != 1){
-						if( substr($handle->handle, 0, 10) != 'buddyforms' ){
-							wp_deregister_style( $handle->handle );
-						}
-					}
-				}
-			endforeach;
-
-		}
-	}
 
 	/**
 	 * Enqueue the needed CSS for the admin screen
@@ -316,10 +252,10 @@ class BuddyForms {
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+//			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
-			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+//			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 
@@ -334,7 +270,7 @@ class BuddyForms {
 
 
 			// Remove Kleo Theme Styles. This theme is often used but the css conflicts with the form builder. So we remove it if the form builder is viewed
-			wp_deregister_style('cmb-styles' ); wp_deregister_style('kleo-cmb-styles' );
+//			wp_deregister_style('cmb-styles' ); wp_deregister_style('kleo-cmb-styles' );
 
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
@@ -359,10 +295,10 @@ class BuddyForms {
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
+//			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
 			|| $hook_suffix == 'buddyforms-page-bf-settings'
 			|| $hook_suffix == 'buddyforms-page-bf-submissions'
-			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+//			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );

@@ -663,7 +663,7 @@ function buddyforms_export_form() {
 add_action( 'admin_init', 'buddyforms_export_form' );
 
 
-add_action( 'admin_notices', 'buddyforms_notice_if_broken_form' );
+add_action( 'post_submitbox_start', 'buddyforms_notice_if_broken_form' );
 
 function buddyforms_notice_if_broken_form(){
 	global $post, $buddyform;
@@ -735,4 +735,16 @@ function buddyforms_notice_if_broken_form(){
             }
         ?>
     </div><?php
+}
+
+add_filter( 'hidden_meta_boxes', 'custom_hidden_meta_boxes' );
+function custom_hidden_meta_boxes( $hidden ) {
+	global $post;
+
+	if ( get_post_type( $post ) != 'buddyforms' ) {
+		return $hidden;
+	}
+
+	$hidden = array();
+	return $hidden;
 }

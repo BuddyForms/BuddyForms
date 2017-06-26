@@ -333,7 +333,6 @@ function buddyforms_form_html( $args ) {
 
 	$form_html .= $layout;
 
-
 	// Create the form object
 	$form = new Form( "buddyforms_form_" . $form_slug );
 

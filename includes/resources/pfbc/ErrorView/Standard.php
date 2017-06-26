@@ -24,7 +24,7 @@ JS;
 	}
 
 	public function render() {
-		$errors = $this->parse( $this->_form->getErrors() );
+		$errors = $this->_form->getErrors();
 		if ( ! empty( $errors ) ) {
 			$size   = sizeof( $errors );
 			$errors = implode( "</li><li>", $errors );
@@ -50,6 +50,7 @@ HTML;
 	 * @return array
 	 */
 	private function parse( $errors ) {
+
 		$list = array();
 		if ( ! empty( $errors ) ) {
 			$keys    = array_keys( $errors );
@@ -63,7 +64,7 @@ HTML;
 	}
 
 	public function renderAjaxErrorResponse() {
-		$errors = $this->parse( $this->_form->getErrors() );
+		$errors = $$this->_form->getErrors();
 		if ( ! empty( $errors ) ) {
 			header( "Content-type: application/json" );
 			echo json_encode( array( "errors" => $errors ) );
