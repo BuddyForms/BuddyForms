@@ -772,6 +772,15 @@ JS;
 				'value'    => $name,
 				'required' => 1
 			) );
+
+            $button_label                           = isset( $customfield['button_label'] ) ? stripcslashes( $customfield['button_label'] ) : __( 'Add Image', 'buddyforms' );
+            $form_fields['general']['button_label'] = new Element_Textbox( '<b>' . __( 'Button Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][button_label]", array(
+                'value'    => $button_label,
+            ) );
+
+
+
+
 			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
 
 			$description                           = isset( $customfield['description'] ) ? stripcslashes( $customfield['description'] ) : '';

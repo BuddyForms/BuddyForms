@@ -252,10 +252,10 @@ class BuddyForms {
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//			|| isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
+//			|| $hook_suffix == 'buddyforms_page_bf_add_ons'
 			|| $hook_suffix == 'buddyforms_page_bf_settings'
 			|| $hook_suffix == 'buddyforms_page_bf_submissions'
-			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+//			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 
@@ -295,10 +295,10 @@ class BuddyForms {
 			( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 			//|| isset($_GET['post_type']) && $_GET['post_type'] == 'buddyforms'
-			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
+//			|| $hook_suffix == 'buddyforms-page-bf-add_ons'
 			|| $hook_suffix == 'buddyforms-page-bf-settings'
 			|| $hook_suffix == 'buddyforms-page-bf-submissions'
-			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
+//			|| $hook_suffix == 'buddyforms_page_buddyforms-pricing'
 			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
 			wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );

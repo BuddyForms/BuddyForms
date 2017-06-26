@@ -518,7 +518,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
 
-						$name_inline = __('Add Image', 'buddyforms');
+						$name_inline = isset( $customfield['button_label'] ) ? $customfield['button_label'] : __('Add Image', 'buddyforms');
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
 							$name_inline = '* ' . $name;
 						}

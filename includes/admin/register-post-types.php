@@ -663,7 +663,7 @@ function buddyforms_export_form() {
 add_action( 'admin_init', 'buddyforms_export_form' );
 
 
-add_action( 'admin_notices', 'buddyforms_notice_if_broken_form' );
+add_action( 'post_submitbox_start', 'buddyforms_notice_if_broken_form' );
 
 function buddyforms_notice_if_broken_form(){
 	global $post, $buddyform;
