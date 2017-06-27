@@ -19,8 +19,8 @@ class Element_HTML extends Element {
 		global $field_id;
 
 		$properties = array(
-			"value"     => $value,
-			"field_id"  => $field_id
+			"value"    => $value,
+			"field_id" => $field_id
 		);
 		parent::__construct( "", "", $properties );
 	}

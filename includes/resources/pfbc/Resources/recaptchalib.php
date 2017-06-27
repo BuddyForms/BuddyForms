@@ -221,9 +221,9 @@ function recaptcha_check_answer( $privkey, $remoteip, $challenge, $response, $ex
  */
 function recaptcha_get_signup_url( $domain = null, $appname = null ) {
 	return "https://www.google.com/recaptcha/admin/create?" . _recaptcha_qsencode( array(
-		'domains' => $domain,
-		'app'     => $appname
-	) );
+			'domains' => $domain,
+			'app'     => $appname
+		) );
 }
 
 /**

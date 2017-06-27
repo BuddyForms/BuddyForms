@@ -16,25 +16,25 @@ add_action( 'admin_menu', 'buddyforms_settings_menu' );
 //
 function buddyforms_settings_page() { ?>
 
-	<div class="wrap">
+    <div class="wrap">
 
 		<?php
 		// Display the BuddyForms Header
-		include( BUDDYFORMS_INCLUDES_PATH . '/admin/bf-admin-header.php' );
+		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 		?>
-		<div id="poststuff">
-			<div id="post-body" class="metabox-holder columns-2">
+        <div id="poststuff">
+            <div id="post-body" class="metabox-holder columns-2">
 
-				<div id="postbox-container-1" class="postbox-container">
+                <div id="postbox-container-1" class="postbox-container">
 					<?php buddyforms_settings_page_sidebar(); ?>
-				</div>
-				<div id="postbox-container-2" class="postbox-container">
+                </div>
+                <div id="postbox-container-2" class="postbox-container">
 					<?php buddyforms_settings_page_tabs_content(); ?>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-	</div> <!-- .wrap -->
+    </div> <!-- .wrap -->
 	<?php
 }
 
@@ -79,7 +79,7 @@ function buddyforms_default_sanitize( $new ) {
 
 function buddyforms_settings_page_tabs_content() {
 	global $pagenow, $buddyforms; ?>
-	<div id="poststuff">
+    <div id="poststuff">
 
 		<?php
 
@@ -105,24 +105,24 @@ function buddyforms_settings_page_tabs_content() {
 			switch ( $tab ) {
 				case 'general' :
 					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' ); ?>
-					<div class="metabox-holder">
+                    <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
-							<h3><span><?php _e( 'Post Types Default Form', 'buddyforms' ); ?></span></h3>
-							<div class="inside">
-								<p>Select a default form for every post type.</p>
+                            <h3><span><?php _e( 'Post Types Default Form', 'buddyforms' ); ?></span></h3>
+                            <div class="inside">
+                                <p>Select a default form for every post type.</p>
 
-								<p>This will make sure that posts created before BuddyForms will have a form associated.
-									<br>
-									If you select none the post edit link will point to the admin for posts not created
-									with
-									BuddyForms</p>
+                                <p>This will make sure that posts created before BuddyForms will have a form associated.
+                                    <br>
+                                    If you select none the post edit link will point to the admin for posts not created
+                                    with
+                                    BuddyForms</p>
 
-								<form method="post" action="options.php">
+                                <form method="post" action="options.php">
 
 									<?php settings_fields( 'buddyforms_posttypes_default' ); ?>
 
-									<table class="form-table">
-										<tbody>
+                                    <table class="form-table">
+                                        <tbody>
 										<?php
 										if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 											$post_types_forms = Array();
@@ -135,17 +135,17 @@ function buddyforms_settings_page_tabs_content() {
 											}
 
 											foreach ( $post_types_forms as $post_type => $post_types_form ) : ?>
-												<tr valign="top">
-													<th scope="row" valign="top">
+                                                <tr valign="top">
+                                                    <th scope="row" valign="top">
 														<?php
 														$post_type_object = get_post_type_object( $post_type );
 														echo $post_type_object->labels->name; ?>
-													</th>
-													<td>
-														<select
-															name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
-															class="regular-radio">
-															<option value="none">None</option>
+                                                    </th>
+                                                    <td>
+                                                        <select
+                                                                name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
+                                                                class="regular-radio">
+                                                            <option value="none">None</option>
 															<?php foreach ( $post_types_form as $form_key => $form ) {
 
 																$default = '';
@@ -153,53 +153,53 @@ function buddyforms_settings_page_tabs_content() {
 																	$default = $buddyforms_posttypes_default[ $post_type ];
 																}
 																?>
-																<option <?php echo selected( $default, $form_key, true ) ?>
-																	value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
+                                                                <option <?php echo selected( $default, $form_key, true ) ?>
+                                                                        value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
 															<?php } ?>
-														</select>
-													</td>
-												</tr>
+                                                        </select>
+                                                    </td>
+                                                </tr>
 											<?php endforeach;
 										} else {
 											echo '<h3>You need to create at least one form to select a post type default.</h3>';
 										} ?>
-										</tbody>
-									</table>
+                                        </tbody>
+                                    </table>
 									<?php submit_button(); ?>
 
-								</form>
-							</div><!-- .inside -->
-						</div><!-- .postbox -->
-					</div><!-- .metabox-holder -->
+                                </form>
+                            </div><!-- .inside -->
+                        </div><!-- .postbox -->
+                    </div><!-- .metabox-holder -->
 					<?php
 					break;
 				case 'import' : ?>
-					<div class="metabox-holder">
+                    <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
-							<h3><span><?php _e( 'Import Forms', 'buddyforms' ); ?></span></h3>
-							<div class="inside">
-								<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
-								<form method="post" enctype="multipart/form-data">
-<!--									<p>-->
-<!--										<b>Type:</b>-->
-<!--										<select name="import-type" class="regular-radio">-->
-<!--											--><?php //echo do_action('buddyforms_import_type_options'); ?>
-<!--											<option value="buddyforms">BuddyForms</option>-->
-<!--											<option value="custom">Custom</option>-->
-<!--										</select>-->
-<!--									</p>-->
-									<p>
-										<input type="file" name="import_file"/>
-									</p>
-									<p>
-										<input type="hidden" name="buddyforms_action" value="import_settings"/>
+                            <h3><span><?php _e( 'Import Forms', 'buddyforms' ); ?></span></h3>
+                            <div class="inside">
+                                <p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
+                                <form method="post" enctype="multipart/form-data">
+                                    <!--									<p>-->
+                                    <!--										<b>Type:</b>-->
+                                    <!--										<select name="import-type" class="regular-radio">-->
+                                    <!--											--><?php //echo do_action('buddyforms_import_type_options'); ?>
+                                    <!--											<option value="buddyforms">BuddyForms</option>-->
+                                    <!--											<option value="custom">Custom</option>-->
+                                    <!--										</select>-->
+                                    <!--									</p>-->
+                                    <p>
+                                        <input type="file" name="import_file"/>
+                                    </p>
+                                    <p>
+                                        <input type="hidden" name="buddyforms_action" value="import_settings"/>
 										<?php wp_nonce_field( 'buddyforms_import_nonce', 'buddyforms_import_nonce' ); ?>
 										<?php submit_button( __( 'Import' ), 'secondary', 'submit', false ); ?>
-									</p>
-								</form>
-							</div><!-- .inside -->
-						</div><!-- .postbox -->
-					</div><!-- .metabox-holder -->
+                                    </p>
+                                </form>
+                            </div><!-- .inside -->
+                        </div><!-- .postbox -->
+                    </div><!-- .metabox-holder -->
 					<?php
 					break;
 				case 'layout' : ?>
@@ -211,9 +211,9 @@ function buddyforms_settings_page_tabs_content() {
                                 <p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ' ); ?></p>
 
                                 <form method="post" action="options.php">
-	                                <?php settings_fields( 'buddyforms_layout_options' ); ?>
-                                    <?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
-	                                <?php submit_button( __( 'Save' ), 'secondary', 'submit', false ); ?>
+									<?php settings_fields( 'buddyforms_layout_options' ); ?>
+									<?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
+									<?php submit_button( __( 'Save' ), 'secondary', 'submit', false ); ?>
                                 </form>
 
                             </div><!-- .inside -->
@@ -228,7 +228,7 @@ function buddyforms_settings_page_tabs_content() {
 			}
 		}
 		?>
-	</div> <!-- #poststuff -->
+    </div> <!-- #poststuff -->
 	<?php
 }
 
@@ -245,22 +245,25 @@ function buddyforms_settings_page_sidebar() {
  * Process a settings import from a json file
  */
 function buddyforms_process_settings_import() {
-	if( empty( $_POST['buddyforms_action'] ) || 'import_settings' != $_POST['buddyforms_action'] )
+	if ( empty( $_POST['buddyforms_action'] ) || 'import_settings' != $_POST['buddyforms_action'] ) {
 		return false;
-	if( ! wp_verify_nonce( $_POST['buddyforms_import_nonce'], 'buddyforms_import_nonce' ) )
+	}
+	if ( ! wp_verify_nonce( $_POST['buddyforms_import_nonce'], 'buddyforms_import_nonce' ) ) {
 		return false;
-	if( ! current_user_can( 'manage_options' ) )
+	}
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return false;
+	}
 
-	$name = explode( '.', $_FILES['import_file']['name'] );
-	$extension =  end( $name );
+	$name      = explode( '.', $_FILES['import_file']['name'] );
+	$extension = end( $name );
 
-	if( $extension != 'json' ) {
+	if ( $extension != 'json' ) {
 		wp_die( __( 'Please upload a valid .json file' ) );
 	}
 
 	$import_file = $_FILES['import_file']['tmp_name'];
-	if( empty( $import_file ) ) {
+	if ( empty( $import_file ) ) {
 		wp_die( __( 'Please upload a file to import' ) );
 	}
 	// Retrieve the settings from the file and convert the json object to an array.
@@ -268,8 +271,10 @@ function buddyforms_process_settings_import() {
 
 	$form_id = buddyforms_create_form_from_json( $settings );
 
-	wp_safe_redirect( admin_url( 'post.php?post=' . $form_id . '&action=edit' ) ); exit;
+	wp_safe_redirect( admin_url( 'post.php?post=' . $form_id . '&action=edit' ) );
+	exit;
 }
+
 add_action( 'admin_init', 'buddyforms_process_settings_import' );
 
 
@@ -285,12 +290,12 @@ function buddyforms_create_form_from_json( $json_array ) {
 	$post_id  = wp_insert_post( $bf_forms_args, true );
 	$the_post = get_post( $post_id );
 
-	$json_array['slug' ] = $the_post->post_name;
+	$json_array['slug'] = $the_post->post_name;
 
 	update_post_meta( $post_id, '_buddyforms_options', $json_array );
 
 	if ( $post_id ) {
-			buddyforms_attached_page_rewrite_rules( true );
+		buddyforms_attached_page_rewrite_rules( true );
 	}
 
 	return $post_id;

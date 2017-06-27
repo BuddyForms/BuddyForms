@@ -6,7 +6,7 @@
  * @since 2.0.5
  */
 add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 );
-function buddyforms_remove_admin_scripts($hook_suffix){
+function buddyforms_remove_admin_scripts( $hook_suffix ) {
 	global $wp_scripts, $wp_styles, $post;
 
 	// Let us clean the BuddyForms admin views from unneeded styles and css
@@ -23,9 +23,9 @@ function buddyforms_remove_admin_scripts($hook_suffix){
 
 		// Remove all code from the js and css added by other plugins. We not need it on the BuddyForms Views
 		remove_all_actions( 'admin_head' );
-		remove_all_actions( 'admin_print_styles');
-		remove_all_actions( 'admin_print_scripts');
-		remove_all_actions( 'admin_print_footer_scripts');
+		remove_all_actions( 'admin_print_styles' );
+		remove_all_actions( 'admin_print_scripts' );
+		remove_all_actions( 'admin_print_footer_scripts' );
 		remove_all_actions( 'admin_footer' );
 
 		// Attach the default filters back so we have all dependencies loaded
@@ -33,10 +33,10 @@ function buddyforms_remove_admin_scripts($hook_suffix){
 
 
 		// Remove css and js added by other plugins. We want to keep the conflicts out of our world ;)
-		foreach( $wp_scripts->registered as $handle ) :
-			if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
-				if($handle->src != 1){
-					if( substr($handle->handle, 0, 10) != 'buddyforms' && substr($handle->handle, 0, 9) != 'fs_common' ){
+		foreach ( $wp_scripts->registered as $handle ) :
+			if ( ! ( preg_match( '/wp-admin/', $handle->src ) || preg_match( '/wp-includes/', $handle->src ) ) && ! empty( $handle->src ) ) {
+				if ( $handle->src != 1 ) {
+					if ( substr( $handle->handle, 0, 10 ) != 'buddyforms' && substr( $handle->handle, 0, 9 ) != 'fs_common' ) {
 						wp_deregister_script( $handle->handle );
 					}
 				}
@@ -44,10 +44,10 @@ function buddyforms_remove_admin_scripts($hook_suffix){
 		endforeach;
 
 		// Same for the css WordPress edit screen is a mess of meta overwrites. So let us deregister any style left over from other plugins
-		foreach( $wp_styles->registered as $handle ) :
-			if( !(preg_match('/wp-admin/',$handle->src) || preg_match('/wp-includes/',$handle->src)) && !empty($handle->src) ){
-				if($handle->src != 1){
-					if( substr($handle->handle, 0, 10) != 'buddyforms' && substr($handle->handle, 0, 9) != 'fs_common' ){
+		foreach ( $wp_styles->registered as $handle ) :
+			if ( ! ( preg_match( '/wp-admin/', $handle->src ) || preg_match( '/wp-includes/', $handle->src ) ) && ! empty( $handle->src ) ) {
+				if ( $handle->src != 1 ) {
+					if ( substr( $handle->handle, 0, 10 ) != 'buddyforms' && substr( $handle->handle, 0, 9 ) != 'fs_common' ) {
 						wp_deregister_style( $handle->handle );
 					}
 				}

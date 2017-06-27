@@ -95,7 +95,7 @@ function buddyforms_my_edit_post_link( $url, $post_ID ) {
 		return $url;
 	}
 
-	$the_author_id = apply_filters('buddyforms_the_author_id', $the_post->post_author, $form_slug, $post_ID );
+	$the_author_id = apply_filters( 'buddyforms_the_author_id', $the_post->post_author, $form_slug, $post_ID );
 
 	if ( $the_author_id != $current_user->ID ) {
 		return $url;

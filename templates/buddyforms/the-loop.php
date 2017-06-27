@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-	<div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
+    <div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>
 
-			<ul class="buddyforms-list buddyforms-posts-content" role="main">
+            <ul class="buddyforms-list buddyforms-posts-content" role="main">
 
 				<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
@@ -31,18 +31,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					?>
 
-					<li id="bf_post_li_<?php the_ID() ?>"
-					    class="bf-submission <?php echo $post_status_css; ?> bf_posts_<?php the_ID() ?>">
+                    <li id="bf_post_li_<?php the_ID() ?>"
+                        class="bf-submission <?php echo $post_status_css; ?> bf_posts_<?php the_ID() ?>">
 
 						<?php // Create the modal for the submissions single view
 						if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
-							<div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
+                            <div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
 								<?php buddyforms_locate_template( 'submission-single' ); ?>
-							</div>
+                            </div>
 						<?php } ?>
 
-						<div class="item">
-							<div class="item-avatar">
+                        <div class="item">
+                            <div class="item-avatar">
 								<?php
 								$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
 									70,
@@ -60,72 +60,72 @@ if ( ! defined( 'ABSPATH' ) ) {
 									}
 								}
 								?>
-								<a class="bf-submission-modal" data-id="<?php the_ID() ?>"
-								   href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
-							</div>
+                                <a class="bf-submission-modal" data-id="<?php the_ID() ?>"
+                                   href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
+                            </div>
 
-							<div class="item-title">
-								<a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
-								   data-id="<?php the_ID() ?>"
-								   href="<?php echo $the_permalink; ?>"
-								   rel="bookmark"
-								   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?>
-								</a>
-							</div>
+                            <div class="item-title">
+                                <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
+                                   data-id="<?php the_ID() ?>"
+                                   href="<?php echo $the_permalink; ?>"
+                                   rel="bookmark"
+                                   title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?>
+                                </a>
+                            </div>
 
-							<div class="item-desc"><?php echo get_the_excerpt(); ?></div>
+                            <div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
 							<?php do_action( 'buddyforms_the_loop_item_last', get_the_ID() ); ?>
 
-						</div>
+                        </div>
 
 						<?php
-                        $the_author_id = apply_filters('buddyforms_the_loop_item_author_id', get_the_author_meta( 'ID' ), $form_slug, get_the_ID() );
-                        ob_start();
-                        ?>
+						$the_author_id = apply_filters( 'buddyforms_the_loop_item_author_id', get_the_author_meta( 'ID' ), $form_slug, get_the_ID() );
+						ob_start();
+						?>
 
                         <div class="action">
                             <span class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'F j, Y' ) ?></span>
-                                <div class="meta">
-                                    <div class="item-status"><?php echo $post_status_name; ?></div>
-                                    <?php buddyforms_post_entry_actions( $form_slug ); ?>
-                                </div>
+                            <div class="meta">
+                                <div class="item-status"><?php echo $post_status_name; ?></div>
+								<?php buddyforms_post_entry_actions( $form_slug ); ?>
+                            </div>
                         </div>
 
-                        <?php echo apply_filters( 'buddyforms_the_loop_meta_html', ob_get_clean() ); ?>
-                        <?php do_action( 'buddyforms_the_loop_li_last', get_the_ID() ); ?>
+						<?php echo apply_filters( 'buddyforms_the_loop_meta_html', ob_get_clean() ); ?>
+						<?php do_action( 'buddyforms_the_loop_li_last', get_the_ID() ); ?>
 
-						<div class="clear"></div>
-					</li>
+                        <div class="clear"></div>
+                    </li>
 
 					<?php do_action( 'buddyforms_after_loop_item' ) ?>
 
 				<?php endwhile; ?>
 
-			</ul>
+            </ul>
 
-			<div class="navigation">
+            <div class="navigation">
 				<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
 				else: ?>
-					<div
-						class="alignleft"><?php next_posts_link( '&larr;' . __( 'Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-					<div
-						class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+                    <div
+                            class="alignleft"><?php next_posts_link( '&larr;' . __( 'Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
+                    <div
+                            class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
 				<?php endif; ?>
 
-			</div>
+            </div>
 
 		<?php else : ?>
 
-			<div id="message" class="info">
-				<p><?php _e( 'There were no posts found. Create your first post now!', 'buddyforms' ); ?></p>
-			</div>
+            <div id="message" class="info">
+                <p><?php _e( 'There were no posts found. Create your first post now!', 'buddyforms' ); ?></p>
+            </div>
 
 		<?php endif; ?>
 
-		<div class="bf_modal">
-			<div style="display: none;"><?php wp_editor( '', 'buddyforms_form_content' ); ?></div>
-		</div>
+        <div class="bf_modal">
+            <div style="display: none;"><?php wp_editor( '', 'buddyforms_form_content' ); ?></div>
+        </div>
 
-	</div>
+    </div>
 <?php wp_reset_query();

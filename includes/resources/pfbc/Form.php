@@ -227,8 +227,9 @@ class Form extends Base {
 	 */
 	protected static function recover( $id ) {
 		$wp_session = WP_Session::get_instance();
-		if (  isset( $wp_session[ $id . '_form' ] ) ) {
+		if ( isset( $wp_session[ $id . '_form' ] ) ) {
 			$json = maybe_unserialize( $wp_session[ $id . '_form' ] );
+
 			return $json;
 		} else {
 			return "";
@@ -264,8 +265,8 @@ class Form extends Base {
 	 * @param $value
 	 */
 	public static function _setSessionValue( $id, $element, $value ) {
-		$wp_session = WP_Session::get_instance();
-		$wp_session[ $id . "_values"] = array( $element => $value );
+		$wp_session                    = WP_Session::get_instance();
+		$wp_session[ $id . "_values" ] = array( $element => $value );
 	}
 
 	/**
@@ -277,18 +278,18 @@ class Form extends Base {
 		$wp_session = WP_Session::get_instance();
 
 		if ( ! is_array( $errors ) ) {
-			$errors_array = array();
+			$errors_array   = array();
 			$errors_array[] = $errors;
-			$errors = $errors_array;
+			$errors         = $errors_array;
 		}
 
-		$element_errors = json_decode($wp_session[ $id . "_errors" ]);
+		$element_errors = json_decode( $wp_session[ $id . "_errors" ] );
 
 		foreach ( $errors as $key => $error ) {
 			$element_errors[] = $element . ' ' . $error;
 		}
 
-		$wp_session[ $id . "_errors"] = json_encode($element_errors);
+		$wp_session[ $id . "_errors" ] = json_encode( $element_errors );
 	}
 
 	/**
@@ -439,6 +440,7 @@ class Form extends Base {
 
 			return $html;
 		}
+
 		return false;
 	}
 
@@ -449,9 +451,9 @@ class Form extends Base {
 	 */
 	protected static function getSessionValues( $id ) {
 		$wp_session = WP_Session::get_instance();
-		$values = array();
+		$values     = array();
 		if ( ! empty( $wp_session[ $id . "_values" ] ) ) {
-			$values = (array)$wp_session[ $id . "_values" ];
+			$values = (array) $wp_session[ $id . "_values" ];
 		}
 
 		return $values;
@@ -654,9 +656,9 @@ JS;
 	}
 
 	protected function save() {
-		$wp_session = WP_Session::get_instance();
-		$session_dada = maybe_serialize( $this );
-		$wp_session[ $this->_attributes["id"] . "_form"  ] = $session_dada;
+		$wp_session                                       = WP_Session::get_instance();
+		$session_dada                                     = maybe_serialize( $this );
+		$wp_session[ $this->_attributes["id"] . "_form" ] = $session_dada;
 	}
 
 	/**
@@ -798,8 +800,8 @@ JS;
 		$errors = array();
 		$id     = $this->_attributes["id"];
 
-		if ( isset( $wp_session[ $id  . "_errors" ] ) ) {
-			$errors = json_decode($wp_session[ $id  . "_errors" ]);
+		if ( isset( $wp_session[ $id . "_errors" ] ) ) {
+			$errors = json_decode( $wp_session[ $id . "_errors" ] );
 			if ( ! is_array( $errors ) ) {
 				$errors[] = $errors;
 			}
@@ -847,6 +849,7 @@ JS;
 		$this->Button( "Cancel", "button", array( "onclick" => "history.go(-1);" ) );
 		echo '</div></div>';
 		$this->view->renderFormClose();
+
 		return true;
 	}
 }

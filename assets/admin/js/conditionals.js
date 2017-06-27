@@ -432,13 +432,13 @@ jQuery(document).ready(function (jQuery) {
     });
 
     jQuery(document.body).on('click', '.public_submit_select input', function () {
-        if( jQuery( this ).val() == 'public_submit' ){
-            jQuery( '.public-submit-option' ).show();
-            jQuery( '.registration-form-option' ).hide();
+        if (jQuery(this).val() == 'public_submit') {
+            jQuery('.public-submit-option').show();
+            jQuery('.registration-form-option').hide();
         }
-        if( jQuery( this ).val() == 'registration_form' ){
-            jQuery( '.registration-form-option' ).show();
-            jQuery( '.public-submit-option' ).hide();
+        if (jQuery(this).val() == 'registration_form') {
+            jQuery('.registration-form-option').show();
+            jQuery('.public-submit-option').hide();
         }
     });
     jQuery(".public_submit_select input:radio:checked").trigger("click");

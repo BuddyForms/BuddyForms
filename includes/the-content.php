@@ -2,15 +2,15 @@
 
 // We need this function to support yoast seo. For a strange reason yoast seo remove the dashicons
 add_action( 'template_include', 'buddyforms_template_include' );
-function buddyforms_template_include($template){
+function buddyforms_template_include( $template ) {
 
-	$form_slug  = get_query_var('bf_form_slug');
-	$action     = get_query_var('bf_action');
+	$form_slug = get_query_var( 'bf_form_slug' );
+	$action    = get_query_var( 'bf_action' );
 
-	if ( !empty( $form_slug ) ) {
+	if ( ! empty( $form_slug ) ) {
 
 		if ( $action == 'view' || $action == 'create' || $action == 'edit' || $action == 'revision' ) {
-			remove_all_actions('wpseo_head');
+			remove_all_actions( 'wpseo_head' );
 		}
 
 	}
@@ -30,10 +30,10 @@ add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
 function buddyforms_attached_page_content( $content ) {
 	global $buddyforms;
 
-	$form_slug      = get_query_var('bf_form_slug');
-	$post_id        = get_query_var('bf_post_id');
-	$parent_post_id = get_query_var('bf_parent_post_id', 0);
-	$action         = get_query_var('bf_action');
+	$form_slug      = get_query_var( 'bf_form_slug' );
+	$post_id        = get_query_var( 'bf_post_id' );
+	$parent_post_id = get_query_var( 'bf_parent_post_id', 0 );
+	$action         = get_query_var( 'bf_action' );
 
 	// Remove the filter to make sure it not end up in a infinity loop
 	remove_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );

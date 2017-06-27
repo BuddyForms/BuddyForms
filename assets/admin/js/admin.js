@@ -79,7 +79,7 @@ function load_formbuilder_template(template) {
 
                         // console.log(val);
 
-                        jQuery('.buddyforms_accordion_notification' ).html(val);
+                        jQuery('.buddyforms_accordion_notification').html(val);
                         jQuery('#no-trigger-mailcontainer').hide();
 
                         tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id']);
@@ -195,9 +195,9 @@ jQuery(document).ready(function (jQuery) {
         var val = jQuery(this).val();
 
         if (val === 'custom') {
-            jQuery('.mail_from_name_custom' ).removeClass('hidden');
+            jQuery('.mail_from_name_custom').removeClass('hidden');
         } else {
-            jQuery('.mail_from_name_custom' ).addClass('hidden');
+            jQuery('.mail_from_name_custom').addClass('hidden');
         }
 
     });
@@ -208,9 +208,9 @@ jQuery(document).ready(function (jQuery) {
         var val = jQuery(this).val();
 
         if (val === 'custom') {
-            jQuery('.mail_from_custom' ).removeClass('hidden');
+            jQuery('.mail_from_custom').removeClass('hidden');
         } else {
-            jQuery('.mail_from_custom' ).addClass('hidden');
+            jQuery('.mail_from_custom').addClass('hidden');
         }
 
     });

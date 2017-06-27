@@ -39,7 +39,7 @@ class View_SideBySide extends FormView {
 		}
 
 		if ( $element->getShared() ) {
-			$colSize = $element->getShared();
+			$colSize           = $element->getShared();
 			$this->sharedCount += $colSize[ strlen( $colSize ) - 1 ];
 		}
 

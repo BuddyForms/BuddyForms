@@ -72,7 +72,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			$user_email   = isset( $_POST['user_email'] ) ? $_POST['user_email'] : '';
 			$mail_address = str_replace( '[user_email]', $user_email, $mail_address );
 
-			if( ! empty($mail_address) ){
+			if ( ! empty( $mail_address ) ) {
 				array_push( $mail_to, $mail_address );
 			}
 
@@ -84,7 +84,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	if ( isset( $mail_notification_trigger['mail_to_bcc_address'] ) ) {
 		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_bcc_address'] ) );
 		foreach ( $mail_to_address as $key => $mail_address ) {
-			if( ! empty($mail_address) ){
+			if ( ! empty( $mail_address ) ) {
 				array_push( $mail_to, $mail_address );
 			}
 		}
@@ -94,7 +94,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	if ( isset( $mail_notification_trigger['mail_to_bcc_address'] ) ) {
 		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_bcc_address'] ) );
 		foreach ( $mail_to_address as $key => $mail_address ) {
-			if( ! empty($mail_address) ){
+			if ( ! empty( $mail_address ) ) {
 				array_push( $mail_to, $mail_address );
 			}
 		}
@@ -112,7 +112,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$from_name = isset( $mail_notification_trigger['mail_from_name'] ) ? $mail_notification_trigger['mail_from_name'] : 'blog_title';
 
-	switch ( $from_name ){
+	switch ( $from_name ) {
 		case 'user_login':
 			$from_name = $usernameauth;
 			break;
@@ -134,10 +134,9 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	}
 
 
-
 	$from_email = isset( $mail_notification_trigger['mail_from'] ) ? $mail_notification_trigger['mail_from'] : 'admin';
 
-	switch ( $from_email ){
+	switch ( $from_email ) {
 		case 'submitter':
 			$from_email = $user_email;
 			break;
@@ -145,17 +144,17 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			$from_email = get_option( 'admin_email' );
 			break;
 		case 'custom':
-			$from_email = isset($mail_notification_trigger['mail_from_custom']) ? $mail_notification_trigger['mail_from_custom'] : $from_email;
+			$from_email = isset( $mail_notification_trigger['mail_from_custom'] ) ? $mail_notification_trigger['mail_from_custom'] : $from_email;
 			break;
 		default:
 			$from_email = $user_email;
 			break;
 	}
 
-	$emailBody  = isset( $_POST['message'] ) ? $_POST['message'] : $mail_notification_trigger['mail_body'];
+	$emailBody = isset( $_POST['message'] ) ? $_POST['message'] : $mail_notification_trigger['mail_body'];
 
 	// If we have content let us check if there are any tags we need to replace with the correct values.
-	if( ! empty($emailBody)){
+	if ( ! empty( $emailBody ) ) {
 
 		$emailBody = stripslashes( $emailBody );
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
@@ -174,13 +173,13 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 				switch ( $field['type'] ) {
 					case 'taxonomy':
 						if ( is_array( $value ) ) {
-							foreach($value as $cat ){
-								$term = get_term( $cat, $field['taxonomy'] );
+							foreach ( $value as $cat ) {
+								$term    = get_term( $cat, $field['taxonomy'] );
 								$terms[] = $term->name;
 							}
 							$field_value = implode( ',', $terms );
 						} else {
-							$term = get_term( $value, $field['taxonomy'] );
+							$term        = get_term( $value, $field['taxonomy'] );
 							$field_value = $term->name;
 						}
 						break;
@@ -217,15 +216,15 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
 		$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
 
-		$emailBody = str_replace( '[form_elements_table]', buddyforms_mail_notification_form_elements_as_table($form_slug), $emailBody );
+		$emailBody = str_replace( '[form_elements_table]', buddyforms_mail_notification_form_elements_as_table( $form_slug ), $emailBody );
 
 		$emailBody = nl2br( htmlspecialchars( $emailBody ) );
 	}
 
 	// If we do not have any valid eMail Body let us try to create the content from teh from elements as table
-	if( empty($emailBody) ) {
+	if ( empty( $emailBody ) ) {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			$emailBody = buddyforms_mail_notification_form_elements_as_table($form_slug);
+			$emailBody = buddyforms_mail_notification_form_elements_as_table( $form_slug );
 		}
 	}
 
@@ -235,7 +234,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	$mailheader .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mailheader .= "Content-Transfer-Encoding: 7bit\n\n";
 	$mailheader .= "From: $from_name <$from_email>" . "\r\n";
-	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
+	$message    = '<html><head></head><body>' . $emailBody . '</body></html>';
 
 	// OK Let us sent the mail
 	wp_mail( $mail_to, $subject, $message, $mailheader );
@@ -364,7 +363,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$mailheader .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mailheader .= "Content-Transfer-Encoding: 7bit\n\n";
 	$mailheader .= "From: $from_name <$from_email>" . "\r\n";
-	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
+	$message    = '<html><head></head><body>' . $emailBody . '</body></html>';
 
 	wp_mail( $mail_to, $subject, $message, $mailheader );
 
@@ -376,7 +375,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
  *
  * @return string
  */
-function buddyforms_mail_notification_form_elements_as_table($form_slug){
+function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 	global $buddyforms, $post;
 	$striped_c = 0;
 
@@ -385,7 +384,7 @@ function buddyforms_mail_notification_form_elements_as_table($form_slug){
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
 
-		$value = isset($_POST[ $field['slug'] ]) ? $_POST[ $field['slug'] ] : '';
+		$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
 
 		// Check if is array
 		if ( is_array( $value ) ) {
@@ -397,13 +396,13 @@ function buddyforms_mail_notification_form_elements_as_table($form_slug){
 		switch ( $field['type'] ) {
 			case 'taxonomy':
 				if ( is_array( $value ) ) {
-					foreach($value as $cat ){
-						$term = get_term( $cat, $field['taxonomy'] );
+					foreach ( $value as $cat ) {
+						$term    = get_term( $cat, $field['taxonomy'] );
 						$terms[] = $term->name;
 					}
 					$field_value = implode( ',', $terms );
 				} else {
-					$term = get_term( $value, $field['taxonomy'] );
+					$term        = get_term( $value, $field['taxonomy'] );
 					$field_value = $term->name;
 				}
 				break;
@@ -415,7 +414,7 @@ function buddyforms_mail_notification_form_elements_as_table($form_slug){
 				break;
 		}
 
-		$striped = ($striped_c++%2==1) ?  "style='background: #eee;'" : '';
+		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
 		if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
 			$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";

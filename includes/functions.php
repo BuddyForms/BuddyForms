@@ -141,13 +141,13 @@ function buddyforms_locate_template( $slug ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $form_slug, $post_id;
 
 	// Get the current user so its not needed in the templates
-	$current_user  = wp_get_current_user();
+	$current_user = wp_get_current_user();
 
 	// create the plugin template path
-	$template_path = BUDDYFORMS_TEMPLATE_PATH .'buddyforms/'. $slug . '.php';
+	$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/' . $slug . '.php';
 
 	// Check if template exist in the child or parent theme and use this path if available
-	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false)) {
+	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
 		$template_path = $template_file;
 	}
 
@@ -167,25 +167,25 @@ function buddyforms_wp_login_form() {
  * @return mixed|string|void
  */
 function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
-    global $buddyforms;
+	global $buddyforms;
 
-    if( empty( $title ) ){
-	    $title = __( 'You need to be logged in to view this page', 'buddyforms' );
-    }
+	if ( empty( $title ) ) {
+		$title = __( 'You need to be logged in to view this page', 'buddyforms' );
+	}
 
 	$wp_login_form = '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
 
-	if( $form_slug != 'none' ){
+	if ( $form_slug != 'none' ) {
 
-	    if($buddyforms[$form_slug]['public_submit'] == 'registration_form' && $buddyforms[$form_slug]['logged_in_only_reg_form'] != 'none' ){
-		    $reg_form_slug = $buddyforms[$form_slug]['logged_in_only_reg_form'];
+		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
+			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
 
-            set_query_var('bf_form_slug', $reg_form_slug);
+			set_query_var( 'bf_form_slug', $reg_form_slug );
 
-			$wp_login_form = do_shortcode('[bf form_slug="' . $reg_form_slug . '"]');
+			$wp_login_form = do_shortcode( '[bf form_slug="' . $reg_form_slug . '"]' );
 		}
-    }
+	}
 
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
@@ -276,7 +276,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 		return;
 	}
 	?>
-	<ul class="edit_links">
+    <ul class="edit_links">
 		<?php
 		if ( buddyforms_is_author( $post->ID ) ) {
 
@@ -302,11 +302,11 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 			ob_start();
 
-			$post_form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
+			$post_form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
 
-			if( $post_form_slug ){
+			if ( $post_form_slug ) {
 				$form_slug = $post_form_slug;
-            }
+			}
 
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 				echo '<li>';
@@ -331,21 +331,21 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			// Display all actions
 			echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
 		} ?>
-	</ul>
+    </ul>
 	<?php
 }
 
-function buddyforms_is_author( $post_id ){
+function buddyforms_is_author( $post_id ) {
 
 	$is_author = false;
 
-	if( get_post_field( 'post_author', $post_id ) == get_current_user_id() ){
+	if ( get_post_field( 'post_author', $post_id ) == get_current_user_id() ) {
 		$is_author = true;
 	}
 
 	$form_slug = get_post_field( '_bf_form_slug', $post_id );
 
-	$is_author = apply_filters('buddyforms_user_can_edit', $is_author, $form_slug,  $post_id );
+	$is_author = apply_filters( 'buddyforms_user_can_edit', $is_author, $form_slug, $post_id );
 
 	return $is_author;
 }
@@ -545,11 +545,11 @@ function buddyforms_metabox_go_pro() {
 }
 
 // Get field by slug
-function buddyforms_get_form_field_by_slug($form_slug, $slug) {
+function buddyforms_get_form_field_by_slug( $form_slug, $slug ) {
 	global $buddyforms;
 
-	if (isset($buddyforms[$form_slug]['form_fields'])) : foreach ($buddyforms[$form_slug]['form_fields'] as $field_key => $field) {
-		if ($field['slug'] == $slug) {
+	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) : foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
+		if ( $field['slug'] == $slug ) {
 			return $field;
 		}
 	} endif;
@@ -561,13 +561,13 @@ function buddyforms_get_form_field_by_slug($form_slug, $slug) {
 // Add Placeholder support top the wp editor
 //
 add_filter( 'mce_external_plugins', 'buddyforms_add_mce_placeholder_plugin' );
-function buddyforms_add_mce_placeholder_plugin( $plugins ){
+function buddyforms_add_mce_placeholder_plugin( $plugins ) {
 
-	if(is_admin()){
+	if ( is_admin() ) {
 		return $plugins;
-    }
+	}
 
- 	$plugins[ 'placeholder' ] = BUDDYFORMS_PLUGIN_URL .'assets/resources/wp-tinymce-placeholder/mce.placeholder.js';
+	$plugins['placeholder'] = BUDDYFORMS_PLUGIN_URL . 'assets/resources/wp-tinymce-placeholder/mce.placeholder.js';
 
 	return $plugins;
 }
@@ -586,6 +586,7 @@ function buddyforms_tinymce_setup_function( $initArray ) {
                     jQuery(editor.getElement()).trigger(\'change\');
                 });
             }';
+
 	return $initArray;
 }
 
@@ -597,7 +598,7 @@ function buddyforms_tinymce_setup_function( $initArray ) {
  *
  * @return mixed
  */
-function buddyforms_get_form_slug_by_post_id( $post_id ){
+function buddyforms_get_form_slug_by_post_id( $post_id ) {
 
 	$value = get_post_meta( $post_id, '_bf_form_slug', true );
 
@@ -612,10 +613,10 @@ function buddyforms_get_form_slug_by_post_id( $post_id ){
 	return $value;
 }
 
-function buddyforms_get_all_pages($type = 'id'){
+function buddyforms_get_all_pages( $type = 'id' ) {
 
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
-	$page_on_front = get_option('page_on_front');
+	$page_on_front = get_option( 'page_on_front' );
 
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
@@ -623,27 +624,27 @@ function buddyforms_get_all_pages($type = 'id'){
 		'parent'      => 0,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
-		'exclude'     => isset($page_on_front) ? $page_on_front : 0
+		'exclude'     => isset( $page_on_front ) ? $page_on_front : 0
 	) );
 
 
 	$all_pages         = Array();
 	$all_pages['none'] = 'Select a Page';
 
-	if($type == 'id'){
+	if ( $type == 'id' ) {
 		// Generate the pages array by id
 		foreach ( $pages as $page ) {
 			$all_pages[ $page->ID ] = $page->post_title;
 		}
-    }
+	}
 
 
-    if($type == 'name'){
-	    foreach ( $pages as $page ) {
-		    $all_pages[ $page->post_name ] = $page->post_title;
-	    }
+	if ( $type == 'name' ) {
+		foreach ( $pages as $page ) {
+			$all_pages[ $page->post_name ] = $page->post_title;
+		}
 
-    }
+	}
 
 	return $all_pages;
 }

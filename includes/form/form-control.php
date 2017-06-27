@@ -92,7 +92,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	// Check if this is a registration form only
 	if ( $form_type == 'registration' ) {
 
-		if( ! is_user_logged_in() ){
+		if ( ! is_user_logged_in() ) {
 			$user_id = buddyforms_wp_insert_user();
 		} else {
 			$user_id = buddyforms_wp_update_user();
@@ -104,6 +104,7 @@ function buddyforms_process_submission( $args = Array() ) {
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
+
 			return $args;
 		}
 
@@ -112,10 +113,10 @@ function buddyforms_process_submission( $args = Array() ) {
 			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
 
-		if(isset($buddyforms[$form_slug]['form_fields'])){
-			foreach($buddyforms[$form_slug]['form_fields'] as $field_key => $r_field) {
-				if(isset($_POST[$r_field['slug']])){
-					update_user_meta( $user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[$r_field['slug']] ) );
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $r_field ) {
+				if ( isset( $_POST[ $r_field['slug'] ] ) ) {
+					update_user_meta( $user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[ $r_field['slug'] ] ) );
 				}
 			}
 
@@ -123,8 +124,8 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		$args = array(
 			'hasError'     => $hasError,
-			'form_notice'  => isset($form_notice) ? $form_notice : false,
-			'customfields' => isset($customfields) ? $customfields : false,
+			'form_notice'  => isset( $form_notice ) ? $form_notice : false,
+			'customfields' => isset( $customfields ) ? $customfields : false,
 			'redirect_to'  => $redirect_to,
 			'form_slug'    => $form_slug,
 		);
@@ -225,10 +226,10 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	// Check if post_excerpt form element exist and if has values if empty check for default
 	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', isset( $_POST['post_excerpt'] ) && ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
-	if( empty( $post_excerpt ) ){
-		$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
-		$post_excerpt = $content_field['generate_post_excerpt'];
-		$post_excerpt = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
+	if ( empty( $post_excerpt ) ) {
+		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
+		$post_excerpt  = $content_field['generate_post_excerpt'];
+		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
 
 	$action      = 'save';
@@ -237,8 +238,8 @@ function buddyforms_process_submission( $args = Array() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
-	$post_status    = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
-	$the_author_id  = apply_filters('buddyforms_the_author_id', $current_user->ID, $form_slug, $post_id );
+	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
+	$the_author_id = apply_filters( 'buddyforms_the_author_id', $current_user->ID, $form_slug, $post_id );
 
 	$args = Array(
 		'post_id'        => $post_id,
@@ -340,20 +341,20 @@ function buddyforms_process_submission( $args = Array() ) {
 
 			$post_title = apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none' );
 
-			if( $post_title == 'none' ){
+			if ( $post_title == 'none' ) {
 
-				$title_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
-				$post_title = $title_field['generate_title'];
+				$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
+				$post_title  = $title_field['generate_title'];
 
 				$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields, $post_id );
 
 			}
 
 			$post_content = apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '' );
-			if( empty( $post_content ) ){
+			if ( empty( $post_content ) ) {
 
-				$content_field  = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
-				$post_content = $content_field['generate_content'];
+				$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
+				$post_content  = $content_field['generate_content'];
 
 				$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields, $post_id );
 
@@ -361,7 +362,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 			$bf_post = array(
 				'ID'             => $post_id,
-				'post_title'     => strip_tags($post_title),
+				'post_title'     => strip_tags( $post_title ),
 				'post_content'   => $post_content,
 				'post_type'      => $post_type,
 				'post_status'    => $post_status,
@@ -515,7 +516,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		if ( isset( $_POST[ $slug ] ) ) {
 			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
 		} else {
-			if(!is_admin()){
+			if ( ! is_admin() ) {
 				update_post_meta( $post_id, $slug, '' );
 			}
 		}
@@ -529,7 +530,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 			if ( empty( $textarea ) ) {
 
 				$this_customfield = buddyforms_get_form_field_by_slug( $form_slug, $customfield['slug'] );
-				$textarea = $this_customfield['generate_textarea'];
+				$textarea         = $this_customfield['generate_textarea'];
 
 				$textarea = buddyforms_str_replace_form_fields_val_by_slug( $textarea, $customfields, $post_id );
 
@@ -584,8 +585,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		//
 		// Save post format if needed
 		//
-		if ( $customfield['type'] == 'post_formats' && isset($_POST[ 'post_formats' ]) && $_POST[ 'post_formats' ] != 'none' ) :
-			set_post_format( $post_id, $_POST[ 'post_formats' ] );
+		if ( $customfield['type'] == 'post_formats' && isset( $_POST['post_formats'] ) && $_POST['post_formats'] != 'none' ) :
+			set_post_format( $post_id, $_POST['post_formats'] );
 		endif;
 
 
@@ -594,14 +595,14 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		// taxonomy, category, tags
 		if ( $customfield['type'] == 'taxonomy' || $customfield['type'] == 'category' || $customfield['type'] == 'tags' ) :
 
-			if ( $customfield['taxonomy'] != 'none' &&isset( $_POST[ $customfield['slug'] ] ) ) {
+			if ( $customfield['taxonomy'] != 'none' && isset( $_POST[ $customfield['slug'] ] ) ) {
 
 				// Get the tax items
 				$tax_terms = $_POST[ $customfield['slug'] ];
 				$taxonomy  = get_taxonomy( $customfield['taxonomy'] );
 
 				// Get the term list before delete all term relations
-				$term_list = wp_get_post_terms( $post_id, $customfield['taxonomy'], array("fields" => "ids"));
+				$term_list = wp_get_post_terms( $post_id, $customfield['taxonomy'], array( "fields" => "ids" ) );
 
 				// Let us delete all and re assign.
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
@@ -617,7 +618,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				}
 
 				// Check if new term to insert
-				if(isset($tax_terms) && is_array($tax_terms)) {
+				if ( isset( $tax_terms ) && is_array( $tax_terms ) ) {
 					foreach ( $tax_terms as $term_key => $term ) {
 
 						// Check if the term exist
@@ -651,9 +652,9 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 
 				// We need to check if an excluded term was added via the backend edit screen.
 				// If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from teh frontend
-				if( isset( $customfield['taxonomy_exclude'] ) && is_array( $customfield['taxonomy_exclude'] ) ){
-					foreach( $customfield['taxonomy_exclude'] as  $exclude ){
-						if( in_array( $exclude, $term_list ) ){
+				if ( isset( $customfield['taxonomy_exclude'] ) && is_array( $customfield['taxonomy_exclude'] ) ) {
+					foreach ( $customfield['taxonomy_exclude'] as $exclude ) {
+						if ( in_array( $exclude, $term_list ) ) {
 							$cat_string .= ', ' . $exclude;
 						}
 					}
@@ -781,10 +782,10 @@ function buddyforms_get_browser() {
 	);
 }
 
-function buddyforms_str_replace_form_fields_val_by_slug($string, $customfields, $post_id ){
-	if( isset($customfields) ) {
+function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id ) {
+	if ( isset( $customfields ) ) {
 		foreach ( $customfields as $f_slug => $t_field ) {
-			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ){
+			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
 
 				$field_val = $_POST[ $t_field['slug'] ];
 
@@ -804,5 +805,6 @@ function buddyforms_str_replace_form_fields_val_by_slug($string, $customfields, 
 			}
 		}
 	}
+
 	return $string;
 }

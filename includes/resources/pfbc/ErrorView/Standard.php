@@ -44,6 +44,14 @@ HTML;
 		}
 	}
 
+	public function renderAjaxErrorResponse() {
+		$errors = $$this->_form->getErrors();
+		if ( ! empty( $errors ) ) {
+			header( "Content-type: application/json" );
+			echo json_encode( array( "errors" => $errors ) );
+		}
+	}
+
 	/**
 	 * @param $errors
 	 *
@@ -61,13 +69,5 @@ HTML;
 		}
 
 		return $list;
-	}
-
-	public function renderAjaxErrorResponse() {
-		$errors = $$this->_form->getErrors();
-		if ( ! empty( $errors ) ) {
-			header( "Content-type: application/json" );
-			echo json_encode( array( "errors" => $errors ) );
-		}
 	}
 }

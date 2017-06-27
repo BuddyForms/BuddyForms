@@ -30,9 +30,9 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	}
 	// if id is used we need to get the post_name
 	if ( empty( $form_slug ) && ! empty( $id ) ) {
-		$post      = get_post( $id );
+		$post = get_post( $id );
 
-		if( ! isset( $post->post_name ) ){
+		if ( ! isset( $post->post_name ) ) {
 			return;
 		}
 		$form_slug = $post->post_name;
@@ -150,15 +150,14 @@ function buddyforms_the_loop( $args ) {
 	do_action( 'buddyforms_the_loop_start', $query_args );
 
 	$the_lp_query = new WP_Query( $query_args );
-	$the_lp_query = apply_filters('buddyforms_the_lp_query', $the_lp_query );
-
+	$the_lp_query = apply_filters( 'buddyforms_the_lp_query', $the_lp_query );
 
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
 	if ( $list_posts_style == 'table' ) {
 		buddyforms_locate_template( 'the-table' );
-	} elseif( $list_posts_style == 'list') {
+	} elseif ( $list_posts_style == 'list' ) {
 		buddyforms_locate_template( 'the-loop' );
 	} else {
 		buddyforms_locate_template( $list_posts_style );
@@ -271,15 +270,15 @@ function buddyforms_button_add_new( $args ) {
 }
 
 add_shortcode( 'bf_login_form', 'buddyforms_view_login_form' );
-function buddyforms_view_login_form($args){
+function buddyforms_view_login_form( $args ) {
 	global $wp;
-	$current_url = home_url(add_query_arg(array(),$wp->request));
+	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
-		'title'  => 'Loggin',
+		'title' => 'Loggin',
 	), $args ) );
 
-	if( is_user_logged_in() ){
+	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">Logout</a>';
 	} else {
 		$tmp = buddyforms_get_wp_login_form( $title );

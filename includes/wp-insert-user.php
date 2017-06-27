@@ -59,25 +59,25 @@ function buddyforms_wp_update_user() {
 	if ( ! $hasError ) {
 
 		$user_id = wp_update_user( array(
-				'ID'            => get_current_user_id(),
+				'ID'          => get_current_user_id(),
 //				'user_login'    => $user_login,
-				'user_pass'     => $user_pass,
-				'user_email'    => $user_email,
-				'first_name'    => $user_first,
-				'last_name'     => $user_last,
-				'user_url'      => $user_url,
-				'description'   => $description
+				'user_pass'   => $user_pass,
+				'user_email'  => $user_email,
+				'first_name'  => $user_first,
+				'last_name'   => $user_last,
+				'user_url'    => $user_url,
+				'description' => $description
 			)
 		);
 
 		// if multisite is enabled we need to make sure the user will become a member of the form blog id
 		if ( buddyforms_is_multisite() ) {
-			if( isset( $buddyforms[ $form_slug ]['blog_id'] ) ){
+			if ( isset( $buddyforms[ $form_slug ]['blog_id'] ) ) {
 				// Add the user to the blog selected in the form builder
 				add_user_to_blog( $buddyforms[ $form_slug ]['blog_id'], $user_id, $user_role );
 			} else {
 				// Add the user to the current blog
-				add_user_to_blog( get_current_blog_id() , $user_id, $user_role );
+				add_user_to_blog( get_current_blog_id(), $user_id, $user_role );
 			}
 		}
 
@@ -90,6 +90,7 @@ function buddyforms_wp_update_user() {
 
 	return false;
 }
+
 // register a new user
 /**
  * @return bool|int|WP_Error
@@ -192,12 +193,12 @@ function buddyforms_wp_insert_user() {
 
 		// if multisite is enabled we need to make sure the user will become a member of the form blog id
 		if ( buddyforms_is_multisite() ) {
-			if( isset( $buddyforms[ $form_slug ]['blog_id'] ) ){
+			if ( isset( $buddyforms[ $form_slug ]['blog_id'] ) ) {
 				// Add the user to the blog selected in the form builder
 				add_user_to_blog( $buddyforms[ $form_slug ]['blog_id'], $new_user_id, $user_role );
 			} else {
 				// Add the user to the current blog
-				add_user_to_blog( get_current_blog_id() , $new_user_id, $user_role );
+				add_user_to_blog( get_current_blog_id(), $new_user_id, $user_role );
 			}
 		}
 
@@ -205,9 +206,9 @@ function buddyforms_wp_insert_user() {
 			$code = sha1( $new_user_id . time() );
 
 			$activation_page = get_home_url();
-			if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) && $buddyforms[ $form_slug ]['registration']['activation_page'] != 'home') {
+			if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) && $buddyforms[ $form_slug ]['registration']['activation_page'] != 'home' ) {
 
-				if( $buddyforms[ $form_slug ]['registration']['activation_page'] == 'referrer' || $buddyforms[ $form_slug ]['registration']['activation_page'] == 'none' ){
+				if ( $buddyforms[ $form_slug ]['registration']['activation_page'] == 'referrer' || $buddyforms[ $form_slug ]['registration']['activation_page'] == 'none' ) {
 					$activation_page = $activation_page . $_POST["redirect_to"];
 				} else {
 					$activation_page = get_permalink( $buddyforms[ $form_slug ]['registration']['activation_page'] );
@@ -229,7 +230,7 @@ function buddyforms_wp_insert_user() {
 			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
 			// send an activation link to the user asking them to activate there account
-			if( !$mail ){
+			if ( ! $mail ) {
 				// General error message that one of the required field sis missing
 				$hasError = true;
 				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
@@ -244,12 +245,14 @@ function buddyforms_wp_insert_user() {
 
 	return false;
 }
+
 // used for tracking error messages
 /**
  * @return WP_Error
  */
 function buddyforms_errors() {
 	static $wp_error; // Will hold global variable safely
+
 	return isset( $wp_error ) ? $wp_error : ( $wp_error = new WP_Error( null, null, null ) );
 }
 
@@ -311,9 +314,10 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 	$mailheaders .= "Content-Transfer-Encoding: 7bit\n\n";
 
 	$mailheaders .= "From: $from_name <$from_email>" . "\r\n";
-	$message = '<html><head></head><body>' . $emailBody . '</body></html>';
+	$message     = '<html><head></head><body>' . $emailBody . '</body></html>';
 
 	$mail = wp_mail( $user_email, $subject, $message, $mailheaders );
+
 	return $mail;
 
 }
@@ -343,7 +347,7 @@ function buddyforms_auth_signon( $user ) {
 	return $user;
 }
 
-add_action( 'template_redirect', 'buddyforms_activate_user', 0, 0  );
+add_action( 'template_redirect', 'buddyforms_activate_user', 0, 0 );
 function buddyforms_activate_user() {
 	global $buddyforms;
 
@@ -372,14 +376,14 @@ function buddyforms_activate_user() {
 
 			$form_slug = filter_input( INPUT_GET, 'form_slug' );
 
-			if( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) ){
+			if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) ) {
 				if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) && $buddyforms[ $form_slug ]['registration']['activation_page'] == 'home' ) {
 					$url = get_home_url();
-					wp_redirect($url);
+					wp_redirect( $url );
 				} else {
-					if( !( $buddyforms[ $form_slug ]['registration']['activation_page'] == 'referrer' || $buddyforms[ filter_input( INPUT_GET, 'form_slug' ) ]['registration']['activation_page'] == 'none' ) ){
+					if ( ! ( $buddyforms[ $form_slug ]['registration']['activation_page'] == 'referrer' || $buddyforms[ filter_input( INPUT_GET, 'form_slug' ) ]['registration']['activation_page'] == 'none' ) ) {
 						$url = get_permalink( $buddyforms[ $form_slug ]['registration']['activation_page'] );
-						wp_redirect($url);
+						wp_redirect( $url );
 					}
 				}
 			}

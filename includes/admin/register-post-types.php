@@ -262,7 +262,7 @@ function buddyforms_regenerate_global_options() {
 		foreach ( $posts as $post ) {
 			$options = get_post_meta( $post->ID, '_buddyforms_options', true );
 			if ( $options ) {
-				$options['slug'] = $post->post_name;
+				$options['slug']                      = $post->post_name;
 				$buddyforms_forms[ $post->post_name ] = $options;
 			}
 		}
@@ -341,17 +341,17 @@ function buddyforms_register_post_type() {
 add_action( 'init', 'buddyforms_register_post_type' );
 
 function menue_icon_admin_head_css() { ?>
-	<style>
+    <style>
 
-		.wp-menu-image.dashicons-before.dashicons-buddyforms:before {
-			content: "\e000";
-			font-family: 'icomoon';
-			font-size: 27px;
-			padding: 0;
-			padding-right: 10px;
-		}
+        .wp-menu-image.dashicons-before.dashicons-buddyforms:before {
+            content: "\e000";
+            font-family: 'icomoon';
+            font-size: 27px;
+            padding: 0;
+            padding-right: 10px;
+        }
 
-	</style>
+    </style>
 
 <?php }
 
@@ -452,17 +452,17 @@ function custom_buddyforms_column( $column, $post_id ) {
 
 			if ( $attached_page != 'Off' ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
-				<div class="row-actions">
+                <div class="row-actions">
 					<span class="view-form">
 						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>">View
 							Form</a> |
 					</span>
-					<span class="view-entryies">
+                    <span class="view-entryies">
 						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>">View
 							Entries</a>
 					</span>
 
-				</div>
+                </div>
 				<?php
 			}
 			break;
@@ -481,42 +481,43 @@ function buddyforms_hide_publishing_actions() {
 	global $post;
 
 	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
-		<style type="text/css">
-			.misc-pub-visibility,
-			.misc-pub-curtime,
-			.misc-pub-post-status {
-				display: none;
-			}
+        <style type="text/css">
+            .misc-pub-visibility,
+            .misc-pub-curtime,
+            .misc-pub-post-status {
+                display: none;
+            }
 
-			h1 {
-				display: none;
-			}
+            h1 {
+                display: none;
+            }
 
-			.metabox-prefs label {
-				/* float: right; */
-				/* margin-top: 57px; */
-				width: 100%;
-			}
-			/* Sven Quick Fix ToDo: Konrad please check it;) */
-			.wrap .wp-heading-inline+.page-title-action {
-				display: none;
-			}
+            .metabox-prefs label {
+                /* float: right; */
+                /* margin-top: 57px; */
+                width: 100%;
+            }
 
-			@media screen and (max-width: 790px){
-				#buddyforms_version{
-					display:none;
-				}
-			}
+            /* Sven Quick Fix ToDo: Konrad please check it;) */
+            .wrap .wp-heading-inline + .page-title-action {
+                display: none;
+            }
 
-		</style>
+            @media screen and (max-width: 790px) {
+                #buddyforms_version {
+                    display: none;
+                }
+            }
+
+        </style>
 		<?php
 		if ( get_post_type( $post ) == 'buddyforms' && ! isset( $_GET['wizard'] ) || isset( $_GET['wizard'] ) && $_GET['wizard'] != 'done' || ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms' ) ) { ?>
-			<script>
-				jQuery(document).ready(function (jQuery) {
-					jQuery('body').find('h1:first').css('line-height', '58px');
-					jQuery('body').find('h1:first').css('margin-top', '20px');
-					jQuery('body').find('h1:first').css('font-size', '30px');
-					jQuery('body').find('h1:first').css('width', '100%');
+            <script>
+                jQuery(document).ready(function (jQuery) {
+                    jQuery('body').find('h1:first').css('line-height', '58px');
+                    jQuery('body').find('h1:first').css('margin-top', '20px');
+                    jQuery('body').find('h1:first').css('font-size', '30px');
+                    jQuery('body').find('h1:first').css('width', '100%');
 					<?php
 					$tmp = '<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms';
 					if ( ! isset( $_GET['wizard'] ) ) {
@@ -532,17 +533,17 @@ function buddyforms_hide_publishing_actions() {
 
 					//echo "jQuery('" . $tmp . "').insertAfter(h1);";
 					?>
-					jQuery('h1').show();
-				});
-			</script>
+                    jQuery('h1').show();
+                });
+            </script>
 			<?php
 		} else {
 			?>
-			<script>
-				jQuery(document).ready(function (jQuery) {
-					jQuery('body').find('h1:first').remove();
-				});
-			</script>
+            <script>
+                jQuery(document).ready(function (jQuery) {
+                    jQuery('body').find('h1:first').remove();
+                });
+            </script>
 			<?php
 		}
 	}
@@ -569,30 +570,31 @@ function buddyforms_add_button_to_submit_box() {
 
 	$preview_page_id = get_option( 'buddyforms_preview_page', true );
 	?>
-	<div id="buddyforms-actions" class="misc-pub-section">
+    <div id="buddyforms-actions" class="misc-pub-section">
 		<?php if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-			<div id="frontend-actions">
-				<a class="button button-large bf_button_action" target="_blank"
-				   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
-						class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?></a>
-			</div>
+            <div id="frontend-actions">
+                <a class="button button-large bf_button_action" target="_blank"
+                   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
+                            class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?>
+                </a>
+            </div>
 		<?php } ?>
 		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
-			<div id="frontend-actions">
-				<label for="button">Frontend</label>
+            <div id="frontend-actions">
+                <label for="button">Frontend</label>
 				<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
                 <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
-			</div>
+            </div>
 		<?php }
 		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-			<div id="admin-actions">
-				<label for="button">Admin</label>
+            <div id="admin-actions">
+                <label for="button">Admin</label>
 				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
-			</div>
+            </div>
 		<?php } ?>
 
-		<div class="clear"></div>
-	</div>
+        <div class="clear"></div>
+    </div>
 
 	<?php
 
@@ -665,13 +667,13 @@ add_action( 'admin_init', 'buddyforms_export_form' );
 
 add_action( 'post_submitbox_start', 'buddyforms_notice_if_broken_form' );
 
-function buddyforms_notice_if_broken_form(){
+function buddyforms_notice_if_broken_form() {
 	global $post, $buddyform;
 
 	// Get the current screen
 	$screen = get_current_screen();
 
-	if ( ! ($screen->parent_base == 'edit' && isset( $_GET[ 'action' ] ) ) ) {
+	if ( ! ( $screen->parent_base == 'edit' && isset( $_GET['action'] ) ) ) {
 		return;
 	}
 
@@ -683,27 +685,27 @@ function buddyforms_notice_if_broken_form(){
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
-	if( ! is_array( $buddyform ) ){
+	if ( ! is_array( $buddyform ) ) {
 		return;
 	}
 
-	if( $buddyform['form_type'] != 'post'){
+	if ( $buddyform['form_type'] != 'post' ) {
 		return;
-    }
+	}
 
-    //
+	//
 	// OK let us start with the form validation
-    //
+	//
 
 	$messages = Array();
-	if( ! isset( $buddyform['post_type'] )  ){
+	if ( ! isset( $buddyform['post_type'] ) ) {
 		$messages[] = __( 'No Post Type Selected. Please select a post type', 'buddyforms' );
 	}
-	if( isset( $buddyform['post_type'] )  ){
+	if ( isset( $buddyform['post_type'] ) ) {
 
 		$post_types = buddyforms_get_post_types();
 
-		if( ! isset( $post_types[$buddyform['post_type']] ) ){
+		if ( ! isset( $post_types[ $buddyform['post_type'] ] ) ) {
 			$pt_messages = __( 'You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types', 'buddyforms' );
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -714,26 +716,26 @@ function buddyforms_notice_if_broken_form(){
 			}
 		}
 
-		if( ! empty($pt_messages ) ){
+		if ( ! empty( $pt_messages ) ) {
 			$messages[] = $pt_messages;
-        }
+		}
 
 	}
 
 	$messages = apply_filters( 'buddyforms_broken_form_error_messages', $messages );
 
-	if( count( $messages ) < 1) {
+	if ( count( $messages ) < 1 ) {
 		return;
-    }
+	}
 
 	?>
     <div class="notice notice-error">
     <font color="#b22222"><?php _e( 'This Form is Broken!', 'buddyforms' ); ?></font>
-        <?php
-            foreach( $messages as $message ){
-                echo '<p>' . $message . '</p>';
-            }
-        ?>
+	<?php
+	foreach ( $messages as $message ) {
+		echo '<p>' . $message . '</p>';
+	}
+	?>
     </div><?php
 }
 
@@ -746,5 +748,6 @@ function custom_hidden_meta_boxes( $hidden ) {
 	}
 
 	$hidden = array();
+
 	return $hidden;
 }

@@ -70,7 +70,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 function buddyforms_jquery_validation() {
 	global $buddyforms;
 
-	if( ! isset( $buddyforms ) || ! is_array( $buddyforms ) ){
+	if ( ! isset( $buddyforms ) || ! is_array( $buddyforms ) ) {
 		return;
 	}
 
@@ -172,9 +172,9 @@ function buddyforms_jquery_validation() {
 	echo $form_html;
 }
 
-function buddyforms_sanitize( $type, $value){
+function buddyforms_sanitize( $type, $value ) {
 
-	switch( $type ){
+	switch ( $type ) {
 		case 'subject':
 			$value = sanitize_text_field( $value );
 			break;
@@ -224,9 +224,10 @@ function buddyforms_sanitize( $type, $value){
 			$value = esc_url( $value );
 			break;
 		default :
-			$value  = apply_filters( 'buddyforms_sanitize', $value, $type );
+			$value = apply_filters( 'buddyforms_sanitize', $value, $type );
 			break;
 
 	}
+
 	return $value;
 }

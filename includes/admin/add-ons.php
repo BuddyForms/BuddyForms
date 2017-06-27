@@ -28,8 +28,8 @@ function buddyforms_add_ons_screen() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 	} ?>
 
-	<div id="bf_admin_wrap" class="wrap">
-		<?php include( 'bf-admin-header.php' ); ?>
-	</div>
+    <div id="bf_admin_wrap" class="wrap">
+		<?php include( 'admin-header.php' ); ?>
+    </div>
 	<?php
 }

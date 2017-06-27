@@ -1,20 +1,20 @@
 <?php
 
 function buddyforms_form_setup_nav_li_registration() { ?>
-	<li class="registrations_nav"><a
-		href="#registration"
-		data-toggle="tab"><?php _e( 'Registration', 'buddyforms' ); ?></a>
-	</li><?php
+    <li class="registrations_nav"><a
+            href="#registration"
+            data-toggle="tab"><?php _e( 'Registration', 'buddyforms' ); ?></a>
+    </li><?php
 }
 
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_registration', 50 );
 
 function buddyforms_form_setup_tab_pane_registration() { ?>
-	<div class="tab-pane fade in" id="registration">
-	<div class="buddyforms_accordion_registration">
+    <div class="tab-pane fade in" id="registration">
+    <div class="buddyforms_accordion_registration">
 		<?php buddyforms_registration_screen() ?>
-	</div>
-	</div><?php
+    </div>
+    </div><?php
 }
 
 add_action( 'buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_registration' );
@@ -61,10 +61,10 @@ function buddyforms_registration_screen() {
 	) );
 
 	// Generate the pages Array
-	$all_pages         = Array();
+	$all_pages             = Array();
 	$all_pages['referrer'] = 'Select a Page';
 	$all_pages['referrer'] = 'Referrer';
-	$all_pages['home'] = 'Homepage';
+	$all_pages['home']     = 'Homepage';
 	foreach ( $pages as $page ) {
 		$all_pages[ $page->ID ] = $page->post_title;
 	}

@@ -11,7 +11,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Recursive array class to allow multidimensional array access.
@@ -68,6 +70,7 @@ class Recursive_ArrayAccess implements ArrayAccess {
 				$data[ $key ] = $value->toArray();
 			}
 		}
+
 		return $data;
 	}
 
@@ -85,7 +88,7 @@ class Recursive_ArrayAccess implements ArrayAccess {
 	 * @return boolean true on success or false on failure.
 	 */
 	public function offsetExists( $offset ) {
-		return isset( $this->container[ $offset ]) ;
+		return isset( $this->container[ $offset ] );
 	}
 
 	/**
@@ -107,7 +110,7 @@ class Recursive_ArrayAccess implements ArrayAccess {
 	 * @link http://php.net/manual/en/arrayaccess.offsetset.php
 	 *
 	 * @param mixed $offset The offset to assign the value to.
-	 * @param mixed $value  The value to set.
+	 * @param mixed $value The value to set.
 	 *
 	 * @return void
 	 */

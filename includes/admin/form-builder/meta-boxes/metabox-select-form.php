@@ -50,7 +50,7 @@ function buddyforms_inner_custom_box( $post ) {
 
 	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
-	if ( ! $value && isset( $buddyforms_posttypes_default[ $post->post_type ] )  ) {
+	if ( ! $value && isset( $buddyforms_posttypes_default[ $post->post_type ] ) ) {
 		$value = $buddyforms_posttypes_default[ $post->post_type ];
 	}
 

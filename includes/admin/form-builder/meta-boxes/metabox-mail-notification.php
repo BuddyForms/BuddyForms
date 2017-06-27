@@ -39,7 +39,7 @@ function buddyforms_post_status_mail_notification_screen() {
 
 	$shortDesc = '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a>';
 	if ( buddyforms_core_fs()->is_not_paying() ) {
-		$shortDesc = '<b>' . __('Get the Pro version to add Post Status Change Mail Notification', 'buddyforms') . '</b>';
+		$shortDesc = '<b>' . __( 'Get the Pro version to add Post Status Change Mail Notification', 'buddyforms' ) . '</b>';
 	}
 
 	$element = new Element_Select( '<h4>' . __( "Post Status Change Mail Notifications", 'buddyforms' ) . '</h4><p>' . __( 'Forms can send different email notifications triggered by post status changes. For example, automatically notify post authors when their post is published! ', 'buddyforms' ) . '</p>', "buddyforms_notification_trigger", buddyforms_get_post_status_array(), array(
@@ -73,7 +73,7 @@ function buddyforms_post_status_mail_notification_screen() {
 function buddyforms_mail_notification_form( $trigger = false ) {
 	global $buddyform;
 
-	if ( $trigger == false) {
+	if ( $trigger == false ) {
 		$trigger = substr( md5( time() * rand() ), 0, 10 );
 	}
 
@@ -85,29 +85,29 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	$form_setup[] = new Element_Hidden( "buddyforms_options[mail_submissions][" . $trigger . "][mail_trigger_id]", $trigger, array( 'class' => 'trigger' . $trigger ) );
 
 	// From Name
-	$element = new Element_Radio( '<b>' . __( 'From Name', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name]", array(
+	$element      = new Element_Radio( '<b>' . __( 'From Name', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name]", array(
 		'user_login'      => __( 'Username', 'buddyforms' ),
 		'user_first'      => __( 'First Name', 'buddyforms' ),
 		'user_last'       => __( 'Last Name', 'buddyforms' ),
 		'user_first_last' => __( 'First and Last Name', 'buddyforms' ),
 		'blog_title'      => __( 'Blog Title', 'buddyforms' ),
-        'custom'          => __( 'Custom', 'buddyforms' )
+		'custom'          => __( 'Custom', 'buddyforms' )
 	), array(
-		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] : 'blog_title',
-		'class'     => 'mail_from_checkbox bf_mail_from_name_multi_checkbox',
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] : 'blog_title',
+		'class' => 'mail_from_checkbox bf_mail_from_name_multi_checkbox',
 	) );
 	$form_setup[] = $element;
 
-	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ==  'custom' ? '' : 'hidden';
+	$mail_to_cc   = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] == 'custom' ? '' : 'hidden';
 	$form_setup[] = new Element_Email( '<b>' . __( "Custom Mail From Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name_custom]", array(
-		"class" => 'mail_from_name_custom ' . $mail_to_cc,
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] : '',
-        'shortDesc' => 'The senders name e.g. John Doe. You can use any form element slug as shortcode [FIELD SLUG]. '
+		"class"     => 'mail_from_name_custom ' . $mail_to_cc,
+		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] : '',
+		'shortDesc' => 'The senders name e.g. John Doe. You can use any form element slug as shortcode [FIELD SLUG]. '
 	) );
 
 
-    // From eMail
-	$element = new Element_Radio( '<b>' . __( 'From eMail', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
+	// From eMail
+	$element      = new Element_Radio( '<b>' . __( 'From eMail', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
 		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
 		'custom'    => __( 'Custom', 'buddyforms' )
@@ -117,7 +117,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	) );
 	$form_setup[] = $element;
 
-	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from'] == 'custom' ? '' : 'hidden';
+	$mail_to_cc   = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from'] == 'custom' ? '' : 'hidden';
 	$form_setup[] = new Element_Email( '<b>' . __( "Custom Mail From Address", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_custom]", array(
 		"class" => 'mail_from_custom ' . $mail_to_cc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_custom'] : ''
@@ -126,12 +126,12 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 
 	// to eMail
 	$form_setup[] = new Element_Textbox( '<b>' . __( "To eMails", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_address]", array(
-		"class" => "bf-mail-field",
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] : '',
+		"class"     => "bf-mail-field",
+		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] : '',
 		'shortDesc' => 'Separate multiple eMail addresses by ","'
 	) );
 
-	$element = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
+	$element      = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
 		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
 		'cc'        => __( 'CC', 'buddyforms' ),
@@ -143,13 +143,13 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	) );
 	$form_setup[] = $element;
 
-	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
+	$mail_to_cc   = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
 	$form_setup[] = new Element_Email( '<b>' . __( "CC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_cc_address]", array(
 		"class" => 'mail_to_cc_address ' . $mail_to_cc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
 	) );
 
-	$mail_to_bcc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'bcc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
+	$mail_to_bcc  = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'bcc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
 	$form_setup[] = new Element_Email( '<b>' . __( "BCC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_bcc_address]", array(
 		"class" => 'mail_to_bcc_address ' . $mail_to_bcc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] : ''
@@ -157,9 +157,9 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 
 	// Subject
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Subject", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_subject]", array(
-		"class"    => "bf-mail-field",
-		'value'    => isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : 'Form Submission Notification',
-		'required' => 1,
+		"class"     => "bf-mail-field",
+		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : 'Form Submission Notification',
+		'required'  => 1,
 		'shortDesc' => 'Add a default Subject. If you use the "subject" form element the form element value will be used.'
 	) );
 
@@ -184,47 +184,47 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	<div class="bf_inputs bf-texteditor">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
 	?>
-	<li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
-		<div class="accordion_fields">
-			<div class="accordion-group">
-				<div class="accordion-heading-options">
-					<table class="wp-list-table widefat fixed posts">
-						<tbody>
-						<tr>
-							<td class="field_order ui-sortable-handle">
-								<span class="circle">1</span>
-							</td>
-							<td class="field_label">
-								<strong>
-									<a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
-									   data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
-									   title="Edit this Field"
-									   href="#"><?php echo isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : ''; ?></a>
-								</strong>
+    <li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
+        <div class="accordion_fields">
+            <div class="accordion-group">
+                <div class="accordion-heading-options">
+                    <table class="wp-list-table widefat fixed posts">
+                        <tbody>
+                        <tr>
+                            <td class="field_order ui-sortable-handle">
+                                <span class="circle">1</span>
+                            </td>
+                            <td class="field_label">
+                                <strong>
+                                    <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
+                                       data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
+                                       title="Edit this Field"
+                                       href="#"><?php echo isset( $buddyform['mail_submissions'][ $trigger ]['mail_subject'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_subject'] : ''; ?></a>
+                                </strong>
 
-							</td>
-							<td class="field_delete">
+                            </td>
+                            <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
                                          title="Edit this Field" href="javascript:;">Edit</a> | </span>
                                 <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>" title="Delete this Field"
                                          href="javascript:;">Delete</a></span>
-							</td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-				<div id="accordion_<?php echo $trigger ?>"
-				     class="accordion-body <?php if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="accordion_<?php echo $trigger ?>"
+                     class="accordion-body <?php if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 					     echo 'in';
 				     } ?> collapse">
-					<div class="accordion-inner">
+                    <div class="accordion-inner">
 						<?php buddyforms_display_field_group_table( $form_setup, $trigger, '' ) ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
 
 	<?php
 	return $trigger;
@@ -311,43 +311,43 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
 	?>
 
-	<li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
-		<div class="accordion_fields">
-			<div class="accordion-group">
-				<div class="accordion-heading-options">
-					<table class="wp-list-table widefat fixed posts">
-						<tbody>
-						<tr>
-							<td class="field_order ui-sortable-handle">
-								<span class="circle">1</span>
-							</td>
-							<td class="field_label">
-								<strong>
-									<a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
-									   data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
-									   title="Edit this Field" href="#"><?php echo $trigger ?></a>
-								</strong>
+    <li id="trigger<?php echo $trigger ?>" class="bf_trigger_list_item <?php echo $trigger ?>">
+        <div class="accordion_fields">
+            <div class="accordion-group">
+                <div class="accordion-heading-options">
+                    <table class="wp-list-table widefat fixed posts">
+                        <tbody>
+                        <tr>
+                            <td class="field_order ui-sortable-handle">
+                                <span class="circle">1</span>
+                            </td>
+                            <td class="field_label">
+                                <strong>
+                                    <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
+                                       data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
+                                       title="Edit this Field" href="#"><?php echo $trigger ?></a>
+                                </strong>
 
-							</td>
-							<td class="field_delete">
+                            </td>
+                            <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
                                          title="Edit this Field" href="javascript:;">Edit</a> | </span>
                                 <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>" title="Delete this Field"
                                          href="javascript:;">Delete</a></span>
-							</td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-				<div id="accordion_<?php echo $trigger ?>" class="accordion-body collapse">
-					<div class="accordion-inner">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="accordion_<?php echo $trigger ?>" class="accordion-body collapse">
+                    <div class="accordion-inner">
 						<?php buddyforms_display_field_group_table( $form_setup, $trigger ) ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
 
 	<?php
 }
@@ -387,29 +387,29 @@ add_action( 'wp_ajax_buddyforms_new_post_status_mail_notification', 'buddyforms_
 
 
 function buddyforms_form_setup_nav_li_notification() { ?>
-	<li class="notifications_nav"><a
-		href="#notification"
-		data-toggle="tab"><?php _e( 'Notifications', 'buddyforms' ); ?></a>
-	</li><?php
+    <li class="notifications_nav"><a
+            href="#notification"
+            data-toggle="tab"><?php _e( 'Notifications', 'buddyforms' ); ?></a>
+    </li><?php
 }
 
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification' );
 
 function buddyforms_form_setup_tab_pane_notification() { ?>
-	<div class="tab-pane fade in" id="notification">
-	<div class="buddyforms_accordion_notification">
-		<div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
+    <div class="tab-pane fade in" id="notification">
+    <div class="buddyforms_accordion_notification">
+        <div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 
 
 		<?php buddyforms_mail_notification_screen() ?>
 
-		<div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
+        <div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
 			<?php buddyforms_post_status_mail_notification_screen() ?>
-		</div>
+        </div>
 
 
-	</div>
-	</div><?php
+    </div>
+    </div><?php
 }
 
 add_action( 'buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_notification' );

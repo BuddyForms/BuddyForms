@@ -11,7 +11,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * buddyforms_Session Class
@@ -66,7 +68,7 @@ class BuddyForms_Session {
 		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
 		add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
 
-		add_action( 'init', array( $this, 'init' ), -1 );
+		add_action( 'init', array( $this, 'init' ), - 1 );
 
 	}
 
@@ -79,6 +81,7 @@ class BuddyForms_Session {
 	 */
 	public function init() {
 		$this->session = WP_Session::get_instance();
+
 		return $this->session;
 	}
 
@@ -99,11 +102,14 @@ class BuddyForms_Session {
 	 *
 	 * @access public
 	 * @since 2.1.0.3
+	 *
 	 * @param string $key Session key
+	 *
 	 * @return string Session variable
 	 */
 	public function get( $key ) {
 		$key = sanitize_key( $key );
+
 		return isset( $this->session[ $key ] ) ? maybe_unserialize( $this->session[ $key ] ) : false;
 	}
 
@@ -114,6 +120,7 @@ class BuddyForms_Session {
 	 *
 	 * @param string $key Session key
 	 * @param integer $value Session variable
+	 *
 	 * @return string Session variable
 	 */
 	public function set( $key, $value ) {
@@ -123,6 +130,7 @@ class BuddyForms_Session {
 		} else {
 			$this->session[ $key ] = $value;
 		}
+
 		return $this->session[ $key ];
 	}
 
@@ -131,7 +139,9 @@ class BuddyForms_Session {
 	 *
 	 * @access public
 	 * @since 2.1.0.3
+	 *
 	 * @param int $exp Default expiration (1 hour)
+	 *
 	 * @return int
 	 */
 	public function set_expiration_variant_time( $exp ) {
@@ -143,7 +153,9 @@ class BuddyForms_Session {
 	 *
 	 * @access public
 	 * @since 2.1.0.3
+	 *
 	 * @param int $exp Default expiration (1 hour)
+	 *
 	 * @return int Cookie expiration time
 	 */
 	public function set_expiration_time( $exp ) {

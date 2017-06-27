@@ -17,11 +17,11 @@ if ( is_user_logged_in() ) {
 ?>
 
 <script>
-	jQuery(document).ready(function () {
-		jQuery(document).on("click", '.bf-show-login', function (evt) {
-			jQuery('.bf-show-login-form').toggle();
-		});
-	});
+    jQuery(document).ready(function () {
+        jQuery(document).on("click", '.bf-show-login', function (evt) {
+            jQuery('.bf-show-login-form').toggle();
+        });
+    });
 </script>
 <div class="buddyforms-info"><?php _e( 'Returning user?', 'buddyforms' ) ?> <a href="#"
                                                                                class="bf-show-login"><?php _e( 'Click here to login', 'buddyforms' ) ?></a>

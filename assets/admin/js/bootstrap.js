@@ -94,7 +94,8 @@
             if (this.sliding)return;
             return this.slide("prev")
         }, slide: function (t, n) {
-            var r = this.$element.find(".item.active"), i = n || r[t](), s = this.interval, o = t == "next" ? "left" : "right", u = t == "next" ? "first" : "last", a = this, f;
+            var r = this.$element.find(".item.active"), i = n || r[t](), s = this.interval,
+                o = t == "next" ? "left" : "right", u = t == "next" ? "first" : "last", a = this, f;
             this.sliding = !0, s && this.pause(), i = i.length ? i : this.$element.find(".item")[u](), f = e.Event("slide", {
                 relatedTarget: i[0],
                 direction: o
@@ -123,7 +124,9 @@
     var n = e.fn.carousel;
     e.fn.carousel = function (n) {
         return this.each(function () {
-            var r = e(this), i = r.data("carousel"), s = e.extend({}, e.fn.carousel.defaults, typeof n == "object" && n), o = typeof n == "string" ? n : s.slide;
+            var r = e(this), i = r.data("carousel"),
+                s = e.extend({}, e.fn.carousel.defaults, typeof n == "object" && n),
+                o = typeof n == "string" ? n : s.slide;
             i || r.data("carousel", i = new t(this, s)), typeof n == "number" ? i.to(n) : o ? i[o]() : s.interval && i.pause().cycle()
         })
     }, e.fn.carousel.defaults = {
@@ -132,7 +135,8 @@
     }, e.fn.carousel.Constructor = t, e.fn.carousel.noConflict = function () {
         return e.fn.carousel = n, this
     }, e(document).on("click.carousel.data-api", "[data-slide], [data-slide-to]", function (t) {
-        var n = e(this), r, i = e(n.attr("data-target") || (r = n.attr("href")) && r.replace(/.*(?=#[^\s]+$)/, "")), s = e.extend({}, i.data(), n.data()), o;
+        var n = e(this), r, i = e(n.attr("data-target") || (r = n.attr("href")) && r.replace(/.*(?=#[^\s]+$)/, "")),
+            s = e.extend({}, i.data(), n.data()), o;
         i.carousel(s), (o = n.attr("data-slide-to")) && i.data("carousel").pause().to(o).cycle(), t.preventDefault()
     })
 }(window.jQuery), !function (e) {
@@ -175,13 +179,16 @@
     var n = e.fn.collapse;
     e.fn.collapse = function (n) {
         return this.each(function () {
-            var r = e(this), i = r.data("collapse"), s = e.extend({}, e.fn.collapse.defaults, r.data(), typeof n == "object" && n);
+            var r = e(this), i = r.data("collapse"),
+                s = e.extend({}, e.fn.collapse.defaults, r.data(), typeof n == "object" && n);
             i || r.data("collapse", i = new t(this, s)), typeof n == "string" && i[n]()
         })
     }, e.fn.collapse.defaults = {toggle: !0}, e.fn.collapse.Constructor = t, e.fn.collapse.noConflict = function () {
         return e.fn.collapse = n, this
     }, e(document).on("click.collapse.data-api", "[data-toggle=collapse]", function (t) {
-        var n = e(this), r, i = n.attr("data-target") || t.preventDefault() || (r = n.attr("href")) && r.replace(/.*(?=#[^\s]+$)/, ""), s = e(i).data("collapse") ? "toggle" : n.data();
+        var n = e(this), r,
+            i = n.attr("data-target") || t.preventDefault() || (r = n.attr("href")) && r.replace(/.*(?=#[^\s]+$)/, ""),
+            s = e(i).data("collapse") ? "toggle" : n.data();
         n[e(i).hasClass("in") ? "addClass" : "removeClass"]("collapsed"), e(i).collapse(s)
     })
 }(window.jQuery), !function (e) {
@@ -195,7 +202,7 @@
     function i(t) {
         var n = t.attr("data-target"), r;
         n || (n = t.attr("href"), n = n && /#/.test(n) && n.replace(/.*(?=#[^\s]*$)/, "")), r = n && e(n);
-        if (!r || !r.length)r = t.parent();
+        if (!r || !r.length) r = t.parent();
         return r
     }
 
@@ -296,7 +303,8 @@
     var n = e.fn.modal;
     e.fn.modal = function (n) {
         return this.each(function () {
-            var r = e(this), i = r.data("modal"), s = e.extend({}, e.fn.modal.defaults, r.data(), typeof n == "object" && n);
+            var r = e(this), i = r.data("modal"),
+                s = e.extend({}, e.fn.modal.defaults, r.data(), typeof n == "object" && n);
             i || r.data("modal", i = new t(this, s)), typeof n == "string" ? i[n]() : s.show && i.show()
         })
     }, e.fn.modal.defaults = {
@@ -306,7 +314,8 @@
     }, e.fn.modal.Constructor = t, e.fn.modal.noConflict = function () {
         return e.fn.modal = n, this
     }, e(document).on("click.modal.data-api", '[data-toggle="modal"]', function (t) {
-        var n = e(this), r = n.attr("href"), i = e(n.attr("data-target") || r && r.replace(/.*(?=#[^\s]+$)/, "")), s = i.data("modal") ? "toggle" : e.extend({remote: !/#/.test(r) && r}, i.data(), n.data());
+        var n = e(this), r = n.attr("href"), i = e(n.attr("data-target") || r && r.replace(/.*(?=#[^\s]+$)/, "")),
+            s = i.data("modal") ? "toggle" : e.extend({remote: !/#/.test(r) && r}, i.data(), n.data());
         t.preventDefault(), i.modal(s).one("hide", function () {
             n.focus()
         })
@@ -495,7 +504,9 @@
                 t.offsets.push(this[0]), t.targets.push(this[1])
             })
         }, process: function () {
-            var e = this.$scrollElement.scrollTop() + this.options.offset, t = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight, n = t - this.$scrollElement.height(), r = this.offsets, i = this.targets, s = this.activeTarget, o;
+            var e = this.$scrollElement.scrollTop() + this.options.offset,
+                t = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight,
+                n = t - this.$scrollElement.height(), r = this.offsets, i = this.targets, s = this.activeTarget, o;
             if (e >= n)return s != (o = i.last()[0]) && this.activate(o);
             for (o = r.length; o--;)s != i[o] && e >= r[o] && (!r[o + 1] || e <= r[o + 1]) && this.activate(i[o])
         }, activate: function (t) {
@@ -687,7 +698,8 @@
     };
     t.prototype.checkPosition = function () {
         if (!this.$element.is(":visible"))return;
-        var t = e(document).height(), n = this.$window.scrollTop(), r = this.$element.offset(), i = this.options.offset, s = i.bottom, o = i.top, u = "affix affix-top affix-bottom", a;
+        var t = e(document).height(), n = this.$window.scrollTop(), r = this.$element.offset(), i = this.options.offset,
+            s = i.bottom, o = i.top, u = "affix affix-top affix-bottom", a;
         typeof i != "object" && (s = o = i), typeof o == "function" && (o = i.top()), typeof s == "function" && (s = i.bottom()), a = this.unpin != null && n + this.unpin <= r.top ? !1 : s != null && r.top + this.$element.height() >= t - s ? "bottom" : o != null && n <= o ? "top" : !1;
         if (this.affixed === a)return;
         this.affixed = a, this.unpin = a == "bottom" ? r.top - n : null, this.$element.removeClass(u).addClass("affix" + (a ? "-" + a : ""))

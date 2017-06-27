@@ -1,31 +1,31 @@
 <?php
 
 // Hooks near the bottom of profile page (if current user)
-add_action('show_user_profile', 'custom_user_profile_fields');
+add_action( 'show_user_profile', 'custom_user_profile_fields' );
 
 // Hooks near the bottom of the profile page (if not current user)
-add_action('edit_user_profile', 'custom_user_profile_fields');
+add_action( 'edit_user_profile', 'custom_user_profile_fields' );
 
 // @param WP_User $user
 function custom_user_profile_fields( $user ) {
 
 	global $buddyforms;
 
-	if( isset( $buddyforms ) ) {
-		foreach( $buddyforms as $form_slug => $buddyform ){
-			if( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ){
+	if ( isset( $buddyforms ) ) {
+		foreach ( $buddyforms as $form_slug => $buddyform ) {
+			if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 
 				$form_setup = array();
 				echo '<h2>' . $buddyform['name'] . '</h2>';
-				foreach( $buddyform['form_fields'] as $key => $user_meta ){
+				foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
 
-					if( substr( $user_meta['type'], 0, 5 ) != 'user_' ){
+					if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
 
-						$name =  $user_meta['name'];
+						$name = $user_meta['name'];
 						$slug = $user_meta['slug'];
 
 						$element_attr = array(
-							'value' => esc_attr( get_the_author_meta( $user_meta['slug'], $user->ID ))
+							'value' => esc_attr( get_the_author_meta( $user_meta['slug'], $user->ID ) )
 						);
 
 
@@ -138,7 +138,7 @@ function update_extra_profile_fields( $user_id ) {
 	global $buddyforms;
 
 	if ( current_user_can( 'edit_user', $user_id ) ) {
-		if( isset( $buddyforms ) ) {
+		if ( isset( $buddyforms ) ) {
 			foreach ( $buddyforms as $form_slug => $buddyform ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
@@ -147,7 +147,7 @@ function update_extra_profile_fields( $user_id ) {
 
 							$slug = $user_meta['slug'];
 
-							$value = isset($_POST[ $slug ]) ? $_POST[ $slug ] : '';
+							$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
 
 							update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
 

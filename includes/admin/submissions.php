@@ -29,10 +29,10 @@ function buddyforms_submissions_screen() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 	} ?>
 
-	<div id="bf_admin_wrap" class="wrap">
+    <div id="bf_admin_wrap" class="wrap">
 
 		<?php
-		include( 'bf-admin-header.php' );
+		include( 'admin-header.php' );
 
 		// echo '<pre>';
 		// print_r($buddyforms);
@@ -42,37 +42,37 @@ function buddyforms_submissions_screen() {
 		$bf_submissions_table->prepare_items();
 		?>
 
-		<div id="icon-users" class="icon32"><br/></div>
-		<div id="buddyforms_admin_main_menu" class="">
-			<ul>
-				<li>
+        <div id="icon-users" class="icon32"><br/></div>
+        <div id="buddyforms_admin_main_menu" class="">
+            <ul>
+                <li>
 
-					<h4>Select a form to display the submissions</h4>
-					<script type="text/javascript">
-						jQuery(document).ready(function (jQuery) {
-							jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
-								window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
-							});
-						});
-					</script>
-					<select id="buddyforms_admin_menu_submissions_form_select">
-						<option value="none">Select Form</option>
+                    <h4>Select a form to display the submissions</h4>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function (jQuery) {
+                            jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
+                                window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
+                            });
+                        });
+                    </script>
+                    <select id="buddyforms_admin_menu_submissions_form_select">
+                        <option value="none">Select Form</option>
 						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-							<option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
-								value="<?php echo $form_slug ?>">
+                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
+                                    value="<?php echo $form_slug ?>">
 								<?php echo $form['name']; ?>
-							</option>
+                            </option>
 						<?php } ?>
-					</select>
-				</li>
-			</ul>
-		</div>
+                    </select>
+                </li>
+            </ul>
+        </div>
 
 		<?php if ( isset( $_GET['form_slug'] ) && ! isset( $_GET['entry'] ) ) { ?>
-			<form id="filter" method="get">
-				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+            <form id="filter" method="get">
+                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
 				<?php $bf_submissions_table->display(); ?>
-			</form>
+            </form>
 		<?php } ?>
 
 		<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
@@ -80,7 +80,7 @@ function buddyforms_submissions_screen() {
 			$post_id   = $_GET['entry'];
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
 		} ?>
-	</div>
+    </div>
 	<?php
 }
 
@@ -191,7 +191,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			$sql_select = implode( ', ', $sql_args );
 
 			$customkey   = '_bf_form_slug'; // set to your custom key
-			$customvalue = !empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
+			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
 			$data        = $wpdb->get_results( "SELECT $sql_select FROM $wpdb->posts, $wpdb->postmeta WHERE ID = $wpdb->postmeta.post_id AND meta_key = '$customkey' AND meta_value = '$customvalue' ORDER BY post_date DESC", ARRAY_A );
 		}
 

@@ -40,8 +40,8 @@ class Element_Button extends Element {
 			$properties["class"] = $class;
 		}
 
-		$properties["value"] = __('Submit', 'buddyforms');
-		if ( !empty( $label ) ) {
+		$properties["value"] = __( 'Submit', 'buddyforms' );
+		if ( ! empty( $label ) ) {
 			$properties["value"] = $label;
 		}
 

@@ -16,7 +16,7 @@ class View_Frontend extends FormView {
 		global $buddyforms, $form_slug;
 
 
-		$field_id = $this->_form->getAttribute( "field_id" );
+		$field_id     = $this->_form->getAttribute( "field_id" );
 		$layout_style = buddyforms_layout_style( $field_id );
 
 		if ( $this->class ) {
@@ -68,32 +68,33 @@ class View_Frontend extends FormView {
 
 		if ( $element instanceof Element_Hidden ) {
 			$element->render();
+
 			return;
 		}
 
 		if ( $element instanceof Element_INLINE_HTML ) {
 			$element->render();
+
 			return;
 		}
 
-		echo '<div class="' .  $layout_style . '">';
+		echo '<div class="' . $layout_style . '">';
 
 		if ( $element instanceof Element_HTML ) {
-				$element->render();
+			$element->render();
 			echo "</div>";
+
 			return;
 		}
 
 
-
-
-		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File    ) {
+		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
 
 			$element->appendAttribute( "class", "form-control" );
 
 			if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] == 'inline' ) {
 
-				if( empty($label) ){
+				if ( empty( $label ) ) {
 					$label = $element->getLabel();
 				}
 
@@ -107,13 +108,13 @@ class View_Frontend extends FormView {
 		}
 
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
-			if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-				echo $this->renderDescriptions( $element );
-				echo $element->render();
-			} else {
-				echo $element->render();
-				echo $this->renderDescriptions( $element );
-			}
+		if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+			echo $this->renderDescriptions( $element );
+			echo $element->render();
+		} else {
+			echo $element->render();
+			echo $this->renderDescriptions( $element );
+		}
 		echo "</div></div></div>";
 	}
 
@@ -129,7 +130,7 @@ class View_Frontend extends FormView {
 		}
 		echo ' <label for="', $element->getAttribute( "id" ), '">';
 
-		if ( isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) && $buddyforms[$form_slug]['layout']['labels_layout']  != 'inline') {
+		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' ) {
 
 			if ( $element->isRequired() ) {
 				echo '<span class="required">* </span> ';
@@ -140,12 +141,12 @@ class View_Frontend extends FormView {
 }
 
 
-function buddyforms_layout_style( $field_id ){
+function buddyforms_layout_style( $field_id ) {
 	global $buddyforms, $form_slug;
 
-	$layout_style = isset( $buddyforms[$form_slug]['layout']['cords'][$field_id] ) ? $buddyforms[$form_slug]['layout']['cords'][$field_id] : '1';
+	$layout_style = isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ? $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] : '1';
 
-	switch ($layout_style){
+	switch ( $layout_style ) {
 		case '1' :
 			$layout_style = 'col-xs-12';
 			break;

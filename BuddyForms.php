@@ -35,7 +35,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! class_exists('BuddyForms') ) {
+if ( ! class_exists( 'BuddyForms' ) ) {
 	/**
 	 * Class BuddyForms
 	 */
@@ -605,7 +605,7 @@ if ( ! class_exists('BuddyForms') ) {
 	}
 
 
-    // BuddyForms requires php version 5.3 or higher.
+	// BuddyForms requires php version 5.3 or higher.
 	if ( PHP_VERSION < 5.3 ) {
 		function buddyforms_php_version_admin_notice() {
 			?>

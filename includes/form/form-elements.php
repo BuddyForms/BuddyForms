@@ -28,12 +28,12 @@ function buddyforms_form_elements( $form, $args ) {
 			$customfield_val = '';
 			if ( isset( $_POST[ $slug ] ) ) {
 				$customfield_val = $_POST[ $slug ];
-			} elseif( is_user_logged_in() ) {
+			} elseif ( is_user_logged_in() ) {
 
-				if( $buddyforms[$form_slug]['form_type'] == 'registration' ){
+				if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
 
-					$current_user = get_userdata( get_current_user_id() );
-					$customfield_val = get_user_meta( $current_user->ID , $slug, true );
+					$current_user    = get_userdata( get_current_user_id() );
+					$customfield_val = get_user_meta( $current_user->ID, $slug, true );
 
 				} else {
 					$customfield_val = get_post_meta( $post_id, $slug, true );
@@ -50,14 +50,14 @@ function buddyforms_form_elements( $form, $args ) {
 				$name = stripcslashes( $customfield['name'] );
 			}
 
-			$name = apply_filters('buddyforms_form_field_name', $name, $post_id );
+			$name = apply_filters( 'buddyforms_form_field_name', $name, $post_id );
 
 			$description = '';
 			if ( isset( $customfield['description'] ) ) {
 				$description = stripcslashes( $customfield['description'] );
 			}
 
-			$description = apply_filters('buddyforms_form_field_description', $description, $post_id );
+			$description = apply_filters( 'buddyforms_form_field_description', $description, $post_id );
 
 			$element_attr = array(
 				'id'        => str_replace( "-", "", $slug ),
@@ -89,28 +89,28 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-							if( $buddyforms[$form_slug]['form_type'] == 'registration' &&  is_user_logged_in() ) {
-								break;
-							}
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
+							break;
+						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_email':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_email;
 						}
 						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_first':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_firstname;
 						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_last':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_lastname;
 						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
@@ -123,14 +123,14 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_website':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_url;
 						}
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_bio':
-						if( $buddyforms[$form_slug]['form_type'] == 'registration' && is_user_logged_in() ) {
+						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 							$element_attr['value'] = $current_user->user_description;
 						}
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
@@ -214,22 +214,22 @@ function buddyforms_form_elements( $form, $args ) {
 								$required  = '<span class="required">* </span>';
 							}
 
-							$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+							$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
 							$wp_editor_label = '';
-							if($labels_layout == 'inline' ){
+							if ( $labels_layout == 'inline' ) {
 								if ( isset( $customfield['required'] ) ) {
 									$required = '* ';
 								}
-								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
+								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
 							} else {
 								$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
 							}
 
-	//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
+							//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
 
 
-							if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
@@ -350,9 +350,9 @@ function buddyforms_form_elements( $form, $args ) {
 								$schedule_val = get_post_meta( $post_id, 'schedule', true );
 							}
 
-							$element_attr['class'] = $element_attr['class'] . ' bf_datetime bf_datetime_wrap';
-							$element_attr['id'] = $element_attr['id'] . '_bf_datetime';
-							$element_attr['placeholder'] = __('Schedule Time', 'buddyforms');
+							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap';
+							$element_attr['id']          = $element_attr['id'] . '_bf_datetime';
+							$element_attr['placeholder'] = __( 'Schedule Time', 'buddyforms' );
 							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr ) );
 
 						}
@@ -376,7 +376,7 @@ function buddyforms_form_elements( $form, $args ) {
 						ob_clean();
 
 
-						$wp_editor = str_replace( '<textarea', '<textarea name="'.$slug.'"', $wp_editor );
+						$wp_editor = str_replace( '<textarea', '<textarea name="' . $slug . '"', $wp_editor );
 
 						$required = '';
 						if ( isset( $customfield['required'] ) ) {
@@ -384,14 +384,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$required  = '<span class="required">* </span>';
 						}
 
-						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
 						$wp_editor_label = '';
-						if($labels_layout == 'inline' ){
+						if ( $labels_layout == 'inline' ) {
 							if ( isset( $customfield['required'] ) ) {
 								$required = '* ';
 							}
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
 						} else {
 							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $required . $name . '</label>';
 						}
@@ -399,7 +399,7 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
-							if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
@@ -427,7 +427,7 @@ function buddyforms_form_elements( $form, $args ) {
 						ob_clean();
 
 
-						$wp_editor = str_replace( '<textarea', '<textarea name="'.$slug.'"', $wp_editor );
+						$wp_editor = str_replace( '<textarea', '<textarea name="' . $slug . '"', $wp_editor );
 
 						$required = '';
 						if ( isset( $customfield['required'] ) ) {
@@ -435,14 +435,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$required  = '<span class="required">* </span>';
 						}
 
-						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
 						$wp_editor_label = '';
-						if($labels_layout == 'inline' ){
+						if ( $labels_layout == 'inline' ) {
 							if ( isset( $customfield['required'] ) ) {
 								$required = '* ';
 							}
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"".$required.$name."\"", $wp_editor    );
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
 						} else {
 							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $required . $name . '</label>';
 						}
@@ -450,7 +450,7 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
-							if ( isset($buddyforms[ $form_slug ]['layout']['desc_position']) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
@@ -516,9 +516,9 @@ function buddyforms_form_elements( $form, $args ) {
 						$str .= '</ul>';
 
 
-						$labels_layout = isset( $buddyforms[$form_slug]['layout']['labels_layout'] ) ? $buddyforms[$form_slug]['layout']['labels_layout'] : 'inline';
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
-						$name_inline = isset( $customfield['button_label'] ) ? $customfield['button_label'] : __('Add Image', 'buddyforms');
+						$name_inline = isset( $customfield['button_label'] ) ? $customfield['button_label'] : __( 'Add Image', 'buddyforms' );
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
 							$name_inline = '* ' . $name;
 						}
@@ -532,7 +532,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$str .= '</span>';
 
 						$fimage_element = '<div class="bf_field_group">';
-						if( $labels_layout != 'inline' ){
+						if ( $labels_layout != 'inline' ) {
 							$fimage_element .= '<label for="_' . $slug . '">';
 
 							if ( isset( $customfield['required'] ) ) {
@@ -634,7 +634,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$str .= '</span>';
 
 						$file_element = '<div class="bf_field_group">';
-						if( $labels_layout != 'inline' ){
+						if ( $labels_layout != 'inline' ) {
 							$file_element .= '<label for="_' . $slug . '">';
 
 							if ( isset( $customfield['required'] ) ) {
@@ -656,18 +656,18 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 					case 'post_formats' :
 
-						$post_formats                       = get_theme_support( 'post-formats' );
-						$post_formats                       = isset( $post_formats[0] ) ? $post_formats[0] : false;
-						array_unshift($post_formats, 'Select a Post Format');
+						$post_formats = get_theme_support( 'post-formats' );
+						$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : false;
+						array_unshift( $post_formats, 'Select a Post Format' );
 
-						if( empty( $element_attr['value'] ) ){
+						if ( empty( $element_attr['value'] ) ) {
 							$element_attr['value'] = $customfield['post_formats_default'];
 						}
 
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
 						} else {
-							$form->addElement( new Element_Select( $name, $slug, $post_formats, $element_attr ));
+							$form->addElement( new Element_Select( $name, $slug, $post_formats, $element_attr ) );
 						}
 
 						break;
@@ -691,7 +691,7 @@ function buddyforms_form_elements( $form, $args ) {
 							'taxonomy'      => $customfield['taxonomy'],
 							'order'         => $customfield['taxonomy_order'],
 							'exclude'       => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
-							'include'           => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
+							'include'       => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
 						);
 
 						$placeholder = isset( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
@@ -703,7 +703,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
 						}
 
-						$args = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id);
+						$args     = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
 						$dropdown = wp_dropdown_categories( $args );
 
 						if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {

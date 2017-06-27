@@ -28,7 +28,7 @@ class View_Vertical extends FormView {
 		}
 
 		if ( $element->getShared() ) {
-			$colSize = $element->getShared();
+			$colSize           = $element->getShared();
 			$this->sharedCount += $colSize[ strlen( $colSize ) - 1 ];
 			echo " <div class='$colSize'> ";
 		}

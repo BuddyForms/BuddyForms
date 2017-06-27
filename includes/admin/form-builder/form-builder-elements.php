@@ -138,7 +138,7 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
 			break;
 		case 'user_login':
-			 unset( $form_fields['advanced']['slug'] );
+			unset( $form_fields['advanced']['slug'] );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Username', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -257,7 +257,7 @@ function buddyforms_display_form_element( $args ) {
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
 
-			$generate_textarea = isset( $customfield['generate_textarea'] ) ? $customfield['generate_textarea']  : '';
+			$generate_textarea                            = isset( $customfield['generate_textarea'] ) ? $customfield['generate_textarea'] : '';
 			$form_fields['advanced']['generate_textarea'] = new Element_Textarea( '<b>' . __( 'Generate textarea', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_textarea]", array(
 				'value'     => $generate_textarea,
 				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
@@ -273,8 +273,8 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$post_excerpt_options                     = isset( $customfield['post_excerpt_options'] ) ? $customfield['post_excerpt_options'] : 'false';
-			$post_excerpt_options_array               = array(
+			$post_excerpt_options                          = isset( $customfield['post_excerpt_options'] ) ? $customfield['post_excerpt_options'] : 'false';
+			$post_excerpt_options_array                    = array(
 				'media_buttons' => 'media_buttons',
 				'tinymce'       => 'tinymce',
 				'quicktags'     => 'quicktags'
@@ -290,7 +290,7 @@ function buddyforms_display_form_element( $args ) {
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
 
-			$generate_post_excerpt = isset( $customfield['generate_post_excerpt'] ) ? $customfield['generate_post_excerpt']  : '';
+			$generate_post_excerpt                            = isset( $customfield['generate_post_excerpt'] ) ? $customfield['generate_post_excerpt'] : '';
 			$form_fields['advanced']['generate_post_excerpt'] = new Element_Textarea( '<b>' . __( 'Generate Post Excerpt', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_post_excerpt]", array(
 				'value'     => $generate_post_excerpt,
 				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
@@ -303,7 +303,7 @@ function buddyforms_display_form_element( $args ) {
 		case 'email':
 			unset( $form_fields['advanced']['slug'] );
 
-			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'eMail', 'buddyforms' );;
+			$name = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'eMail', 'buddyforms' );;
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'data'     => $field_id,
 				'value'    => $name,
@@ -361,12 +361,12 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'post_formats' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
-			$post_formats                       = get_theme_support( 'post-formats' );
-			$post_formats                       = isset( $post_formats[0] ) ? $post_formats[0] : false;
-			array_unshift($post_formats, 'none');
+			$post_formats = get_theme_support( 'post-formats' );
+			$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : false;
+			array_unshift( $post_formats, 'none' );
 
 
-			$post_formats_default                 = isset( $customfield['post_formats_default'] ) ? $customfield['post_formats_default'] : false;
+			$post_formats_default = isset( $customfield['post_formats_default'] ) ? $customfield['post_formats_default'] : false;
 
 			$form_fields['general']['post_formats_default'] = new Element_Select( '<b>' . __( 'Post Formats Default', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][post_formats_default]", $post_formats, array(
 				'value'    => $post_formats_default,
@@ -410,9 +410,9 @@ function buddyforms_display_form_element( $args ) {
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
 
-            if( $customfield['taxonomy'] == 'none' ){
-                $taxonomy = 'category';
-            }
+			if ( $customfield['taxonomy'] == 'none' ) {
+				$taxonomy = 'category';
+			}
 
 			$wp_dropdown_categories_args = array(
 				'hide_empty'    => 0,
@@ -449,11 +449,11 @@ function buddyforms_display_form_element( $args ) {
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
 
-			$taxonomy_placeholder = isset( $customfield['taxonomy_placeholder'] ) ? stripcslashes( $customfield['taxonomy_placeholder'] ) : 'Select an Option';
+			$taxonomy_placeholder                           = isset( $customfield['taxonomy_placeholder'] ) ? stripcslashes( $customfield['taxonomy_placeholder'] ) : 'Select an Option';
 			$form_fields['general']['taxonomy_placeholder'] = new Element_Textbox( '<b>' . __( 'Taxonomy Placeholder', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_placeholder]", array(
 				'data'      => $field_id,
 				'value'     => $taxonomy_placeholder,
-				'shortDesc' => __('You can change the placeholder to something meaningful like Select a Category or what make sense for your taxonomy.')
+				'shortDesc' => __( 'You can change the placeholder to something meaningful like Select a Category or what make sense for your taxonomy.' )
 			) );
 
 			$form_fields['general']['taxonomy_order'] = new Element_Select( '<b>' . __( 'Taxonomy Order', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy_order]", array(
@@ -633,7 +633,7 @@ JS;
 				from_setup_post_type();
 JS;
 
-				$js .= '</script>';
+				$js                           .= '</script>';
 				$form_fields['general']['js'] = new Element_HTML( $js );
 			}
 
@@ -693,7 +693,7 @@ JS;
 					'shortDesc' => 'If you want to generate the title you can set the title to hidden. If the title is visible and a title is entered the entered tiltle is stronger than the generated title. If you want to make sure the generated title is used hide the title field'
 				) );
 
-			$generate_title = isset( $customfield['generate_title'] ) ? $customfield['generate_title'] : '';
+			$generate_title                            = isset( $customfield['generate_title'] ) ? $customfield['generate_title'] : '';
 			$form_fields['advanced']['generate_title'] = new Element_Textbox( '<b>' . __( 'Generate Title', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_title]", array(
 				'value'     => $generate_title,
 				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
@@ -729,7 +729,7 @@ JS;
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
 
-			$generate_content = isset( $customfield['generate_content'] ) ? $customfield['generate_content']  : '';
+			$generate_content                            = isset( $customfield['generate_content'] ) ? $customfield['generate_content'] : '';
 			$form_fields['advanced']['generate_content'] = new Element_Textarea( '<b>' . __( 'Generate Content', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_content]", array(
 				'value'     => $generate_content,
 				'shortDesc' => 'You can use any other field value by using the shortcodes [field_slug]',
@@ -773,12 +773,12 @@ JS;
 				'required' => 1
 			) );
 
-            $button_label                           = isset( $customfield['button_label'] ) ? stripcslashes( $customfield['button_label'] ) : __( 'Add Image', 'buddyforms' );
-            $form_fields['general']['button_label'] = new Element_Textbox( '<b>' . __( 'Button Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][button_label]", array(
-                'value'    => $button_label,
-            ) );
+			$button_label                           = isset( $customfield['button_label'] ) ? stripcslashes( $customfield['button_label'] ) : __( 'Add Image', 'buddyforms' );
+			$form_fields['general']['button_label'] = new Element_Textbox( '<b>' . __( 'Button Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][button_label]", array(
+				'value' => $button_label,
+			) );
 
-			$form_fields['hidden']['slug']  = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
+			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'featured_image' );
 
 			$description                           = isset( $customfield['description'] ) ? stripcslashes( $customfield['description'] ) : '';
 			$form_fields['general']['description'] = new Element_Textbox( '<b>' . __( 'Description:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array( 'value' => $description ) );
@@ -815,67 +815,67 @@ JS;
 	}
 
 	ob_start(); ?>
-	<li id="field_<?php echo $field_id ?>"
-	    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
+    <li id="field_<?php echo $field_id ?>"
+        class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
 
-		<div style="display:none;" class="hidden">
+        <div style="display:none;" class="hidden">
 			<?php if ( isset( $form_fields['hidden'] ) ) {
 				foreach ( $form_fields['hidden'] as $key => $form_field ) {
 					$form_field->render();
 				}
 			} ?>
-		</div>
+        </div>
 
-		<div class="accordion_fields">
-			<div class="accordion-group">
-				<div class="accordion-heading-options">
-					<table class="wp-list-table widefat fixed posts">
-						<tbody>
-						<tr>
-							<td class="field_order ui-sortable-handle">
-								<span class="circle">0</span>
-							</td>
-							<td class="field_label">
-								<strong>
-									<a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
-									   data-parent="#accordion_text"
-									   href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
-									   title="Edit this Field" href="javascript:;"><?php echo $name ?></a>
-								</strong>
+        <div class="accordion_fields">
+            <div class="accordion-group">
+                <div class="accordion-heading-options">
+                    <table class="wp-list-table widefat fixed posts">
+                        <tbody>
+                        <tr>
+                            <td class="field_order ui-sortable-handle">
+                                <span class="circle">0</span>
+                            </td>
+                            <td class="field_label">
+                                <strong>
+                                    <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
+                                       data-parent="#accordion_text"
+                                       href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
+                                       title="Edit this Field" href="javascript:;"><?php echo $name ?></a>
+                                </strong>
 
-							</td>
-							<td class="field_name"><?php echo $field_slug ?></td>
-							<td class="field_type"><?php echo $field_type ?></td>
-							<td class="field_delete">
+                            </td>
+                            <td class="field_name"><?php echo $field_slug ?></td>
+                            <td class="field_type"><?php echo $field_type ?></td>
+                            <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text"
                                          href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
                                          title="Edit this Field" href="javascript:;">Edit</a> | </span>
                                 <span><a class="bf_delete_field" id="<?php echo $field_id ?>" title="Delete this Field"
                                          href="#">Delete</a></span>
-							</td>
+                            </td>
 
-							<?php $layout = isset( $buddyform['layout']['cords'][$field_id] ) ? $buddyform['layout']['cords'][$field_id]  : '1'; ?>
+							<?php $layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layout']['cords'][ $field_id ] : '1'; ?>
 
                             <td class="field_layout">
                                 <select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
-                                    <option <?php selected( $layout, '1'); ?> value="1">Full Width</option>
-                                    <option <?php selected( $layout, '2'); ?> value="2">1/2</option>
-                                    <option <?php selected( $layout, '3'); ?> value="3">1/3</option>
-                                    <option <?php selected( $layout, '4'); ?> value="4">1/4</option>
-                                    <option <?php selected( $layout, '5'); ?> value="5">2/3</option>
-                                    <option <?php selected( $layout, '6'); ?> value="6">3/4</option>
+                                    <option <?php selected( $layout, '1' ); ?> value="1">Full Width</option>
+                                    <option <?php selected( $layout, '2' ); ?> value="2">1/2</option>
+                                    <option <?php selected( $layout, '3' ); ?> value="3">1/3</option>
+                                    <option <?php selected( $layout, '4' ); ?> value="4">1/4</option>
+                                    <option <?php selected( $layout, '5' ); ?> value="5">2/3</option>
+                                    <option <?php selected( $layout, '6' ); ?> value="6">3/4</option>
                                 </select>
                             </td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-				<div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
-					<div class="accordion-inner">
-						<div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
-							<ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
-							    class="nav nav-tabs nav-pills">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
+                            <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
+                                class="nav nav-tabs nav-pills">
 								<?php
 								$i = 0;
 								foreach ( $form_fields as $key => $form_field ) {
@@ -890,16 +890,16 @@ JS;
 									}
 
 									?>
-								<li class="<?php echo $class_active ?>"><a
-										href="#<?php echo $key . '-' . $field_type . '-' . $field_id ?>"
-										data-toggle="tab"><?php echo str_replace( '-', ' ', ucfirst( $key ) ) ?></a>
-									</li><?php
+                                <li class="<?php echo $class_active ?>"><a
+                                            href="#<?php echo $key . '-' . $field_type . '-' . $field_id ?>"
+                                            data-toggle="tab"><?php echo str_replace( '-', ' ', ucfirst( $key ) ) ?></a>
+                                    </li><?php
 									$i ++;
 								}
 								?>
-							</ul>
-							<div id="bf_field_group_content<?php echo $field_type . '-' . $field_id ?>"
-							     class="tab-content">
+                            </ul>
+                            <div id="bf_field_group_content<?php echo $field_type . '-' . $field_id ?>"
+                                 class="tab-content">
 								<?php
 								$i = 0;
 								foreach ( $form_fields as $key => $form_field ) {
@@ -913,12 +913,12 @@ JS;
 										$class_active = 'active';
 									}
 									?>
-									<div class="tab-pane fade in <?php echo $class_active ?>"
-									     id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
-										<div class="buddyforms_accordion_general">
+                                    <div class="tab-pane fade in <?php echo $class_active ?>"
+                                         id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
+                                        <div class="buddyforms_accordion_general">
 											<?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
-										</div>
-									</div>
+                                        </div>
+                                    </div>
 									<?php
 									$i ++;
 								}
@@ -926,13 +926,13 @@ JS;
 									_e( 'Please Save the form once for the form element to work.', 'buddyforms' );
 								}
 								?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
 	<?php
 	$field_html = ob_get_contents();
 	ob_end_clean();
@@ -1027,8 +1027,8 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
  */
 function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped' ) {
 	?>
-	<table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
-		<tbody>
+    <table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
+        <tbody>
 		<?php
 		if ( isset( $form_fields ) ) {
 			foreach ( $form_fields as $key => $field ) {
@@ -1037,7 +1037,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 				$class    = $field->getAttribute( 'class' );
 				$disabled = $field->getAttribute( 'disabled' );
 				$classes  = empty( $class ) ? '' : $class . ' ';
-				$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
+				$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 				switch ( $type ) {
 					case 'html':
@@ -1050,23 +1050,23 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 						break;
 					default :
 						?>
-						<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
-							<th scope="row">
-								<label for="form_title"><?php echo $field->getLabel() ?></label>
-							</th>
-							<td>
+                        <tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
+                            <th scope="row">
+                                <label for="form_title"><?php echo $field->getLabel() ?></label>
+                            </th>
+                            <td>
 								<?php echo $field->render() ?>
-								<p class="description"><?php echo $field->getShortDesc() ?></p>
-							</td>
-						</tr>
+                                <p class="description"><?php echo $field->getShortDesc() ?></p>
+                            </td>
+                        </tr>
 						<?php
 						break;
 				}
 			}
 		}
 		?>
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 	<?php
 }
 

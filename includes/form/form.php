@@ -148,7 +148,7 @@ function buddyforms_create_edit_form( $args ) {
 		'the_post'     => $the_post,
 		'post_parent'  => $post_parent,
 		'customfields' => $customfields,
-		'post_id'      => apply_filters('buddyforms_set_post_id_for_draft', $post_id, $args, $customfields),
+		'post_id'      => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
 		'form_slug'    => $form_slug,
 		'form_notice'  => $form_notice,
 	);

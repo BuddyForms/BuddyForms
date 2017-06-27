@@ -36,10 +36,10 @@ jQuery(document).ready(function (jQuery) {
         var style = jQuery(this).val();
         var field_id = jQuery(this).attr('data-field_id');
 
-        if( style == 'color' ){
-            jQuery('#bf_color_container_' + field_id ).removeClass('bf-color-hidden');
+        if (style == 'color') {
+            jQuery('#bf_color_container_' + field_id).removeClass('bf-color-hidden');
         } else {
-            jQuery('#bf_color_container_' + field_id ).addClass('bf-color-hidden');
+            jQuery('#bf_color_container_' + field_id).addClass('bf-color-hidden');
         }
 
     });

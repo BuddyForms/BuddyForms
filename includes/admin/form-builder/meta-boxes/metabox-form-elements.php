@@ -128,7 +128,7 @@ function buddyforms_form_builder_form_elements_select() {
 	// Loop The form elements array and add the options to the select box
 	if ( is_array( $elements_select_options ) ) {
 		foreach ( $elements_select_options as $optgroup_label => $optgroup ) {
-			$class = isset( $optgroup['class'] ) ? $optgroup['class'] : '';
+			$class          = isset( $optgroup['class'] ) ? $optgroup['class'] : '';
 			$el_sel_options .= '<optgroup style="display:none;" class="' . $class . '" label="' . $optgroup['label'] . '">';
 			foreach ( $optgroup['fields'] as $es_val => $es_label ) {
 				if ( is_array( $es_label ) ) {
@@ -208,11 +208,11 @@ function buddyforms_form_elements_select_options() {
 			'label'  => __( 'Post Fields', 'buddyforms' ),
 			'class'  => 'bf_show_if_f_type_post',
 			'fields' => array(
-				'title'   => array(
+				'title'        => array(
 					'label'  => __( 'Title', 'buddyforms' ),
 					'unique' => 'unique'
 				),
-				'content' => array(
+				'content'      => array(
 					'label'  => __( 'Content', 'buddyforms' ),
 					'unique' => 'unique'
 				),
@@ -230,18 +230,18 @@ function buddyforms_form_elements_select_options() {
 				'text'        => array(
 					'label' => __( 'Text', 'buddyforms' ),
 				),
-				'email'        => array(
+				'email'       => array(
 					'label' => __( 'eMail', 'buddyforms' ),
 				),
 				'textarea'    => array(
 					'label' => __( 'Textarea', 'buddyforms' ),
 				),
-				'phone'    => array(
+				'phone'       => array(
 					'label' => __( 'Phone', 'buddyforms' ),
 				),
-				'number' => array(
-                    'label' => __( 'Number', 'buddyforms' ),
-                ),
+				'number'      => array(
+					'label' => __( 'Number', 'buddyforms' ),
+				),
 				'dropdown'    => array(
 					'label' => __( 'Dropdown', 'buddyforms' ),
 				),
@@ -274,9 +274,9 @@ function buddyforms_form_elements_select_options() {
 				array(
 					'label' => __( 'Taxonomy', 'buddyforms' ),
 				);
-			$elements_select_options['post']['fields']['post_formats']       =
+			$elements_select_options['post']['fields']['post_formats']   =
 				array(
-					'label' => __( 'Post Formats', 'buddyforms' ),
+					'label'  => __( 'Post Formats', 'buddyforms' ),
 					'unique' => 'unique'
 				);
 			$elements_select_options['post']['fields']['comments']       =
@@ -315,9 +315,9 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'Date', 'buddyforms' ),
 					'unique' => 'unique'
 				);
-			$elements_select_options['extra']['fields']['range']   =
+			$elements_select_options['extra']['fields']['range']  =
 				array(
-					'label'  => __( 'Range', 'buddyforms' ),
+					'label' => __( 'Range', 'buddyforms' ),
 				);
 		}
 

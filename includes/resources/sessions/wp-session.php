@@ -11,7 +11,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Return the current cache expire setting.
@@ -81,6 +83,7 @@ function wp_session_start() {
 
 	return $wp_session->session_started();
 }
+
 add_action( 'plugins_loaded', 'wp_session_start' );
 
 /**
@@ -116,6 +119,7 @@ function wp_session_write_close() {
 	$wp_session->write_data();
 	do_action( 'wp_session_commit' );
 }
+
 add_action( 'shutdown', 'wp_session_write_close' );
 
 /**
@@ -135,10 +139,10 @@ function wp_session_cleanup() {
 	if ( ! defined( 'WP_INSTALLING' ) ) {
 		$expiration_keys = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE '_wp_session_expires_%'" );
 
-		$now = current_time( 'timestamp' );
+		$now              = current_time( 'timestamp' );
 		$expired_sessions = array();
 
-		foreach( $expiration_keys as $expiration ) {
+		foreach ( $expiration_keys as $expiration ) {
 
 			// If the session has expired
 			if ( $now > intval( $expiration->option_value ) ) {
@@ -146,7 +150,7 @@ function wp_session_cleanup() {
 				// Get the session ID by parsing the option_name
 				$session_id = substr( $expiration->option_name, 20 );
 
-				if( (int) -1 === (int) $session_id || ! preg_match( '/^[a-f0-9]{32}$/', $session_id ) ) {
+				if ( (int) - 1 === (int) $session_id || ! preg_match( '/^[a-f0-9]{32}$/', $session_id ) ) {
 					continue;
 				}
 
@@ -158,13 +162,14 @@ function wp_session_cleanup() {
 		// Delete all expired sessions in a single query
 		if ( ! empty( $expired_sessions ) ) {
 			$option_names = implode( "','", $expired_sessions );
-			$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name IN ('$option_names')"  );
+			$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name IN ('$option_names')" );
 		}
 	}
 
 	// Allow other plugins to hook in to the garbage collection process.
 	do_action( 'wp_session_cleanup' );
 }
+
 add_action( 'wp_session_garbage_collection', 'wp_session_cleanup' );
 
 /**
@@ -175,4 +180,5 @@ function wp_session_register_garbage_collection() {
 		wp_schedule_event( current_time( 'timestamp' ), 'twicedaily', 'wp_session_garbage_collection' );
 	}
 }
+
 add_action( 'wp', 'wp_session_register_garbage_collection' );

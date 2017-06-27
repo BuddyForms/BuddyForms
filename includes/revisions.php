@@ -50,8 +50,8 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 		$date      = date_i18n( $datef, strtotime( $restored_from_meta['restored_time'] ) );
 		$time_diff = human_time_diff( $restored_from_meta['restored_time'] );
 		?>
-		<hr/>
-		<div id="revisions-meta-restored">
+        <hr/>
+        <div id="revisions-meta-restored">
 			<?php
 			printf(
 			/* translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date */
@@ -62,7 +62,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 				$date
 			);
 			?>
-		</div>
+        </div>
 		<?php
 	}
 	echo "</ul>";

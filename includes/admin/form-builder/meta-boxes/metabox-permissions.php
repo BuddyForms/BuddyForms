@@ -12,14 +12,14 @@ function buddyforms_permissions_unregistered_screen() {
 
 	$public_submit = isset( $buddyform['public_submit'] ) ? $buddyform['public_submit'] : 'public_submit';
 	$form_setup[]  = new Element_Radio( '<b>' . __( 'Public Submittable', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit]",
-        array(
-            'public_submit'     => __( 'Access for unregistered users.', 'buddyforms' ) . '<br>',
-            'registration_form' => __( 'Logged in users only. <br><small>Display Login Form For Unregistered Users with optional Link to a Registration Form</small>')
-        ), array(
-            'value' => $public_submit,
-            'class' => 'public_submit_select'
-	    )
-    );
+		array(
+			'public_submit'     => __( 'Access for unregistered users.', 'buddyforms' ) . '<br>',
+			'registration_form' => __( 'Logged in users only. <br><small>Display Login Form For Unregistered Users with optional Link to a Registration Form</small>' )
+		), array(
+			'value' => $public_submit,
+			'class' => 'public_submit_select'
+		)
+	);
 
 	$public_submit_login = isset( $buddyform['public_submit_login'] ) ? $buddyform['public_submit_login'] : 'above';
 	$form_setup[]        = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array(
@@ -29,7 +29,7 @@ function buddyforms_permissions_unregistered_screen() {
 	), array(
 		'value'     => $public_submit_login,
 		'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
-        'class'     => 'public-submit-option'
+		'class'     => 'public-submit-option'
 	) );
 
 	$public_submit_create_account = ! isset( $buddyform['public_submit_create_account'] ) ? '' : 'public_submit_create_account';
@@ -48,23 +48,23 @@ function buddyforms_permissions_unregistered_screen() {
 //	$all_pages      = buddyforms_get_all_pages('id');
 
 	$all_forms['none'] = __( 'No Registration', 'buddyforms' );
-	if( isset( $buddyforms ) && is_array( $buddyforms ) ){
-		foreach ( $buddyforms as $form_slug => $form ){
-			if( $form['form_type'] == 'registration' ){
-				$all_forms[$form['slug']] = $form['name'];
+	if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
+		foreach ( $buddyforms as $form_slug => $form ) {
+			if ( $form['form_type'] == 'registration' ) {
+				$all_forms[ $form['slug'] ] = $form['name'];
 			}
 		}
 	}
 
 
 	$logged_in_only_reg_form = isset( $buddyform['logged_in_only_reg_form'] ) ? $buddyform['logged_in_only_reg_form'] : 'none';
-	$form_setup[]        = new Element_Select( '<b>' . __( 'Enable Registration on the login form', 'buddyforms' ) . '</b>', "buddyforms_options[logged_in_only_reg_form]",
+	$form_setup[]            = new Element_Select( '<b>' . __( 'Enable Registration on the login form', 'buddyforms' ) . '</b>', "buddyforms_options[logged_in_only_reg_form]",
 		$all_forms,
-        array(
-		'value'     => $logged_in_only_reg_form,
-		'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
-		'class'     => 'registration-form-option'
-	) );
+		array(
+			'value'     => $logged_in_only_reg_form,
+			'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
+			'class'     => 'registration-form-option'
+		) );
 
 	buddyforms_display_field_group_table( $form_setup );
 }
@@ -143,18 +143,18 @@ function buddyforms_permissions_screen() {
 		$form_setup[] = $element;
 	endforeach;
 	?>
-	<div class="fields_header">
-		<table class="wp-list-table widefat posts striped bf_permissions">
-			<thead>
-			<tr>
-				<th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
-				<th class="field_name"><?php _e( 'Create - Edit - Delete', 'buddyforms' ) ?><a style="float: right;"
-				                                                                               href="#"
-				                                                                               class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
-				</th>
-			</tr>
-			</thead>
-			<tbody id="the-list">
+    <div class="fields_header">
+        <table class="wp-list-table widefat posts striped bf_permissions">
+            <thead>
+            <tr>
+                <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
+                <th class="field_name"><?php _e( 'Create - Edit - Delete', 'buddyforms' ) ?><a style="float: right;"
+                                                                                               href="#"
+                                                                                               class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="the-list">
 			<?php
 			if ( isset( $form_setup ) ) {
 				foreach ( $form_setup as $key => $field ) {
@@ -163,7 +163,7 @@ function buddyforms_permissions_screen() {
 					$class    = $field->getAttribute( 'class' );
 					$disabled = $field->getAttribute( 'disabled' );
 					$classes  = empty( $class ) ? '' : $class . ' ';
-					$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
+					$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 
 					if ( $type == 'html' ) {
@@ -171,42 +171,42 @@ function buddyforms_permissions_screen() {
 						$field->render();
 						echo '</td></tr>';
 					} else { ?>
-						<tr class=" <?php echo $classes ?>">
-							<th scope="row">
-								<label for="role_role"><?php echo $field->getLabel() ?></label>
-							</th>
-							<td>
+                        <tr class=" <?php echo $classes ?>">
+                            <th scope="row">
+                                <label for="role_role"><?php echo $field->getLabel() ?></label>
+                            </th>
+                            <td>
 								<?php echo $field->render() ?>
-								<p class="description"><?php echo $field->getShortDesc() ?></p>
-							</td>
-						</tr>
+                                <p class="description"><?php echo $field->getShortDesc() ?></p>
+                            </td>
+                        </tr>
 					<?php }
 				}
 			}
 			?>
-			</tbody>
-		</table>
-	</div>
+            </tbody>
+        </table>
+    </div>
 	<?php
 
 }
 
 function buddyforms_form_setup_nav_li_permission() { ?>
-	<li class="permission_nav"><a class="permission"
-	                              href="#permission"
-	                              data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
-	</li><?php
+    <li class="permission_nav"><a class="permission"
+                                  href="#permission"
+                                  data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a>
+    </li><?php
 }
 
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_permission' );
 
 function buddyforms_form_setup_tab_pane_permission() { ?>
-	<div class="tab-pane fade in" id="permission">
-	<div class="buddyforms_accordion_permission">
+    <div class="tab-pane fade in" id="permission">
+    <div class="buddyforms_accordion_permission">
 		<?php buddyforms_permissions_unregistered_screen() ?>
 		<?php buddyforms_permissions_screen(); ?>
-	</div>
-	</div><?php
+    </div>
+    </div><?php
 }
 
 add_action( 'buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_permission' );

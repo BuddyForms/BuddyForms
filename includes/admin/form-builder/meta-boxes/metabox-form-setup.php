@@ -15,7 +15,7 @@ function buddyforms_metabox_form_setup() {
 	$post_types = buddyforms_get_post_types();
 
 	// Get all allowed pages
-	$all_pages      = buddyforms_get_all_pages('id');
+	$all_pages = buddyforms_get_all_pages( 'id' );
 
 	// Get all values or set the default
 	$slug = $post->post_name;
@@ -265,7 +265,9 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Edit Submissions'][] = $element;
 
-	$element = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", apply_filters( 'buddyforms_loop_template_name', array( 'list'  => 'List', 'table' => 'Table' ) ), array(
+	$element = new Element_Radio( '<b>' . __( "List Style", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_style]", apply_filters( 'buddyforms_loop_template_name', array( 'list'  => 'List',
+	                                                                                                                                                                                'table' => 'Table'
+	) ), array(
 		'value'     => $list_posts_style,
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
 		'class'     => 'bf_hide_if_attached_page_none'
@@ -312,7 +314,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
 	?>
-	<span class="bf-form-type-wrap"> —
+    <span class="bf-form-type-wrap"> —
 			<label for="bf-form-type-select">
 				<select id="bf-form-type-select" name="buddyforms_options[form_type]">
 					<optgroup label="Form Type">
@@ -324,32 +326,32 @@ function buddyforms_metabox_form_setup() {
 				</select>
 			</label>
 	</span>
-	<div class="tabs tabbable tabs-left">
-		<ul class="nav nav-tabs nav-pills">
+    <div class="tabs tabbable tabs-left">
+        <ul class="nav nav-tabs nav-pills">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab ); ?>
-			<li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav"><a
-					href="#<?php echo $tab_slug; ?>"
-					data-toggle="tab"><?php echo $tab; ?></a>
-				</li><?php
+            <li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav"><a
+                        href="#<?php echo $tab_slug; ?>"
+                        data-toggle="tab"><?php echo $tab; ?></a>
+                </li><?php
 				$i ++;
 			}
 			// Allow other plugins to add new sections
 			do_action( 'buddyforms_form_setup_nav_li_last' );
 			?>
 
-		</ul>
-		<div class="tab-content">
+        </ul>
+        <div class="tab-content">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab );
 				?>
-				<div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
-				     id="<?php echo $tab_slug; ?>">
-					<div class="buddyforms_accordion_general">
+                <div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
+                     id="<?php echo $tab_slug; ?>">
+                    <div class="buddyforms_accordion_general">
 						<?php
 						// get all the html elements and add them above the settings
 						foreach ( $fields as $field_key => $field ) {
@@ -358,41 +360,41 @@ function buddyforms_metabox_form_setup() {
 								$field->render();
 							}
 						} ?>
-						<table class="wp-list-table widefat posts striped fixed">
-							<tbody>
+                        <table class="wp-list-table widefat posts striped fixed">
+                            <tbody>
 							<?php foreach ( $fields as $field_key => $field ) {
 
 								$type     = $field->getAttribute( 'type' );
 								$class    = $field->getAttribute( 'class' );
 								$disabled = $field->getAttribute( 'disabled' );
 								$classes  = empty( $class ) ? '' : $class . ' ';
-								$classes .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
+								$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 								// If the form element is not html create it as table row
 								if ( $type != 'html' ) {
 									?>
-									<tr class="<?php echo $classes ?>">
-										<th scope="row">
-											<label for="form_title"><?php echo $field->getLabel() ?></label>
-										</th>
-										<td>
+                                    <tr class="<?php echo $classes ?>">
+                                        <th scope="row">
+                                            <label for="form_title"><?php echo $field->getLabel() ?></label>
+                                        </th>
+                                        <td>
 											<?php echo $field->render() ?>
-											<p class="description"><?php echo $field->getShortDesc() ?></p>
-										</td>
-									</tr>
+                                            <p class="description"><?php echo $field->getShortDesc() ?></p>
+                                        </td>
+                                    </tr>
 								<?php }
 							} ?>
-							</tbody>
-						</table>
-					</div>
-				</div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 				<?php
 				$i ++;
 			}
 			// Allow other plugins to hook there content for there nav into the tab content
 			do_action( 'buddyforms_form_setup_tab_pane_last' );
 			?>
-		</div>  <!-- close .tab-content -->
-	</div> <!--	close .tabs -->
+        </div>  <!-- close .tab-content -->
+    </div> <!--	close .tabs -->
 	<?php
 }
