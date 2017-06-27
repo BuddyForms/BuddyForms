@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 2.1.0.2
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -236,6 +236,20 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.1 - Jun 27.2017 =
+
+* Added a new form element post_excerpt
+* Check if form template json request is an error code and load local json if needed.
+* Create a new file deregister to manage all script and stiles we need to deregister
+* Switch from $_SESSION to $wp_session
+* Make sure the buddyforms metaboxes can not be hidden
+* Move the Form Broken admin_notice to post_submitbox_start
+* Make sure the css and js is not loaded on freemius pages
+* Added a new option to the featured image form element to define the button label
+* Add the field name to the error message
+* Added class_exists as wrapper to the complete loader file to support freemius free plugin deactivation if pro version gets activated
+* Reformat the code and deletes old and unneeded code
 
 = 2.1.0.2 - Jun 12.2017 =
 * Make sure registration activation does work all over the site and if no option is set the home is used

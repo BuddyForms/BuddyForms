@@ -4,7 +4,7 @@
  * Plugin Name: Form Builder & Front End Editor BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: A simple yet powerful form builder. Create contact forms - register forms - post forms - user submitted content - User Registration - Front end Forms - Frontend Editor
- * Version: 2.1.0.2
+ * Version: 2.1.1
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.1.0.2';
+		public $version = '2.1.1';
 
 		/**
 		 * Initiate the class
@@ -71,7 +71,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 102, 1 );
 
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
-
 
 		}
 
@@ -436,7 +435,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		}
 
-
 		/**
 		 * Update form 1.x version
 		 *
@@ -603,7 +601,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		return $buddyforms_core_fs;
 	}
-
 
 	// BuddyForms requires php version 5.3 or higher.
 	if ( PHP_VERSION < 5.3 ) {
