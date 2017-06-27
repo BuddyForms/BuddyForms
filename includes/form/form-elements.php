@@ -371,7 +371,9 @@ function buddyforms_form_elements( $form, $args ) {
 							'editor_class'  => 'textInMce',
 						);
 
-						wp_editor( stripslashes( $customfield_val ), $name, $settings );
+
+
+						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
 						$wp_editor = ob_get_contents();
 						ob_clean();
 
@@ -422,7 +424,7 @@ function buddyforms_form_elements( $form, $args ) {
 							'editor_class'  => 'textInMce',
 						);
 
-						wp_editor( stripslashes( $customfield_val ), $name, $settings );
+						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
 						$wp_editor = ob_get_contents();
 						ob_clean();
 

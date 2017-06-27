@@ -6,6 +6,9 @@
 
 add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );
 /**
+ *
+ * Server Site Validation
+ *
  * @param $valid
  * @param $form_slug
  *
@@ -58,15 +61,10 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 	return $valid;
 }
 
-/* First Browser Validation
- *
- * Generate the jquery validation js
- * hooked into wp_head in buddyforms/buddyforms.php function buddyform_front_js to make sure it only gets loaded if a form is displayed
- *
- * todo: first I thought its best practice to make the jquery work loaded in the wp_head. Now starting to use more and more react js I ask my self the question, why not add it inline to the form where it is used. I think it could be possible I switch from the global instance. If you read this and have some thoughts. please let me know @svenl77 ;)
+/*
+ * Browser Validation - Generate the jquery validation js
  *
  */
-
 function buddyforms_jquery_validation() {
 	global $buddyforms;
 
@@ -75,100 +73,63 @@ function buddyforms_jquery_validation() {
 	}
 
 	$form_html = '<script type="text/javascript">';
-	$form_html .= ' var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";';
+	$form_html .= ' var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";
+	';
 
 	foreach ( $buddyforms as $form_slug => $form ) {
-
-		// make the slug js conform
-		$form_slug_js = str_replace( '-', '_', $form_slug );
-
 		// Create the needed Validation JS.
 		$form_html .= '
 	    jQuery(function() {
-	        var validator_' . $form_slug_js . ' = jQuery("#buddyforms_form_' . $form_slug . '").submit(function() {
-	                if(jQuery(\'textarea\').length > 0) {
-	                	// if TinyMCE is enabled
-	                    if ( "undefined" !== typeof tinyMCE ) {
-		                    // update underlying textarea before submit validation
-		                    tinyMCE.triggerSave();
-		                }
-	                }
-
-	        }).validate({
-	        ignore: [],
-	        rules: {
-	        ';
+	        jQuery("#buddyforms_form_' . $form_slug . '").submit(function(){}).validate({
+	            errorPlacement: function(label, element) {
+		            if (element.is("TEXTAREA")) {
+		                label.insertAfter(element);
+		            } else if(element.is("input[type=\"radio\"]")) {
+		                label.insertBefore(element);
+		            } else {
+		                label.insertAfter(element);
+		            }
+	            }
+	        });';
 
 		if ( isset( $form['form_fields'] ) ) :
 			foreach ( $form['form_fields'] as $key => $form_field ) {
 				if ( isset( $form_field['required'] ) ) {
 
-					$field_slug = str_replace( "-", "", $form_field['slug'] );
-					if ( $field_slug ) :
-						$form_html .= $field_slug . ': { required: true,';
+					$form_html .= '
+				jQuery("[name=' . $form_field['slug'] . ']").rules("add", { ';
 
-						if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
-							$form_html .= 'min: ' . $form_field['validation_min'] . ',';
-						}
+					$form_html .= 'required: true, ';
 
-						if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
-							$form_html .= 'max: ' . $form_field['validation_max'] . ',';
-						}
+					if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
+						$form_html .= 'min: ' . $form_field['validation_min'] . ', ';
+					}
 
-						if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
-							$form_html .= 'minlength: ' . $form_field['validation_minlength'] . ',';
-						}
+					if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
+						$form_html .= 'max: ' . $form_field['validation_max'] . ', ';
+					}
 
-						if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
-							$form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ',';
-						}
+					if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
+						$form_html .= 'minlength: ' . $form_field['validation_minlength'] . ', ';
+					}
 
-						//	$form_html .= 'valueNotEquals: "-1",'; ... 	valueNotEquals: "Please select an item!",
+					if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
+						$form_html .= 'maxlength: ' . $form_field['validation_maxlength'] . ', ';
+					}
 
-						$form_html .= '},
-						';
-					endif;
+					$validation_error_message = isset( $form_field['validation_error_message'] ) ? $form_field['validation_error_message'] : __( 'This field is required.', 'buddyforms' );
+					$form_html                .= ' messages:{ required: "' . $validation_error_message . '" }';
+					$form_html                .= '});';
 				}
 			}
 		endif;
 
-		$form_html .= '},
-	        messages: {
-	            ';
-		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) : foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $form_field ) {
-			if ( isset( $form_field['required'] ) ) {
+		$form_html .= '
+		});';
 
-				$validation_error_message = __( 'This field is required.', 'buddyforms' );
-				if ( isset( $form_field['validation_error_message'] ) ) {
-					$validation_error_message = $form_field['validation_error_message'];
-				}
-
-				$field_slug = str_replace( "-", "", $form_field['slug'] );
-				if ( $field_slug ) :
-					$form_html .= $field_slug . ': {
-	                        required: "' . $validation_error_message . '",
-	                    },';
-				endif;
-			}
-		}
-		endif;
-		$form_html .= '},';
-
-		$form_html .= 'errorPlacement: function(label, element) {
-		console.log(label, element);
-	            // position error label after generated textarea
-	            if (element.is("textarea")) {
-	                label.find(".wp-editor-area").insertBefore(element);
-	            } else if(element.is("input[type=\"radio\"]")) {
-	                label.insertBefore(element)
-	            } else {
-	                label.insertAfter(element)
-	            }
-	        }
-	    });});
-	    ';
 	}
-	$form_html .= '</script>';
+	$form_html .= '
+	</script>';
 	echo $form_html;
 }
 
