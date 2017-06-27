@@ -696,9 +696,8 @@ function buddyforms_notice_if_broken_form() {
 	//
 	// OK let us start with the form validation
 	//
-
 	$messages = Array();
-	if ( ! isset( $buddyform['post_type'] ) ) {
+	if ( ! isset( $buddyform['post_type'] ) || isset( $buddyform['post_type'] ) && $buddyform['post_type'] == 'bf_submissions' ) {
 		$messages[] = __( 'No Post Type Selected. Please select a post type', 'buddyforms' );
 	}
 	if ( isset( $buddyform['post_type'] ) ) {
@@ -706,20 +705,35 @@ function buddyforms_notice_if_broken_form() {
 		$post_types = buddyforms_get_post_types();
 
 		if ( ! isset( $post_types[ $buddyform['post_type'] ] ) ) {
-			$pt_messages = __( 'You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types', 'buddyforms' );
+			$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
 				if ( ! in_array( $buddyform['post_type'], $post_types ) ) {
-					$pt_messages = __( 'The Selected Post Type does not exist', 'buddyforms' );
+					$messages[] = __( 'The Selected Post Type does not exist', 'buddyforms' );
 				}
 			}
 		}
 
-		if ( ! empty( $pt_messages ) ) {
-			$messages[] = $pt_messages;
-		}
+	}
 
+	if ( isset( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $field_key => $field ) {
+		if (   $field['type'] == 'taxonomy'
+                || $field['type'] == 'category'
+                || $field['type'] == 'tags'
+		        || $field['type'] == 'featured-image'
+		        || $field['type'] == 'featured_image'
+		        || $field['type'] == 'featuredimage'
+        ) {
+			$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
+		}
+	}
+	endif;
+
+	if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			unset($messages['pro']);
+		}
 	}
 
 	$messages = apply_filters( 'buddyforms_broken_form_error_messages', $messages );
