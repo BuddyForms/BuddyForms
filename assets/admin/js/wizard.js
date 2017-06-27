@@ -23,6 +23,7 @@ jQuery(document).ready(function (jQuery) {
     // get the url parameter to create the UI
     var wizard = bf_getUrlParameter('wizard');
     var type = bf_getUrlParameter('type');
+    var template = bf_getUrlParameter('template');
     var post_id = bf_getUrlParameter('post');
 
     // Get out of here if not the wizard view
@@ -34,8 +35,8 @@ jQuery(document).ready(function (jQuery) {
     if (wizard != null) {
 
         // Load the form elements template depend on the type
-        if (type) {
-            load_formbuilder_template(type);
+        if (template) {
+            load_formbuilder_template(template);
         }
 
         jQuery(document.body).on('change', '#public_submit_create_account-0 ', function () {
@@ -95,7 +96,9 @@ jQuery(document).ready(function (jQuery) {
         type = jQuery(this).attr('data-type');
         type = type.split('_')[0];
 
-        URL = URL.replace('wizard=1', 'wizard=2&type=' + type);
+        template = jQuery(this).attr('data-template');
+
+        URL = URL.replace('wizard=1', 'wizard=2&type=' + type + '&template=' + template);
         window.location = URL;
     });
 
