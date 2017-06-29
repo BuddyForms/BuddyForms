@@ -308,9 +308,11 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#table_row_' + args[0] + '_select_options ul').append(
             '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
             '<table class="wp-list-table widefat fixed posts"><tbody><tr><td>' +
-            '<input class="field-sortable" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]">' +
+            '<input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]">' +
             '</td><td>' +
-            '<input class="field-sortable" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][value]">' +
+            '<input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][value]">' +
+            '</td><td class="manage-column column-default">' +
+            'You need to Save the Form before you can set this option as default' +
             '</td><td class="manage-column column-author">' +
             '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
             '</td></tr></li></tbody></table>');
