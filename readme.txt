@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 2.1.1
+Stable tag: 2.1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -237,8 +237,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.1.1 - Jun 27.2017 =
+= 2.1.1.1 - Jun 29.2017 =
+Fixed an issue in the ajax error response. $$this should be $this.
+Adjust the checkbox and select box elements and make label and value required.
 
+= 2.1.1 - Jun 27.2017 =
 * Added a new form element post_excerpt
 * Check if form template json request is an error code and load local json if needed.
 * Create a new file deregister to manage all script and stiles we need to deregister
