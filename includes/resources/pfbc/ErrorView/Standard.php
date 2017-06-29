@@ -45,7 +45,7 @@ HTML;
 	}
 
 	public function renderAjaxErrorResponse() {
-		$errors = $$this->_form->getErrors();
+		$errors = $this->_form->getErrors();
 		if ( ! empty( $errors ) ) {
 			header( "Content-type: application/json" );
 			echo json_encode( array( "errors" => $errors ) );
