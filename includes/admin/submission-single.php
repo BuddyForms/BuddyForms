@@ -9,7 +9,7 @@
     <div id="post-body" class="metabox-holder columns-2">
         <div id="post-body-content">
 
-            <div class="postbox-submissions postbox">
+            <div class="buddyforms-metabox postbox-submissions postbox">
                 <h3 class="hndle"><span>Entry</span></h3>
                 <div class="inside">
                     <script>
@@ -53,8 +53,8 @@
 
 
         </div>
-        <div id="postbox-container-1" class="postbox-container">
-            <div id="submitdiv" class="postbox">
+        <div id="postbox-container-1" class="buddyforms-metabox postbox-container">
+            <div id="submitdiv" class="buddyforms-metabox postbox">
 
                 <h3 class="hndle"><span>Entry Actions</span></h3>
                 <div class="inside">
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="postbox frm_with_icons">
+            <div class="buddyforms-metabox postbox frm_with_icons">
                 <h3 class="hndle"><span>Entry Details</span></h3>
                 <div class="inside">
 
@@ -106,7 +106,7 @@
 						$user_data = get_post_meta( $post_id, '_bf_user_data', true );
 
 						if ( $user_data ) { ?>
-                            <div class="postbox">
+                            <div class="buddyforms-metabox postbox">
                                 <h3 class="hndle"><span>User Information</span></h3>
                                 <div class="inside">
 
@@ -124,7 +124,7 @@
 				}
 			}
 			if ( buddyforms_core_fs()->is_not_paying() ) { ?>
-                <div class="postbox">
+                <div class="buddyforms-metabox postbox">
                     <h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
                     <div class="inside">
 						<?php
