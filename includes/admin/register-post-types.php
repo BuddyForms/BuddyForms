@@ -589,7 +589,7 @@ function buddyforms_add_button_to_submit_box() {
 		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
             <div id="admin-actions">
                 <label for="button">Admin</label>
-				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
+				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
             </div>
 		<?php } ?>
 
@@ -639,7 +639,7 @@ function buddyforms_add_action_buttons( $actions, $post ) {
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
 
 		$actions['export']       = '<a href="' . esc_url( $url ) . '">Export</a>';
-		$actions['submissions']  = '<a href="?post_type=buddyforms&page=bf_submissions&form_slug=' . $post->post_name . '">' . __( "View Submissions", "buddyforms" ) . '</a>';
+		$actions['submissions']  = '<a href="?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '">' . __( "View Submissions", "buddyforms" ) . '</a>';
 		$actions['preview_link'] = '<a target="_blank" href="' . $base . '/?page_id=' . $preview_page_id . '&preview=true&form_slug=' . $post->post_name . '">' . __( 'Preview Form', 'buddyforms' ) . '</a>';
 
 	}

@@ -76,70 +76,70 @@
     text-align: center;
 }
 
-#wpbody #bf_admin_wrap h1 {
+#wpbody .bf_admin_wrap h1 {
     float: none;
 }
 
-#bf_admin_wrap h1 span.version {
+.bf_admin_wrap h1 span.version {
     font-size: 14px;
     font-style: italic;
     padding-left: 5px;
 }
 
 @media screen and (max-width: 1140px) {
-    #bf_admin_wrap .credits {
+    .bf_admin_wrap .credits {
         display: none;
     }
 }
 
-#bf_admin_wrap .credits {
+.bf_admin_wrap .credits {
     position: relative;
     float: right;
     padding: 5px 10px;
 }
 
-#bf_admin_wrap .credits a img {
+.bf_admin_wrap .credits a img {
     border-bottom: 1px solid transparent;
     margin: -4px 5px 0 5px;
 }
 
-#bf_admin_wrap .credits a img:hover {
+.bf_admin_wrap .credits a img:hover {
     border-bottom: 1px solid #aaa;
 }
 
-#bf_admin_wrap .credits p {
+.bf_admin_wrap .credits p {
     color: #aaa;
     padding: 4px 0;
 }
 
-#bf_admin_wrap .button-nav {
+.bf_admin_wrap .button-nav {
     margin: 20px 0 10px 0;
     clear: both;
     padding: 20px 0 0 0;
 }
 
-#bf_admin_wrap .button-nav a.btn {
+.bf_admin_wrap .button-nav a.btn {
     text-decoration: none;
     margin-right: 5px;
 }
 
-#bf_admin_wrap #bf_support_nav .btn-small [class^="icon-"] {
+.bf_admin_wrap #bf_support_nav .btn-small [class^="icon-"] {
     margin-top: 1px;
 }
 
-#bf_admin_wrap hr {
+.bf_admin_wrap hr {
     margin: 20px 0 10px 0;
     border: 0;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #fafafa;
 }
 
-#bf_admin_wrap a.btn {
+.bf_admin_wrap a.btn {
     text-decoration: none;
 }
 
 /** the tab menu **/
-#bf_admin_wrap #bf_side_nav a {
+.bf_admin_wrap #bf_side_nav a {
     text-decoration: none;
     font-size: 15px;
     color: #aaa;
@@ -149,16 +149,16 @@
     border-radius: 6px 0 0 6px;
 }
 
-#bf_admin_wrap #bf_side_nav a:hover {
+.bf_admin_wrap #bf_side_nav a:hover {
     color: red;
 }
 
-#bf_admin_wrap #bf_side_nav .active a {
+.bf_admin_wrap #bf_side_nav .active a {
     color: #464646;
     background: #fff;
 }
 
-#bf_admin_wrap #bf_side_nav .active a:hover {
+.bf_admin_wrap #bf_side_nav .active a:hover {
     color: #464646;
 }
 
@@ -185,13 +185,13 @@
 }
 
 /** the content area **/
-#bf_admin_wrap .tab-content .hero-unit {
+.bf_admin_wrap .tab-content .hero-unit {
     background-color: #fff;
     border: 1px solid #dfdfdf;
     margin-right: 31%;
 }
 
-#bf_admin_wrap .accordion-group .accordion-heading {
+.bf_admin_wrap .accordion-group .accordion-heading {
     text-shadow: #fff 0 1px 0;
     -webkit-box-shadow: 0 1px 0 #fff;
 }
@@ -212,76 +212,76 @@
     border-radius: 4px;
 }
 
-#bf_admin_wrap .create-form-box label[for=create_new_form_name],
-#bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
+.bf_admin_wrap .create-form-box label[for=create_new_form_name],
+.bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
     width: 20%;
     float: left;
 }
 
-#bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
+.bf_admin_wrap .create-form-box label[for=create_new_form_singular_name] {
     clear: both;
 }
 
-#bf_admin_wrap .create-form-box input[name=create_new_form_name],
-#bf_admin_wrap .create-form-box input[name=create_new_form_singular_name] {
+.bf_admin_wrap .create-form-box input[name=create_new_form_name],
+.bf_admin_wrap .create-form-box input[name=create_new_form_singular_name] {
     width: 50%;
     float: left;
     clear: right;
 }
 
-#bf_admin_wrap .accordion-body .accordion-inner {
+.bf_admin_wrap .accordion-body .accordion-inner {
     padding: 30px 15px;
 }
 
-#bf_admin_wrap .hero-unit p.accordion-toggle {
+.bf_admin_wrap .hero-unit p.accordion-toggle {
     padding-top: 18px !important;
 }
 
-#bf_admin_wrap .accordion-inner .innerblock {
+.bf_admin_wrap .accordion-inner .innerblock {
     overflow: hidden;
     height: auto;
     margin-bottom: 20px;
 }
 
-#bf_admin_wrap .accordion-inner .innerblock .radio {
+.bf_admin_wrap .accordion-inner .innerblock .radio {
     padding-right: 15px;
 }
 
-#bf_admin_wrap .accordion-inner .innerblock .radio input[type=radio] {
+.bf_admin_wrap .accordion-inner .innerblock .radio input[type=radio] {
     margin-right: 5px;
     margin-left: 1px;
 }
 
-#bf_admin_wrap .buddyforms_accordion_left select {
+.bf_admin_wrap .buddyforms_accordion_left select {
     margin-bottom: 15px;
 }
 
-#bf_admin_wrap .buddyforms_accordion_right .checkbox {
+.bf_admin_wrap .buddyforms_accordion_right .checkbox {
     margin-bottom: 15px;
 }
 
-#bf_admin_wrap i.small {
+.bf_admin_wrap i.small {
     font-size: 15px;
 }
 
-#bf_admin_wrap .form_type_settings input[type="text"] {
+.bf_admin_wrap .form_type_settings input[type="text"] {
     margin-bottom: 20px;
 }
 
-#bf_admin_wrap .btn {
+.bf_admin_wrap .btn {
     margin-right: 5px;
 }
 
 /** form elements **/
-#bf_admin_wrap .element_field {
+.bf_admin_wrap .element_field {
     margin: 10px 0;
 }
 
-#bf_admin_wrap .element_field li input[type="text"] {
+.bf_admin_wrap .element_field li input[type="text"] {
     margin: 0 5px;
 }
 
-#bf_admin_wrap .buddyforms_form_field {
+.bf_admin_wrap .buddyforms_form_field {
     margin: 10px 0 15px;
 }
 
@@ -291,81 +291,81 @@
 }
 
 /** sidebar **/
-#bf_admin_wrap .accordion_sidebar .accordion-heading p {
+.bf_admin_wrap .accordion_sidebar .accordion-heading p {
     font-size: 15px;
     text-shadow: #fff 0 1px 0;
     padding: 7px 10px;
     margin: 0;
 }
 
-#bf_admin_wrap .accordion_sidebar .accordion-inner {
+.bf_admin_wrap .accordion_sidebar .accordion-inner {
     background: #fcfcfc;
     border-color: #dfdfdf;
     padding: 15px;
 }
 
-#bf_admin_wrap .accordion_sidebar .accordion-group {
+.bf_admin_wrap .accordion_sidebar .accordion-group {
     margin-bottom: 20px;
 }
 
-#bf_admin_wrap .accordion_sidebar input[type="text"] {
+.bf_admin_wrap .accordion_sidebar input[type="text"] {
     width: 188px;
     margin-bottom: 20px;
 }
 
 /** the beginning **/
-#bf_admin_wrap .loading-animation-new, .loading-animation-order {
+.bf_admin_wrap .loading-animation-new, .loading-animation-order {
     display: none;
 }
 
-#bf_admin_wrap .bf_list_item {
+.bf_admin_wrap .bf_list_item {
     background-color: #fcfcfc;
 }
 
-#bf_admin_wrap .buddyforms_accordion_right {
+.bf_admin_wrap .buddyforms_accordion_right {
     float: right;
     margin-top: 10px;
     margin-right: 15px;
 }
 
-#bf_admin_wrap .accordion-heading-options {
+.bf_admin_wrap .accordion-heading-options {
     float: right;
     margin-top: 23px;
     margin-right: 15px;
 }
 
-#bf_admin_wrap .accordion-heading-options, #bf_admin_wrap .accordion-heading-options b, #bf_admin_wrap .accordion-heading-options i {
+.bf_admin_wrap .accordion-heading-options, .bf_admin_wrap .accordion-heading-options b, .bf_admin_wrap .accordion-heading-options i {
     cursor: pointer;
 }
 
-#bf_admin_wrap .accordion_sidebar {
+.bf_admin_wrap .accordion_sidebar {
     float: right;
     width: 30%;
 }
 
-#bf_admin_wrap .accordion_title {
+.bf_admin_wrap .accordion_title {
     font-size: 14px;
 }
 
-#bf_admin_wrap .radio {
+.bf_admin_wrap .radio {
     padding: 5px;
 }
 
-#bf_admin_wrap .form_type_settings {
+.bf_admin_wrap .form_type_settings {
     clear: both;
 }
 
-#bf_admin_wrap .bs-sidebar {
+.bf_admin_wrap .bs-sidebar {
     min-width: 150px;
     float: left;
     width: 20%;
 }
 
-#bf_admin_wrap .wp-list-table tr {
+.bf_admin_wrap .wp-list-table tr {
     border-bottom: 1px solid #ddd;
 }
 
-#bf_admin_wrap .wp-list-table tr td {
+.bf_admin_wrap .wp-list-table tr td {
     height: 40px;
 }
 
@@ -376,7 +376,7 @@
     line-height: 2em;
 }
 
-#bf_admin_wrap .buddyforms_forms_builder .hero-unit p {
+.bf_admin_wrap .buddyforms_forms_builder .hero-unit p {
     font-size: 18px;
 }
 

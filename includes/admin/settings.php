@@ -16,7 +16,7 @@ add_action( 'admin_menu', 'buddyforms_settings_menu' );
 //
 function buddyforms_settings_page() { ?>
 
-    <div class="wrap">
+    <div id="post" class="wrap">
 
 		<?php
 		// Display the BuddyForms Header

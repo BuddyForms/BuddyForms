@@ -1,7 +1,7 @@
 <?php
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
 function buddyforms_create_submissions_page() {
-	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'bf_submissions', 'buddyforms_submissions_screen' );
+	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'buddyforms_submissions', 'buddyforms_submissions_screen' );
 	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
 
@@ -29,10 +29,10 @@ function buddyforms_submissions_screen() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 	} ?>
 
-    <div id="bf_admin_wrap" class="wrap">
+    <div id="post" class="bf_admin_wrap wrap">
 
 		<?php
-		include( 'admin-header.php' );
+		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 
 		// echo '<pre>';
 		// print_r($buddyforms);
@@ -51,7 +51,7 @@ function buddyforms_submissions_screen() {
                     <script type="text/javascript">
                         jQuery(document).ready(function (jQuery) {
                             jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
-                                window.location = '?post_type=buddyforms&page=bf_submissions&form_slug=' + this.value
+                                window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
                             });
                         });
                     </script>
@@ -87,9 +87,9 @@ function buddyforms_submissions_screen() {
 add_action( 'admin_init', 'redirect_after_delete' );
 function redirect_after_delete() {
 
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'bf_submissions' && isset( $_GET['entry'] ) ) {
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
 		if ( ! get_post( $_GET['entry'] ) ) {
-			wp_redirect( '?post_type=buddyforms&page=bf_submissions&form_slug=' . $_GET['form_slug'] );
+			wp_redirect( '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $_GET['form_slug'] );
 		}
 	}
 }

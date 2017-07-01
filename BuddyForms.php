@@ -248,8 +248,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			if (
 				( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 				  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
-				|| $hook_suffix == 'buddyforms_page_bf_settings'
-				|| $hook_suffix == 'buddyforms_page_bf_submissions'
+				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 			) {
 
@@ -284,8 +283,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			if (
 				( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 				  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
-				|| $hook_suffix == 'buddyforms-page-bf-settings'
-				|| $hook_suffix == 'buddyforms-page-bf-submissions'
+				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 			) {
 				wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );

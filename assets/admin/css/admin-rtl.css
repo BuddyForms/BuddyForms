@@ -1,14 +1,14 @@
-#bf_admin_wrap .buddyforms_accordion_right {
+.bf_admin_wrap .buddyforms_accordion_right {
     float: LEFT;
     margin-LEFT: 15px;
 }
 
-#bf_admin_wrap .accordion-heading-options {
+.bf_admin_wrap .accordion-heading-options {
     float: LEFT;
     margin-LEFT: 15px;
 }
 
-#bf_admin_wrap .accordion-inner .innerblock .radio input[type=radio] {
+.bf_admin_wrap .accordion-inner .innerblock .radio input[type=radio] {
     margin-LEFT: 5px;
     margin-RIGHT: 1px;
 }
