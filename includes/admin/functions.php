@@ -68,36 +68,6 @@ function buddyforms_get_version_type() {
 	return '<b>' . __( 'Free', 'buddyforms' ) . '</b>';
 }
 
-function buddyforms_get_post_types() {
-	$post_types = array();
-
-	// Generate the Post Type Array 'none' == Contact Form
-	$post_types['bf_submissions'] = 'none';
-	$post_types['post']           = 'Post';
-	$post_types['page']           = 'Page';
-
-	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
-
-			// Get all post types
-			$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );
-
-			// Generate the Post Type Array 'none' == Contact Form
-			$post_types['bf_submissions'] = 'none';
-
-			$post_types = buddyforms_sort_array_by_Array( $post_types, array( 'bf_submissions' ) );
-
-			// Remove the 'buddyforms' post type from the post type array
-			unset( $post_types['buddyforms'] );
-
-			$post_types = apply_filters( 'buddyforms_form_builder_post_type', $post_types );
-
-		}
-	}
-
-	return $post_types;
-}
-
 add_action( 'admin_notices', 'buddyforms_rating_admin_notice' );
 function buddyforms_rating_admin_notice() {
 
@@ -127,11 +97,10 @@ function buddyforms_rating_admin_notice() {
 
 }
 
+add_action( 'admin_init', 'buddyforms_rating_admin_notice_dismissed' );
 function buddyforms_rating_admin_notice_dismissed() {
 	$user_id = get_current_user_id();
 	if ( isset( $_GET['buddyforms_rating_admin_notice_dismissed'] ) ) {
 		add_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed', 'true', true );
 	}
 }
-
-add_action( 'admin_init', 'buddyforms_rating_admin_notice_dismissed' );

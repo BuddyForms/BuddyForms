@@ -296,6 +296,13 @@ function buddyforms_form_elements_select_options() {
 				);
 
 
+			$elements_select_options['user']['fields']['date']   =
+				array(
+					'label'  => __( 'Date', 'buddyforms' ),
+					'unique' => 'unique'
+				);
+
+
 			$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
 			$elements_select_options['extra']['class']            = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
 			$elements_select_options['extra']['fields']['file']   =

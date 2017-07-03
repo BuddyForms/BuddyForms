@@ -132,10 +132,10 @@ function buddyforms_registration_screen() {
 	}
 
 	// User Role
-	$form_setup[] = new Element_Select( '<b>' . __( "New User Role", 'buddyforms' ) . '</b>', "buddyforms_options[registration][new_user_role]", $roles_select, array(
+	$form_setup[] = new Element_Checkbox( '<b>' . __( "New User Role", 'buddyforms' ) . '</b>', "buddyforms_options[registration][new_user_role]", $roles_select, array(
 		'value'     => $new_user_role,
 		'shortDesc' => __( 'Select the User Role the user should have after successful registration', 'buddyforms' ),
-		'class'     => '',
+		'class'     => ''
 	) );
 
 	buddyforms_display_field_group_table( $form_setup );

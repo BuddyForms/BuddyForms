@@ -164,3 +164,38 @@ function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	 */
 	return apply_filters( 'get_edit_post_link', admin_url( sprintf( $post_type_object->_edit_link . $action, $post->ID ) ), $post->ID, $context );
 }
+
+// Redirect Registration Page
+add_filter( 'init', 'buddyforms_registration_page_redirect' );
+function buddyforms_registration_page_redirect(){
+	global $pagenow;
+
+	if( ! isset( $_GET['action'] ) ){
+		return;
+	}
+
+	if ( ( strtolower($pagenow) == 'wp-login.php') && ( strtolower( $_GET['action']) == 'register' ) ) {
+
+		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+
+		if( $buddyforms_registration_page != 'none'){
+			$permalink = get_permalink( $buddyforms_registration_page );
+			wp_redirect( $permalink );
+		}
+
+	}
+}
+
+add_filter( 'the_content', 'buddyforms_registration_page_content' );
+function buddyforms_registration_page_content( $content ) {
+	global $post;
+
+	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+	$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
+
+	if( $post->ID == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ){
+		$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
+	}
+
+	return $content;
+}

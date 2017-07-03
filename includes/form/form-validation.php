@@ -97,7 +97,7 @@ function buddyforms_jquery_validation() {
 				if ( isset( $form_field['required'] ) ) {
 
 					$form_html .= '
-				jQuery("[name=' . $form_field['slug'] . ']").rules("add", { ';
+				jQuery("[name=\'' . $form_field['slug'] . '\']").rules("add", { ';
 
 					$form_html .= 'required: true, ';
 

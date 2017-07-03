@@ -4,9 +4,7 @@
 // Add the Settings Page to the BuddyForms Menu
 //
 function buddyforms_settings_menu() {
-
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
-
 }
 
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
@@ -62,8 +60,14 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 // Register Settings Options
 //
 function buddyforms_register_option() {
-	register_setting( 'buddyforms_posttypes_default', 'buddyforms_posttypes_default', 'buddyforms_default_sanitize' );
-	register_setting( 'buddyforms_layout_options', 'buddyforms_layout_options', 'buddyforms_default_sanitize' );
+
+    // General Settings
+	register_setting( 'buddyforms_general', 'buddyforms_registration_page', 'buddyforms_default_sanitize' );
+	register_setting( 'buddyforms_general', 'buddyforms_registration_form', 'buddyforms_default_sanitize' );
+	register_setting( 'buddyforms_general', 'buddyforms_posttypes_default', 'buddyforms_default_sanitize' );
+
+	// Layout Options
+	register_setting( 'buddyforms_layout', 'buddyforms_layout_options', 'buddyforms_default_sanitize' );
 }
 
 add_action( 'admin_init', 'buddyforms_register_option' );
@@ -104,25 +108,69 @@ function buddyforms_settings_page_tabs_content() {
 
 			switch ( $tab ) {
 				case 'general' :
-					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' ); ?>
+					$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+                    $buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
+                    $buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+
+					$pages = buddyforms_get_all_pages();
+                    ?>
                     <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
-                            <h3><span><?php _e( 'Post Types Default Form', 'buddyforms' ); ?></span></h3>
-                            <div class="inside">
-                                <p>Select a default form for every post type.</p>
 
-                                <p>This will make sure that posts created before BuddyForms will have a form associated.
-                                    <br>
-                                    If you select none the post edit link will point to the admin for posts not created
-                                    with
-                                    BuddyForms</p>
+                            <div class="inside">
+
 
                                 <form method="post" action="options.php">
 
-									<?php settings_fields( 'buddyforms_posttypes_default' ); ?>
+									<?php settings_fields( 'buddyforms_general' ); ?>
 
                                     <table class="form-table">
                                         <tbody>
+
+                                        <!-- Registration Settings -->
+                                        <tr>
+                                            <th colspan="2">
+                                                <h3><span><?php _e( 'Registration Settings', 'buddyforms' ); ?></span></h3>
+                                                <p><?php _e( 'Select the Registration Page and Form to overwrite the WordPress default Registration.', 'buddyforms' ); ?></p>
+                                            </th>
+                                        </tr>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+		                                        <?php _e( 'Registration Page', 'buddyforms' ); ?>
+                                            </th>
+                                            <td>
+                                                <?php
+                                                if( isset( $pages ) && is_array( $pages ) ){
+	                                                echo '<select name="buddyforms_registration_page" id="buddyforms_registration_page">';
+	                                                $pages['none'] = 'WordPress Default';
+	                                                foreach ( $pages as $page_id => $page_name ){
+                                                        echo '<option ' . selected( $buddyforms_registration_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
+	                                                }
+	                                                echo '</select>';
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+                                                <?php _e( 'Registration Form', 'buddyforms' ); ?>
+                                            </th>
+                                            <td>
+		                                        <?php
+		                                        if( isset( $buddyforms ) && is_array( $buddyforms ) ){
+			                                        echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
+			                                        echo '<option value="none">' . __( 'WordPress Default', 'buddyforms' ) . '</option>';
+			                                        foreach ( $buddyforms as $form_slug => $form ){
+				                                        if( $form['form_type'] == 'registration' ){
+					                                        echo '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>';
+				                                        }
+			                                        }
+			                                        echo '</select>';
+		                                        }
+		                                        ?>
+                                            </td>
+                                        </tr>
 										<?php
 										if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 											$post_types_forms = Array();
@@ -133,7 +181,21 @@ function buddyforms_settings_page_tabs_content() {
 												}
 
 											}
+                                            ?>
 
+                                            <!-- POST TYPES Settings -->
+                                            <tr>
+                                                <th colspan="2">
+
+                                                    <h3><span><?php _e( 'Posts - Pages and Custom Post Types', 'buddyforms' ); ?></span></h3>
+
+                                                    <p><?php _e( 'Select a default form for every post type.', 'buddyforms' ); ?></p>
+                                                    <p><?php _e( 'This will make sure that posts created before BuddyForms will have a form associated.
+                                                        If you select none the post edit link will point to the admin for posts not create with BuddyForms', 'buddyforms' ); ?>
+                                                    </p>
+                                                </th>
+                                            </tr>
+											<?php
 											foreach ( $post_types_forms as $post_type => $post_types_form ) : ?>
                                                 <tr valign="top">
                                                     <th scope="row" valign="top">
@@ -165,6 +227,7 @@ function buddyforms_settings_page_tabs_content() {
 										} ?>
                                         </tbody>
                                     </table>
+
 									<?php submit_button(); ?>
 
                                 </form>
@@ -211,7 +274,7 @@ function buddyforms_settings_page_tabs_content() {
                                 <p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ' ); ?></p>
 
                                 <form method="post" action="options.php">
-									<?php settings_fields( 'buddyforms_layout_options' ); ?>
+									<?php settings_fields( 'buddyforms_layout' ); ?>
 									<?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
 									<?php submit_button( __( 'Save' ), 'secondary', 'submit', false ); ?>
                                 </form>

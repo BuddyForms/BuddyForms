@@ -101,11 +101,6 @@ User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://ww
 
 ### Blog Posts
 
-ThemeKraft
-[Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
-[Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
-[New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
-[BuddyForms Sponsors the first BuddyCamp Europe](https://themekraft.com/buddyforms-sponsors-the-first-buddycamp-europe/)
 
 WPExplorer
 [BuddyForms Form Builder & Front-end Post Editor WordPress Plugin](http://www.wpexplorer.com/buddyforms-form-builder-front-end-post-editor-wordpress-plugin/)
@@ -113,6 +108,14 @@ WPExplorer
 BuddyBoss User Generated Content
 Content Generation for your site has never been easier. Read this blog post on how to add user generated posts to your site.
 [How To Add User Generated Content To A WordPress Site With BuddyForms](https://www.buddyboss.com/how-to-add-user-generated-content-to-a-wordpress-site-with-buddyforms/)
+
+[9 Plugins to Encourage User-Generated Content Submissions on Your WordPress Site](https://premium.wpmudev.org/blog/plugins-user-generated-content/)
+
+ThemeKraft
+[Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
+[Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
+[New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
+[BuddyForms Sponsors the first BuddyCamp Europe](https://themekraft.com/buddyforms-sponsors-the-first-buddycamp-europe/)
 
 ---
 
