@@ -99,7 +99,7 @@ class View_Frontend extends FormView {
 				}
 
 				if ( $element->isRequired() ) {
-					$label = '* ' . $label;
+					$label = $label . ' *';
 				}
 
 				$element->setAttribute( "placeholder", $label );
@@ -130,13 +130,15 @@ class View_Frontend extends FormView {
 		}
 		echo ' <label for="', $element->getAttribute( "id" ), '">';
 
+		echo $label;
+
 		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' ) {
 
 			if ( $element->isRequired() ) {
-				echo '<span class="required">* </span> ';
+				echo '<span class="required"> *</span> ';
 			}
 		}
-		echo $label, '</label> ';
+		echo '</label> ';
 	}
 }
 

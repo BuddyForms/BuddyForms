@@ -49,6 +49,7 @@ HTML;
 		if ( ! empty( $errors ) ) {
 			header( "Content-type: application/json" );
 			echo json_encode( array( "errors" => $errors ) );
+			die;
 		}
 	}
 

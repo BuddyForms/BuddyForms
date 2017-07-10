@@ -28,21 +28,22 @@ function buddyforms_ajax_process_edit_post() {
 
 	extract( $args );
 
-	if ( $args['hasError'] ) {
+	if ( $haserror == true ) {
 
 
-		if ( $args['form_notice'] ) {
+		if ( $form_notice ) {
 			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}
 
-		if ( $args['error_message'] ) {
+		if ( $error_message ) {
 			Form::setError( 'buddyforms_form_' . $form_slug, $error_message );
 		}
 
 		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
-		exit;
 
 	} else {
+
+		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
 
 		if ( ! empty( $buddyforms[ $_POST['form_slug'] ]['after_submit_message_text'] ) ) {
 			$permalink = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );

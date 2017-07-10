@@ -15,60 +15,79 @@ function buddyforms_wp_update_user() {
 		return false;
 	}
 
-//	$user_login   = sanitize_user( $_POST["user_login"] );
-	$user_email   = sanitize_email( $_POST["user_email"] );
-	$user_first   = sanitize_text_field( $_POST["user_first"] );
-	$user_last    = sanitize_text_field( $_POST["user_last"] );
-	$user_pass    = esc_attr( $_POST["user_pass"] );
-	$pass_confirm = esc_attr( $_POST["user_pass_confirm"] );
-	$user_url     = isset( $_POST["user_website"] ) ? esc_url( $_POST["user_website"] ) : '';
-	$description  = isset( $_POST["user_bio"] ) ? esc_textarea( $_POST["user_bio"] ) : '';
+	$userdata = get_userdata( get_current_user_id() );
+
+	$user_args = (array) $userdata->data;
+
+	$user_args['ID'] = get_current_user_id();
+
+
+
+	$user_args['user_login'] = isset( $_POST["user_login"] ) && !empty( sanitize_user( $_POST["user_login"] ) )
+		? sanitize_user( $_POST["user_login"] )
+		: $user_args['user_login'];
+
+	$user_args['user_pass'] = isset( $_POST["user_pass"] ) && !empty( esc_attr( $_POST["user_pass"] ) )
+		? esc_attr( $_POST["user_pass"] )
+		: $user_args['user_pass'];
+
+	$user_args['user_pass_confirm'] = isset( $_POST["user_pass_confirm"] ) && !empty( esc_attr( $_POST["user_pass_confirm"] ) )
+		? esc_attr( $_POST["user_pass_confirm"] )
+		: $user_args['user_pass'];
+
+	$user_args['user_email'] = isset( $_POST["user_email"] ) && !empty( sanitize_email( $_POST["user_email"] ) )
+		? sanitize_email( $_POST["user_email"] )
+		: $user_args['user_email'];
+
+	$user_args['first_name'] = isset( $_POST["first_name"] ) && !empty( sanitize_text_field( $_POST["first_name"] ) )
+		? sanitize_text_field( $_POST["first_name"] )
+		: $user_args['first_name'];
+
+	$user_args['last_name'] = isset( $_POST["last_name"] ) && !empty( sanitize_text_field( $_POST["last_name"] ) )
+		? sanitize_text_field( $_POST["last_name"] )
+		: $user_args['last_name'];
+
+	$user_args['user_website'] = isset( $_POST["user_website"] ) && !empty( esc_url( $_POST["user_website"] ) )
+			? esc_url( $_POST["user_website"] )
+			: $user_args['user_url'];
+
+	$user_args['description'] = isset( $_POST["user_bio"] ) && !empty( esc_textarea( $_POST["user_bio"] ) )
+		? esc_textarea( $_POST["user_bio"] )
+		: $user_args['user_bio'];
+
+
 
 	// invalid email?
-	if ( ! is_email( $user_email ) ) {
+	if ( ! is_email( $user_args['user_email'] ) ) {
 		$hasError = true;
 		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __( 'Error: Invalid email', 'buddyforms' ) );
 	}
-
-//	// invalid username?
-//	if ( ! validate_username( $user_login ) ) {
-//		$hasError = true;
-//		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Invalid username', 'buddyforms' ) );
-//	}
-//	// empty username?
-//	if ( $user_login == '' ) {
-//		$hasError = true;
-//		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
-//	}
-
-	if ( $user_pass == '' ) {
+	// invalid username?
+	if ( ! validate_username( $user_args['user_login'] ) ) {
+		$hasError = true;
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+	}
+	// empty username?
+	if ( $user_args['user_login'] == '' ) {
+		$hasError = true;
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+	}
+	if ( $user_args['user_pass'] == '' ) {
 		$hasError = true;
 		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
 	}
 	// passwords do not match?
-	if ( $user_pass != $pass_confirm ) {
+	if ( $user_args['user_pass_confirm'] != $user_args['user_pass'] ) {
 		$hasError = true;
 		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Passwords do not match', 'buddyforms' ) );
 	}
 
 
 	// Let us check if we run into any error.
-
-
 	// only create the user in if there are no errors
 	if ( ! $hasError ) {
 
-		$user_id = wp_update_user( array(
-				'ID'          => get_current_user_id(),
-//				'user_login'    => $user_login,
-				'user_pass'   => $user_pass,
-				'user_email'  => $user_email,
-				'first_name'  => $user_first,
-				'last_name'   => $user_last,
-				'user_url'    => $user_url,
-				'description' => $description
-			)
-		);
+		$user_id = wp_update_user( $user_args );
 
 		// if multisite is enabled we need to make sure the user will become a member of the form blog id
 		if ( buddyforms_is_multisite() ) {

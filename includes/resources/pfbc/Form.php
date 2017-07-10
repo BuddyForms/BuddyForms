@@ -295,7 +295,7 @@ class Form extends Base {
 	/**
 	 * @param string $id
 	 */
-	public static function renderAjaxErrorResponse( $id = "pfbc_form" ) {
+	public static function renderAjaxErrorResponse( $id ) {
 		$form = self::recover( $id );
 		if ( ! empty( $form ) ) {
 			$form->errorView->renderAjaxErrorResponse();
@@ -570,9 +570,20 @@ JS;
                     type: "{$this->_attributes["method"]}",
                     dataType: 'json',
                     data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
-                    error: function() {
-                        jQuery('.bf_modal').hide();
-                        jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
+                    error: function(xhr, status, error){
+						  
+                        
+                        jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert error' );
+                        jQuery( '#form_message_$form_slug' ).html( xhr.responseText );
+                                
+						  
+	                    console.log(xhr.responseText);
+	                    
+						jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
+                        bf_form_errors();
+                        jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("hide");
+                        
+                        
                     },
                     success: function(response) {
 
