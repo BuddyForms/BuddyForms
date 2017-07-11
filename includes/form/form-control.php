@@ -129,6 +129,9 @@ function buddyforms_process_submission( $args = Array() ) {
 			'redirect_to'  => $redirect_to,
 			'form_slug'    => $form_slug,
 		);
+
+
+		do_action( 'buddyforms_process_submission_end', $args );
 		Form::clearValues( "buddyforms_form_" . $form_slug );
 
 		return $args;
