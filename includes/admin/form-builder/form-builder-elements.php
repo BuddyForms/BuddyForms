@@ -196,6 +196,13 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
+			$hide_if_logged_in                            = isset( $customfield['hide_if_logged_in'] ) ? $customfield['hide_if_logged_in'] : 'show';
+			$form_fields['general']['hide_if_logged_in'] = new Element_Checkbox( '<b>' . __( 'Hide Password Form Element for LoggedIn User', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]", array( 'hide' => '<b>' . __( 'Hide for logged in user', 'buddyforms' ) . '</b>' ), array(
+				'value' => $hide_if_logged_in,
+				'id'    => "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]",
+                'shortDesc'  => 'If you want to use this form to allow your users to edit there profile you can hide the password for logged in users to prevent change the password with every update.'
+			) );
+
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_pass' );
 			break;
 		case 'user_website':
