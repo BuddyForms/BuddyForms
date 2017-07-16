@@ -128,6 +128,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			'customfields' => isset( $customfields ) ? $customfields : false,
 			'redirect_to'  => $redirect_to,
 			'form_slug'    => $form_slug,
+			'user_id'      => $user_id
 		);
 
 
@@ -150,7 +151,6 @@ function buddyforms_process_submission( $args = Array() ) {
 				'form_slug' => $form_slug,
 			);
 			Form::clearValues( "buddyforms_form_" . $form_slug );
-
 			return $args;
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {

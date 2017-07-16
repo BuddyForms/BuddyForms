@@ -212,7 +212,7 @@ function buddyforms_metabox_form_setup() {
 	$admin_email = get_option( 'admin_email' );
 
 	// Attached Page
-	$form_setup['Edit Submissions'][] = new Element_HTML( '<h4>Enable your site members to view there submissions</h4>
+	$form_setup['Edit Submissions'][] = new Element_HTML( '<h4>Enable your site members to view their submissions</h4>
 		<p>Select a page or create a new on if you like to turn on submission management for your logged in users.</p>
 		<div class="bf_hide_if_post_type_none">
 			<p class="description">Important!<br> The original page content does not get changed. You are free to use any kind of content on the page itself. View a form or list the users submissions with Shortcodes. For the submissions management new endpoints get create for you. You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder">Read the Documentation</a></p>

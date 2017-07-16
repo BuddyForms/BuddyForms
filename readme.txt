@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 2.1.1.2
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -239,6 +239,18 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.2 - July 14.2017 =
+* Added two now options to select the registration page and form in the general settings and overwrite the WordPress default registration form.
+* Created two new functions buddyforms_registration_page_redirect and buddyforms_registration_page_content to redirect the WordPress registration to a BuddyForms Registration form
+* Created a new user field Date
+* Improved the error handling to better understand ajax errors. If WordPress post insert or update run into an error the error gets displayed.
+* Fixed an issue with the post_excerpt. The form could not get saved if post_excerpt was empty.
+* Moved the required "*" from beginning to the end of the label
+* Fixed some issue in the registration if form is used to update user meta password and mail form element are not required
+* Fixed several smaller issues reported by users
+* Add a new do action do_action( 'buddyforms_process_submission_end', $args ) to the registration case to make sure we can hook into the registration process
+* Created a new option to hide the password form element for logged in users
 
 = 2.1.1.2 - July 01.2017 =
 * Fixed a merge conflict in the submissions and in the settings views. The submissions and settings was set to hidden from the js.
