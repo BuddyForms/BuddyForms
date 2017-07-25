@@ -23,35 +23,35 @@ function buddyforms_wp_update_user() {
 
 
 
-	$user_args['user_login'] = isset( $_POST["user_login"] ) && !empty( sanitize_user( $_POST["user_login"] ) )
+	$user_args['user_login'] = isset( $_POST["user_login"] ) && !empty( $_POST["user_login"] )
 		? sanitize_user( $_POST["user_login"] )
 		: $user_args['user_login'];
 
-	$user_args['user_pass'] = isset( $_POST["user_pass"] ) && !empty( esc_attr( $_POST["user_pass"] ) )
+	$user_args['user_pass'] = isset( $_POST["user_pass"] ) && !empty( $_POST["user_pass"] )
 		? esc_attr( $_POST["user_pass"] )
 		: $user_args['user_pass'];
 
-	$user_args['user_pass_confirm'] = isset( $_POST["user_pass_confirm"] ) && !empty( esc_attr( $_POST["user_pass_confirm"] ) )
+	$user_args['user_pass_confirm'] = isset( $_POST["user_pass_confirm"] ) && !empty( $_POST["user_pass_confirm"] )
 		? esc_attr( $_POST["user_pass_confirm"] )
 		: $user_args['user_pass'];
 
-	$user_args['user_email'] = isset( $_POST["user_email"] ) && !empty( sanitize_email( $_POST["user_email"] ) )
+	$user_args['user_email'] = isset( $_POST["user_email"] ) && !empty( $_POST["user_email"] )
 		? sanitize_email( $_POST["user_email"] )
 		: $user_args['user_email'];
 
-	$user_args['first_name'] = isset( $_POST["first_name"] ) && !empty( sanitize_text_field( $_POST["first_name"] ) )
+	$user_args['first_name'] = isset( $_POST["first_name"] ) && !empty( $_POST["first_name"] )
 		? sanitize_text_field( $_POST["first_name"] )
 		: $user_args['first_name'];
 
-	$user_args['last_name'] = isset( $_POST["last_name"] ) && !empty( sanitize_text_field( $_POST["last_name"] ) )
+	$user_args['last_name'] = isset( $_POST["last_name"] ) && !empty( $_POST["last_name"] )
 		? sanitize_text_field( $_POST["last_name"] )
 		: $user_args['last_name'];
 
-	$user_args['user_website'] = isset( $_POST["user_website"] ) && !empty( esc_url( $_POST["user_website"] ) )
+	$user_args['user_website'] = isset( $_POST["user_website"] ) && !empty( $_POST["user_website"] )
 			? esc_url( $_POST["user_website"] )
 			: $user_args['user_url'];
 
-	$user_args['description'] = isset( $_POST["user_bio"] ) && !empty( esc_textarea( $_POST["user_bio"] ) )
+	$user_args['description'] = isset( $_POST["user_bio"] ) && !empty( $_POST["user_bio"] )
 		? esc_textarea( $_POST["user_bio"] )
 		: $user_args['user_bio'];
 
