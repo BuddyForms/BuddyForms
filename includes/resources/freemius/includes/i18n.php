@@ -2,7 +2,7 @@
 	/**
 	 * @package     Freemius
 	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
 	 * @since       1.1.4
 	 */
 
@@ -35,13 +35,13 @@
 
 	$fs_text = array(
 		'account'                       => _fs_text( 'Account' ),
-		'addon'                         => _fs_text( 'Add On' ),
+		'addon'                         => _fs_text( 'Add-On' ),
 		'contact-us'                    => _fs_text( 'Contact Us' ),
 		'contact-support'               => _fs_text( 'Contact Support' ),
 		'change-ownership'              => _fs_text( 'Change Ownership' ),
 		'support'                       => _fs_text( 'Support' ),
 		'support-forum'                 => _fs_text( 'Support Forum' ),
-		'add-ons'                       => _fs_text( 'Add Ons' ),
+		'add-ons'                       => _fs_text( 'Add-Ons' ),
 		'upgrade'                       => _fs_x( 'Upgrade', 'verb' ),
 		'awesome'                       => _fs_text( 'Awesome' ),
 		'pricing'                       => _fs_x( 'Pricing', 'noun' ),
@@ -217,7 +217,7 @@
 		'complete-the-install'                     => _fs_text( 'complete the install' ),
 		'start-the-trial'                          => _fs_text( 'start the trial' ),
 		'thanks-for-purchasing'                    => _fs_text( 'Thanks for purchasing %s! To get started, please enter your license key:' ),
-		'license-sync-disclaimer'                  => _fs_text( 'The plugin will be periodically sending data to %s to check for plugin updates and verify the validity of your license.' ),
+		'license-sync-disclaimer'                  => _fs_text( 'The %1$s will be periodically sending data to %2$s to check for security and feature updates, and verify the validity of your license.' ),
 		'what-permissions'                         => _fs_text( 'What permissions are being granted?' ),
 		'permissions-profile'                      => _fs_text( 'Your Profile Overview' ),
 		'permissions-profile_desc'                 => _fs_text( 'Name and email address' ),

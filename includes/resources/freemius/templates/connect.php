@@ -2,7 +2,7 @@
 	/**
 	 * @package     Freemius
 	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
 	 * @since       1.0.7
 	 */
 
@@ -68,7 +68,7 @@
 	}
 
 	$fs_user                    = Freemius::_get_user_by_email( $current_user->user_email );
-	$activate_with_current_user = is_object( $fs_user ) && ! $is_pending_activation;
+	$activate_with_current_user = is_object( $fs_user ) && ! $is_pending_activation && ! $require_license_key;
 ?>
 <div id="fs_connect"
      class="wrap<?php if ( ! $fs->is_enable_anonymous() || $is_pending_activation || $require_license_key ) {
@@ -166,9 +166,7 @@
 				<input type="hidden" name="fs_action" value="<?php echo $slug ?>_activate_existing">
 				<?php wp_nonce_field( 'activate_existing_' . $fs->get_public_key() ) ?>
 				<button class="button button-primary" tabindex="1"
-				        type="submit"<?php if ( $require_license_key ) {
-					echo ' disabled="disabled"';
-				} ?>><?php fs_echo( $button_label, $slug ) ?></button>
+				        type="submit"><?php fs_echo( $button_label, $slug ) ?></button>
 			</form>
 		<?php else : ?>
 			<form method="post" action="<?php echo WP_FS__ADDRESS ?>/action/service/user/install/">
@@ -237,7 +235,7 @@
 		if ( ! empty( $permissions ) ) : ?>
 			<div class="fs-permissions">
 				<?php if ( $require_license_key ) : ?>
-					<p class="fs-license-sync-disclaimer"><?php printf( fs_esc_html( 'license-sync-disclaimer', $slug ), $freemius_link ) ?></p>
+					<p class="fs-license-sync-disclaimer"><?php printf( fs_esc_html( 'license-sync-disclaimer', $slug ), $fs->get_module_label( true ), $freemius_link ) ?></p>
 				<?php endif ?>
 				<a class="fs-trigger" href="#" tabindex="1"><?php fs_echo( 'what-permissions', $slug ) ?></a>
 				<ul><?php

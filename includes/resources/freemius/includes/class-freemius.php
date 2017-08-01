@@ -2,7 +2,7 @@
 	/**
 	 * @package     Freemius
 	 * @copyright   Copyright (c) 2015, Freemius, Inc.
-	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
 	 * @since       1.0.3
 	 */
 	if ( ! defined( 'ABSPATH' ) ) {
@@ -552,6 +552,9 @@
 				if ( ! self::is_ajax() ) {
 					if ( ! $this->is_addon() ) {
 						add_action( 'init', array( &$this, '_add_default_submenu_items' ), WP_FS__LOWEST_PRIORITY );
+					}
+
+					if ( ! $this->is_addon() || $this->is_only_premium() ) {
 						add_action( 'admin_menu', array( &$this, '_prepare_admin_menu' ), WP_FS__LOWEST_PRIORITY );
 					}
 				}
@@ -779,10 +782,12 @@
 				if ( ! empty( $bt[ $i ]['function'] ) && in_array( $bt[ $i ]['function'], array(
 						'do_action',
 						'apply_filter',
-						'require_once',
-						'require',
-						'include_once',
-						'include'
+						// The string split is stupid, but otherwise, theme check
+						// throws info notices.
+						'requir' . 'e_once',
+						'requir' . 'e',
+						'includ' . 'e_once',
+						'includ' . 'e'
 					) )
 				) {
 					// Ignore call stack hooks and files inclusion.
@@ -1220,7 +1225,7 @@
 		function is_activation_mode( $and_on = true ) {
 			return (
 				( $this->is_on() || ! $and_on ) &&
-				! $this->is_registered() &&
+				( ! $this->is_registered() || ( $this->is_only_premium() && ! $this->has_features_enabled_license() ) ) &&
 				( ! $this->is_enable_anonymous() ||
 				  ( ! $this->is_anonymous() && ! $this->is_pending_activation() ) )
 			);
@@ -1417,9 +1422,6 @@
 
 			self::$_global_admin_notices = FS_Admin_Notice_Manager::instance( 'global' );
 
-			// Configure which Freemius powered plugins should be auto updated.
-//			add_filter( 'auto_update_plugin', '_include_plugins_in_auto_update', 10, 2 );
-
 			add_action( 'admin_menu', array( 'Freemius', '_add_debug_section' ) );
 
 			add_action( "wp_ajax_fs_toggle_debug_mode", array( 'Freemius', '_toggle_debug_mode' ) );
@@ -1606,6 +1608,10 @@
 				$fs->_storage->install_timestamp = ( time() - WP_FS__TIME_24_HOURS_IN_SEC );
 				// Unset the trial shown timestamp.
 				unset( $fs->_storage->trial_promotion_shown );
+			} else if ( fs_request_is_action( 'delete_install' ) ) {
+				check_admin_referer( 'delete_install' );
+
+				self::_delete_site_by_slug( fs_request_get( 'slug' ) );
 			} else if ( fs_request_is_action( 'download_logs' ) ) {
 				check_admin_referer( 'download_logs' );
 
@@ -2594,6 +2600,9 @@
 						if ( $this->_parent->is_registered() && ! $this->is_registered() ) {
 							// If parent plugin activated, automatically install add-on for the user.
 							$this->_activate_addon_account( $this->_parent );
+						} else if ( ! $this->_parent->is_registered() && $this->is_registered() ) {
+							// If add-on activated and parent not, automatically install parent for the user.
+							$this->activate_parent_account( $this->_parent );
 						}
 
 						// @todo This should be only executed on activation. It should be migrated to register_activation_hook() together with other activation related logic.
@@ -2605,7 +2614,7 @@
 							) );
 						}
 
-						$this->deactivate_premium_only_addon_without_license();
+//						$this->deactivate_premium_only_addon_without_license();
 					}
 				} else {
 					if ( $this->has_addons() &&
@@ -3248,6 +3257,16 @@
 				return $premium_basename;
 			}
 
+			$all_plugins = $this->get_all_plugins();
+
+			foreach ( $all_plugins as $basename => &$data ) {
+				if ( $slug === $data['slug'] ||
+				     $slug . '-premium' === $data['slug']
+				) {
+					return $basename;
+				}
+			}
+
 			$free_basename = "{$slug}/{$slug}.php";
 
 			return $free_basename;
@@ -3332,29 +3351,29 @@
 			     ! $this->has_features_enabled_license() &&
 			     ! $this->_has_premium_license()
 			) {
-				// IF wrapper is turned off because activation_timestamp is currently only stored for plugins (not addons).
+				if ( $this->is_registered() ) {
+					// IF wrapper is turned off because activation_timestamp is currently only stored for plugins (not addons).
 //                if (empty($this->_storage->activation_timestamp) ||
 //                    (WP_FS__SCRIPT_START_TIME - $this->_storage->activation_timestamp) > 30
 //                ) {
-				/**
-				 * @todo When it's first fail, there's no reason to try and re-sync because the licenses were just synced after initial activation.
-				 *
-				 * Retry syncing the user add-on licenses.
-				 */
-				// Sync licenses.
-				$this->_sync_licenses();
+					/**
+					 * @todo When it's first fail, there's no reason to try and re-sync because the licenses were just synced after initial activation.
+					 *
+					 * Retry syncing the user add-on licenses.
+					 */
+					// Sync licenses.
+					$this->_sync_licenses();
 //                }
 
-				// Try to activate premium license.
-				$this->_activate_license( true );
+					// Try to activate premium license.
+					$this->_activate_license( true );
+				}
 
 				if ( ! $this->has_free_plan() &&
 				     ! $this->has_features_enabled_license() &&
 				     ! $this->_has_premium_license()
 				) {
 					// @todo Check if deactivate plugins also call the deactivation hook.
-
-					deactivate_plugins( array( $this->_plugin_basename ), true );
 
 					$this->_parent->_admin_notices->add_sticky(
 						sprintf(
@@ -3373,6 +3392,8 @@
 						( $is_after_trial_cancel ? '' : $this->_parent->get_text( 'oops' ) . '...' ),
 						( $is_after_trial_cancel ? 'success' : 'error' )
 					);
+
+					deactivate_plugins( array( $this->_plugin_basename ), true );
 
 					return true;
 				}
@@ -3488,7 +3509,7 @@
 		 * @since  1.1.7.3
 		 */
 		private function run_manual_sync() {
-			$this->require_pluggable_essentials();
+			self::require_pluggable_essentials();
 
 			if ( ! $this->is_user_admin() ) {
 				return;
@@ -4025,10 +4046,23 @@
 		 * @param bool $store
 		 */
 		function _delete_site( $store = true ) {
+			self::_delete_site_by_slug( $this->_slug, $store );
+		}
+
+		/**
+		 * Delete site install from Database.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.2.7
+		 *
+		 * @param string $slug
+		 * @param bool   $store
+		 */
+		static function _delete_site_by_slug( $slug, $store = true ) {
 			$sites = self::get_all_sites();
 
-			if ( isset( $sites[ $this->_slug ] ) ) {
-				unset( $sites[ $this->_slug ] );
+			if ( isset( $sites[ $slug ] ) ) {
+				unset( $sites[ $slug ] );
 			}
 
 			self::$_accounts->set_option( 'sites', $sites, $store );
@@ -4120,34 +4154,34 @@
 			// Clear API cache on activation.
 			FS_Api::clear_cache();
 
-			if ( $this->is_registered() ) {
-				$is_premium_version_activation = ( current_filter() !== ( 'activate_' . $this->_free_plugin_basename ) );
+			$is_premium_version_activation = ( current_filter() !== ( 'activate_' . $this->_free_plugin_basename ) );
 
+			$this->_logger->info( 'Activating ' . ( $is_premium_version_activation ? 'premium' : 'free' ) . ' plugin version.' );
+
+			// 1. If running in the activation of the FREE module, get the basename of the PREMIUM.
+			// 2. If running in the activation of the PREMIUM module, get the basename of the FREE.
+			$other_version_basename = $is_premium_version_activation ?
+				$this->_free_plugin_basename :
+				$this->premium_plugin_basename();
+
+			/**
+			 * If the other module version is activate, deactivate it.
+			 *
+			 * @author Leo Fajardo (@leorw)
+			 * @since  1.2.2
+			 */
+			if ( is_plugin_active( $other_version_basename ) ) {
+				deactivate_plugins( $other_version_basename );
+			}
+
+			if ( $this->is_registered() ) {
 				if ( $is_premium_version_activation ) {
 					$this->reconnect_locally();
 				}
 
-				$this->_logger->info( 'Activating ' . ( $is_premium_version_activation ? 'premium' : 'free' ) . ' plugin version.' );
-
 				// Schedule re-activation event and sync.
 //				$this->sync_install( array(), true );
 				$this->schedule_install_sync();
-
-				// 1. If running in the activation of the FREE module, get the basename of the PREMIUM.
-				// 2. If running in the activation of the PREMIUM module, get the basename of the FREE.
-				$other_version_basename = $is_premium_version_activation ?
-					$this->_free_plugin_basename :
-					$this->premium_plugin_basename();
-
-				/**
-				 * If the other module version is activate, deactivate it.
-				 *
-				 * @author Leo Fajardo (@leorw)
-				 * @since  1.2.2
-				 */
-				if ( is_plugin_active( $other_version_basename ) ) {
-					deactivate_plugins( $other_version_basename );
-				}
 
 				// If activating the premium module version, add an admin notice to congratulate for an upgrade completion.
 				if ( $is_premium_version_activation ) {
@@ -4349,6 +4383,7 @@
 		 */
 		private function reset_anonymous_mode() {
 			unset( $this->_storage->is_anonymous );
+			unset( $this->_is_anonymous );
 		}
 
 		/**
@@ -5142,8 +5177,8 @@
 				// Get name.
 				$this->_plugin_name = $plugin_data['Name'];
 
-				// Check if plugin name contains [Premium] suffix and remove it.
-				$suffix     = '[premium]';
+				// Check if plugin name contains "(Premium)" suffix and remove it.
+				$suffix     = ' (premium)';
 				$suffix_len = strlen( $suffix );
 
 				if ( strlen( $plugin_data['Name'] ) > $suffix_len &&
@@ -5186,6 +5221,26 @@
 			$title = $this->_plugin->title;
 
 			return $this->apply_filters( 'plugin_title', $title );
+		}
+
+		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.2.7
+		 *
+		 * @param bool $lowercase
+		 *
+		 * @return string
+		 */
+		function get_module_label( $lowercase = false ) {
+			$label = $this->is_addon() ?
+				$this->get_text( 'addon' ) :
+				$this->get_text( 'plugin' );
+
+			if ( $lowercase ) {
+				$label = strtolower( $lowercase );
+			}
+
+			return $label;
 		}
 
 		/**
@@ -6388,6 +6443,44 @@
 		}
 
 		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.8
+		 *
+		 * @var string
+		 */
+		private static $_pagenow;
+
+		/**
+		 * Get current page or the referer if executing a WP AJAX request.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.1.8
+		 *
+		 * @return string
+		 */
+		static function get_current_page() {
+			if ( ! isset( self::$_pagenow ) ) {
+				global $pagenow;
+
+				self::$_pagenow = $pagenow;
+
+				if ( self::is_ajax() &&
+				     'admin-ajax.php' === $pagenow
+				) {
+					$referer = wp_get_raw_referer();
+
+					if ( is_string( $referer ) ) {
+						$parts = explode( '?', $referer );
+
+						self::$_pagenow = basename( $parts[0] );
+					}
+				}
+			}
+
+			return self::$_pagenow;
+		}
+
+		/**
 		 * Helper method to check if user in the plugins page.
 		 *
 		 * @author Vova Feldman (@svovaf)
@@ -6396,9 +6489,7 @@
 		 * @return bool
 		 */
 		function is_plugins_page() {
-			global $pagenow;
-
-			return ( 'plugins.php' === $pagenow );
+			return ( 'plugins.php' === self::get_current_page() );
 		}
 
 		/**
@@ -6410,9 +6501,7 @@
 		 * @return bool
 		 */
 		function is_themes_page() {
-			global $pagenow;
-
-			return ( 'themes.php' === $pagenow );
+			return ( 'themes.php' === self::get_current_page() );
 		}
 
 		#----------------------------------------------------------------------------------
@@ -7937,6 +8026,61 @@
 
 			// Try to activate premium license.
 			$this->_activate_license( true );
+		}
+
+		/**
+		 * Tries to activate parent account based on add-on's info.
+		 *
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.2.2.7
+		 *
+		 * @param Freemius $parent_fs
+		 */
+		private function activate_parent_account( Freemius $parent_fs ) {
+			if ( ! $this->is_addon() ) {
+				// This is not an add-on.
+				return;
+			}
+
+			if ( $parent_fs->is_registered() ) {
+				// Already activated.
+				return;
+			}
+
+			// Activate parent with add-on's user credentials.
+			$parent_install = $this->get_api_user_scope()->call(
+				"/plugins/{$parent_fs->_plugin->id}/installs.json",
+				'post',
+				$parent_fs->get_install_data_for_api( array(
+					'uid' => $parent_fs->get_anonymous_id(),
+				), false, false )
+			);
+
+			if ( isset( $parent_install->error ) ) {
+				$this->_admin_notices->add(
+					sprintf( $this->get_text( 'could-not-activate-x' ), $this->get_plugin_name() ) . ' ' .
+					$this->get_text( 'contact-us-with-error-message' ) . ' ' . '<b>' . $parent_install->error->message . '</b>',
+					$this->get_text( 'oops' ) . '...',
+					'error'
+				);
+
+				return;
+			}
+
+			// First of all, set site info - otherwise we won't
+			// be able to invoke API calls.
+			$parent_fs->_site = new FS_Site( $parent_install );
+
+			// Sync add-on plans.
+			$parent_fs->_sync_plans();
+
+			// Get site's current plan.
+			$parent_fs->_site->plan = $parent_fs->_get_plan_by_id( $parent_fs->_site->plan->id );
+
+			// Get user information based on parent's plugin.
+			$user = $this->get_user();
+
+			$parent_fs->_set_account( $user, $parent_fs->_site );
 		}
 
 		#endregion
@@ -10800,7 +10944,7 @@
 		 * @return string
 		 */
 		private function get_activation_url( $params = array() ) {
-			if ( $this->is_addon() ) {
+			if ( $this->is_addon() && $this->has_free_plan() ) {
 				/**
 				 * @author Vova Feldman (@svovaf)
 				 * @since  1.2.1.7 Add-on's activation is the parent's module activation.
@@ -11716,6 +11860,14 @@
 
 			$this->_logger->entrance();
 
+			if ( fs_request_is_action_secure( $this->_slug . '_reconnect' ) ) {
+				if ( ! $this->is_registered() && $this->is_anonymous() ) {
+					$this->connect_again();
+
+					return;
+				}
+			}
+
 			if ( ! $this->is_plugins_page() ) {
 				// Only show tracking links on the plugin's page.
 				return;
@@ -11737,14 +11889,6 @@
 
 			if ( $this->add_ajax_action( 'allow_tracking', array( &$this, '_allow_tracking_callback' ) ) ) {
 				return;
-			}
-
-			if ( fs_request_is_action_secure( $this->_slug . '_reconnect' ) ) {
-				if ( ! $this->is_registered() && $this->is_anonymous() ) {
-					$this->connect_again();
-
-					return;
-				}
 			}
 
 			$url = '#';
@@ -11791,11 +11935,10 @@
 			$url       = false;
 			$plugin_fs = false;
 
-			if ( ! $this->is_addon() ) {
+			if ( ! $this->is_addon() || ! $this->has_free_plan() ) {
 				$first_time_path = $this->_menu->get_first_time_path();
-				$plugin_fs       = $this;
-				$url             = $plugin_fs->is_activation_mode() ?
-					$plugin_fs->get_activation_url() :
+				$url             = $this->is_activation_mode() ?
+					$this->get_activation_url() :
 					( empty( $first_time_path ) ?
 						$this->_get_admin_page_url() :
 						$first_time_path );
@@ -11954,57 +12097,6 @@
 				'//bit.ly/upload-wp-plugin',
 				$this->get_text( 'howto-upload-activate' )
 			);
-		}
-
-		/* Plugin Auto-Updates (@since 1.0.4)
-		------------------------------------------------------------------------------------------------------------------*/
-		/**
-		 * @var string[]
-		 */
-		private static $_auto_updated_plugins;
-
-		/**
-		 * @todo   TEST IF IT WORKS!!!
-		 *
-		 * Include plugins for automatic updates based on stored settings.
-		 *
-		 * @see    http://wordpress.stackexchange.com/questions/131394/how-do-i-exclude-plugins-from-getting-automatically-updated/131404#131404
-		 *
-		 * @author Vova Feldman (@svovaf)
-		 * @since  1.0.4
-		 *
-		 * @param bool   $update Whether to update (not used for plugins)
-		 * @param object $item   The plugin's info
-		 *
-		 * @return bool
-		 */
-		static function _include_plugins_in_auto_update( $update, $item ) {
-			// Before version 3.8.2 the $item was the file name of the plugin,
-			// while in 3.8.2 statistics were added (https://core.trac.wordpress.org/changeset/27905).
-			$by_slug = ( (int) str_replace( '.', '', get_bloginfo( 'version' ) ) >= 382 );
-
-			if ( ! isset( self::$_auto_updated_plugins ) ) {
-				$plugins = self::$_accounts->get_option( 'plugins', array() );
-
-				$identifiers = array();
-				foreach ( $plugins as $p ) {
-					/**
-					 * @var FS_Plugin $p
-					 */
-					if ( isset( $p->auto_update ) && $p->auto_update ) {
-						$identifiers[] = ( $by_slug ? $p->slug : plugin_basename( $p->file ) );
-					}
-				}
-
-				self::$_auto_updated_plugins = $identifiers;
-			}
-
-			if ( in_array( $by_slug ? $item->slug : $item, self::$_auto_updated_plugins ) ) {
-				return true;
-			}
-
-			// Pass update decision to next filters
-			return $update;
 		}
 
 		/**
