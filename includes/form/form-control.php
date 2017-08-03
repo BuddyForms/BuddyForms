@@ -340,7 +340,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
 		}
 
-		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
+		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
 
 			$post_id = $_POST['post_id'];
 
@@ -813,7 +813,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 
 				switch ( $t_field['type'] ) {
 					case 'taxonomy':
-						if( ! is_error( $post_id ) && ! empty( $post_id ) ){
+						if( ! is_wp_error( $post_id ) && ! empty( $post_id ) ){
 							$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
 						}
 						break;
