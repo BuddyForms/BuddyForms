@@ -90,14 +90,14 @@ function buddyforms_jquery_validation() {
 		                label.insertAfter(element);
 		            }
 	            }
-	        });';
+	        }); setTimeout(function() {';
 
 		if ( isset( $form['form_fields'] ) ) :
 			foreach ( $form['form_fields'] as $key => $form_field ) {
 				if ( isset( $form_field['required'] ) ) {
 
 					$form_html .= '
-				jQuery("[name=\'' . $form_field['slug'] . '\']").rules("add", { ';
+				jQuery("form [name=\'' . $form_field['slug'] . '\']").rules("add", { ';
 
 					$form_html .= 'required: true, ';
 
@@ -125,7 +125,7 @@ function buddyforms_jquery_validation() {
 		endif;
 
 		$form_html .= '
-		});';
+		}); }, 0);';
 
 	}
 	$form_html .= '
