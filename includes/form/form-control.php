@@ -340,7 +340,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
 		}
 
-		if ( isset( $_POST['post_id'] ) && empty( $_POST['post_id'] ) ) {
+		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
 
 			$post_id = $_POST['post_id'];
 
