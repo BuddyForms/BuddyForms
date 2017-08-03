@@ -813,7 +813,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 
 				switch ( $t_field['type'] ) {
 					case 'taxonomy':
-						if( ! is_error( $post_id ) && ! empty( $post_id ) ){
+						if( ! is_wp_error( $post_id ) && ! empty( $post_id ) ){
 							$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
 						}
 						break;
