@@ -403,23 +403,34 @@ function buddyforms_display_form_element( $args ) {
                     </table>';
 
 			$form_fields['general']['disabled'] = new Element_HTML( $error );
+            
+            $taxonomies = buddyforms_taxonomies( $post_type );
+            $taxonomy   = 'none';
+            if( $field_type == 'tags' ){
+                $taxonomy = 'post_tag';
+                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'post_tag' );
+            } elseif( $field_type == 'category') {
+                $taxonomy = 'category';
+                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'category' );
+            } else {
+                if(  isset( $customfield['taxonomy'] ) ) {
+	                $taxonomy = $customfield['taxonomy'];
+                }
+                $form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
+                    'value'    => $taxonomy,
+                    'class'    => 'bf_tax_select bf_hide_if_post_type_none',
+                    'field_id' => $field_id,
+                    'id'       => 'taxonomy_field_id_' . $field_id,
+                ) );
 
-			$taxonomies                         = buddyforms_taxonomies( $post_type );
-			$taxonomy                           = isset( $customfield['taxonomy'] ) ? $customfield['taxonomy'] : false;
-			$form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
-				'value'    => $taxonomy,
-				'class'    => 'bf_tax_select bf_hide_if_post_type_none',
-				'field_id' => $field_id,
-				'id'       => 'taxonomy_field_id_' . $field_id,
-			) );
-
+            }
 
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
 
-			if ( $customfield['taxonomy'] == 'none' ) {
-				$taxonomy = 'category';
-			}
+//			if ( $customfield['taxonomy'] == 'none' ) {
+//				$taxonomy = 'category';
+//			}
 
 			$wp_dropdown_categories_args = array(
 				'hide_empty'    => 0,
@@ -438,7 +449,7 @@ function buddyforms_display_form_element( $args ) {
 				'order'         => $taxonomy_order,
 			);
 
-			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
+    			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 

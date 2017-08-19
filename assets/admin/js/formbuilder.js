@@ -114,7 +114,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery('.formbuilder-spinner').removeClass('is-active');
 
                 bf_update_list_item_number();
-                bf_taxonomy_input();
+                //bf_taxonomy_input();
                 jQuery('#buddyforms_form_elements').removeClass('closed');
                 jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
 

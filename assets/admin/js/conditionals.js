@@ -211,8 +211,8 @@ jQuery(document).ready(function (jQuery) {
                 "post_type": post_type
             },
             success: function (data) {
-                console.log(data);
-                jQuery('select.bf_tax_select').html(data);
+               // console.log(data);
+              //  jQuery('select.bf_tax_select').html(data);
 
             },
             error: function () {
