@@ -21,8 +21,6 @@ function buddyforms_wp_update_user() {
 
 	$user_args['ID'] = get_current_user_id();
 
-
-
 	$user_args['user_login'] = isset( $_POST["user_login"] ) && !empty( $_POST["user_login"] )
 		? sanitize_user( $_POST["user_login"] )
 		: $user_args['user_login'];

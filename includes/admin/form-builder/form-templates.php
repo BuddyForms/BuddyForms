@@ -195,7 +195,7 @@ function buddyforms_form_builder_templates() {
 }
 
 //
-// json string of the form export top generate the Form from template
+// json string of the form export to generate the Form from template
 //
 add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 function buddyforms_form_template() {

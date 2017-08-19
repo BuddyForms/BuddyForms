@@ -101,7 +101,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	}
 
 	$first_name = isset( $_POST['user_first'] ) ? $_POST['user_first'] : $user_info->user_firstname;
-	$last_name  = isset( $_POST['user_last'] ) ? $_POST['user_first'] : $user_info->user_lastname;
+	$last_name  = isset( $_POST['user_last'] ) ? $_POST['user_last'] : $user_info->user_lastname;
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
