@@ -99,7 +99,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	$form_setup[] = $element;
 
 	$mail_to_cc   = isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] ) && $buddyform['mail_submissions'][ $trigger ]['mail_from_name'] == 'custom' ? '' : 'hidden';
-	$form_setup[] = new Element_Email( '<b>' . __( "Custom Mail From Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name_custom]", array(
+	$form_setup[] = new Element_Textbox( '<b>' . __( "Custom Mail From Name", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name_custom]", array(
 		"class"     => 'mail_from_name_custom ' . $mail_to_cc,
 		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from_name_custom'] : '',
 		'shortDesc' => 'The senders name e.g. John Doe. You can use any form element slug as shortcode [FIELD SLUG]. '
