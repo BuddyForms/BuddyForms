@@ -125,14 +125,31 @@ function buddyforms_wp_insert_user() {
 			return false;
 		}
 
-		$user_login   = sanitize_user( $_POST["user_login"] );
-		$user_email   = sanitize_email( $_POST["user_email"] );
-		$user_first   = sanitize_text_field( $_POST["user_first"] );
-		$user_last    = sanitize_text_field( $_POST["user_last"] );
-		$user_pass    = esc_attr( $_POST["user_pass"] );
-		$pass_confirm = esc_attr( $_POST["user_pass_confirm"] );
-		$user_url     = isset( $_POST["user_website"] ) ? esc_url( $_POST["user_website"] ) : '';
-		$description  = isset( $_POST["user_bio"] ) ? esc_textarea( $_POST["user_bio"] ) : '';
+		$user_login = isset( $_POST["user_login"] ) && !empty( $_POST["user_login"] )
+			? sanitize_user( $_POST["user_login"] )
+			: '';
+		$user_email = isset( $_POST["user_email"] ) && !empty( $_POST["user_email"] )
+			? sanitize_email( $_POST["user_email"] )
+			: '';
+		$user_first = isset( $_POST["user_first"] ) && !empty( $_POST["user_first"] )
+			? sanitize_text_field( $_POST["user_first"] )
+			: '';
+		$user_last = isset( $_POST["user_last"] ) && !empty( $_POST["user_last"] )
+			? sanitize_text_field( $_POST["user_last"] )
+			: '';
+		$user_pass = isset( $_POST["user_pass"] ) && !empty( $_POST["user_pass"] )
+			? esc_attr( $_POST["user_pass"] )
+			: '';
+		$pass_confirm = isset( $_POST["user_pass_confirm"] ) && !empty( $_POST["user_pass_confirm"] )
+			? esc_attr( $_POST["user_pass_confirm"] )
+			: '';
+		$user_url = isset( $_POST["user_website"] ) && !empty( $_POST["user_website"] )
+			? esc_url( $_POST["user_website"] )
+			: '';
+		$description = isset( $_POST["user_bio"] ) && !empty( $_POST["user_bio"] )
+			? esc_textarea( $_POST["user_bio"] )
+			: '';
+
 
 		// invalid email?
 		if ( ! is_email( $user_email ) ) {

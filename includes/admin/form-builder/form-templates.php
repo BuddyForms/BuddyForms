@@ -201,6 +201,7 @@ add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 function buddyforms_form_template() {
 	global $post, $buddyform;
 
+
 	$post->post_type = 'buddyforms';
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
