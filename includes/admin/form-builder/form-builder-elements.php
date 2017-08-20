@@ -397,23 +397,23 @@ function buddyforms_display_form_element( $args ) {
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
 
-		if ( buddyforms_core_fs()->is_not_paying() ) {
-			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
-					<td colspan="2">
-                        <div class="is_not_paying bf-error"><p>BuddyForms Professional is required to use this form Element. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Categories tags nad Taxonomies. <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-pricing">Upgrade Now</a></p></div>
-                    </td>
-                    </table>';
-			$form_fields['general']['disabled'] = new Element_HTML( $error );
-			break;
-		}
+            if ( buddyforms_core_fs()->is_not_paying() ) {
+                $error = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
+                        <td colspan="2">
+                            <div class="is_not_paying bf-error"><p>BuddyForms Professional is required to use this form Element. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Categories tags nad Taxonomies. <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-pricing">Upgrade Now</a></p></div>
+                        </td>
+                        </table>';
+                $form_fields['general']['disabled'] = new Element_HTML( $error );
+                break;
+            }
 
 
 
-		$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
-					<td colspan="2">
-                        <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
-                    </td>
-                    </table>';
+            $error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
+                        <td colspan="2">
+                            <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
+                        </td>
+                        </table>';
 
 			$form_fields['general']['disabled'] = new Element_HTML( $error );
 

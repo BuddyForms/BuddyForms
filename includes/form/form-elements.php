@@ -302,7 +302,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 					case 'comments' :
 						if ( isset( $the_post ) ) {
-							$customfield['value'] = $the_post->comment_status;
+							$element_attr['value'] = $the_post->comment_status;
 						}
 
 						$form->addElement( new Element_Select( $name, 'comment_status', array(
