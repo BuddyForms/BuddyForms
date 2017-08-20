@@ -754,13 +754,15 @@ function buddyforms_form_elements( $form, $args ) {
 							$required = '<span class="required">* </span>';
 						}
 
-						$tags = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
+					$tags = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
+					$maximumSelectionLength = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
 
-						$dropdown = '
+					$dropdown = '
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
 //							            minimumResultsForSearch: -1,
+										' . $maximumSelectionLength . '
 										    placeholder: function(){
 										        jQuery(this).data("placeholder");
 										    },

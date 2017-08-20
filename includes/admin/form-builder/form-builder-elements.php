@@ -506,6 +506,12 @@ function buddyforms_display_form_element( $args ) {
 				'class' => 'bf_hide_if_post_type_none'
 			) );
 
+			$tmaximumSelectionLength                           = isset( $customfield['maximumSelectionLength'] ) ? stripcslashes( $customfield['maximumSelectionLength'] ) : 0;
+			$form_fields['general']['maximumSelectionLength'] = new Element_Number( '<b>' . __( 'Limit Selections', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][maximumSelectionLength]", array(
+				'data'      => $field_id,
+				'value'     => $tmaximumSelectionLength,
+				'shortDesc' => __( 'Add a number to limit the Selection amount' )
+			) );
 
 			$taxonomy_include = isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : 'false';
 
