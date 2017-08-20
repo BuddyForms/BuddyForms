@@ -5,7 +5,7 @@ function bf_form_errors() {
     var errors = jQuery('.bf-alert-wrap ul li span');
     jQuery.each(errors, function (i, error) {
         var field_id = jQuery(error).attr('data-field-id');
-        console.log(field_id);
+        // console.log(field_id);
         if (field_id === 'user_pass') {
             jQuery('#' + field_id + '2').addClass('error');
         }

@@ -92,6 +92,7 @@ function load_formbuilder_template(template) {
                         jQuery.each(val, function (i2, form_setup) {
                             if (form_setup instanceof Object) {
                                 jQuery.each(form_setup, function (form_setup_key, form_setup_option) {
+
                                     if (form_setup_option instanceof Object) {
                                         jQuery.each(form_setup_option, function (form_setup_key2, form_setup_option2) {
                                             if (form_setup instanceof Array) {
@@ -115,6 +116,7 @@ function load_formbuilder_template(template) {
                             } else {
                                 jQuery('[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
                             }
+                            jQuery('.bf-select2').select2();
 
                         });
                         break;

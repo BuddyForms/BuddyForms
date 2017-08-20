@@ -141,26 +141,29 @@ function from_setup_create_account() {
 function bf_taxonomy_input(id) {
 
     var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
+
     jQuery('#table_row_' + id + '_taxonomy_default').hide();
+    jQuery('#table_row_' + id + '_taxonomy_include').hide();
+    jQuery('#table_row_' + id + '_taxonomy_exclude').hide();
     jQuery('#table_row_' + id + '_taxonomy_order').hide();
+    jQuery('#table_row_' + id + '_taxonomy_placeholder').hide();
     jQuery('#table_row_' + id + '_show_option_none').hide();
     jQuery('#table_row_' + id + '_create_new_tax').hide();
     jQuery('#table_row_' + id + '_multiple').hide();
     jQuery('#table_row_' + id + '_taxonomy_filter').hide();
     jQuery('#table_row_' + id + '_use_tag_style_input').hide();
-    if (taxonomy == null) {
 
+    if (taxonomy == null) {
         return;
     }
-
-
-    console.log('taxonomy: ' + taxonomy);
-
 
     if (taxonomy == 'none') {
 
         jQuery('#table_row_' + id + '_taxonomy_default').hide();
+        jQuery('#table_row_' + id + '_taxonomy_include').hide();
+        jQuery('#table_row_' + id + '_taxonomy_exclude').hide();
         jQuery('#table_row_' + id + '_taxonomy_order').hide();
+        jQuery('#table_row_' + id + '_taxonomy_placeholder').hide();
         jQuery('#table_row_' + id + '_show_option_none').hide();
         jQuery('#table_row_' + id + '_create_new_tax').hide();
         jQuery('#table_row_' + id + '_multiple').hide();
@@ -171,7 +174,10 @@ function bf_taxonomy_input(id) {
     } else {
 
         jQuery('#table_row_' + id + '_taxonomy_default').show();
+        jQuery('#table_row_' + id + '_taxonomy_include').show();
+        jQuery('#table_row_' + id + '_taxonomy_exclude').show();
         jQuery('#table_row_' + id + '_taxonomy_order').show();
+        jQuery('#table_row_' + id + '_taxonomy_placeholder').show();
         jQuery('#table_row_' + id + '_show_option_none').show();
         jQuery('#table_row_' + id + '_create_new_tax').show();
         jQuery('#table_row_' + id + '_multiple').show();
@@ -211,9 +217,9 @@ jQuery(document).ready(function (jQuery) {
                 "post_type": post_type
             },
             success: function (data) {
-               // console.log(data);
-              //  jQuery('select.bf_tax_select').html(data);
 
+                jQuery('select.bf_tax_select').html(data);
+                jQuery('select.bf_tax_select').trigger('change');
             },
             error: function () {
                 jQuery('.formbuilder-spinner').removeClass('is-active');
@@ -327,9 +333,7 @@ jQuery(document).ready(function (jQuery) {
     // Show Hide Form Elements depend on a select input
     //
     jQuery(document.body).on('change', '.bf_hidden_select', function () {
-
         bf_hidden_select(jQuery(this));
-
     });
 
     function bf_hidden_inputs(this_input) {
@@ -351,9 +355,7 @@ jQuery(document).ready(function (jQuery) {
     }
 
     jQuery(document.body).on('change', '.bf_hidden_input', function () {
-
         bf_hidden_inputs(jQuery(this));
-
     });
 
     jQuery(document.body).on('change', '.bf_hidden_checkbox', function () {
@@ -383,18 +385,22 @@ jQuery(document).ready(function (jQuery) {
 
     });
 
-
     jQuery(document.body).on('change', 'select.bf_tax_select', function () {
 
         var id = jQuery(this).attr('field_id');
         var val = jQuery(this).val();
 
         if (id != null) {
-            console.log('on change ' + id);
 
             if (val != 'none') {
+
+                jQuery('#table_row_' + id + '_post_type_no_taxonomy_error').hide();
+
                 var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
                 var taxonomy_default = jQuery("#taxonomy_default_" + id);
+                var taxonomy_include = jQuery("#taxonomy_include" + id);
+                var taxonomy_exclude = jQuery("#taxonomy_exclude" + id);
+
                 jQuery.ajax({
                     type: 'POST',
                     url: ajaxurl,
@@ -407,6 +413,14 @@ jQuery(document).ready(function (jQuery) {
                             taxonomy_default.val(null).trigger("change");
                             taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
                             taxonomy_default.html(data);
+
+                            taxonomy_include.val(null).trigger("change");
+                            taxonomy_include.select2({placeholder: "Include Items"}).trigger("change");
+                            taxonomy_include.html(data);
+
+                            taxonomy_exclude.val(null).trigger("change");
+                            taxonomy_exclude.select2({placeholder: "Exclude Items"}).trigger("change");
+                            taxonomy_exclude.html(data);
                         }
                     },
                     error: function () {

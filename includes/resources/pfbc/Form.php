@@ -587,7 +587,7 @@ JS;
                     },
                     success: function(response) {
 
-                    console.log(response)
+                    // console.log(response)
 
                     jQuery.each(response, function (i, val) {
 

@@ -118,7 +118,7 @@ jQuery(document).ready(function (jQuery) {
         // URL  = document.origin;
         URL = URL.slice(0, URL.indexOf('?'));
 
-        console.log('url  ' + URL);
+        // console.log('url  ' + URL);
 
         post_body.prepend('<h1 style="margin: 60px 0; padding: 0px; font-size: 78px; display: block;">High Five!</h1>' +
             '<h2 style="margin: 60px 0; padding: 4px; font-size: 24px; font-weight: normal;">You have created the form ' + title.find('#title').val() + '</h2>');

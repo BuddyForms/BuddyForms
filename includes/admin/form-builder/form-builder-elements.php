@@ -403,15 +403,32 @@ function buddyforms_display_form_element( $args ) {
                     </table>';
 
 			$form_fields['general']['disabled'] = new Element_HTML( $error );
-            
-            $taxonomies = buddyforms_taxonomies( $post_type );
+
+
+            $taxonomy_objects = get_object_taxonomies( $post_type );
+
+            if( isset($taxonomy_objects[0]) ){
+                $taxonomies = buddyforms_taxonomies( $post_type );
+            } else {
+	            $taxonomies = array('category' => 'Categories');
+                if( isset($post_type) ){
+	                $error = '<table style="width:100%;"id="table_row_' . $field_id . '_post_type_no_taxonomy_error" class="wp-list-table posts fixed">
+                        <td colspan="2">
+                            <div class="post_type_no_taxonomy_error bf-error">This Post Type does not have any Taxonomies .</div>
+                        </td>
+                        </table>';
+	                $form_fields['general']['post_type_no_taxonomies'] = new Element_HTML( $error );
+                }
+
+            }
+
             $taxonomy   = 'none';
             if( $field_type == 'tags' ){
                 $taxonomy = 'post_tag';
-                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'post_tag' );
+                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'post_tag', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
             } elseif( $field_type == 'category') {
                 $taxonomy = 'category';
-                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'category' );
+                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'category', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
             } else {
                 if(  isset( $customfield['taxonomy'] ) ) {
 	                $taxonomy = $customfield['taxonomy'];
@@ -428,9 +445,10 @@ function buddyforms_display_form_element( $args ) {
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
 
-//			if ( $customfield['taxonomy'] == 'none' ) {
-//				$taxonomy = 'category';
-//			}
+			if ( $customfield['taxonomy'] == 'none' ) {
+				$taxonomy = 'category';
+			}
+
 
 			$wp_dropdown_categories_args = array(
 				'hide_empty'    => 0,
@@ -449,7 +467,7 @@ function buddyforms_display_form_element( $args ) {
 				'order'         => $taxonomy_order,
 			);
 
-    			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
+			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
@@ -462,7 +480,7 @@ function buddyforms_display_form_element( $args ) {
 			}
 
 			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr><th scope="row">
-				<label for="form_title"><b style="margin-left: -10px;">Taxonomy Default</b></label></th>
+				<label for="form_title"><b style="margin-left: -10px;">Default Terms</b></label></th>
 				<td><div>' . $dropdown . '<p class="description">You can select a default category</p></div></td></table>';
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
@@ -599,14 +617,13 @@ function buddyforms_display_form_element( $args ) {
             	<script>
 
 				jQuery(document).ready(function (jQuery) {
-					console.log("on load $field_id" );
 
 					var post_type = jQuery('#form_post_type').val();
 
 					var tax_field_length = jQuery('#taxonomy_field_id_$field_id').children('option').length;
 
 					if(tax_field_length > 1 ){
-						console.log('form_post_type_length link' + tax_field_length);
+						// console.log('form_post_type_length link' + tax_field_length);
 					} else {
 
 				        jQuery.ajax({
@@ -617,8 +634,9 @@ function buddyforms_display_form_element( $args ) {
 				                "post_type": post_type
 				            },
 				            success: function (data) {
-								console.log(data);
+								// console.log(data);
 								jQuery('#taxonomy_field_id_$field_id').html(data);
+								bf_taxonomy_input( "$field_id" );
 
 				            },
 				            error: function () {
