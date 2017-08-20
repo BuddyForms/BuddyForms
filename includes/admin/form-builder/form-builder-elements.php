@@ -14,7 +14,7 @@ function buddyforms_display_form_element( $args ) {
 	global $post, $buddyform;
 
 	if ( ! $post && isset( $_POST['post_id'] ) && $_POST['post_id'] != 0 ) {
-		$post = get_post( $_POST['post_id'] );
+		$post = get_post( intval( $_POST['post_id'] ) );
 	}
 	if ( ! $buddyform ) {
 		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
