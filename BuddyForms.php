@@ -428,6 +428,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
 
+			wp_enqueue_style( 'wp_editor_edit_css', admin_url( '/wp-includes/css/editor.css' ) );
+
 			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
 		}
