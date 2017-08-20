@@ -222,7 +222,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $_GET['form_slug'] ]['form_fields'] as $key => $field ) {
-				$columns[ $field['slug'] ] = $field['name'];
+			    if($field['slug'] != 'user_pass'){
+				    $columns[ $field['slug'] ] = $field['name'];
+                }
 			}
 
 		}

@@ -32,7 +32,17 @@ function buddyforms_form_elements( $form, $args ) {
 
 				if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
 
-					$current_user    = get_userdata( get_current_user_id() );
+
+					if( is_admin() ){
+						$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
+						$current_user    = get_userdata( $bf_registration_user_id );
+					} else {
+						$current_user    = get_userdata( get_current_user_id() );
+					}
+
+					if( ! $current_user ){
+						continue;
+					}
 					$customfield_val = get_user_meta( $current_user->ID, $slug, true );
 
 				} else {
@@ -117,7 +127,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_pass':
-						if( ! isset( $customfield['hide_if_logged_in'] ) ) {
+						if( ! isset( $customfield['hide_if_logged_in'] ) && ! is_admin() ) {
 							$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
 							$element_attr['id'] = $element_attr['id'] . '2';
 							$form->addElement( new Element_Password( $name . ' Confirm', $slug . '_confirm', $element_attr ) );

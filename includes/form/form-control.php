@@ -134,8 +134,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		do_action( 'buddyforms_process_submission_end', $args );
 		Form::clearValues( "buddyforms_form_" . $form_slug );
-
-		return $args;
+		
 	}
 
 	// Check if user is logged in and if not check if registration during submission is enabled.
@@ -336,6 +335,11 @@ function buddyforms_process_submission( $args = Array() ) {
 		// Save the Form slug as post meta
 		update_post_meta( $post_id, "_bf_form_slug", $form_slug );
 
+		// If this was a registration form save the user id
+		if ( isset( $user_id ) ) {
+			update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
+		}
+
 		if ( buddyforms_core_fs()->is__premium_only() ) {
 			// Save the User Data like browser ip etc
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
@@ -520,7 +524,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		}
 
 		// Update the post
-		if ( isset( $_POST[ $slug ] ) ) {
+		if (  isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' ||  $_POST[ $slug ] == 'user_pass_confirm' ) ) {
 			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
 		} else {
 			if ( ! is_admin() ) {

@@ -100,6 +100,26 @@
             </div>
 
 			<?php
+
+			if ( is_admin() ) {
+				$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
+
+				if ( $bf_registration_user_id ) { ?>
+                    <div class="buddyforms-metabox postbox">
+                        <h3 class="hndle"><span>WordPress User</span></h3>
+                        <div class="inside">
+                            <div class="misc-pub-section">
+                                <p>User ID: <?php echo $bf_registration_user_id ?></p>
+                                <p>
+                                    <span class="dashicons dashicons-admin-users"></span>&nbsp;<a
+                                            href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>">Edit User</a></p>
+                            </div>
+                        </div>
+                    </div>
+				<?php } ?>
+			<?php }
+
+
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
 					if ( is_admin() ) {
