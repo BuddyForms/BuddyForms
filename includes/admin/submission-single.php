@@ -112,7 +112,8 @@
                                 <p>User ID: <?php echo $bf_registration_user_id ?></p>
                                 <p>
                                     <span class="dashicons dashicons-admin-users"></span>&nbsp;<a
-                                            href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>">Edit User</a></p>
+                                            href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>">Edit
+                                        User</a></p>
                             </div>
                         </div>
                     </div>

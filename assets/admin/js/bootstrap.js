@@ -14,7 +14,7 @@
                     OTransition: "oTransitionEnd otransitionend",
                     transition: "transitionend"
                 }, n;
-                for (n in t)if (e.style[n] !== undefined)return t[n]
+                for (n in t) if (e.style[n] !== undefined) return t[n]
             }();
             return e && {end: e}
         }()
@@ -31,7 +31,7 @@
 
         var n = e(this), r = n.attr("data-target"), i;
         r || (r = n.attr("href"), r = r && r.replace(/.*(?=#[^\s]*$)/, "")), i = e(r), t && t.preventDefault(), i.length || (i = n.hasClass("alert") ? n : n.parent()), i.trigger(t = e.Event("close"));
-        if (t.isDefaultPrevented())return;
+        if (t.isDefaultPrevented()) return;
         i.removeClass("in"), e.support.transition && i.hasClass("fade") ? i.on(e.support.transition.end, s) : s()
     };
     var r = e.fn.alert;
@@ -81,17 +81,17 @@
             return this.$active = this.$element.find(".item.active"), this.$items = this.$active.parent().children(), this.$items.index(this.$active)
         }, to: function (t) {
             var n = this.getActiveIndex(), r = this;
-            if (t > this.$items.length - 1 || t < 0)return;
+            if (t > this.$items.length - 1 || t < 0) return;
             return this.sliding ? this.$element.one("slid", function () {
                 r.to(t)
             }) : n == t ? this.pause().cycle() : this.slide(t > n ? "next" : "prev", e(this.$items[t]))
         }, pause: function (t) {
             return t || (this.paused = !0), this.$element.find(".next, .prev").length && e.support.transition.end && (this.$element.trigger(e.support.transition.end), this.cycle()), clearInterval(this.interval), this.interval = null, this
         }, next: function () {
-            if (this.sliding)return;
+            if (this.sliding) return;
             return this.slide("next")
         }, prev: function () {
-            if (this.sliding)return;
+            if (this.sliding) return;
             return this.slide("prev")
         }, slide: function (t, n) {
             var r = this.$element.find(".item.active"), i = n || r[t](), s = this.interval,
@@ -100,14 +100,14 @@
                 relatedTarget: i[0],
                 direction: o
             });
-            if (i.hasClass("active"))return;
+            if (i.hasClass("active")) return;
             this.$indicators.length && (this.$indicators.find(".active").removeClass("active"), this.$element.one("slid", function () {
                 var t = e(a.$indicators.children()[a.getActiveIndex()]);
                 t && t.addClass("active")
             }));
             if (e.support.transition && this.$element.hasClass("slide")) {
                 this.$element.trigger(f);
-                if (f.isDefaultPrevented())return;
+                if (f.isDefaultPrevented()) return;
                 i.addClass(t), i[0].offsetWidth, r.addClass(o), i.addClass(o), this.$element.one(e.support.transition.end, function () {
                     i.removeClass([t, o].join(" ")).addClass("active"), r.removeClass(["active", o].join(" ")), a.sliding = !1, setTimeout(function () {
                         a.$element.trigger("slid")
@@ -115,7 +115,7 @@
                 })
             } else {
                 this.$element.trigger(f);
-                if (f.isDefaultPrevented())return;
+                if (f.isDefaultPrevented()) return;
                 r.removeClass("active"), i.addClass("active"), this.sliding = !1, this.$element.trigger("slid")
             }
             return s && this.cycle(), this
@@ -150,17 +150,17 @@
             return e ? "width" : "height"
         }, show: function () {
             var t, n, r, i;
-            if (this.transitioning || this.$element.hasClass("in"))return;
+            if (this.transitioning || this.$element.hasClass("in")) return;
             t = this.dimension(), n = e.camelCase(["scroll", t].join("-")), r = this.$parent && this.$parent.find("> .accordion-group > .in");
             if (r && r.length) {
                 i = r.data("collapse");
-                if (i && i.transitioning)return;
+                if (i && i.transitioning) return;
                 r.collapse("hide"), i || r.data("collapse", null)
             }
             this.$element[t](0), this.transition("addClass", e.Event("show"), "shown"), e.support.transition && this.$element[t](this.$element[0][n])
         }, hide: function () {
             var t;
-            if (this.transitioning || !this.$element.hasClass("in"))return;
+            if (this.transitioning || !this.$element.hasClass("in")) return;
             t = this.dimension(), this.reset(this.$element[t]()), this.transition("removeClass", e.Event("hide"), "hidden"), this.$element[t](0)
         }, reset: function (e) {
             var t = this.dimension();
@@ -170,7 +170,7 @@
                 n.type == "show" && i.reset(), i.transitioning = 0, i.$element.trigger(r)
             };
             this.$element.trigger(n);
-            if (n.isDefaultPrevented())return;
+            if (n.isDefaultPrevented()) return;
             this.transitioning = 1, this.$element[t]("in"), e.support.transition && this.$element.hasClass("collapse") ? this.$element.one(e.support.transition.end, s) : s()
         }, toggle: function () {
             this[this.$element.hasClass("in") ? "hide" : "show"]()
@@ -193,6 +193,7 @@
     })
 }(window.jQuery), !function (e) {
     "use strict";
+
     function r() {
         e(t).each(function () {
             i(e(this)).removeClass("open")
@@ -215,17 +216,17 @@
     n.prototype = {
         constructor: n, toggle: function (t) {
             var n = e(this), s, o;
-            if (n.is(".disabled, :disabled"))return;
+            if (n.is(".disabled, :disabled")) return;
             return s = i(n), o = s.hasClass("open"), r(), o || s.toggleClass("open"), n.focus(), !1
         }, keydown: function (n) {
             var r, s, o, u, a, f;
-            if (!/(38|40|27)/.test(n.keyCode))return;
+            if (!/(38|40|27)/.test(n.keyCode)) return;
             r = e(this), n.preventDefault(), n.stopPropagation();
-            if (r.is(".disabled, :disabled"))return;
+            if (r.is(".disabled, :disabled")) return;
             u = i(r), a = u.hasClass("open");
-            if (!a || a && n.keyCode == 27)return n.which == 27 && u.find(t).focus(), r.click();
+            if (!a || a && n.keyCode == 27) return n.which == 27 && u.find(t).focus(), r.click();
             s = e("[role=menu] li:not(.divider):visible a", u);
-            if (!s.length)return;
+            if (!s.length) return;
             f = s.index(s.filter(":focus")), n.keyCode == 38 && f > 0 && f--, n.keyCode == 40 && f < s.length - 1 && f++, ~f || (f = 0), s.eq(f).focus()
         }
     };
@@ -253,7 +254,7 @@
         }, show: function () {
             var t = this, n = e.Event("show");
             this.$element.trigger(n);
-            if (this.isShown || n.isDefaultPrevented())return;
+            if (this.isShown || n.isDefaultPrevented()) return;
             this.isShown = !0, this.escape(), this.backdrop(function () {
                 var n = e.support.transition && t.$element.hasClass("fade");
                 t.$element.parent().length || t.$element.appendTo(document.body), t.$element.show(), n && t.$element[0].offsetWidth, t.$element.addClass("in").attr("aria-hidden", !1), t.enforceFocus(), n ? t.$element.one(e.support.transition.end, function () {
@@ -264,7 +265,7 @@
             t && t.preventDefault();
             var n = this;
             t = e.Event("hide"), this.$element.trigger(t);
-            if (!this.isShown || t.isDefaultPrevented())return;
+            if (!this.isShown || t.isDefaultPrevented()) return;
             this.isShown = !1, this.escape(), e(document).off("focusin.modal"), this.$element.removeClass("in").attr("aria-hidden", !0), e.support.transition && this.$element.hasClass("fade") ? this.hideWithTransition() : this.hideModal()
         }, enforceFocus: function () {
             var t = this;
@@ -295,9 +296,9 @@
             if (this.isShown && this.options.backdrop) {
                 var i = e.support.transition && r;
                 this.$backdrop = e('<div class="modal-backdrop ' + r + '" />').appendTo(document.body), this.$backdrop.click(this.options.backdrop == "static" ? e.proxy(this.$element[0].focus, this.$element[0]) : e.proxy(this.hide, this)), i && this.$backdrop[0].offsetWidth, this.$backdrop.addClass("in");
-                if (!t)return;
+                if (!t) return;
                 i ? this.$backdrop.one(e.support.transition.end, t) : t()
-            } else!this.isShown && this.$backdrop ? (this.$backdrop.removeClass("in"), e.support.transition && this.$element.hasClass("fade") ? this.$backdrop.one(e.support.transition.end, t) : t()) : t && t()
+            } else !this.isShown && this.$backdrop ? (this.$backdrop.removeClass("in"), e.support.transition && this.$element.hasClass("fade") ? this.$backdrop.one(e.support.transition.end, t) : t()) : t && t()
         }
     };
     var n = e.fn.modal;
@@ -329,7 +330,7 @@
         constructor: t, init: function (t, n, r) {
             var i, s, o, u, a;
             this.type = t, this.$element = e(n), this.options = this.getOptions(r), this.enabled = !0, o = this.options.trigger.split(" ");
-            for (a = o.length; a--;)u = o[a], u == "click" ? this.$element.on("click." + this.type, this.options.selector, e.proxy(this.toggle, this)) : u != "manual" && (i = u == "hover" ? "mouseenter" : "focus", s = u == "hover" ? "mouseleave" : "blur", this.$element.on(i + "." + this.type, this.options.selector, e.proxy(this.enter, this)), this.$element.on(s + "." + this.type, this.options.selector, e.proxy(this.leave, this)));
+            for (a = o.length; a--;) u = o[a], u == "click" ? this.$element.on("click." + this.type, this.options.selector, e.proxy(this.toggle, this)) : u != "manual" && (i = u == "hover" ? "mouseenter" : "focus", s = u == "hover" ? "mouseleave" : "blur", this.$element.on(i + "." + this.type, this.options.selector, e.proxy(this.enter, this)), this.$element.on(s + "." + this.type, this.options.selector, e.proxy(this.leave, this)));
             this.options.selector ? this._options = e.extend({}, this.options, {
                 trigger: "manual",
                 selector: ""
@@ -341,14 +342,14 @@
             }), t
         }, enter: function (t) {
             var n = e(t.currentTarget)[this.type](this._options).data(this.type);
-            if (!n.options.delay || !n.options.delay.show)return n.show();
+            if (!n.options.delay || !n.options.delay.show) return n.show();
             clearTimeout(this.timeout), n.hoverState = "in", this.timeout = setTimeout(function () {
                 n.hoverState == "in" && n.show()
             }, n.options.delay.show)
         }, leave: function (t) {
             var n = e(t.currentTarget)[this.type](this._options).data(this.type);
             this.timeout && clearTimeout(this.timeout);
-            if (!n.options.delay || !n.options.delay.hide)return n.hide();
+            if (!n.options.delay || !n.options.delay.hide) return n.hide();
             n.hoverState = "out", this.timeout = setTimeout(function () {
                 n.hoverState == "out" && n.hide()
             }, n.options.delay.hide)
@@ -356,7 +357,7 @@
             var t, n, r, i, s, o, u = e.Event("show");
             if (this.hasContent() && this.enabled) {
                 this.$element.trigger(u);
-                if (u.isDefaultPrevented())return;
+                if (u.isDefaultPrevented()) return;
                 t = this.tip(), this.setContent(), this.options.animation && t.addClass("fade"), s = typeof this.options.placement == "function" ? this.options.placement.call(this, t[0], this.$element[0]) : this.options.placement, t.detach().css({
                     top: 0,
                     left: 0,
@@ -397,7 +398,7 @@
 
             var t = this, n = this.tip(), r = e.Event("hide");
             this.$element.trigger(r);
-            if (r.isDefaultPrevented())return;
+            if (r.isDefaultPrevented()) return;
             return n.removeClass("in"), e.support.transition && this.$tip.hasClass("fade") ? i() : n.detach(), this.$element.trigger("hidden"), this
         }, fixTitle: function () {
             var e = this.$element;
@@ -487,6 +488,7 @@
     }
 }(window.jQuery), !function (e) {
     "use strict";
+
     function t(t, n) {
         var r = e.proxy(this.process, this), i = e(t).is("body") ? e(window) : e(t), s;
         this.options = e.extend({}, e.fn.scrollspy.defaults, n), this.$scrollElement = i.on("scroll.scroll-spy.data-api", r), this.selector = (this.options.target || (s = e(t).attr("href")) && s.replace(/.*(?=#[^\s]+$)/, "") || "") + " .nav li > a", this.$body = e("body"), this.refresh(), this.process()
@@ -507,8 +509,8 @@
             var e = this.$scrollElement.scrollTop() + this.options.offset,
                 t = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight,
                 n = t - this.$scrollElement.height(), r = this.offsets, i = this.targets, s = this.activeTarget, o;
-            if (e >= n)return s != (o = i.last()[0]) && this.activate(o);
-            for (o = r.length; o--;)s != i[o] && e >= r[o] && (!r[o + 1] || e <= r[o + 1]) && this.activate(i[o])
+            if (e >= n) return s != (o = i.last()[0]) && this.activate(o);
+            for (o = r.length; o--;) s != i[o] && e >= r[o] && (!r[o + 1] || e <= r[o + 1]) && this.activate(i[o])
         }, activate: function (t) {
             var n, r;
             this.activeTarget = t, e(this.selector).parent(".active").removeClass("active"), r = this.selector + '[data-target="' + t + '"],' + this.selector + '[href="' + t + '"]', n = e(r).parent("li").addClass("active"), n.parent(".dropdown-menu").length && (n = n.closest("li.dropdown").addClass("active")), n.trigger("activate")
@@ -537,9 +539,9 @@
         constructor: t, show: function () {
             var t = this.element, n = t.closest("ul:not(.dropdown-menu)"), r = t.attr("data-target"), i, s, o;
             r || (r = t.attr("href"), r = r && r.replace(/.*(?=#[^\s]*$)/, ""));
-            if (t.parent("li").hasClass("active"))return;
+            if (t.parent("li").hasClass("active")) return;
             i = n.find(".active:last a")[0], o = e.Event("show", {relatedTarget: i}), t.trigger(o);
-            if (o.isDefaultPrevented())return;
+            if (o.isDefaultPrevented()) return;
             s = e(r), this.activate(t.parent("li"), n), this.activate(s, s.parent(), function () {
                 t.trigger({type: "shown", relatedTarget: i})
             })
@@ -594,7 +596,7 @@
             return ~e.toLowerCase().indexOf(this.query.toLowerCase())
         }, sorter: function (e) {
             var t = [], n = [], r = [], i;
-            while (i = e.shift())i.toLowerCase().indexOf(this.query.toLowerCase()) ? ~i.indexOf(this.query) ? n.push(i) : r.push(i) : t.push(i);
+            while (i = e.shift()) i.toLowerCase().indexOf(this.query.toLowerCase()) ? ~i.indexOf(this.query) ? n.push(i) : r.push(i) : t.push(i);
             return t.concat(n, r)
         }, highlighter: function (e) {
             var t = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
@@ -618,7 +620,7 @@
             var t = e in this.$element;
             return t || (this.$element.setAttribute(e, "return;"), t = typeof this.$element[e] == "function"), t
         }, move: function (e) {
-            if (!this.shown)return;
+            if (!this.shown) return;
             switch (e.keyCode) {
                 case 9:
                 case 13:
@@ -635,7 +637,7 @@
         }, keydown: function (t) {
             this.suppressKeyPressRepeat = ~e.inArray(t.keyCode, [40, 38, 9, 13, 27]), this.move(t)
         }, keypress: function (e) {
-            if (this.suppressKeyPressRepeat)return;
+            if (this.suppressKeyPressRepeat) return;
             this.move(e)
         }, keyup: function (e) {
             switch (e.keyCode) {
@@ -647,11 +649,11 @@
                     break;
                 case 9:
                 case 13:
-                    if (!this.shown)return;
+                    if (!this.shown) return;
                     this.select();
                     break;
                 case 27:
-                    if (!this.shown)return;
+                    if (!this.shown) return;
                     this.hide();
                     break;
                 default:
@@ -686,7 +688,7 @@
         return e.fn.typeahead = n, this
     }, e(document).on("focus.typeahead.data-api", '[data-provide="typeahead"]', function (t) {
         var n = e(this);
-        if (n.data("typeahead"))return;
+        if (n.data("typeahead")) return;
         n.typeahead(n.data())
     })
 }(window.jQuery), !function (e) {
@@ -697,11 +699,11 @@
         }, this)), this.$element = e(t), this.checkPosition()
     };
     t.prototype.checkPosition = function () {
-        if (!this.$element.is(":visible"))return;
+        if (!this.$element.is(":visible")) return;
         var t = e(document).height(), n = this.$window.scrollTop(), r = this.$element.offset(), i = this.options.offset,
             s = i.bottom, o = i.top, u = "affix affix-top affix-bottom", a;
         typeof i != "object" && (s = o = i), typeof o == "function" && (o = i.top()), typeof s == "function" && (s = i.bottom()), a = this.unpin != null && n + this.unpin <= r.top ? !1 : s != null && r.top + this.$element.height() >= t - s ? "bottom" : o != null && n <= o ? "top" : !1;
-        if (this.affixed === a)return;
+        if (this.affixed === a) return;
         this.affixed = a, this.unpin = a == "bottom" ? r.top - n : null, this.$element.removeClass(u).addClass("affix" + (a ? "-" + a : ""))
     };
     var n = e.fn.affix;

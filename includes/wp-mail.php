@@ -7,7 +7,7 @@ add_action( 'buddyforms_process_submission_end', 'mail_submission_trigger_sent' 
 function mail_submission_trigger_sent( $args ) {
 	global $form_slug, $buddyforms;
 
-	if( ! isset( $args['post_id'] ) ) {
+	if ( ! isset( $args['post_id'] ) ) {
 		return;
 	}
 

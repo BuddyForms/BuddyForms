@@ -2,7 +2,7 @@
 
 add_action( 'wp_ajax_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post' );
 function buddyforms_ajax_edit_post() {
-	$post_id   = intval($_POST['post_id']);
+	$post_id   = intval( $_POST['post_id'] );
 	$form_slug = get_post_meta( $post_id, '_bf_form_slug', true );
 
 	$args = Array(

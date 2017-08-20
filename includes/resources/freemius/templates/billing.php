@@ -1,91 +1,112 @@
 <?php
-	/**
-	 * @package     Freemius
-	 * @copyright   Copyright (c) 2016, Freemius, Inc.
-	 * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
-	 * @since       1.2.0
-	 */
+/**
+ * @package     Freemius
+ * @copyright   Copyright (c) 2016, Freemius, Inc.
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
+ * @since       1.2.0
+ */
 
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	/**
-	 * @var array $VARS
-	 */
-	$slug = $VARS['slug'];
-	/**
-	 * @var Freemius $fs
-	 */
-	$fs = freemius( $slug );
+/**
+ * @var array $VARS
+ */
+$slug = $VARS['slug'];
+/**
+ * @var Freemius $fs
+ */
+$fs = freemius( $slug );
 
-	/**
-	 * @var FS_Plugin_Tag $update
-	 */
-	$update = $fs->get_update( false, false );
+/**
+ * @var FS_Plugin_Tag $update
+ */
+$update = $fs->get_update( false, false );
 
-	$is_paying              = $fs->is_paying();
-	$user                   = $fs->get_user();
-	$site                   = $fs->get_site();
-	$name                   = $user->get_name();
-	$license                = $fs->_get_license();
-	$subscription           = $fs->_get_subscription();
-	$plan                   = $fs->get_plan();
-	$is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
-	$is_paid_trial          = $fs->is_paid_trial();
-	$show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
+$is_paying              = $fs->is_paying();
+$user                   = $fs->get_user();
+$site                   = $fs->get_site();
+$name                   = $user->get_name();
+$license                = $fs->_get_license();
+$subscription           = $fs->_get_subscription();
+$plan                   = $fs->get_plan();
+$is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
+$is_paid_trial          = $fs->is_paid_trial();
+$show_upgrade           = ( ! $is_paying && ! $is_paid_trial );
 
-	$billing     = $fs->_fetch_billing();
-	$has_billing = ( $billing instanceof FS_Billing );
-	if ( ! $has_billing ) {
-		$billing = new FS_Billing();
-	}
+$billing     = $fs->_fetch_billing();
+$has_billing = ( $billing instanceof FS_Billing );
+if ( ! $has_billing ) {
+	$billing = new FS_Billing();
+}
 
-	$readonly_attr = $has_billing ? 'readonly' : '';
+$readonly_attr = $has_billing ? 'readonly' : '';
 ?>
 
-	<div id="fs_account" class="wrap">
-		<h2 class="nav-tab-wrapper">
-			<a href="<?php echo $fs->get_account_url() ?>" class="nav-tab"><?php fs_echo( 'account', $slug ) ?></a>
+    <div id="fs_account" class="wrap">
+        <h2 class="nav-tab-wrapper">
+            <a href="<?php echo $fs->get_account_url() ?>" class="nav-tab"><?php fs_echo( 'account', $slug ) ?></a>
 			<?php if ( $fs->has_addons() ) : ?>
-				<a href="<?php echo $fs->_get_admin_page_url( 'addons' ) ?>"
-				   class="nav-tab"><?php fs_echo( 'add-ons', $slug ) ?></a>
+                <a href="<?php echo $fs->_get_admin_page_url( 'addons' ) ?>"
+                   class="nav-tab"><?php fs_echo( 'add-ons', $slug ) ?></a>
 			<?php endif ?>
 			<?php if ( $fs->is_not_paying() && $fs->has_paid_plan() ) : ?>
-				<a href="<?php echo $fs->get_upgrade_url() ?>" class="nav-tab"><?php fs_echo( 'upgrade', $slug ) ?></a>
+                <a href="<?php echo $fs->get_upgrade_url() ?>" class="nav-tab"><?php fs_echo( 'upgrade', $slug ) ?></a>
 				<?php if ( $fs->apply_filters( 'show_trial', true ) && ! $fs->is_trial_utilized() && $fs->has_trial_plan() ) : ?>
-					<a href="<?php echo $fs->get_trial_url() ?>"
-					   class="nav-tab"><?php fs_echo( 'free-trial', $slug ) ?></a>
+                    <a href="<?php echo $fs->get_trial_url() ?>"
+                       class="nav-tab"><?php fs_echo( 'free-trial', $slug ) ?></a>
 				<?php endif ?>
 			<?php endif ?>
 			<?php if ( ! $plan->is_free() ) : ?>
-				<a href="<?php echo $fs->get_account_tab_url( 'billing' ) ?>"
-				   class="nav-tab nav-tab-active"><?php fs_echo( 'billing', $slug ) ?></a>
+                <a href="<?php echo $fs->get_account_tab_url( 'billing' ) ?>"
+                   class="nav-tab nav-tab-active"><?php fs_echo( 'billing', $slug ) ?></a>
 			<?php endif ?>
-		</h2>
+        </h2>
 
-		<div id="poststuff">
-			<div id="fs_billing">
-				<div class="has-sidebar has-right-sidebar">
-					<div class="has-sidebar-content">
-						<div class="postbox">
-							<h3><span class="dashicons dashicons-businessman"></span> <?php fs_echo( 'billing', $slug ) ?></h3>
-							<table id="fs_billing_address"<?php if ( $has_billing ) {
+        <div id="poststuff">
+            <div id="fs_billing">
+                <div class="has-sidebar has-right-sidebar">
+                    <div class="has-sidebar-content">
+                        <div class="postbox">
+                            <h3>
+                                <span class="dashicons dashicons-businessman"></span> <?php fs_echo( 'billing', $slug ) ?>
+                            </h3>
+                            <table id="fs_billing_address"<?php if ( $has_billing ) {
 								echo ' class="fs-read-mode"';
 							} ?>>
-								<tr>
-									<td><label><span><?php fs_echo( 'business-name', $slug ) ?>:</span> <input id="business_name" value="<?php echo $billing->business_name ?>" placeholder="<?php fs_echo( 'business-name', $slug ) ?>"></label></td>
-									<td><label><span><?php fs_echo( 'tax-vat-id', $slug ) ?>:</span> <input id="tax_id" value="<?php echo $billing->tax_id ?>" placeholder="<?php fs_echo( 'tax-vat-id', $slug ) ?>"></label></td>
-								</tr>
-								<tr>
-									<td><label><span><?php printf( fs_text( 'address-line-n', $slug ), 1 ) ?>:</span> <input id="address_street" value="<?php echo $billing->address_street ?>" placeholder="<?php printf( fs_text( 'address-line-n', $slug ), 1 ) ?>"></label></td>
-									<td><label><span><?php printf( fs_text( 'address-line-n', $slug ), 2 ) ?>:</span> <input id="address_apt" value="<?php echo $billing->address_apt ?>" placeholder="<?php printf( fs_text( 'address-line-n', $slug ), 2 ) ?>"></label></td>
-								</tr>
-								<tr>
-									<td><label><span><?php fs_echo( 'city', $slug ) ?> / <?php fs_echo( 'town', $slug ) ?>:</span> <input id="address_city" value="<?php echo $billing->address_city ?>" placeholder="<?php fs_echo( 'city', $slug ) ?> / <?php fs_echo( 'town', $slug ) ?>"></label></td>
-									<td><label><span><?php fs_echo( 'zip-postal-code', $slug ) ?>:</span> <input id="address_zip" value="<?php echo $billing->address_zip ?>" placeholder="<?php fs_echo( 'zip-postal-code', $slug ) ?>"></label></td>
-								</tr>
-								<tr>
+                                <tr>
+                                    <td><label><span><?php fs_echo( 'business-name', $slug ) ?>:</span> <input
+                                                    id="business_name" value="<?php echo $billing->business_name ?>"
+                                                    placeholder="<?php fs_echo( 'business-name', $slug ) ?>"></label>
+                                    </td>
+                                    <td><label><span><?php fs_echo( 'tax-vat-id', $slug ) ?>:</span> <input id="tax_id"
+                                                                                                            value="<?php echo $billing->tax_id ?>"
+                                                                                                            placeholder="<?php fs_echo( 'tax-vat-id', $slug ) ?>"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label><span><?php printf( fs_text( 'address-line-n', $slug ), 1 ) ?>:</span>
+                                            <input id="address_street" value="<?php echo $billing->address_street ?>"
+                                                   placeholder="<?php printf( fs_text( 'address-line-n', $slug ), 1 ) ?>"></label>
+                                    </td>
+                                    <td><label><span><?php printf( fs_text( 'address-line-n', $slug ), 2 ) ?>:</span>
+                                            <input id="address_apt" value="<?php echo $billing->address_apt ?>"
+                                                   placeholder="<?php printf( fs_text( 'address-line-n', $slug ), 2 ) ?>"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label><span><?php fs_echo( 'city', $slug ) ?>
+                                                / <?php fs_echo( 'town', $slug ) ?>:</span> <input id="address_city"
+                                                                                                   value="<?php echo $billing->address_city ?>"
+                                                                                                   placeholder="<?php fs_echo( 'city', $slug ) ?> / <?php fs_echo( 'town', $slug ) ?>"></label>
+                                    </td>
+                                    <td><label><span><?php fs_echo( 'zip-postal-code', $slug ) ?>:</span> <input
+                                                    id="address_zip" value="<?php echo $billing->address_zip ?>"
+                                                    placeholder="<?php fs_echo( 'zip-postal-code', $slug ) ?>"></label>
+                                    </td>
+                                </tr>
+                                <tr>
 									<?php $countries = array(
 										'AF' => 'Afghanistan',
 										'AX' => 'Aland Islands',
@@ -338,169 +359,175 @@
 										'ZM' => 'Zambia',
 										'ZW' => 'Zimbabwe',
 									) ?>
-									<td><label><span><?php fs_echo( 'country', $slug ) ?>:</span> <select id="address_country_code">
+                                    <td><label><span><?php fs_echo( 'country', $slug ) ?>:</span> <select
+                                                    id="address_country_code">
 												<?php if ( empty( $billing->address_country_code ) ) : ?>
-													<option value=""
-													        selected><?php fs_echo( 'select-country', $slug ) ?></option>
+                                                    <option value=""
+                                                            selected><?php fs_echo( 'select-country', $slug ) ?></option>
 												<?php endif ?>
 												<?php foreach ( $countries as $code => $country ) : ?>
-													<option
-														value="<?php echo $code ?>" <?php selected( $billing->address_country_code, $code ) ?>><?php echo $country ?></option>
+                                                    <option
+                                                            value="<?php echo $code ?>" <?php selected( $billing->address_country_code, $code ) ?>><?php echo $country ?></option>
 												<?php endforeach ?>
-											</select></label></td>
-									<td><label><span><?php fs_echo( 'state', $slug ) ?> / <?php fs_echo( 'province', $slug ) ?>:</span>
-											<input id="address_state" value="<?php echo $billing->address_state ?>" placeholder="<?php fs_echo( 'state', $slug ) ?> / <?php fs_echo( 'province', $slug ) ?>"></label></td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<button
-											class="button"><?php fs_echo( $has_billing ? 'edit' : 'update', $slug ) ?></button>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div class="postbox">
-							<h3><span class="dashicons dashicons-paperclip"></span> <?php fs_echo( 'payments', $slug ) ?></h3>
+                                            </select></label></td>
+                                    <td><label><span><?php fs_echo( 'state', $slug ) ?>
+                                                / <?php fs_echo( 'province', $slug ) ?>:</span>
+                                            <input id="address_state" value="<?php echo $billing->address_state ?>"
+                                                   placeholder="<?php fs_echo( 'state', $slug ) ?> / <?php fs_echo( 'province', $slug ) ?>"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button
+                                                class="button"><?php fs_echo( $has_billing ? 'edit' : 'update', $slug ) ?></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="postbox">
+                            <h3>
+                                <span class="dashicons dashicons-paperclip"></span> <?php fs_echo( 'payments', $slug ) ?>
+                            </h3>
 
 							<?php
-								$payments = $fs->_fetch_payments();
+							$payments = $fs->_fetch_payments();
 							?>
 
-							<div class="inside">
-								<table class="widefat">
-									<thead>
-									<tr>
-										<th><?php fs_echo( 'id', $slug ) ?></th>
-										<th><?php fs_echo( 'date', $slug ) ?></th>
-										<!--		<th>--><?php //fs_echo( 'transaction' ) ?><!--</th>-->
-										<th><?php fs_echo( 'amount', $slug ) ?></th>
-										<th><?php fs_echo( 'invoice', $slug ) ?></th>
-									</tr>
-									</thead>
-									<tbody>
+                            <div class="inside">
+                                <table class="widefat">
+                                    <thead>
+                                    <tr>
+                                        <th><?php fs_echo( 'id', $slug ) ?></th>
+                                        <th><?php fs_echo( 'date', $slug ) ?></th>
+                                        <!--		<th>--><?php //fs_echo( 'transaction' ) ?><!--</th>-->
+                                        <th><?php fs_echo( 'amount', $slug ) ?></th>
+                                        <th><?php fs_echo( 'invoice', $slug ) ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 									<?php $odd = true ?>
 									<?php foreach ( $payments as $payment ) : ?>
-										<tr<?php echo $odd ? ' class="alternate"' : '' ?>>
-											<td><?php echo $payment->id ?></td>
-											<td><?php echo date( 'M j, Y', strtotime( $payment->created ) ) ?></td>
-											<td>$<?php echo $payment->gross ?></td>
-											<td><a href="<?php echo $fs->_get_invoice_api_url( $payment->id ) ?>"
-											       class="button button-small"
-											       target="_blank"><?php fs_echo( 'invoice', $slug ) ?></a></td>
-										</tr>
+                                        <tr<?php echo $odd ? ' class="alternate"' : '' ?>>
+                                            <td><?php echo $payment->id ?></td>
+                                            <td><?php echo date( 'M j, Y', strtotime( $payment->created ) ) ?></td>
+                                            <td>$<?php echo $payment->gross ?></td>
+                                            <td><a href="<?php echo $fs->_get_invoice_api_url( $payment->id ) ?>"
+                                                   class="button button-small"
+                                                   target="_blank"><?php fs_echo( 'invoice', $slug ) ?></a></td>
+                                        </tr>
 										<?php $odd = ! $odd; endforeach ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-		(function($){
-			var $billingAddress = $('#fs_billing_address'),
-				$billingInputs = $billingAddress.find('input, select');
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function ($) {
+            var $billingAddress = $('#fs_billing_address'),
+                $billingInputs = $billingAddress.find('input, select');
 
-			var setPrevValues = function () {
-				$billingInputs.each(function () {
-					$(this).attr('data-val', $(this).val());
-				});
-			};
+            var setPrevValues = function () {
+                $billingInputs.each(function () {
+                    $(this).attr('data-val', $(this).val());
+                });
+            };
 
-			setPrevValues();
+            setPrevValues();
 
-			var hasBillingChanged = function () {
-				for (var i = 0, len = $billingInputs.length; i < len; i++){
-					var $this = $($billingInputs[i]);
-					if ($this.attr('data-val') !== $this.val()) {
-						return true;
-					}
-				}
+            var hasBillingChanged = function () {
+                for (var i = 0, len = $billingInputs.length; i < len; i++) {
+                    var $this = $($billingInputs[i]);
+                    if ($this.attr('data-val') !== $this.val()) {
+                        return true;
+                    }
+                }
 
-				return false;
-			};
+                return false;
+            };
 
-			var isEditAllFieldsMode = false;
+            var isEditAllFieldsMode = false;
 
-			$billingAddress.find('.button').click(function(){
-				$billingAddress.toggleClass('fs-read-mode');
+            $billingAddress.find('.button').click(function () {
+                $billingAddress.toggleClass('fs-read-mode');
 
-				var isEditMode = !$billingAddress.hasClass('fs-read-mode');
+                var isEditMode = !$billingAddress.hasClass('fs-read-mode');
 
-				$(this)
-					.html(isEditMode ? <?php echo json_encode(fs_text('update', $slug)) ?> : <?php echo json_encode(fs_text('edit', $slug)) ?>)
-					.toggleClass('button-primary');
+                $(this)
+                    .html(isEditMode ? <?php echo json_encode( fs_text( 'update', $slug ) ) ?> : <?php echo json_encode( fs_text( 'edit', $slug ) ) ?>)
+                    .toggleClass('button-primary');
 
-				if (isEditMode) {
-					$('#business_name').focus().select();
-					isEditAllFieldsMode = true;
-				} else {
-					isEditAllFieldsMode = false;
+                if (isEditMode) {
+                    $('#business_name').focus().select();
+                    isEditAllFieldsMode = true;
+                } else {
+                    isEditAllFieldsMode = false;
 
-					if (!hasBillingChanged())
-						return;
+                    if (!hasBillingChanged())
+                        return;
 
-					var billing = {};
+                    var billing = {};
 
-					$billingInputs.each(function(){
-						if ($(this).attr('data-val') !== $(this).val()) {
-							billing[$(this).attr('id')] = $(this).val();
-						}
-					});
+                    $billingInputs.each(function () {
+                        if ($(this).attr('data-val') !== $(this).val()) {
+                            billing[$(this).attr('id')] = $(this).val();
+                        }
+                    });
 
-					$.ajax({
-						url    : ajaxurl,
-						method : 'POST',
-						data   : {
-							action   : '<?php echo $fs->get_ajax_action( 'update_billing' ) ?>',
-							security : '<?php echo $fs->get_ajax_security( 'update_billing' ) ?>',
-							slug    : '<?php echo $slug ?>',
-							billing : billing
-						},
-						success: function (resultObj) {
-							if (resultObj.success) {
-								setPrevValues();
-							} else {
-								alert(resultObj.error);
-							}
-						}
-					});
-				}
-			});
+                    $.ajax({
+                        url: ajaxurl,
+                        method: 'POST',
+                        data: {
+                            action: '<?php echo $fs->get_ajax_action( 'update_billing' ) ?>',
+                            security: '<?php echo $fs->get_ajax_security( 'update_billing' ) ?>',
+                            slug: '<?php echo $slug ?>',
+                            billing: billing
+                        },
+                        success: function (resultObj) {
+                            if (resultObj.success) {
+                                setPrevValues();
+                            } else {
+                                alert(resultObj.error);
+                            }
+                        }
+                    });
+                }
+            });
 
-			$billingInputs
-				// Get into edit mode upon selection.
-				.focus(function () {
-					var isEditMode = !$billingAddress.hasClass('fs-read-mode');
+            $billingInputs
+            // Get into edit mode upon selection.
+                .focus(function () {
+                    var isEditMode = !$billingAddress.hasClass('fs-read-mode');
 
-					if (isEditMode) {
-						return;
-					}
+                    if (isEditMode) {
+                        return;
+                    }
 
-					$billingAddress.toggleClass('fs-read-mode');
-					$billingAddress.find('.button')
-						.html(<?php echo json_encode( fs_text( 'update', $slug ) ) ?>)
-						.toggleClass('button-primary');
-				})
-				// If blured after editing only one field without changes, exit edit mode.
-				.blur(function () {
-					if (!isEditAllFieldsMode && !hasBillingChanged()) {
-						$billingAddress.toggleClass('fs-read-mode');
-						$billingAddress.find('.button')
-							.html(<?php echo json_encode( fs_text( 'edit', $slug ) ) ?>)
-							.toggleClass('button-primary');
-					}
-				});
-		})(jQuery);
-	</script>
+                    $billingAddress.toggleClass('fs-read-mode');
+                    $billingAddress.find('.button')
+                        .html(<?php echo json_encode( fs_text( 'update', $slug ) ) ?>)
+                        .toggleClass('button-primary');
+                })
+                // If blured after editing only one field without changes, exit edit mode.
+                .blur(function () {
+                    if (!isEditAllFieldsMode && !hasBillingChanged()) {
+                        $billingAddress.toggleClass('fs-read-mode');
+                        $billingAddress.find('.button')
+                            .html(<?php echo json_encode( fs_text( 'edit', $slug ) ) ?>)
+                            .toggleClass('button-primary');
+                    }
+                });
+        })(jQuery);
+    </script>
 <?php
-	$params = array(
-		'page'           => 'account',
-		'module_id'      => $fs->get_id(),
-		'module_slug'    => $slug,
-		'module_version' => $fs->get_plugin_version(),
-	);
-	fs_require_template( 'powered-by.php', $params );
+$params = array(
+	'page'           => 'account',
+	'module_id'      => $fs->get_id(),
+	'module_slug'    => $slug,
+	'module_version' => $fs->get_plugin_version(),
+);
+fs_require_template( 'powered-by.php', $params );
 ?>

@@ -131,10 +131,9 @@ function buddyforms_process_submission( $args = Array() ) {
 			'user_id'      => $user_id
 		);
 
-
 		do_action( 'buddyforms_process_submission_end', $args );
 		Form::clearValues( "buddyforms_form_" . $form_slug );
-		
+
 	}
 
 	// Check if user is logged in and if not check if registration during submission is enabled.
@@ -150,6 +149,7 @@ function buddyforms_process_submission( $args = Array() ) {
 				'form_slug' => $form_slug,
 			);
 			Form::clearValues( "buddyforms_form_" . $form_slug );
+
 			return $args;
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -346,17 +346,17 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 
 		$post_title = apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none', $form_slug, $post_id );
-		$bf_post = array(
+		$bf_post    = array(
 			'ID'             => $post_id,
 			'post_type'      => $post_type,
 			'post_title'     => $post_title,
-			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '',  $form_slug, $post_id ),
+			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '', $form_slug, $post_id ),
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
 			'post_parent'    => $post_parent,
 		);
 
-		if( isset( $new_post ) && $post_id == $new_post){
+		if ( isset( $new_post ) && $post_id == $new_post ) {
 			$bf_post['post_name'] = sanitize_title( $post_title );
 		}
 
@@ -365,9 +365,9 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 
 		// Update the new post
-		if( ! empty( $post_id ) ){
+		if ( ! empty( $post_id ) ) {
 			$post_id = wp_update_post( $bf_post, true );
-			if( is_wp_error( $post_id ) ) {
+			if ( is_wp_error( $post_id ) ) {
 				$hasError      = true;
 				$error_message = $post_id->get_error_message();
 				Form::setError( 'buddyforms_form_' . $form_slug, $post_id->get_error_message() );
@@ -383,7 +383,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	// Display the message
 	if ( ! $hasError ) :
 		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
-			$info_message = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ][ 'singular_name' ] . __( ' has been successfully updated ', 'buddyforms' );
+			$info_message = __( 'The ', 'buddyforms' ) . $buddyforms[ $form_slug ]['singular_name'] . __( ' has been successfully updated ', 'buddyforms' );
 			$form_notice  = '<div class="info alert">' . $info_message . '</div>';
 		} else {
 			// Update the new post
@@ -447,7 +447,7 @@ function buddyforms_update_post( $args ) {
 			'ID'             => intval( $_POST['post_id'] ),
 			'post_author'    => $post_author,
 			'post_title'     => apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none', $form_slug, $post_id ),
-			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '',  $form_slug, $post_id ),
+			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '', $form_slug, $post_id ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
@@ -469,7 +469,7 @@ function buddyforms_update_post( $args ) {
 			'post_parent'    => $post_parent,
 			'post_author'    => $post_author,
 			'post_title'     => apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none', $form_slug, $post_id ),
-			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '',  $form_slug, $post_id ),
+			'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? $_POST['buddyforms_form_content'] : '', $form_slug, $post_id ),
 			'post_type'      => $post_type,
 			'post_status'    => $post_status,
 			'comment_status' => $comment_status,
@@ -491,7 +491,7 @@ function buddyforms_update_post( $args ) {
 		// Insert the new form
 		$post_id = wp_insert_post( $bf_post, true );
 
-		if(! is_wp_error($post_id) ){
+		if ( ! is_wp_error( $post_id ) ) {
 			$bf_post['new_post'] = $post_id;
 		}
 
@@ -524,7 +524,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		}
 
 		// Update the post
-		if (  isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' ||  $_POST[ $slug ] == 'user_pass_confirm' ) ) {
+		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
 			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
 		} else {
 			if ( ! is_admin() ) {
@@ -804,7 +804,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 					case 'taxonomy' :
 					case 'category' :
 					case 'tags' :
-						if( ! is_wp_error( $post_id ) && ! empty( $post_id ) ){
+						if ( ! is_wp_error( $post_id ) && ! empty( $post_id ) ) {
 							$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
 						}
 						break;
@@ -826,39 +826,40 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 	return $string;
 }
 
-add_filter('buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 10);
-function buddyforms_update_form_title($post_title, $form_slug, $post_id){
+add_filter( 'buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 10 );
+function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 	global $buddyforms;
 
 //	if ( $post_title == 'none' ) {
 
-		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			$customfields = $buddyforms[ $form_slug ]['form_fields'];
-		}
+	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+		$customfields = $buddyforms[ $form_slug ]['form_fields'];
+	}
 
-		$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
-		$post_title  = $title_field['generate_title'];
+	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
+	$post_title  = $title_field['generate_title'];
 
-		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields, $post_id );
+	$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields, $post_id );
 
 //	}
 	return $post_title;
 
 }
-add_filter('buddyforms_update_form_content', 'buddyforms_update_form_content', 2, 10);
-function buddyforms_update_form_content($post_content, $form_slug, $post_id){
+
+add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 2, 10 );
+function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 	global $buddyforms;
 
 //	if( empty( $post_content ) ){
 
-		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			$customfields = $buddyforms[ $form_slug ]['form_fields'];
-		}
+	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+		$customfields = $buddyforms[ $form_slug ]['form_fields'];
+	}
 
-		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
-		$post_content  = $content_field['generate_content'];
+	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
+	$post_content  = $content_field['generate_content'];
 
-		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields, $post_id );
+	$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields, $post_id );
 
 //	}
 

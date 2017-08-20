@@ -403,7 +403,7 @@
 
                             //Support require(['a'])
                             callback = callback || function () {
-                                };
+                            };
 
                             //If relName is a function, it is an errback handler,
                             //so remove it.
@@ -724,7 +724,7 @@
                     }
 
                     return ($el.innerHeight() < el.scrollHeight ||
-                    $el.innerWidth() < el.scrollWidth);
+                        $el.innerWidth() < el.scrollWidth);
                 };
 
                 Utils.escapeMarkup = function (markup) {
@@ -3705,11 +3705,11 @@
                     var i = 0;
 
                     var createTag = this.createTag || function (params) {
-                            return {
-                                id: params.term,
-                                text: params.term
-                            };
+                        return {
+                            id: params.term,
+                            text: params.term
                         };
+                    };
 
                     while (i < term.length) {
                         var termChar = term[i];

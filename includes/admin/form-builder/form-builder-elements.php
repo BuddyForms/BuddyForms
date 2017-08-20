@@ -196,11 +196,11 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$hide_if_logged_in                            = isset( $customfield['hide_if_logged_in'] ) ? $customfield['hide_if_logged_in'] : 'show';
+			$hide_if_logged_in                           = isset( $customfield['hide_if_logged_in'] ) ? $customfield['hide_if_logged_in'] : 'show';
 			$form_fields['general']['hide_if_logged_in'] = new Element_Checkbox( '<b>' . __( 'Hide Password Form Element for LoggedIn User', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]", array( 'hide' => '<b>' . __( 'Hide for logged in user', 'buddyforms' ) . '</b>' ), array(
-				'value' => $hide_if_logged_in,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]",
-                'shortDesc'  => 'If you want to use this form to allow your users to edit there profile you can hide the password for logged in users to prevent change the password with every update.'
+				'value'     => $hide_if_logged_in,
+				'id'        => "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]",
+				'shortDesc' => 'If you want to use this form to allow your users to edit there profile you can hide the password for logged in users to prevent change the password with every update.'
 			) );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_pass' );
@@ -397,19 +397,18 @@ function buddyforms_display_form_element( $args ) {
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
 
-            if ( buddyforms_core_fs()->is_not_paying() ) {
-                $error = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
+			if ( buddyforms_core_fs()->is_not_paying() ) {
+				$error                              = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
                         <td colspan="2">
                             <div class="is_not_paying bf-error"><p>BuddyForms Professional is required to use this form Element. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Categories tags nad Taxonomies. <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-pricing">Upgrade Now</a></p></div>
                         </td>
                         </table>';
-                $form_fields['general']['disabled'] = new Element_HTML( $error );
-                break;
-            }
+				$form_fields['general']['disabled'] = new Element_HTML( $error );
+				break;
+			}
 
 
-
-            $error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
+			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
                         <td colspan="2">
                             <div class="taxonomy_no_post_type bf-error">Please select a post type in the "Form Setup" tab "Create Content" to get the post type taxonomies.</div>
                         </td>
@@ -418,42 +417,42 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['disabled'] = new Element_HTML( $error );
 
 
-            $taxonomy_objects = get_object_taxonomies( $post_type );
+			$taxonomy_objects = get_object_taxonomies( $post_type );
 
-            if( isset($taxonomy_objects[0]) ){
-                $taxonomies = buddyforms_taxonomies( $post_type );
-            } else {
-	            $taxonomies = array('category' => 'Categories');
-                if( isset($post_type) ){
-	                $error = '<table style="width:100%;"id="table_row_' . $field_id . '_post_type_no_taxonomy_error" class="wp-list-table posts fixed">
+			if ( isset( $taxonomy_objects[0] ) ) {
+				$taxonomies = buddyforms_taxonomies( $post_type );
+			} else {
+				$taxonomies = array( 'category' => 'Categories' );
+				if ( isset( $post_type ) ) {
+					$error                                             = '<table style="width:100%;"id="table_row_' . $field_id . '_post_type_no_taxonomy_error" class="wp-list-table posts fixed">
                         <td colspan="2">
                             <div class="post_type_no_taxonomy_error bf-error">This Post Type does not have any Taxonomies .</div>
                         </td>
                         </table>';
-	                $form_fields['general']['post_type_no_taxonomies'] = new Element_HTML( $error );
-                }
+					$form_fields['general']['post_type_no_taxonomies'] = new Element_HTML( $error );
+				}
 
-            }
+			}
 
-            $taxonomy   = 'none';
-            if( $field_type == 'tags' ){
-                $taxonomy = 'post_tag';
-                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'post_tag', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
-            } elseif( $field_type == 'category') {
-                $taxonomy = 'category';
-                $form_fields['hidden']['taxonomy']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'category', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
-            } else {
-                if(  isset( $customfield['taxonomy'] ) ) {
-	                $taxonomy = $customfield['taxonomy'];
-                }
-                $form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
-                    'value'    => $taxonomy,
-                    'class'    => 'bf_tax_select bf_hide_if_post_type_none',
-                    'field_id' => $field_id,
-                    'id'       => 'taxonomy_field_id_' . $field_id,
-                ) );
+			$taxonomy = 'none';
+			if ( $field_type == 'tags' ) {
+				$taxonomy                          = 'post_tag';
+				$form_fields['hidden']['taxonomy'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'post_tag', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
+			} elseif ( $field_type == 'category' ) {
+				$taxonomy                          = 'category';
+				$form_fields['hidden']['taxonomy'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", 'category', array( 'id' => 'taxonomy_field_id_' . $field_id ) );
+			} else {
+				if ( isset( $customfield['taxonomy'] ) ) {
+					$taxonomy = $customfield['taxonomy'];
+				}
+				$form_fields['general']['taxonomy'] = new Element_Select( '<b>' . __( 'Taxonomy', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][taxonomy]", $taxonomies, array(
+					'value'    => $taxonomy,
+					'class'    => 'bf_tax_select bf_hide_if_post_type_none',
+					'field_id' => $field_id,
+					'id'       => 'taxonomy_field_id_' . $field_id,
+				) );
 
-            }
+			}
 
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
@@ -519,7 +518,7 @@ function buddyforms_display_form_element( $args ) {
 				'class' => 'bf_hide_if_post_type_none'
 			) );
 
-			$tmaximumSelectionLength                           = isset( $customfield['maximumSelectionLength'] ) ? stripcslashes( $customfield['maximumSelectionLength'] ) : 0;
+			$tmaximumSelectionLength                          = isset( $customfield['maximumSelectionLength'] ) ? stripcslashes( $customfield['maximumSelectionLength'] ) : 0;
 			$form_fields['general']['maximumSelectionLength'] = new Element_Number( '<b>' . __( 'Limit Selections', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][maximumSelectionLength]", array(
 				'data'      => $field_id,
 				'value'     => $tmaximumSelectionLength,

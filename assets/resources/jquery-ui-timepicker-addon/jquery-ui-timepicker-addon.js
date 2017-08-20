@@ -904,8 +904,8 @@
         _updateDateTime: function (dp_inst) {
             dp_inst = this.inst || dp_inst;
             var dtTmp = (dp_inst.currentYear > 0 ?
-                    new Date(dp_inst.currentYear, dp_inst.currentMonth, dp_inst.currentDay) :
-                    new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay)),
+                new Date(dp_inst.currentYear, dp_inst.currentMonth, dp_inst.currentDay) :
+                new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay)),
                 dt = $.datepicker._daylightSavingAdjust(dtTmp),
                 //dt = $.datepicker._daylightSavingAdjust(new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay)),
                 //dt = $.datepicker._daylightSavingAdjust(new Date(dp_inst.currentYear, dp_inst.currentMonth, dp_inst.currentDay)),
@@ -1221,31 +1221,31 @@
             };
 
             var regstr = '^' + f.toString()
-                        .replace(/([hH]{1,2}|mm?|ss?|[tT]{1,2}|[zZ]|[lc]|'.*?')/g, function (match) {
-                            var ml = match.length;
-                            switch (match.charAt(0).toLowerCase()) {
-                                case 'h':
-                                    return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
-                                case 'm':
-                                    return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
-                                case 's':
-                                    return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
-                                case 'l':
-                                    return '(\\d?\\d?\\d)';
-                                case 'c':
-                                    return '(\\d?\\d?\\d)';
-                                case 'z':
-                                    return '(z|[-+]\\d\\d:?\\d\\d|\\S+)?';
-                                case 't':
-                                    return getPatternAmpm(o.amNames, o.pmNames);
-                                default:    // literal escaped in quotes
-                                    return '(' + match.replace(/\'/g, "").replace(/(\.|\$|\^|\\|\/|\(|\)|\[|\]|\?|\+|\*)/g, function (m) {
-                                            return "\\" + m;
-                                        }) + ')?';
-                            }
-                        })
-                        .replace(/\s/g, '\\s?') +
-                    o.timeSuffix + '$',
+                    .replace(/([hH]{1,2}|mm?|ss?|[tT]{1,2}|[zZ]|[lc]|'.*?')/g, function (match) {
+                        var ml = match.length;
+                        switch (match.charAt(0).toLowerCase()) {
+                            case 'h':
+                                return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
+                            case 'm':
+                                return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
+                            case 's':
+                                return ml === 1 ? '(\\d?\\d)' : '(\\d{' + ml + '})';
+                            case 'l':
+                                return '(\\d?\\d?\\d)';
+                            case 'c':
+                                return '(\\d?\\d?\\d)';
+                            case 'z':
+                                return '(z|[-+]\\d\\d:?\\d\\d|\\S+)?';
+                            case 't':
+                                return getPatternAmpm(o.amNames, o.pmNames);
+                            default:    // literal escaped in quotes
+                                return '(' + match.replace(/\'/g, "").replace(/(\.|\$|\^|\\|\/|\(|\)|\[|\]|\?|\+|\*)/g, function (m) {
+                                    return "\\" + m;
+                                }) + ')?';
+                        }
+                    })
+                    .replace(/\s/g, '\\s?') +
+                o.timeSuffix + '$',
                 order = getFormatPositions(f),
                 ampm = '',
                 treg;
@@ -2048,8 +2048,8 @@
         }
 
         return ((normalized.substr(0, 1) === '-' ? -1 : 1) * // plus or minus
-        ((parseInt(normalized.substr(1, 2), 10) * 60) + // hours (converted to minutes)
-        parseInt(normalized.substr(3, 2), 10))); // minutes
+            ((parseInt(normalized.substr(1, 2), 10) * 60) + // hours (converted to minutes)
+                parseInt(normalized.substr(3, 2), 10))); // minutes
     };
 
     /**

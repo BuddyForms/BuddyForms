@@ -15,7 +15,8 @@
          class="tk-icon-buddyforms"></div>
     BuddyForms
     <a href="post-new.php?post_type=buddyforms" class="page-title-action"><?php _e( 'Add New', 'buddyforms' ); ?></a>
-    <a class="page-title-action" id="btn-open" href="http://docs.buddyforms.com" target="_blank"><?php _e( 'Documentation', 'buddyforms' ); ?></a>
+    <a class="page-title-action" id="btn-open" href="http://docs.buddyforms.com"
+       target="_blank"><?php _e( 'Documentation', 'buddyforms' ); ?></a>
     <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-contact" class="page-title-action"
        id="btn-open"><?php _e( 'Contact Us', 'buddyforms' ); ?></a>
     <small id="buddyforms_version"

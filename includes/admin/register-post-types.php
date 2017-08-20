@@ -718,13 +718,13 @@ function buddyforms_notice_if_broken_form() {
 	}
 
 	if ( isset( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $field_key => $field ) {
-		if (   $field['type'] == 'taxonomy'
-                || $field['type'] == 'category'
-                || $field['type'] == 'tags'
-		        || $field['type'] == 'featured-image'
-		        || $field['type'] == 'featured_image'
-		        || $field['type'] == 'featuredimage'
-        ) {
+		if ( $field['type'] == 'taxonomy'
+		     || $field['type'] == 'category'
+		     || $field['type'] == 'tags'
+		     || $field['type'] == 'featured-image'
+		     || $field['type'] == 'featured_image'
+		     || $field['type'] == 'featuredimage'
+		) {
 			$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
 		}
 	}
@@ -732,7 +732,7 @@ function buddyforms_notice_if_broken_form() {
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
-			unset($messages['pro']);
+			unset( $messages['pro'] );
 		}
 	}
 

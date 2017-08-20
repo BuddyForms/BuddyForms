@@ -56,7 +56,8 @@
 
             tinymce.DOM.setStyle(this.contentAreaContainer, 'position', 'relative');
 
-            attrs = {id: 'mce-placeholder-plugin-label',
+            attrs = {
+                id: 'mce-placeholder-plugin-label',
                 style: {
                     position: 'absolute',
                     top: '2px',

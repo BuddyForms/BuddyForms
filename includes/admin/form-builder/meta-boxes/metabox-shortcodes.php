@@ -25,7 +25,7 @@ function buddyforms_metabox_shortcodes() {
                     <p class="description"><?php _e( 'Display the logged in users posts or a login form.', 'buddyforms' ); ?></p>
                 </div>
 
-				<?php if ( isset($buddyform['attached_page']) && $buddyform['attached_page'] != 'none' ) { ?>
+				<?php if ( isset( $buddyform['attached_page'] ) && $buddyform['attached_page'] != 'none' ) { ?>
 
                     <div class="bf-row">
                         <div class="bf-tile alt">

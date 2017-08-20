@@ -61,7 +61,7 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 //
 function buddyforms_register_option() {
 
-    // General Settings
+	// General Settings
 	register_setting( 'buddyforms_general', 'buddyforms_registration_page', 'buddyforms_default_sanitize' );
 	register_setting( 'buddyforms_general', 'buddyforms_registration_form', 'buddyforms_default_sanitize' );
 	register_setting( 'buddyforms_general', 'buddyforms_posttypes_default', 'buddyforms_default_sanitize' );
@@ -109,12 +109,12 @@ function buddyforms_settings_page_tabs_content() {
 			switch ( $tab ) {
 				case 'general' :
 					$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-                    $buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
-                    $buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+					$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
+					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
 
 					$pages = buddyforms_get_all_pages();
-                    ?>
+					?>
                     <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
 
@@ -131,44 +131,45 @@ function buddyforms_settings_page_tabs_content() {
                                         <!-- Registration Settings -->
                                         <tr>
                                             <th colspan="2">
-                                                <h3><span><?php _e( 'Registration Settings', 'buddyforms' ); ?></span></h3>
+                                                <h3><span><?php _e( 'Registration Settings', 'buddyforms' ); ?></span>
+                                                </h3>
                                                 <p><?php _e( 'Select the Registration Page and Form to overwrite the WordPress default Registration.', 'buddyforms' ); ?></p>
                                             </th>
                                         </tr>
                                         <tr valign="top">
                                             <th scope="row" valign="top">
-		                                        <?php _e( 'Registration Page', 'buddyforms' ); ?>
+												<?php _e( 'Registration Page', 'buddyforms' ); ?>
                                             </th>
                                             <td>
-                                                <?php
-                                                if( isset( $pages ) && is_array( $pages ) ){
-	                                                echo '<select name="buddyforms_registration_page" id="buddyforms_registration_page">';
-	                                                $pages['none'] = 'WordPress Default';
-	                                                foreach ( $pages as $page_id => $page_name ){
-                                                        echo '<option ' . selected( $buddyforms_registration_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
-	                                                }
-	                                                echo '</select>';
-                                                }
-                                                ?>
+												<?php
+												if ( isset( $pages ) && is_array( $pages ) ) {
+													echo '<select name="buddyforms_registration_page" id="buddyforms_registration_page">';
+													$pages['none'] = 'WordPress Default';
+													foreach ( $pages as $page_id => $page_name ) {
+														echo '<option ' . selected( $buddyforms_registration_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
+													}
+													echo '</select>';
+												}
+												?>
                                             </td>
                                         </tr>
                                         <tr valign="top">
                                             <th scope="row" valign="top">
-                                                <?php _e( 'Registration Form', 'buddyforms' ); ?>
+												<?php _e( 'Registration Form', 'buddyforms' ); ?>
                                             </th>
                                             <td>
-		                                        <?php
-		                                        if( isset( $buddyforms ) && is_array( $buddyforms ) ){
-			                                        echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
-			                                        echo '<option value="none">' . __( 'WordPress Default', 'buddyforms' ) . '</option>';
-			                                        foreach ( $buddyforms as $form_slug => $form ){
-				                                        if( $form['form_type'] == 'registration' ){
-					                                        echo '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>';
-				                                        }
-			                                        }
-			                                        echo '</select>';
-		                                        }
-		                                        ?>
+												<?php
+												if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
+													echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
+													echo '<option value="none">' . __( 'WordPress Default', 'buddyforms' ) . '</option>';
+													foreach ( $buddyforms as $form_slug => $form ) {
+														if ( $form['form_type'] == 'registration' ) {
+															echo '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>';
+														}
+													}
+													echo '</select>';
+												}
+												?>
                                             </td>
                                         </tr>
 										<?php
@@ -181,13 +182,15 @@ function buddyforms_settings_page_tabs_content() {
 												}
 
 											}
-                                            ?>
+											?>
 
                                             <!-- POST TYPES Settings -->
                                             <tr>
                                                 <th colspan="2">
 
-                                                    <h3><span><?php _e( 'Posts - Pages and Custom Post Types', 'buddyforms' ); ?></span></h3>
+                                                    <h3>
+                                                        <span><?php _e( 'Posts - Pages and Custom Post Types', 'buddyforms' ); ?></span>
+                                                    </h3>
 
                                                     <p><?php _e( 'Select a default form for every post type.', 'buddyforms' ); ?></p>
                                                     <p><?php _e( 'This will make sure that posts created before BuddyForms will have a form associated.

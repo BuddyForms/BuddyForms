@@ -64,10 +64,10 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 	}
 
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field ) {
-        if ( $field->slug == 'taxonomy' || $field->slug == 'category' || $field->slug == 'tags' ) {
-            $deps .= 'BuddyForms Professional';
-        }
-    }
+		if ( $field->slug == 'taxonomy' || $field->slug == 'category' || $field->slug == 'tags' ) {
+			$deps .= 'BuddyForms Professional';
+		}
+	}
 	endif;
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {

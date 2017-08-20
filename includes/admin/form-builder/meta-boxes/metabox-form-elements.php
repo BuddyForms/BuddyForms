@@ -296,7 +296,7 @@ function buddyforms_form_elements_select_options() {
 				);
 
 
-			$elements_select_options['user']['fields']['date']   =
+			$elements_select_options['user']['fields']['date'] =
 				array(
 					'label'  => __( 'Date', 'buddyforms' ),
 					'unique' => 'unique'
