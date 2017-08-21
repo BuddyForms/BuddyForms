@@ -32,7 +32,6 @@ function buddyforms_form_elements( $form, $args ) {
 
 				if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
 
-
 					if ( is_admin() ) {
 						$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
 						$current_user            = get_userdata( $bf_registration_user_id );

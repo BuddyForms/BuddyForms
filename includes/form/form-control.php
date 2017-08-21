@@ -132,7 +132,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		);
 
 		do_action( 'buddyforms_process_submission_end', $args );
-		Form::clearValues( "buddyforms_form_" . $form_slug );
+		// Form::clearValues( "buddyforms_form_" . $form_slug );
 
 	}
 
@@ -830,18 +830,16 @@ add_filter( 'buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 1
 function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 	global $buddyforms;
 
-//	if ( $post_title == 'none' ) {
-
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		$customfields = $buddyforms[ $form_slug ]['form_fields'];
 	}
 
 	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
-	$post_title  = $title_field['generate_title'];
 
-	$post_title = buddyforms_str_replace_form_fields_val_by_slug( $post_title, $customfields, $post_id );
+	if( isset( $title_field['generate_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $title_field['generate_title'], $customfields, $post_id );
+	}
 
-//	}
 	return $post_title;
 
 }
@@ -850,18 +848,15 @@ add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 
 function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 	global $buddyforms;
 
-//	if( empty( $post_content ) ){
-
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		$customfields = $buddyforms[ $form_slug ]['form_fields'];
 	}
 
 	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
-	$post_content  = $content_field['generate_content'];
 
-	$post_content = buddyforms_str_replace_form_fields_val_by_slug( $post_content, $customfields, $post_id );
-
-//	}
+	if( isset( $content_field['generate_content'] ) && ! empty( $content_field['generate_content'] ) ) {
+		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_content'], $customfields, $post_id );
+	}
 
 	return $post_content;
 }
