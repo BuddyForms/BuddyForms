@@ -645,10 +645,17 @@ function buddyforms_get_post_types() {
 }
 
 
-function buddyforms_get_all_pages( $type = 'id' ) {
+function buddyforms_get_all_pages( $type = 'id', $view = "form_builder") {
 
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
 	$page_on_front = get_option( 'page_on_front' );
+	$exclude = isset( $page_on_front ) ? $page_on_front : '';
+
+	if( $view == 'form_builder' ){
+		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+		$exclude .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
+    }
+
 
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
@@ -656,7 +663,7 @@ function buddyforms_get_all_pages( $type = 'id' ) {
 		'parent'      => 0,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
-		'exclude'     => isset( $page_on_front ) ? $page_on_front : 0
+		'exclude'     => $exclude
 	) );
 
 

@@ -386,10 +386,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
                             "form_slug": form_slug,
                         },
                         success: function (data) {
-                            jQuery.each(data, function (i, val) {
-                                jQuery('.layout-spinner').hide();
-                                jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
-                            });
+                            update_layout_options_screen(data);
                         }
                     });
                     return false;
@@ -408,33 +405,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
                             "form_slug": 'reset',
                         },
                         success: function (data) {
-                            jQuery.each(data, function (i, val) {
-                                jQuery('.layout-spinner-reset').hide();
-
-                                var type = jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").attr('type');
-
-                                if (typeof type === 'undefined' || !type) {
-
-                                    type = jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").attr('type');
-
-                                    if (val.color) {
-                                        jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color);
-                                    }
-
-                                    if (val.style) {
-                                        jQuery("input[name='<?php echo $option_name ?>[" + i + "][style]'][value='" + val.style + "']").prop("checked", true).trigger('change');
-                                    }
-
-                                }
-
-                                if (type == 'text' || type == 'number') {
-                                    jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
-                                } else {
-                                    jQuery("input[name='<?php echo $option_name ?>[" + i + "]'][value='" + val + "']").prop("checked", true);
-                                }
-
-
-                            });
+                            update_layout_options_screen(data);
                         }
                     });
                     return false;
@@ -442,6 +413,41 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 
             });
 
+            function update_layout_options_screen(data){
+                jQuery('.layout-spinner').removeClass('is-active');
+                jQuery('.layout-spinner-reset').hide();
+                jQuery.each(data, function (i, val) {
+
+                    var type = jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").attr('type');
+
+                    if (typeof type === 'undefined' || !type) {
+
+                        type = jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").attr('type');
+
+
+
+                        if (val.style) {
+                            jQuery("input[name='<?php echo $option_name ?>[" + i + "][style]'][value='" + val.style + "']").prop("checked", true).trigger('change');
+                        }
+
+                        if (val.color) {
+                            jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color).trigger('change');;
+                        }
+
+                    }
+
+                    if (type == 'text' || type == 'number') {
+                        jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
+                    } else {
+                        jQuery("input[name='<?php echo $option_name ?>[" + i + "]'][value='" + val + "']").prop("checked", true);
+                    }
+
+                    if (i == 'custom_css') {
+                        jQuery("#" + i).text(val);
+                    }
+
+                });
+            }
 
         </script>
 		<?php

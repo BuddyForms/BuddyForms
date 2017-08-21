@@ -113,7 +113,7 @@ function buddyforms_settings_page_tabs_content() {
 					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 
 
-					$pages = buddyforms_get_all_pages();
+					$pages = buddyforms_get_all_pages('id', 'settings');
 					?>
                     <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
