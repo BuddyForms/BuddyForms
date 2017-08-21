@@ -117,7 +117,17 @@ jQuery(document).ready(function (jQuery) {
 
                 jQuery('#buddyforms_form_elements').removeClass('closed');
                 jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
-                jQuery('#buddyforms_form_elements ul li:last .bf-select2').select2();
+                jQuery('.bf-select2').select2();
+
+                var form_post_type = jQuery('#form_post_type').val();
+
+                if( form_post_type == 'bf_submissions' ){
+
+                    var field_id = jQuery( data ).find('#this_field_id').val();
+
+                    bf_taxonomy_input(field_id)
+                }
+
 
 
             },

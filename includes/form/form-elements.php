@@ -667,7 +667,7 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'post_formats' :
 
 						$post_formats = get_theme_support( 'post-formats' );
-						$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : false;
+						$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : array();
 						array_unshift( $post_formats, 'Select a Post Format' );
 
 						if ( empty( $element_attr['value'] ) ) {

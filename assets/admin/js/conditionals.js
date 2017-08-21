@@ -140,7 +140,7 @@ function from_setup_create_account() {
 
 function bf_taxonomy_input(id) {
 
-    var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
+    var taxonomy = jQuery( '#taxonomy_field_id_' + id ).val();
 
     jQuery('#table_row_' + id + '_taxonomy_default').hide();
     jQuery('#table_row_' + id + '_taxonomy_include').hide();
@@ -152,12 +152,15 @@ function bf_taxonomy_input(id) {
     jQuery('#table_row_' + id + '_multiple').hide();
     jQuery('#table_row_' + id + '_taxonomy_filter').hide();
     jQuery('#table_row_' + id + '_use_tag_style_input').hide();
+    jQuery('#table_row_' + id + '_maximumSelectionLength').hide();
 
     if (taxonomy == null) {
         return;
     }
 
-    if (taxonomy == 'none') {
+    var form_post_type = jQuery('#form_post_type').val();
+
+    if (taxonomy == 'none' || form_post_type == 'bf_submissions') {
 
         jQuery('#table_row_' + id + '_taxonomy_default').hide();
         jQuery('#table_row_' + id + '_taxonomy_include').hide();
@@ -169,6 +172,7 @@ function bf_taxonomy_input(id) {
         jQuery('#table_row_' + id + '_multiple').hide();
         jQuery('#table_row_' + id + '_taxonomy_filter').hide();
         jQuery('#table_row_' + id + '_use_tag_style_input').hide();
+        jQuery('#table_row_' + id + '_maximumSelectionLength').hide();
         //jQuery('#table_row_' + id + '_disabled').hide();
 
     } else {
@@ -183,6 +187,7 @@ function bf_taxonomy_input(id) {
         jQuery('#table_row_' + id + '_multiple').show();
         jQuery('#table_row_' + id + '_taxonomy_filter').show();
         jQuery('#table_row_' + id + '_use_tag_style_input').show();
+        jQuery('#table_row_' + id + '_maximumSelectionLength').show();
         //jQuery('#table_row_' + id + '_disabled').show();
 
     }
@@ -392,9 +397,10 @@ jQuery(document).ready(function (jQuery) {
 
         if (id != null) {
 
-            if (val != 'none') {
+            // if (val != 'none') {
 
                 jQuery('#table_row_' + id + '_post_type_no_taxonomy_error').hide();
+                //jQuery('#table_row_' + id + '_disabled').hide();
 
                 var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
                 var taxonomy_default = jQuery("#taxonomy_default_" + id);
@@ -440,7 +446,7 @@ jQuery(document).ready(function (jQuery) {
                     }
                 });
 
-            }
+            // }
             bf_taxonomy_input(id);
         }
     });

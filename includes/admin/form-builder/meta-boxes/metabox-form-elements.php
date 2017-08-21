@@ -265,10 +265,12 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['post']['fields']['category']       =
 				array(
 					'label' => __( 'Category', 'buddyforms' ),
+					'unique' => 'unique'
 				);
 			$elements_select_options['post']['fields']['tags']           =
 				array(
 					'label' => __( 'Tags', 'buddyforms' ),
+					'unique' => 'unique'
 				);
 			$elements_select_options['post']['fields']['taxonomy']       =
 				array(

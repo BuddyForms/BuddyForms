@@ -369,7 +369,7 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 			$post_formats = get_theme_support( 'post-formats' );
-			$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : false;
+			$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : array();
 			array_unshift( $post_formats, 'none' );
 
 
@@ -654,6 +654,7 @@ function buddyforms_display_form_element( $args ) {
 				            success: function (data) {
 								// console.log(data);
 								jQuery('#taxonomy_field_id_$field_id').html(data);
+								jQuery('#taxonomy_field_id_$field_id').trigger('change');
 								bf_taxonomy_input( "$field_id" );
 
 				            },
@@ -870,7 +871,9 @@ JS;
 
 	ob_start(); ?>
     <li id="field_<?php echo $field_id ?>"
-        class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>">
+        class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?> data-field_id="<?php echo $field_id ?> ">
+
+    <input id="this_field_id" type="hidden" value="<?php echo $field_id ?>">
 
         <div style="display:none;" class="hidden">
 			<?php if ( isset( $form_fields['hidden'] ) ) {

@@ -1,10 +1,10 @@
 === Form Builder & Front End Editor BuddyForms ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
-Requires at least: 3.9
+Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 2.1.3
-License: GPLv2 or later
+License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Contact Forms, Post Forms for user generated content and registration forms easily build in minutes. Ideal for user submitted posts. Get all Insights! Extendable with Addons!
@@ -112,6 +112,35 @@ Content Generation for your site has never been easier. Read this blog post on h
 [9 Plugins to Encourage User-Generated Content Submissions on Your WordPress Site](https://premium.wpmudev.org/blog/plugins-user-generated-content/)
 
 ThemeKraft
+
+
+
+Related BuddyForms Posts
+
+<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Create forms step-by-step for your WordPress website with an easy to use form wizard </a>
+Are you looking for a hassle free creation of forms and a way to easily embed those to your WordPress website? Are you in need of something that helps you step by step through that process, with no distractions and a clear design? With the WordPress Plugin BuddyForms you can configure fully customizable contact, registration [&hellip;]
+<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Read More</a>
+---
+<a href="https://themekraft.com/make-readers-creating-content/"> How to Make Your Readers Creating Content for You </a>
+Online users are now involved with brands they love more than ever. Customers are demanding to be heard and not just talked to. This new way of interaction has led to an increase in user generated content (UCG). Today, UGC is one of the best sources of marketing content for businesses. UCG boosts engagement, brand [&hellip;]
+<a href="https://themekraft.com/make-readers-creating-content/"> Read More</a>
+---
+<a href="https://themekraft.com/create-post-forms-wordpress/"> How to Create Post Forms in WordPress </a>
+Many web users want to have a voice on your blog and are always happy to share their thoughts with you. There are so many benefits of encouraging user generated content on your website. So how can your web users share their content with you without having to access your backend or without you having [&hellip;]
+<a href="https://themekraft.com/create-post-forms-wordpress/"> Read More</a>
+---
+<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> How to Create Incredible Contact Forms for WordPress </a>
+To continuously ensure that your marketing efforts are addressing the needs of your customers you need to know what they want. You can only find out what your customers want by asking them. If you want to easily collect essential information from your web users you should create contact forms for your WordPress site. Contact [&hellip;]
+<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> Read More</a>
+---
+<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> How to Create User Generated Content for Your WordPress Website and Business </a>
+First off, what exactly is user generated content (UGC)? This is content that is created by your customers. It can be anything from a blog post, product reviews, photos, videos or comments. Content marketing is currently a top marketing strategy for most businesses. A report by Demand Gen shows that 47% of customers surveyed will [&hellip;]
+<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> Read More</a>
+---
+<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> How To Automate the Content Creating Process with Guest Articles </a>
+You are a blogger or owner of an online magazine and want allow other authors to contribute to your site in form of guest articles? Usually there are a lot of steps involved from getting in contact with the author, deciding on the content and topic, reviewing the article, adding the article to your [&hellip;]
+<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> Read More</a>
+---
 [Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
 [Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
 [New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
@@ -240,7 +269,33 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.1.2.3 - 21 August 2017 =
+= 2.1.3 - 21 August 2017 =
+* Fixed form validation jQuery error. Props to @Hannah93
+* Fixed undefined function is_error. Props to @Hannah93
+* Fixed small error fixes. Props to @Hannah93
+    @Hannah93 huge thanks for your contributions!
+* Fixed a issue in the contact form FROM sender. If set to first name and last name only first name was used.
+* Fixed an issue in the mail notifications. It was not possible to add shortcodes in the From custom sender field.
+* Work on the taxonomy form element, make categories and tags fixed without taxonomy select to simplifier the configuration.
+* Fixed smaler issues in the taxonomy form element and optimise the taxonomy category and tags form elements
+* Added a new option to limit category, tags and taxonomy selection if multiple is enabled
+* Add a notice to the taxonomy form element and hide the options if not on the professional plan
+* Fixed an issue with the comment status The form element always stay as comments open. Even if comments are closed.
+* Set the js and css to global by default. There are to many issues with the function at the moment. Can still set to false with the filer priority higher than 10 or by de register buddyforms_front_js_css_loader_global
+* Fixed admin notice in wp-insert-user.php
+* Make sure mail_submission_trigger_sent is only triggered if a post exist
+* Make sure the wp editor css get loaded
+* Rewrite the logic of generate titlle and content
+* New feature! Log Registrations as Submissions. From now on every Registration and profile changed get logged as submission.
+* Add new metabox to the submissions single view in the backend to display the user id if form type is registration form.
+* Hide Password form any view.
+* Make sure passwords fields does not get saved as post meta with the new logic of registration log as submissions
+* Save the user id in the post if registration form to know the user
+* Add functions to load the admin single view from user meta
+* Reformat Code to stay conform with WordPress Coding Standards
+* Make sure Registration Pages are not displayed in the form builder/ form edit / page select
+* Fixed the layout import in the Form Designer. Colors and custom css was broken and did not get imported.
+* check if generate content and title is activated and generate teh content if the field is not empty.
 
 
 = 2.1.2.3 - 1 August 2017 =
