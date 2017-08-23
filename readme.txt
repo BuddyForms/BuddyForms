@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 2.1.3
+Tested up to: 4.8.1
+Stable tag: 2.1.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.3.1 - 23 August 2017 =
+* Fixed a issue in the taxonomy form element In some installs it was not possible to process the form if no option was selected even if the field was not required.
+* Added a Redirecting message to the notice if redirect to page is set with Ajax enabled
 
 = 2.1.3 - 21 August 2017 =
 * Fixed form validation jQuery error. Props to @Hannah93
