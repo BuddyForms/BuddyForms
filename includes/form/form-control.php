@@ -600,11 +600,24 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 			set_post_format( $post_id, $_POST['post_formats'] );
 		endif;
 
-
 		//
 		// Save taxonomies if needed
 		// taxonomy, category, tags
 		if ( $customfield['type'] == 'taxonomy' || $customfield['type'] == 'category' || $customfield['type'] == 'tags' ) :
+
+
+			if ( ! isset( $customfield['taxonomy'] ) ) {
+				$customfield['taxonomy'] = 'none';
+			}
+			if ( $customfield['taxonomy'] == 'none' ) {
+
+				if ( $customfield['type'] == 'tags' ) {
+					$customfield['taxonomy'] = 'post_tag';
+				} elseif ( $customfield['type'] == 'category' ) {
+					$customfield['taxonomy'] = 'category';
+				}
+
+			}
 
 			if ( $customfield['taxonomy'] != 'none' && isset( $_POST[ $customfield['slug'] ] ) ) {
 
@@ -633,7 +646,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 					foreach ( $tax_terms as $term_key => $term ) {
 
 						// Check if the term exist
-						$term_exist = term_exists( (int) $term, $customfield['taxonomy'] );
+						$term_exist = term_exists( $term, $customfield['taxonomy'] );
 
 						// Create new term if need and add to the new tax items array
 						if ( ! $term_exist ) {

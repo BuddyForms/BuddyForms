@@ -163,7 +163,7 @@ function buddyforms_ajax_delete_post() {
  */
 function buddyforms_after_save_post_redirect( $url ) {
 	$url    = apply_filters( 'buddyforms_after_save_post_redirect', $url );
-	$string = '<script type="text/javascript">';
+	$string = __( 'Redirecting..', 'buddyforms' ) . '<script type="text/javascript">';
 	$string .= 'window.location = "' . $url . '"';
 	$string .= '</script>';
 

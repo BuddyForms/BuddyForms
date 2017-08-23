@@ -38,12 +38,6 @@ BuddyForms has proven to be an invaluable plugin for communities and networks. W
 
 ---
 
-Upgrade to ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
-
-→ Get more information and upgrade at [BuddyForms](https://themekraft.com/buddyforms)
-
----
-
 #### Typical Use-Cases that our users create with BuddyForms
 * Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 * Online Directories – Crowdsource categorized data from your community
@@ -52,10 +46,85 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 * Marketplace – Sell and purchase products from different vendors and list all the product features
 * Content Forms for any kind of user generated content, user submitted posts
+
+---
+
 #### Of course, you can do simple forms, too like
 * Contact Forms – Collect leads and customer support data
 * Registration Forms – Sign-up users to your webpage
 * Login Forms – Grant users access to restricted content
+
+---
+
+#### Contact Forms
+* Create Custom Contact Forms for your Brand and Business in Minutes
+* Prevent users from submitting false data by setting custom validation rules on your forms
+
+---
+
+#### Registration Forms
+* Overwrite the WordPress Registration Form.
+* Redirect to a Custom Registration Page
+* Redirect your users to a custom location page or form if they click the activation link.
+* Combine Registration and Post forms and redirect your user to the Post Form after Registration.
+
+---
+
+
+### Form Wizard for any Form Type with easy to follow Steps.
+
+---
+
+## CONTACT FORM TEMPLATES
+* Contact Full Name
+First Name, Last Name, Email, Subject, Message
+
+* Contact Simple
+Your Name, Your Email, Your Message
+
+* User Support
+First Name, Last Name, Support Type, Subject, Email, Message
+
+---
+
+## REGISTRATION FORM TEMPLATES
+* Become a Vendor
+Username, eMail, Password, Shop Name, PayPal E-mail (required), Seller Info, Shop description
+
+* Registration Full Name
+Username, First Name, Last Name, eMail, Password
+
+* Registration Profile
+Username, First Name, Last Name, Bio, Website, eMail, Password
+ Preview
+
+* Registration Simple
+Username, eMail, Password
+
+---
+
+## POST FORM TEMPLATES
+* Post Form All Fields
+Title, Content, Categories, Tags, Featured Image
+
+* Post Simple
+Title, Content, User eMail
+
+* WC Grouped Product
+Title, Content, WooCommerce, Product Gallery, FeaturedImage
+Dependencies: WooCommerce, BuddyForms WooElements
+
+* WC Product All Fields
+Title, Content, WooCommerce, Product Gallery, FeaturedImage
+Dependencies: WooCommerce, BuddyForms WooElements
+
+* WC Simple Auction
+Title, Content, WooCommerce, Product Gallery, FeaturedImage
+Dependencies: WooCommerce, BuddyForms WooElements, BuddyForms Simple Auction, WC Simple Auctions
+
+* WC Simple Product
+Title, Content, WooCommerce, Product Gallery, FeaturedImage
+Dependencies: WooCommerce, BuddyForms WooElements
 
 ---
 
@@ -70,7 +139,7 @@ Upgrade to ‘Professional’ to skyrocket the engagement around your website an
 
 ---
 
-<h4>Videos</h4>
+### Videos
 
 Contact Forms [youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
 Registration Forms [youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
@@ -91,7 +160,7 @@ Ultimate Member Integration [youtube https://www.youtube.com/watch?v=b7YNax-ORzQ
 
 ---
 
-[More Videos](https://themekraft.com/buddyforms-videos/)
+Want to se more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
 
 ---
 
@@ -99,8 +168,46 @@ User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://ww
 
 ---
 
-### Blog Posts
+### Related BuddyForms Posts
 
+<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Create forms step-by-step for your WordPress website with an easy to use form wizard </a>
+Are you looking for a hassle free creation of forms and a way to easily embed those to your WordPress website? Are you in need of something that helps you step by step through that process, with no distractions and a clear design? With the WordPress Plugin BuddyForms you can configure fully customizable contact, registration [&hellip;]
+
+---
+
+<a href="https://themekraft.com/make-readers-creating-content/"> How to Make Your Readers Creating Content for You </a>
+Online users are now involved with brands they love more than ever. Customers are demanding to be heard and not just talked to. This new way of interaction has led to an increase in user generated content (UCG). Today, UGC is one of the best sources of marketing content for businesses. UCG boosts engagement, brand [&hellip;]
+
+---
+
+<a href="https://themekraft.com/create-post-forms-wordpress/"> How to Create Post Forms in WordPress </a>
+Many web users want to have a voice on your blog and are always happy to share their thoughts with you. There are so many benefits of encouraging user generated content on your website. So how can your web users share their content with you without having to access your backend or without you having [&hellip;]
+
+---
+
+<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> How to Create Incredible Contact Forms for WordPress </a>
+To continuously ensure that your marketing efforts are addressing the needs of your customers you need to know what they want. You can only find out what your customers want by asking them. If you want to easily collect essential information from your web users you should create contact forms for your WordPress site. Contact [&hellip;]
+
+---
+
+<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> How to Create User Generated Content for Your WordPress Website and Business </a>
+First off, what exactly is user generated content (UGC)? This is content that is created by your customers. It can be anything from a blog post, product reviews, photos, videos or comments. Content marketing is currently a top marketing strategy for most businesses. A report by Demand Gen shows that 47% of customers surveyed will [&hellip;]
+
+---
+
+<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> How To Automate the Content Creating Process with Guest Articles </a>
+You are a blogger or owner of an online magazine and want allow other authors to contribute to your site in form of guest articles? Usually there are a lot of steps involved from getting in contact with the author, deciding on the content and topic, reviewing the article, adding the article to your [&hellip;]
+
+---
+
+[Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
+[Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
+[New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
+[BuddyForms Sponsors the first BuddyCamp Europe](https://themekraft.com/buddyforms-sponsors-the-first-buddycamp-europe/)
+
+---
+
+#### Other Blog Posts
 
 WPExplorer
 [BuddyForms Form Builder & Front-end Post Editor WordPress Plugin](http://www.wpexplorer.com/buddyforms-form-builder-front-end-post-editor-wordpress-plugin/)
@@ -111,42 +218,6 @@ Content Generation for your site has never been easier. Read this blog post on h
 
 [9 Plugins to Encourage User-Generated Content Submissions on Your WordPress Site](https://premium.wpmudev.org/blog/plugins-user-generated-content/)
 
-ThemeKraft
-
-
-
-Related BuddyForms Posts
-
-<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Create forms step-by-step for your WordPress website with an easy to use form wizard </a>
-Are you looking for a hassle free creation of forms and a way to easily embed those to your WordPress website? Are you in need of something that helps you step by step through that process, with no distractions and a clear design? With the WordPress Plugin BuddyForms you can configure fully customizable contact, registration [&hellip;]
-<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Read More</a>
----
-<a href="https://themekraft.com/make-readers-creating-content/"> How to Make Your Readers Creating Content for You </a>
-Online users are now involved with brands they love more than ever. Customers are demanding to be heard and not just talked to. This new way of interaction has led to an increase in user generated content (UCG). Today, UGC is one of the best sources of marketing content for businesses. UCG boosts engagement, brand [&hellip;]
-<a href="https://themekraft.com/make-readers-creating-content/"> Read More</a>
----
-<a href="https://themekraft.com/create-post-forms-wordpress/"> How to Create Post Forms in WordPress </a>
-Many web users want to have a voice on your blog and are always happy to share their thoughts with you. There are so many benefits of encouraging user generated content on your website. So how can your web users share their content with you without having to access your backend or without you having [&hellip;]
-<a href="https://themekraft.com/create-post-forms-wordpress/"> Read More</a>
----
-<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> How to Create Incredible Contact Forms for WordPress </a>
-To continuously ensure that your marketing efforts are addressing the needs of your customers you need to know what they want. You can only find out what your customers want by asking them. If you want to easily collect essential information from your web users you should create contact forms for your WordPress site. Contact [&hellip;]
-<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> Read More</a>
----
-<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> How to Create User Generated Content for Your WordPress Website and Business </a>
-First off, what exactly is user generated content (UGC)? This is content that is created by your customers. It can be anything from a blog post, product reviews, photos, videos or comments. Content marketing is currently a top marketing strategy for most businesses. A report by Demand Gen shows that 47% of customers surveyed will [&hellip;]
-<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> Read More</a>
----
-<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> How To Automate the Content Creating Process with Guest Articles </a>
-You are a blogger or owner of an online magazine and want allow other authors to contribute to your site in form of guest articles? Usually there are a lot of steps involved from getting in contact with the author, deciding on the content and topic, reviewing the article, adding the article to your [&hellip;]
-<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> Read More</a>
----
-[Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
-[Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
-[New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
-[BuddyForms Sponsors the first BuddyCamp Europe](https://themekraft.com/buddyforms-sponsors-the-first-buddycamp-europe/)
-
----
 
 #### Supported Frontend Form Types
 * Contact Form
@@ -156,11 +227,18 @@ You are a blogger or owner of an online magazine and want allow other authors to
 * Custom Form to submit images or any media
 * Post Submission and Post Management from the frontend
 * Product Form for WooCommerce
+* Any Frontend Form Type
+* Post Meta Forms
+* User Meat Forms
+* Profile Forms for normal WordPress User Data
+* Profile Forms with BuddyPress xProfile Support
 
 
 #### Form Builder Features
 * Drag and Drop Forms Builder
-* Forms Manager and Submission Manager. Find All Forms and there submissions in one place. Post Forms or Contact Forms
+* Form Designer to Layout your forms with options and custom css
+* Form Grid to sort form elements in a grid
+* Forms Manager and Submission Manager. Find All Forms and there submissions in one place. Post Forms Registration or Contact Forms
 
 #### User Submitted Content
 * Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
@@ -187,7 +265,9 @@ You are a blogger or owner of an online magazine and want allow other authors to
 * Password
 * Website
 * About / Bio
+* Date
 * Captcha
+
 
 #### Post Fields
 * Title
@@ -206,11 +286,13 @@ You are a blogger or owner of an online magazine and want allow other authors to
 * Comments
 * Post Status
 * Featured Image
+* File
 * Hidden
 * HTML
 * Date
+* and more coming all the time
 
-More Fields available by Add-Ons
+Also more Fields available by Add-Ons
 
 
 ---
@@ -232,6 +314,9 @@ More Fields available by Add-Ons
 
 > **Powered with ❤ by [ThemeKraft](https://themekraft.com)**
 
+Upgrade to ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
+
+→ Get more information and upgrade at [BuddyForms](https://themekraft.com/buddyforms)
 
 == Installation ==
 
