@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name: Form Builder & Front End Editor BuddyForms
+ * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
- * Description: A simple yet powerful form builder. Create contact forms - register forms - post forms - user submitted content - User Registration - Front end Forms - Frontend Editor
+ * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
  * Version: 2.1.3.1
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
@@ -386,7 +386,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery-ui-dialog' );
-			wp_enqueue_style( 'buddyforms-jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
+			// wp_enqueue_style( 'buddyforms-jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
 
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-widgets' );

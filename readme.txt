@@ -1,4 +1,4 @@
-=== Form Builder & Front End Editor BuddyForms ===
+=== Contact - Registration - Post Form Builder & FrontEnd Editor BuddyForms - Making WordPress Forms A Breeze ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
@@ -7,7 +7,7 @@ Stable tag: 2.1.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Contact Forms, Post Forms for user generated content and registration forms easily build in minutes. Ideal for user submitted posts. Get all Insights! Extendable with Addons!
+Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
 
 == Description ==
 
