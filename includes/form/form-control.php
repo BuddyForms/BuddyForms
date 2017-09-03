@@ -269,6 +269,11 @@ function buddyforms_process_submission( $args = Array() ) {
 			$customfields = buddyforms_update_post_meta( $post_id, $customfields );
 		}
 
+		// Check if user is logged in and update user relevant fields if used in the form
+		if ( is_user_logged_in() ) {
+			$user_id = buddyforms_wp_update_user();
+		}
+
 		if ( isset( $_POST['featured_image'] ) ) {
 
 			$attach_id = $_POST['featured_image'];
@@ -645,8 +650,11 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				if ( isset( $tax_terms ) && is_array( $tax_terms ) ) {
 					foreach ( $tax_terms as $term_key => $term ) {
 
+						if( (integer)$term == -1 ){
+							continue;
+						}
 						// Check if the term exist
-						$term_exist = term_exists( $term, $customfield['taxonomy'] );
+							$term_exist = term_exists( (integer)$term, $customfield['taxonomy'] );
 
 						// Create new term if need and add to the new tax items array
 						if ( ! $term_exist ) {
@@ -687,6 +695,8 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				// Add the new terms to the taxonomy
 				wp_set_post_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 
+			} else {
+				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
 			}
 
 		endif;

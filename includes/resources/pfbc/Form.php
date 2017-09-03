@@ -473,7 +473,7 @@ class Form extends Base {
 	/*This method restores the serialized form instance.*/
 
 	protected function renderCSS() {
-		$this->renderCSSFiles();
+		//$this->renderCSSFiles();
 
 		echo '<style type="text/css">';
 		$this->view->renderCSS();
