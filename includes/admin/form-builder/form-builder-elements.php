@@ -1077,7 +1077,6 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 	return $tmp;
 }
 
-
 /**
  * @param $form_fields
  * @param string $field_id

@@ -296,7 +296,7 @@ jQuery(document).ready(function (jQuery) {
         }
         return false;
     });
-
+    
     //
     // Add new options to select, checkbox form element. The js will ad one more line for value and label
     //

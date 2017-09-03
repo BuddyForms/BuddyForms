@@ -5,6 +5,7 @@
  *
  *
  */
+add_action( 'wp_ajax_buddyforms_post_types_taxonomies', 'buddyforms_post_types_taxonomies' );
 function buddyforms_post_types_taxonomies() {
 
 	if ( ! isset( $_POST['post_type'] ) ) {
@@ -25,9 +26,7 @@ function buddyforms_post_types_taxonomies() {
 
 }
 
-add_action( 'wp_ajax_buddyforms_post_types_taxonomies', 'buddyforms_post_types_taxonomies' );
-
-
+add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
 function buddyforms_update_taxonomy_default() {
 
 	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none' ) {
@@ -58,8 +57,7 @@ function buddyforms_update_taxonomy_default() {
 
 }
 
-add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
-
+add_action( 'wp_ajax_buddyforms_new_page', 'buddyforms_new_page' );
 function buddyforms_new_page() {
 
 	if ( ! is_admin() ) {
@@ -97,9 +95,7 @@ function buddyforms_new_page() {
 
 }
 
-add_action( 'wp_ajax_buddyforms_new_page', 'buddyforms_new_page' );
-
-
+add_action( 'wp_ajax_buddyforms_url_builder', 'buddyforms_url_builder' );
 function buddyforms_url_builder() {
 	global $post;
 	$page_id   = $_POST['attached_page'];
@@ -117,5 +113,3 @@ function buddyforms_url_builder() {
 
 
 }
-
-add_action( 'wp_ajax_buddyforms_url_builder', 'buddyforms_url_builder' );
