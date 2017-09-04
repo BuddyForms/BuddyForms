@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                             <div class="item-desc"><?php echo get_the_excerpt(); ?></div>
 
-							<?php do_action( 'buddyforms_the_loop_item_last', get_the_ID() ); ?>
+	                        <?php do_action( 'buddyforms_the_loop_item_excerpt_after', get_the_ID() ); ?>
 
                         </div>
 
@@ -93,12 +93,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                         </div>
 
 						<?php echo apply_filters( 'buddyforms_the_loop_meta_html', ob_get_clean() ); ?>
-						<?php do_action( 'buddyforms_the_loop_li_last', get_the_ID() ); ?>
+
+						<?php do_action( 'buddyforms_the_loop_li_last', get_the_ID(), $form_slug ); ?>
 
                         <div class="clear"></div>
                     </li>
 
-					<?php do_action( 'buddyforms_after_loop_item' ) ?>
+					<?php do_action( 'buddyforms_after_loop_item', get_the_ID(), $form_slug ) ?>
 
 				<?php endwhile; ?>
 

@@ -10,7 +10,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 ?>
 
     <div id="buddyforms-table-view" class="buddyforms_posts_table buddyforms-posts-container">
@@ -84,7 +83,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
                                data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
                                title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
-							<?php do_action( 'buddyforms_the_loop_item_last', get_the_ID() ); ?>
+	                        <?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
                         </td>
                         <td colspan="2" class="table-wrapper">
                             <table class="table table-inner">
@@ -107,27 +106,26 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </tbody>
                             </table>
                         </td>
+						<?php do_action( 'buddyforms_the_table_tr_last', get_the_ID(), $form_slug ); ?>
                     </tr>
-					<?php do_action( 'buddyforms_the_table_tr_last', get_the_ID() ); ?>
 
-
-					<?php do_action( 'buddyforms_after_loop_item' ) ?>
+					<?php do_action( 'buddyforms_after_loop_item', get_the_ID(), $form_slug ) ?>
 
 				<?php endwhile; ?>
 
-                <div class="navigation">
-					<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
-					else: ?>
-                        <div
-                                class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-                        <div
-                                class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
-					<?php endif; ?>
-
-                </div>
-
                 </tbody>
             </table>
+
+            <div class="navigation">
+				<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
+				else: ?>
+                    <div
+                            class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
+                    <div
+                            class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+				<?php endif; ?>
+
+            </div>
 
 		<?php else : ?>
 
