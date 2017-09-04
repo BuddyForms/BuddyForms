@@ -38,6 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span><?php _e( 'Actions', 'buddyforms' ); ?></span>
                         </th>
 					<?php } ?>
+	                <?php do_action( 'buddyforms_the_thead_tr_inner_last', get_the_ID(), $form_slug ); ?>
                 </tr>
                 </thead>
                 <tbody>

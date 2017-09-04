@@ -71,6 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                    rel="bookmark"
                                    title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?>
                                 </a>
+	                            <?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
                             </div>
 
                             <div class="item-desc"><?php echo get_the_excerpt(); ?></div>
