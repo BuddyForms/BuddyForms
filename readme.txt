@@ -3,7 +3,8 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.8.1
-Stable tag: 2.1.3.1
+Stable tag: 2.1.4
+Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +354,23 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.4 - 23 August 2017 =
+* Fixed an issue with the login form shortcode
+* Comment out buddyforms-jquery-ui-style I not think its needed anymore. Let us keep it for a while and delete it in the next versions
+* Update the plugin description and change the link form buddyforms.com to themekraft.com/buddyforms
+* Changed the editor.css path. it was admin_url but should be includes_url. Do not as me why this worked before...
+* Fixed an issue with the taxonomy form element. ID must be an integer. There was a string in some situations passed to the function after the last update.
+--> Make sure the term gets deleted if the field is unselected.
+--> Make sure the new taxonomy is saved as default 'unauthorised' or nothing instead of a "-1"
+* Remove old pfbc css and js dependencies
+* Reorder and clean up the code
+* Clean up the-loop.php template. Move the pagination out of the table
+* Rename the buddyforms_the_loop_item_last hook to buddyforms_the_loop_item_title_after for the table and buddyforms_the_loop_item_excerpt_after for the list
+* Add form_slug as parameter to the buddyforms_the_loop_li_last and buddyforms_after_loop_item in the the-loop.php template
+* Add form_slug as parameter to the buddyforms_the_table_tr_last and buddyforms_after_loop_item in the the-table.php template
+* Add new hook to the the-loop.php templates buddyforms_the_loop_item_title_after to hook content after the title
+* Add new hook to the the-table.php templates buddyforms_the_thead_tr_inner_last to add new table head labels
 
 = 2.1.3.1 - 23 August 2017 =
 * Fixed a issue in the taxonomy form element In some installs it was not possible to process the form if no option was selected even if the field was not required.
