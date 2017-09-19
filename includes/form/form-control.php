@@ -609,6 +609,10 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		// Save taxonomies if needed
 		// taxonomy, category, tags
 		if ( $customfield['type'] == 'taxonomy' || $customfield['type'] == 'category' || $customfield['type'] == 'tags' ) :
+			//return when on backend post edit page
+			if( is_admin() && !defined( 'DOING_AJAX' ) ) {
+				return;
+			}
 
 
 			if ( ! isset( $customfield['taxonomy'] ) ) {
