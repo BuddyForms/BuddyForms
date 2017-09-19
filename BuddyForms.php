@@ -323,6 +323,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_media();
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
+
+			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
 		/**

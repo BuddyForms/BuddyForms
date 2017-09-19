@@ -182,3 +182,11 @@ li.image.bf_image {
 ul.bf_files {
     padding: 0;
 }
+
+#poststuff {
+    padding-top: 0;
+     min-width: auto;
+}
+.bf_inputs li {
+    list-style: none;
+}

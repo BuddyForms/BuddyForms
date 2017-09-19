@@ -74,7 +74,7 @@ function buddyforms_registration_screen() {
 	// Activation Page
 	$form_setup[] = new Element_Select( '<b>' . __( "Activation Page", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_page]", $all_pages, array(
 		'value'     => $activation_page,
-		'shortDesc' => __( 'Select the Page from where the user lands if he press the activation link in the activation mail. You can create a personal page or add a other form.', 'buddyforms' ),
+		'shortDesc' => __( 'Select the page the user should land on if he clicks the activation link in the activation email.', 'buddyforms' ),
 		'class'     => '',
 	) );
 
