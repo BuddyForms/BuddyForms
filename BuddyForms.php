@@ -393,7 +393,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-widgets' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
-
+			wp_enqueue_script( 'mce-view' );
 			// jQuery Validation http://jqueryvalidation.org/
 			wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );
 

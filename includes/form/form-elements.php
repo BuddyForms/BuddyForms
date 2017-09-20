@@ -184,6 +184,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'content':
+						remove_filter( 'the_content', 'do_shortcode', 11 );
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 						$buddyforms_form_content_val = false;
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
