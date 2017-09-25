@@ -93,6 +93,14 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
+					case 'country':
+						$form->addElement( new Element_Country( $name, $slug, $element_attr ) );
+						break;
+
+					case 'state':
+						$form->addElement( new Element_State( $name, $slug, $element_attr ) );
+						break;
+
 					case 'message':
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;

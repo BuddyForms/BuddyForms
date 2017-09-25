@@ -101,6 +101,10 @@ function buddyforms_display_form_element( $args ) {
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
 			break;
+		case 'country':
+			break;
+		case 'state':
+			break;
 		case 'subject':
 			unset( $form_fields['advanced']['slug'] );
 

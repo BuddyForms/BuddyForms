@@ -198,6 +198,12 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'About / Bio', 'buddyforms' ),
 					'unique' => 'unique'
 				),
+				'country'     => array(
+					'label'  => __( 'Country' ),
+				),
+				'state'     => array(
+					'label'  => __( 'State' ),
+				),
 				'captcha'      => array(
 					'label'  => __( 'Captcha', 'buddyforms' ),
 					'unique' => 'unique'
