@@ -26,7 +26,7 @@ function buddyforms_template_include( $template ) {
  *
  * @return string
  */
-add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+add_filter( 'the_content', 'buddyforms_attached_page_content', 50, 1 );
 function buddyforms_attached_page_content( $content ) {
 	global $buddyforms;
 
@@ -36,8 +36,8 @@ function buddyforms_attached_page_content( $content ) {
 	$action         = get_query_var( 'bf_action' );
 
 	// Remove the filter to make sure it not end up in a infinity loop
-	remove_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
-	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 );
+	remove_filter( 'the_content', 'buddyforms_attached_page_content', 50, 1 );
+	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 51, 1 );
 
 	if ( is_admin() ) {
 		return $content;
@@ -81,7 +81,7 @@ function buddyforms_attached_page_content( $content ) {
 	}
 
 	// Rebuild the removed filters
-	add_filter( 'the_content', 'buddyforms_attached_page_content', 10, 1 );
+	add_filter( 'the_content', 'buddyforms_attached_page_content', 50, 1 );
 
 	return $new_content;
 
