@@ -43,11 +43,11 @@ jQuery(document).ready(function () {
 
     jQuery('.bf-garlic').garlic();
 
-    //jQuery(".bf-select2").select2({
-    //    placeholder: "Select an option",
-    //    tags: true,
-    //    tokenSeparators: [',', ' ']
-    //});
+    jQuery(".bf-select2").select2({
+       placeholder: "Select an option",
+       tags: true,
+       tokenSeparators: [',', ' ']
+    });
 
     jQuery(document).on("click", '.create-new-tax-item', function (evt) {
 
