@@ -163,7 +163,7 @@ function buddyforms_wp_insert_user() {
 
 		if ( isset( $buddyforms[ $form_slug ]['public_submit_username_from_email'] ) ) {
 			$user_login = explode( '@', $user_email );
-			$user_login = $user_login[0];
+			$user_login = $user_login[0] . substr( md5( time() * rand() ), 0, 10 );;
 		}
 
 		// Username already registered?
