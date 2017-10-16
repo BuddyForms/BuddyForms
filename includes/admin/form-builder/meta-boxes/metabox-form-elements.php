@@ -317,11 +317,11 @@ function buddyforms_form_elements_select_options() {
 				array(
 					'label' => __( 'File', 'buddyforms' ),
 				);
-			$elements_select_options['extra']['fields']['hidden'] =
+			$elements_select_options['basic']['fields']['hidden'] =
 				array(
 					'label' => __( 'Hidden', 'buddyforms' ),
 				);
-			$elements_select_options['extra']['fields']['html']   =
+			$elements_select_options['basic']['fields']['html']   =
 				array(
 					'label' => __( 'HTML', 'buddyforms' ),
 				);
