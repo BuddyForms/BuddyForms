@@ -194,11 +194,11 @@ function buddyforms_registration_page_content( $content ) {
 	$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
 
 	if( ! $buddyforms_registration_page){
-		return;
+		return $content;
 	}
 
 	if( ! $buddyforms_registration_form){
-		return;
+		return $content;
 	}
 
 	if ( $post->ID == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ) {

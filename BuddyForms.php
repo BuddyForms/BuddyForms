@@ -171,6 +171,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'change-password.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
@@ -393,6 +394,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-widgets' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
+			wp_enqueue_script( 'password-strength-meter' );
 			wp_enqueue_script( 'mce-view' );
 			// jQuery Validation http://jqueryvalidation.org/
 			wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );

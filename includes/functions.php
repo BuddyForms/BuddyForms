@@ -192,6 +192,22 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
 	return $wp_login_form;
 }
 
+
+add_filter('login_form_bottom', 'baumensch_register_link');
+function baumensch_register_link($wp_login_form){
+	$url = home_url( '/jetzt-registrieren/' ); // new login page
+
+	$wp_login_form .= '<a href="' . $url . '">Jetzt Registrieren</a>';
+	return $wp_login_form;
+}
+
+
+add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
+function buddyforms_add_lost_password_link() {
+	return '<a href="' . wp_lostpassword_url( get_permalink() ) . '">' . __('Lost Password?', 'buddyforms') . '</a>';
+}
+
+
 // Helper Function to get the Get the REQUEST_URI Vars
 /**
  * @param $name
