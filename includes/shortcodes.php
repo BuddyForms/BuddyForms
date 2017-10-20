@@ -276,8 +276,9 @@ function buddyforms_view_login_form( $args ) {
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
-		'form_slug'   => 'none',
-		'title'       => 'Login',
+		'form_slug'     => 'none',
+		'redirect_url'  => '',
+		'title'         => 'Login',
 	), $args ) );
 
 	if ( is_user_logged_in() ) {
@@ -288,3 +289,22 @@ function buddyforms_view_login_form( $args ) {
 
 	return $tmp;
 }
+
+
+// password reset form
+function buddyforms_reset_password_form($args) {
+
+	extract( shortcode_atts( array(
+		'redirect_url' => '',
+	), $args ) );
+
+
+	if(is_user_logged_in()) {
+		return buddyforms_change_password_form( $redirect_url );
+	} else {
+
+		$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
+		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __('You need to login to change your password.') );
+	}
+}
+add_shortcode('buddyforms_reset_password', 'buddyforms_reset_password_form');

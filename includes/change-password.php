@@ -5,7 +5,7 @@
 // Link: https://pippinsplugins.com/change-password-form-short-code/
 //
 
-function buddyforms_change_password_form() {
+function buddyforms_change_password_form($redirect_url = '') {
 	global $post;
 
 	if (is_singular()) :
@@ -20,9 +20,16 @@ function buddyforms_change_password_form() {
 	endif;
 	$redirect = $current_url;
 
-	ob_start();
+    if( ! empty( $redirect_url ) ){
+	    $redirect = $redirect_url;
+    }
 
+    ob_start();
+
+	//
 	// show any error messages after form submission
+    //
+
 	buddyforms_show_error_messages(); ?>
 
 	<?php if(isset($_GET['password-reset']) && $_GET['password-reset'] == 'true') { ?>
@@ -47,7 +54,7 @@ function buddyforms_change_password_form() {
 
 
 
-				<span id="password-strength"></span>
+				<div><span id="password-strength"></span></div>
 				<input id="buddyforms_password_submit" disabled="disabled" type="submit" value="<?php _e('Change Password', 'buddyforms'); ?>"/>
 
 			</p>
@@ -56,20 +63,6 @@ function buddyforms_change_password_form() {
 	<?php
 	return ob_get_clean();
 }
-
-// password reset form
-function buddyforms_reset_password_form() {
-	if(is_user_logged_in()) {
-		return buddyforms_change_password_form();
-	} else {
-
-		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-
-		return buddyforms_get_wp_login_form($buddyforms_registration_form, __('You need to login to change your password.'));
-	}
-}
-add_shortcode('buddyforms_reset_password', 'buddyforms_reset_password_form');
-
 
 function buddyforms_reset_password() {
 	// reset a users password

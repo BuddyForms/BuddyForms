@@ -178,6 +178,11 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
 
 	if ( $form_slug != 'none' ) {
 
+	    // Das funktioniert so nur wenn permission "Public Submittable" is set to "Logged in users only"!!!!!
+        // Und labels??? wass is mit de labels
+
+
+        // Display a registration form
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
 
