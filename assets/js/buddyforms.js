@@ -145,9 +145,17 @@ function checkPasswordStrength( $pass1,
     // Get the password strength
     var strength = wp.passwordStrength.meter( pass1, blacklistArray, pass2 );
 
-    // Add the strength meter results
-    switch ( strength ) {
+    var hint_html = '<p><small class="buddyforms-password-hint">' + pwsL10n.hint_text + '</small></p>';
 
+    // Add the strength meter results
+    console.log('strength ' + strength + 'required_strength ' + pwsL10n.required_strength);
+    $('.buddyforms-password-hint').remove();
+
+
+    switch ( strength ) {
+        case 0: case 1:
+            $strengthResult.addClass( 'short' ).html( pwsL10n.short );
+            break;
         case 2:
             $strengthResult.addClass( 'bad' ).html( pwsL10n.bad );
             break;
@@ -172,8 +180,12 @@ function checkPasswordStrength( $pass1,
     // The meter function returns a result even if pass2 is empty,
     // enable only the submit button if the password is strong and
     // both passwords are filled up
-    if ( 4 === strength && '' !== pass2.trim() ) {
+
+    if ( pwsL10n.required_strength <= strength && strength != 5 && '' !== pass2.trim() ) {
+        $('.buddyforms-password-hint').remove();
         $submitButton.removeAttr( 'disabled' );
+    } else {
+        $strengthResult.after( hint_html );
     }
 
     return strength;
