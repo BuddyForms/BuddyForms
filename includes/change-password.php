@@ -95,7 +95,10 @@ function buddyforms_reset_password() {
 				);
 				wp_update_user($user_data);
 				// send password change email here (if WP doesn't)
-				wp_redirect(add_query_arg('password-reset', 'true', $_POST['buddyforms_redirect']));
+
+                $redirect_url = apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] );
+
+				wp_redirect(add_query_arg('password-reset', 'true', $redirect_url));
 				exit;
 			}
 		}
