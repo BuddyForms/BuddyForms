@@ -62,7 +62,7 @@ function from_setup_form_type(value) {
             jQuery('.bf_show_if_f_type_post').hide();
 
             // Hide after submission post options
-            jQuery('#bf-after-submission-action option[value=display_form]').hide();
+            //jQuery('#bf-after-submission-action option[value=display_form]').hide();
             jQuery('#bf-after-submission-action option[value=display_post]').hide();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
 
