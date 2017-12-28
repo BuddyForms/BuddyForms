@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param $form
+ * @param Form $form
  * @param $args
  */
 function buddyforms_form_elements( $form, $args ) {
@@ -579,6 +579,9 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
 
 
+						break;
+					case 'upload':
+						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug ) ) );
 						break;
 					case 'file':
 
