@@ -404,8 +404,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			//DropZone
 			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
+            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ) );
 			wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ) );
+            $params = array(
+
+                'upload'=>admin_url( 'admin-ajax.php?action=handle_dropped_media' ),
+                'delete'=>admin_url( 'admin-ajax.php?action=handle_deleted_media' ),
+                'ajaxnonce' => wp_create_nonce('fac_drop')
+            );
+            wp_localize_script("buddyforms_dropzone_initializer", "dropParam", $params);
 
 			// jQuery Select2 // https://select2.github.io/
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
