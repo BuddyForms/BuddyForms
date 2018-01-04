@@ -6,6 +6,7 @@ function buddyforms_metabox_form_designer() {
 }
 
 function buddyforms_layout_defaults() {
+
 	$json['labels_disable_css']    = '';
 	$json['labels_layout']    = 'inline';
 	$json['label_font_size']  = '';
@@ -47,11 +48,13 @@ function buddyforms_layout_defaults() {
 	$json['button_font_color_hover']       = array( 'color' => '', 'style' => 'auto' );
 	$json['button_border_color_hover']     = array( 'color' => '', 'style' => 'auto' );
 
-
+	$json['other_elements_disable_css']    = '';
 	$json['radio_button_alignment'] = 'inline';
 	$json['checkbox_alignment']     = 'inline';
 
 	$json['custom_css'] = '';
+
+	$json['extras_disable_all_css']    = '';
 
 	return $json;
 
@@ -191,8 +194,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 	) );
 
 
-	// Form Elements
+	// Other Form Elements
 	$form_setup['Form Elements'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Other Elements</h4>' );
+
+	$other_elements_disable_css  = isset( $options['layout']['other_elements_disable_css'] ) ? $options['layout']['other_elements_disable_css'] : $defaults['other_elements_disable_css'];
+	$form_setup['Form Elements'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[other_elements_disable_css]", array(
+		'disable'  => __( 'Disable CSS for these form elements, on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $other_elements_disable_css,
+		'shortDesc' => ''
+	) );
 
 	$radio_button_alignment        = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : $defaults['radio_button_alignment'];
 	$form_setup['Form Elements'][] = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
@@ -404,6 +415,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		'shortDesc' => __( 'Add custom styles to the form', 'buddyforms' )
 	) );
 
+	// Extras
+	$extras_disable_all_css = isset( $options['layout']['extras_disable_all_css'] ) ? $options['layout']['extras_disable_all_css'] : $defaults['extras_disable_all_css'];
+	$form_setup['Extras'][] = new Element_Checkbox( 'Disable all CSS', $option_name . "[extras_disable_all_css]", array(
+		'disable'  => __( 'Disable all BuddyForms CSS on this form', 'buddyforms' ),
+	), array(
+		'value'     => $extras_disable_all_css,
+		'shortDesc' => ''
+	) );
+
+
 
 	if ( get_post_type() == 'buddyforms' ) { ?>
         <script>
@@ -499,8 +520,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		echo '</select>';
 		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner  spinner"></span> Load Layout Settings</a>';
 		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset  spinner"></span> Reset</a></p>';
-	};
-	?>
+	}; ?>
 
     <div class="tabs tabbable tabs-left">
         <ul class="nav nav-tabs nav-pills">
