@@ -69,9 +69,10 @@ function buddyforms_form_html( $args ) {
 	$bfdesign = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 
 
-	// Alright, let's some defaults
+	// Alright, let's set some defaults
 
 	// Labels
+	$bfdesign['labels_disable_css']        = isset( $bfdesign['labels_disable_css'] ) ? $bfdesign['labels_disable_css'] : '';
 	$bfdesign['labels_layout']             = isset( $bfdesign['labels_layout'] ) ? $bfdesign['labels_layout'] : 'inline';
 	$bfdesign['label_font_size']           = isset( $bfdesign['label_font_size'] ) ? $bfdesign['label_font_size'] : '';
 	$bfdesign['label_font_color']['style'] = isset( $bfdesign['label_font_color']['style'] ) ? $bfdesign['label_font_color']['style'] : 'auto';
@@ -122,31 +123,36 @@ function buddyforms_form_html( $args ) {
 	ob_start(); ?>
 
     <style>
-        /* Design Options - Labels */
-        .the_buddyforms_form .bf_field_group label {
-            margin-right: 10px;
-        <?php
-		// Font Size
-		if( $bfdesign['label_font_size'] != '' ) {
-			echo 'font-size: ' . $bfdesign['label_font_size'] . 'px;';
-		}
-		// Font Color
-		if( $bfdesign['label_font_color']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['label_font_color']['color'] . ';';
-		}
-		// Font Weight
-		if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) {
-			echo 'font-weight: bold;';
-		} else {
-			echo 'font-weight: normal;';
-		}
-		// Font Style
-		if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{
-			echo 'font-style: italic;';
-		} else {
-			echo 'font-style: normal;';
-		} ?>;
-        }
+
+				<?php
+				// only output CSS for labels if the option to disable CSS is unchecked
+				if( $bfdesign['labels_disable_css'] == '' ) { ?>
+			    /* Design Options - Labels */
+			    .the_buddyforms_form .bf_field_group label {
+			        margin-right: 10px;
+					    <?php
+							// Font Size
+							if( $bfdesign['label_font_size'] != '' ) {
+								echo 'font-size: ' . $bfdesign['label_font_size'] . 'px;';
+							}
+							// Font Color
+							if( $bfdesign['label_font_color']['style'] == 'color' ) {
+								echo 'color: ' . $bfdesign['label_font_color']['color'] . ';';
+							}
+							// Font Weight
+							if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'bold' ) {
+								echo 'font-weight: bold;';
+							} else {
+								echo 'font-weight: normal;';
+							}
+							// Font Style
+							if( $bfdesign['label_font_style'] == 'bolditalic' || $bfdesign['label_font_style'] == 'italic' ) 	{
+								echo 'font-style: italic;';
+							} else {
+								echo 'font-style: normal;';
+							} ?>;
+			    }
+				<?php } ?>
 
         /* Design Options - Form Elements */
         .the_buddyforms_form .bf-input .radio {
@@ -157,174 +163,190 @@ function buddyforms_form_html( $args ) {
             display: <?php echo $bfdesign['checkbox_alignment']; ?>;
         }
 
-        /* Design Options - Text Fields */
-        .the_buddyforms_form .bf-input textarea,
-        .the_buddyforms_form .bf-input .form-control {
-            display: block;
-            width: 100%;
-        <?php
-		// Padding
-		if( $bfdesign['field_padding'] != '' ) {
-			echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
-		}
-		// Background Color
-		if( $bfdesign['field_background_color']['style'] == 'color' ) {
-			echo 'background-color: ' . $bfdesign['field_background_color']['color'] . ';';
-		} elseif( $bfdesign['field_background_color']['style'] == 'transparent' ) {
-			echo 'background-color: transparent;';
-		}
-		// Border Color
-		if( $bfdesign['field_border_color']['style'] == 'color' ) {
-			echo 'border-color: ' . $bfdesign['field_border_color']['color'] . ';';
-		} elseif( $bfdesign['field_border_color']['style'] == 'transparent' ) {
-			echo 'border-color: transparent;';
-		}
-		// Border Width
-		if( $bfdesign['field_border_width'] != '' ) {
-			echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
-		}
-		// Border Radius
-		if( $bfdesign['field_border_radius'] != '' ) {
-			echo 'border-radius: ' . $bfdesign['field_border_radius'] . 'px;';
-		}
-		// Font Size
-		if( $bfdesign['field_font_size'] != '' ) {
-			echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
-		}
-		// Font Color
-		if( $bfdesign['field_font_color']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
-		} ?>
-        }
-
-        /* Design Options - Text Fields Active */
-        .the_buddyforms_form .bf-input textarea:focus,
-        .the_buddyforms_form .bf-input .form-control:focus {
-        <?php
-		// Background Color
-		if( $bfdesign['field_active_background_color']['style'] == 'color' ) {
-			echo 'background-color: ' . $bfdesign['field_active_background_color']['color'] . ';';
-		} elseif( $bfdesign['field_active_background_color']['style'] == 'transparent' ) {
-			echo 'background-color: transparent;';
-		}
-		// Border Color
-		if( $bfdesign['field_active_border_color']['style'] == 'color' ) {
-			echo 'border-color: ' . $bfdesign['field_active_border_color']['color'] . ';';
-		} elseif( $bfdesign['field_active_border_color']['style'] == 'transparent' ) {
-			echo 'border-color: transparent;';
-		}
-		// Font Color
-		if( $bfdesign['field_active_font_color']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['field_active_font_color']['color'] . ';';
-		} ?>
-        }
-
-        <?php // Placeholder Font Color
-		if( $bfdesign['field_placeholder_font_color']['style'] == 'color' ) {
-			echo '.the_buddyforms_form .bf-input textarea::placeholder,
-						.the_buddyforms_form .bf-input .form-control::placeholder {
-								color: ' . $bfdesign['field_placeholder_font_color']['color'] . ';
-							}';
-		} ?>
-
-        /* Design Options - Descriptions */
-        .the_buddyforms_form span.help-inline,
-        .the_buddyforms_form span.help-block {
-            padding: 5px 0;
-        <?php
-		// Font Size
-		if( $bfdesign['desc_font_size'] != '' ) {
-			echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
-		}
-		// Font Color
-		if( $bfdesign['desc_font_color']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['desc_font_color']['color'] . ';';
-		}
-		// Font Style
-		if( $bfdesign['desc_font_style'] == 'italic' ) 	{
-			echo 'font-style: italic;';
-		} else {
-			echo 'font-style: normal;';
-		} ?>;
-        }
-
-        /* Design Options - Buttons */
-        .the_buddyforms_form .form-actions button.bf-submit {
-        <?php
-		// Button Width
-		if( $bfdesign['button_width'] != 'inline' ) {
-			echo 'display: block; width: 100%;'; }
-		else {
-			echo 'display: inline; width: auto;';
-		}
-		// Button Size
-		if( $bfdesign['button_size'] == 'large' ) {
-			echo 'padding: 12px 25px; font-size: 17px;';
-		}
-		if( $bfdesign['button_size'] == 'xlarge' ) {
-			echo 'padding: 15px 32px; font-size: 19px;';
-		}
-		// Background Color
-		if( $bfdesign['button_background_color']['style'] == 'color' ) {
-			echo 'background-color: ' . $bfdesign['button_background_color']['color'] . ';';
-		} elseif( $bfdesign['button_background_color']['style'] == 'transparent' ) {
-			echo 'background-color: transparent;';
-		}
-		// Font Color
-		if( $bfdesign['button_font_color']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['button_font_color']['color'] . ';';
-		}
-		// Border Radius
-		if( $bfdesign['button_border_radius'] != '' ) {
-			echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
-		}
-		// Border Width
-		if( $bfdesign['button_border_width'] != '' ) {
-			echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
-		}
-		// Border Color
-		if( $bfdesign['button_border_color']['style'] == 'color' ) {
-			echo 'border-color: ' . $bfdesign['button_border_color']['color'] . ';';
-		} elseif( $bfdesign['button_border_color']['style'] == 'transparent' ) {
-			echo 'border-color: transparent;';
-		} ?>
-        }
-
-        .the_buddyforms_form form .form-actions {
-            text-align: <?php echo $bfdesign['button_alignment']; ?>;
-        }
-
-        <?php // Button Width Behaviour -- if always on block
-		if( $bfdesign['button_width'] != 'block' ) {
-			echo '@media (min-width: 768px) {
-							.the_buddyforms_form .form-actions button.bf-submit {
-								display: inline;
-								width: auto;
+				<?php
+				// only output CSS for form elements if the option to disable CSS is unchecked
+				if( $bfdesign['field_disable_css'] == '' ) { ?>
+	        /* Design Options - Text Fields */
+	        .the_buddyforms_form .bf-input textarea,
+	        .the_buddyforms_form .bf-input .form-control {
+	            display: block;
+	            width: 100%;
+	        		<?php
+							// Padding
+							if( $bfdesign['field_padding'] != '' ) {
+								echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
 							}
-						}';
-			} ?>
+							// Background Color
+							if( $bfdesign['field_background_color']['style'] == 'color' ) {
+								echo 'background-color: ' . $bfdesign['field_background_color']['color'] . ';';
+							} elseif( $bfdesign['field_background_color']['style'] == 'transparent' ) {
+								echo 'background-color: transparent;';
+							}
+							// Border Color
+							if( $bfdesign['field_border_color']['style'] == 'color' ) {
+								echo 'border-color: ' . $bfdesign['field_border_color']['color'] . ';';
+							} elseif( $bfdesign['field_border_color']['style'] == 'transparent' ) {
+								echo 'border-color: transparent;';
+							}
+							// Border Width
+							if( $bfdesign['field_border_width'] != '' ) {
+								echo 'border-width: ' . $bfdesign['field_border_width'] . 'px; border-style: solid;';
+							}
+							// Border Radius
+							if( $bfdesign['field_border_radius'] != '' ) {
+								echo 'border-radius: ' . $bfdesign['field_border_radius'] . 'px;';
+							}
+							// Font Size
+							if( $bfdesign['field_font_size'] != '' ) {
+								echo 'font-size: ' . $bfdesign['field_font_size'] . 'px;';
+							}
+							// Font Color
+							if( $bfdesign['field_font_color']['style'] == 'color' ) {
+								echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
+							} ?>
+	        }
 
-        /* Design Options - Buttons Hover State */
-        .the_buddyforms_form .form-actions button.bf-submit:hover,
-        .the_buddyforms_form .form-actions button.bf-submit:focus {
-        <?php
-		// Background Color
-		if( $bfdesign['button_background_color_hover']['style'] == 'color' ) {
-			echo 'background-color: ' . $bfdesign['button_background_color_hover']['color'] . ';';
-		} elseif( $bfdesign['button_background_color_hover']['style'] == 'transparent' ) {
-			echo 'background-color: transparent;';
-		}
-		// Font Color
-		if( $bfdesign['button_font_color_hover']['style'] == 'color' ) {
-			echo 'color: ' . $bfdesign['button_font_color_hover']['color'] . ';';
-		}
-		// Border Color
-		if( $bfdesign['button_border_color_hover']['style'] == 'color' ) {
-			echo 'border-color: ' . $bfdesign['button_border_color_hover']['color'] . ';';
-		} elseif( $bfdesign['button_border_color_hover']['style'] == 'transparent' ) {
-			echo 'border-color: transparent;';
-		} ?>
-        }
+	        /* Design Options - Text Fields Active */
+	        .the_buddyforms_form .bf-input textarea:focus,
+	        .the_buddyforms_form .bf-input .form-control:focus {
+	        	<?php
+						// Background Color
+						if( $bfdesign['field_active_background_color']['style'] == 'color' ) {
+							echo 'background-color: ' . $bfdesign['field_active_background_color']['color'] . ';';
+						} elseif( $bfdesign['field_active_background_color']['style'] == 'transparent' ) {
+							echo 'background-color: transparent;';
+						}
+						// Border Color
+						if( $bfdesign['field_active_border_color']['style'] == 'color' ) {
+							echo 'border-color: ' . $bfdesign['field_active_border_color']['color'] . ';';
+						} elseif( $bfdesign['field_active_border_color']['style'] == 'transparent' ) {
+							echo 'border-color: transparent;';
+						}
+						// Font Color
+						if( $bfdesign['field_active_font_color']['style'] == 'color' ) {
+							echo 'color: ' . $bfdesign['field_active_font_color']['color'] . ';';
+						} ?>
+	        }
+
+	        <?php // Placeholder Font Color
+					if( $bfdesign['field_placeholder_font_color']['style'] == 'color' ) {
+						echo '.the_buddyforms_form .bf-input textarea::placeholder,
+									.the_buddyforms_form .bf-input .form-control::placeholder {
+											color: ' . $bfdesign['field_placeholder_font_color']['color'] . ';
+										}';
+					} ?>
+
+				<?php } ?>
+
+
+				<?php
+				// only output CSS for descriptions if the option to disable CSS is unchecked
+				if( $bfdesign['desc_disable_css'] == '' ) { ?>
+
+	        /* Design Options - Descriptions */
+	        .the_buddyforms_form span.help-inline,
+	        .the_buddyforms_form span.help-block {
+	            padding: 5px 0;
+	        		<?php
+							// Font Size
+							if( $bfdesign['desc_font_size'] != '' ) {
+								echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
+							}
+							// Font Color
+							if( $bfdesign['desc_font_color']['style'] == 'color' ) {
+								echo 'color: ' . $bfdesign['desc_font_color']['color'] . ';';
+							}
+							// Font Style
+							if( $bfdesign['desc_font_style'] == 'italic' ) 	{
+								echo 'font-style: italic;';
+							} else {
+								echo 'font-style: normal;';
+							} ?>;
+	        }
+				<?php } ?>
+
+
+				<?php
+				// only output CSS for buttons if the option to disable CSS is unchecked
+				if( $bfdesign['button_disable_css'] == '' ) { ?>
+	        /* Design Options - Buttons */
+	        .the_buddyforms_form .form-actions button.bf-submit {
+	        	<?php
+						// Button Width
+						if( $bfdesign['button_width'] != 'inline' ) {
+							echo 'display: block; width: 100%;'; }
+						else {
+							echo 'display: inline; width: auto;';
+						}
+						// Button Size
+						if( $bfdesign['button_size'] == 'large' ) {
+							echo 'padding: 12px 25px; font-size: 17px;';
+						}
+						if( $bfdesign['button_size'] == 'xlarge' ) {
+							echo 'padding: 15px 32px; font-size: 19px;';
+						}
+						// Background Color
+						if( $bfdesign['button_background_color']['style'] == 'color' ) {
+							echo 'background-color: ' . $bfdesign['button_background_color']['color'] . ';';
+						} elseif( $bfdesign['button_background_color']['style'] == 'transparent' ) {
+							echo 'background-color: transparent;';
+						}
+						// Font Color
+						if( $bfdesign['button_font_color']['style'] == 'color' ) {
+							echo 'color: ' . $bfdesign['button_font_color']['color'] . ';';
+						}
+						// Border Radius
+						if( $bfdesign['button_border_radius'] != '' ) {
+							echo 'border-radius: ' . $bfdesign['button_border_radius'] . 'px;';
+						}
+						// Border Width
+						if( $bfdesign['button_border_width'] != '' ) {
+							echo 'border-width: ' . $bfdesign['button_border_width'] . 'px; border-style: solid;';
+						}
+						// Border Color
+						if( $bfdesign['button_border_color']['style'] == 'color' ) {
+							echo 'border-color: ' . $bfdesign['button_border_color']['color'] . ';';
+						} elseif( $bfdesign['button_border_color']['style'] == 'transparent' ) {
+							echo 'border-color: transparent;';
+						} ?>
+	        }
+
+	        .the_buddyforms_form form .form-actions {
+	            text-align: <?php echo $bfdesign['button_alignment']; ?>;
+	        }
+
+	        <?php // Button Width Behaviour -- if always on block
+					if( $bfdesign['button_width'] != 'block' ) {
+						echo '@media (min-width: 768px) {
+										.the_buddyforms_form .form-actions button.bf-submit {
+											display: inline;
+											width: auto;
+										}
+									}';
+					} ?>
+
+	        /* Design Options - Buttons Hover State */
+	        .the_buddyforms_form .form-actions button.bf-submit:hover,
+	        .the_buddyforms_form .form-actions button.bf-submit:focus {
+	        	<?php
+						// Background Color
+						if( $bfdesign['button_background_color_hover']['style'] == 'color' ) {
+							echo 'background-color: ' . $bfdesign['button_background_color_hover']['color'] . ';';
+						} elseif( $bfdesign['button_background_color_hover']['style'] == 'transparent' ) {
+							echo 'background-color: transparent;';
+						}
+						// Font Color
+						if( $bfdesign['button_font_color_hover']['style'] == 'color' ) {
+							echo 'color: ' . $bfdesign['button_font_color_hover']['color'] . ';';
+						}
+						// Border Color
+						if( $bfdesign['button_border_color_hover']['style'] == 'color' ) {
+							echo 'border-color: ' . $bfdesign['button_border_color_hover']['color'] . ';';
+						} elseif( $bfdesign['button_border_color_hover']['style'] == 'transparent' ) {
+							echo 'border-color: transparent;';
+						} ?>
+	        }
+				<?php } ?>
 
         <?php echo $bfdesign['custom_css']; ?>
 
