@@ -200,14 +200,11 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms_posts_table .table {
     width: 100%;
     max-width: 100%;
-    border: 3px solid #e1e1e1;
+    border: none;
     border-top: 0;
 }
 
 @media screen and (max-width: 767px) {
-    .buddyforms_posts_table .table {
-        border-top: 3px solid #e1e1e1;
-    }
 
     .buddyforms_posts_table .table thead {
         position: absolute;
@@ -245,6 +242,16 @@ ul.buddyforms-list .publish .item-status {
     min-width: 165px;
 }
 
+.buddyforms_posts_table .table-striped>tbody>tr:nth-of-type(odd) {
+    border-top: none;
+    background: transparent;
+}
+
+.buddyforms_posts_table .table-striped>tbody>tr:nth-of-type(2n) {
+    border-top: none;
+    background: rgba(0,0,0,0.04);
+}
+
 .buddyforms_posts_table .table th, .buddyforms_posts_table .table td {
     border-top: 0;
     border: 0;
@@ -267,7 +274,7 @@ ul.buddyforms-list .publish .item-status {
     letter-spacing: -0.025em;
     padding: 7px 10px;
     display: block;
-    background-color: #e1e1e1;
+    background-color: transparent;
 }
 
 .buddyforms_posts_table .table tbody td {
@@ -330,21 +337,21 @@ ul.buddyforms-list .publish .item-status {
 }
 
 .buddyforms_posts_table .table-item-status {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 24px;
-    letter-spacing: 0.2;
+    /* letter-spacing: 0.2; */
     display: inline-block;
-    padding: 0 11px;
+    /* padding: 0 11px; */
     margin: 0 5px 0 0;
-    -webkit-border-radius: 12px;
+    /* -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
     border-radius: 12px;
     color: #fff;
     background-color: #1ec0ed;
-    border: 1px solid #23a6cb;
+    border: 1px solid #23a6cb; */
     font-weight: normal;
-    font-family: helvetica, arial, sans-serif;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1);
+    /* font-family: helvetica, arial, sans-serif; */
+    /* text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1); */
 }
 
 @media screen and (min-width: 768px) {
@@ -358,22 +365,23 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms_posts_table .publish .draft .table-item-status,
 .buddyforms_posts_table .publish .edit-draft .table-item-status {
     color: #888;
+}
+
+.buddyforms_posts_table .publish .table-item-status:before {
     background-color: #e3e3e3;
-    border: 1px solid #ccc;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+    content: "";
+    padding: 0px 7px;
+    border-radius: 50%;
+    margin-right: 4px;
 }
 
-.buddyforms_posts_table .bf-pending .table-item-status,
-.buddyforms_posts_table .publish .bf-pending .table-item-status {
-    color: #fff;
-    background-color: #f3a93c;
-    border: 1px solid #d88f37;
-}
-
-.buddyforms_posts_table .publish .table-item-status {
-    color: #fff;
+.buddyforms_posts_table .publish .table-item-status:before {
     background-color: #70d986;
-    border: 1px solid #6abf6a;
+}
+
+.buddyforms_posts_table .bf-pending .table-item-status:before,
+.buddyforms_posts_table .publish .bf-pending .table-item-status:before {
+    background-color: #f3a93c;
 }
 
 .buddyforms_posts_table .item-status-action {
@@ -485,11 +493,15 @@ ul.buddyforms-list .publish .item-status {
     box-sizing: border-box;
 }
 
-.dashicons {
+.buddyforms-posts-content .dashicons {
     line-height: inherit;
     font-size: inherit;
     width: auto;
     height: auto;
+}
+.buddyforms-posts-content .dashicons:before {
+    font-size: 19px;
+    margin-right: 5px;
 }
 
 /* Quick Column Grid for BuddyForms Frontend */
