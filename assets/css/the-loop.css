@@ -26,9 +26,9 @@ ul.buddyforms-list li.bf-submission {
     list-style: none outside none;
 }
 
-ul.buddyforms-list li.bf-submission:hover {
-    background: rgba(0, 0, 0, 0.03);
-}
+/* ul.buddyforms-list li.bf-submission:hover {
+    background: rgba(0, 0, 0, 0.02);
+} */
 
 ul.buddyforms-list li .item {
     overflow: auto;
@@ -36,7 +36,7 @@ ul.buddyforms-list li .item {
     margin: 0;
 }
 
-ul.buddyforms-list li img.avatar {
+ul.buddyforms-list li img.thumb {
     float: left;
     margin: 3px 10px 10px 2px;
 }
@@ -52,7 +52,7 @@ ul.buddyforms-list.item-list li div.item-desc {
 ul.buddyforms-list li div.action {
     clear: both;
     margin-bottom: 20px;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 ul.buddyforms-list li div.meta {
@@ -60,54 +60,49 @@ ul.buddyforms-list li div.meta {
 }
 
 ul.buddyforms-list .item-status {
-    font-size: 12px;
-    line-height: 24px;
-    letter-spacing: 0.2;
     display: inline-block;
-    padding: 0 11px;
-    margin: 0 5px 0 0;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-    color: #fff;
-    background-color: #1ec0ed;
-    border: 1px solid #23a6cb;
+    margin: 5px 5px 0 0;
     font-weight: normal;
-    font-family: helvetica, arial, sans-serif;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1);
 }
 
-ul.buddyforms-list .draft .item-status,
-ul.buddyforms-list .edit-draft .item-status,
-ul.buddyforms-list .publish .draft .item-status,
-ul.buddyforms-list .publish .edit-draft .item-status {
-    color: #888;
+ul.buddyforms-list .item-status:before {
     background-color: #e3e3e3;
-    border: 1px solid #ccc;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+    content: "";
+    padding: 0px 7px;
+    border-radius: 50%;
+    margin-right: 4px;
 }
 
-ul.buddyforms-list .bf-pending .item-status,
-ul.buddyforms-list .publish .bf-pending .item-status {
-    color: #fff;
-    background-color: #f3a93c;
-    border: 1px solid #d88f37;
-}
-
-ul.buddyforms-list .publish .item-status {
-    color: #fff;
+ul.buddyforms-list .publish .item-status:before {
     background-color: #70d986;
-    border: 1px solid #6abf6a;
+}
+
+ul.buddyforms-list .draft .item-status:before,
+ul.buddyforms-list .publish .draft .item-status:before,
+ul.buddyforms-list .edit-draft .item-status:before,
+ul.buddyforms-list .publish .edit-draft .item-status:before {
+  background-color: #e3e3e3;
+}
+
+ul.buddyforms-list .bf-pending .item-status:before,
+ul.buddyforms-list .publish .bf-pending .item-status:before {
+    background-color: #f3a93c;
+}
+
+ul.buddyforms-list .publish-date {
+  margin: 5px 0 5px 0;
+  font-size: 11px;
+  color: #888;
 }
 
 /* Action Links - Edit and Delete */
-.buddyforms-list .meta .edit_links {
+.buddyforms-list .edit_links {
     display: inline-block;
     padding: 0;
-    margin: 0;
+    margin: 5px 0 10px;
 }
 
-.buddyforms-list .meta .edit_links li {
+.buddyforms-list .edit_links li {
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -115,20 +110,33 @@ ul.buddyforms-list .publish .item-status {
     min-height: 0;
 }
 
-.buddyforms-list .meta .edit_links a {
-    padding: 0;
-    margin: 0;
+.buddyforms-list .edit_links a {
+    padding: 5px 10px;
+    margin: 0 10px 0 0;
     text-decoration: none;
-    border: none;
+    background: #f9f9f9;
+    border: 1px solid #aaa;
+    border: 1px solid rgba(0,0,0,0.2);
     text-shadow: none;
     box-shadow: none;
+    border-radius: 3px;
+    line-height: 1;
+    font-size: 13px;
+    color: #888;
 }
 
-.buddyforms-list .edit_links .dashicons {
-    line-height: 1.2;
+.buddyforms-list .edit_links a:hover,
+.buddyforms-list .edit_links a:focus {
+  border: 1px solid #8f8f8f;
+  border: 1px solid rgba(0,0,0,0.4);
 }
 
-.dashicons.disabled {
+.buddyforms-list .edit_links .dashicons:before {
+    line-height: 1.1;
+    font-size: 15px;
+}
+
+.buddyforms-list .dashicons.disabled {
     opacity: 0.5;
 }
 
@@ -141,13 +149,15 @@ ul.buddyforms-list .publish .item-status {
 }
 
 .buddyforms-list .buddyforms-list-sub .item {
-    font-size: 85%;
     padding: 0;
 }
 
-.buddyforms-list-sub .item-avatar {
+.buddyforms-list-sub img {
     width: 50px;
     height: auto;
+    border-radius: 0;
+    float: left;
+    margin: 5px 5px 5px 0;
 }
 
 .bf-submission-sub {
@@ -172,7 +182,7 @@ ul.buddyforms-list .publish .item-status {
         float: right;
         text-align: left;
         min-width: 200px;
-        font-size: 70%;
+        font-size: 13px;
         clear: none;
     }
 
@@ -339,19 +349,9 @@ ul.buddyforms-list .publish .item-status {
 .buddyforms_posts_table .table-item-status {
     font-size: 13px;
     line-height: 24px;
-    /* letter-spacing: 0.2; */
     display: inline-block;
-    /* padding: 0 11px; */
     margin: 0 5px 0 0;
-    /* -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-    color: #fff;
-    background-color: #1ec0ed;
-    border: 1px solid #23a6cb; */
     font-weight: normal;
-    /* font-family: helvetica, arial, sans-serif; */
-    /* text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1); */
 }
 
 @media screen and (min-width: 768px) {
@@ -367,7 +367,7 @@ ul.buddyforms-list .publish .item-status {
     color: #888;
 }
 
-.buddyforms_posts_table .publish .table-item-status:before {
+.buddyforms_posts_table .table-item-status:before {
     background-color: #e3e3e3;
     content: "";
     padding: 0px 7px;
@@ -377,6 +377,13 @@ ul.buddyforms-list .publish .item-status {
 
 .buddyforms_posts_table .publish .table-item-status:before {
     background-color: #70d986;
+}
+
+.buddyforms_posts_table .draft .table-item-status:before,
+.buddyforms_posts_table .publish .draft .table-item-status:before,
+.buddyforms_posts_table .edit-draft .table-item-status:before,
+.buddyforms_posts_table .publish .edit-draft .table-item-status:before {
+  background-color: #e3e3e3;
 }
 
 .buddyforms_posts_table .bf-pending .table-item-status:before,
@@ -501,7 +508,6 @@ ul.buddyforms-list .publish .item-status {
 }
 .buddyforms-posts-content .dashicons:before {
     font-size: 19px;
-    margin-right: 5px;
 }
 
 /* Quick Column Grid for BuddyForms Frontend */
