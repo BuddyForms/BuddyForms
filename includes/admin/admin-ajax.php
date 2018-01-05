@@ -5,7 +5,7 @@
  *
  *
  */
-
+add_action('wp_ajax_nopriv_handle_dropped_media', 'BMP_handle_dropped_media');
 add_action( 'wp_ajax_handle_dropped_media', 'BMP_handle_dropped_media' );
 function BMP_handle_dropped_media() {
     status_header(200);
@@ -37,6 +37,7 @@ function BMP_handle_dropped_media() {
     echo $newupload;
     die();
 }
+add_action('wp_ajax_nopriv_handle_deleted_media', 'BMP_handle_delete_media');
 add_action( 'wp_ajax_handle_deleted_media', 'BMP_handle_delete_media' );
 
 function BMP_handle_delete_media(){
