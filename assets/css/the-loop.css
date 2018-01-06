@@ -132,7 +132,7 @@ ul.buddyforms-list .publish-date {
 .buddyforms-list .edit_links {
     display: inline-block;
     padding: 0;
-    margin: 5px 0 10px;
+    margin: 5px 0 5px;
 }
 
 .buddyforms-list .edit_links li {
@@ -154,7 +154,7 @@ ul.buddyforms-list .publish-date {
     text-shadow: none;
     box-shadow: none;
     border-radius: 3px;
-    line-height: 1;
+    line-height: 14px;
     color: #888;
 }
 
@@ -177,7 +177,7 @@ ul.buddyforms-list .publish-date {
 
   .buddyforms-list .edit_links {
       display: block;
-      margin-top: 10px;
+      margin: 10px 0 5px;
   }
 
 }
