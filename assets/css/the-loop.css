@@ -37,8 +37,8 @@ ul.buddyforms-list li .item {
 }
 
 ul.buddyforms-list li img.thumb {
-    width: 300px;
-    max-width: auto;
+    width: 420px;
+    max-width: 100%;
     height: auto;
     float: left;
     margin: 3px 10px 10px 2px;

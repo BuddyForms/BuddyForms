@@ -44,8 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="item-thumb">
 							<?php
 							$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
-								300,
-								300
+								420,
+								420
 							), array( 'class' => "thumb" ) );
 							$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
 
