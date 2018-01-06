@@ -44,8 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="item-thumb">
 							<?php
 							$post_thumbnail = get_the_post_thumbnail( get_the_ID(), array(
-								70,
-								70
+								300,
+								300
 							), array( 'class' => "thumb" ) );
 							$post_thumbnail = apply_filters( 'buddyforms_loop_thumbnail', $post_thumbnail );
 
@@ -85,10 +85,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 
           <div class="action">
-						<div class="item-status"><?php echo $post_status_name; ?></div>
             <div class="meta">
+							<div class="item-status"><?php echo $post_status_name; ?></div>
 							<?php buddyforms_post_entry_actions( $form_slug ); ?>
-							<div class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'D j, Y' ) ?></div>
+							<div class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'M j, Y' ) ?></div>
             </div>
           </div>
 
