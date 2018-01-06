@@ -20,7 +20,7 @@ ul.buddyforms-list li.bf-submission {
     overflow: auto;
     min-height: 44px;
     position: relative;
-    padding: 30px 20px 10px;
+    padding: 20px 0 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-left: 0px;
     list-style: none outside none;
@@ -67,7 +67,7 @@ ul.buddyforms-list li .item-desc {
 ul.buddyforms-list li div.action {
     clear: both;
     margin-bottom: 20px;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 ul.buddyforms-list .item-status {
@@ -102,7 +102,7 @@ ul.buddyforms-list .publish .bf-pending .item-status:before {
 
 ul.buddyforms-list .publish-date {
   margin: 5px 0 5px 0;
-  font-size: 11px;
+  font-size: 12px;
   color: #888;
 }
 
@@ -132,7 +132,6 @@ ul.buddyforms-list .publish-date {
     box-shadow: none;
     border-radius: 3px;
     line-height: 1;
-    font-size: 11px;
     color: #888;
 }
 
@@ -143,8 +142,8 @@ ul.buddyforms-list .publish-date {
 }
 
 .buddyforms-list .edit_links .dashicons:before {
-    line-height: 1.7;
-    font-size: 11px;
+    line-height: 14px;
+    font-size: 12px;
 }
 
 .buddyforms-list .dashicons.disabled {
@@ -183,13 +182,10 @@ ul.buddyforms-list .publish-date {
 }
 
 @media (min-width: 768px) {
-    ul.buddyforms-list li.bf-submission {
-        padding: 20px 20px 0;
-    }
 
     ul.buddyforms-list li .item {
         overflow: auto;
-        width: calc(100% - 265px);
+        width: calc(100% - 180px);
         float: left;
     }
 
@@ -199,8 +195,8 @@ ul.buddyforms-list .publish-date {
         margin-bottom: 10px;
         float: right;
         text-align: left;
-        min-width: 200px;
-        font-size: 13px;
+        min-width: 150px;
+        font-size: 12px;
         clear: none;
     }
 
