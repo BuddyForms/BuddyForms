@@ -199,7 +199,8 @@ ul.buddyforms-list .publish-date {
 }
 
 .bf-submission-sub {
-    padding: 15px 0;
+    padding: 15px 0 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .buddyforms-list .buddyforms-list-sub img.thumb {
@@ -224,11 +225,6 @@ ul.buddyforms-list .publish-date {
     .buddyforms-list-sub {
         margin: 0 0 0 46px;
         border-top: none;
-    }
-
-    .bf-submission-sub {
-        padding: 0 0 10px 0;
-        overflow: auto;
     }
 
     .buddyforms-list .buddyforms-list-sub .item {
