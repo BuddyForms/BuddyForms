@@ -26,10 +26,6 @@ ul.buddyforms-list li.bf-submission {
     list-style: none outside none;
 }
 
-/* ul.buddyforms-list li.bf-submission:hover {
-    background: rgba(0, 0, 0, 0.02);
-} */
-
 ul.buddyforms-list li .item {
     overflow: auto;
     padding: 0 0 10px 0;
@@ -48,31 +44,57 @@ ul.buddyforms-list li .item-title {
   clear: both;
 }
 
-@media (min-width: 420px) {
-  ul.buddyforms-list li img.thumb {
-    width: 120px;
-    height: 120px;
-  }
-  ul.buddyforms-list li .item-title {
-    clear: none;
-  }
-}
 ul.buddyforms-list li .item-desc {
     font-size: 13px;
-    margin: 10px 0 0 0px !important;
     margin: 5px 5px 5px 0;
     clear: right;
 }
 
+@media (min-width: 420px) {
+
+  ul.buddyforms-list li img.thumb {
+    width: 120px;
+    height: 120px;
+  }
+
+  ul.buddyforms-list li .item-title {
+    clear: none;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  ul.buddyforms-list li .item {
+      overflow: auto;
+      width: calc(100% - 180px);
+      float: left;
+  }
+
+  ul.buddyforms-list li div.action {
+      max-width: 50px;
+      width: auto;
+      margin-bottom: 10px;
+      float: right;
+      text-align: left;
+      min-width: 150px;
+      font-size: 12px;
+      clear: none;
+  }
+
+}
+
+
+/* The Actions Box */
 ul.buddyforms-list li div.action {
-    clear: both;
+    clear: none;
     margin-bottom: 20px;
     font-size: 12px;
 }
 
 ul.buddyforms-list .item-status {
     display: inline-block;
-    margin: 5px 5px 0 0;
+    margin: 10px 10px 10px 0;
     font-weight: normal;
 }
 
@@ -123,7 +145,8 @@ ul.buddyforms-list .publish-date {
 
 .buddyforms-list .edit_links a {
     padding: 3px 8px;
-    margin: 0 10px 0 0;
+    margin: 0 5px 5px 0;
+    display: inline-block;
     text-decoration: none;
     background: #f9f9f9;
     border: 1px solid #aaa;
@@ -151,64 +174,76 @@ ul.buddyforms-list .publish-date {
 }
 
 @media (min-width: 768px) {
+
   .buddyforms-list .edit_links {
       display: block;
       margin-top: 10px;
   }
+
 }
+
+
 
 /* BuddyForms Sub List */
 .buddyforms-list-sub {
     clear: both;
     padding: 0;
-    margin: 20px 0 0 20px;
+    margin: 0;
     list-style: none;
 }
 
 .buddyforms-list .buddyforms-list-sub .item {
+    width: auto;
+    clear: none;
     padding: 0;
-}
-
-.buddyforms-list-sub img {
-    width: 50px;
-    height: auto;
-    border-radius: 0;
-    float: left;
-    margin: 5px 5px 5px 0;
 }
 
 .bf-submission-sub {
     padding: 15px 0;
 }
 
+.buddyforms-list .buddyforms-list-sub img.thumb {
+    width: 75px;
+    height: auto;
+    border-radius: 0;
+    float: left;
+    margin: 5px 10px 5px 0;
+}
+
+.buddyforms-list .buddyforms-list-sub .item-desc {
+  display: none;
+}
+
+.buddyforms-list .buddyforms-list-sub .action {
+  clear: none;
+  margin-left: 85px;
+}
+
 @media (min-width: 768px) {
 
-    ul.buddyforms-list li .item {
-        overflow: auto;
-        width: calc(100% - 180px);
-        float: left;
-    }
-
-    ul.buddyforms-list li div.action {
-        max-width: 50px;
-        width: auto;
-        margin-bottom: 10px;
-        float: right;
-        text-align: left;
-        min-width: 150px;
-        font-size: 12px;
-        clear: none;
-    }
-
     .buddyforms-list-sub {
-        margin: 0 0 0 20px;
+        margin: 0 0 0 46px;
         border-top: none;
     }
 
     .bf-submission-sub {
-        padding: 10px 0;
+        padding: 0 0 10px 0;
         overflow: auto;
     }
+
+    .buddyforms-list .buddyforms-list-sub .item {
+        clear: none;
+        width: calc(100% - 260px);
+    }
+
+    .buddyforms-list .buddyforms-list-sub .item-desc {
+      display: block;
+    }
+
+    .buddyforms-list .buddyforms-list-sub .action {
+      margin-left: 0;
+    }
+
 }
 
 /* --- BuddyForms View My Posts - TABLE View --- */
@@ -438,6 +473,7 @@ ul.buddyforms-list .publish-date {
 .buddyforms_posts_table .edit_links li,
 .buddyforms_posts_table .edit_links a {
     float: left;
+    margin-right: 5px;
 }
 
 .buddyforms_posts_table .edit_links a {
