@@ -577,3 +577,27 @@ ul.buddyforms-list .publish-date {
         padding: 0 15px 15px;
     }
 }
+
+
+/* Modals */
+
+.ui-dialog {
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+.ui-dialog-titlebar-close {
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: red;
+    color: white;
+    border: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 5px;
+}
+.bf-popup-button {
+    margin: 15px 0 30px;
+}
