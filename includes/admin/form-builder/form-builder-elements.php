@@ -366,6 +366,13 @@ function buddyforms_display_form_element( $args ) {
 			);
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
+        case 'upload':
+
+            $file_limit                           = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '';
+            $form_fields['general']['upload_file_limts'] = new Element_Textbox( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array( 'value' =>  $file_limit , 'id'    => 'upload_file_limit' . $field_id
+               ) );
+
+            break;
 		case 'post_formats':
 			unset( $form_fields['advanced']['slug'] );
 			unset( $form_fields['advanced']['metabox_enabled'] );

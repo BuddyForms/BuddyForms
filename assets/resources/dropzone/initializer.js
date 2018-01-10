@@ -6,12 +6,15 @@ jQuery(document).ready(function ($) {
     $(".dropzone").each(function (index, value) {
         var current = $(this),
             id = current.attr('id'),
+            max_size = current.attr('file_limit'),
             checked = false;
 
        // var myDropzone = new Dropzone("#"+id, { url: "/uploads"});
         Dropzone.autoDiscover = false;
+
         $("#"+id).dropzone({
             url: dropParam.upload,
+            maxFilesize: max_size,
             acceptedFiles: 'image/*',
             success: function (file, response) {
                 file.previewElement.classList.add("dz-success");
