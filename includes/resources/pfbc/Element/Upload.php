@@ -12,7 +12,7 @@ class Element_Upload extends Element_Textbox
     /**
      * @var array
      */
-    protected $_attributes = array("type" => "file","file_limit"=>"",);
+    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"");
 
     public function render()
     {
@@ -21,9 +21,10 @@ class Element_Upload extends Element_Textbox
         $box = ob_get_contents();
         ob_end_clean();
         $max_size =  $this->getAttribute('file_limit');
+        $accepted_files =  $this->getAttribute('accepted_files');
         $id = $this->getAttribute('id');
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size'>
+        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$accepted_files'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                       <span>Drop files here to upload</span>
                                  </div>

@@ -583,10 +583,14 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'upload':
 
                         $max_size = '2';
+                        $accepted_files = 'image/*';
                         if (  isset( $customfield['file_limit'] ) ) {
                             $max_size = $customfield['file_limit'];
                         }
-						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size ) ) );
+                        if (  isset( $customfield['accepted_files'] ) ) {
+                            $accepted_files = $customfield['accepted_files'];
+                        }
+						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files ) ) );
 						break;
 					case 'file':
 
