@@ -369,10 +369,19 @@ function buddyforms_display_form_element( $args ) {
         case 'upload':
 
             $file_limit                           = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '';
-            $accepted_files                           = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) : '';
+            $accepted_files                           = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : '';
+            $multiple_files                           = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ?  $buddyform['form_fields'][ $field_id ]['multiple_files'][0]  : '';
+
             $form_fields['general']['upload_file_limts'] = new Element_Textbox( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array( 'value' =>  $file_limit , 'id'    => 'upload_file_limit' . $field_id
                ) );
             $form_fields['general']['upload_accepted_files'] = new Element_Textbox( '<b>' . __( 'Allowed File Types ', 'buddyforms' ) . '</b> <br/>' . '<i>'. __('Eg.: image/*,application/pdf,.psd','buddyforms').'</i>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", array( 'value' =>  $accepted_files , 'id'    => 'upload_accepted_files' . $field_id));
+            $element = new Element_Checkbox( '<b>' . __( 'Multiple Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array( 'allow' => __( 'Allow multiple files to be upload to this field . ', 'buddyforms' ) ), array(
+                'id'    => 'upload_multiple_files' . $field_id,
+
+                'value' =>   $multiple_files
+            ) );
+
+            $form_fields['general']['upload_multiple_files'] = $element;
 
             break;
 		case 'post_formats':

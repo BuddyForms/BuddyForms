@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
             id = current.attr('id'),
             max_size = current.attr('file_limit'),
             accepted_files = current.attr('accepted_files'),
+            multiple_files = current.attr('multiple_files');
             checked = false;
 
        // var myDropzone = new Dropzone("#"+id, { url: "/uploads"});
@@ -17,6 +18,7 @@ jQuery(document).ready(function ($) {
             url: dropParam.upload,
             maxFilesize: max_size,
             acceptedFiles: accepted_files,
+            maxFiles: multiple_files,
             success: function (file, response) {
                 file.previewElement.classList.add("dz-success");
                 file['attachment_id'] = response; // push the id for future reference
