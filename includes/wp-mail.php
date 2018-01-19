@@ -360,7 +360,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
 	$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
 
-	$emailBody = nl2br( htmlspecialchars( $emailBody ) );
+	//$emailBody = nl2br( htmlspecialchars( $emailBody ) ); todo: find better solution
 
 	$mailheader .= "MIME-Version: 1.0\n";
 	$mailheader .= "X-Priority: 1\n";
