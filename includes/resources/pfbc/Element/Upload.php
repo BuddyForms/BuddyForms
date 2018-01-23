@@ -12,7 +12,7 @@ class Element_Upload extends Element_Textbox
     /**
      * @var array
      */
-    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"");
+    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"");
 
     public function render()
     {

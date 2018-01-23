@@ -371,6 +371,7 @@ function buddyforms_display_form_element( $args ) {
             $file_limit                           = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '';
             $accepted_files                           = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : '';
             $multiple_files                           = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ?  $buddyform['form_fields'][ $field_id ]['multiple_files'][0]  : '';
+            $delete_files                           = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ?  $buddyform['form_fields'][ $field_id ]['delete_files'][0]  : '';
 
             $form_fields['general']['upload_file_limts'] = new Element_Textbox( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array( 'value' =>  $file_limit , 'id'    => 'upload_file_limit' . $field_id
                ) );
@@ -380,8 +381,15 @@ function buddyforms_display_form_element( $args ) {
 
                 'value' =>   $multiple_files
             ) );
+            $element_delete = new Element_Checkbox( '<b>' . __( 'Delete Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][delete_files]", array( 'delete' => __( 'Remove Files when Entry is deleted. ', 'buddyforms' ) ), array(
+                'id'    => 'upload_delete_files' . $field_id,
+
+                'value' =>   $delete_files
+            ) );
 
             $form_fields['general']['upload_multiple_files'] = $element;
+            $form_fields['general']['upload_delete_files'] = $element_delete;
+
 
             break;
 		case 'post_formats':
