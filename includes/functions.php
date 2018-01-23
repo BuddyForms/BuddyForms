@@ -166,15 +166,24 @@ function buddyforms_wp_login_form() {
 /**
  * @return mixed|string|void
  */
-function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
+function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array()) {
 	global $buddyforms;
+
+
+	extract( shortcode_atts( array(
+		'redirect_url'   => home_url(),
+		'label_username' => __( 'Username or Email Address' ),
+		'label_password' => __( 'Password' ),
+		'label_remember' => __( 'Remember Me' ),
+		'label_log_in'   => __( 'Log In' ),
+	), $args ) );
 
 	if ( empty( $title ) ) {
 		$title = __( 'You need to be logged in to view this page', 'buddyforms' );
 	}
 
 	$wp_login_form = '<h3>' . $title . '</h3>';
-	$wp_login_form .= wp_login_form( array( 'echo' => false ) );
+	$wp_login_form .= wp_login_form( array( 'echo' => false, 'redirect' => $redirect_url ) );
 
 	if ( $form_slug != 'none' ) {
 
@@ -182,8 +191,15 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
         // Und labels??? wass is mit de labels
 
 
-        // Display a registration form
-		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
+        // Display a registration form and lOgin Form above
+
+        // das ist wie es gerade ist und das is alles total verdreht
+
+
+
+
+
+		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' ) { // && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none'
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
 
 			set_query_var( 'bf_form_slug', $reg_form_slug );
@@ -200,16 +216,22 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '' ) {
 
 add_filter('login_form_bottom', 'baumensch_register_link');
 function baumensch_register_link($wp_login_form){
-	$url = home_url( '/jetzt-registrieren/' ); // new login page
 
-	$wp_login_form .= '<a href="' . $url . '">Jetzt Registrieren</a>';
+	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+	if ( $buddyforms_registration_page != 'none' ) {
+		$permalink = get_permalink( $buddyforms_registration_page );
+	}
+
+	// new login page
+	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a>';
+
 	return $wp_login_form;
 }
 
 
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
 function buddyforms_add_lost_password_link() {
-	return '<a href="' . wp_lostpassword_url( get_permalink() ) . '">' . __('Lost Password?', 'buddyforms') . '</a>';
+	return '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a>';
 }
 
 

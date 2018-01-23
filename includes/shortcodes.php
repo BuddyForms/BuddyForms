@@ -276,15 +276,19 @@ function buddyforms_view_login_form( $args ) {
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
-		'form_slug'     => 'none',
-		'redirect_url'  => '',
-		'title'         => 'Login',
+		'form_slug'      => 'none',
+		'redirect_url'   => home_url(),
+		'title'          => 'Login',
+		'label_username' => __( 'Username or Email Address' ),
+		'label_password' => __( 'Password' ),
+		'label_remember' => __( 'Remember Me' ),
+		'label_log_in'   => __( 'Log In' ),
 	), $args ) );
 
 	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">' . __( 'Logout', 'buddyforms' ) . '</a>';
 	} else {
-		$tmp = buddyforms_get_wp_login_form( $form_slug, $title );
+		$tmp = buddyforms_get_wp_login_form( $form_slug, $title, $args );
 	}
 
 	return $tmp;
