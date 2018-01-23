@@ -277,7 +277,7 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 							$element = new Element_Radio( $name, $slug, $options, $element_attr );
-
+							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
 							$form->addElement( $element );
 
 						}
@@ -292,7 +292,7 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 							$element = new Element_Checkbox( $name, $slug, $options, $element_attr );
-
+							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
 							$form->addElement( $element );
 
 						}
@@ -307,11 +307,14 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 
-							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
+//							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
 							$element               = new Element_Select( $name, $slug, $options, $element_attr );
 
 							if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 								$element->setAttribute( 'multiple', 'multiple' );
+							}
+							if ( ! empty( $customfield['frontend_reset'][0] ) ) {
+								$element->setAttribute( 'allowClear', 'true' );
 							}
 
 							$form->addElement( $element );

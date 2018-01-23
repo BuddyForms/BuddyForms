@@ -204,6 +204,16 @@ jQuery( document ).ready( function( $ ) {
             );
         }
     );
+
+    //
+    // Reset option for multiple choice fields radio and checkboxes
+    //
+    jQuery(document.body).on('click', '.button.bf_reset_multi_input', function (event) {
+        event.preventDefault();
+        var group_name = jQuery(this).attr('data-group-name');
+        jQuery('input[name="' + group_name + '"]').attr('checked', false);
+        return false;
+    });
 });
 
 

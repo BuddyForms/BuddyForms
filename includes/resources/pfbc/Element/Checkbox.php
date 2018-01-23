@@ -55,6 +55,10 @@ class Element_Checkbox extends OptionElement {
 				echo '</div><div class="checkbox">';
 			}
 		}
-		echo '</div></div>';
+		echo '</div>';
+		if ( $this->getAttribute( 'frontend_reset' ) ) {
+			echo '<a href="#">Reset</a>';
+		}
+		echo '</div>';
 	}
 }

@@ -40,6 +40,9 @@ class Element_Radio extends OptionElement {
 				echo '</div><div class="radio">';
 			}
 		}
+		if ( $this->getAttribute( 'frontend_reset' ) ) {
+			echo '<a href="#">Reset</a>';
+		}
 		echo '</div>';
 	}
 }
