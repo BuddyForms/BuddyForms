@@ -354,15 +354,15 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 				echo '<li>';
 				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span></a>', get_the_ID() );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
 				} else {
-					echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span>' ), get_the_ID(), $form_slug );
+					echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span> ' . __( 'Edit', 'buddyforms' ) . '' ), get_the_ID(), $form_slug );
 				}
 				echo '</li>';
 			}
 			if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) ) {
 				echo '<li>';
-				echo '<a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"></span></a></li>';
+				echo '<a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"></span> ' . __( 'Delete', 'buddyforms' ) . '</a></li>';
 				echo '</li>';
 			}
 
@@ -625,7 +625,7 @@ function buddyforms_add_mce_placeholder_plugin( $plugins ) {
 function buddyforms_tinymce_setup_function( $initArray ) {
 	$initArray['setup'] = 'function(editor) {
                 editor.on("change keyup", function(e){
-                    editor.save(); 
+                    editor.save();
                     jQuery(editor.getElement()).trigger(\'change\');
                 });
             }';
