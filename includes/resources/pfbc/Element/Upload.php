@@ -29,6 +29,7 @@ class Element_Upload extends Element_Textbox
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                       <span>Drop files here to upload</span>
                                  </div>
+                                 <input type='hidden' name='$id' value='' id='field_$id'/>
                 </div>";
         if ($this->bootstrapVersion == 3) {
             echo $box;

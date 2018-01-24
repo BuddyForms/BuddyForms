@@ -22,8 +22,16 @@ jQuery(document).ready(function ($) {
             success: function (file, response) {
                 file.previewElement.classList.add("dz-success");
                 file['attachment_id'] = response; // push the id for future reference
-                var ids = jQuery('#media-ids').val() + ',' + response;
-                jQuery('#media-ids').val(ids);
+                var ids = jQuery('#field_'+id).val() + ',' + response;
+                var idsFormat = "";
+                if(ids[0]==','){
+                     idsFormat = ids.substring(1,ids.length);
+                }
+                else{
+                    idsFormat = ids;
+                }
+
+                jQuery('#field_'+id).val(idsFormat);
             },
             error: function (file, response) {
                 file.previewElement.classList.add("dz-error");
@@ -32,6 +40,19 @@ jQuery(document).ready(function ($) {
             addRemoveLinks: true,
             removedfile: function(file) {
                 var attachment_id = file.attachment_id;
+                var ids = jQuery('#field_'+id).val();
+
+                var remainigIds = ids.replace(attachment_id,"");
+                if(remainigIds[0]==','){
+                    remainigIds = remainigIds.substring(1,ids.length);
+                }
+                var lastChar = remainigIds[remainigIds.length-1];
+                if(lastChar==','){
+                    remainigIds = remainigIds.slice(0, -1);
+                }
+
+
+                jQuery('#field_'+id).val(remainigIds);
                 jQuery.ajax({
                     type: 'POST',
                     url: dropParam.delete,
