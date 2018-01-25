@@ -158,6 +158,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
+	    global $buddyforms;
 		$column_val = get_post_meta( $item['ID'], $column_name, true );
 
 		if ( is_array( $column_val ) ) {
@@ -165,7 +166,23 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				echo $val;
 			}
 		} else {
-			echo wp_trim_words( $column_val, 25 );
+		    //Check if the column is of an Upload field
+            $result = $column_val;
+            $formSlug= $_GET['form_slug'];
+            $buddyFData = isset($buddyforms[$formSlug]['form_fields']) ?$buddyforms[$formSlug]['form_fields']:[] ;
+            foreach ($buddyFData as $key=>$value){
+                $field = $value['slug'];
+                $type  = $value['type'];
+                if( $field == $column_name && $type == 'upload'){
+                    $result = "";
+                    $attachmet_id = explode(",",$column_val);
+                    foreach ($attachmet_id as $id){
+                        $url = wp_get_attachment_url( $id );
+                        $result .= " <a style='vertical-align: top;' target='_blank' href='" .  $url . "'>$id</a>,";
+                    }
+                }
+            }
+			echo  (rtrim(trim($result), ','));
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item['ID'] );
