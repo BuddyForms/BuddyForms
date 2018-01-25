@@ -307,6 +307,10 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 
+							if ( ! empty( $customfield['frontend_reset'][0] ) ) {
+								$element_attr['data-reset'] = 'true';
+							}
+
 							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
 							$element               = new Element_Select( $name, $slug, $options, $element_attr );
 
