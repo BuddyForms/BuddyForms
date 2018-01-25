@@ -9,16 +9,6 @@ class Element_Select extends OptionElement {
 	 */
 	protected $_attributes = array();
 
-	public function jQueryDocumentReady() {
-		echo 'jQuery("select[field_id=\''+$this->_attributes["field_id"]+'\']").select2({
-	       placeholder: "Select an option",
-	       tags: true,
-	       allowClear: true,
-	       tokenSeparators: [\',\', \' \']
-	    });
-	    ';
-	}
-
 	public function render() {
 		$this->appendAttribute( 'class', 'c-select' );
 		if ( isset( $this->_attributes["value"] ) ) {

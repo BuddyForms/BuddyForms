@@ -343,10 +343,6 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['validation']['validation_max'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array( 'value' => $validation_max ) );
 			break;
 		case 'dropdown':
-			$is_frontend_checked                      = isset( $customfield['frontend_reset'] ) ? $customfield['frontend_reset'] : 'false';
-			$form_fields['general']['frontend_reset'] = new Element_Checkbox( '<b>' . __( 'Reset', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][frontend_reset]", array( 'frontend_reset' => __( 'Enable Frontend Reset Option', 'buddyforms' ) ), array(
-				'value' => $is_frontend_checked,
-			) );
 			$multiple                                 = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
 			$form_fields['general']['multiple']       = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple ) );
 			$field_args                               = Array(
@@ -1089,7 +1085,7 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
      </div>
      <a href="' . $field_id . '" class="button bf_add_input">+</a>';
 
-	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
+	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'radiobutton', 'checkbox' ), true ) ) {
 		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';
 	}
 
