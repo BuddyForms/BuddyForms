@@ -887,3 +887,16 @@ function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 
 	return $post_content;
 }
+
+add_action( 'edit_post', 'buddyforms_after_update_post', 10, 2 );
+/**
+ * @param integer $post_ID
+ * @param WP_Post $post
+ */
+function buddyforms_after_update_post( $post_ID, $post ) {
+//	buddyforms_update_post_meta($post_ID, false);
+	$t = $post_ID;
+	if ( ! empty( $_POST ) && ! empty( $_POST['_bf_form_slug'] ) && intval( $post_ID ) === intval( $_POST['post_ID'] ) && ! empty( $_POST['meta'] ) ) {
+		$fields = $_POST['meta'];
+	}
+}
