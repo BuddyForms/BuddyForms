@@ -8,17 +8,20 @@ jQuery(document).ready(function ($) {
             id = current.attr('id'),
             max_size = current.attr('file_limit'),
             accepted_files = current.attr('accepted_files'),
+            action = current.attr('action'),
             multiple_files = current.attr('multiple_files');
             checked = false;
 
        // var myDropzone = new Dropzone("#"+id, { url: "/uploads"});
         Dropzone.autoDiscover = false;
+        var clickeable = action === 'edit' ? false : true;
 
         $("#"+id).dropzone({
             url: dropParam.upload,
             maxFilesize: max_size,
             acceptedFiles: accepted_files,
             maxFiles: multiple_files,
+            clickable : clickeable,
             success: function (file, response) {
                 file.previewElement.classList.add("dz-success");
                 file['attachment_id'] = response; // push the id for future reference
