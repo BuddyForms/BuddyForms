@@ -19,6 +19,10 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	$current_user = wp_get_current_user();
 
+	$redirect_to = '';
+	$post_id = 0;
+	$post_parent = 0;
+
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,
@@ -27,7 +31,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'revision_id' => false,
 		'form_slug'   => 0,
 		'redirect_to' => $_SERVER['REQUEST_URI'],
-	), $args ) );
+	), $args ) , EXTR_IF_EXISTS);
 
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -437,7 +441,18 @@ function buddyforms_process_submission( $args = Array() ) {
  */
 function buddyforms_update_post( $args ) {
 
-	extract( $args = apply_filters( 'buddyforms_update_post_args', $args ) );
+	$action = '';
+	$post_author = '';
+	$post_type = '';
+	$post_status = '';
+	$comment_status = '';
+	$post_parent = 0;
+	$form_slug = '';
+	$post_id = 0;
+
+	$args = apply_filters( 'buddyforms_update_post_args', $args );
+
+	extract( $args, EXTR_IF_EXISTS );
 
 	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
 
@@ -888,6 +903,7 @@ function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 	return $post_content;
 }
 
+
 add_action( 'edit_post', 'buddyforms_after_update_post', 10, 2 );
 /**
  * @param integer $post_ID
@@ -898,5 +914,6 @@ function buddyforms_after_update_post( $post_ID, $post ) {
 	$t = $post_ID;
 	if ( ! empty( $_POST ) && ! empty( $_POST['_bf_form_slug'] ) && intval( $post_ID ) === intval( $_POST['post_ID'] ) && ! empty( $_POST['meta'] ) ) {
 		$fields = $_POST['meta'];
+
 	}
 }

@@ -201,8 +201,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			) );
 
 			$data = $the_query->get_posts();
-
-//			$data = $wpdb->get_results( "SELECT $sql_select FROM $wpdb->posts, $wpdb->postmeta WHERE ID = $wpdb->postmeta.post_id AND meta_key = '$customkey' AND meta_value = '$customvalue' ORDER BY post_date DESC", ARRAY_A );
 		}
 
 		$current_page = $this->get_pagenum();
