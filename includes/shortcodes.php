@@ -273,11 +273,15 @@ add_shortcode( 'bf_login_form', 'buddyforms_view_login_form' );
 function buddyforms_view_login_form( $args ) {
 	global $wp;
 
+	if(is_admin()){
+		return;
+	}
+
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
 		'form_slug'      => 'none',
-		'redirect_url'   => home_url(),
+		'redirect_url'   => $current_url,
 		'title'          => 'Login',
 		'label_username' => __( 'Username or Email Address' ),
 		'label_password' => __( 'Password' ),

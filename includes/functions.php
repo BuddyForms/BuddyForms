@@ -169,6 +169,9 @@ function buddyforms_wp_login_form() {
 function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array()) {
 	global $buddyforms;
 
+	if(is_admin()){
+		return;
+	}
 
 	extract( shortcode_atts( array(
 		'redirect_url'   => home_url(),
