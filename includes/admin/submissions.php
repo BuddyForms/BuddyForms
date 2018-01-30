@@ -86,6 +86,32 @@ function buddyforms_submissions_screen() {
 
 add_action( 'admin_init', 'redirect_after_delete' );
 function redirect_after_delete() {
+ global $buddyforms;
+
+    $action = isset($_GET['action']) ? $_GET['action'] : "" ;
+    $entry  = isset($_GET['post']) ? $_GET['post'] : "" ;
+    $form_slug = isset($_GET['form_slug']) ? $_GET['form_slug'] : "" ;
+    if (    $action === 'delete'){
+        $buddyFData = isset($buddyforms[$form_slug]['form_fields']) ?$buddyforms[$form_slug]['form_fields']:[] ;
+        foreach ($buddyFData as $key=>$value){
+
+            $field = $value['slug'];
+            $type  = $value['type'];
+            if(  $type == 'upload'){
+                //Check if the option Delete Files When Remove Entry is ON.
+                $can_delete_files = isset($value['delete_files'])? true : false;
+                if ( $can_delete_files){
+                    // If true then Delete the files attached to the entry
+                    $column_val = get_post_meta( $entry, $field, true );
+                    $attachmet_id = explode(",",$column_val);
+                    foreach ($attachmet_id as $id){
+                        wp_delete_attachment( $id, true );
+                    }
+                }
+
+            }
+        }
+    }
 
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
 		if ( ! get_post( $_GET['entry'] ) ) {
@@ -137,9 +163,11 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	function column_ID( $item ) {
 		global $buddyforms;
 
+		$form_slug = isset( $_GET['form_slug']) ?  $_GET['form_slug'] : '';
+
 		$actions = array(
 			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item['ID'], 'edit' ),
-			'delete' => '<a href="' . get_delete_post_link( $item['ID'], '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
+			'delete' => '<a href="' . get_delete_post_link( $item['ID'], '', true ) . '&form_slug='.$form_slug.'" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
 		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && $buddyforms[ $_GET['form_slug'] ]['post_type'] == 'bf_submissions' ) {

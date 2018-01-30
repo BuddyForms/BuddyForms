@@ -598,7 +598,7 @@ function buddyforms_form_elements( $form, $args ) {
                         }
                         if (  isset( $customfield['delete_files'] ) ) {
                             $param_value = $customfield['delete_files'][0];
-                            $multiple_files = $param_value == 'delete'? true : false;
+                            $delete_files = $param_value == 'delete'? true : false;
                         }
 						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files ) ) );
 						break;
