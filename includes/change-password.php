@@ -37,6 +37,7 @@ function buddyforms_change_password_form($redirect_url = '') {
 			<span><?php _e('Password changed successfully', 'buddyforms'); ?></span>
 		</div>
 	<?php } ?>
+
 	<form id="buddyforms_password_form" method="POST" action="<?php echo $current_url; ?>">
 		<fieldset>
 			<p>
@@ -96,7 +97,17 @@ function buddyforms_reset_password() {
 				wp_update_user($user_data);
 				// send password change email here (if WP doesn't)
 
+
+
                 $redirect_url = apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] );
+
+				$bf_pw_redirect_url = get_user_meta( $user_ID,'bf_pw_redirect_url', true );
+
+				if($bf_pw_redirect_url){
+					$redirect_url = $bf_pw_redirect_url;
+					delete_user_meta( $user_ID, 'bf_pw_redirect_url' );
+				}
+
 
 				wp_redirect(add_query_arg('password-reset', 'true', $redirect_url));
 				exit;

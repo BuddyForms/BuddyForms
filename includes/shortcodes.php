@@ -308,6 +308,13 @@ function buddyforms_reset_password_form($args) {
 
 
 	if(is_user_logged_in()) {
+
+		$bf_pw_redirect_url = get_user_meta( get_current_user_id(),'bf_pw_redirect_url', true );
+
+		if($bf_pw_redirect_url){
+			$redirect_url = $bf_pw_redirect_url;
+		}
+
 		return buddyforms_change_password_form( $redirect_url );
 	} else {
 
