@@ -40,6 +40,9 @@ class Element_Radio extends OptionElement {
 				echo '</div><div class="radio">';
 			}
 		}
+		if ( $this->getAttribute( 'frontend_reset' ) ) {
+			echo '<a href="#" class="button bf_reset_multi_input" data-group-name="' . $this->getAttribute( 'name' ) . '">Reset</a>';
+		}
 		echo '</div>';
 	}
 }

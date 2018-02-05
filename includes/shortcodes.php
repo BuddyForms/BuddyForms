@@ -273,11 +273,15 @@ add_shortcode( 'bf_login_form', 'buddyforms_view_login_form' );
 function buddyforms_view_login_form( $args ) {
 	global $wp;
 
+	if(is_admin()){
+		return;
+	}
+
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
 		'form_slug'      => 'none',
-		'redirect_url'   => home_url(),
+		'redirect_url'   => $current_url,
 		'title'          => 'Login',
 		'label_username' => __( 'Username or Email Address' ),
 		'label_password' => __( 'Password' ),
@@ -304,6 +308,13 @@ function buddyforms_reset_password_form($args) {
 
 
 	if(is_user_logged_in()) {
+
+		$bf_pw_redirect_url = get_user_meta( get_current_user_id(),'bf_pw_redirect_url', true );
+
+		if($bf_pw_redirect_url){
+			$redirect_url = $bf_pw_redirect_url;
+		}
+
 		return buddyforms_change_password_form( $redirect_url );
 	} else {
 
