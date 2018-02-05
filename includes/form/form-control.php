@@ -20,7 +20,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	$current_user = wp_get_current_user();
 
 	$redirect_to = '';
-	$post_id = 0;
+	$post_id     = 0;
 	$post_parent = 0;
 
 	extract( shortcode_atts( array(
@@ -31,7 +31,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'revision_id' => false,
 		'form_slug'   => 0,
 		'redirect_to' => $_SERVER['REQUEST_URI'],
-	), $args ) , EXTR_IF_EXISTS);
+	), $args ), EXTR_IF_EXISTS );
 
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -441,14 +441,14 @@ function buddyforms_process_submission( $args = Array() ) {
  */
 function buddyforms_update_post( $args ) {
 
-	$action = '';
-	$post_author = '';
-	$post_type = '';
-	$post_status = '';
+	$action         = '';
+	$post_author    = '';
+	$post_type      = '';
+	$post_status    = '';
 	$comment_status = '';
-	$post_parent = 0;
-	$form_slug = '';
-	$post_id = 0;
+	$post_parent    = 0;
+	$form_slug      = '';
+	$post_id        = 0;
 
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
 
@@ -523,8 +523,10 @@ function buddyforms_update_post( $args ) {
 }
 
 /**
- * @param $post_id
- * @param $customfields
+ * @param integer $post_id
+ * @param array $customfields
+ *
+ * @return mixed
  */
 function buddyforms_update_post_meta( $post_id, $customfields ) {
 	global $buddyforms, $form_slug;
@@ -625,7 +627,7 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 		// taxonomy, category, tags
 		if ( $customfield['type'] == 'taxonomy' || $customfield['type'] == 'category' || $customfield['type'] == 'tags' ) :
 			//return when on backend post edit page
-			if( is_admin() && !defined( 'DOING_AJAX' ) ) {
+			if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 				return;
 			}
 
@@ -669,11 +671,11 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				if ( isset( $tax_terms ) && is_array( $tax_terms ) ) {
 					foreach ( $tax_terms as $term_key => $term ) {
 
-						if( (integer)$term == -1 ){
+						if ( (integer) $term == - 1 ) {
 							continue;
 						}
 						// Check if the term exist
-							$term_exist = term_exists( (integer)$term, $customfield['taxonomy'] );
+						$term_exist = term_exists( (integer) $term, $customfield['taxonomy'] );
 
 						// Create new term if need and add to the new tax items array
 						if ( ! $term_exist ) {
@@ -878,7 +880,7 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 
 	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
 
-	if( isset( $title_field['generate_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+	if ( isset( $title_field['generate_title'] ) && ! empty( $title_field['generate_title'] ) ) {
 		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $title_field['generate_title'], $customfields, $post_id );
 	}
 
@@ -896,7 +898,7 @@ function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 
 	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
 
-	if( isset( $content_field['generate_content'] ) && ! empty( $content_field['generate_content'] ) ) {
+	if ( isset( $content_field['generate_content'] ) && ! empty( $content_field['generate_content'] ) ) {
 		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_content'], $customfields, $post_id );
 	}
 
@@ -910,10 +912,27 @@ add_action( 'edit_post', 'buddyforms_after_update_post', 10, 2 );
  * @param WP_Post $post
  */
 function buddyforms_after_update_post( $post_ID, $post ) {
-//	buddyforms_update_post_meta($post_ID, false);
-	$t = $post_ID;
 	if ( ! empty( $_POST ) && ! empty( $_POST['_bf_form_slug'] ) && intval( $post_ID ) === intval( $_POST['post_ID'] ) && ! empty( $_POST['meta'] ) ) {
-		$fields = $_POST['meta'];
-
+		global $buddyforms;
+		$fields = $buddyforms[ $_POST['_bf_form_slug'] ]['form_fields'];
+		foreach ( $fields as $key => $field ) {
+			if ( isset( $field['slug'] ) ) {
+				$slug = $field['slug'];
+			}
+			if ( empty( $slug ) ) {
+				$slug = sanitize_title( $field['name'] );
+			}
+			switch ( $field['type'] ) {
+				case 'title':
+					$value = isset( $_POST['post_title'] ) ? $_POST['post_title'] : '';
+					break;
+				case 'content':
+					$value = isset( $_POST['content'] ) ? $_POST['content'] : '';
+					break;
+				default:
+					$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
+			}
+			$_POST[ $field['slug'] ] = $value;
+		}
 	}
 }
