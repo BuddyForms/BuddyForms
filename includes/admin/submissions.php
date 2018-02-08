@@ -22,6 +22,7 @@ function buddyforms_submissions_add_options() {
 }
 
 function buddyforms_submissions_screen() {
+	/** @var BuddyForms_Submissions_List_Table $bf_submissions_table */
 	global $buddyforms, $bf_submissions_table, $form_slug, $post_id;
 
 	// Check that the user is allowed to update options
@@ -130,7 +131,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param $item
+	 * @param WP_Post $item
 	 *
 	 * @return string
 	 */
@@ -138,27 +139,27 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item['ID'], 'edit' ),
-			'delete' => '<a href="' . get_delete_post_link( $item['ID'], '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
+			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item->ID, 'edit' ),
+			'delete' => '<a href="' . get_delete_post_link( $item->ID, '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
 		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && $buddyforms[ $_GET['form_slug'] ]['post_type'] == 'bf_submissions' ) {
-			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Submission</a>', $_REQUEST['page'], 'edit', $item['ID'], $_GET['form_slug'] );
+			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Submission</a>', $_REQUEST['page'], 'edit', $item->ID, $_GET['form_slug'] );
 		}
 
 		// Return the title contents
 		return sprintf( '<span style="color:silver">%1$s</span>%2$s',
-			$item['ID'],
+			$item->ID,
 			$this->row_actions( $actions )
 		);
 	}
 
 	/**
-	 * @param object $item
+	 * @param WP_Post $item
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
-		$column_val = get_post_meta( $item['ID'], $column_name, true );
+		$column_val = get_post_meta( $item->ID, $column_name, true );
 
 		if ( is_array( $column_val ) ) {
 			foreach ( $column_val as $key => $val ) {
@@ -168,7 +169,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			echo wp_trim_words( $column_val, 25 );
 		}
 		if ( $column_name == 'Date' ) {
-			echo get_the_date( 'F j, Y', $item['ID'] );
+			echo get_the_date( 'F j, Y', $item->ID );
 		}
 	}
 
@@ -192,7 +193,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			$data        = $wpdb->get_results( "SELECT $sql_select FROM $wpdb->posts, $wpdb->postmeta WHERE ID = $wpdb->postmeta.post_id AND meta_key = '$customkey' AND meta_value = '$customvalue' ORDER BY post_date DESC", ARRAY_A );
+
+			$the_query = new WP_Query( array(
+				'post_status' => array('any'),
+				'meta_key'   => $customkey,
+				'meta_value' => $customvalue,
+			) );
+
+			$data = $the_query->get_posts();
 		}
 
 		$current_page = $this->get_pagenum();
