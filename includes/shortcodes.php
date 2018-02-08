@@ -83,7 +83,8 @@ function buddyforms_the_loop( $args ) {
 		'post_type'   => '',
 		'form_slug'   => '',
 		'id'          => '',
-		'post_parent' => 0
+		'post_parent' => 0,
+		'query_option' => isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : ''
 	), $args ) );
 
 	// if multisite is enabled switch to the form blog id
@@ -100,7 +101,6 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
 	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', get_current_user_id(), $form_slug );
@@ -113,7 +113,18 @@ function buddyforms_the_loop( $args ) {
 
 	$paged = buddyforms_get_url_var( 'page' );
 
-	switch ( $list_posts_option ) {
+	switch ( $query_option ) {
+		case 'list_all_published_posts':
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => 'published',
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'paged'          => $paged,
+			);
+
+			break;
 		case 'list_all':
 			$query_args = array(
 				'post_type'      => $post_type,
@@ -181,6 +192,25 @@ add_shortcode( 'buddyforms_the_loop', 'buddyforms_the_loop_shortcode' );
 add_shortcode( 'buddyforms_list_all', 'buddyforms_the_loop_shortcode' );
 add_shortcode( 'bf_user_posts_list', 'buddyforms_the_loop_shortcode' );
 add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //
