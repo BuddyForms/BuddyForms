@@ -69,11 +69,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
-	if ( ! is_user_logged_in() ) :
-		buddyforms_wp_login_form();
 
-		return;
-	endif;
 
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
@@ -84,8 +80,15 @@ function buddyforms_the_loop( $args ) {
 		'form_slug'   => '',
 		'id'          => '',
 		'post_parent' => 0,
-		'query_option' => isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : ''
+		'query_option' => isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '',
+		'user_logged_in_only' => 'logged_in_only'
 	), $args ) );
+
+	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) :
+		buddyforms_wp_login_form();
+
+		return;
+	endif;
 
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -119,11 +122,22 @@ function buddyforms_the_loop( $args ) {
 				'post_type'      => $post_type,
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
-				'post_status'    => 'published',
+				'post_status'    => 'publish',
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
 				'paged'          => $paged,
 			);
-
+			break;
+		case 'list_all_published_posts_by_meta_key':
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => 'publish',
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'paged'          => $paged,
+				'meta_key'       => $meta_key,
+				'meta_value'     => $meta_value
+			);
 			break;
 		case 'list_all':
 			$query_args = array(
