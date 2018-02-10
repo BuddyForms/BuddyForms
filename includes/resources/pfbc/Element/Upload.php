@@ -46,9 +46,21 @@ class Element_Upload extends Element_Textbox
         $max_size =  $this->getAttribute('file_limit');
         $accepted_files =  $this->getAttribute('accepted_files');
         $multiple_files =  $this->getAttribute('multiple_files');
+        $mime_type ='';
+        $mime_type_result ='';
+        $allowed_types = get_allowed_mime_types();
+        foreach( $accepted_files as $key=>$value){
+
+            $mime_type .=  $allowed_types[$value].',';
+        }
+        if(!empty($mime_type))
+        {
+            $mime_type_result = rtrim(trim($mime_type), ',');
+        }
+
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$accepted_files' multiple_files='$multiple_files' action='$action'>
+        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>
