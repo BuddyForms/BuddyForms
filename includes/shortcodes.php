@@ -210,25 +210,6 @@ add_shortcode( 'bf_user_posts_list', 'buddyforms_the_loop_shortcode' );
 add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //
 // buddyforms_the_loop_shortcode
 //
