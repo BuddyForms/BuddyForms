@@ -375,13 +375,32 @@ function buddyforms_display_form_element( $args ) {
 
             $form_fields['general']['upload_file_limts'] = new Element_Textbox( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array( 'value' =>  $file_limit , 'id'    => 'upload_file_limit' . $field_id
                ) );
+            $original_mimes_types = get_allowed_mime_types();
+            $sorted_mimes_types = array() ;
+            foreach (   $accepted_files  as $mime_type){
 
-            $allowed_mime_types = get_allowed_mime_types();
-            $mime_value ='';
-            foreach ($accepted_files as $key=>$value ){
-                $mime_value .= $allowed_mime_types[$value] .', ';
+               if( array_key_exists($mime_type,  $original_mimes_types)){
+
+                   $sorted_mimes_types[$mime_type]=$original_mimes_types[$mime_type];
+               }
             }
-            $html =rtrim(trim($mime_value), ',');;
+
+            asort($sorted_mimes_types);
+            $preview_mime_value ='';
+            foreach ($sorted_mimes_types as $key=>$value ){
+                $preview_mime_value .= $value .', ';
+            }
+
+            foreach ($original_mimes_types as $key=>$value){
+
+                if(!array_key_exists($key,$sorted_mimes_types)){
+
+                    $sorted_mimes_types[$key]=$original_mimes_types[$key];
+                }
+            }
+
+            $allowed_mime_types = $sorted_mimes_types;
+            $html =rtrim(trim($preview_mime_value ), ',');;
             $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html,'readonly'=>'readonly' ) );
             $form_fields['general']['upload_accepted_files'] =  new Element_Checkbox( '<b>' . __( 'Allowed File Types ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", $allowed_mime_types, array(
                 'id'    => 'upload_multiple_files' . $field_id,
