@@ -60,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							}
 							?>
 
-							<a class="bf-submission-modal" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
+							<a class="" data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>"><?php echo $post_thumbnail ?></a>
             </div>
 
             <div class="item-title">

@@ -396,6 +396,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'jquery-ui-widgets' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'password-strength-meter' );
+
+
+            $password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
+            wp_localize_script( 'password-strength-meter', 'pwsL10n', array(
+                'empty' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator' ),
+                'short' => isset( $password_strength_settings['lavel_1']  ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.' ),
+                'bad' => isset( $password_strength_settings['lavel_2']  ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak' ),
+                'good' => isset( $password_strength_settings['lavel_3']  ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'password strength' ),
+                'strong' => isset( $password_strength_settings['lavel_4']  ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong' ),
+                'mismatch' => isset( $password_strength_settings['mismatch']  ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch' ),
+                //'error' => isset( $password_strength_settings['error']  ) && ! empty( $password_strength_settings['error'] ) ? $password_strength_settings['error'] : __( 'Error' ),
+                'hint_text' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).' ),
+                'required_strength' => isset( $password_strength_settings['required_strength']  ) && ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
+            ) );
+
 			wp_enqueue_script( 'mce-view' );
 			// jQuery Validation http://jqueryvalidation.org/
 			wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );

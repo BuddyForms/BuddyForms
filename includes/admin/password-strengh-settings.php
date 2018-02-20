@@ -129,22 +129,3 @@ function buddyforms_password_strength_settings_default_sanitize( $new ) {
 	return $new;
 
 }
-
-function irgentnenscheipp(){
-
-	$password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
-
-	wp_localize_script( 'password-strength-meter', 'pwsL10n', array(
-		'empty' => ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator' ),
-		'short' => ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.' ),
-		'bad' => ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak' ),
-		'good' => ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'password strength' ),
-		'strong' => ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong' ),
-		'mismatch' => ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch' ),
-		//'error' => ! empty( $password_strength_settings['error'] ) ? $password_strength_settings['error'] : __( 'Error' ),
-		'hint_text' => ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).' ),
-        'required_strength' => ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
-	) );
-
-}
-add_action( 'wp_enqueue_scripts', 'irgentnenscheipp', 900 );
