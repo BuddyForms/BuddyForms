@@ -378,63 +378,55 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
         case 'upload':
-
-            $file_limit                           = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '2';
-            $accepted_files                           = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
-            $multiple_files                           = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ?  $buddyform['form_fields'][ $field_id ]['multiple_files'][0]  : '';
-            $delete_files                           = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ?  $buddyform['form_fields'][ $field_id ]['delete_files'][0]  : '';
-
-            $form_fields['general']['upload_file_limts'] = new Element_Textbox( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array( 'value' =>  $file_limit , 'id'    => 'upload_file_limit' . $field_id
-               ) );
-            $original_mimes_types = get_allowed_mime_types();
-            $sorted_mimes_types = array() ;
-            foreach (   $accepted_files  as $mime_type){
-
-               if( array_key_exists($mime_type,  $original_mimes_types)){
-
-                   $sorted_mimes_types[$mime_type]=$original_mimes_types[$mime_type];
-               }
-            }
-
-            asort($sorted_mimes_types);
-            $preview_mime_value ='';
-            foreach ($sorted_mimes_types as $key=>$value ){
-                $preview_mime_value .= $value .', ';
-            }
-
-            foreach ($original_mimes_types as $key=>$value){
-
-                if(!array_key_exists($key,$sorted_mimes_types)){
-
-                    $sorted_mimes_types[$key]=$original_mimes_types[$key];
-                }
-            }
-
-            $allowed_mime_types = $sorted_mimes_types;
-            $html =rtrim(trim($preview_mime_value ), ',');;
-            $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html,'readonly'=>'readonly' ) );
-            $form_fields['general']['upload_accepted_files'] =  new Element_Checkbox( '<b>' . __( 'Allowed File Types ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", $allowed_mime_types, array(
-                'id'    => 'upload_multiple_files' . $field_id,
-
-                'value' =>   $accepted_files
-            ) );
-
-
-            $element = new Element_Checkbox( '<b>' . __( 'Multiple Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array( 'allow' => __( 'Allow multiple files to be upload to this field . ', 'buddyforms' ) ), array(
-                'id'    => 'upload_multiple_files' . $field_id,
-
-                'value' =>   $multiple_files
-            ) );
-            $element_delete = new Element_Checkbox( '<b>' . __( 'Delete Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][delete_files]", array( 'delete' => __( 'Remove Files when Entry is deleted. ', 'buddyforms' ) ), array(
-                'id'    => 'upload_delete_files' . $field_id,
-
-                'value' =>   $delete_files
-            ) );
-
-            $form_fields['general']['upload_multiple_files'] = $element;
-            $form_fields['general']['upload_delete_files'] = $element_delete;
-
-
+	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
+	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
+	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : '';
+	        $delete_files   = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ? $buddyform['form_fields'][ $field_id ]['delete_files'][0] : '';
+	
+	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
+		        'value' => floatval( $file_limit ),
+		        'id'    => 'upload_file_limit' . $field_id,
+		        'step'=> '.01'
+	        ) );
+	        $original_mimes_types                        = get_allowed_mime_types();
+	        $sorted_mimes_types                          = array();
+	        foreach ( $accepted_files as $mime_type ) {
+		        if ( array_key_exists( $mime_type, $original_mimes_types ) ) {
+			        $sorted_mimes_types[ $mime_type ] = $original_mimes_types[ $mime_type ];
+		        }
+	        }
+	
+	        asort( $sorted_mimes_types );
+	        $preview_mime_value = '';
+	        foreach ( $sorted_mimes_types as $key => $value ) {
+		        $preview_mime_value .= $value . ', ';
+	        }
+	
+	        foreach ( $original_mimes_types as $key => $value ) {
+		        if ( ! array_key_exists( $key, $sorted_mimes_types ) ) {
+			        $sorted_mimes_types[ $key ] = $original_mimes_types[ $key ];
+		        }
+	        }
+	
+	        $allowed_mime_types = $sorted_mimes_types;
+	        $form_fields['general']['upload_accepted_files']       = new Element_Checkbox( '<b>' . __( 'Allowed File Types', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", $allowed_mime_types, array(
+		        'id' => 'upload_multiple_files' . $field_id,
+		        'value' => $accepted_files,
+		        'class' => 'upload_accepted_fields_container'
+	        ) );
+	        $html               = rtrim( trim( $preview_mime_value ), ',' );
+	        $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types Resume', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html, 'readonly' => 'readonly' ) );
+	        $element        = new Element_Checkbox( '<b>' . __( 'Multiple Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array( 'allow' => __( 'Allow multiple files to be upload to this field . ', 'buddyforms' ) ), array(
+		        'id' => 'upload_multiple_files' . $field_id,
+		        'value' => $multiple_files
+	        ) );
+	        $element_delete = new Element_Checkbox( '<b>' . __( 'Delete Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][delete_files]", array( 'delete' => __( 'Remove Files when Entry is deleted. ', 'buddyforms' ) ), array(
+		        'id' => 'upload_delete_files' . $field_id,
+		        'value' => $delete_files
+	        ) );
+	        $form_fields['general']['upload_multiple_files'] = $element;
+	        $form_fields['general']['upload_delete_files']   = $element_delete;
+	        
             break;
 		case 'post_formats':
 			unset( $form_fields['advanced']['slug'] );
