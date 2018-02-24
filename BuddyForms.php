@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.1.4
+ * Version: 2.1.5.2
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.1.4';
+		public $version = '2.1.5.2';
 
 		/**
 		 * Initiate the class
@@ -198,6 +198,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
@@ -408,6 +409,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'jquery-ui-widgets' );
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'password-strength-meter' );
+
+
+            $password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
+            wp_localize_script( 'password-strength-meter', 'pwsL10n', array(
+                'empty' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator' ),
+                'short' => isset( $password_strength_settings['lavel_1']  ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.' ),
+                'bad' => isset( $password_strength_settings['lavel_2']  ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak' ),
+                'good' => isset( $password_strength_settings['lavel_3']  ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'password strength' ),
+                'strong' => isset( $password_strength_settings['lavel_4']  ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong' ),
+                'mismatch' => isset( $password_strength_settings['mismatch']  ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch' ),
+                //'error' => isset( $password_strength_settings['error']  ) && ! empty( $password_strength_settings['error'] ) ? $password_strength_settings['error'] : __( 'Error' ),
+                'hint_text' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).' ),
+                'required_strength' => isset( $password_strength_settings['required_strength']  ) && ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
+            ) );
+
 			wp_enqueue_script( 'mce-view' );
 			// jQuery Validation http://jqueryvalidation.org/
 			wp_enqueue_script( 'jquery-validation', plugins_url( 'assets/resources/jquery.validate.min.js', __FILE__ ), array( 'jquery' ) );

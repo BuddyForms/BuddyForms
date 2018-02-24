@@ -231,7 +231,7 @@
 	}
 
 	if ( ! defined( 'FS_CHECKOUT__ADDRESS_LOCALHOST' ) ) {
-		define( 'FS_CHECKOUT__ADDRESS_LOCALHOST', 'http://checkout.freemius:8080' );
+		define( 'FS_CHECKOUT__ADDRESS_LOCALHOST', 'http://checkout.freemius-local.com:8080' );
 	}
 
 	if ( ! defined( 'FS_CHECKOUT__ADDRESS' ) ) {
@@ -284,6 +284,9 @@
 //	define( 'WP_FS__TIME_15_MIN_IN_SEC', 900 );
 	if ( ! defined( 'WP_FS__TIME_24_HOURS_IN_SEC' ) ) {
 		define( 'WP_FS__TIME_24_HOURS_IN_SEC', 86400 );
+	}
+	if ( ! defined( 'WP_FS__TIME_WEEK_IN_SEC' ) ) {
+		define( 'WP_FS__TIME_WEEK_IN_SEC', 7 * WP_FS__TIME_24_HOURS_IN_SEC );
 	}
 
 	#--------------------------------------------------------------------------------

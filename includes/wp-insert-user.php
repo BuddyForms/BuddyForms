@@ -256,6 +256,10 @@ function buddyforms_wp_insert_user() {
 
 			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
 
+			if( isset( $_POST['bf_pw_redirect_url'] )){
+				add_user_meta( $new_user_id, 'bf_pw_redirect_url', $_POST['bf_pw_redirect_url'], true );
+			}
+
 			// send an email to the admin alerting them of the registration
 			wp_new_user_notification( $new_user_id );
 
