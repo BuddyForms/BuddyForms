@@ -355,7 +355,6 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-
 = 2.1.5.2 - 20. February 2018 = 
 * Fixed an issue in the loop. The thumbnail was not clickable in all sirtuations
 * Moved the password-strength-meter wp_localize_script to its correct location. It was in the admin settings and never got loaded in the frontend. This issue was a merge conflict.
