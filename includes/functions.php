@@ -679,6 +679,24 @@ function buddyforms_get_form_slug_by_post_id( $post_id ) {
 	return $value;
 }
 
+/**
+ * Get the post types for teh created forms
+ *
+ * @return array
+ */
+function buddyforms_get_post_types_from_forms() {
+	global $buddyforms;
+	$result = array();
+	if ( ! empty( $buddyforms ) ) {
+		foreach ( $buddyforms as $form ) {
+			$result[] = $form['post_type'];
+		}
+		$result = array_unique( $result );
+	}
+	
+	return $result;
+}
+
 
 function buddyforms_get_post_types() {
 	$post_types = array();

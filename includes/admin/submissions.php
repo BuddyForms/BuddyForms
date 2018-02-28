@@ -175,7 +175,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	function prepare_items() {
 		global $wpdb;
-
+		global $wp_post_types;
 		$per_page = $this->get_items_per_page( 'entries_per_page', 10 );
 
 		$columns  = $this->get_columns();
@@ -188,16 +188,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$data = array();
 		if ( isset( $_GET['form_slug'] ) ) {
-			$sql_args   = array( 'ID', 'post_title', 'post_author' );
-			$sql_select = implode( ', ', $sql_args );
-
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-
+			$post_types_array = buddyforms_get_post_types_from_forms();
 			$the_query = new WP_Query( array(
-				'post_status' => array('any'),
-				'meta_key'   => $customkey,
-				'meta_value' => $customvalue,
+				'post_type'   =>  $post_types_array,
+				'post_status' => array( 'any' ),
+				'meta_key'    => $customkey,
+				'meta_value'  => $customvalue,
 			) );
 
 			$data = $the_query->get_posts();
