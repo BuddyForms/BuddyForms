@@ -190,9 +190,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( isset( $_GET['form_slug'] ) ) {
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			
+			$post_types_array = buddyforms_get_post_types_from_forms();
 			$the_query = new WP_Query( array(
-				'post_type'   =>  array('post', 'bf_submissions', 'buddyforms') ,
+				'post_type'   =>  $post_types_array,
 				'post_status' => array( 'any' ),
 				'meta_key'    => $customkey,
 				'meta_value'  => $customvalue,
