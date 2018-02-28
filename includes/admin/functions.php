@@ -120,7 +120,7 @@ function buddyform_add_label_to_post_list( $post_states, $post ) {
 		if ( ! empty( $is_buddyform_post ) ) {
 			$title_field = buddyforms_get_form_field_by_slug( $is_buddyform_post, 'buddyforms_form_title' );
 			if ( ! empty( $title_field ) && ! empty( $title_field['generate_title'] ) ) {
-				$post_states = array( __( 'Generated Title', 'buddyform' ) );
+				$post_states = array( '<span class="bf-auto-generated-title">'.__( 'Generated Title', 'buddyform' ).'</span>' );
 			}
 		}
 	}
