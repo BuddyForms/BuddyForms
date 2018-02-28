@@ -888,17 +888,6 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 
 }
 
-add_filter( 'the_title', 'buddyform_strip_html_title_for_entries_in_post_screen', 100, 2 );
-function buddyform_strip_html_title_for_entries_in_post_screen( $title, $id ) {
-	if(is_admin()) {
-		$is_buddyform_post = get_post_meta( $id, '_bf_form_slug', true );
-		if ( ! empty( $is_buddyform_post ) ) {
-			$title = wp_strip_all_tags( html_entity_decode( $title ), true );
-		}
-	}
-	return $title;
-}
-
 add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 2, 10 );
 function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 	global $buddyforms;
