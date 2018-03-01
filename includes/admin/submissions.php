@@ -81,7 +81,33 @@ function buddyforms_submissions_screen() {
 
 add_action( 'admin_init', 'redirect_after_delete' );
 function redirect_after_delete() {
-
+	global $buddyforms;
+	
+	$action    = isset( $_GET['action'] ) ? $_GET['action'] : "";
+	$entry     = isset( $_GET['post'] ) ? $_GET['post'] : "";
+	$form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
+	if ( $action === 'delete' ) {
+		$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
+		foreach ( $buddyFData as $key => $value ) {
+			
+			$field = $value['slug'];
+			$type  = $value['type'];
+			if ( $type == 'upload' ) {
+				//Check if the option Delete Files When Remove Entry is ON.
+				$can_delete_files = isset( $value['delete_files'] ) ? true : false;
+				if ( $can_delete_files ) {
+					// If true then Delete the files attached to the entry
+					$column_val   = get_post_meta( $entry, $field, true );
+					$attachmet_id = explode( ",", $column_val );
+					foreach ( $attachmet_id as $id ) {
+						wp_delete_attachment( $id, true );
+					}
+				}
+				
+			}
+		}
+	}
+	
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
 		if ( ! get_post( $_GET['entry'] ) ) {
 			wp_redirect( '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $_GET['form_slug'] );
@@ -153,6 +179,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
+		global $buddyforms;
 		$column_val = get_post_meta( $item->ID, $column_name, true );
 
 		if ( is_array( $column_val ) ) {
@@ -160,7 +187,23 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				echo $val;
 			}
 		} else {
-			echo wp_trim_words( $column_val, 25 );
+			//Check if the column is of an Upload field
+			$result     = $column_val;
+			$formSlug   = $_GET['form_slug'];
+			$buddyFData = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
+			foreach ( $buddyFData as $key => $value ) {
+				$field = $value['slug'];
+				$type  = $value['type'];
+				if ( $field == $column_name && $type == 'upload' ) {
+					$result       = "";
+					$attachmet_id = explode( ",", $column_val );
+					foreach ( $attachmet_id as $id ) {
+						$url    = wp_get_attachment_url( $id );
+						$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
+					}
+				}
+			}
+			echo( rtrim( trim( $result ), ',' ) );
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
