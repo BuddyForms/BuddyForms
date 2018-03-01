@@ -44,9 +44,10 @@ class Element_Upload extends Element_Textbox {
 		$mime_type        = '';
 		$mime_type_result = '';
 		$allowed_types    = get_allowed_mime_types();
-		foreach ( $accepted_files as $key => $value ) {
-			
-			$mime_type .= $allowed_types[ $value ] . ',';
+		if( isset( $accepted_files ) && is_array( $accepted_files ) ) {
+			foreach ( $accepted_files as $key => $value ) {
+				$mime_type .= $allowed_types[ $value ] . ',';
+			}
 		}
 		if ( ! empty( $mime_type ) ) {
 			$mime_type_result = rtrim( trim( $mime_type ), ',' );
@@ -55,7 +56,6 @@ class Element_Upload extends Element_Textbox {
 		$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 		$box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
-                                  
                                       <span>$message</span>
                                  </div>
                                  <input type='hidden' name='$id' value='' id='field_$id'/>
@@ -67,11 +67,5 @@ class Element_Upload extends Element_Textbox {
 				'${1}<label class="file">${2}<span class="file-custom"></span></label>${3}', $box );
 		}
 	}
-	
-	function renderJS() {
-		$id = $this->getAttribute( 'id' );
-		//echo 'jQuery("#' . $id . '").dropzone({ url: "/uploads" });';
-	}
-	
 	
 }
