@@ -190,3 +190,7 @@ ul.bf_files {
 .bf_inputs li {
     list-style: none;
 }
+
+button.bf-submit:disabled{
+	background-color: #c4c4c4;
+}
