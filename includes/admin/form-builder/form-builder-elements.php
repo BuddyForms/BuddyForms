@@ -390,21 +390,28 @@ function buddyforms_display_form_element( $args ) {
 	        ) );
 	        $original_mimes_types                        = get_allowed_mime_types();
 	        $sorted_mimes_types                          = array();
-	        foreach ( $accepted_files as $mime_type ) {
-		        if ( array_key_exists( $mime_type, $original_mimes_types ) ) {
-			        $sorted_mimes_types[ $mime_type ] = $original_mimes_types[ $mime_type ];
+
+	        if( isset( $accepted_files ) && is_array( $accepted_files ) ) {
+		        foreach ( $accepted_files as $mime_type ) {
+			        if ( array_key_exists( $mime_type, $original_mimes_types ) ) {
+				        $sorted_mimes_types[ $mime_type ] = $original_mimes_types[ $mime_type ];
+			        }
 		        }
 	        }
 	
 	        asort( $sorted_mimes_types );
 	        $preview_mime_value = '';
-	        foreach ( $sorted_mimes_types as $key => $value ) {
-		        $preview_mime_value .= $value . ', ';
-	        }
-	
-	        foreach ( $original_mimes_types as $key => $value ) {
-		        if ( ! array_key_exists( $key, $sorted_mimes_types ) ) {
-			        $sorted_mimes_types[ $key ] = $original_mimes_types[ $key ];
+	        if( isset( $sorted_mimes_types ) && is_array( $sorted_mimes_types ) ) {
+		        foreach ( $sorted_mimes_types as $key => $value ) {
+			        $preview_mime_value .= $value . ', ';
+		        }
+            }
+
+	        if( isset( $original_mimes_types ) && is_array( $original_mimes_types ) ) {
+		        foreach ( $original_mimes_types as $key => $value ) {
+			        if ( ! array_key_exists( $key, $sorted_mimes_types ) ) {
+				        $sorted_mimes_types[ $key ] = $original_mimes_types[ $key ];
+			        }
 		        }
 	        }
 	
