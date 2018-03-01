@@ -8,8 +8,8 @@
 add_action('wp_ajax_nopriv_handle_dropped_media', 'BMP_handle_dropped_media');
 add_action( 'wp_ajax_handle_dropped_media', 'BMP_handle_dropped_media' );
 function BMP_handle_dropped_media() {
+	check_ajax_referer( 'fac_drop', 'nonce' );
 	status_header( 200 );
-	
 	$upload_dir  = wp_upload_dir();
 	$upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
 	$num_files   = count( $_FILES['file']['tmp_name'] );
@@ -29,6 +29,7 @@ add_action( 'wp_ajax_nopriv_handle_deleted_media', 'BMP_handle_delete_media' );
 add_action( 'wp_ajax_handle_deleted_media', 'BMP_handle_delete_media' );
 
 function BMP_handle_delete_media() {
+	check_ajax_referer( 'fac_drop', 'nonce' );
 	if ( isset( $_REQUEST['media_id'] ) ) {
 		$post_id = absint( $_REQUEST['media_id'] );
 		

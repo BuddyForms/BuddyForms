@@ -15,11 +15,15 @@ jQuery(document).ready(function ($) {
 		var clickeable = action !== 'edit';
 
 		$("#" + id).dropzone({
-			url: dropParam.upload,
+			url: dropParam.admin_url,
 			maxFilesize: max_size,
 			acceptedFiles: accepted_files,
 			maxFiles: multiple_files,
 			clickable: clickeable,
+			sending: function(file, xhr, formData){
+				formData.append('action', 'handle_dropped_media' );
+				formData.append('nonce', dropParam.ajaxnonce );
+			},
 			success: function (file, response) {
 				file.previewElement.classList.add("dz-success");
 				file['attachment_id'] = response; // push the id for future reference
@@ -59,9 +63,11 @@ jQuery(document).ready(function ($) {
 				jQuery('#field_' + id).val(remainigIds);
 				jQuery.ajax({
 					type: 'POST',
-					url: dropParam.delete,
+					url: dropParam.admin_url,
 					data: {
-						media_id: attachment_id
+						action: 'handle_deleted_media',
+						media_id: attachment_id,
+						nonce: dropParam.ajaxnonce
 					}
 				});
 				var _ref;
