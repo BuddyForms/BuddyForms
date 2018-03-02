@@ -1422,3 +1422,9 @@ input[type="color"] {
 .bf-image {
     list-style-type: none;
 }
+
+tr.upload_accepted_fields_container >td>div.bf-input{
+	min-height: 42px;
+	max-height: 200px;
+	overflow: auto;
+}

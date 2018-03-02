@@ -48,7 +48,7 @@ class Form extends Base {
 	 */
 	protected static $form = null;
 	/**
-	 * @var array
+	 * @var Element[]
 	 */
 	protected $_elements = array();
 	/**

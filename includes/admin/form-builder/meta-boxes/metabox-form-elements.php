@@ -198,11 +198,11 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'About / Bio', 'buddyforms' ),
 					'unique' => 'unique'
 				),
-				'country'     => array(
-					'label'  => __( 'Country' ),
+				'country'      => array(
+					'label' => __( 'Country' ),
 				),
-				'state'     => array(
-					'label'  => __( 'State' ),
+				'state'        => array(
+					'label' => __( 'State' ),
 				),
 				'captcha'      => array(
 					'label'  => __( 'Captcha', 'buddyforms' ),
@@ -270,12 +270,12 @@ function buddyforms_form_elements_select_options() {
 			// Post Fields
 			$elements_select_options['post']['fields']['category']       =
 				array(
-					'label' => __( 'Category', 'buddyforms' ),
+					'label'  => __( 'Category', 'buddyforms' ),
 					'unique' => 'unique'
 				);
 			$elements_select_options['post']['fields']['tags']           =
 				array(
-					'label' => __( 'Tags', 'buddyforms' ),
+					'label'  => __( 'Tags', 'buddyforms' ),
 					'unique' => 'unique'
 				);
 			$elements_select_options['post']['fields']['taxonomy']       =
@@ -316,6 +316,10 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['extra']['fields']['file']   =
 				array(
 					'label' => __( 'File', 'buddyforms' ),
+				);
+			$elements_select_options['extra']['fields']['upload'] =
+				array(
+					'label' => __( 'Upload', 'buddyforms' ),
 				);
 			$elements_select_options['basic']['fields']['hidden'] =
 				array(

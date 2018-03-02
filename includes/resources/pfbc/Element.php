@@ -13,7 +13,7 @@ abstract class Element extends Base {
 	 */
 	protected $_attributes = array();
 	/**
-	 * @var
+	 * @var Form
 	 */
 	protected $_form;
 
