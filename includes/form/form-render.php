@@ -177,7 +177,7 @@ function buddyforms_form_html( $args ) {
 
 					<?php
 					// only output CSS for form elements if the option to disable CSS is unchecked
-					if( $bfdesign['field_disable_css'] == '' ) { ?>
+					if( empty($bfdesign['field_disable_css']) ) { ?>
 		        /* Design Options - Text Fields */
 		        .the_buddyforms_form .bf-input textarea,
 		        .the_buddyforms_form .bf-input .form-control {
@@ -253,7 +253,7 @@ function buddyforms_form_html( $args ) {
 
 					<?php
 					// only output CSS for descriptions if the option to disable CSS is unchecked
-					if( $bfdesign['desc_disable_css'] == '' ) { ?>
+					if( empty($bfdesign['desc_disable_css']) ) { ?>
 
 		        /* Design Options - Descriptions */
 		        .the_buddyforms_form span.help-inline,
@@ -280,7 +280,7 @@ function buddyforms_form_html( $args ) {
 
 					<?php
 					// only output CSS for buttons if the option to disable CSS is unchecked
-					if( $bfdesign['button_disable_css'] == '' ) { ?>
+					if( empty($bfdesign['button_disable_css']) ) { ?>
 		        /* Design Options - Buttons */
 		        .the_buddyforms_form .form-actions button.bf-submit {
 		        	<?php
@@ -369,7 +369,7 @@ function buddyforms_form_html( $args ) {
 
 		$form_html .= $layout;
 
-	} 
+	}
 
 
 	// Create the form object

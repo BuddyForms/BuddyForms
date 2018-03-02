@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param $form
+ * @param Form $form
  * @param $args
  */
 function buddyforms_form_elements( $form, $args ) {
@@ -583,6 +583,28 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
 
 
+						break;
+					case 'upload':
+
+                        $max_size = '2';
+                        $accepted_files = 'image/*';
+                        $multiple_files = "1";
+                        $delete_files = false;
+                        if (  isset( $customfield['file_limit'] ) ) {
+                            $max_size = $customfield['file_limit'];
+                        }
+                        if (  isset( $customfield['accepted_files'] ) ) {
+                            $accepted_files = $customfield['accepted_files'];
+                        }
+                        if (  isset( $customfield['multiple_files'] ) ) {
+                            $param_value = $customfield['multiple_files'][0];
+                            $multiple_files = $param_value == 'allow'? 9 : 1;
+                        }
+                        if (  isset( $customfield['delete_files'] ) ) {
+                            $param_value = $customfield['delete_files'][0];
+                            $delete_files = $param_value == 'delete'? true : false;
+                        }
+						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files ) ) );
 						break;
 					case 'file':
 

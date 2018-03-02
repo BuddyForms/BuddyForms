@@ -590,17 +590,33 @@ function buddyforms_metabox_go_pro() {
 	) );
 }
 
-// Get field by slug
-function buddyforms_get_form_field_by_slug( $form_slug, $slug ) {
-	global $buddyforms;
-
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) : foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
-		if ( $field['slug'] == $slug ) {
-			return $field;
+/**
+ * Get field by slug
+ *
+ * @author Sven edited by gfirem
+ *
+ * @param $form_slug
+ * @param $field_slug
+ *
+ * @return bool
+ */
+function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
+	$result_field = wp_cache_get( 'buddyform_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyform' );
+	if ( $result_field === false ) {
+		global $buddyforms;
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
+				if ( $field['slug'] == $field_slug ) {
+					$result_field = $field;
+					wp_cache_set( 'buddyform_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyform' );
+					
+					return $result_field;
+				}
+			}
 		}
-	} endif;
-
-	return false;
+	}
+	
+	return $result_field;
 }
 
 //
@@ -637,26 +653,48 @@ function buddyforms_tinymce_setup_function( $initArray ) {
 }
 
 /**
- *
  * Will return the form slug from post meta or the default. none if no form is attached
+ *
+ * @author Sven edited by gfirem
  *
  * @param $post_id
  *
  * @return mixed
  */
 function buddyforms_get_form_slug_by_post_id( $post_id ) {
-
-	$value = get_post_meta( $post_id, '_bf_form_slug', true );
-
-	$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
-
-	$post_type = get_post_type( $post_id );
-
-	if ( ! $value && isset( $buddyforms_posttypes_default[ $post_type ] ) || isset( $value ) && $value == 'none' ) {
-		$value = $buddyforms_posttypes_default[ $post_type ];
+	$value = wp_cache_get( 'buddyform_form_slug_' . $post_id, 'buddyform' );
+	if ( $value === false ) {
+		$value = get_post_meta( $post_id, '_bf_form_slug', true );
+		
+		$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+		
+		$post_type = get_post_type( $post_id );
+		
+		if ( ! $value && isset( $buddyforms_posttypes_default[ $post_type ] ) || isset( $value ) && $value == 'none' ) {
+			$value = $buddyforms_posttypes_default[ $post_type ];
+		}
+		wp_cache_set( 'buddyform_form_slug_' . $post_id, $value, 'buddyform' );
 	}
-
+	
 	return $value;
+}
+
+/**
+ * Get the post types for teh created forms
+ *
+ * @return array
+ */
+function buddyforms_get_post_types_from_forms() {
+	global $buddyforms;
+	$result = array();
+	if ( ! empty( $buddyforms ) ) {
+		foreach ( $buddyforms as $form ) {
+			$result[] = $form['post_type'];
+		}
+		$result = array_unique( $result );
+	}
+	
+	return $result;
 }
 
 

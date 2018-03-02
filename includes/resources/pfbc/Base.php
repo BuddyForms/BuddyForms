@@ -109,14 +109,31 @@ abstract class Base {
 
 		return $str;
 	}
-
+	
 	/**
+	 * Filter special characters
+	 *
 	 * @param $str
 	 *
 	 * @return string
 	 */
 	protected function filter( $str ) {
-		return htmlspecialchars( $str );
+		if ( is_array( $str ) ) {
+			return array_walk_recursive( $str, array( $this, 'apply_filter' ) );
+		} else {
+			return htmlspecialchars( $str );
+		}
+	}
+	
+	/**
+	 * Convert special characters to HTML entities
+	 *
+	 * @internal
+	 *
+	 * @param $str
+	 */
+	public function apply_filter( &$str ) {
+		$str = htmlspecialchars( $str );
 	}
 
 	/**
