@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.1.5.2
+ * Version: 2.1.6
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.1.5.2';
+		public $version = '2.1.6';
 
 		/**
 		 * Initiate the class
@@ -625,17 +625,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
 			$buddyforms_core_fs = fs_dynamic_init( array(
-				'id'             => '391',
-				'slug'           => 'buddyforms',
-				'type'           => 'plugin',
-				'public_key'     => 'pk_dea3d8c1c831caf06cfea10c7114c',
-				'is_premium'     => true,
-				'has_addons'     => true,
-				'has_paid_plans' => true,
-				'menu'           => array(
-					'slug'       => 'edit.php?post_type=buddyforms',
+				'id'                  => '391',
+				'slug'                => 'buddyforms',
+				'type'                => 'plugin',
+				'public_key'          => 'pk_dea3d8c1c831caf06cfea10c7114c',
+				'is_premium'          => true,
+				'has_addons'          => true,
+				'has_paid_plans'      => true,
+				'trial'               => array(
+					'days'               => 14,
+					'is_require_payment' => true,
+				),
+				'menu'                => array(
+					'slug'           => 'edit.php?post_type=buddyforms',
 					'first-path' => $first_path,
-					'support'    => false,
+					'support'        => false,
 					'contact'    => true,
 					'addons'     => true,
 				),
