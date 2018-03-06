@@ -31,13 +31,14 @@ function buddyforms_permissions_unregistered_screen() {
 		'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
 		'class'     => 'public-submit-option'
 	) );
-
-	$public_submit_create_account = ! isset( $buddyform['public_submit_create_account'] ) ? '' : 'public_submit_create_account';
+	
+	$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
 	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
 		array(
 			'value'     => $public_submit_create_account,
 			'shortDesc' => 'Create a new user during form submission',
-		) );
+		)
+	);
 
 	$element->setAttribute( 'id', 'public_submit_create_account' );
 	$element->setAttribute( 'class', 'public-submit-option public_submit_create_account' );
