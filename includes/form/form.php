@@ -15,27 +15,40 @@ function buddyforms_create_edit_form( $args ) {
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
 
-		return;
+		return false;
 	}
 
 	do_action( 'buddyforms_create_edit_form_loader' );
 
 	// Hook for plugins to overwrite the $args.
 	$args = apply_filters( 'buddyforms_create_edit_form_args', $args );
-
-	extract( shortcode_atts( array(
+	
+	$post_type   = '';
+	$the_post    = 0;
+	$post_id     = 0;
+	$post_parent = 0;
+	$form_slug   = false;
+	$form_notice = '';
+	
+	$short_array = shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,
 		'post_id'     => 0,
 		'post_parent' => 0,
 		'form_slug'   => false,
 		'form_notice' => '',
-	), $args ) );
-
+	), $args, EXTR_IF_EXISTS );
+	
+	extract( $short_array );
+	
+	if ( empty( $buddyforms[ $form_slug ] ) ) {
+		return false;
+	}
+	
 	buddyforms_switch_to_form_blog( $form_slug );
-
+	
 	$current_user = wp_get_current_user();
-
+	
 	if ( empty( $post_type ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
@@ -84,7 +97,7 @@ function buddyforms_create_edit_form( $args ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-				return;
+				return false;
 			}
 
 		}
@@ -111,7 +124,7 @@ function buddyforms_create_edit_form( $args ) {
 			$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 			echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-			return;
+			return false;
 		}
 	}
 
@@ -128,13 +141,12 @@ function buddyforms_create_edit_form( $args ) {
 	if ( empty( $form_slug ) ) {
 		$form_slug = apply_filters( 'buddyforms_the_form_to_use', $form_slug, $post_type );
 	}
-
-
+	
 	if ( ! isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-		return;
+		return false;
 	}
 
 	$customfields = $buddyforms[ $form_slug ]['form_fields'];
@@ -168,7 +180,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_message' ) {
 			echo $display_message;
 
-			return;
+			return false;
 		}
 	}
 
