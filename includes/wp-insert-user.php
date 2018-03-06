@@ -118,10 +118,8 @@ function buddyforms_wp_insert_user() {
 	
 	$hasError = false;
 	
-	if ( isset( $_POST["user_email"] ) ) {
-		
+	if ( ! empty( $_POST["user_email"] ) ) {
 		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
-		
 		if ( ! wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
 			return false;
 		}
@@ -192,27 +190,22 @@ function buddyforms_wp_insert_user() {
 				$hasError = true;
 				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
 			}
-			
 		}
 		// passwords do not match?
 		if ( $user_pass != $pass_confirm ) {
 			$hasError = true;
 			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Passwords do not match', 'buddyforms' ) );
 		}
-		
 	} else {
-		// General error message that one of the required field sis missing
+		// General error message that one of the required fields are missing
 		$hasError = true;
 		Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: eMail Address is a required fields. You need to add the email address field to the form.', 'buddyforms' ) );
 	}
-	
-	// Let us check if we run into any error.
 	
 	$user_role = isset( $buddyforms[ $form_slug ]['registration']['new_user_role'] ) ? $buddyforms[ $form_slug ]['registration']['new_user_role'] : 'subscriber';
 	
 	// only create the user in if there are no errors
 	if ( ! $hasError ) {
-		
 		$new_user_id = wp_insert_user( array(
 				'user_login'      => $user_login,
 				'user_pass'       => $user_pass,

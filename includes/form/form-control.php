@@ -17,11 +17,12 @@ function buddyforms_process_submission( $args = Array() ) {
 	$hasError      = false;
 	$error_message = '';
 
-	$current_user = wp_get_current_user();
-
 	$redirect_to = '';
 	$post_id     = 0;
 	$post_parent = 0;
+	
+	$current_user = wp_get_current_user();
+	$user_id = $current_user->ID;
 
 	extract( shortcode_atts( array(
 		'post_type'   => '',
@@ -170,7 +171,6 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 
 	if ( $post_id != 0 ) {
-
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
@@ -180,7 +180,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		// Check if the user is author of the post
 		$user_can_edit = false;
-		if ( $the_post->post_author == $current_user->ID ) {
+		if ( $the_post->post_author == $user_id ) {
 			$user_can_edit = true;
 		}
 		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
@@ -231,7 +231,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 
 	// Check if post_excerpt form element exist and if has values if empty check for default
-	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', isset( $_POST['post_excerpt'] ) && ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
+	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
 	if ( empty( $post_excerpt ) ) {
 		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
 		$post_excerpt  = $content_field['generate_post_excerpt'];
@@ -245,7 +245,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_status = get_post_status( $post_id );
 	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
-	$the_author_id = apply_filters( 'buddyforms_the_author_id', $current_user->ID, $form_slug, $post_id );
+	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
 
 	$args = Array(
 		'post_id'        => $post_id,
