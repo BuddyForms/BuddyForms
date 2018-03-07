@@ -493,10 +493,16 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-
+					
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
-							$form->addElement( new Element_Captcha( "Captcha", $attributes = null ) );
+							$element = new Element_Captcha( "Captcha", $attributes = null );
+							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
+							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );
+							$element->setAttribute( 'data_theme', ! empty( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark' );
+							$element->setAttribute( 'data_type', ! empty( $customfield['captcha_data_type'] ) ? $customfield['captcha_data_type'] : 'image' );
+							$element->setAttribute( 'data_size', ! empty( $customfield['captcha_data_size'] ) ? $customfield['captcha_data_size'] : 'normal' );
+							$form->addElement( $element );
 						}
 						break;
 

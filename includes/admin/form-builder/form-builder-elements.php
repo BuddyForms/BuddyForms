@@ -243,7 +243,50 @@ function buddyforms_display_form_element( $args ) {
 				'value'    => $name,
 				'required' => 1
 			) );
-
+			
+			$captcha_site_key                           = ! empty( $customfield['captcha_site_key'] ) ? $customfield['captcha_site_key'] : '';
+			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( 'Site Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
+				'data'     => $field_id,
+				'value'    => $captcha_site_key,
+				'required' => 1
+			) );
+			$captcha_private_key                           = ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '';
+			$form_fields['general']['captcha_private_key'] = new Element_Textbox( '<b>' . __( 'Private Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_private_key]", array(
+				'data'     => $field_id,
+				'value'    => $captcha_private_key,
+				'required' => 1
+			) );
+			
+			$form_fields['general']['captcha_data_theme'] = new Element_Select( '<b>' . __( 'The color theme of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_theme]",
+				array(
+					'dark'  => __( 'Dark', 'buddyform' ),
+					'light' => __( 'Light', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark',
+					'field_id' => $field_id,
+				)
+			);
+			
+			$form_fields['general']['captcha_data_type'] = new Element_Select( '<b>' . __( 'The type of CAPTCHA to serve', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_type]",
+				array(
+					'image'  => __( 'Image', 'buddyform' ),
+					'audio' => __( 'Audio', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_type'] ) ? $customfield['captcha_data_type'] : 'image',
+					'field_id' => $field_id,
+				)
+			);
+			
+			$form_fields['general']['captcha_data_size'] = new Element_Select( '<b>' . __( 'The size of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_size]",
+				array(
+					'normal'  => __( 'Normal', 'buddyform' ),
+					'compact' => __( 'Compact', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_size'] ) ? $customfield['captcha_data_size'] : 'normal',
+					'field_id' => $field_id,
+				)
+			);
+			
 			$form_fields['general']['html'] = new Element_HTML( '<p><b>reCaptcha is only visible to logged off users. Logged in users not need to get checked.<b><p>' );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
