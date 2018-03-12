@@ -25,13 +25,13 @@ function buddyforms_wp_update_user() {
 		? sanitize_user( $_POST["user_login"] )
 		: $user_args['user_login'];
 	
-	$user_args['user_pass'] = isset( $_POST["user_pass"] ) && ! empty( $_POST["user_pass"] )
-		? esc_attr( $_POST["user_pass"] )
+	$user_args['user_pass'] = isset( $_POST["buddyforms_user_pass"] ) && ! empty( $_POST["buddyforms_user_pass"] )
+		? esc_attr( $_POST["buddyforms_user_pass"] )
 		: $user_args['user_pass'];
 	
-	$user_args['user_pass_confirm'] = ! empty( $_POST["user_pass_confirm"] )
-		? esc_attr( $_POST["user_pass_confirm"] )
-		: $user_args['user_pass'];
+	$user_args['user_pass_confirm'] = ! empty( $_POST["buddyforms_user_pass_confirm"] )
+		? esc_attr( $_POST["buddyforms_user_pass_confirm"] )
+		: $user_args['user_pass_confirm'];
 	
 	$user_args['user_email'] = ! empty( $_POST["user_email"] )
 		? sanitize_email( $_POST["user_email"] )
@@ -53,7 +53,10 @@ function buddyforms_wp_update_user() {
 		? esc_textarea( $_POST["user_bio"] )
 		: $user_args['user_bio'];
 	
-	
+
+
+
+
 	// invalid email?
 	if ( ! is_email( $user_args['user_email'] ) ) {
 		$hasError = true;
@@ -73,12 +76,27 @@ function buddyforms_wp_update_user() {
 		$hasError = true;
 		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
 	}
-	// passwords do not match?
-	if ( $user_args['user_pass_confirm'] != $user_args['user_pass'] ) {
-		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Passwords do not match', 'buddyforms' ) );
+
+
+	if($_POST['buddyforms_user_pass'] == '' || $_POST['buddyforms_user_pass_confirm'] == '') {
+		// password(s) field empty
+		buddyforms_reset_password_errors()->add('password_empty', __('Please enter a password, and confirm it', 'buddyforms'));
 	}
-	
+	if($_POST['buddyforms_user_pass'] != $_POST['buddyforms_user_pass_confirm']) {
+		// passwords do not match
+		buddyforms_reset_password_errors()->add('password_mismatch', __('Passwords do not match', 'buddyforms'));
+	}
+
+	// retrieve all error messages, if any
+	$errors = buddyforms_reset_password_errors()->get_error_messages();
+
+	if( !empty( $errors ) ){
+		$hasError = true;
+		foreach($errors as $error){
+			$message = buddyforms_reset_password_errors()->get_error_message();
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span> Error: ' . $message );
+		}
+	}
 	
 	// Let us check if we run into any error.
 	// only create the user in if there are no errors

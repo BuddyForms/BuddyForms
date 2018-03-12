@@ -134,10 +134,8 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_pass':
-						if ( ! isset( $customfield['hide_if_logged_in'] ) && ! is_admin() ) {
-							$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
-							$element_attr['id'] = $element_attr['id'] . '2';
-							$form->addElement( new Element_Password( $name . ' Confirm', $slug . '_confirm', $element_attr ) );
+						 if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr ) );
 						}
 						break;
 

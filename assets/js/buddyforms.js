@@ -141,7 +141,7 @@ function checkPasswordStrength( $pass1,
                                 blacklistArray ) {
     var pass1 = $pass1.val();
     var pass2 = $pass2.val();
-
+    
     // Reset the form & meter
     $submitButton.attr( 'disabled', 'disabled' );
     $strengthResult.removeClass( 'short bad good strong' );
@@ -206,7 +206,7 @@ jQuery( document ).ready( function( $ ) {
                 $('input[name=buddyforms_user_pass]'),         // First password field
                 $('input[name=buddyforms_user_pass_confirm]'), // Second password field
                 $('#password-strength'),           // Strength meter
-                $('input[type=submit]'),           // Submit button
+                $('.bf-submit'),           // Submit button
                 ['black', 'listed', 'word']        // Blacklisted words
             );
         }
