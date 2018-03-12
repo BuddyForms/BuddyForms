@@ -141,7 +141,7 @@ function checkPasswordStrength( $pass1,
                                 blacklistArray ) {
     var pass1 = $pass1.val();
     var pass2 = $pass2.val();
-    
+
     // Reset the form & meter
     $submitButton.attr( 'disabled', 'disabled' );
     $strengthResult.removeClass( 'short bad good strong' );

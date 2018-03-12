@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9.4
-Stable tag: 2.1.6.1
+Stable tag: 2.1.6.2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -354,6 +354,14 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.6.2 - 12. March 2018
+* Updated the re captcha form element to use the version 2. Version 1 is only supported til the 30 of March.
+* Adding new options for recaptcha v2 to the form element.
+* Fixing an issue with the user creation. If "Create account during submission" was set without a page selected in the form builder under edit submissions.
+* Fixed an issue with the post author. If the user was created during submission it could happen that no author was set.
+* Rebuild the pfbc password field and make use of the WordPress validation also in registration forms.
+* Fixed an with the password option "hide for logged in users". If the option was set the password field was hidden all the time.
 
 = 2.1.6.1 - 6. March 2018
 * Fixed an issue in the Registration and Activation Process.
