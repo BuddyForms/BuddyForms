@@ -194,3 +194,7 @@ ul.bf_files {
 button.bf-submit:disabled{
 	background-color: #c4c4c4;
 }
+
+.bf-hidden {
+    display: none !important;
+}
