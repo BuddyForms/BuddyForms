@@ -400,7 +400,10 @@ function buddyforms_form_html( $args ) {
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
-
+	//Honey Pot
+	$honey_pot = new Element_HTML( '<input data-storage="false" type="text" value="" style="display: none" id="bf_honeypot" name="bf_honeypot" />');
+	$form->addElement( $honey_pot );
+	
 	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
 	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
 	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
