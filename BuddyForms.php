@@ -648,33 +648,33 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		return $buddyforms_core_fs;
 	}
-
-	// BuddyForms requires php version 5.3 or higher.
-	if ( PHP_VERSION < 5.3 ) {
-		function buddyforms_php_version_admin_notice() {
-			?>
-            <div class="notice notice-error is-dismissible">
-                <p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-                <p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
-                <p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
-            </div>
-			<?php
-		}
-
-		add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
-	} else {
-
-		// Init BuddyForms.
-		$GLOBALS['buddyforms_new'] = new BuddyForms();
-
-		// Init Freemius.
-		buddyforms_core_fs();
-		// Signal that parent SDK was initiated.
-		do_action( 'buddyforms_core_fs_loaded' );
-
-		if ( buddyforms_core_fs()->is__premium_only() ) {
-			define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
-		}
-
+	
+	function buddyforms_php_version_admin_notice() {
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
+			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+		</div>
+		<?php
 	}
+	
+	function activate_buddyform_at_plugin_loader() {
+		// BuddyForms requires php version 5.3 or higher.
+		if ( PHP_VERSION < 5.3 ) {
+			add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
+		} else {
+			// Init BuddyForms.
+			$GLOBALS['buddyforms_new'] = new BuddyForms();
+			// Init Freemius.
+			buddyforms_core_fs();
+			// Signal that parent SDK was initiated.
+			do_action( 'buddyforms_core_fs_loaded' );
+			if ( buddyforms_core_fs()->is__premium_only() ) {
+				define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
+			}
+		}
+	}
+	
+	add_action( 'init', 'activate_buddyform_at_plugin_loader' );
 }
