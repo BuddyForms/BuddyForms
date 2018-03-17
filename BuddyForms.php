@@ -676,5 +676,5 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		}
 	}
 	
-	add_action( 'init', 'activate_buddyform_at_plugin_loader' );
+	activate_buddyform_at_plugin_loader();
 }
