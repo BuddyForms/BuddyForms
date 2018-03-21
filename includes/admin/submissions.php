@@ -53,8 +53,7 @@ function buddyforms_submissions_screen() {
                     <select id="buddyforms_admin_menu_submissions_form_select">
                         <option value="none">Select Form</option>
 						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
-                                    value="<?php echo $form_slug ?>">
+                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
 								<?php echo $form['name']; ?>
                             </option>
 						<?php } ?>
