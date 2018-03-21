@@ -212,18 +212,20 @@ function baumensch_register_link($wp_login_form){
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
 		$permalink = get_permalink( $buddyforms_registration_page );
-	}
+	} else {
+		$permalink = site_url('/wp-login.php?action=register&redirect_to=' . get_permalink());
+    }
 
 	// new login page
-	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a>';
+	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a> ';
 
 	return $wp_login_form;
 }
 
 
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
-function buddyforms_add_lost_password_link() {
-	return '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a>';
+function buddyforms_add_lost_password_link($wp_login_form) {
+	return $wp_login_form .= '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a> ';
 }
 
 

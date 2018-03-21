@@ -1,35 +1,5 @@
 <?php
 
-/**
- * Plugin Name: BuddyForms Password Strength
- * Plugin URI: http://buddyforms.com/downloads/buddyforms-password-strength/
- * Description: Password strength option page to BuddyForms to adjust the minimum strength requirement and custom messages
- * Version: 0.1
- * Author: ThemeKraft
- * Author URI: https://themekraft.com/buddyforms/
- * License: GPLv2 or later
- * Network: false
- *
- *****************************************************************************
- *
- * This script is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- ****************************************************************************
- */
-
-
 add_filter('buddyforms_admin_tabs', 'buddyforms_password_strength_admin_tab', 10, 1);
 function buddyforms_password_strength_admin_tab($tabs){
 
