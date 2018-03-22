@@ -198,3 +198,11 @@ button.bf-submit:disabled{
 .bf-hidden {
     display: none !important;
 }
+
+#wp-admin-bar-buddyforms-admin-edit-form>a.ab-item:before {
+	content: "\e000";
+	font-family: 'icomoon';
+	font-size: 27px;
+	padding: 0;
+	padding-right: 10px;
+}

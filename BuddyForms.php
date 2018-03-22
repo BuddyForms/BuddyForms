@@ -45,6 +45,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @var string
 		 */
 		public $version = '2.1.6.3';
+		
+		/**
+		 * @var string Assets URL
+		 */
+		public static $assets;
 
 		/**
 		 * Initiate the class
@@ -54,10 +59,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		public function __construct() {
 			global $wp_session;
-
+			
 			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 			$this->load_constants();
+			
+			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
@@ -265,9 +272,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			} else {
 				wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 			}
-			// load the tk_icons everywhere
-			wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
+			// load the tk_icons everywhere in the admin
+			self::load_tk_font_icons();
 
+		}
+		
+		/**
+		 * Load TK icons
+		 */
+		static function load_tk_font_icons() {
+			wp_enqueue_style( 'buddyforms-tk-icons', self::$assets . 'resources/tk_icons/style.css' );
 		}
 
 		/**
@@ -338,7 +352,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
                 'ajaxnonce' => wp_create_nonce('fac_drop')
             );
             wp_localize_script("buddyforms_dropzone_initializer", "dropParam", $params);
-
+			
 			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
@@ -384,6 +398,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			if ( $found ) {
 				BuddyForms::front_js_css();
+				self::load_tk_font_icons();
 			}
 
 		}
