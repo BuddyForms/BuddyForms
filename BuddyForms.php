@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.1.6.4
+ * Version: 2.1.6.3
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -47,6 +47,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		public $version = '2.1.6.4';
 
 		/**
+		 * @var string Assets URL
+		 */
+		public static $assets;
+
+		/**
 		 * Initiate the class
 		 *
 		 * @package buddyforms
@@ -58,6 +63,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 			$this->load_constants();
+
+			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
@@ -265,9 +272,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			} else {
 				wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 			}
-			// load the tk_icons everywhere
-			wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
+			// load the tk_icons everywhere in the admin
+			self::load_tk_font_icons();
 
+		}
+
+		/**
+		 * Load TK icons
+		 */
+		static function load_tk_font_icons() {
+			wp_enqueue_style( 'buddyforms-tk-icons', self::$assets . 'resources/tk_icons/style.css' );
 		}
 
 		/**
@@ -384,6 +398,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			if ( $found ) {
 				BuddyForms::front_js_css();
+				self::load_tk_font_icons();
 			}
 
 		}
