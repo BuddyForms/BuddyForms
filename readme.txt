@@ -369,7 +369,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the the visibility of the selected form post type
 * Moving the tk icon load script to a separated function to load in backend and frontend
 * Adding css to include the icon in the shortcode
-* Chreate a new admin bar menu item to edit the form if the form is displayed.
+* Create a new admin bar menu item to edit the form if the form is displayed.
 * Update Freemius version to 2.0.1
 
 = 2.1.6.3 - 14. March 2018
