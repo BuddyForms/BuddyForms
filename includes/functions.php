@@ -768,3 +768,51 @@ add_filter( 'buddyforms_front_js_css_loader', 'buddyforms_front_js_css_loader_gl
 function buddyforms_front_js_css_loader_global( $found ) {
 	return true;
 }
+
+add_action( 'admin_bar_menu', 'buddyform_admin_bar_shortcut', 60 );
+/**
+ * Add a short-code to the admin toolbar to edit the form in the current screen
+ *
+ * @param WP_Admin_Bar $wp_admin_bar
+ */
+function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
+	if ( is_admin() && is_user_logged_in() ) {
+		return;
+	}
+	
+	global $post, $buddyforms;
+	
+	if ( empty( $post->ID ) ) {
+		return;
+	}
+	$form_slug = '';
+	if ( ! empty( $_GET['form_slug'] ) ) {
+		$form_slug = sanitize_title( $_GET['form_slug'] );
+	} else if ( ! empty( $post->post_name ) ) {
+		$form_slug = $post->post_name;
+	}
+	
+	if ( ! empty( $form_slug ) && ! array_key_exists( $form_slug, $buddyforms ) ) {
+		return;
+	}
+	
+	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
+		return;
+	}
+	
+	$form = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
+	
+	$post_url = sprintf( 'post.php?post=%s&action=edit', $form->ID );
+	
+	$args = array(
+		'id'    => 'buddyforms-admin-edit-form',
+		'title' => __( 'Edit BuddyForm', 'buddyforms' ),
+		'href'  => admin_url( $post_url ),
+		'meta'  => array(
+			'data-post_id' => 33,
+			'class'        => 'admin-bar dashicons-before dashicons-buddyforms'
+		)
+	);
+	
+	$wp_admin_bar->add_node( $args );
+}
