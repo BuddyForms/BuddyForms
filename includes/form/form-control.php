@@ -17,6 +17,9 @@ function buddyforms_process_submission( $args = Array() ) {
 	$hasError      = false;
 	$error_message = '';
 	
+	$post_type   = '';
+	$the_post    = '';
+	$revision_id = '';
 	$redirect_to = '';
 	$post_id     = 0;
 	$post_parent = 0;
