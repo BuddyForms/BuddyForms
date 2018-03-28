@@ -12,7 +12,7 @@ class Element_Upload extends Element_Textbox
     /**
      * @var array
      */
-    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"");
+    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"");
 
     public function render()
     {
@@ -42,7 +42,7 @@ class Element_Upload extends Element_Textbox
         }
 
 
-
+        $description = $this->getAttribute('description');
         $max_size =  $this->getAttribute('file_limit');
         $accepted_files =  $this->getAttribute('accepted_files');
         $multiple_files =  $this->getAttribute('multiple_files');
@@ -60,7 +60,8 @@ class Element_Upload extends Element_Textbox
 
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
+        $box = "<label>$description</label>
+                <div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>

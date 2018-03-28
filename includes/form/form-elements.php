@@ -586,6 +586,10 @@ function buddyforms_form_elements( $form, $args ) {
                         $accepted_files = 'image/*';
                         $multiple_files = "1";
                         $delete_files = false;
+                        $description = "";
+                        if (  isset( $customfield['description'] ) ) {
+                           $description = $customfield['description'];
+                        }
                         if (  isset( $customfield['file_limit'] ) ) {
                             $max_size = $customfield['file_limit'];
                         }
@@ -600,7 +604,7 @@ function buddyforms_form_elements( $form, $args ) {
                             $param_value = $customfield['delete_files'][0];
                             $delete_files = $param_value == 'delete'? true : false;
                         }
-						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files ) ) );
+						$form->addElement( new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files,'description'=>$description ) ) );
 						break;
 					case 'file':
 
