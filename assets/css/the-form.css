@@ -57,6 +57,11 @@
     width: 100%;
 }
 
+#loginform input.input {
+  max-width: 300px;
+}
+
+#loginform input.input,
 .the_buddyforms_form .standard-form textarea,
 .the_buddyforms_form .standard-form input[type=url],
 .the_buddyforms_form .standard-form input[type=link],
