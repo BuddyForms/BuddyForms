@@ -12,7 +12,7 @@ class Element_Upload extends Element_Textbox
     /**
      * @var array
      */
-    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"");
+    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"","mandatory"=>"");
 
     public function render()
     {
@@ -21,6 +21,7 @@ class Element_Upload extends Element_Textbox
         parent::render();
         $box = ob_get_contents();
         ob_end_clean();
+
         $id = $this->getAttribute('id');
         $action= isset($_GET['action']) ? $_GET['action'] : "" ;
         $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
@@ -40,8 +41,7 @@ class Element_Upload extends Element_Textbox
         {
             $message = rtrim(trim($result), ',');
         }
-
-
+        $required    = $this->getAttribute('mandatory');
         $description = $this->getAttribute('description');
         $max_size =  $this->getAttribute('file_limit');
         $accepted_files =  $this->getAttribute('accepted_files');
@@ -66,7 +66,8 @@ class Element_Upload extends Element_Textbox
                                   
                                       <span>$message</span>
                                  </div>
-                                 <input type='hidden' name='$id' value='' id='field_$id'/>
+                                 <input type='text' style='visibility: hidden' name='$id' value='' id='field_$id' $required />
+                                 
                 </div>";
         if ($this->bootstrapVersion == 3) {
             echo $box;
