@@ -147,4 +147,3 @@ function buddyform_strip_html_title_for_entries_in_post_screen( $title, $id ) {
 	
 	return $title;
 }
-

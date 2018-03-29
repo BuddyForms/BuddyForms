@@ -53,8 +53,7 @@ function buddyforms_submissions_screen() {
                     <select id="buddyforms_admin_menu_submissions_form_select">
                         <option value="none">Select Form</option>
 						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
-                                    value="<?php echo $form_slug ?>">
+                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
 								<?php echo $form['name']; ?>
                             </option>
 						<?php } ?>
@@ -227,15 +226,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( isset( $_GET['form_slug'] ) ) {
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			$post_types_array = buddyforms_get_post_types_from_forms();
-			$the_query = new WP_Query( array(
-				'post_type'   =>  $post_types_array,
-				'post_status' => array( 'any' ),
-				'meta_key'    => $customkey,
-				'meta_value'  => $customvalue,
-			) );
-
-			$data = $the_query->get_posts();
+			$sql_args   = array( 'ID', 'post_title', 'post_author' );
+			$sql_select = implode( ', ', $sql_args );
+			$data        = $wpdb->get_results( $wpdb->prepare("SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s ORDER BY post_date DESC", $customkey, $customvalue) );
 		}
 
 		$current_page = $this->get_pagenum();

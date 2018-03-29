@@ -9,7 +9,8 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  * @return string
  */
 function buddyforms_create_edit_form_shortcode( $args ) {
-
+	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
+	
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,
@@ -18,7 +19,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'form_slug'   => '',
 		'slug'        => '',
 		'id'          => '',
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
@@ -33,7 +34,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		$post = get_post( $id );
 
 		if ( ! isset( $post->post_name ) ) {
-			return;
+			return false;
 		}
 		$form_slug = $post->post_name;
 	}
@@ -68,9 +69,9 @@ function buddyforms_create_edit_form_shortcode( $args ) {
  */
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
-
-
-
+	
+	$author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+	
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
@@ -84,7 +85,7 @@ function buddyforms_the_loop( $args ) {
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key' => '',
 		'meta_value' => ''
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) :
 		buddyforms_wp_login_form();
@@ -228,23 +229,23 @@ function buddyforms_the_loop_shortcode( $args ) {
 
 
 //
-// BuddyForms Schortcode Buttons
+// BuddyForms Shortcode Buttons
 //
 add_shortcode( 'buddyforms_nav', 'buddyforms_nav' );
 add_shortcode( 'bf_nav', 'buddyforms_nav' );
 /**
  * @param $args
  *
- * @return mixed|string|void
+ * @return mixed|string
  */
 function buddyforms_nav( $args ) {
-
+	$form_slug = $separator = $label_add = $label_view = '';
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
 		'separator'  => ' | ',
 		'label_add'  => 'Add New',
 		'label_view' => 'View',
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	$tmp = buddyforms_button_view_posts( $args );
 	$tmp .= $separator;
@@ -258,15 +259,15 @@ add_shortcode( 'bf_link_to_user_posts', 'buddyforms_button_view_posts' );
 /**
  * @param $args
  *
- * @return mixed|void
+ * @return mixed
  */
 function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
-
+	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
 		'label_view' => 'View',
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label_view, 'buddyforms' ) . ' </a>';
 
@@ -279,11 +280,11 @@ add_shortcode( 'bf_link_to_form', 'buddyforms_button_add_new' );
 /**
  * @param $args
  *
- * @return mixed|void
+ * @return mixed
  */
 function buddyforms_button_add_new( $args ) {
 	global $buddyforms;
-
+	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
 		'label_add' => 'Add New',
@@ -299,11 +300,11 @@ function buddyforms_button_add_new( $args ) {
 add_shortcode( 'bf_login_form', 'buddyforms_view_login_form' );
 function buddyforms_view_login_form( $args ) {
 	global $wp;
-
-	if(is_admin()){
-		return;
+	
+	if ( is_admin() ) {
+		return false;
 	}
-
+	$form_slug = $redirect_url = $title = $label_username = $label_password = $label_remember = $label_log_in = '';
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
@@ -314,7 +315,7 @@ function buddyforms_view_login_form( $args ) {
 		'label_password' => __( 'Password' ),
 		'label_remember' => __( 'Remember Me' ),
 		'label_log_in'   => __( 'Log In' ),
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">' . __( 'Logout', 'buddyforms' ) . '</a>';
@@ -328,10 +329,10 @@ function buddyforms_view_login_form( $args ) {
 
 // password reset form
 function buddyforms_reset_password_form($args) {
-
+	$redirect_url = '';
 	extract( shortcode_atts( array(
 		'redirect_url' => '',
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 
 	if(is_user_logged_in()) {

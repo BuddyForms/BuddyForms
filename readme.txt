@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9.4
-Stable tag: 2.1.5.2
+Stable tag: 2.1.6.4
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -355,6 +355,53 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
+= 2.1.6.4 - 26. March 2018
+* Fixed the check for the permission for admin and autor (read-edit-write)
+* Fixed the loader of the plugin to avoid incompatibilities with WP
+* Added new class bf-hidden to enable hide form elements by class
+* Adding the honey pot to the form.
+* Fixed and issue in the login form. The Lost Password Link was overwriting the registration link
+* Remove the old plugin header from the password-strengh-settings
+* Make sure Form Layout and Import Forms are always the last tabs
+* Improving the global var of BuddyForms
+* Fixed the item in the list of form inside the submission view to include the last updated form names
+* Fixed the items name in the list of form inside the submission view
+* Fixed the the visibility of the selected form post type
+* Moving the tk icon load script to a separated function to load in backend and frontend
+* Adding css to include the icon in the shortcode
+* Create a new admin bar menu item to edit the form if the form is displayed.
+* Update Freemius version to 2.0.1
+
+= 2.1.6.3 - 14. March 2018
+* Make sure the password update script in the wp insert user only run if new password is set during update
+* Make sure the password script works for new registrations with the change password class introduced in the latest update
+
+= 2.1.6.2 - 12. March 2018
+* Updated the re captcha form element to use the version 2. Version 1 is only supported til the 30 of March.
+* Adding new options for recaptcha v2 to the form element.
+* Fixed an issue with the user creation. If "Create account during submission" was set without a page selected in the form builder under edit submissions.
+* Fixed an issue with the post author. If the user was created during submission it could happen that no author was set.
+* Rebuild the pfbc password field and make use of the WordPress validation also in registration forms.
+* Fixed an with the password option "hide for logged in users". If the option was set the password field was hidden all the time.
+
+= 2.1.6.1 - 6. March 2018
+* Fixed an issue in the Registration and Activation Process.
+* Refactoring the code.
+* Adding the login/registration form to the forms when the option correspond
+
+= 2.1.6 - 5. March 2018 =
+* New upload field to integrate with dropzone
+*  - Added option max file size
+*  - Added option acceptedFiles
+*  - Added the option multuple files
+*  - Added the delete file option
+*  - Added the id of the attachment in the submissions table for the upload field
+*  - Show the id of the submited files as links in the entry list
+*  - Props to Victor and Guillermo for there contributions and making the DropZone a reality ;)
+* Fixed the submission view in the backend.
+* Adding a function to strip the html from the post list in the backend
+* Adding the interaction when the ajax is in progress to disabled the submit button
+* Several smaller bug fixes
 
 = 2.1.5.2 - 20. February 2018 = 
 * Fixed an issue in the loop. The thumbnail was not clickable in all sirtuations
@@ -375,7 +422,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Adding the reset option to the dropdown field using an attribute as flag.
 * Adding the reset option to the checkbox, dropdown and select2
 * Implementing the save of post in the backend. This implementation is only for 2 field types.
-* Fixing the extract functions to avoid notices and warnings.
+* Fixed the extract functions to avoid notices and warnings.
 * Change the submission page to use WP_Query and OOP.
 * Adding a hook to update the post meta on edit post in the backend
 * Adding a validation to check for specific number when the user set max and min for the same number.

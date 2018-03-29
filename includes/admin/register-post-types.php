@@ -147,8 +147,8 @@ function buddyforms_post_edit_form_tag() {
  * @param $post_id
  */
 function buddyforms_edit_form_save_meta_box_data( $post_id ) {
-	global $post;
-
+	$post = WP_Post::get_instance($post_id);
+	
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
 	}
@@ -168,33 +168,35 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	$buddyform['slug'] = $post->post_name;
 
 	// make sure the form fields slug and type is sanitised
-	if ( isset( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $key => $field ) {
-		$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
-		$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
-	} endif;
+	if ( isset( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
+		foreach ( $buddyform['form_fields'] as $key => $field ) {
+			$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
+			$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
+		}
+	}
 
 	// Update post meta
 	update_post_meta( $post_id, '_buddyforms_options', $buddyform );
 
 	// Save the Roles and capabilities.
 	if ( isset( $_POST['buddyforms_roles'] ) ) {
-
-		foreach ( get_editable_roles() as $role_name => $role_info ):
+		
+		foreach ( get_editable_roles() as $role_name => $role_info ) {
 			$role = get_role( $role_name );
-			foreach ( $role_info['capabilities'] as $capability => $_ ):
-
+			foreach ( $role_info['capabilities'] as $capability => $_ ) {
+				
 				$capability_array = explode( '_', $capability );
-
+				
 				if ( $capability_array[0] == 'buddyforms' ) {
 					if ( $capability_array[1] == $buddyform['slug'] ) {
-
+						
 						$role->remove_cap( $capability );
-
+						
 					}
 				}
-
-			endforeach;
-		endforeach;
+				
+			}
+		}
 
 		foreach ( $_POST['buddyforms_roles'] as $form_role => $capabilities ) {
 			$role = get_role( $form_role );
@@ -263,6 +265,7 @@ function buddyforms_regenerate_global_options() {
 			$options = get_post_meta( $post->ID, '_buddyforms_options', true );
 			if ( $options ) {
 				$options['slug']                      = $post->post_name;
+				$options['name']                      = $post->post_title;
 				$buddyforms_forms[ $post->post_name ] = $options;
 			}
 		}

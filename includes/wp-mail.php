@@ -222,7 +222,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 		$emailBody = str_replace( '[form_elements_table]', buddyforms_mail_notification_form_elements_as_table( $form_slug ), $emailBody );
 
-		$emailBody = nl2br( htmlspecialchars( $emailBody ) );
+		// $emailBody = nl2br( htmlspecialchars( $emailBody ) );
 	}
 
 	// If we do not have any valid eMail Body let us try to create the content from teh from elements as table
