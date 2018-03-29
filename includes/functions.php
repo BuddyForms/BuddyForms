@@ -786,8 +786,9 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 		return;
 	}
 	$form_slug = '';
-	if ( ! empty( $_GET['form_slug'] ) ) {
-		$form_slug = sanitize_title( $_GET['form_slug'] );
+	global $wp_query;
+	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
+		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
 	} else if ( ! empty( $post->post_name ) ) {
 		$form_slug = $post->post_name;
 	}
