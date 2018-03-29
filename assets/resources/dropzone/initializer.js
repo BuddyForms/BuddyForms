@@ -22,11 +22,13 @@ jQuery(document).ready(function ($) {
 			clickable: clickeable,
 			addRemoveLinks: true,
 			init: function () {
+               
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
 				});
 
 				this.on('addedfile', function () {
+					jQuery("#field_"+id+"-error").text("");
 					jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
 				});
 
