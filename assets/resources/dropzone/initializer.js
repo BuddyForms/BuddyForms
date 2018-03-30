@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
 			clickable: clickeable,
 			addRemoveLinks: true,
 			init: function () {
-               
+
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
 				});
