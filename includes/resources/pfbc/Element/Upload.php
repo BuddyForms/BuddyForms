@@ -60,13 +60,12 @@ class Element_Upload extends Element_Textbox
 
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<label>$description</label>
-                <div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
+        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>
                                  </div>
-                                 <input type='text' style='visibility: hidden' name='$id' value='' id='field_$id' $required />
+                                <input type='text' style='visibility: hidden' name='$id' value='' id='field_$id' $required />
                                  
                 </div>";
         if ($this->bootstrapVersion == 3) {
