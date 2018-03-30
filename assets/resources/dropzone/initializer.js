@@ -1,13 +1,21 @@
 /**
  * Created by Victor on 28/12/2017.
  */
+
 jQuery(document).ready(function ($) {
+   /* Object.prototype.$emit = function(name) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        if (this._events && this._events[name])
+            this._events[name].forEach(function(cb) { cb.apply(this, args) }.bind(this));
+        return this;
+    };*/
 	$(".dropzone").each(function (index, value) {
 		var current = $(this),
 			id = current.attr('id'),
 			max_size = current.attr('file_limit'),
 			accepted_files = current.attr('accepted_files'),
 			action = current.attr('action'),
+            uploadFields = current.data('entry'),
 			multiple_files = current.attr('multiple_files');
 
 		Dropzone.autoDiscover = false;
@@ -23,8 +31,12 @@ jQuery(document).ready(function ($) {
 			addRemoveLinks: true,
 			init: function () {
 
+
+
+
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+					
 				});
 
 				this.on('addedfile', function () {
@@ -78,7 +90,24 @@ jQuery(document).ready(function ($) {
 						jQuery("button[type=submit].bf-submit").removeAttr("disabled");
 					});
 				});
-			}
+
+				for(var key in uploadFields){
+					console.log(uploadFields[key]);
+                    var mockFile = {
+                        name: uploadFields[key]['name'],
+                        size: uploadFields[key]['size'],
+                        url:uploadFields[key]['url'],
+                        mediaID: uploadFields[key]['mediaID']
+                    };
+                    this.emit('addedfile', mockFile);
+                    this.emit('thumbnail', mockFile, mockFile.url);
+                    this.emit('complete', mockFile);
+                    this.files.push(mockFile);
+
+				}
+
+
+            }
 		});
 
 	});

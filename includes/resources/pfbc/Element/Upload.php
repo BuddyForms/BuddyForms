@@ -27,14 +27,28 @@ class Element_Upload extends Element_Textbox
         $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
         $column_val ="";
         $result = "";
+        $entries = array();
+        $entries_result="";
         if (! empty($entry) && $action == 'edit'){
             $column_val =  get_post_meta( $entry, $id, true );
 
             $attachmet_id = explode(",",$column_val);
             foreach ($attachmet_id as $id){
+
+                $metadata =   wp_prepare_attachment_for_js($id);
                 $url = wp_get_attachment_url( $id );
-                $result .= " <a style='vertical-align: top;' target='_blank' href='" .  $url . "'>$id</a>,";
+               // $result .= " <a style='vertical-align: top;' target='_blank' href='" .  $url . "'>$id</a>,";
+                $mockFile = new stdClass();
+                $mockFile->name = $metadata['filename'];
+                $mockFile->url = $url;
+                $mockFile->mediaID = $id;
+                $mockFile->size = $metadata['filesizeInBytes'];
+                $entries[$id]=$mockFile;
             }
+        }
+        if(count($entries) > 0){
+
+            $entries_result = json_encode($entries);
         }
         $message = "Drop files here to upload";
         if(!empty($result))
@@ -60,7 +74,7 @@ class Element_Upload extends Element_Textbox
 
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
+        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>
@@ -79,7 +93,10 @@ class Element_Upload extends Element_Textbox
     function renderJS()
     {
         $id = $this->getAttribute('id');
-        //echo 'jQuery("#' . $id . '").dropzone({ url: "/uploads" });';
+        $jscript = " var entries = 
+        
+        ";
+        echo $jscript;
     }
 
 
