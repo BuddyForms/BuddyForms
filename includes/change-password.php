@@ -56,7 +56,7 @@ function buddyforms_change_password_form($redirect_url = '') {
 
 
 				<div><span id="password-strength"></span></div>
-				<input id="buddyforms_password_submit" disabled="disabled" type="submit" value="<?php _e('Change Password', 'buddyforms'); ?>"/>
+				<input id="buddyforms_password_submit" disabled="disabled" type="submit" class="bf-submit" value="<?php _e('Change Password', 'buddyforms'); ?>"/>
 
 			</p>
 		</fieldset>

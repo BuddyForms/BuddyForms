@@ -134,10 +134,8 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_pass':
-						if ( ! isset( $customfield['hide_if_logged_in'] ) && ! is_admin() ) {
-							$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
-							$element_attr['id'] = $element_attr['id'] . '2';
-							$form->addElement( new Element_Password( $name . ' Confirm', $slug . '_confirm', $element_attr ) );
+						 if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr ) );
 						}
 						break;
 
@@ -493,10 +491,16 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-
+					
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
-							$form->addElement( new Element_Captcha( "Captcha", $attributes = null ) );
+							$element = new Element_Captcha( "Captcha", $attributes = null );
+							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
+							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );
+							$element->setAttribute( 'data_theme', ! empty( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark' );
+							$element->setAttribute( 'data_type', ! empty( $customfield['captcha_data_type'] ) ? $customfield['captcha_data_type'] : 'image' );
+							$element->setAttribute( 'data_size', ! empty( $customfield['captcha_data_size'] ) ? $customfield['captcha_data_size'] : 'normal' );
+							$form->addElement( $element );
 						}
 						break;
 

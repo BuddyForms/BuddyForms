@@ -31,13 +31,14 @@ function buddyforms_permissions_unregistered_screen() {
 		'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
 		'class'     => 'public-submit-option'
 	) );
-
-	$public_submit_create_account = ! isset( $buddyform['public_submit_create_account'] ) ? '' : 'public_submit_create_account';
+	
+	$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
 	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
 		array(
 			'value'     => $public_submit_create_account,
 			'shortDesc' => 'Create a new user during form submission',
-		) );
+		)
+	);
 
 	$element->setAttribute( 'id', 'public_submit_create_account' );
 	$element->setAttribute( 'class', 'public-submit-option public_submit_create_account' );
@@ -71,15 +72,15 @@ function buddyforms_permissions_unregistered_screen() {
 
 function buddyforms_permissions_screen() {
 	global $post, $buddyform;
-
+	
 	$form_slug = $post->post_name;
-
+	
 	$form_setup = array();
-
+	
 	if ( ! $buddyform ) {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
-
+	
 	$shortDesc_permission = '<br><br>
 		<div class="bf-roles-main-desc">
 			<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
@@ -87,7 +88,7 @@ function buddyforms_permissions_screen() {
 			<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role with the pro version.', 'buddyforms' ) . '</p>
 			<p>' . __( 'In the free version all roles can create and edit / delete there own posts', 'buddyforms' ) . '</p>
 		</div>';
-
+	
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
 			$shortDesc_permission = '<br><br>
@@ -97,81 +98,89 @@ function buddyforms_permissions_screen() {
 			</div>';
 		}
 	}
-
+	
 	// User Roles Description
 	echo $shortDesc_permission;
-
+	
 	// Display all user roles
-	foreach ( get_editable_roles() as $role_name => $role_info ):
-
+	foreach ( get_editable_roles() as $role_name => $role_info ) {
+		
 		$default_roles['create'] = '';
 		$default_roles['edit']   = '';
 		$default_roles['delete'] = '';
-
+		
 		$form_user_role = array();
-
-		foreach ( $role_info['capabilities'] as $capability => $_ ):
+		
+		foreach ( $role_info['capabilities'] as $capability => $_ ) {
 			$capability_array = explode( '_', $capability );
 			if ( $capability_array[0] == 'buddyforms' ) {
 				if ( $capability_array[1] == $form_slug ) {
 					$form_user_role[ $capability_array[2] ] = $capability_array[2];
 				}
 			}
-		endforeach;
-
+		}
+		
 		if ( buddyforms_core_fs()->is_not_paying() ) {
 			foreach ( $default_roles as $role_n_a => $role_a ) {
 				$form_user_role[ $role_n_a ] = $role_n_a;
 			}
+		} else {
+			foreach ( $default_roles as $role_n_a => $role_a ) {
+				if ( 'administrator' === $role_name || 'editor' === $role_name ) {
+					$form_user_role[ $role_n_a ] = $role_n_a;
+				}
+			}
 		}
-
+		
 		$element = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 			'value'  => $form_user_role,
 			'inline' => true,
+			'id' => 'permission_for_'.$role_name,
 			'style'  => 'margin-right: 60px;',
 		) );
-
+		
 		if ( $role_name == 'administrator' ) {
 			$element->setAttribute( 'shortDesc', 'Admin rights can not get changed' );
 //			$element->setAttribute( 'disabled', 'disabled' );
 		}
-
+		
 		if ( buddyforms_core_fs()->is_not_paying() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
 		}
-
+		
 		$form_setup[] = $element;
-	endforeach;
+	}
 	?>
     <div class="fields_header">
         <table class="wp-list-table widefat posts striped bf_permissions">
             <thead>
             <tr>
                 <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
-                <th class="field_name"><?php _e( 'Create - Edit - Delete', 'buddyforms' ) ?><a style="float: right;"
-                                                                                               href="#"
-                                                                                               class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
+                <th class="field_name"><?php _e( 'Create - Edit - Delete', 'buddyforms' ) ?>
+	                <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
                 </th>
             </tr>
             </thead>
             <tbody id="the-list">
 			<?php
 			if ( isset( $form_setup ) ) {
+				/**
+				 * @var int $key
+				 * @var Element_Checkbox $field
+				 */
 				foreach ( $form_setup as $key => $field ) {
-
 					$type     = $field->getAttribute( 'type' );
 					$class    = $field->getAttribute( 'class' );
 					$disabled = $field->getAttribute( 'disabled' );
 					$classes  = empty( $class ) ? '' : $class . ' ';
 					$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
-
-
+					
 					if ( $type == 'html' ) {
-						echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $class . '"><td colspan="2">';
+						echo '<tr id="table_row_' . $field->getAttribute('id'). '_' . $key . '" class="' . $class . '"><td colspan="2">';
 						$field->render();
 						echo '</td></tr>';
 					} else { ?>
-                        <tr class=" <?php echo $classes ?>">
+                        <tr id="table_row_<?php echo $field->getAttribute('id'); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
                             <th scope="row">
                                 <label for="role_role"><?php echo $field->getLabel() ?></label>
                             </th>

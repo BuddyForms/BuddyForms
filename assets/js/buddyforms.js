@@ -206,7 +206,7 @@ jQuery( document ).ready( function( $ ) {
                 $('input[name=buddyforms_user_pass]'),         // First password field
                 $('input[name=buddyforms_user_pass_confirm]'), // Second password field
                 $('#password-strength'),           // Strength meter
-                $('input[type=submit]'),           // Submit button
+                $('.bf-submit'),           // Submit button
                 ['black', 'listed', 'word']        // Blacklisted words
             );
         }

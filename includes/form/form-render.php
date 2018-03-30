@@ -3,18 +3,20 @@
 /**
  * @param $args
  *
- * @return mixed|string|void
+ * @return mixed|string
  */
 function buddyforms_form_html( $args ) {
 	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id, $form_slug;
-
+	
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
-
+		
 		return $args;
 	}
-
+	
+	$post_type = $the_post = $customfields = $post_id = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
+	
 	// Extract the form args
 	extract( shortcode_atts( array(
 		'post_type'    => '',
@@ -26,12 +28,15 @@ function buddyforms_form_html( $args ) {
 		'redirect_to'  => esc_url( $_SERVER['REQUEST_URI'] ),
 		'form_slug'    => '',
 		'form_notice'  => '',
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
+	
+	$is_registration_form   = ! empty( $buddyforms[ $form_slug ]['form_type'] ) && 'registration' === $buddyforms[ $form_slug ]['form_type'];
+	$need_registration_form = ! empty( $buddyforms[ $form_slug ]['public_submit'] ) && 'registration_form' === $buddyforms[ $form_slug ]['public_submit'];
 
-	if ( ! is_user_logged_in() && $buddyforms[ $form_slug ]['form_type'] != 'registration' && isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] != 'public_submit' )  :
+	if ( ! is_user_logged_in() && !$is_registration_form && $need_registration_form ) {
 		return buddyforms_get_wp_login_form( $form_slug );
-	endif;
-
+	}
+	
 	$user_can_edit = false;
 	if ( empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 		$user_can_edit = true;
@@ -395,7 +400,10 @@ function buddyforms_form_html( $args ) {
 
 	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
-
+	//Honey Pot
+	$honey_pot = new Element_HTML( '<input data-storage="false" type="text" value="" style="display: none" id="bf_honeypot" name="bf_honeypot" />');
+	$form->addElement( $honey_pot );
+	
 	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
 	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
 	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );

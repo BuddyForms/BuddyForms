@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.1.5.2
+ * Version: 2.1.6.4
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.1.5.2';
+		public $version = '2.1.6.4';
+
+		/**
+		 * @var string Assets URL
+		 */
+		public static $assets;
 
 		/**
 		 * Initiate the class
@@ -58,6 +63,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 
 			$this->load_constants();
+
+			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
@@ -265,9 +272,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			} else {
 				wp_enqueue_style( 'buddyforms-admin-post-metabox', plugins_url( 'assets/admin/css/admin-post-metabox.css', __FILE__ ) );
 			}
-			// load the tk_icons everywhere
-			wp_enqueue_style( 'buddyforms-tk-icons', plugins_url( '/assets/resources/tk_icons/style.css', __FILE__ ) );
+			// load the tk_icons everywhere in the admin
+			self::load_tk_font_icons();
 
+		}
+
+		/**
+		 * Load TK icons
+		 */
+		static function load_tk_font_icons() {
+			wp_enqueue_style( 'buddyforms-tk-icons', self::$assets . 'resources/tk_icons/style.css' );
 		}
 
 		/**
@@ -384,6 +398,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			if ( $found ) {
 				BuddyForms::front_js_css();
+				self::load_tk_font_icons();
 			}
 
 		}
@@ -625,17 +640,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
 			$buddyforms_core_fs = fs_dynamic_init( array(
-				'id'             => '391',
-				'slug'           => 'buddyforms',
-				'type'           => 'plugin',
-				'public_key'     => 'pk_dea3d8c1c831caf06cfea10c7114c',
-				'is_premium'     => true,
-				'has_addons'     => true,
-				'has_paid_plans' => true,
-				'menu'           => array(
-					'slug'       => 'edit.php?post_type=buddyforms',
+				'id'                  => '391',
+				'slug'                => 'buddyforms',
+				'type'                => 'plugin',
+				'public_key'          => 'pk_dea3d8c1c831caf06cfea10c7114c',
+				'is_premium'          => true,
+				'has_addons'          => true,
+				'has_paid_plans'      => true,
+				'trial'               => array(
+					'days'               => 14,
+					'is_require_payment' => true,
+				),
+				'menu'                => array(
+					'slug'           => 'edit.php?post_type=buddyforms',
 					'first-path' => $first_path,
-					'support'    => false,
+					'support'        => false,
 					'contact'    => true,
 					'addons'     => true,
 				),
@@ -644,33 +663,33 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		return $buddyforms_core_fs;
 	}
-
-	// BuddyForms requires php version 5.3 or higher.
-	if ( PHP_VERSION < 5.3 ) {
-		function buddyforms_php_version_admin_notice() {
-			?>
-            <div class="notice notice-error is-dismissible">
-                <p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-                <p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
-                <p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
-            </div>
-			<?php
-		}
-
-		add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
-	} else {
-
-		// Init BuddyForms.
-		$GLOBALS['buddyforms_new'] = new BuddyForms();
-
-		// Init Freemius.
-		buddyforms_core_fs();
-		// Signal that parent SDK was initiated.
-		do_action( 'buddyforms_core_fs_loaded' );
-
-		if ( buddyforms_core_fs()->is__premium_only() ) {
-			define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
-		}
-
+	
+	function buddyforms_php_version_admin_notice() {
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
+			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+		</div>
+		<?php
 	}
+	
+	function activate_buddyform_at_plugin_loader() {
+		// BuddyForms requires php version 5.3 or higher.
+		if ( PHP_VERSION < 5.3 ) {
+			add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
+		} else {
+			// Init BuddyForms.
+			$GLOBALS['buddyforms_new'] = new BuddyForms();
+			// Init Freemius.
+			buddyforms_core_fs();
+			// Signal that parent SDK was initiated.
+			do_action( 'buddyforms_core_fs_loaded' );
+			if ( buddyforms_core_fs()->is__premium_only() ) {
+				define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
+			}
+		}
+	}
+	
+	activate_buddyform_at_plugin_loader();
 }

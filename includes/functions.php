@@ -164,14 +164,16 @@ function buddyforms_wp_login_form() {
 
 // Create the BuddyForms Login Form
 /**
- * @return mixed|string|void
+ * @return string|boolean
  */
 function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array()) {
 	global $buddyforms;
 
 	if(is_admin()){
-		return;
+		return false;
 	}
+	
+	$redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
 
 	extract( shortcode_atts( array(
 		'redirect_url'   => home_url(),
@@ -179,7 +181,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		'label_password' => __( 'Password' ),
 		'label_remember' => __( 'Remember Me' ),
 		'label_log_in'   => __( 'Log In' ),
-	), $args ) );
+	), $args ), EXTR_IF_EXISTS );
 
 	if ( empty( $title ) ) {
 		$title = __( 'You need to be logged in to view this page', 'buddyforms' );
@@ -189,20 +191,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	$wp_login_form .= wp_login_form( array( 'echo' => false, 'redirect' => $redirect_url ) );
 
 	if ( $form_slug != 'none' ) {
-
-	    // Das funktioniert so nur wenn permission "Public Submittable" is set to "Logged in users only"!!!!!
-        // Und labels??? wass is mit de labels
-
-
-        // Display a registration form and lOgin Form above
-
-        // das ist wie es gerade ist und das is alles total verdreht
-
-
-
-
-
-		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' ) { // && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none'
+		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
 
 			set_query_var( 'bf_form_slug', $reg_form_slug );
@@ -223,18 +212,20 @@ function baumensch_register_link($wp_login_form){
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
 		$permalink = get_permalink( $buddyforms_registration_page );
-	}
+	} else {
+		$permalink = site_url('/wp-login.php?action=register&redirect_to=' . get_permalink());
+    }
 
 	// new login page
-	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a>';
+	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a> ';
 
 	return $wp_login_form;
 }
 
 
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
-function buddyforms_add_lost_password_link() {
-	return '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a>';
+function buddyforms_add_lost_password_link($wp_login_form) {
+	return $wp_login_form .= '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a> ';
 }
 
 
@@ -776,4 +767,53 @@ function buddyforms_get_all_pages( $type = 'id', $view = "form_builder") {
 add_filter( 'buddyforms_front_js_css_loader', 'buddyforms_front_js_css_loader_global', 1, 10 );
 function buddyforms_front_js_css_loader_global( $found ) {
 	return true;
+}
+
+add_action( 'admin_bar_menu', 'buddyform_admin_bar_shortcut', 60 );
+/**
+ * Add a short-code to the admin toolbar to edit the form in the current screen
+ *
+ * @param WP_Admin_Bar $wp_admin_bar
+ */
+function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
+	if ( is_admin() && is_user_logged_in() ) {
+		return;
+	}
+	
+	global $post, $buddyforms;
+	
+	if ( empty( $post->ID ) ) {
+		return;
+	}
+	$form_slug = '';
+	global $wp_query;
+	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
+		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
+	} else if ( ! empty( $post->post_name ) ) {
+		$form_slug = $post->post_name;
+	}
+	
+	if ( ! empty( $form_slug ) && ! array_key_exists( $form_slug, $buddyforms ) ) {
+		return;
+	}
+	
+	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
+		return;
+	}
+	
+	$form = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
+	
+	$post_url = sprintf( 'post.php?post=%s&action=edit', $form->ID );
+	
+	$args = array(
+		'id'    => 'buddyforms-admin-edit-form',
+		'title' => __( 'Edit BuddyForm', 'buddyforms' ),
+		'href'  => admin_url( $post_url ),
+		'meta'  => array(
+			'data-post_id' => 33,
+			'class'        => 'admin-bar dashicons-before dashicons-buddyforms'
+		)
+	);
+	
+	$wp_admin_bar->add_node( $args );
 }
