@@ -15,12 +15,14 @@ jQuery(document).ready(function ($) {
 			max_size = current.attr('file_limit'),
 			accepted_files = current.attr('accepted_files'),
 			action = current.attr('action'),
+			page   = current.attr('page'),
             uploadFields = current.data('entry'),
 			multiple_files = current.attr('multiple_files');
 
 		Dropzone.autoDiscover = false;
-		var clickeable = action !== 'edit';
+		var clickeable = page !== 'buddyforms_submissions';
 		var currentField = jQuery('#field_' + id);
+
 
 		$("#" + id).dropzone({
 			url: dropParam.admin_url,
@@ -28,7 +30,7 @@ jQuery(document).ready(function ($) {
 			acceptedFiles: accepted_files,
 			maxFiles: multiple_files,
 			clickable: clickeable,
-			addRemoveLinks: true,
+			addRemoveLinks: clickeable,
 			init: function () {
 
 
@@ -36,7 +38,7 @@ jQuery(document).ready(function ($) {
 
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
-					
+
 				});
 
 				this.on('addedfile', function () {
@@ -97,7 +99,7 @@ jQuery(document).ready(function ($) {
                         name: uploadFields[key]['name'],
                         size: uploadFields[key]['size'],
                         url:uploadFields[key]['url'],
-                        mediaID: uploadFields[key]['mediaID']
+                        attachment_id: uploadFields[key]['attachment_id']
                     };
                     this.emit('addedfile', mockFile);
                     this.emit('thumbnail', mockFile, mockFile.url);
