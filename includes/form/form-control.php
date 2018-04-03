@@ -279,7 +279,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'post_parent'    => $post_parent,
 		'comment_status' => $comment_status,
 	);
-	
+
 	if ( ! empty( $post_excerpt ) ) {
 		$args['post_excerpt'] = $post_excerpt;
 	}
