@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 2.1.6.4
+Tested up to: 4.9
+Stable tag: 2.1.6.5
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -354,6 +354,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.6.5 - 29. March 2018
+* Changing the submission query to use wpdp
+* Improving the edit form shortcode
+* Fixed an issue with the upload form element. The label and description was not displayed
+* Fixed smaller issues reported by users
+* CSS some css in the login form
 
 = 2.1.6.4 - 26. March 2018
 * Fixed the check for the permission for admin and autor (read-edit-write)
