@@ -119,10 +119,17 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 		
 		// Check if registration or update was successful
-		if ( ! $user_id ) {
+		if ( is_wp_error( $user_id ) || ! $user_id  ) {
+
+			$error_message = '';
+			if ( is_wp_error( $user_id ) ){
+				$error_message = $user_id->get_error_message();
+			}
+
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
+				'error_message' => $error_message
 			);
 			
 			return $args;
@@ -152,7 +159,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		);
 		
 		do_action( 'buddyforms_process_submission_end', $args );
-		// Form::clearValues( "buddyforms_form_" . $form_slug );
+		//Form::clearValues( "buddyforms_form_" . $form_slug );
 		
 	}
 	
@@ -271,8 +278,8 @@ function buddyforms_process_submission( $args = Array() ) {
 		'post_status'    => $post_status,
 		'post_parent'    => $post_parent,
 		'comment_status' => $comment_status,
-	
 	);
+	
 	if ( ! empty( $post_excerpt ) ) {
 		$args['post_excerpt'] = $post_excerpt;
 	}
