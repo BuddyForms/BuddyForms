@@ -319,6 +319,10 @@ function buddyforms_form_elements_select_options() {
 					'unique' => 'unique'
 				);
 
+            $elements_select_options['extra']['fields']['profile_picture'] =
+                array(
+                    'label' => __( 'Profile Picture', 'buddyforms' ),
+                );
 
 
 			$elements_select_options['user']['fields']['date'] =
