@@ -243,7 +243,7 @@ function buddyforms_display_form_element( $args ) {
 				'value'    => $name,
 				'required' => 1
 			) );
-			
+
 			$captcha_site_key                           = ! empty( $customfield['captcha_site_key'] ) ? $customfield['captcha_site_key'] : '';
 			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( 'Site Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
 				'data'     => $field_id,
@@ -256,7 +256,7 @@ function buddyforms_display_form_element( $args ) {
 				'value'    => $captcha_private_key,
 				'required' => 1
 			) );
-			
+
 			$form_fields['general']['captcha_data_theme'] = new Element_Select( '<b>' . __( 'The color theme of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_theme]",
 				array(
 					'dark'  => __( 'Dark', 'buddyform' ),
@@ -266,7 +266,7 @@ function buddyforms_display_form_element( $args ) {
 					'field_id' => $field_id,
 				)
 			);
-			
+
 			$form_fields['general']['captcha_data_type'] = new Element_Select( '<b>' . __( 'The type of CAPTCHA to serve', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_type]",
 				array(
 					'image'  => __( 'Image', 'buddyform' ),
@@ -276,7 +276,7 @@ function buddyforms_display_form_element( $args ) {
 					'field_id' => $field_id,
 				)
 			);
-			
+
 			$form_fields['general']['captcha_data_size'] = new Element_Select( '<b>' . __( 'The size of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_size]",
 				array(
 					'normal'  => __( 'Normal', 'buddyform' ),
@@ -286,7 +286,7 @@ function buddyforms_display_form_element( $args ) {
 					'field_id' => $field_id,
 				)
 			);
-			
+
 			$form_fields['general']['html'] = new Element_HTML( '<p><b>reCaptcha is only visible to logged off users. Logged in users not need to get checked.<b><p>' );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
@@ -420,12 +420,19 @@ function buddyforms_display_form_element( $args ) {
 			) );
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
+
+        case 'profile_picture':
+            $form_fields['hidden']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", 'Profile Picture' );
+            $form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'profile_picture' );
+
+            $form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", 'profile_picture' );
+            break;
         case 'upload':
 	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
 	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
 	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : '';
 	        $delete_files   = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ? $buddyform['form_fields'][ $field_id ]['delete_files'][0] : '';
-	
+
 	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
 		        'value' => floatval( $file_limit ),
 		        'id'    => 'upload_file_limit' . $field_id,
@@ -441,7 +448,7 @@ function buddyforms_display_form_element( $args ) {
 			        }
 		        }
 	        }
-	
+
 	        asort( $sorted_mimes_types );
 	        $preview_mime_value = '';
 	        if( isset( $sorted_mimes_types ) && is_array( $sorted_mimes_types ) ) {
@@ -457,7 +464,7 @@ function buddyforms_display_form_element( $args ) {
 			        }
 		        }
 	        }
-	
+
 	        $allowed_mime_types = $sorted_mimes_types;
 	        $form_fields['general']['upload_accepted_files']       = new Element_Checkbox( '<b>' . __( 'Allowed File Types', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", $allowed_mime_types, array(
 		        'id' => 'upload_multiple_files' . $field_id,
@@ -476,7 +483,7 @@ function buddyforms_display_form_element( $args ) {
 	        ) );
 	        $form_fields['general']['upload_multiple_files'] = $element;
 	        $form_fields['general']['upload_delete_files']   = $element_delete;
-	        
+
             break;
 		case 'post_formats':
 			unset( $form_fields['advanced']['slug'] );
