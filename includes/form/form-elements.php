@@ -492,7 +492,7 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-
+					
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
 							$element = new Element_Captcha( "Captcha", $attributes = null );
@@ -622,18 +622,18 @@ function buddyforms_form_elements( $form, $args ) {
 							$delete_files = $param_value == 'delete' ? true : false;
 						}
 
-						$upload_element = new Element_Upload( $slug, $customfield_val, array( 'id'             => $slug,
-						                                                                      "file_limit"     => $max_size,
-						                                                                      'accepted_files' => $accepted_files,
-						                                                                      'multiple_files' => $multiple_files,
-						                                                                      'delete_files'   => $delete_files,
-						                                                                      'mandatory'      => $required,
-						                                                                      "shortDesc"      => $description
+						$upload_element = new Element_Upload( $slug, $customfield_val, array(
+							'id'             => $slug,
+							'file_limit'     => $max_size,
+							'accepted_files' => $accepted_files,
+							'multiple_files' => $multiple_files,
+							'delete_files'   => $delete_files,
+							'mandatory'      => $required,
+							'shortDesc'      => $description
 						) );
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );
 						break;
-
                     case 'profile_picture':
                         $description = "";
                         if (  isset( $customfield['description'] ) ) {

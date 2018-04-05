@@ -429,6 +429,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
            // wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
 			do_action( 'buddyforms_front_js_css_enqueue' );
 
+            wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
+
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery-ui-dialog' );
 			// wp_enqueue_style( 'buddyforms-jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_version );
@@ -669,7 +671,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'menu'                => array(
 					'slug'           => 'edit.php?post_type=buddyforms',
 					'first-path' => $first_path,
-					'support'        => false,
+                    'support'    => false,
 					'contact'    => true,
 					'addons'     => true,
 				),
