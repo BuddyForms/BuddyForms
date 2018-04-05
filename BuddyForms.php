@@ -65,10 +65,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$this->load_constants();
 
 			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
-			
+
 			//Load the necessary files to start the sessions
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
-			
+
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
@@ -331,7 +331,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
 				wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
-				
+
 				wp_enqueue_script( 'jQuery' );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-sortable' );
