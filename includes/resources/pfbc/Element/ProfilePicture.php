@@ -2,7 +2,7 @@
 /**
  * Class Element_Upload
  */
-class Element_ProfilePicture extends Element_Textbox
+class Element_Profile_Picture extends Element_Textbox
 {
     /**
      * @var int
@@ -11,7 +11,7 @@ class Element_ProfilePicture extends Element_Textbox
     /**
      * @var array
      */
-   // protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"","mandatory"=>"");
+    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"","mandatory"=>"");
     public function render()
     {
         global $buddyforms;
@@ -31,7 +31,7 @@ class Element_ProfilePicture extends Element_Textbox
                         <input type='hidden' id='crop_y' name ='crop_y_bf'>
                         <input type='hidden' id='type'>
                          <input type='hidden' id='nonce'>
-                                 
+                         
                 </div>";
 
         echo $box;
