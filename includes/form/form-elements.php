@@ -580,6 +580,15 @@ function buddyforms_form_elements( $form, $args ) {
 
 
 						break;
+
+                    case 'profile_picture':
+                        $description = "";
+                        if (  isset( $customfield['description'] ) ) {
+                            $description = $customfield['description'];
+                        }
+                        $prfile_element = new Element_ProfilePicture( $slug, $customfield_val, array( 'id' => $slug,"shortDesc"=>$description ) );
+                        $form->addElement( $prfile_element );
+                        break;
 					case 'file':
 
 						$attachment_ids = $customfield_val;
