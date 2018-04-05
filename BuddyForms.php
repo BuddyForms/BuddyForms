@@ -65,10 +65,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$this->load_constants();
 
 			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
-			
+
 			//Load the necessary files to start the sessions
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
-			
+
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
@@ -331,7 +331,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
 				wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
-				
+
 				wp_enqueue_script( 'jQuery' );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-sortable' );
@@ -349,6 +349,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_media();
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
+
+			//Profile Picture
+
+            //**
 
             //DropZone
             wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
@@ -419,7 +423,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		function front_js_css() {
 			global $wp_scripts;
-
+            wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
 			do_action( 'buddyforms_front_js_css_enqueue' );
@@ -672,7 +676,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		return $buddyforms_core_fs;
 	}
-	
+
 	function buddyforms_php_version_admin_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
@@ -682,7 +686,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		</div>
 		<?php
 	}
-	
+
 	function activate_buddyform_at_plugin_loader() {
 		// BuddyForms requires php version 5.3 or higher.
 		if ( PHP_VERSION < 5.3 ) {
@@ -702,6 +706,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			}
 		}
 	}
-	
+
 	activate_buddyform_at_plugin_loader();
 }
