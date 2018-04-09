@@ -211,3 +211,7 @@ button.bf-submit:disabled{
 	padding: 0;
 	padding-right: 10px;
 }
+
+#bf_honeypot {
+    display: none !important;
+}
