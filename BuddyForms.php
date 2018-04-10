@@ -413,9 +413,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		function front_js_css() {
 			global $wp_scripts;
-            wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
+            wp_enqueue_style( 'profilePictureStyles', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
-
+           // wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/profile/css/avatar.css', __FILE__ ) );
 			do_action( 'buddyforms_front_js_css_enqueue' );
 
 			wp_enqueue_script( 'jquery' );
