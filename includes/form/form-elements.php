@@ -631,6 +631,11 @@ function buddyforms_form_elements( $form, $args ) {
                         if (  isset( $customfield['description'] ) ) {
                             $description = $customfield['description'];
                         }
+                        $label_name ="";
+                        if (  isset( $customfield['name'] ) ) {
+                            $label_name = $customfield['name'];
+                        }
+                       $form->addElement( new  Element_HTML("<label>$label_name</label>"));
                         $prfile_element = new Element_ProfilePicture( $slug, $customfield_val, array( 'id' => $slug,"shortDesc"=>$description ) );
                         $form->addElement( $prfile_element );
                         break;
