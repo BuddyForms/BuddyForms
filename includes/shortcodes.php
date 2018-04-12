@@ -10,7 +10,7 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  */
 function buddyforms_create_edit_form_shortcode( $args ) {
 	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
-	
+
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,
@@ -69,9 +69,9 @@ function buddyforms_create_edit_form_shortcode( $args ) {
  */
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
-	
+
 	$author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
-	
+
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
@@ -89,7 +89,6 @@ function buddyforms_the_loop( $args ) {
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) :
 		buddyforms_wp_login_form();
-
 		return;
 	endif;
 
@@ -109,7 +108,12 @@ function buddyforms_the_loop( $args ) {
 
 	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
-	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', get_current_user_id(), $form_slug );
+
+	if( empty( $author ) ){
+		$author = get_current_user_id();
+	}
+
+	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', $author, $form_slug );
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
@@ -300,7 +304,7 @@ function buddyforms_button_add_new( $args ) {
 add_shortcode( 'bf_login_form', 'buddyforms_view_login_form' );
 function buddyforms_view_login_form( $args ) {
 	global $wp;
-	
+
 	if ( is_admin() ) {
 		return false;
 	}
