@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1.6.6
+Stable tag: 2.1.6.7
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -354,6 +354,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.6.7 - 16. April 2018
+* Added a display none important as css to the id bf_honeypot. The bf_honeypot form element does have a style attribute display: none but for some reason some customer reported in the support that the field was visible.
+* Fixed an issue in the shortcode. The author id attribute did not have any effect.
+* Added compatibility for public post lists so they can be used in other extension like BuddyForms Ultimate Member
 
 = 2.1.6.6 - 3. March 2018
 * Added a default error message to the error handling just in case we have a error but no message
