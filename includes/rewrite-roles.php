@@ -186,6 +186,26 @@ function buddyforms_registration_page_redirect() {
 	}
 }
 
+// Redirect after login
+add_filter( 'login_redirect', 'buddyforms_login_redirect', 99999, 3 );
+function buddyforms_login_redirect( $redirect_to, $request, $user )  {
+	global $pagenow;
+
+	if ( ( strtolower( $pagenow ) == 'wp-login.php' ) ) {
+		// Look for 'redirect_to'
+		if ( isset( $_REQUEST['redirect_to'] ) && is_string( $_REQUEST['redirect_to'] ) && isset( $_REQUEST['log'] ) ){
+
+			$redirect_url = apply_filters('buddyforms_login_form_redirect_url', $_REQUEST['redirect_to'] );
+
+			if( ! empty($redirect_url) ){
+				$redirect_to = $redirect_url;
+			}
+
+		}
+	}
+	return $redirect_to;
+}
+
 add_filter( 'the_content', 'buddyforms_registration_page_content' );
 function buddyforms_registration_page_content( $content ) {
 	global $post;

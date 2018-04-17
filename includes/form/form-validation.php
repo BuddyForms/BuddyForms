@@ -16,28 +16,36 @@ add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation',
  */
 function buddyforms_server_validation( $valid, $form_slug ) {
 	global $buddyforms;
-
+	
 	$form = $buddyforms[ $form_slug ];
-
-	if ( isset( $form['form_fields'] ) ) :
+	
+	if ( isset( $form['form_fields'] ) ) {
 		foreach ( $form['form_fields'] as $key => $form_field ) {
-
+			
+			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 && isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
+				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] === $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] !== $form_field['validation_min'] ) ) {
+					$valid                    = false;
+					$validation_error_message = __( 'Please enter a value equal to ', 'buddyforms' ) . $form_field['validation_min'];
+					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
+				}
+			}
+			
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
-				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) {
+				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value greater than or equal to ', 'buddyforms' ) . $form_field['validation_min'];
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-
+			
 			if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
-				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) {
+				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value less than or equal to ', 'buddyforms' ) . $form_field['validation_max'];
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-
+			
 			if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) < $form_field['validation_minlength'] ) {
 					$valid                    = false;
@@ -45,7 +53,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-
+			
 			if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) > $form_field['validation_maxlength'] ) {
 					$valid                    = false;
@@ -53,10 +61,10 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-
+			
 		}
-
-	endif;
+		
+	}
 
 	return $valid;
 }

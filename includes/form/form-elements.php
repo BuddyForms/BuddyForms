@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param $form
+ * @param Form $form
  * @param $args
  */
 function buddyforms_form_elements( $form, $args ) {
@@ -134,10 +134,8 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_pass':
-						if ( ! isset( $customfield['hide_if_logged_in'] ) && ! is_admin() ) {
-							$form->addElement( new Element_Password( $name, $slug, $element_attr ) );
-							$element_attr['id'] = $element_attr['id'] . '2';
-							$form->addElement( new Element_Password( $name . ' Confirm', $slug . '_confirm', $element_attr ) );
+						 if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr ) );
 						}
 						break;
 
@@ -277,7 +275,7 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 							$element = new Element_Radio( $name, $slug, $options, $element_attr );
-
+							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
 							$form->addElement( $element );
 
 						}
@@ -292,7 +290,7 @@ function buddyforms_form_elements( $form, $args ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
 							$element = new Element_Checkbox( $name, $slug, $options, $element_attr );
-
+							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
 							$form->addElement( $element );
 
 						}
@@ -305,6 +303,10 @@ function buddyforms_form_elements( $form, $args ) {
 							$options = Array();
 							foreach ( $customfield['options'] as $key => $option ) {
 								$options[ $option['value'] ] = $option['label'];
+							}
+
+							if ( ! empty( $customfield['frontend_reset'][0] ) ) {
+								$element_attr['data-reset'] = 'true';
 							}
 
 							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
@@ -489,10 +491,16 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-
+					
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
-							$form->addElement( new Element_Captcha( "Captcha", $attributes = null ) );
+							$element = new Element_Captcha( "Captcha", $attributes = null );
+							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
+							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );
+							$element->setAttribute( 'data_theme', ! empty( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark' );
+							$element->setAttribute( 'data_type', ! empty( $customfield['captcha_data_type'] ) ? $customfield['captcha_data_type'] : 'image' );
+							$element->setAttribute( 'data_size', ! empty( $customfield['captcha_data_size'] ) ? $customfield['captcha_data_size'] : 'normal' );
+							$form->addElement( $element );
 						}
 						break;
 
@@ -579,6 +587,38 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
 
 
+						break;
+					case 'upload':
+
+                        $max_size = '2';
+                        $accepted_files = 'image/*';
+                        $multiple_files = "1";
+                        $delete_files = false;
+                        $description = "";
+                        $required ="";
+                        if (  isset( $customfield['required'] ) ) {
+                            $required = $customfield['required'][0];
+                        }
+                        if (  isset( $customfield['description'] ) ) {
+                           $description = $customfield['description'];
+                        }
+                        if (  isset( $customfield['file_limit'] ) ) {
+                            $max_size = $customfield['file_limit'];
+                        }
+                        if (  isset( $customfield['accepted_files'] ) ) {
+                            $accepted_files = $customfield['accepted_files'];
+                        }
+                        if (  isset( $customfield['multiple_files'] ) ) {
+                            $param_value = $customfield['multiple_files'][0];
+                            $multiple_files = $param_value == 'allow'? 9 : 1;
+                        }
+                        if (  isset( $customfield['delete_files'] ) ) {
+                            $param_value = $customfield['delete_files'][0];
+                            $delete_files = $param_value == 'delete'? true : false;
+                        }
+
+                        $upload_element = new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files, 'mandatory'=>$required,"shortDesc"=>$description ) );
+						$form->addElement( $upload_element );
 						break;
 
                     case 'profile_picture':

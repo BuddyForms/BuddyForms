@@ -28,6 +28,8 @@
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-user.php';
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-site.php';
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-plugin.php';
+	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-affiliate.php';
+	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-affiliate-terms.php';
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-plugin-info.php';
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-plugin-tag.php';
 	require_once WP_FS__DIR_INCLUDES . '/entities/class-fs-plugin-plan.php';
@@ -38,6 +40,9 @@
 	require_once WP_FS__DIR_INCLUDES . '/class-fs-api.php';
 	require_once WP_FS__DIR_INCLUDES . '/class-fs-plugin-updater.php';
 	require_once WP_FS__DIR_INCLUDES . '/class-fs-security.php';
+    require_once WP_FS__DIR_INCLUDES . '/class-fs-options.php';
+    require_once WP_FS__DIR_INCLUDES . '/class-fs-storage.php';
+    require_once WP_FS__DIR_INCLUDES . '/class-fs-admin-notices.php';
 	require_once WP_FS__DIR_INCLUDES . '/class-freemius-abstract.php';
 	require_once WP_FS__DIR_INCLUDES . '/sdk/Exceptions/Exception.php';
 	require_once WP_FS__DIR_INCLUDES . '/class-freemius.php';

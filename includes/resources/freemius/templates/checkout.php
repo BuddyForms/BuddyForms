@@ -148,14 +148,18 @@
 
 	$return_url = $fs->_get_sync_license_url( $plugin_id );
 
+	$can_user_install = (
+		( $fs->is_plugin() && current_user_can( 'install_plugins' ) ) ||
+		( $fs->is_theme() && current_user_can( 'install_themes' ) )
+	);
+
 	$query_params = array_merge( $context_params, $_GET, array(
 		// Current plugin version.
 		'plugin_version' => $fs->get_plugin_version(),
 		'sdk_version'    => WP_FS__SDK_VERSION,
 		'is_premium'     => $is_premium ? 'true' : 'false',
+		'can_install'    => $can_user_install ? 'true' : 'false',
 		'return_url'     => $return_url,
-		// Admin CSS URL for style/design competability.
-//		'wp_admin_css'   => get_bloginfo('wpurl') . "/wp-admin/load-styles.php?c=1&load=buttons,wp-admin,dashicons",
 	) );
 
 	$xdebug_session = fs_request_get( 'XDEBUG_SESSION' );
@@ -165,7 +169,7 @@
 
 	$view_params = array(
 		'id'   => $VARS['id'],
-		'page' => strtolower( $fs->get_text( 'checkout' ) ) . ' ' . $fs->get_text( 'pci-compliant' ),
+		'page' => strtolower( $fs->get_text_inline( 'Checkout', 'checkout' ) ) . ' ' . $fs->get_text_inline( 'PCI compliant', 'pci-compliant' ),
 	);
 	fs_require_once_template('secure-https-header.php', $view_params);
 ?>
@@ -298,6 +302,10 @@
 						) ) ?>
 						FS.PostMessage.post('context', <?php echo json_encode( $install_data ) ?>, frame[0]);
 					});
+
+					FS.PostMessage.receiveOnce('purchaseCompleted', <?php echo $fs->apply_filters('checkout/purchaseCompleted', 'function (data) {
+						console.log("checkout", "purchaseCompleted");
+					}') ?>);
 
 					FS.PostMessage.receiveOnce('get_dimensions', function (data) {
 						console.debug('receiveOnce', 'get_dimensions');

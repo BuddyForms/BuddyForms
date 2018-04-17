@@ -40,10 +40,17 @@ jQuery(document).ready(function () {
 
     jQuery('.bf-garlic').garlic();
 
-    jQuery(".bf-select2").select2({
-       placeholder: "Select an option",
-       tags: true,
-       tokenSeparators: [',', ' ']
+    jQuery(".bf-select2").each(function(){
+        var reset = jQuery(this).attr('data-reset');
+        var options = {
+            placeholder: "Select an option",
+            tags: true,
+            tokenSeparators: [',', ' ']
+        };
+        if(reset){
+            options['allowClear'] = true;
+        }
+        jQuery(this).select2(options);
     });
 
     jQuery(document).on("click", '.create-new-tax-item', function (evt) {
@@ -199,12 +206,48 @@ jQuery( document ).ready( function( $ ) {
                 $('input[name=buddyforms_user_pass]'),         // First password field
                 $('input[name=buddyforms_user_pass_confirm]'), // Second password field
                 $('#password-strength'),           // Strength meter
-                $('input[type=submit]'),           // Submit button
+                $('.bf-submit'),           // Submit button
                 ['black', 'listed', 'word']        // Blacklisted words
             );
         }
     );
+
+    //
+    // Reset option for multiple choice fields radio and checkboxes
+    //
+    jQuery(document.body).on('click', '.button.bf_reset_multi_input', function (event) {
+        event.preventDefault();
+        var group_name = jQuery(this).attr('data-group-name');
+        jQuery('input[name="' + group_name + '"]').attr('checked', false);
+        return false;
+    });
 });
 
 
 // Password Reset Ends
+
+
+// Special password redirects after registration
+// If a redirect url is added to the register page url we use this redirect and add it as hidden field to the form
+jQuery(document).ready(function (jQuery) {
+    var getUrlParameter = function bf_getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+    var redirect = getUrlParameter('redirect_url');
+
+    if(redirect){
+        jQuery('#submitted').append('<input type="hidden" name="bf_pw_redirect_url" value="'+ redirect +'" />');
+    }
+
+});

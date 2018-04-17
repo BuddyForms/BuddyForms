@@ -23,14 +23,19 @@ function buddyforms_ajax_process_edit_post() {
 		parse_str( $_POST['data'], $formdata );
 		$_POST = $formdata;
 	}
+	
 
 	$args = buddyforms_process_submission( $formdata );
 
-	extract( $args );
+	$hasError = false;
+	$form_notice = '';
+	$form_slug = '';
+	$error_message = __('There was an error please check the form!', 'buddyforms');
+	
+	extract( $args, EXTR_IF_EXISTS );
 
-	if ( $haserror == true ) {
-
-
+	if ( $hasError == true ) {
+		
 		if ( $form_notice ) {
 			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}

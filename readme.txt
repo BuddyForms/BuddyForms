@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 4.8.1
-Stable tag: 2.1.4
+Tested up to: 4.9
+Stable tag: 2.1.6.7
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -354,6 +354,127 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.6.7 - 16. April 2018
+* Added a display none important as css to the id bf_honeypot. The bf_honeypot form element does have a style attribute display: none but for some reason some customer reported in the support that the field was visible.
+* Fixed an issue in the shortcode. The author id attribute did not have any effect.
+* Added compatibility for public post lists so they can be used in other extension like BuddyForms Ultimate Member
+
+= 2.1.6.6 - 3. March 2018
+* Added a default error message to the error handling just in case we have a error but no message
+* Check if the user id is_wp_error and get the error message
+* Added description and Label to the upload field drop zone
+
+= 2.1.6.5 - 29. March 2018
+* Changing the submission query to use wpdp
+* Improving the edit form shortcode
+* Fixed an issue with the upload form element. The label and description was not displayed
+* Fixed smaller issues reported by users
+* CSS some css in the login form
+
+= 2.1.6.4 - 26. March 2018
+* Fixed the check for the permission for admin and autor (read-edit-write)
+* Fixed the loader of the plugin to avoid incompatibilities with WP
+* Added new class bf-hidden to enable hide form elements by class
+* Adding the honey pot to the form.
+* Fixed and issue in the login form. The Lost Password Link was overwriting the registration link
+* Remove the old plugin header from the password-strengh-settings
+* Make sure Form Layout and Import Forms are always the last tabs
+* Improving the global var of BuddyForms
+* Fixed the item in the list of form inside the submission view to include the last updated form names
+* Fixed the items name in the list of form inside the submission view
+* Fixed the the visibility of the selected form post type
+* Moving the tk icon load script to a separated function to load in backend and frontend
+* Adding css to include the icon in the shortcode
+* Create a new admin bar menu item to edit the form if the form is displayed.
+* Update Freemius version to 2.0.1
+
+= 2.1.6.3 - 14. March 2018
+* Make sure the password update script in the wp insert user only run if new password is set during update
+* Make sure the password script works for new registrations with the change password class introduced in the latest update
+
+= 2.1.6.2 - 12. March 2018
+* Updated the re captcha form element to use the version 2. Version 1 is only supported til the 30 of March.
+* Adding new options for recaptcha v2 to the form element.
+* Fixed an issue with the user creation. If "Create account during submission" was set without a page selected in the form builder under edit submissions.
+* Fixed an issue with the post author. If the user was created during submission it could happen that no author was set.
+* Rebuild the pfbc password field and make use of the WordPress validation also in registration forms.
+* Fixed an with the password option "hide for logged in users". If the option was set the password field was hidden all the time.
+
+= 2.1.6.1 - 6. March 2018
+* Fixed an issue in the Registration and Activation Process.
+* Refactoring the code.
+* Adding the login/registration form to the forms when the option correspond
+
+= 2.1.6 - 5. March 2018 =
+* New upload field to integrate with dropzone
+*  - Added option max file size
+*  - Added option acceptedFiles
+*  - Added the option multuple files
+*  - Added the delete file option
+*  - Added the id of the attachment in the submissions table for the upload field
+*  - Show the id of the submited files as links in the entry list
+*  - Props to Victor and Guillermo for there contributions and making the DropZone a reality ;)
+* Fixed the submission view in the backend.
+* Adding a function to strip the html from the post list in the backend
+* Adding the interaction when the ajax is in progress to disabled the submit button
+* Several smaller bug fixes
+
+= 2.1.5.2 - 20. February 2018 = 
+* Fixed an issue in the loop. The thumbnail was not clickable in all sirtuations
+* Moved the password-strength-meter wp_localize_script to its correct location. It was in the admin settings and never got loaded in the frontend. This issue was a merge conflict.
+* Add localisation for password rest to make the password hint and messages translatable.
+
+= 2.1.5.1 - 9. February 2018 =
+* fixed a merge conflict from Merge pull request #174 from BuddyForms/fix/g-171
+
+= 2.1.5 - 8. February 2018 =
+* Add new shortcode attribute query_option to list posts from all users of the post type for public usage
+* Added new js for special password redirects after registration. If a redirect url is added to the register page url we use this redirect and add it as hidden field to the form
+* Fixed some issues with the redirect after successful login
+* Add a check to the change password form to check if the user should be redirected to a special location There is a new option bf_pw_redirect_url with the redirect url as absolute path
+* Added a new check into the wp insert user function to save the redirect url
+* Created a new function buddyforms_login_redirect to redirect after login from shortcode attribute "redirct_url"
+* Created a new filter buddyforms_login_form_redirect_url to make it possible to overwrite the login redirect in BuddyForms extensions.
+* Adding the reset option to the dropdown field using an attribute as flag.
+* Adding the reset option to the checkbox, dropdown and select2
+* Implementing the save of post in the backend. This implementation is only for 2 field types.
+* Fixed the extract functions to avoid notices and warnings.
+* Change the submission page to use WP_Query and OOP.
+* Adding a hook to update the post meta on edit post in the backend
+* Adding a validation to check for specific number when the user set max and min for the same number.
+* More fixes and mobile view improvements, bigger image, fix in date formatting, better buttons, better typo
+* Fully reworked list view CSS
+* New CSS for table view and status items for table view
+* CSS options for each module, done and tested
+* Created extras tab with an option to disable all CSS for this form
+* Created also an option to disable CSS for the tab "other form elements"
+* Work on the login form and password reset
+* Added the display form option back to registration forms so they can be used for profile forms.
+* Change the scroll to top so that we can be sure to see the message
+* Add a new filter "buddyforms_reset_password_redirect" to change the password redirect url
+* Fixed an issue with validation min length. There was a spelling issue in the option name.
+* Add support for the option page to the password strength js
+* Add an redirect option to change password
+* Welcome back the languages folder for the .pot file. People still ask for the file so we move it back
+* Fixed an issue with the registration form content overwrite. The content was returned empty in all cases... ;(
+* Add a change password shortcode to the plugin. This enables new workflow You can auto generate the password during registration and redirect the user to a page with the change password shortcode included.
+* Make hidden and html basic fields so they can be used in all form types
+* Added md5 string to auto generated usernames
+* Fixed a issue with the form and posts list did not get displayed in the endpoints
+* Created two new form elements Country and State
+* Enqueue mce-view to view gallery in front-end post edit props to @Hannah93 for there pull request
+* Remove do_shortcode so galleries work on front-end post edit props to @Hannah93
+* Fixed backend tax empty bug
+* Added some extra check to BuddyForms rewrite roles to avoid load registration forms on BuddyPress Groups pages
+* Added a new do action buddyforms_admin_js_css_enqueue
+* Fixed some css issues
+* Correct some spelling and bad english
+* Fixed an issue with validation min length. There was a spelling issue in the option name.
+* Add support for the option page to the password strength js
+* add a new filter "buddyforms_reset_password_redirect" to change the password redirect url
+* Added the display form option back to registration forms so they can be used for profile forms.
+* Change the scroll to top so that we can be sure to see the message
 
 = 2.1.4 - 23 August 2017 =
 * Fixed an issue with the login form shortcode
