@@ -174,7 +174,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Post $item
+	 * @param object $item
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
