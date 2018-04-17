@@ -38,12 +38,14 @@ jQuery(document).ready(function ($) {
 
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                    jQuery("button[type=submit].bf-submit").html("Submit");
 
 				});
 
 				this.on('addedfile', function () {
 					jQuery("#field_"+id+"-error").text("");
 					jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
+                    jQuery("button[type=submit].bf-submit").html("upload in process");
 				});
 
 				this.on('sending', function (file, xhr, formData) {
@@ -68,6 +70,7 @@ jQuery(document).ready(function ($) {
 					file.previewElement.classList.add("dz-error");
 					jQuery(file.previewElement).find('div.dz-error-message>span').text(response);
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                    jQuery("button[type=submit].bf-submit").html("Submit");
 				});
 				this.on('removedfile', function (file) {
 					var attachment_id = file.attachment_id;
@@ -90,6 +93,7 @@ jQuery(document).ready(function ($) {
 						console.log(data);
 					}).always(function () {
 						jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                        jQuery("button[type=submit].bf-submit").html("Submit");
 					});
 				});
 
