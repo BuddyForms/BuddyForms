@@ -1,18 +1,28 @@
 /**
  * Created by Victor on 28/12/2017.
  */
+
 jQuery(document).ready(function ($) {
+   /* Object.prototype.$emit = function(name) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        if (this._events && this._events[name])
+            this._events[name].forEach(function(cb) { cb.apply(this, args) }.bind(this));
+        return this;
+    };*/
 	$(".dropzone").each(function (index, value) {
 		var current = $(this),
 			id = current.attr('id'),
 			max_size = current.attr('file_limit'),
 			accepted_files = current.attr('accepted_files'),
 			action = current.attr('action'),
+			page   = current.attr('page'),
+            uploadFields = current.data('entry'),
 			multiple_files = current.attr('multiple_files');
 
 		Dropzone.autoDiscover = false;
-		var clickeable = action !== 'edit';
+		var clickeable = page !== 'buddyforms_submissions';
 		var currentField = jQuery('#field_' + id);
+
 
 		$("#" + id).dropzone({
 			url: dropParam.admin_url,
@@ -20,16 +30,22 @@ jQuery(document).ready(function ($) {
 			acceptedFiles: accepted_files,
 			maxFiles: multiple_files,
 			clickable: clickeable,
-			addRemoveLinks: true,
+			addRemoveLinks: clickeable,
 			init: function () {
+
+
+
 
 				this.on('complete', function () {
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                    jQuery("button[type=submit].bf-submit").html("Submit");
+
 				});
 
 				this.on('addedfile', function () {
 					jQuery("#field_"+id+"-error").text("");
 					jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
+                    jQuery("button[type=submit].bf-submit").html("upload in process");
 				});
 
 				this.on('sending', function (file, xhr, formData) {
@@ -54,6 +70,7 @@ jQuery(document).ready(function ($) {
 					file.previewElement.classList.add("dz-error");
 					jQuery(file.previewElement).find('div.dz-error-message>span').text(response);
 					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                    jQuery("button[type=submit].bf-submit").html("Submit");
 				});
 				this.on('removedfile', function (file) {
 					var attachment_id = file.attachment_id;
@@ -76,9 +93,27 @@ jQuery(document).ready(function ($) {
 						console.log(data);
 					}).always(function () {
 						jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                        jQuery("button[type=submit].bf-submit").html("Submit");
 					});
 				});
-			}
+
+				for(var key in uploadFields){
+					console.log(uploadFields[key]);
+                    var mockFile = {
+                        name: uploadFields[key]['name'],
+                        size: uploadFields[key]['size'],
+                        url:uploadFields[key]['url'],
+                        attachment_id: uploadFields[key]['attachment_id']
+                    };
+                    this.emit('addedfile', mockFile);
+                    this.emit('thumbnail', mockFile, mockFile.url);
+                    this.emit('complete', mockFile);
+                    this.files.push(mockFile);
+
+				}
+
+
+            }
 		});
 
 	});

@@ -25,21 +25,47 @@ class Element_Upload extends Element_Textbox
         $id = $this->getAttribute('id');
         $action= isset($_GET['action']) ? $_GET['action'] : "" ;
         $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
+        $page = isset($_GET['page']) ? $_GET['page'] : "" ;
+
+        //If Entry is empty we check if we are in a edit entry page
+        if(empty($entry)){
+            $entry = isset($_GET['post']) ? $_GET['post'] : "";
+        }
+
+
         $column_val ="";
         $result = "";
+        $result_value ="";
+        $entries = array();
+        $entries_result="";
         if (! empty($entry) && $action == 'edit'){
             $column_val =  get_post_meta( $entry, $id, true );
 
             $attachmet_id = explode(",",$column_val);
-            foreach ($attachmet_id as $id){
-                $url = wp_get_attachment_url( $id );
-                $result .= " <a style='vertical-align: top;' target='_blank' href='" .  $url . "'>$id</a>,";
+            foreach ($attachmet_id as $id_value){
+
+                $metadata =   wp_prepare_attachment_for_js($id_value);
+                if($metadata != null){
+                    $url = wp_get_attachment_url( $id_value );
+                    $result .= $id_value.",";
+                    $mockFile = new stdClass();
+                    $mockFile->name = $metadata['filename'];
+                    $mockFile->url = $url;
+                    $mockFile->attachment_id = $id_value;
+                    $mockFile->size = $metadata['filesizeInBytes'];
+                    $entries[$id_value]=$mockFile;
+                }
+
             }
+        }
+        if(count($entries) > 0){
+
+            $entries_result = json_encode($entries);
         }
         $message = "Drop files here to upload";
         if(!empty($result))
         {
-            $message = rtrim(trim($result), ',');
+           $result_value = rtrim(trim($result), ',');
         }
         $required    = $this->getAttribute('mandatory');
         $description = $this->getAttribute('description');
@@ -60,12 +86,12 @@ class Element_Upload extends Element_Textbox
 
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action'>
+        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>
                                  </div>
-                                <input type='text' style='visibility: hidden' name='$id' value='' id='field_$id' $required />
+                                <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' $required />
                                  
                 </div>";
         if ($this->bootstrapVersion == 3) {
@@ -79,7 +105,10 @@ class Element_Upload extends Element_Textbox
     function renderJS()
     {
         $id = $this->getAttribute('id');
-        //echo 'jQuery("#' . $id . '").dropzone({ url: "/uploads" });';
+        $jscript = " var entries = 
+        
+        ";
+        echo $jscript;
     }
 
 
