@@ -165,7 +165,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				echo $val;
 			}
 		} else {
-			echo wp_trim_words( $column_val, 25 );
+			//echo wp_trim_words( $column_val, 25 );
+			do_action("custom_column_default",$item,$column_name);
+
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item['ID'] );
