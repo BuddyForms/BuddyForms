@@ -187,7 +187,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			}
 		} else {
 			//Check if the column is of an Upload field
-			$result     = $column_val;
+			$result     = apply_filters("custom_column_default",$item, $column_name);
 			$formSlug   = $_GET['form_slug'];
 			$buddyFData = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
 			foreach ( $buddyFData as $key => $value ) {
