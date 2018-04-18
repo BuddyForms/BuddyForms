@@ -596,6 +596,10 @@ function buddyforms_form_elements( $form, $args ) {
                         $delete_files = false;
                         $description = "";
                         $required ="";
+                        $label_name ="";
+                        if (  isset( $customfield['name'] ) ) {
+                            $label_name = $customfield['name'];
+                        }
                         if (  isset( $customfield['required'] ) ) {
                             $required = $customfield['required'][0];
                         }
@@ -618,6 +622,7 @@ function buddyforms_form_elements( $form, $args ) {
                         }
 
                         $upload_element = new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files, 'mandatory'=>$required,"shortDesc"=>$description ) );
+                        $form->addElement(new Element_HTML("<label>$label_name</label>"));
 						$form->addElement( $upload_element );
 						break;
 					case 'file':
