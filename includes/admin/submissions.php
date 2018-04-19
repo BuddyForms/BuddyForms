@@ -22,6 +22,7 @@ function buddyforms_submissions_add_options() {
 }
 
 function buddyforms_submissions_screen() {
+	/** @var BuddyForms_Submissions_List_Table $bf_submissions_table */
 	global $buddyforms, $bf_submissions_table, $form_slug, $post_id;
 
 	// Check that the user is allowed to update options
@@ -33,12 +34,6 @@ function buddyforms_submissions_screen() {
 
 		<?php
 		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
-
-		// echo '<pre>';
-		// print_r($buddyforms);
-		// echo '</pre>';
-
-		//Fetch, prepare, sort, and filter our data...
 		$bf_submissions_table->prepare_items();
 		?>
 
@@ -58,8 +53,7 @@ function buddyforms_submissions_screen() {
                     <select id="buddyforms_admin_menu_submissions_form_select">
                         <option value="none">Select Form</option>
 						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?>
-                                    value="<?php echo $form_slug ?>">
+                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
 								<?php echo $form['name']; ?>
                             </option>
 						<?php } ?>
@@ -86,7 +80,33 @@ function buddyforms_submissions_screen() {
 
 add_action( 'admin_init', 'redirect_after_delete' );
 function redirect_after_delete() {
-
+	global $buddyforms;
+	
+	$action    = isset( $_GET['action'] ) ? $_GET['action'] : "";
+	$entry     = isset( $_GET['post'] ) ? $_GET['post'] : "";
+	$form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
+	if ( $action === 'delete' ) {
+		$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
+		foreach ( $buddyFData as $key => $value ) {
+			
+			$field = $value['slug'];
+			$type  = $value['type'];
+			if ( $type == 'upload' ) {
+				//Check if the option Delete Files When Remove Entry is ON.
+				$can_delete_files = isset( $value['delete_files'] ) ? true : false;
+				if ( $can_delete_files ) {
+					// If true then Delete the files attached to the entry
+					$column_val   = get_post_meta( $entry, $field, true );
+					$attachmet_id = explode( ",", $column_val );
+					foreach ( $attachmet_id as $id ) {
+						wp_delete_attachment( $id, true );
+					}
+				}
+				
+			}
+		}
+	}
+	
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
 		if ( ! get_post( $_GET['entry'] ) ) {
 			wp_redirect( '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $_GET['form_slug'] );
@@ -130,7 +150,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param $item
+	 * @param WP_Post $item
 	 *
 	 * @return string
 	 */
@@ -138,37 +158,54 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item['ID'], 'edit' ),
-			'delete' => '<a href="' . get_delete_post_link( $item['ID'], '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
+			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">Edit</a>', $item->ID, 'edit' ),
+			'delete' => '<a href="' . get_delete_post_link( $item->ID, '', true ) . '" class="submitdelete deletion" onclick="return confirm(\'Are you sure you want to delete that entry?\');" title="Delete">Delete</a>',
 		);
 
 		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && $buddyforms[ $_GET['form_slug'] ]['post_type'] == 'bf_submissions' ) {
-			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Submission</a>', $_REQUEST['page'], 'edit', $item['ID'], $_GET['form_slug'] );
+			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">View Submission</a>', $_REQUEST['page'], 'edit', $item->ID, $_GET['form_slug'] );
 		}
 
 		// Return the title contents
 		return sprintf( '<span style="color:silver">%1$s</span>%2$s',
-			$item['ID'],
+			$item->ID,
 			$this->row_actions( $actions )
 		);
 	}
 
 	/**
-	 * @param object $item
+	 * @param WP_Post $item
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
-		$column_val = get_post_meta( $item['ID'], $column_name, true );
+		global $buddyforms;
+		$column_val = get_post_meta( $item->ID, $column_name, true );
 
 		if ( is_array( $column_val ) ) {
 			foreach ( $column_val as $key => $val ) {
 				echo $val;
 			}
 		} else {
-			echo wp_trim_words( $column_val, 25 );
+			//Check if the column is of an Upload field
+			$result     = apply_filters("custom_column_default",$item, $column_name);
+			$formSlug   = $_GET['form_slug'];
+			$buddyFData = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
+			foreach ( $buddyFData as $key => $value ) {
+				$field = $value['slug'];
+				$type  = $value['type'];
+				if ( $field == $column_name && $type == 'upload' ) {
+					$result       = "";
+					$attachmet_id = explode( ",", $column_val );
+					foreach ( $attachmet_id as $id ) {
+						$url    = wp_get_attachment_url( $id );
+						$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
+					}
+				}
+			}
+			echo( rtrim( trim( $result ), ',' ) );
 		}
 		if ( $column_name == 'Date' ) {
-			echo get_the_date( 'F j, Y', $item['ID'] );
+			echo get_the_date( 'F j, Y', $item->ID );
 		}
 	}
 
@@ -187,12 +224,11 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$data = array();
 		if ( isset( $_GET['form_slug'] ) ) {
-			$sql_args   = array( 'ID', 'post_title', 'post_author' );
-			$sql_select = implode( ', ', $sql_args );
-
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			$data        = $wpdb->get_results( "SELECT $sql_select FROM $wpdb->posts, $wpdb->postmeta WHERE ID = $wpdb->postmeta.post_id AND meta_key = '$customkey' AND meta_value = '$customvalue' ORDER BY post_date DESC", ARRAY_A );
+			$sql_args   = array( 'ID', 'post_title', 'post_author' );
+			$sql_select = implode( ', ', $sql_args );
+			$data        = $wpdb->get_results( $wpdb->prepare("SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s ORDER BY post_date DESC", $customkey, $customvalue) );
 		}
 
 		$current_page = $this->get_pagenum();

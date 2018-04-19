@@ -6,11 +6,20 @@ function buddyforms_metabox_form_designer() {
 }
 
 function buddyforms_layout_defaults() {
+
+	$json['labels_disable_css']    = '';
 	$json['labels_layout']    = 'inline';
 	$json['label_font_size']  = '';
 	$json['label_font_color'] = array( 'color' => '', 'style' => 'auto' );
 	$json['label_font_style'] = 'bold';
 
+	$json['desc_disable_css']    = '';
+	$json['desc_position']   = 'above_field';
+	$json['desc_font_size']  = '';
+	$json['desc_font_color'] = array( 'color' => '', 'style' => 'auto' );
+	$json['desc_font_style'] = 'italic';
+
+	$json['field_disable_css']    = '';
 	$json['field_padding']                 = '15';
 	$json['field_background_color']        = array( 'color' => '', 'style' => 'auto' );
 	$json['field_border_color']            = array( 'color' => '', 'style' => 'auto' );
@@ -23,11 +32,7 @@ function buddyforms_layout_defaults() {
 	$json['field_active_border_color']     = array( 'color' => '', 'style' => 'auto' );
 	$json['field_active_font_color']       = array( 'color' => '', 'style' => 'auto' );
 
-	$json['desc_position']   = 'above_field';
-	$json['desc_font_size']  = '';
-	$json['desc_font_color'] = array( 'color' => '', 'style' => 'auto' );
-	$json['desc_font_style'] = 'italic';
-
+	$json['button_disable_css']    = '';
 	$json['submit_text']             = __( 'Submit', 'buddyforms' );
 	$json['button_width']            = 'blockmobile';
 	$json['button_alignment']        = 'left';
@@ -43,11 +48,13 @@ function buddyforms_layout_defaults() {
 	$json['button_font_color_hover']       = array( 'color' => '', 'style' => 'auto' );
 	$json['button_border_color_hover']     = array( 'color' => '', 'style' => 'auto' );
 
-
+	$json['other_elements_disable_css']    = '';
 	$json['radio_button_alignment'] = 'inline';
 	$json['checkbox_alignment']     = 'inline';
 
 	$json['custom_css'] = '';
+
+	$json['extras_disable_all_css']    = '';
 
 	return $json;
 
@@ -104,6 +111,14 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 	// Labels
 	$form_setup['Labels'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Labels</h4>' );
 
+	$labels_disable_css          = isset( $options['layout']['labels_disable_css'] ) ? $options['layout']['labels_disable_css'] : $defaults['labels_disable_css'];
+	$form_setup['Labels'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[labels_disable_css]", array(
+		'disable'  => __( 'Disable CSS for labels on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $labels_disable_css,
+		'shortDesc' => ''
+	) );
+
 	$labels_layout          = isset( $options['layout']['labels_layout'] ) ? $options['layout']['labels_layout'] : $defaults['labels_layout'];
 	$form_setup['Labels'][] = new Element_Radio( '<b>' . __( 'Use labels as placeholders?', 'buddyforms' ) . '</b>', $option_name . "[labels_layout]", array(
 		'label'  => __( 'Show labels', 'buddyforms' ),
@@ -140,6 +155,14 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 	// Descriptions
 	$form_setup['Descriptions'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Descriptions</h4>' );
 
+	$desc_disable_css          = isset( $options['layout']['desc_disable_css'] ) ? $options['layout']['desc_disable_css'] : $defaults['desc_disable_css'];
+	$form_setup['Descriptions'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[desc_disable_css]", array(
+		'disable'  => __( 'Disable CSS for descriptions on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $desc_disable_css,
+		'shortDesc' => ''
+	) );
+
 	$desc_position                = isset( $options['layout']['desc_position'] ) ? $options['layout']['desc_position'] : 'blockmobile';
 	$form_setup['Descriptions'][] = new Element_Radio( '<b>' . __( 'Description Position', 'buddyforms' ) . '</b>', $option_name . "[desc_position]", array(
 		'above_field' => __( 'Above form field', 'buddyforms' ),
@@ -171,8 +194,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 	) );
 
 
-	// Form Elements
+	// Other Form Elements
 	$form_setup['Form Elements'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Other Elements</h4>' );
+
+	$other_elements_disable_css  = isset( $options['layout']['other_elements_disable_css'] ) ? $options['layout']['other_elements_disable_css'] : $defaults['other_elements_disable_css'];
+	$form_setup['Form Elements'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[other_elements_disable_css]", array(
+		'disable'  => __( 'Disable CSS for these form elements, on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $other_elements_disable_css,
+		'shortDesc' => ''
+	) );
 
 	$radio_button_alignment        = isset( $options['layout']['radio_button_alignment'] ) ? $options['layout']['radio_button_alignment'] : $defaults['radio_button_alignment'];
 	$form_setup['Form Elements'][] = new Element_Radio( '<b>' . __( 'Radio Button Alignment', 'buddyforms' ) . '</b>', $option_name . "[radio_button_alignment]", array(
@@ -195,6 +226,14 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 
 	// Text Fields
 	$form_setup['Text Fields'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Text Fields</h4>' );
+
+	$field_disable_css 	         = isset( $options['layout']['field_disable_css'] ) ? $options['layout']['field_disable_css'] : $defaults['field_disable_css'];
+	$form_setup['Text Fields'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[field_disable_css]", array(
+		'disable'  => __( 'Disable CSS for text fields on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $field_disable_css,
+		'shortDesc' => ''
+	) );
 
 	$field_padding               = isset( $options['layout']['field_padding'] ) ? $options['layout']['field_padding'] : $defaults['field_padding'];
 	$form_setup['Text Fields'][] = new Element_Number( '<b>' . __( 'Field Padding', 'buddyforms' ) . '</b>', $option_name . "[field_padding]", array(
@@ -265,6 +304,14 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 
 	// Buttons
 	$form_setup['Submit Button'][] = new Element_HTML( '<h4 style="margin-top: 30px; text-transform: uppercase;">Submit Button</h4>' );
+
+	$button_disable_css 	       = isset( $options['layout']['button_disable_css'] ) ? $options['layout']['button_disable_css'] : $defaults['button_disable_css'];
+	$form_setup['Submit Button'][] = new Element_Checkbox( 'Disable CSS', $option_name . "[button_disable_css]", array(
+		'disable'  => __( 'Disable CSS for buttons on this form?', 'buddyforms' ),
+	), array(
+		'value'     => $button_disable_css,
+		'shortDesc' => ''
+	) );
 
 	$submit_text                   = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
 	$form_setup['Submit Button'][] = new Element_Textbox( '<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
@@ -368,6 +415,16 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		'shortDesc' => __( 'Add custom styles to the form', 'buddyforms' )
 	) );
 
+	// Extras
+	$extras_disable_all_css = isset( $options['layout']['extras_disable_all_css'] ) ? $options['layout']['extras_disable_all_css'] : $defaults['extras_disable_all_css'];
+	$form_setup['Extras'][] = new Element_Checkbox( 'Disable all CSS', $option_name . "[extras_disable_all_css]", array(
+		'disable'  => __( 'Disable all BuddyForms CSS on this form', 'buddyforms' ),
+	), array(
+		'value'     => $extras_disable_all_css,
+		'shortDesc' => ''
+	) );
+
+
 
 	if ( get_post_type() == 'buddyforms' ) { ?>
         <script>
@@ -463,8 +520,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		echo '</select>';
 		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner  spinner"></span> Load Layout Settings</a>';
 		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset  spinner"></span> Reset</a></p>';
-	};
-	?>
+	}; ?>
 
     <div class="tabs tabbable tabs-left">
         <ul class="nav nav-tabs nav-pills">

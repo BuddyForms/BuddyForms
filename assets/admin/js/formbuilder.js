@@ -121,13 +121,12 @@ jQuery(document).ready(function (jQuery) {
 
                 var form_post_type = jQuery('#form_post_type').val();
 
-                if( form_post_type == 'bf_submissions' ){
+                if (form_post_type == 'bf_submissions') {
 
-                    var field_id = jQuery( data ).find('#this_field_id').val();
+                    var field_id = jQuery(data).find('#this_field_id').val();
 
                     bf_taxonomy_input(field_id)
                 }
-
 
 
             },
@@ -183,5 +182,14 @@ jQuery(document).ready(function (jQuery) {
             jQuery('tr .slug' + field_id).val(slug(field_name, {lower: true}));
         }
         jQuery(this).unbind('blur');
+    });
+    //
+    // Reset option for multiple choice fields radio and checkboxes
+    //
+    jQuery(document.body).on('click', '.button.bf_reset_multi_input', function (event) {
+        event.preventDefault();
+        var group_name = jQuery(this).attr('data-group-name');
+        jQuery('input[name="' + group_name + '"]').attr('checked', false);
+        return false;
     });
 });

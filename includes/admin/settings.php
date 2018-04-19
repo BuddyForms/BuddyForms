@@ -43,9 +43,12 @@ function buddyforms_settings_page() { ?>
  * @param string $current
  */
 function buddyforms_admin_tabs( $current = 'homepage' ) {
-	$tabs = array( 'general' => 'General Settings', 'layout' => 'Form Layout', 'import' => 'Import Forms' );
+	$tabs = array( 'general' => 'General Settings' );
 
 	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
+	$tabs['layout'] = 'Form Layout';
+	$tabs['import'] = 'Import Forms';
+
 
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
 	foreach ( $tabs as $tab => $name ) {

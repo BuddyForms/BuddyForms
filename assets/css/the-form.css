@@ -57,6 +57,11 @@
     width: 100%;
 }
 
+#loginform input.input {
+  max-width: 300px;
+}
+
+#loginform input.input,
 .the_buddyforms_form .standard-form textarea,
 .the_buddyforms_form .standard-form input[type=url],
 .the_buddyforms_form .standard-form input[type=link],
@@ -189,4 +194,24 @@ ul.bf_files {
 }
 .bf_inputs li {
     list-style: none;
+}
+
+button.bf-submit:disabled{
+	background-color: #c4c4c4;
+}
+
+.bf-hidden {
+    display: none !important;
+}
+
+#wp-admin-bar-buddyforms-admin-edit-form>a.ab-item:before {
+	content: "\e000";
+	font-family: 'icomoon';
+	font-size: 27px;
+	padding: 0;
+	padding-right: 10px;
+}
+
+#bf_honeypot {
+    display: none !important;
 }

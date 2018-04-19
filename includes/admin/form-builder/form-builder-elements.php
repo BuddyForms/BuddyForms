@@ -243,7 +243,50 @@ function buddyforms_display_form_element( $args ) {
 				'value'    => $name,
 				'required' => 1
 			) );
-
+			
+			$captcha_site_key                           = ! empty( $customfield['captcha_site_key'] ) ? $customfield['captcha_site_key'] : '';
+			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( 'Site Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
+				'data'     => $field_id,
+				'value'    => $captcha_site_key,
+				'required' => 1
+			) );
+			$captcha_private_key                           = ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '';
+			$form_fields['general']['captcha_private_key'] = new Element_Textbox( '<b>' . __( 'Private Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_private_key]", array(
+				'data'     => $field_id,
+				'value'    => $captcha_private_key,
+				'required' => 1
+			) );
+			
+			$form_fields['general']['captcha_data_theme'] = new Element_Select( '<b>' . __( 'The color theme of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_theme]",
+				array(
+					'dark'  => __( 'Dark', 'buddyform' ),
+					'light' => __( 'Light', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark',
+					'field_id' => $field_id,
+				)
+			);
+			
+			$form_fields['general']['captcha_data_type'] = new Element_Select( '<b>' . __( 'The type of CAPTCHA to serve', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_type]",
+				array(
+					'image'  => __( 'Image', 'buddyform' ),
+					'audio' => __( 'Audio', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_type'] ) ? $customfield['captcha_data_type'] : 'image',
+					'field_id' => $field_id,
+				)
+			);
+			
+			$form_fields['general']['captcha_data_size'] = new Element_Select( '<b>' . __( 'The size of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_size]",
+				array(
+					'normal'  => __( 'Normal', 'buddyform' ),
+					'compact' => __( 'Compact', 'buddyform' ),
+				), array(
+					'value'    => isset( $customfield['captcha_data_size'] ) ? $customfield['captcha_data_size'] : 'normal',
+					'field_id' => $field_id,
+				)
+			);
+			
 			$form_fields['general']['html'] = new Element_HTML( '<p><b>reCaptcha is only visible to logged off users. Logged in users not need to get checked.<b><p>' );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
@@ -343,9 +386,12 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['validation']['validation_max'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array( 'value' => $validation_max ) );
 			break;
 		case 'dropdown':
-			$multiple                           = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
-			$form_fields['general']['multiple'] = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple ) );
-
+			$is_frontend_checked                      = isset( $customfield['frontend_reset'] ) ? $customfield['frontend_reset'] : 'false';
+			$form_fields['general']['frontend_reset'] = new Element_Checkbox( '<b>' . __( 'Reset', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][frontend_reset]", array( 'frontend_reset' => __( 'Enable Frontend Reset Option', 'buddyforms' ) ), array(
+				'value' => $is_frontend_checked,
+			) );
+			$multiple                                 = isset( $customfield['multiple'] ) ? $customfield['multiple'] : 'false';
+			$form_fields['general']['multiple']       = new Element_Checkbox( '<b>' . __( 'Multiple Selection', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple]", array( 'multiple' => '<b>' . __( 'Multiple', 'buddyforms' ) . '</b>' ), array( 'value' => $multiple ) );
 			$field_args                               = Array(
 				'field_id'  => $field_id,
 				'buddyform' => $buddyform
@@ -357,6 +403,10 @@ function buddyforms_display_form_element( $args ) {
 				'field_id'  => $field_id,
 				'buddyform' => $buddyform
 			);
+			$is_frontend_checked                      = isset( $customfield['frontend_reset'] ) ? $customfield['frontend_reset'] : 'false';
+			$form_fields['general']['frontend_reset'] = new Element_Checkbox( '<b>' . __( 'Reset', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][frontend_reset]", array( 'frontend_reset' => __( 'Enable Frontend Reset Option', 'buddyforms' ) ), array(
+				'value' => $is_frontend_checked,
+			) );
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 		case 'checkbox':
@@ -364,8 +414,70 @@ function buddyforms_display_form_element( $args ) {
 				'field_id'  => $field_id,
 				'buddyform' => $buddyform
 			);
+			$is_frontend_checked                      = isset( $customfield['frontend_reset'] ) ? $customfield['frontend_reset'] : 'false';
+			$form_fields['general']['frontend_reset'] = new Element_Checkbox( '<b>' . __( 'Reset', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][frontend_reset]", array( 'frontend_reset' => __( 'Enable Frontend Reset Option', 'buddyforms' ) ), array(
+				'value' => $is_frontend_checked,
+			) );
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
+        case 'upload':
+	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
+	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
+	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : '';
+	        $delete_files   = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ? $buddyform['form_fields'][ $field_id ]['delete_files'][0] : '';
+	
+	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
+		        'value' => floatval( $file_limit ),
+		        'id'    => 'upload_file_limit' . $field_id,
+		        'step'=> '.01'
+	        ) );
+	        $original_mimes_types                        = get_allowed_mime_types();
+	        $sorted_mimes_types                          = array();
+
+	        if( isset( $accepted_files ) && is_array( $accepted_files ) ) {
+		        foreach ( $accepted_files as $mime_type ) {
+			        if ( array_key_exists( $mime_type, $original_mimes_types ) ) {
+				        $sorted_mimes_types[ $mime_type ] = $original_mimes_types[ $mime_type ];
+			        }
+		        }
+	        }
+	
+	        asort( $sorted_mimes_types );
+	        $preview_mime_value = '';
+	        if( isset( $sorted_mimes_types ) && is_array( $sorted_mimes_types ) ) {
+		        foreach ( $sorted_mimes_types as $key => $value ) {
+			        $preview_mime_value .= $value . ', ';
+		        }
+            }
+
+	        if( isset( $original_mimes_types ) && is_array( $original_mimes_types ) ) {
+		        foreach ( $original_mimes_types as $key => $value ) {
+			        if ( ! array_key_exists( $key, $sorted_mimes_types ) ) {
+				        $sorted_mimes_types[ $key ] = $original_mimes_types[ $key ];
+			        }
+		        }
+	        }
+	
+	        $allowed_mime_types = $sorted_mimes_types;
+	        $form_fields['general']['upload_accepted_files']       = new Element_Checkbox( '<b>' . __( 'Allowed File Types', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][accepted_files]", $allowed_mime_types, array(
+		        'id' => 'upload_multiple_files' . $field_id,
+		        'value' => $accepted_files,
+		        'class' => 'upload_accepted_fields_container'
+	        ) );
+	        $html               = rtrim( trim( $preview_mime_value ), ',' );
+	        $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types Resume', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html, 'readonly' => 'readonly' ) );
+	        $element        = new Element_Checkbox( '<b>' . __( 'Multiple Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array( 'allow' => __( 'Allow multiple files to be upload to this field . ', 'buddyforms' ) ), array(
+		        'id' => 'upload_multiple_files' . $field_id,
+		        'value' => $multiple_files
+	        ) );
+	        $element_delete = new Element_Checkbox( '<b>' . __( 'Delete Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][delete_files]", array( 'delete' => __( 'Remove Files when Entry is deleted. ', 'buddyforms' ) ), array(
+		        'id' => 'upload_delete_files' . $field_id,
+		        'value' => $delete_files
+	        ) );
+	        $form_fields['general']['upload_multiple_files'] = $element;
+	        $form_fields['general']['upload_delete_files']   = $element_delete;
+	        
+            break;
 		case 'post_formats':
 			unset( $form_fields['advanced']['slug'] );
 			unset( $form_fields['advanced']['metabox_enabled'] );
@@ -875,124 +987,124 @@ JS;
 
 	ob_start(); ?>
     <li id="field_<?php echo $field_id ?>"
-        class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?> data-field_id="<?php echo $field_id ?> ">
+    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?> data-field_id="<?php echo $field_id ?> ">
 
     <input id="this_field_id" type="hidden" value="<?php echo $field_id ?>">
 
-        <div style="display:none;" class="hidden">
-			<?php if ( isset( $form_fields['hidden'] ) ) {
-				foreach ( $form_fields['hidden'] as $key => $form_field ) {
-					$form_field->render();
-				}
-			} ?>
-        </div>
+    <div style="display:none;" class="hidden">
+		<?php if ( isset( $form_fields['hidden'] ) ) {
+			foreach ( $form_fields['hidden'] as $key => $form_field ) {
+				$form_field->render();
+			}
+		} ?>
+    </div>
 
-        <div class="accordion_fields">
-            <div class="accordion-group">
-                <div class="accordion-heading-options">
-                    <table class="wp-list-table widefat fixed posts">
-                        <tbody>
-                        <tr>
-                            <td class="field_order ui-sortable-handle">
-                                <span class="circle">0</span>
-                            </td>
-                            <td class="field_label">
-                                <strong>
-                                    <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
-                                       data-parent="#accordion_text"
-                                       href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
-                                       title="Edit this Field" href="javascript:;"><?php echo $name ?></a>
-                                </strong>
+    <div class="accordion_fields">
+        <div class="accordion-group">
+            <div class="accordion-heading-options">
+                <table class="wp-list-table widefat fixed posts">
+                    <tbody>
+                    <tr>
+                        <td class="field_order ui-sortable-handle">
+                            <span class="circle">0</span>
+                        </td>
+                        <td class="field_label">
+                            <strong>
+                                <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
+                                   data-parent="#accordion_text"
+                                   href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
+                                   title="Edit this Field" href="javascript:;"><?php echo $name ?></a>
+                            </strong>
 
-                            </td>
-                            <td class="field_name"><?php echo $field_slug ?></td>
-                            <td class="field_type"><?php echo $field_type ?></td>
-                            <td class="field_delete">
+                        </td>
+                        <td class="field_name"><?php echo $field_slug ?></td>
+                        <td class="field_type"><?php echo $field_type ?></td>
+                        <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text"
                                          href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
                                          title="Edit this Field" href="javascript:;">Edit</a> | </span>
-                                <span><a class="bf_delete_field" id="<?php echo $field_id ?>" title="Delete this Field"
-                                         href="#">Delete</a></span>
-                            </td>
+                            <span><a class="bf_delete_field" id="<?php echo $field_id ?>" title="Delete this Field"
+                                     href="#">Delete</a></span>
+                        </td>
 
-							<?php $layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layout']['cords'][ $field_id ] : '1'; ?>
+						<?php $layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layout']['cords'][ $field_id ] : '1'; ?>
 
-                            <td class="field_layout">
-                                <select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
-                                    <option <?php selected( $layout, '1' ); ?> value="1">Full Width</option>
-                                    <option <?php selected( $layout, '2' ); ?> value="2">1/2</option>
-                                    <option <?php selected( $layout, '3' ); ?> value="3">1/3</option>
-                                    <option <?php selected( $layout, '4' ); ?> value="4">1/4</option>
-                                    <option <?php selected( $layout, '5' ); ?> value="5">2/3</option>
-                                    <option <?php selected( $layout, '6' ); ?> value="6">3/4</option>
-                                </select>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                        <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
-                            <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
-                                class="nav nav-tabs nav-pills">
-								<?php
-								$i = 0;
-								foreach ( $form_fields as $key => $form_field ) {
+                        <td class="field_layout">
+                            <select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
+                                <option <?php selected( $layout, '1' ); ?> value="1">Full Width</option>
+                                <option <?php selected( $layout, '2' ); ?> value="2">1/2</option>
+                                <option <?php selected( $layout, '3' ); ?> value="3">1/3</option>
+                                <option <?php selected( $layout, '4' ); ?> value="4">1/4</option>
+                                <option <?php selected( $layout, '5' ); ?> value="5">2/3</option>
+                                <option <?php selected( $layout, '6' ); ?> value="6">3/4</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
+                        <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
+                            class="nav nav-tabs nav-pills">
+							<?php
+							$i = 0;
+							foreach ( $form_fields as $key => $form_field ) {
 
-									if ( $key == 'hidden' ) {
-										continue;
-									}
+								if ( $key == 'hidden' ) {
+									continue;
+								}
 
-									$class_active = '';
-									if ( $i == 0 ) {
-										$class_active = 'active';
-									}
+								$class_active = '';
+								if ( $i == 0 ) {
+									$class_active = 'active';
+								}
 
-									?>
-                                <li class="<?php echo $class_active ?>"><a
-                                            href="#<?php echo $key . '-' . $field_type . '-' . $field_id ?>"
-                                            data-toggle="tab"><?php echo str_replace( '-', ' ', ucfirst( $key ) ) ?></a>
-                                    </li><?php
-									$i ++;
+								?>
+                            <li class="<?php echo $class_active ?>"><a
+                                        href="#<?php echo $key . '-' . $field_type . '-' . $field_id ?>"
+                                        data-toggle="tab"><?php echo str_replace( '-', ' ', ucfirst( $key ) ) ?></a>
+                                </li><?php
+								$i ++;
+							}
+							?>
+                        </ul>
+                        <div id="bf_field_group_content<?php echo $field_type . '-' . $field_id ?>"
+                             class="tab-content">
+							<?php
+							$i = 0;
+							foreach ( $form_fields as $key => $form_field ) {
+
+								if ( $key == 'hidden' ) {
+									continue;
+								}
+
+								$class_active = '';
+								if ( $i == 0 ) {
+									$class_active = 'active';
 								}
 								?>
-                            </ul>
-                            <div id="bf_field_group_content<?php echo $field_type . '-' . $field_id ?>"
-                                 class="tab-content">
-								<?php
-								$i = 0;
-								foreach ( $form_fields as $key => $form_field ) {
-
-									if ( $key == 'hidden' ) {
-										continue;
-									}
-
-									$class_active = '';
-									if ( $i == 0 ) {
-										$class_active = 'active';
-									}
-									?>
-                                    <div class="tab-pane fade in <?php echo $class_active ?>"
-                                         id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
-                                        <div class="buddyforms_accordion_general">
-											<?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
-                                        </div>
+                                <div class="tab-pane fade in <?php echo $class_active ?>"
+                                     id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
+                                    <div class="buddyforms_accordion_general">
+										<?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
                                     </div>
-									<?php
-									$i ++;
-								}
-								if ( ! is_array( $form_field ) ) {
-									_e( 'Please Save the form once for the form element to work.', 'buddyforms' );
-								}
-								?>
-                            </div>
+                                </div>
+								<?php
+								$i ++;
+							}
+							if ( ! is_array( $form_field ) ) {
+								_e( 'Please Save the form once for the form element to work.', 'buddyforms' );
+							}
+							?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </li>
 	<?php
 	$field_html = ob_get_contents();
@@ -1017,7 +1129,9 @@ add_action( 'wp_ajax_buddyforms_display_form_element', 'buddyforms_display_form_
  */
 function buddyforms_form_element_multiple( $form_fields, $args ) {
 
-	extract( $args );
+	$field_id  = '';
+	$buddyform = '';
+	extract( $args, EXTR_IF_EXISTS );
 
 	ob_start();
 
@@ -1075,6 +1189,10 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 	    </ul>
      </div>
      <a href="' . $field_id . '" class="button bf_add_input">+</a>';
+
+	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
+		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';
+	}
 
 	$tmp = ob_get_clean();
 
