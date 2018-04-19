@@ -46,7 +46,7 @@ class Element_Upload extends Element_Textbox
 
                 $metadata =   wp_prepare_attachment_for_js($id_value);
                 if($metadata != null){
-                    $url = wp_get_attachment_url( $id_value );
+                    $url = wp_get_attachment_thumb_url( $id_value );
                     $result .= $id_value.",";
                     $mockFile = new stdClass();
                     $mockFile->name = $metadata['filename'];
