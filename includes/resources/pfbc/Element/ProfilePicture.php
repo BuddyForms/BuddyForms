@@ -47,11 +47,13 @@ class Element_ProfilePicture extends Element_Textbox
         require_once $path.'bp-core/classes/class-bp-attachment-avatar.php';
         require_once $path.'bp-core/bp-core-cssjs.php';
         $this->custom_avatar_scripts();
+        $buddyform_assets_url = BuddyForms::$assets.'resources/profile/avatar.js';
        // bp_core_avatar_scripts() ;
         //$bp_attachmett = new BP_Attachment_Avatar();
         //$bp_attachmett->script_data();
        // bp_attachments_enqueue_scripts();
-        wp_enqueue_script( 'bp-avatar', "{$url}avatar.js", array( 'jquery' ) );
+        wp_enqueue_script( 'bp-avatar2', $buddyform_assets_url, array( 'jquery' ) );
+        wp_enqueue_script( 'bf-profile-picture', BuddyForms::$assets.'resources/profile/profilePicture.js', array( 'jquery' ) );
         wp_enqueue_script( 'bp-plupload', "{$url}bp-plupload.js", array( 'plupload', 'jquery', 'json2', 'wp-backbone' ) );
 
 
