@@ -457,6 +457,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			// jQuery Local storage http://garlicjs.org/
 			wp_enqueue_script( 'jquery-garlicjs', plugins_url( 'assets/resources/garlicjs/garlic.js', __FILE__ ), array( 'jquery' ) );
 
+           // wp_enqueue_script( 'bp-avatar2', plugins_url('assets/resources/profile/avatar.js',__FILE__), array( 'jquery' ) );
 			//DropZone
 			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
             wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ) );
