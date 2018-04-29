@@ -38,20 +38,26 @@ jQuery(document).ready(function () {
 
     bf_form_errors();
 
-    jQuery('.bf-garlic').garlic();
+	var bf_garlic = jQuery('.bf-garlic');
+	if (bf_garlic.length > 0) {
+		bf_garlic.garlic();
+	}
 
-    jQuery(".bf-select2").each(function(){
-        var reset = jQuery(this).attr('data-reset');
-        var options = {
-            placeholder: "Select an option",
-            tags: true,
-            tokenSeparators: [',', ' ']
-        };
-        if(reset){
-            options['allowClear'] = true;
-        }
-        jQuery(this).select2(options);
-    });
+	var bf_select_2 = jQuery(".bf-select2");
+	if(bf_select_2.length > 0) {
+		bf_select_2.each(function () {
+			var reset = jQuery(this).attr('data-reset');
+			var options = {
+				placeholder: "Select an option",
+				tags: true,
+				tokenSeparators: [',', ' ']
+			};
+			if (reset) {
+				options['allowClear'] = true;
+			}
+			jQuery(this).select2(options);
+		});
+	}
 
     jQuery(document).on("click", '.create-new-tax-item', function (evt) {
 
