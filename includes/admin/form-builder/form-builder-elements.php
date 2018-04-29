@@ -57,7 +57,7 @@ function buddyforms_display_form_element( $args ) {
 		'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 	) );
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			$metabox_enabled                            = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
 			$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
 				'value' => $metabox_enabled,
@@ -513,7 +513,7 @@ function buddyforms_display_form_element( $args ) {
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
 
-			if ( buddyforms_core_fs()->is_not_paying() ) {
+			if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 				$error                              = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
                         <td colspan="2">
                             <div class="is_not_paying bf-error"><p>BuddyForms Professional is required to use this form Element. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Categories tags nad Taxonomies. <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-pricing">Upgrade Now</a></p></div>

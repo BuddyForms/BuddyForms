@@ -711,7 +711,7 @@ function buddyforms_notice_if_broken_form() {
 			$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
 		}
 		if ( buddyforms_core_fs()->is__premium_only() ) {
-			if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+			if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 				if ( ! in_array( $buddyform['post_type'], $post_types ) ) {
 					$messages[] = __( 'The Selected Post Type does not exist', 'buddyforms' );
 				}
@@ -734,7 +734,7 @@ function buddyforms_notice_if_broken_form() {
 	endif;
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			unset( $messages['pro'] );
 		}
 	}

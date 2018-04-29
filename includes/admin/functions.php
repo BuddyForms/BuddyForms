@@ -22,7 +22,7 @@ function buddyforms_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) 
  * @return string
  */
 function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) {
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		
 		$tmp = '<div id="bf-gopro-sidebar">';
 		$tmp .= ! empty( $h2 ) ? '<h2>' . $h2 . '</h2>' : '';

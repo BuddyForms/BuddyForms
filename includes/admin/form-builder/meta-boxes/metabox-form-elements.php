@@ -266,7 +266,7 @@ function buddyforms_form_elements_select_options() {
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 
 
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			// Post Fields
 			$elements_select_options['post']['fields']['category']       =
 				array(

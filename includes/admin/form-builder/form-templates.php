@@ -71,7 +71,7 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 	endif;
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			$deps = '';
 		}
 	}

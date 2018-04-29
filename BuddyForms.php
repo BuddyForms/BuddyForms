@@ -211,7 +211,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
 
 				if ( buddyforms_core_fs()->is__premium_only() ) {
-					if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+					if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 						require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
 					}
 				}
@@ -650,6 +650,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'days'               => 14,
 					'is_require_payment' => true,
 				),
+				'has_affiliation'     => 'all',
 				'menu'                => array(
 					'slug'           => 'edit.php?post_type=buddyforms',
 					'first-path' => $first_path,

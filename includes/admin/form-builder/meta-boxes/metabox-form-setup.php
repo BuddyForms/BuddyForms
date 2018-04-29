@@ -96,7 +96,7 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $bf_ajax
 	) );
 
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Form Submission'][] = $element;
@@ -105,7 +105,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => __( 'The form elements content is stored in the browser so it not gets lost if the tab gets closed by accident', 'buddyforms' ),
 		'value'     => $local_storage
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Form Submission'][] = $element;
@@ -123,14 +123,14 @@ function buddyforms_metabox_form_setup() {
 		'value'     => $bf_ajax
 	) );
 
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Form Submission'][] = $element;
 
 	$shortDesc_post_type = '<b>Use any POST TYPE with the PRO Version!</b> <br><br>Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			$shortDesc_post_type = 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
 		}
 	}
@@ -152,7 +152,7 @@ function buddyforms_metabox_form_setup() {
 		'value' => $status,
 		'class' => 'bf_hide_if_post_type_none'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Create Content'][] = $element;
@@ -164,7 +164,7 @@ function buddyforms_metabox_form_setup() {
 		'value' => $comment_status,
 		'class' => 'bf_hide_if_post_type_none'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Create Content'][] = $element;
@@ -174,7 +174,7 @@ function buddyforms_metabox_form_setup() {
 			'value' => $revision,
 			'class' => 'bf_hide_if_post_type_none'
 		) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Create Content'][] = $element;
@@ -185,7 +185,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )',
 		'class'     => 'bf_hide_if_post_type_none'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Create Content'][] = $element;
@@ -231,7 +231,7 @@ function buddyforms_metabox_form_setup() {
 		'value' => $admin_bar,
 		'class' => 'bf_hide_if_attached_page_none'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Edit Submissions'][] = $element;
@@ -247,7 +247,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => __( 'The link to the backend will be changed to use the frontend editing.', 'buddyforms' ),
 		'class'     => 'bf_hide_if_attached_page_none',
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Edit Submissions'][] = $element;
@@ -260,7 +260,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => '',
 		'class'     => 'bf_hide_if_attached_page_none',
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Edit Submissions'][] = $element;
@@ -273,7 +273,7 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
 		'class'     => 'bf_hide_if_attached_page_none'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Edit Submissions'][] = $element;

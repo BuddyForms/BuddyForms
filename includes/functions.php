@@ -698,7 +698,7 @@ function buddyforms_get_post_types() {
 	$post_types['page']           = 'Page';
 
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 
 			// Get all post types
 			$post_types = get_post_types( array( 'show_ui' => true ), 'names', 'and' );

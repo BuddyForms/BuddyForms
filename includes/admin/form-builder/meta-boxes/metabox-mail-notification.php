@@ -38,7 +38,7 @@ function buddyforms_post_status_mail_notification_screen() {
 	$form_setup = array();
 
 	$shortDesc = '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new">' . __( 'Create New Post Status Change Mail Notification', 'buddyforms' ) . '</a>';
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$shortDesc = '<b>' . __( 'Get the Pro version to add Post Status Change Mail Notification', 'buddyforms' ) . '</b>';
 	}
 
@@ -46,7 +46,7 @@ function buddyforms_post_status_mail_notification_screen() {
 		'class'     => 'post_status_mail_notification_trigger',
 		'shortDesc' => $shortDesc,
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup[] = $element;

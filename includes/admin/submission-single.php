@@ -122,7 +122,7 @@
 
 
 			if ( buddyforms_core_fs()->is__premium_only() ) {
-				if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+				if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 					if ( is_admin() ) {
 						$user_data = get_post_meta( $post_id, '_bf_user_data', true );
 
@@ -144,7 +144,7 @@
 					<?php }
 				}
 			}
-			if ( buddyforms_core_fs()->is_not_paying() ) { ?>
+			if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) { ?>
                 <div class="buddyforms-metabox postbox">
                     <h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
                     <div class="inside">

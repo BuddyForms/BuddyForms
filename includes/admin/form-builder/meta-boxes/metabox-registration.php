@@ -35,7 +35,7 @@ function buddyforms_registration_screen() {
 		'value'     => $generate_password,
 		'shortDesc' => 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup[] = $element;
@@ -46,7 +46,7 @@ function buddyforms_registration_screen() {
 		'value'     => $public_submit_username_from_email,
 		'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.'
 	) );
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup[] = $element;

@@ -90,7 +90,7 @@ function buddyforms_permissions_screen() {
 		</div>';
 	
 	if ( buddyforms_core_fs()->is__premium_only() ) {
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			$shortDesc_permission = '<br><br>
 			<div class="bf-roles-main-desc">
 				<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
@@ -120,7 +120,7 @@ function buddyforms_permissions_screen() {
 			}
 		}
 		
-		if ( buddyforms_core_fs()->is_not_paying() ) {
+		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			foreach ( $default_roles as $role_n_a => $role_a ) {
 				$form_user_role[ $role_n_a ] = $role_n_a;
 			}
@@ -144,7 +144,7 @@ function buddyforms_permissions_screen() {
 //			$element->setAttribute( 'disabled', 'disabled' );
 		}
 		
-		if ( buddyforms_core_fs()->is_not_paying() ) {
+		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
 		}
 		
