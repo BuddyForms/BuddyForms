@@ -15,7 +15,7 @@ function buddyforms_add_meta_boxes() {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
-	if ( buddyforms_core_fs()->is_not_paying() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
 	}
 
