@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1.6.7
+Stable tag: 2.1.6.8
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -354,6 +354,16 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.1.6.8 - 29. April 2018
+* Fixed an issue with the upload form element "No image displayed in the admin edit screen"
+* Change submit button text to upload in process during upload
+* Fixed the upload label. slug was used.
+* Added a filter for allow add-ons display the value in the column of the submission list
+* show the thumbnail of the uploaded files in the view and edit submision pages
+* Change the loader of garlic library to first check if the html tag exist in the dom.
+* Added jQuery identifier instead of $ to avoid error
+* Make trials working. Tehre was an issue with the trial activation.
 
 = 2.1.6.7 - 16. April 2018
 * Added a display none important as css to the id bf_honeypot. The bf_honeypot form element does have a style attribute display: none but for some reason some customer reported in the support that the field was visible.
