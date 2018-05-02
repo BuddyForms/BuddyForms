@@ -156,7 +156,7 @@ function checkPasswordStrength( $pass1,
 
     // Add the strength meter results
     console.log('strength ' + strength + 'required_strength ' + pwsL10n.required_strength);
-    $('.buddyforms-password-hint').remove();
+    jQuery('.buddyforms-password-hint').remove();
 
 
     switch ( strength ) {
@@ -189,7 +189,7 @@ function checkPasswordStrength( $pass1,
     // both passwords are filled up
 
     if ( pwsL10n.required_strength <= strength && strength != 5 && '' !== pass2.trim() ) {
-        $('.buddyforms-password-hint').remove();
+        jQuery('.buddyforms-password-hint').remove();
         $submitButton.removeAttr( 'disabled' );
     } else {
         $strengthResult.after( hint_html );
