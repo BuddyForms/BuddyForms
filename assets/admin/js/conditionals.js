@@ -31,7 +31,7 @@ function from_setup_form_type(value) {
             jQuery('.bf_show_if_f_type_post').hide();
             jQuery('.bf_show_if_f_type_all').show();
             jQuery('.bf_show_if_f_type_contact').show();
-            jQuery('.bf_show_if_f_type_registration').show();
+            jQuery('.bf_show_if_f_type_registration').hide();
 
 
             // Show/Hide after submission post options
