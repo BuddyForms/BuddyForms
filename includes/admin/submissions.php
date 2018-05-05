@@ -203,11 +203,23 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			case 'Date':
 				$bf_value = get_the_date( 'F j, Y', $item->ID );
 				break;
+			case 'category':
+			case 'tags':
+				if ( is_array( $bf_value ) ) {
+					$result = array();
+					foreach ( $bf_value as $key => $val ) {
+						$result[] = ( $field_type == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
+					}
+					$bf_value = implode( ',', $result );
+				}
+				break;
 			default:
 				if ( is_array( $bf_value ) ) {
+					$str_result = '';
 					foreach ( $bf_value as $key => $val ) {
-						$bf_value .= $val;
+						$str_result .= $val;
 					}
+					$bf_value = $str_result;
 				} else {
 					$bf_value = wp_trim_words( $bf_value, 25 );
 				}
