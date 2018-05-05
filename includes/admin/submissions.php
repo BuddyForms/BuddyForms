@@ -178,35 +178,42 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
-		global $buddyforms;
-		$column_val = get_post_meta( $item->ID, $column_name, true );
-
-		if ( is_array( $column_val ) ) {
-			foreach ( $column_val as $key => $val ) {
-				echo $val;
-			}
-		} else {
-			//Check if the column is of an Upload field
-			$result     = apply_filters("custom_column_default",$item, $column_name);
-			$formSlug   = $_GET['form_slug'];
-			$buddyFData = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
-			foreach ( $buddyFData as $key => $value ) {
-				$field = $value['slug'];
-				$type  = $value['type'];
-				if ( $field == $column_name && $type == 'upload' ) {
-					$result       = "";
-					$attachmet_id = explode( ",", $column_val );
-					foreach ( $attachmet_id as $id ) {
-						$url    = wp_get_attachment_url( $id );
-						$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
-					}
-				}
-			}
-			echo( rtrim( trim( $result ), ',' ) );
+		$bf_value = get_post_meta( $item->ID, $column_name, true );
+		$bf_field = buddyforms_get_form_field_by_slug($_GET['form_slug'], $column_name);
+		if($bf_field !== false){
+			$this->get_column_values($column_name, $bf_field['type'], $item, $bf_value);
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
 		}
+	}
+	
+	public function get_column_values($field_slug, $field_type, $item, $bf_value) {
+		$bf_value = apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug, $bf_value);
+		switch ( $field_type ) {
+			case 'upload':
+				$result        = '';
+				$attachment_id = explode( ",", $bf_value );
+				foreach ( $attachment_id as $id ) {
+					$url    = wp_get_attachment_url( $id );
+					$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
+				}
+				$bf_value = rtrim( trim( $result ), ',' );
+				break;
+			case 'Date':
+				$bf_value = get_the_date( 'F j, Y', $item->ID );
+				break;
+			default:
+				if ( is_array( $bf_value ) ) {
+					foreach ( $bf_value as $key => $val ) {
+						$bf_value .= $val;
+					}
+				} else {
+					$bf_value = wp_trim_words( $bf_value, 25 );
+				}
+				break;
+		}
+		echo $bf_value;
 	}
 
 	function prepare_items() {
