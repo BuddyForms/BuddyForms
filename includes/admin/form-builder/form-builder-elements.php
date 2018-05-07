@@ -978,7 +978,7 @@ JS;
 			break;
 	}
 
-	$form_fields = apply_filters( 'buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id );
+	$form_fields = apply_filters( 'buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id, $form_slug );
 
 
 	if ( is_array( $form_fields ) ) {
