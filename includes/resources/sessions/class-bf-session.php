@@ -21,11 +21,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package WordPress
  * @since   3.7.0
  */
-final class WP_Session extends Recursive_ArrayAccess implements Iterator, Countable {
+final class BF_Session extends Recursive_ArrayAccess implements Iterator, Countable {
 	/**
 	 * Singleton instance.
 	 *
-	 * @var bool|WP_Session
+	 * @var bool|BF_Session
 	 */
 	private static $instance = false;
 	/**
@@ -177,7 +177,7 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
 	 *
 	 * @param bool $session_id Session ID from which to populate data.
 	 *
-	 * @return bool|WP_Session
+	 * @return bool|BF_Session
 	 */
 	public static function get_instance() {
 		if ( ! self::$instance ) {
