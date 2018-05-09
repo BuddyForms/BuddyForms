@@ -189,7 +189,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 	
 	public function get_column_values($field_slug, $field_type, $item, $bf_value) {
-		$bf_value = apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug, $bf_value);
 		switch ( $field_type ) {
 			case 'upload':
 				$result        = '';
@@ -225,7 +224,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				}
 				break;
 		}
-		echo $bf_value;
+		echo apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug, $bf_value);
 	}
 
 	function prepare_items() {
