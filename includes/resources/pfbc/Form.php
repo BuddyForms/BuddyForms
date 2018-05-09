@@ -226,7 +226,7 @@ class Form extends Base {
 	 * @return mixed|string
 	 */
 	protected static function recover( $id ) {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 		if ( isset( $wp_session[ $id . '_form' ] ) ) {
 			$json = maybe_unserialize( $wp_session[ $id . '_form' ] );
 
@@ -243,7 +243,7 @@ class Form extends Base {
 	 * @param string $id
 	 */
 	public static function clearValues( $id ) {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 		if ( ! empty( $wp_session[ $id . "_values" ] ) ) {
 			unset( $wp_session[ $id . "_values" ] );
 		}
@@ -253,7 +253,7 @@ class Form extends Base {
 	 * @param string $id
 	 */
 	public static function clearErrors( $id ) {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 		if ( isset( $wp_session[ $id . "_errors" ] ) ) {
 			unset( $wp_session[ $id . "_errors" ] );
 		}
@@ -265,7 +265,7 @@ class Form extends Base {
 	 * @param $value
 	 */
 	public static function _setSessionValue( $id, $element, $value ) {
-		$wp_session                    = WP_Session::get_instance();
+		$wp_session                    = BF_Session::get_instance();
 		$wp_session[ $id . "_values" ] = array( $element => $value );
 	}
 
@@ -275,7 +275,7 @@ class Form extends Base {
 	 * @param string $element
 	 */
 	public static function setError( $id, $errors, $element = "" ) {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 
 		if ( ! is_array( $errors ) ) {
 			$errors_array   = array();
@@ -450,7 +450,7 @@ class Form extends Base {
 	 * @return array
 	 */
 	protected static function getSessionValues( $id ) {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 		$values     = array();
 		if ( ! empty( $wp_session[ $id . "_values" ] ) ) {
 			$values = (array) $wp_session[ $id . "_values" ];
@@ -575,7 +575,7 @@ JS;
                         
                         jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert error' );
                         jQuery( '#form_message_$form_slug' ).html( xhr.responseText );
-                                
+                        
 						  
 	                    console.log(xhr.responseText);
 	                    
@@ -667,9 +667,10 @@ JS;
 	}
 
 	protected function save() {
-		$wp_session                                       = WP_Session::get_instance();
+		$wp_session                                       = BF_Session::get_instance();
 		$session_dada                                     = maybe_serialize( $this );
 		$wp_session[ $this->_attributes["id"] . "_form" ] = $session_dada;
+		$wp_session->write_data();
 	}
 
 	/**
@@ -806,7 +807,7 @@ JS;
 	 * @return array
 	 */
 	public function getErrors() {
-		$wp_session = WP_Session::get_instance();
+		$wp_session = BF_Session::get_instance();
 
 		$errors = array();
 		$id     = $this->_attributes["id"];

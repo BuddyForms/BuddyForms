@@ -2,7 +2,7 @@
 /**
  * BuddyForms Session
  *
- * This is a wrapper class for WP_Session / PHP $_SESSION and handles the storage of form sessions, etc
+ * This is a wrapper class for BF_Session / PHP $_SESSION and handles the storage of form sessions, etc
  *
  * @package     BuddyForms
  * @subpackage  Classes/Session
@@ -25,7 +25,7 @@ class BuddyForms_Session {
 	/**
 	 * Holds our session data
 	 *
-	 * @var array
+	 * @var array|BF_Session
 	 * @access private
 	 * @since 2.1.0.3
 	 */
@@ -44,14 +44,14 @@ class BuddyForms_Session {
 	/**
 	 * Get things started
 	 *
-	 * Defines our WP_Session constants, includes the necessary libraries and
+	 * Defines our BF_Session constants, includes the necessary libraries and
 	 * retrieves the WP Session instance
 	 *
 	 * @since 2.1.0.3
 	 */
 	public function __construct() {
 
-		// Use WP_Session (default)
+		// Use BF_Session (default)
 		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
 			define( 'WP_SESSION_COOKIE', 'buddyforms_wp_session' );
 		}
@@ -60,9 +60,9 @@ class BuddyForms_Session {
 			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/class-recursive-arrayaccess.php';
 		}
 
-		if ( ! class_exists( 'WP_Session' ) ) {
-			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/class-wp-session.php';
-			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/wp-session.php';
+		if ( ! class_exists( 'BF_Session' ) ) {
+			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/class-bf-session.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/bf-session.php';
 		}
 
 		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
@@ -73,14 +73,15 @@ class BuddyForms_Session {
 	}
 
 	/**
-	 * Setup the WP_Session instance
+	 * Setup the BF_Session instance
 	 *
 	 * @access public
 	 * @since 2.1.0.3
-	 * @return void
+	 *
+	 * @return BF_Session
 	 */
 	public function init() {
-		$this->session = WP_Session::get_instance();
+		$this->session = BF_Session::get_instance();
 
 		return $this->session;
 	}

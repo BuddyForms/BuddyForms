@@ -65,7 +65,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$this->load_constants();
 
 			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
-
+			
+			//Load the necessary files to start the sessions
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
+			
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
@@ -168,8 +171,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
-
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
