@@ -165,6 +165,7 @@ function buddyforms_settings_page_tabs_content() {
 												if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 													echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
 													echo '<option value="none">' . __( 'WordPress Default', 'buddyforms' ) . '</option>';
+													echo '<option ' . selected( $buddyforms_registration_form, 'page' ) . ' value="page">' . __( 'No Form', 'buddyforms' ) . '</option>';
 													foreach ( $buddyforms as $form_slug => $form ) {
 														if ( $form['form_type'] == 'registration' ) {
 															echo '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>';

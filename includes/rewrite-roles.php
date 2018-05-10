@@ -206,7 +206,7 @@ function buddyforms_login_redirect( $redirect_to, $request, $user )  {
 	return $redirect_to;
 }
 
-add_filter( 'the_content', 'buddyforms_registration_page_content' );
+add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
 function buddyforms_registration_page_content( $content ) {
 	global $post;
 
@@ -221,9 +221,24 @@ function buddyforms_registration_page_content( $content ) {
 		return $content;
 	}
 
-	if ( $post->ID == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ) {
-		$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
+		$page_id = buddyforms_get_ID_by_page_name( $post->post_name );
+
+
+	if ( $page_id == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ) {
+		if( $buddyforms_registration_form == 'page' ){
+			$regpage = get_post($buddyforms_registration_page);
+			$content = $regpage->post_content;
+		} else {
+			$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
+		}
 	}
 
 	return $content;
+}
+
+function buddyforms_get_ID_by_page_name($page_name)
+{
+	global $wpdb;
+	$page_name_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '".$page_name."'");
+	return $page_name_id;
 }
