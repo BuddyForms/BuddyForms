@@ -283,7 +283,9 @@ function buddyforms_process_submission( $args = Array() ) {
 	if ( ! empty( $post_excerpt ) ) {
 		$args['post_excerpt'] = $post_excerpt;
 	}
-	extract( $args = buddyforms_update_post( $args ) );
+	$post_author = '';
+	$args = buddyforms_update_post( $args );
+	extract( $args, EXTR_IF_EXISTS );
 	
 	/*
 	 * Check if the update or insert was successful
