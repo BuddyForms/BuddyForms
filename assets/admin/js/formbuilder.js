@@ -30,10 +30,13 @@ jQuery(document).ready(function (jQuery) {
 
 	$( "#sortable_buddyforms_elements" ).accordion({
 		collapsible: true,
-		header: "div.accordion-heading-options"
+		header: "div.accordion-heading-options",
+		heightStyle: "content"
 	});
 
-	$( ".tabs-left" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+	$( ".tabs-left" ).tabs({
+		"heightStyle": "content"
+	}).addClass( "ui-tabs-vertical ui-helper-clearfix" );
 	$( ".tabs-left li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
     //
     // Show Hide Color Picker

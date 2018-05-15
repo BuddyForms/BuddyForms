@@ -265,7 +265,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					wp_enqueue_style( 'buddyforms-style-rtl', plugins_url( 'assets/admin/css/admin-rtl.css', __FILE__ ) );
 				}
 
-//				wp_enqueue_style( 'buddyforms-bootstrap-css', plugins_url( 'assets/admin/css/bootstrap.css', __FILE__ ) );
 				wp_enqueue_style( 'buddyforms-admin-css', plugins_url( 'assets/admin/css/admin.css', __FILE__ ) );
 				wp_enqueue_style( 'wp-jquery-ui-dialog' );
 				wp_enqueue_style( 'wp-color-picker' );
@@ -322,7 +321,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
 				wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
-//				wp_enqueue_script( 'buddyforms-bootstrap-js', plugins_url( 'assets/admin/js/bootstrap.js', __FILE__ ), array( 'jquery' ) );
 				
 				wp_enqueue_script( 'jQuery' );
 				wp_enqueue_script( 'jquery-ui-core' );

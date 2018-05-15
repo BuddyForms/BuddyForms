@@ -8,7 +8,9 @@ function from_setup_form_type(value) {
 
 
     // Select first tab
-    jQuery('a[href="#form-submission"]').tab('show');
+    jQuery('a[href="#form-submission"]').tabs({
+	    active: 1
+    });
     jQuery('.activeform-submission').addClass('active');
     jQuery('#form-submission').addClass('active in');
 
