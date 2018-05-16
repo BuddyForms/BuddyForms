@@ -1045,7 +1045,7 @@ div#buddyforms_metabox_sidebar p {
 
     .wizard > .steps > ul > li:after {
         right: auto;
-        top: 15px;
+        top: 0px;
         border: solid transparent;
         content: " ";
         position: absolute;

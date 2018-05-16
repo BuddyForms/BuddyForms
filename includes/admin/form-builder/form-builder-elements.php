@@ -987,7 +987,7 @@ JS;
 
 	ob_start(); ?>
     <li id="field_<?php echo $field_id ?>"
-    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?> data-field_id="<?php echo $field_id ?> ">
+    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>" data-field_id="<?php echo $field_id ?> ">
 
     <input id="this_field_id" type="hidden" value="<?php echo $field_id ?>">
 
