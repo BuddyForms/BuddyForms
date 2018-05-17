@@ -75,7 +75,7 @@ function buddyforms_ajax_process_edit_post() {
 					break;
 				case 'redirect':
 					$json['form_remove'] = 'true';
-					$json['form_notice'] = $buddyforms[ $_POST['form_slug'] ]['after_submission_url'];
+					$json['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $_POST['form_slug'] ]['after_submission_url'] );
 					break;
 				case 'display_posts_list':
 					$json['form_remove'] = 'true';
