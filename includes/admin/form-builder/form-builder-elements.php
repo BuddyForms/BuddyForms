@@ -987,7 +987,7 @@ JS;
 
 	ob_start(); ?>
     <li id="field_<?php echo $field_id ?>"
-    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?> data-field_id="<?php echo $field_id ?> ">
+    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>" data-field_id="<?php echo $field_id ?> ">
 
     <input id="this_field_id" type="hidden" value="<?php echo $field_id ?>">
 
@@ -1046,9 +1046,9 @@ JS;
             </div>
             <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
                 <div class="accordion-inner">
-                    <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
+                    <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable buddyform-tabs-left ">
                         <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
-                            class="nav nav-tabs nav-pills">
+                            class="nav buddyform-nav-tabs buddyform-nav-pills">
 							<?php
 							$i = 0;
 							foreach ( $form_fields as $key => $form_field ) {

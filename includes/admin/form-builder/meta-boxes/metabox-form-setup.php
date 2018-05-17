@@ -327,8 +327,8 @@ function buddyforms_metabox_form_setup() {
 				</select>
 			</label>
 	</span>
-    <div class="tabs tabbable tabs-left">
-        <ul class="nav nav-tabs nav-pills">
+    <div class="tabs tabbable buddyform-tabs-left">
+        <ul class="nav buddyform-nav-tabs buddyform-nav-pills">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
