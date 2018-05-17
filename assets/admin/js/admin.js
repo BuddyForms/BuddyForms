@@ -63,22 +63,18 @@ function load_formbuilder_template(template) {
         url: ajaxurl,
         data: {
             "action": "buddyforms_form_template",
-            "template": template,
+            "template": template
         },
         success: function (data) {
-
-            //console.log(data);
-
             jQuery.each(data, function (i, val) {
                 switch (i) {
                     case 'formbuilder':
-                        jQuery('.buddyforms_forms_builder').replaceWith(val);
+                    	var form_builder = jQuery('.buddyforms_forms_builder');
+	                    form_builder.replaceWith(val);
                         bf_update_list_item_number();
+	                    jQuery.event.trigger({type: "buddyform:load_fields"});
                         break;
                     case 'mail_notification':
-
-                        // console.log(val);
-
                         jQuery('.buddyforms_accordion_notification').html(val);
                         jQuery('#no-trigger-mailcontainer').hide();
 
@@ -117,13 +113,11 @@ function load_formbuilder_template(template) {
                                 jQuery('[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
                             }
                             jQuery('.bf-select2').select2();
-
                         });
                         break;
                     default:
                         bf_alert(val);
                 }
-
             });
             tb_remove();
 

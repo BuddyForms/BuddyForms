@@ -25,11 +25,9 @@ jQuery(function () {
 		jQuery(this).find(':input').prop('disabled', false);
 	});
 
-});
-jQuery(document).ready(function () {
-	var buddyforms_forms_builder = jQuery('.buddyforms_forms_builder');
-	if (buddyforms_forms_builder.length > 0) {
-		if (!buddyforms_forms_builder.hasClass('buddyform_loaded')) {
+	jQuery(document).on('buddyform:load_fields', function (event) {
+		var buddyforms_forms_builder = jQuery(this).find('.buddyforms_forms_builder');
+		if (buddyforms_forms_builder.length > 0) {
 			jQuery("#sortable_buddyforms_elements").accordion({
 				collapsible: true,
 				header: "div.accordion-heading-options",
@@ -40,9 +38,12 @@ jQuery(document).ready(function () {
 				"heightStyle": "content"
 			}).addClass("ui-tabs-vertical ui-helper-clearfix");
 			jQuery(".buddyform-tabs-left li").removeClass("ui-corner-top").addClass("ui-corner-left");
-			buddyforms_forms_builder.addClass('buddyform_loaded');
 		}
-	}
+	});
+
+});
+jQuery(document).ready(function () {
+	jQuery.event.trigger({type: "buddyform:load_fields"});
 	//
 	// Show Hide Color Picker
 	//

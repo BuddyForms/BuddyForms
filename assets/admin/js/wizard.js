@@ -247,22 +247,7 @@ jQuery(document).ready(function (jQuery) {
             });
         }
 		function load_field_containers() {
-			var buddyforms_forms_builder = jQuery('.buddyforms_forms_builder');
-			if (buddyforms_forms_builder.length > 0) {
-				if (!buddyforms_forms_builder.hasClass('buddyform_loaded')) {
-					jQuery("#sortable_buddyforms_elements").accordion({
-						collapsible: true,
-						header: "div.accordion-heading-options",
-						heightStyle: "content"
-					});
-
-					jQuery(".buddyform-tabs-left").tabs({
-						"heightStyle": "content"
-					}).addClass("ui-tabs-vertical ui-helper-clearfix");
-					jQuery(".buddyform-tabs-left li").removeClass("ui-corner-top").addClass("ui-corner-left");
-					buddyforms_forms_builder.addClass('buddyform_loaded');
-				}
-			}
+			jQuery.event.trigger({type: "buddyform:load_fields"});
 		}
 
         add_form_elements_select();

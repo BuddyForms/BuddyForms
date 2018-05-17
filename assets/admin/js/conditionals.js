@@ -6,11 +6,6 @@ function from_setup_form_type(value) {
 
     from_setup_attached_page();
 
-
-    // Select first tab
-    jQuery('a[href="#form-submission"]').tabs({
-	    active: 1
-    });
     jQuery('.activeform-submission').addClass('active');
     jQuery('#form-submission').addClass('active in');
 
