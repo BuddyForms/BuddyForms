@@ -23,7 +23,7 @@ function from_setup_form_type(value) {
             jQuery('#form_post_type').val('bf_submissions');
 
             // Rename edit submissions to View
-            jQuery('.nav-tabs .edit-submissions_nav a').text('View Submissions');
+            jQuery('.buddyform-nav-tabs .edit-submissions_nav a').text('View Submissions');
 
             // Show
             jQuery('.permission_nav, .edit-submissions_nav, .notifications_nav').show();
@@ -72,7 +72,7 @@ function from_setup_form_type(value) {
         case 'post':
 
             // Rename edit submissions to Edit
-            jQuery('.nav-tabs .edit-submissions_nav a').text('Edit Submissions');
+            jQuery('.buddyform-nav-tabs .edit-submissions_nav a').text('Edit Submissions');
 
             // Show
             jQuery('.buddyforms-metabox-show-if-form-type-post').show();

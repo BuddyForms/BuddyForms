@@ -1046,9 +1046,9 @@ JS;
             </div>
             <div id="accordion_<?php echo $field_type . '_' . $field_id; ?>" class="accordion-body collapse">
                 <div class="accordion-inner">
-                    <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable tabs-left ">
+                    <div class="tabs-<?php echo $field_type . '-' . $field_id ?> tabbable buddyform-tabs-left ">
                         <ul id="bf_field_group<?php echo $field_type . '-' . $field_id ?>"
-                            class="nav nav-tabs nav-pills">
+                            class="nav buddyform-nav-tabs buddyform-nav-pills">
 							<?php
 							$i = 0;
 							foreach ( $form_fields as $key => $form_field ) {

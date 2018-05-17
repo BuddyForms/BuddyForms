@@ -256,10 +256,10 @@ jQuery(document).ready(function (jQuery) {
 						heightStyle: "content"
 					});
 
-					jQuery(".tabs-left").tabs({
+					jQuery(".buddyform-tabs-left").tabs({
 						"heightStyle": "content"
 					}).addClass("ui-tabs-vertical ui-helper-clearfix");
-					jQuery(".tabs-left li").removeClass("ui-corner-top").addClass("ui-corner-left");
+					jQuery(".buddyform-tabs-left li").removeClass("ui-corner-top").addClass("ui-corner-left");
 					buddyforms_forms_builder.addClass('buddyform_loaded');
 				}
 			}

@@ -522,8 +522,8 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset  spinner"></span> Reset</a></p>';
 	}; ?>
 
-    <div class="tabs tabbable tabs-left">
-        <ul class="nav nav-tabs nav-pills">
+    <div class="tabs tabbable buddyform-tabs-left">
+        <ul class="nav buddyform-nav-tabs buddyform-nav-pills">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
