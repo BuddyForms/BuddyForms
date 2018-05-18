@@ -2,7 +2,7 @@
 /**
  * Class Element_Upload
  */
-class Element_Profile_Picture extends Element_Textbox
+class Element_ProfilePicture extends Element_Textbox
 {
     /**
      * @var int
@@ -264,6 +264,7 @@ class Element_Profile_Picture extends Element_Textbox
         add_action( 'bp_after_group_admin_content',           'bp_avatar_template_check' );
         add_action( 'bp_after_group_avatar_creation_step',    'bp_avatar_template_check' );
     }
+
     public function add_scripts(  ) {
         global $bp;
 
@@ -278,11 +279,10 @@ class Element_Profile_Picture extends Element_Textbox
         require_once $path.'bp-core/classes/class-bp-attachment-avatar.php';
         require_once $path.'bp-core/classes/class-bp-attachment.php';
         require_once $path.'bp-core/bp-core-cssjs.php';
-        $bp_attachmett = new BP_Attachment_Avatar();
         $this->custom_avatar_scripts();
         $buddyform_assets_url = BuddyForms::$assets.'resources/profile/avatar.js';
        // bp_core_avatar_scripts() ;
-
+        //$bp_attachmett = new BP_Attachment_Avatar();
         //$bp_attachmett->script_data();
        // bp_attachments_enqueue_scripts();
         wp_enqueue_script( 'bp-avatar2', $buddyform_assets_url, array( 'jquery' ) );
