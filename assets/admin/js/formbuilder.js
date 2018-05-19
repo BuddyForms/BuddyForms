@@ -28,12 +28,17 @@ jQuery(function () {
 	jQuery(document).on('buddyform:load_fields', function (event) {
 		var buddyforms_forms_builder = jQuery(this).find('.buddyforms_forms_builder');
 		if (buddyforms_forms_builder.length > 0) {
-			jQuery("#sortable_buddyforms_elements").accordion({
-				collapsible: true,
-				header: "div.accordion-heading-options",
-				heightStyle: "content"
-			});
-
+			var accordionContainer = jQuery("#sortable_buddyforms_elements");
+			if (!accordionContainer.hasClass('buddyform-ready')) {
+				accordionContainer.accordion({
+					collapsible: true,
+					header: "div.accordion-heading-options",
+					heightStyle: "content"
+				});
+				accordionContainer.addClass('buddyform-ready');
+			} else {
+				accordionContainer.accordion("refresh");
+			}
 			jQuery(".buddyform-tabs-left").tabs({
 				"heightStyle": "content"
 			}).addClass("ui-tabs-vertical ui-helper-clearfix");
@@ -143,7 +148,7 @@ jQuery(document).ready(function () {
 
 					bf_taxonomy_input(field_id)
 				}
-
+				jQuery.event.trigger({type: "buddyform:load_fields"});
 			},
 			error: function () {
 				jQuery('.formbuilder-spinner').removeClass('is-active');
