@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1.6.8
+Stable tag: 2.1.7
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -355,8 +355,23 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.1.6.8 - 29. April 2018
-* Fixed an issue with the upload form element "No image displayed in the admin edit screen"
+= 2.1.7 – 20. May 2018
+* Removed all dependencies to bootstrap. In earlier versions UI parts of the Admin have been build with Bootstrap. This parts have been rebuild to use WordPress native jQuery UI
+* --> Added buddyform prefix for nav-pills, nav-tabs and tabs-left
+* --> Fixing the field related scripts like the tabs and the accordion when new field is added to the form builder.
+* --> Adding script to load the field inside the wizard.
+* --> Fixing css to organize the arrow inside the wizard
+* Fixing php language minor issues
+* Change the place of the filter for submission default value
+* Fixing a sessions issue. This fix is related a conflict during recovery of the session when the page is load the first time.
+* Improved the submissions table to show the column data and custom field types
+* -->Added the category and the tag to the list of submission
+* changing the input ids for the wp login form to avoid name coalition with the user_id field
+* add form slug as attribute to the buddyforms_formbuilder_fields_options filter
+* Fixed some issue in the registration form redirect. redirect to url #was broken
+
+= 2.1.6.8 – 29. April 2018
+* Fixed an issue with the upload form element “No image displayed in the admin edit screen”
 * Change submit button text to upload in process during upload
 * Fixed the upload label. slug was used.
 * Added a filter for allow add-ons display the value in the column of the submission list
