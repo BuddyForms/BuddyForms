@@ -11,7 +11,7 @@ class Element_ProfilePicture extends Element_Textbox
     /**
      * @var array
      */
-    protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"","mandatory"=>"");
+   // protected $_attributes = array("type" => "file","file_limit"=>"","accepted_files"=>"","multiple_files"=>"","delete_files"=>"","description"=>"","mandatory"=>"");
     public function render()
     {
         global $buddyforms;
@@ -31,7 +31,7 @@ class Element_ProfilePicture extends Element_Textbox
                         <input type='hidden' id='crop_y' name ='crop_y_bf'>
                         <input type='hidden' id='type'>
                          <input type='hidden' id='nonce'>
-                         
+                                 
                 </div>";
 
         echo $box;
@@ -264,7 +264,6 @@ class Element_ProfilePicture extends Element_Textbox
         add_action( 'bp_after_group_admin_content',           'bp_avatar_template_check' );
         add_action( 'bp_after_group_avatar_creation_step',    'bp_avatar_template_check' );
     }
-
     public function add_scripts(  ) {
         global $bp;
 
@@ -279,10 +278,11 @@ class Element_ProfilePicture extends Element_Textbox
         require_once $path.'bp-core/classes/class-bp-attachment-avatar.php';
         require_once $path.'bp-core/classes/class-bp-attachment.php';
         require_once $path.'bp-core/bp-core-cssjs.php';
+        $bp_attachmett = new BP_Attachment_Avatar();
         $this->custom_avatar_scripts();
         $buddyform_assets_url = BuddyForms::$assets.'resources/profile/avatar.js';
        // bp_core_avatar_scripts() ;
-        //$bp_attachmett = new BP_Attachment_Avatar();
+
         //$bp_attachmett->script_data();
        // bp_attachments_enqueue_scripts();
         wp_enqueue_script( 'bp-avatar2', $buddyform_assets_url, array( 'jquery' ) );
