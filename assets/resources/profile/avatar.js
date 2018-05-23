@@ -298,8 +298,14 @@ window.bp = window.bp || {};
             }
 
             var original_file= avatar.get( 'url' );
+
+            $('#original-file-picture').val(original_file);
             var width =  cropWidth;
             var heigth =  cropheigth;
+            $('#crop_w').val(width);
+            $('#crop_h').val(heigth);
+            $('#crop_x').val(cropMarginLeft);
+            $('#crop_y').val(cropMarginTop);
            var contentPreview = '<div class="avatar-crop-management" >' +
                             '<div id="avatar-crop-pane" class="avatar" style="width:150px; height:150px">'+
                                 '<img src="'+original_file+'" style="width: '+width+'px; height: '+heigth+'px; margin-left: -'+cropMarginLeft+'px; margin-top: -'+cropMarginTop+'px; max-width: none;"></img>'+
