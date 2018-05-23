@@ -31,7 +31,7 @@ function buddyforms_wp_update_user() {
 	
 	$user_args['user_pass_confirm'] = ! empty( $_POST["buddyforms_user_pass_confirm"] )
 		? esc_attr( $_POST["buddyforms_user_pass_confirm"] )
-		: $user_args['user_pass_confirm'];
+		: $user_args['user_pass'];
 	
 	$user_args['user_email'] = ! empty( $_POST["user_email"] )
 		? sanitize_email( $_POST["user_email"] )
@@ -39,19 +39,19 @@ function buddyforms_wp_update_user() {
 	
 	$user_args['first_name'] = ! empty( $_POST["first_name"] )
 		? sanitize_text_field( $_POST["first_name"] )
-		: $user_args['first_name'];
+		: isset( $user_args['first_name'] ) ? $user_args['first_name'] : '';
 	
 	$user_args['last_name'] = ! empty( $_POST["last_name"] )
 		? sanitize_text_field( $_POST["last_name"] )
-		: $user_args['last_name'];
+		: isset( $user_args['last_name'] ) ? $user_args['last_name'] : '';
 	
 	$user_args['user_website'] = ! empty( $_POST["user_website"] )
 		? esc_url( $_POST["user_website"] )
-		: $user_args['user_url'];
+		: isset( $user_args['user_url'] ) ? $user_args['user_url'] : '';
 	
 	$user_args['description'] = ! empty( $_POST["user_bio"] )
 		? esc_textarea( $_POST["user_bio"] )
-		: $user_args['user_bio'];
+		: isset( $user_args['user_bio'] ) ? $user_args['user_bio'] : '';
 	
 
 	// invalid email?
