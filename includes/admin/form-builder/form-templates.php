@@ -37,7 +37,7 @@ function buddyforms_form_builder_register_templates() {
 
 			}
 			$buddyforms_templates[ $sort_key ][ $form_slug ]['title'] = $buddyform->name;
-			$buddyforms_templates[ $sort_key ][ $form_slug ]['url']   = 'http://demo.buddyforms.com/remote/remote-create/' . $form_slug;
+			$buddyforms_templates[ $sort_key ][ $form_slug ]['url']   = 'http://demo.buddyforms.com/' . $form_slug;
 			$buddyforms_templates[ $sort_key ][ $form_slug ]['desc']  = $desc;
 			$buddyforms_templates[ $sort_key ][ $form_slug ]['json']  = json_encode( $buddyform );
 		}
