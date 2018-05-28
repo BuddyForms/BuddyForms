@@ -248,6 +248,15 @@ function buddyforms_wp_insert_user() {
 		);
 		
 		if ( ! is_wp_error( $new_user_id ) && is_int( $new_user_id ) ) {
+
+			if( apply_filters( 'buddyforms_wp_insert_user_activation_mail', true , $new_user_id ) != true ){
+
+				// send an email to the admin alerting them of the registration
+				wp_new_user_notification( $new_user_id );
+				return $new_user_id;
+
+			}
+
 			// if multisite is enabled we need to make sure the user will become a member of the form blog id
 			if ( buddyforms_is_multisite() ) {
 				if ( isset( $buddyforms[ $form_slug ]['blog_id'] ) ) {
