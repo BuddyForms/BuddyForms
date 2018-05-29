@@ -20,6 +20,22 @@ A simple yet powerful [Form Builder](https://themekraft.com/buddyforms). Contact
 BuddyForms has proven to be an invaluable plugin for communities and networks. With simple forms it is very easy to encourage members, users and community to contribute and engage with your site. This makes the plugin priceless valuable as it supports organic traffic to your site.
 
 ---
+####GDPR compliant WordPress Forms
+
+![https://www.polydone.com/gdpr/badges/regular/gdpr-badge-landscape-lg-polydone.png]
+
+BuddyForms comes out of the box GDPR compliant plugin. We've used the time, to improve our data protection even more. What we've done so far: 
+
+
+* *Consent Checkbox* - a new form element has been added to give you an easy option to collect the consent for your user-generated form.
+* *Right to access & to be forgotten* - if your users want to get access to their data, you can easily show it with BuddyForms on the front-end. They even have the opportunity to change or delete their data from the front-end.
+* *Privacy by Design* - With BuddyForms our goal is it to make you the boss of your data. From the beginning, we've made it a major priority, that you store your data on your own server.
+
+In other words, BuddyForms is 100% approved to be GDPR compliant. The content is saved in on your WordPress hoster either as a post (post & post_meta table) or user data (user & user_meta table). 
+
+[Try the new version of BuddyForms today](https://themekraft.com/buddyforms/) 
+
+---
 
 #### Features of Form Builder BuddyForms
 * Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
