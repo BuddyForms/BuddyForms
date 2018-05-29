@@ -12,7 +12,7 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 
 == Description ==
 
-<h4>Build all kind of forms - no coding required.</h4>
+##Best WordPress form builder for frontend-publishing - no coding required.</h4>
 A simple yet powerful [Form Builder](https://themekraft.com/buddyforms). Contact, Register and POST FORMS. Ideal for User Submitted Content. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
 
 ---
@@ -20,7 +20,7 @@ A simple yet powerful [Form Builder](https://themekraft.com/buddyforms). Contact
 BuddyForms has proven to be an invaluable plugin for communities and networks. With simple forms it is very easy to encourage members, users and community to contribute and engage with your site. This makes the plugin priceless valuable as it supports organic traffic to your site.
 
 ---
-####GDPR compliant WordPress Forms
+##GDPR compliant WordPress form builder
 
 ![https://www.polydone.com/gdpr/badges/regular/gdpr-badge-landscape-lg-polydone.png]
 
@@ -37,7 +37,7 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-#### Features of Form Builder BuddyForms
+## Features of BuddyForms Form Builder 
 * Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
 * Choose between over 20 field types (text, numbers, check boxes, buttons, comments, media files, post status, taxonomies, CAPTCHA, ...)
 * Set custom validation rules to prevent users from submitting false data
@@ -55,7 +55,7 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-#### Typical Use-Cases that our users create with BuddyForms
+## Typical Use-Cases that our users create with BuddyForms
 * Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 * Online Directories – Crowdsource categorized data from your community
 * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
@@ -66,20 +66,21 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-#### Of course, you can do simple forms, too like
-* Contact Forms – Collect leads and customer support data
-* Registration Forms – Sign-up users to your webpage
-* Login Forms – Grant users access to restricted content
+## Other more basic use Cases with our Form Builder
+Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create: 
+1. Contact Forms – Collect leads and customer support data
+1. Registration Forms – Sign-up users to your webpage
+1. Login Forms – Grant users access to restricted content
 
 ---
 
-#### Contact Forms
+### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
 * Prevent users from submitting false data by setting custom validation rules on your forms
 
 ---
 
-#### Registration Forms
+### 2. Registration Forms
 * Overwrite the WordPress Registration Form.
 * Redirect to a Custom Registration Page
 * Redirect your users to a custom location page or form if they click the activation link.
@@ -145,35 +146,49 @@ Dependencies: WooCommerce, BuddyForms WooElements
 
 ---
 
-#### BuddyForms works great with other Plug-Ins. Enhance its capabilities with the following
-* BuddyPress – Enable all publishing features of BuddyForms in BuddyPress
-* Ultimate Member – Submit and manage posts from your Ultimate Member profile
-* WooCommerce – Build your own marketplace with user-submitted products
-* WooCommerce Simple Auctions – Create and manage auctions via front end
-* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-* Posts 2 Posts - Efficient many-to-many connections between posts, pages, custom post types, users.
-* WC Vendors - BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products
+## BuddyForms Integration 
+BuddyForm works great with other Plug-Ins. Enhance its capabilities with the following
+* *BuddyPress* – Enable all publishing features of BuddyForms in BuddyPress
+* *Ultimate Member* – Submit and manage posts from your Ultimate Member profile
+* *WooCommerce* – Build your own marketplace with user-submitted products
+* *WooCommerce Simple Auctions* – Create and manage auctions via front end
+* *Advanced Custom Fields* – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* *Posts 2 Posts* - Efficient many-to-many connections between posts, pages, custom post types, users.
+* *WC Vendors* - BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products
 
 ---
 
-### Videos
+## Videos about BuddyForms
 
-Contact Forms [youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
-Registration Forms [youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
-
----
-
-<h4>Post Forms</h4> [youtube https://www.youtube.com/watch?v=iHhDO_zFmbc&feature=youtu.be]
+###Why BuddyForms is the best Frontend-Publishing Plugin - BuddyForms Trailer 
+[https://www.youtube.com/watch?v=By1GIBiilcI]
 
 ---
 
-<h4>Works great with BuddyPress or Ultimate Member</h4>
+###Contact Forms 
+[youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
 
-BuddyPress Integration [youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A]
+###Registration Forms
+[youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
 
 ---
 
-Ultimate Member Integration [youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&t=78s]
+###Post Forms 
+[youtube https://www.youtube.com/watch?v=iHhDO_zFmbc&feature=youtu.be]
+
+---
+
+###Integration with BuddyPress or Ultimate Member
+
+####BuddyPress Integration 
+
+[youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A]
+
+---
+
+####Ultimate Member Integration 
+
+[youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&t=78s]
 
 ---
 
@@ -181,9 +196,6 @@ Want to se more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
 
 ---
 
-User Review from Webzio Showcase the Plugin Moderation Logic![youtube https://www.youtube.com/watch?v=lg2lAt0zljc]
-
----
 
 ### Related BuddyForms Posts
 
