@@ -491,7 +491,7 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-
+					
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
 							$element = new Element_Captcha( "Captcha", $attributes = null );
@@ -639,6 +639,7 @@ function buddyforms_form_elements( $form, $args ) {
                         $prfile_element = new Element_ProfilePicture( $slug, $customfield_val, array( 'id' => $slug,"shortDesc"=>$description ) );
                         $form->addElement( $prfile_element );
                         break;
+
 					case 'file':
 
 						$attachment_ids = $customfield_val;
@@ -874,7 +875,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$form_args = Array(
 							'field_id'        => $field_id,
 							'post_id'         => $post_id,
-							'post_parent'     => isset( $post_parent ) ? $post_parent : 0,
+							'post_parent'     => "",//$post_parent,
 							'form_slug'       => $form_slug,
 							'customfield'     => $customfield,
 							'customfield_val' => $customfield_val
