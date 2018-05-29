@@ -136,8 +136,7 @@ function load_formbuilder_template(template) {
 }
 
 /**
- * Me quede por aqui que no se estan aplicando los valores por defecto a los componente.
- * 
+ *
  * @param element
  * @param value
  */
@@ -146,8 +145,10 @@ function buddyform_apply_template_to_element(element, value){
 		element.val(value).trigger('change');
 	} else {
 		jQuery.each(element, function () {
-			if(jQuery(this).val() === value) {
-				jQuery(this).attr('checked', 'checked');
+			var current = jQuery(this);
+			var current_val = current.val();
+			if(current_val == value) {
+				current.attr('checked', 'checked');
 			}
 		});
 	}
