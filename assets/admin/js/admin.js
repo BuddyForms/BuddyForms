@@ -88,29 +88,23 @@ function load_formbuilder_template(template) {
                         jQuery.each(val, function (i2, form_setup) {
                             if (form_setup instanceof Object) {
                                 jQuery.each(form_setup, function (form_setup_key, form_setup_option) {
-
+	                                var element;
                                     if (form_setup_option instanceof Object) {
                                         jQuery.each(form_setup_option, function (form_setup_key2, form_setup_option2) {
-                                            if (form_setup instanceof Array) {
-                                                jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]').val(form_setup_option2).trigger('change');
-                                            } else {
-                                                jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]').val(form_setup_option2).trigger('change');
-                                            }
+                                             element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]');
+                                             buddyform_apply_template_to_element(element, form_setup_option2);
                                         });
                                     } else {
-                                        if (form_setup instanceof Array) {
-                                            jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]').val(form_setup_option).trigger('change');
-                                        } else {
-                                            jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]').val(form_setup_option).trigger('change');
-                                        }
+	                                    element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]');
+	                                    buddyform_apply_template_to_element(element, form_setup_option);
                                     }
                                 });
                             }
 
                             if (form_setup instanceof Array) {
-                                jQuery('[name="buddyforms_options[' + i2 + '][]"]').val(form_setup).change();
+	                            buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + '][]"]'), form_setup);
                             } else {
-                                jQuery('[name="buddyforms_options[' + i2 + ']"]').val(form_setup).change();
+	                            buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + ']"]'), form_setup);
                             }
                             jQuery('.bf-select2').select2();
                         });
@@ -139,6 +133,24 @@ function load_formbuilder_template(template) {
         }
     });
     return false;
+}
+
+/**
+ * Me quede por aqui que no se estan aplicando los valores por defecto a los componente.
+ * 
+ * @param element
+ * @param value
+ */
+function buddyform_apply_template_to_element(element, value){
+	if(element.length === 1){
+		element.val(value).trigger('change');
+	} else {
+		jQuery.each(element, function () {
+			if(jQuery(this).val() === value) {
+				jQuery(this).attr('checked', 'checked');
+			}
+		});
+	}
 }
 
 //
