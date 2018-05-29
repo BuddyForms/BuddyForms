@@ -10,7 +10,7 @@ function buddyforms_layout_defaults() {
 	$json['labels_disable_css']    = '';
 	$json['labels_layout']    = 'inline';
 	$json['label_font_size']  = '';
-	$json['label_font_color'] = array( 'color' => '', 'style' => 'color' );
+	$json['label_font_color'] = array( 'color' => '', 'style' => 'auto' );
 	$json['label_font_style'] = 'bold';
 
 	$json['desc_disable_css']    = '';
@@ -35,7 +35,7 @@ function buddyforms_layout_defaults() {
 	$json['button_disable_css']    = '';
 	$json['submit_text']             = __( 'Submit', 'buddyforms' );
 	$json['button_width']            = 'blockmobile';
-	$json['button_alignment']        = 'center';
+	$json['button_alignment']        = 'left';
 	$json['button_size']             = 'large';
 	$json['button_class']            = '';
 	$json['button_border_radius']    = '';
