@@ -1882,5 +1882,9 @@ nav{
 .tabs-right > .buddyform-nav-tabs .ui-tabs-active > a,
 .tabs-right > .buddyform-nav-tabs .ui-tabs-active > a:hover {
 	border-color: #ddd #ddd #ddd transparent;
-	*border-left-color: #ffffff;
+	border-left-color: #ffffff;
+}
+
+div.checkbox>label>input[type='checkbox'][value='enable_all']{
+	display: none;
 }

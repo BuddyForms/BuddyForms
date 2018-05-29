@@ -37,7 +37,7 @@ function buddyforms_metabox_form_setup() {
 	$revision          = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
 	$admin_bar         = isset( $buddyform['admin_bar'] ) ? $buddyform['admin_bar'] : 'false';
 	$edit_link         = isset( $buddyform['edit_link'] ) ? $buddyform['edit_link'] : 'all';
-	$bf_ajax           = isset( $buddyform['bf_ajax'] ) ? $buddyform['bf_ajax'] : 'false';
+	$bf_ajax           = isset( $buddyform['bf_ajax'] ) ? $buddyform['bf_ajax'] : array( 'ipaddress', 'referer', 'browser', 'version', 'platform', 'reports', 'userAgent', 'enable_all' );
 	$list_posts_option = isset( $buddyform['list_posts_option'] ) ? $buddyform['list_posts_option'] : 'list_all_form';
 	$list_posts_style  = isset( $buddyform['list_posts_style'] ) ? $buddyform['list_posts_style'] : 'list';
 
@@ -111,15 +111,16 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Form Submission'][] = $element;
 
 	$element = new Element_Checkbox( '<b>' . __( 'User Data', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array(
-		'ipaddress' => __( 'Disable IP Address', 'buddyforms' ),
-		'referer'   => __( 'Disable Referer', 'buddyforms' ),
-		'browser'   => __( 'Disable Browser', 'buddyforms' ),
-		'version'   => __( 'Disable Browser Version', 'buddyforms' ),
-		'platform'  => __( 'Disable Platform', 'buddyforms' ),
-		'reports'   => __( 'Disable Reports', 'buddyforms' ),
-		'userAgent' => __( 'Disable User Agent', 'buddyforms' ),
+		'ipaddress'  => __( 'Disable IP Address', 'buddyforms' ),
+		'referer'    => __( 'Disable Referer', 'buddyforms' ),
+		'browser'    => __( 'Disable Browser', 'buddyforms' ),
+		'version'    => __( 'Disable Browser Version', 'buddyforms' ),
+		'platform'   => __( 'Disable Platform', 'buddyforms' ),
+		'reports'    => __( 'Disable Reports', 'buddyforms' ),
+		'userAgent'  => __( 'Disable User Agent', 'buddyforms' ),
+		'enable_all' => '',
 	), array(
-		'shortDesc' => __( 'By default all above user data will be stored. In some country\'s for example in the EU you are not allowed to save the ip. Please make sure you not against the low in your country and adjust if needed', 'buddyforms' ),
+		'shortDesc' => __( 'By default all above user data will not be stored. In some country\'s for example in the EU you are not allowed to save the ip. Please make sure you not against the low in your country and adjust if needed', 'buddyforms' ),
 		'value'     => $bf_ajax
 	) );
 
