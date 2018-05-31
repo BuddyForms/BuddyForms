@@ -1,7 +1,23 @@
 <?php
 
 add_action( 'buddyforms_process_submission_end','profile_picture_user_registration_ended' ,10,1 );
+add_filter( 'login_redirect', 'login_redirect', 10, 3 );
 
+function login_redirect( $redirect_to, $request, $user ){
+
+
+    if(!empty($user)){
+
+        $current_user = get_user_by( 'id', $user );
+        if($current_user){
+            $base_url = bp_core_get_user_domain( bp_loggedin_user_id() ) . 'shop/';
+            wp_safe_redirect( $base_url,302);
+            exit;
+        }
+
+    }
+
+}
 function crop_profile_picture($args = array()){
 
     // Bail if the original file is missing.
@@ -171,11 +187,13 @@ function profile_picture_user_registration_ended($args){
             );
 
             do_action( 'xprofile_avatar_uploaded', (int) $args['user_id'], 'avatar', $r );
+            do_action('template_redirect') ;
 
 
-
-            wp_send_json_success( $return );
+          //  wp_send_json_success( $return );
         }
+
+        apply_filters('login_redirect','','',$args['user_id']) ;
     }
 
 
