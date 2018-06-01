@@ -142,10 +142,10 @@ function buddyforms_process_submission( $args = Array() ) {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $r_field ) {
 				if ( isset( $_POST[ $r_field['slug'] ] ) ) {
-                    $avoid_fields_types = array('user_login', 'user_email', 'user_first', 'user_last', 'user_pass', 'user_website', 'user_bio', 'country', 'state', 'date');
-                    if (!in_array($r_field['type'], $avoid_fields_types)) {
-                        update_user_meta($user_id, $r_field['slug'], buddyforms_sanitize($r_field['type'], $_POST[$r_field['slug']]));
-                    }
+					$avoid_fields_types = buddyforms_avoid_user_fields_in_forms();
+					if ( ! in_array( $r_field['type'], $avoid_fields_types ) ) {
+						update_user_meta( $user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[ $r_field['slug'] ] ) );
+					}
 				}
 			}
 			

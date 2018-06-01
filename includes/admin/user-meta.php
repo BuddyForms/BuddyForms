@@ -143,19 +143,43 @@ function update_extra_profile_fields( $user_id ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
 						// Check if the form element type starts with user_ as prefix. user_ is reserved by WordPress and handled separably
-						if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
-
-							$slug = $user_meta['slug'];
-
-							$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
-
-							update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
-
+						$avoid_fields_types = buddyforms_avoid_user_fields_in_forms();
+						if ( ! in_array( $user_meta['type'], $avoid_fields_types ) ) {
+							if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
+								$slug = $user_meta['slug'];
+								$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
+								update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
+							}
+						} else {
+							//TODO aqui hay que ver como se manejarian los datos del usuario para que se actualicen en los mismos metas de wp
+							/**
+							 * Me quede por hacer que se cargen los campos y hacer que cuando se guarden vallan a los metas de wp para que los sobre escriba.
+							 * Tambien ver como organizo para que las cosas esten en funciones reutilizables en los lugares correspondientes. 
+							 */
 						}
-
 					}
 				}
 			}
 		}
 	}
+}
+
+/**
+ * Get the array of avoid fields from the user. This fields are stored in the same wp user meta
+ *
+ * @return array
+ */
+function buddyforms_avoid_user_fields_in_forms() {
+	return apply_filters( 'buddyforms_avoid_user_fields', array(
+		'user_login',
+		'user_email',
+		'user_first',
+		'user_last',
+		'user_pass',
+		'user_website',
+		'user_bio',
+		'country',
+		'state',
+		'date'
+	) );
 }
