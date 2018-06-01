@@ -20,39 +20,35 @@ function buddyforms_wp_update_user() {
 	$user_args = (array) $userdata->data;
 	
 	$user_args['ID'] = get_current_user_id();
-	
-	$user_args['user_login'] = ! empty( $_POST["user_login"] )
-		? sanitize_user( $_POST["user_login"] )
-		: $user_args['user_login'];
-	
-	$user_args['user_pass'] = isset( $_POST["buddyforms_user_pass"] ) && ! empty( $_POST["buddyforms_user_pass"] )
-		? esc_attr( $_POST["buddyforms_user_pass"] )
-		: $user_args['user_pass'];
-	
-	$user_args['user_pass_confirm'] = ! empty( $_POST["buddyforms_user_pass_confirm"] )
-		? esc_attr( $_POST["buddyforms_user_pass_confirm"] )
-		: $user_args['user_pass_confirm'];
 
-	$user_args['user_email'] = ! empty( $_POST["user_email"] )
-		? sanitize_email( $_POST["user_email"] )
-		: $user_args['user_email'];
-
-	$user_args['first_name'] = ! empty( $_POST["first_name"] )
-		? sanitize_text_field( $_POST["first_name"] )
-		: $user_args['first_name'];
-
-	$user_args['last_name'] = ! empty( $_POST["last_name"] )
-		? sanitize_text_field( $_POST["last_name"] )
-		: $user_args['last_name'];
-
-	$user_args['user_website'] = ! empty( $_POST["user_website"] )
-		? esc_url( $_POST["user_website"] )
-		: $user_args['user_url'];
-
-	$user_args['description'] = ! empty( $_POST["user_bio"] )
-		? esc_textarea( $_POST["user_bio"] )
-		: $user_args['user_bio'];
-	
+	if(! empty( $_POST["user_login"] )){
+        $user_args['user_login'] = sanitize_user( $_POST["user_login"] );
+    }
+    if(! empty( $_POST["buddyforms_user_pass"] )){
+        $user_args['user_pass'] = esc_attr( $_POST["buddyforms_user_pass"] );
+    }
+    if(! empty( $_POST["buddyforms_user_pass_confirm"] )){
+        $user_args['user_pass_confirm'] = esc_attr( $_POST["buddyforms_user_pass_confirm"] );
+    }
+    if(! empty( $_POST["user_email"] )){
+        $user_args['user_email'] = sanitize_email( $_POST["user_email"] );
+    }
+    if(! empty( $_POST["first_name"] )){
+        $user_args['first_name'] = sanitize_text_field( $_POST["first_name"] );
+    }
+    if(! empty( $_POST["last_name"] )){
+        $user_args['last_name'] = sanitize_text_field( $_POST["last_name"] );
+    }
+    if(! empty( $_POST["user_website"] )){
+        $user_args['user_website'] = esc_url( $_POST["user_website"] );
+    } else {
+        $user_args['user_website'] = !empty($user_args['user_url']) ? $user_args['user_url'] : '';
+    }
+    if(! empty( $_POST["user_bio"] )){
+        $user_args['description'] = esc_textarea( $_POST["user_bio"] );
+    } else {
+        $user_args['description'] = !empty($user_args['user_bio']) ? $user_args['user_bio'] : '';
+    }
 
 	// invalid email?
 	if ( ! is_email( $user_args['user_email'] ) ) {
