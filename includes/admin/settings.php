@@ -46,8 +46,9 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	$tabs = array( 'general' => 'General Settings' );
 
 	$tabs = apply_filters( 'buddyforms_admin_tabs', $tabs );
-	$tabs['layout'] = 'Form Layout';
+	//$tabs['layout'] = 'Form Layout';
 	$tabs['import'] = 'Import Forms';
+	$tabs['gdpr'] = 'GDPR';
 
 
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
@@ -68,6 +69,8 @@ function buddyforms_register_option() {
 	register_setting( 'buddyforms_general', 'buddyforms_registration_page', 'buddyforms_default_sanitize' );
 	register_setting( 'buddyforms_general', 'buddyforms_registration_form', 'buddyforms_default_sanitize' );
 	register_setting( 'buddyforms_general', 'buddyforms_posttypes_default', 'buddyforms_default_sanitize' );
+	register_setting( 'buddyforms_gdpr', 'buddyforms_gdpr', 'buddyforms_default_sanitize' );
+
 
 	// Layout Options
 	register_setting( 'buddyforms_layout', 'buddyforms_layout_options', 'buddyforms_default_sanitize' );
@@ -291,6 +294,73 @@ function buddyforms_settings_page_tabs_content() {
                     </div><!-- .metabox-holder -->
 					<?php
 					break;
+				case 'gdpr' :
+					$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
+					$pages = buddyforms_get_all_pages('id', 'settings');
+					?>
+                    <div class="metabox-holder">
+                        <div class="postbox buddyforms-metabox">
+
+                            <div class="inside">
+
+
+                                <form method="post" action="options.php">
+
+									<?php settings_fields( 'buddyforms_gdpr' ); ?>
+
+                                    <table class="form-table">
+                                        <tbody>
+
+                                        <!-- Registration Settings -->
+                                        <tr>
+                                            <th colspan="2">
+                                                <h3><span><?php _e( 'General Data Protection Regulation Settings', 'buddyforms' ); ?></span></h3>
+                                            </th>
+                                        </tr>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+												<?php _e( 'Agreement Templates', 'buddyforms' ); ?>
+                                                <p><small><?php _e( 'This templates are used in the GDPR Agreement form element and can be overwritten in the form.', 'buddyforms' ); ?></small></p>
+                                            </th>
+                                            <td>
+                                                <label for="buddyforms_gdpr_registration"><p>Registration Template</b></label>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_registration" name="buddyforms_gdpr[templates][registration]"><?php echo empty($buddyforms_gdpr['templates']['registration']) ? '' : $buddyforms_gdpr['templates']['registration']; ?></textarea>
+                                                <label for="buddyforms_gdpr_registration"><p>Post Submission</b></label>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_post" name="buddyforms_gdpr[templates][post]"><?php echo empty($buddyforms_gdpr['templates']['post']) ? '' : $buddyforms_gdpr['templates']['post']; ?></textarea>
+                                                <label for="buddyforms_gdpr_registration"><p>Contact Form</b></label>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_contact" name="buddyforms_gdpr[templates][contact]"><?php echo empty($buddyforms_gdpr['templates']['contact']) ? '' : $buddyforms_gdpr['templates']['contact']; ?></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+												<?php _e( 'Form Footer Links', 'buddyforms' ); ?>
+                                                <p><small><?php _e( 'Please select a Terms and Privacy Police page. We will link to this page under the form.', 'buddyforms' ); ?></small></p>
+                                            </th>
+                                            <td>
+                                                <?php
+	                                            if ( isset( $pages ) && is_array( $pages ) ) {
+		                                            echo '<select name="buddyforms_gdpr[terms]" id="buddyforms_gdpr_terms">';
+		                                            $pages['none'] = 'No Terms';
+		                                            foreach ( $pages as $page_id => $page_name ) {
+			                                            echo '<option ' . selected( $buddyforms_gdpr['terms'], $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
+		                                            }
+		                                            echo '</select>';
+	                                            }
+	                                            ?>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+									<?php submit_button(); ?>
+
+                                </form>
+                            </div><!-- .inside -->
+                        </div><!-- .postbox -->
+                    </div><!-- .metabox-holder -->
+					<?php
+					break;
+
 				default:
 					do_action( 'buddyforms_settings_page_tab', $tab );
 

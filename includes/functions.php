@@ -817,3 +817,17 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 	
 	$wp_admin_bar->add_node( $args );
 }
+
+add_action('buddyforms_form_hero_last', 'buddyforms_form_footer_terms');
+function buddyforms_form_footer_terms($html){
+
+
+	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
+
+
+	if( isset( $buddyforms_gdpr['terms'] ) && $buddyforms_gdpr['terms'] != 'none' ){
+		$html .= '<div id="" class=""><a id="" class="" href="' . get_permalink( $buddyforms_gdpr['terms'] ) . '">' . get_the_title( $buddyforms_gdpr['terms'] ) . '</a></div>';
+    }
+
+	return $html;
+}

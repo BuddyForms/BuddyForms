@@ -307,11 +307,45 @@ jQuery(document).ready(function (jQuery) {
     //
     // Add new options to select, checkbox form element. The js will ad one more line for value and label
     //
-    jQuery(document).on('click', '.bf_add_input', function () {
+    jQuery(document).on('click', '.bf_add_gdpr', function () {
+
 
         var action = jQuery(this);
         var args = action.attr('href').split("/");
         var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
+
+        var message = jQuery('#gdpr_option_type').val();
+
+
+        var text = jQuery('#bf_gdpr_registration').html()
+
+        alert(text);
+
+        numItems = numItems + 1;
+        jQuery('#table_row_' + args[0] + '_select_options ul').append(
+            '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
+            '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
+            '<textarea rows="5" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]" cols="50">' + text + '</textarea>' +
+            '</td><td class="manage-column column-author">' +
+            '<input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][default][]" value="">' +
+            '</td><td class="manage-column column-author">' +
+            '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
+            '</td></tr></li></tbody></table>');
+        return false;
+
+    });
+
+    //
+    // Add new options to gdpr, checkbox form element. The js will add one more line for value and label
+    //
+    jQuery(document).on('click', '.bf_add_input', function () {
+
+
+        var action = jQuery(this);
+        var args = action.attr('href').split("/");
+        var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
+
+        alert('#table_row_' + args[0] + '_select_options ul li');
 
         numItems = numItems + 1;
         jQuery('#table_row_' + args[0] + '_select_options ul').append(

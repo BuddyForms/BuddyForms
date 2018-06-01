@@ -973,6 +973,14 @@ JS;
 			$form_fields['hidden']['slug']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'html' );
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
+		case 'gdpr':
+            $field_args                           = Array(
+                'field_id'  => $field_id,
+                'buddyform' => $buddyform
+            );
+            $form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_gdpr( $form_fields, $field_args ) );
+            break;
+
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );
 			break;
@@ -1198,7 +1206,85 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 
 	return $tmp;
 }
+function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
+	$field_id  = '';
+	$buddyform = '';
+	extract( $args, EXTR_IF_EXISTS );
+
+	ob_start();
+
+	echo '<div class="element_field">';
+
+	echo '
+
+            <table class="wp-list-table widefat posts">
+                <thead>
+                    <tr>
+                        <th><span style="padding-left: 10px;">Agreement</span></th>
+                        <th class="manage-column column-author"><span style="padding-left: 10px;">Auto Check</span></th>
+                        <th class="manage-column column-author"><span style="padding-left: 10px;">Action</span></th>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+    ';
+
+	echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
+
+
+	if ( ! isset( $buddyform['form_fields'][ $field_id ]['options'] ) && isset( $buddyform['form_fields'][ $field_id ]['value'] ) ) {
+		foreach ( $buddyform['form_fields'][ $field_id ]['value'] as $key => $value ) {
+			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['label'] = $value;
+			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['value'] = $value;
+		}
+	}
+
+	if ( isset( $buddyform['form_fields'][ $field_id ]['options'] ) ) {
+		$count = 1;
+		foreach ( $buddyform['form_fields'][ $field_id ]['options'] as $key => $option ) {
+
+
+			echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
+			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td>';
+			$form_element = new Element_Textarea( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array( 'value' => $option['label'], 'cols' => '50' ) );
+			$form_element->render();
+
+
+
+			echo '</td><td class="manage-column column-author">';
+			$value = isset( $option['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '';
+			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][default]", array( $option['value'] ), array( 'value' => $value ) );
+			$form_element->render();
+			echo '</td><td class="manage-column column-author">';
+			echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">Delete</a>';
+			echo '</td></tr></li></tbody></table>';
+
+			$count ++;
+		}
+	}
+
+	echo '
+	    </ul>
+     </div>
+     <select id="gdpr_option_type">
+        <option value="none">Select a template</option>
+        <option value="registration">Registration</option>
+        <option value="contact">Contact Form</option>
+        <option value="post">Post Submission</option>
+        <option value="other">Other</option>
+    </select>
+    <div id="bf_gdpr_registration" class="hidden bf-hidden">Dieser hilf text ...</div>
+    <a href="' . $field_id . '" class="button bf_add_gdpr">+</a>';
+
+	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
+		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';
+	}
+
+	$tmp = ob_get_clean();
+
+	return $tmp;
+}
 /**
  * @param $form_fields
  * @param string $field_id

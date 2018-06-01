@@ -855,6 +855,22 @@ function buddyforms_form_elements( $form, $args ) {
 
 						break;
 
+					case 'gdpr' :
+
+						if ( isset( $customfield['options'] ) && is_array( $customfield['options'] ) ) {
+
+							$options = Array();
+							foreach ( $customfield['options'] as $key => $option ) {
+								$options[ $option['value'] ] = $option['label'];
+							}
+							$element = new Element_Checkbox( $name, $slug, $options, $element_attr );
+							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
+							$element->setAttribute( 'required', 'required' );
+							$form->addElement( $element );
+
+						}
+						break;
+
 					default:
 
 						$form_args = Array(
