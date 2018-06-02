@@ -261,6 +261,10 @@ add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
+    if ($new_status === $old_status) {
+        return;
+    }
+
 	if ( empty( $form_slug ) ) {
 		$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
 	}
