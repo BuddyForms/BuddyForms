@@ -195,6 +195,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
 
 			if ( is_admin() ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
@@ -207,7 +208,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
 

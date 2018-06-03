@@ -42,7 +42,8 @@ function buddyforms_form_elements( $form, $args ) {
 					if ( ! $current_user ) {
 						continue;
 					}
-					$customfield_val = get_user_meta( $current_user->ID, $slug, true );
+
+					$customfield_val = buddyforms_get_value_from_user_meta($current_user->ID, $slug);
 
 				} else {
 					$customfield_val = get_post_meta( $post_id, $slug, true );

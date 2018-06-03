@@ -10,7 +10,6 @@
  *
  * @return array
  */
-
 function buddyforms_process_submission( $args = Array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
 	
@@ -43,13 +42,13 @@ function buddyforms_process_submission( $args = Array() ) {
 	buddyforms_switch_to_form_blog( $form_slug );
 	
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
-	
+
+    $user_data = array();
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		// Get the browser and platform
 		$browser_data = buddyforms_get_browser();
 		
 		// Collect all submitter data
-		$user_data = array();
 		if ( ! isset( $buddyforms[ $form_slug ]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 		}
@@ -142,11 +141,8 @@ function buddyforms_process_submission( $args = Array() ) {
 		
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $r_field ) {
-				if ( isset( $_POST[ $r_field['slug'] ] ) ) {
-					update_user_meta( $user_id, $r_field['slug'], buddyforms_sanitize( $r_field['type'], $_POST[ $r_field['slug'] ] ) );
-				}
+				buddyforms_update_user_meta( $user_id, $r_field['type'], $r_field['slug'] );
 			}
-			
 		}
 		
 		$args = array(

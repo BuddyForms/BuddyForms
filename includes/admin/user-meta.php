@@ -142,20 +142,103 @@ function update_extra_profile_fields( $user_id ) {
 			foreach ( $buddyforms as $form_slug => $buddyform ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
-						// Check if the form element type starts with user_ as prefix. user_ is reserved by WordPress and handled separably
-						if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
-
-							$slug = $user_meta['slug'];
-
-							$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
-
-							update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
-
-						}
-
+						buddyforms_update_user_meta( $user_id, $user_meta['type'], $user_meta['slug'] );
 					}
 				}
 			}
 		}
 	}
+}
+
+/**
+ * Update user meta, this function not save the wp core user meta related data.
+ * The field value is grab from the $_POST base on the field slug
+ *
+ * @param $user_id
+ * @param $field_type
+ * @param $field_slug
+ * @param string $value
+ *
+ * @return bool|int
+ */
+function buddyforms_update_user_meta( $user_id, $field_type, $field_slug ) {
+	$result = false;
+	// Check if the form element type starts with user_ as prefix. user_ is reserved by WordPress and handled separably
+	if ( substr( $field_type, 0, 5 ) != 'user_' && $field_type !== 'website' ) {
+		$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
+		$value  = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
+		$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
+	}
+
+	return $result;
+}
+
+
+/**
+ * Get the slug to map to the wp core meta user
+ *
+ * @param string $slug
+ *
+ * @return string
+ */
+function buddyforms_get_mapped_slug_from_user_meta( $slug ) {
+	switch ( $slug ) {
+		case 'user_first':
+			$slug = 'first_name';
+			break;
+		case 'user_last':
+			$slug = 'last_name';
+			break;
+		case 'user_pass':
+			$slug = 'first_name';
+			break;
+		case 'user_website':
+			$slug = 'user_url';
+			break;
+		case 'user_bio':
+			$slug = 'description';
+			break;
+	}
+
+	return $slug;
+}
+
+/**
+ * Get the value from user meta. This function map the existing user meta form wp core data
+ *
+ * @param $user_id
+ * @param $slug
+ *
+ * @return string
+ */
+function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
+	if ( ! in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) ) {
+		return get_user_meta( $user_id, $slug, true );
+	} else {
+		$user  = get_userdata( $user_id );
+		$slug  = buddyforms_get_mapped_slug_from_user_meta( $slug );
+		$value = '';
+		if ( isset( $user->$slug ) ) {
+			$value = $user->$slug;
+		}
+
+		return $value;
+	}
+}
+
+/**
+ * Get the array of avoid fields from the user. This fields are stored in the same wp user meta
+ *
+ * @return array
+ */
+function buddyforms_avoid_user_fields_in_forms() {
+	return apply_filters( 'buddyforms_avoid_user_fields', array(
+		'user_login',
+		'user_email',
+		'user_first',
+		'user_last',
+		'user_pass',
+		'website',
+		'user_bio',
+	) );
 }
