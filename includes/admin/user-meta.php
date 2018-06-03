@@ -143,24 +143,68 @@ function update_extra_profile_fields( $user_id ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
 						// Check if the form element type starts with user_ as prefix. user_ is reserved by WordPress and handled separably
-						$avoid_fields_types = buddyforms_avoid_user_fields_in_forms();
-						if ( ! in_array( $user_meta['type'], $avoid_fields_types ) ) {
-							if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
-								$slug = $user_meta['slug'];
-								$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
-								update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
-							}
-						} else {
-							//TODO aqui hay que ver como se manejarian los datos del usuario para que se actualicen en los mismos metas de wp
-							/**
-							 * Me quede por hacer que se cargen los campos y hacer que cuando se guarden vallan a los metas de wp para que los sobre escriba.
-							 * Tambien ver como organizo para que las cosas esten en funciones reutilizables en los lugares correspondientes. 
-							 */
+						if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
+							$slug  = buddyforms_get_slug_to_save_user_meta( $user_meta['slug'] );
+							$value = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
+							update_user_meta( $user_id, $slug, buddyforms_sanitize( $user_meta['type'], $value ) );
 						}
+
 					}
 				}
 			}
 		}
+	}
+}
+
+/**
+ * Get the slug to map to the wp core meta user
+ *
+ * @param string $slug
+ *
+ * @return string
+ */
+function buddyforms_get_slug_to_save_user_meta( $slug ) {
+	switch ( $slug ) {
+		case 'user_first':
+			$slug = 'first_name';
+			break;
+		case 'user_last':
+			$slug = 'last_name';
+			break;
+		case 'user_pass':
+			$slug = 'first_name';
+			break;
+		case 'user_website':
+			$slug = 'user_url';
+			break;
+		case 'user_bio':
+			$slug = 'description';
+			break;
+	}
+
+	return $slug;
+}
+
+/**
+ * Get the value from user meta. This function map the existing user meta form wp core data
+ *
+ * @param $user_id
+ * @param $slug
+ *
+ * @return string
+ */
+function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
+	if ( ! in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) ) {
+		return get_user_meta( $user_id, $slug, true );
+	} else {
+		$user  = get_userdata( $user_id );
+		$slug  = buddyforms_get_slug_to_save_user_meta( $slug );
+		$value = '';
+		if ( isset( $user->$slug ) ) {
+			$value = $user->$slug;
+		}
+
+		return $value;
 	}
 }
 
@@ -178,8 +222,5 @@ function buddyforms_avoid_user_fields_in_forms() {
 		'user_pass',
 		'user_website',
 		'user_bio',
-		'country',
-		'state',
-		'date'
 	) );
 }
