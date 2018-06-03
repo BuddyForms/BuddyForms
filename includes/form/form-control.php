@@ -44,31 +44,31 @@ function buddyforms_process_submission( $args = Array() ) {
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
 
     $user_data = array();
-	if ( buddyforms_core_fs()->is__premium_only() ) {
+	if ( buddyforms_core_fs()->is__premium_only() && isset( $buddyforms[ $form_slug ]['user_data'])) {
 		// Get the browser and platform
 		$browser_data = buddyforms_get_browser();
-		
+
 		// Collect all submitter data
-		if ( ! isset( $buddyforms[ $form_slug ]['ipaddress'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ) {
+		if ( ! in_array( 'ipaddress', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			$user_data['ipaddress'] = $_SERVER['REMOTE_ADDR'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['referer'] ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ) {
+		if ( ! in_array( 'referer', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ) {
 			$user_data['referer'] = $_SERVER['HTTP_REFERER'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['browser'] ) && isset( $browser_data['name'] ) ) {
+		if ( ! in_array( 'browser', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['name'] ) ) {
 			$user_data['browser'] = $browser_data['name'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['version'] ) && isset( $browser_data['version'] ) ) {
+		if ( ! in_array( 'version', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['version'] ) ) {
 			$user_data['version'] = $browser_data['version'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['platform'] ) && isset( $browser_data['platform'] ) ) {
+		if ( ! in_array( 'platform', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['platform'] ) ) {
 			$user_data['platform'] = $browser_data['platform'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['reports'] ) && isset( $browser_data['reports'] ) ) {
+		if ( ! in_array( 'reports', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['reports'] ) ) {
 			$user_data['reports'] = $browser_data['reports'];
 		}
-		if ( ! isset( $buddyforms[ $form_slug ]['useragent'] ) && isset( $browser_data['useragent'] ) ) {
-			$user_data['useragent'] = $browser_data['useragent'];
+		if ( ! in_array( 'userAgent', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['userAgent'] ) ) {
+			$user_data['userAgent'] = $browser_data['userAgent'];
 		}
 	}
 	
@@ -134,7 +134,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			return $args;
 		}
 		
-		if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is__premium_only() && !empty($user_data) ) {
 			// Save the Browser user data
 			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
@@ -175,7 +175,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			
 			return $args;
 		}
-		if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is__premium_only() && !empty($user_data)) {
 			// Save the Browser user data
 			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 		}
@@ -369,7 +369,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
 		}
 		
-		if ( buddyforms_core_fs()->is__premium_only() ) {
+		if ( buddyforms_core_fs()->is__premium_only() && !empty($user_data)) {
 			// Save the User Data like browser ip etc
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
 		}
