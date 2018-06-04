@@ -527,7 +527,9 @@ class Form extends Base {
 		    });
 
             jQuery("#$id").bind("submit", function() {
-            	tinyMCE.triggerSave();
+                if (typeof(tinyMCE) != "undefined") {
+            		tinyMCE.triggerSave();
+            	}
             	jQuery(this).find("#status").val(bf_submit_type);
                 jQuery(this).find("input[type=submit]").attr("disabled", "disabled");
             });
