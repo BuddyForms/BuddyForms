@@ -314,20 +314,29 @@ jQuery(document).ready(function (jQuery) {
         var args = action.attr('href').split("/");
         var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
 
-        var message = jQuery('#gdpr_option_type').val();
+        var type = jQuery('#gdpr_option_type').val();
+        var message = '';
 
-
-        var text = jQuery('#bf_gdpr_registration').html()
-
-        alert(text);
+        if(admin_text[type]){
+            message = admin_text[type]
+        }
 
         numItems = numItems + 1;
         jQuery('#table_row_' + args[0] + '_select_options ul').append(
             '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
             '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
-            '<textarea rows="5" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]" cols="50">' + text + '</textarea>' +
+            '<textarea rows="5" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
             '</td><td class="manage-column column-author">' +
-            '<input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][default][]" value="">' +
+            '<div class="checkbox">' +
+            '   <label class="">' +
+            '       <input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
+            '   </label>' +
+            '</div>' +
+            '<div class="checkbox">' +
+            '   <label class="">' +
+            '       <input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
+            '   </label>' +
+            '</div>' +
             '</td><td class="manage-column column-author">' +
             '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
             '</td></tr></li></tbody></table>');

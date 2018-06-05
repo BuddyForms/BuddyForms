@@ -130,6 +130,28 @@ function buddyforms_jquery_validation() {
 					$form_html                .= '});';
 				}
 			}
+
+
+
+			if ( isset( $form_field['type'] ) && $form_field['type'] == 'gdpr' && isset( $form_field['options'] ) ) {
+				foreach ( $form_field['options'] as $key => $option ) {
+
+					$form_html .='alert("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']"); ';
+					$form_html .= 'jQuery("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']").rules("add", { ';
+
+
+					$validation_error_message = isset( $form_field['validation_error_message'] ) ? $form_field['validation_error_message'] : __( 'This field is required.', 'buddyforms' );
+					$form_html                .= ' messages:{ required: "' . $validation_error_message . '" }';
+					$form_html                .= '});';
+				}
+			}
+
+
+
+
+
+
+
 		endif;
 
 		$form_html .= '

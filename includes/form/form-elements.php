@@ -43,7 +43,7 @@ function buddyforms_form_elements( $form, $args ) {
 						continue;
 					}
 
-					$customfield_val = buddyforms_get_value_from_user_meta($current_user->ID, $slug);
+					$customfield_val = buddyforms_get_value_from_user_meta( $current_user->ID, $slug );
 
 				} else {
 					$customfield_val = get_post_meta( $post_id, $slug, true );
@@ -135,7 +135,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_pass':
-						 if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
 							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr ) );
 						}
 						break;
@@ -492,7 +492,7 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'range' :
 						$form->addElement( new Element_Range( $name, $slug, $element_attr ) );
 						break;
-					
+
 					case 'captcha' :
 						if ( ! is_user_logged_in() ) {
 							$element = new Element_Captcha( "Captcha", $attributes = null );
@@ -591,39 +591,46 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 					case 'upload':
 
-                        $max_size = '2';
-                        $accepted_files = 'image/*';
-                        $multiple_files = "1";
-                        $delete_files = false;
-                        $description = "";
-                        $required ="";
-                        $label_name ="";
-                        if (  isset( $customfield['name'] ) ) {
-                            $label_name = $customfield['name'];
-                        }
-                        if (  isset( $customfield['required'] ) ) {
-                            $required = $customfield['required'][0];
-                        }
-                        if (  isset( $customfield['description'] ) ) {
-                           $description = $customfield['description'];
-                        }
-                        if (  isset( $customfield['file_limit'] ) ) {
-                            $max_size = $customfield['file_limit'];
-                        }
-                        if (  isset( $customfield['accepted_files'] ) ) {
-                            $accepted_files = $customfield['accepted_files'];
-                        }
-                        if (  isset( $customfield['multiple_files'] ) ) {
-                            $param_value = $customfield['multiple_files'][0];
-                            $multiple_files = $param_value == 'allow'? 9 : 1;
-                        }
-                        if (  isset( $customfield['delete_files'] ) ) {
-                            $param_value = $customfield['delete_files'][0];
-                            $delete_files = $param_value == 'delete'? true : false;
-                        }
+						$max_size       = '2';
+						$accepted_files = 'image/*';
+						$multiple_files = "1";
+						$delete_files   = false;
+						$description    = "";
+						$required       = "";
+						$label_name     = "";
+						if ( isset( $customfield['name'] ) ) {
+							$label_name = $customfield['name'];
+						}
+						if ( isset( $customfield['required'] ) ) {
+							$required = $customfield['required'][0];
+						}
+						if ( isset( $customfield['description'] ) ) {
+							$description = $customfield['description'];
+						}
+						if ( isset( $customfield['file_limit'] ) ) {
+							$max_size = $customfield['file_limit'];
+						}
+						if ( isset( $customfield['accepted_files'] ) ) {
+							$accepted_files = $customfield['accepted_files'];
+						}
+						if ( isset( $customfield['multiple_files'] ) ) {
+							$param_value    = $customfield['multiple_files'][0];
+							$multiple_files = $param_value == 'allow' ? 9 : 1;
+						}
+						if ( isset( $customfield['delete_files'] ) ) {
+							$param_value  = $customfield['delete_files'][0];
+							$delete_files = $param_value == 'delete' ? true : false;
+						}
 
-                        $upload_element = new Element_Upload( $slug, $customfield_val, array( 'id' => $slug,"file_limit"=>$max_size,'accepted_files'=>$accepted_files,'multiple_files'=>$multiple_files, 'delete_files'=>$delete_files, 'mandatory'=>$required,"shortDesc"=>$description ) );
-                        $form->addElement(new Element_HTML("<label>$label_name</label>"));
+						$upload_element = new Element_Upload( $slug, $customfield_val, array( 'id'             => $slug,
+						                                                                      "file_limit"     => $max_size,
+						                                                                      'accepted_files' => $accepted_files,
+						                                                                      'multiple_files' => $multiple_files,
+						                                                                      'delete_files'   => $delete_files,
+						                                                                      'mandatory'      => $required,
+						                                                                      "shortDesc"      => $description
+						) );
+						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );
 						break;
 					case 'file':
@@ -860,14 +867,48 @@ function buddyforms_form_elements( $form, $args ) {
 
 						if ( isset( $customfield['options'] ) && is_array( $customfield['options'] ) ) {
 
-							$options = Array();
+							$label = $name;
+
+							$shortdesc = $element_attr['shortDesc'];
 							foreach ( $customfield['options'] as $key => $option ) {
-								$options[ $option['value'] ] = $option['label'];
+
+								if ( isset( $option['checked'] ) ) {
+									$value = 'checked';
+								} else {
+									$value = '';
+								}
+
+
+								if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
+									if ( $key == 1 ) {
+										$shortDesc = $customfield['description'];
+									} else {
+										$shortDesc = '';
+									}
+								} else {
+									if ( count( $customfield['options'] ) == $key ) {
+										$shortDesc = $customfield['description'];
+									} else {
+										$shortDesc = '';
+									}
+								}
+
+								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), array( 'value'     => $value,
+								                                                                                                          'shortDesc' => $shortDesc
+								) );
+
+								$element->setAttribute( 'data-storage', 'false' );
+
+									if ( isset( $option['required'] ) ) {
+									$element->setAttribute( 'required', 'required' );
+								}
+
+								$form->addElement( $element );
+
+								$label = '';
+
 							}
-							$element = new Element_Checkbox( $name, $slug, $options, $element_attr );
-							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
-							$element->setAttribute( 'required', 'required' );
-							$form->addElement( $element );
+
 
 						}
 						break;

@@ -308,12 +308,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ) );
 				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ) );
 
-				$admin_text_array = array(
-					'check'   => __( 'Check all', 'buddyforms' ),
-					'uncheck' => __( 'Uncheck all', 'buddyforms' )
-				);
+
+				// GDPR Localisation
+				$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
+				$templates = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
+
+				$admin_text_array = array();
+				$admin_text_array['check'] = __( 'Check all', 'buddyforms' );
+				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
+
+				foreach( $templates as $key => $template ) {
+					$admin_text_array[$key] = $template;
+                 }
 				wp_localize_script( 'buddyforms-admin-js', 'admin_text', $admin_text_array );
 				wp_enqueue_script( 'buddyforms-admin-js' );
+
 				wp_enqueue_script( 'buddyforms-admin-slugifies-js' );
 				wp_enqueue_script( 'buddyforms-admin-wizard-js' );
 				wp_enqueue_script( 'buddyforms-admin-deprecated-js' );

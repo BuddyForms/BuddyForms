@@ -259,6 +259,7 @@ function buddyforms_form_elements_select_options() {
 				),
 				'gdpr'       => array(
 					'label' => __( 'GDPR Agreement', 'buddyforms' ),
+					'unique' => 'unique'
 				)
 			),
 		),

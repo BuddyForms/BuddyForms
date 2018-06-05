@@ -1233,12 +1233,12 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 	echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
 
 
-	if ( ! isset( $buddyform['form_fields'][ $field_id ]['options'] ) && isset( $buddyform['form_fields'][ $field_id ]['value'] ) ) {
-		foreach ( $buddyform['form_fields'][ $field_id ]['value'] as $key => $value ) {
-			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['label'] = $value;
-			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['value'] = $value;
-		}
-	}
+//	if ( ! isset( $buddyform['form_fields'][ $field_id ]['options'] ) && isset( $buddyform['form_fields'][ $field_id ]['value'] ) ) {
+//		foreach ( $buddyform['form_fields'][ $field_id ]['value'] as $key => $value ) {
+//			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['label'] = $value;
+//			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['value'] = $value;
+//		}
+//	}
 
 	if ( isset( $buddyform['form_fields'][ $field_id ]['options'] ) ) {
 		$count = 1;
@@ -1252,10 +1252,16 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 
 
-			echo '</td><td class="manage-column column-author">';
-			$value = isset( $option['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '';
-			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][default]", array( $option['value'] ), array( 'value' => $value ) );
+			echo '</td><td class="manage-column">';
+			$value = isset( $option['checked'] ) ? $option['checked'] : '';
+			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][checked]", array('checked' => 'Checked'), array( 'value' => $value ) );
 			$form_element->render();
+
+			$value = isset( $option['required'] ) ? $option['required'] : '';
+			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][required]", array('required' => 'Required'), array( 'value' => $value ) );
+			$form_element->render();
+
+
 			echo '</td><td class="manage-column column-author">';
 			echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">Delete</a>';
 			echo '</td></tr></li></tbody></table>';
@@ -1264,7 +1270,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 		}
 	}
 
-	echo '
+	?>
 	    </ul>
      </div>
      <select id="gdpr_option_type">
@@ -1274,8 +1280,13 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
         <option value="post">Post Submission</option>
         <option value="other">Other</option>
     </select>
-    <div id="bf_gdpr_registration" class="hidden bf-hidden">Dieser hilf text ...</div>
-    <a href="' . $field_id . '" class="button bf_add_gdpr">+</a>';
+
+
+
+    <?php
+	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
+
+    echo '<a href="' . $field_id . '" class="button bf_add_gdpr">+</a>';
 
 	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
 		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';
