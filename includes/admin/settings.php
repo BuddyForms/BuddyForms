@@ -323,12 +323,14 @@ function buddyforms_settings_page_tabs_content() {
                                                 <p><small><?php _e( 'This templates are used in the GDPR Agreement form element and can be overwritten in the form.', 'buddyforms' ); ?></small></p>
                                             </th>
                                             <td>
-                                                <label for="buddyforms_gdpr_registration"><p>Registration Template</b></label>
+                                                <label for="buddyforms_gdpr_registration"><p>Registration Form</p></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_registration" name="buddyforms_gdpr[templates][registration]"><?php echo empty($buddyforms_gdpr['templates']['registration']) ? '' : $buddyforms_gdpr['templates']['registration']; ?></textarea>
-                                                <label for="buddyforms_gdpr_registration"><p>Post Submission</b></label>
+                                                <label for="buddyforms_gdpr_post"><p>Post Submission</b></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_post" name="buddyforms_gdpr[templates][post]"><?php echo empty($buddyforms_gdpr['templates']['post']) ? '' : $buddyforms_gdpr['templates']['post']; ?></textarea>
-                                                <label for="buddyforms_gdpr_registration"><p>Contact Form</b></label>
+                                                <label for="buddyforms_gdpr_contact"><p>Contact Form</b></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_contact" name="buddyforms_gdpr[templates][contact]"><?php echo empty($buddyforms_gdpr['templates']['contact']) ? '' : $buddyforms_gdpr['templates']['contact']; ?></textarea>
+                                                <label for="buddyforms_gdpr_other"><p>Other</b></label>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_other" name="buddyforms_gdpr[templates][other]"><?php echo empty($buddyforms_gdpr['templates']['other']) ? '' : $buddyforms_gdpr['templates']['other']; ?></textarea>
                                             </td>
                                         </tr>
                                         <tr valign="top">
@@ -337,6 +339,10 @@ function buddyforms_settings_page_tabs_content() {
                                                 <p><small><?php _e( 'Please select a Terms and Privacy Police page. We will link to this page under the form.', 'buddyforms' ); ?></small></p>
                                             </th>
                                             <td>
+                                                <label for="buddyforms_gdpr_terms_label"><p>Terms Label ( Will be displayed under the form )</p></label>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label" name="buddyforms_gdpr[terms_label]"><?php echo empty($buddyforms_gdpr['terms_label']) ? '' : $buddyforms_gdpr['terms_label']; ?></textarea>
+
+                                                <label for="buddyforms_gdpr_terms"><p>Terms Page ( Will be displayed as link after the terms label)</p></label>
                                                 <?php
 	                                            if ( isset( $pages ) && is_array( $pages ) ) {
 		                                            echo '<select name="buddyforms_gdpr[terms]" id="buddyforms_gdpr_terms">';
@@ -347,7 +353,7 @@ function buddyforms_settings_page_tabs_content() {
 		                                            echo '</select>';
 	                                            }
 	                                            ?>
-                                            </td>
+                                                </td>
                                         </tr>
                                         </tbody>
                                     </table>

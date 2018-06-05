@@ -1246,10 +1246,15 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 
 			echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
-			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td>';
+			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td><p><b>Agreement Text</b></p>';
 			$form_element = new Element_Textarea( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array( 'value' => $option['label'], 'cols' => '50' ) );
 			$form_element->render();
 
+            echo '<p><b>Error Message</b></p>';
+
+            $error_message = empty( $option['error_message'] ) ? __('This field is Required', 'buddyforms' ) : $option['error_message'];
+			$form_element = new Element_Textarea( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][error_message]", array( 'value' => $error_message, 'cols' => '50', 'rows' => '2' ) );
+			$form_element->render();
 
 
 			echo '</td><td class="manage-column">';

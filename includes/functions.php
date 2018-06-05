@@ -823,9 +823,15 @@ function buddyforms_form_footer_terms($html){
 
 	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 
-	if( isset( $buddyforms_gdpr['terms'] ) && $buddyforms_gdpr['terms'] != 'none' ){
-		$html .= '<div id="" class=""><a id="" class="" href="' . get_permalink( $buddyforms_gdpr['terms'] ) . '">' . get_the_title( $buddyforms_gdpr['terms'] ) . '</a></div>';
-    }
+	$html .= ' <div class="terms"><p>';
+        if( ! empty( $buddyforms_gdpr['terms_label'] ) ){
+            $html .= '<span id="" class="buddyforms_terms_label">' . $buddyforms_gdpr['terms_label']  . '</span> ';
+        }
+
+        if( isset( $buddyforms_gdpr['terms'] ) && $buddyforms_gdpr['terms'] != 'none' ){
+            $html .= '<a id="" class="" href="' . get_permalink( $buddyforms_gdpr['terms'] ) . '">' . get_the_title( $buddyforms_gdpr['terms'] ) . '</a>';
+        }
+	$html .= '</p></div>';
 
 	return $html;
 }
