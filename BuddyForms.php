@@ -316,6 +316,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$admin_text_array = array();
 				$admin_text_array['check'] = __( 'Check all', 'buddyforms' );
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
+				$admin_text_array['error_message'] = __( 'This field is required', 'buddyforms' );
 
 				foreach( $templates as $key => $template ) {
 					$admin_text_array[$key] = $template;

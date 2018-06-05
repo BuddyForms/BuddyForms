@@ -320,12 +320,16 @@ jQuery(document).ready(function (jQuery) {
         if(admin_text[type]){
             message = admin_text[type]
         }
+        if(admin_text['error_message']){
+            error_message = admin_text['error_message']
+        }
 
         numItems = numItems + 1;
         jQuery('#table_row_' + args[0] + '_select_options ul').append(
             '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
             '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
             '<textarea rows="5" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
+            '<textarea rows="2" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
             '</td><td class="manage-column column-author">' +
             '<div class="checkbox">' +
             '   <label class="">' +
