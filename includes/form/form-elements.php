@@ -894,7 +894,7 @@ function buddyforms_form_elements( $form, $args ) {
 								}
 
 								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), array( 'value'     => $value,
-								                                                                                                          'shortDesc' => $shortDesc
+								                                                                                                          'shortDesc' => $shortDesc,
 								) );
 
 								$element->setAttribute( 'data-storage', 'false' );

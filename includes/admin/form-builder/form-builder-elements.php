@@ -974,7 +974,23 @@ JS;
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'gdpr':
-            $field_args                           = Array(
+			unset( $form_fields );
+
+
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'GDPR Agreement', 'buddyforms' );
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'value'    => $name,
+				'required' => 0
+			) );
+
+			$description                           = isset( $customfield['description'] ) ? stripcslashes( $customfield['description'] ) : __( 'Please agree to our privacy police', 'buddyforms' );
+			$form_fields['general']['description'] = new Element_Textbox( '<b>' . __( 'Description:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array( 'value' => $description ) );
+
+
+			$form_fields['hidden']['slug']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'gdpr-agreement' );
+			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+			$field_args                           = Array(
                 'field_id'  => $field_id,
                 'buddyform' => $buddyform
             );
@@ -1222,7 +1238,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
                 <thead>
                     <tr>
                         <th><span style="padding-left: 10px;">Agreement</span></th>
-                        <th class="manage-column column-author"><span style="padding-left: 10px;">Auto Check</span></th>
+                        <th class="manage-column column-author"><span style="padding-left: 10px;">Options</span></th>
                         <th class="manage-column column-author"><span style="padding-left: 10px;">Action</span></th>
                     </tr>
                 </thead>
@@ -1269,29 +1285,29 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 			echo '</td><td class="manage-column column-author">';
 			echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="delete me">Delete</a>';
-			echo '</td></tr></li></tbody></table>';
+			echo '</td></tr></li></tbody></table><hr>';
 
 			$count ++;
 		}
 	}
 
-	?>
-	    </ul>
-     </div>
-     <select id="gdpr_option_type">
-        <option value="none">Select a template</option>
-        <option value="registration">Registration</option>
-        <option value="contact">Contact Form</option>
-        <option value="post">Post Submission</option>
-        <option value="other">Other</option>
-    </select>
+	echo ' </ul>
+    <table class="wp-list-table widefat posts striped"><tbody><tr><td>
+                <select id="gdpr_option_type">
+                    <option value="none">Select a template</option>
+                    <option value="registration">Registration</option>
+                    <option value="contact">Contact Form</option>
+                    <option value="post">Post Submission</option>
+                    <option value="other">Other</option>
+                </select>
+            </td><td class="manage-column">
+                <a href="' . $field_id . '" class="button bf_add_gdpr">+</a>
+            </td></tr></li></tbody></table>
+     </div> ';
 
-
-
-    <?php
 	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 
-    echo '<a href="' . $field_id . '" class="button bf_add_gdpr">+</a>';
+
 
 	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
 		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';

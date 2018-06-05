@@ -343,7 +343,7 @@ jQuery(document).ready(function (jQuery) {
             '</div>' +
             '</td><td class="manage-column column-author">' +
             '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
-            '</td></tr></li></tbody></table>');
+            '</td></tr></li></tbody></table><hr>');
         return false;
 
     });

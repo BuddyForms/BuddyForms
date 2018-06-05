@@ -573,7 +573,17 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 				update_post_meta( $post_id, $slug, '' );
 			}
 		}
-		
+
+		// Save the GDPR Agreement
+		if ( $customfield['type'] == 'gdpr' && isset( $customfield['options'] ) ) {
+			foreach ( $customfield['options'] as $key => $option ) {
+				$gdpr_data[$key]['checked'] = buddyforms_sanitize( $customfield['type'], $_POST[ $slug . '_' . $key ] );
+				$gdpr_data[$key]['label'] = $option['label'];
+
+			}
+			update_post_meta( $post_id, $slug, $gdpr_data );
+		}
+
 		//
 		// Check if file is new and needs to get reassigned to the correct parent
 		//
