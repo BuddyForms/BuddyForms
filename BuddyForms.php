@@ -211,6 +211,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
 
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-eraser.php' );
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-exporter.php' );
+
 				if ( buddyforms_core_fs()->is__premium_only() ) {
 					if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 						require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
