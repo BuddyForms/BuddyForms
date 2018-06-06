@@ -179,6 +179,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'gdpr.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'change-password.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
@@ -210,9 +211,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
-
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-eraser.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-exporter.php' );
 
 				if ( buddyforms_core_fs()->is__premium_only() ) {
 					if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
@@ -319,7 +317,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$admin_text_array = array();
 				$admin_text_array['check'] = __( 'Check all', 'buddyforms' );
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
-				$admin_text_array['error_message'] = __( 'This field is required', 'buddyforms' );
+				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 
 				foreach( $templates as $key => $template ) {
 					$admin_text_array[$key] = $template;
@@ -499,6 +497,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
 
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
+
+
+			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), '', false  );
+			$translations = array(
+				'gdpr_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
+				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'gdpr-data-request-form' ),
+				'gdpr_errors'   => __( 'Some errors occurred:', 'gdpr-data-request-form' ),
+			);
+			wp_localize_script( 'buddyforms-gdpr-js', 'buddyforms_gdpr_localize', $translations );
+
 
 			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
