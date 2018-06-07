@@ -213,7 +213,7 @@ function buddyforms_form_response_no_ajax() {
 
 		extract( $bf_form_response_args );
 
-		if ( isset( $hasError ) && $hasError !== false ) {
+		if ( isset( $hasError ) ) {
 			wp_redirect( $_SERVER['HTTP_REFERER'], 302 );
 			exit;
 		}
