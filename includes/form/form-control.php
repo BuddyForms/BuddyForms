@@ -135,13 +135,41 @@ function buddyforms_process_submission( $args = Array() ) {
 		}
 		
 		if ( buddyforms_core_fs()->is__premium_only() && !empty($user_data) ) {
-			// Save the Browser user data
-			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
+			/**
+			 * Avoid save user meta data.
+			 *
+			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
+			 *
+			 * @since 2.1.7
+			 *
+			 * @param boolean  $grant This parameter determine if the data will be saved by buddyforms functions.
+			 * @param string  $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array  $data This parameter holds the information what wil be saved.
+			 */
+			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
+			if ( $save_usermeta ) {
+				// Save the Browser user data
+				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
+			}
 		}
 		
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $r_field ) {
-				buddyforms_update_user_meta( $user_id, $r_field['type'], $r_field['slug'] );
+				/**
+				 * Avoid save user meta data.
+				 *
+				 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
+				 *
+				 * @since 2.1.7
+				 *
+				 * @param boolean  $grant This parameter determine if the data will be saved by buddyforms functions.
+				 * @param string  $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+				 * @param array  $data This parameter holds the information what wil be saved.
+				 */
+				$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'field', $r_field );
+				if ( $save_usermeta ) {
+					buddyforms_update_user_meta( $user_id, $r_field['type'], $r_field['slug'] );
+				}
 			}
 		}
 		
@@ -176,8 +204,22 @@ function buddyforms_process_submission( $args = Array() ) {
 			return $args;
 		}
 		if ( buddyforms_core_fs()->is__premium_only() && !empty($user_data)) {
-			// Save the Browser user data
-			add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
+			/**
+			 * Avoid save user meta data.
+			 *
+			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
+			 *
+			 * @since 2.1.7
+			 *
+			 * @param boolean  $grant This parameter determine if the data will be saved by buddyforms functions.
+			 * @param string  $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array  $data This parameter holds the information what wil be saved.
+			 */
+			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta',  true, 'browser_data', $user_data );
+			if ( $save_usermeta ) {
+				// Save the Browser user data
+				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
+			}
 		}
 	}
 	
