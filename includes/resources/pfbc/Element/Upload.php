@@ -86,7 +86,7 @@ class Element_Upload extends Element_Textbox
 
 
         $box = str_replace("class=\"form-control\"", "class=\"dropzone\"", $box);
-        $box = "<div class=\"dropzone dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'>
+        $box = "<div class=\"dropzone upload_field dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'>
                                  <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                   
                                       <span>$message</span>

@@ -683,6 +683,12 @@ function buddyforms_update_post_meta( $post_id, $customfields ) {
 					'post_parent' => $post_id,
 				);
 				wp_update_post( $attachement );
+				if(isset($_POST['action'])){
+				    if($_POST['action']=='editpost'){
+
+                        set_post_thumbnail( $post_id, $attachement_id );
+                    }
+                }
 			}
 			
 		}
