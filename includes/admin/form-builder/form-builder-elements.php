@@ -931,7 +931,7 @@ JS;
 		case 'featuredimage':
 		case 'featured_image':
 
-			unset( $form_fields );
+			//unset( $form_fields );
 			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
 			$form_fields['general']['required'] = new Element_Checkbox( '<b>' . __( 'Required', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array( 'required' => '<b>' . __( 'Required', 'buddyforms' ) . '</b>' ), array(
 				'value' => $required,

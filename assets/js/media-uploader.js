@@ -1,5 +1,7 @@
 (function ($) {
 
+
+
     jQuery(document).on('click', '.bf_add_files a', function (event) {
 
         var $el = $(this);

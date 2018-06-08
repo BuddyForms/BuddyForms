@@ -513,7 +513,69 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$attachment_ids = get_post_thumbnail_id( $post_id );
 						$attachments    = array_filter( explode( ',', $attachment_ids ) );
+                        $attachment_ids = get_post_thumbnail_id( $post_id );
+                        $attachments    = array_filter( explode( ',', $attachment_ids ) );
 
+
+                        $id = $slug;
+                        $action= isset($_GET['action']) ? $_GET['action'] : "" ;
+                        $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
+                        $page = isset($_GET['page']) ? $_GET['page'] : "" ;
+
+                        //If Entry is empty we check if we are in a edit entry page
+                        if(empty($entry)){
+                            $entry = isset($_GET['post']) ? $_GET['post'] : "";
+                        }
+
+                        $column_val ="";
+                        $result = "";
+                        $result_value ="";
+                        $entries = array();
+                        $entries_result="";
+
+                        if (! empty($entry) && $action == 'edit'){
+                            $column_val =  get_post_meta( $entry, $id, true );
+
+                            $attachmet_id = explode(",",$column_val);
+                            foreach ($attachmet_id as $id_value){
+
+                                $metadata =   wp_prepare_attachment_for_js($id_value);
+                                if($metadata != null){
+                                    $url = wp_get_attachment_thumb_url( $id_value );
+                                    $result .= $id_value.",";
+                                    $mockFile = new stdClass();
+                                    $mockFile->name = $metadata['filename'];
+                                    $mockFile->url = $url;
+                                    $mockFile->attachment_id = $id_value;
+                                    $mockFile->size = $metadata['filesizeInBytes'];
+                                    $entries[$id_value]=$mockFile;
+                                }
+
+                            }
+                        }
+                        if(count($entries) > 0){
+
+                            $entries_result = json_encode($entries);
+                        }
+                        if(!empty($result))
+                        {
+                            $result_value = rtrim(trim($result), ',');
+                        }
+                        $label_name = $customfield['name'];
+
+                        $message = "Drop the image here to upload";
+                        $str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
+                        $box = "<div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page'>
+                                         <div class=\"dz-default dz-message\" data-dz-message=\"\">
+                                          
+                                              <span>$message</span>
+                                         </div>
+                                        <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id'  />
+                                         
+                                 </div>";
+                    $form->addElement(new Element_HTML("<label>$label_name</label>"));
+                    $form->addElement( new Element_HTML( $box ) );
+                    $form->addElement(new Element_HTML("<span class='help-inline'>$description</span>"));
 						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
 
 						if ( $attachments ) {
@@ -574,7 +636,7 @@ function buddyforms_form_elements( $form, $args ) {
                             </div></div>
                         ';
 
-						$form->addElement( new Element_HTML( $fimage_element ) );
+						//$form->addElement( new Element_HTML( $fimage_element ) );
 
 						// always add slug
 						$featured_image_params = array( 'id' => $slug );
@@ -584,7 +646,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$featured_image_params['required'] = 'required';
 						}
 
-						$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
+						//$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
 
 
 						break;
