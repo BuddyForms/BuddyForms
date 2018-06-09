@@ -509,37 +509,28 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
 
-					case 'featured-image':
 					case 'featured_image':
-
 						$attachment_ids = get_post_thumbnail_id( $post_id );
 						$attachments    = array_filter( explode( ',', $attachment_ids ) );
                         $attachment_ids = get_post_thumbnail_id( $post_id );
                         $attachments    = array_filter( explode( ',', $attachment_ids ) );
-
-
                         $id = $slug;
                         $action= isset($_GET['action']) ? $_GET['action'] : "" ;
                         $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
                         $page = isset($_GET['page']) ? $_GET['page'] : "" ;
-
                         //If Entry is empty we check if we are in a edit entry page
                         if(empty($entry)){
                             $entry = isset($_GET['post']) ? $_GET['post'] : "";
                         }
-
                         $column_val ="";
                         $result = "";
                         $result_value ="";
                         $entries = array();
                         $entries_result="";
-
                         if (! empty($entry) && $action == 'edit'){
                             $column_val =  get_post_meta( $entry, $id, true );
-
                             $attachmet_id = explode(",",$column_val);
                             foreach ($attachmet_id as $id_value){
-
                                 $metadata =   wp_prepare_attachment_for_js($id_value);
                                 if($metadata != null){
                                     $url = wp_get_attachment_thumb_url( $id_value );
@@ -551,7 +542,6 @@ function buddyforms_form_elements( $form, $args ) {
                                     $mockFile->size = $metadata['filesizeInBytes'];
                                     $entries[$id_value]=$mockFile;
                                 }
-
                             }
                         }
                         if(count($entries) > 0){
@@ -684,13 +674,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$delete_files = $param_value == 'delete' ? true : false;
 						}
 
-						$upload_element = new Element_Upload( $slug, $customfield_val, array( 'id'             => $slug,
-						                                                                      "file_limit"     => $max_size,
-						                                                                      'accepted_files' => $accepted_files,
-						                                                                      'multiple_files' => $multiple_files,
-						                                                                      'delete_files'   => $delete_files,
-						                                                                      'mandatory'      => $required,
-						                                                                      "shortDesc"      => $description
+						$upload_element = new Element_Upload( $slug, $customfield_val, array(
+							'id'             => $slug,
+							"file_limit"     => $max_size,
+							'accepted_files' => $accepted_files,
+							'multiple_files' => $multiple_files,
+							'delete_files'   => $delete_files,
+							'mandatory'      => $required,
+							"shortDesc"      => $description
 						) );
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );

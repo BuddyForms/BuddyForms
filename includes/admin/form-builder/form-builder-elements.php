@@ -927,10 +927,7 @@ JS;
 			) );
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
-		case 'featured-image':
-		case 'featuredimage':
 		case 'featured_image':
-
 			//unset( $form_fields );
 			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
 			$form_fields['general']['required'] = new Element_Checkbox( '<b>' . __( 'Required', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array( 'required' => '<b>' . __( 'Required', 'buddyforms' ) . '</b>' ), array(
@@ -938,7 +935,7 @@ JS;
 				'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
 			) );
 
-			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'FeaturedImage', 'buddyforms' );
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Featured Image', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
 				'required' => 1
