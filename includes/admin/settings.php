@@ -325,11 +325,11 @@ function buddyforms_settings_page_tabs_content() {
                                             <td>
                                                 <label for="buddyforms_gdpr_registration"><p>Registration Form</p></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_registration" name="buddyforms_gdpr[templates][registration]"><?php echo empty($buddyforms_gdpr['templates']['registration']) ? '' : $buddyforms_gdpr['templates']['registration']; ?></textarea>
-                                                <label for="buddyforms_gdpr_post"><p>Post Submission</b></label>
+                                                <label for="buddyforms_gdpr_post"><p>Post Submission</p></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_post" name="buddyforms_gdpr[templates][post]"><?php echo empty($buddyforms_gdpr['templates']['post']) ? '' : $buddyforms_gdpr['templates']['post']; ?></textarea>
-                                                <label for="buddyforms_gdpr_contact"><p>Contact Form</b></label>
+                                                <label for="buddyforms_gdpr_contact"><p>Contact Form</p></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_contact" name="buddyforms_gdpr[templates][contact]"><?php echo empty($buddyforms_gdpr['templates']['contact']) ? '' : $buddyforms_gdpr['templates']['contact']; ?></textarea>
-                                                <label for="buddyforms_gdpr_other"><p>Other</b></label>
+                                                <label for="buddyforms_gdpr_other"><p>Other</p></label>
                                                 <textarea cols="70" rows="5" id="buddyforms_gdpr_other" name="buddyforms_gdpr[templates][other]"><?php echo empty($buddyforms_gdpr['templates']['other']) ? '' : $buddyforms_gdpr['templates']['other']; ?></textarea>
                                             </td>
                                         </tr>
