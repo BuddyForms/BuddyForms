@@ -37,6 +37,10 @@ function buddyforms_ajax_process_edit_post() {
 	
 	extract( $args );
 
+	if ( empty( $form_slug ) ) {
+		$form_slug = $formdata['form_slug'];
+	}
+
 	if ( $hasError == true ) {
 		
 		if ( $form_notice ) {
