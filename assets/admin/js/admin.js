@@ -107,6 +107,8 @@ function load_formbuilder_template(template) {
 	                            buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + ']"]'), form_setup);
                             }
                             jQuery('.bf-select2').select2();
+                            // Check the form type and only display the relevant form setup tabs
+                            from_setup_form_type(jQuery('#bf-form-type-select').val());
                         });
                         break;
                     default:
