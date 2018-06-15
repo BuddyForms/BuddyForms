@@ -36,7 +36,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'form_slug'   => 0,
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 		'bf_honeypot' => '',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 	
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -323,7 +323,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 	$post_author = '';
 	$args = buddyforms_update_post( $args );
-	extract( $args, EXTR_IF_EXISTS );
+	extract( $args );
 	
 	/*
 	 * Check if the update or insert was successful
@@ -514,7 +514,7 @@ function buddyforms_update_post( $args ) {
 	
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
 	
-	extract( $args, EXTR_IF_EXISTS );
+	extract( $args );
 	
 	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
 	

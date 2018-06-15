@@ -181,7 +181,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		'label_password' => __( 'Password' ),
 		'label_remember' => __( 'Remember Me' ),
 		'label_log_in'   => __( 'Log In' ),
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	if ( empty( $title ) ) {
 		$title = __( 'You need to be logged in to view this page', 'buddyforms' );

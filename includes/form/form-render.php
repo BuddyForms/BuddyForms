@@ -28,7 +28,7 @@ function buddyforms_form_html( $args ) {
 		'redirect_to'  => esc_url( $_SERVER['REQUEST_URI'] ),
 		'form_slug'    => '',
 		'form_notice'  => '',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 	
 	$is_registration_form   = ! empty( $buddyforms[ $form_slug ]['form_type'] ) && 'registration' === $buddyforms[ $form_slug ]['form_type'];
 	$need_registration_form = ! empty( $buddyforms[ $form_slug ]['public_submit'] ) && 'registration_form' === $buddyforms[ $form_slug ]['public_submit'];

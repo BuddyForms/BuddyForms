@@ -37,7 +37,7 @@ function buddyforms_create_edit_form( $args ) {
 		'post_parent' => 0,
 		'form_slug'   => false,
 		'form_notice' => '',
-	), $args, EXTR_IF_EXISTS );
+	), $args );
 	
 	extract( $short_array );
 	
@@ -211,6 +211,7 @@ function buddyforms_form_response_no_ajax() {
 
 		$bf_form_response_args = buddyforms_process_submission( $_POST );
 
+		$post_id = 0;
 		extract( $bf_form_response_args );
 
 		if ( isset( $hasError ) ) {
