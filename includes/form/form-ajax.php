@@ -30,10 +30,10 @@ function buddyforms_ajax_process_edit_post() {
 	$hasError = false;
 	$form_notice = '';
 	$form_slug = '';
-	$json = '';
+	$json_array = [];
 	$error_message = __('There was an error please check the form!', 'buddyforms');
 	
-	extract( $args, EXTR_IF_EXISTS );
+	extract( $args );
 
 	if ( $hasError == true ) {
 		
@@ -66,43 +66,43 @@ function buddyforms_ajax_process_edit_post() {
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
 			switch ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) {
 				case 'display_post':
-					$json['form_remove'] = 'true';
-					$json['form_notice'] = buddyforms_after_save_post_redirect( get_permalink( $args['post_id'] ) );
+					$json_array['form_remove'] = 'true';
+					$json_array['form_notice'] = buddyforms_after_save_post_redirect( get_permalink( $args['post_id'] ) );
 					break;
 				case 'display_page':
-					$json['form_remove'] = 'true';
-					$json['form_notice'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
+					$json_array['form_remove'] = 'true';
+					$json_array['form_notice'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
 					break;
 				case 'redirect':
-					$json['form_remove'] = 'true';
-					$json['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $_POST['form_slug'] ]['after_submission_url'] );
+					$json_array['form_remove'] = 'true';
+					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $_POST['form_slug'] ]['after_submission_url'] );
 					break;
 				case 'display_posts_list':
-					$json['form_remove'] = 'true';
+					$json_array['form_remove'] = 'true';
 					$permalink           = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
 					$post_list_link      = $permalink . 'view/' . $args['form_slug'] . '/';
-					$json['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
-					$json['form_notice'] .= $display_message;
+					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
+					$json_array['form_notice'] .= $display_message;
 					break;
 				case 'display_message':
-					$json['form_remove'] = 'true';
-					$json['form_notice'] = $display_message;
+					$json_array['form_remove'] = 'true';
+					$json_array['form_notice'] = $display_message;
 					break;
 				default:
 					if ( isset( $args['post_id'] ) ) {
-						$json['post_id'] = $args['post_id'];
+						$json_array['post_id'] = $args['post_id'];
 					}
 					if ( isset( $args['post_title'] ) ) {
-						$json['buddyforms_form_title'] = $args['post_title'];
+						$json_array['buddyforms_form_title'] = $args['post_title'];
 					}
 					if ( isset( $args['revision_id'] ) ) {
-						$json['revision_id'] = $args['revision_id'];
+						$json_array['revision_id'] = $args['revision_id'];
 					}
 					if ( isset( $args['post_parent'] ) ) {
-						$json['post_parent'] = $args['post_parent'];
+						$json_array['post_parent'] = $args['post_parent'];
 					}
 					if ( isset( $args['form_notice'] ) ) {
-						$json['form_notice'] = $args['form_notice'];
+						$json_array['form_notice'] = $args['form_notice'];
 					}
 					break;
 			}
@@ -110,9 +110,9 @@ function buddyforms_ajax_process_edit_post() {
 
 	}
 
-	$json = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json );
+	$json_array = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json_array );
 
-	echo json_encode( $json );
+	echo json_encode( $json_array );
 
 	die();
 }
