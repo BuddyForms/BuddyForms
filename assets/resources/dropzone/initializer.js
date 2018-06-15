@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
             this._events[name].forEach(function(cb) { cb.apply(this, args) }.bind(this));
         return this;
     };*/
-	$(".dropzone").each(function (index, value) {
+	$(".upload_field").each(function (index, value) {
 		var current = $(this),
 			id = current.attr('id'),
 			max_size = current.attr('file_limit'),
