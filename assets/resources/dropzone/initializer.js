@@ -9,6 +9,20 @@ jQuery(document).ready(function ($) {
             this._events[name].forEach(function(cb) { cb.apply(this, args) }.bind(this));
         return this;
     };*/
+
+    $( "form" ).click(function( event ) {
+
+        var $form = $(this).closest('form');
+        var target = event.target.name;
+        if (target == 'submitted' || target == 'save') {
+
+
+            var myDropzone = Dropzone.forElement(".dropzone");
+           	var resultado = myDropzone.processQueue();
+            event.preventDefault();
+        }
+    });
+
 	$(".upload_field").each(function (index, value) {
 		var current = $(this),
 			id = current.attr('id'),
@@ -29,6 +43,7 @@ jQuery(document).ready(function ($) {
 			maxFilesize: max_size,
 			acceptedFiles: accepted_files,
 			maxFiles: multiple_files,
+            autoProcessQueue: false,
 			clickable: clickeable,
 			addRemoveLinks: clickeable,
 			init: function () {
@@ -43,15 +58,16 @@ jQuery(document).ready(function ($) {
 				});
 
 				this.on('addedfile', function () {
-					jQuery("#field_"+id+"-error").text("");
+					/*jQuery("#field_"+id+"-error").text("");
 					jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
-                    jQuery("button[type=submit].bf-submit").html("upload in process");
+                    jQuery("button[type=submit].bf-submit").html("upload in process");*/
 				});
 
 				this.on('sending', function (file, xhr, formData) {
 					formData.append('action', 'handle_dropped_media');
 					formData.append('nonce', dropParam.ajaxnonce);
 				});
+
 
 				this.on('success', function (file, response) {
 					file.previewElement.classList.add("dz-success");
@@ -64,6 +80,8 @@ jQuery(document).ready(function ($) {
 						idsFormat = ids;
 					}
 					currentField.val(idsFormat);
+                    var $form = $("#"+id).closest('form');
+                    $form.submit();
 				});
 
 				this.on('error', function (file, response) {
