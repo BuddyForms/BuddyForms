@@ -53,8 +53,6 @@ function buddyforms_change_password_form($redirect_url = '') {
 				<input type="hidden" name="buddyforms_redirect" value="<?php echo $redirect; ?>"/>
 				<input type="hidden" name="buddyforms_password_nonce" value="<?php echo wp_create_nonce('buddyforms-password-nonce'); ?>"/>
 
-
-
 				<div><span id="password-strength"></span></div>
 				<input id="buddyforms_password_submit" disabled="disabled" type="submit" class="bf-submit" value="<?php _e('Change Password', 'buddyforms'); ?>"/>
 
