@@ -3,7 +3,6 @@
 /*
  * The default validation is already covert. Let us do some extra work and also do the advanced validation server site.
  */
-
 add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation', 2, 2 );
 /**
  *
@@ -100,7 +99,7 @@ function buddyforms_jquery_validation() {
 	            }
 	        }); setTimeout(function() {';
 
-		if ( isset( $form['form_fields'] ) ) :
+		if ( isset( $form['form_fields'] ) ) {
 			foreach ( $form['form_fields'] as $key => $form_field ) {
 				if ( isset( $form_field['required'] ) ) {
 
@@ -131,24 +130,15 @@ function buddyforms_jquery_validation() {
 				}
 			}
 
-
-
 			if ( isset( $form_field['type'] ) && $form_field['type'] == 'gdpr' && isset( $form_field['options'] ) ) {
 				foreach ( $form_field['options'] as $key => $option ) {
-					$form_html .= 'jQuery("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']").rules("add", { ';
+					$form_html                .= 'jQuery("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']").rules("add", { ';
 					$validation_error_message = isset( $option['error_message'] ) ? $option['error_message'] : __( 'This field is required.', 'buddyforms' );
 					$form_html                .= ' messages:{ required: "' . $validation_error_message . '" }';
 					$form_html                .= '});';
 				}
 			}
-
-
-
-
-
-
-
-		endif;
+		}
 
 		$form_html .= '
 		}); }, 0);';

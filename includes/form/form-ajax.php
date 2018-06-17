@@ -31,11 +31,15 @@ function buddyforms_ajax_process_edit_post() {
 	$form_notice = '';
 	$form_slug = '';
 
-	$json = array();
+	$json_array = array();
 
-  $error_message = __('There was an error please check the form!', 'buddyforms');
+    $error_message = __('There was an error please check the form!', 'buddyforms');
 	
 	extract( $args );
+
+	if ( empty( $form_slug ) ) {
+		$form_slug = $formdata['form_slug'];
+	}
 
 	if ( $hasError == true ) {
 		
