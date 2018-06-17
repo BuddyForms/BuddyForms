@@ -14,8 +14,8 @@ function buddyforms_gdpr_shortcode_data_request( $atts ) {
         ?>
         <style>
             /**
- * Public CSS rules for the GDPR Form
- */
+             * Public CSS rules for the GDPR Form
+             */
             #buddyforms-gdpr-radio-label {
                 font-weight: 800;
                 display: block;
@@ -86,7 +86,7 @@ function buddyforms_gdpr_shortcode_data_request( $atts ) {
         return esc_html__( 'This plugin requires WordPress 4.9.6.', 'buddyforms' );
     }
 }
-add_shortcode( 'buddyforms-gpdr', 'buddyforms_gdpr_shortcode_data_request' );
+add_shortcode( 'buddyforms_gpdr', 'buddyforms_gdpr_shortcode_data_request' );
 
 
 function buddyforms_gdpr_data_request() {
