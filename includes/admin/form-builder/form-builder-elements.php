@@ -1161,7 +1161,7 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 
 	$field_id  = '';
 	$buddyform = '';
-	extract( $args, EXTR_IF_EXISTS );
+	extract( $args );
 
 	ob_start();
 
@@ -1232,7 +1232,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 	$field_id  = '';
 	$buddyform = '';
-	extract( $args, EXTR_IF_EXISTS );
+	extract( $args );
 
 	ob_start();
 

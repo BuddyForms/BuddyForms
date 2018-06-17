@@ -19,7 +19,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'form_slug'   => '',
 		'slug'        => '',
 		'id'          => '',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
@@ -85,7 +85,7 @@ function buddyforms_the_loop( $args ) {
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key' => '',
 		'meta_value' => ''
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) :
 		buddyforms_wp_login_form();
@@ -249,7 +249,7 @@ function buddyforms_nav( $args ) {
 		'separator'  => ' | ',
 		'label_add'  => 'Add New',
 		'label_view' => 'View',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	$tmp = buddyforms_button_view_posts( $args );
 	$tmp .= $separator;
@@ -271,7 +271,7 @@ function buddyforms_button_view_posts( $args ) {
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
 		'label_view' => 'View',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label_view, 'buddyforms' ) . ' </a>';
 
@@ -319,7 +319,7 @@ function buddyforms_view_login_form( $args ) {
 		'label_password' => __( 'Password' ),
 		'label_remember' => __( 'Remember Me' ),
 		'label_log_in'   => __( 'Log In' ),
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">' . __( 'Logout', 'buddyforms' ) . '</a>';
@@ -336,7 +336,7 @@ function buddyforms_reset_password_form($args) {
 	$redirect_url = '';
 	extract( shortcode_atts( array(
 		'redirect_url' => '',
-	), $args ), EXTR_IF_EXISTS );
+	), $args ) );
 
 
 	if(is_user_logged_in()) {
