@@ -6,7 +6,6 @@ function buddyforms_gdpr_shortcode_data_request( $atts ) {
     $number_one = rand( 1, 9 );
     $number_two = rand( 1, 9 );
 
-    // Check is 4.9.6 Core function wp_create_user_request() exists
     if ( function_exists( 'wp_create_user_request' ) ) {
 
         // Display the form

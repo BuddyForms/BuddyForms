@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1.7
+Stable tag: 2.2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -382,6 +382,43 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.2 – 20. Jun 2018
+* This is a huge update. Please test deeply.
+
+* GDPR Release
+* We belive we have done all possible to make BuddyForms GDPR compliance. GDPR is still a subject to change and we will adjust BuddyForms if we find out that something is not build GDPR compliance.
+* --> Make the architecture of BuddyForms GDPR Complaint
+* --> Add a new Form Element "GDPR Agreement"
+* --> Added GDPR Agreement templates for registration, post and contact forms
+* --> Add new general settings page to create default Agreement templates and form footer terms text and terms page link option.
+* --> Added a new shortcode "GDPR Export and Erase Form" [buddyforms_gpdr]. A form to add GDPR Personal Data Export and Erase request forms to your site
+* --> Added support for the Personal data exporter
+* --> Fixing how the plugin get the user data with a new way to disable it.
+* --> Added argument validation to take in count the wp core key and the field types matching.
+* --> Refactoring how the user meta is saved. Now all is in the same place.
+
+* Featured Image
+* Created a new uploader. Its now possible to upload featured images for unregistered logged off users.
+
+* Adding a link "create new entry" if the submission list is empty.
+* Fixing the form slug to get the form messages. Cleaning and refactoring the code.
+* Adding a code to show the related tabs in base of the form type select in the templates
+* Adding a filter to disable save usermeta data 'buddyforms_not_save_usermeta'.
+* Make sure tinyMCE exist otherwise it is braking the ajax.
+* Fixing the submit with ajax option for the form.
+* Adding function to map the existing fields to override the meta use in wp core instead of duplicate it.
+* Calling the new functions in the user-meta.php file, this is a new centralice way to get and write the user data.
+* Changing the loader priority of the user-meta.php file to use the new function in the frontend
+* Avoid send the notification id if the status is the same
+* Including Patty O'Hara suggestion to avoid send the email notification if the old status is equal to the new status. This will avoid to send the notification twice
+* Added the new GDPR Admin Notice
+* Added the new freemius sdk
+* Fixed a issue with the user meta. Some data have not get validated correctly.
+* save a issue with tinymce not updating the textbox during submit
+* Added a check to registration forms if the default values exist on update of a user to avoid notice
+* Added new filter and add a check to deactivate the activation mail with a filter
+* Fixing the remote preview url
 
 = 2.1.7 – 20. May 2018
 * Removed all dependencies to bootstrap. In earlier versions UI parts of the Admin have been build with Bootstrap. This parts have been rebuild to use WordPress native jQuery UI
