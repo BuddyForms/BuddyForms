@@ -22,7 +22,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	$redirect_to = '';
 	$post_id     = 0;
 	$post_parent = 0;
-	$bf_honeypot = '';
+	$bf_hweb = '';
 	
 	$current_user = wp_get_current_user();
 	$user_id      = $current_user->ID;
@@ -35,7 +35,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		'revision_id' => false,
 		'form_slug'   => 0,
 		'redirect_to' => $_SERVER['REQUEST_URI'],
-		'bf_honeypot' => '',
+		'bf_hweb' => '',
 	), $args ) );
 	
 	// Check if multisite is enabled and switch to the form blog id
@@ -73,7 +73,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 	
 	// Check HoneyPot
-	$bf_honeypot = $_POST[ 'bf_honeypot' ];
+	$bf_honeypot = $_POST[ 'bf_hweb' ];
 	if ( ! empty( $bf_honeypot ) ) {
 		return array(
 			'hasError'  => true,
