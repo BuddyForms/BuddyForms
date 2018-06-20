@@ -151,6 +151,20 @@ function buddyforms_locate_template( $slug ) {
 		$template_path = $template_file;
 	}
 
+	$empty_post_message = __( 'There were no posts found. Create your first post now! ', 'buddyforms' );
+	if ( ! empty( $form_slug ) ) {
+		$attached_page     = isset( $buddyforms[ $form_slug ]['attached_page'] ) ? $buddyforms[ $form_slug ]['attached_page'] : 'false';
+		$siteurl           = get_bloginfo( 'wpurl' );
+		$attached_page_url = get_permalink( $attached_page );
+
+		if ( ! empty( $attached_page_url ) ) {
+			$site_url_create_html = $attached_page_url . "create/" . $form_slug;
+		} else {
+			$site_url_create_html = $siteurl . '/' . $attached_page . '/create/' . $form_slug;
+		}
+		$empty_post_message = sprintf( __( 'There were no posts found. Create your first post <a href="%s" target="_blank" >now</a>!', 'buddyforms' ), $site_url_create_html );
+	}
+
 	// Do the include
 	include( $template_path );
 
@@ -166,13 +180,13 @@ function buddyforms_wp_login_form() {
 /**
  * @return string|boolean
  */
-function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array()) {
+function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array() ) {
 	global $buddyforms;
 
-	if(is_admin()){
+	if ( is_admin() ) {
 		return false;
 	}
-	
+
 	$redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
 
 	extract( shortcode_atts( array(
@@ -206,26 +220,26 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 }
 
 
-add_filter('login_form_bottom', 'baumensch_register_link');
-function baumensch_register_link($wp_login_form){
+add_filter( 'login_form_bottom', 'baumensch_register_link' );
+function baumensch_register_link( $wp_login_form ) {
 
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
 		$permalink = get_permalink( $buddyforms_registration_page );
 	} else {
-		$permalink = site_url('/wp-login.php?action=register&redirect_to=' . get_permalink());
-    }
+		$permalink = site_url( '/wp-login.php?action=register&redirect_to=' . get_permalink() );
+	}
 
 	// new login page
-	$wp_login_form .= '<a href="' . $permalink . '">' . __('Register', 'buddyforms') . '</a> ';
+	$wp_login_form .= '<a href="' . $permalink . '">' . __( 'Register', 'buddyforms' ) . '</a> ';
 
 	return $wp_login_form;
 }
 
 
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
-function buddyforms_add_lost_password_link($wp_login_form) {
-	return $wp_login_form .= '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __('Lost Password?', 'buddyforms') . '</a> ';
+function buddyforms_add_lost_password_link( $wp_login_form ) {
+	return $wp_login_form .= '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
 }
 
 
@@ -600,13 +614,13 @@ function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
 				if ( $field['slug'] == $field_slug ) {
 					$result_field = $field;
 					wp_cache_set( 'buddyform_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyform' );
-					
+
 					return $result_field;
 				}
 			}
 		}
 	}
-	
+
 	return $result_field;
 }
 
@@ -656,17 +670,17 @@ function buddyforms_get_form_slug_by_post_id( $post_id ) {
 	$value = wp_cache_get( 'buddyform_form_slug_' . $post_id, 'buddyform' );
 	if ( $value === false ) {
 		$value = get_post_meta( $post_id, '_bf_form_slug', true );
-		
+
 		$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
-		
+
 		$post_type = get_post_type( $post_id );
-		
+
 		if ( ! $value && isset( $buddyforms_posttypes_default[ $post_type ] ) || isset( $value ) && $value == 'none' ) {
 			$value = $buddyforms_posttypes_default[ $post_type ];
 		}
 		wp_cache_set( 'buddyform_form_slug_' . $post_id, $value, 'buddyform' );
 	}
-	
+
 	return $value;
 }
 
@@ -684,7 +698,7 @@ function buddyforms_get_post_types_from_forms() {
 		}
 		$result = array_unique( $result );
 	}
-	
+
 	return $result;
 }
 
@@ -720,16 +734,16 @@ function buddyforms_get_post_types() {
 }
 
 
-function buddyforms_get_all_pages( $type = 'id', $view = "form_builder") {
+function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
 	$page_on_front = get_option( 'page_on_front' );
-	$exclude = isset( $page_on_front ) ? $page_on_front : '';
+	$exclude       = isset( $page_on_front ) ? $page_on_front : '';
 
-	if( $view == 'form_builder' ){
+	if ( $view == 'form_builder' ) {
 		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-		$exclude .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
-    }
+		$exclude                      .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
+	}
 
 
 	$pages = get_pages( array(
@@ -779,9 +793,9 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 	if ( is_admin() && is_user_logged_in() ) {
 		return;
 	}
-	
+
 	global $post, $buddyforms;
-	
+
 	if ( empty( $post->ID ) ) {
 		return;
 	}
@@ -792,19 +806,19 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 	} else if ( ! empty( $post->post_name ) ) {
 		$form_slug = $post->post_name;
 	}
-	
+
 	if ( ! empty( $form_slug ) && ! array_key_exists( $form_slug, $buddyforms ) ) {
 		return;
 	}
-	
+
 	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 		return;
 	}
-	
+
 	$form = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
-	
+
 	$post_url = sprintf( 'post.php?post=%s&action=edit', $form->ID );
-	
+
 	$args = array(
 		'id'    => 'buddyforms-admin-edit-form',
 		'title' => __( 'Edit BuddyForm', 'buddyforms' ),
@@ -814,23 +828,23 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 			'class'        => 'admin-bar dashicons-before dashicons-buddyforms'
 		)
 	);
-	
+
 	$wp_admin_bar->add_node( $args );
 }
 
-add_action('buddyforms_form_hero_last', 'buddyforms_form_footer_terms');
-function buddyforms_form_footer_terms($html){
+add_action( 'buddyforms_form_hero_last', 'buddyforms_form_footer_terms' );
+function buddyforms_form_footer_terms( $html ) {
 
 	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 
 	$html .= ' <div class="terms"><p>';
-        if( ! empty( $buddyforms_gdpr['terms_label'] ) ){
-            $html .= '<span id="" class="buddyforms_terms_label">' . $buddyforms_gdpr['terms_label']  . '</span> ';
-        }
+	if ( ! empty( $buddyforms_gdpr['terms_label'] ) ) {
+		$html .= '<span id="" class="buddyforms_terms_label">' . $buddyforms_gdpr['terms_label'] . '</span> ';
+	}
 
-        if( isset( $buddyforms_gdpr['terms'] ) && $buddyforms_gdpr['terms'] != 'none' ){
-            $html .= '<a id="" class="" href="' . get_permalink( $buddyforms_gdpr['terms'] ) . '">' . get_the_title( $buddyforms_gdpr['terms'] ) . '</a>';
-        }
+	if ( isset( $buddyforms_gdpr['terms'] ) && $buddyforms_gdpr['terms'] != 'none' ) {
+		$html .= '<a id="" class="" href="' . get_permalink( $buddyforms_gdpr['terms'] ) . '">' . get_the_title( $buddyforms_gdpr['terms'] ) . '</a>';
+	}
 	$html .= '</p></div>';
 
 	return $html;

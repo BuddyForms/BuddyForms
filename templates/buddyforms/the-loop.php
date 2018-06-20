@@ -120,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php else : ?>
 
     <div id="message" class="info">
-        <p><?php _e( 'There were no posts found. Create your first post now!', 'buddyforms' ); ?></p>
+        <p><?php echo $empty_post_message; ?></p>
     </div>
 
 	<?php endif; ?>
