@@ -300,9 +300,10 @@ function buddyforms_settings_page_tabs_content() {
 
 
 
-					$registration_templat   = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address. ", 'buddyforms' );
-                    $post_template          = __( "By submitting this form you grant us the rights • to store your submitted contents in our database • to generate a post on our site based on your data • to make this post publicly accessible.", 'buddyforms' );
+					$registration_templat   = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   ", 'buddyforms' );
+                    $post_template          = __( "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ", 'buddyforms' );
 					$contact_templat        = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
+					$terms_label            = __('', 'buddyforms' );
 					?>
                     <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">
@@ -347,11 +348,11 @@ function buddyforms_settings_page_tabs_content() {
                                         <tr valign="top">
                                             <th scope="row" valign="top">
 												<?php _e( 'Form Footer Links', 'buddyforms' ); ?>
-                                                <p><small><?php _e( 'Please select your Terms and Conditions and your Privacy Policy page. If you choose you may add more Links. These will be displayed below the form and remain visible after pressing „submit“ - when the form disappears.', 'buddyforms' ); ?></small></p>
+                                                <p><small><?php _e( 'Please select your Terms and Conditions and and your Privacy Policy page. These will be displayed below the form and remain visible after pressing „submit“ - when the form disappears.', 'buddyforms' ); ?></small></p>
                                             </th>
                                             <td>
                                                 <label for="buddyforms_gdpr_terms_label"><p>Terms Label ( Will be displayed under the form )</p></label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label" name="buddyforms_gdpr[terms_label]"><?php echo empty($buddyforms_gdpr['terms_label']) ? '' : $buddyforms_gdpr['terms_label']; ?></textarea>
+                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label" name="buddyforms_gdpr[terms_label]"><?php echo empty($buddyforms_gdpr['terms_label']) ? $terms_label : $buddyforms_gdpr['terms_label']; ?></textarea>
 
                                                 <label for="buddyforms_gdpr_terms"><p>Terms Page ( Will be displayed as link after the terms label)</p></label>
                                                 <?php

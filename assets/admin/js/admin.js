@@ -312,39 +312,42 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document).on('click', '.bf_add_gdpr', function () {
 
 
-        var action = jQuery(this);
-        var args = action.attr('href').split("/");
-        var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
+        var action = jQuery( this );
+        var gdpr_type = jQuery( this ).attr( 'data-gdpr-type' );
+
+        var numItems = jQuery('#table_row_' + gdpr_type + '_select_options ul li').size();
 
         var type = jQuery('#gdpr_option_type').val();
-        var message = '';
 
+        var message = '';
         if(admin_text[type]){
             message = admin_text[type]
         }
+
+        var error_message = '';
         if(admin_text['error_message']){
             error_message = admin_text['error_message']
         }
 
         numItems = numItems + 1;
-        jQuery('#table_row_' + args[0] + '_select_options ul').append(
-            '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
+        jQuery('#table_row_' + gdpr_type + '_select_options ul').append(
+            '<li class="field_item field_item_' + gdpr_type + '_' + numItems + '">' +
             '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
-            '<textarea rows="5" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
-            '<textarea rows="2" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
+            '<textarea rows="5" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
+            '<textarea rows="2" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
             '</td><td class="manage-column column-author">' +
             '<div class="checkbox">' +
             '   <label class="">' +
-            '       <input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
+            '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
             '   </label>' +
             '</div>' +
             '<div class="checkbox">' +
             '   <label class="">' +
-            '       <input type="checkbox" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
+            '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
             '   </label>' +
             '</div>' +
             '</td><td class="manage-column column-author">' +
-            '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
+            '<a href="#" id="' + gdpr_type + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
             '</td></tr></li></tbody></table><hr>');
         return false;
 

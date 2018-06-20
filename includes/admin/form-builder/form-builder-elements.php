@@ -1307,7 +1307,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
                     <option value="other">Other</option>
                 </select>
             </td><td class="manage-column">
-                <a href="' . $field_id . '" class="button bf_add_gdpr">+</a>
+                <a href="#" data-gdpr-type="' . $field_id . '" class="button bf_add_gdpr">+</a>
             </td></tr></li></tbody></table>
      </div> ';
 
