@@ -277,7 +277,7 @@ function buddyforms_wp_insert_user() {
 				'key'       => $code,
 				'user'      => $new_user_id,
 				'form_slug' => $form_slug,
-				'_wpnonce'  => wp_create_nonce( 'buddyform_activate_user_link' )
+				'_wpnonce'  => buddyforms_create_nonce( 'buddyform_activate_user_link', $new_user_id )
 			), $activation_page );
 
 			add_user_meta( $new_user_id, 'has_to_be_activated', $code, true );
@@ -449,10 +449,30 @@ function buddyforms_activate_action() {
 	}
 	remove_query_arg( array( 'bf_activate_user_notice', 'bf_resend_activation_user_notice' ) );
 	$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT );
-//	delete_user_meta( $user_id, 'has_to_be_activated' );
-//	delete_user_meta( $user_id, 'bf_activation_link' );
+	delete_user_meta( $user_id, 'has_to_be_activated' );
+	delete_user_meta( $user_id, 'bf_activation_link' );
 
 	wp_safe_redirect( add_query_arg( 'bf_activate_user_notice', 'true', 'users.php' ) );
+}
+
+add_filter( 'nonce_user_logged_out', 'buddyforms_resend_activation_user_id', 11, 2 );
+/**
+ * Set the user id for the resend activation link
+ *
+ * @param $uid
+ * @param $action
+ *
+ * @return mixed
+ */
+function buddyforms_resend_activation_user_id( $uid, $action ) {
+	if ( $action === 'buddyform_activate_user_link' ) {
+		if ( empty( $_GET['user'] ) ) {
+			return $uid;
+		}
+		$uid = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT );
+	}
+
+	return $uid;
 }
 
 add_action( 'admin_action_buddyforms_resend_activation', 'buddyforms_resend_activate_action', 10, 3 );
@@ -473,18 +493,18 @@ function buddyforms_resend_activate_action() {
 	remove_query_arg( array( 'bf_activate_user_notice', 'bf_resend_activation_user_notice' ) );
 
 	$bf_activation_link = get_user_meta( $user_id, 'bf_activation_link', true );
-//	$url_query = wp_parse_url( $bf_activation_link );
-//	$args      = wp_parse_args( $url_query['query'] );
-//	$new_nonce = wp_create_nonce( 'buddyform_activate_user_link' );
-//
-//	$args['_wpnonce'] = $new_nonce;
-//	$activation_page  = get_home_url();
-//
-//	$activation_link = add_query_arg( $args, $activation_page );
-//
-//	$mail = buddyforms_activate_account_mail( $activation_link, $user_id );
-//
-//	update_user_meta( $user_id, 'bf_activation_link', $activation_link );
+	$url_query = wp_parse_url( $bf_activation_link );
+	$args      = wp_parse_args( $url_query['query'] );
+	$new_nonce = buddyforms_create_nonce( 'buddyform_activate_user_link', $user_id );
+
+	$args['_wpnonce'] = $new_nonce;
+	$activation_page  = get_home_url();
+
+	$activation_link = add_query_arg( $args, $activation_page );
+
+	$mail = buddyforms_activate_account_mail( $activation_link, $user_id );
+
+	update_user_meta( $user_id, 'bf_activation_link', $activation_link );
 	wp_safe_redirect( add_query_arg( 'bf_resend_activation_user_notice', 'true', 'users.php' ) );
 }
 
