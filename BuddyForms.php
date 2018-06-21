@@ -185,6 +185,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-profile-image.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
