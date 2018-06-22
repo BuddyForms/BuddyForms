@@ -849,3 +849,31 @@ function buddyforms_form_footer_terms( $html ) {
 
 	return $html;
 }
+
+/**
+ * Generate a nonce for certain user. This is used to generate the activation link for other user
+ * NOTE: when the nonce is generate for other user the token is an empty string,
+ * because the nonce will be validate when the session not exist yet.
+ *
+ * @param int $action
+ * @param int $user_id
+ *
+ * @return bool|string
+ */
+function buddyforms_create_nonce( $action = - 1, $user_id = 0 ) {
+	$token = '';
+	if ( $user_id === 0 ) {
+		$user = wp_get_current_user();
+		$uid  = (int) $user->ID;
+		if ( ! $uid ) {
+			/** This filter is documented in wp-includes/pluggable.php */
+			$uid = apply_filters( 'nonce_user_logged_out', $uid, $action );
+		}
+		$token = wp_get_session_token();
+	} else {
+		$uid = $user_id;
+	}
+	$i = wp_nonce_tick();
+
+	return substr( wp_hash( $i . '|' . $action . '|' . $uid . '|' . $token, 'nonce' ), - 12, 10 );
+}
