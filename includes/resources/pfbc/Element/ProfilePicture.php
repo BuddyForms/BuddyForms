@@ -38,7 +38,10 @@ class Element_ProfilePicture extends Element_Textbox
     }
 
 
-    function bp_attachments_enqueue_scripts( $class = '' ) {
+    /*
+     * load the required resource to  the avatar and uploader components
+     */
+    function buddyforms_attachments_enqueue_scripts( $class = '' ) {
         // Enqueue me just once per page, please.
         if ( did_action( 'bp_attachments_enqueue_scripts' ) ) {
             return;
@@ -252,7 +255,7 @@ class Element_ProfilePicture extends Element_Textbox
     }
     function  custom_avatar_scripts(){
         if(!is_user_logged_in()){
-            $this-> bp_attachments_enqueue_scripts( 'BP_Attachment_Avatar' );
+            $this-> buddyforms_attachments_enqueue_scripts( 'BP_Attachment_Avatar' );
         }
         else{
             bp_attachments_enqueue_scripts( 'BP_Attachment_Avatar' );

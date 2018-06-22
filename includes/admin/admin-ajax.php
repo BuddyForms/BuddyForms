@@ -8,12 +8,16 @@
 add_action('wp_ajax_nopriv_handle_dropped_media', 'BMP_handle_dropped_media');
 add_action( 'wp_ajax_handle_dropped_media', 'BMP_handle_dropped_media' );
 add_action( 'wp_ajax_nopriv_bp_avatar_upload', 'bf_avatar_ajax_upload' );
-add_action( 'buddyforms_process_submission_end','profile_picture_user_registration_ended' ,10,1 );
-
-add_action( 'buddyforms_after_activate_user','bf_after_activate_user' ,1,2 );
+add_action( 'buddyforms_process_submission_end','buddyforms_profile_picture_user_registration_ended' ,10,1 );
 
 
-function profile_picture_user_registration_ended($args){
+
+/*
+ * When register a new user add the url of the uploaded image and
+ * the crop dimessions to the user metadata
+ *
+ * */
+function buddyforms_profile_picture_user_registration_ended($args){
     global $bp;
     if(isset($args['user_id']) && isset($_POST['user_login']) ) {
         add_user_meta($args['user_id'], 'profile_image', $_POST['original-file-bf'], true );
@@ -23,56 +27,12 @@ function profile_picture_user_registration_ended($args){
         add_user_meta($args['user_id'], 'crop_x', $_POST['crop_x_bf'], true );
         add_user_meta($args['user_id'], 'crop_y', $_POST['crop_y_bf'], true );
 
-        /*$user_id = $args['user_id'];
-        $bp->displayed_user->id = $user_id;
-        $bp->loggedin_user->id = $user_id;
-        $bp->displayed_user->domain = bp_core_get_user_domain( $bp->displayed_user->id );
-        $bp->displayed_user->userdata = bp_core_get_core_userdata( $bp->displayed_user->id );
-        $bp->displayed_user->fullname = bp_core_get_user_displayname( $bp->displayed_user->id );*/
-
-        // Set the global user object
-
-        //$current_user = get_user_by( 'id', $args['user_id'] );
-
-        // set the WP login cookie
-      //  $secure_cookie = is_ssl() ? true : false;
-       /* wp_set_auth_cookie( $args['user_id'], true, $secure_cookie );
-        $r = array(
-            'item_id'       => $args['user_id'],
-            'object'        => 'user',
-            'avatar_dir'    => 'avatars',
-            'original_file' => $_POST['original-file-bf'],
-            'crop_w'        => $_POST['crop_w_bf'],
-            'crop_h'        => $_POST['crop_h_bf'],
-            'crop_x'        => $_POST['crop_x_bf'],
-            'crop_y'        => $_POST['crop_y_bf']
-        );
-
-        if ( crop_profile_picture_registration( $r ) ) {
-            $return = array(
-                'avatar' => html_entity_decode( bp_core_fetch_avatar( array(
-                    'object'  => 'user',
-                    'item_id' =>  $args['user_id'],
-                    'html'    => false,
-                    'type'    => 'full',
-                ) ) ),
-                'feedback_code' => 2,
-                'item_id'       =>  $args['user_id'],
-            );
-
-            do_action( 'xprofile_avatar_uploaded', (int) $args['user_id'], 'avatar', $r );
-
-              wp_send_json_success( $return );
-        }
-
-       // apply_filters('login_redirect','','',$args['user_id']) ;*/
     }
-
-
-
 }
 
-
+/*
+ * upload the image to the avatar directory
+ */
 function bf_avatar_ajax_upload() {
     // Bail if not a POST action.
     if ( 'POST' !== strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {

@@ -2,6 +2,11 @@
 
 add_action( 'buddyforms_after_activate_user', 'buddyforms_after_activate_user', 10, 1 );
 
+/*
+ * after the user activation get the image from the user meta and set it as profile
+ * image of the activated user.
+ *
+ */
 function buddyforms_after_activate_user( $user_id ) {
 	global $bp;
 	$original_file = get_user_meta( $user_id, 'profile_image', true );
@@ -26,7 +31,7 @@ function buddyforms_after_activate_user( $user_id ) {
 		'crop_x'        => $crop_x,
 		'crop_y'        => $crop_y
 	);
-	if ( crop_profile_picture_registration( $r ) ) {
+	if (  buddyforms_crop_profile_picture_registration( $r ) ) {
 		$return = array(
 			'avatar'        => html_entity_decode( bp_core_fetch_avatar( array(
 				'object'  => 'user',
@@ -38,14 +43,14 @@ function buddyforms_after_activate_user( $user_id ) {
 			'item_id'       => $user_id,
 		);
 
-		// do_action( 'xprofile_avatar_uploaded', (int)$user_id, 'avatar', $r );
+		 do_action( 'xprofile_avatar_uploaded', (int)$user_id, 'avatar', $r );
 
 		// wp_send_json_success( $return );
 	}
 }
 
 
-function crop_profile_picture( $args = array() ) {
+function  buddyforms_crop_profile_picture( $args = array() ) {
 
 	// Bail if the original file is missing.
 	if ( empty( $args['original_file'] ) ) {
@@ -162,8 +167,8 @@ function crop_profile_picture( $args = array() ) {
 	return $avatar_types;
 }
 
-function crop_profile_picture_registration( $args = array() ) {
-	$cropped = crop_profile_picture( $args );
+function  buddyforms_crop_profile_picture_registration( $args = array() ) {
+	$cropped =  buddyforms_crop_profile_picture( $args );
 
 	// Check for errors.
 	if ( is_wp_error( $cropped['full'] ) || is_wp_error( $cropped['thumb'] ) ) {
