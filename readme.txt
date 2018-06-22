@@ -383,6 +383,15 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
+= 2.2.1 – 22. Jun 2018
+* Adding a filter at top of the user list to filter the list of user for the buddyforms pending for activation users.
+* Adding the activation and resend activation email link into the admin user list.
+* Adding a buddyform function to generate nonces, to use in the activation process of users.
+* Saving the activation link into user meta.
+* Adding a function to get the current user id from the get parameters when the activation process is running.
+* Applying code style.
+* Mke the review notification grab the correct version number.
+
 = 2.2 – 20. Jun 2018
 * This is a huge update. Please test deeply.
 
