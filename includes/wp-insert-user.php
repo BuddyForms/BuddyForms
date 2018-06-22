@@ -327,6 +327,8 @@ function buddyforms_errors() {
 function buddyforms_activate_account_mail( $activation_link, $new_user_id ) {
 	global $form_slug, $buddyforms;
 
+	delete_transient('buddyforms_get_users_pending_for_activation');
+
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
 	$siteurlhtml = "<a href='$siteurl' target='_blank' >$siteurl</a>";
@@ -489,13 +491,13 @@ function buddyforms_resend_activate_action() {
 	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'bf_resend_activation' ) ) {
 		return;
 	}
-	$user_id            = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT );
+	$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT );
 	remove_query_arg( array( 'bf_activate_user_notice', 'bf_resend_activation_user_notice' ) );
 
 	$bf_activation_link = get_user_meta( $user_id, 'bf_activation_link', true );
-	$url_query = wp_parse_url( $bf_activation_link );
-	$args      = wp_parse_args( $url_query['query'] );
-	$new_nonce = buddyforms_create_nonce( 'buddyform_activate_user_link', $user_id );
+	$url_query          = wp_parse_url( $bf_activation_link );
+	$args               = wp_parse_args( $url_query['query'] );
+	$new_nonce          = buddyforms_create_nonce( 'buddyform_activate_user_link', $user_id );
 
 	$args['_wpnonce'] = $new_nonce;
 	$activation_page  = get_home_url();
@@ -524,6 +526,70 @@ function buddyforms_admin_users_notices() {
 		echo '</div>';
 	}
 }
+
+add_filter( 'views_users', 'buddyforms_admin_users_views', 50, 1 );
+/**
+ * Add a new view to get only the list of need for activation users
+ *
+ * @param $views
+ *
+ * @return mixed
+ */
+function buddyforms_admin_users_views( $views ) {
+	if ( ! is_multisite() ) {
+		$current_link_attributes = '';
+		if ( ! empty( $_GET['bf_users_need_activation'] ) ) {
+			$current_link_attributes = ' class="current" aria-current="page"';
+		}
+		$url                 = add_query_arg( 'bf_users_need_activation', 'true', 'users.php' );
+		$name                = apply_filters( 'buddyforms_admin_user_list_head_filter_text', __( 'Need Activation', 'buddyforms' ) );
+		$pending_users       = buddyforms_get_users_pending_for_activation();
+		$name                = sprintf( __( '%1$s <span class="count">(%2$s)</span>' ), $name, number_format_i18n( $pending_users ) );
+		$views['bf_pending'] = "<a href='" . esc_url( $url ) . "'$current_link_attributes>$name</a>";
+	}
+
+	return $views;
+}
+
+add_filter( 'users_list_table_query_args', 'buddyforms_admin_users_list_table_query_args', 50, 1 );
+/**
+ * Set the argument of the query for the admin user list table
+ *
+ * @param $views
+ *
+ * @return mixed
+ */
+function buddyforms_admin_users_list_table_query_args( $args ) {
+	if ( ! is_multisite() ) {
+		if ( ! empty( $_GET['bf_users_need_activation'] ) ) {
+			$args['meta_key']     = 'bf_activation_link';
+			$args['meta_compare'] = 'EXISTS';
+		}
+	}
+
+	return $args;
+}
+
+/**
+ * Count the amount of user where need activation
+ *
+ * @return int
+ */
+function buddyforms_get_users_pending_for_activation() {
+	$count = get_transient( 'buddyforms_get_users_pending_for_activation' );
+	if ( $count === false ) {
+		$args  = array(
+			'meta_key'     => 'bf_activation_link',
+			'meta_compare' => 'EXISTS',
+		);
+		$query = new WP_User_Query( $args );
+		$count = $query->get_total();
+		set_transient( 'buddyforms_get_users_pending_for_activation', $count );
+	}
+
+	return $count;
+}
+
 
 add_action( 'template_redirect', 'buddyforms_activate_user', 0, 0 );
 function buddyforms_activate_user() {
