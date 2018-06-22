@@ -79,7 +79,7 @@ function buddyforms_rating_admin_notice() {
 	if ( ! get_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed' ) ) {
 		?>
 		<div class="notice notice-success is-dismissible">
-			<h4 style="margin-top: 20px;">Hey, you just updated to the 2.1 version of BuddyForms – that’s awesome!</h4>
+			<h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo BUDDYFORMS_VERSION ?> version of BuddyForms – that’s awesome!</h4>
 			<p style="line-height: 2.2; font-size: 13px;">Could you please do me a BIG favor and give it a 5-star rating
 				on WordPress? Just to help us spread the word and boost our motivation.
 			<p>
