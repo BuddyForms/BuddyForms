@@ -632,13 +632,13 @@ function buddyforms_activate_user() {
 			$form_slug = filter_input( INPUT_GET, 'form_slug' );
             do_action('buddyforms_after_activate_user', $user_id, $form_slug);
 			if ( ! empty( $form_slug ) ) {
+                remove_query_arg('key' );
+                remove_query_arg('user' );
+                remove_query_arg('form_slug' );
+                remove_query_arg('_wpnonce' );
 				if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) ) {
 					if ( isset( $buddyforms[ $form_slug ]['registration']['activation_page'] ) && $buddyforms[ $form_slug ]['registration']['activation_page'] == 'home' ) {
 						$url = get_home_url();
-                        remove_query_arg('key' );
-                        remove_query_arg('user' );
-                        remove_query_arg('form_slug' );
-                        remove_query_arg('_wpnonce' );
                         wp_safe_redirect( $url );
                         exit;
 
@@ -646,7 +646,9 @@ function buddyforms_activate_user() {
 						if ( ! ( $buddyforms[ $form_slug ]['registration']['activation_page'] == 'referrer' || $buddyforms[ $form_slug ]['registration']['activation_page'] == 'none' ) ) {
 							$url = get_permalink( $buddyforms[ $form_slug ]['registration']['activation_page'] );
 							wp_safe_redirect( $url );
-						}
+                            exit;
+
+                        }
 					}
 				}
 			}
