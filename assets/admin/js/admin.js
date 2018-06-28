@@ -72,7 +72,7 @@ function load_formbuilder_template(template) {
                     	var form_builder = jQuery('.buddyforms_forms_builder');
 	                    form_builder.replaceWith(val);
                         bf_update_list_item_number();
-	                    jQuery.event.trigger({type: "buddyform:load_fields"});
+                        jQuery(document.body).trigger({type: "buddyform:load_fields"});
                         break;
                     case 'mail_notification':
                         jQuery('.buddyforms_accordion_notification').html(val);
@@ -144,14 +144,12 @@ function load_formbuilder_template(template) {
  */
 function buddyform_apply_template_to_element(element, value){
 	if(element.length === 1){
-		element.val(value).trigger('change');
+         element.val(value).trigger('change');
 	} else {
 		jQuery.each(element, function () {
 			var current = jQuery(this);
 			var current_val = current.val();
-			if(current_val == value) {
-				current.attr('checked', 'checked');
-			}
+			current.prop( "checked", (current_val === value) );
 		});
 	}
 }
@@ -404,7 +402,7 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    jQuery('#mail_notification_add_new').live('click', function () {
+    jQuery('#mail_notification_add_new').on('click', function () {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
@@ -430,7 +428,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Add new mail notification
     //
-    jQuery('#post_status_mail_notification_add_new').live('click', function () {
+    jQuery('#post_status_mail_notification_add_new').on('click', function () {
 
         var error = false;
         var trigger = jQuery('.post_status_mail_notification_trigger select').val();
@@ -508,7 +506,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // #bf-create-page-modal
     //
-    jQuery('#bf_create_page_modal').live('click', function () {
+    jQuery('#bf_create_page_modal').on('click', function () {
 
         var dialog = jQuery('<div></div>').dialog({
             modal: true,
