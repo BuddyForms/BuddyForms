@@ -109,7 +109,7 @@ function buddyforms_my_edit_post_link( $url, $post_ID ) {
 		return $url;
 	}
 
-	if ( isset( $buddyforms[ $form_slug ] ) && $buddyforms[ $form_slug ]['post_type'] == $post_type ) {
+	if ( isset( $buddyforms[ $form_slug ] ) && $buddyforms[ $form_slug ]['post_type'] == $post_type && ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
 
 		$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 		$url       = $permalink . 'edit/' . $form_slug . '/' . $post_ID;
