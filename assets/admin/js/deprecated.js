@@ -2,7 +2,7 @@ jQuery(document).ready(function (jQuery) {
 //
 // This is the old sidbear based add form elements function. Its deprecated but let us support it till 2.0
 //
-    jQuery('.bf_add_element_action').live('click', function () {
+    jQuery('.bf_add_element_action').on('click', function () {
 
         var action = jQuery(this);
         var post_id = bf_getUrlParameter('post');
