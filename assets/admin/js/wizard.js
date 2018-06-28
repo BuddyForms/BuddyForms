@@ -247,7 +247,7 @@ jQuery(document).ready(function (jQuery) {
             });
         }
 		function load_field_containers() {
-			jQuery.event.trigger({type: "buddyform:load_fields"});
+            jQuery(document.body).trigger({type: "buddyform:load_fields"});
 		}
 
         add_form_elements_select();

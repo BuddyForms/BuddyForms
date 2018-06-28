@@ -72,7 +72,7 @@ function load_formbuilder_template(template) {
                     	var form_builder = jQuery('.buddyforms_forms_builder');
 	                    form_builder.replaceWith(val);
                         bf_update_list_item_number();
-	                    jQuery.event.trigger({type: "buddyform:load_fields"});
+                        jQuery(document.body).trigger({type: "buddyform:load_fields"});
                         break;
                     case 'mail_notification':
                         jQuery('.buddyforms_accordion_notification').html(val);
@@ -144,14 +144,12 @@ function load_formbuilder_template(template) {
  */
 function buddyform_apply_template_to_element(element, value){
 	if(element.length === 1){
-		element.val(value).trigger('change');
+         element.val(value).trigger('change');
 	} else {
 		jQuery.each(element, function () {
 			var current = jQuery(this);
 			var current_val = current.val();
-			if(current_val == value) {
-				current.attr('checked', 'checked');
-			}
+			current.prop( "checked", (current_val === value) );
 		});
 	}
 }

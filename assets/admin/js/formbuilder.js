@@ -48,7 +48,7 @@ jQuery(function () {
 
 });
 jQuery(document).ready(function () {
-	jQuery.event.trigger({type: "buddyform:load_fields"});
+	jQuery(document.body).trigger({type: "buddyform:load_fields"});
 	//
 	// Show Hide Color Picker
 	//
@@ -148,7 +148,7 @@ jQuery(document).ready(function () {
 
 					bf_taxonomy_input(field_id)
 				}
-				jQuery.event.trigger({type: "buddyform:load_fields"});
+				jQuery(document.body).trigger({type: "buddyform:load_fields"});
 			},
 			error: function () {
 				jQuery('.formbuilder-spinner').removeClass('is-active');
