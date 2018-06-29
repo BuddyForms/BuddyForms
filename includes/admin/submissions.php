@@ -224,7 +224,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				}
 				break;
 		}
-		echo apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug, $bf_value);
+		echo apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug);
 	}
 
 	function prepare_items() {
