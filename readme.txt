@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2
+Stable tag: 2.2.2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -382,6 +382,16 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.2.2 – 29. Jun 2018
+Fixing the resend activation link for user pending of activations
+Improved the submission view UI
+Added a new filter buddyform_after_activate_user. To hook just after the user got activated.
+Removed duplicated argument `$bf_value` from the filter `bf_submission_column_default`.
+Fixing a notice related to an empty attached_page option
+Updating the js functions to not use live, thanks to @virtualLast
+Removing deprecated functions and fixed several smaller issues
+Prefixed custom_user_profile_fields function to avoid conflicts with other plugins using the same name.
 
 = 2.2.1 – 22. Jun 2018
 * Adding a filter at top of the user list to filter the list of user for the buddyforms pending for activation users.
