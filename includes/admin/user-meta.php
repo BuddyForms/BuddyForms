@@ -1,13 +1,13 @@
 <?php
 
 // Hooks near the bottom of profile page (if current user)
-add_action( 'show_user_profile', 'custom_user_profile_fields' );
+add_action( 'show_user_profile', 'buddyforms_user_profile_fields' );
 
 // Hooks near the bottom of the profile page (if not current user)
-add_action( 'edit_user_profile', 'custom_user_profile_fields' );
+add_action( 'edit_user_profile', 'buddyforms_user_profile_fields' );
 
 // @param WP_User $user
-function custom_user_profile_fields( $user ) {
+function buddyforms_user_profile_fields( $user ) {
 
 	global $buddyforms;
 
