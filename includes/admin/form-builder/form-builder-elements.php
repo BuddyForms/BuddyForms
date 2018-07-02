@@ -246,10 +246,12 @@ function buddyforms_display_form_element( $args ) {
 			) );
 			
 			$captcha_site_key                           = ! empty( $customfield['captcha_site_key'] ) ? $customfield['captcha_site_key'] : '';
-			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( 'Site Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
+			$short_description                                      = sprintf( __( "Sign up for a free <a target='_blank' href='%s'>reCaptcha</a> Keys.", 'buddyforms' ), 'https://www.google.com/recaptcha/' );
+			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( "Site Key.", 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
 				'data'     => $field_id,
 				'value'    => $captcha_site_key,
-				'required' => 1
+				'required' => 1,
+				'shortDesc' => $short_description
 			) );
 			$captcha_private_key                           = ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '';
 			$form_fields['general']['captcha_private_key'] = new Element_Textbox( '<b>' . __( 'Private Key', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_private_key]", array(

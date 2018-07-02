@@ -32,12 +32,16 @@ class Validation_Captcha extends Validation {
 	 * @return bool
 	 */
 	public function isValid( $value ) {
-		require_once( dirname( __FILE__ ) . "/../Resources/recaptchalib.php" );
-		$resp = recaptcha_check_answer( $this->privateKey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"] );
-		if ( $resp->is_valid ) {
+		$captcha = sanitize_text_field( $_POST["g-recaptcha-response"] );
+		$resp    = $this->validate_google_captcha( $captcha, $this->privateKey );
+		if ( ! empty( $resp['success'] ) && boolval( $resp['success'] ) === true ) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public function validate_google_captcha( $captcha, $secret ) {
+		return json_decode( file_get_contents( "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ), true );
 	}
 }
