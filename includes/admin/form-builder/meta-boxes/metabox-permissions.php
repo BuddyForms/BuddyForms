@@ -136,7 +136,7 @@ function buddyforms_permissions_screen() {
 			'value'  => $form_user_role,
 			'inline' => true,
 			'id' => 'permission_for_'.$role_name,
-			'style'  => 'margin-right: 60px;',
+			'style'  => 'margin-right: 15px; margin-left: 15px; float: left;',
 		) );
 		
 		if ( $role_name == 'administrator' ) {

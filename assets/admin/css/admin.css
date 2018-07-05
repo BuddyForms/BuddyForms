@@ -1889,3 +1889,7 @@ div.checkbox>label>input[type='checkbox'][value='enable_all'],
 div.checkbox>p>input[type='checkbox'][value='enable_all']{
 	display: none;
 }
+
+div.checkbox > p.checkbox-inline > input[type=“checkbox”] {
+    float: left;
+}
