@@ -9,6 +9,20 @@ jQuery(document).ready(function ($) {
             this._events[name].forEach(function(cb) { cb.apply(this, args) }.bind(this));
         return this;
     };*/
+    $( "form" ).click(function( event ) {
+
+        var $form = $(this).closest('form');
+        var target = event.target.name;
+        if (target == 'submitted' || target == 'save') {
+
+
+           jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
+            jQuery("button[type=submit].bf-submit").html("upload in process");
+            var myDropzone = Dropzone.forElement(".dropzone");
+            var resultado = myDropzone.processQueue();
+            event.preventDefault();
+        }
+    });
 	$(".upload_field").each(function (index, value) {
 		var current = $(this),
 			id = current.attr('id'),
@@ -29,6 +43,7 @@ jQuery(document).ready(function ($) {
 			maxFilesize: max_size,
 			acceptedFiles: accepted_files,
 			maxFiles: multiple_files,
+            autoProcessQueue: false,
 			clickable: clickeable,
 			addRemoveLinks: clickeable,
 			init: function () {
@@ -37,15 +52,15 @@ jQuery(document).ready(function ($) {
 
 
 				this.on('complete', function () {
-					jQuery("button[type=submit].bf-submit").removeAttr("disabled");
-                    jQuery("button[type=submit].bf-submit").html("Submit");
+					/*jQuery("button[type=submit].bf-submit").removeAttr("disabled");
+                    jQuery("button[type=submit].bf-submit").html("Submit");*/
 
 				});
 
 				this.on('addedfile', function () {
-					jQuery("#field_"+id+"-error").text("");
+					/*jQuery("#field_"+id+"-error").text("");
 					jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
-                    jQuery("button[type=submit].bf-submit").html("upload in process");
+                    jQuery("button[type=submit].bf-submit").html("upload in process");*/
 				});
 
 				this.on('sending', function (file, xhr, formData) {
@@ -64,6 +79,12 @@ jQuery(document).ready(function ($) {
 						idsFormat = ids;
 					}
 					currentField.val(idsFormat);
+					var remainingFilesonQueque=this.getUploadingFiles().length;
+					if(remainingFilesonQueque==0){
+                        var $form = $("#"+id).closest('form');
+                        $form.submit();
+					}
+
 				});
 
 				this.on('error', function (file, response) {
