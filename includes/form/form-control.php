@@ -339,7 +339,55 @@ function buddyforms_process_submission( $args = Array() ) {
 		if ( is_user_logged_in() ) {
 			$user_id = buddyforms_wp_update_user();
 		}
-		
+		/*
+		 * Upload
+		 */
+        $result        = '';
+        $attachment_id = '';
+        $formSlug      = $_POST['form_slug'];
+        $buddyFData    = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
+        foreach ( $buddyFData as $key => $value ) {
+            $field = $value['slug'];
+            $type  = $value['type'];
+            $post  = get_post( $post_id );
+            if ( $type == 'upload' ) {
+                $key_value          = $_POST[ $field ];
+
+                $attachment_id = explode( ",", $key_value );
+                break;
+            }
+        }
+
+        $upload_dir = wp_upload_dir(); // Set upload folder
+        $absolute_path = wp_upload_dir()['path'];
+        foreach ( $attachment_id as $id_value ) {
+            $metadata =   wp_prepare_attachment_for_js($id_value);
+            $file_name =  $metadata['filename'];
+            $wp_filetype   = wp_check_filetype( $file_name, null );
+            $attachment    = array(
+                'post_mime_type' => $wp_filetype['type'],
+                'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
+                'post_content'   => '',
+                'post_status'    => 'inherit',
+                'ID'             => $id_value,
+                'post_parent' => $post_id
+            );
+
+            // Create the attachment
+            $attach_id = wp_insert_attachment( $attachment, $absolute_path .'/' . $file_name, $post_id );
+            // Define attachment metadata
+            $attach_data = wp_generate_attachment_metadata( $attach_id, $absolute_path .'/' . $file_name );
+
+            // Assign metadata to attachment
+            wp_update_attachment_metadata( $attach_id, $attach_data );
+
+            // And finally assign featured image to post
+
+        }
+
+		/*
+		 * End Upload
+		 */
 		if ( isset( $_POST['featured_image'] ) ) {
 			
 			$attach_id = $_POST['featured_image'];
