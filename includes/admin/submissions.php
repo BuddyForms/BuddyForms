@@ -1,12 +1,13 @@
 <?php
 add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
 function buddyforms_create_submissions_page() {
-	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'buddyforms_submissions', 'buddyforms_submissions_screen' );
+    $hook = add_menu_page('Submissions', 'BuddyForm Submissions', 'activate_plugins', 'buddyforms_submissions', 'buddyforms_submissions_screen','dashicons-media-spreadsheet');
+	//$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'activate_plugins', 'buddyforms_submissions', 'buddyforms_submissions_screen' );
 	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
 }
 
 function buddyforms_submissions_add_options() {
-	global $bf_submissions_table;
+    global $bf_submissions_table;
 
 	$option = 'per_page';
 	$args   = array(
@@ -15,9 +16,10 @@ function buddyforms_submissions_add_options() {
 		'option'  => 'entries_per_page'
 	);
 	add_screen_option( $option, $args );
+    $bf_submissions_table = new BuddyForms_Submissions_List_Table;
 
 	//Create an instance of our package class...
-	$bf_submissions_table = new BuddyForms_Submissions_List_Table;
+
 
 }
 
@@ -114,7 +116,7 @@ function redirect_after_delete() {
 	}
 }
 
-add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 1 );
+add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 3 );
 /**
  * @param $status
  * @param $option
@@ -122,7 +124,7 @@ add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 1 );
  *
  * @return mixed
  */
-function buddyforms_submissions_set_option( $value ) {
+function buddyforms_submissions_set_option( $status, $option, $value ) {
 	return $value;
 }
 
@@ -227,6 +229,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		echo apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug);
 	}
 
+
+
+
 	function prepare_items() {
 		global $wpdb;
 
@@ -236,9 +241,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$hidden   = array();
 		$sortable = $this->get_sortable_columns();
 
-		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->_column_headers = $this->get_column_info();
 
-		$this->process_bulk_action();
+		$this->get_bulk_actions();
 
 		$data = array();
 		if ( isset( $_GET['form_slug'] ) ) {
@@ -270,6 +275,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$columns = array(
+            'cb'        => '<input type="checkbox" />',
 			'ID'   => 'ID',
 			'Date' => 'Date',
 		);
