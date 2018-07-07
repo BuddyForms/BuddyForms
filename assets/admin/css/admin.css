@@ -1893,3 +1893,7 @@ div.checkbox>p>input[type='checkbox'][value='enable_all']{
 div.checkbox > p.checkbox-inline > input[type=“checkbox”] {
     float: left;
 }
+
+input.screen-per-page{
+    width: 4em !important;
+}

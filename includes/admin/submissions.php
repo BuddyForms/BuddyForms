@@ -1,130 +1,148 @@
 <?php
-add_action( 'admin_menu', 'buddyforms_create_submissions_page' );
-function buddyforms_create_submissions_page() {
-	$hook = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'manage_options', 'buddyforms_submissions', 'buddyforms_submissions_screen' );
-	add_action( "load-$hook", 'buddyforms_submissions_add_options' );
-}
 
-function buddyforms_submissions_add_options() {
-	global $bf_submissions_table;
+class BuddyFormsSubmissionPage {
+	/**
+	 * @var BuddyForms_Submissions_List_Table
+	 */
+	private $bf_submissions_table;
 
-	$option = 'per_page';
-	$args   = array(
-		'label'   => 'Entries',
-		'default' => 10,
-		'option'  => 'entries_per_page'
-	);
-	add_screen_option( $option, $args );
+	public function __construct() {
+		add_action( 'admin_menu', array( $this, 'buddyforms_create_submissions_page' ) );
 
-	//Create an instance of our package class...
-	$bf_submissions_table = new BuddyForms_Submissions_List_Table;
+		add_filter( 'set-screen-option', array( $this, 'buddyforms_submissions_set_option' ), 10, 3 );
+		add_action( 'admin_init', array( $this, 'redirect_after_delete' ) );
+	}
 
-}
 
-function buddyforms_submissions_screen() {
-	/** @var BuddyForms_Submissions_List_Table $bf_submissions_table */
-	global $buddyforms, $bf_submissions_table, $form_slug, $post_id;
+	public function buddyforms_create_submissions_page() {
+		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'activate_plugins', 'buddyforms_submissions', array( $this, 'buddyforms_submissions_screen' ) );
+		add_action( "load-$buddyforms_submission_admin_page", array( $this, 'buddyforms_submissions_add_options' ) );
+	}
 
-	// Check that the user is allowed to update options
-	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
-	} ?>
+	public function buddyforms_submissions_add_options() {
+		$option = 'per_page';
+		$args   = array(
+			'label'   => 'Entries',
+			'default' => 10,
+			'option'  => 'entries_per_page'
+		);
+		add_screen_option( $option, $args );
 
-    <div id="post" class="bf_admin_wrap wrap">
+		$this->bf_submissions_table = new BuddyForms_Submissions_List_Table;
+	}
 
-		<?php
-		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
-		$bf_submissions_table->prepare_items();
-		?>
+	public function buddyforms_submissions_screen() {
+		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
 
-        <div id="icon-users" class="icon32"><br/></div>
-        <div id="buddyforms_admin_main_menu" class="">
-            <ul>
-                <li>
-
-                    <h4>Select a form to display the submissions</h4>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function (jQuery) {
-                            jQuery("#buddyforms_admin_menu_submissions_form_select").change(function () {
-                                window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
-                            });
-                        });
-                    </script>
-                    <select id="buddyforms_admin_menu_submissions_form_select">
-                        <option value="none">Select Form</option>
-						<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-                            <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
-								<?php echo $form['name']; ?>
-                            </option>
-						<?php } ?>
-                    </select>
-                </li>
-            </ul>
-        </div>
-
-		<?php if ( isset( $_GET['form_slug'] ) && ! isset( $_GET['entry'] ) ) { ?>
-            <form id="filter" method="get">
-                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-				<?php $bf_submissions_table->display(); ?>
-            </form>
-		<?php } ?>
-
-		<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
-			$form_slug = get_post_meta( $_GET['entry'], '_bf_form_slug', true );
-			$post_id   = $_GET['entry'];
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
+		// Check that the user is allowed to update options
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 		} ?>
-    </div>
-	<?php
-}
+        <div id="post" class="bf_admin_wrap wrap">
+			<?php
+			include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
+			?>
+            <hr style="margin-bottom: 0px !important;"/><?php
+			if ( isset( $_GET['form_slug'] ) ) {
+				$current_screen->set_parentage( $parent_file );
+				$current_screen->render_screen_meta();
+			}
+			$this->bf_submissions_table->prepare_items();
+			?>
 
-add_action( 'admin_init', 'redirect_after_delete' );
-function redirect_after_delete() {
-	global $buddyforms;
-	
-	$action    = isset( $_GET['action'] ) ? $_GET['action'] : "";
-	$entry     = isset( $_GET['post'] ) ? $_GET['post'] : "";
-	$form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
-	if ( $action === 'delete' ) {
-		$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
-		foreach ( $buddyFData as $key => $value ) {
-			
-			$field = $value['slug'];
-			$type  = $value['type'];
-			if ( $type == 'upload' ) {
-				//Check if the option Delete Files When Remove Entry is ON.
-				$can_delete_files = isset( $value['delete_files'] ) ? true : false;
-				if ( $can_delete_files ) {
-					// If true then Delete the files attached to the entry
-					$column_val   = get_post_meta( $entry, $field, true );
-					$attachmet_id = explode( ",", $column_val );
-					foreach ( $attachmet_id as $id ) {
-						wp_delete_attachment( $id, true );
+            <div id="icon-users" class="icon32"><br/></div>
+            <div id="buddyforms_admin_main_menu" class="">
+                <ul>
+                    <li>
+
+                        <h4>Select a form to display the submissions</h4>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(jQuery) {
+                                jQuery("#buddyforms_admin_menu_submissions_form_select").change(function() {
+                                    window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
+                                });
+                            });
+                        </script>
+                        <select id="buddyforms_admin_menu_submissions_form_select">
+                            <option value="none">Select Form</option>
+							<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
+                                <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
+									<?php echo $form['name']; ?>
+                                </option>
+							<?php } ?>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+			<?php if ( isset( $_GET['form_slug'] ) && ! isset( $_GET['entry'] ) ) { ?>
+                <form id="filter" method="get">
+                    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+					<?php $this->bf_submissions_table->display(); ?>
+                </form>
+			<?php } ?>
+
+			<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
+				$form_slug = get_post_meta( $_GET['entry'], '_bf_form_slug', true );
+				$post_id   = $_GET['entry'];
+				require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
+			} ?>
+        </div>
+		<?php
+	}
+
+	function redirect_after_delete() {
+		global $buddyforms;
+
+		$action    = isset( $_GET['action'] ) ? $_GET['action'] : "";
+		$entry     = isset( $_GET['post'] ) ? $_GET['post'] : "";
+		$form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
+		if ( $action === 'delete' ) {
+			$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
+			foreach ( $buddyFData as $key => $value ) {
+
+				$field = $value['slug'];
+				$type  = $value['type'];
+				if ( $type == 'upload' ) {
+					//Check if the option Delete Files When Remove Entry is ON.
+					$can_delete_files = isset( $value['delete_files'] ) ? true : false;
+					if ( $can_delete_files ) {
+						// If true then Delete the files attached to the entry
+						$column_val   = get_post_meta( $entry, $field, true );
+						$attachmet_id = explode( ",", $column_val );
+						foreach ( $attachmet_id as $id ) {
+							wp_delete_attachment( $id, true );
+						}
 					}
+
 				}
-				
+			}
+		}
+
+		if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
+			if ( ! get_post( $_GET['entry'] ) ) {
+				wp_redirect( '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $_GET['form_slug'] );
 			}
 		}
 	}
-	
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'buddyforms_submissions' && isset( $_GET['entry'] ) ) {
-		if ( ! get_post( $_GET['entry'] ) ) {
-			wp_redirect( '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $_GET['form_slug'] );
-		}
+
+	/**
+	 * @param $status
+	 * @param $option
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	function buddyforms_submissions_set_option( $status, $option, $value ) {
+		return $value;
 	}
 }
 
-add_filter( 'set-screen-option', 'buddyforms_submissions_set_option', 10, 1 );
-/**
- * @param $status
- * @param $option
- * @param $value
- *
- * @return mixed
- */
-function buddyforms_submissions_set_option( $value ) {
-	return $value;
+function buddyforms_submission_page_init() {
+	new BuddyFormsSubmissionPage();
 }
+
+add_action( 'init', 'buddyforms_submission_page_init' );
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
@@ -179,16 +197,16 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 */
 	function column_default( $item, $column_name ) {
 		$bf_value = get_post_meta( $item->ID, $column_name, true );
-		$bf_field = buddyforms_get_form_field_by_slug($_GET['form_slug'], $column_name);
-		if($bf_field !== false){
-			$this->get_column_values($column_name, $bf_field['type'], $item, $bf_value);
+		$bf_field = buddyforms_get_form_field_by_slug( $_GET['form_slug'], $column_name );
+		if ( $bf_field !== false ) {
+			$this->get_column_values( $column_name, $bf_field['type'], $item, $bf_value );
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
 		}
 	}
-	
-	public function get_column_values($field_slug, $field_type, $item, $bf_value) {
+
+	public function get_column_values( $field_slug, $field_type, $item, $bf_value ) {
 		switch ( $field_type ) {
 			case 'upload':
 				$result        = '';
@@ -224,8 +242,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				}
 				break;
 		}
-		echo apply_filters("bf_submission_column_default", $bf_value, $item, $field_type, $field_slug);
+		echo apply_filters( "bf_submission_column_default", $bf_value, $item, $field_type, $field_slug );
 	}
+
 
 	function prepare_items() {
 		global $wpdb;
@@ -236,17 +255,17 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$hidden   = array();
 		$sortable = $this->get_sortable_columns();
 
-		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->_column_headers = $this->get_column_info();
 
-		$this->process_bulk_action();
+		$this->get_bulk_actions();
 
 		$data = array();
 		if ( isset( $_GET['form_slug'] ) ) {
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			$sql_args   = array( 'ID', 'post_title', 'post_author' );
-			$sql_select = implode( ', ', $sql_args );
-			$data        = $wpdb->get_results( $wpdb->prepare("SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s ORDER BY post_date DESC", $customkey, $customvalue) );
+			$sql_args    = array( 'ID', 'post_title', 'post_author' );
+			$sql_select  = implode( ', ', $sql_args );
+			$data        = $wpdb->get_results( $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s ORDER BY post_date DESC", $customkey, $customvalue ) );
 		}
 
 		$current_page = $this->get_pagenum();
@@ -270,6 +289,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$columns = array(
+			'cb'   => '<input type="checkbox" />',
 			'ID'   => 'ID',
 			'Date' => 'Date',
 		);
