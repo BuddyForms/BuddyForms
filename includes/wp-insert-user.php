@@ -108,7 +108,7 @@ function buddyforms_wp_update_user() {
 			}
 
 			if ( $user_id && ! is_wp_error( $user_id ) ) {
-				//wp_new_user_notification( $user_id, null, 'both' );
+//				wp_new_user_notification( $user_id, null, 'both' );
 			}
 		}
 
@@ -413,7 +413,9 @@ function buddyforms_auth_signon( $user ) {
 		return $user;
 	}
 
-	if ( get_user_meta( $user->ID, 'has_to_be_activated', true ) != false ) {
+	$need_activation = get_user_meta( $user->ID, 'has_to_be_activated', true );
+
+	if ( ! empty( $need_activation ) ) {
 		$user = new WP_Error( 'activation_failed', __( '<strong>ERROR</strong>: User is not activated.' ) );
 	}
 
