@@ -11,8 +11,8 @@ class BuddyFormsSubmissionPage {
 
 		add_filter( 'set-screen-option', array( $this, 'buddyforms_submissions_set_option' ), 10, 3 );
 		add_action( 'admin_init', array( $this, 'redirect_after_delete' ) );
-	}
 
+	}
 
 	public function buddyforms_create_submissions_page() {
 		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'activate_plugins', 'buddyforms_submissions', array( $this, 'buddyforms_submissions_screen' ) );
@@ -43,11 +43,13 @@ class BuddyFormsSubmissionPage {
 			include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 			?>
             <hr style="margin-bottom: 0px !important;"/><?php
+            $this->bf_submissions_table->prepare_items();
 			if ( isset( $_GET['form_slug'] ) ) {
 				$current_screen->set_parentage( $parent_file );
-				$current_screen->render_screen_meta();
+				//$current_screen->render_screen_options();
+                $current_screen->render_screen_meta();
 			}
-			$this->bf_submissions_table->prepare_items();
+
 			?>
 
             <div id="icon-users" class="icon32"><br/></div>
@@ -61,6 +63,20 @@ class BuddyFormsSubmissionPage {
                                 jQuery("#buddyforms_admin_menu_submissions_form_select").change(function() {
                                     window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
                                 });
+
+
+                                jQuery('.metabox-prefs input:checkbox').each(function()
+                                {
+                                    var colID= jQuery(this).attr('id');
+                                    var hasCheckedAtt =document.getElementById(colID).hasAttribute('checked');
+                                    if(!hasCheckedAtt)
+                                    {
+                                        document.getElementById(colID).checked = false;
+                                    }
+
+                                });
+
+
                             });
                         </script>
                         <select id="buddyforms_admin_menu_submissions_form_select">
@@ -289,7 +305,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$columns = array(
-			'cb'   => '<input type="checkbox" />',
 			'ID'   => 'ID',
 			'Date' => 'Date',
 		);
