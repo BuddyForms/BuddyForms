@@ -199,7 +199,7 @@ class BuddyFormsMetaBoxRegistration {
 
 		//Put the user on activation flow when the rol is changed.
 		$is_active_moderate_user_change = ! isset( $buddyform['on_user_update']['moderate_user_change'] ) ? '' : 'moderate_user_change';
-		$rows_are_visible                    = ( empty( $is_active_moderate_user_change ) ) ? 'bf-hidden' : '';
+		$rows_are_visible               = ( empty( $is_active_moderate_user_change ) ) ? 'bf-hidden' : '';
 
 		$new_user_role = isset( $buddyform['on_user_update']['new_user_role'] ) ? $buddyform['on_user_update']['new_user_role'] : 'keep';
 

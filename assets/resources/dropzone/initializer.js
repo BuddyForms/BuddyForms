@@ -10,17 +10,17 @@ jQuery(document).ready(function ($) {
         return this;
     };*/
     $( "form" ).click(function( event ) {
-
         var $form = $(this).closest('form');
-        var target = event.target.name;
-        if (target == 'submitted' || target == 'save') {
-
-
-           jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
-            jQuery("button[type=submit].bf-submit").html("upload in process");
-            var myDropzone = Dropzone.forElement(".dropzone");
-            var resultado = myDropzone.processQueue();
-            event.preventDefault();
+        var uploadFields = $form.find('.upload_field');
+        if(uploadFields.length > 0) {
+            var target = event.target.name;
+            if (target == 'submitted' || target == 'save') {
+                jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
+                jQuery("button[type=submit].bf-submit").html("upload in process");
+                var myDropzone = Dropzone.forElement(".dropzone");
+                var resultado = myDropzone.processQueue();
+                event.preventDefault();
+            }
         }
     });
 	$(".upload_field").each(function (index, value) {
@@ -37,7 +37,6 @@ jQuery(document).ready(function ($) {
 		var clickeable = page !== 'buddyforms_submissions';
 		var currentField = jQuery('#field_' + id);
 
-
 		$("#" + id).dropzone({
 			url: dropParam.admin_url,
 			maxFilesize: max_size,
@@ -47,14 +46,9 @@ jQuery(document).ready(function ($) {
 			clickable: clickeable,
 			addRemoveLinks: clickeable,
 			init: function () {
-
-
-
-
 				this.on('complete', function () {
 					/*jQuery("button[type=submit].bf-submit").removeAttr("disabled");
                     jQuery("button[type=submit].bf-submit").html("Submit");*/
-
 				});
 
 				this.on('addedfile', function () {
@@ -130,10 +124,7 @@ jQuery(document).ready(function ($) {
                     this.emit('thumbnail', mockFile, mockFile.url);
                     this.emit('complete', mockFile);
                     this.files.push(mockFile);
-
 				}
-
-
             }
 		});
 
