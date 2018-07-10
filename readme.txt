@@ -21,11 +21,7 @@ BuddyForms has proven to be an invaluable plugin for communities and networks. W
 
 ---
 ##GDPR compliant WordPress form builder
-
-![https://www.polydone.com/gdpr/badges/regular/gdpr-badge-landscape-lg-polydone.png]
-
-BuddyForms comes out of the box GDPR compliant plugin. We've used the time, to improve our data protection even more. What we've done so far: 
-
+BuddyForms comes out of the box GDPR compliant plugin. We've used the time, to improve our data protection even more. What we've done so far:
 
 * *Consent Checkbox* - a new form element has been added to give you an easy option to collect the consent for your user-generated form.
 * *Right to access & to be forgotten* - if your users want to get access to their data, you can easily show it with BuddyForms on the front-end. They even have the opportunity to change or delete their data from the front-end.
@@ -37,7 +33,9 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-## Features of BuddyForms Form Builder 
+## Features of BuddyForms Form Builder
+
+
 * Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
 * Choose between over 20 field types (text, numbers, check boxes, buttons, comments, media files, post status, taxonomies, CAPTCHA, ...)
 * Set custom validation rules to prevent users from submitting false data
@@ -52,6 +50,13 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 * Control who can create, edit and delete content that is created from a form and even prevent 404 error messages when a published post is set back to draft mode
 * Set-up email notifications to notify admins when content is submitted
 * Set-up email notifications to notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation)
+* Featured Image Upload for Unregistered Users
+* Drop Zone File Upload of any file Type for Unregistered Users
+* Overwrite the WordPress default Registration Form and Page
+* Create registation funnels and ask to create a password after click on the activation link.
+* User registration & user profile. Front-end login, user registration and edit profile.
+* Create author profiles and list all author posts.
+* Create forms for any kind of user generated content
 
 ---
 
@@ -68,9 +73,10 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ## Other more basic use Cases with our Form Builder
 Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create: 
-1. Contact Forms – Collect leads and customer support data
-1. Registration Forms – Sign-up users to your webpage
-1. Login Forms – Grant users access to restricted content
+* Contact Forms – Collect leads and customer support data
+* Registration Forms – Sign-up users to your webpage
+* Profile Forms – Let your user update there profile information.
+* Login Forms – Grant users access to restricted content
 
 ---
 
@@ -384,14 +390,14 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 
 = 2.2.2 – 29. Jun 2018
-Fixing the resend activation link for user pending of activations
-Improved the submission view UI
-Added a new filter buddyform_after_activate_user. To hook just after the user got activated.
-Removed duplicated argument `$bf_value` from the filter `bf_submission_column_default`.
-Fixing a notice related to an empty attached_page option
-Updating the js functions to not use live, thanks to @virtualLast
-Removing deprecated functions and fixed several smaller issues
-Prefixed custom_user_profile_fields function to avoid conflicts with other plugins using the same name.
+* Fixing the resend activation link for user pending of activations
+* Improved the submission view UI
+* Added a new filter buddyform_after_activate_user. To hook just after the user got activated.
+* Removed duplicated argument `$bf_value` from the filter `bf_submission_column_default`.
+* Fixing a notice related to an empty attached_page option
+* Updating the js functions to not use live, thanks to @virtualLast
+* Removing deprecated functions and fixed several smaller issues
+* Prefixed custom_user_profile_fields function to avoid conflicts with other plugins using the same name.
 
 = 2.2.1 – 22. Jun 2018
 * Adding a filter at top of the user list to filter the list of user for the buddyforms pending for activation users.
