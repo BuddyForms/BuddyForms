@@ -49,6 +49,26 @@ jQuery(function () {
 });
 jQuery(document).ready(function () {
 	jQuery(document.body).trigger({type: "buddyform:load_fields"});
+
+	//
+	// Handle the hide/show moderation of user on update
+	//
+    jQuery(document.body).on('click', '[name="buddyforms_options[on_user_update][moderate_user_role_change][]"]', function() {
+        var element = jQuery(this);
+        var rows = element.closest('table.wp-list-table').find('tr[id^=table_row_global_]').not('tr[id=table_row_global_0], tr[id=table_row_global_1]');
+        if (element.is(':checked')) {
+            jQuery.each(rows, function(){
+            	jQuery(this).removeClass('bf-hidden');
+                jQuery(this).find('input, select').removeClass('bf-hidden');
+			});
+        } else {
+            jQuery.each(rows, function(){
+                jQuery(this).addClass('bf-hidden');
+                jQuery(this).find('input, select').addClass('bf-hidden');
+            });
+		}
+    });
+
 	//
 	// Show Hide Color Picker
 	//

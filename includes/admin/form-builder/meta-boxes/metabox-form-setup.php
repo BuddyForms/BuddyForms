@@ -30,6 +30,7 @@ function buddyforms_metabox_form_setup() {
 
 	$message_text_default      = $post_type == 'false' ? 'Form Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
 	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : $message_text_default;
+	$after_update_submit_message_text = isset( $buddyform['after_update_submit_message_text'] ) ? $buddyform['after_update_submit_message_text'] : buddyforms_default_message_on_update();
 
 	$attached_page     = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
 	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
@@ -81,7 +82,7 @@ function buddyforms_metabox_form_setup() {
 		'class'     => 'redirect'
 	) );
 
-	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'After Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
+	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'After Create Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_submit_message_text]", array(
 		'rows'  => 3,
 		'style' => "width:100%",
 		'class' => 'display_message display_form',
@@ -90,6 +91,14 @@ function buddyforms_metabox_form_setup() {
 //		'shortDesc' => $post_type == 'false'
 //			? __('Add a after Submission Message', 'buddyforms')
 //			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
+	) );
+
+	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'After Update Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_update_submit_message_text]", array(
+		'rows'  => 3,
+		'style' => "width:100%",
+		'class' => 'display_message display_form',
+		'value' => $after_update_submit_message_text,
+		'id'    => 'after_update_submit_message_text',
 	) );
 
 	$element = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
