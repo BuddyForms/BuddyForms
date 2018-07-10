@@ -198,8 +198,8 @@ class BuddyFormsMetaBoxRegistration {
 		echo '<h4>' . __( 'On User Update Options', 'buddyforms' ) . '</h4>';
 
 		//Put the user on activation flow when the rol is changed.
-		$is_active_moderate_user_role_change = ! isset( $buddyform['on_user_update']['moderate_user_role_change'] ) ? '' : 'moderate_user_role_change';
-		$rows_are_visible                    = ( empty( $is_active_moderate_user_role_change ) ) ? 'bf-hidden' : '';
+		$is_active_moderate_user_change = ! isset( $buddyform['on_user_update']['moderate_user_change'] ) ? '' : 'moderate_user_change';
+		$rows_are_visible                    = ( empty( $is_active_moderate_user_change ) ) ? 'bf-hidden' : '';
 
 		$new_user_role = isset( $buddyform['on_user_update']['new_user_role'] ) ? $buddyform['on_user_update']['new_user_role'] : 'keep';
 
@@ -209,9 +209,9 @@ class BuddyFormsMetaBoxRegistration {
 			'shortDesc' => __( 'Select the User Role the user should have after successful Update the Form.', 'buddyforms' ),
 		) );
 
-		$element                             = new Element_Checkbox( '<b>' . __( 'Moderate User Role', 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][moderate_user_role_change]", array( 'moderate_user_role_change' => __( 'Moderate User on Role Change.', 'buddyforms' ) ), array(
-			'value'     => $is_active_moderate_user_role_change,
-			'shortDesc' => __( 'To moderate when the user role is change check this option. When the User or the Form change the User Role, that User will be Deactivate and Activation Email will be Send. Note the User WILL BE INACTIVE until the Email Activation is clicked or the Admin Activate the user on the WP list of Users.', 'buddyforms' )
+		$element = new Element_Checkbox( '<b>' . __( 'Moderate User Update', 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][moderate_user_change]", array( 'moderate_user_change' => __( 'Moderate User on Update.', 'buddyforms' ) ), array(
+			'value'     => $is_active_moderate_user_change,
+			'shortDesc' => __( 'To moderate when the user is Updated check this option. When the User change, it will be Deactivate and Activation Email will be Send. Note the User WILL BE INACTIVE until the Email Activation is clicked or the Admin Activate the user on the WP list of Users.', 'buddyforms' )
 		) );
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
@@ -241,7 +241,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
 		// Activation Page
-		$form_setup[] = new Element_Select( '<b>' . __( "Activation Page", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_page]", $all_pages, array(
+		$form_setup[] = new Element_Select( '<b>' . __( "Activation Page", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_page]", $all_pages, array(
 			'value'     => $activation_page,
 			'shortDesc' => __( 'Select the page the user should land on if he clicks the activation link in the activation email.', 'buddyforms' ),
 			'class'     => $rows_are_visible,

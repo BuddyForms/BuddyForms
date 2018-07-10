@@ -112,7 +112,7 @@ function buddyforms_wp_update_user() {
 			}
 
 			//Moderate user role changes
-			$is_role_moderation_enabled = isset( $buddyforms[ $form_slug ]['on_user_update']['moderate_user_role_change'] ) ? $buddyforms[ $form_slug ]['on_user_update']['moderate_user_role_change'] : false;
+			$is_role_moderation_enabled = isset( $buddyforms[ $form_slug ]['on_user_update']['moderate_user_change'] ) ? $buddyforms[ $form_slug ]['on_user_update']['moderate_user_change'] : false;
 			if ( ! empty( $is_role_moderation_enabled[0] ) ) {
 				//Deactivate the user
 				$activation_link = buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyforms, 'on_user_update' );
