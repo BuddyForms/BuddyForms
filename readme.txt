@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,22 +389,41 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
+= 2.2.3 – 10. July 2018
+* Fixed the reCaptcha library, adding a native checking from google.
+* Added a link to generate new keys.
+* Fixed the permission tab checkboxes css
+* Implemented a role based authorization security mechanism using a custom attribute filter.
+* Fixed a issue with the drop zone. File upload via form not attached to post
+* Added a screen option for the submission screen.
+* Fixed the login for active or not active users.
+* Added the js script to handle the moderation settings.
+* Added the new moderation and on update user settings.
+* Implementing the moderation function for user update.
+* Updating the options and the text related to the moderation to make more friendly.
+* Fixed the upload field initializer.
+* Added some functions to display the submit message of the forms and the default message.
+* Added the new option to the form setting to add new message on form update.
+* Fixed the user update on form update.
+* Implementing the new update message for form submit
+* Freemius SDK Update
+
 = 2.2.2 – 29. Jun 2018
-* Fixing the resend activation link for user pending of activations
+* Fixed the resend activation link for user pending of activations
 * Improved the submission view UI
 * Added a new filter buddyform_after_activate_user. To hook just after the user got activated.
 * Removed duplicated argument `$bf_value` from the filter `bf_submission_column_default`.
-* Fixing a notice related to an empty attached_page option
+* Fixed a notice related to an empty attached_page option
 * Updating the js functions to not use live, thanks to @virtualLast
 * Removing deprecated functions and fixed several smaller issues
 * Prefixed custom_user_profile_fields function to avoid conflicts with other plugins using the same name.
 
 = 2.2.1 – 22. Jun 2018
-* Adding a filter at top of the user list to filter the list of user for the buddyforms pending for activation users.
-* Adding the activation and resend activation email link into the admin user list.
-* Adding a buddyform function to generate nonces, to use in the activation process of users.
+* Added a filter at top of the user list to filter the list of user for the buddyforms pending for activation users.
+* Added the activation and resend activation email link into the admin user list.
+* Added a buddyform function to generate nonces, to use in the activation process of users.
 * Saving the activation link into user meta.
-* Adding a function to get the current user id from the get parameters when the activation process is running.
+* Added a function to get the current user id from the get parameters when the activation process is running.
 * Applying code style.
 * Mke the review notification grab the correct version number.
 
@@ -419,20 +438,20 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * --> Add new general settings page to create default Agreement templates and form footer terms text and terms page link option.
 * --> Added a new shortcode "GDPR Export and Erase Form" [buddyforms_gpdr]. A form to add GDPR Personal Data Export and Erase request forms to your site
 * --> Added support for the Personal data exporter
-* --> Fixing how the plugin get the user data with a new way to disable it.
+* --> Fixed how the plugin get the user data with a new way to disable it.
 * --> Added argument validation to take in count the wp core key and the field types matching.
 * --> Refactoring how the user meta is saved. Now all is in the same place.
 
 * Featured Image
 * Created a new uploader. Its now possible to upload featured images for unregistered logged off users.
 
-* Adding a link "create new entry" if the submission list is empty.
-* Fixing the form slug to get the form messages. Cleaning and refactoring the code.
-* Adding a code to show the related tabs in base of the form type select in the templates
-* Adding a filter to disable save usermeta data 'buddyforms_not_save_usermeta'.
+* Added a link "create new entry" if the submission list is empty.
+* Fixed the form slug to get the form messages. Cleaning and refactoring the code.
+* Added a code to show the related tabs in base of the form type select in the templates
+* Added a filter to disable save usermeta data 'buddyforms_not_save_usermeta'.
 * Make sure tinyMCE exist otherwise it is braking the ajax.
-* Fixing the submit with ajax option for the form.
-* Adding function to map the existing fields to override the meta use in wp core instead of duplicate it.
+* Fixed the submit with ajax option for the form.
+* Added function to map the existing fields to override the meta use in wp core instead of duplicate it.
 * Calling the new functions in the user-meta.php file, this is a new centralice way to get and write the user data.
 * Changing the loader priority of the user-meta.php file to use the new function in the frontend
 * Avoid send the notification id if the status is the same
@@ -443,17 +462,17 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * save a issue with tinymce not updating the textbox during submit
 * Added a check to registration forms if the default values exist on update of a user to avoid notice
 * Added new filter and add a check to deactivate the activation mail with a filter
-* Fixing the remote preview url
+* Fixed the remote preview url
 
 = 2.1.7 – 20. May 2018
 * Removed all dependencies to bootstrap. In earlier versions UI parts of the Admin have been build with Bootstrap. This parts have been rebuild to use WordPress native jQuery UI
 * --> Added buddyform prefix for nav-pills, nav-tabs and tabs-left
-* --> Fixing the field related scripts like the tabs and the accordion when new field is added to the form builder.
-* --> Adding script to load the field inside the wizard.
-* --> Fixing css to organize the arrow inside the wizard
-* Fixing php language minor issues
+* --> Fixed the field related scripts like the tabs and the accordion when new field is added to the form builder.
+* --> Added script to load the field inside the wizard.
+* --> Fixed css to organize the arrow inside the wizard
+* Fixed php language minor issues
 * Change the place of the filter for submission default value
-* Fixing a sessions issue. This fix is related a conflict during recovery of the session when the page is load the first time.
+* Fixed a sessions issue. This fix is related a conflict during recovery of the session when the page is load the first time.
 * Improved the submissions table to show the column data and custom field types
 * -->Added the category and the tag to the list of submission
 * changing the input ids for the wp login form to avoid name coalition with the user_id field
@@ -491,7 +510,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the check for the permission for admin and autor (read-edit-write)
 * Fixed the loader of the plugin to avoid incompatibilities with WP
 * Added new class bf-hidden to enable hide form elements by class
-* Adding the honey pot to the form.
+* Added the honey pot to the form.
 * Fixed and issue in the login form. The Lost Password Link was overwriting the registration link
 * Remove the old plugin header from the password-strengh-settings
 * Make sure Form Layout and Import Forms are always the last tabs
@@ -500,7 +519,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the items name in the list of form inside the submission view
 * Fixed the the visibility of the selected form post type
 * Moving the tk icon load script to a separated function to load in backend and frontend
-* Adding css to include the icon in the shortcode
+* Added css to include the icon in the shortcode
 * Create a new admin bar menu item to edit the form if the form is displayed.
 * Update Freemius version to 2.0.1
 
@@ -510,7 +529,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 = 2.1.6.2 - 12. March 2018
 * Updated the re captcha form element to use the version 2. Version 1 is only supported til the 30 of March.
-* Adding new options for recaptcha v2 to the form element.
+* Added new options for recaptcha v2 to the form element.
 * Fixed an issue with the user creation. If "Create account during submission" was set without a page selected in the form builder under edit submissions.
 * Fixed an issue with the post author. If the user was created during submission it could happen that no author was set.
 * Rebuild the pfbc password field and make use of the WordPress validation also in registration forms.
@@ -519,7 +538,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 = 2.1.6.1 - 6. March 2018
 * Fixed an issue in the Registration and Activation Process.
 * Refactoring the code.
-* Adding the login/registration form to the forms when the option correspond
+* Added the login/registration form to the forms when the option correspond
 
 = 2.1.6 - 5. March 2018 =
 * New upload field to integrate with dropzone
@@ -531,8 +550,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 *  - Show the id of the submited files as links in the entry list
 *  - Props to Victor and Guillermo for there contributions and making the DropZone a reality ;)
 * Fixed the submission view in the backend.
-* Adding a function to strip the html from the post list in the backend
-* Adding the interaction when the ajax is in progress to disabled the submit button
+* Added a function to strip the html from the post list in the backend
+* Added the interaction when the ajax is in progress to disabled the submit button
 * Several smaller bug fixes
 
 = 2.1.5.2 - 20. February 2018 = 
@@ -551,13 +570,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added a new check into the wp insert user function to save the redirect url
 * Created a new function buddyforms_login_redirect to redirect after login from shortcode attribute "redirct_url"
 * Created a new filter buddyforms_login_form_redirect_url to make it possible to overwrite the login redirect in BuddyForms extensions.
-* Adding the reset option to the dropdown field using an attribute as flag.
-* Adding the reset option to the checkbox, dropdown and select2
+* Added the reset option to the dropdown field using an attribute as flag.
+* Added the reset option to the checkbox, dropdown and select2
 * Implementing the save of post in the backend. This implementation is only for 2 field types.
 * Fixed the extract functions to avoid notices and warnings.
 * Change the submission page to use WP_Query and OOP.
-* Adding a hook to update the post meta on edit post in the backend
-* Adding a validation to check for specific number when the user set max and min for the same number.
+* Added a hook to update the post meta on edit post in the backend
+* Added a validation to check for specific number when the user set max and min for the same number.
 * More fixes and mobile view improvements, bigger image, fix in date formatting, better buttons, better typo
 * Fully reworked list view CSS
 * New CSS for table view and status items for table view
