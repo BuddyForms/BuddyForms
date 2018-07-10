@@ -877,3 +877,34 @@ function buddyforms_create_nonce( $action = - 1, $user_id = 0 ) {
 
 	return substr( wp_hash( $i . '|' . $action . '|' . $uid . '|' . $token, 'nonce' ), - 12, 10 );
 }
+
+function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after_submit_message_text' ) {
+	global $buddyforms;
+	$display_message = buddyforms_default_message_on_create();
+	if ( ! empty( $buddyforms[ $form_slug ][ $source ] ) ) {
+		$display_message = $buddyforms[ $form_slug ][ $source ];
+	} else {
+		if ( $source !== 'after_submit_message_text' ) {
+			$display_message = buddyforms_default_message_on_update();
+		}
+	}
+	$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
+	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
+	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
+	$display_message = str_ireplace( '[post_link]', '<a title="Display Post" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
+	$display_message = str_ireplace( '[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
+
+	return $display_message;
+}
+
+function buddyforms_user_fields_array() {
+	return array( 'user_login', 'user_email', 'user_first', 'user_last', 'user_pass', 'user_website', 'user_bio', 'country', 'state' );
+}
+
+function buddyforms_default_message_on_update() {
+	return __( 'Form Updated Successfully.', 'buddyforms' );
+}
+
+function buddyforms_default_message_on_create() {
+	return __( 'Form Submitted Successfully.', 'buddyforms' );
+}

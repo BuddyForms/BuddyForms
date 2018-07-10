@@ -334,9 +334,18 @@ function buddyforms_process_submission( $args = Array() ) {
 		if ( isset( $customfields ) ) {
 			$customfields = buddyforms_update_post_meta( $post_id, $customfields );
 		}
-		
+
+		$have_user_fields = false;
+		foreach ( $customfields as $customfield ) {
+			if(in_array($customfield, buddyforms_user_fields_array())){
+				$have_user_fields = true;
+				break;
+			}
+		}
+
+		//TODO gfirem this need to be in other way review with @sven
 		// Check if user is logged in and update user relevant fields if used in the form
-		if ( is_user_logged_in() ) {
+		if ( is_user_logged_in() && 'registration' !== $form_type && $have_user_fields === true) {
 			$user_id = buddyforms_wp_update_user();
 		}
 		/*
@@ -523,13 +532,15 @@ function buddyforms_process_submission( $args = Array() ) {
 	endif;
 	
 	do_action( 'buddyforms_after_save_post', $post_id );
-	
+
 	$args2 = array(
 		'hasError'     => $hasError,
 		'form_notice'  => empty( $form_notice ) ? '' : $form_notice,
 		'customfields' => is_array( $customfields ) ? $customfields : array(),
 		'redirect_to'  => $redirect_to,
 		'form_slug'    => $form_slug,
+		'form_type'    => $form_type,
+		'action'       => $action,
 	);
 	
 	$args = array_merge( $args, $args2 );

@@ -166,17 +166,22 @@ function buddyforms_create_edit_form( $args ) {
 	);
 
 	if ( isset( $_POST['form_slug'] ) ) {
-		if ( ! empty( $buddyforms[ $_POST['form_slug'] ]['after_submit_message_text'] ) ) {
-			$permalink = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
-
-			$display_message = $buddyforms[ $_POST['form_slug'] ]['after_submit_message_text'];
-			$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $args['form_slug'] ]['singular_name'], $display_message );
-			$display_message = str_ireplace( '[post_title]', get_the_title( $args['post_id'] ), $display_message );
-			$display_message = str_ireplace( '[post_link]', '<a title="Display Post" href="' . get_permalink( $args['post_id'] ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
-			$display_message = str_ireplace( '[edit_link]', '<a title="Edit Post" href="' . $permalink . 'edit/' . $args['form_slug'] . '/' . $args['post_id'] . '"">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
-
-			$args['form_notice'] = $display_message;
+		//decide if the update of create message will show.
+		$form_type = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$message_source = 'after_submit_message_text';
+		if ( 'registration' === $form_type ) {
+			if ( is_user_logged_in() ) {
+				$message_source = 'after_update_submit_message_text';
+			}
+		} else {
+			if ( 'update' === $form_action ) {
+				$message_source = 'after_update_submit_message_text';
+			}
 		}
+		$display_message = buddyforms_form_display_message($_POST['form_slug'], $args['post_id'], $message_source);
+		$args['form_notice'] = $display_message;
+
 		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_message' ) {
 			echo $display_message;
 
