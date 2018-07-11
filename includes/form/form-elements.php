@@ -527,8 +527,8 @@ function buddyforms_form_elements( $form, $args ) {
                         $result_value ="";
                         $entries = array();
                         $entries_result="";
-                        if (! empty($entry) && $action == 'edit'){
-                            $column_val =  get_post_meta( $entry, $id, true );
+                        if ($post_id > 0){
+                            $column_val =  get_post_meta( $post_id, $id, true );
                             $attachmet_id = explode(",",$column_val);
                             foreach ($attachmet_id as $id_value){
                                 $metadata =   wp_prepare_attachment_for_js($id_value);
