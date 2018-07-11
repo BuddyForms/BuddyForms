@@ -82,6 +82,29 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
+			//Check for permalink
+			if ( ! $this->buddyforms_is_permalink_correct() ) {
+				add_action( 'admin_notices', array( $this, 'buddyforms_permalink_admin_notice' ) );
+			}
+		}
+
+		public function buddyforms_permalink_admin_notice() {
+			?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php _e( 'BuddyForm Error => You current permalink option is unsupported, please change it to %postname%.!', 'buddyforms' ); ?></p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Check if the permalink is setup and is postname
+		 *
+		 * @return bool
+		 */
+		public function buddyforms_is_permalink_correct() {
+			$permalink = get_option( 'permalink_structure' );
+
+			return $permalink === '/%postname%/';
 		}
 
 		/**
@@ -691,7 +714,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		return $buddyforms_core_fs;
 	}
-	
+
 	function buddyforms_php_version_admin_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
