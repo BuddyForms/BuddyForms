@@ -16,7 +16,7 @@ class Element_Upload extends Element_Textbox
 
     public function render()
     {
-        global $buddyforms;
+        global $buddyforms,$post_id;
         ob_start();
         parent::render();
         $box = ob_get_contents();
@@ -38,8 +38,8 @@ class Element_Upload extends Element_Textbox
         $result_value ="";
         $entries = array();
         $entries_result="";
-        if (! empty($entry) && $action == 'edit'){
-            $column_val =  get_post_meta( $entry, $id, true );
+        if ($post_id > 0){
+            $column_val =  get_post_meta( $post_id, $id, true );
 
             $attachmet_id = explode(",",$column_val);
             foreach ($attachmet_id as $id_value){
