@@ -65,7 +65,8 @@ function buddyforms_editor_button_inline_content() {
 		//
 		// Insert Form
 		//
-		session_id( 'buddyforms-mce' );
+		$newid = session_create_id('buddyforms-mce-');
+		session_id( $newid );
 		$form = new Form( "buddyforms_add_form" );
 		$form->configure( array(
 			"prevent" => array( "bootstrap", "jQuery" ),
