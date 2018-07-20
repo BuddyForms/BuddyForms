@@ -410,7 +410,10 @@ function buddyforms_form_html( $args ) {
 	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
 	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );
 	$form->addElement( new Element_Hidden( "bf_post_type", $post_type ) );
-	$form->addElement( new Element_Hidden( "status", 'draft', array( 'id' => "status" ) ) );
+	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
+	if ( ! $exist_field_status ) {
+		$form->addElement( new Element_Hidden( "status", 'draft', array( 'id' => "status" ) ) );
+	}
 
 	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
 		$form->addElement( new Element_Hidden( "ajax", 'off' ) );

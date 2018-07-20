@@ -304,6 +304,10 @@ function buddyforms_process_submission( $args = Array() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
+	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
+	if ( ! empty( $args['status'] ) && $exist_field_status ) {
+		$post_status = $args['status'];
+	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
 	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
 	

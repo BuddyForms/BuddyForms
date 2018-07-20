@@ -411,7 +411,7 @@ function buddyforms_post_status_readable( $post_status ) {
 /**
  * @param $post_status
  *
- * @return mixed|string|void
+ * @return string
  */
 function buddyforms_get_post_status_readable( $post_status ) {
 	if ( $post_status == 'publish' ) {
@@ -606,14 +606,14 @@ function buddyforms_metabox_go_pro() {
  * @return bool
  */
 function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
-	$result_field = wp_cache_get( 'buddyform_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyform' );
+	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyform' );
 	if ( $result_field === false ) {
 		global $buddyforms;
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
 				if ( $field['slug'] == $field_slug ) {
 					$result_field = $field;
-					wp_cache_set( 'buddyform_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyform' );
+					wp_cache_set( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyform' );
 
 					return $result_field;
 				}
@@ -622,6 +622,44 @@ function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
 	}
 
 	return $result_field;
+}
+
+/**
+ * Return teh array of field belong to the form.
+ *
+ * @param $form_slug
+ *
+ * @return bool|array
+ */
+function buddyforms_get_form_fields( $form_slug ) {
+	$result_field = wp_cache_get( 'buddyforms_get_form_fields' . $form_slug, 'buddyform' );
+	if ( $result_field === false ) {
+		global $buddyforms;
+		if ( empty( $form_slug ) ) {
+			return false;
+		}
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			$result_fields = $buddyforms[ $form_slug ]['form_fields'];
+			wp_cache_set( 'buddyforms_get_form_fields' . $form_slug, $result_fields, 'buddyform' );
+
+			return $result_fields;
+		}
+	}
+
+	return $result_field;
+}
+
+function buddyforms_exist_field_type_in_form( $form_slug, $field_type ) {
+	$fields = buddyforms_get_form_fields( $form_slug );
+	$exist  = false;
+	foreach ( $fields as $field ) {
+		if ( $field['type'] == $field_type ) {
+			$exist = true;
+			break;
+		}
+	}
+
+	return $exist;
 }
 
 //
