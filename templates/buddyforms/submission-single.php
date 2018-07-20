@@ -35,8 +35,6 @@ $post_id = get_the_ID();
         </script>
 
 		<?php
-		session_id( 'buddyforms-submissions-modal' . $post_id );
-
 		// Create the form object
 		$form = new Form( "submissions_" . $form_slug );
 

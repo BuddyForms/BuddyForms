@@ -20,8 +20,6 @@
                         });
                     </script>
 					<?php
-					session_id( 'buddyforms-submissions-modal' . $post_id );
-
 					// Create the form object
 					$form = new Form( "submissions_" . $form_slug );
 

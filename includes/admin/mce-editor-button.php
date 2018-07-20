@@ -65,7 +65,6 @@ function buddyforms_editor_button_inline_content() {
 		//
 		// Insert Form
 		//
-		session_id( 'buddyforms-mce' );
 		$form = new Form( "buddyforms_add_form" );
 		$form->configure( array(
 			"prevent" => array( "bootstrap", "jQuery" ),
@@ -78,7 +77,6 @@ function buddyforms_editor_button_inline_content() {
 			$the_forms[ $buddyform['slug'] ] = $buddyform['slug'];
 		}
 
-
 		$form->addElement( new Element_Select( "<h3>" . __( 'Insert Form', 'buddyforms' ) . "</h3><br>", "buddyforms_add_form", $the_forms, array( 'class' => 'buddyforms_add_form' ) ) );
 		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-form button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
 		$form->render();
@@ -86,7 +84,6 @@ function buddyforms_editor_button_inline_content() {
 		//
 		// Insert Posts
 		//
-
 		$form = new Form( "buddyforms_view_posts" );
 		$form->configure( array(
 			"prevent" => array( "bootstrap", "jQuery" ),
