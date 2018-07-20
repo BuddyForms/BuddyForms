@@ -69,8 +69,6 @@ function buddyforms_metabox_admin_form_metabox() {
 		return;
 	}
 
-	session_id( 'buddyforms-memtabox' );
-
 	// Create the form object
 	$form = new Form( "metabox_" . $form_slug );
 
