@@ -246,6 +246,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 					$bf_value = implode( ',', $result );
 				}
 				break;
+            case 'status':
+                $bf_value = get_post_status($item->ID);
+                break;
 			default:
 				if ( is_array( $bf_value ) ) {
 					$str_result = '';
