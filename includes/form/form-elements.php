@@ -107,17 +107,21 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							break;
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
+								break;
+							}
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						}
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_email':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							$element_attr['value'] = $current_user->user_email;
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
+								$element_attr['value'] = $current_user->user_email;
+							}
+							$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						}
-						$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_first':
