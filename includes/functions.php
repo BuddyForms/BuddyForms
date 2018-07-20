@@ -411,7 +411,7 @@ function buddyforms_post_status_readable( $post_status ) {
 /**
  * @param $post_status
  *
- * @return mixed|string|void
+ * @return string
  */
 function buddyforms_get_post_status_readable( $post_status ) {
 	if ( $post_status == 'publish' ) {
