@@ -91,10 +91,10 @@ function buddyforms_wp_update_user() {
 		//Update the user role base on the update options or keep the same from the registration options
 		$user_role           = isset( $buddyforms[ $form_slug ]['registration']['new_user_role'] ) ? $buddyforms[ $form_slug ]['registration']['new_user_role'] : 'subscriber';
 		$on_update_user_role = isset( $buddyforms[ $form_slug ]['on_user_update']['new_user_role'] ) ? $buddyforms[ $form_slug ]['on_user_update']['new_user_role'] : 'keep';
-		if ( ! empty( $on_update_user_role ) && $on_update_user_role !== 'keep' ) {
-			$user_role = $on_update_user_role;
+		if ( ! empty( $on_update_user_role ) && $on_update_user_role !== 'keep' && current_user_can( 'administrator' ) ) {
+			$user_role         = $on_update_user_role;
+			$user_args['role'] = $user_role;
 		}
-		$user_args['role'] = $user_role;
 
 		$user_id = wp_update_user( $user_args );
 
