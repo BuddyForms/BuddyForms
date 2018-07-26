@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,26 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.2.3 – 10. July 2018
+* Fix the screen option for submission page in BuddyForms.
+* Fix: Featured image field is not working in the front-end for edit entries.
+* Fix :Upload field is not working in the front-end for edit entries.
+* Adding a function to check for the correct permalink.
+* Adding a notice to show to the user in case the permalink are not the correct.
+* Adding permalink admin notification.
+* Fixing the js code related to the new upload field, because it was changing the name of the submit buttons in the forms.
+* Removing unused php session.
+* Adding the option to hide the User related fields.
+* Adding status of the post to the submission list
+* Adding better return for the post status. Now it show the full string.
+* Adding helper functions to get all files of one form.
+* Adding a helper function to check if exist a field in the form.
+* Implementing a condition to hide the hidden status input is exist the field status in the form.
+* Adding the code to handle the status if they coming form the form.
+* Fix Status field.
+* Fixing the user role moderation to avoid the user role change for admin and when the option is to keep the current user role.
+* Fixing the user role moderation.
 
 = 2.2.3 – 10. July 2018
 * Fixed the reCaptcha library, adding a native checking from google.
