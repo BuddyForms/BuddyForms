@@ -408,6 +408,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fix Status field.
 * Fixing the user role moderation to avoid the user role change for admin and when the option is to keep the current user role.
 * Fixing the user role moderation.
+* Fixing the submit of the form.
 
 = 2.2.3 – 10. July 2018
 * Fixed the reCaptcha library, adding a native checking from google.
