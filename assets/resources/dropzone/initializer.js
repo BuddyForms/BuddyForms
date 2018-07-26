@@ -4,19 +4,34 @@ jQuery(document).ready(function($) {
         var submitButton = submitButtons.first();
         var existingHtmlInsideSubmitButton = submitButton.html();
     }
-    $("form").click(function(event) {
+    $("form").submit(function(event) {
         var $form = $(this).closest('form');
         var uploadFields = $form.find('.upload_field');
         if (uploadFields.length > 0) {
-            var target = event.target.name;
-            if (target === 'submitted' || target === 'save') {
-                if (submitButtons.length > 0) {
-                    submitButtons.attr("disabled", "disabled");
-                    submitButton.html("Upload in progress");
+            var existFiles = false;
+            uploadFields.each(function() {
+                if(Dropzone) {
+                  var current = jQuery(this);
+                    var currentDropZone = jQuery(current)[0].dropzone;
+                    if (currentDropZone) {
+                        existFiles = currentDropZone.files.length > 0;
+                        if(existFiles){
+                            return false;
+                        }
+                    }
                 }
-                var myDropzone = Dropzone.forElement(".dropzone");
-                var resultado = myDropzone.processQueue();
-                event.preventDefault();
+            });
+            if(existFiles) {
+                var target = event.target.name;
+                if (target === 'submitted' || target === 'save') {
+                    if (submitButtons.length > 0) {
+                        submitButtons.attr("disabled", "disabled");
+                        submitButton.html("Upload in progress");
+                    }
+                    var myDropzone = Dropzone.forElement(".dropzone");
+                    var resultado = myDropzone.processQueue();
+                    event.preventDefault();
+                }
             }
         }
     });
