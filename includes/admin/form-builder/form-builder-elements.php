@@ -438,6 +438,21 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
         case 'upload':
+            $name                           = isset(  $buddyform['form_fields'][$field_id]['name'] ) ? stripcslashes( $buddyform['form_fields'][$field_id]['name'] ) : __( 'Upload', 'buddyforms' );
+            $form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+                'value'    => $name,
+                'required' => 1
+            ) );
+
+            $field_slug                      = isset(  $buddyform['form_fields'][$field_id]['slug'] ) ? sanitize_title( $buddyform['form_fields'][$field_id]['slug'] ) : 'upload';
+            $form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
+                'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
+                'value'     => $field_slug,
+                'required'  => 1,
+                'class'     => 'slug' . $field_id
+            ) );
+
+
 	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
 	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
 	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : '';
