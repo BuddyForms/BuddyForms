@@ -67,6 +67,7 @@ jQuery(document).ready(function($) {
                     /*jQuery("#field_"+id+"-error").text("");
                     jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
                     jQuery("button[type=submit].bf-submit").html("upload in process");*/
+                    jQuery('.dz-progress').hide()
                 });
 
                 this.on('sending', function(file, xhr, formData) {
