@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.2.3 – 10. July 2018
+= 2.2.4 – 10. July 2018
 * Fix the screen option for submission page in BuddyForms.
 * Fix: Featured image field is not working in the front-end for edit entries.
 * Fix :Upload field is not working in the front-end for edit entries.
