@@ -946,3 +946,42 @@ function buddyforms_default_message_on_update() {
 function buddyforms_default_message_on_create() {
 	return __( 'Form Submitted Successfully.', 'buddyforms' );
 }
+
+add_action('wp_ajax_nopriv_handle_dropped_media', 'buddyforms_upload_handle_dropped_media');
+add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_media' );
+function buddyforms_upload_handle_dropped_media() {
+	check_ajax_referer( 'fac_drop', 'nonce' );
+	status_header( 200 );
+	$upload_dir  = wp_upload_dir();
+	$upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
+	$num_files   = count( $_FILES['file']['tmp_name'] );
+	$newupload = 0;
+	if ( ! empty( $_FILES ) ) {
+		$files = $_FILES;
+		foreach ( $files as $file_id => $file ) {
+			$newupload = media_handle_upload( $file_id, 0 );
+		}
+	}
+
+	echo $newupload;
+	die();
+}
+
+add_action( 'wp_ajax_nopriv_handle_deleted_media', 'buddyforms_upload_handle_delete_media' );
+add_action( 'wp_ajax_handle_deleted_media', 'buddyforms_upload_handle_delete_media' );
+function buddyforms_upload_handle_delete_media() {
+	check_ajax_referer( 'fac_drop', 'nonce' );
+	if ( isset( $_REQUEST['media_id'] ) ) {
+		$post_id = absint( $_REQUEST['media_id'] );
+
+		$status = wp_delete_attachment( $post_id, true );
+
+		if ( $status ) {
+			echo wp_json_encode( array( 'status' => 'OK' ) );
+		} else {
+			echo wp_json_encode( array( 'status' => 'FAILED' ) );
+		}
+	}
+
+	die();
+}

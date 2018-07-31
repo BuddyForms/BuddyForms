@@ -22,16 +22,21 @@ jQuery(document).ready(function($) {
                 }
             });
             if(existFiles) {
-                var target = event.target.name;
-                if (target === 'submitted' || target === 'save') {
-                    if (submitButtons.length > 0) {
-                        submitButtons.attr("disabled", "disabled");
-                        submitButton.html("Upload in progress");
-                    }
-                    var myDropzone = Dropzone.forElement(".dropzone");
-                    var resultado = myDropzone.processQueue();
-                    event.preventDefault();
+                if (submitButtons.length > 0) {
+                    submitButtons.attr("disabled", "disabled");
+                    submitButton.html("Upload in progress");
                 }
+                uploadFields.each(function() {
+                    if(Dropzone) {
+                        var current = jQuery(this);
+                        var currentDropZone = jQuery(current)[0].dropzone;
+                        if (currentDropZone) {
+                            var result = currentDropZone.processQueue();
+                            console.log(result)
+                        }
+                    }
+                });
+                event.preventDefault();
             }
         }
     });
@@ -91,7 +96,6 @@ jQuery(document).ready(function($) {
                         var $form = $("#" + id).closest('form');
                         $form.submit();
                     }
-
                 });
 
                 this.on('error', function(file, response) {
