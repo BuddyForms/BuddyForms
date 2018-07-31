@@ -43,11 +43,11 @@ class BuddyFormsSubmissionPage {
 			include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 			?>
             <hr style="margin-bottom: 0px !important;"/><?php
-            $this->bf_submissions_table->prepare_items();
+			$this->bf_submissions_table->prepare_items();
 			if ( isset( $_GET['form_slug'] ) ) {
 				$current_screen->set_parentage( $parent_file );
 				//$current_screen->render_screen_options();
-                $current_screen->render_screen_meta();
+				$current_screen->render_screen_meta();
 			}
 
 			?>
@@ -59,25 +59,21 @@ class BuddyFormsSubmissionPage {
 
                         <h4>Select a form to display the submissions</h4>
                         <script type="text/javascript">
-                            jQuery(document).ready(function(jQuery) {
-                                jQuery("#buddyforms_admin_menu_submissions_form_select").change(function() {
-                                    window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
-                                });
+                          jQuery(document).ready(function (jQuery) {
+                            jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
+                              window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
+                            })
 
+                            jQuery('.metabox-prefs input:checkbox').each(function () {
+                              var colID = jQuery(this).attr('id')
+                              var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked')
+                              if (!hasCheckedAtt) {
+                                document.getElementById(colID).checked = false
+                              }
 
-                                jQuery('.metabox-prefs input:checkbox').each(function()
-                                {
-                                    var colID= jQuery(this).attr('id');
-                                    var hasCheckedAtt =document.getElementById(colID).hasAttribute('checked');
-                                    if(!hasCheckedAtt)
-                                    {
-                                        document.getElementById(colID).checked = false;
-                                    }
+                            })
 
-                                });
-
-
-                            });
+                          })
                         </script>
                         <select id="buddyforms_admin_menu_submissions_form_select">
                             <option value="none">Select Form</option>
@@ -212,7 +208,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
-		$bf_value = get_post_meta( $item->ID, $column_name, true );
+		$bf_value = get_post_meta( intval( $item->ID ), $column_name, true );
 		$bf_field = buddyforms_get_form_field_by_slug( $_GET['form_slug'], $column_name );
 		if ( $bf_field !== false ) {
 			$this->get_column_values( $column_name, $bf_field['type'], $item, $bf_value );
@@ -224,14 +220,43 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 	public function get_column_values( $field_slug, $field_type, $item, $bf_value ) {
 		switch ( $field_type ) {
+			case 'title':
+				$bf_value = get_the_title( $item->ID );
+				break;
+			case 'content':
+				$post = get_post( $item->ID );
+
+				$content = str_replace( ']]>', ']]&gt;', $post->post_content );
+				$content = strip_shortcodes( $content );
+
+				/**
+				 * Filters the number of words in an excerpt.
+				 *
+				 * @since 2.7.0
+				 *
+				 * @param int $number The number of words. Default 55.
+				 */
+				$excerpt_length = apply_filters( 'excerpt_length', 55 );
+				/**
+				 * Filters the string in the "more" link displayed after a trimmed excerpt.
+				 *
+				 * @since 2.9.0
+				 *
+				 * @param string $more_string The string shown within the more link.
+				 */
+				$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+				$bf_value     = wp_trim_words( $content, $excerpt_length, $excerpt_more );
+				break;
 			case 'upload':
 				$result        = '';
 				$attachment_id = explode( ",", $bf_value );
 				foreach ( $attachment_id as $id ) {
-					$url    = wp_get_attachment_url( $id );
-					$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
+					if ( ! empty( $id ) ) {
+						$url    = wp_get_attachment_url( $id );
+						$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
+					}
 				}
-				$bf_value = rtrim( trim( $result ), ',' );
+				$bf_value = ( ! empty( $result ) ) ? rtrim( trim( $result ), ',' ) : '';
 				break;
 			case 'Date':
 				$bf_value = get_the_date( 'F j, Y', $item->ID );
@@ -246,9 +271,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 					$bf_value = implode( ',', $result );
 				}
 				break;
-            case 'status':
-                $bf_value = buddyforms_get_post_status_readable(get_post_status($item->ID));
-                break;
+			case 'status':
+				$bf_value = buddyforms_get_post_status_readable( get_post_status( $item->ID ) );
+				break;
 			default:
 				if ( is_array( $bf_value ) ) {
 					$str_result = '';

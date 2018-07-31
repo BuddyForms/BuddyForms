@@ -22,16 +22,14 @@ jQuery(document).ready(function($) {
                 }
             });
             if(existFiles) {
-                var target = event.target.name;
-                if (target === 'submitted' || target === 'save') {
-                    if (submitButtons.length > 0) {
-                        submitButtons.attr("disabled", "disabled");
-                        submitButton.html("Upload in progress");
-                    }
-                    var myDropzone = Dropzone.forElement(".dropzone");
-                    var resultado = myDropzone.processQueue();
-                    event.preventDefault();
+                if (submitButtons.length > 0) {
+                    submitButtons.attr("disabled", "disabled");
+                    submitButton.html("Upload in progress");
                 }
+                var myDropzone = Dropzone.forElement(".dropzone");
+                var result = myDropzone.processQueue();
+                console.log(result)
+                event.preventDefault();
             }
         }
     });
