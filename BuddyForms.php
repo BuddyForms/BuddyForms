@@ -57,7 +57,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @package buddyforms
 		 * @since 0.1-beta
 		 */
-		public function __construct() {
+		public function __construct() { 
 			global $wp_session;
 
 			register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
