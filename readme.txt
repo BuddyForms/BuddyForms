@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.2.4 – 10. July 2018
+= 2.2.4 – 7 August 2018
 * Fix the screen option for submission page in BuddyForms.
 * Fix: Featured image field is not working in the front-end for edit entries.
 * Fix :Upload field is not working in the front-end for edit entries.
@@ -409,6 +409,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixing the user role moderation to avoid the user role change for admin and when the option is to keep the current user role.
 * Fixing the user role moderation.
 * Fixing the submit of the form.
+* Added a code to check if the uploader have a file to avoid cancel the form submission.
+* Moving upload function to the function file to include in the front.
+* Fixing submission view to include the post title and the post content. The post content with the elipsis form wp
+* Cleaning the upload field.
+* Added a code to wait the form submission for multiples file upload from different fields.
+* Added the option to handle the empty submission list.
+* Added a shortcode to add a link inside the empty submission list message.
 
 = 2.2.3 – 10. July 2018
 * Fixed the reCaptcha library, adding a native checking from google.
