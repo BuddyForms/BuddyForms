@@ -355,3 +355,45 @@ function buddyforms_reset_password_form($args) {
 	}
 }
 add_shortcode('buddyforms_reset_password', 'buddyforms_reset_password_form');
+
+/**
+ * This shortcode will return the link to create a new post if the attached page option are enabled
+ *
+ * @param $args
+ *
+ * @return string
+ */
+function buddyforms_create_submission_link_shortcode( $args ) {
+	global $buddyforms, $form_slug;
+
+	$default_link = '';
+	if ( ! empty( $form_slug ) ) {
+		$attached_page     = isset( $buddyforms[ $form_slug ]['attached_page'] ) ? $buddyforms[ $form_slug ]['attached_page'] : 'false';
+		$siteurl           = get_bloginfo( 'wpurl' );
+		$attached_page_url = get_permalink( $attached_page );
+
+		if ( ! empty( $attached_page_url ) ) {
+			$default_link = $attached_page_url . "create/" . $form_slug;
+		} else {
+			$default_link = $siteurl . '/' . $attached_page . '/create/' . $form_slug;
+		}
+	}
+	$arguments = shortcode_atts( array(
+		'name'   => __( 'Now', 'buddyforms' ),
+		'link'   => $default_link,
+		'target' => '_blank',
+	), $args );
+
+	$target = '';
+	if ( ! empty( $arguments['target'] ) && 'false' !== $arguments['target'] ) {
+		$target = sprintf( ' target="%s" ', $arguments['target'] );
+	}
+	if ( ! empty( $arguments['link'] ) ) {
+		return sprintf( '<a href="%s" %s >%s</a>', $arguments['link'], $target, $arguments['name'] );
+	} else {
+		return $arguments['name'];
+	}
+}
+
+add_shortcode( 'bf_new_submission_link', 'buddyforms_create_submission_link_shortcode' );
+
