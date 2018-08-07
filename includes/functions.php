@@ -150,19 +150,13 @@ function buddyforms_locate_template( $slug ) {
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
 		$template_path = $template_file;
 	}
-
 	$empty_post_message = __( 'There were no posts found. Create your first post now! ', 'buddyforms' );
 	if ( ! empty( $form_slug ) ) {
-		$attached_page     = isset( $buddyforms[ $form_slug ]['attached_page'] ) ? $buddyforms[ $form_slug ]['attached_page'] : 'false';
-		$siteurl           = get_bloginfo( 'wpurl' );
-		$attached_page_url = get_permalink( $attached_page );
-
-		if ( ! empty( $attached_page_url ) ) {
-			$site_url_create_html = $attached_page_url . "create/" . $form_slug;
+		if ( ! empty( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] ) ) {
+			$empty_post_message = do_shortcode( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] );
 		} else {
-			$site_url_create_html = $siteurl . '/' . $attached_page . '/create/' . $form_slug;
+			$empty_post_message = do_shortcode( buddyforms_default_message_on_empty_submission_list() );
 		}
-		$empty_post_message = sprintf( __( 'There were no posts found. Create your first post <a href="%s" target="_blank" >now</a>!', 'buddyforms' ), $site_url_create_html );
 	}
 
 	// Do the include
@@ -943,11 +937,15 @@ function buddyforms_default_message_on_update() {
 	return __( 'Form Updated Successfully.', 'buddyforms' );
 }
 
+function buddyforms_default_message_on_empty_submission_list() {
+	return __( 'There were no posts found. Create your first post [bf_new_submission_link name="Now"]!', 'buddyforms' );
+}
+
 function buddyforms_default_message_on_create() {
 	return __( 'Form Submitted Successfully.', 'buddyforms' );
 }
 
-add_action('wp_ajax_nopriv_handle_dropped_media', 'buddyforms_upload_handle_dropped_media');
+add_action( 'wp_ajax_nopriv_handle_dropped_media', 'buddyforms_upload_handle_dropped_media' );
 add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_media' );
 function buddyforms_upload_handle_dropped_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
@@ -955,7 +953,7 @@ function buddyforms_upload_handle_dropped_media() {
 	$upload_dir  = wp_upload_dir();
 	$upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
 	$num_files   = count( $_FILES['file']['tmp_name'] );
-	$newupload = 0;
+	$newupload   = 0;
 	if ( ! empty( $_FILES ) ) {
 		$files = $_FILES;
 		foreach ( $files as $file_id => $file ) {

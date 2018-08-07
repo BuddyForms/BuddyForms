@@ -31,6 +31,7 @@ function buddyforms_metabox_form_setup() {
 	$message_text_default      = $post_type == 'false' ? 'Form Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
 	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : $message_text_default;
 	$after_update_submit_message_text = isset( $buddyform['after_update_submit_message_text'] ) ? $buddyform['after_update_submit_message_text'] : buddyforms_default_message_on_update();
+	$empty_submit_list_message_text = isset( $buddyform['empty_submit_list_message_text'] ) ? $buddyform['empty_submit_list_message_text'] : buddyforms_default_message_on_empty_submission_list();
 
 	$attached_page     = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
 	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
@@ -99,6 +100,15 @@ function buddyforms_metabox_form_setup() {
 		'class' => 'display_message display_form',
 		'value' => $after_update_submit_message_text,
 		'id'    => 'after_update_submit_message_text',
+	) );
+
+	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'Empty Submission List Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[empty_submit_list_message_text]", array(
+		'rows'     => 3,
+		'style'    => "width:100%",
+		'class'    => 'display_message display_form',
+		'value'    => $empty_submit_list_message_text,
+		'id'       => 'empty_submit_list_message_text',
+		'shortDesc' => __( 'This message is used when you have setup the option <b>Enable your site members to view their submissions</b>', 'buddyforms' )
 	) );
 
 	$element = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
