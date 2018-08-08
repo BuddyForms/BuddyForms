@@ -381,7 +381,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
             //DropZone
             wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
-            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ) );
+            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), $this->version, true );
             wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ) );
             wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ) );
             $params = array(
@@ -487,7 +487,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			//DropZone
 			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
-            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ) );
+            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), $this->version,  true);
 			wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ) );
 			$params = array(
