@@ -1,46 +1,51 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+    var completed = false;
+    var uploadFieldsLength = 0;
     var submitButtons = jQuery("button[type=submit].bf-submit");
     if (submitButtons.length > 0) {
         var submitButton = submitButtons.first();
         var existingHtmlInsideSubmitButton = submitButton.html();
     }
-    $("form").submit(function(event) {
-        var $form = $(this).closest('form');
-        var uploadFields = $form.find('.upload_field');
-        if (uploadFields.length > 0) {
-            var existFiles = false;
-            uploadFields.each(function() {
-                if(Dropzone) {
-                  var current = jQuery(this);
-                    var currentDropZone = jQuery(current)[0].dropzone;
-                    if (currentDropZone) {
-                        existFiles = currentDropZone.files.length > 0;
-                        if(existFiles){
-                            return false;
-                        }
-                    }
-                }
-            });
-            if(existFiles) {
-                if (submitButtons.length > 0) {
-                    submitButtons.attr("disabled", "disabled");
-                    submitButton.html("Upload in progress");
-                }
-                uploadFields.each(function() {
-                    if(Dropzone) {
+    jQuery('button.bf-submit[type="submit"]').on('click', function (event) {
+        if (!completed) {
+            var $form = $(this).closest('form'),
+                uploadFields = $form.find('.upload_field');
+            if (uploadFields.length > 0) {
+                var existFiles = false;
+                uploadFieldsLength = uploadFields.length;
+                uploadFields.each(function () {
+                    if (Dropzone) {
                         var current = jQuery(this);
                         var currentDropZone = jQuery(current)[0].dropzone;
                         if (currentDropZone) {
-                            var result = currentDropZone.processQueue();
-                            console.log(result)
+                            existFiles = currentDropZone.files.length > 0;
+                            if (existFiles) {
+                                return false;
+                            }
                         }
                     }
                 });
-                event.preventDefault();
+                if (existFiles) {
+                    if (submitButtons.length > 0) {
+                        submitButtons.attr("disabled", "disabled");
+                        submitButton.html("Upload in progress");
+                    }
+                    uploadFields.each(function () {
+                        if (Dropzone) {
+                            var current = jQuery(this);
+                            var currentDropZone = jQuery(current)[0].dropzone;
+                            if (currentDropZone) {
+                                var result = currentDropZone.processQueue();
+                                console.log(result)
+                            }
+                        }
+                    });
+                    event.preventDefault();
+                }
             }
         }
     });
-    $(".upload_field").each(function(index, value) {
+    $(".upload_field").each(function (index, value) {
         var current = $(this),
             id = current.attr('id'),
             max_size = current.attr('file_limit'),
@@ -62,25 +67,27 @@ jQuery(document).ready(function($) {
             autoProcessQueue: false,
             clickable: clickeable,
             addRemoveLinks: clickeable,
-            init: function() {
-                this.on('complete', function() {
-                    /*jQuery("button[type=submit].bf-submit").removeAttr("disabled");
-                    jQuery("button[type=submit].bf-submit").html("Submit");*/
+            init: function () {
+                this.on('queuecomplete', function () {
+                    uploadFieldsLength--;
+                    if (uploadFieldsLength === 0) {
+                        var $form = $("#" + id).closest('form');
+                        $form.submit();
+                    }
                 });
 
-                this.on('addedfile', function() {
-                    /*jQuery("#field_"+id+"-error").text("");
-                    jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
-                    jQuery("button[type=submit].bf-submit").html("upload in process");*/
+                this.on('addedfile', function () {
+                    jQuery("#" + id + "-error").text("");
                     jQuery('.dz-progress').hide()
                 });
 
-                this.on('sending', function(file, xhr, formData) {
+                this.on('sending', function (file, xhr, formData) {
                     formData.append('action', 'handle_dropped_media');
                     formData.append('nonce', dropParam.ajaxnonce);
                 });
 
-                this.on('success', function(file, response) {
+                this.on('success', function (file, response) {
+                    console.log('success')
                     file.previewElement.classList.add("dz-success");
                     file['attachment_id'] = response; // push the id for future reference
                     var ids = currentField.val() + ',' + response;
@@ -91,14 +98,9 @@ jQuery(document).ready(function($) {
                         idsFormat = ids;
                     }
                     currentField.val(idsFormat);
-                    var remainingFilesonQueque = this.getUploadingFiles().length;
-                    if (remainingFilesonQueque == 0) {
-                        var $form = $("#" + id).closest('form');
-                        $form.submit();
-                    }
                 });
 
-                this.on('error', function(file, response) {
+                this.on('error', function (file, response) {
                     file.previewElement.classList.add("dz-error");
                     jQuery(file.previewElement).find('div.dz-error-message>span').text(response);
                     if (submitButtons.length > 0) {
@@ -106,7 +108,7 @@ jQuery(document).ready(function($) {
                         submitButton.html(existingHtmlInsideSubmitButton);
                     }
                 });
-                this.on('removedfile', function(file) {
+                this.on('removedfile', function (file) {
                     var attachment_id = file.attachment_id;
                     var ids = currentField.val();
                     var remainigIds = ids.replace(attachment_id, "");
@@ -123,9 +125,9 @@ jQuery(document).ready(function($) {
                         action: 'handle_deleted_media',
                         media_id: attachment_id,
                         nonce: dropParam.ajaxnonce
-                    }, function(data) {
+                    }, function (data) {
                         console.log(data);
-                    }).always(function() {
+                    }).always(function () {
                         if (submitButtons.length > 0) {
                             submitButtons.removeAttr("disabled");
                             submitButton.html(existingHtmlInsideSubmitButton);
