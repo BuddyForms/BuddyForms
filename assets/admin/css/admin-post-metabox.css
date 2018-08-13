@@ -65,3 +65,11 @@ li.fs-cta a, #fs_addons h2 {
 	font-size: 11px;
 }
 
+#TB_window {
+    height: auto !important;
+    overflow: hidden;
+}
+
+#TB_ajaxContent{
+    width: auto !important;
+}
