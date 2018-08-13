@@ -81,19 +81,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 102, 1 );
 
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
-
-			//Check for permalink
-			if ( ! $this->buddyforms_is_permalink_correct() ) {
-				add_action( 'admin_notices', array( $this, 'buddyforms_permalink_admin_notice' ) );
-			}
-		}
-
-		public function buddyforms_permalink_admin_notice() {
-			?>
-            <div class="notice notice-error is-dismissible">
-                <p><?php _e( 'BuddyForm Error => You current permalink option is unsupported, please change it to %postname%.!', 'buddyforms' ); ?></p>
-            </div>
-			<?php
 		}
 
 		/**
