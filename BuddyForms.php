@@ -84,17 +84,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		}
 
 		/**
-		 * Check if the permalink is setup and is postname
-		 *
-		 * @return bool
-		 */
-		public function buddyforms_is_permalink_correct() {
-			$permalink = get_option( 'permalink_structure' );
-
-			return $permalink === '/%postname%/';
-		}
-
-		/**
 		 * Defines constants needed throughout the plugin.
 		 *
 		 * These constants can be overridden in bp-custom.php or wp-config.php.
