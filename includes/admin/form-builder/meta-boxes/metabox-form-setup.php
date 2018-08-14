@@ -105,7 +105,6 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'Empty Submission List Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[empty_submit_list_message_text]", array(
 		'rows'     => 3,
 		'style'    => "width:100%",
-		'class'    => 'display_message display_form',
 		'value'    => $empty_submit_list_message_text,
 		'id'       => 'empty_submit_list_message_text',
 		'shortDesc' => __( 'This message is used when you have setup the option <b>Enable your site members to view their submissions</b>', 'buddyforms' )
