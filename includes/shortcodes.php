@@ -81,16 +81,22 @@ function buddyforms_the_loop( $args ) {
 		'form_slug'   => '',
 		'id'          => '',
 		'post_parent' => 0,
-		'query_option' => isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '',
+		'query_option' => $query_option,
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key' => '',
 		'meta_value' => ''
 	), $args ) );
 
-	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) :
-		buddyforms_wp_login_form();
-		return;
-	endif;
+    if (empty($form_slug)) {
+        return '';
+    }
+
+    $query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
+
+	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
+        buddyforms_wp_login_form();
+        return;
+    }
 
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
