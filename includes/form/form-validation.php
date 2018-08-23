@@ -15,12 +15,12 @@ add_filter( 'buddyforms_form_custom_validation', 'buddyforms_server_validation',
  */
 function buddyforms_server_validation( $valid, $form_slug ) {
 	global $buddyforms;
-	
+
 	$form = $buddyforms[ $form_slug ];
-	
+
 	if ( isset( $form['form_fields'] ) ) {
 		foreach ( $form['form_fields'] as $key => $form_field ) {
-			
+
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 && isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] === $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] !== $form_field['validation_min'] ) ) {
 					$valid                    = false;
@@ -28,7 +28,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-			
+
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) ) {
 					$valid                    = false;
@@ -36,7 +36,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-			
+
 			if ( isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) ) {
 					$valid                    = false;
@@ -44,7 +44,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-			
+
 			if ( isset( $form_field['validation_minlength'] ) && $form_field['validation_minlength'] > 0 ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) < $form_field['validation_minlength'] ) {
 					$valid                    = false;
@@ -52,7 +52,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-			
+
 			if ( isset( $form_field['validation_maxlength'] ) && $form_field['validation_maxlength'] > 0 ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) > $form_field['validation_maxlength'] ) {
 					$valid                    = false;
@@ -60,9 +60,9 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	return $valid;
@@ -84,20 +84,27 @@ function buddyforms_jquery_validation() {
 	';
 
 	foreach ( $buddyforms as $form_slug => $form ) {
-		// Create the needed Validation JS.
-		$form_html .= '
-	    jQuery(function() {
-	        jQuery("#buddyforms_form_' . $form_slug . '").submit(function(){}).validate({
-	            errorPlacement: function(label, element) {
-		            if (element.is("TEXTAREA")) {
-		                label.insertAfter(element);
-		            } else if(element.is("input[type=\"radio\"]")) {
-		                label.insertBefore(element);
-		            } else {
-		                label.insertAfter(element);
-		            }
-	            }
-	        }); setTimeout(function() {';
+			// Create the needed Validation JS.
+      $form_html .=  '
+      jQuery(function() { ';
+    $validator_init = '
+      jQuery("#buddyforms_form_' . $form_slug . '").submit(function(){}).validate({
+        errorPlacement: function(label, element) {
+          if (element.is("TEXTAREA")) {
+              label.insertAfter(element);
+          } else if(element.is("input[type=\"radio\"]")) {
+              label.insertBefore(element);
+          } else {
+              label.insertAfter(element);
+          }
+        }
+      });';
+
+    //allow the validate script to be altered
+    $form_html .= apply_filters('buddyforms_jquery_validator_init', $validator_init, $form_slug);
+
+    $form_html .= '
+      setTimeout(function() {';
 
 		if ( isset( $form['form_fields'] ) ) {
 			foreach ( $form['form_fields'] as $key => $form_field ) {
@@ -141,7 +148,7 @@ function buddyforms_jquery_validation() {
 		}
 
 		$form_html .= '
-		}); }, 0);';
+    }, 0); });';
 
 	}
 	$form_html .= '
