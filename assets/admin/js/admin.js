@@ -254,13 +254,20 @@ jQuery(document).ready(function (jQuery) {
 
         // traverse all the required elements looking for an empty one
         jQuery("#post input[required]").each(function () {
-
             // if the value is empty, that means that is invalid
             if (jQuery(this).val() == "") {
+                jQuery(this).addClass("bf-error");
+                //close all
+                jQuery("#sortable_buddyforms_elements").accordion({
+                    active: false
+                });
+                jQuery(this).closest(".accordion-body.ui-accordion-content.collapse").addClass("ui-accordion-content-active").css("height", "auto");
+                var li_id = jQuery(this).closest('li.bf_list_item');
+                var li_position = jQuery('#sortable_buddyforms_elements li.bf_list_item').index(jQuery(li_id));
 
-                // hide the currently open accordion and open the one with the required field
-                jQuery(".accordion-body.collapse.in").removeClass("in");
-                jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height", "auto");
+                jQuery("#sortable_buddyforms_elements").accordion({
+                    active: li_position
+                });
                 jQuery('#buddyforms_form_setup').removeClass('closed');
                 jQuery('#buddyforms_form_elements').removeClass('closed');
 
@@ -268,6 +275,8 @@ jQuery(document).ready(function (jQuery) {
 
                 // stop scrolling through the required elements
                 return false;
+            } else {
+                jQuery(this).removeClass("bf-error");
             }
         });
 
