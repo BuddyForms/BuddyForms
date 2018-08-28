@@ -114,7 +114,6 @@ function buddyforms_the_loop( $args ) {
 
 	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
-
 	if( empty( $author ) ){
 		$author = get_current_user_id();
 	}
@@ -159,7 +158,6 @@ function buddyforms_the_loop( $args ) {
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
-				'author'         => $the_author_id,
 				'paged'          => $paged,
 			);
 			break;
@@ -170,13 +168,16 @@ function buddyforms_the_loop( $args ) {
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
-				'author'         => $the_author_id,
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
 				'meta_value'     => $form_slug
 			);
 			break;
 
+	}
+
+	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+		$query_args['author'] = $the_author_id;
 	}
 
 	// New
