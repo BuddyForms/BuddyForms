@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,15 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.2.5 – 31 August 2018
+* Fixed the shortcode generator modal. Now it look full width.
+* Removed the permalink notice and function.
+* Showing the empty submission list message option always in the form settings.
+* Fixed the list post option setting.
+* Added a filter to customize the jquery validations. `buddyforms_jquery_validator_init`, thanks to @pattyok.
+* Added the function to the form to open the field in case of empty required setting.
+* Added a script to check for repeated slug and add a random suffix.
+* Added a new permission to get all user submission in the frontend.
 
 = 2.2.4 – 7 August 2018
 * Fix the screen option for submission page in BuddyForms.
