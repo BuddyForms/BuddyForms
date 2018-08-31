@@ -94,7 +94,7 @@ function buddyforms_permissions_screen() {
 			$shortDesc_permission = '<br><br>
 			<div class="bf-roles-main-desc">
 				<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
-				<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
+				<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you check the All Submission the user role will get all users submission in the frontend. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 			</div>';
 		}
 	}
@@ -104,11 +104,12 @@ function buddyforms_permissions_screen() {
 	
 	// Display all user roles
 	foreach ( get_editable_roles() as $role_name => $role_info ) {
-		
+
 		$default_roles['create'] = '';
 		$default_roles['edit']   = '';
 		$default_roles['delete'] = '';
-		
+		$default_roles['all']    = '';
+
 		$form_user_role = array();
 		
 		foreach ( $role_info['capabilities'] as $capability => $_ ) {
@@ -156,7 +157,7 @@ function buddyforms_permissions_screen() {
             <thead>
             <tr>
                 <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
-                <th class="field_name"><?php _e( 'Create - Edit - Delete', 'buddyforms' ) ?>
+                <th class="field_name"><?php _e( 'Create - Edit - Delete - All Submissions', 'buddyforms' ) ?>
 	                <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
                 </th>
             </tr>
