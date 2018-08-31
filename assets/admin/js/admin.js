@@ -252,6 +252,18 @@ jQuery(document).ready(function (jQuery) {
             jQuery('[name="post_title"]').addClass('bf-ok');
         }
 
+        //Fill and avoid duplicates of field slugs
+        var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
+        findFieldsSlugs.each(function () {
+            var fieldSlugs = jQuery(this);
+            findFieldsSlugs.each(function () {
+                if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
+                    fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
+                    return false;
+                }
+            });
+        });
+
         // traverse all the required elements looking for an empty one
         jQuery("#post input[required]").each(function () {
             // if the value is empty, that means that is invalid
@@ -280,13 +292,24 @@ jQuery(document).ready(function (jQuery) {
             }
         });
 
-
         if (error === true) {
             return false;
         }
 
     });
 
+    //
+    // Generate a custom string to append to the field slug in case of duplicate
+    //
+    function buddyformsMakeFieldId() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 5; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
 
     //
     // Remove form element form the form builder
