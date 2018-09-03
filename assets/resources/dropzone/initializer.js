@@ -11,7 +11,6 @@ function uploadHandler() {
     }
 
     function handleSubmitClick(event) {
-        event.preventDefault();
         //base case is to let form send, if something is wrong stop send it
         if (!isCompleted) {
             var form = $(this).closest('form'),
