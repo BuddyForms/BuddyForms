@@ -63,20 +63,27 @@ class Element_Upload extends Element_Textbox {
 		if ( ! empty( $result ) ) {
 			$result_value = rtrim( trim( $result ), ',' );
 		}
-		$required         = $this->getAttribute( 'mandatory' );
-		$description      = $this->getAttribute( 'description' );
-		$max_size         = $this->getAttribute( 'file_limit' );
-		$accepted_files   = $this->getAttribute( 'accepted_files' );
-		$multiple_files   = $this->getAttribute( 'multiple_files' );
+		$required                 = $this->getAttribute( 'mandatory' );
+		$validation_error_message = $this->getAttribute( 'validation_error_message' );
+		$description              = $this->getAttribute( 'description' );
+		$max_size                 = $this->getAttribute( 'file_limit' );
+		$accepted_files           = $this->getAttribute( 'accepted_files' );
+		$multiple_files           = $this->getAttribute( 'multiple_files' );
 		$mime_type        = '';
 		$mime_type_result = '';
 		$allowed_types    = get_allowed_mime_types();
 		foreach ( $accepted_files as $key => $value ) {
-
 			$mime_type .= $allowed_types[ $value ] . ',';
 		}
 		if ( ! empty( $mime_type ) ) {
 			$mime_type_result = rtrim( trim( $mime_type ), ',' );
+		}
+
+		if ( ! empty( $required ) ) {
+			$required = 'data-rule-uploadrequired=\'true\' data-rule-upload-max-exceeded=\'[' . $multiple_files . ']\'';
+			if ( ! empty( $validation_error_message ) ) {
+				$required .= ' data-msg-uploadrequired=\'' . $validation_error_message . '\'';
+			}
 		}
 
 		$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );

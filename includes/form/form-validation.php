@@ -108,6 +108,10 @@ function buddyforms_jquery_validation() {
 
 		if ( isset( $form['form_fields'] ) ) {
 			foreach ( $form['form_fields'] as $key => $form_field ) {
+				if($form_field['type'] === 'upload'){
+					continue;
+				}
+
 				if ( isset( $form_field['required'] ) ) {
 
 					$form_html .= '

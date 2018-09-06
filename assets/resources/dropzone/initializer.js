@@ -2,7 +2,7 @@ function uploadHandler() {
     Dropzone.autoDiscover = false;
     var isCompleted = false,
         uploadFieldsLength = 0,
-        submitButtons, submitButton,
+        submitButtons, submitButton, uploadFieldsValidation = [],
         existingHtmlInsideSubmitButton = '';
 
     function getFirstSubmitButton(submitButtons) {
@@ -200,7 +200,7 @@ function uploadHandler() {
             submitButtons = jQuery("button.bf-submit[type=submit]");
             if (submitButtons.length > 0) {
                 getFirstSubmitButton(submitButtons);
-                submitButtons.on('click', handleSubmitClick);
+                // submitButtons.on('click', handleSubmitClick);
                 buildDropZoneFieldsOptions();
             }
         }
@@ -209,5 +209,25 @@ function uploadHandler() {
 
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
-    uploadImplementation.init()
+    jQuery.validator.addMethod("uploadrequired", function (value, element) {
+        if (Dropzone) {
+            var dropZoneId = jQuery(element).attr('name');
+            var currentDropZone = jQuery('#'+dropZoneId)[0].dropzone;
+            if (currentDropZone) {
+                return currentDropZone.files.length > 0;
+            }
+        }
+        return false;
+    }, "This field is required.");
+    jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
+        if (Dropzone) {
+            var dropZoneId = jQuery(element).attr('name');
+            var currentDropZone = jQuery('#'+dropZoneId)[0].dropzone;
+            if (currentDropZone) {
+                return param >= currentDropZone.files.length;
+            }
+        }
+        return false;
+    }, "The number of files is greater than allowed.");
+    uploadImplementation.init();
 });
