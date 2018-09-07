@@ -80,14 +80,14 @@ class Element_Upload extends Element_Textbox {
 		}
 
 		if ( ! empty( $required ) ) {
-			$required = 'data-rule-uploadrequired=\'true\' data-rule-upload-max-exceeded=\'[' . $multiple_files . ']\'';
+			$required = 'data-rule-upload-required=\'true\' ';
 			if ( ! empty( $validation_error_message ) ) {
-				$required .= ' data-msg-uploadrequired=\'' . $validation_error_message . '\'';
+				$required .= ' data-msg-upload-required=\'' . $validation_error_message . '\'';
 			}
 		}
 
 		$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
-		$box = "<div class=\"dropzone upload_field dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'><div class=\"dz-default dz-message\" data-dz-message=\"\"><span>$message</span></div><input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' $required /></div>";
+		$box = "<div class=\"dropzone upload_field dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'><div class=\"dz-default dz-message\" data-dz-message=\"\"><span>$message</span></div><input type='text' style='visibility: hidden' class='upload_field_input' name='$id' value='$result_value' id='field_$id' data-rule-upload-max-exceeded='[" . $multiple_files . "]' data-rule-upload-group='true' $required /></div>";
 		if ( $this->bootstrapVersion == 3 ) {
 			echo $box;
 		} else {
