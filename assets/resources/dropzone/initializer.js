@@ -17,7 +17,7 @@ function uploadHandler() {
                 uploadFields.each(function () {
                     if (Dropzone) {
                         var currentDropZone = jQuery(this)[0].dropzone;
-                        if (currentDropZone && form.valid()) {
+                        if (currentDropZone ) {
                             var result = currentDropZone.processQueue();
                             console.log('process done', result);
                         }
@@ -114,13 +114,21 @@ function uploadHandler() {
     }
 
     function DropZoneQueueComplete(dropzoneStringId) {
-        var isSuccessAll = checkIfAllSuccess();
-        console.log('isSuccessAll ', isSuccessAll, ' #', dropzoneStringId);
-        if(isSuccessAll){
-            var form = jQuery(dropzoneStringId).closest('form');
+       // var isSuccessAll = checkIfAllSuccess();
+       // console.log('isSuccessAll ', isSuccessAll, ' #', dropzoneStringId);
+        var form = jQuery(dropzoneStringId).closest('form');
+        var isValid= form.valid();
+        if(isValid){
             form.submit();
-            console.log('submit');
         }
+       /* if(isSuccessAll){
+            var form = jQuery(dropzoneStringId).closest('form');
+           var isValid= form.valid();
+           if(isValid){
+               form.submit();
+           }
+
+        }*/
     }
 
     function DropZoneAddedFile(dropzoneStringId) {
@@ -235,31 +243,40 @@ jQuery(document).ready(function () {
         return false;
     }, "The number of files is greater than allowed.");
     jQuery.validator.addMethod("upload-group", function (value, element, options) {
-        var $fields = jQuery('.upload_field_input', element.form),
-            $fieldsFirst = $fields.eq(0),
-            validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-            isValid = $fields.filter(function () {
-                var dropZoneId = jQuery(this).attr('name');
+
+        var fields = jQuery('.upload_field_input', element.form);
+            var $fieldsFirst = fields.eq(0);
+            var enqueueFields = new Array();
+            var isValid = true;
+            var validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this);
+            for(var i =0; i< fields.length;i++) {
+                var dropZoneId = jQuery(fields[i]).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+
                 if (currentDropZone.files.length > 0) {
-                    return currentDropZone.files.filter(function (file) {
+                    enqueueFields[i]= currentDropZone.files.filter(function (file) {
                         return file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED;
-                    });
-                } else {
-                    return true;
+                    }).length;
                 }
-            }).length >= jQuery('.upload_field').length;
+            };
+         for(var k=0; k < enqueueFields.length; k++){
+             if(enqueueFields[k] > 0){
+                 isValid = false;
+                 break;
+             }
+         }
+
 
         // Store the cloned validator for future validation
         $fieldsFirst.data("valid_req_grp", validator);
 
         // If element isn't being validated, run each require_from_group field's validation rules
         if (!jQuery(element).data("being_validated")) {
-            $fields.data("being_validated", true);
-            $fields.each(function () {
+            fields.data("being_validated", true);
+            fields.each(function () {
                 validator.element(this);
             });
-            $fields.data("being_validated", false);
+            fields.data("being_validated", false);
         }
         return isValid;
     }, 'uploading or queued');
