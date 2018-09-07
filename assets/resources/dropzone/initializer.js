@@ -1,30 +1,11 @@
 function uploadHandler() {
     Dropzone.autoDiscover = false;
-    var isCompleted = false,
-        submitButtons, submitButton, uploadFieldsValidation = [],
+    var submitButtons, submitButton,
         existingHtmlInsideSubmitButton = '';
 
     function getFirstSubmitButton(submitButtons) {
         submitButton = submitButtons.first();
         existingHtmlInsideSubmitButton = submitButton.html();
-    }
-
-    function handleSubmitClick() {
-        if (!isCompleted) {
-            var form = jQuery(this).closest('form'),
-                uploadFields = form.find('.upload_field');
-            if (uploadFields.length > 0) {
-                uploadFields.each(function () {
-                    if (Dropzone) {
-                        var currentDropZone = jQuery(this)[0].dropzone;
-                        if (currentDropZone ) {
-                            var result = currentDropZone.processQueue();
-                            console.log('process done', result);
-                        }
-                    }
-                });
-            }
-        }
     }
 
     function buildDropZoneFieldsOptions() {
@@ -49,12 +30,11 @@ function uploadHandler() {
             maxFilesize: maxSize,
             acceptedFiles: acceptedFiles,
             maxFiles: multipleFiles,
-            autoProcessQueue: false,
             clickable: clickeable,
             addRemoveLinks: clickeable,
             init: function () {
                 this.on('queuecomplete', function () {
-                    DropZoneQueueComplete(dropzoneStringId);
+                    console.log('DropZoneQueueComplete');
                 });
                 this.on('addedfile', function () {
                     DropZoneAddedFile(dropzoneStringId);
@@ -92,47 +72,7 @@ function uploadHandler() {
         enabledSubmitButtons();
     }
 
-    function checkIfAllSuccess() {
-        var uploadFields = jQuery(this).closest('form').find('.upload_field');
-        if (uploadFields.length > 0) {
-            uploadFields.each(function () {
-                var currentDropZone = jQuery(this)[0].dropzone;
-                if (currentDropZone.files.length > 0) {
-                    var allFiles = currentDropZone.files.filter(function (file) {
-                        return file.status !== Dropzone.SUCCESS;
-                    }).map(function (file) {
-                        return file;
-                    });
-                    console.log('files different of success', allFiles);
-                    return allFiles.length === 0;
-                } else {
-                    return false;
-                }
-            });
-        }
-        return false;
-    }
-
-    function DropZoneQueueComplete(dropzoneStringId) {
-       // var isSuccessAll = checkIfAllSuccess();
-       // console.log('isSuccessAll ', isSuccessAll, ' #', dropzoneStringId);
-        var form = jQuery(dropzoneStringId).closest('form');
-        var isValid= form.valid();
-        if(isValid){
-            form.submit();
-        }
-       /* if(isSuccessAll){
-            var form = jQuery(dropzoneStringId).closest('form');
-           var isValid= form.valid();
-           if(isValid){
-               form.submit();
-           }
-
-        }*/
-    }
-
     function DropZoneAddedFile(dropzoneStringId) {
-        //add a clean here for jquery validation hide the messages
         jQuery(dropzoneStringId + "-error").text("");
         jQuery('.dz-progress').hide()
     }
@@ -147,14 +87,14 @@ function uploadHandler() {
         console.log('success', currentField);
         file.previewElement.classList.add("dz-success");
         file['attachment_id'] = response; // push the id for future reference
-        var ids = currentField.val() + ',' + response;
+        var ids = jQuery(currentField).val() + ',' + response;
         var idsFormat = "";
         if (ids[0] === ',') {
             idsFormat = ids.substring(1, ids.length);
         } else {
             idsFormat = ids;
         }
-        currentField.val(idsFormat);
+        jQuery(currentField).attr('value', idsFormat);
     }
 
     function DropZoneError(file, response) {
@@ -165,7 +105,7 @@ function uploadHandler() {
 
     function DropZoneRemovedFile(file, currentField) {
         var attachment_id = file.attachment_id;
-        var ids = currentField.val();
+        var ids = jQuery(currentField).val();
         var remainigIds = ids.replace(attachment_id, "");
         if (remainigIds[0] === ',') {
             remainigIds = remainigIds.substring(1, ids.length);
@@ -174,7 +114,7 @@ function uploadHandler() {
         if (lastChar === ',') {
             remainigIds = remainigIds.slice(0, -1);
         }
-        currentField.val(remainigIds);
+        jQuery(currentField).attr('value', remainigIds);
         handleDeletedMedia(attachment_id);
     }
 
@@ -210,10 +150,12 @@ function uploadHandler() {
 
     return {
         init: function () {
+            var uploadFields = jQuery(".upload_field");
             submitButtons = jQuery("button.bf-submit[type=submit]");
             if (submitButtons.length > 0) {
                 getFirstSubmitButton(submitButtons);
-                submitButtons.on('click', handleSubmitClick);
+            }
+            if (uploadFields.length > 0) {
                 buildDropZoneFieldsOptions();
             }
         }
@@ -222,63 +164,63 @@ function uploadHandler() {
 
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
-    jQuery.validator.addMethod("upload-required", function (value, element) {
-        if (Dropzone) {
-            var dropZoneId = jQuery(element).attr('name');
-            var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-            if (currentDropZone) {
-                return currentDropZone.files.length > 0;
-            }
-        }
-        return false;
-    }, "This field is required.");
-    jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
-        if (Dropzone) {
-            var dropZoneId = jQuery(element).attr('name');
-            var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-            if (currentDropZone) {
-                return param >= currentDropZone.files.length;
-            }
-        }
-        return false;
-    }, "The number of files is greater than allowed.");
-    jQuery.validator.addMethod("upload-group", function (value, element, options) {
-
-        var fields = jQuery('.upload_field_input', element.form);
-            var $fieldsFirst = fields.eq(0);
-            var enqueueFields = new Array();
-            var isValid = true;
-            var validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this);
-            for(var i =0; i< fields.length;i++) {
-                var dropZoneId = jQuery(fields[i]).attr('name');
+    if (jQuery.validator) {
+        jQuery.validator.addMethod("upload-required", function (value, element) {
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-
-                if (currentDropZone.files.length > 0) {
-                    enqueueFields[i]= currentDropZone.files.filter(function (file) {
-                        return file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED;
-                    }).length;
+                if (currentDropZone) {
+                    return currentDropZone.files.length > 0;
                 }
-            };
-         for(var k=0; k < enqueueFields.length; k++){
-             if(enqueueFields[k] > 0){
-                 isValid = false;
-                 break;
-             }
-         }
+            }
+            return false;
+        }, "This field is required.");
+        jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    return param >= currentDropZone.files.length;
+                }
+            }
+            return false;
+        }, "The number of files is greater than allowed.");
+        jQuery.validator.addMethod("upload-group", function (value, element) {
+            console.log('validate the group of uploads');
+            var $fields = jQuery('.upload_field_input', element.form),
+                $fieldsFirst = $fields.eq(0),
+                validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
+                result = $fields.filter(function () {
+                    var dropZoneId = jQuery(this).attr('name');
+                    var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                    if (currentDropZone.files.length > 0) {
+                        return currentDropZone.files.filter(function (file) {
+                            return file.status !== Dropzone.SUCCESS;
+                        });
+                    } else {
+                        console.log('no files, no need this validation');
+                        return true;
+                    }
+                });
+            var isValid = true;
+            if (jQuery.isArray(result)) {
+                isValid = result.length === 0;
+            }
 
+            // Store the cloned validator for future validation
+            $fieldsFirst.data("valid_req_grp", validator);
 
-        // Store the cloned validator for future validation
-        $fieldsFirst.data("valid_req_grp", validator);
-
-        // If element isn't being validated, run each require_from_group field's validation rules
-        if (!jQuery(element).data("being_validated")) {
-            fields.data("being_validated", true);
-            fields.each(function () {
-                validator.element(this);
-            });
-            fields.data("being_validated", false);
-        }
-        return isValid;
-    }, 'uploading or queued');
+            // If element isn't being validated, run each require_from_group field's validation rules
+            if (!jQuery(element).data("being_validated")) {
+                $fields.data("being_validated", true);
+                $fields.each(function () {
+                    validator.element(this);
+                });
+                $fields.data("being_validated", false);
+            }
+            console.log('isvalid ', isValid);
+            return isValid;
+        }, 'Need Uploading');
+    }
     uploadImplementation.init();
 });

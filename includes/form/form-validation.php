@@ -103,12 +103,14 @@ function buddyforms_jquery_validation() {
     //allow the validate script to be altered
     $form_html .= apply_filters('buddyforms_jquery_validator_init', $validator_init, $form_slug);
 
+    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array('upload'));
+
     $form_html .= '
       setTimeout(function() {';
 
 		if ( isset( $form['form_fields'] ) ) {
 			foreach ( $form['form_fields'] as $key => $form_field ) {
-				if($form_field['type'] === 'upload'){
+				if(in_array($form_field['type'], $field_types_avoid_jquery_validation)){
 					continue;
 				}
 

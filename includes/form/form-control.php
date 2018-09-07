@@ -355,25 +355,24 @@ function buddyforms_process_submission( $args = Array() ) {
 		/*
 		 * Upload
 		 */
-        $result        = '';
-        $attachment_id = '';
+        $attachment_ids = array();
         $formSlug      = $_POST['form_slug'];
         $buddyFData    = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
         foreach ( $buddyFData as $key => $value ) {
             $field = $value['slug'];
             $type  = $value['type'];
-            $post  = get_post( $post_id );
-            if ( $type == 'upload' ) {
+            if ( $type === 'upload' ) {
                 $key_value          = $_POST[ $field ];
-
-                $attachment_id = explode( ",", $key_value );
-                break;
+                if(empty($attachment_ids)){
+	                $attachment_ids = explode( ",", $key_value );
+                } else {
+	                $attachment_ids = array_merge($attachment_ids,  explode( ",", $key_value ));
+                }
             }
         }
 
-        $upload_dir = wp_upload_dir(); // Set upload folder
         $absolute_path = wp_upload_dir()['path'];
-        foreach ( $attachment_id as $id_value ) {
+        foreach ( $attachment_ids as $id_value ) {
             $metadata =   wp_prepare_attachment_for_js($id_value);
             $file_name =  $metadata['filename'];
             $wp_filetype   = wp_check_filetype( $file_name, null );
@@ -393,9 +392,6 @@ function buddyforms_process_submission( $args = Array() ) {
 
             // Assign metadata to attachment
             wp_update_attachment_metadata( $attach_id, $attach_data );
-
-            // And finally assign featured image to post
-
         }
 
 		/*

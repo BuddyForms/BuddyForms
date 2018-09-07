@@ -11,7 +11,15 @@ class Element_Upload extends Element_Textbox {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( "type" => "file", "file_limit" => "", "accepted_files" => "", "multiple_files" => "", "delete_files" => "", "description" => "", "mandatory" => "" );
+	protected $_attributes = array(
+		"type"           => "file",
+		"file_limit"     => "",
+		"accepted_files" => "",
+		"multiple_files" => "",
+		"delete_files"   => "",
+		"description"    => "",
+		"mandatory"      => ""
+	);
 
 	public function render() {
 		global $buddyforms, $post_id;
@@ -56,7 +64,6 @@ class Element_Upload extends Element_Textbox {
 			}
 		}
 		if ( count( $entries ) > 0 ) {
-
 			$entries_result = json_encode( $entries );
 		}
 		$message = "Drop files here to upload";
@@ -69,9 +76,9 @@ class Element_Upload extends Element_Textbox {
 		$max_size                 = $this->getAttribute( 'file_limit' );
 		$accepted_files           = $this->getAttribute( 'accepted_files' );
 		$multiple_files           = $this->getAttribute( 'multiple_files' );
-		$mime_type        = '';
-		$mime_type_result = '';
-		$allowed_types    = get_allowed_mime_types();
+		$mime_type                = '';
+		$mime_type_result         = '';
+		$allowed_types            = get_allowed_mime_types();
 		foreach ( $accepted_files as $key => $value ) {
 			$mime_type .= $allowed_types[ $value ] . ',';
 		}
@@ -86,8 +93,14 @@ class Element_Upload extends Element_Textbox {
 			}
 		}
 
-		$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
-		$box = "<div class=\"dropzone upload_field dz-clickable\" id=\"$id\" file_limit='$max_size' accepted_files='$mime_type_result' multiple_files='$multiple_files' action='$action' data-entry='$entries_result' page='$page'><div class=\"dz-default dz-message\" data-dz-message=\"\"><span>$message</span></div><input type='text' style='visibility: hidden' class='upload_field_input' name='$id' value='$result_value' id='field_$id' data-rule-upload-max-exceeded='[" . $multiple_files . "]' data-rule-upload-group='true' $required /></div>";
+		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
+		$box = sprintf( '<div class="dropzone upload_field dz-clickable" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s">', $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page );
+		$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
+		$box .= sprintf( '<input type="text" style="visibility: hidden" class="upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" data-rule-upload-group="true" %s />', $id, $result_value, $id, $multiple_files, $required );
+		$box .= '</div>';
+		if ( ! empty( $description ) ) {
+			$box .= sprintf( '<span class="help-inline">%s</span>', $description );
+		}
 		if ( $this->bootstrapVersion == 3 ) {
 			echo $box;
 		} else {

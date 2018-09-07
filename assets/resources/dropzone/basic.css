@@ -21,6 +21,10 @@
     filter: brightness(0.3) sepia(1) hue-rotate(-70deg) saturate(5);
 }
 
+.dropzone .dz-preview.dz-success .dz-success-mark svg {
+    filter: brightness(0.5) sepia(47) hue-rotate(66deg) saturate(100);
+}
+
 .dropzone .dz-preview .dz-progress {
     display: block;
     height: 15px;
