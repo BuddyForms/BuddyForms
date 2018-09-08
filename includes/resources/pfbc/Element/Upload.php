@@ -96,7 +96,7 @@ class Element_Upload extends Element_Textbox {
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 		$box = sprintf( '<div class="dropzone upload_field dz-clickable" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s">', $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page );
 		$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
-		$box .= sprintf( '<input type="text" style="visibility: hidden" class="upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" data-rule-upload-group="true" %s />', $id, $result_value, $id, $multiple_files, $required );
+		$box .= sprintf( '<input type="text" style="visibility: hidden" class="upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" data-rule-upload-group="true" data-rule-upload-error="true" %s />', $id, $result_value, $id, $multiple_files, $required );
 		$box .= '</div>';
 		if ( ! empty( $description ) ) {
 			$box .= sprintf( '<span class="help-inline">%s</span>', $description );
