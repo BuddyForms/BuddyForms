@@ -84,7 +84,6 @@ function uploadHandler() {
     }
 
     function DropZoneSuccess(file, response, currentField) {
-        console.log('success', currentField);
         file.previewElement.classList.add("dz-success");
         file['attachment_id'] = response; // push the id for future reference
         var ids = jQuery(currentField).val() + ',' + response;
@@ -248,7 +247,6 @@ jQuery(document).ready(function () {
                             return file.status === Dropzone.ERROR;
                         }).length;
                     } else {
-                        console.log('no files, no need this validation');
                         return true;
                     }
                 });
@@ -273,7 +271,6 @@ jQuery(document).ready(function () {
                 });
                 $fields.data("being_validated", false);
             }
-            console.log('isvalid ', isValid);
             return isValid;
         }, 'Files with Errors');
     }
