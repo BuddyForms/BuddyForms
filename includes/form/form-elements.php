@@ -646,19 +646,22 @@ function buddyforms_form_elements( $form, $args ) {
 
 						break;
 					case 'upload':
-
-						$max_size       = '2';
-						$accepted_files = 'image/*';
-						$multiple_files = "1";
-						$delete_files   = false;
-						$description    = "";
-						$required       = "";
-						$label_name     = "";
+						$max_size                 = '2';
+						$accepted_files           = 'image/*';
+						$multiple_files           = "1";
+						$delete_files             = false;
+						$description              = "";
+						$required                 = "";
+						$validation_error_message = "";
+						$label_name               = "";
 						if ( isset( $customfield['name'] ) ) {
 							$label_name = $customfield['name'];
 						}
 						if ( isset( $customfield['required'] ) ) {
 							$required = $customfield['required'][0];
+						}
+						if ( isset( $customfield['validation_error_message'] ) ) {
+							$validation_error_message = $customfield['validation_error_message'];
 						}
 						if ( isset( $customfield['description'] ) ) {
 							$description = $customfield['description'];
@@ -679,13 +682,14 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$upload_element = new Element_Upload( $slug, $customfield_val, array(
-							'id'             => $slug,
-							"file_limit"     => $max_size,
-							'accepted_files' => $accepted_files,
-							'multiple_files' => $multiple_files,
-							'delete_files'   => $delete_files,
-							'mandatory'      => $required,
-							"shortDesc"      => $description
+							'id'                       => $slug,
+							"file_limit"               => $max_size,
+							'accepted_files'           => $accepted_files,
+							'multiple_files'           => $multiple_files,
+							'delete_files'             => $delete_files,
+							'mandatory'                => $required,
+							'validation_error_message' => $validation_error_message,
+							"shortDesc"                => $description
 						) );
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );
