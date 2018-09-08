@@ -141,8 +141,23 @@ function uploadHandler() {
         }
     }
 
+    function checkToEnableSubmit(){
+        var result = true;
+        jQuery(".upload_field").each(function () {
+            var currentDropZone = jQuery(this)[0].dropzone;
+            if (currentDropZone && currentDropZone.files.length > 0) {
+                var allFilesSuccessDiff = currentDropZone.files.filter(function (file) {
+                    return file.status !== Dropzone.SUCCESS;
+                });
+                result = allFilesSuccessDiff.length === 0;
+            }
+        });
+
+        return result;
+    }
+
     function enabledSubmitButtons() {
-        if (submitButtons.length > 0) {
+        if (submitButtons.length > 0 && checkToEnableSubmit()) {
             submitButtons.removeAttr("disabled");
             submitButton.html(existingHtmlInsideSubmitButton);
         }
@@ -186,20 +201,17 @@ jQuery(document).ready(function () {
             return false;
         }, "The number of files is greater than allowed.");
         jQuery.validator.addMethod("upload-group", function (value, element) {
-            console.log('validate the group of uploads');
             var $fields = jQuery('.upload_field_input', element.form),
                 $fieldsFirst = $fields.eq(0),
-                pendingFiles = new Array(),
                 validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-                result = $fields.filter(function (key,valorr) {
+                result = $fields.filter(function (key) {
                     var dropZoneId = jQuery(this).attr('name');
                     var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                     if (currentDropZone.files.length > 0) {
-                        pendingFiles[key] = currentDropZone.files.filter(function (file) {
+                        return currentDropZone.files.filter(function (file) {
                             return file.status !== Dropzone.SUCCESS;
                         });
                     } else {
-                        console.log('no files, no need this validation');
                         return true;
                     }
                 });
@@ -207,7 +219,6 @@ jQuery(document).ready(function () {
             if (jQuery.isArray(result)) {
                 isValid = result.length === 0;
             }
-
 
             // Store the cloned validator for future validation
             $fieldsFirst.data("valid_req_grp", validator);
@@ -220,23 +231,21 @@ jQuery(document).ready(function () {
                 });
                 $fields.data("being_validated", false);
             }
-            console.log('isvalid ', isValid);
             return isValid;
         }, 'Need Uploading');
-        //Validation for error on upload fields
 
+        //Validation for error on upload fields
         jQuery.validator.addMethod("upload-error", function (value, element) {
-            console.log('validate the group of uploads');
             var $fields = jQuery('.upload_field_input', element.form),
                 $fieldsFirst = $fields.eq(0),
-                pendingFiles = new Array(),
+                pendingFiles = [],
                 validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-                result = $fields.filter(function (key,valorr) {
+                result = $fields.filter(function (key) {
                     var dropZoneId = jQuery(this).attr('name');
                     var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                     if (currentDropZone.files.length > 0) {
                         pendingFiles[key] = currentDropZone.files.filter(function (file) {
-                            return file.status == Dropzone.ERROR;
+                            return file.status === Dropzone.ERROR;
                         }).length;
                     } else {
                         console.log('no files, no need this validation');
@@ -245,16 +254,13 @@ jQuery(document).ready(function () {
                 });
             var isValid = true;
             if (jQuery.isArray(pendingFiles)) {
-                for(var i =0; i < pendingFiles.length; i++){
-                    if(pendingFiles[i] >0){
+                for (var i = 0; i < pendingFiles.length; i++) {
+                    if (pendingFiles[i] > 0) {
                         isValid = false;
                         break;
                     }
-
                 }
-
             }
-
 
             // Store the cloned validator for future validation
             $fieldsFirst.data("valid_req_grp", validator);
