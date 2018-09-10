@@ -137,7 +137,7 @@ add_filter( 'the_title', 'buddyforms_strip_html_title_for_entries_in_post_screen
  *
  * @return string
  */
-function buddyforms_strip_html_title_for_entries_in_post_screen( $title, $id ) {
+function buddyforms_strip_html_title_for_entries_in_post_screen( $title, $id = null ) {
 	if ( is_admin() && ! empty( $id ) ) {
 		$is_buddyform_post = buddyforms_get_form_slug_by_post_id( $id );
 		if ( ! empty( $is_buddyform_post ) ) {
