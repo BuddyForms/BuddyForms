@@ -498,15 +498,18 @@ function buddyforms_display_form_element( $args ) {
 	        ) );
 	        $html               = rtrim( trim( $preview_mime_value ), ',' );
 	        $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types Resume', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html, 'readonly' => 'readonly' ) );
-	        $element        = new Element_Checkbox( '<b>' . __( 'Multiple Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array( 'allow' => __( 'Allow multiple files to be upload to this field . ', 'buddyforms' ) ), array(
-		        'id' => 'upload_multiple_files' . $field_id,
-		        'value' => $multiple_files
-	        ) );
+            $form_fields['general']['upload_multiple_files']  = new Element_Number( '<b>' . __( 'Limit the max number of files that will be handled', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array(
+                'value' => intval( $multiple_files ),
+                'min'   =>1,
+                'max'   =>9,
+                'id'    => 'upload_multiple_files' . $field_id,
+                'step'=> '1'
+            ) );
 	        $element_delete = new Element_Checkbox( '<b>' . __( 'Delete Files', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][delete_files]", array( 'delete' => __( 'Remove Files when Entry is deleted. ', 'buddyforms' ) ), array(
 		        'id' => 'upload_delete_files' . $field_id,
 		        'value' => $delete_files
 	        ) );
-	        $form_fields['general']['upload_multiple_files'] = $element;
+
 	        $form_fields['general']['upload_delete_files']   = $element_delete;
 	        
             break;

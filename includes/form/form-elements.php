@@ -673,9 +673,9 @@ function buddyforms_form_elements( $form, $args ) {
 							$accepted_files = $customfield['accepted_files'];
 						}
 						if ( isset( $customfield['multiple_files'] ) ) {
-							$param_value    = $customfield['multiple_files'][0];
-							$multiple_files = $param_value == 'allow' ? 9 : 1;
-						}
+                            $multiple_files = $customfield['multiple_files'];
+
+                        }
 						if ( isset( $customfield['delete_files'] ) ) {
 							$param_value  = $customfield['delete_files'][0];
 							$delete_files = $param_value == 'delete' ? true : false;
