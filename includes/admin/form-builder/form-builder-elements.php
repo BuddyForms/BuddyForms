@@ -455,7 +455,13 @@ function buddyforms_display_form_element( $args ) {
 
 	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
 	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
-	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : '';
+	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : 1;
+
+	        //To keep backward compatibility
+	        if ( ! empty( $multiple_files ) && $multiple_files == 0 ) {
+		        $multiple_files = 1;
+	        }
+
 	        $delete_files   = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ? $buddyform['form_fields'][ $field_id ]['delete_files'][0] : '';
 	
 	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
