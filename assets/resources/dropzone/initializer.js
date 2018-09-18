@@ -251,7 +251,7 @@ jQuery(document).ready(function () {
                     for(var i=0; i < currentDropZone.files.length ; i++ ){
                         var validation_result=  currentDropZone.files[i].status === Dropzone.ERROR;
                         if(validation_result===true){
-                            jQuery.validator.messages['upload-max-exceeded'] = upload_error_validation_message;
+                            jQuery.validator.messages['upload-error'] = upload_error_validation_message;
                             return false;
                         }
                     }
