@@ -189,16 +189,22 @@ jQuery(document).ready(function () {
             }
             return false;
         }, "This field is required.");
+        var multiple_files_validation_message = '';
         jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
+            multiple_files_validation_message = jQuery(element).attr('multiple_files_validation_message');
             if (Dropzone) {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
-                    return param >= currentDropZone.files.length;
+                    var validation_result= param >= currentDropZone.files.length;
+                    if(validation_result===false){
+                        jQuery.validator.messages['upload-max-exceeded'] = multiple_files_validation_message;
+                    }
+                    return validation_result;
                 }
             }
             return false;
-        }, "The number of files is greater than allowed.");
+        },'' );
         jQuery.validator.addMethod("upload-group", function (value, element) {
             var $fields = jQuery('.upload_field_input', element.form),
                 $fieldsFirst = $fields.eq(0),
@@ -234,45 +240,27 @@ jQuery(document).ready(function () {
         }, 'Need Uploading');
 
         //Validation for error on upload fields
+        var upload_error_validation_message = '';
         jQuery.validator.addMethod("upload-error", function (value, element) {
-            var $fields = jQuery('.upload_field_input', element.form),
-                $fieldsFirst = $fields.eq(0),
-                pendingFiles = [],
-                validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-                result = $fields.filter(function (key) {
-                    var dropZoneId = jQuery(this).attr('name');
-                    var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                    if (currentDropZone.files.length > 0) {
-                        pendingFiles[key] = currentDropZone.files.filter(function (file) {
-                            return file.status === Dropzone.ERROR;
-                        }).length;
-                    } else {
-                        return true;
+            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+
+                    for(var i=0; i < currentDropZone.files.length ; i++ ){
+                        var validation_result=  currentDropZone.files[i].status === Dropzone.ERROR;
+                        if(validation_result===true){
+                            jQuery.validator.messages['upload-max-exceeded'] = upload_error_validation_message;
+                            return false;
+                        }
                     }
-                });
-            var isValid = true;
-            if (jQuery.isArray(pendingFiles)) {
-                for (var i = 0; i < pendingFiles.length; i++) {
-                    if (pendingFiles[i] > 0) {
-                        isValid = false;
-                        break;
-                    }
+
+                    return true;
                 }
             }
-
-            // Store the cloned validator for future validation
-            $fieldsFirst.data("valid_req_grp", validator);
-
-            // If element isn't being validated, run each require_from_group field's validation rules
-            if (!jQuery(element).data("being_validated")) {
-                $fields.data("being_validated", true);
-                $fields.each(function () {
-                    validator.element(this);
-                });
-                $fields.data("being_validated", false);
-            }
-            return isValid;
-        }, 'Files with Errors');
+            return false;
+        },'' );
     }
     uploadImplementation.init();
 });
