@@ -87,12 +87,6 @@ function buddyforms_the_loop( $args ) {
 		'meta_value' => ''
 	), $args ) );
 
-    if (empty($form_slug)) {
-        return '';
-    }
-
-    $query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
-
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
         buddyforms_wp_login_form();
         return;
@@ -107,6 +101,8 @@ function buddyforms_the_loop( $args ) {
 	}
 	$args['form_slug'] = $form_slug;
 	unset( $args['id'] );
+
+	$query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 
 	if ( empty( $post_type ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
