@@ -147,7 +147,7 @@ function uploadHandler() {
             var currentDropZone = jQuery(this)[0].dropzone;
             if (currentDropZone && currentDropZone.files.length > 0) {
                 var allFilesSuccessDiff = currentDropZone.files.filter(function (file) {
-                    return file.status !== Dropzone.SUCCESS;
+                    return file.status == Dropzone.UPLOADING;
                 });
                 result = allFilesSuccessDiff.length === 0;
             }
