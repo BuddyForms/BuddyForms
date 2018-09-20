@@ -55,7 +55,7 @@ class Element_Upload extends Element_Textbox {
 					$result                  .= $id_value . ",";
 					$mockFile                = new stdClass();
 					$mockFile->name          = $metadata['filename'];
-					$mockFile->url           = $url;
+					$mockFile->url           = esc_url( $url );
 					$mockFile->attachment_id = $id_value;
 					$mockFile->size          = $metadata['filesizeInBytes'];
 					$entries[ $id_value ]    = $mockFile;
@@ -64,7 +64,7 @@ class Element_Upload extends Element_Textbox {
 			}
 		}
 		if ( count( $entries ) > 0 ) {
-			$entries_result = json_encode( $entries );
+			$entries_result = esc_attr( json_encode( $entries ) );
 		}
 		$message = "Drop files here to upload";
 		if ( ! empty( $result ) ) {
