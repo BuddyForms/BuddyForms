@@ -141,13 +141,13 @@ function uploadHandler() {
         }
     }
 
-    function checkToEnableSubmit(){
+    function checkToEnableSubmit() {
         var result = true;
         jQuery(".upload_field").each(function () {
             var currentDropZone = jQuery(this)[0].dropzone;
             if (currentDropZone && currentDropZone.files.length > 0) {
                 var allFilesSuccessDiff = currentDropZone.files.filter(function (file) {
-                    return file.status == Dropzone.UPLOADING;
+                    return file.status === Dropzone.UPLOADING;
                 });
                 result = allFilesSuccessDiff.length === 0;
             }
@@ -197,15 +197,15 @@ jQuery(document).ready(function () {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
-                    var validation_result= param >= currentDropZone.files.length;
-                    if(validation_result===false){
+                    var validation_result = param >= currentDropZone.files.length;
+                    if (validation_result === false) {
                         jQuery.validator.messages['upload-max-exceeded'] = multiple_files_validation_message;
                     }
                     return validation_result;
                 }
             }
             return false;
-        },'upload max excceed' );
+        }, '');
         jQuery.validator.addMethod("upload-group", function (value, element) {
             var $fields = jQuery('.upload_field_input', element.form),
                 $fieldsFirst = $fields.eq(0),
@@ -238,7 +238,7 @@ jQuery(document).ready(function () {
                 $fields.data("being_validated", false);
             }
             return isValid;
-        }, 'Need Uploading');
+        }, '');
 
         //Validation for error on upload fields
         var upload_error_validation_message = '';
@@ -249,9 +249,9 @@ jQuery(document).ready(function () {
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
 
-                    for(var i=0; i < currentDropZone.files.length ; i++ ){
-                        var validation_result=  currentDropZone.files[i].status === Dropzone.ERROR;
-                        if(validation_result===true){
+                    for (var i = 0; i < currentDropZone.files.length; i++) {
+                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
+                        if (validation_result === true) {
                             jQuery.validator.messages['upload-error'] = upload_error_validation_message;
                             return false;
                         }
@@ -261,7 +261,7 @@ jQuery(document).ready(function () {
                 }
             }
             return false;
-        },'other' );
+        }, '');
     }
     uploadImplementation.init();
 });
