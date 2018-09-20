@@ -28,6 +28,7 @@ function uploadHandler() {
         var options = {
             url: dropParam.admin_url,
             maxFilesize: maxSize,
+            parallelUploads: 1,
             acceptedFiles: acceptedFiles,
             maxFiles: multipleFiles,
             clickable: clickeable,
@@ -204,7 +205,7 @@ jQuery(document).ready(function () {
                 }
             }
             return false;
-        },'' );
+        },'upload max excceed' );
         jQuery.validator.addMethod("upload-group", function (value, element) {
             var $fields = jQuery('.upload_field_input', element.form),
                 $fieldsFirst = $fields.eq(0),
@@ -260,7 +261,7 @@ jQuery(document).ready(function () {
                 }
             }
             return false;
-        },'' );
+        },'other' );
     }
     uploadImplementation.init();
 });
