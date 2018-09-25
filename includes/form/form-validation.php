@@ -105,7 +105,7 @@ function buddyforms_jquery_validation() {
 
     $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array('upload'));
 
-    $form_html .= '
+    $form_html .= 'if (jQuery.validator) {
       setTimeout(function() {';
 
 		if ( isset( $form['form_fields'] ) ) {
@@ -154,7 +154,7 @@ function buddyforms_jquery_validation() {
 		}
 
 		$form_html .= '
-    }, 0); });';
+    }, 0);} });';
 
 	}
 	$form_html .= '
