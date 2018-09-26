@@ -976,11 +976,12 @@ JS;
 			break;
 		case 'featured_image':
 			//unset( $form_fields );
-			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
-			$form_fields['general']['required'] = new Element_Checkbox( '<b>' . __( 'Required', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array( 'required' => '<b>' . __( 'Required', 'buddyforms' ) . '</b>' ), array(
-				'value' => $required,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
-			) );
+            $max_file_size     = isset( $buddyform['form_fields'][ $field_id ]['max_file_size'] ) ?  $buddyform['form_fields'][ $field_id ]['max_file_size']  : '1';
+            $form_fields['general']['max_file_size'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][max_file_size]", array(
+                'value' => floatval( $max_file_size ),
+                'id'    => 'max_file_size' . $field_id,
+                'step'=> '1'
+            ) );
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Featured Image', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -1006,6 +1007,11 @@ JS;
                 'required'  => 1,
                 'class'     => 'slug' . $field_id
             ) );
+
+            $upload_error_validation_message = isset( $customfield['upload_error_validation_message'] ) ? stripcslashes( $customfield['upload_error_validation_message'] ) : __( 'One or more files have errors, please check.', 'buddyforms' );
+            $form_fields['validation']['upload_error_validation_message'] = new Element_Textbox( '<b>' . __( 'Upload Error Validation Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][upload_error_validation_message]", array( 'value' => $upload_error_validation_message ) );
+
+
 			break;
 		case 'file':
 

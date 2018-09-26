@@ -103,7 +103,7 @@ function buddyforms_jquery_validation() {
     //allow the validate script to be altered
     $form_html .= apply_filters('buddyforms_jquery_validator_init', $validator_init, $form_slug);
 
-    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array('upload'));
+    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array('upload','featured_image'));
 
     $form_html .= '
       setTimeout(function() {';
