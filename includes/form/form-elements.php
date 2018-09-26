@@ -514,6 +514,10 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'featured_image':
+                        $upload_error_validation_message = isset( $customfield['upload_error_validation_message'] ) ? $customfield['upload_error_validation_message'] : "";
+                        $max_file_size                   = isset( $customfield['max_file_size'] ) ? $customfield['max_file_size'] :1;
+                        $validation_error_message                 = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] :'';
+                        $required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" :'';
 						$attachment_ids = get_post_thumbnail_id( $post_id );
 						$attachments    = array_filter( explode( ',', $attachment_ids ) );
                         $attachment_ids = get_post_thumbnail_id( $post_id );
@@ -559,15 +563,15 @@ function buddyforms_form_elements( $form, $args ) {
                         $label_name = $customfield['name'];
 
                         $message = "Drop the image here to upload";
-                        $str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
-                        $box = "<div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page'>
+                        $str = '<div class=" bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
+                        $box = "<div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                           
                                               <span>$message</span>
                                          </div>
-                                        <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id'  />
+                                        <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
                                          
-                                 </div>";
+                                 </div></div></div>";
                     $form->addElement(new Element_HTML("<label>$label_name</label>"));
                     $form->addElement( new Element_HTML( $box ) );
                     $form->addElement(new Element_HTML("<span class='help-inline'>$description</span>"));
