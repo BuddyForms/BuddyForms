@@ -180,6 +180,21 @@ function uploadHandler() {
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
     if (jQuery.validator) {
+        jQuery.validator.addMethod("upload-ensure-amount", function (value, element,param) {
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    var validation_result = currentDropZone.files.length == param;
+                    if (validation_result === false) {
+                        jQuery.validator.messages['upload-ensure-amount'] = 'This field must have : '+param+' files';
+                    }
+                    return validation_result;
+
+                }
+            }
+            return false;
+        }, "");
         jQuery.validator.addMethod("upload-required", function (value, element) {
             if (Dropzone) {
                 var dropZoneId = jQuery(element).attr('name');

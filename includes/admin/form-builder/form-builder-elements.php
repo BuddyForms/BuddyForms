@@ -504,6 +504,12 @@ function buddyforms_display_form_element( $args ) {
 	        ) );
 	        $html               = rtrim( trim( $preview_mime_value ), ',' );
 	        $form_fields['general']['upload_accepted_files_label'] = new Element_Textarea( '<b>' . __( 'Allowed File Types Resume', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html, 'readonly' => 'readonly' ) );
+
+            $ensure_amount  = isset( $buddyform['form_fields'][ $field_id ]['ensure_amount'] ) ? $buddyform['form_fields'][ $field_id ]['ensure_amount'][0] : '';
+            $form_fields['validation']['ensure_amount'] = new Element_Checkbox( '<b>' . __( 'Ensure Amount', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][ensure_amount]", array( 'ensure_amount' => '<b>'.__( 'Files in the field should be equals to Max Number of Files. ', 'buddyforms' ).'</b>' ), array(
+                'id' => 'ensure_amount' . $field_id,
+                'value' => $ensure_amount
+            ) );
             $form_fields['validation']['upload_multiple_files']  = new Element_Number( '<b>' . __( 'Max number of files that will be handled', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array(
                 'value' => intval( $multiple_files ),
                 'min'   =>1,
@@ -521,6 +527,7 @@ function buddyforms_display_form_element( $args ) {
 		        'id' => 'upload_delete_files' . $field_id,
 		        'value' => $delete_files
 	        ) );
+
 
 	        $form_fields['general']['upload_delete_files']   = $element_delete;
 	        

@@ -656,6 +656,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$delete_files             = false;
 						$description              = "";
 						$required                 = "";
+						$ensure_amount            = "";
 						$validation_error_message = "";
 						$upload_error_validation_message = "";
 						$label_name               = "";
@@ -666,6 +667,9 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['required'] ) ) {
 							$required = $customfield['required'][0];
 						}
+                        if ( isset( $customfield['ensure_amount'] ) ) {
+                            $ensure_amount = $customfield['ensure_amount'][0];
+                        }
 						if ( isset( $customfield['validation_error_message'] ) ) {
 							$validation_error_message = $customfield['validation_error_message'];
 						}
@@ -703,6 +707,7 @@ function buddyforms_form_elements( $form, $args ) {
 							'multiple_files'           => $multiple_files,
 							'delete_files'             => $delete_files,
 							'mandatory'                => $required,
+							'ensure_amount'            => $ensure_amount,
 							'validation_error_message' => $validation_error_message,
 							"multiple_files_validation_message" => $multiple_files_validation_message,
 							"upload_error_validation_message" => $upload_error_validation_message,
