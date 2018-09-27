@@ -362,11 +362,13 @@ function buddyforms_process_submission( $args = Array() ) {
             $field = $value['slug'];
             $type  = $value['type'];
             if ( $type === 'upload' ) {
-                $key_value          = $_POST[ $field ];
-                if(empty($attachment_ids)){
-	                $attachment_ids = explode( ",", $key_value );
-                } else {
-	                $attachment_ids = array_merge($attachment_ids,  explode( ",", $key_value ));
+                $key_value          = isset($_POST[ $field ]) ? $_POST[ $field ] : "";
+                if(!empty($key_value)){
+                    if(empty($attachment_ids)){
+                        $attachment_ids = explode( ",", $key_value );
+                    } else {
+                        $attachment_ids = array_merge($attachment_ids,  explode( ",", $key_value ));
+                    }
                 }
             }
         }
