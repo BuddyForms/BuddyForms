@@ -129,7 +129,7 @@ function buddyforms_ajax_process_edit_post() {
 add_action( 'wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post' );
 //add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
 function buddyforms_ajax_delete_post() {
-	global $current_user;
+	global $current_user, $buddyforms;
 	$current_user = wp_get_current_user();
 
 	$post_id  = intval( $_POST['post_id'] );
@@ -140,6 +140,32 @@ function buddyforms_ajax_delete_post() {
 		_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
 		die();
 	}
+
+	//Delete Files from server option
+    $buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
+    foreach ( $buddyFData as $key => $value ) {
+
+        $field = $value['slug'];
+        $type  = $value['type'];
+        if ( $type == 'upload' ) {
+            //Check if the option Delete Files When Remove Entry is ON.
+            $can_delete_files = isset( $value['delete_files'] ) ? true : false;
+            if ( $can_delete_files ) {
+                // If true then Delete the files attached to the entry
+                $column_val   = get_post_meta( $post_id, $field, true );
+                if(!empty($column_val)){
+                    $attachmet_id = explode( ",", $column_val );
+                    foreach ( $attachmet_id as $id ) {
+                        wp_delete_attachment( $id, true );
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
 
 	// Check if the user is author of the post
 	$user_can_delete = false;
