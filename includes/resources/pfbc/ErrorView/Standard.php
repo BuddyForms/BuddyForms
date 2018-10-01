@@ -5,16 +5,20 @@
  */
 class ErrorView_Standard extends ErrorView {
 	public function applyAjaxErrorResponse() {
-		$id = $this->_form->getAttribute( "id" );
+		$id                    = $this->_form->getAttribute( "id" );
+		$error_string_start    = __( 'The following', 'buddyforms' );
+		$error_string_singular = __( 'error was', 'buddyforms' );
+		$error_string_plural   = __( 'errors were', 'buddyforms' );
+		$error_string_end      = __( 'found: ', 'buddyforms' );
 		echo <<<JS
         var errorSize = response.errors.length;
         if(errorSize == 1)
-            var errorFormat = "error was";
+            var errorFormat = "$error_string_singular";
         else
-            var errorFormat = errorSize + " errors were";
+            var errorFormat = errorSize + " $error_string_plural";
 
         jQuery('.bf-alert').remove();
-        var errorHTML = '<div class="bf-alert error"><strong class="alert-heading">The following ' + errorFormat + ' found:</strong><ul>';
+        var errorHTML = '<div class="bf-alert error"><strong class="alert-heading">$error_string_start ' + errorFormat + ' $error_string_end</strong><ul>';
         for(e = 0; e < errorSize; ++e)
             errorHTML += '<li>' + response.errors[e] + '</li>';
         errorHTML += '</ul></div>';
@@ -29,15 +33,11 @@ JS;
 			$size   = sizeof( $errors );
 			$errors = implode( "</li><li>", $errors );
 
-			if ( $size == 1 ) {
-				$format = "error was";
-			} else {
-				$format = $size . " errors were";
-			}
+			$error_heading_text = _n( 'The following error was found:', 'The following errors were found:', $size, 'buddyforms' );
 
 			echo <<<HTML
             <div class="bf-alert error">
-                <strong class="alert-heading">The following $format found:</strong>
+                <strong class="alert-heading">$error_heading_text</strong>
                 <ul><li>$errors</li></ul>
             </div>
 HTML;
