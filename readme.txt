@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,16 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.2.6 – 1 October 2018
+* Fixed the option to delete an image when post is deleted inside the upload field.
+* Added new option to upload field to define how many file will be uploaded.
+* Added new option in the upload field to define the validation messages.
+* The upload field now upload one file by one.
+* Fixed the the shortcode bf_user_posts_list.
+* Fixed the validations process, in the case where the jQuery validator not exist.
+* Added new options to the featured-image field, now it work like the upload field.
+* Fixed the invalid image when file is not present.
+* New option for image upload max number of files to ensure the amount of files to upload.
 
 = 2.2.5 – 10 September 2018
 * Added support for WordPress.com. There have been UI issue in the Admin backend.
