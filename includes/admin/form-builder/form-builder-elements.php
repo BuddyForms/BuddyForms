@@ -16,7 +16,7 @@ function buddyforms_display_form_element( $args ) {
 	if ( ! $post && isset( $_POST['post_id'] ) && $_POST['post_id'] != 0 ) {
 		$post = get_post( intval( $_POST['post_id'] ) );
 	}
-	if ( ! $buddyform ) {
+	if ( ! $buddyform && ( ! empty( $post->ID ) && $post->ID > 0 ) ) {
 		$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 	}
 	if ( isset( $_POST['fieldtype'] ) ) {
@@ -27,8 +27,8 @@ function buddyforms_display_form_element( $args ) {
 		$field_unique = $_POST['unique'];
 	}
 
-	$form_slug = $post->post_name;
-	$post_type = $post->post_type;
+	$form_slug = ( ! empty( $post->post_name ) ) ? $post->post_name : '';
+	$post_type = ( ! empty( $post->post_type ) ) ? $post->post_type : '';
 
 	if ( isset( $field_unique ) && $field_unique == 'unique' ) {
 		if ( isset( $buddyform['form_fields'] ) ) {

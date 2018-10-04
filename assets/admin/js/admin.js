@@ -17,6 +17,19 @@ var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
 };
 
 //
+// Generate a custom string to append to the field slug in case of duplicate
+//
+function buddyformsMakeFieldId() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+//
 // Update form builder form elements list number 1,2,3,...
 //
 function bf_update_list_item_number() {
@@ -56,14 +69,18 @@ function bf_update_list_item_number_mail() {
 // Helper Function to lode form element templates depend on the form type
 //
 function load_formbuilder_template(template) {
-
+    var postTitle = jQuery('input#title');
+    if (!postTitle.val()) {
+        postTitle.val(buddyformsMakeFieldId());
+    }
     jQuery.ajax({
         type: 'POST',
         dataType: "json",
         url: ajaxurl,
         data: {
             "action": "buddyforms_form_template",
-            "template": template
+            "template": template,
+            "title": postTitle.val()
         },
         success: function (data) {
             jQuery.each(data, function (i, val) {
@@ -297,19 +314,6 @@ jQuery(document).ready(function (jQuery) {
         }
 
     });
-
-    //
-    // Generate a custom string to append to the field slug in case of duplicate
-    //
-    function buddyformsMakeFieldId() {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < 5; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
-    }
 
     //
     // Remove form element form the form builder
