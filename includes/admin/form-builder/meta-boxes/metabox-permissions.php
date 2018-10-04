@@ -109,17 +109,6 @@ function buddyforms_permissions_screen() {
 		$default_roles['edit']   = '';
 		$default_roles['delete'] = '';
 		$default_roles['all']    = '';
-
-		$form_user_role = array();
-		
-		foreach ( $role_info['capabilities'] as $capability => $_ ) {
-			$capability_array = explode( '_', $capability );
-			if ( $capability_array[0] == 'buddyforms' ) {
-				if ( $capability_array[1] == $form_slug ) {
-					$form_user_role[ $capability_array[2] ] = $capability_array[2];
-				}
-			}
-		}
 		
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			foreach ( $default_roles as $role_n_a => $role_a ) {
@@ -129,6 +118,17 @@ function buddyforms_permissions_screen() {
 			foreach ( $default_roles as $role_n_a => $role_a ) {
 				if ( 'administrator' === $role_name || 'editor' === $role_name ) {
 					$form_user_role[ $role_n_a ] = $role_n_a;
+				}
+			}
+		}
+
+		$form_user_role = array();
+
+		foreach ( $role_info['capabilities'] as $capability => $_ ) {
+			$capability_array = explode( '_', $capability );
+			if ( $capability_array[0] == 'buddyforms' ) {
+				if ( $capability_array[1] == $form_slug ) {
+					$form_user_role[ $capability_array[2] ] = $capability_array[2];
 				}
 			}
 		}

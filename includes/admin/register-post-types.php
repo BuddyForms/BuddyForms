@@ -189,9 +189,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 				
 				if ( $capability_array[0] == 'buddyforms' ) {
 					if ( $capability_array[1] == $buddyform['slug'] ) {
-						
 						$role->remove_cap( $capability );
-						
 					}
 				}
 				
