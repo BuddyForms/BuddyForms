@@ -201,6 +201,13 @@ add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 function buddyforms_form_template() {
 	global $post, $buddyform;
 
+	if ( empty( $post ) ) {
+		$post = new stdClass();
+	}
+
+	if ( ! empty( $_POST['title'] ) ) {
+		$post->post_name = sanitize_title( $_POST['title'] );
+	}
 
 	$post->post_type = 'buddyforms';
 
