@@ -70,21 +70,22 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
-	$author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+	$caller = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
 
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
 	extract( shortcode_atts( array(
-		'author'      => '',
-		'post_type'   => '',
-		'form_slug'   => '',
-		'id'          => '',
-		'post_parent' => 0,
-		'query_option' => $query_option,
+		'author'              => '',
+		'post_type'           => '',
+		'form_slug'           => '',
+		'id'                  => '',
+		'caller'              => $caller,
+		'post_parent'         => 0,
+		'query_option'        => $query_option,
 		'user_logged_in_only' => 'logged_in_only',
-		'meta_key' => '',
-		'meta_value' => ''
+		'meta_key'            => '',
+		'meta_value'          => ''
 	), $args ) );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
@@ -110,7 +111,7 @@ function buddyforms_the_loop( $args ) {
 
 	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
 
-	if( empty( $author ) ){
+	if ( empty( $author ) ) {
 		$author = get_current_user_id();
 	}
 
@@ -172,8 +173,10 @@ function buddyforms_the_loop( $args ) {
 
 	}
 
-	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
-		$query_args['author'] = $the_author_id;
+	if( $caller !== 'buddyforms_list_all' ) {
+		if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+			$query_args['author'] = $the_author_id;
+		}
 	}
 
 	// New
@@ -213,21 +216,43 @@ function buddyforms_the_loop( $args ) {
 }
 
 add_shortcode( 'buddyforms_the_loop', 'buddyforms_the_loop_shortcode' );
-add_shortcode( 'buddyforms_list_all', 'buddyforms_the_loop_shortcode' );
-add_shortcode( 'bf_user_posts_list', 'buddyforms_the_loop_shortcode' );
-add_shortcode( 'bf_posts_list', 'buddyforms_the_loop_shortcode' );
-
+add_shortcode( 'buddyforms_list_all', 'buddyforms_list_all_shortcode' );
+add_shortcode( 'bf_user_posts_list', 'bf_user_posts_list_shortcode' );
+add_shortcode( 'bf_posts_list', 'bf_posts_list_shortcode' );
 
 //
 // buddyforms_the_loop_shortcode
 //
-/**
- * @param $args
- *
- * @return string
- */
+function buddyforms_list_all_shortcode( $args ) {
+	ob_start();
+	$args['caller'] = 'buddyforms_list_all';
+	buddyforms_the_loop( $args );
+	$tmp = ob_get_clean();
+
+	return $tmp;
+}
+
+function bf_user_posts_list_shortcode( $args ) {
+	ob_start();
+	$args['caller'] = 'bf_user_posts_list';
+	buddyforms_the_loop( $args );
+	$tmp = ob_get_clean();
+
+	return $tmp;
+}
+
+function bf_posts_list_shortcode( $args ) {
+	ob_start();
+	$args['caller'] = 'bf_posts_list';
+	buddyforms_the_loop( $args );
+	$tmp = ob_get_clean();
+
+	return $tmp;
+}
+
 function buddyforms_the_loop_shortcode( $args ) {
 	ob_start();
+	$args['caller'] = 'buddyforms_the_loop';
 	buddyforms_the_loop( $args );
 	$tmp = ob_get_clean();
 
