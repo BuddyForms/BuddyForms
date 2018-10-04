@@ -41,6 +41,7 @@ rm -rf ./composer.lock
 rm -rf ./.netbeans*
 rm -rf ./.php_cs
 rm -rf ./*.zip
+rm -rf ./readme.md
 #This contain the test stuff
 rm -rf ./vendor
 rm -rf ./tests
