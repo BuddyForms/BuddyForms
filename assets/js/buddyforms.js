@@ -17,6 +17,11 @@ jQuery(document).ready(function () {
 
     var bf_submission_modal_content = jQuery(".buddyforms-posts-content");
     var bf_submission_modal = '';
+    // disable the ACF js navigate away pop up
+    if(acf){
+        acf.unload.active = false;
+    }
+
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
 
