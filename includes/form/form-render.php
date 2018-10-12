@@ -403,13 +403,15 @@ function buddyforms_form_html( $args ) {
 	//Honey Pot
 	$honey_pot = new Element_HTML( '<input data-storage="false" type="text" value="" style="display: none" id="bf_hweb" name="bf_hweb" />');
 	$form->addElement( $honey_pot );
-	
+
 	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
 	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
 	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
 	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
 	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );
 	$form->addElement( new Element_Hidden( "bf_post_type", $post_type ) );
+	$form->addElement( new Element_Hidden( "form_type", isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '' ) );
+
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! $exist_field_status ) {
 		$form->addElement( new Element_Hidden( "status", 'draft', array( 'id' => "status" ) ) );

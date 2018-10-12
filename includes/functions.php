@@ -600,14 +600,14 @@ function buddyforms_metabox_go_pro() {
  * @return bool
  */
 function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
-	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyform' );
+	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyforms' );
 	if ( $result_field === false ) {
 		global $buddyforms;
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
 				if ( $field['slug'] == $field_slug ) {
 					$result_field = $field;
-					wp_cache_set( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyform' );
+					wp_cache_set( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyforms' );
 
 					return $result_field;
 				}
@@ -626,7 +626,7 @@ function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
  * @return bool|array
  */
 function buddyforms_get_form_fields( $form_slug ) {
-	$result_field = wp_cache_get( 'buddyforms_get_form_fields' . $form_slug, 'buddyform' );
+	$result_field = wp_cache_get( 'buddyforms_get_form_fields' . $form_slug, 'buddyforms' );
 	if ( $result_field === false ) {
 		global $buddyforms;
 		if ( empty( $form_slug ) ) {
@@ -634,7 +634,7 @@ function buddyforms_get_form_fields( $form_slug ) {
 		}
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			$result_fields = $buddyforms[ $form_slug ]['form_fields'];
-			wp_cache_set( 'buddyforms_get_form_fields' . $form_slug, $result_fields, 'buddyform' );
+			wp_cache_set( 'buddyforms_get_form_fields' . $form_slug, $result_fields, 'buddyforms' );
 
 			return $result_fields;
 		}
@@ -690,6 +690,26 @@ function buddyforms_tinymce_setup_function( $initArray ) {
 }
 
 /**
+ * Get a form by slug
+ *
+ * @param $form_slug
+ *
+ * @return bool|array
+ */
+function buddyforms_get_form_by_slug( $form_slug ) {
+	$value = wp_cache_get( 'buddyforms_form_by_slug_' . $form_slug, 'buddyforms' );
+	if ( $value === false ) {
+		global $buddyforms;
+		if ( isset( $buddyforms[ $form_slug ] ) ) {
+			$value = $buddyforms[ $form_slug ];
+			wp_cache_set( 'buddyforms_form_by_slug_' . $form_slug, $value, 'buddyforms' );
+		}
+	}
+
+	return $value;
+}
+
+/**
  * Will return the form slug from post meta or the default. none if no form is attached
  *
  * @author Sven edited by gfirem
@@ -699,7 +719,7 @@ function buddyforms_tinymce_setup_function( $initArray ) {
  * @return mixed
  */
 function buddyforms_get_form_slug_by_post_id( $post_id ) {
-	$value = wp_cache_get( 'buddyform_form_slug_' . $post_id, 'buddyform' );
+	$value = wp_cache_get( 'buddyform_form_slug_' . $post_id, 'buddyforms' );
 	if ( $value === false ) {
 		$value = get_post_meta( $post_id, '_bf_form_slug', true );
 
@@ -710,7 +730,7 @@ function buddyforms_get_form_slug_by_post_id( $post_id ) {
 		if ( ! $value && isset( $buddyforms_posttypes_default[ $post_type ] ) || isset( $value ) && $value == 'none' ) {
 			$value = $buddyforms_posttypes_default[ $post_type ];
 		}
-		wp_cache_set( 'buddyform_form_slug_' . $post_id, $value, 'buddyform' );
+		wp_cache_set( 'buddyform_form_slug_' . $post_id, $value, 'buddyforms' );
 	}
 
 	return $value;
