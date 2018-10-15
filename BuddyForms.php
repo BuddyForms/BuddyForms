@@ -305,12 +305,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 			) {
-				wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ) );
-				wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ) );
-				wp_register_script( 'buddyforms-admin-wizard-js', plugins_url( 'assets/admin/js/wizard.js', __FILE__ ) );
-				wp_register_script( 'buddyforms-admin-deprecated-js', plugins_url( 'assets/admin/js/deprecated.js', __FILE__ ) );
-				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ) );
-				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ) );
+				wp_register_script( 'buddyforms-admin-js', plugins_url( 'assets/admin/js/admin.js', __FILE__ ), array(), $this->version );
+				wp_register_script( 'buddyforms-admin-slugifies-js', plugins_url( 'assets/admin/js/slugifies.js', __FILE__ ), array(), $this->version );
+				wp_register_script( 'buddyforms-admin-wizard-js', plugins_url( 'assets/admin/js/wizard.js', __FILE__ ), array(), $this->version );
+				wp_register_script( 'buddyforms-admin-deprecated-js', plugins_url( 'assets/admin/js/deprecated.js', __FILE__ ), array(), $this->version );
+				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ), array(), $this->version );
+				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ), array(), $this->version );
 
 
 				// GDPR Localisation
@@ -334,7 +334,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_script( 'buddyforms-admin-formbuilder-js' );
 				wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
 
-				wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), '' );
+				wp_enqueue_script( 'buddyforms-jquery-steps-js', plugins_url( 'assets/resources/jquery-steps/jquery.steps.min.js', __FILE__ ), array( 'jquery' ), $this->version );
 
 				wp_enqueue_script( 'jQuery' );
 				wp_enqueue_script( 'jquery-ui-core' );
@@ -349,17 +349,17 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 			}
 			wp_enqueue_script( 'tinymce' );
-			wp_enqueue_script( 'buddyforms-admin-all-js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ) );
+			wp_enqueue_script( 'buddyforms-admin-all-js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ), $this->version );
 
 			wp_enqueue_media();
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 
 
             //DropZone
-            wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
-            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), $this->version, true );
-            wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ) );
-            wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ) );
+			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
+			wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+			wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ), array(), $this->version );
+			wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ), array(), $this->version );
             $params = array(
                 'admin_url' => admin_url( 'admin-ajax.php' ),
                 'ajaxnonce' => wp_create_nonce( 'fac_drop' )
@@ -367,7 +367,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
             wp_localize_script("buddyforms_dropzone_initializer", "dropParam", $params);
 
             //Featured image
-            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ) );
+            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), $this->version );
 			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
@@ -472,7 +472,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			);
             wp_localize_script("buddyforms_dropzone_initializer", "dropParam", $params);
             //Featured image
-            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ) );
+            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 			// jQuery Select2 // https://select2.github.io/
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
@@ -481,7 +481,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'jquery-ui-core',
 				'jquery-ui-datepicker',
 				'jquery-ui-slider'
-			) );
+			), $this->version );
 			wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__ ) );
 
 			wp_enqueue_script( 'buddyforms-js', plugins_url( 'assets/js/buddyforms.js', __FILE__ ), array(
@@ -506,7 +506,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 
 
-			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), '', false  );
+			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), $this->version, false  );
 			$translations = array(
 				'gdpr_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'gdpr-data-request-form' ),
