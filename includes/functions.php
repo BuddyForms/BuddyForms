@@ -597,7 +597,7 @@ function buddyforms_metabox_go_pro() {
  * @param $form_slug
  * @param $field_slug
  *
- * @return bool
+ * @return bool|array
  */
 function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
 	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyforms' );
