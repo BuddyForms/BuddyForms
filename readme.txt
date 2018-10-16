@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,20 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.2.7 – 1 October 2018
+* Added missing translations
+* Fixed some admin css issues and make sure its also working for WordPress.com
+* Removed the readme from the zip process.
+* Added a functionality to add a random string as the form name in case the form is created and not provide a title.
+* Fixed the notices and warnings related to the create form process
+* Added the BuddyForms version to the file enqueue
+* Fixed the shortcode to show all users entries work.
+* Fixed the permission tab to avoid override saved values with default values.
+* Disabled the ACF js navigate away pop up
+* Updated the cache group.
+* Added a helper function to get the form by slug and include a cache inside
+* Improving function documentation
+
 = 2.2.6 – 1 October 2018
 * Fixed the option to delete an image when post is deleted inside the upload field.
 * Added new option to upload field to define how many file will be uploaded.
