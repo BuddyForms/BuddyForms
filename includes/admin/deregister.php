@@ -13,6 +13,11 @@ add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 
 function buddyforms_remove_admin_scripts( $hook_suffix ) {
 	global $wp_scripts, $wp_styles, $post;
 
+	// Add a check for WordPress.com to make sure its working on .com
+	if( defined('VIP_GO_ENV')){
+		return;
+	}
+
 	// Let us clean the BuddyForms admin views from unneeded styles and css
 	if (
 		( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
