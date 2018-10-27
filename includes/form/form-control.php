@@ -454,9 +454,18 @@ function buddyforms_process_submission( $args = Array() ) {
 				// And finally assign featured image to post
 				
 			}
-			
+
+
+            wp_update_post(
+                array(
+                    'ID' => $attach_id,
+                    'post_parent' => $post_id
+                )
+            );
 			// Ok let us save the Attachment as post thumbnail
 			set_post_thumbnail( $post_id, $attach_id );
+
+
 			
 		} else {
 			delete_post_thumbnail( $post_id );
