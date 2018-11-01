@@ -236,9 +236,9 @@ function buddyforms_registration_page_content( $content ) {
 	return $content;
 }
 
-function buddyforms_get_ID_by_page_name($page_name)
-{
+function buddyforms_get_ID_by_page_name( $page_name ) {
 	global $wpdb;
-	$page_name_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '".$page_name."'");
+	$page_name_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s", $page_name ) );
+
 	return $page_name_id;
 }
