@@ -155,16 +155,17 @@ function bp_session_cleanup() {
 				if ( (int) - 1 === (int) $session_id || ! preg_match( '/^[a-f0-9]{32}$/', $session_id ) ) {
 					continue;
 				}
-				
-				$expired_sessions[] = $expiration->option_name;
+
+				$expired_sessions[] = esc_sql( $expiration->option_name );
 				$expired_sessions[] = esc_sql( "_wp_session_$session_id" );
 			}
 		}
-		
+
 		// Delete all expired sessions in a single query
 		if ( ! empty( $expired_sessions ) ) {
 			$option_names = implode( "','", $expired_sessions );
-			$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name IN ('$option_names')" );
+			$delete_query = $wpdb->prepare( "DELETE FROM $wpdb->options WHERE option_name IN (%s)", $option_names );
+			$wpdb->query( $delete_query );
 		}
 	}
 	
