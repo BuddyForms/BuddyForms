@@ -455,7 +455,7 @@ function buddyforms_display_form_element( $args ) {
 
 	        $file_limit     = isset( $buddyform['form_fields'][ $field_id ]['file_limit'] ) ? stripslashes( $buddyform['form_fields'][ $field_id ]['file_limit'] ) : '1.00';
 	        $accepted_files = isset( $buddyform['form_fields'][ $field_id ]['accepted_files'] ) ? $buddyform['form_fields'][ $field_id ]['accepted_files'] : 'jpg|jpeg|jpe';
-	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'][0] : 1;
+	        $multiple_files = isset( $buddyform['form_fields'][ $field_id ]['multiple_files'] ) ? $buddyform['form_fields'][ $field_id ]['multiple_files'] : 1;
 
 	        //To keep backward compatibility
 	        if ( ! empty( $multiple_files ) && $multiple_files == 0 ) {
@@ -513,7 +513,6 @@ function buddyforms_display_form_element( $args ) {
             $form_fields['validation']['upload_multiple_files']  = new Element_Number( '<b>' . __( 'Max number of files that will be handled', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][multiple_files]", array(
                 'value' => intval( $multiple_files ),
                 'min'   =>1,
-                'max'   =>9,
                 'id'    => 'upload_multiple_files' . $field_id,
                 'step'=> '1'
             ) );
