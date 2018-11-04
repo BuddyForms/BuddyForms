@@ -1003,3 +1003,20 @@ function buddyforms_upload_handle_delete_media() {
 
 	die();
 }
+
+/**
+ * Check if a file was include into the global php queue
+ *
+ * @since 2.2.8
+ *
+ * @author gfirem
+ *
+ * @param $file_name
+ *
+ * @return bool
+ */
+function buddyforms_check_loaded_file( $file_name ) {
+	$includes_files = get_included_files();
+
+	return in_array( $file_name, $includes_files );
+}
