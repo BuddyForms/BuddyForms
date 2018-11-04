@@ -360,7 +360,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			$field_slug = $customfield['slug'];
 			$field_type = $customfield['type'];
 
-			do_action('buddyforms_process_field_submission', $field_slug, $field_type, $customfield, $post_id, $form_slug, $args);
+			do_action('buddyforms_process_field_submission', $field_slug, $field_type, $customfield, $post_id, $form_slug, $args, $action);
 		}
 		
 		// Save the Form slug as post meta

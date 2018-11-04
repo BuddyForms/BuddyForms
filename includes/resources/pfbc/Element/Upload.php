@@ -22,11 +22,12 @@ class Element_Upload extends Element_Textbox {
 		"mandatory"      => ""
 	);
 
-	public static function upload_process_field_submission( $field_slug, $field_type, $field, $post_id, $form_slug, $args ) {
+	public static function upload_process_field_submission( $field_slug, $field_type, $field, $post_id, $form_slug, $args, $action ) {
 		if ( $field_type !== 'upload' && $field_type !== 'featured_image' ) {
 			return;
 		}
 
+		$key_value      = '';
 		$attachment_ids = array();
 		if ( $field_type === 'upload' || $field_type === 'featured_image' ) {
 			$key_value = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : "";
@@ -62,7 +63,7 @@ class Element_Upload extends Element_Textbox {
 					// Define attachment metadata
 
 					// Include image.php if not was loaded
-					if ( ! buddyforms_check_loaded_file( 'image.php' ) ) {
+					if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
 						require_once( ABSPATH . 'wp-admin/includes/image.php' );
 					}
 
@@ -115,7 +116,7 @@ class Element_Upload extends Element_Textbox {
 					$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
 
 					// Include image.php if not was loaded
-					if ( ! buddyforms_check_loaded_file( 'image.php' ) ) {
+					if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
 						require_once( ABSPATH . 'wp-admin/includes/image.php' );
 					}
 
@@ -175,10 +176,10 @@ class Element_Upload extends Element_Textbox {
 					$url                     = wp_get_attachment_thumb_url( $id_value );
 					$result                  .= $id_value . ",";
 					$mockFile                = new stdClass();
-					$mockFile->name          = $metadata['filename'];
+					$mockFile->name          = isset( $metadata['filename'] ) ? $metadata['filename'] : '';
 					$mockFile->url           = esc_url( $url );
 					$mockFile->attachment_id = $id_value;
-					$mockFile->size          = $metadata['filesizeInBytes'];
+					$mockFile->size          = isset( $metadata['filesizeInBytes'] ) ? $metadata['filesizeInBytes'] : '';
 					$entries[ $id_value ]    = $mockFile;
 				}
 
