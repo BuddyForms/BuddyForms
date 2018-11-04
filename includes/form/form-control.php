@@ -352,123 +352,15 @@ function buddyforms_process_submission( $args = Array() ) {
 		if ( is_user_logged_in() && 'registration' !== $form_type && $have_user_fields === true) {
 			$user_id = buddyforms_wp_update_user();
 		}
-		/*
-		 * Upload
-		 */
-        $attachment_ids = array();
-        $formSlug      = $_POST['form_slug'];
-        $buddyFData    = isset( $buddyforms[ $formSlug ]['form_fields'] ) ? $buddyforms[ $formSlug ]['form_fields'] : [];
-        foreach ( $buddyFData as $key => $value ) {
-            $field = $value['slug'];
-            $type  = $value['type'];
-            if ( $type === 'upload' ) {
-                $key_value          = isset($_POST[ $field ]) ? $_POST[ $field ] : "";
-                if(!empty($key_value)){
-                    if(empty($attachment_ids)){
-                        $attachment_ids = explode( ",", $key_value );
-                    } else {
-                        $attachment_ids = array_merge($attachment_ids,  explode( ",", $key_value ));
-                    }
-                }
-            }
-        }
-
-        $absolute_path = wp_upload_dir()['path'];
-        foreach ( $attachment_ids as $id_value ) {
-            $metadata =   wp_prepare_attachment_for_js($id_value);
-            $file_name =  $metadata['filename'];
-            $wp_filetype   = wp_check_filetype( $file_name, null );
-            $attachment    = array(
-                'post_mime_type' => $wp_filetype['type'],
-                'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
-                'post_content'   => '',
-                'post_status'    => 'inherit',
-                'ID'             => $id_value,
-                'post_parent' => $post_id
-            );
-
-            // Create the attachment
-            $attach_id = wp_insert_attachment( $attachment, $absolute_path .'/' . $file_name, $post_id );
-            // Define attachment metadata
-            $attach_data = wp_generate_attachment_metadata( $attach_id, $absolute_path .'/' . $file_name );
-
-            // Assign metadata to attachment
-            wp_update_attachment_metadata( $attach_id, $attach_data );
-        }
 
 		/*
-		 * End Upload
+		 * Process field submission for 3rd party and internal code. For example the Upload Field and Feature Image
 		 */
-		if ( isset( $_POST['featured_image'] ) ) {
-			
-			$attach_id = $_POST['featured_image'];
-			
-			if ( buddyforms_is_multisite() ) {
-				
-				restore_current_blog();
-				
-				$image_url = wp_get_attachment_image_src( $_POST['featured_image'], 'full' );
-				$image_url = $image_url[0];
-				
-				switch_to_blog( $buddyforms[ $form_slug ]['blog_id'] );
-				
-				
-				// Add Featured Image to Post
-				$upload_dir = wp_upload_dir(); // Set upload folder
-				$image_data = file_get_contents( $image_url ); // Get image data
-				$filename   = basename( $image_url ); // Create image file name
-				
-				// Check folder permission and define file location
-				if ( wp_mkdir_p( $upload_dir['path'] ) ) {
-					$file = $upload_dir['path'] . '/' . $filename;
-				} else {
-					$file = $upload_dir['basedir'] . '/' . $filename;
-				}
-				
-				// Create the image  file on the server
-				file_put_contents( $file, $image_data );
-				
-				// Check image file type
-				$wp_filetype = wp_check_filetype( $filename, null );
-				
-				// Set attachment data
-				$attachment = array(
-					'post_mime_type' => $wp_filetype['type'],
-					'post_title'     => sanitize_file_name( $filename ),
-					'post_content'   => '',
-					'post_status'    => 'inherit'
-				);
-				
-				// Create the attachment
-				$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
-				
-				// Include image.php
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
-				
-				// Define attachment metadata
-				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
-				
-				// Assign metadata to attachment
-				wp_update_attachment_metadata( $attach_id, $attach_data );
-				
-				// And finally assign featured image to post
-				
-			}
+		foreach ( $customfields as $customfield ) {
+			$field_slug = $customfield['slug'];
+			$field_type = $customfield['type'];
 
-
-            wp_update_post(
-                array(
-                    'ID' => $attach_id,
-                    'post_parent' => $post_id
-                )
-            );
-			// Ok let us save the Attachment as post thumbnail
-			set_post_thumbnail( $post_id, $attach_id );
-
-
-			
-		} else {
-			delete_post_thumbnail( $post_id );
+			do_action('buddyforms_process_field_submission', $field_slug, $field_type, $customfield, $post_id, $form_slug, $args, $action);
 		}
 		
 		// Save the Form slug as post meta
