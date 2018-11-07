@@ -1,0 +1,83 @@
+services:
+  SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff: ~
+  SlevomatCodingStandard\Sniffs\Variables\UselessVariableSniff: ~
+
+  # function ($var) use ($unused) { return $var; }    →   function ($var) { return $var; }
+  SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff: ~
+
+  # echo "hi";;   →   echo "hi";
+  SlevomatCodingStandard\Sniffs\PHP\UselessSemicolonSniff: ~
+
+  # ((new Class))->call()   →     (new Class)->call()
+  SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff: ~
+
+  # detect dead code
+  SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff:
+
+  # drop dead use namespaces
+  PhpCsFixer\Fixer\Import\NoUnusedImportsFixer:
+
+  # and sort them A → Z
+  PhpCsFixer\Fixer\Import\OrderedImportsFixer:
+
+  # $value;;
+  PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer:
+
+  # final class { ... protected ... }
+  PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer:
+
+  # continue (2);
+  PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer:
+
+  # { echo 'hi'; }
+  PhpCsFixer\Fixer\ControlStructure\NoUnneededCurlyBracesFixer:
+
+  # $var = 5; return $var;    →    return $var;
+  PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer:
+
+  # $var = $foo : $foo ? $bar → $var = $foo ?: $bar
+  SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff:
+
+  # $var = $var + foo → $var += $foo
+  SlevomatCodingStandard\Sniffs\Operators\RequireCombinedAssignmentOperatorSniff:
+
+  #### ARRAY ####
+  # [ 1 , 2];
+  PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer: ~
+
+  # [    1, 2   ];
+  PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer: ~
+
+  # [ 1,\n2 ];
+  PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: ~
+
+  # [1, ]   =>   [1]
+  PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer: ~
+
+  # array(    );
+  PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+    syntax: long
+
+  # [1,2]
+  PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer: ~
+
+  PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer: ~
+
+imports:
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/comments.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/control-structures.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/docblock.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/namespaces.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/phpunit.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/spaces.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/common/strict.yml', ignore_errors: true }
+- { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml', ignore_errors: true }
+parameters:
+  skip:
+    # code to skip for all files
+    SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.UselessDocComment: ~
+    SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty: ~
+    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff.NotCamelCaps: ~
+    `Unused variable $post.`: ~
+  exclude_files:
+    - 'includes/resources/tgm/class-tgm-plugin-activation.php'
