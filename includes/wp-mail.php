@@ -113,7 +113,6 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$subject = isset( $_POST['subject'] ) ? $_POST['subject'] : $mail_notification_trigger['mail_subject'];
 
-
 	$from_name = isset( $mail_notification_trigger['mail_from_name'] ) ? $mail_notification_trigger['mail_from_name'] : 'blog_title';
 
 	switch ( $from_name ) {
@@ -136,7 +135,6 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			$from_name = $blog_title;
 			break;
 	}
-
 
 	$from_email = isset( $mail_notification_trigger['mail_from'] ) ? $mail_notification_trigger['mail_from'] : 'admin';
 
@@ -368,22 +366,26 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$from_email = $mail_notification_trigger['mail_from'];
 	$emailBody  = $mail_notification_trigger['mail_body'];
 	$emailBody  = stripslashes( $emailBody );
-	$emailBody  = str_replace( '[user_login]', $usernameauth, $emailBody );
-	$emailBody  = str_replace( '[user_nicename]', $user_nicename, $emailBody );
-	$emailBody  = str_replace( '[user_email]', $user_email, $emailBody );
-	$emailBody  = str_replace( '[first_name]', $first_name, $emailBody );
-	$emailBody  = str_replace( '[last_name]', $last_name, $emailBody );
 
-	$emailBody = str_replace( '[published_post_link_plain]', $postperma, $emailBody );
+	$post_link_html = "<a href='$postperma' target='_blank'>$postperma</a>";
 
-	$postlinkhtml = "<a href='$postperma' target='_blank'>$postperma</a>";
+	$short_codes_and_values = array(
+		'[user_login]' => $usernameauth,
+		'[user_nicename]' => $user_nicename,
+		'[user_email]' => $user_email,
+		'[first_name]' => $first_name,
+		'[last_name]' => $last_name,
+		'[published_post_link_plain]' => $postperma,
+		'[published_post_link_html]' => $post_link_html,
+		'[published_post_title]' => $post_title,
+		'[site_name]' => $blog_title,
+		'[site_url]' => $siteurl,
+		'[site_url_html]' => $siteurlhtml,
+	);
 
-	$emailBody = str_replace( '[published_post_link_html]', $postlinkhtml, $emailBody );
-
-	$emailBody = str_replace( '[published_post_title]', $post_title, $emailBody );
-	$emailBody = str_replace( '[site_name]', $blog_title, $emailBody );
-	$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
-	$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
+	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
+		$emailBody = buddyforms_email_replace_shortcode( $emailBody, $shortcode, $short_code_value );
+	}
 
 	//$emailBody = nl2br( htmlspecialchars( $emailBody ) ); todo: find better solution
 
