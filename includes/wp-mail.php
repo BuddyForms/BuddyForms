@@ -155,7 +155,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			break;
 	}
 
-	$emailBody = isset( $_POST['message'] ) ? $_POST['message'] : $mail_notification_trigger['mail_body'];
+	$emailBody = isset( $mail_notification_trigger['mail_body'] ) ? $mail_notification_trigger['mail_body'] : '';
 
 	// If we have content let us check if there are any tags we need to replace with the correct values.
 	if ( ! empty( $emailBody ) ) {
@@ -196,36 +196,38 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 				}
 
 				// Replace From name Shortcodes with form element values
-				$from_name = str_replace( '[' . $field['slug'] . ']', $field_value, $from_name );
+				$from_name = buddyforms_email_replace_shortcode( $from_name, sprintf('[%s]', $field['slug']), $field_value );
 
 				// Replace Buddytext Shortcodes with form element values
-				$emailBody = str_replace( '[' . $field['slug'] . ']', $field_value, $emailBody );
+				$emailBody = buddyforms_email_replace_shortcode( $emailBody, sprintf('[%s]', $field['slug'] ), $field_value );
 			}
 		}
 
-		$emailBody = str_replace( '[user_login]', $usernameauth, $emailBody );
-		$emailBody = str_replace( '[user_nicename]', $user_nicename, $emailBody );
-		$emailBody = str_replace( '[user_email]', $user_email, $emailBody );
-		$emailBody = str_replace( '[first_name]', $first_name, $emailBody );
-		$emailBody = str_replace( '[last_name]', $last_name, $emailBody );
+		$post_link_html = sprintf('<a href="%2$s" target="_blank">%s1$</a>', $postperma);
 
-		$emailBody = str_replace( '[published_post_link_plain]', $postperma, $emailBody );
+		$short_codes_and_values = array(
+			'[user_login]' => $usernameauth,
+			'[user_nicename]' => $user_nicename,
+			'[user_email]' => $user_email,
+			'[first_name]' => $first_name,
+			'[last_name]' => $last_name,
+			'[published_post_link_plain]' => $postperma,
+			'[published_post_link_html]' => $post_link_html,
+			'[published_post_title]' => $post_title,
+			'[site_name]' => $blog_title,
+			'[site_url]' => $siteurl,
+			'[site_url_html]' => $siteurlhtml,
+			'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
+		);
 
-		$postlinkhtml = "<a href='$postperma' target='_blank'>$postperma</a>";
-
-		$emailBody = str_replace( '[published_post_link_html]', $postlinkhtml, $emailBody );
-
-		$emailBody = str_replace( '[published_post_title]', $post_title, $emailBody );
-		$emailBody = str_replace( '[site_name]', $blog_title, $emailBody );
-		$emailBody = str_replace( '[site_url]', $siteurl, $emailBody );
-		$emailBody = str_replace( '[site_url_html]', $siteurlhtml, $emailBody );
-
-		$emailBody = str_replace( '[form_elements_table]', buddyforms_mail_notification_form_elements_as_table( $form_slug ), $emailBody );
+		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
+			$emailBody = buddyforms_email_replace_shortcode( $emailBody, $shortcode, $short_code_value );
+		}
 
 		// $emailBody = nl2br( htmlspecialchars( $emailBody ) );
 	}
 
-	// If we do not have any valid eMail Body let us try to create the content from teh from elements as table
+	// If we do not have any valid eMail Body let us try to create the content from the from elements as table
 	if ( empty( $emailBody ) ) {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			$emailBody = buddyforms_mail_notification_form_elements_as_table( $form_slug );
@@ -242,6 +244,25 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	// OK Let us sent the mail
 	wp_mail( $mail_to, $subject, $message, $mailheader );
+}
+
+/**
+ * Replace the shortcode in the body, only if they exist.
+ *
+ * @param $string
+ * @param $shortcode
+ * @param $value
+ *
+ * @since 2.2.7
+ *
+ * @return mixed
+ */
+function buddyforms_email_replace_shortcode( $string, $shortcode, $value ) {
+	if ( strpos( $string, $shortcode ) >= 0 ) {
+		$string = str_replace( $shortcode, $value, $string );
+	}
+
+	return $string;
 }
 
 /**
@@ -366,7 +387,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	//$emailBody = nl2br( htmlspecialchars( $emailBody ) ); todo: find better solution
 
-	$mailheader .= "MIME-Version: 1.0\n";
+	$mailheader = "MIME-Version: 1.0\n";
 	$mailheader .= "X-Priority: 1\n";
 	$mailheader .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mailheader .= "Content-Transfer-Encoding: 7bit\n\n";
