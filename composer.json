@@ -32,7 +32,7 @@
   },
   "scripts": {
     "cghooks": "vendor/bin/cghooks",
-    "tests": "composer fixes && composer lints",
+    "tests": "composer lints",
     "sniffs": [
       "phpcs --report=full --colors -p --standard=phpcs.xml --ignore=*/vendor/*,*/node_modules/* includes/ --report=diff -v",
       "phpcs --report=full --colors -p --standard=phpcs.xml --ignore=*/vendor/*,*/node_modules/* templates/ --report=diff -v",
