@@ -78,6 +78,7 @@ parameters:
     SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.UselessDocComment: ~
     SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty: ~
     PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff.NotCamelCaps: ~
-    `Unused variable $post.`: ~
+    'Unused variable $the_author_id.': ~
+    'Useless variable $message.': ~
   exclude_files:
-    - 'includes/resources/tgm/class-tgm-plugin-activation.php'
+    - 'includes/resources/freemius/*'
