@@ -21,6 +21,13 @@ jQuery(document).ready(function () {
     if(typeof acf !== 'undefined'){
         acf.unload.active = false;
     }
+    jQuery.validator.addMethod("user-website", function (value, element) {
+       var match = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
+       if(match){
+           return true;
+       }
+        return false;
+    }, "Please enter a valid URL.");
 
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
