@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,7 +388,25 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
-= 2.2.7 – 1 October 2018
+
+= 2.2.8 – 9 November 2018
+* Fixed an issue where the feature image was not attach to the post
+* Removed the maxFiles limit from the upload form element
+* Improved the security and added prepare to queries to avoid sql injection.
+* Improved the field processing, for extra process.
+* Added the action `buddyforms_process_field_submission` to grant 3rd party to add extra process to the field and include this extra process internal fields like Upload and Features.
+* Added the Field Control to start migrating to SOLID principles.
+* Added the action to the action `buddyforms_process_field_submission`.
+* Fixed the condition to ask if the imgae.php was already included.
+* Fixed the email short-code generation.
+* Improving the shortcode replacement
+* Adding CI with codeship, phpcs, php linter and php fixer.
+* Updated php cs and fixer configuration
+* Fixed the validation og the website form element without http protocol
+* Improving the code.
+
+
+= 2.2.7 – 19 October 2018
 * Added missing translations
 * Fixed some admin css issues and make sure its also working for WordPress.com
 * Removed the readme from the zip process.
