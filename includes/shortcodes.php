@@ -109,7 +109,7 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : '';
+	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
 
 	if ( empty( $author ) ) {
 		$author = get_current_user_id();
