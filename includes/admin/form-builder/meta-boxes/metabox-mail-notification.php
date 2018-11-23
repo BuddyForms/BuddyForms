@@ -127,6 +127,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	// to eMail
 	$form_setup[] = new Element_Textbox( '<b>' . __( "To eMails", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_address]", array(
 		"class"     => "bf-mail-field",
+		'required'  => 1,
 		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] : '',
 		'shortDesc' => 'Separate multiple eMail addresses by ","'
 	) );
@@ -143,17 +144,26 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	) );
 	$form_setup[] = $element;
 
-	$mail_to_cc   = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
-	$form_setup[] = new Element_Email( '<b>' . __( "CC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_cc_address]", array(
-		"class" => 'mail_to_cc_address ' . $mail_to_cc,
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
-	) );
+	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
+	$attrs      = array(
+		"class"    => 'mail_to_cc_address ' . $mail_to_cc,
+		'required' => ! empty( $mail_to_cc ),
+		'value'    => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
+	);
+	if ( empty( $mail_to_cc ) ) {
+		$attrs['required'] = 1;
+	}
+	$form_setup[] = new Element_Textbox( '<b>' . __( "CC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_cc_address]", $attrs );
 
-	$mail_to_bcc  = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'bcc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
-	$form_setup[] = new Element_Email( '<b>' . __( "BCC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_bcc_address]", array(
+	$mail_to_bcc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'bcc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
+	$attrs       = array(
 		"class" => 'mail_to_bcc_address ' . $mail_to_bcc,
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_bcc_address'] : ''
-	) );
+	);
+	if ( empty( $mail_to_bcc ) ) {
+		$attrs['required'] = 1;
+	}
+	$form_setup[] = new Element_Textbox( '<b>' . __( "BCC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_bcc_address]", $attrs );
 
 	// Subject
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Subject", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_subject]", array(
