@@ -82,9 +82,10 @@ function buddyforms_validate_notifications_email(element){
             if (!jQuery(element).is(':visible') && !isValid) {
                 jQuery('.buddyform-nav-tabs .notifications_nav>a').click()
             }
-            return !isValid;
+            return isValid;
         }
     }
+    return true;
 }
 
 //
@@ -319,37 +320,36 @@ jQuery(document).ready(function (jQuery) {
     // Validate the form before publish
     jQuery('#publish').click(function () {
 
-        var create_new_form_name = jQuery('[name="post_title"]').val();
+        var post_title = jQuery('[name="post_title"]');
+        var errors = [];
 
-        var error = false;
-        if (create_new_form_name === '') {
-            jQuery('[name="post_title"]').removeClass('bf-ok');
-            jQuery('[name="post_title"]').addClass('bf-error');
-            error = true;
+        if (post_title.val() === '') {
+            post_title.removeClass('bf-ok');
+            post_title.addClass('bf-error');
+            errors.push({result: false, element: post_title});
         } else {
-            jQuery('[name="post_title"]').removeClass('bf-error');
-            jQuery('[name="post_title"]').addClass('bf-ok');
+            post_title.removeClass('bf-error');
+            post_title.addClass('bf-ok');
         }
 
         //Validate emails notifications
         var mail_to_cc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_cc_address]"]');
         jQuery.each(mail_to_cc_addresses, function (index, mail_to_cc_address) {
-            error = buddyforms_validate_notifications_email(mail_to_cc_address);
+            var result = buddyforms_validate_notifications_email(mail_to_cc_address);
+            errors.push({result: result, element: mail_to_cc_address});
         });
 
         var mail_to_bcc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_bcc_address]"]');
         jQuery.each(mail_to_bcc_addresses, function (index, mail_to_bcc_address) {
-            error = buddyforms_validate_notifications_email(mail_to_bcc_address);
+            var result = buddyforms_validate_notifications_email(mail_to_bcc_address);
+            errors.push({result: result, element: mail_to_bcc_address});
         });
 
         var mail_to_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_address]"]');
         jQuery.each(mail_to_addresses, function (index, mail_to_address) {
-            error = buddyforms_validate_notifications_email(mail_to_address);
+            var result = buddyforms_validate_notifications_email(mail_to_address);
+            errors.push({result: result, element: mail_to_address});
         });
-
-        if (error === true) {
-            return false;
-        }
 
         //Fill and avoid duplicates of field slugs
         var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
@@ -391,8 +391,14 @@ jQuery(document).ready(function (jQuery) {
             }
         });
 
-        if (error === true) {
-            return false;
+        if (errors.length > 0) {
+            jQuery.each(errors, function (index, current_error) {
+                if (!current_error.result) {
+                    var element_name = jQuery(current_error.element).attr('name');
+                    jQuery("html, body").animate({scrollTop: jQuery('[name="' + element_name + '"]').offset().top - 250}, 1000);
+                    return false;
+                }
+            });
         }
 
     });
