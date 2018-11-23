@@ -214,8 +214,8 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 }
 
 
-add_filter( 'login_form_bottom', 'baumensch_register_link' );
-function baumensch_register_link( $wp_login_form ) {
+add_filter( 'login_form_bottom', 'buddyforms_register_link' );
+function buddyforms_register_link( $wp_login_form ) {
 
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
