@@ -214,8 +214,8 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 }
 
 
-add_filter( 'login_form_bottom', 'baumensch_register_link' );
-function baumensch_register_link( $wp_login_form ) {
+add_filter( 'login_form_bottom', 'buddyforms_register_link' );
+function buddyforms_register_link( $wp_login_form ) {
 
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
@@ -827,12 +827,6 @@ function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 	}
 
 	return $all_pages;
-}
-
-// Set the js and css to global by default. There are to many issues with the function at the moment. Can still set to false with the filer priority higher than 10 or by de register buddyforms_front_js_css_loader_global
-add_filter( 'buddyforms_front_js_css_loader', 'buddyforms_front_js_css_loader_global', 1, 10 );
-function buddyforms_front_js_css_loader_global( $found ) {
-	return true;
 }
 
 add_action( 'admin_bar_menu', 'buddyform_admin_bar_shortcut', 60 );
