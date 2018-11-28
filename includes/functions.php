@@ -56,11 +56,11 @@ function buddyforms_wp_before_admin_bar_render() {
 function buddyforms_get_post_status_array() {
 
 	$status_array = array(
-		'publish' => __( 'Published', 'buddyforms' ),
+		'publish' => __( 'Publish', 'buddyforms' ),
 		'pending' => __( 'Pending Review', 'buddyforms' ),
 		'draft'   => __( 'Draft', 'buddyforms' ),
-		'future'  => __( 'Scheduled', 'buddyforms' ),
-		'private' => __( 'Privately Published', 'buddyforms' ),
+		'future'  => __( 'Schedule', 'buddyforms' ),
+		'private' => __( 'Privately Publish', 'buddyforms' ),
 		'trash'   => __( 'Trash', 'buddyforms' ),
 	);
 
