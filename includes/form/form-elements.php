@@ -776,6 +776,8 @@ function buddyforms_form_elements( $form, $args ) {
 							$data_multiple = 'data-multiple="true"';
 						}
 
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+
 						$name_inline = __( 'Attache File', 'buddyforms' );
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
 							$name_inline = '* ' . $name;
