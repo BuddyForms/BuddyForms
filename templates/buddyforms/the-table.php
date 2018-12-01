@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<?php buddyforms_locate_template( 'submission-single' ); ?>
                                 </div>
 							<?php } ?>
-                            <span class="mobile-th"><?php _e( 'Created ', 'buddyforms' ); ?></span>
+                            <span class="mobile-th"><?php _e( 'Created ', 'buddyforms' ); ?></span> 
 							<?php the_time( 'F j, Y' ) ?>
                         </td>
                         <td>
