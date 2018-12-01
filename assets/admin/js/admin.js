@@ -505,8 +505,6 @@ jQuery(document).ready(function (jQuery) {
         var args = action.attr('href').split("/");
         var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
 
-        alert('#table_row_' + args[0] + '_select_options ul li');
-
         numItems = numItems + 1;
         jQuery('#table_row_' + args[0] + '_select_options ul').append(
             '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
