@@ -90,7 +90,7 @@ abstract class Element extends Base {
 	 * @return mixed
 	 */
 	public function getLabel() {
-		return $this->label;
+		return ( ! empty( $this->label ) ) ? $this->label : '';
 	}
 
 	/**

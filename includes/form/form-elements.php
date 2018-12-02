@@ -234,7 +234,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$required = '';
 							if ( isset( $customfield['required'] ) ) {
 								$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
-								$required  = '<span class="required">* </span>';
+								$required  = $form->renderRequired();
 							}
 
 							$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
@@ -242,11 +242,11 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor_label = '';
 							if ( $labels_layout == 'inline' ) {
 								if ( isset( $customfield['required'] ) ) {
-									$required = '* ';
+									$required = $form->getRequiredSignal();
 								}
-								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
+								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 							} else {
-								$wp_editor_label = '<label for="buddyforms_form_content">' . $required . $name . '</label>';
+								$wp_editor_label = '<label for="buddyforms_form_content">'  . $name . $required . '</label>';
 							}
 
 							//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
@@ -407,7 +407,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$required = '';
 						if ( isset( $customfield['required'] ) ) {
 							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
-							$required  = '<span class="required">* </span>';
+							$required  = $form->renderRequired();
 						}
 
 						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
@@ -415,11 +415,11 @@ function buddyforms_form_elements( $form, $args ) {
 						$wp_editor_label = '';
 						if ( $labels_layout == 'inline' ) {
 							if ( isset( $customfield['required'] ) ) {
-								$required = '* ';
+								$required = $form->getRequiredSignal();
 							}
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 						} else {
-							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $required . $name . '</label>';
+							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
 						if ( isset( $customfield['hidden'] ) ) {
@@ -458,7 +458,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$required = '';
 						if ( isset( $customfield['required'] ) ) {
 							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
-							$required  = '<span class="required">* </span>';
+							$required  = $form->renderRequired();
 						}
 
 						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
@@ -466,11 +466,11 @@ function buddyforms_form_elements( $form, $args ) {
 						$wp_editor_label = '';
 						if ( $labels_layout == 'inline' ) {
 							if ( isset( $customfield['required'] ) ) {
-								$required = '* ';
+								$required = $form->getRequiredSignal();
 							}
-							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $required . $name . "\"", $wp_editor );
+							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 						} else {
-							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $required . $name . '</label>';
+							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
 						if ( isset( $customfield['hidden'] ) ) {
@@ -608,7 +608,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$name_inline = isset( $customfield['button_label'] ) ? $customfield['button_label'] : __( 'Add Image', 'buddyforms' );
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
-							$name_inline = '* ' . $name;
+							$name_inline = $form->getRequiredSignal() . $name;
 						}
 
 						$str .= '<span class="bf_add_files hide-if-no-js">';
@@ -621,13 +621,13 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$fimage_element = '<div class="bf_field_group">';
 						if ( $labels_layout != 'inline' ) {
-							$fimage_element .= '<label for="_' . $slug . '">';
+							$fimage_element .= '<label for="_' . $slug . '">' . $name;
 
 							if ( isset( $customfield['required'] ) ) {
-								$fimage_element .= '<span class="required">* </span>';
+								$fimage_element .= $form->renderRequired();
 							}
 
-							$fimage_element .= $name . '</label>';
+							$fimage_element .= '</label>';
 						}
 
 						$fimage_element .= '<div class="bf_inputs bf-input">
@@ -780,7 +780,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$name_inline = __( 'Attache File', 'buddyforms' );
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
-							$name_inline = '* ' . $name;
+							$name_inline = $form->getRequiredSignal() . $name;
 						}
 
 						$str .= '<a href="#" class="button btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</a>';
@@ -792,13 +792,13 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$file_element = '<div class="bf_field_group">';
 						if ( $labels_layout != 'inline' ) {
-							$file_element .= '<label for="_' . $slug . '">';
+							$file_element .= '<label for="_' . $slug . '">'. $name;
 
 							if ( isset( $customfield['required'] ) ) {
-								$file_element .= '<span class="required">* </span>';
+								$file_element .= $form->renderRequired();
 							}
 
-							$file_element .= $name . '</label>';
+							$file_element .= '</label>';
 						}
 
 						$file_element .= '<div class="bf_inputs bf-input">
@@ -907,7 +907,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$required = '';
 						if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
-							$required = '<span class="required">* </span>';
+							$required = $form->renderRequired();
 						}
 
 						$tags                   = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
@@ -930,7 +930,7 @@ function buddyforms_form_elements( $form, $args ) {
 						</script>
 						<div class="bf_field_group">
 	                        <label for="editpost-element-' . $field_id . '">
-	                            ' . $required . $name . '
+	                            ' . $name . $required . '
 	                        </label>
 	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
 		                	<span class="help-inline">' . $description . '</span>
