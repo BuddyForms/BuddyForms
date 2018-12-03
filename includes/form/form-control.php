@@ -112,6 +112,19 @@ function buddyforms_process_submission( $args = Array() ) {
 	if ( $form_type == 'registration' ) {
 
 		if ( ! is_user_logged_in() ) {
+
+			$users_can_register = get_site_option( 'users_can_register' );
+
+			if ( empty( $users_can_register ) ) {
+				$args = array(
+					'hasError'      => true,
+					'form_slug'     => $form_slug,
+					'error_message' => apply_filters( 'buddyforms_disable_registration_error_message', __( 'Sorry, but registration is disabled on this site at the moment.', 'buddyforms' ) )
+				);
+
+				return $args;
+			}
+
 			$user_id = buddyforms_wp_insert_user();
 		} else {
 			$user_id = buddyforms_wp_update_user();
