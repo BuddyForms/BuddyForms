@@ -79,10 +79,10 @@ abstract class Base {
 	 */
 	public function getAttribute( $attribute ) {
 		if ( isset ( $this->_attributes[ $attribute ] ) ) {
-			return $this->_attributes[ $attribute ];
+			return ! empty( $this->_attributes[ $attribute ] ) ? $this->_attributes[ $attribute ] : '';
 		}
 
-		return "";
+		return '';
 	}
 
 	/**
@@ -92,8 +92,8 @@ abstract class Base {
 	 *
 	 * @return string
 	 */
-	public function getAttributes( $ignore = "" ) {
-		$str = "";
+	public function getAttributes( $ignore = '' ) {
+		$str = '';
 		if ( ! empty( $this->_attributes ) ) {
 			if ( ! is_array( $ignore ) ) {
 				$ignore = array( $ignore );
@@ -147,6 +147,31 @@ abstract class Base {
 			} else {
 				$this->_attributes[ $attribute ] = $value;
 			}
+		}
+	}
+
+	/**
+	 * Get the Required Signal by default &nbsp;*&nbsp;
+	 *
+	 * @return string
+	 */
+	public function getRequiredSignal() {
+		return apply_filters( 'buddyforms_render_required_signal', '&nbsp;&ast;&nbsp;' );
+	}
+
+	/**
+	 * Output or return the required flag
+	 *
+	 * @param bool $echo
+	 *
+	 * @return string
+	 */
+	public function renderRequired( $echo = false ) {
+		$html   = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
+		if ( $echo ) {
+			echo $html;
+		} else {
+			return $html;
 		}
 	}
 }

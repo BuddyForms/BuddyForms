@@ -10,7 +10,7 @@ class View_Metabox extends FormView {
 	protected $class = "form-inline";
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
@@ -48,8 +48,18 @@ class View_Metabox extends FormView {
 		}
 		echo '<div class="bf-label"><label for="', $element->getAttribute( "id" ), '">';
 		if ( $element->isRequired() ) {
-			echo '<span class="required">* </span> ';
+			echo '&nbsp;<span class="required">* </span> ';
 		}
 		echo $label, '</label></div> ';
+
+
+		$label = $element->getLabel();
+
+		//TODO improve required flag position
+		if ( $element->isRequired() ) {
+			$label = $label . $this->renderRequired();
+		}
+
+		echo sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
 	}
 }

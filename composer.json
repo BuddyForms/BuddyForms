@@ -69,8 +69,7 @@
       "pre-commit": [
         "echo committing as $(git config user.name)",
         "composer tests"
-      ],
-      "post-merge": "composer update"
+      ]
     }
   }
 }

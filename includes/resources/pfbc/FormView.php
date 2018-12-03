@@ -9,7 +9,7 @@ abstract class FormView extends Base {
 	 */
 	public $noLabel = false;
 	/**
-	 * @var
+	 * @var Form
 	 */
 	protected $_form;
 	/**
