@@ -177,7 +177,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				new FieldControl();
 			}
 
-
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/class-bf-admin-notices.php' );
+			new BfAdminNotices();
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
 
