@@ -315,10 +315,12 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
  * @param $form_slug
  */
 function buddyforms_post_entry_actions( $form_slug ) {
+	if ( empty( $form_slug ) ) {
+		echo '';
+	}
 	global $buddyforms, $post;
-
-	if ( $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
-		return;
+	if ( ! isset( $buddyforms[ $form_slug ] ) || $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
+		echo '';
 	}
 	?>
     <ul class="edit_links">
