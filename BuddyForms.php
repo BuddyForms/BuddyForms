@@ -52,6 +52,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		public static $assets;
 
 		/**
+		 * @var string Gutenberg base components url
+		 */
+		public static $gutenberg_url;
+
+		/*
+		 * @var string Gutenberg base path
+		 */
+		public static $gutenberg_path;
+
+		/**
 		 * Initiate the class
 		 *
 		 * @package buddyforms
@@ -65,9 +75,14 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$this->load_constants();
 
 			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
+			self::$gutenberg_url  = plugin_dir_url( __FILE__ ) . 'gutenberg/components/';
+			self::$gutenberg_path  =  dirname( __FILE__ ).DIRECTORY_SEPARATOR.'gutenberg'.DIRECTORY_SEPARATOR;
 
 			//Load the necessary files to start the sessions
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
+			//Load Gutenberg handler
+			require_once( 'gutenberg/class-buddyforms-gutenberg.php' );
+			new BuddyFormsGutenberg();
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
@@ -178,7 +193,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			}
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/class-bf-admin-notices.php' );
-			new BfAdminNotices();
+			new BuddyFormsAdminNotices();
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
 

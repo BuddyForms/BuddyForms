@@ -151,3 +151,6 @@ fabric.properties
 .idea/httpRequests
 
 /.php_cs.cache
+
+dist
+*.zip

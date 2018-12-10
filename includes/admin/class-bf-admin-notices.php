@@ -9,11 +9,11 @@
  */
 
 /**
- * Class BfAdminNotices
+ * Class BuddyFormsAdminNotices
  *
  * Handle the notices inside the form builder
  */
-class BfAdminNotices {
+class BuddyFormsAdminNotices {
 	public function __construct() {
 		add_action('post_submitbox_start', array($this, 'buddyforms_notice'));
 	}
