@@ -181,11 +181,10 @@ function buddyforms_form_elements( $form, $args ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
 						} else {
 
-							$element_attr = array(
-								'id'        => 'buddyforms_form_title',
-								'value'     => $post_title,
-								'shortDesc' => $description
-							);
+							$element_attr['id'] = 'buddyforms_form_title';
+							$element_attr['value'] = $post_title;
+							$element_attr['shortDesc'] =  $description;
+
 							if ( isset( $customfield['required'] ) ) {
 								$element_attr = array_merge( $element_attr, array( 'required' => true ) );
 							}
