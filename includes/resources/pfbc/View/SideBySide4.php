@@ -10,7 +10,7 @@ class View_SideBySide4 extends FormView {
 	private $sharedCount = 0;
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		$colSize                   = 'col-xs-12 col-md-8';
@@ -61,14 +61,13 @@ class View_SideBySide4 extends FormView {
 		}
 
 		$label = $element->getLabel();
-		if ( empty ( $label ) ) {
-			$label = '';
+
+		//TODO improve required flag position
+		if ( ! $this->noLabel &&  $element->isRequired() ) {
+			$label = $label . $this->renderRequired();
 		}
-		echo ' <label class="text-right-lg col-xs-12 col-md-4 form-control-label" for="', $element->getAttribute( "id" ), '">';
-		if ( ! $this->noLabel && $element->isRequired() ) {
-			echo '<span class="required">* </span>';
-		}
-		echo $label, '</label> ';
+
+		echo sprintf('<label class="text-right-lg col-xs-12 col-md-4 form-control-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label);
 	}
 
 	public function renderCSS() {
