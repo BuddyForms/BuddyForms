@@ -142,6 +142,8 @@ function buddyforms_layout_style( $field_id ) {
 
 	$layout_style = isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ? $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] : '1';
 
+	$custom_class =isset( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) : '';
+
 	switch ( $layout_style ) {
 		case '1' :
 			$layout_style = 'col-xs-12';
@@ -166,5 +168,5 @@ function buddyforms_layout_style( $field_id ) {
 			break;
 	}
 
-	return apply_filters( 'buddyforms_layout_style', $layout_style, $field_id );
+	return apply_filters( 'buddyforms_layout_style', $layout_style . ' ' . $custom_class, $field_id );
 }
