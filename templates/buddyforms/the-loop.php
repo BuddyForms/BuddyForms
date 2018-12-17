@@ -88,7 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="meta">
 							<div class="item-status"><?php echo $post_status_name; ?></div>
 							<?php buddyforms_post_entry_actions( $form_slug ); ?>
-							<div class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'M j, Y' ) ?></div>
+							<div class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?> <?php the_time( 'M j, Y' ) ?></div>
             </div>
           </div>
 

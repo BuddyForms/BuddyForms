@@ -248,21 +248,8 @@ jQuery( document ).ready( function( $ ) {
 // Special password redirects after registration
 // If a redirect url is added to the register page url we use this redirect and add it as hidden field to the form
 jQuery(document).ready(function (jQuery) {
-    var getUrlParameter = function bf_getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
 
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-    var redirect = getUrlParameter('redirect_url');
+    var redirect = bf_getUrlParameter('redirect_url');
 
     if(redirect){
         jQuery('#submitted').append('<input type="hidden" name="bf_pw_redirect_url" value="'+ redirect +'" />');
@@ -270,3 +257,19 @@ jQuery(document).ready(function (jQuery) {
 
 });
 
+
+// Helper function to get $_GET parameter
+function bf_getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+}
