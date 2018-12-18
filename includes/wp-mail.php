@@ -73,7 +73,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 		foreach ( $mail_to_address as $key => $mail_address ) {
 
-			$user_email   = isset( $_POST['user_email'] ) ? $_POST['user_email'] : '';
+			$user_email   = isset( $_POST['user_email'] ) ? $_POST['user_email'] : $user_email;
 			$mail_address = str_replace( '[user_email]', $user_email, $mail_address );
 
 			if ( ! empty( $mail_address ) ) {
