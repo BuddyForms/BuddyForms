@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 2.2.9.2
+Tested up to: 5.0
+Stable tag: 2.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,28 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+
+= 2.3 – 21 Jan 2019
+* Removed an left over alert from the dropdown rewrite
+* Fixed user_website valdiation
+* Moving the asterisk to flag required fields to by at the end of the label.
+* Added a Hook to change the signal of the default values, by default asterisk. Filter details `buddyforms_render_required_signal` one parameter.
+* Removed composer update from the post-merge git hook
+* Added a message inside the registration forms type to let the user know the Wordpress user registration is disable, added the same validation and message to avoid to render a registration form.
+* Improved the validation
+* Added the first step to create gutenberg block
+* Fixed E-Mail Adress is empty, if no form field with E-Mail Adress is submitted by logged in users
+* Added a space between the Date #167
+* Changed the labels in the form builder
+* Added a space between the Date #167
+* Created a new helper function to get $_GET parameter
+* Fixed an issue with the form element custom class. The class option was not working on every form element. Should be fixed now.
+* Added a wrapper class to the form element call div. The wrapper class starts with col- and the custom form element class from the form element option custom_class
+* Added a query var to get the form slug from the Form preview
+* Fixed the field id for the form_arg parameter
+* Updated the freemius sdk to version 2.2.3
+* Cleaned and refactored the code.
+
 
 = 2.2.9.2 – 29 November 2018
 * Added validation to the file element.
