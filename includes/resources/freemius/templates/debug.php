@@ -86,6 +86,16 @@
                 <button class="button button-primary"><?php fs_esc_html_echo_inline( 'Sync Data From Server' ) ?></button>
             </form>
         </td>
+        <?php if ( fs_is_network_admin() && true !== $fs_options->get_option( 'ms_migration_complete', false, true ) ) : ?>
+        <td>
+            <!-- Migrate Options to Network -->
+            <form action="" method="POST">
+                <input type="hidden" name="fs_action" value="migrate_options_to_network">
+                <?php wp_nonce_field( 'migrate_options_to_network' ) ?>
+                <button class="button button-primary"><?php fs_esc_html_echo_inline( 'Migrate Options to Network' ) ?></button>
+            </form>
+        </td>
+        <?php endif ?>
         <td>
             <button id="fs_load_db_option" class="button"><?php fs_esc_html_echo_inline( 'Load DB Option' ) ?></button>
         </td>
@@ -195,7 +205,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ( $fs_active_plugins->plugins as $sdk_path => &$data ) : ?>
+    <?php foreach ( $fs_active_plugins->plugins as $sdk_path => $data ) : ?>
         <?php $is_active = ( WP_FS__SDK_VERSION == $data->version ) ?>
         <tr<?php if ( $is_active ) {
             echo ' style="background: #E6FFE6; font-weight: bold"';
@@ -307,7 +317,7 @@
                                     <input type="hidden" name="module_id" value="<?php echo $fs->get_id() ?>">
                                     <?php wp_nonce_field( 'simulate_trial' ) ?>
 
-                                    <button type="submit" class="button button-primary simulate-trial"><?php fs_esc_html_echo_inline( 'Simulate Trial' ) ?></button>
+                                    <button type="submit" class="button button-primary simulate-trial"><?php fs_esc_html_echo_inline( 'Simulate Trial Promotion' ) ?></button>
                                 </form>
                             <?php endif ?>
                             <?php if ( $fs->is_registered() ) : ?>
