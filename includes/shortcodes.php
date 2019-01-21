@@ -10,7 +10,7 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  */
 function buddyforms_create_edit_form_shortcode( $args ) {
 	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
-
+	
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,
@@ -89,9 +89,10 @@ function buddyforms_the_loop( $args ) {
 	), $args ) );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
-        buddyforms_wp_login_form();
-        return;
-    }
+		buddyforms_wp_login_form();
+
+		return;
+	}
 
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -109,7 +110,7 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_style  = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
+	$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
 
 	if ( empty( $author ) ) {
 		$author = get_current_user_id();
@@ -173,7 +174,7 @@ function buddyforms_the_loop( $args ) {
 
 	}
 
-	if( $caller !== 'buddyforms_list_all' ) {
+	if ( $caller !== 'buddyforms_list_all' ) {
 		if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
 			$query_args['author'] = $the_author_id;
 		}
@@ -336,7 +337,7 @@ function buddyforms_view_login_form( $args ) {
 	if ( is_admin() ) {
 		return false;
 	}
-	$form_slug = $redirect_url = $title = $label_username = $label_password = $label_remember = $label_log_in = '';
+	$form_slug   = $redirect_url = $title = $label_username = $label_password = $label_remember = $label_log_in = '';
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 	extract( shortcode_atts( array(
@@ -360,18 +361,18 @@ function buddyforms_view_login_form( $args ) {
 
 
 // password reset form
-function buddyforms_reset_password_form($args) {
+function buddyforms_reset_password_form( $args ) {
 	$redirect_url = '';
 	extract( shortcode_atts( array(
 		'redirect_url' => '',
 	), $args ) );
 
 
-	if(is_user_logged_in()) {
+	if ( is_user_logged_in() ) {
 
-		$bf_pw_redirect_url = get_user_meta( get_current_user_id(),'bf_pw_redirect_url', true );
+		$bf_pw_redirect_url = get_user_meta( get_current_user_id(), 'bf_pw_redirect_url', true );
 
-		if($bf_pw_redirect_url){
+		if ( $bf_pw_redirect_url ) {
 			$redirect_url = $bf_pw_redirect_url;
 		}
 
@@ -379,10 +380,12 @@ function buddyforms_reset_password_form($args) {
 	} else {
 
 		$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
-		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __('You need to login to change your password.') );
+
+		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __( 'You need to login to change your password.' ) );
 	}
 }
-add_shortcode('buddyforms_reset_password', 'buddyforms_reset_password_form');
+
+add_shortcode( 'buddyforms_reset_password', 'buddyforms_reset_password_form' );
 
 /**
  * This shortcode will return the link to create a new post if the attached page option are enabled
@@ -424,4 +427,3 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 }
 
 add_shortcode( 'bf_new_submission_link', 'buddyforms_create_submission_link_shortcode' );
-
