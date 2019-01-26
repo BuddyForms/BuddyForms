@@ -29,8 +29,6 @@ registerBlockType( 'buddyforms/bf-embed-form', {
 	edit: function( props ) {
         console.log(buddyforms_forms);
 
-
-
         var forms = [
             { value: 'no', label: 'Select a Form' },
         ];
@@ -39,7 +37,7 @@ registerBlockType( 'buddyforms/bf-embed-form', {
             forms.push({ value: key, label: buddyforms_forms[key] });
         }
 
-        console.log(forms);
+        //console.log(forms);
 
 		return [
 			/*
@@ -94,9 +92,17 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
      */
 
     edit: function( props ) {
-        console.log(buddyforms_forms);
+        //console.log(buddyforms_forms);
+        console.log(buddyforms_roles);
 
-
+        var permission = [
+            { value: 'public', label: 'Public (Unregistered Users)' },
+            { value: 'logged_in_user', label: 'Private (Logged in user only) ' },
+        ];
+        for (var key in buddyforms_roles) {
+            console.log(key +' - '+buddyforms_roles[key]);
+            permission.push({ value: key, label: buddyforms_roles[key] });
+        }
 
         var forms = [
             { value: 'no', label: 'Select a Form' },
@@ -124,19 +130,40 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
              * we defined in the PHP). The onChange property is a little bit of magic to tell
              * the block editor to update the value of our 'form_slug' property, and to re-render
              * the block.
+             *
+             *
+             *
+             * query_option
+             * user_logged_in_only
+             * meta_key
+             * meta_value
+             *
+             *
              */
 
+
+
+            //
+
+
             el( InspectorControls, {},
-                // el( TextControl, {
-                //     label: 'Form Slug',
-                //     value: props.attributes.form_slug,
-                //     onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
-                // } ),
+
                 el( SelectControl, {
                     label: 'Please Select a form',
                     value: props.attributes.form_slug,
                     options: forms,
                     onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
+                } ),
+                el( SelectControl, {
+                    label: 'Permissions',
+                    value: props.attributes.permissions,
+                    options: permission,
+                    onChange: ( value ) => { props.setAttributes( { permission: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Author',
+                    value: props.attributes.author,
+                    onChange: ( value ) => { props.setAttributes( { author: value } ); },
                 } ),
             )
         ];

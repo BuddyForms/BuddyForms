@@ -46,6 +46,11 @@ function php_block_init() {
 
 	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $bf_forms );
 
+	$roles = buddyform_get_role_names();
+	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
+
+//	print_r($roles);
+
 
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-embed-form', array(

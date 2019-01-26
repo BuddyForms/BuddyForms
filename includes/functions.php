@@ -1016,3 +1016,14 @@ function buddyforms_check_loaded_file( $file_name ) {
 
 	return in_array( $file_name, $includes_files );
 }
+
+
+function buddyform_get_role_names() {
+
+	global $wp_roles;
+
+	if ( ! isset( $wp_roles ) )
+		$wp_roles = new WP_Roles();
+
+	return $wp_roles->get_names();
+}

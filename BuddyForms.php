@@ -321,6 +321,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ), array(), $this->version );
 
 
+
+
+
 				// GDPR Localisation
 				$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 				$templates = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
