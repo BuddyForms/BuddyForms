@@ -14,10 +14,10 @@ var el = wp.element.createElement,
  * of registering the block, and giving the basic ability to edit the block
  * attributes. (In this case, there's only one attribute, 'form_slug'.)
  */
-registerBlockType( 'buddyforms/php-block', {
-	title: 'PHP Block',
-	icon: 'megaphone',
-	category: 'widgets',
+registerBlockType( 'buddyforms/bf-embed-form', {
+	title: 'Embed a BuddyForm',
+	icon: 'welcome-widgets-menus',
+	category: 'buddyforms',
 
 	/*
 	 * In most other blocks, you'd see an 'attributes' property being defined here.
@@ -33,7 +33,7 @@ registerBlockType( 'buddyforms/php-block', {
 			 * view of the block.
 			 */
 			el( ServerSideRender, {
-				block: 'buddyforms/php-block',
+				block: 'buddyforms/bf-embed-form',
 				attributes: props.attributes,
 			} ),
 			/*

@@ -30,19 +30,19 @@ License: GPLv2+
 function php_block_init() {
 	// Register our block editor script.
 	wp_register_script(
-		'php-block',
+		'bf-embed-form',
 		plugins_url( 'shortcodes-to-blocks.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' )
 	);
 
 	// Register our block, and explicitly define the attributes we accept.
-	register_block_type( 'buddyforms/php-block', array(
+	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
 			'form_slug' => array(
 				'type' => 'string',
 			),
 		),
-		'editor_script'   => 'php-block', // The script name we gave in the wp_register_script() call.
+		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
 		'render_callback' => 'php_block_render',
 	) );
 
@@ -61,7 +61,13 @@ add_action( 'init', 'php_block_init' );
  * @param array $attributes The attributes that were set on the block or shortcode.
  */
 function php_block_render( $attributes ) {
+	global $buddyforms;
 
-	return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+	if( isset($attributes['form_slug']) && isset($buddyforms[$attributes['form_slug']])){
+		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+	} else {
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	}
+
 //	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
 }
