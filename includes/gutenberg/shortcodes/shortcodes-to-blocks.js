@@ -12,7 +12,7 @@ var el = wp.element.createElement,
  * It's not yet possible to register a block entirely without JavaScript, but
  * that is something I'd love to see happen. This is a barebones example
  * of registering the block, and giving the basic ability to edit the block
- * attributes. (In this case, there's only one attribute, 'foo'.)
+ * attributes. (In this case, there's only one attribute, 'form_slug'.)
  */
 registerBlockType( 'buddyforms/php-block', {
 	title: 'PHP Block',
@@ -38,16 +38,16 @@ registerBlockType( 'buddyforms/php-block', {
 			} ),
 			/*
 			 * InspectorControls lets you add controls to the Block sidebar. In this case,
-			 * we're adding a TextControl, which lets us edit the 'foo' attribute (which
+			 * we're adding a TextControl, which lets us edit the 'form_slug' attribute (which
 			 * we defined in the PHP). The onChange property is a little bit of magic to tell
-			 * the block editor to update the value of our 'foo' property, and to re-render
+			 * the block editor to update the value of our 'form_slug' property, and to re-render
 			 * the block.
 			 */
 			el( InspectorControls, {},
 				el( TextControl, {
-					label: 'Foo',
-					value: props.attributes.foo,
-					onChange: ( value ) => { props.setAttributes( { foo: value } ); },
+					label: 'Form Slug',
+					value: props.attributes.form_slug,
+					onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
 				} )
 			),
 		];

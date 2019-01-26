@@ -24,7 +24,6 @@ License: GPLv2+
  */
 
 
-
 /**
  * Register our block and shortcode.
  */
@@ -39,7 +38,7 @@ function php_block_init() {
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/php-block', array(
 		'attributes'      => array(
-			'foo' => array(
+			'form_slug' => array(
 				'type' => 'string',
 			),
 		),
@@ -50,6 +49,7 @@ function php_block_init() {
 	// Define our shortcode, too, using the same render function as the block.
 	add_shortcode( 'php_block', 'php_block_render' );
 }
+
 add_action( 'init', 'php_block_init' );
 
 /**
@@ -61,5 +61,7 @@ add_action( 'init', 'php_block_init' );
  * @param array $attributes The attributes that were set on the block or shortcode.
  */
 function php_block_render( $attributes ) {
-	return '<p>Laver ' . print_r( $attributes, true ) . '</p>';
+
+	return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+//	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
 }
