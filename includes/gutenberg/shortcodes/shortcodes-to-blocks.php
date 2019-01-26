@@ -43,7 +43,7 @@ function php_block_init() {
 	foreach( $buddyforms as $form_slug => $form ){
 		$bf_forms[$form_slug] = $form['name'];
 	}
-	
+
 	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $bf_forms );
 
 
@@ -58,11 +58,22 @@ function php_block_init() {
 			),
 		),
 		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
-		'render_callback' => 'php_block_render',
+		'render_callback' => 'buddyforms_block_render_form',
 	) );
 
-	// Define our shortcode, too, using the same render function as the block.
-	add_shortcode( 'php_block', 'php_block_render' );
+	// Register our block, and explicitly define the attributes we accept.
+	register_block_type( 'buddyforms/bf-list-submissions', array(
+		'attributes'      => array(
+			'form_slug' => array(
+				'type' => 'string',
+			),
+			'form_slug_2' => array(
+				'type' => 'string',
+			),
+		),
+		'editor_script'   => 'bf-list-submissions', // The script name we gave in the wp_register_script() call.
+		'render_callback' => 'buddyforms_block_list_submissions',
+	) );
 }
 
 add_action( 'init', 'php_block_init' );
@@ -75,7 +86,7 @@ add_action( 'init', 'php_block_init' );
  *
  * @param array $attributes The attributes that were set on the block or shortcode.
  */
-function php_block_render( $attributes ) {
+function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
 	if( isset($attributes['form_slug']) && isset($buddyforms[$attributes['form_slug']])){
@@ -86,3 +97,17 @@ function php_block_render( $attributes ) {
 
 //	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
 }
+
+function buddyforms_block_list_submissions( $attributes ) {
+	global $buddyforms;
+
+	if( isset($attributes['form_slug']) && isset($buddyforms[$attributes['form_slug']])){
+
+		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+	} else {
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	}
+
+//	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
+}
+
