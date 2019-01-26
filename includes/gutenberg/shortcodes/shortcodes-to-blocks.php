@@ -28,6 +28,8 @@ License: GPLv2+
  * Register our block and shortcode.
  */
 function php_block_init() {
+	global $buddyforms;
+
 	// Register our block editor script.
 	wp_register_script(
 		'bf-embed-form',
@@ -35,10 +37,23 @@ function php_block_init() {
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' )
 	);
 
+
+	// Localize the script with new data
+	$bf_forms = array();
+	foreach( $buddyforms as $form_slug => $form ){
+		$bf_forms[$form_slug] = $form['name'];
+	}
+	
+	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $bf_forms );
+
+
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
 			'form_slug' => array(
+				'type' => 'string',
+			),
+			'form_slug_2' => array(
 				'type' => 'string',
 			),
 		),
