@@ -193,6 +193,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
+			// Gutenberg
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/gutenberg.php' );
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-preview.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php' );
