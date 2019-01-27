@@ -70,7 +70,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
-	$caller = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+	$caller = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
 
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
@@ -85,7 +85,8 @@ function buddyforms_the_loop( $args ) {
 		'query_option'        => $query_option,
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key'            => '',
-		'meta_value'          => ''
+		'meta_value'          => '',
+		'list_posts_style'    => 'none'
 	), $args ) );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
@@ -110,7 +111,9 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
+	if( $list_posts_style == 'none' ){
+		$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
+	}
 
 	if ( empty( $author ) ) {
 		$author = get_current_user_id();

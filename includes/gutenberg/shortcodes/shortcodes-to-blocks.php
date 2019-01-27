@@ -83,6 +83,12 @@ function php_block_init() {
 			'bf_author' => array(
 				'type' => 'string',
 			),
+			'bf_meta_key' => array(
+				'type' => 'string',
+			),
+			'bf_list_posts_style' => array(
+				'type' => 'string',
+			),
 		),
 		'editor_script'   => 'bf-list-submissions', // The script name we gave in the wp_register_script() call.
 		'render_callback' => 'buddyforms_block_list_submissions',
@@ -115,8 +121,8 @@ function buddyforms_block_list_submissions( $attributes ) {
 //	print_r($attributes);
 
 	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
-
-		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
+		$list_style = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
+		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['bf_form_slug'], 'list_posts_style' => $list_style ) );
 	} else {
 		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
 	}

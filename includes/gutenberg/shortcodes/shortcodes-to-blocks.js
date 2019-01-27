@@ -6,6 +6,7 @@ var el = wp.element.createElement,
 	ServerSideRender = wp.components.ServerSideRender,
     TextControl = wp.components.TextControl,
     SelectControl = wp.components.SelectControl,
+    ToggleControl = wp.components.ToggleControl,
 	InspectorControls = wp.editor.InspectorControls;
 
 /*
@@ -89,7 +90,6 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
     title: 'List Submissions',
     icon: 'welcome-widgets-menus',
     category: 'buddyforms',
-    header: "My Panel",
 
     /*
      * In most other blocks, you'd see an 'attributes' property being defined here.
@@ -100,12 +100,17 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
 
 
     edit: function( props ) {
-
+        var className = props.className;
         // var bf_form_slug = props.attributes.bf_form_slug;
         // var bf_permissions = props.attributes.bf_permissions;
         // var bf_author = props.attributes.bf_author;
 
         console.log(props.attributes);
+        // Generate Forms array
+        var bf_list_posts_style_options = [
+            { value: 'list', label: 'List' },
+            { value: 'table', label: 'Table' },
+        ];
 
         // Generate Forms array
         var forms = [
@@ -129,13 +134,11 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
         return [
 
 
-
-
-            /*
-             * The ServerSideRender element uses the REST API to automatically call
-             * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
-             * view of the block.
-             */
+                /*
+                 * The ServerSideRender element uses the REST API to automatically call
+                 * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
+                 * view of the block.
+                 */
             el( ServerSideRender, {
                 block: 'buddyforms/bf-list-submissions',
                 attributes: props.attributes,
@@ -163,29 +166,45 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
 
 
             el( InspectorControls, {},
+                el( 'p', {}, '' ),
                 el( SelectControl, {
                     label: 'Please Select a form',
                     value: props.attributes.bf_form_slug,
                     options: forms,
                     onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
                 } ),
+                el( 'p', {}, '' ),
+                el( 'b', {}, 'Restrict Access to this Block' ),
+                el( 'p', {}, '' ),
                 el( SelectControl, {
                     label: 'Permissions',
                     value: props.attributes.bf_rights,
                     options: permission,
                     onChange: ( value ) => { props.setAttributes( { bf_rights: value } ); },
                 } ),
+                el( 'p', {}, '' ),
+                el( 'b', {}, 'Filter Posts' ),
                 el( SelectControl, {
+                    className: props.className,
                     label: 'Author',
                     value: props.attributes.bf_author,
                     options: permission,
                     onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
                 } ),
-                // el( TextControl, {
-                //     label: 'Author',
-                //     value: props.attributes.bf_author,
-                //     onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
-                // } ),
+                el( TextControl, {
+                    label: 'Meta Key',
+                    value: props.attributes.bf_meta_key,
+                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                } ),
+                el( 'p', {}, '' ),
+                el( 'b', {}, 'Template' ),
+                el( SelectControl, {
+                    label: 'List or Table',
+                    value: props.attributes.bf_list_posts_style,
+                    options: bf_list_posts_style_options,
+                    onChange: ( value ) => { props.setAttributes( { bf_list_posts_style: value } ); },
+                } ),
+
             )
         ];
     },
