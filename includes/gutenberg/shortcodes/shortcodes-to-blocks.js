@@ -1,5 +1,6 @@
 // License: GPLv2+
 
+
 var el = wp.element.createElement,
     Fragment = wp.element.Fragment,
 	registerBlockType = wp.blocks.registerBlockType,
@@ -9,66 +10,31 @@ var el = wp.element.createElement,
     ToggleControl = wp.components.ToggleControl,
 	InspectorControls = wp.editor.InspectorControls;
 
-/*
- * Here's where we register the block in JavaScript.
- *
- * It's not yet possible to register a block entirely without JavaScript, but
- * that is something I'd love to see happen. This is a barebones example
- * of registering the block, and giving the basic ability to edit the block
- * attributes. (In this case, there's only one attribute, 'form_slug'.)
- */
+//
+// Embed a form
+//
 registerBlockType( 'buddyforms/bf-embed-form', {
 	title: 'Embed a BuddyForm',
 	icon: 'welcome-widgets-menus',
 	category: 'buddyforms',
 
-	/*
-	 * In most other blocks, you'd see an 'attributes' property being defined here.
-	 * We've defined attributes in the PHP, that information is automatically sent
-	 * to the block editor, so we don't need to redefine it here.
-	 */
-
 	edit: function( props ) {
-        // console.log(buddyforms_forms);
 
         var forms = [
             { value: 'no', label: 'Select a Form' },
         ];
         for (var key in buddyforms_forms) {
-            // console.log(key +' - '+buddyforms_forms[key]);
             forms.push({ value: key, label: buddyforms_forms[key] });
         }
 
-        //console.log(forms);
-
 		return [
 
-
-
-
-			/*
-			 * The ServerSideRender element uses the REST API to automatically call
-			 * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
-			 * view of the block.
-			 */
 			el( ServerSideRender, {
 				block: 'buddyforms/bf-embed-form',
 				attributes: props.attributes,
 			} ),
-			/*
-			 * InspectorControls lets you add controls to the Block sidebar. In this case,
-			 * we're adding a TextControl, which lets us edit the 'form_slug' attribute (which
-			 * we defined in the PHP). The onChange property is a little bit of magic to tell
-			 * the block editor to update the value of our 'form_slug' property, and to re-render
-			 * the block.
-			 */
 
 			el( InspectorControls, {},
-                // el( TextControl, {
-                //     label: 'Form Slug',
-                //     value: props.attributes.form_slug,
-                //     onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
-                // } ),
                 el( SelectControl, {
                     label: 'Please Select a form',
                     value: props.attributes.bf_form_slug,
@@ -85,19 +51,13 @@ registerBlockType( 'buddyforms/bf-embed-form', {
 	},
 } );
 
-
+//
+// Display Submissions
+//
 registerBlockType( 'buddyforms/bf-list-submissions', {
     title: 'List Submissions',
     icon: 'welcome-widgets-menus',
     category: 'buddyforms',
-
-    /*
-     * In most other blocks, you'd see an 'attributes' property being defined here.
-     * We've defined attributes in the PHP, that information is automatically sent
-     * to the block editor, so we don't need to redefine it here.
-     */
-
-
 
     edit: function( props ) {
         var className = props.className;
@@ -133,37 +93,10 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
 
         return [
 
-
-                /*
-                 * The ServerSideRender element uses the REST API to automatically call
-                 * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
-                 * view of the block.
-                 */
             el( ServerSideRender, {
                 block: 'buddyforms/bf-list-submissions',
                 attributes: props.attributes,
             } ),
-            /*
-             * InspectorControls lets you add controls to the Block sidebar. In this case,
-             * we're adding a TextControl, which lets us edit the 'form_slug' attribute (which
-             * we defined in the PHP). The onChange property is a little bit of magic to tell
-             * the block editor to update the value of our 'form_slug' property, and to re-render
-             * the block.
-             *
-             *
-             *
-             * query_option
-             * user_logged_in_only
-             * meta_key
-             * meta_value
-             *
-             *
-             */
-
-
-
-            //
-
 
             el( InspectorControls, {},
                 el( 'p', {}, '' ),
@@ -175,7 +108,6 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 } ),
                 el( 'p', {}, '' ),
                 el( 'b', {}, 'Restrict Access to this Block' ),
-                el( 'p', {}, '' ),
                 el( SelectControl, {
                     label: 'Permissions',
                     value: props.attributes.bf_rights,
@@ -186,13 +118,28 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 el( 'b', {}, 'Filter Posts' ),
                 el( SelectControl, {
                     className: props.className,
-                    label: 'Author',
+                    label: 'by Author',
                     value: props.attributes.bf_author,
                     options: permission,
                     onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
                 } ),
                 el( TextControl, {
-                    label: 'Meta Key',
+                    label: 'by Meta Key',
+                    value: props.attributes.bf_meta_key,
+                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Meta Value',
+                    value: props.attributes.bf_meta_key,
+                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Posts peer page',
+                    value: props.attributes.bf_meta_key,
+                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'With Pagination',
                     value: props.attributes.bf_meta_key,
                     onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
                 } ),
