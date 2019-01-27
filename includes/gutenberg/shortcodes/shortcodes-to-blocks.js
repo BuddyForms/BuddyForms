@@ -52,6 +52,49 @@ registerBlockType( 'buddyforms/bf-embed-form', {
 } );
 
 //
+// Embed a form
+//
+registerBlockType( 'buddyforms/bf-navigation', {
+    title: 'Links to Forms and Post Lists',
+    icon: 'welcome-widgets-menus',
+    category: 'buddyforms',
+
+    edit: function( props ) {
+
+        var forms = [
+            { value: 'no', label: 'Select a Form' },
+        ];
+        for (var key in buddyforms_forms) {
+            forms.push({ value: key, label: buddyforms_forms[key] });
+        }
+
+        return [
+
+            el( ServerSideRender, {
+                block: 'buddyforms/bf-embed-form',
+                attributes: props.attributes,
+            } ),
+
+            el( InspectorControls, {},
+                el( SelectControl, {
+                    label: 'Please Select a form',
+                    value: props.attributes.bf_form_slug,
+                    options: forms,
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
+                } ),
+            )
+        ];
+    },
+
+    // We're going to be rendering in PHP, so save() can just return null.
+    save: function() {
+        return null;
+    },
+} );
+
+
+
+//
 // Display Submissions
 //
 registerBlockType( 'buddyforms/bf-list-submissions', {

@@ -72,6 +72,17 @@ function php_block_init() {
 	) );
 
 	// Register our block, and explicitly define the attributes we accept.
+	register_block_type( 'buddyforms/bf-navigation', array(
+		'attributes'      => array(
+			'bf_form_slug' => array(
+				'type' => 'string',
+			)
+		),
+		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
+		'render_callback' => 'buddyforms_block_navigation',
+	) );
+
+	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-list-submissions', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
@@ -96,16 +107,17 @@ function php_block_init() {
 }
 
 add_action( 'init', 'php_block_init' );
-
-/**
- * Our combined block and shortcode renderer.
- *
- * For more complex shortcodes, this would naturally be a much bigger function, but
- * I've kept it brief for the sake of focussing on how to use it for block rendering.
- *
- * @param array $attributes The attributes that were set on the block or shortcode.
- */
 function buddyforms_block_render_form( $attributes ) {
+	global $buddyforms;
+
+	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
+	} else {
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	}
+}
+
+function buddyforms_block_navigation( $attributes ) {
 	global $buddyforms;
 
 	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
