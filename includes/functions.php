@@ -1016,3 +1016,59 @@ function buddyforms_check_loaded_file( $file_name ) {
 
 	return in_array( $file_name, $includes_files );
 }
+
+/**
+ * Get a tag inside a shortcode from a given content.
+ *
+ * @since 2.3.1
+ *
+ * @param array $shortcodes
+ * @param array $targets_tags
+ * @param string $content
+ *
+ * @return string
+ */
+function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
+	if ( ! is_array( $shortcodes ) || ! is_array( $targets_tags ) ) {
+		return '';
+	}
+	$pattern = get_shortcode_regex();
+	$result  = '';
+
+	preg_replace_callback( "/$pattern/s", function ( $tag ) use ( $shortcodes, $targets_tags, &$result ) {
+		foreach ( $shortcodes as $shortcode_item ) {
+			if ( $shortcode_item === $tag[2] ) {
+				$attributes = shortcode_parse_atts( $tag[3] );
+				foreach ( $targets_tags as $target_item ) {
+					if ( array_key_exists( $target_item, $attributes ) ) {
+						$result = $attributes[ $target_item ];
+
+						return $tag[0];
+					}
+				}
+			}
+		}
+
+		return $tag[0];
+	}, $content );
+
+	return $result;
+}
+
+/**
+ * Extract the form slug from a shortcode inside the given content
+ *
+ * @param $content
+ *
+ * @return string
+ */
+function buddyforms_get_form_slug_from_shortcode( $content ) {
+	$form_slug = buddyforms_get_shortcode_tag( array( 'bf', 'buddyforms_form' ), array( 'form_slug', 'id' ), $content );
+
+	if ( is_numeric( $form_slug ) ) {
+		$form_post = get_post( $form_slug );
+		$form_slug = $form_post->post_name;
+	}
+
+	return $form_slug;
+}
