@@ -90,11 +90,21 @@ function php_block_init() {
 			),
 			'bf_rights' => array(
 				'type' => 'string',
+				'default' => 'public'
 			),
 			'bf_author' => array(
-				'type' => 'string',
+				'type' => 'number',
 			),
 			'bf_meta_key' => array(
+				'type' => 'string',
+			),
+			'bf_meta_value' => array(
+				'type' => 'string',
+			),
+			'bf_posts_per_page' => array(
+				'type' => 'number',
+			),
+			'bf_with_pagination' => array(
 				'type' => 'string',
 			),
 			'bf_list_posts_style' => array(
@@ -131,13 +141,39 @@ function buddyforms_block_list_submissions( $attributes ) {
 	global $buddyforms;
 
 //	print_r($attributes);
+	$display = false;
 
-	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
-		$list_style = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
-		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['bf_form_slug'], 'list_posts_style' => $list_style ) );
-	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	if( !is_user_logged_in() && $attributes['bf_rights'] == 'public' ){
+		$display = true;
 	}
+	if( is_user_logged_in() && $attributes['bf_rights'] == 'public' ){
+		$display = true;
+	}
+	if( is_user_logged_in() && $attributes['bf_rights'] == 'private' ){
+		$display = true;
+	}
+	$user = wp_get_current_user();
+	if( is_user_logged_in() && in_array( $attributes['bf_rights'], (array) $user->roles ) ){
+		$display = true;
+	}
+
+	if( $display ){
+		if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+
+			$list_style = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
+			$posts_per_page = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
+
+			return buddyforms_the_loop_shortcode(
+				array(
+					'form_slug' => $attributes['bf_form_slug'],
+					'list_posts_style' => $list_style,
+					'posts_per_page' => $posts_per_page
+				) );
+		} else {
+			return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+		}
+	}
+
 
 //	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['bf_form_slug'];
 }

@@ -70,7 +70,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
-	$caller = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+	$caller = $posts_per_page = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
 
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
@@ -86,7 +86,8 @@ function buddyforms_the_loop( $args ) {
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key'            => '',
 		'meta_value'          => '',
-		'list_posts_style'    => 'none'
+		'list_posts_style'    => 'none',
+		'posts_per_page'      => '10'
 	), $args ) );
 
 	if ( $user_logged_in_only == 'logged_in_only' && ! is_user_logged_in() ) {
@@ -136,7 +137,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => 'publish',
-				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 			);
 			break;
@@ -146,7 +147,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => 'publish',
-				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 				'meta_key'       => $meta_key,
 				'meta_value'     => $meta_value
@@ -158,7 +159,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 			);
 			break;
@@ -168,7 +169,7 @@ function buddyforms_the_loop( $args ) {
 				'post_parent'    => $post_parent,
 				'form_slug'      => $form_slug,
 				'post_status'    => $post_status,
-				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', 10 ),
+				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
 				'meta_value'     => $form_slug

@@ -127,7 +127,7 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
         // Generate Permissions array
         var permission = [
             { value: 'public', label: 'Public (Unregistered Users)' },
-            { value: 'logged_in_user', label: 'Private (Logged in user only) ' },
+            { value: 'private', label: 'Private (Logged in user only) ' },
         ];
         for (var key in buddyforms_roles) {
             // console.log(key +' - '+buddyforms_roles[key]);
@@ -173,18 +173,18 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 } ),
                 el( TextControl, {
                     label: 'Meta Value',
-                    value: props.attributes.bf_meta_key,
-                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                    value: props.attributes.bf_meta_value,
+                    onChange: ( value ) => { props.setAttributes( { bf_meta_value: value } ); },
                 } ),
                 el( TextControl, {
                     label: 'Posts peer page',
-                    value: props.attributes.bf_meta_key,
-                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                    value: props.attributes.bf_posts_per_page,
+                    onChange: ( value ) => { props.setAttributes( { bf_posts_per_page: value } ); },
                 } ),
-                el( TextControl, {
+                el( ToggleControl, {
                     label: 'With Pagination',
-                    value: props.attributes.bf_meta_key,
-                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                    value: props.attributes.bf_with_pagination,
+                    onChange: ( value ) => { props.setAttributes( { bf_with_pagination: value } ); },
                 } ),
                 el( 'p', {}, '' ),
                 el( 'b', {}, 'Template' ),
