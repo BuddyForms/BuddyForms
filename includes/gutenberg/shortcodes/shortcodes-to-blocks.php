@@ -30,37 +30,42 @@ License: GPLv2+
 function php_block_init() {
 	global $buddyforms;
 
-	// Register our block editor script.
+	// Register block editor BuddyForms script.
 	wp_register_script(
 		'bf-embed-form',
 		plugins_url( 'shortcodes-to-blocks.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' )
 	);
 
+	//
+	// Localize the BuddyForms script with all needed data
+	//
 
-	// Localize the script with new data
-	$bf_forms = array();
+	// All Forms as slug and label
+	$forms = array();
 	foreach( $buddyforms as $form_slug => $form ){
-		$bf_forms[$form_slug] = $form['name'];
+		$forms[$form_slug] = $form['name'];
 	}
+	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $forms );
 
-	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $bf_forms );
-
+	// All WordPress User Roles
 	$roles = buddyform_get_role_names();
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
-//	print_r($roles);
-
+	// All WordPress Users
+	$users = array();
+	$users_object = get_users( array( 'fields' => array( 'ID', 'display_name' ) ) );
+	foreach ( $users_object as $user ) {
+		$users[$user->ID] = esc_html( $user->display_name );
+	}
+	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
 
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
-			'form_slug' => array(
+			'bf_form_slug' => array(
 				'type' => 'string',
-			),
-			'form_slug_2' => array(
-				'type' => 'string',
-			),
+			)
 		),
 		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
 		'render_callback' => 'buddyforms_block_render_form',
@@ -69,10 +74,13 @@ function php_block_init() {
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-list-submissions', array(
 		'attributes'      => array(
-			'form_slug' => array(
+			'bf_form_slug' => array(
 				'type' => 'string',
 			),
-			'form_slug_2' => array(
+			'bf_rights' => array(
+				'type' => 'string',
+			),
+			'bf_author' => array(
 				'type' => 'string',
 			),
 		),
@@ -94,25 +102,25 @@ add_action( 'init', 'php_block_init' );
 function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
-	if( isset($attributes['form_slug']) && isset($buddyforms[$attributes['form_slug']])){
-		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
 	} else {
 		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
 	}
-
-//	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
 }
 
 function buddyforms_block_list_submissions( $attributes ) {
 	global $buddyforms;
 
-	if( isset($attributes['form_slug']) && isset($buddyforms[$attributes['form_slug']])){
+//	print_r($attributes);
 
-		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['form_slug'] ) );
+	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+
+		return buddyforms_the_loop_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
 	} else {
 		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
 	}
 
-//	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['form_slug'];
+//	return '<p>Laver ' . print_r( $attributes, true ) . '</p>'.  $attributes['bf_form_slug'];
 }
 

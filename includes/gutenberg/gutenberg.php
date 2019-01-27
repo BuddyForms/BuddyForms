@@ -1,7 +1,7 @@
 <?php
 
+// Require all needed files
 require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/shortcodes/shortcodes-to-blocks.php' );
-
 
 // Add Gutenberg block category "BuddyForms"
 function buddyforms_block_category( $categories, $post ) {

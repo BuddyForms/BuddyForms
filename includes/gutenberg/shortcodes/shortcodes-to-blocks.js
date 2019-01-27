@@ -1,6 +1,7 @@
 // License: GPLv2+
 
 var el = wp.element.createElement,
+    Fragment = wp.element.Fragment,
 	registerBlockType = wp.blocks.registerBlockType,
 	ServerSideRender = wp.components.ServerSideRender,
     TextControl = wp.components.TextControl,
@@ -27,19 +28,23 @@ registerBlockType( 'buddyforms/bf-embed-form', {
 	 */
 
 	edit: function( props ) {
-        console.log(buddyforms_forms);
+        // console.log(buddyforms_forms);
 
         var forms = [
             { value: 'no', label: 'Select a Form' },
         ];
         for (var key in buddyforms_forms) {
-            console.log(key +' - '+buddyforms_forms[key]);
+            // console.log(key +' - '+buddyforms_forms[key]);
             forms.push({ value: key, label: buddyforms_forms[key] });
         }
 
         //console.log(forms);
 
 		return [
+
+
+
+
 			/*
 			 * The ServerSideRender element uses the REST API to automatically call
 			 * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
@@ -65,9 +70,9 @@ registerBlockType( 'buddyforms/bf-embed-form', {
                 // } ),
                 el( SelectControl, {
                     label: 'Please Select a form',
-                    value: props.attributes.form_slug,
+                    value: props.attributes.bf_form_slug,
                     options: forms,
-                    onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
                 } ),
 			)
 		];
@@ -84,6 +89,7 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
     title: 'List Submissions',
     icon: 'welcome-widgets-menus',
     category: 'buddyforms',
+    header: "My Panel",
 
     /*
      * In most other blocks, you'd see an 'attributes' property being defined here.
@@ -91,30 +97,40 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
      * to the block editor, so we don't need to redefine it here.
      */
 
-    edit: function( props ) {
-        //console.log(buddyforms_forms);
-        console.log(buddyforms_roles);
 
+
+    edit: function( props ) {
+
+        // var bf_form_slug = props.attributes.bf_form_slug;
+        // var bf_permissions = props.attributes.bf_permissions;
+        // var bf_author = props.attributes.bf_author;
+
+        console.log(props.attributes);
+
+        // Generate Forms array
+        var forms = [
+            { value: 'no', label: 'Select a Form' },
+        ];
+        for (var key in buddyforms_forms) {
+            // console.log(key +' - '+buddyforms_forms[key]);
+            forms.push({ value: key, label: buddyforms_forms[key] });
+        }
+
+        // Generate Permissions array
         var permission = [
             { value: 'public', label: 'Public (Unregistered Users)' },
             { value: 'logged_in_user', label: 'Private (Logged in user only) ' },
         ];
         for (var key in buddyforms_roles) {
-            console.log(key +' - '+buddyforms_roles[key]);
+            // console.log(key +' - '+buddyforms_roles[key]);
             permission.push({ value: key, label: buddyforms_roles[key] });
         }
 
-        var forms = [
-            { value: 'no', label: 'Select a Form' },
-        ];
-        for (var key in buddyforms_forms) {
-            console.log(key +' - '+buddyforms_forms[key]);
-            forms.push({ value: key, label: buddyforms_forms[key] });
-        }
-
-        console.log(forms);
-
         return [
+
+
+
+
             /*
              * The ServerSideRender element uses the REST API to automatically call
              * buddyforms_block_render_form() in your PHP code whenever it needs to get an updated
@@ -147,24 +163,29 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
 
 
             el( InspectorControls, {},
-
                 el( SelectControl, {
                     label: 'Please Select a form',
-                    value: props.attributes.form_slug,
+                    value: props.attributes.bf_form_slug,
                     options: forms,
-                    onChange: ( value ) => { props.setAttributes( { form_slug: value } ); },
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
                 } ),
                 el( SelectControl, {
                     label: 'Permissions',
-                    value: props.attributes.permissions,
+                    value: props.attributes.bf_rights,
                     options: permission,
-                    onChange: ( value ) => { props.setAttributes( { permission: value } ); },
+                    onChange: ( value ) => { props.setAttributes( { bf_rights: value } ); },
                 } ),
-                el( TextControl, {
+                el( SelectControl, {
                     label: 'Author',
-                    value: props.attributes.author,
-                    onChange: ( value ) => { props.setAttributes( { author: value } ); },
+                    value: props.attributes.bf_author,
+                    options: permission,
+                    onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
                 } ),
+                // el( TextControl, {
+                //     label: 'Author',
+                //     value: props.attributes.bf_author,
+                //     onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
+                // } ),
             )
         ];
     },
