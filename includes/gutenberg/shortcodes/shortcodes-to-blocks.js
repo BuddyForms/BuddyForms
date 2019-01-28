@@ -9,6 +9,7 @@ var el = wp.element.createElement,
     SelectControl = wp.components.SelectControl,
     ToggleControl = wp.components.ToggleControl,
 	InspectorControls = wp.editor.InspectorControls;
+;
 
 //
 // Embed a form
@@ -108,8 +109,13 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
         // var bf_permissions = props.attributes.bf_permissions;
         // var bf_author = props.attributes.bf_author;
 
-        console.log(props.attributes);
+
         // Generate Forms array
+        var yesno = [
+            { value: 'enabled', label: 'Enabled' },
+            { value: 'disabled', label: 'Disabled' },
+        ];
+
         var bf_list_posts_style_options = [
             { value: 'list', label: 'List' },
             { value: 'table', label: 'Table' },
@@ -160,7 +166,6 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 el( 'p', {}, '' ),
                 el( 'b', {}, 'Filter Posts' ),
                 el( SelectControl, {
-                    className: props.className,
                     label: 'by Author',
                     value: props.attributes.bf_author,
                     options: permission,
@@ -179,12 +184,7 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 el( TextControl, {
                     label: 'Posts peer page',
                     value: props.attributes.bf_posts_per_page,
-                    onChange: ( value ) => { props.setAttributes( { bf_posts_per_page: value } ); },
-                } ),
-                el( ToggleControl, {
-                    label: 'With Pagination',
-                    value: props.attributes.bf_with_pagination,
-                    onChange: ( value ) => { props.setAttributes( { bf_with_pagination: value } ); },
+                    onChange: ( value ) => { props.setAttributes( { posts_per_page: value } ); },
                 } ),
                 el( 'p', {}, '' ),
                 el( 'b', {}, 'Template' ),

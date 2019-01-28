@@ -206,10 +206,6 @@ function buddyforms_the_loop( $args ) {
 		buddyforms_locate_template( $list_posts_style );
 	}
 
-	// Support for wp_pagenavi
-	if ( function_exists( 'wp_pagenavi' ) ) {
-		wp_pagenavi( array( 'query' => $the_lp_query ) );
-	}
 	wp_reset_postdata();
 
 	do_action( 'buddyforms_the_loop_end', $query_args );

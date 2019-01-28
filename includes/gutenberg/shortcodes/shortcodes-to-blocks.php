@@ -93,7 +93,7 @@ function php_block_init() {
 				'default' => 'public'
 			),
 			'bf_author' => array(
-				'type' => 'number',
+				'type' => 'string',
 			),
 			'bf_meta_key' => array(
 				'type' => 'string',
@@ -102,9 +102,6 @@ function php_block_init() {
 				'type' => 'string',
 			),
 			'bf_posts_per_page' => array(
-				'type' => 'number',
-			),
-			'bf_with_pagination' => array(
 				'type' => 'string',
 			),
 			'bf_list_posts_style' => array(
