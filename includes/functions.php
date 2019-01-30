@@ -325,7 +325,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 	?>
     <ul class="edit_links">
 		<?php
-		if ( buddyforms_is_author( $post->ID ) ) {
+        $is_author = buddyforms_is_author( $post->ID );
+        $user_can_all_submission = current_user_can( 'buddyforms_' . $form_slug . '_all' );
+		if ( $is_author || $user_can_all_submission ) {
 
 			$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 			$permalink = apply_filters( 'buddyforms_the_loop_edit_permalink', $permalink, $buddyforms[ $form_slug ]['attached_page'] );
@@ -355,7 +357,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				$form_slug = $post_form_slug;
 			}
 
-			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
+			if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) || current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
 				echo '<li>';
 				if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 					echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"></span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
@@ -364,7 +366,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				}
 				echo '</li>';
 			}
-			if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) ) {
+			if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) || current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
 				echo '<li>';
 				echo '<a title="Delete"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"></span> ' . __( 'Delete', 'buddyforms' ) . '</a></li>';
 				echo '</li>';
@@ -382,6 +384,13 @@ function buddyforms_post_entry_actions( $form_slug ) {
 	<?php
 }
 
+/**
+ * Determinate if the current user is the user of the given post
+ *
+ * @param $post_id
+ *
+ * @return bool
+ */
 function buddyforms_is_author( $post_id ) {
 
 	$is_author = false;
