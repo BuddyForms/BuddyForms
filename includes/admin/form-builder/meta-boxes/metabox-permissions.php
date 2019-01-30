@@ -109,18 +109,6 @@ function buddyforms_permissions_screen() {
 		$default_roles['edit']   = '';
 		$default_roles['delete'] = '';
 		$default_roles['all']    = '';
-		
-		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-			foreach ( $default_roles as $role_n_a => $role_a ) {
-				$form_user_role[ $role_n_a ] = $role_n_a;
-			}
-		} else {
-			foreach ( $default_roles as $role_n_a => $role_a ) {
-				if ( 'administrator' === $role_name || 'editor' === $role_name ) {
-					$form_user_role[ $role_n_a ] = $role_n_a;
-				}
-			}
-		}
 
 		$form_user_role = array();
 
@@ -132,23 +120,44 @@ function buddyforms_permissions_screen() {
 				}
 			}
 		}
-		
+
+		$screen = get_current_screen();
+		if ( empty( $form_user_role ) && ! empty( $screen ) && $screen->action === 'add' && $screen->id === 'buddyforms' ) {
+			if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+				foreach ( $default_roles as $role_n_a => $role_a ) {
+					if ( $role_n_a !== 'all' ) {
+						$form_user_role[ $role_n_a ] = $role_n_a;
+					}
+				}
+			} else {
+				foreach ( $default_roles as $role_n_a => $role_a ) {
+					if ( ( 'administrator' === $role_name || 'editor' === $role_name ) && $role_n_a !== 'all' ) {
+						$form_user_role[ $role_n_a ] = $role_n_a;
+					}
+				}
+			}
+		}
+
+		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() && isset( $form_user_role['all'] ) ) {
+			unset( $form_user_role['all'] );
+		}
+
 		$element = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 			'value'  => $form_user_role,
 			'inline' => true,
 			'id' => 'permission_for_'.$role_name,
 			'style'  => 'margin-right: 15px; margin-left: 15px; float: left;',
 		) );
-		
+
 		if ( $role_name == 'administrator' ) {
 			$element->setAttribute( 'shortDesc', 'Admin rights can not get changed' );
 //			$element->setAttribute( 'disabled', 'disabled' );
 		}
-		
+
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
 		}
-		
+
 		$form_setup[] = $element;
 	}
 	?>
