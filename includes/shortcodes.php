@@ -106,7 +106,7 @@ function buddyforms_the_loop( $args ) {
 
 	$query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 
-	if ( empty( $post_type ) ) {
+	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] )) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
