@@ -184,7 +184,7 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 el( TextControl, {
                     label: 'Posts peer page',
                     value: props.attributes.bf_posts_per_page,
-                    onChange: ( value ) => { props.setAttributes( { posts_per_page: value } ); },
+                    onChange: ( value ) => { props.setAttributes( { bf_posts_per_page: value } ); },
                 } ),
                 el( 'p', {}, '' ),
                 el( 'b', {}, 'Template' ),
