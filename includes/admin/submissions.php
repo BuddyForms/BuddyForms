@@ -279,6 +279,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			case 'status':
 				$bf_value = buddyforms_get_post_status_readable( get_post_status( $item->ID ) );
 				break;
+            case 'user_login':
+	            $author_id = ( ! empty( $item->post_author ) ) ? $item->post_author : 0;
+	            if ( ! empty( $author_id ) ) {
+		             $author = get_user_by( 'ID', $author_id );
+		             if($author instanceof WP_User)
+		             $bf_value = $author->user_login;
+	            }
+                break;
 			default:
 				if ( is_array( $bf_value ) ) {
 					$str_result = '';

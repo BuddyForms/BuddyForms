@@ -39,27 +39,19 @@ class View_Metabox extends FormView {
 	}
 
 	/**
+	 * Return the label of the element
+	 *
 	 * @param Element $element
+	 *
+	 * @return string
 	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
-		if ( empty ( $label ) ) {
-			$label = '';
-		}
-		echo '<div class="bf-label"><label for="', $element->getAttribute( "id" ), '">';
-		if ( $element->isRequired() ) {
-			echo '&nbsp;<span class="required">* </span> ';
-		}
-		echo $label, '</label></div> ';
 
-
-		$label = $element->getLabel();
-
-		//TODO improve required flag position
 		if ( $element->isRequired() ) {
 			$label = $label . $this->renderRequired();
 		}
 
-		echo sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
+		return sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
 	}
 }
