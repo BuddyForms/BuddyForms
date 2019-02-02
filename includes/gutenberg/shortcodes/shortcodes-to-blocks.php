@@ -160,8 +160,6 @@ function buddyforms_block_list_submissions( $attributes ) {
 			$list_style = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
 			$posts_per_page = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
 
-			//return 'nixe';
-
 			return buddyforms_the_loop_shortcode(
 				array(
 					'form_slug' => $attributes['bf_form_slug'],
