@@ -7,6 +7,7 @@ var el = wp.element.createElement,
 	ServerSideRender = wp.components.ServerSideRender,
     TextControl = wp.components.TextControl,
     SelectControl = wp.components.SelectControl,
+    CheckboxControl = wp.components.CheckboxControl,
     ToggleControl = wp.components.ToggleControl,
 	InspectorControls = wp.editor.InspectorControls;
 ;
@@ -111,9 +112,21 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
 
 
         // Generate Forms array
+
         var yesno = [
-            { value: 'enabled', label: 'Enabled' },
+            { value: 'logged_in_user_only', label: 'Enabled' },
             { value: 'disabled', label: 'Disabled' },
+        ];
+
+        var bf_by_author = [
+            { value: 'logged_in_user', label: 'Logged in User Posts' },
+            { value: 'all_users', label: 'All User Posts' },
+            { value: 'author_ids', label: 'Author ID\'S' },
+        ];
+
+        var bf_by_form = [
+            { value: 'form', label: 'Form Submissions' },
+            { value: 'all', label: 'Form selected Post Type' },
         ];
 
         var bf_list_posts_style_options = [
@@ -167,19 +180,20 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
                 el( 'b', {}, 'Filter Posts' ),
                 el( SelectControl, {
                     label: 'by Author',
-                    value: props.attributes.bf_author,
-                    options: permission,
-                    onChange: ( value ) => { props.setAttributes( { bf_author: value } ); },
+                    value: props.attributes.bf_by_author,
+                    options: bf_by_author,
+                    onChange: ( value ) => { props.setAttributes( { bf_by_author: value } ); },
                 } ),
                 el( TextControl, {
-                    label: 'by Meta Key',
-                    value: props.attributes.bf_meta_key,
-                    onChange: ( value ) => { props.setAttributes( { bf_meta_key: value } ); },
+                    label: 'Author ID\'s',
+                    value: props.attributes.bf_author_ids,
+                    onChange: ( value ) => { props.setAttributes( { bf_author_ids: value } ); },
                 } ),
-                el( TextControl, {
-                    label: 'Meta Value',
-                    value: props.attributes.bf_meta_value,
-                    onChange: ( value ) => { props.setAttributes( { bf_meta_value: value } ); },
+                el( SelectControl, {
+                    label: 'by Form',
+                    value: props.attributes.bf_by_form,
+                    options: bf_by_form,
+                    onChange: ( value ) => { props.setAttributes( { bf_by_form: value } ); },
                 } ),
                 el( TextControl, {
                     label: 'Posts peer page',

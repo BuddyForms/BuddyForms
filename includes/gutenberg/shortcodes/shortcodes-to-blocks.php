@@ -92,13 +92,13 @@ function php_block_init() {
 				'type' => 'string',
 				'default' => 'public'
 			),
-			'bf_author' => array(
+			'bf_by_author' => array(
 				'type' => 'string',
 			),
-			'bf_meta_key' => array(
+			'bf_author_ids' => array(
 				'type' => 'string',
 			),
-			'bf_meta_value' => array(
+			'bf_by_form' => array(
 				'type' => 'string',
 			),
 			'bf_posts_per_page' => array(
@@ -157,15 +157,27 @@ function buddyforms_block_list_submissions( $attributes ) {
 	if( $display ){
 		if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
 
-			$list_style = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
-			$posts_per_page = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
+			$list_style         = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
+			$posts_per_page     = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
+			$filter_by_author   = empty( $attributes['bf_by_author'] ) ? 'logged_in_user' : $attributes['bf_by_author'];
+			$filter_by_author_ids   = empty( $attributes['bf_author_ids'] ) ? '' : $attributes['bf_author_ids'];
+			$bf_by_form   = empty( $attributes['bf_by_form'] ) ? 'form' : $attributes['bf_by_form'];
 
-			return buddyforms_the_loop_shortcode(
-				array(
-					'form_slug' => $attributes['bf_form_slug'],
-					'list_posts_style' => $list_style,
-					'posts_per_page' => $posts_per_page
-				) );
+			ob_start();
+				buddyforms_blocks_the_loop(
+					array(
+						'form_slug' => $attributes['bf_form_slug'],
+						'list_posts_style' => $list_style,
+						'posts_per_page' => $posts_per_page,
+						'query_option' => $filter_by_author,
+						'author_ids' => $filter_by_author_ids,
+						'bf_by_form' => $bf_by_form
+					)
+				);
+			$tmp = ob_get_clean();
+
+			return $tmp;
+
 		} else {
 			return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
 		}
@@ -173,3 +185,128 @@ function buddyforms_block_list_submissions( $attributes ) {
 
 }
 
+function buddyforms_blocks_the_loop( $args ) {
+	global $the_lp_query, $buddyforms, $form_slug, $paged;
+
+	$caller = $posts_per_page = $list_posts_style = $author = $author_ids = $bf_by_form = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+
+	// Enable other plugins to manipulate the arguments used for query the posts
+	$args = apply_filters( 'buddyforms_the_loop_args', $args );
+
+	extract( shortcode_atts( array(
+		'author'              => '',
+		'author_ids'          => '',
+		'bf_by_form'           => '',
+		'post_type'           => '',
+		'form_slug'           => '',
+		'id'                  => '',
+		'caller'              => $caller,
+		'post_parent'         => 0,
+		'query_option'        => 'logged_in_user',
+		'user_logged_in_only' => 'logged_in_only',
+		'meta_key'            => '',
+		'meta_value'          => '',
+		'list_posts_style'    => 'none',
+		'posts_per_page'      => '10'
+	), $args ) );
+
+
+	// if multisite is enabled switch to the form blog id
+	buddyforms_switch_to_form_blog( $form_slug );
+
+	if ( empty( $form_slug ) && ! empty( $id ) ) {
+		$post      = get_post( $id );
+		$form_slug = $post->post_name;
+	}
+	$args['form_slug'] = $form_slug;
+	unset( $args['id'] );
+
+
+	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] )) {
+		$post_type = $buddyforms[ $form_slug ]['post_type'];
+	}
+
+	if( $list_posts_style == 'none' ){
+		$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
+	}
+
+
+	$post_status = array( 'publish', 'pending', 'draft', 'future' );
+
+	$paged = buddyforms_get_url_var( 'page' );
+
+	switch ( $query_option ) {
+		case 'all_users':
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => 'publish',
+				'posts_per_page' => $posts_per_page,
+				'paged'          => $paged,
+			);
+			break;
+		case 'author_ids':
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => 'publish',
+				'posts_per_page' => $posts_per_page,
+				'paged'          => $paged,
+				'author'        => $author_ids
+			);
+			break;
+		case 'list_all':
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => $post_status,
+				'posts_per_page' => $posts_per_page,
+				'paged'          => $paged,
+
+			);
+			break;
+		default:
+			$query_args = array(
+				'post_type'      => $post_type,
+				'post_parent'    => $post_parent,
+				'form_slug'      => $form_slug,
+				'post_status'    => $post_status,
+				'posts_per_page' => $posts_per_page,
+				'paged'          => $paged,
+			);
+			break;
+
+	}
+
+	if( $bf_by_form == 'form' ){
+		$query_args['meta_key'] = '_bf_form_slug';
+		$query_args['meta_value'] = $form_slug;
+	}
+
+
+	$the_lp_query = new WP_Query( $query_args );
+	$the_lp_query = apply_filters( 'buddyforms_the_lp_query', $the_lp_query );
+
+
+	$form_slug = $the_lp_query->query_vars['form_slug'];
+
+	if ( $list_posts_style == 'table' ) {
+		buddyforms_locate_template( 'the-table' );
+	} elseif ( $list_posts_style == 'list' ) {
+		buddyforms_locate_template( 'the-loop' );
+	} else {
+		buddyforms_locate_template( $list_posts_style );
+	}
+
+	wp_reset_postdata();
+
+	do_action( 'buddyforms_the_loop_end', $query_args );
+
+	// If multisite is enabled we should restore now to the current blog.
+	if ( buddyforms_is_multisite() ) {
+		restore_current_blog();
+	}
+}
