@@ -31,11 +31,11 @@ function buddyforms_wp_update_user() {
 	if ( ! empty( $_POST["user_email"] ) ) {
 		$user_args['user_email'] = sanitize_email( $_POST["user_email"] );
 	}
-	if ( ! empty( $_POST["first_name"] ) ) {
-		$user_args['first_name'] = sanitize_text_field( $_POST["first_name"] );
+	if ( ! empty( $_POST["user_first"] ) ) {
+		$user_args['first_name'] = sanitize_text_field( $_POST["user_first"] );
 	}
-	if ( ! empty( $_POST["last_name"] ) ) {
-		$user_args['last_name'] = sanitize_text_field( $_POST["last_name"] );
+	if ( ! empty( $_POST["user_last"] ) ) {
+		$user_args['last_name'] = sanitize_text_field( $_POST["user_last"] );
 	}
 	if ( ! empty( $_POST["website"] ) ) {
 		$user_args['user_url'] = esc_url( $_POST["website"] );

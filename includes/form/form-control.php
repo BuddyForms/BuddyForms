@@ -354,7 +354,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		$have_user_fields = false;
 		foreach ( $customfields as $customfield ) {
-			if ( in_array( $customfield, buddyforms_user_fields_array() ) ) {
+			if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
 				$have_user_fields = true;
 				break;
 			}
