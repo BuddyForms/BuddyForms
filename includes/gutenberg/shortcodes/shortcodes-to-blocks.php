@@ -1,33 +1,6 @@
 <?php
-/*
-Plugin Name: PHP Block
-Description: A sample PHP rendered block, showing how to convert a shortcode to a block.
-Author: Gary Pendergast
-Version: 0.1
-Author URI: https://buddyforms.net/
-License: GPLv2+
-*/
 
-/*
- * Here's a little sample plugin that shows how to easily convert an existing shortcode
- * to be a server-side rendered block. This lets you get your existing plugin functionality
- * running in the block editor as quickly as possible, you can always go back later and
- * improve the UX.
- *
- * In this case, we have an imaginary shortcode, [php_block], which accepts one argument, 'foo'.
- * This shortcode would be used like so:
- *
- * [php_block foo=abcde]
- *
- * Because the block editor uses the same function signature when doing server-side rendering, we
- * can reuse our entire shortcode logic when creating the block.
- */
-
-
-/**
- * Register our block and shortcode.
- */
-function php_block_init() {
+function buddyforms_shortcodes_to_block_init() {
 	global $buddyforms;
 
 	// Register block editor BuddyForms script.
@@ -50,14 +23,21 @@ function php_block_init() {
 
 	$forms = array();
 	foreach ( $buddyforms as $form_slug => $form ) {
-
-
 		if ( $form['form_type'] == 'registration' ) {
 			$forms[ $form_slug ] = $form['name'];
 		}
-
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_registration_forms', $forms );
+
+	$forms = array();
+	foreach ( $buddyforms as $form_slug => $form ) {
+		if ( $form['attached_page'] != 'none' ) {
+			$forms[ $form_slug ] = $form['name'];
+		}
+	}
+	wp_localize_script( 'bf-embed-form', 'buddyforms_post_forms', $forms );
+
+	wp_localize_script( 'bf-embed-form', 'buddyforms_create_new_form_url', get_admin_url(get_current_blog_id(), 'post-new.php?post_type=buddyforms') );
 
 
 	// All WordPress User Roles
@@ -65,12 +45,12 @@ function php_block_init() {
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
 	// All WordPress Users
-	$users        = array();
-	$users_object = get_users( array( 'fields' => array( 'ID', 'display_name' ) ) );
-	foreach ( $users_object as $user ) {
-		$users[ $user->ID ] = esc_html( $user->display_name );
-	}
-	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
+//	$users        = array();
+//	$users_object = get_users( array( 'fields' => array( 'ID', 'display_name' ) ) );
+//	foreach ( $users_object as $user ) {
+//		$users[ $user->ID ] = esc_html( $user->display_name );
+//	}
+//	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
 
 	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
@@ -91,13 +71,16 @@ function php_block_init() {
 				'type' => 'string',
 			),
 			'bf_label_add'     => array(
-				'type' => 'string',
+				'type'    => 'string',
+				'default' => 'Create'
 			),
 			'bf_label_view'    => array(
-				'type' => 'string',
+				'type'    => 'string',
+				'default' => 'Display'
 			),
 			'bf_nav_separator' => array(
-				'type' => 'string',
+				'type'    => 'string',
+				'default' => ' | '
 			),
 
 		),
@@ -173,7 +156,7 @@ function php_block_init() {
 	) );
 }
 
-add_action( 'init', 'php_block_init' );
+add_action( 'init', 'buddyforms_shortcodes_to_block_init' );
 
 
 function buddyforms_block_render_form( $attributes ) {
@@ -182,7 +165,7 @@ function buddyforms_block_render_form( $attributes ) {
 	if ( isset( $attributes['bf_form_slug'] ) && isset( $buddyforms[ $attributes['bf_form_slug'] ] ) ) {
 		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
 	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
+		return '<p>' . __( 'Please select a form in the block settings sidebar!', 'buddyforms' ) . '</p>';
 	}
 }
 
@@ -244,7 +227,7 @@ function buddyforms_block_navigation( $attributes ) {
 
 
 	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
+		return '<p>' . __( 'Please select a form in the block settings sidebar!', 'buddyforms' ) . '</p>';
 	}
 }
 
@@ -293,7 +276,7 @@ function buddyforms_block_list_submissions( $attributes ) {
 			return $tmp;
 
 		} else {
-			return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
+			return '<p>' . __( 'Please select a form in the block settings sidebar!', 'buddyforms' ) . '</p>';
 		}
 	}
 
