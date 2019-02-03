@@ -75,17 +75,17 @@ registerBlockType( 'buddyforms/bf-password-reset-form', {
         return [
 
             el( ServerSideRender, {
-                block: 'buddyforms/bf-embed-form',
+                block: 'buddyforms/bf-password-reset-form',
                 attributes: props.attributes,
             } ),
 
             el( InspectorControls, {},
-                el( SelectControl, {
-                    label: 'Please Select a form',
-                    value: props.attributes.bf_form_slug,
-                    options: forms,
-                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
+                el( TextControl, {
+                    label: 'Redirect URL',
+                    value: props.attributes.bf_redirect_url,
+                    onChange: ( value ) => { props.setAttributes( { bf_redirect_url: value } ); },
                 } ),
+
             )
         ];
     },
@@ -109,10 +109,10 @@ registerBlockType( 'buddyforms/bf-embed-login-form', {
     edit: function( props ) {
 
         var forms = [
-            { value: 'no', label: 'Select a Form' },
+            { value: 'no', label: 'Select a Registration Form' },
         ];
-        for (var key in buddyforms_forms) {
-            forms.push({ value: key, label: buddyforms_forms[key] });
+        for (var key in buddyforms_registration_forms) {
+            forms.push({ value: key, label: buddyforms_registration_forms[key] });
         }
 
         return [
@@ -124,11 +124,41 @@ registerBlockType( 'buddyforms/bf-embed-login-form', {
 
             el( InspectorControls, {},
                 el( SelectControl, {
-                    label: 'Please Select a form',
+                    label: 'Select a Registration Form',
                     value: props.attributes.bf_form_slug,
                     options: forms,
                     onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
                 } ),
+                el( TextControl, {
+                    label: 'Redirect URL',
+                    value: props.attributes.bf_redirect_url,
+                    onChange: ( value ) => { props.setAttributes( { bf_redirect_url: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Title',
+                    value: props.attributes.bf_title,
+                    onChange: ( value ) => { props.setAttributes( { bf_title: value } ); },
+                } ),
+                // el( TextControl, {
+                //     label: 'Label Username',
+                //     value: props.attributes.bf_label_username,
+                //     onChange: ( value ) => { props.setAttributes( { bf_label_username: value } ); },
+                // } ),
+                // el( TextControl, {
+                //     label: 'Label Password',
+                //     value: props.attributes.bf_label_password,
+                //     onChange: ( value ) => { props.setAttributes( { bf_label_password: value } ); },
+                // } ),
+                // el( TextControl, {
+                //     label: 'Label Remember',
+                //     value: props.attributes.bf_label_remember,
+                //     onChange: ( value ) => { props.setAttributes( { bf_label_remember: value } ); },
+                // } ),
+                // el( TextControl, {
+                //     label: 'Label Log In',
+                //     value: props.attributes.bf_label_lohg_in,
+                //     onChange: ( value ) => { props.setAttributes( { bf_label_lohg_in: value } ); },
+                // } ),
             )
         ];
     },

@@ -196,7 +196,18 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	}
 
 	$wp_login_form = '<h3>' . $title . '</h3>';
-	$wp_login_form .= wp_login_form( array( 'echo' => false, 'redirect' => $redirect_url, 'id_username' => 'bf_user_name', 'id_password' => 'bf_user_pass' ) );
+	$wp_login_form .= wp_login_form(
+	        array(
+	                'echo' => false,
+                    'redirect' => $redirect_url,
+                    'id_username' => 'bf_user_name',
+                    'id_password' => 'bf_user_pass' ,
+                    'label_username' => $label_username,
+                    'label_password' => $label_password,
+                    'label_remember' => $label_remember,
+                    'label_log_in'   => $label_log_in,
+            )
+    );
 
 	if ( $form_slug != 'none' ) {
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {

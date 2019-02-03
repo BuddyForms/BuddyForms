@@ -43,20 +43,32 @@ function php_block_init() {
 
 	// All Forms as slug and label
 	$forms = array();
-	foreach( $buddyforms as $form_slug => $form ){
-		$forms[$form_slug] = $form['name'];
+	foreach ( $buddyforms as $form_slug => $form ) {
+		$forms[ $form_slug ] = $form['name'];
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_forms', $forms );
+
+	$forms = array();
+	foreach ( $buddyforms as $form_slug => $form ) {
+
+
+		if ( $form['form_type'] == 'registration' ) {
+			$forms[ $form_slug ] = $form['name'];
+		}
+
+	}
+	wp_localize_script( 'bf-embed-form', 'buddyforms_registration_forms', $forms );
+
 
 	// All WordPress User Roles
 	$roles = buddyform_get_role_names();
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
 	// All WordPress Users
-	$users = array();
+	$users        = array();
 	$users_object = get_users( array( 'fields' => array( 'ID', 'display_name' ) ) );
 	foreach ( $users_object as $user ) {
-		$users[$user->ID] = esc_html( $user->display_name );
+		$users[ $user->ID ] = esc_html( $user->display_name );
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
 
@@ -72,16 +84,16 @@ function php_block_init() {
 
 	register_block_type( 'buddyforms/bf-navigation', array(
 		'attributes'      => array(
-			'bf_form_slug' => array(
+			'bf_form_slug'     => array(
 				'type' => 'string',
 			),
-			'bf_nav_style' => array(
+			'bf_nav_style'     => array(
 				'type' => 'string',
 			),
-			'bf_label_add' => array(
+			'bf_label_add'     => array(
 				'type' => 'string',
 			),
-			'bf_label_view' => array(
+			'bf_label_view'    => array(
 				'type' => 'string',
 			),
 			'bf_nav_separator' => array(
@@ -95,9 +107,27 @@ function php_block_init() {
 
 	register_block_type( 'buddyforms/bf-embed-login-form', array(
 		'attributes'      => array(
-			'bf_form_slug' => array(
+			'bf_form_slug'    => array(
 				'type' => 'string',
-			)
+			),
+			'bf_redirect_url' => array(
+				'type' => 'string',
+			),
+			'bf_title'        => array(
+				'type' => 'string',
+			),
+//			'bf_label_username' => array(
+//				'type' => 'string',
+//			),
+//			'bf_label_password' => array(
+//				'type' => 'string',
+//			),
+//			'bf_label_remember' => array(
+//				'type' => 'string',
+//			),
+//			'bf_label_lohg_in' => array(
+//				'type' => 'string',
+//			)
 		),
 		'editor_script'   => 'bf-embed-form',
 		'render_callback' => 'buddyforms_block_render_login_form',
@@ -105,9 +135,9 @@ function php_block_init() {
 
 	register_block_type( 'buddyforms/bf-password-reset-form', array(
 		'attributes'      => array(
-			'bf_form_slug' => array(
+			'bf_redirect_url' => array(
 				'type' => 'string',
-			)
+			),
 		),
 		'editor_script'   => 'bf-embed-form',
 		'render_callback' => 'buddyforms_block_password_reset_form',
@@ -115,23 +145,23 @@ function php_block_init() {
 
 	register_block_type( 'buddyforms/bf-list-submissions', array(
 		'attributes'      => array(
-			'bf_form_slug' => array(
+			'bf_form_slug'        => array(
 				'type' => 'string',
 			),
-			'bf_rights' => array(
-				'type' => 'string',
+			'bf_rights'           => array(
+				'type'    => 'string',
 				'default' => 'public'
 			),
-			'bf_by_author' => array(
+			'bf_by_author'        => array(
 				'type' => 'string',
 			),
-			'bf_author_ids' => array(
+			'bf_author_ids'       => array(
 				'type' => 'string',
 			),
-			'bf_by_form' => array(
+			'bf_by_form'          => array(
 				'type' => 'string',
 			),
-			'bf_posts_per_page' => array(
+			'bf_posts_per_page'   => array(
 				'type' => 'string',
 			),
 			'bf_list_posts_style' => array(
@@ -149,52 +179,46 @@ add_action( 'init', 'php_block_init' );
 function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
-	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+	if ( isset( $attributes['bf_form_slug'] ) && isset( $buddyforms[ $attributes['bf_form_slug'] ] ) ) {
 		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
 	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
 	}
 }
 
 function buddyforms_block_render_login_form( $attributes ) {
 	global $buddyforms;
 
-	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
-		$attr = array(
-			'form_slug'      => 'none',
-			'redirect_url'   => $current_url,
-			'title'          => 'Login',
-			'label_username' => __( 'Username or Email Address' ),
-			'label_password' => __( 'Password' ),
-			'label_remember' => __( 'Remember Me' ),
-			'label_log_in'   => __( 'Log In' ),
-		);
 
-		buddyforms_view_login_form($attr);
-	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
-	}
+	$attr = array(
+		'form_slug'      => empty( $attributes['bf_form_slug'] ) ? 'none' : $attributes['bf_form_slug'],
+		'redirect_url'   => empty( $attributes['bf_redirect_url'] ) ? '' : $attributes['bf_redirect_url'],
+		'title'          => empty( $attributes['bf_title'] ) ? __( 'Login' ) : $attributes['bf_title'],
+		'label_username' => empty( $attributes['bf_label_username'] ) ? __( 'Username or Email Address' ) : $attributes['bf_label_username'],
+		'label_password' => empty( $attributes['bf_label_password'] ) ? __( 'Password' ) : $attributes['bf_label_password'],
+		'label_remember' => empty( $attributes['bf_label_remember'] ) ? __( 'Remember Me' ) : $attributes['bf_label_remember'],
+		'label_log_in'   => empty( $attributes['bf_label_log_in'] ) ? __( 'Log In' ) : $attributes['bf_label_log_in'],
+	);
+
+	return buddyforms_view_login_form( $attr );
+
 }
 
 function buddyforms_block_password_reset_form( $attributes ) {
-	global $buddyforms;
 
-	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
-		$attr = array(
-			'redirect_url'   => $current_url,
-		);
+	$attr = array(
+		'redirect_url' => empty( $attributes['bf_redirect_url'] ) ? '' : $attributes['bf_redirect_url'],
+	);
 
-		buddyforms_reset_password_form($attr);
-	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
-	}
+	return buddyforms_reset_password_form( $attr );
+
 }
 
 
 function buddyforms_block_navigation( $attributes ) {
 	global $buddyforms;
 
-	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+	if ( isset( $attributes['bf_form_slug'] ) && isset( $buddyforms[ $attributes['bf_form_slug'] ] ) ) {
 
 		$args = array(
 			'form_slug'  => $attributes['bf_form_slug'],
@@ -203,8 +227,8 @@ function buddyforms_block_navigation( $attributes ) {
 			'label_view' => empty( $attributes['bf_label_view'] ) ? 'View' : $attributes['bf_label_view'],
 		);
 
-		if(isset($attributes['bf_nav_style'])){
-			switch ( $attributes['bf_nav_style'] ){
+		if ( isset( $attributes['bf_nav_style'] ) ) {
+			switch ( $attributes['bf_nav_style'] ) {
 				case 'buddyforms_button_view_posts':
 					return buddyforms_button_view_posts( $args );
 					break;
@@ -220,7 +244,7 @@ function buddyforms_block_navigation( $attributes ) {
 
 
 	} else {
-		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
 	}
 }
 
@@ -230,46 +254,46 @@ function buddyforms_block_list_submissions( $attributes ) {
 //	print_r($attributes);
 	$display = false;
 
-	if( !is_user_logged_in() && $attributes['bf_rights'] == 'public' ){
+	if ( ! is_user_logged_in() && $attributes['bf_rights'] == 'public' ) {
 		$display = true;
 	}
-	if( is_user_logged_in() && $attributes['bf_rights'] == 'public' ){
+	if ( is_user_logged_in() && $attributes['bf_rights'] == 'public' ) {
 		$display = true;
 	}
-	if( is_user_logged_in() && $attributes['bf_rights'] == 'private' ){
+	if ( is_user_logged_in() && $attributes['bf_rights'] == 'private' ) {
 		$display = true;
 	}
 	$user = wp_get_current_user();
-	if( is_user_logged_in() && in_array( $attributes['bf_rights'], (array) $user->roles ) ){
+	if ( is_user_logged_in() && in_array( $attributes['bf_rights'], (array) $user->roles ) ) {
 		$display = true;
 	}
 
-	if( $display ){
-		if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+	if ( $display ) {
+		if ( isset( $attributes['bf_form_slug'] ) && isset( $buddyforms[ $attributes['bf_form_slug'] ] ) ) {
 
-			$list_style         = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
-			$posts_per_page     = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
-			$filter_by_author   = empty( $attributes['bf_by_author'] ) ? 'logged_in_user' : $attributes['bf_by_author'];
-			$filter_by_author_ids   = empty( $attributes['bf_author_ids'] ) ? '' : $attributes['bf_author_ids'];
-			$bf_by_form   = empty( $attributes['bf_by_form'] ) ? 'form' : $attributes['bf_by_form'];
+			$list_style           = empty( $attributes['bf_list_posts_style'] ) ? 'list' : $attributes['bf_list_posts_style'];
+			$posts_per_page       = empty( $attributes['bf_posts_per_page'] ) ? '10' : $attributes['bf_posts_per_page'];
+			$filter_by_author     = empty( $attributes['bf_by_author'] ) ? 'logged_in_user' : $attributes['bf_by_author'];
+			$filter_by_author_ids = empty( $attributes['bf_author_ids'] ) ? '' : $attributes['bf_author_ids'];
+			$bf_by_form           = empty( $attributes['bf_by_form'] ) ? 'form' : $attributes['bf_by_form'];
 
 			ob_start();
-				buddyforms_blocks_the_loop(
-					array(
-						'form_slug' => $attributes['bf_form_slug'],
-						'list_posts_style' => $list_style,
-						'posts_per_page' => $posts_per_page,
-						'query_option' => $filter_by_author,
-						'author_ids' => $filter_by_author_ids,
-						'bf_by_form' => $bf_by_form
-					)
-				);
+			buddyforms_blocks_the_loop(
+				array(
+					'form_slug'        => $attributes['bf_form_slug'],
+					'list_posts_style' => $list_style,
+					'posts_per_page'   => $posts_per_page,
+					'query_option'     => $filter_by_author,
+					'author_ids'       => $filter_by_author_ids,
+					'bf_by_form'       => $bf_by_form
+				)
+			);
 			$tmp = ob_get_clean();
 
 			return $tmp;
 
 		} else {
-			return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+			return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms' ) . '</p>';
 		}
 	}
 
@@ -286,7 +310,7 @@ function buddyforms_blocks_the_loop( $args ) {
 	extract( shortcode_atts( array(
 		'author'              => '',
 		'author_ids'          => '',
-		'bf_by_form'           => '',
+		'bf_by_form'          => '',
 		'post_type'           => '',
 		'form_slug'           => '',
 		'id'                  => '',
@@ -312,11 +336,11 @@ function buddyforms_blocks_the_loop( $args ) {
 	unset( $args['id'] );
 
 
-	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] )) {
+	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	if( $list_posts_style == 'none' ){
+	if ( $list_posts_style == 'none' ) {
 		$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
 	}
 
@@ -344,7 +368,7 @@ function buddyforms_blocks_the_loop( $args ) {
 				'post_status'    => 'publish',
 				'posts_per_page' => $posts_per_page,
 				'paged'          => $paged,
-				'author'        => $author_ids
+				'author'         => $author_ids
 			);
 			break;
 		case 'list_all':
@@ -371,8 +395,8 @@ function buddyforms_blocks_the_loop( $args ) {
 
 	}
 
-	if( $bf_by_form == 'form' ){
-		$query_args['meta_key'] = '_bf_form_slug';
+	if ( $bf_by_form == 'form' ) {
+		$query_args['meta_key']   = '_bf_form_slug';
 		$query_args['meta_value'] = $form_slug;
 	}
 
