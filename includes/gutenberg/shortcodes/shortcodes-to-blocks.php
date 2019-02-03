@@ -60,29 +60,59 @@ function php_block_init() {
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
 
-	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
 				'type' => 'string',
 			)
 		),
-		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
+		'editor_script'   => 'bf-embed-form',
 		'render_callback' => 'buddyforms_block_render_form',
 	) );
 
-	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'buddyforms/bf-navigation', array(
+		'attributes'      => array(
+			'bf_form_slug' => array(
+				'type' => 'string',
+			),
+			'bf_nav_style' => array(
+				'type' => 'string',
+			),
+			'bf_label_add' => array(
+				'type' => 'string',
+			),
+			'bf_label_view' => array(
+				'type' => 'string',
+			),
+			'bf_nav_separator' => array(
+				'type' => 'string',
+			),
+
+		),
+		'editor_script'   => 'bf-embed-form',
+		'render_callback' => 'buddyforms_block_navigation',
+	) );
+
+	register_block_type( 'buddyforms/bf-embed-login-form', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
 				'type' => 'string',
 			)
 		),
-		'editor_script'   => 'bf-embed-form', // The script name we gave in the wp_register_script() call.
-		'render_callback' => 'buddyforms_block_navigation',
+		'editor_script'   => 'bf-embed-form',
+		'render_callback' => 'buddyforms_block_render_login_form',
 	) );
 
-	// Register our block, and explicitly define the attributes we accept.
+	register_block_type( 'buddyforms/bf-password-reset-form', array(
+		'attributes'      => array(
+			'bf_form_slug' => array(
+				'type' => 'string',
+			)
+		),
+		'editor_script'   => 'bf-embed-form',
+		'render_callback' => 'buddyforms_block_password_reset_form',
+	) );
+
 	register_block_type( 'buddyforms/bf-list-submissions', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
@@ -108,12 +138,14 @@ function php_block_init() {
 				'type' => 'string',
 			),
 		),
-		'editor_script'   => 'bf-list-submissions', // The script name we gave in the wp_register_script() call.
+		'editor_script'   => 'bf-embed-form',
 		'render_callback' => 'buddyforms_block_list_submissions',
 	) );
 }
 
 add_action( 'init', 'php_block_init' );
+
+
 function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
@@ -124,11 +156,69 @@ function buddyforms_block_render_form( $attributes ) {
 	}
 }
 
+function buddyforms_block_render_login_form( $attributes ) {
+	global $buddyforms;
+
+	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+		$attr = array(
+			'form_slug'      => 'none',
+			'redirect_url'   => $current_url,
+			'title'          => 'Login',
+			'label_username' => __( 'Username or Email Address' ),
+			'label_password' => __( 'Password' ),
+			'label_remember' => __( 'Remember Me' ),
+			'label_log_in'   => __( 'Log In' ),
+		);
+
+		buddyforms_view_login_form($attr);
+	} else {
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	}
+}
+
+function buddyforms_block_password_reset_form( $attributes ) {
+	global $buddyforms;
+
+	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
+		$attr = array(
+			'redirect_url'   => $current_url,
+		);
+
+		buddyforms_reset_password_form($attr);
+	} else {
+		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
+	}
+}
+
+
 function buddyforms_block_navigation( $attributes ) {
 	global $buddyforms;
 
 	if( isset($attributes['bf_form_slug']) && isset($buddyforms[$attributes['bf_form_slug']])){
-		return buddyforms_create_edit_form_shortcode( array( 'form_slug' => $attributes['bf_form_slug'] ) );
+
+		$args = array(
+			'form_slug'  => $attributes['bf_form_slug'],
+			'separator'  => empty( $attributes['bf_nav_separator'] ) ? '' : $attributes['bf_nav_separator'],
+			'label_add'  => empty( $attributes['bf_label_add'] ) ? 'Add' : $attributes['bf_label_add'],
+			'label_view' => empty( $attributes['bf_label_view'] ) ? 'View' : $attributes['bf_label_view'],
+		);
+
+		if(isset($attributes['bf_nav_style'])){
+			switch ( $attributes['bf_nav_style'] ){
+				case 'buddyforms_button_view_posts':
+					return buddyforms_button_view_posts( $args );
+					break;
+				case 'buddyforms_button_add_new':
+					return buddyforms_button_add_new( $args );
+					break;
+
+			}
+		}
+
+
+		return buddyforms_nav( $args );
+
+
 	} else {
 		return '<p>' . __( 'Please Select a Form in the Block Settings Sitebar', 'buddyforms') . '</p>';
 	}

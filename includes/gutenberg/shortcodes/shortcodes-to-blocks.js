@@ -16,48 +16,7 @@ var el = wp.element.createElement,
 // Embed a form
 //
 registerBlockType( 'buddyforms/bf-embed-form', {
-	title: 'Embed a BuddyForm',
-	icon: 'welcome-widgets-menus',
-	category: 'buddyforms',
-
-	edit: function( props ) {
-
-        var forms = [
-            { value: 'no', label: 'Select a Form' },
-        ];
-        for (var key in buddyforms_forms) {
-            forms.push({ value: key, label: buddyforms_forms[key] });
-        }
-
-		return [
-
-			el( ServerSideRender, {
-				block: 'buddyforms/bf-embed-form',
-				attributes: props.attributes,
-			} ),
-
-			el( InspectorControls, {},
-                el( SelectControl, {
-                    label: 'Please Select a form',
-                    value: props.attributes.bf_form_slug,
-                    options: forms,
-                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
-                } ),
-			)
-		];
-	},
-
-	// We're going to be rendering in PHP, so save() can just return null.
-	save: function() {
-		return null;
-	},
-} );
-
-//
-// Embed a form
-//
-registerBlockType( 'buddyforms/bf-navigation', {
-    title: 'Links to Forms and Post Lists',
+    title: 'Embed a BuddyForm',
     icon: 'welcome-widgets-menus',
     category: 'buddyforms',
 
@@ -97,6 +56,163 @@ registerBlockType( 'buddyforms/bf-navigation', {
 
 
 //
+// Embed a form
+//
+registerBlockType( 'buddyforms/bf-password-reset-form', {
+    title: 'Embed a Password Reset Form',
+    icon: 'welcome-widgets-menus',
+    category: 'buddyforms',
+
+    edit: function( props ) {
+
+        var forms = [
+            { value: 'no', label: 'Select a Form' },
+        ];
+        for (var key in buddyforms_forms) {
+            forms.push({ value: key, label: buddyforms_forms[key] });
+        }
+
+        return [
+
+            el( ServerSideRender, {
+                block: 'buddyforms/bf-embed-form',
+                attributes: props.attributes,
+            } ),
+
+            el( InspectorControls, {},
+                el( SelectControl, {
+                    label: 'Please Select a form',
+                    value: props.attributes.bf_form_slug,
+                    options: forms,
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
+                } ),
+            )
+        ];
+    },
+
+    // We're going to be rendering in PHP, so save() can just return null.
+    save: function() {
+        return null;
+    },
+} );
+
+
+
+//
+// Embed a form
+//
+registerBlockType( 'buddyforms/bf-embed-login-form', {
+    title: 'Embed a Login Form',
+    icon: 'welcome-widgets-menus',
+    category: 'buddyforms',
+
+    edit: function( props ) {
+
+        var forms = [
+            { value: 'no', label: 'Select a Form' },
+        ];
+        for (var key in buddyforms_forms) {
+            forms.push({ value: key, label: buddyforms_forms[key] });
+        }
+
+        return [
+
+            el( ServerSideRender, {
+                block: 'buddyforms/bf-embed-login-form',
+                attributes: props.attributes,
+            } ),
+
+            el( InspectorControls, {},
+                el( SelectControl, {
+                    label: 'Please Select a form',
+                    value: props.attributes.bf_form_slug,
+                    options: forms,
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
+                } ),
+            )
+        ];
+    },
+
+    // We're going to be rendering in PHP, so save() can just return null.
+    save: function() {
+        return null;
+    },
+} );
+
+
+
+//
+// Embed a Navigation
+//
+registerBlockType( 'buddyforms/bf-navigation', {
+    title: 'Links to Forms and Post Lists',
+    icon: 'welcome-widgets-menus',
+    category: 'buddyforms',
+
+    edit: function( props ) {
+
+        var bf_nav_style = [
+            { value: 'buddyforms_nav', label: 'View - Add New' },
+            { value: 'buddyforms_button_view_posts', label: 'View Posts' },
+            { value: 'buddyforms_button_add_new', label: 'Add New' },
+        ];
+
+
+        var forms = [
+            { value: 'no', label: 'Select a Form' },
+        ];
+        for (var key in buddyforms_forms) {
+            forms.push({ value: key, label: buddyforms_forms[key] });
+        }
+
+        return [
+
+            el( ServerSideRender, {
+                block: 'buddyforms/bf-navigation',
+                attributes: props.attributes,
+            } ),
+
+            el( InspectorControls, {},
+                el( SelectControl, {
+                    label: 'Please Select a form',
+                    value: props.attributes.bf_form_slug,
+                    options: forms,
+                    onChange: ( value ) => { props.setAttributes( { bf_form_slug: value } ); },
+                } ),
+                el( SelectControl, {
+                    label: 'Navigation Style',
+                    value: props.attributes.bf_nav_style,
+                    options: bf_nav_style,
+                    onChange: ( value ) => { props.setAttributes( { bf_nav_style: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Label Add',
+                    value: props.attributes.bf_label_add,
+                    onChange: ( value ) => { props.setAttributes( { bf_label_add: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Label View',
+                    value: props.attributes.bf_label_view,
+                    onChange: ( value ) => { props.setAttributes( { bf_label_view: value } ); },
+                } ),
+                el( TextControl, {
+                    label: 'Separator',
+                    value: props.attributes.bf_nav_separator,
+                    onChange: ( value ) => { props.setAttributes( { bf_nav_separator: value } ); },
+                } ),
+            )
+        ];
+    },
+
+    // We're going to be rendering in PHP, so save() can just return null.
+    save: function() {
+        return null;
+    },
+} );
+
+
+
+//
 // Display Submissions
 //
 registerBlockType( 'buddyforms/bf-list-submissions', {
@@ -119,8 +235,8 @@ registerBlockType( 'buddyforms/bf-list-submissions', {
         ];
 
         var bf_by_author = [
-            { value: 'logged_in_user', label: 'Logged in User Posts' },
-            { value: 'all_users', label: 'All User Posts' },
+            { value: 'logged_in_user', label: 'Logged in Author Posts' },
+            { value: 'all_users', label: 'All Author Posts' },
             { value: 'author_ids', label: 'Author ID\'S' },
         ];
 
