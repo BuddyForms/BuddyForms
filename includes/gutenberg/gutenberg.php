@@ -9,18 +9,19 @@ function buddyforms_block_category( $categories, $post ) {
 		$categories,
 		array(
 			array(
-				'slug' => 'buddyforms',
+				'slug'  => 'buddyforms',
 				'title' => __( 'BuddyForms', 'buddyforms' ),
 			),
 		)
 	);
 }
-add_filter( 'block_categories', 'buddyforms_block_category', 10, 2);
 
-// Load all the assets needed.
+add_filter( 'block_categories', 'buddyforms_block_category', 10, 2 );
+
+// Load all the assets needed. @todo: load only the js/ css needed by individual blocks. For now all css/is loaded.
 function buddyforms_editor_assets() {
 	global $GLOBALS;
 	$GLOBALS['buddyforms_new']->front_js_css();
-};
+}
 
-add_action( 'enqueue_block_editor_assets', 'buddyforms_editor_assets');
+add_action( 'enqueue_block_editor_assets', 'buddyforms_editor_assets' );

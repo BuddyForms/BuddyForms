@@ -37,21 +37,16 @@ function buddyforms_shortcodes_to_block_init() {
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_post_forms', $forms );
 
-	wp_localize_script( 'bf-embed-form', 'buddyforms_create_new_form_url', get_admin_url(get_current_blog_id(), 'post-new.php?post_type=buddyforms') );
-
+	wp_localize_script( 'bf-embed-form', 'buddyforms_create_new_form_url', get_admin_url( get_current_blog_id(), 'post-new.php?post_type=buddyforms' ) );
 
 	// All WordPress User Roles
 	$roles = buddyform_get_role_names();
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
-	// All WordPress Users
-//	$users        = array();
-//	$users_object = get_users( array( 'fields' => array( 'ID', 'display_name' ) ) );
-//	foreach ( $users_object as $user ) {
-//		$users[ $user->ID ] = esc_html( $user->display_name );
-//	}
-//	wp_localize_script( 'bf-embed-form', 'buddyforms_users', $users );
 
+	//
+	// Embed a form
+	//
 	register_block_type( 'buddyforms/bf-embed-form', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
@@ -62,6 +57,9 @@ function buddyforms_shortcodes_to_block_init() {
 		'render_callback' => 'buddyforms_block_render_form',
 	) );
 
+	//
+	// Embed a navigation
+	//
 	register_block_type( 'buddyforms/bf-navigation', array(
 		'attributes'      => array(
 			'bf_form_slug'     => array(
@@ -88,6 +86,9 @@ function buddyforms_shortcodes_to_block_init() {
 		'render_callback' => 'buddyforms_block_navigation',
 	) );
 
+	//
+	// Embed a login form
+	//
 	register_block_type( 'buddyforms/bf-embed-login-form', array(
 		'attributes'      => array(
 			'bf_form_slug'    => array(
@@ -99,23 +100,15 @@ function buddyforms_shortcodes_to_block_init() {
 			'bf_title'        => array(
 				'type' => 'string',
 			),
-//			'bf_label_username' => array(
-//				'type' => 'string',
-//			),
-//			'bf_label_password' => array(
-//				'type' => 'string',
-//			),
-//			'bf_label_remember' => array(
-//				'type' => 'string',
-//			),
-//			'bf_label_lohg_in' => array(
-//				'type' => 'string',
-//			)
+
 		),
 		'editor_script'   => 'bf-embed-form',
 		'render_callback' => 'buddyforms_block_render_login_form',
 	) );
 
+	//
+	// Embed a password reset form
+	//
 	register_block_type( 'buddyforms/bf-password-reset-form', array(
 		'attributes'      => array(
 			'bf_redirect_url' => array(
@@ -126,6 +119,9 @@ function buddyforms_shortcodes_to_block_init() {
 		'render_callback' => 'buddyforms_block_password_reset_form',
 	) );
 
+	//
+	// Embed a post list
+	//
 	register_block_type( 'buddyforms/bf-list-submissions', array(
 		'attributes'      => array(
 			'bf_form_slug'        => array(
@@ -158,7 +154,9 @@ function buddyforms_shortcodes_to_block_init() {
 
 add_action( 'init', 'buddyforms_shortcodes_to_block_init' );
 
-
+//
+// Render a form
+//
 function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
@@ -169,6 +167,9 @@ function buddyforms_block_render_form( $attributes ) {
 	}
 }
 
+//
+// Render a login form
+//
 function buddyforms_block_render_login_form( $attributes ) {
 	global $buddyforms;
 
@@ -187,6 +188,9 @@ function buddyforms_block_render_login_form( $attributes ) {
 
 }
 
+//
+// Render a password reset form
+//
 function buddyforms_block_password_reset_form( $attributes ) {
 
 	$attr = array(
@@ -197,7 +201,9 @@ function buddyforms_block_password_reset_form( $attributes ) {
 
 }
 
-
+//
+// Render navigation to a post form
+//
 function buddyforms_block_navigation( $attributes ) {
 	global $buddyforms;
 
@@ -231,6 +237,10 @@ function buddyforms_block_navigation( $attributes ) {
 	}
 }
 
+
+//
+// Render a form submissions
+//
 function buddyforms_block_list_submissions( $attributes ) {
 	global $buddyforms;
 
@@ -282,6 +292,9 @@ function buddyforms_block_list_submissions( $attributes ) {
 
 }
 
+//
+// Query posts for the submission lists
+//
 function buddyforms_blocks_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
@@ -329,8 +342,7 @@ function buddyforms_blocks_the_loop( $args ) {
 
 
 	$post_status = array( 'publish', 'pending', 'draft', 'future' );
-
-	$paged = buddyforms_get_url_var( 'page' );
+	$paged       = buddyforms_get_url_var( 'page' );
 
 	switch ( $query_option ) {
 		case 'all_users':
