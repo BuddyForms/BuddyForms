@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Create Blocks from Shortcodes
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_shortcodes_to_block_init() {
 	global $buddyforms;
 
@@ -154,9 +159,12 @@ function buddyforms_shortcodes_to_block_init() {
 
 add_action( 'init', 'buddyforms_shortcodes_to_block_init' );
 
-//
-// Render a form
-//
+/**
+ * Render a Form
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_block_render_form( $attributes ) {
 	global $buddyforms;
 
@@ -167,9 +175,12 @@ function buddyforms_block_render_form( $attributes ) {
 	}
 }
 
-//
-// Render a login form
-//
+/**
+ * Render a login form
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_block_render_login_form( $attributes ) {
 	global $buddyforms;
 
@@ -188,9 +199,12 @@ function buddyforms_block_render_login_form( $attributes ) {
 
 }
 
-//
-// Render a password reset form
-//
+/**
+ * Render a password reset form
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_block_password_reset_form( $attributes ) {
 
 	$attr = array(
@@ -201,9 +215,12 @@ function buddyforms_block_password_reset_form( $attributes ) {
 
 }
 
-//
-// Render navigation to a post form
-//
+/**
+ * Render navigation to a post form
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_block_navigation( $attributes ) {
 	global $buddyforms;
 
@@ -238,9 +255,12 @@ function buddyforms_block_navigation( $attributes ) {
 }
 
 
-//
-// Render a form submissions
-//
+/**
+ * Render a form submissions
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_block_list_submissions( $attributes ) {
 	global $buddyforms;
 
@@ -292,9 +312,13 @@ function buddyforms_block_list_submissions( $attributes ) {
 
 }
 
-//
-// Query posts for the submission lists
-//
+
+/**
+ * Query posts for the submission lists
+ *
+ * @since 2.3.1
+ *
+ */
 function buddyforms_blocks_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 

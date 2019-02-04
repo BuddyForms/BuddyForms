@@ -150,14 +150,14 @@ function buddyforms_locate_template( $slug ) {
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
 		$template_path = $template_file;
 	}
-//	$empty_post_message = __( 'There were no posts found. Create your first post now! ', 'buddyforms' );
-//	if ( ! empty( $form_slug ) ) {
-//		if ( ! empty( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] ) ) {
-//			$empty_post_message = do_shortcode( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] );
-//		} else {
-//			$empty_post_message = do_shortcode( buddyforms_default_message_on_empty_submission_list() );
-//		}
-//	}
+	$empty_post_message = __( 'There were no posts found. Create your first post now! ', 'buddyforms' );
+	if ( ! empty( $form_slug ) ) {
+		if ( ! empty( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] ) ) {
+			$empty_post_message = do_shortcode( $buddyforms[ $form_slug ]['empty_submit_list_message_text'] );
+		} else {
+			$empty_post_message = do_shortcode( buddyforms_default_message_on_empty_submission_list() );
+		}
+	}
 
 	// Do the include
 	include( $template_path );
