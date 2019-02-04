@@ -193,6 +193,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
 
+			// Gutenberg
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/gutenberg.php' );
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-preview.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php' );
@@ -316,6 +319,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_register_script( 'buddyforms-admin-deprecated-js', plugins_url( 'assets/admin/js/deprecated.js', __FILE__ ), array(), $this->version );
 				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ), array(), $this->version );
 				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ), array(), $this->version );
+
+
+
 
 
 				// GDPR Localisation

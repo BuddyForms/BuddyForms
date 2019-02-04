@@ -7,6 +7,7 @@
 function buddyforms_form_elements( $form, $args ) {
 	global $buddyforms, $field_id;
 
+
 	extract( $args );
 
 	if ( ! isset( $customfields ) ) {
@@ -14,6 +15,7 @@ function buddyforms_form_elements( $form, $args ) {
 	}
 
 	foreach ( $customfields as $field_id => $customfield ) :
+
 
 		if ( isset( $customfield['slug'] ) ) {
 			$slug = sanitize_title( $customfield['slug'] );

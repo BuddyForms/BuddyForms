@@ -131,10 +131,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php else : ?>
 
             <div id="message" class="info">
-                <p><?php _e( 'There were no posts found.', 'buddyforms' ); ?></p>
+                <p><?php echo $empty_post_message; ?></p>
             </div>
 
-		<?php endif; ?>
+        <?php endif; ?>
 
         <div class="bf_modal">
             <div style="display: none;"><?php wp_editor( '', 'buddyforms_form_content' ); ?></div>
