@@ -86,7 +86,7 @@ function buddyforms_the_loop( $args ) {
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key'            => '',
 		'meta_value'          => '',
-		'list_posts_style'    => 'none',
+		'list_posts_style'    => '',
 		'posts_per_page'      => '10'
 	), $args ) );
 
