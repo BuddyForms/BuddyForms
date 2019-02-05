@@ -354,7 +354,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		$have_user_fields = false;
 		foreach ( $customfields as $customfield ) {
-			if ( in_array( $customfield, buddyforms_user_fields_array() ) ) {
+			if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
 				$have_user_fields = true;
 				break;
 			}
@@ -389,7 +389,13 @@ function buddyforms_process_submission( $args = Array() ) {
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
 		}
 
-		$post_title = apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none', $form_slug, $post_id );
+		if ( 'registration' === $form_type ) {
+			$default_post_title = ! empty( $current_user->user_nicename ) ? $current_user->user_nicename : __( 'none', 'buddyforms' );
+		} else {
+			$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : __( 'none', 'buddyforms' );
+		}
+
+		$post_title = apply_filters( 'buddyforms_update_form_title', $default_post_title, $form_slug, $post_id );
 		$bf_post    = array(
 			'ID'             => $post_id,
 			'post_type'      => $post_type,

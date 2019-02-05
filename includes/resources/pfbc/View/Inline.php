@@ -39,7 +39,6 @@ class View_Inline extends FormView {
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
 
-		//TODO improve required flag position
 		if ( $element->isRequired() ) {
 			$label = $label . $this->renderRequired();
 		}

@@ -76,7 +76,7 @@
                                 <div class="misc-pub-section">
                                     <a href="?post_type=buddyforms&page=buddyforms_submissions&form_slug=<?php echo $form_slug ?>"
                                        class="button button-primary bf-close-submissions-modal"
-                                       data-id="<?php the_ID() ?>">Close</a>
+                                       data-id="<?php the_ID() ?>"><?php _e( 'Back', 'buddyforms' ); ?></a>
                                 </div>
                             </div>
                         </div>
