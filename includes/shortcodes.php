@@ -112,7 +112,9 @@ function buddyforms_the_loop( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	if( $list_posts_style == 'none' ){
+	if ( ! empty( $args['list_posts_style'] ) && ( 'list' === $args['list_posts_style'] || 'table' === $args['list_posts_style'] ) ) {
+		$list_posts_style = $args['list_posts_style'];
+	} else {
 		$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
 	}
 

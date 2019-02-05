@@ -23,11 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <span><?php _e( 'Created', 'buddyforms' ); ?></span>
                     </th>
                     <th class="title">
-						<?php if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
+						<?php if ( $buddyforms[ $form_slug ]['form_type'] === 'contact' ) : ?>
                             <span><?php _e( 'Subject', 'buddyforms' ); ?></span>
-						<?php } else { ?>
+						<?php elseif ($buddyforms[ $form_slug ]['form_type'] === 'registration' ) : ?>
+                            <span><?php _e( 'Name', 'buddyforms' ); ?></span>
+						<?php else : ?>
                             <span><?php _e( 'Title', 'buddyforms' ); ?></span>
-						<?php } ?>
+						<?php endif; ?>
 
                     </th>
                     <th class="status">
