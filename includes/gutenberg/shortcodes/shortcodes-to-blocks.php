@@ -36,7 +36,7 @@ function buddyforms_shortcodes_to_block_init() {
 
 	$forms = array();
 	foreach ( $buddyforms as $form_slug => $form ) {
-		if ( $form['attached_page'] != 'none' ) {
+		if ( !empty($form['attached_page']) && $form['attached_page'] != 'none' ) {
 			$forms[ $form_slug ] = $form['name'];
 		}
 	}
