@@ -5,24 +5,27 @@ class BuddyFormsSubmissionPage {
 	 * @var BuddyForms_Submissions_List_Table
 	 */
 	private $bf_submissions_table;
+	/*
+	 * @var default capability
+	 */
+	private $bf_submission_capability = 'activate_plugins';
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'buddyforms_create_submissions_page' ) );
 
 		add_filter( 'set-screen-option', array( $this, 'buddyforms_submissions_set_option' ), 10, 3 );
 		add_action( 'admin_init', array( $this, 'redirect_after_delete' ) );
-
 	}
 
 	public function buddyforms_create_submissions_page() {
-		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), 'activate_plugins', 'buddyforms_submissions', array( $this, 'buddyforms_submissions_screen' ) );
+		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), $this->bf_submission_capability, 'buddyforms_submissions', array( $this, 'buddyforms_submissions_screen' ) );
 		add_action( "load-$buddyforms_submission_admin_page", array( $this, 'buddyforms_submissions_add_options' ) );
 	}
 
 	public function buddyforms_submissions_add_options() {
 		$option = 'per_page';
 		$args   = array(
-			'label'   => 'Entries',
+			'label'   => __('Entries', 'buddyforms'),
 			'default' => 10,
 			'option'  => 'entries_per_page'
 		);
@@ -35,7 +38,7 @@ class BuddyFormsSubmissionPage {
 		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
 
 		// Check that the user is allowed to update options
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
 		} ?>
         <div id="post" class="bf_admin_wrap wrap">
@@ -57,26 +60,24 @@ class BuddyFormsSubmissionPage {
                 <ul>
                     <li>
 
-                        <h4>Select a form to display the submissions</h4>
+                        <h4><?php _e('Select a form to display the submissions', 'buddyforms') ?></h4>
                         <script type="text/javascript">
                           jQuery(document).ready(function (jQuery) {
                             jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
                               window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
-                            })
+                            });
 
                             jQuery('.metabox-prefs input:checkbox').each(function () {
-                              var colID = jQuery(this).attr('id')
-                              var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked')
+                              var colID = jQuery(this).attr('id');
+                              var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked');
                               if (!hasCheckedAtt) {
                                 document.getElementById(colID).checked = false
                               }
-
                             })
-
                           })
                         </script>
                         <select id="buddyforms_admin_menu_submissions_form_select">
-                            <option value="none">Select Form</option>
+                            <option value="none"><?php _e('Select Form', 'buddyforms') ?></option>
 							<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
                                 <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
 									<?php echo $form['name']; ?>
@@ -126,11 +127,8 @@ class BuddyFormsSubmissionPage {
                             foreach ( $attachmet_id as $id ) {
                                 wp_delete_attachment( $id, true );
                             }
-
                         }
-
                     }
-
                 }
             }
         }

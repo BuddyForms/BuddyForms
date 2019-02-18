@@ -57,7 +57,7 @@ class Element_Checkbox extends OptionElement {
 		}
 		echo '</div>';
 		if ( $this->getAttribute( 'frontend_reset' ) ) {
-			echo '<a href="#" class="button bf_reset_multi_input" data-group-name="' . $this->getAttribute( 'name' ) . '">Reset</a>';
+			echo '<a href="#" class="button bf_reset_multi_input" data-group-name="' . $this->getAttribute( 'name' ) . '">' . __( 'Reset', 'buddyforms' ) . '</a>';
 		}
 		echo '</div>';
 	}
