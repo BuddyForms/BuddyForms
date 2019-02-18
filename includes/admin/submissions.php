@@ -221,6 +221,14 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
 		}
+		if ( $column_name == 'Author' ) {
+			$post = get_post( $item->ID );
+			if ( ! empty( $post->post_author ) ) {
+				echo apply_filters( 'bf_submission_column_default_author_meta', get_the_author_meta( 'nickname', $post->post_author ), $post->post_author );
+			} else {
+				_e('Anonymous', 'buddyforms');
+			}
+		}
 	}
 
 	public function get_column_values( $field_slug, $field_type, $item, $bf_value ) {
@@ -346,8 +354,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$columns = array(
-			'ID'   => 'ID',
-			'Date' => 'Date',
+			'ID'     => 'ID',
+			'Author' => 'Author',
+			'Date'   => 'Date',
 		);
 
 		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
