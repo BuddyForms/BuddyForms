@@ -28,7 +28,7 @@ class Element_Checkbox extends OptionElement {
 
 		$labelClass = $this->getAttribute( 'class' );
 		if ( ! empty( $this->inline ) ) {
-			$labelClass .= "checkbox-inline";
+			$labelClass .= " checkbox-inline";
 		}
 
 		$count = 0;
@@ -39,7 +39,7 @@ class Element_Checkbox extends OptionElement {
 			// get optional ID
 			$id = isset( $this->_attributes["id"] ) ? ' id="' . $this->_attributes["id"] . '-' . $count . '"' : '';
 
-			echo '<p class="', $labelClass, '">';
+			echo '<p class="' , $labelClass , ' ' , sanitize_title($value) , '">';
 			echo '<input', $id, $this->getAttributes( array(
 				"id",
 				"class",

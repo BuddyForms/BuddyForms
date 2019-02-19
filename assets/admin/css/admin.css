@@ -1897,3 +1897,28 @@ div.checkbox > p.checkbox-inline > input[type=“checkbox”] {
 input.screen-per-page{
     width: 4em !important;
 }
+
+.buddyforms_accordion_permission p.checkbox-inline.admin-submission > input {
+    margin-left: 13% !important;
+    float: left;
+}
+
+.buddyforms_accordion_permission p.checkbox-inline.all > input {
+    margin-left: 8% !important;
+    float: left;
+}
+
+.buddyforms_accordion_permission p.checkbox-inline.delete > input {
+    margin-left: 3% !important;
+    float: left;
+}
+
+.buddyforms_accordion_permission p.checkbox-inline.edit > input {
+    margin-left: 3% !important;
+    float: left;
+}
+
+.buddyforms_accordion_permission p.checkbox-inline.create > input {
+    margin-left: 3% !important;
+    float: left;
+}

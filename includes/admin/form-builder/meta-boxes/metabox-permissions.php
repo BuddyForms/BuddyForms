@@ -93,13 +93,18 @@ function buddyforms_permissions_screen() {
 			$shortDesc_permission = '<br><br>
 			<div class="bf-roles-main-desc">
 				<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
-				<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role. If you check the All Submission the user role will get all users submission in the frontend. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
+				<p>' . __( 'Control who can create, edit and delete content that is created with this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
+				<p>' . __( 'If you check the All Submission the user role will get all users submission in the frontend.', 'buddyforms' ) . '</p>
+				<p>' . __( 'The Admin Submission capability give the ability to the user to access to submission from the administration, take in count it need the minimum permission to access to WordPress administration.', 'buddyforms' ) . '</p>
 			</div>';
 		}
 	}
 
 	// User Roles Description
 	echo $shortDesc_permission;
+
+	$checkbox_style_group_1 = 'margin-left: 2%; float: left;';
+	$checkbox_style_group_2 = 'margin-left: 3%; float: left;';
 
 	// Display all user roles
 	foreach ( get_editable_roles() as $role_name => $role_info ) {
@@ -147,13 +152,11 @@ function buddyforms_permissions_screen() {
 			}
 		}
 
-		$style = 'margin-right: 15px; margin-left: 15px; float: left;';
-
 		$element = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 			'value'  => $form_user_role,
 			'inline' => true,
+			'class'  => $role_name,
 			'id'     => 'permission_for_' . $role_name,
-			'style'  => $style,
 		) );
 
 		if ( $role_name == 'administrator' ) {
@@ -172,8 +175,13 @@ function buddyforms_permissions_screen() {
             <thead>
             <tr>
                 <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
-                <th class="field_name"><?php _e( 'Create - Edit - Delete - All Submissions - Admin Submission', 'buddyforms' ) ?>
-	                <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
+                <th class="field_name">
+	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Create', 'buddyforms' ) ) ?>
+	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Edit', 'buddyforms' ) ) ?>
+	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Delete', 'buddyforms' ) ) ?>
+	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'All Submissions', 'buddyforms' ) ) ?>
+	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Admin Submission', 'buddyforms' ) ) ?>
+                    <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
                 </th>
             </tr>
             </thead>

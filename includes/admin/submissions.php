@@ -8,7 +8,7 @@ class BuddyFormsSubmissionPage {
 	/*
 	 * @var default capability
 	 */
-	private $bf_submission_capability = 'activate_plugins';
+	private $bf_submission_capability = 'read';
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'buddyforms_create_submissions_page' ) );
@@ -38,19 +38,21 @@ class BuddyFormsSubmissionPage {
 		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
 
 		// Check that the user is allowed to update options
-		if ( ! current_user_can( 'activate_plugins' ) ) {
+		if ( ! current_user_can( $this->bf_submission_capability ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
-		} ?>
+		}
+		?>
         <div id="post" class="bf_admin_wrap wrap">
 			<?php
 			include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 			?>
             <hr style="margin-bottom: 0px !important;"/><?php
 			$this->bf_submissions_table->prepare_items();
+			$selected_form = '';
 			if ( isset( $_GET['form_slug'] ) ) {
 				$current_screen->set_parentage( $parent_file );
-				//$current_screen->render_screen_options();
 				$current_screen->render_screen_meta();
+				$selected_form = $_GET['form_slug'];
 			}
 
 			?>
@@ -59,14 +61,12 @@ class BuddyFormsSubmissionPage {
             <div id="buddyforms_admin_main_menu" class="">
                 <ul>
                     <li>
-
                         <h4><?php _e('Select a form to display the submissions', 'buddyforms') ?></h4>
                         <script type="text/javascript">
                           jQuery(document).ready(function (jQuery) {
                             jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
                               window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
                             });
-
                             jQuery('.metabox-prefs input:checkbox').each(function () {
                               var colID = jQuery(this).attr('id');
                               var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked');
@@ -77,31 +77,59 @@ class BuddyFormsSubmissionPage {
                           })
                         </script>
                         <select id="buddyforms_admin_menu_submissions_form_select">
-                            <option value="none"><?php _e('Select Form', 'buddyforms') ?></option>
-							<?php foreach ( $buddyforms as $form_slug => $form ) { ?>
-                                <option <?php isset( $_GET['form_slug'] ) ? selected( $_GET['form_slug'], $form_slug ) : ''; ?> value="<?php echo $form_slug ?>">
-									<?php echo $form['name']; ?>
-                                </option>
-							<?php } ?>
+                            <option value="none"><?php _e( 'Select Form', 'buddyforms' ) ?></option>
+	                        <?php foreach ( $buddyforms as $form_slug => $form ) : ?>
+		                        <?php if ( ! $this->has_the_capability( $form_slug ) ) : ?>
+			                        <?php continue; ?>
+		                        <?php endif; ?>
+                                <option <?php selected( $selected_form, $form_slug ) ?> value="<?php echo $form_slug ?>"><?php echo $form['name']; ?></option>
+	                        <?php endforeach; ?>
                         </select>
                     </li>
                 </ul>
             </div>
 
-			<?php if ( isset( $_GET['form_slug'] ) && ! isset( $_GET['entry'] ) ) { ?>
-                <form id="filter" method="get">
-                    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-					<?php $this->bf_submissions_table->display(); ?>
-                </form>
-			<?php } ?>
+		<?php if ( isset( $_GET['form_slug'] ) ) : ?>
+			<?php if ( $this->has_the_capability( $_GET['form_slug'] ) ) : ?>
+				<?php if ( ! isset( $_GET['entry'] ) ) { ?>
+                    <form id="filter" method="get">
+                        <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+						<?php $this->bf_submissions_table->display(); ?>
+                    </form>
+				<?php } ?>
 
-			<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
-				$form_slug = get_post_meta( $_GET['entry'], '_bf_form_slug', true );
-				$post_id   = $_GET['entry'];
-				require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
-			} ?>
-        </div>
+				<?php if ( isset( $_GET['action'] ) && isset( $_GET['entry'] ) ) {
+					$form_slug = get_post_meta( $_GET['entry'], '_bf_form_slug', true );
+					$post_id   = $_GET['entry'];
+					require_once( BUDDYFORMS_INCLUDES_PATH . 'admin/submission-single.php' );
+				} ?>
+                </div>
+			<?php else: ?>
+                <strong><?php _e( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) ?></strong>
+			<?php endif; ?>
+		<?php endif; ?>
 		<?php
+	}
+
+	/**
+     * Determine if the user have the capability to get the submission for this form.
+     * Note: This return true for user with admin role, checking the `activate_plugins` capability
+     *
+     * @since 2.3.1
+     *
+	 * @param $form_slug
+	 *
+	 * @return bool
+	 */
+	function has_the_capability( $form_slug ) {
+		if ( empty( $form_slug ) ) {
+			return false;
+		}
+		if ( current_user_can( 'activate_plugins' ) ) {
+			return true;
+		}
+
+		return current_user_can( 'buddyforms_' . $form_slug . '_admin-submission' );
 	}
 
     function redirect_after_delete() {
@@ -110,7 +138,7 @@ class BuddyFormsSubmissionPage {
         $action    = isset( $_GET['action'] ) ? $_GET['action'] : "";
         $entry     = isset( $_GET['post'] ) ? $_GET['post'] : "";
         $form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
-        if ( $action === 'delete' ) {
+	    if ( $action === 'delete' && $this->has_the_capability( $form_slug ) ) {
             $buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
             foreach ( $buddyFData as $key => $value ) {
 
