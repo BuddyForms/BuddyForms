@@ -94,23 +94,8 @@ class BuddyFormsMetaBoxRegistration {
 		}
 		$form_setup[] = $element;
 
-		// Get all Pages
-		$pages = get_pages( array(
-			'sort_order'  => 'asc',
-			'sort_column' => 'post_title',
-			'parent'      => 0,
-			'post_type'   => 'page',
-			'post_status' => 'publish'
-		) );
-
-		// Generate the pages Array
-		$all_pages             = Array();
-		$all_pages['referrer'] = 'Select a Page';
-		$all_pages['referrer'] = 'Referrer';
-		$all_pages['home']     = 'Homepage';
-		foreach ( $pages as $page ) {
-			$all_pages[ $page->ID ] = $page->post_title;
-		}
+		//Get all Pages
+		$all_pages = $this->get_activation_page_list();
 
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
@@ -163,6 +148,33 @@ class BuddyFormsMetaBoxRegistration {
 		) );
 
 		buddyforms_display_field_group_table( $form_setup );
+	}
+
+	/**
+	 * Get the list of pages to show in the list of the Activation Page
+	 * @return array
+	 */
+	public function get_activation_page_list() {
+		$home_page_id = get_option( 'page_on_front' );
+		// Get all Pages
+		$pages = get_pages( array(
+			'sort_order'  => 'asc',
+			'sort_column' => 'post_title',
+			'parent'      => 0,
+			'exclude'     => array( $home_page_id ),
+			'post_type'   => 'page',
+			'post_status' => 'publish'
+		) );
+
+		// Generate the pages Array
+		$all_pages             = array();
+		$all_pages['referrer'] = __( 'Select a Page', 'buddyforms' );
+		$all_pages['home']     = __( 'Homepage', 'buddyforms' );
+		foreach ( $pages as $page ) {
+			$all_pages[ $page->ID ] = $page->post_title;
+		}
+
+		return $all_pages;
 	}
 
 	/**
@@ -220,23 +232,9 @@ class BuddyFormsMetaBoxRegistration {
 
 		//Explain the redirection on update
 		echo sprintf( '<p>%s</p><br>', __( 'To select the page where the user should land on Update the User Profile use te Form Submission options ', 'buddyforms' ) );
-		// Get all Pages
-		$pages = get_pages( array(
-			'sort_order'  => 'asc',
-			'sort_column' => 'post_title',
-			'parent'      => 0,
-			'post_type'   => 'page',
-			'post_status' => 'publish'
-		) );
 
-		// Generate the pages Array
-		$all_pages             = Array();
-		$all_pages['referrer'] = 'Select a Page';
-		$all_pages['referrer'] = 'Referrer';
-		$all_pages['home']     = 'Homepage';
-		foreach ( $pages as $page ) {
-			$all_pages[ $page->ID ] = $page->post_title;
-		}
+		//Get all Pages
+		$all_pages = $this->get_activation_page_list();
 
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
