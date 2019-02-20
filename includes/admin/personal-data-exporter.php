@@ -5,7 +5,7 @@ function buddyforms_exporter( $email_address, $page = 1 ) {
 	$number       = 500; // Limit us to avoid timing out
 	$page         = (int) $page;
 	$export_items = array();
-	$my_data = array();
+	$my_data      = array();
 	foreach ( $buddyforms as $form_slug => $buddyform ) {
 
 		$query_args = array(
@@ -23,19 +23,19 @@ function buddyforms_exporter( $email_address, $page = 1 ) {
 				$the_query->the_post();
 
 				$my_data[] = array(
-					'name' => 'Title',
+					'name'  => __( 'Title', 'buddyforms' ),
 					'value' => get_the_title()
 				);
 				$my_data[] = array(
-					'name' => 'Content',
+					'name'  => __( 'Content', 'buddyforms' ),
 					'value' => get_the_content()
 				);
 
 				if ( isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $field_key => $field ) {
-						$user_id = get_the_author_meta( 'ID' );
+						$user_id   = get_the_author_meta( 'ID' );
 						$my_data[] = array(
-							'name' => $field['name'],
+							'name'  => $field['name'],
 							'value' => get_post_meta( $user_id, $field['slug'], true )
 						);
 					}

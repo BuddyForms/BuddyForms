@@ -10,7 +10,7 @@
         <div id="post-body-content">
 
             <div class="buddyforms-metabox postbox-submissions postbox">
-                <h3 class="hndle"><span>Entry</span></h3>
+                <h3 class="hndle"><span><?php _e( 'Entry', 'buddyforms' ) ?></span></h3>
                 <div class="inside">
                     <script>
                         jQuery(document).ready(function () {
@@ -54,7 +54,7 @@
         <div id="postbox-container-1" class="buddyforms-metabox postbox-container">
             <div id="submitdiv" class="buddyforms-metabox postbox">
 
-                <h3 class="hndle"><span>Entry Actions</span></h3>
+                <h3 class="hndle"><span><?php _e( 'Entry Actions', 'buddyforms' ) ?></span></h3>
                 <div class="inside">
                     <div class="submitbox">
                         <div id="minor-publishing-<?php echo $post_id; ?>" class="frm_remove_border">
@@ -70,7 +70,7 @@
 
                                 <div class="misc-pub-section">
                                     <span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>&nbsp;<a
-                                            href="#" onclick="window.print();return false;">Print</a>
+                                            href="#" onclick="window.print();return false;"><?php _e( 'Print', 'buddyforms' ) ?></a>
                                 </div>
 
                                 <div class="misc-pub-section">
@@ -85,12 +85,12 @@
             </div>
 
             <div class="buddyforms-metabox postbox frm_with_icons">
-                <h3 class="hndle"><span>Entry Details</span></h3>
+                <h3 class="hndle"><span><?php _e( 'Entry Details', 'buddyforms' ) ?></span></h3>
                 <div class="inside">
 
                     <div class="misc-pub-section">
                         <span class="dashicons dashicons-id wp-media-buttons-icon"></span>
-                        Entry ID:
+	                    <?php _e( 'Entry ID', 'buddyforms' ) ?>:
                         <b><?php echo $post_id; ?></b>
                     </div>
 
@@ -104,14 +104,14 @@
 
 				if ( $bf_registration_user_id ) { ?>
                     <div class="buddyforms-metabox postbox">
-                        <h3 class="hndle"><span>WordPress User</span></h3>
+                        <h3 class="hndle"><span><?php _e( 'WordPress User', 'buddyforms' ) ?></span></h3>
                         <div class="inside">
                             <div class="misc-pub-section">
-                                <p>User ID: <?php echo $bf_registration_user_id ?></p>
+                                <p><?php _e( 'User ID:', 'buddyforms' ) ?> <?php echo $bf_registration_user_id ?></p>
                                 <p>
-                                    <span class="dashicons dashicons-admin-users"></span>&nbsp;<a
-                                            href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>">Edit
-                                        User</a></p>
+                                    <span class="dashicons dashicons-admin-users"></span>&nbsp;
+                                    <a href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>"><?php _e( 'Edit User', 'buddyforms' ) ?></a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
 
 						if ( $user_data ) { ?>
                             <div class="buddyforms-metabox postbox">
-                                <h3 class="hndle"><span>User Information</span></h3>
+                                <h3 class="hndle"><span><?php _e( 'User Information', 'buddyforms' ) ?></span></h3>
                                 <div class="inside">
 
 									<?php foreach ( $user_data as $uinfo => $uval ) { ?>
@@ -144,16 +144,16 @@
 			}
 			if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) { ?>
                 <div class="buddyforms-metabox postbox">
-                    <h3 class="hndle"><span><?php _e( 'Get all insights about your user' ); ?></span></h3>
+                    <h3 class="hndle"><span><?php _e( 'Get all insights about your user', 'buddyforms' ); ?></span></h3>
                     <div class="inside">
 						<?php
-						buddyforms_go_pro( '', __( '', 'buddyforms' ), array(
-							'IP Address',
-							'Referer',
-							'Browser',
-							'Platform',
-							'Reports',
-							'User Agent',
+						buddyforms_go_pro( '', '', array(
+							__( 'IP Address', 'buddyforms' ),
+							__( 'Referer', 'buddyforms' ),
+							__( 'Browser', 'buddyforms' ),
+							__( 'Platform', 'buddyforms' ),
+							__( 'Reports', 'buddyforms' ),
+							__( 'User Agent', 'buddyforms' ),
 						) );
 						?>
                     </div>

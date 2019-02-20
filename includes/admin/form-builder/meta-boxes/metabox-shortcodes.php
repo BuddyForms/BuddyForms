@@ -8,7 +8,6 @@ function buddyforms_metabox_shortcodes() {
     <div class="bf-shortcode">
         <div id="bf-shortcode">
 
-
             <div class="bf-tile">
                 <label for="the-form"><?php _e( 'Display Form', 'buddyforms' ); ?></label>
                 <input id="the-form" type="text" readonly="readonly" onfocus="this.select();" onmouseup="return false;"
@@ -50,8 +49,8 @@ function buddyforms_metabox_shortcodes() {
 
         </div>
         <br>
-        <p><a target="_blank"
-              href="http://docs.buddyforms.com/article/141-shortcodes"><?php _e( 'List of all Available Shortcodes', 'buddyforms' ); ?> </a>
+        <p>
+            <a target="_blank" href="http://docs.buddyforms.com/article/141-shortcodes"><?php _e( 'List of all Available Shortcodes', 'buddyforms' ); ?> </a>
         </p>
     </div>
 	<?php

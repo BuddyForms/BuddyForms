@@ -320,10 +320,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ), array(), $this->version );
 				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ), array(), $this->version );
 
-
-
-
-
 				// GDPR Localisation
 				$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 				$templates = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
@@ -333,9 +329,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 
-				foreach( $templates as $key => $template ) {
-					$admin_text_array[$key] = $template;
-                 }
+				foreach ( $templates as $key => $template ) {
+					$admin_text_array[ $key ] = $template;
+				}
+
 				wp_localize_script( 'buddyforms-admin-js', 'admin_text', $admin_text_array );
 				wp_enqueue_script( 'buddyforms-admin-js' );
 
@@ -454,14 +451,14 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
             $password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
             wp_localize_script( 'password-strength-meter', 'pwsL10n', array(
-                'empty' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator' ),
-                'short' => isset( $password_strength_settings['lavel_1']  ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.' ),
-                'bad' => isset( $password_strength_settings['lavel_2']  ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak' ),
-                'good' => isset( $password_strength_settings['lavel_3']  ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'password strength' ),
-                'strong' => isset( $password_strength_settings['lavel_4']  ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong' ),
-                'mismatch' => isset( $password_strength_settings['mismatch']  ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch' ),
+                'empty' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator', 'buddyforms' ),
+                'short' => isset( $password_strength_settings['lavel_1']  ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.', 'buddyforms' ),
+                'bad' => isset( $password_strength_settings['lavel_2']  ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak', 'buddyforms' ),
+                'good' => isset( $password_strength_settings['lavel_3']  ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'buddyforms' ),
+                'strong' => isset( $password_strength_settings['lavel_4']  ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong', 'buddyforms' ),
+                'mismatch' => isset( $password_strength_settings['mismatch']  ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch', 'buddyforms' ),
                 //'error' => isset( $password_strength_settings['error']  ) && ! empty( $password_strength_settings['error'] ) ? $password_strength_settings['error'] : __( 'Error' ),
-                'hint_text' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).' ),
+                'hint_text' => isset( $password_strength_settings['hint_text']  ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).', 'buddyforms' ),
                 'required_strength' => isset( $password_strength_settings['required_strength']  ) && ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
             ) );
 
@@ -520,8 +517,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), $this->version, false  );
 			$translations = array(
 				'gdpr_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
-				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'gdpr-data-request-form' ),
-				'gdpr_errors'   => __( 'Some errors occurred:', 'gdpr-data-request-form' ),
+				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
+				'gdpr_errors'   => __( 'Some errors occurred:', 'buddyforms' ),
 			);
 			wp_localize_script( 'buddyforms-gdpr-js', 'buddyforms_gdpr_localize', $translations );
 
@@ -621,15 +618,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		function plugin_activation() {
 
-			$title        = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
+			$title        = apply_filters( 'buddyforms_preview_page_title', __( 'BuddyForms Preview Page', 'buddyforms' ) );
 			$preview_page = get_page_by_title( $title );
 			if ( ! $preview_page ) {
 				// Create preview page object
 				$preview_post = array(
 					'post_title'   => $title,
-					'post_content' => 'This is a preview of how this form will appear on your website',
+					'post_content' => __( 'This is a preview of how this form will appear on your website', 'buddyforms' ),
 					'post_status'  => 'draft',
-					'post_type'    => 'page'
+					'post_type'    => 'page',
+					'post_name'    => sanitize_title('BuddyForms Preview Page')
 				);
 
 				// Insert the page into the database

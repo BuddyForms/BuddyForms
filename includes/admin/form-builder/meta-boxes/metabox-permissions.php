@@ -14,7 +14,7 @@ function buddyforms_permissions_unregistered_screen() {
 	$form_setup[]  = new Element_Radio( '<b>' . __( 'Public Submittable', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit]",
 		array(
 			'public_submit'     => __( 'Access for unregistered users.', 'buddyforms' ) . '<br>',
-			'registration_form' => __( 'Logged in users only. <br><small>Display Login Form For Unregistered Users with optional Link to a Registration Form</small>' )
+			'registration_form' => sprintf('%s <br><small>%s</small>', __( 'Logged in users only .', 'buddyforms' ), __( 'Display Login Form For Unregistered Users with optional Link to a Registration Form', 'buddyforms' ))
 		), array(
 			'value' => $public_submit,
 			'class' => 'public_submit_select'
@@ -28,7 +28,7 @@ function buddyforms_permissions_unregistered_screen() {
 		'under' => __( 'Under the Form', 'buddyforms' )
 	), array(
 		'value'     => $public_submit_login,
-		'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
+		'shortDesc' => __( 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.', 'buddyforms' ),
 		'class'     => 'public-submit-option'
 	) );
 
@@ -36,7 +36,7 @@ function buddyforms_permissions_unregistered_screen() {
 	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
 		array(
 			'value'     => $public_submit_create_account,
-			'shortDesc' => 'Create a new user during form submission',
+			'shortDesc' => __( 'Create a new user during form submission', 'buddyforms' ),
 		)
 	);
 
@@ -62,7 +62,7 @@ function buddyforms_permissions_unregistered_screen() {
 		$all_forms,
 		array(
 			'value'     => $logged_in_only_reg_form,
-			'shortDesc' => 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.',
+			'shortDesc' => __( 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.', 'buddyforms' ),
 			'class'     => 'registration-form-option'
 		) );
 
@@ -160,7 +160,7 @@ function buddyforms_permissions_screen() {
 		) );
 
 		if ( $role_name == 'administrator' ) {
-			$element->setAttribute( 'shortDesc', 'Admin rights can not get changed' );
+			$element->setAttribute( 'shortDesc', __( 'Admin rights can not get changed', 'buddyforms' ) );
 		}
 
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {

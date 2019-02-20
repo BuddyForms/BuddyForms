@@ -25,6 +25,7 @@ function buddyforms_form_builder_wizard_elements() {
 
 	// Loop The form elements array and add the options to the select box
 	if ( is_array( $elements_select_options ) ) {
+		$el_links = '';
 		foreach ( $elements_select_options as $optgroup_slug => $optgroup ) {
 			$el_links .= '<h5>' . $optgroup['label'] . '</h5>';
 			foreach ( $optgroup['fields'] as $es_val => $es_label ) {
@@ -166,8 +167,8 @@ function buddyforms_wizard_page() {
 	// Add The Wizard to the Page
 	add_submenu_page(
 		'edit.php?post_type=buddyforms',
-		'BuddyForms Wizard',
-		'Form Wizard',
+		__( 'BuddyForms Wizard', 'buddyforms' ),
+		__( 'Form Wizard', 'buddyforms' ),
 		'manage_options',
 		'post-new.php?post_type=buddyforms&wizard=1'
 	);

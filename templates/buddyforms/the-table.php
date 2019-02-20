@@ -122,10 +122,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="navigation">
 				<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
 				else: ?>
-                    <div
-                            class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-                    <div
-                            class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+                    <div class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
+                    <div class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
 				<?php endif; ?>
 
             </div>
