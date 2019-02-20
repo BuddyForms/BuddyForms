@@ -126,7 +126,7 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 	// if post edit screen is displayed
-	if ( ! empty( $post_id ) ) {
+	if ( ! empty( $post_id ) && $buddyforms[ $form_slug ]['form_type'] !== 'registration') {
 
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );

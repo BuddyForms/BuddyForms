@@ -112,7 +112,7 @@ function buddyforms_form_elements( $form, $args ) {
 						// @since 2.3 we remove is_admin form the if because is not clear
 						// old condition
 						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
-						if ( is_user_logged_in() && ! isset( $customfield['hide_if_logged_in'] ) ) {
+						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 								$element_attr['value'] = $current_user->user_login;
 							}
@@ -124,7 +124,7 @@ function buddyforms_form_elements( $form, $args ) {
 						// @since 2.3 we remove is_admin form the if because is not clear
 						// old condition
 						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
-						if ( is_user_logged_in() && ! isset( $customfield['hide_if_logged_in'] ) ) {
+						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 								$element_attr['value'] = $current_user->user_email;
 							}
