@@ -78,7 +78,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		return array(
 			'hasError'      => true,
 			'form_slug'     => $form_slug,
-			'error_message' => __( 'SPAM Detected!', 'buddyform' ),
+			'error_message' => __( 'SPAM Detected!', 'buddyforms' ),
 		);
 	}
 
@@ -804,7 +804,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 
 		//first check if the user uploaded the right type
 		if ( ! in_array( $ext, (array) $allowed ) ) {
-			$file['error'] = $file['type'] . __( "Sorry, you cannot upload this file type for this field." );
+			$file['error'] = $file['type'] . __( "Sorry, you cannot upload this file type for this field.", 'buddyforms' );
 
 			return $file;
 		}
@@ -815,7 +815,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 				return $file;
 			}
 		}
-		$file['error'] = __( "Sorry, you cannot upload this file type for this field." );
+		$file['error'] = __( "Sorry, you cannot upload this file type for this field.", 'buddyforms' );
 	}
 
 	return $file;

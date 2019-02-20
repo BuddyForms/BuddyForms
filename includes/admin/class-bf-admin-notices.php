@@ -75,7 +75,7 @@ class BfAdminNotices {
 			$post_types = buddyforms_get_post_types();
 
 			if ( ! isset( $post_types[ $buddyform['post_type'] ] ) ) {
-				$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
+				$messages['pro'] = __( 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>', 'buddyforms' );
 			}
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
@@ -94,7 +94,7 @@ class BfAdminNotices {
 				     || $field['type'] == 'tags'
 				     || $field['type'] == 'featured_image'
 				) {
-					$messages['pro'] = 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>';
+					$messages['pro'] = __( 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>', 'buddyforms' );
 				}
 			}
 		}

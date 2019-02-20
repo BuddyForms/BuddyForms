@@ -320,10 +320,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_register_script( 'buddyforms-admin-conditionals-js', plugins_url( 'assets/admin/js/conditionals.js', __FILE__ ), array(), $this->version );
 				wp_register_script( 'buddyforms-admin-formbuilder-js', plugins_url( 'assets/admin/js/formbuilder.js', __FILE__ ), array(), $this->version );
 
-
-
-
-
 				// GDPR Localisation
 				$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 				$templates = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
@@ -333,9 +329,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 
-				foreach( $templates as $key => $template ) {
-					$admin_text_array[$key] = $template;
-                 }
+				foreach ( $templates as $key => $template ) {
+					$admin_text_array[ $key ] = $template;
+				}
+
 				wp_localize_script( 'buddyforms-admin-js', 'admin_text', $admin_text_array );
 				wp_enqueue_script( 'buddyforms-admin-js' );
 
@@ -621,15 +618,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		function plugin_activation() {
 
-			$title        = apply_filters( 'buddyforms_preview_page_title', 'BuddyForms Preview Page' );
+			$title        = apply_filters( 'buddyforms_preview_page_title', __( 'BuddyForms Preview Page', 'buddyforms' ) );
 			$preview_page = get_page_by_title( $title );
 			if ( ! $preview_page ) {
 				// Create preview page object
 				$preview_post = array(
 					'post_title'   => $title,
-					'post_content' => 'This is a preview of how this form will appear on your website',
+					'post_content' => __( 'This is a preview of how this form will appear on your website', 'buddyforms' ),
 					'post_status'  => 'draft',
-					'post_type'    => 'page'
+					'post_type'    => 'page',
+					'post_name'    => sanitize_title('BuddyForms Preview Page')
 				);
 
 				// Insert the page into the database

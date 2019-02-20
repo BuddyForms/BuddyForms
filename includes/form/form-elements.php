@@ -568,15 +568,13 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 						$label_name = $customfield['name'];
 
-						$message = "Drop the image here to upload";
+						$message = __( 'Drop the image here to upload', 'buddyforms' );
 						$str     = '<div class=" bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
 						$box     = "<div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
-                                          
                                               <span>$message</span>
                                          </div>
                                         <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
-                                         
                                  </div></div></div>";
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( new Element_HTML( $box ) );

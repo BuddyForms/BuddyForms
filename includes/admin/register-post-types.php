@@ -148,7 +148,7 @@ function buddyforms_post_edit_form_tag() {
  */
 function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	$post = WP_Post::get_instance($post_id);
-	
+
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
 	}
@@ -180,19 +180,19 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 
 	// Save the Roles and capabilities.
 	if ( isset( $_POST['buddyforms_roles'] ) ) {
-		
+
 		foreach ( get_editable_roles() as $role_name => $role_info ) {
 			$role = get_role( $role_name );
 			foreach ( $role_info['capabilities'] as $capability => $_ ) {
-				
+
 				$capability_array = explode( '_', $capability );
-				
+
 				if ( $capability_array[0] == 'buddyforms' ) {
 					if ( $capability_array[1] == $buddyform['slug'] ) {
 						$role->remove_cap( $capability );
 					}
 				}
-				
+
 			}
 		}
 
@@ -442,7 +442,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 			break;
 		case 'attached_page' :
 			if ( isset( $buddyform['attached_page'] ) && empty( $buddyform['attached_page'] ) ) {
-				$attached_page = '<p style="color: red;">No Page Attached</p>';
+				$attached_page = '<p style="color: red;">' . __( 'No Page Attached', 'buddyforms' ) . '</p>';
 			} elseif ( isset( $buddyform['attached_page'] ) && $attached_page_title = get_the_title( $buddyform['attached_page'] ) ) {
 				$attached_page = '<p>' . __( 'On', 'buddyforms' ) . '</p>';// . '<br>' . $attached_page_title . '</p>';
 			} else {
@@ -455,12 +455,10 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
                 <div class="row-actions">
 					<span class="view-form">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>">View
-							Form</a> |
+						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
 					</span>
                     <span class="view-entryies">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>">View
-							Entries</a>
+						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
 					</span>
 
                 </div>
@@ -522,14 +520,14 @@ function buddyforms_hide_publishing_actions() {
 					<?php
 					$tmp = '<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms';
 					if ( ! isset( $_GET['wizard'] ) ) {
-						$tmp .= ' <a href="post-new.php?post_type=buddyforms" class="page-title-action">Add New</a> <a class="page-title-action" id="btn-open">Documentation</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">Contact Us</a>';
+						$tmp .= ' <a href="post-new.php?post_type=buddyforms" class="page-title-action">' . __( 'Add New', 'buddyforms' ) . '</a> <a class="page-title-action" id="btn-open">' . __( 'Documentation', 'buddyforms' ) . '</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">' . __( 'Contact Us', 'buddyforms' ) . '</a>';
 					}
 					echo "var h1 = jQuery('body').find('h1:first');";
 
 					echo "h1.html('" . $tmp . "');";
 
 
-					$tmp = '<small id="buddyforms_version" style="line-height: 1; margin-top: -10px; color: #888; font-size: 13px; padding-top: 30px; float:right;">' . buddyforms_get_version_type() . ' Version ' . BUDDYFORMS_VERSION . '</small>';
+					$tmp = '<small id="buddyforms_version" style="line-height: 1; margin-top: -10px; color: #888; font-size: 13px; padding-top: 30px; float:right;">' . buddyforms_get_version_type() . ' ' . __( 'Version', 'buddyforms' ) . ' ' . BUDDYFORMS_VERSION . '</small>';
 					echo "h1.append('" . $tmp . "');";
 
 					//echo "jQuery('" . $tmp . "').insertAfter(h1);";
@@ -582,14 +580,14 @@ function buddyforms_add_button_to_submit_box() {
 		<?php } ?>
 		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
             <div id="frontend-actions">
-                <label for="button">Frontend</label>
+                <label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
 				<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
                 <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
             </div>
 		<?php }
 		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
             <div id="admin-actions">
-                <label for="button">Admin</label>
+                <label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
 				<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
             </div>
 		<?php } ?>
@@ -639,7 +637,7 @@ function buddyforms_add_action_buttons( $actions, $post ) {
 
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
 
-		$actions['export']       = '<a href="' . esc_url( $url ) . '">Export</a>';
+		$actions['export']       = '<a href="' . esc_url( $url ) . '">' . __( 'Export', 'buddyforms' ) . '</a>';
 		$actions['submissions']  = '<a href="?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '">' . __( "View Submissions", "buddyforms" ) . '</a>';
 		$actions['preview_link'] = '<a target="_blank" href="' . $base . '/?page_id=' . $preview_page_id . '&preview=true&form_slug=' . $post->post_name . '">' . __( 'Preview Form', 'buddyforms' ) . '</a>';
 

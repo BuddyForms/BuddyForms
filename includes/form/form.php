@@ -172,7 +172,7 @@ function buddyforms_create_edit_form( $args ) {
 
 	$customfields = $buddyforms[ $form_slug ]['form_fields'];
 
-	if ( $the_post->post_parent ) {
+	if ( ! empty( $the_post ) && ! empty( $the_post->post_parent ) ) {
 		$post_parent = $the_post->post_parent;
 	}
 

@@ -278,8 +278,8 @@ function buddyforms_nav( $args ) {
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
 		'separator'  => ' | ',
-		'label_add'  => 'Add New',
-		'label_view' => 'View',
+		'label_add'  => __( 'Add New', 'buddyforms' ),
+		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
 	$tmp = buddyforms_button_view_posts( $args );
@@ -301,10 +301,10 @@ function buddyforms_button_view_posts( $args ) {
 	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
-		'label_view' => 'View',
+		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . __( $label_view, 'buddyforms' ) . ' </a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
 
@@ -322,11 +322,11 @@ function buddyforms_button_add_new( $args ) {
 	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label_add' => 'Add New',
+		'label_add' => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . __( $label_add, 'buddyforms' ) . '</a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $label_add . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 
@@ -346,10 +346,10 @@ function buddyforms_view_login_form( $args ) {
 		'form_slug'      => 'none',
 		'redirect_url'   => $current_url,
 		'title'          => 'Login',
-		'label_username' => __( 'Username or Email Address' ),
-		'label_password' => __( 'Password' ),
-		'label_remember' => __( 'Remember Me' ),
-		'label_log_in'   => __( 'Log In' ),
+		'label_username' => __( 'Username or Email Address', 'buddyforms' ),
+		'label_password' => __( 'Password', 'buddyforms' ),
+		'label_remember' => __( 'Remember Me', 'buddyforms' ),
+		'label_log_in'   => __( 'Log In', 'buddyforms' ),
 	), $args ) );
 
 	if ( is_user_logged_in() ) {

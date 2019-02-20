@@ -28,10 +28,10 @@ function buddyforms_metabox_form_setup() {
 
 	$form_type = isset( $buddyform['form_type'] ) ? $buddyform['form_type'] : 'contact';
 
-	$message_text_default      = $post_type == 'false' ? 'Form Submitted Successfully' : 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]';
-	$after_submit_message_text = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : $message_text_default;
+	$message_text_default             = $post_type == 'false' ? 'Form Submitted Successfully' : __( 'The [form_singular_name] [post_title] has been successfully Submitted!<br>1. [post_link]<br>2. [edit_link]', 'buddyforms' );
+	$after_submit_message_text        = isset( $buddyform['after_submit_message_text'] ) ? $buddyform['after_submit_message_text'] : $message_text_default;
 	$after_update_submit_message_text = isset( $buddyform['after_update_submit_message_text'] ) ? $buddyform['after_update_submit_message_text'] : buddyforms_default_message_on_update();
-	$empty_submit_list_message_text = isset( $buddyform['empty_submit_list_message_text'] ) ? $buddyform['empty_submit_list_message_text'] : buddyforms_default_message_on_empty_submission_list();
+	$empty_submit_list_message_text   = isset( $buddyform['empty_submit_list_message_text'] ) ? $buddyform['empty_submit_list_message_text'] : buddyforms_default_message_on_empty_submission_list();
 
 	$attached_page     = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
 	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
@@ -40,7 +40,7 @@ function buddyforms_metabox_form_setup() {
 	$admin_bar         = isset( $buddyform['admin_bar'] ) ? $buddyform['admin_bar'] : 'false';
 	$edit_link         = isset( $buddyform['edit_link'] ) ? $buddyform['edit_link'] : 'all';
 	$bf_ajax           = isset( $buddyform['bf_ajax'] ) ? $buddyform['bf_ajax'] : false;
-	$user_data          = isset( $buddyform['user_data'] ) ? $buddyform['user_data'] : array( 'ipaddress', 'referer', 'browser', 'version', 'platform', 'reports', 'userAgent', 'enable_all' );
+	$user_data         = isset( $buddyform['user_data'] ) ? $buddyform['user_data'] : array( 'ipaddress', 'referer', 'browser', 'version', 'platform', 'reports', 'userAgent', 'enable_all' );
 	$list_posts_option = isset( $buddyform['list_posts_option'] ) ? $buddyform['list_posts_option'] : 'list_all_form';
 	$list_posts_style  = isset( $buddyform['list_posts_style'] ) ? $buddyform['list_posts_style'] : 'list';
 
@@ -103,10 +103,10 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'Empty Submission List Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[empty_submit_list_message_text]", array(
-		'rows'     => 3,
-		'style'    => "width:100%",
-		'value'    => $empty_submit_list_message_text,
-		'id'       => 'empty_submit_list_message_text',
+		'rows'      => 3,
+		'style'     => "width:100%",
+		'value'     => $empty_submit_list_message_text,
+		'id'        => 'empty_submit_list_message_text',
 		'shortDesc' => __( 'This message is used when you have setup the option <b>Enable your site members to view their submissions</b>', 'buddyforms' )
 	) );
 
@@ -148,10 +148,14 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Form Submission'][] = $element;
 
-	$shortDesc_post_type = '<b>Use any POST TYPE with the PRO Version!</b> <br><br>Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+	$shortDesc_post_type = sprintf( '<b>%s</b> <br><br><a target="_blank" href="#">%s</a>',
+		__( 'Use any POST TYPE with the PRO Version!', 'buddyforms' ),
+		__( 'Select a post type if you want to create posts from form submissions. ', 'buddyforms' ),
+		__( 'Read the Documentation', 'buddyforms' )
+	);
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
-			$shortDesc_post_type = 'Select a post type if you want to create posts from form submissions. <a target="_blank" href="#">Read the Documentation</a>';
+			$shortDesc_post_type = sprintf( '%s<a target="_blank" href="#">%s</a>', __( 'Select a post type if you want to create posts from form submissions. ', 'buddyforms' ), __( 'Read the Documentation', 'buddyforms' ) );
 		}
 	}
 	//
@@ -202,7 +206,7 @@ function buddyforms_metabox_form_setup() {
 
 	$element = new Element_Textbox( '<b>' . __( "Singular Name", 'buddyforms' ), "buddyforms_options[singular_name]", array(
 		'value'     => $singular_name,
-		'shortDesc' => 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )',
+		'shortDesc' => __( 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )', 'buddyforms' ),
 		'class'     => 'bf_hide_if_post_type_none'
 	) );
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
@@ -232,17 +236,18 @@ function buddyforms_metabox_form_setup() {
 	$admin_email = get_option( 'admin_email' );
 
 	// Attached Page
-	$form_setup['Edit Submissions'][] = new Element_HTML( '<h4>Enable your site members to view their submissions</h4>
-		<p>Select a page or create a new on if you like to turn on submission management for your logged in users.</p>
-		<div class="bf_hide_if_post_type_none">
-			<p class="description">Important!<br> The original page content does not get changed. You are free to use any kind of content on the page itself. View a form or list the users submissions with Shortcodes. For the submissions management new endpoints get create for you. You can combine forms under the same page. Its a powerful option. <a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder">Read the Documentation</a></p>
-		    <h6>Form URL<br><small class="siteurl_create_html">' . $siteurl_create_html . '</small></h6>
-		    <h6>User Submissions URL<br><small class="siteurl_edit_html">' . $siteurl_edit_html . '</small></h6>
-		</div>' );
+	$form_setup['Edit Submissions'][] = new Element_HTML( sprintf( '<h4>%s</h4>', __( 'Enable your site members to view their submissions', 'buddyforms' ) ) .
+	                                                      sprintf( '<p>%s</p>', __( 'Select a page or create a new on if you like to turn on submission management for your logged in users.', 'buddyforms' ) ) .
+	                                                      '<div class="bf_hide_if_post_type_none">' .
+	                                                      sprintf( '<p class="description">%s<br> %s', __( 'Important!', 'buddyforms' ), __( 'The original page content does not get changed. You are free to use any kind of content on the page itself. View a form or list the users submissions with Shortcodes. For the submissions management new endpoints get create for you. You can combine forms under the same page. Its a powerful option.', 'buddyforms' ) ) .
+	                                                      sprintf( '<a target="_blank" href="http://docs.buddyforms.com/article/139-select-page-in-the-formbuilder">%s</a></p>', __( 'Read the Documentation', 'buddyforms' ) ) .
+	                                                      sprintf( '<h6>%s<br><small class="siteurl_create_html">' . $siteurl_create_html . '</small></h6>', __( 'Form URL', 'buddyforms' ) ) .
+	                                                      sprintf( '<h6>%s<br><small class="siteurl_edit_html">' . $siteurl_edit_html . '</small></h6>', __( 'User Submissions URL', 'buddyforms' ) ) .
+	                                                      '</div>' );
 
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage their submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => '<b><a href="#" id="bf_create_page_modal">Create a new Page </a></b> The page is used to create the endpoints for the create - list and edit submissions views.',
+		'shortDesc' => sprintf( '<b><a href="#" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) ),
 		'id'        => 'attached_page',
 		'data-slug' => $slug
 	) );
@@ -273,8 +278,8 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Edit Submissions'][] = $element;
 
 	$element = new Element_Radio( '<b>' . __( "List Posts Options", 'buddyforms' ) . '</b>', "buddyforms_options[list_posts_option]", array(
-		'list_all_form' => 'List all Author Posts created with this Form',
-		'list_all'      => 'List all Author Posts of the PostType'
+		'list_all_form' => __( 'List all Author Posts created with this Form', 'buddyforms' ),
+		'list_all'      => __( 'List all Author Posts of the PostType', 'buddyforms' )
 	), array(
 		'value'     => $list_posts_option,
 		'shortDesc' => '',
@@ -290,7 +295,7 @@ function buddyforms_metabox_form_setup() {
 		'table' => 'Table'
 	) ), array(
 		'value'     => $list_posts_style,
-		'shortDesc' => 'Do you want to list post in a ul li list or as table.',
+		'shortDesc' => __( 'Do you want to list post in a ul li list or as table.', 'buddyforms' ),
 		'class'     => 'bf_hide_if_attached_page_none'
 	) );
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
@@ -317,7 +322,7 @@ function buddyforms_metabox_form_setup() {
 
 		$element                 = new Element_Select( '<b>' . __( "Select a Blog", 'buddyforms' ) . '</b>', "buddyforms_options[blog_id]", $sites_select, array(
 			'value'     => $blog_id,
-			'shortDesc' => 'You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place.',
+			'shortDesc' => __( 'You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place.', 'buddyforms' ),
 			'id'        => 'blog_id',
 		) );
 		$form_setup['Network'][] = $element;
@@ -327,9 +332,9 @@ function buddyforms_metabox_form_setup() {
 	// Check if form elements exist and sort the form elements
 	if ( is_array( $form_setup ) ) {
 		$form_setup = buddyforms_sort_array_by_Array( $form_setup, array(
-			'Form Submission',
-			'Create Content',
-			'Edit Submissions'
+			__( 'Form Submission', 'buddyforms' ),
+			__( 'Create Content', 'buddyforms' ),
+			__( 'Edit Submissions', 'buddyforms' )
 		) );
 	}
 
@@ -339,10 +344,9 @@ function buddyforms_metabox_form_setup() {
 			<label for="bf-form-type-select">
 				<select id="bf-form-type-select" name="buddyforms_options[form_type]">
 					<optgroup label="Form Type">
-						<option <?php selected( $form_type, 'contact' ) ?> value="contact">Contact Form</option>
-						<option <?php selected( $form_type, 'registration' ) ?> value="registration">Registration Form
-						</option>
-						<option <?php selected( $form_type, 'post' ) ?> value="post">Post Form</option>
+						<option <?php selected( $form_type, 'contact' ) ?> value="contact"><?php _e( 'Contact Form', 'buddyforms' ) ?></option>
+						<option <?php selected( $form_type, 'registration' ) ?> value="registration"><?php _e( 'Registration Form', 'buddyforms' ) ?></option>
+						<option <?php selected( $form_type, 'post' ) ?> value="post"><?php _e( 'Post Form', 'buddyforms' ) ?></option>
 					</optgroup>
 				</select>
 			</label>
@@ -353,9 +357,8 @@ function buddyforms_metabox_form_setup() {
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab ); ?>
-            <li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav"><a
-                        href="#<?php echo $tab_slug; ?>"
-                        data-toggle="tab"><?php echo $tab; ?></a>
+            <li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav">
+                <a href="#<?php echo $tab_slug; ?>" data-toggle="tab"><?php echo $tab; ?></a>
                 </li><?php
 				$i ++;
 			}

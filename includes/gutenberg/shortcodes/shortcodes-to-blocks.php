@@ -75,11 +75,11 @@ function buddyforms_shortcodes_to_block_init() {
 			),
 			'bf_label_add'     => array(
 				'type'    => 'string',
-				'default' => 'Create'
+				'default' => __( 'Create', 'buddyforms' )
 			),
 			'bf_label_view'    => array(
 				'type'    => 'string',
-				'default' => 'Display'
+				'default' => __( 'Display', 'buddyforms' )
 			),
 			'bf_nav_separator' => array(
 				'type'    => 'string',
@@ -188,11 +188,11 @@ function buddyforms_block_render_login_form( $attributes ) {
 	$attr = array(
 		'form_slug'      => empty( $attributes['bf_form_slug'] ) ? 'none' : $attributes['bf_form_slug'],
 		'redirect_url'   => empty( $attributes['bf_redirect_url'] ) ? '' : $attributes['bf_redirect_url'],
-		'title'          => empty( $attributes['bf_title'] ) ? __( 'Login' ) : $attributes['bf_title'],
-		'label_username' => empty( $attributes['bf_label_username'] ) ? __( 'Username or Email Address' ) : $attributes['bf_label_username'],
-		'label_password' => empty( $attributes['bf_label_password'] ) ? __( 'Password' ) : $attributes['bf_label_password'],
-		'label_remember' => empty( $attributes['bf_label_remember'] ) ? __( 'Remember Me' ) : $attributes['bf_label_remember'],
-		'label_log_in'   => empty( $attributes['bf_label_log_in'] ) ? __( 'Log In' ) : $attributes['bf_label_log_in'],
+		'title'          => empty( $attributes['bf_title'] ) ? __( 'Login', 'buddyforms' ) : $attributes['bf_title'],
+		'label_username' => empty( $attributes['bf_label_username'] ) ? __( 'Username or Email Address', 'buddyforms'  ) : $attributes['bf_label_username'],
+		'label_password' => empty( $attributes['bf_label_password'] ) ? __( 'Password', 'buddyforms'  ) : $attributes['bf_label_password'],
+		'label_remember' => empty( $attributes['bf_label_remember'] ) ? __( 'Remember Me', 'buddyforms'  ) : $attributes['bf_label_remember'],
+		'label_log_in'   => empty( $attributes['bf_label_log_in'] ) ? __( 'Log In', 'buddyforms'  ) : $attributes['bf_label_log_in'],
 	);
 
 	return buddyforms_view_login_form( $attr );
@@ -229,8 +229,8 @@ function buddyforms_block_navigation( $attributes ) {
 		$args = array(
 			'form_slug'  => $attributes['bf_form_slug'],
 			'separator'  => empty( $attributes['bf_nav_separator'] ) ? '' : $attributes['bf_nav_separator'],
-			'label_add'  => empty( $attributes['bf_label_add'] ) ? 'Add' : $attributes['bf_label_add'],
-			'label_view' => empty( $attributes['bf_label_view'] ) ? 'View' : $attributes['bf_label_view'],
+			'label_add'  => empty( $attributes['bf_label_add'] ) ? __( 'Add', 'buddyforms' ) : $attributes['bf_label_add'],
+			'label_view' => empty( $attributes['bf_label_view'] ) ? __( 'View', 'buddyforms' ) : $attributes['bf_label_view'],
 		);
 
 		if ( isset( $attributes['bf_nav_style'] ) ) {
