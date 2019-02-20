@@ -110,7 +110,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_subject = isset( $buddyform['registration']['activation_message_from_subject'] ) ? $buddyform['registration']['activation_message_from_subject'] : 'User Account Activation Mail';
 		$form_setup[]                    = new Element_Textbox( '<b>' . __( "Activation Message Subject", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_subject]", array(
 			'value'     => $activation_message_from_subject,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 		) );
 		// activation_message_text
@@ -119,7 +119,7 @@ class BuddyFormsMetaBoxRegistration {
 			: __('Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]', 'buddyforms');
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
 			'value'     => $activation_message_text,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 			'style'     => 'width: 100%; display: inline-block;'
 		) );
@@ -127,7 +127,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_name = isset( $buddyform['registration']['activation_message_from_name'] ) ? $buddyform['registration']['activation_message_from_name'] : '[blog_title]';
 		$form_setup[]                 = new Element_Textbox( '<b>' . __( "Activation From Name", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_name]", array(
 			'value'     => $activation_message_from_name,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 		) );
 		// activation_message_from_email
@@ -249,7 +249,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_subject = isset( $buddyform['on_user_update']['activation_message_from_subject'] ) ? $buddyform['on_user_update']['activation_message_from_subject'] : 'User Account Activation Mail';
 		$form_setup[]                    = new Element_Textbox( '<b>' . __( "Activation Message Subject", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_from_subject]", array(
 			'value'     => $activation_message_from_subject,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 		) );
 		// activation_message_text
@@ -258,7 +258,7 @@ class BuddyFormsMetaBoxRegistration {
 			: __("Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]", 'buddyforms');
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_text]", array(
 			'value'     => $activation_message_text,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 			'style'     => 'width: 100%; display: inline-block; ',
 		) );
@@ -266,7 +266,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_name = isset( $buddyform['on_user_update']['activation_message_from_name'] ) ? $buddyform['on_user_update']['activation_message_from_name'] : '[blog_title]';
 		$form_setup[]                 = new Element_Textbox( '<b>' . __( "Activation From Name", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_from_name]", array(
 			'value'     => $activation_message_from_name,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 		) );
 		// activation_message_from_email

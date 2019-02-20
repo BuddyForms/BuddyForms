@@ -302,7 +302,7 @@ function buddyforms_settings_page_tabs_content() {
 					$registration_templat   = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   ", 'buddyforms' );
                     $post_template          = __( "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ", 'buddyforms' );
 					$contact_templat        = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
-					$terms_label            = __('', 'buddyforms' );
+					$terms_label            = '';
 					?>
                     <div class="metabox-holder">
                         <div class="postbox buddyforms-metabox">

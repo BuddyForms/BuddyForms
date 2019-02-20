@@ -111,7 +111,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$element = new Element_Checkbox( '<b>' . __( 'AJAX', 'buddyforms' ) . '</b>', "buddyforms_options[bf_ajax]", array( 'bf_ajax' => __( 'Disable ajax form submission', 'buddyforms' ) ), array(
-		'shortDesc' => __( '', 'buddyforms' ),
+		'shortDesc' => '',
 		'value'     => $bf_ajax
 	) );
 
