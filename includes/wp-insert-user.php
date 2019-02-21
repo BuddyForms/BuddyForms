@@ -123,7 +123,6 @@ function buddyforms_wp_update_user() {
 				// send an activation link to the user asking them to activate there account
 				if ( ! $mail ) {
 					// General error message that one of the required field sis missing
-					$hasError = true;
 					Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 				}
 				wp_logout();
@@ -289,7 +288,6 @@ function buddyforms_wp_insert_user() {
 			// send an activation link to the user asking them to activate there account
 			if ( ! $mail ) {
 				// General error message that one of the required field sis missing
-				$hasError = true;
 				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 			}
 		}

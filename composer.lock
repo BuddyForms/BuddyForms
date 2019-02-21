@@ -321,12 +321,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "66b52fbf47a3a9dd623cdc1212677cdfbcc142fe"
+                "reference": "16ca33ecc67a625de250f476531dfe5de4c32ff2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/66b52fbf47a3a9dd623cdc1212677cdfbcc142fe",
-                "reference": "66b52fbf47a3a9dd623cdc1212677cdfbcc142fe",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/16ca33ecc67a625de250f476531dfe5de4c32ff2",
+                "reference": "16ca33ecc67a625de250f476531dfe5de4c32ff2",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-02-11T09:44:09+00:00"
+            "time": "2019-02-20T06:21:04+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -646,12 +646,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "ae7949ee7b865f0eb8b191c438cda63cad59d437"
+                "reference": "31ea59d632d3ac145300fffb2873a195172c0814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/ae7949ee7b865f0eb8b191c438cda63cad59d437",
-                "reference": "ae7949ee7b865f0eb8b191c438cda63cad59d437",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/31ea59d632d3ac145300fffb2873a195172c0814",
+                "reference": "31ea59d632d3ac145300fffb2873a195172c0814",
                 "shasum": ""
             },
             "require": {
@@ -663,6 +663,7 @@
                 "psr/http-message-implementation": "1.0"
             },
             "require-dev": {
+                "ext-zlib": "*",
                 "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
             },
             "suggest": {
@@ -708,7 +709,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2018-12-28T01:59:01+00:00"
+            "time": "2019-02-20T09:29:56+00:00"
         },
         {
             "name": "illuminate/contracts",
@@ -760,12 +761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "71b0671de51d3a3c14599c6c6f78c2a720ed80f5"
+                "reference": "66a6ce7da82927f4278872a26b1f3c2e20d215cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/71b0671de51d3a3c14599c6c6f78c2a720ed80f5",
-                "reference": "71b0671de51d3a3c14599c6c6f78c2a720ed80f5",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/66a6ce7da82927f4278872a26b1f3c2e20d215cf",
+                "reference": "66a6ce7da82927f4278872a26b1f3c2e20d215cf",
                 "shasum": ""
             },
             "require": {
@@ -784,7 +785,8 @@
                 "moontoast/math": "Required to use ordered UUIDs (^1.1).",
                 "ramsey/uuid": "Required to use Str::uuid() (^3.7).",
                 "symfony/process": "Required to use the composer class (^4.2).",
-                "symfony/var-dumper": "Required to use the dd function (^4.2)."
+                "symfony/var-dumper": "Required to use the dd function (^4.2).",
+                "vlucas/phpdotenv": "Required to use the env helper (^3.3)."
             },
             "type": "library",
             "extra": {
@@ -812,7 +814,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-02-17T09:49:31+00:00"
+            "time": "2019-02-18T19:35:14+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1052,16 +1054,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.11.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "48d211435ecb3671a2237614dc19fc2be185acb6"
+                "reference": "35dc8834ae9ad79b77c22d1e276fd838ca8c503d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/48d211435ecb3671a2237614dc19fc2be185acb6",
-                "reference": "48d211435ecb3671a2237614dc19fc2be185acb6",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/35dc8834ae9ad79b77c22d1e276fd838ca8c503d",
+                "reference": "35dc8834ae9ad79b77c22d1e276fd838ca8c503d",
                 "shasum": ""
             },
             "require": {
@@ -1107,7 +1109,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-01-29T16:35:35+00:00"
+            "time": "2019-02-06T21:23:55+00:00"
         },
         {
             "name": "nette/finder",
@@ -3421,12 +3423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "58add019d32bfd9ee7657dda64aa31900a2739b2"
+                "reference": "b32588547642e984501c5dfbd4a1e8c204786c20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/58add019d32bfd9ee7657dda64aa31900a2739b2",
-                "reference": "58add019d32bfd9ee7657dda64aa31900a2739b2",
+                "url": "https://api.github.com/repos/symfony/console/zipball/b32588547642e984501c5dfbd4a1e8c204786c20",
+                "reference": "b32588547642e984501c5dfbd4a1e8c204786c20",
                 "shasum": ""
             },
             "require": {
@@ -3486,7 +3488,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-31T09:53:43+00:00"
+            "time": "2019-02-19T18:29:52+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -3562,12 +3564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "f47ba47df31a4db6a96af0e1a72dacb0b70b858a"
+                "reference": "091fd557df9422472f877c3034b8454273b4a5b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/f47ba47df31a4db6a96af0e1a72dacb0b70b858a",
-                "reference": "f47ba47df31a4db6a96af0e1a72dacb0b70b858a",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/091fd557df9422472f877c3034b8454273b4a5b3",
+                "reference": "091fd557df9422472f877c3034b8454273b4a5b3",
                 "shasum": ""
             },
             "require": {
@@ -3610,7 +3612,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-02-14T09:10:17+00:00"
+            "time": "2019-02-19T18:29:52+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -4496,12 +4498,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "5f470b253d2682f74c75e6b2c97f04c6682567bb"
+                "reference": "65d772fd969419e264d1721e7a10f7ccde35c17b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/5f470b253d2682f74c75e6b2c97f04c6682567bb",
-                "reference": "5f470b253d2682f74c75e6b2c97f04c6682567bb",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/65d772fd969419e264d1721e7a10f7ccde35c17b",
+                "reference": "65d772fd969419e264d1721e7a10f7ccde35c17b",
                 "shasum": ""
             },
             "require": {
@@ -4561,7 +4563,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-02-16T18:46:38+00:00"
+            "time": "2019-02-19T18:29:52+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -4688,12 +4690,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Symplify/BetterPhpDocParser.git",
-                "reference": "f4eeff7bc75db5e4ab9019a9e848277340ec4922"
+                "reference": "1a63de11e23796e945497e53843089ab472c8c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/BetterPhpDocParser/zipball/f4eeff7bc75db5e4ab9019a9e848277340ec4922",
-                "reference": "f4eeff7bc75db5e4ab9019a9e848277340ec4922",
+                "url": "https://api.github.com/repos/Symplify/BetterPhpDocParser/zipball/1a63de11e23796e945497e53843089ab472c8c1b",
+                "reference": "1a63de11e23796e945497e53843089ab472c8c1b",
                 "shasum": ""
             },
             "require": {
@@ -4722,7 +4724,7 @@
                 "MIT"
             ],
             "description": "Slim wrapper around phpstan/phpdoc-parser with format preserving printer",
-            "time": "2019-02-16T21:35:43+00:00"
+            "time": "2019-02-20T15:51:30+00:00"
         },
         {
             "name": "symplify/coding-standard",
@@ -4730,12 +4732,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Symplify/CodingStandard.git",
-                "reference": "a6daa2a8c735aa1dc65211ca19c1ed7cc801ef1d"
+                "reference": "79b802a6436030ab6af721ab4b4afcbd33cc5c46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/CodingStandard/zipball/a6daa2a8c735aa1dc65211ca19c1ed7cc801ef1d",
-                "reference": "a6daa2a8c735aa1dc65211ca19c1ed7cc801ef1d",
+                "url": "https://api.github.com/repos/Symplify/CodingStandard/zipball/79b802a6436030ab6af721ab4b4afcbd33cc5c46",
+                "reference": "79b802a6436030ab6af721ab4b4afcbd33cc5c46",
                 "shasum": ""
             },
             "require": {
@@ -4769,7 +4771,7 @@
                 "MIT"
             ],
             "description": "Set of Symplify rules for PHP_CodeSniffer and PHP CS Fixer.",
-            "time": "2019-02-16T21:35:43+00:00"
+            "time": "2019-02-20T15:51:30+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
@@ -4777,12 +4779,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Symplify/EasyCodingStandard.git",
-                "reference": "09a05a73f4261d3d24e4f8b281e4e6218f1f73f7"
+                "reference": "84436e79eb71e77c6602343f11194a3ac6fbe003"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/EasyCodingStandard/zipball/09a05a73f4261d3d24e4f8b281e4e6218f1f73f7",
-                "reference": "09a05a73f4261d3d24e4f8b281e4e6218f1f73f7",
+                "url": "https://api.github.com/repos/Symplify/EasyCodingStandard/zipball/84436e79eb71e77c6602343f11194a3ac6fbe003",
+                "reference": "84436e79eb71e77c6602343f11194a3ac6fbe003",
                 "shasum": ""
             },
             "require": {
@@ -4833,7 +4835,7 @@
                 "MIT"
             ],
             "description": "Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer.",
-            "time": "2019-02-17T12:31:55+00:00"
+            "time": "2019-02-20T15:51:30+00:00"
         },
         {
             "name": "symplify/package-builder",
@@ -4841,12 +4843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Symplify/PackageBuilder.git",
-                "reference": "3be47ca6e39411c6b88a74e5760971e76be62079"
+                "reference": "e586d11890749ceb0e3e77efacb539165415fbd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/PackageBuilder/zipball/3be47ca6e39411c6b88a74e5760971e76be62079",
-                "reference": "3be47ca6e39411c6b88a74e5760971e76be62079",
+                "url": "https://api.github.com/repos/Symplify/PackageBuilder/zipball/e586d11890749ceb0e3e77efacb539165415fbd0",
+                "reference": "e586d11890749ceb0e3e77efacb539165415fbd0",
                 "shasum": ""
             },
             "require": {
@@ -4881,7 +4883,7 @@
                 "MIT"
             ],
             "description": "Dependency Injection, Console and Kernel toolkit for Symplify packages.",
-            "time": "2019-02-17T12:31:55+00:00"
+            "time": "2019-02-20T14:51:47+00:00"
         },
         {
             "name": "symplify/token-runner",
@@ -4889,12 +4891,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Symplify/TokenRunner.git",
-                "reference": "1246692d2f721e213c636282dafda0b4e60f9950"
+                "reference": "605fb06894a046b5cf84af15d4184f25e3fecdda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/TokenRunner/zipball/1246692d2f721e213c636282dafda0b4e60f9950",
-                "reference": "1246692d2f721e213c636282dafda0b4e60f9950",
+                "url": "https://api.github.com/repos/Symplify/TokenRunner/zipball/605fb06894a046b5cf84af15d4184f25e3fecdda",
+                "reference": "605fb06894a046b5cf84af15d4184f25e3fecdda",
                 "shasum": ""
             },
             "require": {
@@ -4925,7 +4927,7 @@
                 "MIT"
             ],
             "description": "Set of utils for PHP_CodeSniffer and PHP CS Fixer.",
-            "time": "2019-02-16T21:35:43+00:00"
+            "time": "2019-02-20T15:51:30+00:00"
         },
         {
             "name": "theseer/tokenizer",
