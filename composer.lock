@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BrainMaestro/composer-git-hooks.git",
-                "reference": "3f950b4323d79a98d39cfd50122995b17c72af87"
+                "reference": "606976d2882f3de75ae1c17e027034e69a337d84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BrainMaestro/composer-git-hooks/zipball/3f950b4323d79a98d39cfd50122995b17c72af87",
-                "reference": "3f950b4323d79a98d39cfd50122995b17c72af87",
+                "url": "https://api.github.com/repos/BrainMaestro/composer-git-hooks/zipball/606976d2882f3de75ae1c17e027034e69a337d84",
+                "reference": "606976d2882f3de75ae1c17e027034e69a337d84",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "composer",
                 "git"
             ],
-            "time": "2019-01-07T09:23:04+00:00"
+            "time": "2019-02-05T11:02:51+00:00"
         },
         {
             "name": "composer/semver",
@@ -3564,12 +3564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "091fd557df9422472f877c3034b8454273b4a5b3"
+                "reference": "4792c7baab24f95e8f0ec2da1145ff025c93cc73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/091fd557df9422472f877c3034b8454273b4a5b3",
-                "reference": "091fd557df9422472f877c3034b8454273b4a5b3",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/4792c7baab24f95e8f0ec2da1145ff025c93cc73",
+                "reference": "4792c7baab24f95e8f0ec2da1145ff025c93cc73",
                 "shasum": ""
             },
             "require": {
@@ -3612,7 +3612,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-02-19T18:29:52+00:00"
+            "time": "2019-02-20T23:39:50+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -3911,12 +3911,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "8dcd273733e789ffc3ff9b847bd3336bc106c3df"
+                "reference": "e2a7971b4be1c9b3dfaa24628466ccc90e9231bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/8dcd273733e789ffc3ff9b847bd3336bc106c3df",
-                "reference": "8dcd273733e789ffc3ff9b847bd3336bc106c3df",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/e2a7971b4be1c9b3dfaa24628466ccc90e9231bf",
+                "reference": "e2a7971b4be1c9b3dfaa24628466ccc90e9231bf",
                 "shasum": ""
             },
             "require": {
@@ -3992,7 +3992,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2019-02-17T09:56:33+00:00"
+            "time": "2019-02-21T09:57:57+00:00"
         },
         {
             "name": "symfony/mime",

@@ -1087,14 +1087,31 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
 }
 
 /**
- * Extract the form slug from a shortcode inside the given content
+ * Extract the form slug from a html inside the given content reading the inout hidden with the Id `form_slug`
  *
  * @param $content
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_shortcode( $content ) {
-	$form_slug = buddyforms_get_shortcode_tag( array( 'bf', 'buddyforms_form' ), array( 'form_slug', 'id' ), $content );
+function buddyforms_get_form_slug_from_html( $content ) {
+	$dom = new DOMDocument();
+	$dom->loadHTML( $content );
+
+	$form_input_node = $dom->getElementById( 'form_slug' );
+
+	return $form_input_node->getAttribute( 'value' );
+}
+
+/**
+ * Extract the form slug from a shortcode inside the given content
+ *
+ * @param $content
+ * @param array $shortcodes
+ *
+ * @return string
+ */
+function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array( 'bf', 'buddyforms_form' ) ) {
+	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 
 	if ( is_numeric( $form_slug ) ) {
 		$form_post = get_post( $form_slug );
@@ -1103,6 +1120,31 @@ function buddyforms_get_form_slug_from_shortcode( $content ) {
 
 	return $form_slug;
 }
+
+/**
+ * Extract the form slug from a shortcode inside the given content, if exist the shortcode or reading the hidden input form_slug from the html
+ *
+ * @param $content
+ * @param array $shortcodes
+ *
+ * @return string
+ */
+function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf', 'buddyforms_form' ) ){
+    //Extract from the a shortcode inside the content
+    $form_slug = buddyforms_get_shortcode_tag($shortcodes , array( 'form_slug', 'id' ), $content );
+    //Extract form the html inside the content, reading the hidden input form_slug
+	if ( empty( $form_slug ) ) {
+		$form_slug = buddyforms_get_form_slug_from_html( $content );
+	}
+
+    if ( is_numeric( $form_slug ) ) {
+		$form_post = get_post( $form_slug );
+		$form_slug = $form_post->post_name;
+	}
+
+	return $form_slug;
+}
+
 
 /**
  * Detext if is gutenberg
