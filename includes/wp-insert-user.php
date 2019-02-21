@@ -121,7 +121,8 @@ function buddyforms_wp_update_user() {
 				$mail = buddyforms_activate_account_mail( $activation_link, $user_id, $form_slug, 'on_user_update' );
 
 				// send an activation link to the user asking them to activate there account
-				if ( ! apply_filters('buddyforms_send_activation_mail_result', $mail, $user_id) ) {
+				$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $user_id );
+				if ( ! $was_send_activation_email ) {
 					// General error message that one of the required field sis missing
 					Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 				}
@@ -286,7 +287,8 @@ function buddyforms_wp_insert_user() {
 			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
 			// send an activation link to the user asking them to activate there account
-			if ( ! apply_filters('buddyforms_send_activation_mail_result', $mail, $new_user_id) ) {
+			$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $new_user_id );
+			if ( ! $was_send_activation_email ) {
 				// General error message that one of the required field sis missing
 				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 			}

@@ -53,7 +53,7 @@ function buddyforms_create_edit_form( $args ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
-	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
+	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 		$current_user_entry = new WP_Query( array(
 			'post_type'      => $post_type,
 			'fields'         => 'ids',

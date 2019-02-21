@@ -1094,12 +1094,18 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
  * @return string
  */
 function buddyforms_get_form_slug_from_html( $content ) {
-	$dom = new DOMDocument();
-	$dom->loadHTML( $content );
+	if ( ! empty( $content ) ) {
+		$dom = new DOMDocument();
+		$dom->loadHTML( $content );
 
-	$form_input_node = $dom->getElementById( 'form_slug' );
+		$form_input_node = $dom->getElementById( 'form_slug' );
 
-	return $form_input_node->getAttribute( 'value' );
+		if ( ! empty( $form_input_node ) && $form_input_node instanceof DOMElement) {
+			return $form_input_node->getAttribute( 'value' );
+		}
+	}
+
+	return '';
 }
 
 /**

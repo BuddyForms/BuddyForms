@@ -182,8 +182,10 @@ function buddyforms_process_submission( $args = Array() ) {
 				$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'field', $r_field );
 				if ( $save_usermeta ) {
 					buddyforms_update_user_meta( $user_id, $r_field['type'], $r_field['slug'] );
+					do_action( 'buddyforms_update_user_meta', $r_field, $user_id );
 				}
 			}
+
 		}
 
 		$args = array(
@@ -243,7 +245,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_type = $_POST['bf_post_type'];
 	}
 
-	if ( $post_id != 0 ) {
+	if ( $post_id != 0 && $form_type !== 'registration' ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
