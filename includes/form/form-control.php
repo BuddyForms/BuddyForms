@@ -243,7 +243,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_type = $_POST['bf_post_type'];
 	}
 
-	if ( $post_id != 0 ) {
+	if ( $post_id != 0 && !empty($post_id) ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
@@ -253,6 +253,11 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		// Check if the user is author of the post
 		$user_can_edit = false;
+
+        if($buddyforms[$form_slug]['form_type']=="registration"){
+            $user_can_edit = true;
+        }
+
 		if ( $the_post->post_author == $user_id ) {
 			$user_can_edit = true;
 		}
@@ -270,9 +275,9 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
-	if ( $post_id == 0 && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
+	if ( ($post_id == 0 || empty($post_id)) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 		$user_can_edit = true;
-	} elseif ( $post_id != 0 && current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
+	} elseif ( ($post_id != 0 || !empty($post_id))&& current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
 		$user_can_edit = true;
 	}
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
@@ -289,7 +294,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 
 	// If post_id == 0 a new post is created
-	if ( $post_id == 0 ) {
+	if ( $post_id == 0 || empty($post_id) ) {
 		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 		// $the_post = get_default_post_to_edit( $post_type );
 	}
@@ -313,7 +318,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	$action      = 'save';
 	$post_status = $buddyforms[ $form_slug ]['status'];
-	if ( $post_id != 0 ) {
+	if ( is_user_logged_in() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}

@@ -280,18 +280,21 @@ function buddyforms_wp_insert_user() {
 				$bf_pw_redirect_url = esc_url( $_POST['bf_pw_redirect_url'] );
 				add_user_meta( $new_user_id, 'bf_pw_redirect_url', $bf_pw_redirect_url, true );
 			}
+			/*$sent_email_active = true;
+			$sent_email_active = apply_filters('buddyforms_sent_email_on_registration',$sent_email_active);
+			if($sent_email_active){
+			    // send an email to the admin alerting them of the registration
+                wp_new_user_notification( $new_user_id );
 
-			// send an email to the admin alerting them of the registration
-			wp_new_user_notification( $new_user_id );
+                $mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
-			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
-
-			// send an activation link to the user asking them to activate there account
-			if ( ! $mail ) {
-				// General error message that one of the required field sis missing
-				$hasError = true;
-				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
-			}
+                // send an activation link to the user asking them to activate there account
+                if ( ! $mail ) {
+                    // General error message that one of the required field sis missing
+                    $hasError = true;
+                    Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
+                }
+			}*/
 		}
 
 		return $new_user_id;
