@@ -207,7 +207,7 @@ function buddyforms_login_redirect( $redirect_to, $request, $user )  {
 	return $redirect_to;
 }
 
-add_filter( 'the_content', 'buddyforms_registration_page_content', 999 );
+add_filter( 'the_content', 'buddyforms_registration_page_content', 9999 );
 function buddyforms_registration_page_content( $content ) {
 	global $post;
 
