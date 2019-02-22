@@ -391,8 +391,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$found = false;
 
 			if(!empty($post->post_content)) {
-				$post_content = apply_filters( 'the_content', $post->post_content );
-				$form_slug    = buddyforms_get_form_slug_from_content( $post_content, array( 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
+				$form_slug    = buddyforms_get_form_slug_from_content( $post->post_content, array( 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
 				// check the post content for the short code
 				$found = ( ! empty( $form_slug ) );
 			}
@@ -421,8 +420,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 *
 		 * @package buddyforms
 		 * @since 1.0
+		 *
+		 * @param string $content This is the page content,
+         * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
 		 */
-		public static function front_js_css() {
+		public static function front_js_css( $content = '' ) {
 			global $wp_scripts;
 
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
@@ -515,6 +517,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
+			do_action( 'buddyforms_front_js_css_after_enqueue', $content );
 		}
 
 		/**

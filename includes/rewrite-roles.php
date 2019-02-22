@@ -207,7 +207,7 @@ function buddyforms_login_redirect( $redirect_to, $request, $user )  {
 	return $redirect_to;
 }
 
-add_filter( 'the_content', 'buddyforms_registration_page_content', 999 );
+add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
 function buddyforms_registration_page_content( $content ) {
 	global $post;
 
@@ -233,6 +233,10 @@ function buddyforms_registration_page_content( $content ) {
 			$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
 		}
 	}
+
+	//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
+	BuddyForms::front_js_css($content);
+	BuddyForms::load_tk_font_icons();
 
 	return $content;
 }
