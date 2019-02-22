@@ -103,21 +103,21 @@ function buddyforms_welcome_screen_content() {
 
             <h1><?php _e( 'Welcome to BuddyForms', 'buddyforms' ) ?> <?php echo BUDDYFORMS_VERSION ?></h1>
 
-            <p class="about-text"><?php _e( 'Enjoy Groundbreaking New Features!', 'buddyforms' ) ?></p>
+            <p class="about-text"><?php _e( 'Enjoy Groundbreaking New Features and Add-ons!', 'buddyforms' ) ?></p>
 
             <h2 class="nav-tab-wrapper wp-clearfix">
                 <a href="about.php" class="nav-tab nav-tab-active"><?php _e( 'What’s New', 'buddyforms' ) ?></a>
                 <a href="edit.php?post_type=buddyforms&page=buddyforms-addons" target="_new"
-                   title="<?php _e( 'Browse BuddyForms Add-ons', 'buddyforms' ) ?>"
-                   class="nav-tab"><?php _e( 'BuddyForms Add-ons', 'buddyforms' ) ?></a>
+                   title="<?php _e( 'Gutenberg Support', 'buddyforms' ) ?>"
+                   class="nav-tab"><?php _e( 'Add Ons', 'buddyforms' ) ?></a>
             </h2>
 
             <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
 
                 <div class="xcol col-big">
-                    <h2><?php _e( 'A new Form Designer for Beautiful Forms', 'buddyforms' ) ?></h2>
+                    <h2><?php _e( 'Gutenberg Support', 'buddyforms' ) ?></h2>
                     <p class="lead">
-	                    <?php _e( 'Create Individual Forms to Match your Website Layout and Design!', 'buddyforms' ) ?>
+	                    <?php _e( 'BuddyForms support now Gutenberg out of the box and comes with 5 different Gutenberg Blocks ', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -125,8 +125,8 @@ function buddyforms_welcome_screen_content() {
                     <div class="imgframe">
                         <img class="nopad"
                              style="margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/form-designer.png' ?>"
-                             alt="<?php _e( 'BuddyForms Form Wizard Screenshots', 'buddyforms' ) ?>">
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-overview.png' ?>"
+                             alt="<?php _e( 'Gutenberg', 'buddyforms' ) ?>">
                     </div>
                 </div>
 
@@ -137,9 +137,9 @@ function buddyforms_welcome_screen_content() {
             <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
 
                 <div class="xcol col-big">
-                    <h2><?php _e( 'All Form Types', 'buddyforms' ) ?></h2>
+                    <h2><?php _e( 'Embed Forms', 'buddyforms' ) ?></h2>
                     <p class="lead">
-	                    <?php _e( 'Contact Forms. Signup Forms. Post Forms.', 'buddyforms' ) ?>
+				        <?php _e( 'Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -147,8 +147,92 @@ function buddyforms_welcome_screen_content() {
                     <div class="imgframe">
                         <img class="nopad"
                              style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/form-templates.png' ?>"
-                             alt="<?php _e( 'BuddyForms Form Wizard Screenshots', 'buddyforms' ) ?>">
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-form.gif' ?>"
+                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
+
+                <div class="xcol col-big">
+                    <h2><?php _e( 'List Submissions', 'buddyforms' ) ?></h2>
+                    <p class="lead">
+				        <?php _e( 'You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.', 'buddyforms' ) ?>
+                    </p>
+                </div>
+
+                <div class="xcol col-small">
+                    <div class="imgframe">
+                        <img class="nopad"
+                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-list-submissions.gif' ?>"
+                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
+
+                <div class="xcol col-big">
+                    <h2><?php _e( 'Embed Navigation', 'buddyforms' ) ?></h2>
+                    <p class="lead">
+				        <?php _e( 'Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder', 'buddyforms' ) ?>
+                    </p>
+                </div>
+
+                <div class="xcol col-small">
+                    <div class="imgframe">
+                        <img class="nopad"
+                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-add-navigation.gif' ?>"
+                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
+
+                <div class="xcol col-big">
+                    <h2><?php _e( 'Login/ Logout Form', 'buddyforms' ) ?></h2>
+                    <p class="lead">
+				        <?php _e( 'Display a login form or a logout button if the user is logged in.', 'buddyforms' ) ?>
+                    </p>
+                </div>
+
+                <div class="xcol col-small">
+                    <div class="imgframe">
+                        <img class="nopad"
+                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-login-form.gif' ?>"
+                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
+
+                <div class="xcol col-big">
+                    <h2><?php _e( ' Password Reset', 'buddyforms' ) ?></h2>
+                    <p class="lead">
+				        <?php _e( 'Display a password reset form. This can be helpful if you want to create a registration form and ask the user to create a password first after he clicks on the activation link. Select the page with the password reset block as a redirect link in the registration form settings if you like to create this kind of funnel.', 'buddyforms' ) ?>
+                    </p>
+                </div>
+
+                <div class="xcol col-small">
+                    <div class="imgframe">
+                        <img class="nopad"
+                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
+                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-password-reset.gif' ?>"
+                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
                     </div>
                 </div>
 

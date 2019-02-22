@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 2.3
+Stable tag: 2.3.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,46 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.3.1 – 22 Feb 2019
+* Added Gutenberg Support
+* Add new Blocks for Embed Forms, Submissions, Registration and Login Forms.
+* Added the ability to show other user submission if the permission is enabled.
+* Fixed the permission auto check. Now the permissions follow the next rules:
+--> For pro version -if the form is new only select create-edit-delete by default for admin and editor
+--> Free version -all permission checked for all roles except for all submissions Fix/all submission permission
+* Fixed Upload field - image url is getting reset on save
+* Added the user_login to the submission list to get the value form the user meta.
+* Improved the user_login and email field to show in the single submission view.
+* Fixed the label duplication issue in the single submission view
+* Change the button text from Close to Back
+* Fixed the user fields first and last name to store correctly into the user meta.
+* Fixed the issue related to create multiples entries when the registration form was used to update an user.
+* Added the different Column name for table template
+* Changed the post entry title to use the user nicename when the pest entry belong to a registration form.
+* Added a new tag to define the style of the list in the shortcodes.
+* Updated the default value for the post style
+* Fixed the warning inside the Gutenberg shortcode
+* Added an Author column to the submission list in the administration, to easily identify the author of the entry. If the entry belong to an un-authenticated user it will show `Anonymous`
+* Changed the name of the composer library to avoid conflict with composer 2
+* Added the styles to organize the permission chk.
+* Added the validation for the permissions inside the submission view.
+* Added the value as class inside the container of the checkbox to easily style each one.
+* Removed the home page from the activation page list. Now to redirect to WordPress home is necessary to use the HomePage option in the list.
+* Avoid to ask for permission to show the form in the registration forms.
+* Fixed the fields email and user_login to show if the user is not logged in.
+* Improved the code.
+* Localized ready for all strings
+* Fixed the empty localization strings
+* Updating the translation file. Adding the Spanish translation.
+* updated composer.lock
+* Fixed the undefined index name in the submission page
+* Add a new function to detect if is gutenberg
+* Added a filter to disable the validation of the email send to the user on activation or update
+* Improved the assets included in the form.
+* Added a function to extract the form slug reading a shortcode or direct from the html after the shortcode is processed reading the hidden input form_slug.
+* Fixed security issue related to the registration form. It was including the last entry id in the hidden field of a registration form where it suppose to be empty. Now the update user process work seamless.
+* Code cleaning
+
 
 = 2.3 – 21 Jan 2019
 * Removed an left over alert from the dropdown rewrite
