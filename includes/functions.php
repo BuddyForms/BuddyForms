@@ -1095,14 +1095,20 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
  */
 function buddyforms_get_form_slug_from_html( $content ) {
 	if ( ! empty( $content ) ) {
-		$dom = new DOMDocument();
-		$dom->loadHTML( $content );
+	    try {
+	        libxml_use_internal_errors(true);
+		    $dom                  = new DOMDocument();
+		    $dom->validateOnParse = false;
+		    $content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
+		    $dom->loadHTML( $content );
+		    $form_input_node = $dom->getElementById( 'form_slug' );
+		    libxml_use_internal_errors(false);
+		    if ( ! empty( $form_input_node ) && $form_input_node instanceof DOMElement ) {
+			    return $form_input_node->getAttribute( 'value' );
+		    }
+	    } catch (Exception $e){
 
-		$form_input_node = $dom->getElementById( 'form_slug' );
-
-		if ( ! empty( $form_input_node ) && $form_input_node instanceof DOMElement) {
-			return $form_input_node->getAttribute( 'value' );
-		}
+        }
 	}
 
 	return '';
