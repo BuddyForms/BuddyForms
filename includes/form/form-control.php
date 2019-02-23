@@ -315,7 +315,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	$action      = 'save';
 	$post_status = $buddyforms[ $form_slug ]['status'];
-	if ( $post_id != 0 ) {
+	if ( is_user_logged_in() ) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
