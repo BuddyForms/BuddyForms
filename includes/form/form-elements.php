@@ -455,6 +455,11 @@ function buddyforms_form_elements( $form, $args ) {
 							'editor_class'  => 'textInMce',
 						);
 
+						//check if post has manual excerpt
+						if (has_excerpt($post_id)) {
+							$customfield_val = get_the_excerpt($post_id);
+						}
+
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
 						$wp_editor = ob_get_contents();
 						ob_clean();
