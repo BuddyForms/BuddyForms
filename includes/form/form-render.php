@@ -7,16 +7,16 @@
  */
 function buddyforms_form_html( $args ) {
 	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id, $form_slug;
-	
+
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
-		
+
 		return $args;
 	}
-	
+
 	$post_type = $the_post = $customfields = $post_id = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
-	
+
 	// Extract the form args
 	extract( shortcode_atts( array(
 		'post_type'    => '',
@@ -29,14 +29,14 @@ function buddyforms_form_html( $args ) {
 		'form_slug'    => '',
 		'form_notice'  => '',
 	), $args ) );
-	
+
 	$is_registration_form   = ! empty( $buddyforms[ $form_slug ]['form_type'] ) && 'registration' === $buddyforms[ $form_slug ]['form_type'];
 	$need_registration_form = ! empty( $buddyforms[ $form_slug ]['public_submit'] ) && 'registration_form' === $buddyforms[ $form_slug ]['public_submit'];
 
 	if ( ! is_user_logged_in() && !$is_registration_form && $need_registration_form ) {
 		return buddyforms_get_wp_login_form( $form_slug );
 	}
-	
+
 	$user_can_edit = false;
 	if ( empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 		$user_can_edit = true;
@@ -472,7 +472,7 @@ function buddyforms_form_html( $args ) {
 	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template() : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-		$form_html .= '<div style="text-align: right; opacity: 0.4; font-size: 12px; margin: 30px 0 0;" clss="branding">Proudly brought to you by <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
+		$form_html .= '<div style="text-align: right; opacity: 0.4; font-size: 12px; margin: 30px 0 0;" clss="branding">' . __( 'Proudly brought to you by', 'buddyforms' ) . ' <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
 	}
 
 	$form_html .= '</div>'; // the_buddyforms_form end

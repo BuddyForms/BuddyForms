@@ -31,11 +31,11 @@ function buddyforms_wp_update_user() {
 	if ( ! empty( $_POST["user_email"] ) ) {
 		$user_args['user_email'] = sanitize_email( $_POST["user_email"] );
 	}
-	if ( ! empty( $_POST["first_name"] ) ) {
-		$user_args['first_name'] = sanitize_text_field( $_POST["first_name"] );
+	if ( ! empty( $_POST["user_first"] ) ) {
+		$user_args['first_name'] = sanitize_text_field( $_POST["user_first"] );
 	}
-	if ( ! empty( $_POST["last_name"] ) ) {
-		$user_args['last_name'] = sanitize_text_field( $_POST["last_name"] );
+	if ( ! empty( $_POST["user_last"] ) ) {
+		$user_args['last_name'] = sanitize_text_field( $_POST["user_last"] );
 	}
 	if ( ! empty( $_POST["website"] ) ) {
 		$user_args['user_url'] = esc_url( $_POST["website"] );
@@ -47,21 +47,21 @@ function buddyforms_wp_update_user() {
 	// invalid email?
 	if ( ! is_email( $user_args['user_email'] ) ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __( 'Error: Invalid email', 'buddyforms' ) );
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) );
 	}
 	// invalid username?
 	if ( ! validate_username( $user_args['user_login'] ) ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) );
 	}
 	// empty username?
 	if ( $user_args['user_login'] == '' ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
 	}
 	if ( $user_args['user_pass'] == '' ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
+		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
 	}
 
 	if ( isset( $_POST["user_pass"] ) ) {
@@ -81,7 +81,7 @@ function buddyforms_wp_update_user() {
 			$hasError = true;
 			foreach ( $errors as $error ) {
 				$message = buddyforms_reset_password_errors()->get_error_message();
-				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span> Error: ' . $message );
+				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
 			}
 		}
 	}
@@ -121,9 +121,9 @@ function buddyforms_wp_update_user() {
 				$mail = buddyforms_activate_account_mail( $activation_link, $user_id, $form_slug, 'on_user_update' );
 
 				// send an activation link to the user asking them to activate there account
-				if ( ! $mail ) {
+				$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $user_id );
+				if ( ! $was_send_activation_email ) {
 					// General error message that one of the required field sis missing
-					$hasError = true;
 					Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 				}
 				wp_logout();
@@ -179,12 +179,12 @@ function buddyforms_wp_insert_user() {
 		// invalid email?
 		if ( ! is_email( $user_email ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __( 'Error: Invalid email', 'buddyforms' ) );
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) );
 		}
 		// Email address already registered?
 		if ( email_exists( $user_email ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"></span>' . __( 'Error: Email already registered', 'buddyforms' ) );
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Email already registered', 'buddyforms' ) );
 		}
 		if ( isset( $buddyforms[ $form_slug ]['public_submit_username_from_email'] ) ) {
 			$user_login = explode( '@', $user_email );
@@ -193,17 +193,17 @@ function buddyforms_wp_insert_user() {
 		// Username already registered?
 		if ( username_exists( $user_login ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Username already taken', 'buddyforms' ) );
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Username already taken', 'buddyforms' ) );
 		}
 		// invalid username?
 		if ( ! validate_username( $user_login ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) );
 		}
 		// empty username?
 		if ( $user_login == '' ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"></span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
 		}
 
 		if ( $user_pass == '' ) {
@@ -227,7 +227,7 @@ function buddyforms_wp_insert_user() {
 			$hasError = true;
 			foreach ( $errors as $error ) {
 				$message = buddyforms_reset_password_errors()->get_error_message();
-				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"></span> Error: ' . $message );
+				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
 			}
 		}
 
@@ -287,9 +287,9 @@ function buddyforms_wp_insert_user() {
 			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
 
 			// send an activation link to the user asking them to activate there account
-			if ( ! $mail ) {
+			$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $new_user_id );
+			if ( ! $was_send_activation_email ) {
 				// General error message that one of the required field sis missing
-				$hasError = true;
 				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
 			}
 		}
@@ -436,7 +436,7 @@ function buddyforms_auth_signon( $user ) {
 	$need_activation = get_user_meta( $user->ID, 'has_to_be_activated', true );
 
 	if ( ! empty( $need_activation ) ) {
-		$user = new WP_Error( 'activation_failed', __( '<strong>ERROR</strong>: User is not activated.' ) );
+		$user = new WP_Error( 'activation_failed', __( '<strong>ERROR</strong>: User is not activated.', 'buddyforms' ) );
 	}
 
 	return $user;

@@ -7,13 +7,15 @@
 function buddyforms_form_elements( $form, $args ) {
 	global $buddyforms, $field_id;
 
+	$customfields = $post_id = $form_slug = '';
+
 	extract( $args );
 
-	if ( ! isset( $customfields ) ) {
+	if ( empty( $customfields ) ) {
 		return;
 	}
 
-	foreach ( $customfields as $field_id => $customfield ) :
+	foreach ( $customfields as $field_id => $customfield ) {
 
 		if ( isset( $customfield['slug'] ) ) {
 			$slug = sanitize_title( $customfield['slug'] );
@@ -23,7 +25,7 @@ function buddyforms_form_elements( $form, $args ) {
 			$slug = sanitize_title( $customfield['name'] );
 		}
 
-		if ( $slug != '' ) :
+		if ( $slug != '' ) {
 
 			$customfield_val = '';
 			if ( isset( $_POST[ $slug ] ) ) {
@@ -107,16 +109,22 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+						// @since 2.3 we remove is_admin form the if because is not clear
+						// old condition
+						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
+						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-								break;
+								$element_attr['value'] = $current_user->user_login;
 							}
 							$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						}
 						break;
 
 					case 'user_email':
-						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+						// @since 2.3 we remove is_admin form the if because is not clear
+						// old condition
+						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
+						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
 								$element_attr['value'] = $current_user->user_email;
 							}
@@ -181,9 +189,9 @@ function buddyforms_form_elements( $form, $args ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
 						} else {
 
-							$element_attr['id'] = 'buddyforms_form_title';
-							$element_attr['value'] = $post_title;
-							$element_attr['shortDesc'] =  $description;
+							$element_attr['id']        = 'buddyforms_form_title';
+							$element_attr['value']     = $post_title;
+							$element_attr['shortDesc'] = $description;
 
 							if ( isset( $customfield['required'] ) ) {
 								$element_attr = array_merge( $element_attr, array( 'required' => true ) );
@@ -513,67 +521,64 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'featured_image':
-                        $upload_error_validation_message = isset( $customfield['upload_error_validation_message'] ) ? $customfield['upload_error_validation_message'] : "";
-                        $max_file_size                   = isset( $customfield['max_file_size'] ) ? $customfield['max_file_size'] :1;
-                        $validation_error_message                 = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] :'';
-                        $required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" :'';
-						$attachment_ids = get_post_thumbnail_id( $post_id );
-						$attachments    = array_filter( explode( ',', $attachment_ids ) );
-                        $attachment_ids = get_post_thumbnail_id( $post_id );
-                        $attachments    = array_filter( explode( ',', $attachment_ids ) );
-                        $id = $slug;
-                        $action= isset($_GET['action']) ? $_GET['action'] : "" ;
-                        $entry = isset($_GET['entry']) ? $_GET['entry'] : "" ;
-                        $page = isset($_GET['page']) ? $_GET['page'] : "" ;
-                        //If Entry is empty we check if we are in a edit entry page
-                        if(empty($entry)){
-                            $entry = isset($_GET['post']) ? $_GET['post'] : "";
-                        }
-                        $column_val ="";
-                        $result = "";
-                        $result_value ="";
-                        $entries = array();
-                        $entries_result="";
-                        if ($post_id > 0){
-                            $column_val =  get_post_meta( $post_id, $id, true );
-                            $attachmet_id = explode(",",$column_val);
-                            foreach ($attachmet_id as $id_value){
-                                $metadata =   wp_prepare_attachment_for_js($id_value);
-                                if($metadata != null){
-                                    $url = wp_get_attachment_thumb_url( $id_value );
-                                    $result .= $id_value.",";
-                                    $mockFile = new stdClass();
-                                    $mockFile->name = $metadata['filename'];
-                                    $mockFile->url = $url;
-                                    $mockFile->attachment_id = $id_value;
-                                    $mockFile->size = $metadata['filesizeInBytes'];
-                                    $entries[$id_value]=$mockFile;
-                                }
-                            }
-                        }
-                        if(count($entries) > 0){
+						$upload_error_validation_message = isset( $customfield['upload_error_validation_message'] ) ? $customfield['upload_error_validation_message'] : "";
+						$max_file_size                   = isset( $customfield['max_file_size'] ) ? $customfield['max_file_size'] : 1;
+						$validation_error_message        = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] : '';
+						$required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" : '';
+						$attachment_ids                  = get_post_thumbnail_id( $post_id );
+						$attachments                     = array_filter( explode( ',', $attachment_ids ) );
+						$attachment_ids                  = get_post_thumbnail_id( $post_id );
+						$attachments                     = array_filter( explode( ',', $attachment_ids ) );
+						$id                              = $slug;
+						$action                          = isset( $_GET['action'] ) ? $_GET['action'] : "";
+						$entry                           = isset( $_GET['entry'] ) ? $_GET['entry'] : "";
+						$page                            = isset( $_GET['page'] ) ? $_GET['page'] : "";
+						//If Entry is empty we check if we are in a edit entry page
+						if ( empty( $entry ) ) {
+							$entry = isset( $_GET['post'] ) ? $_GET['post'] : "";
+						}
+						$column_val     = "";
+						$result         = "";
+						$result_value   = "";
+						$entries        = array();
+						$entries_result = "";
+						if ( $post_id > 0 ) {
+							$column_val   = get_post_meta( $post_id, $id, true );
+							$attachmet_id = explode( ",", $column_val );
+							foreach ( $attachmet_id as $id_value ) {
+								$metadata = wp_prepare_attachment_for_js( $id_value );
+								if ( $metadata != null ) {
+									$url                     = wp_get_attachment_thumb_url( $id_value );
+									$result                  .= $id_value . ",";
+									$mockFile                = new stdClass();
+									$mockFile->name          = $metadata['filename'];
+									$mockFile->url           = $url;
+									$mockFile->attachment_id = $id_value;
+									$mockFile->size          = $metadata['filesizeInBytes'];
+									$entries[ $id_value ]    = $mockFile;
+								}
+							}
+						}
+						if ( count( $entries ) > 0 ) {
 
-                            $entries_result = json_encode($entries);
-                        }
-                        if(!empty($result))
-                        {
-                            $result_value = rtrim(trim($result), ',');
-                        }
-                        $label_name = $customfield['name'];
+							$entries_result = json_encode( $entries );
+						}
+						if ( ! empty( $result ) ) {
+							$result_value = rtrim( trim( $result ), ',' );
+						}
+						$label_name = $customfield['name'];
 
-                        $message = "Drop the image here to upload";
-                        $str = '<div class=" bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
-                        $box = "<div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
+						$message = __( 'Drop the image here to upload', 'buddyforms' );
+						$str     = '<div class=" bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
+						$box     = "<div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
-                                          
                                               <span>$message</span>
                                          </div>
                                         <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
-                                         
                                  </div></div></div>";
-                    $form->addElement(new Element_HTML("<label>$label_name</label>"));
-                    $form->addElement( new Element_HTML( $box ) );
-                    $form->addElement(new Element_HTML("<span class='help-inline'>$description</span>"));
+						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
+						$form->addElement( new Element_HTML( $box ) );
+						$form->addElement( new Element_HTML( "<span class='help-inline'>$description</span>" ) );
 						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
 
 						if ( $attachments ) {
@@ -649,26 +654,26 @@ function buddyforms_form_elements( $form, $args ) {
 
 						break;
 					case 'upload':
-						$max_size                 = '2';
-						$accepted_files           = 'image/*';
-						$multiple_files           = "1";
-						$delete_files             = false;
-						$description              = "";
-						$required                 = "";
-						$ensure_amount            = "";
-						$validation_error_message = "";
-						$upload_error_validation_message = "";
-						$label_name               = "";
-                        $multiple_files_validation_message = "";
+						$max_size                          = '2';
+						$accepted_files                    = 'image/*';
+						$multiple_files                    = "1";
+						$delete_files                      = false;
+						$description                       = "";
+						$required                          = "";
+						$ensure_amount                     = "";
+						$validation_error_message          = "";
+						$upload_error_validation_message   = "";
+						$label_name                        = "";
+						$multiple_files_validation_message = "";
 						if ( isset( $customfield['name'] ) ) {
 							$label_name = $customfield['name'];
 						}
 						if ( isset( $customfield['required'] ) ) {
 							$required = $customfield['required'][0];
 						}
-                        if ( isset( $customfield['ensure_amount'] ) ) {
-                            $ensure_amount = $customfield['ensure_amount'][0];
-                        }
+						if ( isset( $customfield['ensure_amount'] ) ) {
+							$ensure_amount = $customfield['ensure_amount'][0];
+						}
 						if ( isset( $customfield['validation_error_message'] ) ) {
 							$validation_error_message = $customfield['validation_error_message'];
 						}
@@ -682,17 +687,17 @@ function buddyforms_form_elements( $form, $args ) {
 							$accepted_files = $customfield['accepted_files'];
 						}
 						if ( isset( $customfield['multiple_files'] ) ) {
-                            $multiple_files = $customfield['multiple_files'];
+							$multiple_files = $customfield['multiple_files'];
 
-                        }
-                        if ( isset( $customfield['multiple_files_validation_message'] ) ) {
-                            $multiple_files_validation_message = $customfield['multiple_files_validation_message'];
+						}
+						if ( isset( $customfield['multiple_files_validation_message'] ) ) {
+							$multiple_files_validation_message = $customfield['multiple_files_validation_message'];
 
-                        }
-                        if ( isset( $customfield['upload_error_validation_message'] ) ) {
-                            $upload_error_validation_message = $customfield['upload_error_validation_message'];
+						}
+						if ( isset( $customfield['upload_error_validation_message'] ) ) {
+							$upload_error_validation_message = $customfield['upload_error_validation_message'];
 
-                        }
+						}
 
 						if ( isset( $customfield['delete_files'] ) ) {
 							$param_value  = $customfield['delete_files'][0];
@@ -700,17 +705,17 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$upload_element = new Element_Upload( $slug, $customfield_val, array(
-							'id'                       => $slug,
-							"file_limit"               => $max_size,
-							'accepted_files'           => $accepted_files,
-							'multiple_files'           => $multiple_files,
-							'delete_files'             => $delete_files,
-							'mandatory'                => $required,
-							'ensure_amount'            => $ensure_amount,
-							'validation_error_message' => $validation_error_message,
+							'id'                                => $slug,
+							"file_limit"                        => $max_size,
+							'accepted_files'                    => $accepted_files,
+							'multiple_files'                    => $multiple_files,
+							'delete_files'                      => $delete_files,
+							'mandatory'                         => $required,
+							'ensure_amount'                     => $ensure_amount,
+							'validation_error_message'          => $validation_error_message,
 							"multiple_files_validation_message" => $multiple_files_validation_message,
-							"upload_error_validation_message" => $upload_error_validation_message,
-							"shortDesc"                => $description
+							"upload_error_validation_message"   => $upload_error_validation_message,
+							"shortDesc"                         => $description
 						) );
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );
@@ -791,7 +796,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$file_element = '<div class="bf_field_group">';
 						if ( $labels_layout != 'inline' ) {
-							$file_element .= '<label for="_' . $slug . '">'. $name;
+							$file_element .= '<label for="_' . $slug . '">' . $name;
 
 							if ( isset( $customfield['required'] ) ) {
 								$file_element .= $form->renderRequired();
@@ -977,13 +982,14 @@ function buddyforms_form_elements( $form, $args ) {
 									}
 								}
 
-								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), array( 'value'     => $value,
-								                                                                                                          'shortDesc' => $shortDesc,
+								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), array(
+									'value'     => $value,
+									'shortDesc' => $shortDesc,
 								) );
 
 								$element->setAttribute( 'data-storage', 'false' );
 
-									if ( isset( $option['required'] ) ) {
+								if ( isset( $option['required'] ) ) {
 									$element->setAttribute( 'required', 'required' );
 								}
 
@@ -1016,6 +1022,6 @@ function buddyforms_form_elements( $form, $args ) {
 				}
 			}
 
-		endif;
-	endforeach;
+		}
+	}
 }

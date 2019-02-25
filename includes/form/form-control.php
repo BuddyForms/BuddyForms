@@ -78,7 +78,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		return array(
 			'hasError'      => true,
 			'form_slug'     => $form_slug,
-			'error_message' => __( 'SPAM Detected!', 'buddyform' ),
+			'error_message' => __( 'SPAM Detected!', 'buddyforms' ),
 		);
 	}
 
@@ -182,8 +182,10 @@ function buddyforms_process_submission( $args = Array() ) {
 				$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'field', $r_field );
 				if ( $save_usermeta ) {
 					buddyforms_update_user_meta( $user_id, $r_field['type'], $r_field['slug'] );
+					do_action( 'buddyforms_update_user_meta', $r_field, $user_id );
 				}
 			}
+
 		}
 
 		$args = array(
@@ -243,7 +245,7 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_type = $_POST['bf_post_type'];
 	}
 
-	if ( $post_id != 0 ) {
+	if ( $post_id != 0 && $form_type !== 'registration' ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
@@ -313,7 +315,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	$action      = 'save';
 	$post_status = $buddyforms[ $form_slug ]['status'];
-	if ( $post_id != 0 ) {
+	if ( is_user_logged_in() && $post_id != 0) {
 		$action      = 'update';
 		$post_status = get_post_status( $post_id );
 	}
@@ -354,7 +356,7 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		$have_user_fields = false;
 		foreach ( $customfields as $customfield ) {
-			if ( in_array( $customfield, buddyforms_user_fields_array() ) ) {
+			if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
 				$have_user_fields = true;
 				break;
 			}
@@ -389,7 +391,13 @@ function buddyforms_process_submission( $args = Array() ) {
 			update_post_meta( $post_id, "_bf_user_data", $user_data );
 		}
 
-		$post_title = apply_filters( 'buddyforms_update_form_title', isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : 'none', $form_slug, $post_id );
+		if ( 'registration' === $form_type ) {
+			$default_post_title = ! empty( $current_user->user_nicename ) ? $current_user->user_nicename : __( 'none', 'buddyforms' );
+		} else {
+			$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : __( 'none', 'buddyforms' );
+		}
+
+		$post_title = apply_filters( 'buddyforms_update_form_title', $default_post_title, $form_slug, $post_id );
 		$bf_post    = array(
 			'ID'             => $post_id,
 			'post_type'      => $post_type,
@@ -798,7 +806,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 
 		//first check if the user uploaded the right type
 		if ( ! in_array( $ext, (array) $allowed ) ) {
-			$file['error'] = $file['type'] . __( "Sorry, you cannot upload this file type for this field." );
+			$file['error'] = $file['type'] . __( "Sorry, you cannot upload this file type for this field.", 'buddyforms' );
 
 			return $file;
 		}
@@ -809,7 +817,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
 				return $file;
 			}
 		}
-		$file['error'] = __( "Sorry, you cannot upload this file type for this field." );
+		$file['error'] = __( "Sorry, you cannot upload this file type for this field.", 'buddyforms' );
 	}
 
 	return $file;
