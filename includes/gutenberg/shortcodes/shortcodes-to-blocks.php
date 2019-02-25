@@ -434,11 +434,11 @@ function buddyforms_blocks_the_loop( $args ) {
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
 	if ( $list_posts_style == 'table' ) {
-		buddyforms_locate_template( 'the-table' );
+		buddyforms_locate_template( 'the-table', $form_slug );
 	} elseif ( $list_posts_style == 'list' ) {
-		buddyforms_locate_template( 'the-loop' );
+		buddyforms_locate_template( 'the-loop', $form_slug );
 	} else {
-		buddyforms_locate_template( $list_posts_style );
+		buddyforms_locate_template( $list_posts_style, $form_slug );
 	}
 
 	wp_reset_postdata();
