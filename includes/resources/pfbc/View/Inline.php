@@ -10,7 +10,7 @@ class View_Inline extends FormView {
 	protected $class = "form-inline";
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
@@ -38,13 +38,11 @@ class View_Inline extends FormView {
 	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
-		if ( empty ( $label ) ) {
-			$label = '';
-		}
-		echo ' <label for="', $element->getAttribute( "id" ), '">';
+
 		if ( $element->isRequired() ) {
-			echo '<span class="required">* </span> ';
+			$label = $label . $this->renderRequired();
 		}
-		echo $label, '</label> ';
+
+		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
 	}
 }

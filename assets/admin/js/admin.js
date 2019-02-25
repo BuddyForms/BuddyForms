@@ -17,6 +17,78 @@ var bf_getUrlParameter = function bf_getUrlParameter(sParam) {
 };
 
 //
+// Generate a custom string to append to the field slug in case of duplicate
+//
+function buddyformsMakeFieldId() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+//
+// Validate an email using regex
+//
+function buddyformsIsEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
+//
+// Validate multiples email address separated by coma
+//
+function buddyformsValidateMultiEmail(string) {
+    var result = true;
+    if (string) {
+        var isMulti = /[;,]+/.test(string);
+        if (isMulti) {
+            var values = string.split(/[;,]+/);
+            jQuery.each(values, function (index, email) {
+                result = buddyformsIsEmail(email.trim());
+                if (!result) {
+                    return result;
+                }
+            });
+        } else {
+            result = buddyformsIsEmail(string);
+            if (!result) {
+                return result;
+            }
+        }
+    } else {
+        result = false;
+    }
+
+    return result;
+}
+//
+// Validate notification email element
+//
+function buddyforms_validate_notifications_email(element){
+    if (element) {
+        var value = jQuery(element).val();
+        if (value) {
+            var isValid = buddyformsValidateMultiEmail(jQuery(element).val());
+            if(!isValid){
+                jQuery(element)[0].setCustomValidity('Invalid Email(s)');
+                jQuery(element).addClass('bf-error');
+            } else {
+                jQuery(element)[0].setCustomValidity('');
+                jQuery(element).removeClass('bf-error');
+            }
+            return isValid;
+        } else {
+            jQuery(element)[0].setCustomValidity('');
+            jQuery(element).removeClass('bf-error');
+        }
+    }
+    return true;
+}
+
+//
 // Update form builder form elements list number 1,2,3,...
 //
 function bf_update_list_item_number() {
@@ -56,14 +128,18 @@ function bf_update_list_item_number_mail() {
 // Helper Function to lode form element templates depend on the form type
 //
 function load_formbuilder_template(template) {
-
+    var postTitle = jQuery('input#title');
+    if (!postTitle.val()) {
+        postTitle.val(buddyformsMakeFieldId());
+    }
     jQuery.ajax({
         type: 'POST',
         dataType: "json",
         url: ajaxurl,
         data: {
             "action": "buddyforms_form_template",
-            "template": template
+            "template": template,
+            "title": postTitle.val()
         },
         success: function (data) {
             jQuery.each(data, function (i, val) {
@@ -155,6 +231,49 @@ function buddyform_apply_template_to_element(element, value){
 }
 
 //
+// Process the form errors and scroll to it
+//
+function buddyforms_process_errors(errors) {
+    if (errors.length > 0) {
+        jQuery.each(errors, function (index, current_error) {
+            if (!current_error.isValid) {
+                var type = current_error.type || 'accordion';
+                switch (type) {
+                    case 'accordion': {
+                        //close all
+                        var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
+                        sortableBuddyformsElements.accordion({
+                            active: false
+                        });
+                        //Find the parent, the element id and expand it
+                        jQuery(current_error.element).closest(".accordion-body.ui-accordion-content.collapse").addClass("ui-accordion-content-active").css("height", "auto");
+                        var li_id = jQuery(current_error.element).closest('li.bf_list_item');
+                        var li_position = jQuery('#sortable_buddyforms_elements li.bf_list_item').index(jQuery(li_id));
+                        sortableBuddyformsElements.accordion({
+                            active: li_position
+                        });
+                        jQuery('#buddyforms_form_setup').removeClass('closed');
+                        jQuery('#buddyforms_form_elements').removeClass('closed');
+                        break;
+                    }
+                    case 'settings': {
+                        if (!jQuery(current_error.element).is(':visible')) {
+                            var currentId = jQuery(current_error.element).closest('div.tab-pane.ui-widget-content.ui-corner-bottom').attr('id');
+                            jQuery('.buddyform-nav-tabs li[aria-controls="' + currentId + '"]>a').click()
+                        }
+                        break;
+                    }
+                }
+                var element_name = jQuery(current_error.element).attr('name');
+                jQuery("html, body").animate({scrollTop: jQuery('[name="' + element_name + '"]').offset().top - 250}, 1000);
+                return false;
+            }
+        });
+    }
+    return true;
+}
+
+//
 // Lets do some stuff after the document is loaded
 //
 jQuery(document).ready(function (jQuery) {
@@ -204,9 +323,9 @@ jQuery(document).ready(function (jQuery) {
         var val = jQuery(this).val();
 
         if (val === 'custom') {
-            jQuery('.mail_from_name_custom').removeClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_from_name_custom').removeClass('hidden');
         } else {
-            jQuery('.mail_from_name_custom').addClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_from_name_custom').addClass('hidden');
         }
 
     });
@@ -217,9 +336,9 @@ jQuery(document).ready(function (jQuery) {
         var val = jQuery(this).val();
 
         if (val === 'custom') {
-            jQuery('.mail_from_custom').removeClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_from_custom').removeClass('hidden');
         } else {
-            jQuery('.mail_from_custom').addClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_from_custom').addClass('hidden');
         }
 
     });
@@ -230,9 +349,13 @@ jQuery(document).ready(function (jQuery) {
         var val = jQuery(this).val();
 
         if (jQuery(this).is(':checked')) {
-            jQuery('.mail_to_' + val + '_address').removeClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address')
+                .removeClass('hidden')
+                .prop('required', true);
         } else {
-            jQuery('.mail_to_' + val + '_address').addClass('hidden');
+            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address')
+                .addClass('hidden')
+                .prop('required', false);
         }
 
     });
@@ -240,44 +363,65 @@ jQuery(document).ready(function (jQuery) {
     // Validate the form before publish
     jQuery('#publish').click(function () {
 
-        var create_new_form_name = jQuery('[name="post_title"]').val();
+        var post_title = jQuery('[name="post_title"]');
+        var errors = [];
 
-        var error = false;
-        if (create_new_form_name === '') {
-            jQuery('[name="post_title"]').removeClass('bf-ok');
-            jQuery('[name="post_title"]').addClass('bf-error');
-            error = true;
+        if (post_title.val() === '') {
+            post_title.removeClass('bf-ok');
+            post_title.addClass('bf-error');
+            errors.push({isValid: false, element: post_title, type: 'title'});
         } else {
-            jQuery('[name="post_title"]').removeClass('bf-error');
-            jQuery('[name="post_title"]').addClass('bf-ok');
+            post_title.removeClass('bf-error');
+            post_title.addClass('bf-ok');
         }
+
+        //Validate emails notifications
+        var mail_to_cc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_cc_address]"]');
+        jQuery.each(mail_to_cc_addresses, function (index, mail_to_cc_address) {
+            var result = buddyforms_validate_notifications_email(mail_to_cc_address);
+            errors.push({isValid: result, element: mail_to_cc_address, type: 'settings'});
+        });
+
+        var mail_to_bcc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_bcc_address]"]');
+        jQuery.each(mail_to_bcc_addresses, function (index, mail_to_bcc_address) {
+            var result = buddyforms_validate_notifications_email(mail_to_bcc_address);
+            errors.push({isValid: result, element: mail_to_bcc_address, type: 'settings'});
+        });
+
+        var mail_to_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_address]"]');
+        jQuery.each(mail_to_addresses, function (index, mail_to_address) {
+            var result = buddyforms_validate_notifications_email(mail_to_address);
+            errors.push({isValid: result, element: mail_to_address, type: 'settings'});
+        });
+
+        //Fill and avoid duplicates of field slugs
+        var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
+        findFieldsSlugs.each(function () {
+            var fieldSlugs = jQuery(this);
+            findFieldsSlugs.each(function () {
+                if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
+                    fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
+                    return false;
+                }
+            });
+        });
 
         // traverse all the required elements looking for an empty one
         jQuery("#post input[required]").each(function () {
-
             // if the value is empty, that means that is invalid
-            if (jQuery(this).val() == "") {
-
-                // hide the currently open accordion and open the one with the required field
-                jQuery(".accordion-body.collapse.in").removeClass("in");
-                jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height", "auto");
-                jQuery('#buddyforms_form_setup').removeClass('closed');
-                jQuery('#buddyforms_form_elements').removeClass('closed');
-
-                jQuery("html, body").animate({scrollTop: jQuery(this).offset().top - 250}, 1000);
-
-                // stop scrolling through the required elements
+            var isValid = (jQuery(this).val() != "");
+            errors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion'});
+            if (isValid) {
+                jQuery(this).removeClass("bf-error");
+            } else {
+                jQuery(this).addClass("bf-error");
                 return false;
             }
         });
 
-
-        if (error === true) {
-            return false;
-        }
+        return buddyforms_process_errors(errors);
 
     });
-
 
     //
     // Remove form element form the form builder
@@ -360,8 +504,6 @@ jQuery(document).ready(function (jQuery) {
         var action = jQuery(this);
         var args = action.attr('href').split("/");
         var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
-
-        alert('#table_row_' + args[0] + '_select_options ul li');
 
         numItems = numItems + 1;
         jQuery('#table_row_' + args[0] + '_select_options ul').append(

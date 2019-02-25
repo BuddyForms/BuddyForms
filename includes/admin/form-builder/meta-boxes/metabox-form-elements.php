@@ -16,7 +16,7 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	}
 
 	// Generate the form slug from the post name
-	$form_slug = $post->post_name;
+	$form_slug = ( isset( $post->post_name ) ) ? $post->post_name : '';
 
 	// Create the form elements array
 	$form_setup = array();
@@ -33,12 +33,12 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	            <table class="wp-list-table widefat fixed posts">
 	                <thead>
 	                    <tr>
-	                        <th class="field_order">Field Order</th>
-	                        <th class="field_label">Field Label</th>
-	                        <th class="field_name">Field Slug</th>
-	                        <th class="field_type">Field Type</th>
-	                        <th class="field_type">Action</th>
-	                        <th class="field_type">Layout</th>
+	                        <th class="field_order">' . __( 'Field Order', 'buddyforms' ) . '</th>
+	                        <th class="field_label">' . __( 'Field Label', 'buddyforms' ) . '</th>
+	                        <th class="field_name">' . __( 'Field Slug', 'buddyforms' ) . '</th>
+	                        <th class="field_type">' . __( 'Field Type', 'buddyforms' ) . '</th>
+	                        <th class="field_type">' . __( 'Action', 'buddyforms' ) . '</th>
+	                        <th class="field_type">' . __( 'Layout', 'buddyforms' ) . '</th>
 	                    </tr>
 	                </thead>
 	            </table>
@@ -123,7 +123,7 @@ function buddyforms_form_builder_form_elements_select() {
 	$elements_select_options = buddyforms_form_elements_select_options();
 
 	// Add a default value
-	$el_sel_options = '<option value="none">Select Field Type</option>';
+	$el_sel_options = '<option value="none">' . __( 'Select Field Type', 'buddyforms' ) . '</option>';
 
 	// Loop The form elements array and add the options to the select box
 	if ( is_array( $elements_select_options ) ) {
@@ -199,10 +199,10 @@ function buddyforms_form_elements_select_options() {
 					'unique' => 'unique'
 				),
 				'country'      => array(
-					'label' => __( 'Country' ),
+					'label' => __( 'Country', 'buddyforms' ),
 				),
 				'state'        => array(
-					'label' => __( 'State' ),
+					'label' => __( 'State', 'buddyforms' ),
 				),
 				'captcha'      => array(
 					'label'  => __( 'Captcha', 'buddyforms' ),
@@ -257,8 +257,8 @@ function buddyforms_form_elements_select_options() {
 				'checkbox'    => array(
 					'label' => __( 'Checkbox', 'buddyforms' ),
 				),
-				'gdpr'       => array(
-					'label' => __( 'GDPR Agreement', 'buddyforms' ),
+				'gdpr'        => array(
+					'label'  => __( 'GDPR Agreement', 'buddyforms' ),
 					'unique' => 'unique'
 				)
 			),

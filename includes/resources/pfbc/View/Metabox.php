@@ -10,7 +10,7 @@ class View_Metabox extends FormView {
 	protected $class = "form-inline";
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
@@ -39,17 +39,19 @@ class View_Metabox extends FormView {
 	}
 
 	/**
+	 * Return the label of the element
+	 *
 	 * @param Element $element
+	 *
+	 * @return string
 	 */
 	protected function renderLabel( Element $element ) {
 		$label = $element->getLabel();
-		if ( empty ( $label ) ) {
-			$label = '';
-		}
-		echo '<div class="bf-label"><label for="', $element->getAttribute( "id" ), '">';
+
 		if ( $element->isRequired() ) {
-			echo '<span class="required">* </span> ';
+			$label = $label . $this->renderRequired();
 		}
-		echo $label, '</label></div> ';
+
+		return sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
 	}
 }

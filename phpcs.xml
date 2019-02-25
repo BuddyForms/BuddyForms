@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress ThemeKraft Coding Standards">
+  <description>A custom ruleset to take in account both WordPress and ThemeKraft code standards.</description>
+  <rule ref="WordPress-Extra">
+    <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" />
+    <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
+    <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+    <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.AssociativeKeyFound" />
+  </rule>
+</ruleset>

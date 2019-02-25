@@ -25,13 +25,10 @@ function buddyforms_editor_button( $context ) {
 	$container_id = 'buddyforms_popup_container';
 
 // Our popup's title
-	$title = 'BuddyForms Shortcode Generator!';
+	$title = __( 'BuddyForms Shortcode Generator!', 'buddyforms' );
 
 // Append the icon <a href="#" class="button insert-media add_media" data-editor="content" title="Add Media"><span class="wp-media-buttons-icon"></span> Add Media</a>
-	$context .= "<a class='button thickbox' data-editor='content'  title='{$title}'
-                href='#TB_inline?width=400&inlineId={$container_id}'>
-
-	<span class='tk-icon-buddyforms'></span> BuddyForms</a>";
+	$context .= "<a class='button thickbox' data-editor='content'  title='{$title}' href='#TB_inline?width=400&inlineId={$container_id}'><span class='tk-icon-buddyforms'> </span> BuddyForms</a>";
 
 	return $context;
 }
@@ -91,11 +88,11 @@ function buddyforms_editor_button_inline_content() {
 			"view"    => new View_Inline
 		) );
 
-		$view_type['none']                = 'Filter Posts';
-		$view_type['buddyforms_list_all'] = 'All User';
-		$view_type['buddyforms_the_loop'] = 'Displayed User';
+		$view_type['none']                = __( 'Filter Posts', 'buddyforms' );
+		$view_type['buddyforms_list_all'] = __( 'All User', 'buddyforms' );
+		$view_type['buddyforms_the_loop'] = __( 'Displayed User', 'buddyforms' );
 
-		$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><p>List post submissions here.</p><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
+		$form->addElement( new Element_Select( "<h3>" . __( 'List Posts', 'buddyforms' ) . "</h3><p>" . __( 'List post submissions here.', 'buddyforms' ) . "</p><br>", "buddyforms_view_posts", $view_type, array( 'class' => 'buddyforms_view_posts' ) ) );
 		$form->addElement( new Element_Select( "", "buddyforms_select_form_posts", $the_forms, array( 'class' => 'buddyforms_select_form_posts' ) ) );
 		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-posts button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
 		$form->render();
@@ -112,13 +109,13 @@ function buddyforms_editor_button_inline_content() {
 			"view"    => new View_Inline
 		) );
 
-		$button_type['none']                         = 'Insert Navigation';
-		$button_type['buddyforms_nav']               = 'View - Add New';
-		$button_type['buddyforms_button_view_posts'] = 'View Posts';
-		$button_type['buddyforms_button_add_new']    = 'Add New';
+		$button_type['none']                         = __( 'Insert Navigation', 'buddyforms' );
+		$button_type['buddyforms_nav']               = __( 'View - Add New', 'buddyforms' );
+		$button_type['buddyforms_button_view_posts'] = __( 'View Posts', 'buddyforms' );
+		$button_type['buddyforms_button_add_new']    = __( 'Add New', 'buddyforms' );
 
 
-		$form->addElement( new Element_Select( "<h3>" . __( 'Add Links', 'buddyforms' ) . "</h3><p>Add links to your form or form submissions.</p><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
+		$form->addElement( new Element_Select( "<h3>" . __( 'Add Links', 'buddyforms' ) . "</h3><p>" . __( 'Add links to your form or form submissions.', 'buddyforms' ) . "</p><br>", "buddyforms_insert_nav", $button_type, array( 'class' => 'buddyforms_insert_nav' ) ) );
 		$form->addElement( new Element_Select( "", "buddyforms_select_form", $the_forms, array( 'class' => 'buddyforms_select_form' ) ) );
 		$form->addElement( new Element_HTML( '  <a href="#" class="buddyforms-button-insert-nav button">' . __( 'Insert into Post', 'buddyforms' ) . '</a>' ) );
 		$form->render();
@@ -148,11 +145,11 @@ function buddyforms_editor_button_mce_popup() { ?>
                 var form_slug = jQuery('.buddyforms_select_form').val();
 
                 if (shortcode == "none") {
-                    alert('Please select a Button Type');
+                    alert('<?php _e( 'Please select a Button Type', 'buddyforms' ) ?>');
                     return
                 }
                 if (form_slug == "none") {
-                    alert('Please select a Form');
+                    alert('<?php _e( 'Please select a Form', 'buddyforms' ) ?>');
                     return
                 }
 
@@ -164,11 +161,11 @@ function buddyforms_editor_button_mce_popup() { ?>
                 var form_slug = jQuery('.buddyforms_select_form_posts').val();
 
                 if (shortcode == "none") {
-                    alert('Please select a List Type');
+                    alert('<?php _e( 'Please select a List Type', 'buddyforms' ) ?>');
                     return
                 }
                 if (form_slug == "none") {
-                    alert('Please select a Form');
+                    alert('<?php _e( 'Please select a Form', 'buddyforms' ) ?>');
                     return
                 }
 

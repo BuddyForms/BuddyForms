@@ -148,10 +148,13 @@ function buddyforms_form_builder_templates() {
                         <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
                     </div>
                     <div class="bf-tile-preview-wrap">
-                        <p><a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
+                        <p>
+                            <a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
                               data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>"
-                              title="<?php echo $template['title'] ?>" class="thickbox button bf-preview"><span
-                                        class="dashicons dashicons-visibility"></span> Preview</a></p>
+                              title="<?php echo $template['title'] ?>" class="thickbox button bf-preview">
+                                <span class="dashicons dashicons-visibility"> </span> <?php _e( 'Preview', 'buddyforms' ) ?>
+                            </a>
+                        </p>
                     </div>
 					<?php if ( $dependencies != 'None' ) { ?>
                         <p class="bf-tile-dependencies">Dependencies: <?php echo $dependencies ?></p>
@@ -161,7 +164,7 @@ function buddyforms_form_builder_templates() {
                                                         data-template="<?php echo $key ?>"
                                                         class="bf_wizard_types bf_form_template btn btn-primary btn-50"
                                                         onclick="">
-                            Use This Template
+	                        <?php _e( 'Use This Template', 'buddyforms' ) ?>
                         </button>
 					<?php } ?>
                     <div id="template-<?php echo $key ?>" style="display:none;">
@@ -173,7 +176,7 @@ function buddyforms_form_builder_templates() {
                                                             class="bf_wizard_types bf_form_template button button-primary"
                                                             onclick="">
                                 <!-- <span class="dashicons dashicons-plus"></span>  -->
-                                Use This Template
+	                            <?php _e( 'Use This Template', 'buddyforms' ) ?>
                             </button>
                         </div>
                         <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"
@@ -201,6 +204,13 @@ add_action( 'wp_ajax_buddyforms_form_template', 'buddyforms_form_template' );
 function buddyforms_form_template() {
 	global $post, $buddyform;
 
+	if ( empty( $post ) ) {
+		$post = new stdClass();
+	}
+
+	if ( ! empty( $_POST['title'] ) ) {
+		$post->post_name = sanitize_title( $_POST['title'] );
+	}
 
 	$post->post_type = 'buddyforms';
 

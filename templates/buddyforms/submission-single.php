@@ -23,8 +23,10 @@ $post_id = get_the_ID();
 
 <div id="bf-submission-<?php echo $post_id; ?>" class="bf-submission-single bf_submit_form<?php echo $post_id; ?>">
     <div class="inner-wrap">
-        <p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i
-                        class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;Back</a></p>
+        <p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>">
+                <i class="dashicons dashicons-arrow-left-alt2"> </i>&nbsp;<?php _e( 'Back', 'buddyforms' ) ?>
+            </a>
+        </p>
 
         <script>
             jQuery(document).ready(function () {
@@ -68,27 +70,31 @@ $post_id = get_the_ID();
 
         <div id="bf-submissions-entry-actions" class="bf-submission-metabox bf-col-50">
             <div class="inner-wrap">
-                <h3>Entry Actions</h3>
-                <p><span
-                            id="timestamp-<?php echo $post_id; ?>">Submitted on: <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
+                <h3><?php _e( 'Entry Actions', 'buddyforms' ) ?></h3>
+                <p><span id="timestamp-<?php echo $post_id; ?>"><?php _e( 'Submitted on:', 'buddyforms' ) ?> <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
                 </p>
-                <p><span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span><a href="#"
-                                                                                                  onclick="window.print();return false;">
-                        &nbsp;Print</a></p>
+                <p>
+                    <span class="dashicons dashicons-format-aside wp-media-buttons-icon"> </span>
+                    <a href="#" onclick="window.print();return false;"><?php _e( 'Print', 'buddyforms' ) ?></a></p>
             </div>
         </div>
 
         <div id="bf-submissions-entry-details" class="bf-submission-metabox bf-col-50">
             <div class="inner-wrap">
-                <h3>Entry Details</h3>
-                <p><span class="dashicons dashicons-id wp-media-buttons-icon"></span>&nbsp;Entry ID:
-                    <b><?php echo $post_id; ?></b></p>
+                <h3><?php _e( 'Entry Details', 'buddyforms' ) ?></h3>
+                <p>
+                    <span class="dashicons dashicons-id wp-media-buttons-icon"></span>&nbsp;<?php _e( 'Entry ID:', 'buddyforms' ) ?>
+                    <b><?php echo $post_id; ?></b>
+                </p>
             </div>
         </div>
 
     </div>
 
-    <p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>"><i
-                    class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;Back To All Submissions</a></p>
+    <p>
+        <a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>">
+            <i class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;<?php _e( 'Back To All Submissions', 'buddyforms' ) ?>
+        </a>
+    </p>
 
 </div>

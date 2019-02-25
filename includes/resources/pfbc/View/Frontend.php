@@ -15,7 +15,6 @@ class View_Frontend extends FormView {
 	public function render( $onlyElement = null ) {
 		global $buddyforms, $form_slug;
 
-
 		$field_id     = $this->_form->getAttribute( "field_id" );
 		$layout_style = buddyforms_layout_style( $field_id );
 
@@ -57,7 +56,7 @@ class View_Frontend extends FormView {
 	}
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		global $form_slug, $buddyforms;
@@ -125,20 +124,15 @@ class View_Frontend extends FormView {
 		global $form_slug, $buddyforms;
 
 		$label = $element->getLabel();
-		if ( empty ( $label ) ) {
-			$label = '';
-		}
-		echo ' <label for="', $element->getAttribute( "id" ), '">';
 
-		echo $label;
-
+		//TODO improve required flag position
 		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' ) {
-
 			if ( $element->isRequired() ) {
-				echo '<span class="required"> *</span> ';
+				$label = $label . $this->renderRequired();
 			}
 		}
-		echo '</label> ';
+
+		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
 	}
 }
 
@@ -147,6 +141,8 @@ function buddyforms_layout_style( $field_id ) {
 	global $buddyforms, $form_slug;
 
 	$layout_style = isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ? $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] : '1';
+
+	$custom_class =isset( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) : '';
 
 	switch ( $layout_style ) {
 		case '1' :
@@ -172,5 +168,5 @@ function buddyforms_layout_style( $field_id ) {
 			break;
 	}
 
-	return apply_filters( 'buddyforms_layout_style', $layout_style, $field_id );
+	return apply_filters( 'buddyforms_layout_style', $layout_style . ' ' . $custom_class, $field_id );
 }

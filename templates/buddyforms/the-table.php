@@ -23,11 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <span><?php _e( 'Created', 'buddyforms' ); ?></span>
                     </th>
                     <th class="title">
-						<?php if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
+						<?php if ( $buddyforms[ $form_slug ]['form_type'] === 'contact' ) : ?>
                             <span><?php _e( 'Subject', 'buddyforms' ); ?></span>
-						<?php } else { ?>
+						<?php elseif ($buddyforms[ $form_slug ]['form_type'] === 'registration' ) : ?>
+                            <span><?php _e( 'Name', 'buddyforms' ); ?></span>
+						<?php else : ?>
                             <span><?php _e( 'Title', 'buddyforms' ); ?></span>
-						<?php } ?>
+						<?php endif; ?>
 
                     </th>
                     <th class="status">
@@ -120,10 +122,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="navigation">
 				<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
 				else: ?>
-                    <div
-                            class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-                    <div
-                            class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+                    <div class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
+                    <div class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
 				<?php endif; ?>
 
             </div>
@@ -131,10 +131,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php else : ?>
 
             <div id="message" class="info">
-                <p><?php _e( 'There were no posts found.', 'buddyforms' ); ?></p>
+                <p><?php echo $empty_post_message; ?></p>
             </div>
 
-		<?php endif; ?>
+        <?php endif; ?>
 
         <div class="bf_modal">
             <div style="display: none;"><?php wp_editor( '', 'buddyforms_form_content' ); ?></div>

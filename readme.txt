@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 2.2.4
+Tested up to: 5.0
+Stable tag: 2.3.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,9 +27,9 @@ BuddyForms comes out of the box GDPR compliant plugin. We've used the time, to i
 * *Right to access & to be forgotten* - if your users want to get access to their data, you can easily show it with BuddyForms on the front-end. They even have the opportunity to change or delete their data from the front-end.
 * *Privacy by Design* - With BuddyForms our goal is it to make you the boss of your data. From the beginning, we've made it a major priority, that you store your data on your own server.
 
-In other words, BuddyForms is 100% approved to be GDPR compliant. The content is saved in on your WordPress hoster either as a post (post & post_meta table) or user data (user & user_meta table). 
+In other words, BuddyForms is 100% approved to be GDPR compliant. The content is saved in on your WordPress hoster either as a post (post & post_meta table) or user data (user & user_meta table).
 
-[Try the new version of BuddyForms today](https://themekraft.com/buddyforms/) 
+[Try the new version of BuddyForms today](https://themekraft.com/buddyforms/)
 
 ---
 
@@ -72,7 +72,7 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 ---
 
 ## Other more basic use Cases with our Form Builder
-Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create: 
+Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create:
 * Contact Forms – Collect leads and customer support data
 * Registration Forms – Sign-up users to your webpage
 * Profile Forms – Let your user update there profile information.
@@ -152,7 +152,7 @@ Dependencies: WooCommerce, BuddyForms WooElements
 
 ---
 
-## BuddyForms Integration 
+## BuddyForms Integration
 BuddyForm works great with other Plug-Ins. Enhance its capabilities with the following
 * *BuddyPress* – Enable all publishing features of BuddyForms in BuddyPress
 * *Ultimate Member* – Submit and manage posts from your Ultimate Member profile
@@ -166,12 +166,12 @@ BuddyForm works great with other Plug-Ins. Enhance its capabilities with the fol
 
 ## Videos about BuddyForms
 
-###Why BuddyForms is the best Frontend-Publishing Plugin - BuddyForms Trailer 
+###Why BuddyForms is the best Frontend-Publishing Plugin - BuddyForms Trailer
 [https://www.youtube.com/watch?v=By1GIBiilcI]
 
 ---
 
-###Contact Forms 
+###Contact Forms
 [youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
 
 ###Registration Forms
@@ -179,20 +179,20 @@ BuddyForm works great with other Plug-Ins. Enhance its capabilities with the fol
 
 ---
 
-###Post Forms 
+###Post Forms
 [youtube https://www.youtube.com/watch?v=iHhDO_zFmbc&feature=youtu.be]
 
 ---
 
 ###Integration with BuddyPress or Ultimate Member
 
-####BuddyPress Integration 
+####BuddyPress Integration
 
 [youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A]
 
 ---
 
-####Ultimate Member Integration 
+####Ultimate Member Integration
 
 [youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&t=78s]
 
@@ -388,6 +388,182 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.3.1 – 22 Feb 2019
+* Added Gutenberg Support
+* Add new Blocks for Embed Forms, Submissions, Registration and Login Forms.
+* Added the ability to show other user submission if the permission is enabled.
+* Fixed the permission auto check. Now the permissions follow the next rules:
+--> For pro version -if the form is new only select create-edit-delete by default for admin and editor
+--> Free version -all permission checked for all roles except for all submissions Fix/all submission permission
+* Fixed Upload field - image url is getting reset on save
+* Added the user_login to the submission list to get the value form the user meta.
+* Improved the user_login and email field to show in the single submission view.
+* Fixed the label duplication issue in the single submission view
+* Change the button text from Close to Back
+* Fixed the user fields first and last name to store correctly into the user meta.
+* Fixed the issue related to create multiples entries when the registration form was used to update an user.
+* Added the different Column name for table template
+* Changed the post entry title to use the user nicename when the pest entry belong to a registration form.
+* Added a new tag to define the style of the list in the shortcodes.
+* Updated the default value for the post style
+* Fixed the warning inside the Gutenberg shortcode
+* Added an Author column to the submission list in the administration, to easily identify the author of the entry. If the entry belong to an un-authenticated user it will show `Anonymous`
+* Changed the name of the composer library to avoid conflict with composer 2
+* Added the styles to organize the permission chk.
+* Added the validation for the permissions inside the submission view.
+* Added the value as class inside the container of the checkbox to easily style each one.
+* Removed the home page from the activation page list. Now to redirect to WordPress home is necessary to use the HomePage option in the list.
+* Avoid to ask for permission to show the form in the registration forms.
+* Fixed the fields email and user_login to show if the user is not logged in.
+* Improved the code.
+* Localized ready for all strings
+* Fixed the empty localization strings
+* Updating the translation file. Adding the Spanish translation.
+* updated composer.lock
+* Fixed the undefined index name in the submission page
+* Add a new function to detect if is gutenberg
+* Added a filter to disable the validation of the email send to the user on activation or update
+* Improved the assets included in the form.
+* Added a function to extract the form slug reading a shortcode or direct from the html after the shortcode is processed reading the hidden input form_slug.
+* Fixed security issue related to the registration form. It was including the last entry id in the hidden field of a registration form where it suppose to be empty. Now the update user process work seamless.
+* Code cleaning
+
+
+= 2.3 – 21 Jan 2019
+* Removed an left over alert from the dropdown rewrite
+* Fixed user_website valdiation
+* Moving the asterisk to flag required fields to by at the end of the label.
+* Added a Hook to change the signal of the default values, by default asterisk. Filter details `buddyforms_render_required_signal` one parameter.
+* Removed composer update from the post-merge git hook
+* Added a message inside the registration forms type to let the user know the Wordpress user registration is disable, added the same validation and message to avoid to render a registration form.
+* Improved the validation
+* Added the first step to create gutenberg block
+* Fixed E-Mail Adress is empty, if no form field with E-Mail Adress is submitted by logged in users
+* Added a space between the Date #167
+* Changed the labels in the form builder
+* Added a space between the Date #167
+* Created a new helper function to get $_GET parameter
+* Fixed an issue with the form element custom class. The class option was not working on every form element. Should be fixed now.
+* Added a wrapper class to the form element call div. The wrapper class starts with col- and the custom form element class from the form element option custom_class
+* Added a query var to get the form slug from the Form preview
+* Fixed the field id for the form_arg parameter
+* Updated the freemius sdk to version 2.2.3
+* Cleaned and refactored the code.
+
+
+= 2.2.9.2 – 29 November 2018
+* Added validation to the file element.
+* Fixing the validation of the emails notifications.
+* Fixed the function to scroll to error in the form designer.
+* Fixing the form designer validation
+
+= 2.2.9.1 – 28 November 2018
+Spelling correctioon
+Added a extra check to the updated script top avoid a PHP Warning: Invalid argument supplied for foreach. This was reported by a user and happened on some installs if a form with no form elements was used from the backend.
+Reformat code
+
+= 2.2.9 – 23 November 2018
+* Improving the email functionality to receive the user cc and bcc copies of the emails. Refactoring the code.
+* Added a default template for the shortcode
+* Added validation for the cc and bcc fields with multiples emails or one.
+* Fixed the option to show the cc or bcc to interact only with the field in the current notification.
+* fixed to keep the round red color and the scroll to the elements.
+
+= 2.2.8 – 9 November 2018
+* Fixed an issue where the feature image was not attach to the post
+* Removed the maxFiles limit from the upload form element
+* Improved the security and added prepare to queries to avoid sql injection.
+* Improved the field processing, for extra process.
+* Added the action `buddyforms_process_field_submission` to grant 3rd party to add extra process to the field and include this extra process internal fields like Upload and Features.
+* Added the Field Control to start migrating to SOLID principles.
+* Added the action to the action `buddyforms_process_field_submission`.
+* Fixed the condition to ask if the imgae.php was already included.
+* Fixed the email short-code generation.
+* Improving the shortcode replacement
+* Adding CI with codeship, phpcs, php linter and php fixer.
+* Updated php cs and fixer configuration
+* Fixed the validation og the website form element without http protocol
+* Improving the code.
+
+
+= 2.2.7 – 19 October 2018
+* Added missing translations
+* Fixed some admin css issues and make sure its also working for WordPress.com
+* Removed the readme from the zip process.
+* Added a functionality to add a random string as the form name in case the form is created and not provide a title.
+* Fixed the notices and warnings related to the create form process
+* Added the BuddyForms version to the file enqueue
+* Fixed the shortcode to show all users entries work.
+* Fixed the permission tab to avoid override saved values with default values.
+* Disabled the ACF js navigate away pop up
+* Updated the cache group.
+* Added a helper function to get the form by slug and include a cache inside
+* Improving function documentation
+
+= 2.2.6 – 1 October 2018
+* Fixed the option to delete an image when post is deleted inside the upload field.
+* Added new option to upload field to define how many file will be uploaded.
+* Added new option in the upload field to define the validation messages.
+* The upload field now upload one file by one.
+* Fixed the the shortcode bf_user_posts_list.
+* Fixed the validations process, in the case where the jQuery validator not exist.
+* Added new options to the featured-image field, now it work like the upload field.
+* Fixed the invalid image when file is not present.
+* New option for image upload max number of files to ensure the amount of files to upload.
+
+= 2.2.5 – 10 September 2018
+* Added support for WordPress.com. There have been UI issue in the Admin backend.
+* Added validation to avoid form submission when one of the files in the upload has errors
+* Added a validation to avoid enable the submit button when some process is in motion.
+
+* Rewrite the file upload form element
+** New version of the upload field.
+** Added a new validation for required fields.
+** Added a validation for when the field have more file than allowed.
+** Included de description at the bottom of the field, if the description exist.
+** The validations run over jquery validations.
+** Adding a new filter to pass the jquery validation for certain field types. Filter name 'buddyforms_jquery_validator_field_to_pass' with the parameter array('upload').
+** Fixed the link between the media files and the created post.
+** Changed the behavior of the upload field. When a file is droped is automatically validated. The submit of the form is lock until a file is uploading and unlock on finish the queue.
+** Improved the code of the upload field.
+** Changed the color of the error and success svg using a filter to be red and green.
+
+* Added group validation
+* Added a global validation to avoid send the form until the field not upload the files
+* Added a validation with jquery to check if the upload is required and if they have only the allowed files
+* Removed prevent default of the submit button
+* Added a red color to the error cross in the field upload
+* Fixed compatibility to php 7.1 for the function `buddyforms_strip_html_title_for_entries_in_post_screen`
+* Added a new permission to get all user submission in the frontend.
+* Added a script to check for repeated slug and add a random suffix. This is important to avoid crash with components that use the name in the frontend with javascript
+* Added a filter to customize the jquery validations. `buddyforms_jquery_validator_init`, thanks to @pattyok.
+* Added the function to the form to open the field in case of empty required setting.
+* Fixed the list post option setting.
+* Show the empty submission list message option always in the form settings.
+* Removed the permalink notice and Removing permalink verification funciton
+* Fixed the shortcode generator modal. Now it look full width
+* Changed the version of the upload script make it load by the clients.
+* Fixed the upload field to handle more than one field in the same form.
+* Added the option to handle the empty submission list.
+* Added a shortcode to add a link inside the empty submission list message.
+* Added an improve to wait the form submission for multiples file upload from diferents fields
+* Moved upload function to the function file to include in the front.
+* Fixed submission view to include the post title and the post content. The post content with the elipsis form wp
+* Cleaned the upload field.
+* Added a code to check if the uploader have a file to avoid cancel the form submission.
+* Added a script to check for repeated slug and add a random suffix.
+* Added a new permission to get all user submission in the frontend.
+* Cleaned the code.
+
+= 2.2.5 – 31 August 2018
+* Fixed the shortcode generator modal. Now it look full width.
+* Removed the permalink notice and function.
+* Showing the empty submission list message option always in the form settings.
+* Fixed the list post option setting.
+* Added a filter to customize the jquery validations. `buddyforms_jquery_validator_init`, thanks to @pattyok.
+* Added the function to the form to open the field in case of empty required setting.
+* Added a script to check for repeated slug and add a random suffix.
+* Added a new permission to get all user submission in the frontend.
 
 = 2.2.4 – 7 August 2018
 * Fix the screen option for submission page in BuddyForms.
@@ -582,7 +758,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added the interaction when the ajax is in progress to disabled the submit button
 * Several smaller bug fixes
 
-= 2.1.5.2 - 20. February 2018 = 
+= 2.1.5.2 - 20. February 2018 =
 * Fixed an issue in the loop. The thumbnail was not clickable in all sirtuations
 * Moved the password-strength-meter wp_localize_script to its correct location. It was in the admin settings and never got loaded in the frontend. This issue was a merge conflict.
 * Add localisation for password rest to make the password hint and messages translatable.

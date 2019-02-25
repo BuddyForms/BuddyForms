@@ -24,7 +24,7 @@ add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_tax
 function buddyforms_update_taxonomy_default() {
 
 	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none' ) {
-		$tmp = '<option value="none">First you need to select a Taxonomy to select the Taxonomy defaults</option>';
+		$tmp = '<option value="none">' . __( 'First you need to select a Taxonomy to select the Taxonomy defaults', 'buddyforms' ) . '</option>';
 		echo $tmp;
 		die();
 	}
@@ -60,7 +60,7 @@ function buddyforms_new_page() {
 
 	// Check if a title is entered
 	if ( empty( $_POST['page_name'] ) ) {
-		$json['error'] = 'Please enter a name';
+		$json['error'] = __( 'Please enter a name', 'buddyforms' );
 		echo json_encode( $json );
 		die();
 	}

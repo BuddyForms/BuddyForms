@@ -4,15 +4,58 @@ jQuery(document).ready(function($) {
         var submitButton = submitButtons.first();
         var existingHtmlInsideSubmitButton = submitButton.html();
     }
+    if (jQuery.validator) {
+
+        jQuery.validator.addMethod("featured-image-required", function (value, element) {
+            var validation_error_message = jQuery(element).attr('validation_error_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    var validation_result= currentDropZone.files.length > 0;
+                    if (validation_result === false) {
+                        jQuery.validator.messages['featured-image-required'] = validation_error_message;
+                    }
+                    return validation_result;
+                }
+            }
+            return false;
+        }, "");
+        //Validation for error on upload fields
+        var upload_error_validation_message = '';
+        jQuery.validator.addMethod("featured-image-error", function (value, element) {
+            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+
+                    for (var i = 0; i < currentDropZone.files.length; i++) {
+                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
+                        if (validation_result === true) {
+                            jQuery.validator.messages['featured-image-error'] = upload_error_validation_message;
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }, '');
+
+    }
+
     $(".featured-image-uploader").each(function(index, value) {
         var current = $(this),
             id = current.attr('id'),
-            max_size = current.attr('file_limit'),
-            accepted_files = current.attr('accepted_files'),
+            max_file_size = current.attr('max_file_size'),
             action = current.attr('action'),
             page = current.attr('page'),
-            uploadFields = current.data('entry'),
-            multiple_files = current.attr('multiple_files');
+            uploadFields = current.data('entry')
+          ;
+       var entrada= current.find('input:text');
+
 
         Dropzone.autoDiscover = false;
         var clickeable = page !== 'buddyforms_submissions';
@@ -20,7 +63,7 @@ jQuery(document).ready(function($) {
 
         var myDropzone = new Dropzone("div#" + id, {
             url: dropParam.admin_url,
-            maxFilesize: 2,
+            maxFilesize: max_file_size,
             acceptedFiles: 'image/*',
             maxFiles: 1,
             clickable: clickeable,

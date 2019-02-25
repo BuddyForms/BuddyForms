@@ -54,6 +54,7 @@ function buddyforms_attached_page_query_vars( $query_vars ) {
 	$query_vars[] = 'bf_post_id';
 	$query_vars[] = 'bf_parent_post_id';
 	$query_vars[] = 'bf_rev_id';
+	$query_vars[] = 'form_slug';
 
 	return $query_vars;
 }
@@ -233,12 +234,16 @@ function buddyforms_registration_page_content( $content ) {
 		}
 	}
 
+	//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
+	BuddyForms::front_js_css($content);
+	BuddyForms::load_tk_font_icons();
+
 	return $content;
 }
 
-function buddyforms_get_ID_by_page_name($page_name)
-{
+function buddyforms_get_ID_by_page_name( $page_name ) {
 	global $wpdb;
-	$page_name_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '".$page_name."'");
+	$page_name_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s", $page_name ) );
+
 	return $page_name_id;
 }

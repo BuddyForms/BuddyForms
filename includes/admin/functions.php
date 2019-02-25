@@ -105,7 +105,7 @@ function buddyforms_rating_admin_notice_dismissed() {
 	}
 }
 
-add_filter( 'display_post_states', 'buddyform_add_label_to_post_list', 10, 2 );
+add_filter( 'display_post_states', 'buddyforms_add_label_to_post_list', 10, 2 );
 /**
  * Add a label to the post in the list in the backend where the title was auto generated
  *
@@ -114,36 +114,36 @@ add_filter( 'display_post_states', 'buddyform_add_label_to_post_list', 10, 2 );
  *
  * @return mixed
  */
-function buddyform_add_label_to_post_list( $post_states, $post ) {
-	if ( is_admin() ) {
+function buddyforms_add_label_to_post_list( $post_states, $post ) {
+	if ( is_admin() && ! empty( $post ) && ! empty( $post->ID ) ) {
 		$is_buddyform_post = buddyforms_get_form_slug_by_post_id( $post->ID );
 		if ( ! empty( $is_buddyform_post ) ) {
 			$title_field = buddyforms_get_form_field_by_slug( $is_buddyform_post, 'buddyforms_form_title' );
 			if ( ! empty( $title_field ) && ! empty( $title_field['generate_title'] ) ) {
-				$post_states = array( '<span class="bf-auto-generated-title">'.__( 'Generated Title', 'buddyform' ).'</span>' );
+				$post_states = array( '<span class="bf-auto-generated-title">' . __( 'Generated Title', 'buddyform' ) . '</span>' );
 			}
 		}
 	}
-	
+
 	return $post_states;
 }
 
-add_filter( 'the_title', 'buddyform_strip_html_title_for_entries_in_post_screen', 100, 2 );
+add_filter( 'the_title', 'buddyforms_strip_html_title_for_entries_in_post_screen', 100, 2 );
 /**
- * Change the title in the backend  post list
+ * Change the title in the backend post list
  *
  * @param $title
  * @param $id
  *
  * @return string
  */
-function buddyform_strip_html_title_for_entries_in_post_screen( $title, $id ) {
-	if ( is_admin() ) {
+function buddyforms_strip_html_title_for_entries_in_post_screen( $title, $id = null ) {
+	if ( is_admin() && ! empty( $id ) ) {
 		$is_buddyform_post = buddyforms_get_form_slug_by_post_id( $id );
 		if ( ! empty( $is_buddyform_post ) ) {
 			$title = wp_strip_all_tags( html_entity_decode( $title ), true );
 		}
 	}
-	
+
 	return $title;
 }

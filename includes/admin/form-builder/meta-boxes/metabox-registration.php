@@ -76,7 +76,7 @@ class BuddyFormsMetaBoxRegistration {
 		$generate_password = isset( $buddyform['registration']['generate_password'] ) ? $buddyform['registration']['generate_password'] : '';
 		$element           = new Element_Checkbox( '<b>' . __( 'Generate Password', 'buddyforms' ) . '</b>', "buddyforms_options[registration][generate_password]", array( 'yes' => __( 'Auto generate the password.', 'buddyforms' ) ), array(
 			'value'     => $generate_password,
-			'shortDesc' => 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.'
+			'shortDesc' => __('If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.', 'buddyforms')
 		) );
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
@@ -87,30 +87,15 @@ class BuddyFormsMetaBoxRegistration {
 		$public_submit_username_from_email = ! isset( $buddyform['public_submit_username_from_email'] ) ? '' : 'public_submit_username_from_email';
 		$element                           = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array(
 			'value'     => $public_submit_username_from_email,
-			'shortDesc' => 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.'
+			'shortDesc' => __('This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.', 'buddyforms')
 		) );
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
 		}
 		$form_setup[] = $element;
 
-		// Get all Pages
-		$pages = get_pages( array(
-			'sort_order'  => 'asc',
-			'sort_column' => 'post_title',
-			'parent'      => 0,
-			'post_type'   => 'page',
-			'post_status' => 'publish'
-		) );
-
-		// Generate the pages Array
-		$all_pages             = Array();
-		$all_pages['referrer'] = 'Select a Page';
-		$all_pages['referrer'] = 'Referrer';
-		$all_pages['home']     = 'Homepage';
-		foreach ( $pages as $page ) {
-			$all_pages[ $page->ID ] = $page->post_title;
-		}
+		//Get all Pages
+		$all_pages = $this->get_activation_page_list();
 
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
@@ -125,16 +110,16 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_subject = isset( $buddyform['registration']['activation_message_from_subject'] ) ? $buddyform['registration']['activation_message_from_subject'] : 'User Account Activation Mail';
 		$form_setup[]                    = new Element_Textbox( '<b>' . __( "Activation Message Subject", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_subject]", array(
 			'value'     => $activation_message_from_subject,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 		) );
 		// activation_message_text
 		$activation_message_text = isset( $buddyform['registration']['activation_message_text'] )
 			? $buddyform['registration']['activation_message_text']
-			: 'Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]';
+			: __('Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]', 'buddyforms');
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
 			'value'     => $activation_message_text,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 			'style'     => 'width: 100%; display: inline-block;'
 		) );
@@ -142,7 +127,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_name = isset( $buddyform['registration']['activation_message_from_name'] ) ? $buddyform['registration']['activation_message_from_name'] : '[blog_title]';
 		$form_setup[]                 = new Element_Textbox( '<b>' . __( "Activation From Name", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_from_name]", array(
 			'value'     => $activation_message_from_name,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => '',
 		) );
 		// activation_message_from_email
@@ -163,6 +148,33 @@ class BuddyFormsMetaBoxRegistration {
 		) );
 
 		buddyforms_display_field_group_table( $form_setup );
+	}
+
+	/**
+	 * Get the list of pages to show in the list of the Activation Page
+	 * @return array
+	 */
+	public function get_activation_page_list() {
+		$home_page_id = get_option( 'page_on_front' );
+		// Get all Pages
+		$pages = get_pages( array(
+			'sort_order'  => 'asc',
+			'sort_column' => 'post_title',
+			'parent'      => 0,
+			'exclude'     => array( $home_page_id ),
+			'post_type'   => 'page',
+			'post_status' => 'publish'
+		) );
+
+		// Generate the pages Array
+		$all_pages             = array();
+		$all_pages['referrer'] = __( 'Select a Page', 'buddyforms' );
+		$all_pages['home']     = __( 'Homepage', 'buddyforms' );
+		foreach ( $pages as $page ) {
+			$all_pages[ $page->ID ] = $page->post_title;
+		}
+
+		return $all_pages;
 	}
 
 	/**
@@ -220,23 +232,9 @@ class BuddyFormsMetaBoxRegistration {
 
 		//Explain the redirection on update
 		echo sprintf( '<p>%s</p><br>', __( 'To select the page where the user should land on Update the User Profile use te Form Submission options ', 'buddyforms' ) );
-		// Get all Pages
-		$pages = get_pages( array(
-			'sort_order'  => 'asc',
-			'sort_column' => 'post_title',
-			'parent'      => 0,
-			'post_type'   => 'page',
-			'post_status' => 'publish'
-		) );
 
-		// Generate the pages Array
-		$all_pages             = Array();
-		$all_pages['referrer'] = 'Select a Page';
-		$all_pages['referrer'] = 'Referrer';
-		$all_pages['home']     = 'Homepage';
-		foreach ( $pages as $page ) {
-			$all_pages[ $page->ID ] = $page->post_title;
-		}
+		//Get all Pages
+		$all_pages = $this->get_activation_page_list();
 
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
@@ -251,16 +249,16 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_subject = isset( $buddyform['on_user_update']['activation_message_from_subject'] ) ? $buddyform['on_user_update']['activation_message_from_subject'] : 'User Account Activation Mail';
 		$form_setup[]                    = new Element_Textbox( '<b>' . __( "Activation Message Subject", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_from_subject]", array(
 			'value'     => $activation_message_from_subject,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 		) );
 		// activation_message_text
 		$activation_message_text = isset( $buddyform['on_user_update']['activation_message_text'] )
 			? $buddyform['on_user_update']['activation_message_text']
-			: "Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]";
+			: __("Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]", 'buddyforms');
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_text]", array(
 			'value'     => $activation_message_text,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 			'style'     => 'width: 100%; display: inline-block; ',
 		) );
@@ -268,7 +266,7 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_message_from_name = isset( $buddyform['on_user_update']['activation_message_from_name'] ) ? $buddyform['on_user_update']['activation_message_from_name'] : '[blog_title]';
 		$form_setup[]                 = new Element_Textbox( '<b>' . __( "Activation From Name", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_from_name]", array(
 			'value'     => $activation_message_from_name,
-			'shortDesc' => __( '', 'buddyforms' ),
+			'shortDesc' => '',
 			'class'     => $rows_are_visible,
 		) );
 		// activation_message_from_email

@@ -1,5 +1,4 @@
 .bf_field_group {
-    margin: 10px 0 20px;
     overflow: auto;
     clear: both;
 }
@@ -16,7 +15,6 @@
 .bf_field_group .bf-input {
     width: 70%;
     display: inline;
-    float: right;
     overflow: auto;
 }
 
@@ -72,4 +70,8 @@ li.fs-cta a, #fs_addons h2 {
 
 #TB_ajaxContent{
     width: auto !important;
+}
+
+.the_buddyforms_form .bf-input textarea, .the_buddyforms_form .bf-input .form-control {
+    width: 99% !important;
 }

@@ -17,6 +17,18 @@ jQuery(document).ready(function () {
 
     var bf_submission_modal_content = jQuery(".buddyforms-posts-content");
     var bf_submission_modal = '';
+    // disable the ACF js navigate away pop up
+    if(typeof acf !== 'undefined'){
+        acf.unload.active = false;
+    }
+    jQuery.validator.addMethod("user-website", function (value, element) {
+       var match = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
+       if(match){
+           return true;
+       }
+        return false;
+    }, "Please enter a valid URL.");
+
 
     jQuery(document).on("click", '.bf-submission-modal', function (evt) {
 
@@ -236,21 +248,8 @@ jQuery( document ).ready( function( $ ) {
 // Special password redirects after registration
 // If a redirect url is added to the register page url we use this redirect and add it as hidden field to the form
 jQuery(document).ready(function (jQuery) {
-    var getUrlParameter = function bf_getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
 
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-    var redirect = getUrlParameter('redirect_url');
+    var redirect = bf_getUrlParameter('redirect_url');
 
     if(redirect){
         jQuery('#submitted').append('<input type="hidden" name="bf_pw_redirect_url" value="'+ redirect +'" />');
@@ -258,3 +257,19 @@ jQuery(document).ready(function (jQuery) {
 
 });
 
+
+// Helper function to get $_GET parameter
+function bf_getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+}
