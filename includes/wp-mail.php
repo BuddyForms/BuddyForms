@@ -203,7 +203,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			}
 		}
 
-		$post_link_html = sprintf('<a href="%2$s" target="_blank">%s1$</a>', $postperma);
+		$post_link_html = ! empty( $postperma ) ? sprintf( '<a href="%s" target="_blank">%s</a>', $postperma , $postperma ) : '';
 
 		$short_codes_and_values = array(
 			'[user_login]' => $usernameauth,
