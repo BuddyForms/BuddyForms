@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
 				$the_permalink = get_permalink();
-				if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) {
+				if (isset( $buddyforms[ $form_slug ]['post_type'] ) &&  $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) {
 					$the_permalink = '#';
 				}
 
@@ -34,9 +34,9 @@ if ( ! defined( 'ABSPATH' ) ) {
         <li id="bf_post_li_<?php the_ID() ?>" class="bf-submission <?php echo $post_status_css; ?> bf_posts_<?php the_ID() ?>">
 
 					<?php // Create the modal for the submissions single view
-					if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
+					if ( isset( $buddyforms[ $form_slug ]['post_type'] ) && $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
                         <div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
-                            <?php buddyforms_locate_template( 'submission-single' ); ?>
+                            <?php buddyforms_locate_template( 'submission-single', $form_slug ); ?>
                         </div>
 					<?php } ?>
 
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
 
             <div class="item-title">
-              <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
+                <a class="<?php echo ( isset( $buddyforms[ $form_slug ]['post_type'] ) && $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) ? 'bf-submission-modal' : '' ?> "
                  data-id="<?php the_ID() ?>"
                  href="<?php echo $the_permalink; ?>"
                  rel="bookmark"

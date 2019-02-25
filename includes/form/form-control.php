@@ -393,7 +393,9 @@ function buddyforms_process_submission( $args = Array() ) {
 
 		if ( 'registration' === $form_type ) {
 			$default_post_title = ! empty( $current_user->user_nicename ) ? $current_user->user_nicename : __( 'none', 'buddyforms' );
-		} else {
+		} else if('contact' === $form_type) {
+			$default_post_title = ! empty( $_POST['subject'] ) ? stripslashes( $_POST['subject'] ) : __( 'none', 'buddyforms' );
+		} else  {
 			$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : __( 'none', 'buddyforms' );
 		}
 

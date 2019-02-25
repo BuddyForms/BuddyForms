@@ -21,11 +21,12 @@ function from_setup_form_type(value) {
             jQuery('.buddyform-nav-tabs .edit-submissions_nav a').text('View Submissions');
 
             // Show
-            jQuery('.permission_nav, .edit-submissions_nav, .notifications_nav').show();
+            jQuery('.edit-submissions_nav, .notifications_nav').show();
 
             // Hide
             jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
             jQuery('.create-content_nav').hide();
+            jQuery('.permission_nav').hide();
 
             // Show/Hide the corresponding form elements in the form select
             jQuery('.bf_show_if_f_type_post').hide();
