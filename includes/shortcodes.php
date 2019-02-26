@@ -51,6 +51,8 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	unset( $args['id'] );
 
 	ob_start();
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
 	buddyforms_create_edit_form( $args );
 	$create_edit_form = ob_get_contents();
 	ob_clean();
@@ -200,6 +202,9 @@ function buddyforms_the_loop( $args ) {
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
+
 	if ( $list_posts_style == 'table' ) {
 		buddyforms_locate_template( 'the-table', $form_slug );
 	} elseif ( $list_posts_style == 'list' ) {
@@ -282,6 +287,9 @@ function buddyforms_nav( $args ) {
 		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
+
 	$tmp = buddyforms_button_view_posts( $args );
 	$tmp .= $separator;
 	$tmp .= buddyforms_button_add_new( $args );
@@ -304,6 +312,9 @@ function buddyforms_button_view_posts( $args ) {
 		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
+
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
@@ -325,6 +336,8 @@ function buddyforms_button_add_new( $args ) {
 		'label_add' => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $label_add . '</a>';
 
@@ -352,6 +365,9 @@ function buddyforms_view_login_form( $args ) {
 		'label_log_in'   => __( 'Log In', 'buddyforms' ),
 	), $args ) );
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
+
 	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">' . __( 'Logout', 'buddyforms' ) . '</a>';
 	} else {
@@ -369,6 +385,8 @@ function buddyforms_reset_password_form( $args ) {
 		'redirect_url' => '',
 	), $args ) );
 
+	BuddyForms::front_js_css();
+	BuddyForms::load_tk_font_icons();
 
 	if ( is_user_logged_in() ) {
 
