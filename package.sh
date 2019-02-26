@@ -47,6 +47,10 @@ rm -rf ./readme.md
 rm -rf ./vendor
 rm -rf ./tests
 rm -rf ./bin
+#remove cache
+rm -rf ./.cache
+#remove extra
+rm -rf ./docs
 #Scripts
 rm -rf ./*.sh
 
