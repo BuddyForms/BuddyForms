@@ -80,8 +80,6 @@ function buddyforms_jquery_validation() {
 	}
 
 	$form_html = '<script type="text/javascript">';
-	$form_html .= ' var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";
-	';
 
 	foreach ( $buddyforms as $form_slug => $form ) {
 			// Create the needed Validation JS.
@@ -103,7 +101,7 @@ function buddyforms_jquery_validation() {
     //allow the validate script to be altered
     $form_html .= apply_filters('buddyforms_jquery_validator_init', $validator_init, $form_slug);
 
-    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array('upload','featured_image'));
+    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array( 'upload', 'featured_image' ) );
 
     $form_html .= 'if (jQuery.validator) {
       setTimeout(function() {';
@@ -116,8 +114,8 @@ function buddyforms_jquery_validation() {
 
 				if ( isset( $form_field['required'] ) ) {
 
-					$form_html .= '
-				jQuery("form [name=\'' . $form_field['slug'] . '\']").rules("add", { ';
+
+					$form_html .= 'jQuery("form [name=\'' . $form_field['slug'] . '\']:active").rules("add", { ';
 
 					$form_html .= 'required: true, ';
 
@@ -145,7 +143,7 @@ function buddyforms_jquery_validation() {
 
 			if ( isset( $form_field['type'] ) && $form_field['type'] == 'gdpr' && isset( $form_field['options'] ) ) {
 				foreach ( $form_field['options'] as $key => $option ) {
-					$form_html                .= 'jQuery("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']").rules("add", { ';
+					$form_html                .= 'jQuery("form [name=\'' . $form_field['slug'] . '_' . $key . '[]\']:active").rules("add", { ';
 					$validation_error_message = isset( $option['error_message'] ) ? $option['error_message'] : __( 'This field is required.', 'buddyforms' );
 					$form_html                .= ' messages:{ required: "' . $validation_error_message . '" }';
 					$form_html                .= '});';

@@ -22,15 +22,15 @@
             $( '.buddyforms-success' ).remove();
 
             $.ajax({
-                url: buddyforms_gdpr_localize.gdpr_ajax_url,
+                url: buddyformsGlobal.admin_url,
                 type: 'post',
                 data: data,
                 success: function( response ) {
                     if ( 'success' !== response.data ) {
-                        $( '#buddyforms-gdpr-form' ).append( '<div class="buddyforms-errors" style="display:none;">' + buddyforms_gdpr_localize.gdpr_errors + '<br />' + response.data + '</div>' );
+                        $( '#buddyforms-gdpr-form' ).append( '<div class="buddyforms-errors" style="display:none;">' + buddyformsGlobal.buddyforms_gdpr_localize.gdpr_errors + '<br />' + response.data + '</div>' );
                         $( '.buddyforms-errors' ).slideDown();
                     } else {
-                        $( '#buddyforms-gdpr-form' ).append( '<div class="buddyforms-success" style="display:none;">' + buddyforms_gdpr_localize.gdpr_success + '</div>' );
+                        $( '#buddyforms-gdpr-form' ).append( '<div class="buddyforms-success" style="display:none;">' + buddyformsGlobal.buddyforms_gdpr_localize.gdpr_success + '</div>' );
                         $( '.buddyforms-success' ).slideDown();
                     }
                 }

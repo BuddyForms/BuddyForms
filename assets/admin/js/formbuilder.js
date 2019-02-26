@@ -134,7 +134,7 @@ jQuery(document).ready(function () {
 
 		jQuery.ajax({
 			type: 'POST',
-			url: ajaxurl,
+			url: buddyformsGlobal.ajaxurl,
 			data: {
 				"action": "buddyforms_display_form_element",
 				"fieldtype": fieldtype,

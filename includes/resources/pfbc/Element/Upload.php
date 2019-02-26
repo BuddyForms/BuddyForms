@@ -6,10 +6,6 @@
 class Element_Upload extends Element_Textbox {
 
 	/**
-	 * @var int
-	 */
-	public $bootstrapVersion = 3;
-	/**
 	 * @var array
 	 */
 	protected $_attributes = array(
@@ -26,9 +22,9 @@ class Element_Upload extends Element_Textbox {
 		if ( $field_type !== 'upload' && $field_type !== 'featured_image' ) {
 			return;
 		}
-        $media_attached_to_post = get_attached_media( '', $post_id );
-		$key_value      = '';
-		$attachment_ids = array();
+		$media_attached_to_post = get_attached_media( '', $post_id );
+		$key_value              = '';
+		$attachment_ids         = array();
 		if ( $field_type === 'upload' || $field_type === 'featured_image' ) {
 			$key_value = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : "";
 			if ( $field_type === 'upload' ) {
@@ -46,35 +42,35 @@ class Element_Upload extends Element_Textbox {
 			if ( ! empty( $attachment_ids ) && is_array( $attachment_ids ) ) {
 				$absolute_path = wp_upload_dir()['path'];
 				foreach ( $attachment_ids as $id_value ) {
-				    $file_already_uploaded = isset($media_attached_to_post[$id_value]);
-				    //If the file was already uploaded don´t execute the attachment logic
-                    if(!$file_already_uploaded && !empty($id_value)){
-                        $metadata    = wp_prepare_attachment_for_js( $id_value );
-                        $file_name   = $metadata['filename'];
-                        $wp_filetype = wp_check_filetype( $file_name, null );
-                        $attachment  = array(
-                            'post_mime_type' => $wp_filetype['type'],
-                            'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
-                            'post_content'   => '',
-                            'post_status'    => 'inherit',
-                            'ID'             => $id_value,
-                            'post_parent'    => $post_id
-                        );
+					$file_already_uploaded = isset( $media_attached_to_post[ $id_value ] );
+					//If the file was already uploaded don´t execute the attachment logic
+					if ( ! $file_already_uploaded && ! empty( $id_value ) ) {
+						$metadata    = wp_prepare_attachment_for_js( $id_value );
+						$file_name   = $metadata['filename'];
+						$wp_filetype = wp_check_filetype( $file_name, null );
+						$attachment  = array(
+							'post_mime_type' => $wp_filetype['type'],
+							'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
+							'post_content'   => '',
+							'post_status'    => 'inherit',
+							'ID'             => $id_value,
+							'post_parent'    => $post_id
+						);
 
-                        // Create the attachment
-                        $attach_id = wp_insert_attachment( $attachment, $absolute_path . '/' . $file_name, $post_id );
-                        // Define attachment metadata
+						// Create the attachment
+						$attach_id = wp_insert_attachment( $attachment, $absolute_path . '/' . $file_name, $post_id );
+						// Define attachment metadata
 
-                        // Include image.php if not was loaded
-                        if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
-                            require_once( ABSPATH . 'wp-admin/includes/image.php' );
-                        }
+						// Include image.php if not was loaded
+						if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
+							require_once( ABSPATH . 'wp-admin/includes/image.php' );
+						}
 
-                        $attach_data = wp_generate_attachment_metadata( $attach_id, $absolute_path . '/' . $file_name );
+						$attach_data = wp_generate_attachment_metadata( $attach_id, $absolute_path . '/' . $file_name );
 
-                        // Assign metadata to attachment
-                        wp_update_attachment_metadata( $attach_id, $attach_data );
-                    }
+						// Assign metadata to attachment
+						wp_update_attachment_metadata( $attach_id, $attach_data );
+					}
 
 				}
 			}
@@ -150,10 +146,6 @@ class Element_Upload extends Element_Textbox {
 
 	public function render() {
 		global $buddyforms, $post_id;
-		ob_start();
-		parent::render();
-		$box = ob_get_contents();
-		ob_end_clean();
 
 		$id     = $this->getAttribute( 'id' );
 		$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
@@ -193,7 +185,7 @@ class Element_Upload extends Element_Textbox {
 		if ( count( $entries ) > 0 ) {
 			$entries_result = esc_attr( json_encode( $entries ) );
 		}
-		$message = "Drop files here to upload";
+		$message = __( "Drop files here to upload", 'buddyforms' );
 		if ( ! empty( $result ) ) {
 			$result_value = rtrim( trim( $result ), ',' );
 		}
@@ -235,11 +227,7 @@ class Element_Upload extends Element_Textbox {
 		if ( ! empty( $description ) ) {
 			$box .= sprintf( '<span class="help-inline">%s</span>', $description );
 		}
-		if ( $this->bootstrapVersion == 3 ) {
-			echo $box;
-		} else {
-			echo preg_replace( "/(.*)(<input .*\/>)(.*)/i",
-				'${1}<label class="file">${2}<span class="file-custom"></span></label>${3}', $box );
-		}
+
+		echo $box;
 	}
 }

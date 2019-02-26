@@ -17,16 +17,18 @@ function uploadHandler() {
             var multipleFiles = current.attr('multiple_files');
             var entry = current.data('entry');
 
-            initSingleDropZone(current.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
+            initSingleDropZone(current, current.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
         })
     }
 
-    function initSingleDropZone(id, maxSize, acceptedFiles, multipleFiles, clickeable, uploadFields) {
-        var field = jQuery('#field_' + id);
+    function initSingleDropZone(current, id, maxSize, acceptedFiles, multipleFiles, clickeable, uploadFields) {
+        //Hidden field
+        var hidden_field = jQuery(current).find('input[type="text"][style*="hidden"]');
+        //Container field
         var dropzoneStringId = '#' + id;
         //Set default values
         var options = {
-            url: dropParam.admin_url,
+            url: buddyformsGlobal.admin_url,
             maxFilesize: maxSize,
             parallelUploads: 1,
             acceptedFiles: acceptedFiles,
@@ -41,7 +43,7 @@ function uploadHandler() {
                     DropZoneAddedFile(dropzoneStringId);
                 });
                 this.on('success', function (file, response) {
-                    DropZoneSuccess(file, response, field);
+                    DropZoneSuccess(file, response, hidden_field);
                 });
                 this.on('error', DropZoneError);
                 this.on('sending', DropZoneSending);
@@ -49,7 +51,7 @@ function uploadHandler() {
                 this.on('complete', DropZoneComplete);
                 this.on('completemultiple', DropZoneComplete);
                 this.on('removedfile', function (file) {
-                    DropZoneRemovedFile(file, field);
+                    DropZoneRemovedFile(file, hidden_field);
                 });
 
                 for (var key in uploadFields) {
@@ -66,22 +68,22 @@ function uploadHandler() {
                 }
             }
         };
-        jQuery(dropzoneStringId).dropzone(options);
+        jQuery(current).dropzone(options);
     }
 
     function DropZoneComplete() {
         enabledSubmitButtons();
     }
 
-    function DropZoneAddedFile(dropzoneStringId) {
-        jQuery(dropzoneStringId + "-error").text("");
-        jQuery('.dz-progress').hide()
+    function DropZoneAddedFile(dropzoneContainer) {
+        jQuery(dropzoneContainer).find("label[class*='error']").text("");
+        jQuery(dropzoneContainer).find('.dz-progress').hide()
     }
 
     function DropZoneSending(file, xhr, formData) {
         disableSubmitButtons(true);
         formData.append('action', 'handle_dropped_media');
-        formData.append('nonce', dropParam.ajaxnonce);
+        formData.append('nonce', buddyformsGlobal.ajaxnonce);
     }
 
     function DropZoneSuccess(file, response, currentField) {
@@ -120,10 +122,10 @@ function uploadHandler() {
 
     function handleDeletedMedia(attachmentId) {
         disableSubmitButtons(false);
-        jQuery.post(dropParam.admin_url, {
+        jQuery.post(buddyformsGlobal.admin_url, {
             action: 'handle_deleted_media',
             media_id: attachmentId,
-            nonce: dropParam.ajaxnonce
+            nonce: buddyformsGlobal.ajaxnonce
         }, function (data) {
             console.log(data);
         }).always(function () {

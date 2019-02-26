@@ -569,7 +569,7 @@ JS;
                 var FormData = jQuery("#$id").serialize();
 
                 jQuery.ajax({
-                    url: ajaxurl,
+                    url: buddyformsGlobal.ajaxurl,
                     type: "{$this->_attributes["method"]}",
                     dataType: 'json',
                     data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},

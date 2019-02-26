@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
         if (confirm('Delete Permanently')) {
             jQuery.ajax({
                 type: 'POST',
-                url: ajaxurl,
+                url: buddyformsGlobal.ajaxurl,
                 data: {"action": "buddyforms_ajax_delete_post", "post_id": post_id},
                 success: function (data) {
                     if (isNaN(data)) {
@@ -170,35 +170,35 @@ function checkPasswordStrength( $pass1,
     // Get the password strength
     var strength = wp.passwordStrength.meter( pass1, blacklistArray, pass2 );
 
-    var hint_html = '<p><small class="buddyforms-password-hint">' + pwsL10n.hint_text + '</small></p>';
+    var hint_html = '<p><small class="buddyforms-password-hint">' + buddyformsGlobal.pwsL10n.hint_text + '</small></p>';
 
     // Add the strength meter results
-    console.log('strength ' + strength + 'required_strength ' + pwsL10n.required_strength);
+    console.log('strength ' + strength + 'required_strength ' + buddyformsGlobal.pwsL10n.required_strength);
     jQuery('.buddyforms-password-hint').remove();
 
 
     switch ( strength ) {
         case 0: case 1:
-            $strengthResult.addClass( 'short' ).html( pwsL10n.short );
+            $strengthResult.addClass( 'short' ).html( buddyformsGlobal.pwsL10n.short );
             break;
         case 2:
-            $strengthResult.addClass( 'bad' ).html( pwsL10n.bad );
+            $strengthResult.addClass( 'bad' ).html( buddyformsGlobal.pwsL10n.bad );
             break;
 
         case 3:
-            $strengthResult.addClass( 'good' ).html( pwsL10n.good );
+            $strengthResult.addClass( 'good' ).html( buddyformsGlobal.pwsL10n.good );
             break;
 
         case 4:
-            $strengthResult.addClass( 'strong' ).html( pwsL10n.strong );
+            $strengthResult.addClass( 'strong' ).html( buddyformsGlobal.pwsL10n.strong );
             break;
 
         case 5:
-            $strengthResult.addClass( 'short' ).html( pwsL10n.mismatch );
+            $strengthResult.addClass( 'short' ).html( buddyformsGlobal.pwsL10n.mismatch );
             break;
 
         default:
-            $strengthResult.addClass( 'short' ).html( pwsL10n.short );
+            $strengthResult.addClass( 'short' ).html( buddyformsGlobal.pwsL10n.short );
 
     }
 
@@ -206,7 +206,7 @@ function checkPasswordStrength( $pass1,
     // enable only the submit button if the password is strong and
     // both passwords are filled up
 
-    if ( pwsL10n.required_strength <= strength && strength != 5 && '' !== pass2.trim() ) {
+    if ( buddyformsGlobal.pwsL10n.required_strength <= strength && strength != 5 && '' !== pass2.trim() ) {
         jQuery('.buddyforms-password-hint').remove();
         $submitButton.removeAttr( 'disabled' );
     } else {
