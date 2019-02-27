@@ -129,13 +129,12 @@ function bf_update_list_item_number_mail() {
 //
 function load_formbuilder_template(template) {
     var postTitle = jQuery('input#title');
-    if (!postTitle.val()) {
-        postTitle.val(buddyformsMakeFieldId());
-    }
+    
+
     jQuery.ajax({
         type: 'POST',
         dataType: "json",
-        url: buddyformsGlobal.ajaxurl,
+        url: buddyformsGlobal.admin_url,
         data: {
             "action": "buddyforms_form_template",
             "template": template,
@@ -192,6 +191,14 @@ function load_formbuilder_template(template) {
                 }
             });
             tb_remove();
+			if (!postTitle.val()) {
+				postTitle.val(buddyformsMakeFieldId());
+				jQuery('input#title').focus();
+				jQuery('input#title').focus();
+			}
+
+                
+
 
         },
         error: function () {
@@ -205,11 +212,14 @@ function load_formbuilder_template(template) {
                 buttons: {
                     Ok: function () {
                         jQuery(this).dialog("close");
+                            
                     }
                 }
             });
+
         }
     });
+
     return false;
 }
 
@@ -548,7 +558,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
-            url: buddyformsGlobal.ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_new_mail_notification"},
             success: function (data) {
 
@@ -597,7 +607,7 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery.ajax({
             type: 'POST',
-            url: buddyformsGlobal.ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
             success: function (data) {
 
@@ -667,7 +677,7 @@ jQuery(document).ready(function (jQuery) {
                     jQuery.ajax({
                         type: 'POST',
                         dataType: "json",
-                        url: buddyformsGlobal.ajaxurl,
+                        url: buddyformsGlobal.admin_url,
                         data: {
                             "action": "buddyforms_new_page",
                             "page_name": page_name
