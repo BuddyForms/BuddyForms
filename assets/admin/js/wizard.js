@@ -154,7 +154,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery('#post, #postbox-container-1, #postbox-container-2').show();
         jQuery.ajax({
             type: 'POST',
-            url: buddyformsGlobal.ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_wizard_rewrite_rules"},
             success: function (data) {
                 //console.log('Done ' + data);
@@ -166,7 +166,7 @@ jQuery(document).ready(function (jQuery) {
     function select_form_type() {
         jQuery.ajax({
             type: 'POST',
-            url: buddyformsGlobal.ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_form_builder_wizard_types"},
             success: function (data) {
                 jQuery('#poststuff #post-body-content').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
@@ -239,7 +239,7 @@ jQuery(document).ready(function (jQuery) {
             // Get all form elements for the selected form type and add them to the form builder
             jQuery.ajax({
                 type: 'POST',
-                url: buddyformsGlobal.ajaxurl,
+                url: buddyformsGlobal.admin_url,
                 data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
                 success: function (data) {
                     jQuery('#formbuilder-actions-wrap').append(data);
@@ -367,7 +367,7 @@ jQuery(document).ready(function (jQuery) {
                 var FormData = jQuery(form).serialize();
                 jQuery.ajax({
                     type: 'POST',
-                    url: buddyformsGlobal.ajaxurl,
+                    url: buddyformsGlobal.admin_url,
                     data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
                     success: function (data) {
                         jQuery('#post').html('<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2><br><span class="dashicons dashicons-smiley"></span>');

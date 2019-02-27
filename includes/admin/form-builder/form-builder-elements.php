@@ -815,7 +815,7 @@ function buddyforms_display_form_element( $args ) {
 
 				        jQuery.ajax({
 				            type: 'POST',
-				            url: buddyformsGlobal.ajaxurl,
+				            url: buddyformsGlobal.admin_url,
 				            data: {
 				                "action": "buddyforms_post_types_taxonomies",
 				                "post_type": post_type

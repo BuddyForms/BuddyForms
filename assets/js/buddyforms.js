@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
         if (confirm('Delete Permanently')) {
             jQuery.ajax({
                 type: 'POST',
-                url: buddyformsGlobal.ajaxurl,
+                url: buddyformsGlobal.admin_url,
                 data: {"action": "buddyforms_ajax_delete_post", "post_id": post_id},
                 success: function (data) {
                     if (isNaN(data)) {

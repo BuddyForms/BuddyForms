@@ -437,7 +437,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
                     jQuery.ajax({
                         type: 'POST',
                         dataType: "json",
-                        url: buddyformsGlobal.ajaxurl,
+                        url: buddyformsGlobal.admin_url,
                         data: {
                             "action": "buddyforms_load_form_layout",
                             "form_slug": form_slug,
@@ -456,7 +456,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
                     jQuery.ajax({
                         type: 'POST',
                         dataType: "json",
-                        url: buddyformsGlobal.ajaxurl,
+                        url: buddyformsGlobal.admin_url,
                         data: {
                             "action": "buddyforms_load_form_layout",
                             "form_slug": 'reset',

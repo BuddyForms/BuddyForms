@@ -50,9 +50,10 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	unset( $args['slug'] );
 	unset( $args['id'] );
 
-	ob_start();
 	BuddyForms::front_js_css();
 	BuddyForms::load_tk_font_icons();
+
+	ob_start();
 	buddyforms_create_edit_form( $args );
 	$create_edit_form = ob_get_contents();
 	ob_clean();
