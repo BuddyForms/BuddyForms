@@ -765,7 +765,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			add_action( 'admin_notices', 'buddyforms_php_version_admin_notice' );
 		} else {
 			// Init BuddyForms.
-			$GLOBALS['buddyforms_new'] = BuddyForms::get_instance();
+			$GLOBALS['buddyforms_new'] = new BuddyForms();
 			// Init Freemius.
 			buddyforms_core_fs();
 			// Signal that parent SDK was initiated.
