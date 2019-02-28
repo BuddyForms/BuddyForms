@@ -129,13 +129,12 @@ function bf_update_list_item_number_mail() {
 //
 function load_formbuilder_template(template) {
     var postTitle = jQuery('input#title');
-    if (!postTitle.val()) {
-        postTitle.val(buddyformsMakeFieldId());
-    }
+    
+
     jQuery.ajax({
         type: 'POST',
         dataType: "json",
-        url: ajaxurl,
+        url: buddyformsGlobal.admin_url,
         data: {
             "action": "buddyforms_form_template",
             "template": template,
@@ -192,6 +191,14 @@ function load_formbuilder_template(template) {
                 }
             });
             tb_remove();
+			if (!postTitle.val()) {
+				postTitle.val(buddyformsMakeFieldId());
+				jQuery('input#title').focus();
+				jQuery('input#title').focus();
+			}
+
+                
+
 
         },
         error: function () {
@@ -205,11 +212,14 @@ function load_formbuilder_template(template) {
                 buttons: {
                     Ok: function () {
                         jQuery(this).dialog("close");
+                            
                     }
                 }
             });
+
         }
     });
+
     return false;
 }
 
@@ -462,13 +472,13 @@ jQuery(document).ready(function (jQuery) {
         var type = jQuery('#gdpr_option_type').val();
 
         var message = '';
-        if(admin_text[type]){
-            message = admin_text[type]
+        if(buddyformsGlobal.admin_text[type]){
+            message = buddyformsGlobal.admin_text[type]
         }
 
         var error_message = '';
-        if(admin_text['error_message']){
-            error_message = admin_text['error_message']
+        if(buddyformsGlobal.admin_text['error_message']){
+            error_message = buddyformsGlobal.admin_text['error_message']
         }
 
         numItems = numItems + 1;
@@ -548,7 +558,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
-            url: ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_new_mail_notification"},
             success: function (data) {
 
@@ -597,7 +607,7 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery.ajax({
             type: 'POST',
-            url: ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
             success: function (data) {
 
@@ -625,10 +635,10 @@ jQuery(document).ready(function (jQuery) {
 
         if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
             jQuery('.bf_permissions :checkbox').prop('checked', false);
-            jQuery(this).text(admin_text.check);
+            jQuery(this).text(buddyformsGlobal.admin_text.check);
         } else {
             jQuery('.bf_permissions :checkbox').prop('checked', true);
-            jQuery(this).text(admin_text.uncheck);
+            jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
         }
         e.preventDefault();
     });
@@ -636,9 +646,9 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document).on('click', '.bf_check', function (e) {
 
         if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
-            jQuery(this).text(admin_text.check);
+            jQuery(this).text(buddyformsGlobal.admin_text.check);
         } else {
-            jQuery(this).text(admin_text.uncheck);
+            jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
         }
         e.preventDefault();
     });
@@ -667,7 +677,7 @@ jQuery(document).ready(function (jQuery) {
                     jQuery.ajax({
                         type: 'POST',
                         dataType: "json",
-                        url: ajaxurl,
+                        url: buddyformsGlobal.admin_url,
                         data: {
                             "action": "buddyforms_new_page",
                             "page_name": page_name

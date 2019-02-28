@@ -62,7 +62,7 @@ jQuery(document).ready(function($) {
         var currentField = jQuery('#field_' + id);
 
         var myDropzone = new Dropzone("div#" + id, {
-            url: dropParam.admin_url,
+            url: buddyformsGlobal.admin_url,
             maxFilesize: max_file_size,
             acceptedFiles: 'image/*',
             maxFiles: 1,
@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 
                 this.on('sending', function(file, xhr, formData) {
                     formData.append('action', 'handle_dropped_media');
-                    formData.append('nonce', dropParam.ajaxnonce);
+                    formData.append('nonce', buddyformsGlobal.ajaxnonce);
                 });
 
                 this.on('success', function(file, response) {
@@ -125,10 +125,10 @@ jQuery(document).ready(function($) {
                     }
                     currentField.val(remainigIds);
                     jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
-                    jQuery.post(dropParam.admin_url, {
+                    jQuery.post(buddyformsGlobal.admin_url, {
                         action: 'handle_deleted_media',
                         media_id: attachment_id,
-                        nonce: dropParam.ajaxnonce
+                        nonce: buddyformsGlobal.ajaxnonce
                     }, function(data) {
                         console.log(data);
                     }).always(function() {

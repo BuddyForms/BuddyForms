@@ -214,7 +214,7 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery.ajax({
             type: 'POST',
-            url: ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {
                 "action": "buddyforms_post_types_taxonomies",
                 "post_type": post_type
@@ -254,7 +254,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
-            url: ajaxurl,
+            url: buddyformsGlobal.admin_url,
             data: {
                 "action": "buddyforms_url_builder",
                 "attached_page": attached_page,
@@ -410,7 +410,7 @@ jQuery(document).ready(function (jQuery) {
 
                 jQuery.ajax({
                     type: 'POST',
-                    url: ajaxurl,
+                    url: buddyformsGlobal.admin_url,
                     data: {
                         "action": "buddyforms_update_taxonomy_default",
                         "taxonomy": taxonomy,

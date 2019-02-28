@@ -709,7 +709,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$delete_files = $param_value == 'delete' ? true : false;
 						}
 
-						$upload_element = new Element_Upload( $slug, $customfield_val, array(
+						$upload_element = new Element_Upload( $label_name, $customfield_val, array(
 							'id'                                => $slug,
 							"file_limit"                        => $max_size,
 							'accepted_files'                    => $accepted_files,
@@ -722,7 +722,6 @@ function buddyforms_form_elements( $form, $args ) {
 							"upload_error_validation_message"   => $upload_error_validation_message,
 							"shortDesc"                         => $description
 						) );
-						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( $upload_element );
 						break;
 					case 'file':

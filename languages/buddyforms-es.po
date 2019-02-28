@@ -3065,8 +3065,8 @@ msgstr "No está permitido editar este mensaje. ¿Qué estás haciendo aquí?"
 
 #: includes/form/form.php:167
 #, fuzzy
-msgid "This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful."
-msgstr "Este formulario no tiene chorro de campos. No hay nada que rellenar hasta ahora. Agregue campos a su formulario para que sea útil."
+msgid "This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful."
+msgstr "Este formulario no tiene campos todavía. No hay nada que rellenar hasta ahora. Agregue campos a su formulario para que sea útil."
 
 #: includes/functions.php:35
 msgid "View my "

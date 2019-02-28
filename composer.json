@@ -1,6 +1,7 @@
 {
   "name": "themekraft/buddyforms",
   "description": "Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!",
+  "type": "wordpress-plugin",
   "keywords": [
     "form builder",
     "contact forms",
