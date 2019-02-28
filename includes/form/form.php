@@ -164,7 +164,7 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 	if ( ! isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields jet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
+		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		echo '<div class="bf-alert error">' . $error_message . '</div>';
 
 		return false;
