@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -388,6 +388,18 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.3.3 – 28 Feb 2019
+* Update the way to include parameters into js
+* Added buddyformsGlobal var
+* Code Refactored
+* Improved the upload field to work in the list of contact entries
+* Fixed the double label for the upload field
+* Fixed the way is added the rules to jQuery validation, now the input need to be active.
+* Fixed: Overlapping title on a new BuddyForm
+* fixed the admin url used in ajax call
+* Update Freemius
+* Update composer type
+
 = 2.3.2 – 26 Feb 2019
 * Fixed the assets to be included with the shortcodes.
 
