@@ -388,6 +388,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 7. Form Submissions in the admin backend
 
 == Changelog ==
+= 2.3.3.1 – 1 March 2019
+* IMPORTANT: the function buddyforms_locate_template used in our templates has changed now need the $form_slug parameter. Please update your templates files.
+* Fixed the checkbox styles in the form permissions
+
 = 2.3.3 – 28 Feb 2019
 * Update the way to include parameters into js
 * Added buddyformsGlobal var
