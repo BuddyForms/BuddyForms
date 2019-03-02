@@ -142,6 +142,11 @@ function buddyforms_get_template_directory() {
 function buddyforms_locate_template( $slug, $form_slug = '' ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $post_id;
 
+	//Backguard compatibility @sinde 2.3.3.
+	if ( empty( $form_slug ) ) {
+		global $form_slug;
+	}
+
 	// Get the current user so its not needed in the templates
 	$current_user = wp_get_current_user();
 
@@ -371,7 +376,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 						$current_site = get_current_site();
 						$form_blog_id = $buddyforms[ $form_slug ]['blog_id'];
-						
+
 						if ( $current_site->blog_id != $form_blog_id ) {
 							$form_site = get_blog_details( $form_blog_id, array( 'blog_id', 'blogname' ) );
 

@@ -486,7 +486,7 @@ function buddyforms_form_html( $args ) {
 function buddyforms_get_login_form_template() {
 
 	ob_start();
-	buddyforms_locate_template( 'login-form' );
+	buddyforms_locate_template( 'login-form', 'none' );
 	$login_form = ob_get_clean();
 
 	return $login_form;
