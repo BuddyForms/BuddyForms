@@ -464,4 +464,27 @@ jQuery(document).ready(function (jQuery) {
     });
     jQuery(".public_submit_select input:radio:checked").trigger("click");
 
+    var selectorForTaxAjaxOption = 'label.bf_taxonomy_ajax_ready>input[type="checkbox"][name^="buddyforms_options[form_fields]"][name$="[ajax][]"]';
+	jQuery(document.body).on('change', selectorForTaxAjaxOption, function () {
+		bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
+	});
+
+	if(jQuery(selectorForTaxAjaxOption).length > 0){
+		jQuery.each(jQuery(selectorForTaxAjaxOption), function(){
+			bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
+		});
+	}
+
+	function bfTaxFieldShowAjaxRelatedOptions(element){
+		var fieldId = element.attr('data');
+		if(fieldId) {
+			var minCharContainer = jQuery('#table_row_' + fieldId + '_minimumInputLength');
+			if(element.is(':checked')){
+				minCharContainer.show();
+			} else {
+				minCharContainer.hide();
+			}
+		}
+	}
+
 });

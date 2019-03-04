@@ -1922,3 +1922,7 @@ input.screen-per-page{
     margin-left: 3% !important;
     float: left;
 }
+
+.bf_hide_if_not_ajax_ready {
+	display: none;
+}
