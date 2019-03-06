@@ -854,6 +854,11 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 
 						}
+					
+						$taxonomy = isset( $customfield['taxonomy'] ) && $customfield['taxonomy'] != 'none' ? $customfield['taxonomy'] : '';
+						$order    = $customfield['taxonomy_order'];
+						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode(',', $customfield['taxonomy_exclude']) : '';
+						$include  = isset( $customfield['taxonomy_include'] ) ? implode(',', $customfield['taxonomy_include']) : '';
 
 						$args = array(
 							'hide_empty'    => 0,
@@ -868,10 +873,10 @@ function buddyforms_form_elements( $form, $args ) {
 							'tab_index'     => 0,
 							'hide_if_empty' => false,
 							'orderby'       => 'SLUG',
-							'taxonomy'      => isset( $customfield['taxonomy'] ) && $customfield['taxonomy'] != 'none' ? $customfield['taxonomy'] : '',
-							'order'         => $customfield['taxonomy_order'],
-							'exclude'       => isset( $customfield['taxonomy_exclude'] ) ? $customfield['taxonomy_exclude'] : '',
-							'include'       => isset( $customfield['taxonomy_include'] ) ? $customfield['taxonomy_include'] : '',
+							'taxonomy'      => $taxonomy,
+							'order'         => $order,
+							'exclude'       => $exclude,
+							'include'       => $include,
 						);
 
 						$placeholder = isset( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
@@ -884,8 +889,9 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$args     = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
+					
 						$dropdown = wp_dropdown_categories( $args );
-
+						
 						if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 							$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 						}
@@ -920,13 +926,38 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$tags                   = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
 						$maximumSelectionLength = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
-
+						$minimumInputLength = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
+						$ajax_options = '';
+						$is_ajax = isset( $customfield['ajax'] );
+						if($is_ajax){
+							$ajax_options .= $minimumInputLength;
+							$ajax_options .= 'ajax:{ ' .
+								                 'url: "'.admin_url( 'admin-ajax.php' ).'", ' .
+								                 'delay: 250, ' .
+								                 'method : "POST", ' .
+								                 'data: function (params) { ' .
+									                 'var query = { ' .
+										                 'search: params.term, ' .
+										                 'type: "public", ' .
+										                 'action: "bf_load_taxonomy", ' .
+										                 'nonce: "'.wp_create_nonce( 'bf_tax_loading') .'", ' .
+										                 'taxonomy: "' . $taxonomy . '", ' .
+										                 'order: "' . $order . '", ' .
+										                 'exclude: "' . $exclude . '", ' .
+										                 'include: "' . $include . '" ' .
+								                        '}; ' .
+								
+								                    'return query; ' .
+								                 ' } ' .
+							                 '}, ';
+						}
 						$dropdown = '
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
 //							            minimumResultsForSearch: -1,
 										' . $maximumSelectionLength . '
+										' . $ajax_options . '
 										    placeholder: function(){
 										        jQuery(this).data("placeholder");
 										    },

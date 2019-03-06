@@ -903,7 +903,7 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 		$form_slug = $post->post_name;
 	}
 
-	if ( ! empty( $form_slug ) && is_array( $buddyforms ) && ! array_key_exists( $form_slug, $buddyforms ) ) {
+	if ( empty( $form_slug ) && is_array( $buddyforms ) && ! array_key_exists( $form_slug, $buddyforms ) ) {
 		return;
 	}
 

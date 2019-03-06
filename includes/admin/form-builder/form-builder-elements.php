@@ -784,12 +784,27 @@ function buddyforms_display_form_element( $args ) {
 
 
 			$form_fields['general']['taxonomy_exclude'] = new Element_HTML( $dropdown );
-
-
+		
+		
 			$create_new_tax                           = isset( $customfield['create_new_tax'] ) ? $customfield['create_new_tax'] : 'false';
 			$form_fields['general']['create_new_tax'] = new Element_Checkbox( '<b>' . __( 'New Taxonomy Item', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][create_new_tax]", array( 'user_can_create_new' => '<b>' . __( 'User can create new', 'buddyforms' ) . '</b>' ), array(
 				'value' => $create_new_tax,
 				'class' => 'bf_hide_if_post_type_none'
+			) );
+		
+			$is_ajax                            = isset( $customfield['ajax'] ) ? $customfield['ajax'] : 'false';
+			$form_fields['general']['ajax'] = new Element_Checkbox( '<b>' . __( 'Ajax', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][ajax]", array( 'is_ajax' => '<b>' . __( 'Enabled Ajax', 'buddyforms' ) . '</b>' ), array(
+				'value' => $is_ajax,
+				'data'  => $field_id,
+				'class' => 'bf_hide_if_post_type_none bf_taxonomy_ajax_ready'
+			) );
+		
+			$minimum_input_length                         = isset( $customfield['minimumInputLength'] ) ? stripcslashes( $customfield['minimumInputLength'] ) : 0;
+			$form_fields['general']['minimumInputLength'] = new Element_Number( '<b>' . __( 'Minimum characters ', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][minimumInputLength]", array(
+				'data'      => $field_id,
+				'value'     => $minimum_input_length,
+				'shortDesc' => __( 'Minimum number of characters required to start a search.', 'buddyforms' ),
+				'class'     => 'bf_hide_if_post_type_none bf_hide_if_not_ajax_ready'
 			) );
 
 			$hidden                            = isset( $customfield['hidden'] ) ? $customfield['hidden'] : false;
