@@ -33,7 +33,7 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-## Features of BuddyForms Form Builder
+## Features of BuddyForms Form Builder 
 
 
 * Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
