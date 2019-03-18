@@ -719,7 +719,7 @@ jQuery(document).ready(function (jQuery) {
 	//
 	if (buddyformsGlobal && buddyformsGlobal.post_type === 'buddyforms') {
 		jQuery(document).on('click', '#bf_load_layout_options', function() {
-			jQuery('.layout-spinner').addClass(' is-active').show();
+			jQuery('.layout-spinner').addClass('is-active').show();
 			var form_slug = jQuery('#bf_form_layout_select').val();
 			jQuery.ajax({
 				type: 'POST',
@@ -737,7 +737,7 @@ jQuery(document).ready(function (jQuery) {
 		});
 
 		jQuery(document).on('click', '#bf_reset_layout_options', function(event) {
-			jQuery('.layout-spinner-reset').addClass(' is-active').show();
+			jQuery('.layout-spinner-reset').addClass('is-active').show();
 			jQuery.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -754,8 +754,7 @@ jQuery(document).ready(function (jQuery) {
 		});
 
 		function update_layout_options_screen(data) {
-			jQuery('.layout-spinner').removeClass('is-active');
-			jQuery('.layout-spinner-reset').hide();
+			jQuery('.layout-spinner').removeClass('is-active').hide();
 			var layout_container = jQuery('#buddyforms_form_designer');
 			if(layout_container.length > 0) {
 				jQuery.each(data, function(key, val) {
