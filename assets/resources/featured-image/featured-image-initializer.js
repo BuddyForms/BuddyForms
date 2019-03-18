@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
                     }
                     if (submitButtons.length > 0) {
                         submitButtons.attr("disabled", "disabled");
-                        submitButton.html("Upload in progress");
+                        submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress');
                     }
                 });
 

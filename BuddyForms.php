@@ -294,6 +294,14 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
 		}
 
+		/**
+		 * Enable the localization of the fields adding the strings to js
+		 *
+		 * @return array
+		 */
+		public static function localize_fields() {
+			return apply_filters( 'buddyforms_field_localization', array() );
+		}
 
 		/**
 		 * Enqueue the needed CSS for the admin screen
@@ -376,7 +384,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'admin_text' => $admin_text_array,
 					'admin_url'  => admin_url( 'admin-ajax.php' ),
 					'ajaxnonce'  => wp_create_nonce( 'fac_drop' ),
-					'post_type'  => get_post_type()
+					'post_type'  => get_post_type(),
+					'localize' => self::localize_fields()
 				) );
 
 				wp_enqueue_script( 'buddyforms-admin-js' );
@@ -582,7 +591,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			self::buddyforms_js_global_set_parameters( array(
 				'admin_url'                => admin_url( 'admin-ajax.php' ),
 				'ajaxnonce'                => wp_create_nonce( 'fac_drop' ),
-				'buddyforms_gdpr_localize' => $gpdr_translations
+				'buddyforms_gdpr_localize' => $gpdr_translations,
+				'localize'                 => self::localize_fields()
 			) );
 
 			//Global frontend vars

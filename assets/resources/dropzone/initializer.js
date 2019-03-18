@@ -138,7 +138,7 @@ function uploadHandler() {
             showButtonText = !!(showButtonText);
             submitButtons.attr("disabled", "disabled");
             if (showButtonText) {
-                submitButton.html('Upload in progress');
+                submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress');
             }
         }
     }

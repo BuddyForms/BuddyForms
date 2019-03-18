@@ -27,6 +27,7 @@ class FieldControl {
 	public function __construct() {
 		if ( class_exists( 'Element_Upload' ) ) {
 			add_action( 'buddyforms_process_field_submission', array( 'Element_Upload', 'upload_process_field_submission' ), 10, 7 );
+			add_filter('buddyforms_field_localization', array('Element_Upload', 'localize_string'), 10, 1);
 		}
 	}
 }

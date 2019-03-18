@@ -18,6 +18,23 @@ class Element_Upload extends Element_Textbox {
 		"mandatory"      => ""
 	);
 
+	/**
+	 * Return the localization string for this field
+	 *
+	 * @param $default
+	 *
+	 * @since 2.4.0
+	 *
+	 * @return array
+	 */
+	public static function localize_string($default) {
+		return array(
+			'upload' => array(
+				'submitButton' => __( 'Upload in progress', 'buddyforms' )
+			)
+		);
+	}
+
 	public static function upload_process_field_submission( $field_slug, $field_type, $field, $post_id, $form_slug, $args, $action ) {
 		if ( $field_type !== 'upload' && $field_type !== 'featured_image' ) {
 			return;
