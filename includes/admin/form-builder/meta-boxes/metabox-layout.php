@@ -424,88 +424,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		'shortDesc' => ''
 	) );
 
-
-
-	if ( get_post_type() == 'buddyforms' ) { ?>
-        <script>
-            jQuery(document).ready(function (jQuery) {
-                jQuery(document).on('click', '#bf_load_layout_options', function () {
-
-                    jQuery('.layout-spinner').addClass(' is-active');
-                    jQuery('.layout-spinner').show();
-                    var form_slug = jQuery('#bf_form_layout_select').val();
-                    jQuery.ajax({
-                        type: 'POST',
-                        dataType: "json",
-                        url: buddyformsGlobal.admin_url,
-                        data: {
-                            "action": "buddyforms_load_form_layout",
-                            "form_slug": form_slug,
-                        },
-                        success: function (data) {
-                            update_layout_options_screen(data);
-                        }
-                    });
-                    return false;
-
-                });
-
-                jQuery(document).on('click', '#bf_reset_layout_options', function () {
-                    jQuery('.layout-spinner-reset').addClass(' is-active');
-                    jQuery('.layout-spinner-reset').show();
-                    jQuery.ajax({
-                        type: 'POST',
-                        dataType: "json",
-                        url: buddyformsGlobal.admin_url,
-                        data: {
-                            "action": "buddyforms_load_form_layout",
-                            "form_slug": 'reset',
-                        },
-                        success: function (data) {
-                            update_layout_options_screen(data);
-                        }
-                    });
-                    return false;
-                });
-
-            });
-
-            function update_layout_options_screen(data){
-                jQuery('.layout-spinner').removeClass('is-active');
-                jQuery('.layout-spinner-reset').hide();
-                jQuery.each(data, function (i, val) {
-
-                    var type = jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").attr('type');
-
-                    if (typeof type === 'undefined' || !type) {
-
-                        type = jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").attr('type');
-
-                        if (val.style) {
-                            jQuery("input[name='<?php echo $option_name ?>[" + i + "][style]'][value='" + val.style + "']").prop("checked", true).trigger('change');
-                        }
-
-                        if (val.color) {
-                            jQuery("input[name='<?php echo $option_name ?>[" + i + "][color]']").val(val.color).trigger('change');;
-                        }
-
-                    }
-
-                    if (type == 'text' || type == 'number') {
-                        jQuery("input[name='<?php echo $option_name ?>[" + i + "]']").val(val);
-                    } else {
-                        jQuery("input[name='<?php echo $option_name ?>[" + i + "]'][value='" + val + "']").prop("checked", true);
-                    }
-
-                    if (i == 'custom_css') {
-                        jQuery("#" + i).text(val);
-                    }
-
-                });
-            }
-
-        </script>
-		<?php
+	if ( get_post_type() == 'buddyforms' ) {
 		echo '<p>' . __( 'Copy layout settings from' ) . '</p>';
 
 		echo '<p><select id="bf_form_layout_select" style="width: 50% !important; margin-right: 10px">';
@@ -518,7 +437,8 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		echo '</select>';
 		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner  spinner"></span> ' . __( 'Load Layout Settings', 'buddyforms' ) . '</a>';
 		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset  spinner"></span> '. __( 'Reset', 'buddyforms' ).'</a></p>';
-	}; ?>
+	}
+	?>
 
     <div class="tabs tabbable buddyform-tabs-left">
         <ul class="nav buddyform-nav-tabs buddyform-nav-pills">
