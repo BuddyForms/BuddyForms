@@ -361,7 +361,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				self::buddyforms_js_global_set_parameters( array(
 					'admin_text' => $admin_text_array,
 					'admin_url'  => admin_url( 'admin-ajax.php' ),
-					'ajaxnonce'  => wp_create_nonce( 'fac_drop' )
+					'ajaxnonce'  => wp_create_nonce( 'fac_drop' ),
+					'post_type'  => get_post_type()
 				) );
 
 				wp_enqueue_script( 'buddyforms-admin-js' );
