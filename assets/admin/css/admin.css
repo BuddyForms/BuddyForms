@@ -785,6 +785,19 @@ a.button.button-large.bf_button_action {
     border-radius: 3px;
 }
 
+.bf-3-tile button.bf_form_template.btn:disabled,
+.bf-3-tile button.bf_form_template.btn[disabled],
+.bf-3-tile button.bf_form_template.btn[disabled]:hover,
+.bf-3-tile button.bf_form_template.btn[disabled]:hover {
+	background: #CCCCCC;
+	color: #333;
+	text-shadow: none;
+	border-color: buttonface;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
 .buddyforms_template .btn:hover,
 .buddyforms_template .btn:focus {
     background: #008ec2;

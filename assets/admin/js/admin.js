@@ -127,9 +127,8 @@ function bf_update_list_item_number_mail() {
 //
 // Helper Function to lode form element templates depend on the form type
 //
-function load_formbuilder_template(template) {
+function load_formbuilder_template(template, completeCallBack) {
     var postTitle = jQuery('input#title');
-
 
     jQuery.ajax({
         type: 'POST',
@@ -194,12 +193,7 @@ function load_formbuilder_template(template) {
 			if (!postTitle.val()) {
 				postTitle.val(buddyformsMakeFieldId());
 				jQuery('input#title').focus();
-				jQuery('input#title').focus();
 			}
-
-
-
-
         },
         error: function () {
             jQuery('<div></div>').dialog({
@@ -212,12 +206,15 @@ function load_formbuilder_template(template) {
                 buttons: {
                     Ok: function () {
                         jQuery(this).dialog("close");
-
                     }
                 }
             });
-
-        }
+        },
+        complete: function(jqXHR, textStatus){
+        	if(typeof completeCallBack === 'function'){
+        		completeCallBack(jqXHR, textStatus);
+			}
+		}
     });
 
     return false;
@@ -316,15 +313,17 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
+    //
+	// Click on the button to preview a form type from the demo site
+	// @since 2.4.0
+	//
     jQuery(document.body).on('click', '.bf-preview', function () {
-
         var key = jQuery(this).attr('data-key');
         var src = jQuery(this).attr('data-src');
-
-        jQuery('#iframe-' + key).attr('src', src);
-        // jQuery('#iframe-' + key).attr('width', 750);
-        // jQuery('#iframe-' + key).attr('height', 600);
-
+        var iFrame = jQuery('#iframe-' + key);
+        if(iFrame.length > 0){
+        	iFrame.attr('src', src);
+		}
     });
 
     // Mail Notifications from email display only if selected

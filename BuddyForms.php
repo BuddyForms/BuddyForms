@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.3.3.2
+ * Version: 2.4.0
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.3.3.2';
+		public $version = '2.4.0';
 
 		/**
 		 * @var string Assets URL
@@ -283,6 +283,17 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 
+		/**
+		 * Shared assets between frontend and backend
+		 *
+		 * @since 2.4.0
+		 *
+		 * @param $hook_suffix
+		 */
+		public static function shared_styles( $hook_suffix ) {
+			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
+		}
+
 
 		/**
 		 * Enqueue the needed CSS for the admin screen
@@ -407,6 +418,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
             //Global frontend vars
 			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters( ) );
+
+			//Loading shared assets
+			self::shared_styles( $hook_suffix );
+
 			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
@@ -555,8 +570,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
-			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
-
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 
 			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, false  );
@@ -574,6 +587,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			//Global frontend vars
 			wp_localize_script( "buddyforms-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters() );
+
+			//Loading shared assets
+			self::shared_styles( '' );
 
 			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 

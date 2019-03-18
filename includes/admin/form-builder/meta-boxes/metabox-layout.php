@@ -435,8 +435,8 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 			}
 		}
 		echo '</select>';
-		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner  spinner"></span> ' . __( 'Load Layout Settings', 'buddyforms' ) . '</a>';
-		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset  spinner"></span> '. __( 'Reset', 'buddyforms' ).'</a></p>';
+		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner spinner"></span> ' . __( 'Load Layout Settings', 'buddyforms' ) . '</a>';
+		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset spinner"></span> '. __( 'Reset', 'buddyforms' ).'</a></p>';
 	}
 	?>
 
