@@ -1285,6 +1285,11 @@ div#buddyforms_metabox_sidebar p {
     float: left;
 }
 
+.bf-tile.actions {
+    padding: 5px 10px 0;
+	width: 91%;
+}
+
 .bf-tile.alt {
     /*background: #f5f4f1;*/
 }
