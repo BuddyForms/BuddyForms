@@ -854,7 +854,7 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 
 						}
-					
+
 						$taxonomy = isset( $customfield['taxonomy'] ) && $customfield['taxonomy'] != 'none' ? $customfield['taxonomy'] : '';
 						$order    = $customfield['taxonomy_order'];
 						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode(',', $customfield['taxonomy_exclude']) : '';
@@ -889,9 +889,9 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$args     = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
-					
+
 						$dropdown = wp_dropdown_categories( $args );
-						
+
 						if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 							$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 						}
@@ -941,12 +941,13 @@ function buddyforms_form_elements( $form, $args ) {
 										                 'type: "public", ' .
 										                 'action: "bf_load_taxonomy", ' .
 										                 'nonce: "'.wp_create_nonce( 'bf_tax_loading') .'", ' .
+										                 'form_slug: "'. $form_slug .'", ' .
 										                 'taxonomy: "' . $taxonomy . '", ' .
 										                 'order: "' . $order . '", ' .
 										                 'exclude: "' . $exclude . '", ' .
 										                 'include: "' . $include . '" ' .
 								                        '}; ' .
-								
+
 								                    'return query; ' .
 								                 ' } ' .
 							                 '}, ';
