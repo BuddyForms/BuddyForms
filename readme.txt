@@ -391,7 +391,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 
 = 2.4.0 – 6 March 2019
-* Change to use SEM Versio.
+* Change to use SEM Version.
 *
 
 = 2.3.3.2 – 6 March 2019
