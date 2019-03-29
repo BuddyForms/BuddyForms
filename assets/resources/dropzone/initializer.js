@@ -54,22 +54,22 @@ function uploadHandler() {
                     DropZoneRemovedFile(file, hidden_field);
                 });
 
-                if(uploadFields && uploadFields.length > 0) {
-					for (var key in uploadFields) {
-						if(key) {
-							var mockFile = {
-								name: uploadFields[key]['name'],
-								size: uploadFields[key]['size'],
-								url: uploadFields[key]['url'],
-								attachment_id: uploadFields[key]['attachment_id']
-							};
-							this.emit('addedfile', mockFile);
-							this.emit('thumbnail', mockFile, mockFile.url);
-							this.emit('complete', mockFile);
-							this.files.push(mockFile);
-						}
-					}
-				}
+                if (uploadFields) {
+                    for (var key in uploadFields) {
+                        if (key) {
+                            var mockFile = {
+                                name: uploadFields[key]['name'],
+                                size: uploadFields[key]['size'],
+                                url: uploadFields[key]['url'],
+                                attachment_id: uploadFields[key]['attachment_id'],
+                            };
+                            this.emit('addedfile', mockFile);
+                            this.emit('thumbnail', mockFile, mockFile.url);
+                            this.emit('complete', mockFile);
+                            this.files.push(mockFile);
+                        }
+                    }
+                }
             }
         };
         jQuery(current).dropzone(options);
