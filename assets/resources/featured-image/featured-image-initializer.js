@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function() {
     var submitButtons = jQuery("button[type=submit].bf-submit");
     if (submitButtons.length > 0) {
         var submitButton = submitButtons.first();
@@ -46,8 +46,8 @@ jQuery(document).ready(function($) {
 
     }
 
-    $(".featured-image-uploader").each(function(index, value) {
-        var current = $(this),
+    jQuery(".featured-image-uploader").each(function(index, value) {
+        var current = jQuery(this),
             id = current.attr('id'),
             max_file_size = current.attr('max_file_size'),
             action = current.attr('action'),
@@ -139,18 +139,22 @@ jQuery(document).ready(function($) {
                     });
                 });
 
-                for (var key in uploadFields) {
-                    var mockFile = {
-                        name: uploadFields[key]['name'],
-                        size: uploadFields[key]['size'],
-                        url: uploadFields[key]['url'],
-                        attachment_id: uploadFields[key]['attachment_id']
-                    };
-                    this.emit('addedfile', mockFile);
-                    this.emit('thumbnail', mockFile, mockFile.url);
-                    this.emit('complete', mockFile);
-                    this.files.push(mockFile);
-                }
+                if(uploadFields && uploadFields.length > 0) {
+					for (var key in uploadFields) {
+						if(key) {
+							var mockFile = {
+								name: uploadFields[key]['name'],
+								size: uploadFields[key]['size'],
+								url: uploadFields[key]['url'],
+								attachment_id: uploadFields[key]['attachment_id']
+							};
+							this.emit('addedfile', mockFile);
+							this.emit('thumbnail', mockFile, mockFile.url);
+							this.emit('complete', mockFile);
+							this.files.push(mockFile);
+						}
+					}
+				}
             }
         });
 

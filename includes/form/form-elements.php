@@ -584,7 +584,7 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( new Element_HTML( $box ) );
 						$form->addElement( new Element_HTML( "<span class='help-inline'>$description</span>" ) );
-						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
+						$str .= '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
 
 						if ( $attachments ) {
 							foreach ( $attachments as $attachment_id ) {
