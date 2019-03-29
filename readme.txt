@@ -390,13 +390,25 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
-= 2.4.0 – 6 March 2019
-* Change to use SEM Version.
-*
+= 2.4.0 – 29 March 2019
+* Change to use SEM Version
+* Fixed default value for upload and feature image field
+* Added a way to not echo the textarea, only return the html
+* Fixed the double update of the existing post
+* Improved the taxonomy, category and tag field to be possible to extend the terms query by 3rd parties using the filter `buddyforms_ajax_load_term_query`
+* Ready to be localized the string `Upload in progress`
+* Added a hook to add field related translations inside the field
+* Added a container to divide the form actions
+* Fixed the error related to the save of fields placed after a taxonomy field
+* Added a validation to avoid error when no exist any form
+* Fixed the visibility of the new ajax option inside the taxonomy field
+* Fixed the button to reset the form styles
+* Added compatibility for `Better Notifications for WordPress`
+
 
 = 2.3.3.2 – 6 March 2019
 * Added a check to avoid start gutenberg block in older wordpress versions
-* Added an option to use ajax for the taxonomy field.
+* Added an option to use ajax for the taxonomy field
 * Code improved
 
 = 2.3.3.1 – 2 March 2019
