@@ -26,10 +26,11 @@ function buddyforms_ajax_load_taxonomy(){
 	}
 
 	$args = array(
-		'fields' => 'id=>name',
-		'hide_empty'    => 0,
-		'child_of'      => 0,
-		'orderby'       => 'SLUG',
+		'fields'       => 'id=>name',
+		'hide_empty'   => 0,
+		'child_of'     => 0,
+		'orderby'      => 'SLUG',
+		'cache_domain' => 'buddyforms_ajax_load_taxonomy',
 	);
 
 	$form_slug = '';
