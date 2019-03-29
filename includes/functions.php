@@ -1014,9 +1014,6 @@ add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_me
 function buddyforms_upload_handle_dropped_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
 	status_header( 200 );
-	$upload_dir  = wp_upload_dir();
-	$upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
-	$num_files   = count( $_FILES['file']['tmp_name'] );
 	$newupload   = 0;
 	if ( ! empty( $_FILES ) ) {
 		$files = $_FILES;
