@@ -15,11 +15,11 @@ class Element_Textarea extends Element {
 			$output .= $this->filter( $this->_attributes["value"] );
 		}
 		$output .= '</textarea>';
-		
+
 		if ( $echo ) {
 			echo $output;
-			
-			return true;
+
+			return;
 		} else {
 			return $output;
 		}
