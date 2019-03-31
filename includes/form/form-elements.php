@@ -855,6 +855,8 @@ function buddyforms_form_elements( $form, $args ) {
 							$ajax_options .= 'ajax:{ ' .
 								                 'url: "'.admin_url( 'admin-ajax.php' ).'", ' .
 								                 'delay: 250, ' .
+								                 'dataType: "json", ' .
+								                 'cache: true, ' .
 								                 'method : "POST", ' .
 								                 'data: function (params) { ' .
 									                 'var query = { ' .
