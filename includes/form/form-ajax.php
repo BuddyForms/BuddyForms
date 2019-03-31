@@ -41,7 +41,7 @@ function buddyforms_ajax_load_taxonomy(){
 	}
 
 	if ( ! empty( $_POST['search'] ) ) {
-		$args['name__like'] = sanitize_title_for_query( $_POST['search'] );
+		$args['search'] = sanitize_title_for_query( $_POST['search'] );
 	}
 
 	if ( ! empty( $_POST['taxonomy'] ) ) {
