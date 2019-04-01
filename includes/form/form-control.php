@@ -292,8 +292,8 @@ function buddyforms_process_submission( $args = Array() ) {
 
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
-		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		// $the_post = get_default_post_to_edit( $post_type );
+		require_once( ABSPATH . 'wp-admin/includes/admin.php' );//todo delete this block
+//		 $the_post = get_default_post_to_edit( $post_type, true );
 	}
 
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
@@ -308,24 +308,36 @@ function buddyforms_process_submission( $args = Array() ) {
 	// Check if post_excerpt form element exist and if has values if empty check for default
 	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
 	if ( empty( $post_excerpt ) ) {
-		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
+		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );//todo add check here
 		$post_excerpt  = $content_field['generate_post_excerpt'];
 		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
-
-	$action      = 'save';
-	$post_status = $buddyforms[ $form_slug ]['status'];
-	if ( is_user_logged_in() && $post_id != 0 ) {
-		$action      = 'update';
-		$post_status = get_post_status( $post_id );
+	
+	$action      = 'save';//Base action
+	$is_draft_enabled = true; // todo this from option need to be implemented
+	$post_status = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
+	$post_status_action =  ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
+	//Check the current post status
+	if ( $post_id != 0 ) {
+		$post_current_status = get_post_status( $post_id );
+		if ( $post_current_status === 'auto-draft' ) {
+			if ( $is_draft_enabled && $post_status_action === 'draft' ) {
+				$post_status = 'draft';
+			}
+		} else {
+			$action = 'update';
+			$post_status = $post_status_action; // Keep the same action status selected by the user from the form
+		}
 	}
+	
+	//Override the post status if exist a status field
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! empty( $args['status'] ) && $exist_field_status ) {
 		$post_status = $args['status'];
 	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
 	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
-
+	
 	$args = Array(
 		'post_id'        => $post_id,
 		'action'         => $action,
@@ -446,12 +458,14 @@ function buddyforms_process_submission( $args = Array() ) {
 }
 
 /**
+ * Update post arguments
+ *
  * @param $args
  *
  * @return array|bool
  */
 function buddyforms_update_post( $args ) {
-
+	
 	$action         = '';
 	$post_author    = '';
 	$post_type      = '';

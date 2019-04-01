@@ -520,17 +520,10 @@ class Form extends Base {
 		/*When the form is submitted, disable all submit buttons to prevent duplicate submissions.*/
 		echo <<<JS
         jQuery(document).ready(function() {
-
-			var bf_submit_type = "";
-		    jQuery(document).on("click", '.bf-submit', function (evt) {
-		        bf_submit_type = evt.target.name;
-		    });
-
             jQuery("#$id").bind("submit", function() {
                 if (typeof(tinyMCE) != "undefined") {
             		tinyMCE.triggerSave();
             	}
-            	jQuery(this).find("#status").val(bf_submit_type);
                 jQuery(this).find("input[type=submit]").attr("disabled", "disabled");
             });
 JS;

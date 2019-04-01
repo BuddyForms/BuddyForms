@@ -196,6 +196,7 @@ ul.bf_files {
     list-style: none;
 }
 
+button.bf-draft:disabled,
 button.bf-submit:disabled{
 	background-color: #c4c4c4;
 }

@@ -693,6 +693,14 @@ function buddyforms_get_form_fields( $form_slug ) {
 	return $result_field;
 }
 
+/**
+ * Check if field type exist in a form
+ *
+ * @param $form_slug
+ * @param $field_type
+ *
+ * @return bool
+ */
 function buddyforms_exist_field_type_in_form( $form_slug, $field_type ) {
 	$fields = buddyforms_get_form_fields( $form_slug );
 	$exist  = false;
@@ -984,11 +992,14 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 			$display_message = buddyforms_default_message_on_update();
 		}
 	}
-	$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
+	if(!empty($buddyforms[ $form_slug ]['attached_page'])) {
+		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
+		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
+	}
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
 	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
-	$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
+	
 
 	return $display_message;
 }
@@ -1209,4 +1220,35 @@ function buddyforms_is_gutenberg_page() {
 	}
 
 	return false;
+}
+
+/**
+ * This function secure the array of options to use in the buddyformsGlobal
+ *
+ * @param $options
+ * @param $form_slug
+ * @param $bf_post_id
+ *
+ * @return mixed
+ * @since 2.4.0
+ *
+ */
+function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id ) {
+	/**
+	 * Let the user change the user granted options to use in the frontend global variable buddyformsGlobal
+     *
+     * @param array granted keys from the options
+	 * @param string The form slug from the global wp_query
+	 * @param number The current post id form the wp_query. This can be empty when the form is creating an entry.
+     *
+	 * @since 2.4.0
+	 */
+	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields' ), $form_slug, $bf_post_id);
+	foreach ( $granted as $item ) {
+		if ( isset( $options[ $item ] ) ) {
+			$result[ $item ] = $options[ $item ];
+		}
+	}
+	
+	return $result;
 }

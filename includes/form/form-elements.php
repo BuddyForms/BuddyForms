@@ -345,7 +345,8 @@ function buddyforms_form_elements( $form, $args ) {
 
 					case 'status' :
 
-						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) ) {
+						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) && count($customfield['post_status']) > 0 ) {
+							$post_status = array();
 							if ( in_array( 'pending', $customfield['post_status'] ) ) {
 								$post_status['pending'] = __( 'Pending Review', 'buddyforms' );
 							}
@@ -369,8 +370,12 @@ function buddyforms_form_elements( $form, $args ) {
 							if ( in_array( 'private', $customfield['post_status'] ) ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
-
-							$customfield_val = isset( $the_post->post_status ) ? $the_post->post_status : '';
+							
+							$customfield_val = isset( $the_post ) && isset( $the_post->post_status ) ? $the_post->post_status : '';
+							
+							if ( ! empty( $customfield_val ) && $customfield_val === 'auto-draft' ) {
+								$customfield_val = 'draft';
+							}
 
 							if ( isset( $_POST['status'] ) ) {
 								$customfield_val = $_POST['status'];

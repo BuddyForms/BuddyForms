@@ -4,7 +4,9 @@ function uploadHandler() {
         existingHtmlInsideSubmitButton = '';
 
     function getFirstSubmitButton(submitButtons) {
-        submitButton = submitButtons.first();
+        submitButton = jQuery.map(submitButtons, function (element) {
+		    return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
+	    })[0];
         existingHtmlInsideSubmitButton = submitButton.html();
     }
 
@@ -142,7 +144,7 @@ function uploadHandler() {
             showButtonText = !!(showButtonText);
             submitButtons.attr("disabled", "disabled");
             if (showButtonText) {
-                submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress');
+                submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress'); // todo need il18n
             }
         }
     }
@@ -172,7 +174,7 @@ function uploadHandler() {
     return {
         init: function () {
             var uploadFields = jQuery(".upload_field");
-            submitButtons = jQuery("button.bf-submit[type=submit]");
+            submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
             if (submitButtons.length > 0) {
                 getFirstSubmitButton(submitButtons);
             }
