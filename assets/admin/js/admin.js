@@ -782,7 +782,7 @@ jQuery(document).ready(function (jQuery) {
 								jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"][value="'+val+'"]').prop('checked', true).trigger('change');
 								break;
 							case 'checkbox':
-								let currentItem = jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"]');
+								var currentItem = jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"]');
 								currentItem.prop('checked', (val && currentItem.val() === val)).trigger('change');
 								break;
 						}
