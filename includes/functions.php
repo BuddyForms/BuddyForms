@@ -999,7 +999,7 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
 	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
-	
+
 
 	return $display_message;
 }
@@ -1249,6 +1249,52 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
 			$result[ $item ] = $options[ $item ];
 		}
 	}
-	
+
 	return $result;
+}
+
+/**
+ * Retrieve the form slug from different sources
+ *
+ * @since 2.4.0
+ *
+ * @return string
+ */
+function buddyforms_get_form_slug() {
+	$form_slug = '';
+	global $wp_query;
+	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
+		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
+	} elseif ( ! empty( $_GET['form_slug'] ) ) {
+		$form_slug = sanitize_title( $_GET['form_slug'] );
+	} elseif ( ! empty( $wp_query->query_vars['form_slug'] ) ) {
+		$form_slug = sanitize_title( $wp_query->query_vars['form_slug'] );
+	} elseif ( ! empty( $post ) ) {
+		$post_content = ! empty( $content ) ? $content : $post->post_content;
+		if ( ! empty( $post->post_name ) && $post->post_type === 'buddyforms' ) {
+			$form_slug = $post->post_name;
+		} elseif ( ! empty( $post_content ) ) {
+			//Extract the shortcode inside the content
+			$form_slug = buddyforms_get_form_slug_from_content( $post_content );
+			if ( empty( $form_slug ) ) {
+				$form_slug = buddyforms_get_form_slug_by_post_id( $post->ID );
+			}
+		}
+	} elseif ( function_exists( 'bp_current_component' ) && function_exists( 'bp_current_action' ) && function_exists( 'buddyforms_members_get_form_by_member_type' ) ) {
+		global $buddyforms_member_tabs;
+		$bp_action    = bp_current_action();
+		$bp_component = bp_current_component();
+		if ( ! empty( $buddyforms_member_tabs ) && 'xprofile' !== $bp_component ) {
+			$form_slug = ! empty( $buddyforms_member_tabs[ bp_current_component() ][ bp_current_action() ] ) ? $buddyforms_member_tabs[ bp_current_component() ][ bp_current_action() ] : '';
+			if ( $form_slug . '-create' !== $bp_action && $form_slug . '-edit' !== $bp_action && $form_slug . '-revision' !== $bp_action ) {
+				$member_type = bp_get_member_type( get_current_user_id() );
+				$form_slug   = buddyforms_members_get_form_by_member_type( $member_type );
+				if ( ! $form_slug ) {
+					$form_slug = buddyforms_members_get_form_by_member_type( 'none' );
+				}
+			}
+		}
+	}
+
+	return $form_slug;
 }
