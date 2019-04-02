@@ -587,14 +587,14 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
 				'gdpr_errors'   => __( 'Some errors occurred:', 'buddyforms' ),
 			);
-			
+
 			$front_js_arguments = array(
 				'admin_url'                => admin_url( 'admin-ajax.php' ),
 				'ajaxnonce'                => wp_create_nonce( 'fac_drop' ),
 				'buddyforms_gdpr_localize' => $gpdr_translations,
 				'localize'                 => self::localize_fields()
 			);
-			$form_slug          = $wp_query->get( 'bf_form_slug' );
+			$form_slug          = buddyforms_get_form_slug();
 			$bf_post_id         = $wp_query->get( 'bf_post_id' );
 			if ( ! empty( $form_slug ) && !empty($buddyforms) && isset( $buddyforms[ $form_slug ] ) ) {
 			    $options = buddyforms_filter_frontend_js_form_options($buddyforms[ $form_slug ], $form_slug, $bf_post_id);

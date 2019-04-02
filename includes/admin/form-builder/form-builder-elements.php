@@ -1055,7 +1055,6 @@ JS;
 		case 'gdpr':
 			unset( $form_fields );
 
-
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'GDPR Agreement', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
@@ -1074,6 +1073,30 @@ JS;
                 'buddyform' => $buddyform
             );
             $form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_gdpr( $form_fields, $field_args ) );
+            break;
+        case 'form_actions':
+            unset($form_fields);
+
+            $name                           = isset(  $buddyform['form_fields'][$field_id]['name'] ) ? stripcslashes( $buddyform['form_fields'][$field_id]['name'] ) : __( 'Form Actions', 'buddyforms' );
+            $form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+                'value'    => $name,
+                'required' => 1
+            ) );
+
+
+            $form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'form_actions' );
+			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
+
+            $is_draft_enabled                           = isset( $customfield['enable_draft'] ) ? $customfield['enable_draft'] : 'false';
+			$form_fields['general']['enable_draft'] = new Element_Checkbox( '<b>' . __( 'Draft Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_draft]", array( 'enable_draft' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
+				'value' => $is_draft_enabled,
+				'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_draft]"
+			) );
+			$is_publish_enabled                           = isset( $customfield['enable_publish'] ) ? $customfield['enable_publish'] : 'false';
+			$form_fields['general']['enable_publish'] = new Element_Checkbox( '<b>' . __( 'Publish Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_publish]", array( 'enable_publish' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
+				'value' => $is_publish_enabled,
+				'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_publish]"
+			) );
             break;
 
 		default:

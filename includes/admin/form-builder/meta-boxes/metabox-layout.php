@@ -31,11 +31,11 @@ function buddyforms_layout_defaults($form_type = '') {
 	$json['field_active_background_color'] = array( 'color' => '', 'style' => 'auto' );
 	$json['field_active_border_color']     = array( 'color' => '', 'style' => 'auto' );
 	$json['field_active_font_color']       = array( 'color' => '', 'style' => 'auto' );
-	
+
 	$json['button_disable_css'] = '';
 	$json['submit_text']        = ( ! empty( $form_type ) && $form_type === 'post' ) ? __( 'Publish', 'buddyforms' ) : __( 'Submit', 'buddyforms' );
 	if ( ! empty( $form_type ) && $form_type === 'post' ) {
-		$json['draft_text'] = __( 'Draft', 'buddyforms' );
+		$json['draft_text'] = __( 'Save as draft', 'buddyforms' );
 	}
 	$json['button_width']            = 'blockmobile';
 	$json['button_alignment']        = 'left';
@@ -107,7 +107,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 
 
 	$form_setup = array();
-	
+
 	$form_type = '';
 	if ( isset( $buddyforms[ $form_slug ]['form_type'] ) ) {
 		$form_type = $buddyforms[ $form_slug ]['form_type'];
@@ -320,7 +320,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		'value'     => $button_disable_css,
 		'shortDesc' => ''
 	) );
-	
+
 	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
 	$form_setup['Submit Button'][] = new Element_Textbox( '<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
 		'value'     => $submit_text,

@@ -331,8 +331,8 @@ function BuddyForms() {
 			if (redirect) {
 				specialPasswordRedirectAfterRegistration(redirect);
 			}
-			jQuery(document.body).on('click', 'button[type="button"][name="draft"].btn.btn-primary.bf-draft', actionFromButton);
-			jQuery(document.body).on('click', 'button[type="submit"][name="submitted"].btn.btn-primary.bf-submit', actionFromButton);
+			jQuery(document.body).on('click', 'button[type="button"][name="draft"].bf-draft', actionFromButton);
+			jQuery(document.body).on('click', 'button[type="submit"][name="submitted"].bf-submit', actionFromButton);
 			jQuery(document.body).on('click', '.button.bf_reset_multi_input', resetInputMultiplesChoices);
 			jQuery(document.body).on('keyup', 'input[name=buddyforms_user_pass], input[name=buddyforms_user_pass_confirm]', checkPasswordStrength);
 			jQuery(document).on("click", '.bf_delete_post', bf_delete_post);

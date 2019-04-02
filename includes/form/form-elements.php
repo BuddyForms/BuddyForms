@@ -370,9 +370,9 @@ function buddyforms_form_elements( $form, $args ) {
 							if ( in_array( 'private', $customfield['post_status'] ) ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
-							
+
 							$customfield_val = isset( $the_post ) && isset( $the_post->post_status ) ? $the_post->post_status : '';
-							
+
 							if ( ! empty( $customfield_val ) && $customfield_val === 'auto-draft' ) {
 								$customfield_val = 'draft';
 							}
@@ -965,6 +965,9 @@ function buddyforms_form_elements( $form, $args ) {
 
 
 						}
+						break;
+					case 'form_actions':
+						$form = buddyforms_form_action_buttons($form, $form_slug, $post_id, $customfield);
 						break;
 
 					default:
