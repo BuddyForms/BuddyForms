@@ -1298,3 +1298,76 @@ function buddyforms_get_form_slug() {
 
 	return $form_slug;
 }
+
+/**
+ * Get the form actions. This function is used to handle the form actions if the form have a form_action element or if not
+ *
+ * @since 2.4.0
+ *
+ * @param $form Form
+ * @param $form_slug
+ * @param $post_id
+ * @param $field_options
+ *
+ * @return Form
+ */
+function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_options ) {
+	global $buddyforms;
+	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
+	$is_draft_enabled   = true;// todo need implementation
+	$user_can_draft     = true; // todo need implementation
+	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
+		$user_can_draft = true;
+	}
+
+	$is_field_publish_enabled = true;
+	$is_field_draft_enabled   = true;
+	if ( ! empty( $field_options ) ) {
+		$is_field_publish_enabled = isset( $field_options['enable_publish'] ) && isset( $field_options['enable_publish'][0] ) && $field_options['enable_publish'][0] === 'enable_publish';
+		$is_field_draft_enabled   = isset( $field_options['enable_draft'] ) && isset( $field_options['enable_draft'][0] ) && $field_options['enable_draft'][0] === 'enable_draft';
+	}
+	$bfdesign  = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
+	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+
+	if ( ! $exist_field_status && $is_draft_enabled && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() && $user_can_draft ) {
+		$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Draft', 'buddyforms' );
+		$bf_draft_button_classes = 'bf-draft ' . ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
+		$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'button', array(
+			'id'          => $form_slug . '-draft',
+			'class'       => $bf_draft_button_classes,
+			'name'        => 'draft',
+			'data-target' => $form_slug,
+			'data-status' => 'draft',
+		) );
+
+		if ( $bf_draft_button ) {
+			$form->addElement( $bf_draft_button );
+		}
+	}
+
+	if ( $is_field_publish_enabled ) {
+		$bf_publish_button_classes = 'bf-submit ' . ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
+
+		if ( ! empty( $form_type ) && $form_type === 'post' && ! $exist_field_status ) {
+			$bf_button_text = ! empty( $bfdesign['submit_text'] ) ? $bfdesign['submit_text'] : __( 'Publish', 'buddyforms' );
+		} else {
+			$bf_button_text = ! empty( $bfdesign['submit_text'] ) ? $bfdesign['submit_text'] : __( 'Submit', 'buddyforms' );
+		}
+
+		$bf_submit_button = new Element_Button( $bf_button_text, 'submit', array(
+			'id'          => $form_slug,
+			'class'       => $bf_publish_button_classes,
+			'name'        => 'submitted',
+			'data-target' => $form_slug,
+			'data-status' => 'publish',
+		) );
+
+		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
+
+		if ( $bf_submit_button ) {
+			$form->addElement( $bf_submit_button );
+		}
+	}
+
+	return $form;
+}

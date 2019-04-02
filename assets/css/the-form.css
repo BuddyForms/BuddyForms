@@ -201,6 +201,12 @@ button.bf-submit:disabled{
 	background-color: #c4c4c4;
 }
 
+.bf-draft {
+    background: #f2f2f2;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: #444;
+}
+
 .bf-hidden {
     display: none !important;
 }
