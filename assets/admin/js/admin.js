@@ -127,9 +127,8 @@ function bf_update_list_item_number_mail() {
 //
 // Helper Function to lode form element templates depend on the form type
 //
-function load_formbuilder_template(template) {
+function load_formbuilder_template(template, completeCallBack) {
     var postTitle = jQuery('input#title');
-    
 
     jQuery.ajax({
         type: 'POST',
@@ -194,12 +193,7 @@ function load_formbuilder_template(template) {
 			if (!postTitle.val()) {
 				postTitle.val(buddyformsMakeFieldId());
 				jQuery('input#title').focus();
-				jQuery('input#title').focus();
 			}
-
-                
-
-
         },
         error: function () {
             jQuery('<div></div>').dialog({
@@ -212,12 +206,15 @@ function load_formbuilder_template(template) {
                 buttons: {
                     Ok: function () {
                         jQuery(this).dialog("close");
-                            
                     }
                 }
             });
-
-        }
+        },
+        complete: function(jqXHR, textStatus){
+        	if(typeof completeCallBack === 'function'){
+        		completeCallBack(jqXHR, textStatus);
+			}
+		}
     });
 
     return false;
@@ -316,15 +313,17 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
+    //
+	// Click on the button to preview a form type from the demo site
+	// @since 2.4.0
+	//
     jQuery(document.body).on('click', '.bf-preview', function () {
-
         var key = jQuery(this).attr('data-key');
         var src = jQuery(this).attr('data-src');
-
-        jQuery('#iframe-' + key).attr('src', src);
-        // jQuery('#iframe-' + key).attr('width', 750);
-        // jQuery('#iframe-' + key).attr('height', 600);
-
+        var iFrame = jQuery('#iframe-' + key);
+        if(iFrame.length > 0){
+        	iFrame.attr('src', src);
+		}
     });
 
     // Mail Notifications from email display only if selected
@@ -713,5 +712,92 @@ jQuery(document).ready(function (jQuery) {
 
     // Remove all Visual Composer elements form BuddyForms View
     jQuery('*[class^="vc_"]').remove();
+
+    //
+	// Layout Meta-box related functions
+	//
+	if (buddyformsGlobal && buddyformsGlobal.post_type === 'buddyforms') {
+		jQuery(document).on('click', '#bf_load_layout_options', function() {
+			jQuery('.layout-spinner').addClass('is-active').show();
+			var form_slug = jQuery('#bf_form_layout_select').val();
+			jQuery.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: buddyformsGlobal.admin_url,
+				data: {
+					'action': 'buddyforms_load_form_layout',
+					'form_slug': form_slug,
+				},
+				success: function(data) {
+					update_layout_options_screen(data);
+				},
+			});
+			return false;
+		});
+
+		jQuery(document).on('click', '#bf_reset_layout_options', function(event) {
+			jQuery('.layout-spinner-reset').addClass('is-active').show();
+			jQuery.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: buddyformsGlobal.admin_url,
+				data: {
+					'action': 'buddyforms_load_form_layout',
+					'form_slug': 'reset',
+				},
+				success: function(data) {
+					update_layout_options_screen(data);
+				},
+			});
+			return false;
+		});
+
+		function update_layout_options_screen(data) {
+			jQuery('.layout-spinner').removeClass('is-active').hide();
+			var layout_container = jQuery('#buddyforms_form_designer');
+			if(layout_container.length > 0) {
+				jQuery.each(data, function(key, val) {
+					var item = jQuery(layout_container).find('input[name^="buddyforms_options[layout]"][name*="' + key + '"]');
+					var itemColor = jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"][name$="[color]"]');
+					var itemStyle = jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"][name$="[style]"][value="' + val.style + '"]');
+					var type;
+					if (item || itemColor || itemStyle) {
+						type = item.attr('type');
+						if ((typeof type === 'undefined' || !type) && itemColor.length > 0) {
+							type = itemColor.attr('type');
+						}
+					}
+
+					if ('custom_css' === key) {
+						jQuery('#' + key).text(val);
+					}
+
+					if (item.length > 0 && type) {
+						switch (type) {
+							case 'text':
+							case 'number':
+								item.val(val || '');
+								break;
+							case 'radio':
+								jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"][value="'+val+'"]').prop('checked', true).trigger('change');
+								break;
+							case 'checkbox':
+								var currentItem = jQuery('input[name^="buddyforms_options[layout]"][name*="' + key + '"]');
+								currentItem.prop('checked', (val && currentItem.val() === val)).trigger('change');
+								break;
+						}
+					}
+
+					if(itemColor.length > 0){
+						itemColor.val(val && val.color || '').trigger('change');
+					}
+
+					if(itemStyle.length > 0){
+						itemStyle.prop('checked', val && val.style).trigger('change');
+					}
+				});
+			}
+		}
+	}
 
 });

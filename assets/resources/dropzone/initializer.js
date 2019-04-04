@@ -4,7 +4,9 @@ function uploadHandler() {
         existingHtmlInsideSubmitButton = '';
 
     function getFirstSubmitButton(submitButtons) {
-        submitButton = submitButtons.first();
+        submitButton = jQuery.map(submitButtons, function (element) {
+		    return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
+	    })[0];
         existingHtmlInsideSubmitButton = submitButton.html();
     }
 
@@ -54,17 +56,21 @@ function uploadHandler() {
                     DropZoneRemovedFile(file, hidden_field);
                 });
 
-                for (var key in uploadFields) {
-                    var mockFile = {
-                        name: uploadFields[key]['name'],
-                        size: uploadFields[key]['size'],
-                        url: uploadFields[key]['url'],
-                        attachment_id: uploadFields[key]['attachment_id']
-                    };
-                    this.emit('addedfile', mockFile);
-                    this.emit('thumbnail', mockFile, mockFile.url);
-                    this.emit('complete', mockFile);
-                    this.files.push(mockFile);
+                if (uploadFields) {
+                    for (var key in uploadFields) {
+                        if (key) {
+                            var mockFile = {
+                                name: uploadFields[key]['name'],
+                                size: uploadFields[key]['size'],
+                                url: uploadFields[key]['url'],
+                                attachment_id: uploadFields[key]['attachment_id'],
+                            };
+                            this.emit('addedfile', mockFile);
+                            this.emit('thumbnail', mockFile, mockFile.url);
+                            this.emit('complete', mockFile);
+                            this.files.push(mockFile);
+                        }
+                    }
                 }
             }
         };
@@ -138,7 +144,7 @@ function uploadHandler() {
             showButtonText = !!(showButtonText);
             submitButtons.attr("disabled", "disabled");
             if (showButtonText) {
-                submitButton.html('Upload in progress');
+                submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress'); // todo need il18n
             }
         }
     }
@@ -168,7 +174,7 @@ function uploadHandler() {
     return {
         init: function () {
             var uploadFields = jQuery(".upload_field");
-            submitButtons = jQuery("button.bf-submit[type=submit]");
+            submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
             if (submitButtons.length > 0) {
                 getFirstSubmitButton(submitButtons);
             }

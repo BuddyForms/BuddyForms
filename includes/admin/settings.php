@@ -434,7 +434,13 @@ function buddyforms_process_settings_import() {
 
 add_action( 'admin_init', 'buddyforms_process_settings_import' );
 
-
+/**
+ * Create a form from importing functionality
+ *
+ * @param $json_array
+ *
+ * @return int|WP_Error
+ */
 function buddyforms_create_form_from_json( $json_array ) {
 
 	$bf_forms_args = array(

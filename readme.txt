@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 2.3.3.2 
+Tested up to: 5.1
+Stable tag: 2.4.0
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,7 +33,7 @@ In other words, BuddyForms is 100% approved to be GDPR compliant. The content is
 
 ---
 
-## Features of BuddyForms Form Builder 
+## Features of BuddyForms Form Builder
 
 
 * Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
@@ -390,9 +390,25 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 
+= 2.4.0 – 29 March 2019
+* Change to use SEM Version
+* Fixed default value for upload and feature image field
+* Added a way to not echo the textarea, only return the html
+* Fixed the double update of the existing post
+* Improved the taxonomy, category and tag field to be possible to extend the terms query by 3rd parties using the filter `buddyforms_ajax_load_term_query`
+* Ready to be localized the string `Upload in progress`
+* Added a hook to add field related translations inside the field
+* Added a container to divide the form actions
+* Fixed the error related to the save of fields placed after a taxonomy field
+* Added a validation to avoid error when no exist any form
+* Fixed the visibility of the new ajax option inside the taxonomy field
+* Fixed the button to reset the form styles
+* Added compatibility for `Better Notifications for WordPress`
+
+
 = 2.3.3.2 – 6 March 2019
 * Added a check to avoid start gutenberg block in older wordpress versions
-* Added an option to use ajax for the taxonomy field.
+* Added an option to use ajax for the taxonomy field
 * Code improved
 
 = 2.3.3.1 – 2 March 2019

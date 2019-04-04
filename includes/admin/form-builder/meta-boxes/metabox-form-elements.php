@@ -342,6 +342,10 @@ function buddyforms_form_elements_select_options() {
 				array(
 					'label' => __( 'Range', 'buddyforms' ),
 				);
+			$elements_select_options['extra']['fields']['form_actions']   =
+				array(
+					'label'  => __( 'Form Actions', 'buddyforms' ),
+				);
 		}
 
 	}

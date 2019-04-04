@@ -479,10 +479,13 @@ jQuery(document).ready(function (jQuery) {
 		var fieldId = element.attr('data');
 		if(fieldId) {
 			var minCharContainer = jQuery('#table_row_' + fieldId + '_minimumInputLength');
+			var input = minCharContainer.find('input.bf_hide_if_not_ajax_ready');
 			if(element.is(':checked')){
 				minCharContainer.show();
+				input.show();
 			} else {
 				minCharContainer.hide();
+				input.show();
 			}
 		}
 	}

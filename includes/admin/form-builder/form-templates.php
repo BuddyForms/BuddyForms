@@ -9,7 +9,7 @@ function buddyforms_form_builder_register_templates() {
 	$response = wp_remote_get( 'http://demo.buddyforms.com/wp-json/buddyforms/v1/all/' );
 
 	if ( is_wp_error( $response ) || $response['response']['code'] != 200 ) {
-		$response         = Array();
+		$response         = array();
 		$response['body'] = buddyforms_default_form_templates_json();
 	}
 
@@ -43,7 +43,7 @@ function buddyforms_form_builder_register_templates() {
 		}
 	}
 
-	$templates                 = Array();
+	$templates                 = array();
 	$templates['contact']      = $buddyforms_templates['contact'];
 	$templates['registration'] = $buddyforms_templates['registration'];
 	$templates['post']         = $buddyforms_templates['post'];
@@ -56,16 +56,16 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 
 	$buddyform = json_decode( $template['json'] );
 
-	$dependencies = 'None';
+	$dependencies = __('None', 'buddyforms');
 	$deps         = '';
 
 	if ( ! ( $buddyform->post_type == 'post' || $buddyform->post_type == 'page' || $buddyform->post_type == 'bf_submissions' ) ) {
-		$deps .= 'BuddyForms Professional';
+		$deps .= __('BuddyForms Professional', 'buddyforms');
 	}
 
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field ) {
 		if ( $field->slug == 'taxonomy' || $field->slug == 'category' || $field->slug == 'tags' ) {
-			$deps .= 'BuddyForms Professional';
+			$deps .= __('BuddyForms Professional', 'buddyforms');
 		}
 	}
 	endif;
@@ -125,7 +125,7 @@ function buddyforms_form_builder_templates() {
 
 	?>
     <div class="buddyforms_template buddyforms_wizard_types">
-        <h5>Choose a pre-configured form template or start a new one:</h5>
+        <h5><?php _e('Choose a pre-configured form template or start a new one:', 'buddyforms') ?></h5>
 
 		<?php add_thickbox(); ?>
 
@@ -157,7 +157,7 @@ function buddyforms_form_builder_templates() {
                         </p>
                     </div>
 					<?php if ( $dependencies != 'None' ) { ?>
-                        <p class="bf-tile-dependencies">Dependencies: <?php echo $dependencies ?></p>
+                        <p class="bf-tile-dependencies"><?php _e('Dependencies: ', 'buddyforms') ?><?php echo $dependencies ?></p>
 					<?php } else { ?>
                         <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
                                                         data-type="<?php echo $sort_key ?>"
@@ -216,7 +216,7 @@ function buddyforms_form_template() {
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
 
-	$forms = Array();
+	$forms = array();
 	foreach ( $buddyforms_templates as $type => $form_temps ) {
 		foreach ( $form_temps as $forms_slug => $form ) {
 			$forms[ $forms_slug ] = $form;

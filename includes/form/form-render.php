@@ -15,7 +15,7 @@ function buddyforms_form_html( $args ) {
 		return $args;
 	}
 
-	$post_type = $the_post = $customfields = $post_id = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
+	$post_type = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
 
 	// Extract the form args
 	extract( shortcode_atts( array(
@@ -27,6 +27,7 @@ function buddyforms_form_html( $args ) {
 		'post_parent'  => 0,
 		'redirect_to'  => esc_url( $_SERVER['REQUEST_URI'] ),
 		'form_slug'    => '',
+		'post_status'    => '',
 		'form_notice'  => '',
 	), $args ) );
 
@@ -35,6 +36,10 @@ function buddyforms_form_html( $args ) {
 
 	if ( ! is_user_logged_in() && !$is_registration_form && $need_registration_form ) {
 		return buddyforms_get_wp_login_form( $form_slug );
+	}
+
+	if ( empty( $post_id ) && ! empty( $the_post ) ) {
+		$post_id = $the_post->ID;
 	}
 
 	$user_can_edit = false;
@@ -295,7 +300,7 @@ function buddyforms_form_html( $args ) {
 					// only output CSS for buttons if the option to disable CSS is unchecked
 					if( empty($bfdesign['button_disable_css']) ) { ?>
 		        /* Design Options - Buttons */
-		        .the_buddyforms_form .form-actions button.bf-submit {
+		        .the_buddyforms_form .form-actions button.bf-submit, .the_buddyforms_form .form-actions button.bf-draft {
 		        	<?php
 							// Button Width
 							if( $bfdesign['button_width'] != 'inline' ) {
@@ -343,7 +348,7 @@ function buddyforms_form_html( $args ) {
 		        <?php // Button Width Behaviour -- if always on block
 						if( $bfdesign['button_width'] != 'block' ) {
 							echo '@media (min-width: 768px) {
-											.the_buddyforms_form .form-actions button.bf-submit {
+											.the_buddyforms_form .form-actions button.bf-submit, .the_buddyforms_form .form-actions button.bf-draft {
 												display: inline;
 												width: auto;
 											}
@@ -352,7 +357,9 @@ function buddyforms_form_html( $args ) {
 
 		        /* Design Options - Buttons Hover State */
 		        .the_buddyforms_form .form-actions button.bf-submit:hover,
-		        .the_buddyforms_form .form-actions button.bf-submit:focus {
+		        .the_buddyforms_form .form-actions button.bf-draft:hover,
+		        .the_buddyforms_form .form-actions button.bf-submit:focus,
+		        .the_buddyforms_form .form-actions button.bf-draft:focus {
 		        	<?php
 							// Background Color
 							if( $bfdesign['button_background_color_hover']['style'] == 'color' ) {
@@ -390,10 +397,10 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
-	$form_class = 'standard-form';
+	$form_class = 'standard-form buddyforms-' . $form_slug . ' ';
 
 	if ( ! isset( $buddyforms[ $form_slug ]['local_storage'] ) ) {
-		$form_class = ' bf-garlic';
+		$form_class .= ' bf-garlic';
 	}
 
 	// Set the form attribute
@@ -420,11 +427,6 @@ function buddyforms_form_html( $args ) {
 	$form->addElement( new Element_Hidden( "bf_post_type", $post_type ) );
 	$form->addElement( new Element_Hidden( "form_type", isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '' ) );
 
-	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
-	if ( ! $exist_field_status ) {
-		$form->addElement( new Element_Hidden( "status", 'draft', array( 'id' => "status" ) ) );
-	}
-
 	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
 		$form->addElement( new Element_Hidden( "ajax", 'off' ) );
 	}
@@ -432,21 +434,18 @@ function buddyforms_form_html( $args ) {
 	// if the form has custom field to save as post meta data they get displayed here
 	buddyforms_form_elements( $form, $args );
 
-
 	$form->addElement( new Element_Hidden( "bf_submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
 
-	$bf_button_classes = 'bf-submit ' . isset( $bfdesign['button_class'] ) && ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
-	$bf_button_text    = isset( $bfdesign['submit_text'] ) && ! empty( $bfdesign['submit_text'] ) ? $bfdesign['submit_text'] : __( 'Submit', 'buddyforms' );
+	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
+	if ( ! $exist_field_status ) {
+		$setup_form_status = $buddyforms[ $form_slug ]['status'];
+		$post_status = (!empty($post_status))? $post_status: $setup_form_status;
+		$form->addElement( new Element_Hidden( "status", $post_status, array( 'id' => "status" ) ) );
+	}
 
-	$bf_submit_button = new Element_Button( $bf_button_text, 'submit', array(
-		'id'    => $form_slug,
-		'class' => $bf_button_classes,
-		'name'  => 'submitted'
-	) );
-	$form             = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
-
-	if ( $bf_submit_button ) {
-		$form->addElement( $bf_submit_button );
+	$exist_field_form_actions = buddyforms_exist_field_type_in_form( $form_slug, 'form_actions' );
+	if ( ! $exist_field_form_actions ) {
+		$form = buddyforms_form_action_buttons($form, $form_slug, $post_id, array());
 	}
 
 	$form = apply_filters( 'buddyforms_form_before_render', $form, $args );

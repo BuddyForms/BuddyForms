@@ -345,7 +345,8 @@ function buddyforms_form_elements( $form, $args ) {
 
 					case 'status' :
 
-						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) ) {
+						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) && count($customfield['post_status']) > 0 ) {
+							$post_status = array();
 							if ( in_array( 'pending', $customfield['post_status'] ) ) {
 								$post_status['pending'] = __( 'Pending Review', 'buddyforms' );
 							}
@@ -370,7 +371,11 @@ function buddyforms_form_elements( $form, $args ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
 
-							$customfield_val = isset( $the_post->post_status ) ? $the_post->post_status : '';
+							$customfield_val = isset( $the_post ) && isset( $the_post->post_status ) ? $the_post->post_status : '';
+
+							if ( ! empty( $customfield_val ) && $customfield_val === 'auto-draft' ) {
+								$customfield_val = 'draft';
+							}
 
 							if ( isset( $_POST['status'] ) ) {
 								$customfield_val = $_POST['status'];
@@ -530,42 +535,29 @@ function buddyforms_form_elements( $form, $args ) {
 						$max_file_size                   = isset( $customfield['max_file_size'] ) ? $customfield['max_file_size'] : 1;
 						$validation_error_message        = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] : '';
 						$required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" : '';
-						$attachment_ids                  = get_post_thumbnail_id( $post_id );
-						$attachments                     = array_filter( explode( ',', $attachment_ids ) );
-						$attachment_ids                  = get_post_thumbnail_id( $post_id );
-						$attachments                     = array_filter( explode( ',', $attachment_ids ) );
 						$id                              = $slug;
 						$action                          = isset( $_GET['action'] ) ? $_GET['action'] : "";
-						$entry                           = isset( $_GET['entry'] ) ? $_GET['entry'] : "";
 						$page                            = isset( $_GET['page'] ) ? $_GET['page'] : "";
-						//If Entry is empty we check if we are in a edit entry page
-						if ( empty( $entry ) ) {
-							$entry = isset( $_GET['post'] ) ? $_GET['post'] : "";
-						}
-						$column_val     = "";
 						$result         = "";
 						$result_value   = "";
 						$entries        = array();
 						$entries_result = "";
 						if ( $post_id > 0 ) {
-							$column_val   = get_post_meta( $post_id, $id, true );
-							$attachmet_id = explode( ",", $column_val );
-							foreach ( $attachmet_id as $id_value ) {
-								$metadata = wp_prepare_attachment_for_js( $id_value );
-								if ( $metadata != null ) {
-									$url                     = wp_get_attachment_thumb_url( $id_value );
-									$result                  .= $id_value . ",";
-									$mockFile                = new stdClass();
-									$mockFile->name          = $metadata['filename'];
-									$mockFile->url           = $url;
-									$mockFile->attachment_id = $id_value;
-									$mockFile->size          = $metadata['filesizeInBytes'];
-									$entries[ $id_value ]    = $mockFile;
-								}
+							//Load the current feature image
+							$post_feature_image_id = get_post_thumbnail_id($post_id);
+							$metadata = wp_prepare_attachment_for_js( $post_feature_image_id );
+							if ( $metadata != null ) {
+								$url                     = wp_get_attachment_thumb_url( $post_feature_image_id );
+								$result                  .= $post_feature_image_id . ",";
+								$mockFile                = new stdClass();
+								$mockFile->name          = $metadata['filename'];
+								$mockFile->url           = $url;
+								$mockFile->attachment_id = $post_feature_image_id;
+								$mockFile->size          = $metadata['filesizeInBytes'];
+								$entries[ $post_feature_image_id ]    = $mockFile;
 							}
 						}
 						if ( count( $entries ) > 0 ) {
-
 							$entries_result = json_encode( $entries );
 						}
 						if ( ! empty( $result ) ) {
@@ -574,7 +566,6 @@ function buddyforms_form_elements( $form, $args ) {
 						$label_name = $customfield['name'];
 
 						$message = __( 'Drop the image here to upload', 'buddyforms' );
-						$str     = '<div class=" bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
 						$box     = "<div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                               <span>$message</span>
@@ -584,67 +575,6 @@ function buddyforms_form_elements( $form, $args ) {
 						$form->addElement( new Element_HTML( "<label>$label_name</label>" ) );
 						$form->addElement( new Element_HTML( $box ) );
 						$form->addElement( new Element_HTML( "<span class='help-inline'>$description</span>" ) );
-						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
-
-						if ( $attachments ) {
-							foreach ( $attachments as $attachment_id ) {
-
-								$attachment_metadat = get_post( $attachment_id );
-
-								$str .= '<li class="image bf-image" data-attachment_id="' . esc_attr( $attachment_id ) . '">
-
-                                    <div class="bf_attachment_li">
-                                    <div class="bf_attachment_img">
-                                    ' . wp_get_attachment_image( $attachment_id, array( 64, 64 ), true ) . '
-                                    </div><div class="bf_attachment_meta">
-                                    <p><b>' . __( 'Name: ', 'buddyforms' ) . '</b>' . $attachment_metadat->post_name . '<p>
-                                    <p><b>' . __( 'Type: ', 'buddyforms' ) . '</b>' . $attachment_metadat->post_mime_type . '<p>
-
-                                    <p>
-                                    <a href="#" class="delete tips" data-slug="' . $slug . '" data-tip="' . __( 'Delete image', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>
-                                    <a href="' . wp_get_attachment_url( $attachment_id ) . '" target="_blank" class="view" data-tip="' . __( 'View', 'buddyforms' ) . '">' . __( 'View', 'buddyforms' ) . '</a>
-                                    </p>
-                                    </div></div>
-
-                                </li>';
-							}
-						}
-
-						$str .= '</ul>';
-
-
-						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
-
-						$name_inline = isset( $customfield['button_label'] ) ? $customfield['button_label'] : __( 'Add Image', 'buddyforms' );
-						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
-							$name_inline = $form->getRequiredSignal() . $name;
-						}
-
-						$str .= '<span class="bf_add_files hide-if-no-js">';
-						$str .= '<a class="button btn btn-primary" href="#" data-slug="' . $slug . '" data-type="image/jpeg,image/gif,image/png,image/bmp,image/tiff,image/x-icon" data-multiple="false" data-choose="' . __( 'Add ', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</a>';
-						$str .= '</span>';
-
-						$str .= '</div><span class="help-inline">';
-						$str .= $description;
-						$str .= '</span>';
-
-						$fimage_element = '<div class="bf_field_group">';
-						if ( $labels_layout != 'inline' ) {
-							$fimage_element .= '<label for="_' . $slug . '">' . $name;
-
-							if ( isset( $customfield['required'] ) ) {
-								$fimage_element .= $form->renderRequired();
-							}
-
-							$fimage_element .= '</label>';
-						}
-
-						$fimage_element .= '<div class="bf_inputs bf-input">
-                            ' . $str . '
-                            </div></div>
-                        ';
-
-						//$form->addElement( new Element_HTML( $fimage_element ) );
 
 						// always add slug
 						$featured_image_params = array( 'id' => $slug );
@@ -653,10 +583,6 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['required'] ) ) {
 							$featured_image_params['required'] = 'required';
 						}
-
-						//$form->addElement( new Element_Hidden( 'featured_image', $customfield_val, $featured_image_params ) );
-
-
 						break;
 					case 'upload':
 						$max_size                          = '2';
@@ -854,7 +780,7 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 
 						}
-					
+
 						$taxonomy = isset( $customfield['taxonomy'] ) && $customfield['taxonomy'] != 'none' ? $customfield['taxonomy'] : '';
 						$order    = $customfield['taxonomy_order'];
 						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode(',', $customfield['taxonomy_exclude']) : '';
@@ -889,9 +815,9 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 
 						$args     = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
-					
+
 						$dropdown = wp_dropdown_categories( $args );
-						
+
 						if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 							$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 						}
@@ -934,6 +860,8 @@ function buddyforms_form_elements( $form, $args ) {
 							$ajax_options .= 'ajax:{ ' .
 								                 'url: "'.admin_url( 'admin-ajax.php' ).'", ' .
 								                 'delay: 250, ' .
+								                 'dataType: "json", ' .
+								                 'cache: true, ' .
 								                 'method : "POST", ' .
 								                 'data: function (params) { ' .
 									                 'var query = { ' .
@@ -941,12 +869,13 @@ function buddyforms_form_elements( $form, $args ) {
 										                 'type: "public", ' .
 										                 'action: "bf_load_taxonomy", ' .
 										                 'nonce: "'.wp_create_nonce( 'bf_tax_loading') .'", ' .
+										                 'form_slug: "'. $form_slug .'", ' .
 										                 'taxonomy: "' . $taxonomy . '", ' .
 										                 'order: "' . $order . '", ' .
 										                 'exclude: "' . $exclude . '", ' .
 										                 'include: "' . $include . '" ' .
 								                        '}; ' .
-								
+
 								                    'return query; ' .
 								                 ' } ' .
 							                 '}, ';
@@ -1036,6 +965,9 @@ function buddyforms_form_elements( $form, $args ) {
 
 
 						}
+						break;
+					case 'form_actions':
+						$form = buddyforms_form_action_buttons($form, $form_slug, $post_id, $customfield);
 						break;
 
 					default:

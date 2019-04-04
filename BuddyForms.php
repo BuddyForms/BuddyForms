@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.3.3.2
+ * Version: 2.4.0
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -44,7 +44,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.3.3.2';
+		public $version = '2.4.0';
 
 		/**
 		 * @var string Assets URL
@@ -208,6 +208,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
 
+			//Compatibility
+			require_once( BUDDYFORMS_INCLUDES_PATH . 'compatibility.php' );
+
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'gdpr.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'change-password.php' );
@@ -280,6 +283,25 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 
+		/**
+		 * Shared assets between frontend and backend
+		 *
+		 * @since 2.4.0
+		 *
+		 * @param $hook_suffix
+		 */
+		public static function shared_styles( $hook_suffix ) {
+			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
+		}
+
+		/**
+		 * Enable the localization of the fields adding the strings to js
+		 *
+		 * @return array
+		 */
+		public static function localize_fields() {
+			return apply_filters( 'buddyforms_field_localization', array() );
+		}
 
 		/**
 		 * Enqueue the needed CSS for the admin screen
@@ -361,7 +383,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				self::buddyforms_js_global_set_parameters( array(
 					'admin_text' => $admin_text_array,
 					'admin_url'  => admin_url( 'admin-ajax.php' ),
-					'ajaxnonce'  => wp_create_nonce( 'fac_drop' )
+					'ajaxnonce'  => wp_create_nonce( 'fac_drop' ),
+					'post_type'  => get_post_type(),
+					'localize' => self::localize_fields()
 				) );
 
 				wp_enqueue_script( 'buddyforms-admin-js' );
@@ -402,7 +426,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
             wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
 
             //Global frontend vars
-			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters( ) );
+			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters( ) ) );
+
+			//Loading shared assets
+			self::shared_styles( $hook_suffix );
+
 			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
@@ -478,7 +506,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
          * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
 		 */
 		public static function front_js_css( $content = '' ) {
-			global $wp_scripts;
+			global $wp_scripts, $buddyforms, $wp_query;
 
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
@@ -551,8 +579,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
-			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
-
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 
 			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, false  );
@@ -562,14 +588,25 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'gdpr_errors'   => __( 'Some errors occurred:', 'buddyforms' ),
 			);
 
-			self::buddyforms_js_global_set_parameters( array(
+			$front_js_arguments = array(
 				'admin_url'                => admin_url( 'admin-ajax.php' ),
 				'ajaxnonce'                => wp_create_nonce( 'fac_drop' ),
-				'buddyforms_gdpr_localize' => $gpdr_translations
-			) );
+				'buddyforms_gdpr_localize' => $gpdr_translations,
+				'localize'                 => self::localize_fields()
+			);
+			$form_slug          = buddyforms_get_form_slug();
+			$bf_post_id         = $wp_query->get( 'bf_post_id' );
+			if ( ! empty( $form_slug ) && !empty($buddyforms) && isset( $buddyforms[ $form_slug ] ) ) {
+			    $options = buddyforms_filter_frontend_js_form_options($buddyforms[ $form_slug ], $form_slug, $bf_post_id);
+				$front_js_arguments[ $form_slug ] = $options;
+			}
+			self::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 			//Global frontend vars
-			wp_localize_script( "buddyforms-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters() );
+			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
+
+			//Loading shared assets
+			self::shared_styles( '' );
 
 			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 

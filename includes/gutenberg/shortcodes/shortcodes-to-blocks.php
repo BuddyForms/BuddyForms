@@ -8,6 +8,10 @@
 function buddyforms_shortcodes_to_block_init() {
 	global $buddyforms;
 
+	if (empty($buddyforms)) {
+		return;
+	}
+
 	// Register block editor BuddyForms script.
 	wp_register_script(
 		'bf-embed-form',

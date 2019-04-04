@@ -195,11 +195,15 @@ jQuery(document).ready(function () {
 	// Load the Form From Template
 	//
 	jQuery(document.body).on('click', '.bf_form_template', function () {
-
-		var template = jQuery(this).data("template");
-		load_formbuilder_template(template);
+		var button = jQuery(this);
+		button.parent().LoadingOverlay('show');
+		jQuery('button.bf_form_template').prop('disabled', true);
+		var template = button.data('template');
+		load_formbuilder_template(template, function() {
+			button.parent().LoadingOverlay('hide');
+			jQuery('button.bf_form_template').prop('disabled', false);
+		});
 		return false;
-
 	});
 
 	//

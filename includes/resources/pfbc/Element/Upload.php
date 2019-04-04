@@ -18,6 +18,49 @@ class Element_Upload extends Element_Textbox {
 		"mandatory"      => ""
 	);
 
+	public static function save_post_meta( $customfield, $post_id ) {
+		if ( $customfield['type'] == 'featured_image' ) {
+			if ( ! empty( $_POST[ $customfield['slug'] ] ) ) {
+				$attachment_id = $_POST[ $customfield['slug'] ];
+				//Update attachment parent
+				$attachment_args = array(
+					'ID'          => $attachment_id,
+					'post_parent' => $post_id,
+				);
+				wp_update_post( $attachment_args );
+				//Update post thumb data
+				set_post_thumbnail( $post_id, $attachment_id );
+			}
+		}
+	}
+
+	public static function submission_default_value( $bf_value, $item, $field_type, $field_slug ) {
+		if ( $field_type === 'featured_image' ) {
+			$featured_img_url = get_the_post_thumbnail_url( $item->ID );
+			$result = '<a target="blank" href="' . esc_url( $featured_img_url ) . '" rel="lightbox">' . get_the_post_thumbnail( $item->ID,  array(64, 64) ) . '</a>';
+			return $result;
+		}
+
+		return $bf_value;
+	}
+
+	/**
+	 * Return the localization string for this field
+	 *
+	 * @param $default
+	 *
+	 * @since 2.4.0
+	 *
+	 * @return array
+	 */
+	public static function localize_string( $default ) {
+		return array(
+			'upload' => array(
+				'submitButton' => __( 'Upload in progress', 'buddyforms' )
+			)
+		);
+	}
+
 	public static function upload_process_field_submission( $field_slug, $field_type, $field, $post_id, $form_slug, $args, $action ) {
 		if ( $field_type !== 'upload' && $field_type !== 'featured_image' ) {
 			return;
