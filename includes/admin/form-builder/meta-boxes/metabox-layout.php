@@ -5,7 +5,7 @@ function buddyforms_metabox_form_designer() {
 	buddyforms_layout_screen();
 }
 
-function buddyforms_layout_defaults() {
+function buddyforms_layout_defaults($form_type = '') {
 
 	$json['labels_disable_css']    = '';
 	$json['labels_layout']    = 'inline';
@@ -32,8 +32,11 @@ function buddyforms_layout_defaults() {
 	$json['field_active_border_color']     = array( 'color' => '', 'style' => 'auto' );
 	$json['field_active_font_color']       = array( 'color' => '', 'style' => 'auto' );
 
-	$json['button_disable_css']    = '';
-	$json['submit_text']             = __( 'Submit', 'buddyforms' );
+	$json['button_disable_css'] = '';
+	$json['submit_text']        = ( ! empty( $form_type ) && $form_type === 'post' ) ? __( 'Publish', 'buddyforms' ) : __( 'Submit', 'buddyforms' );
+	if ( ! empty( $form_type ) && $form_type === 'post' ) {
+		$json['draft_text'] = __( 'Save as draft', 'buddyforms' );
+	}
 	$json['button_width']            = 'blockmobile';
 	$json['button_alignment']        = 'left';
 	$json['button_size']             = 'large';
@@ -105,7 +108,12 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 
 	$form_setup = array();
 
-	$defaults = buddyforms_layout_defaults();
+	$form_type = '';
+	if ( isset( $buddyforms[ $form_slug ]['form_type'] ) ) {
+		$form_type = $buddyforms[ $form_slug ]['form_type'];
+	}
+
+	$defaults = buddyforms_layout_defaults($form_type);
 
 
 	// Labels
@@ -313,7 +321,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 		'shortDesc' => ''
 	) );
 
-	$submit_text                   = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
+	$submit_text = isset( $options['layout']['submit_text'] ) ? $options['layout']['submit_text'] : $defaults['submit_text'];
 	$form_setup['Submit Button'][] = new Element_Textbox( '<b>' . __( 'Button Submit Text', 'buddyforms' ) . '</b>', $option_name . "[submit_text]", array(
 		'value'     => $submit_text,
 		'shortDesc' => sprintf('%s <br> %s', __( 'Default text for the submit button . Default is "Submit" .', 'buddyforms' ), __( 'HTML is allowed, so you can embed icons .', 'buddyforms' ))

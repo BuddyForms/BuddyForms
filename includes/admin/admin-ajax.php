@@ -52,6 +52,9 @@ function buddyforms_update_taxonomy_default() {
 }
 
 add_action( 'wp_ajax_buddyforms_new_page', 'buddyforms_new_page' );
+/**
+ * Create the holder page to be use as endpoint
+ */
 function buddyforms_new_page() {
 
 	if ( ! is_admin() ) {

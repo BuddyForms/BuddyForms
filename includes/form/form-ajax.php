@@ -20,53 +20,67 @@ function buddyforms_ajax_load_taxonomy(){
 	if (! (is_array($_POST) && defined('DOING_AJAX') && DOING_AJAX)) {
 		return;
 	}
-	
+
 	if ( ! isset($_POST['action']) || wp_verify_nonce($_POST['nonce'], 'bf_tax_loading') === false ) {
 		wp_die();
 	}
-	
+
 	$args = array(
-		'fields' => 'id=>name',
-		'hide_empty'    => 0,
-		'child_of'      => 0,
-		'orderby'       => 'SLUG',
+		'fields'       => 'id=>name',
+		'hide_empty'   => 0,
+		'child_of'     => 0,
+		'orderby'      => 'SLUG',
+		'cache_domain' => 'buddyforms_ajax_load_taxonomy',
 	);
-	
-	if(!empty($_POST['search'])){
-		$args['name__like'] = sanitize_title_for_query($_POST['search']);
+
+	$form_slug = '';
+	if ( empty( $_POST['form_slug'] ) ) {
+		wp_send_json_error( new WP_Error( 'invalid_form_slug', 'Invalid Form Slug' ), 500 );
+	} else {
+		$form_slug = sanitize_title( $_POST['form_slug'] );
 	}
-	
-	if(!empty($_POST['taxonomy'])){
+
+	if ( ! empty( $_POST['search'] ) ) {
+		$args['search'] = sanitize_title_for_query( $_POST['search'] );
+	}
+
+	if ( ! empty( $_POST['taxonomy'] ) ) {
 		$args['taxonomy'] = $_POST['taxonomy'];
 	}
-	
-	if(!empty($_POST['order'])){
+
+	if ( ! empty( $_POST['order'] ) ) {
 		$args['order'] = $_POST['order'];
 	}
-	
-	if(!empty($_POST['exclude'])){
+
+	if ( ! empty( $_POST['exclude'] ) ) {
 		$args['exclude'] = $_POST['exclude'];
 	}
-	
-	if(!empty($_POST['include'])){
+
+	if ( ! empty( $_POST['include'] ) ) {
 		$args['include'] = $_POST['include'];
 	}
-	
-	$terms_result = new WP_Term_Query($args);
-	
-	if(is_wp_error($terms_result)){
-		wp_send_json_error($terms_result, 500);
+
+	$terms_result = false;
+
+	$terms_result = apply_filters( 'buddyforms_ajax_load_term_query', $terms_result, $args, $form_slug );
+
+	if ( empty( $terms_result ) ) {
+		$terms_result = new WP_Term_Query( $args );
+	}
+
+	if ( is_wp_error( $terms_result ) ) {
+		wp_send_json_error( $terms_result, 500 );
 	} else {
 		$response = new stdClass;
-		$result = array();
+		$result   = array();
 		foreach ( $terms_result->get_terms() as $key => $term ) {
-			$current = new stdClass;
-			$current->id = $key;
+			$current       = new stdClass;
+			$current->id   = $key;
 			$current->text = $term;
-			$result[] = $current;
+			$result[]      = $current;
 		}
 		$response->results = $result;
-		wp_send_json($response);
+		wp_send_json( $response );
 	}
 }
 
@@ -79,7 +93,7 @@ function buddyforms_ajax_process_edit_post() {
 		parse_str( $_POST['data'], $formdata );
 		$_POST = $formdata;
 	}
-	
+
 
 	$args = buddyforms_process_submission( $formdata );
 
@@ -90,7 +104,7 @@ function buddyforms_ajax_process_edit_post() {
 	$json_array = array();
 
     $error_message = __('There was an error please check the form!', 'buddyforms');
-	
+
 	extract( $args );
 
 	if ( empty( $form_slug ) ) {
@@ -98,7 +112,7 @@ function buddyforms_ajax_process_edit_post() {
 	}
 
 	if ( $hasError == true ) {
-		
+
 		if ( $form_notice ) {
 			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}

@@ -1,7 +1,10 @@
-jQuery(document).ready(function($) {
-    var submitButtons = jQuery("button[type=submit].bf-submit");
+jQuery(document).ready(function() {
+    var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
+    var submitButton;
     if (submitButtons.length > 0) {
-        var submitButton = submitButtons.first();
+        submitButton = jQuery.map(submitButtons, function (element) {
+            return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
+        })[0];
         var existingHtmlInsideSubmitButton = submitButton.html();
     }
     if (jQuery.validator) {
@@ -46,8 +49,8 @@ jQuery(document).ready(function($) {
 
     }
 
-    $(".featured-image-uploader").each(function(index, value) {
-        var current = $(this),
+    jQuery(".featured-image-uploader").each(function(index, value) {
+        var current = jQuery(this),
             id = current.attr('id'),
             max_file_size = current.attr('max_file_size'),
             action = current.attr('action'),
@@ -124,7 +127,7 @@ jQuery(document).ready(function($) {
                         remainigIds = remainigIds.slice(0, -1);
                     }
                     currentField.val(remainigIds);
-                    jQuery("button[type=submit].bf-submit").attr("disabled", "disabled");
+                    submitButtons.attr("disabled", "disabled");
                     jQuery.post(buddyformsGlobal.admin_url, {
                         action: 'handle_deleted_media',
                         media_id: attachment_id,
@@ -139,17 +142,21 @@ jQuery(document).ready(function($) {
                     });
                 });
 
-                for (var key in uploadFields) {
-                    var mockFile = {
-                        name: uploadFields[key]['name'],
-                        size: uploadFields[key]['size'],
-                        url: uploadFields[key]['url'],
-                        attachment_id: uploadFields[key]['attachment_id']
-                    };
-                    this.emit('addedfile', mockFile);
-                    this.emit('thumbnail', mockFile, mockFile.url);
-                    this.emit('complete', mockFile);
-                    this.files.push(mockFile);
+                if(uploadFields) {
+                    for (var key in uploadFields) {
+                        if(key) {
+                            var mockFile = {
+                                name: uploadFields[key]['name'],
+                                size: uploadFields[key]['size'],
+                                url: uploadFields[key]['url'],
+                                attachment_id: uploadFields[key]['attachment_id']
+                            };
+                            this.emit('addedfile', mockFile);
+                            this.emit('thumbnail', mockFile, mockFile.url);
+                            this.emit('complete', mockFile);
+                            this.files.push(mockFile);
+                        }
+                    }
                 }
             }
         });

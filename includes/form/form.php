@@ -6,8 +6,9 @@
  *
  * @package buddyforms
  * @since 0.1-beta
+ *
+ * @since 2.4.0 The function only return string or empty
  */
-
 function buddyforms_create_edit_form( $args ) {
 	global $current_user, $buddyforms, $wp_query, $bf_form_response_args, $bf_form_error;
 
@@ -15,7 +16,7 @@ function buddyforms_create_edit_form( $args ) {
 	if ( ! empty( $bf_form_error ) ) {
 		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
 
-		return false;
+		return;
 	}
 
 	do_action( 'buddyforms_create_edit_form_loader' );
@@ -27,6 +28,7 @@ function buddyforms_create_edit_form( $args ) {
 	$the_post    = 0;
 	$post_id     = 0;
 	$post_parent = 0;
+	$post_status = '';
 	$form_slug   = false;
 	$form_notice = '';
 
@@ -42,7 +44,7 @@ function buddyforms_create_edit_form( $args ) {
 	extract( $short_array );
 
 	if ( empty( $buddyforms[ $form_slug ] ) ) {
-		return false;
+		return;
 	}
 
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -118,7 +120,7 @@ function buddyforms_create_edit_form( $args ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-				return false;
+				return;
 			}
 
 		}
@@ -145,14 +147,14 @@ function buddyforms_create_edit_form( $args ) {
 			$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 			echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-			return false;
+			return;
 		}
 	}
 
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
 		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		$the_post = get_default_post_to_edit( $post_type );
+		$the_post = get_default_post_to_edit( $post_type, true );
 	}
 
 	if ( empty( $post_type ) ) {
@@ -167,19 +169,25 @@ function buddyforms_create_edit_form( $args ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		echo '<div class="bf-alert error">' . $error_message . '</div>';
 
-		return false;
+		return;
 	}
 
 	$customfields = $buddyforms[ $form_slug ]['form_fields'];
 
-	if ( ! empty( $the_post ) && ! empty( $the_post->post_parent ) ) {
-		$post_parent = $the_post->post_parent;
+	if ( ! empty( $the_post ) ) {
+		if(empty($post_parent) && ! empty( $the_post->post_parent )) {
+			$post_parent = $the_post->post_parent;
+		}
+		if(empty($post_status) && ! empty( $the_post->post_status )) {
+			$post_status = $the_post->post_status;
+		}
 	}
 
 	$args = array(
 		'post_type'    => $post_type,
 		'the_post'     => $the_post,
 		'post_parent'  => $post_parent,
+		'post_status'  => $post_status,
 		'customfields' => $customfields,
 		'post_id'      => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
 		'form_slug'    => $form_slug,
@@ -206,7 +214,7 @@ function buddyforms_create_edit_form( $args ) {
 		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_message' ) {
 			echo $display_message;
 
-			return false;
+			return;
 		}
 	}
 
@@ -222,7 +230,7 @@ function buddyforms_create_edit_form( $args ) {
 }
 
 /**
- * Save the submited for, amd create a global arry with the response array
+ * Save the submited form and create a global array with the response array
  *
  * @package buddyforms
  * @since 1.5

@@ -11,7 +11,7 @@ function buddyforms_user_profile_fields( $user ) {
 
 	global $buddyforms;
 
-	if ( isset( $buddyforms ) ) {
+	if ( !empty( $buddyforms ) && is_array($buddyforms) ) {
 		foreach ( $buddyforms as $form_slug => $buddyform ) {
 			if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 

@@ -46,7 +46,9 @@ function buddyforms_form_builder_wizard_elements() {
 
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_elements', 'buddyforms_form_builder_wizard_elements' );
 
-
+/**
+ * Save the form the wizard
+ */
 function buddyforms_form_builder_wizard_save() {
 
 	if ( isset( $_POST['FormData'] ) ) {

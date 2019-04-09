@@ -426,7 +426,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
             wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
 
             //Global frontend vars
-			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters( ) );
+			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters( ) ) );
 
 			//Loading shared assets
 			self::shared_styles( $hook_suffix );
@@ -506,7 +506,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
          * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
 		 */
 		public static function front_js_css( $content = '' ) {
-			global $wp_scripts;
+			global $wp_scripts, $buddyforms, $wp_query;
 
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
@@ -588,15 +588,22 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'gdpr_errors'   => __( 'Some errors occurred:', 'buddyforms' ),
 			);
 
-			self::buddyforms_js_global_set_parameters( array(
+			$front_js_arguments = array(
 				'admin_url'                => admin_url( 'admin-ajax.php' ),
 				'ajaxnonce'                => wp_create_nonce( 'fac_drop' ),
 				'buddyforms_gdpr_localize' => $gpdr_translations,
 				'localize'                 => self::localize_fields()
-			) );
+			);
+			$form_slug          = buddyforms_get_form_slug();
+			$bf_post_id         = $wp_query->get( 'bf_post_id' );
+			if ( ! empty( $form_slug ) && !empty($buddyforms) && isset( $buddyforms[ $form_slug ] ) ) {
+			    $options = buddyforms_filter_frontend_js_form_options($buddyforms[ $form_slug ], $form_slug, $bf_post_id);
+				$front_js_arguments[ $form_slug ] = $options;
+			}
+			self::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 			//Global frontend vars
-			wp_localize_script( "buddyforms-js", "buddyformsGlobal", self::buddyforms_js_global_get_parameters() );
+			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
 
 			//Loading shared assets
 			self::shared_styles( '' );
