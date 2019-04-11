@@ -307,6 +307,10 @@ function buddyforms_form_elements_select_options() {
 					'unique' => 'unique'
 				);
 
+			$elements_select_options['basic']['fields']['form_actions']   =
+				array(
+					'label'  => __( 'Form Actions', 'buddyforms' ),
+				);
 
 			$elements_select_options['user']['fields']['date'] =
 				array(
@@ -341,10 +345,6 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['extra']['fields']['range']  =
 				array(
 					'label' => __( 'Range', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['form_actions']   =
-				array(
-					'label'  => __( 'Form Actions', 'buddyforms' ),
 				);
 		}
 

@@ -1082,23 +1082,23 @@ JS;
             $form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'form_actions' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
-            $is_draft_enabled                           = isset( $customfield['enable_draft'] ) ? $customfield['enable_draft'] : 'false';
-			$form_fields['general']['enable_draft'] = new Element_Checkbox( '<b>' . __( 'Draft Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_draft]", array( 'enable_draft' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
-				'value' => $is_draft_enabled,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_draft]"
-			) );
-			$is_publish_enabled                           = isset( $customfield['enable_publish'] ) ? $customfield['enable_publish'] : 'false';
-			$form_fields['general']['enable_publish'] = new Element_Checkbox( '<b>' . __( 'Publish Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_publish]", array( 'enable_publish' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
-				'value' => $is_publish_enabled,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_publish]"
-			) );
+	        $is_draft_enabled                         = isset( $customfield['enable_draft'] ) ? $customfield['enable_draft'] : 'false';
+	        $form_fields['general']['enable_draft']   = new Element_Checkbox( '<b>' . __( 'Draft Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_draft]", array( 'enable_draft' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
+		        'value' => $is_draft_enabled,
+		        'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_draft]"
+	        ) );
+	        $is_publish_enabled                       = isset( $customfield['enable_publish'] ) ? $customfield['enable_publish'] : 'false';
+	        $form_fields['general']['enable_publish'] = new Element_Checkbox( '<b>' . __( 'Publish Button', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_publish]", array( 'enable_publish' => '<b>' . __( 'Check to enabled', 'buddyforms' ) . '</b>' ), array(
+		        'value' => $is_publish_enabled,
+		        'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_publish]"
+	        ) );
             break;
 
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );
 			break;
 	}
-	
+
 	$custom_class                            = isset( $customfield['custom_class'] ) ? stripcslashes( $customfield['custom_class'] ) : '';
 	$form_fields['advanced']['custom_class'] = new Element_Textbox( '<b>' . __( 'Add custom class to the form element', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][custom_class]", array( 'value' => $custom_class ) );
 
