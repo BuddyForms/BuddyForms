@@ -1916,6 +1916,11 @@ input.screen-per-page{
     width: 4em !important;
 }
 
+.buddyforms_accordion_permission label.checkbox-inline.draft > input {
+    margin-left: 5% !important;
+    float: left;
+}
+
 .buddyforms_accordion_permission label.checkbox-inline.admin-submission > input {
     margin-left: 13% !important;
     float: left;

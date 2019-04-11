@@ -109,11 +109,12 @@ function buddyforms_permissions_screen() {
 	// Display all user roles
 	foreach ( get_editable_roles() as $role_name => $role_info ) {
 
-		$default_roles['create'] = '';
-		$default_roles['edit']   = '';
-		$default_roles['delete'] = '';
-		$default_roles['all']    = '';
-		$default_roles['admin-submission']    = '';
+		$default_roles['create']           = '';
+		$default_roles['edit']             = '';
+		$default_roles['delete']           = '';
+		$default_roles['draft']            = '';
+		$default_roles['all']              = '';
+		$default_roles['admin-submission'] = '';
 
 		$form_user_role = array();
 
@@ -179,6 +180,7 @@ function buddyforms_permissions_screen() {
 	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Create', 'buddyforms' ) ) ?>
 	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Edit', 'buddyforms' ) ) ?>
 	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Delete', 'buddyforms' ) ) ?>
+                    <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Draft', 'buddyforms' ) ) ?>
 	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'All Submissions', 'buddyforms' ) ) ?>
 	                <?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Admin Submission', 'buddyforms' ) ) ?>
                     <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>

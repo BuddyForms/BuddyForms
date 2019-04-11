@@ -37,10 +37,20 @@ function buddyforms_metabox_form_setup() {
 	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
 	$comment_status    = isset( $buddyform['comment_status'] ) ? $buddyform['comment_status'] : 'false';
 	$revision          = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
+	$draft_action      = isset( $buddyform['draft_action'] ) ? $buddyform['draft_action'] : 'false';
 	$admin_bar         = isset( $buddyform['admin_bar'] ) ? $buddyform['admin_bar'] : 'false';
 	$edit_link         = isset( $buddyform['edit_link'] ) ? $buddyform['edit_link'] : 'all';
 	$bf_ajax           = isset( $buddyform['bf_ajax'] ) ? $buddyform['bf_ajax'] : false;
-	$user_data         = isset( $buddyform['user_data'] ) ? $buddyform['user_data'] : array( 'ipaddress', 'referer', 'browser', 'version', 'platform', 'reports', 'userAgent', 'enable_all' );
+	$user_data         = isset( $buddyform['user_data'] ) ? $buddyform['user_data'] : array(
+		'ipaddress',
+		'referer',
+		'browser',
+		'version',
+		'platform',
+		'reports',
+		'userAgent',
+		'enable_all'
+	);
 	$list_posts_option = isset( $buddyform['list_posts_option'] ) ? $buddyform['list_posts_option'] : 'list_all_form';
 	$list_posts_style  = isset( $buddyform['list_posts_style'] ) ? $buddyform['list_posts_style'] : 'list';
 
@@ -209,6 +219,16 @@ function buddyforms_metabox_form_setup() {
 		'shortDesc' => __( 'The Single Name is used by other plugins and Navigation ( Display Books, Add Book )', 'buddyforms' ),
 		'class'     => 'bf_hide_if_post_type_none'
 	) );
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Create Content'][] = $element;
+
+	$element = new Element_Checkbox( '<b>' . __( 'Enable Draft', 'buddyforms' ) . '</b>', "buddyforms_options[draft_action]", array( 'Enable Draft' => __( 'Enable Draft Form Action', 'buddyforms' ) ),
+		array(
+			'value' => $draft_action,
+			'class' => 'bf_hide_if_post_type_none'
+		) );
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}

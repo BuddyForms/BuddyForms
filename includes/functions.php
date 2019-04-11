@@ -1324,8 +1324,9 @@ function buddyforms_get_form_slug() {
 function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_options ) {
 	global $buddyforms;
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
-	$is_draft_enabled   = true;// todo need implementation
-	$user_can_draft     = true; // todo need implementation
+
+	$is_draft_enabled   = !empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$user_can_draft     = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
 		$user_can_draft = true;
 	}
@@ -1339,19 +1340,21 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	$bfdesign  = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
 
-	if ( ! $exist_field_status && $is_draft_enabled && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() && $user_can_draft ) {
-		$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
-		$bf_draft_button_classes = 'bf-draft ' . ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
-		$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'button', array(
-			'id'          => $form_slug . '-draft',
-			'class'       => $bf_draft_button_classes,
-			'name'        => 'draft',
-			'data-target' => $form_slug,
-			'data-status' => 'draft',
-		) );
+	if ( $is_draft_enabled && $user_can_draft ) {
+		if ( ! $exist_field_status && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() ) {
+			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
+			$bf_draft_button_classes = 'bf-draft ' . ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
+			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'button', array(
+				'id'          => $form_slug . '-draft',
+				'class'       => $bf_draft_button_classes,
+				'name'        => 'draft',
+				'data-target' => $form_slug,
+				'data-status' => 'draft',
+			) );
 
-		if ( $bf_draft_button ) {
-			$form->addElement( $bf_draft_button );
+			if ( $bf_draft_button ) {
+				$form->addElement( $bf_draft_button );
+			}
 		}
 	}
 
