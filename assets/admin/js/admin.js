@@ -129,93 +129,94 @@ function bf_update_list_item_number_mail() {
 //
 function load_formbuilder_template(template, completeCallBack) {
     var postTitle = jQuery('input#title');
+    if(buddyformsGlobal) {
+        jQuery.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: buddyformsGlobal.admin_url,
+            data: {
+                "action": "buddyforms_form_template",
+                "template": template,
+                "title": postTitle.val()
+            },
+            success: function(data) {
+                jQuery.each(data, function(i, val) {
+                    switch (i) {
+                        case 'formbuilder':
+                            var form_builder = jQuery('.buddyforms_forms_builder');
+                            form_builder.replaceWith(val);
+                            bf_update_list_item_number();
+                            jQuery(document.body).trigger({type: "buddyform:load_fields"});
+                            break;
+                        case 'mail_notification':
+                            jQuery('.buddyforms_accordion_notification').html(val);
+                            jQuery('#no-trigger-mailcontainer').hide();
 
-    jQuery.ajax({
-        type: 'POST',
-        dataType: "json",
-        url: buddyformsGlobal.admin_url,
-        data: {
-            "action": "buddyforms_form_template",
-            "template": template,
-            "title": postTitle.val()
-        },
-        success: function (data) {
-            jQuery.each(data, function (i, val) {
-                switch (i) {
-                    case 'formbuilder':
-                    	var form_builder = jQuery('.buddyforms_forms_builder');
-	                    form_builder.replaceWith(val);
-                        bf_update_list_item_number();
-                        jQuery(document.body).trigger({type: "buddyform:load_fields"});
-                        break;
-                    case 'mail_notification':
-                        jQuery('.buddyforms_accordion_notification').html(val);
-                        jQuery('#no-trigger-mailcontainer').hide();
+                            tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id']);
+                            tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + val['trigger_id']);
 
-                        tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + val['trigger_id']);
-                        tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + val['trigger_id']);
+                            bf_update_list_item_number_mail();
 
-                        bf_update_list_item_number_mail();
+                            break;
+                        case 'form_setup':
+                            jQuery.each(val, function(i2, form_setup) {
+                                if (form_setup instanceof Object) {
+                                    jQuery.each(form_setup, function(form_setup_key, form_setup_option) {
+                                        var element;
+                                        if (form_setup_option instanceof Object) {
+                                            jQuery.each(form_setup_option, function(form_setup_key2, form_setup_option2) {
+                                                element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]');
+                                                buddyform_apply_template_to_element(element, form_setup_option2);
+                                            });
+                                        } else {
+                                            element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]');
+                                            buddyform_apply_template_to_element(element, form_setup_option);
+                                        }
+                                    });
+                                }
 
-                        break;
-                    case 'form_setup':
-                        jQuery.each(val, function (i2, form_setup) {
-                            if (form_setup instanceof Object) {
-                                jQuery.each(form_setup, function (form_setup_key, form_setup_option) {
-	                                var element;
-                                    if (form_setup_option instanceof Object) {
-                                        jQuery.each(form_setup_option, function (form_setup_key2, form_setup_option2) {
-                                             element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + '][' + form_setup_key2 + ']"]');
-                                             buddyform_apply_template_to_element(element, form_setup_option2);
-                                        });
-                                    } else {
-	                                    element = jQuery('[name="buddyforms_options[' + i2 + '][' + form_setup_key + ']"]');
-	                                    buddyform_apply_template_to_element(element, form_setup_option);
-                                    }
-                                });
-                            }
-
-                            if (form_setup instanceof Array) {
-	                            buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + '][]"]'), form_setup);
-                            } else {
-	                            buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + ']"]'), form_setup);
-                            }
-                            jQuery('.bf-select2').select2();
-                            // Check the form type and only display the relevant form setup tabs
-                            from_setup_form_type(jQuery('#bf-form-type-select').val());
-                        });
-                        break;
-                    default:
-                        bf_alert(val);
-                }
-            });
-            tb_remove();
-			if (!postTitle.val()) {
-				postTitle.val(buddyformsMakeFieldId());
-				jQuery('input#title').focus();
-			}
-        },
-        error: function () {
-            jQuery('<div></div>').dialog({
-                modal: true,
-                title: "Info",
-                open: function () {
-                    var markup = 'Something went wrong ;-(sorry)';
-                    jQuery(this).html(markup);
-                },
-                buttons: {
-                    Ok: function () {
-                        jQuery(this).dialog("close");
+                                if (form_setup instanceof Array) {
+                                    buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + '][]"]'), form_setup);
+                                } else {
+                                    buddyform_apply_template_to_element(jQuery('[name="buddyforms_options[' + i2 + ']"]'), form_setup);
+                                }
+                                jQuery('.bf-select2').select2();
+                                // Check the form type and only display the relevant form setup tabs
+                                from_setup_form_type(jQuery('#bf-form-type-select').val());
+                            });
+                            break;
+                        default:
+                            bf_alert(val);
                     }
+                });
+                tb_remove();
+                if (!postTitle.val()) {
+                    postTitle.val(buddyformsMakeFieldId());
+                    jQuery('input#title').focus();
                 }
-            });
-        },
-        complete: function(jqXHR, textStatus){
-        	if(typeof completeCallBack === 'function'){
-        		completeCallBack(jqXHR, textStatus);
-			}
-		}
-    });
+            },
+            error: function() {
+                jQuery('<div></div>').dialog({
+                    modal: true,
+                    title: "Info",
+                    open: function() {
+                        var markup = 'Something went wrong ;-(sorry)';
+                        jQuery(this).html(markup);
+                    },
+                    buttons: {
+                        Ok: function() {
+                            jQuery(this).dialog("close");
+                        }
+                    }
+                });
+            },
+            complete: function(jqXHR, textStatus) {
+                if (typeof completeCallBack === 'function') {
+                    completeCallBack(jqXHR, textStatus);
+                }
+            }
+        });
+    }
 
     return false;
 }
@@ -306,7 +307,7 @@ jQuery(document).ready(function (jQuery) {
     });
 
     // Prevent form submission if enter key is pressed on text fields
-    jQuery(document).on('keyup keypress', 'form input[type="text"]', function (e) {
+    jQuery(document).on('keyup keypress', 'form input[type="text"]', function(e) {
         if (e.which == 13) {
             e.preventDefault();
             return false;
@@ -314,20 +315,20 @@ jQuery(document).ready(function (jQuery) {
     });
 
     //
-	// Click on the button to preview a form type from the demo site
-	// @since 2.4.0
-	//
-    jQuery(document.body).on('click', '.bf-preview', function () {
+    // Click on the button to preview a form type from the demo site
+    // @since 2.4.0
+    //
+    jQuery(document.body).on('click', '.bf-preview', function() {
         var key = jQuery(this).attr('data-key');
         var src = jQuery(this).attr('data-src');
         var iFrame = jQuery('#iframe-' + key);
-        if(iFrame.length > 0){
-        	iFrame.attr('src', src);
-		}
+        if (iFrame.length > 0) {
+            iFrame.attr('src', src);
+        }
     });
 
     // Mail Notifications from email display only if selected
-    jQuery(document.body).on('change', '.bf_mail_from_name_multi_checkbox input', function () {
+    jQuery(document.body).on('change', '.bf_mail_from_name_multi_checkbox input', function() {
 
         var val = jQuery(this).val();
 
@@ -340,7 +341,7 @@ jQuery(document).ready(function (jQuery) {
     });
 
     // Mail Notifications from email display only if selected
-    jQuery(document.body).on('change', '.bf_mail_from_multi_checkbox input', function () {
+    jQuery(document.body).on('change', '.bf_mail_from_multi_checkbox input', function() {
 
         var val = jQuery(this).val();
 
@@ -353,24 +354,20 @@ jQuery(document).ready(function (jQuery) {
     });
 
     // Mail Notifications sent to display only if selected
-    jQuery(document.body).on('change', '.bf_sent_mail_to_multi_checkbox input', function () {
+    jQuery(document.body).on('change', '.bf_sent_mail_to_multi_checkbox input', function() {
 
         var val = jQuery(this).val();
 
         if (jQuery(this).is(':checked')) {
-            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address')
-                .removeClass('hidden')
-                .prop('required', true);
+            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address').removeClass('hidden').prop('required', true);
         } else {
-            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address')
-                .addClass('hidden')
-                .prop('required', false);
+            jQuery(this).closest('.wp-list-table').find('.mail_to_' + val + '_address').addClass('hidden').prop('required', false);
         }
 
     });
 
     // Validate the form before publish
-    jQuery('#publish').click(function () {
+    jQuery('#publish').click(function() {
 
         var post_title = jQuery('[name="post_title"]');
         var errors = [];
@@ -386,28 +383,28 @@ jQuery(document).ready(function (jQuery) {
 
         //Validate emails notifications
         var mail_to_cc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_cc_address]"]');
-        jQuery.each(mail_to_cc_addresses, function (index, mail_to_cc_address) {
+        jQuery.each(mail_to_cc_addresses, function(index, mail_to_cc_address) {
             var result = buddyforms_validate_notifications_email(mail_to_cc_address);
             errors.push({isValid: result, element: mail_to_cc_address, type: 'settings'});
         });
 
         var mail_to_bcc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_bcc_address]"]');
-        jQuery.each(mail_to_bcc_addresses, function (index, mail_to_bcc_address) {
+        jQuery.each(mail_to_bcc_addresses, function(index, mail_to_bcc_address) {
             var result = buddyforms_validate_notifications_email(mail_to_bcc_address);
             errors.push({isValid: result, element: mail_to_bcc_address, type: 'settings'});
         });
 
         var mail_to_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_address]"]');
-        jQuery.each(mail_to_addresses, function (index, mail_to_address) {
+        jQuery.each(mail_to_addresses, function(index, mail_to_address) {
             var result = buddyforms_validate_notifications_email(mail_to_address);
             errors.push({isValid: result, element: mail_to_address, type: 'settings'});
         });
 
         //Fill and avoid duplicates of field slugs
         var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
-        findFieldsSlugs.each(function () {
+        findFieldsSlugs.each(function() {
             var fieldSlugs = jQuery(this);
-            findFieldsSlugs.each(function () {
+            findFieldsSlugs.each(function() {
                 if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
                     fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
                     return false;
@@ -416,7 +413,7 @@ jQuery(document).ready(function (jQuery) {
         });
 
         // traverse all the required elements looking for an empty one
-        jQuery("#post input[required]").each(function () {
+        jQuery("#post input[required]").each(function() {
             // if the value is empty, that means that is invalid
             var isValid = (jQuery(this).val() != "");
             errors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion'});
@@ -435,7 +432,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Remove form element form the form builder
     //
-    jQuery(document).on('click', '.bf_delete_field', function () {
+    jQuery(document).on('click', '.bf_delete_field', function() {
 
         var del_id = jQuery(this).attr('id');
 
@@ -448,7 +445,7 @@ jQuery(document).ready(function (jQuery) {
     //
     // Delete mail notification trigger
     //
-    jQuery(document).on('click', '.bf_delete_trigger', function () {
+    jQuery(document).on('click', '.bf_delete_trigger', function() {
         var del_id = jQuery(this).attr('id');
         if (confirm('Delete Permanently')) {
             jQuery("#trigger" + del_id).remove();
@@ -460,55 +457,54 @@ jQuery(document).ready(function (jQuery) {
     //
     // Add new options to select, checkbox form element. The js will ad one more line for value and label
     //
-    jQuery(document).on('click', '.bf_add_gdpr', function () {
+    jQuery(document).on('click', '.bf_add_gdpr', function() {
 
+        if (buddyformsGlobal) {
+            var action = jQuery(this);
+            var gdpr_type = jQuery(this).attr('data-gdpr-type');
 
-        var action = jQuery( this );
-        var gdpr_type = jQuery( this ).attr( 'data-gdpr-type' );
+            var numItems = jQuery('#table_row_' + gdpr_type + '_select_options ul li').size();
 
-        var numItems = jQuery('#table_row_' + gdpr_type + '_select_options ul li').size();
+            var type = jQuery('#gdpr_option_type').val();
 
-        var type = jQuery('#gdpr_option_type').val();
+            var message = '';
+            if (buddyformsGlobal.admin_text[type]) {
+                message = buddyformsGlobal.admin_text[type]
+            }
 
-        var message = '';
-        if(buddyformsGlobal.admin_text[type]){
-            message = buddyformsGlobal.admin_text[type]
+            var error_message = '';
+            if (buddyformsGlobal.admin_text['error_message']) {
+                error_message = buddyformsGlobal.admin_text['error_message']
+            }
+
+            numItems = numItems + 1;
+            jQuery('#table_row_' + gdpr_type + '_select_options ul').append(
+                '<li class="field_item field_item_' + gdpr_type + '_' + numItems + '">' +
+                '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
+                '<textarea rows="5" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
+                '<textarea rows="2" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
+                '</td><td class="manage-column column-author">' +
+                '<div class="checkbox">' +
+                '   <label class="">' +
+                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
+                '   </label>' +
+                '</div>' +
+                '<div class="checkbox">' +
+                '   <label class="">' +
+                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
+                '   </label>' +
+                '</div>' +
+                '</td><td class="manage-column column-author">' +
+                '<a href="#" id="' + gdpr_type + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
+                '</td></tr></li></tbody></table><hr>');
+            return false;
         }
-
-        var error_message = '';
-        if(buddyformsGlobal.admin_text['error_message']){
-            error_message = buddyformsGlobal.admin_text['error_message']
-        }
-
-        numItems = numItems + 1;
-        jQuery('#table_row_' + gdpr_type + '_select_options ul').append(
-            '<li class="field_item field_item_' + gdpr_type + '_' + numItems + '">' +
-            '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
-            '<textarea rows="5" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
-            '<textarea rows="2" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
-            '</td><td class="manage-column column-author">' +
-            '<div class="checkbox">' +
-            '   <label class="">' +
-            '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
-            '   </label>' +
-            '</div>' +
-            '<div class="checkbox">' +
-            '   <label class="">' +
-            '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
-            '   </label>' +
-            '</div>' +
-            '</td><td class="manage-column column-author">' +
-            '<a href="#" id="' + gdpr_type + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
-            '</td></tr></li></tbody></table><hr>');
-        return false;
-
     });
 
     //
     // Add new options to gdpr, checkbox form element. The js will add one more line for value and label
     //
-    jQuery(document).on('click', '.bf_add_input', function () {
-
+    jQuery(document).on('click', '.bf_add_input', function() {
 
         var action = jQuery(this);
         var args = action.attr('href').split("/");
@@ -533,19 +529,18 @@ jQuery(document).ready(function (jQuery) {
     //
     // Remove an option from a select or checkbox
     //
-    jQuery(document).on('click', '.bf_delete_input', function () {
+    jQuery(document).on('click', '.bf_delete_input', function() {
         var del_id = jQuery(this).attr('id');
         if (confirm('Delete Permanently'))
             jQuery(".field_item_" + del_id).remove();
         return false;
     });
 
-
     bf_update_list_item_number();
 
-    jQuery(document).on('mousedown', '.bf_list_item', function () {
+    jQuery(document).on('mousedown', '.bf_list_item', function() {
         itemList = jQuery(this).closest('.sortable').sortable({
-            update: function (event, ui) {
+            update: function(event, ui) {
                 bf_update_list_item_number();
             }
         });
@@ -553,28 +548,30 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    jQuery('#mail_notification_add_new').on('click', function () {
-        jQuery.ajax({
-            type: 'POST',
-            dataType: "json",
-            url: buddyformsGlobal.admin_url,
-            data: {"action": "buddyforms_new_mail_notification"},
-            success: function (data) {
+    if (buddyformsGlobal) {
+        jQuery('#mail_notification_add_new').on('click', function() {
+            jQuery.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: buddyformsGlobal.admin_url,
+                data: {"action": "buddyforms_new_mail_notification"},
+                success: function(data) {
 
-                //console.log(data);
+                    //console.log(data);
 
-                jQuery('#no-trigger-mailcontainer').hide();
-                jQuery('#mailcontainer').append(data['html']);
+                    jQuery('#no-trigger-mailcontainer').hide();
+                    jQuery('#mailcontainer').append(data['html']);
 
-                tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id']);
-                tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + data['trigger_id']);
+                    tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id']);
+                    tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + data['trigger_id']);
 
-                bf_update_list_item_number_mail();
+                    bf_update_list_item_number_mail();
 
-            }
+                }
+            });
+            return false;
         });
-        return false;
-    });
+    }
 
     //
     // Add new mail notification
@@ -603,27 +600,28 @@ jQuery(document).ready(function (jQuery) {
 
         if (error == true)
             return false;
+        if(buddyformsGlobal) {
+            jQuery.ajax({
+                type: 'POST',
+                url: buddyformsGlobal.admin_url,
+                data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
+                success: function(data) {
 
-        jQuery.ajax({
-            type: 'POST',
-            url: buddyformsGlobal.admin_url,
-            data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
-            success: function (data) {
+                    if (data == 0) {
+                        bf_alert('trigger already exists');
+                        return false;
+                    }
+                    jQuery('#no-trigger-post-status-mail-container').hide();
+                    jQuery('#post-status-mail-container').append(data);
 
-                if (data == 0) {
-                    bf_alert('trigger already exists');
-                    return false;
+                    tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body');
+                    tinymce.execCommand('mceAddEditor', false, 'bf_mail_body');
+
+                    bf_update_list_item_number_mail();
+
                 }
-                jQuery('#no-trigger-post-status-mail-container').hide();
-                jQuery('#post-status-mail-container').append(data);
-
-                tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body');
-                tinymce.execCommand('mceAddEditor', false, 'bf_mail_body');
-
-                bf_update_list_item_number_mail();
-
-            }
-        });
+            });
+        }
         return false;
     });
 
@@ -632,22 +630,25 @@ jQuery(document).ready(function (jQuery) {
     //
     jQuery(document).on('click', '.bf_check_all', function (e) {
 
-        if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
-            jQuery('.bf_permissions :checkbox').prop('checked', false);
-            jQuery(this).text(buddyformsGlobal.admin_text.check);
-        } else {
-            jQuery('.bf_permissions :checkbox').prop('checked', true);
-            jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
+        if(buddyformsGlobal) {
+            if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
+                jQuery('.bf_permissions :checkbox').prop('checked', false);
+                jQuery(this).text(buddyformsGlobal.admin_text.check);
+            } else {
+                jQuery('.bf_permissions :checkbox').prop('checked', true);
+                jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
+            }
         }
         e.preventDefault();
     });
 
     jQuery(document).on('click', '.bf_check', function (e) {
-
-        if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
-            jQuery(this).text(buddyformsGlobal.admin_text.check);
-        } else {
-            jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
+        if(buddyformsGlobal) {
+            if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
+                jQuery(this).text(buddyformsGlobal.admin_text.check);
+            } else {
+                jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
+            }
         }
         e.preventDefault();
     });
@@ -672,32 +673,32 @@ jQuery(document).ready(function (jQuery) {
 
                     var page_name = jQuery('#bf_create_page_name').val();
                     dialog.html('<span class="spinner is-active"></span>');
-
-                    jQuery.ajax({
-                        type: 'POST',
-                        dataType: "json",
-                        url: buddyformsGlobal.admin_url,
-                        data: {
-                            "action": "buddyforms_new_page",
-                            "page_name": page_name
-                        },
-                        success: function (data) {
-                            if (data['error']) {
-                                console.log(data['error']);
-                            } else {
-                                jQuery('#attached_page').append(jQuery('<option>', {
-                                    value: data['id'],
-                                    text: data['name']
-                                }));
-                                jQuery('#attached_page').val(data['id']);
+                    if(buddyformsGlobal) {
+                        jQuery.ajax({
+                            type: 'POST',
+                            dataType: "json",
+                            url: buddyformsGlobal.admin_url,
+                            data: {
+                                "action": "buddyforms_new_page",
+                                "page_name": page_name
+                            },
+                            success: function(data) {
+                                if (data['error']) {
+                                    console.log(data['error']);
+                                } else {
+                                    jQuery('#attached_page').append(jQuery('<option>', {
+                                        value: data['id'],
+                                        text: data['name']
+                                    }));
+                                    jQuery('#attached_page').val(data['id']);
+                                }
+                                dialog.dialog("close");
+                            },
+                            error: function() {
+                                dialog.dialog("close");
                             }
-                            dialog.dialog("close");
-                        },
-                        error: function () {
-                            dialog.dialog("close");
-                        }
-                    });
-
+                        });
+                    }
                 }
             }
         });
@@ -726,11 +727,11 @@ jQuery(document).ready(function (jQuery) {
 				url: buddyformsGlobal.admin_url,
 				data: {
 					'action': 'buddyforms_load_form_layout',
-					'form_slug': form_slug,
+					'form_slug': form_slug
 				},
 				success: function(data) {
 					update_layout_options_screen(data);
-				},
+				}
 			});
 			return false;
 		});
@@ -743,11 +744,11 @@ jQuery(document).ready(function (jQuery) {
 				url: buddyformsGlobal.admin_url,
 				data: {
 					'action': 'buddyforms_load_form_layout',
-					'form_slug': 'reset',
+					'form_slug': 'reset'
 				},
 				success: function(data) {
 					update_layout_options_screen(data);
-				},
+				}
 			});
 			return false;
 		});

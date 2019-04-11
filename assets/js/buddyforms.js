@@ -85,67 +85,70 @@ function BuddyForms() {
 	 * Binding to trigger checkPasswordStrength
 	 */
 	function checkPasswordStrength() {
-		var pass1 = jQuery('input[name=buddyforms_user_pass]').val();
-		var pass2 = jQuery('input[name=buddyforms_user_pass_confirm]').val();
-		var strengthResult = jQuery('#password-strength');
-		var submitButton = jQuery('.bf-submit');
-		var blacklistArray = ['black', 'listed', 'word'];
-		var passwordHint = jQuery('.buddyforms-password-hint');
+		if(buddyformsGlobal) {
+			var pass1 = jQuery('input[name=buddyforms_user_pass]').val();
+			var pass2 = jQuery('input[name=buddyforms_user_pass_confirm]').val();
+			var strengthResult = jQuery('#password-strength');
+			var submitButton = jQuery('.bf-submit');
+			var blacklistArray = ['black', 'listed', 'word'];
+			var passwordHint = jQuery('.buddyforms-password-hint');
 
-		// Reset the form & meter
-		submitButton.attr('disabled', 'disabled');
-		strengthResult.removeClass('short bad good strong');
+			// Reset the form & meter
+			submitButton.attr('disabled', 'disabled');
+			strengthResult.removeClass('short bad good strong');
 
-		// Extend our blacklist array with those from the inputs & site data
-		blacklistArray = blacklistArray.concat(wp.passwordStrength.userInputBlacklist())
+			// Extend our blacklist array with those from the inputs & site data
+			blacklistArray = blacklistArray.concat(wp.passwordStrength.userInputBlacklist())
 
-		// Get the password strength
-		var strength = wp.passwordStrength.meter(pass1, blacklistArray, pass2);
+			// Get the password strength
+			var strength = wp.passwordStrength.meter(pass1, blacklistArray, pass2);
 
-		var hint_html = '<p><small class="buddyforms-password-hint">' + buddyformsGlobal.pwsL10n.hint_text + '</small></p>';
+			var hint_html = '<p><small class="buddyforms-password-hint">' + buddyformsGlobal.pwsL10n.hint_text + '</small></p>';
 
-		// Add the strength meter results
-		console.log('strength ' + strength + 'required_strength ' + buddyformsGlobal.pwsL10n.required_strength);
-		passwordHint.remove();
-
-		switch (strength) {
-			case 0:
-			case 1:
-				strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
-				break;
-			case 2:
-				strengthResult.addClass('bad').html(buddyformsGlobal.pwsL10n.bad);
-				break;
-
-			case 3:
-				strengthResult.addClass('good').html(buddyformsGlobal.pwsL10n.good);
-				break;
-
-			case 4:
-				strengthResult.addClass('strong').html(buddyformsGlobal.pwsL10n.strong);
-				break;
-
-			case 5:
-				strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.mismatch);
-				break;
-
-			default:
-				strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
-
-		}
-
-		// The meter function returns a result even if pass2 is empty,
-		// enable only the submit button if the password is strong and
-		// both passwords are filled up
-
-		if (buddyformsGlobal.pwsL10n.required_strength <= strength && strength !== 5 && '' !== pass2.trim()) {
+			// Add the strength meter results
+			console.log('strength ' + strength + 'required_strength ' + buddyformsGlobal.pwsL10n.required_strength);
 			passwordHint.remove();
-			submitButton.removeAttr('disabled');
-		} else {
-			strengthResult.after(hint_html);
-		}
 
-		return strength;
+			switch (strength) {
+				case 0:
+				case 1:
+					strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
+					break;
+				case 2:
+					strengthResult.addClass('bad').html(buddyformsGlobal.pwsL10n.bad);
+					break;
+
+				case 3:
+					strengthResult.addClass('good').html(buddyformsGlobal.pwsL10n.good);
+					break;
+
+				case 4:
+					strengthResult.addClass('strong').html(buddyformsGlobal.pwsL10n.strong);
+					break;
+
+				case 5:
+					strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.mismatch);
+					break;
+
+				default:
+					strengthResult.addClass('short').html(buddyformsGlobal.pwsL10n.short);
+
+			}
+
+			// The meter function returns a result even if pass2 is empty,
+			// enable only the submit button if the password is strong and
+			// both passwords are filled up
+
+			if (buddyformsGlobal.pwsL10n.required_strength <= strength && strength !== 5 && '' !== pass2.trim()) {
+				passwordHint.remove();
+				submitButton.removeAttr('disabled');
+			} else {
+				strengthResult.after(hint_html);
+			}
+
+			return strength;
+		}
+		return '';
 	}
 
 	function bf_delete_post() {

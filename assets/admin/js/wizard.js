@@ -152,31 +152,35 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery('#post').html(poststuff);
         jQuery('#post, #postbox-container-1, #postbox-container-2').show();
-        jQuery.ajax({
-            type: 'POST',
-            url: buddyformsGlobal.admin_url,
-            data: {"action": "buddyforms_wizard_rewrite_rules"},
-            success: function (data) {
-                //console.log('Done ' + data);
-            }
-        });
+        if(buddyformsGlobal) {
+            jQuery.ajax({
+                type: 'POST',
+                url: buddyformsGlobal.admin_url,
+                data: {"action": "buddyforms_wizard_rewrite_rules"},
+                success: function (data) {
+                    //console.log('Done ' + data);
+                }
+            });
+        }
     }
 
     // Get the Form Type Templates for Step 1
     function select_form_type() {
-        jQuery.ajax({
-            type: 'POST',
-            url: buddyformsGlobal.admin_url,
-            data: {"action": "buddyforms_form_builder_wizard_types"},
-            success: function (data) {
-                jQuery('#poststuff #post-body-content').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
-                jQuery(data).appendTo('#poststuff #post-body-content');
+        if(buddyformsGlobal) {
+            jQuery.ajax({
+                type: 'POST',
+                url: buddyformsGlobal.admin_url,
+                data: {"action": "buddyforms_form_builder_wizard_types"},
+                success: function (data) {
+                    jQuery('#poststuff #post-body-content').html('<p style="font-size: 21px; margin: 20px 0 30px;">Select the form type to start the Wizard:</p>');
+                    jQuery(data).appendTo('#poststuff #post-body-content');
 
-                jQuery('#poststuff .buddyforms_wizard_types h5:first').hide();
-                jQuery('#post').show();
+                    jQuery('#poststuff .buddyforms_wizard_types h5:first').hide();
+                    jQuery('#post').show();
 
-            }
-        });
+                }
+            });
+        }
     }
 
     // Start the wizard
@@ -237,14 +241,16 @@ jQuery(document).ready(function (jQuery) {
 
         function add_form_elements_select() {
             // Get all form elements for the selected form type and add them to the form builder
-            jQuery.ajax({
-                type: 'POST',
-                url: buddyformsGlobal.admin_url,
-                data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
-                success: function (data) {
-                    jQuery('#formbuilder-actions-wrap').append(data);
-                }
-            });
+            if(buddyformsGlobal) {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: buddyformsGlobal.admin_url,
+                    data: {"action": "buddyforms_form_builder_wizard_elements", "type": type},
+                    success: function (data) {
+                        jQuery('#formbuilder-actions-wrap').append(data);
+                    }
+                });
+            }
         }
 		function load_field_containers() {
             jQuery(document.body).trigger({type: "buddyform:load_fields"});
@@ -365,16 +371,18 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinished: function (event, currentIndex) {
                 var FormData = jQuery(form).serialize();
-                jQuery.ajax({
-                    type: 'POST',
-                    url: buddyformsGlobal.admin_url,
-                    data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
-                    success: function (data) {
-                        jQuery('#post').html('<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2><br><span class="dashicons dashicons-smiley"></span>');
-                        window.location = data;
-                        return false;
-                    }
-                });
+                if(buddyformsGlobal) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: buddyformsGlobal.admin_url,
+                        data: {"action": "buddyforms_form_builder_wizard_save", "FormData": FormData},
+                        success: function (data) {
+                            jQuery('#post').html('<h2 style="margin: 30px 0; padding: 4px;">Well Done! Form Processing.</h2><br><span class="dashicons dashicons-smiley"></span>');
+                            window.location = data;
+                            return false;
+                        }
+                    });
+                }
                 return false;
             }
 

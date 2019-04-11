@@ -827,42 +827,40 @@ function buddyforms_display_form_element( $args ) {
 					if(tax_field_length > 1 ){
 						// console.log('form_post_type_length link' + tax_field_length);
 					} else {
-
-				        jQuery.ajax({
-				            type: 'POST',
-				            url: buddyformsGlobal.admin_url,
-				            data: {
-				                "action": "buddyforms_post_types_taxonomies",
-				                "post_type": post_type
-				            },
-				            success: function (data) {
-								// console.log(data);
-								jQuery('#taxonomy_field_id_$field_id').html(data);
-								jQuery('#taxonomy_field_id_$field_id').trigger('change');
-								bf_taxonomy_input( "$field_id" );
-
-				            },
-				            error: function () {
-				                jQuery('.formbuilder-spinner').removeClass('is-active');
-				                jQuery('<div></div>').dialog({
-				                    modal: true,
-				                    title: "Info",
-				                    open: function() {
-				                        var markup = 'Something went wrong ;-(sorry)';
-				                        jQuery(this).html(markup);
-				                    },
-				                    buttons: {
-				                        Ok: function() {
-				                            jQuery( this ).dialog( "close" );
-				                        }
-				                    }
-				                });
-				            }
-				        });
-
+                        if(buddyformsGlobal){
+                            jQuery.ajax({
+                                type: 'POST',
+                                url: buddyformsGlobal.admin_url,
+                                data: {
+                                    "action": "buddyforms_post_types_taxonomies",
+                                    "post_type": post_type
+                                },
+                                success: function (data) {
+                                    // console.log(data);
+                                    jQuery('#taxonomy_field_id_$field_id').html(data);
+                                    jQuery('#taxonomy_field_id_$field_id').trigger('change');
+                                    bf_taxonomy_input( "$field_id" );
+    
+                                },
+                                error: function () {
+                                    jQuery('.formbuilder-spinner').removeClass('is-active');
+                                    jQuery('<div></div>').dialog({
+                                        modal: true,
+                                        title: "Info",
+                                        open: function() {
+                                            var markup = 'Something went wrong ;-(sorry)';
+                                            jQuery(this).html(markup);
+                                        },
+                                        buttons: {
+                                            Ok: function() {
+                                                jQuery( this ).dialog( "close" );
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+				        }
 					}
-
-				//
 				});
 JS;
 

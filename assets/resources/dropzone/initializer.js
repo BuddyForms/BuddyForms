@@ -29,52 +29,54 @@ function uploadHandler() {
         //Container field
         var dropzoneStringId = '#' + id;
         //Set default values
-        var options = {
-            url: buddyformsGlobal.admin_url,
-            maxFilesize: maxSize,
-            parallelUploads: 1,
-            acceptedFiles: acceptedFiles,
-            maxFiles: multipleFiles,
-            clickable: clickeable,
-            addRemoveLinks: clickeable,
-            init: function () {
-                this.on('queuecomplete', function () {
-                    console.log('DropZoneQueueComplete');
-                });
-                this.on('addedfile', function () {
-                    DropZoneAddedFile(dropzoneStringId);
-                });
-                this.on('success', function (file, response) {
-                    DropZoneSuccess(file, response, hidden_field);
-                });
-                this.on('error', DropZoneError);
-                this.on('sending', DropZoneSending);
-                this.on('sendingmultiple', DropZoneSending);
-                this.on('complete', DropZoneComplete);
-                this.on('completemultiple', DropZoneComplete);
-                this.on('removedfile', function (file) {
-                    DropZoneRemovedFile(file, hidden_field);
-                });
+        if(buddyformsGlobal) {
+            var options = {
+                url: buddyformsGlobal.admin_url,
+                maxFilesize: maxSize,
+                parallelUploads: 1,
+                acceptedFiles: acceptedFiles,
+                maxFiles: multipleFiles,
+                clickable: clickeable,
+                addRemoveLinks: clickeable,
+                init: function () {
+                    this.on('queuecomplete', function () {
+                        console.log('DropZoneQueueComplete');
+                    });
+                    this.on('addedfile', function () {
+                        DropZoneAddedFile(dropzoneStringId);
+                    });
+                    this.on('success', function (file, response) {
+                        DropZoneSuccess(file, response, hidden_field);
+                    });
+                    this.on('error', DropZoneError);
+                    this.on('sending', DropZoneSending);
+                    this.on('sendingmultiple', DropZoneSending);
+                    this.on('complete', DropZoneComplete);
+                    this.on('completemultiple', DropZoneComplete);
+                    this.on('removedfile', function (file) {
+                        DropZoneRemovedFile(file, hidden_field);
+                    });
 
-                if (uploadFields) {
-                    for (var key in uploadFields) {
-                        if (key) {
-                            var mockFile = {
-                                name: uploadFields[key]['name'],
-                                size: uploadFields[key]['size'],
-                                url: uploadFields[key]['url'],
-                                attachment_id: uploadFields[key]['attachment_id'],
-                            };
-                            this.emit('addedfile', mockFile);
-                            this.emit('thumbnail', mockFile, mockFile.url);
-                            this.emit('complete', mockFile);
-                            this.files.push(mockFile);
+                    if (uploadFields) {
+                        for (var key in uploadFields) {
+                            if (key) {
+                                var mockFile = {
+                                    name: uploadFields[key]['name'],
+                                    size: uploadFields[key]['size'],
+                                    url: uploadFields[key]['url'],
+                                    attachment_id: uploadFields[key]['attachment_id'],
+                                };
+                                this.emit('addedfile', mockFile);
+                                this.emit('thumbnail', mockFile, mockFile.url);
+                                this.emit('complete', mockFile);
+                                this.files.push(mockFile);
+                            }
                         }
                     }
                 }
-            }
-        };
-        jQuery(current).dropzone(options);
+            };
+            jQuery(current).dropzone(options);
+        }
     }
 
     function DropZoneComplete() {
@@ -140,11 +142,13 @@ function uploadHandler() {
     }
 
     function disableSubmitButtons(showButtonText) {
-        if (submitButtons.length > 0) {
-            showButtonText = !!(showButtonText);
-            submitButtons.attr("disabled", "disabled");
-            if (showButtonText) {
-                submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress'); // todo need il18n
+        if(buddyformsGlobal) {
+            if (submitButtons.length > 0) {
+                showButtonText = !!(showButtonText);
+                submitButtons.attr("disabled", "disabled");
+                if (showButtonText) {
+                    submitButton.html(buddyformsGlobal.localize.upload.submitButton || 'Upload in progress'); // todo need il18n
+                }
             }
         }
     }

@@ -560,55 +560,55 @@ JS;
 
 
                 var FormData = jQuery("#$id").serialize();
-
-                jQuery.ajax({
-                    url: buddyformsGlobal.admin_url,
-                    type: "{$this->_attributes["method"]}",
-                    dataType: 'json',
-                    data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
-                    error: function(xhr, status, error){
-						  
-                        
-                        jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert error' );
-                        jQuery( '#form_message_$form_slug' ).html( xhr.responseText );
-                        
-						  
-	                    console.log(xhr.responseText);
-	                    
-						jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
-                        bf_form_errors();
-                        jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("hide");
-                        
-                        
-                    },
-                    success: function(response) {
-
-                    console.log(response)
-
-                    jQuery.each(response, function (i, val) {
-
-                        switch (i) {
-                            case 'form_notice':
-                           		jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert success' );
-                                jQuery( '#form_message_$form_slug' ).html( val );
-                                break;
-                            case 'form_remove':
-
-							    jQuery("#buddyforms_form_hero_$form_slug .form_wrapper").fadeOut("normal", function() {
-
-							        jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
-							    });
-                                break;
-                            case 'form_actions':
-                                jQuery( '#buddyforms_form_$form_slug .form-actions' ).html(val);
-                                break;
-                            default:
-                                jQuery( 'input[name="' + i + '"]').val(val);
-                        }
-                        jQuery('#recaptcha_reload').trigger('click');
-
-                    });
-					if(response != undefined && typeof response == "object" && response.errors) {
+                if(buddyformsGlobal){
+                    jQuery.ajax({
+                        url: buddyformsGlobal.admin_url,
+                        type: "{$this->_attributes["method"]}",
+                        dataType: 'json',
+                        data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
+                        error: function(xhr, status, error){
+                              
+                            
+                            jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert error' );
+                            jQuery( '#form_message_$form_slug' ).html( xhr.responseText );
+                            
+                              
+                            console.log(xhr.responseText);
+                            
+                            jQuery("#$id").find("input[type=submit]").removeAttr("disabled");
+                            bf_form_errors();
+                            jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("hide");
+                            
+                            
+                        },
+                        success: function(response) {
+    
+                        console.log(response)
+    
+                        jQuery.each(response, function (i, val) {
+    
+                            switch (i) {
+                                case 'form_notice':
+                                    jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert success' );
+                                    jQuery( '#form_message_$form_slug' ).html( val );
+                                    break;
+                                case 'form_remove':
+    
+                                    jQuery("#buddyforms_form_hero_$form_slug .form_wrapper").fadeOut("normal", function() {
+    
+                                        jQuery( '#buddyforms_form_hero_$form_slug .form_wrapper' ).remove();
+                                    });
+                                    break;
+                                case 'form_actions':
+                                    jQuery( '#buddyforms_form_$form_slug .form-actions' ).html(val);
+                                    break;
+                                default:
+                                    jQuery( 'input[name="' + i + '"]').val(val);
+                            }
+                            jQuery('#recaptcha_reload').trigger('click');
+    
+                        });
+                        if(response != undefined && typeof response == "object" && response.errors) {
 JS;
 
 			$this->errorView->applyAjaxErrorResponse();
@@ -616,7 +616,7 @@ JS;
 			echo <<<JS
 
 
-	                } else {
+	                    } else {
 JS;
 			/*A callback function can be specified to handle any post submission events.*/
 			if ( ! empty( $this->ajaxCallback ) ) {
@@ -630,12 +630,12 @@ JS;
                         jQuery("#buddyforms_form_hero_$form_slug .form_wrapper form").LoadingOverlay("hide");
 
                         // scrollto message after submit
-						 jQuery('html, body').animate({
-			            	 scrollTop: (jQuery("#buddyforms_form_hero_$form_slug"))
-		                 }, 2000);
-
-                    }
-                });
+                         jQuery('html, body').animate({
+                             scrollTop: (jQuery("#buddyforms_form_hero_$form_slug"))
+                         }, 2000);
+                        }
+                    });
+                }
                 return false;
             });
 JS;

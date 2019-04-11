@@ -131,62 +131,63 @@ jQuery(document).ready(function () {
 				return false;
 			}
 		}
-
-		jQuery.ajax({
-			type: 'POST',
-			url: buddyformsGlobal.admin_url,
-			data: {
-				"action": "buddyforms_display_form_element",
-				"fieldtype": fieldtype,
-				"unique": unique,
-				"post_id": post_id
-			},
-			success: function (data) {
-				if (data == 'unique') {
-					bf_alert('This element can only be added once into each form');
-					return false;
-				}
-
-				jQuery('.buddyforms_template').remove();
-
-				data = data.replace('accordion-body collapse', 'accordion-body in collapse');
-
-				jQuery('#sortable_buddyforms_elements').append(data);
-				jQuery('.formbuilder-spinner').removeClass('is-active');
-
-				bf_update_list_item_number();
-
-				jQuery('#buddyforms_form_elements').removeClass('closed');
-				jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
-				jQuery('.bf-select2').select2();
-
-				var form_post_type = jQuery('#form_post_type').val();
-
-				if (form_post_type == 'bf_submissions') {
-
-					var field_id = jQuery(data).find('#this_field_id').val();
-
-					bf_taxonomy_input(field_id)
-				}
-				jQuery(document.body).trigger({type: "buddyform:load_fields"});
-			},
-			error: function () {
-				jQuery('.formbuilder-spinner').removeClass('is-active');
-				jQuery('<div></div>').dialog({
-					modal: true,
-					title: "Info",
-					open: function () {
-						var markup = 'Something went wrong ;-(sorry)';
-						jQuery(this).html(markup);
-					},
-					buttons: {
-						Ok: function () {
-							jQuery(this).dialog("close");
-						}
+		if(buddyformsGlobal) {
+			jQuery.ajax({
+				type: 'POST',
+				url: buddyformsGlobal.admin_url,
+				data: {
+					"action": "buddyforms_display_form_element",
+					"fieldtype": fieldtype,
+					"unique": unique,
+					"post_id": post_id
+				},
+				success: function (data) {
+					if (data == 'unique') {
+						bf_alert('This element can only be added once into each form');
+						return false;
 					}
-				});
-			}
-		});
+
+					jQuery('.buddyforms_template').remove();
+
+					data = data.replace('accordion-body collapse', 'accordion-body in collapse');
+
+					jQuery('#sortable_buddyforms_elements').append(data);
+					jQuery('.formbuilder-spinner').removeClass('is-active');
+
+					bf_update_list_item_number();
+
+					jQuery('#buddyforms_form_elements').removeClass('closed');
+					jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
+					jQuery('.bf-select2').select2();
+
+					var form_post_type = jQuery('#form_post_type').val();
+
+					if (form_post_type == 'bf_submissions') {
+
+						var field_id = jQuery(data).find('#this_field_id').val();
+
+						bf_taxonomy_input(field_id)
+					}
+					jQuery(document.body).trigger({type: "buddyform:load_fields"});
+				},
+				error: function () {
+					jQuery('.formbuilder-spinner').removeClass('is-active');
+					jQuery('<div></div>').dialog({
+						modal: true,
+						title: "Info",
+						open: function () {
+							var markup = 'Something went wrong ;-(sorry)';
+							jQuery(this).html(markup);
+						},
+						buttons: {
+							Ok: function () {
+								jQuery(this).dialog("close");
+							}
+						}
+					});
+				}
+			});
+		}
 		return false;
 
 	});

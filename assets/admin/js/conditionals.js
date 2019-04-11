@@ -211,36 +211,37 @@ jQuery(document).ready(function (jQuery) {
         //if(tax_field_length > 1 ){
         //    console.log('form_post_type_length neu ' + tax_field_length);
         //} else {
+        if(buddyformsGlobal) {
+            jQuery.ajax({
+                type: 'POST',
+                url: buddyformsGlobal.admin_url,
+                data: {
+                    "action": "buddyforms_post_types_taxonomies",
+                    "post_type": post_type
+                },
+                success: function (data) {
 
-        jQuery.ajax({
-            type: 'POST',
-            url: buddyformsGlobal.admin_url,
-            data: {
-                "action": "buddyforms_post_types_taxonomies",
-                "post_type": post_type
-            },
-            success: function (data) {
-
-                jQuery('select.bf_tax_select').html(data);
-                jQuery('select.bf_tax_select').trigger('change');
-            },
-            error: function () {
-                jQuery('.formbuilder-spinner').removeClass('is-active');
-                jQuery('<div></div>').dialog({
-                    modal: true,
-                    title: "Info",
-                    open: function () {
-                        var markup = 'Something went wrong ;-(sorry)';
-                        jQuery(this).html(markup);
-                    },
-                    buttons: {
-                        Ok: function () {
-                            jQuery(this).dialog("close");
+                    jQuery('select.bf_tax_select').html(data);
+                    jQuery('select.bf_tax_select').trigger('change');
+                },
+                error: function () {
+                    jQuery('.formbuilder-spinner').removeClass('is-active');
+                    jQuery('<div></div>').dialog({
+                        modal: true,
+                        title: "Info",
+                        open: function () {
+                            var markup = 'Something went wrong ;-(sorry)';
+                            jQuery(this).html(markup);
+                        },
+                        buttons: {
+                            Ok: function () {
+                                jQuery(this).dialog("close");
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
         //}
     });
 
@@ -249,44 +250,45 @@ jQuery(document).ready(function (jQuery) {
 
         var attached_page = jQuery('#attached_page').val();
         var form_slug = jQuery('#attached_page').attr('data-slug');
+        if(buddyformsGlobal) {
+            from_setup_attached_page();
+            jQuery.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: buddyformsGlobal.admin_url,
+                data: {
+                    "action": "buddyforms_url_builder",
+                    "attached_page": attached_page,
+                    "form_slug": form_slug
+                },
+                success: function (data) {
+                    //console.log(data);
 
-        from_setup_attached_page();
-        jQuery.ajax({
-            type: 'POST',
-            dataType: "json",
-            url: buddyformsGlobal.admin_url,
-            data: {
-                "action": "buddyforms_url_builder",
-                "attached_page": attached_page,
-                "form_slug": form_slug
-            },
-            success: function (data) {
-                //console.log(data);
-
-                if (!data['form_slug']) {
-                    data['form_slug'] = '<span style="color:red">form slug</slug>';
-                }
-                jQuery('.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
-                jQuery('.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
-
-
-            },
-            error: function () {
-                jQuery('<div></div>').dialog({
-                    modal: true,
-                    title: "Info",
-                    open: function () {
-                        var markup = 'Something went wrong ;-(sorry)';
-                        jQuery(this).html(markup);
-                    },
-                    buttons: {
-                        Ok: function () {
-                            jQuery(this).dialog("close");
-                        }
+                    if (!data['form_slug']) {
+                        data['form_slug'] = '<span style="color:red">form slug</slug>';
                     }
-                });
-            }
-        });
+                    jQuery('.siteurl_create_html').html(data['permalink'] + 'create/' + data['form_slug']);
+                    jQuery('.siteurl_edit_html').html(data['permalink'] + 'edit/' + data['form_slug']);
+
+
+                },
+                error: function () {
+                    jQuery('<div></div>').dialog({
+                        modal: true,
+                        title: "Info",
+                        open: function () {
+                            var markup = 'Something went wrong ;-(sorry)';
+                            jQuery(this).html(markup);
+                        },
+                        buttons: {
+                            Ok: function () {
+                                jQuery(this).dialog("close");
+                            }
+                        }
+                    });
+                }
+            });
+        }
     });
 
     // Form Type Select listener for the on change event
@@ -407,45 +409,46 @@ jQuery(document).ready(function (jQuery) {
                 var taxonomy_default = jQuery("#taxonomy_default_" + id);
                 var taxonomy_include = jQuery("#taxonomy_include" + id);
                 var taxonomy_exclude = jQuery("#taxonomy_exclude" + id);
+                if(buddyformsGlobal) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: buddyformsGlobal.admin_url,
+                        data: {
+                            "action": "buddyforms_update_taxonomy_default",
+                            "taxonomy": taxonomy,
+                        },
+                        success: function (data) {
+                            if (data != 'false') {
+                                taxonomy_default.val(null).trigger("change");
+                                taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
+                                taxonomy_default.html(data);
 
-                jQuery.ajax({
-                    type: 'POST',
-                    url: buddyformsGlobal.admin_url,
-                    data: {
-                        "action": "buddyforms_update_taxonomy_default",
-                        "taxonomy": taxonomy,
-                    },
-                    success: function (data) {
-                        if (data != 'false') {
-                            taxonomy_default.val(null).trigger("change");
-                            taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
-                            taxonomy_default.html(data);
+                                taxonomy_include.val(null).trigger("change");
+                                taxonomy_include.select2({placeholder: "Include Items"}).trigger("change");
+                                taxonomy_include.html(data);
 
-                            taxonomy_include.val(null).trigger("change");
-                            taxonomy_include.select2({placeholder: "Include Items"}).trigger("change");
-                            taxonomy_include.html(data);
-
-                            taxonomy_exclude.val(null).trigger("change");
-                            taxonomy_exclude.select2({placeholder: "Exclude Items"}).trigger("change");
-                            taxonomy_exclude.html(data);
-                        }
-                    },
-                    error: function () {
-                        jQuery('<div></div>').dialog({
-                            modal: true,
-                            title: "Info",
-                            open: function () {
-                                var markup = 'Something went wrong ;-(sorry)';
-                                jQuery(this).html(markup);
-                            },
-                            buttons: {
-                                Ok: function () {
-                                    jQuery(this).dialog("close");
-                                }
+                                taxonomy_exclude.val(null).trigger("change");
+                                taxonomy_exclude.select2({placeholder: "Exclude Items"}).trigger("change");
+                                taxonomy_exclude.html(data);
                             }
-                        });
-                    }
-                });
+                        },
+                        error: function () {
+                            jQuery('<div></div>').dialog({
+                                modal: true,
+                                title: "Info",
+                                open: function () {
+                                    var markup = 'Something went wrong ;-(sorry)';
+                                    jQuery(this).html(markup);
+                                },
+                                buttons: {
+                                    Ok: function () {
+                                        jQuery(this).dialog("close");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
 
             // }
             bf_taxonomy_input(id);
