@@ -370,10 +370,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 				// GDPR Localisation
 				$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
-				$templates = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
+				$templates       = isset( $buddyforms_gdpr['templates'] ) ? $buddyforms_gdpr['templates'] : array();
 
-				$admin_text_array = array();
-				$admin_text_array['check'] = __( 'Check all', 'buddyforms' );
+				$admin_text_array            = array();
+				$admin_text_array['check']   = __( 'Check all', 'buddyforms' );
 				$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 
 				foreach ( $templates as $key => $template ) {
@@ -385,7 +385,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'admin_url'  => admin_url( 'admin-ajax.php' ),
 					'ajaxnonce'  => wp_create_nonce( 'fac_drop' ),
 					'post_type'  => get_post_type(),
-					'localize' => self::localize_fields()
+					'localize'   => self::localize_fields()
 				) );
 
 				wp_enqueue_script( 'buddyforms-admin-js' );
@@ -409,29 +409,30 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 				wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ) );
 				wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
+
+				wp_enqueue_script( 'tinymce' );
+				wp_enqueue_script( 'buddyforms-admin-all-js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
+
+				wp_enqueue_media();
+				wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
+
+				//DropZone
+				wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
+				wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, true );
+				wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ), array(), BUDDYFORMS_VERSION );
+				wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ), array(), BUDDYFORMS_VERSION );
+
+				//Featured image
+				wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
+
+				//Global frontend vars
+				wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
+
+				//Loading shared assets
+				self::shared_styles( $hook_suffix );
+
+				do_action( 'buddyforms_admin_js_css_enqueue' );
 			}
-			wp_enqueue_script( 'tinymce' );
-			wp_enqueue_script( 'buddyforms-admin-all-js', plugins_url( 'assets/admin/js/admin-all.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
-
-			wp_enqueue_media();
-			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
-
-            //DropZone
-			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
-			wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, true );
-			wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ), array(), BUDDYFORMS_VERSION );
-			wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ), array(), BUDDYFORMS_VERSION );
-
-            //Featured image
-            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
-
-            //Global frontend vars
-			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters( ) ) );
-
-			//Loading shared assets
-			self::shared_styles( $hook_suffix );
-
-			do_action( 'buddyforms_admin_js_css_enqueue' );
 		}
 
 		/**
