@@ -182,7 +182,7 @@ function BuddyForms() {
 
     function openSubmissionModal() {
         var bf_submission_modal_content = fncBuddyForms.getSubmissionModalContent();
-        if (bf_submission_modal_content.length > 0) {
+        if (bf_submission_modal_content && bf_submission_modal_content.length > 0) {
             var targetId = jQuery(this).attr('data-id');
             var target = jQuery("#bf-submission-modal_" + targetId);
             fncBuddyForms.submissionModal(target);
@@ -195,7 +195,7 @@ function BuddyForms() {
 
     function closeSubmissionModal() {
         var bf_submission_modal_content = fncBuddyForms.getSubmissionModalContent();
-        if (bf_submission_modal_content.length > 0) {
+        if (bf_submission_modal_content && bf_submission_modal_content.length > 0) {
             var targetId = jQuery(this).attr('data-id');
             var submissionTarget = fncBuddyForms.getSubmissionModal();
             bf_submission_modal_content.find('.bf_posts_' + targetId).prepend(submissionTarget);
