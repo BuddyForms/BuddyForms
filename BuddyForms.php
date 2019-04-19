@@ -473,7 +473,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$found = false;
 
 			if(!empty($post->post_content)) {
-				$form_slug    = buddyforms_get_form_slug_from_content( $post->post_content, array( 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
+				$form_slug    = buddyforms_get_form_slug_from_content( $post->post_content, array( 'bf-list-submissions','buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
 				// check the post content for the short code
 				$found = ( ! empty( $form_slug ) );
 			}
