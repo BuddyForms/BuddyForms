@@ -1178,25 +1178,27 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf', 'buddyforms_form' ) ){
-    //Extract from the a shortcode inside the content
-    $form_slug = buddyforms_get_shortcode_tag($shortcodes , array( 'form_slug', 'id' ), $content );
-    //Extract form the html inside the content, reading the hidden input form_slug
+function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf', 'buddyforms_form' ) ) {
+	//Extract from the a shortcode inside the content
+	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
+	//Extract form the html inside the content, reading the hidden input form_slug
 	if ( empty( $form_slug ) ) {
-		$is_dom_loaded = extension_loaded( 'dom' );
-		if ( $is_dom_loaded ) {
-			$form_slug = buddyforms_get_form_slug_from_html( $content );
-		} else {
-		    //use regex to extract
-            $regex = array();
-			preg_match( '/<input type="hidden" name="form_slug" value="(.*?)" id="form_slug">/m', $content, $regex );
-			if ( ! empty( $regex ) && isset( $regex[1][0] ) ) {
-				$form_slug = $regex[1][0];
+		//use regex to extract
+		$regex = array();
+		preg_match( '/<input type="hidden" name="form_slug" value="(.*?)" id="form_slug">/m', $content, $regex );
+		if ( ! empty( $regex ) && isset( $regex[1][0] ) ) {
+			$form_slug = $regex[1][0];
+		}
+		if ( empty( $form_slug ) ) {
+		    $regex = array();
+			preg_match( '/"bf_form_slug":"(.*)",/m', $content, $regex );//gutenberg block
+			if ( ! empty( $regex ) && isset( $regex[1] ) ) {
+				$form_slug = $regex[1];
 			}
-        }
+		}
 	}
 
-    if ( is_numeric( $form_slug ) ) {
+	if ( is_numeric( $form_slug ) ) {
 		$form_post = get_post( $form_slug );
 		$form_slug = $form_post->post_name;
 	}
