@@ -51,13 +51,13 @@ function buddyforms_form_html( $args ) {
 
 	$users_can_register = get_site_option( 'users_can_register' );
 
-	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && empty( $users_can_register ) ) {
+	if ( ! empty( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] == 'registration' && empty( $users_can_register ) ) {
 		$error_message = apply_filters( 'buddyforms_disable_registration_error_message', __( 'Sorry, but registration is disabled on this site at the moment.', 'buddyforms' ) );
 
 		return '<div class="bf-alert error">' . $error_message . '</div>';
 	}
 
-	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration'
+	if ( ! empty( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] == 'registration'
 	     || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit'
 	) {
 		$user_can_edit = true;
@@ -438,8 +438,8 @@ function buddyforms_form_html( $args ) {
 
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! $exist_field_status ) {
-		$setup_form_status = $buddyforms[ $form_slug ]['status'];
-		$post_status = (!empty($post_status))? $post_status: $setup_form_status;
+		$setup_form_status = ! empty( $buddyforms[ $form_slug ]['status'] ) ? $buddyforms[ $form_slug ]['status'] : 'publish';
+		$post_status       = ( ! empty( $post_status ) ) ? $post_status : $setup_form_status;
 		$form->addElement( new Element_Hidden( "status", $post_status, array( 'id' => "status" ) ) );
 	}
 

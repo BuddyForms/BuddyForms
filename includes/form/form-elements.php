@@ -9,6 +9,10 @@ function buddyforms_form_elements( $form, $args ) {
 
 	$customfields = $post_id = $form_slug = '';
 
+	if ( empty( $args ) ) {
+		return;
+	}
+
 	extract( $args );
 
 	if ( empty( $customfields ) ) {
