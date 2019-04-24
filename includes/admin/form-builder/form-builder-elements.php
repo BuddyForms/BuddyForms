@@ -1408,7 +1408,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 
 
-	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
+	if ( !empty($buddyform['form_fields'][ $field_id ]['type']) && in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
 		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">' . __( 'Reset', 'buddyforms' ) . '</a>';
 	}
 
