@@ -77,8 +77,7 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 			// Update the session expiration if we're past the variant time
 			if ( time() > $this->exp_variant ) {
 				$this->set_expiration();
-				delete_option( "_wp_session_expires_{$this->session_id}" );
-				add_option( "_wp_session_expires_{$this->session_id}", $this->expires, '', 'no' );
+				delete_transient("_wp_session_{$this->session_id}");
 			}
 		} else {
 			$this->session_id = $this->generate_id();
@@ -109,7 +108,7 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 	 */
 	public function regenerate_id( $delete_old = false ) {
 		if ( $delete_old ) {
-			delete_option( "_wp_session_{$this->session_id}" );
+			delete_transient("_wp_session_{$this->session_id}");
 		}
 
 		$this->session_id = $this->generate_id();
@@ -167,7 +166,11 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 	 * @return array
 	 */
 	protected function read_data() {
-		$this->container = get_option( "_wp_session_{$this->session_id}", array() );
+		$this->container = get_transient( "_wp_session_{$this->session_id}" );
+
+		if ( empty( $this->container ) ) {
+			$this->container = array();
+		}
 
 		return $this->container;
 	}
@@ -195,12 +198,11 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 
 		// Only write the collection to the DB if it's changed.
 		if ( $this->dirty ) {
-			if ( false === get_option( $option_key ) ) {
-				add_option( "_wp_session_{$this->session_id}", $this->container, '', 'no' );
-				add_option( "_wp_session_expires_{$this->session_id}", $this->expires, '', 'no' );
+			if ( false === get_transient( $option_key ) ) {
+				set_transient( $option_key, $this->container, $this->expires );
 			} else {
-				delete_option( "_wp_session_{$this->session_id}" );
-				add_option( "_wp_session_{$this->session_id}", $this->container, '', 'no' );
+				delete_transient( $option_key );
+				set_transient( $option_key, $this->container, $this->expires );
 			}
 		}
 	}

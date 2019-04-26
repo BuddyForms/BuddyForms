@@ -65,9 +65,6 @@ class BuddyForms_Session {
 			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/sessions/bf-session.php';
 		}
 
-		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
-		add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
-
 		add_action( 'init', array( $this, 'init' ), - 1 );
 
 	}
@@ -133,34 +130,6 @@ class BuddyForms_Session {
 		}
 
 		return $this->session[ $key ];
-	}
-
-	/**
-	 * Force the cookie expiration variant time to 23 hours
-	 *
-	 * @access public
-	 * @since 2.1.0.3
-	 *
-	 * @param int $exp Default expiration (1 hour)
-	 *
-	 * @return int
-	 */
-	public function set_expiration_variant_time( $exp ) {
-		return ( 30 * 60 * 23 );
-	}
-
-	/**
-	 * Force the cookie expiration time to 24 hours
-	 *
-	 * @access public
-	 * @since 2.1.0.3
-	 *
-	 * @param int $exp Default expiration (1 hour)
-	 *
-	 * @return int Cookie expiration time
-	 */
-	public function set_expiration_time( $exp ) {
-		return ( 30 * 60 * 24 );
 	}
 }
 
