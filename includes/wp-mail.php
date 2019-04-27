@@ -387,6 +387,26 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	if ( isset( $mail_notification_trigger['mail_to_address'] ) ) {
 		$mail_to_address = explode( ',', str_replace( ' ', '', $mail_notification_trigger['mail_to_address'] ) );
 		foreach ( $mail_to_address as $key => $mail_address ) {
+			if ( false !== strpos( $mail_address, '[' ) ) {
+				if ( ! empty( $form_slug ) && ! empty( $buddyforms ) ) {
+					$field = buddyforms_get_form_field_by_slug( $form_slug, 'user_email' );
+					if ( empty( $field ) ) {
+						$field = buddyforms_get_form_field_by_slug( $form_slug, 'email' );
+					}
+					if ( ! empty( $field ) ) {
+						if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
+							foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
+								if( $field['slug'] === $meta_value['key'] ){
+									$mail_address = $meta_value['value'];
+									break;
+								}
+							}
+						} else {
+							$mail_address = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+						}
+					}
+				}
+			}
 			array_push( $mail_to, $mail_address );
 		}
 	}
@@ -418,6 +438,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 		'[site_name]' => $blog_title,
 		'[site_url]' => $siteurl,
 		'[site_url_html]' => $siteurlhtml,
+		'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
 	);
 
 	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
@@ -426,7 +447,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	$emailBody = nl2br( $emailBody );
 
-	buddyforms_email($mail_to, $subject, $from_name, $from_email, $emailBody);
+ 	buddyforms_email($mail_to, $subject, $from_name, $from_email, $emailBody);
 }
 
 
@@ -444,7 +465,21 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
 
-		$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+		if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
+			foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
+				if ( $field['slug'] === $meta_value['key'] ) {
+					$value = $meta_value['value'];
+					break;
+				}
+			}
+		}
+		if ( empty( $value ) ) {
+			$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+		}
+
+		if ( empty( $value ) ) {
+			continue;
+		}
 
 		// Check if is array
 		if ( is_array( $value ) ) {
@@ -457,13 +492,17 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 			case 'taxonomy':
 				if ( is_array( $value ) ) {
 					foreach ( $value as $cat ) {
-						$term    = get_term( $cat, $field['taxonomy'] );
-						$terms[] = $term->name;
+						$term = get_term( $cat, $field['taxonomy'] );
+						if ( isset( $term ) ) {
+							$terms[] = $term->name;
+						}
 					}
 					$field_value = implode( ',', $terms );
 				} else {
-					$term        = get_term( $value, $field['taxonomy'] );
-					$field_value = $term->name;
+					$term = get_term( $value, $field['taxonomy'] );
+					if ( isset( $term ) ) {
+						$field_value = $term->name;
+					}
 				}
 				break;
 			case 'link':
@@ -476,9 +515,8 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
-		if ( isset( $_POST[ $field['slug'] ] ) && ! empty( $_POST[ $field['slug'] ] ) ) {
-			$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
-		}
+		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
+		unset($value, $field_value);
 	}
 	// Table end
 	$message .= "</table>";
