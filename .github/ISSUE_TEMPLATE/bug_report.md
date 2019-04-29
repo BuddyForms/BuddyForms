@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[bug] - "
+title: "Small Description"
 labels: bug
 assignees: gfirem
 
@@ -33,3 +33,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+**Support**
+If applicable, a link to the helpscout ticket.
