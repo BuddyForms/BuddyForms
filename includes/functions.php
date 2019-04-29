@@ -252,7 +252,8 @@ function buddyforms_register_link( $wp_login_form ) {
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
 function buddyforms_add_lost_password_link( $wp_login_form ) {
     $lost_password_url = apply_filters( 'buddyforms_lost_password_url', wp_lostpassword_url() );
-	return $wp_login_form .= '<a href="' . esc_url( $lost_password_url ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
+    $wp_login_form .= '<a href="' . esc_url( $lost_password_url ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
+	return $wp_login_form;
 }
 
 
