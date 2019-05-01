@@ -216,7 +216,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			'[site_name]' => $blog_title,
 			'[site_url]' => $siteurl,
 			'[site_url_html]' => $siteurlhtml,
-			'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
+			'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug, $post ),
 		);
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
@@ -229,7 +229,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	// If we do not have any valid eMail Body let us try to create the content from the from elements as table
 	if ( empty( $emailBody ) ) {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			$emailBody = buddyforms_mail_notification_form_elements_as_table( $form_slug );
+			$emailBody = buddyforms_mail_notification_form_elements_as_table( $form_slug, $post );
 		}
 	}
 
