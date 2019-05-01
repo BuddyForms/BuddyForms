@@ -150,7 +150,7 @@ function buddyforms_ajax_process_edit_post() {
 					break;
 				case 'display_page':
 					$json_array['form_remove'] = 'true';
-					$json_array['form_notice'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
+					$json_array['form_notice'] = $display_message;// apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
 					break;
 				case 'redirect':
 					$json_array['form_remove'] = 'true';
