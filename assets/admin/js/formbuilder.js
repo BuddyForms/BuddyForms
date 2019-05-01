@@ -222,6 +222,7 @@ jQuery(document).ready(function () {
 		load_formbuilder_template(template, function() {
 			button.parent().LoadingOverlay('hide');
 			jQuery('button.bf_form_template').prop('disabled', false);
+			jQuery(document.body).trigger({type: "buddyform:load_notifications"});
 		});
 		return false;
 	});
