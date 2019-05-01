@@ -378,3 +378,7 @@ var fncBuddyForms = BuddyForms();
 jQuery(document).ready(function () {
     fncBuddyForms.init();
 });
+
+jQuery(document).on('buddyforms:init', function () {
+    fncBuddyForms.init();
+});
