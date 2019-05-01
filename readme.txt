@@ -404,7 +404,37 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the visibility of the new ajax option inside the taxonomy field
 * Fixed the button to reset the form styles
 * Added compatibility for `Better Notifications for WordPress`
-
+* Changed the ajax search name_like to use search option
+* Updated select2 to the latest version
+* Added cache to the select2 search terms field
+* Add draft functionality
+* Add a mechanism to read the form options from the js side
+* Improved the code stability
+* Added a helper function to grab the form slug from different sources
+* Added a btn-alt for the draft button to make a difference with the primary button
+* Added custom class for draft button
+* Added a custom element to handle the form actions (publish/draft) buttons. With this custom field is possible to output the selected button in a different order
+* Updated the draft text
+* DOMDocument error fixed. Now the code detect if dom library is loaded if not it use regex
+* Moved the custom class option under the switch to make sure the option is available for all fields
+* Added the draft options
+* Move the form action field into the basic group
+* Fixed the issue related to load assets in the admin where they don't needed
+* Improved the detection of the block to include the assets trough gutenberg
+* Fixed the navigation in the list of entries for contact form
+* Fixed the form builder grid option not working for images
+* Update the session to use transient to avoid trash in the database
+* Remove the long time expiration for the session, now is 27~30mn
+* Fixed the mail notification when the post status change.
+* Improved the shortcode `form_elements_table` used into the mail notifications
+* Added the git templates for issues and features request into the git repository
+* Added a filter to override the lost password link
+* Fix the notification accordion
+* Fix the ad notification button
+* Fixed the after submission option when is displaying a page content
+* Fixed the regex to detect bf from the post content
+* Fix the shortcode to generate the table with all values from the form. This shortcode is used in the form notification. The fix include the notification when the post change his status.
+* Fixed the notification accordion when the form is created directly
 
 = 2.3.3.2 – 6 March 2019
 * Added a check to avoid start gutenberg block in older wordpress versions
