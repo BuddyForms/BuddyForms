@@ -1196,7 +1196,7 @@ function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( '
 		}
 		if ( empty( $form_slug ) ) {
 		    $regex = array();
-			preg_match( '/"bf_form_slug":"(.*)",/m', $content, $regex );//gutenberg block
+			preg_match( '/"bf_form_slug":"(.*)"/m', $content, $regex );//gutenberg block
 			if ( ! empty( $regex ) && isset( $regex[1] ) ) {
 				$form_slug = $regex[1];
 			}

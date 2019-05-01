@@ -592,6 +592,9 @@ JS;
                                     jQuery( '#form_message_$form_slug' ).addClass( 'bf-alert success' );
                                     jQuery( '#form_message_$form_slug' ).html( val );
                                     break;
+                                case 'display_page':
+                                    jQuery( '#form_message_$form_slug' ).html( val );
+                                    break;
                                 case 'form_remove':
     
                                     jQuery("#buddyforms_form_hero_$form_slug .form_wrapper").fadeOut("normal", function() {
@@ -606,6 +609,7 @@ JS;
                                     jQuery( 'input[name="' + i + '"]').val(val);
                             }
                             jQuery('#recaptcha_reload').trigger('click');
+                            jQuery(document.body).trigger({type: "buddyforms:init"});
     
                         });
                         if(response != undefined && typeof response == "object" && response.errors) {

@@ -142,19 +142,19 @@ function buddyforms_ajax_process_edit_post() {
 		$display_message = buddyforms_form_display_message($form_slug, $args['post_id'], $message_source);
 		$args['form_notice'] = $display_message;
 
-		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
-			switch ( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) {
+		if ( isset( $buddyforms[ $form_slug ]['after_submit'] ) ) {
+			switch ( $buddyforms[ $form_slug ]['after_submit'] ) {
 				case 'display_post':
 					$json_array['form_remove'] = 'true';
 					$json_array['form_notice'] = buddyforms_after_save_post_redirect( get_permalink( $args['post_id'] ) );
 					break;
 				case 'display_page':
 					$json_array['form_remove'] = 'true';
-					$json_array['form_notice'] = $display_message;// apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $_POST['form_slug'] ]['after_submission_page'] ) );
+					$json_array['display_page'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $form_slug ]['after_submission_page'] ) );
 					break;
 				case 'redirect':
 					$json_array['form_remove'] = 'true';
-					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $_POST['form_slug'] ]['after_submission_url'] );
+					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $form_slug ]['after_submission_url'] );
 					break;
 				case 'display_posts_list':
 					$json_array['form_remove'] = 'true';
