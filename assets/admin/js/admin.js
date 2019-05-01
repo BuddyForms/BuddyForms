@@ -548,8 +548,11 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    if (buddyformsGlobal) {
-        jQuery('#mail_notification_add_new').on('click', function() {
+    //
+    // Add notification inside the wizard
+    //
+    jQuery(document).on('click', '#mail_notification_add_new', function() {
+        if (buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 dataType: "json",
@@ -567,17 +570,17 @@ jQuery(document).ready(function (jQuery) {
 
                     bf_update_list_item_number_mail();
 
+                    jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                 }
             });
-            return false;
-        });
-    }
+        }
+        return false;
+    });
 
     //
     // Add new mail notification
     //
-    jQuery('#post_status_mail_notification_add_new').on('click', function () {
-
+    jQuery(document).on('click', '#post_status_mail_notification_add_new', function() {
         var error = false;
         var trigger = jQuery('.post_status_mail_notification_trigger select').val();
 
@@ -585,14 +588,14 @@ jQuery(document).ready(function (jQuery) {
             return false;
         }
 
-        if (trigger == 'none') {
+        if (trigger === 'none') {
             bf_alert('You have to select a trigger first.');
             return false;
         }
 
         // traverse all the required elements looking for an empty one
         jQuery("#post-status-mail-container li.bf_trigger_list_item").each(function () {
-            if (jQuery(this).attr('id') == 'trigger' + trigger) {
+            if (jQuery(this).attr('id') =='trigger' + trigger) {
                 bf_alert('Trigger already exists');
                 error = true;
             }
@@ -606,7 +609,6 @@ jQuery(document).ready(function (jQuery) {
                 url: buddyformsGlobal.admin_url,
                 data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
                 success: function(data) {
-
                     if (data == 0) {
                         bf_alert('trigger already exists');
                         return false;
@@ -619,6 +621,7 @@ jQuery(document).ready(function (jQuery) {
 
                     bf_update_list_item_number_mail();
 
+                    jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                 }
             });
         }

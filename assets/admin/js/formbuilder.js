@@ -46,9 +46,28 @@ jQuery(function () {
 		}
 	});
 
+	jQuery(document).on('buddyform:load_notifications', function () {
+		var buddyforms_notification_builder = jQuery(this).find('.buddyforms_accordion_notification');
+		if (buddyforms_notification_builder.length > 0) {
+			var accordionNotificationContainer = buddyforms_notification_builder.find("li.bf_trigger_list_item");
+			jQuery.each(accordionNotificationContainer, function(){
+				var currentAccordionNotificationContainer = jQuery(this);
+				if (!currentAccordionNotificationContainer.hasClass('buddyforms-ready')) {
+					currentAccordionNotificationContainer.accordion({
+						collapsible: true,
+						active: false,
+						header: "div.accordion-heading-options",
+						heightStyle: "content"
+					});
+					currentAccordionNotificationContainer.addClass('buddyforms-ready');
+				}
+			});
+		}
+	});
 });
 jQuery(document).ready(function () {
 	jQuery(document.body).trigger({type: "buddyform:load_fields"});
+	jQuery(document.body).trigger({type: "buddyform:load_notifications"});
 
 	//
 	// Handle the hide/show moderation of user on update
