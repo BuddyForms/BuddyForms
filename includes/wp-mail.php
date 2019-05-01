@@ -34,11 +34,10 @@ function mail_submission_trigger_sent( $args ) {
 function buddyforms_send_mail_submissions( $notification, $post ) {
 	global $form_slug, $buddyforms;
 
-	$pub_post = $post;
 	$post_ID  = $post->ID;
 
-	$author_id  = $pub_post->post_author;
-	$post_title = $pub_post->post_title;
+	$author_id  = $post->post_author;
+	$post_title = $post->post_title;
 	$postperma  = get_permalink( $post_ID );
 	$user_info  = get_userdata( $author_id );
 
@@ -353,11 +352,10 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	global $form_slug, $buddyforms;
 
-	$pub_post = $post;
 	$post_ID  = $post->ID;
 
-	$author_id  = $pub_post->post_author;
-	$post_title = $pub_post->post_title;
+	$author_id  = $post->post_author;
+	$post_title = $post->post_title;
 	$postperma  = get_permalink( $post_ID );
 	$user_info  = get_userdata( $author_id );
 
@@ -438,7 +436,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 		'[site_name]' => $blog_title,
 		'[site_url]' => $siteurl,
 		'[site_url_html]' => $siteurlhtml,
-		'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
+		'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug, $post ),
 	);
 
 	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
@@ -453,11 +451,12 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 /**
  * @param $form_slug
+ * @param $post
  *
  * @return string
  */
-function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
-	global $buddyforms, $post;
+function buddyforms_mail_notification_form_elements_as_table( $form_slug, $post ) {
+	global $buddyforms;
 	$striped_c = 0;
 
 	// Table start
@@ -475,6 +474,10 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 		}
 		if ( empty( $value ) ) {
 			$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+		}
+
+		if ( empty( $value ) && ! empty( $post ) && ! empty( $post->ID ) ) {
+			$value = get_post_meta( $post->ID, $field['slug'], true );
 		}
 
 		if ( empty( $value ) ) {
