@@ -239,14 +239,12 @@ function buddyforms_form_template() {
 	ob_start();
 
 	?>
-    <div class="buddyforms_accordion_notification">
-        <div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
+    <div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 
-		<?php buddyforms_mail_notification_screen() ?>
+	<?php buddyforms_mail_notification_screen() ?>
 
-        <div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
-			<?php buddyforms_post_status_mail_notification_screen() ?>
-        </div>
+    <div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
+		<?php buddyforms_post_status_mail_notification_screen() ?>
     </div>
 	<?php
 	$mail_notification = ob_get_clean();
