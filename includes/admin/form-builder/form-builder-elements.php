@@ -326,10 +326,14 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['advanced']['hidden'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden]", array( 'hidden' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
 
 			$generate_textarea                            = isset( $customfield['generate_textarea'] ) ? $customfield['generate_textarea'] : '';
-			$form_fields['advanced']['generate_textarea'] = new Element_Textarea( '<b>' . __( 'Generate textarea', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_textarea]", array(
-				'value'     => $generate_textarea,
+			$form_fields['advanced']['generate_textarea'] = new Element_Textbox( '<b>' . __( 'Generate textarea', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][generate_textarea]", array(
+				'data'     => $field_id,
+				'value'    => $generate_textarea,
 				'shortDesc' => __( 'You can use any other field value by using the shortcodes [field_slug]', 'buddyforms' ),
 			) );
+
+			$textarea_rows                              = isset( $customfield['textarea_rows'] ) ? stripcslashes( $customfield['textarea_rows'] ) : apply_filters('buddyforms_textarea_text_area_default_rows', 3);
+			$form_fields['advanced']['textarea_rows'] = new Element_Number( '<b>' . __( 'Amount of rows', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][textarea_rows]", array( 'value' => $textarea_rows ) );
 
 			break;
 		case 'post_excerpt':

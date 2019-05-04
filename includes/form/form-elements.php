@@ -438,6 +438,11 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
+						$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_textarea_text_area_default_rows', 3 );
+						if ( $textarea_rows ) {
+							$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
+						}
+
 						if ( isset( $customfield['hidden'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
