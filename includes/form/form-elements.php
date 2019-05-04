@@ -189,7 +189,7 @@ function buddyforms_form_elements( $form, $args ) {
 						} elseif ( isset( $the_post->post_title ) ) {
 							$post_title = $the_post->post_title;
 						}
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
 						} else {
 
@@ -217,7 +217,7 @@ function buddyforms_form_elements( $form, $args ) {
 							}
 						}
 
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
 
@@ -443,7 +443,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
 						}
 
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
@@ -499,7 +499,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
@@ -765,7 +765,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$element_attr['value'] = $customfield['post_formats_default'];
 						}
 
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
 						} else {
 							$form->addElement( new Element_Select( $name, $slug, $post_formats, $element_attr ) );
@@ -914,7 +914,7 @@ function buddyforms_form_elements( $form, $args ) {
 		                	<span class="help-inline">' . $description . '</span>
 		                </div>';
 
-						if ( isset( $customfield['hidden'] ) ) {
+						if ( isset( $customfield['hidden_field'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {
 								foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
 									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax ) );
