@@ -356,7 +356,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			global $post;
 
 			if (
-				( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+				( isset( $post ) && ($post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 				  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'

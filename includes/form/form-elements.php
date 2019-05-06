@@ -656,7 +656,8 @@ function buddyforms_form_elements( $form, $args ) {
 							'validation_error_message'          => $validation_error_message,
 							"multiple_files_validation_message" => $multiple_files_validation_message,
 							"upload_error_validation_message"   => $upload_error_validation_message,
-							"shortDesc"                         => $description
+							"shortDesc"                         => $description,
+                            "form_slug"                         => $form_slug
 						) );
 						$form->addElement( $upload_element );
 						break;
