@@ -244,6 +244,29 @@ function BuddyForms() {
             return false;
         }, "Please enter a valid URL.");// todo need il18n
     }
+    function addValidationForTextareaMinlenght(){
+        jQuery.validator.addMethod("minlength", function (value, element,param) {
+
+            var count = value.length;
+            if (count < param) {
+                jQuery.validator.messages['minlength'] = "The minimun character lenght is : "+param +" . Please check." ;
+                return false;
+            }
+            return true;
+        }, "");
+    }
+
+    function addValidationForTextareaMaxlenght(){
+        jQuery.validator.addMethod("maxlength", function (value, element,param) {
+
+            var count = value.length;
+            if (count > param) {
+                jQuery.validator.messages['maxlength'] = "The maximum character lenght is : "+param +" . Please check." ;
+                return false;
+            }
+            return true;
+        }, "");
+    }
 
     function enabledGarlic() {
         var bf_garlic = jQuery('.bf-garlic');
@@ -359,6 +382,9 @@ function BuddyForms() {
 
             if (jQuery && jQuery.validator) {
                 addValidationForUserWebsite();
+                addValidationForTextareaMinlenght();
+                addValidationForTextareaMaxlenght();
+
             }
 
             bf_form_errors();
@@ -376,9 +402,13 @@ function BuddyForms() {
 
 var fncBuddyForms = BuddyForms();
 jQuery(document).ready(function () {
+
+
+
     fncBuddyForms.init();
 });
 
 jQuery(document).on('buddyforms:init', function () {
+
     fncBuddyForms.init();
 });
