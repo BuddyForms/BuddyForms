@@ -1038,7 +1038,13 @@ function buddyforms_upload_handle_dropped_media() {
 		}
 	}
 
-	echo $newupload;
+	if ( is_wp_error( $newupload ) ) {
+	    status_header( '500' );
+		echo $newupload->get_error_message();
+	} else {
+	    status_header( '200' );
+		echo $newupload;
+	}
 	die();
 }
 
