@@ -1261,28 +1261,6 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 	$buddyform = '';
 	extract( $args );
 
-	ob_start();
-
-	echo '<div class="element_field">';
-
-	echo '
-
-            <table class="wp-list-table widefat posts">
-                <thead>
-                    <tr>
-                        <th><span style="padding-left: 10px;">' . __( 'Label', 'buddyforms' ) . '</span></th>
-                        <th><span style="padding-left: 10px;">' . __( 'Value', 'buddyforms' ) . '</span></th>
-                        <th><span style="padding-left: 10px;">' . __( 'Default', 'buddyforms' ) . '</span></th>
-                        <th class="manage-column column-author"><span style="padding-left: 10px;">' . __( 'Action', 'buddyforms' ) . '</span></th>
-                    </tr>
-                </thead>
-            </table>
-            <br>
-    ';
-
-	echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
-
-
 	if ( ! isset( $buddyform['form_fields'][ $field_id ]['options'] ) && isset( $buddyform['form_fields'][ $field_id ]['value'] ) ) {
 		foreach ( $buddyform['form_fields'][ $field_id ]['value'] as $key => $value ) {
 			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['label'] = $value;
@@ -1290,37 +1268,14 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 		}
 	}
 
-	if ( isset( $buddyform['form_fields'][ $field_id ]['options'] ) ) {
-		$count = 1;
-		foreach ( $buddyform['form_fields'][ $field_id ]['options'] as $key => $option ) {
+	$field_options = $buddyform['form_fields'][ $field_id ]['options'];
+	$field_type = $buddyform['form_fields'][ $field_id ]['type'];
+	$count = 1;
+	$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
 
+	ob_start();
 
-			echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
-			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td>';
-			$form_element = new Element_Textbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array( 'value' => $option['label'] ) );
-			$form_element->render();
-			echo '</td><td>';
-			$form_element = new Element_Textbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][value]", array( 'value' => $option['value'] ) );
-			$form_element->render();
-			echo '</td><td>';
-			$form_element = new Element_Radio( '', "buddyforms_options[form_fields][" . $field_id . "][default]", array( $option['value'] ), array( 'value' => isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ) );
-			$form_element->render();
-			echo '</td><td class="manage-column column-author">';
-			echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>';
-			echo '</td></tr></li></tbody></table>';
-
-			$count ++;
-		}
-	}
-
-	echo '
-	    </ul>
-     </div>
-     <a href="' . $field_id . '" class="button bf_add_input">+</a>';
-
-	if ( in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
-		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">Reset</a>';
-	}
+	require BUDDYFORMS_ADMIN_VIEW.'buddyforms-form-element-multiple.php';
 
 	$tmp = ob_get_clean();
 
@@ -1332,89 +1287,14 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 	$buddyform = '';
 	extract( $args );
 
+	$field_options = $buddyform['form_fields'][ $field_id ]['options'];
+	$field_type = $buddyform['form_fields'][ $field_id ]['type'];
+	$count = 1;
+	$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
+
 	ob_start();
 
-	echo '<div class="element_field">';
-
-	echo '
-            <table class="wp-list-table widefat posts">
-                <thead>
-                    <tr>
-                        <th><span style="padding-left: 10px;">' . __( 'Agreement', 'buddyforms' ) . '</span></th>
-                        <th class="manage-column column-author"><span style="padding-left: 10px;">' . __( 'Options', 'buddyforms' ) . '</span></th>
-                        <th class="manage-column column-author"><span style="padding-left: 10px;">' . __( 'Action', 'buddyforms' ) . '</span></th>
-                    </tr>
-                </thead>
-            </table>
-            <br>
-    ';
-
-	echo '<ul id="field_' . $field_id . '" class="element_field_sortable">';
-
-
-//	if ( ! isset( $buddyform['form_fields'][ $field_id ]['options'] ) && isset( $buddyform['form_fields'][ $field_id ]['value'] ) ) {
-//		foreach ( $buddyform['form_fields'][ $field_id ]['value'] as $key => $value ) {
-//			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['label'] = $value;
-//			$buddyform['form_fields'][ $field_id ]['options'][ $key ]['value'] = $value;
-//		}
-//	}
-
-	if ( isset( $buddyform['form_fields'][ $field_id ]['options'] ) ) {
-		$count = 1;
-		foreach ( $buddyform['form_fields'][ $field_id ]['options'] as $key => $option ) {
-
-
-			echo '<li class="field_item field_item_' . $field_id . '_' . $count . '">';
-			echo '<table class="wp-list-table widefat posts striped"><tbody><tr><td><p><b>' . __( 'Agreement Text', 'buddyforms' ) . '</b></p>';
-			$form_element = new Element_Textarea( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][label]", array( 'value' => $option['label'], 'cols' => '50' ) );
-			$form_element->render();
-
-            echo '<p><b>' . __( 'Error Message', 'buddyforms' ) . '</b></p>';
-
-            $error_message = empty( $option['error_message'] ) ? __('This field is Required', 'buddyforms' ) : $option['error_message'];
-			$form_element = new Element_Textarea( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][error_message]", array( 'value' => $error_message, 'cols' => '50', 'rows' => '2' ) );
-			$form_element->render();
-
-
-			echo '</td><td class="manage-column">';
-			$value = isset( $option['checked'] ) ? $option['checked'] : '';
-			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][checked]", array('checked' => 'Checked'), array( 'value' => $value ) );
-			$form_element->render();
-
-			$value = isset( $option['required'] ) ? $option['required'] : '';
-			$form_element = new Element_Checkbox( '', "buddyforms_options[form_fields][" . $field_id . "][options][" . $key . "][required]", array('required' => 'Required'), array( 'value' => $value ) );
-			$form_element->render();
-
-
-			echo '</td><td class="manage-column column-author">';
-			echo '<a href="#" id="' . $field_id . '_' . $count . '" class="bf_delete_input" title="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>';
-			echo '</td></tr></li></tbody></table><hr>';
-
-			$count ++;
-		}
-	}
-
-	echo ' </ul>
-    <table class="wp-list-table widefat posts striped"><tbody><tr><td>
-                <select id="gdpr_option_type">
-                    <option value="none">' . __( 'Select a template', 'buddyforms' ) . '</option>
-                    <option value="registration">' . __( 'Registration', 'buddyforms' ) . '</option>
-                    <option value="contact">' . __( 'Contact Form', 'buddyforms' ) . '</option>
-                    <option value="post">' . __( 'Post Submission', 'buddyforms' ) . '</option>
-                    <option value="other">' . __( 'Other', 'buddyforms' ) . '</option>
-                </select>
-            </td><td class="manage-column">
-                <a href="#" data-gdpr-type="' . $field_id . '" class="button bf_add_gdpr">+</a>
-            </td></tr></li></tbody></table>
-     </div> ';
-
-	$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
-
-
-
-	if ( !empty($buddyform['form_fields'][ $field_id ]['type']) && in_array( $buddyform['form_fields'][ $field_id ]['type'], array( 'dropdown', 'radiobutton', 'checkbox' ), true ) ) {
-		echo '<a href="#" data-group-name="' . esc_attr( "buddyforms_options[form_fields][" . $field_id . "][default]" ) . '" class="button bf_reset_multi_input">' . __( 'Reset', 'buddyforms' ) . '</a>';
-	}
+	require BUDDYFORMS_ADMIN_VIEW.'buddyforms-form-gdpr-element-multiple.php';
 
 	$tmp = ob_get_clean();
 

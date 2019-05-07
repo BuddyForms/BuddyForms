@@ -152,6 +152,13 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				define( 'BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
 			}
 
+			if ( ! defined( 'BUDDYFORMS_ADMIN_VIEW' ) ) {
+				/**
+				 * Define the template path
+				 */
+				define( 'BUDDYFORMS_ADMIN_VIEW', BUDDYFORMS_INCLUDES_PATH . 'admin/view/' );
+			}
+
 		}
 
 		/**
@@ -573,12 +580,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 
 			wp_enqueue_style( 'buddyforms-the-loop-css', plugins_url( 'assets/css/the-loop.css', __FILE__ ) );
-			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
 			// load dashicons
 			wp_enqueue_style( 'dashicons' );
 
-			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
+			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ), array('acf-input') );
 
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 

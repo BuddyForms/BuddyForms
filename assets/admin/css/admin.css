@@ -1949,3 +1949,7 @@ input.screen-per-page{
 .bf_hide_if_not_ajax_ready {
 	display: none;
 }
+
+table .element_field_table_sortable tbody{
+    cursor: ns-resize;
+}
