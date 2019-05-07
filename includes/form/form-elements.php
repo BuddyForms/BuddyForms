@@ -443,6 +443,11 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
 						}
 
+                        $minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                        $maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 100;
+                        $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $minlength . "]\"", $wp_editor );
+                        $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $maxlength . "]\"", $wp_editor );
+
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
