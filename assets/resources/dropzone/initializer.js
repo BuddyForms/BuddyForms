@@ -18,6 +18,8 @@ function uploadHandler() {
             var acceptedFiles = current.attr('accepted_files');
             var multipleFiles = current.attr('multiple_files');
             var entry = current.data('entry');
+            var form_slug = current.attr('form-slug');
+            jQuery('#buddyforms_form_'+form_slug).show();
 
             initSingleDropZone(current, current.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
         })
