@@ -584,7 +584,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			// load dashicons
 			wp_enqueue_style( 'dashicons' );
 
-			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ), array('acf-input') );
+			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 
