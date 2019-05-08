@@ -40,6 +40,10 @@ class Element_Checkbox extends OptionElement {
 			$id = isset( $this->_attributes["id"] ) ? ' id="' . $this->_attributes["id"] . '-' . $count . '"' : '';
 
 			echo '<label class="' , $labelClass , ' ' , sanitize_title($value) , '">';
+			if($count < 1){
+                echo '<label for="'.$this->_attributes["name"].'" generated="true" class="error"></label>';
+            }
+
 			echo '<input', $id, $this->getAttributes( array(
 				"id",
 				"class",

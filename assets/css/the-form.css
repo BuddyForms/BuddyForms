@@ -142,6 +142,11 @@
     color: red;
 }
 
+.the_buddyforms_form .bf_field_group .checkbox label label.error {
+    color: red;
+    font-weight: bold;
+}
+
 .the_buddyforms_form .bf_field_group input.error {
     border: 1px solid red;
 }
