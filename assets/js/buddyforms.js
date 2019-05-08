@@ -244,24 +244,24 @@ function BuddyForms() {
             return false;
         }, "Please enter a valid URL.");// todo need il18n
     }
-    function addValidationForTextareaMinlenght(){
-        jQuery.validator.addMethod("minlength", function (value, element,param) {
 
+    function addValidationForTextareaMinLength() {
+        jQuery.validator.addMethod("minlength", function (value, element, param) {
             var count = value.length;
             if (count < param) {
-                jQuery.validator.messages['minlength'] = "The minimun character lenght is : "+param +" . Please check." ;
+                jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
                 return false;
             }
             return true;
         }, "");
     }
 
-    function addValidationForTextareaMaxlenght(){
-        jQuery.validator.addMethod("maxlength", function (value, element,param) {
+    function addValidationForTextareaMaxLength() {
+        jQuery.validator.addMethod("maxlength", function (value, element, param) {
 
             var count = value.length;
             if (count > param) {
-                jQuery.validator.messages['maxlength'] = "The maximum character lenght is : "+param +" . Please check." ;
+                jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
                 return false;
             }
             return true;
@@ -329,17 +329,20 @@ function BuddyForms() {
         event.preventDefault();
         var target = jQuery(this).data('target');
         var formOptions = 'publish';
-        if (buddyformsGlobal && buddyformsGlobal[target]) {
+        var draftAction = false;
+        if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].status) {
             formOptions = buddyformsGlobal[target].status;
         }
-        var post_status = jQuery(this).data('status') || formOptions;
+        if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].draft_action) {
+            draftAction = (buddyformsGlobal[target].draft_action[0] === 'Enable Draft');
+        }
         var targetForms = jQuery('form#buddyforms_form_' + target);
         if (targetForms && targetForms.length > 0) {
-            var statusElement;
             var fieldStatus = getFieldDataBy(target, 'status');
             if (fieldStatus === false) { //Not exist the field,
-                statusElement = targetForms.find('input[type="hidden"][name="status"]');
+                var statusElement = targetForms.find('input[type="hidden"][name="status"]');
                 if (statusElement && statusElement.length > 0) {
+                    var post_status = jQuery(this).data('status') || formOptions;
                     statusElement.val(post_status);
                 }
             }
@@ -382,9 +385,8 @@ function BuddyForms() {
 
             if (jQuery && jQuery.validator) {
                 addValidationForUserWebsite();
-                addValidationForTextareaMinlenght();
-                addValidationForTextareaMaxlenght();
-
+                addValidationForTextareaMinLength();
+                addValidationForTextareaMaxLength();
             }
 
             bf_form_errors();
@@ -402,7 +404,6 @@ function BuddyForms() {
 
 var fncBuddyForms = BuddyForms();
 jQuery(document).ready(function () {
-
 
 
     fncBuddyForms.init();

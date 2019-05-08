@@ -1266,7 +1266,7 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
      *
 	 * @since 2.4.0
 	 */
-	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields' ), $form_slug, $bf_post_id);
+	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields', 'draft_action' ), $form_slug, $bf_post_id);
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
@@ -1352,6 +1352,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	}
 	$bfdesign  = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+	$form_status = isset( $buddyforms[ $form_slug ]['status'] ) ? $buddyforms[ $form_slug ]['status'] : 'publish';
 
 	$button_class = ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
 
@@ -1387,7 +1388,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 			'class'       => $bf_publish_button_classes,
 			'name'        => 'submitted',
 			'data-target' => $form_slug,
-			'data-status' => 'publish',
+			'data-status' => $form_status,
 		) );
 
 		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );

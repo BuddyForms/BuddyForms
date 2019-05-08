@@ -312,9 +312,9 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_excerpt  = $content_field['generate_post_excerpt'];
 		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
-	
+
 	$action      = 'save';//Base action
-	$is_draft_enabled = true; // todo this from option need to be implemented
+	$is_draft_enabled = !empty( $buddyforms[ $form_slug ]['draft_action'] );
 	$post_status = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
 	$post_status_action =  ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
 	//Check the current post status
@@ -329,7 +329,7 @@ function buddyforms_process_submission( $args = Array() ) {
 			$post_status = $post_status_action; // Keep the same action status selected by the user from the form
 		}
 	}
-	
+
 	//Override the post status if exist a status field
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! empty( $args['status'] ) && $exist_field_status ) {
@@ -337,7 +337,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
 	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
-	
+
 	$args = Array(
 		'post_id'        => $post_id,
 		'action'         => $action,
@@ -465,7 +465,7 @@ function buddyforms_process_submission( $args = Array() ) {
  * @return array|bool
  */
 function buddyforms_update_post( $args ) {
-	
+
 	$action         = '';
 	$post_author    = '';
 	$post_type      = '';
