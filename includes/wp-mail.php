@@ -392,15 +392,20 @@ function buddyforms_send_post_status_change_notification( $post ) {
 						$field = buddyforms_get_form_field_by_slug( $form_slug, 'email' );
 					}
 					if ( ! empty( $field ) ) {
-						if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
-							foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
-								if( $field['slug'] === $meta_value['key'] ){
-									$mail_address = $meta_value['value'];
-									break;
+						$action = (isset($_REQUEST['action']))? sanitize_text_field($_REQUEST['action']): '';
+						if(empty($action)) {
+							if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
+								foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
+									if ( $field['slug'] === $meta_value['key'] ) {
+										$mail_address = $meta_value['value'];
+										break;
+									}
 								}
+							} else {
+								$mail_address = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
 							}
 						} else {
-							$mail_address = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
+							$mail_address = get_post_meta($post_ID, $field['slug'], true);
 						}
 					}
 				}
