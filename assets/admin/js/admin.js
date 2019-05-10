@@ -32,8 +32,8 @@ function buddyformsMakeFieldId() {
 //
 // Validate an email using regex
 //
-function buddyformsIsEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+function buddyformsIsEmailOrShortcode(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})|\[(.*?)(\s.*?)?\]$/;
     return regex.test(email);
 }
 
@@ -47,13 +47,13 @@ function buddyformsValidateMultiEmail(string) {
         if (isMulti) {
             var values = string.split(/[;,]+/);
             jQuery.each(values, function (index, email) {
-                result = buddyformsIsEmail(email.trim());
+                result = buddyformsIsEmailOrShortcode(email.trim());
                 if (!result) {
                     return result;
                 }
             });
         } else {
-            result = buddyformsIsEmail(string);
+            result = buddyformsIsEmailOrShortcode(string);
             if (!result) {
                 return result;
             }
@@ -411,6 +411,12 @@ jQuery(document).ready(function (jQuery) {
             var result = buddyforms_validate_notifications_email(mail_to_address);
             errors.push({isValid: result, element: mail_to_address, type: 'settings'});
         });
+
+        var mail_from = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_from_custom]"]');
+        if(mail_from.length > 0) {
+            var result = buddyforms_validate_notifications_email(mail_from);
+            errors.push({isValid: result, element: mail_from, type: 'settings'});
+        }
 
         //Fill and avoid duplicates of field slugs
         var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
