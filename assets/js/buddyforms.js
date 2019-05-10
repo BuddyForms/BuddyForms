@@ -259,6 +259,9 @@ function BuddyForms() {
     function addValidationForTextareaMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
 
+            if(param==0){
+                return true;
+            }
             var count = value.length;
             if (count > param) {
                 jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
