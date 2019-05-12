@@ -64,7 +64,7 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 	}
 
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field ) {
-		if ( $field->slug == 'taxonomy' || $field->slug == 'category' || $field->slug == 'tags' ) {
+		if ( $field->slug == 'taxonomy' ) {
 			$deps .= __('BuddyForms Professional', 'buddyforms');
 		}
 	}
