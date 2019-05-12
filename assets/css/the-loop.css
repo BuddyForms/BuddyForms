@@ -41,7 +41,7 @@ ul.buddyforms-list li img.thumb {
 }
 
 ul.buddyforms-list li .item-title {
-  clear: both;
+    clear: both;
 }
 
 ul.buddyforms-list li .item-desc {
@@ -52,35 +52,35 @@ ul.buddyforms-list li .item-desc {
 
 @media (min-width: 420px) {
 
-  ul.buddyforms-list li img.thumb {
-    width: 120px;
-    height: 120px;
-  }
+    ul.buddyforms-list li img.thumb {
+        width: 120px;
+        height: 120px;
+    }
 
-  ul.buddyforms-list li .item-title {
-    clear: none;
-  }
+    ul.buddyforms-list li .item-title {
+        clear: none;
+    }
 
 }
 
 @media (min-width: 768px) {
 
-  ul.buddyforms-list li .item {
-      overflow: auto;
-      width: calc(100% - 180px);
-      float: left;
-  }
+    ul.buddyforms-list li .item {
+        overflow: auto;
+        width: calc(100% - 180px);
+        float: left;
+    }
 
-  ul.buddyforms-list li div.action {
-      max-width: 50px;
-      width: auto;
-      margin-bottom: 10px;
-      float: right;
-      text-align: left;
-      min-width: 150px;
-      font-size: 12px;
-      clear: none;
-  }
+    ul.buddyforms-list li div.action {
+        max-width: 50px;
+        width: auto;
+        margin-bottom: 10px;
+        float: right;
+        text-align: left;
+        min-width: 150px;
+        font-size: 12px;
+        clear: none;
+    }
 
 }
 
@@ -114,7 +114,7 @@ ul.buddyforms-list .draft .item-status:before,
 ul.buddyforms-list .publish .draft .item-status:before,
 ul.buddyforms-list .edit-draft .item-status:before,
 ul.buddyforms-list .publish .edit-draft .item-status:before {
-  background-color: #e3e3e3;
+    background-color: #e3e3e3;
 }
 
 ul.buddyforms-list .bf-pending .item-status:before,
@@ -123,9 +123,9 @@ ul.buddyforms-list .publish .bf-pending .item-status:before {
 }
 
 ul.buddyforms-list .publish-date {
-  margin: 5px 0 5px 0;
-  font-size: 12px;
-  color: #888;
+    margin: 5px 0 5px 0;
+    font-size: 12px;
+    color: #888;
 }
 
 /* Action Links - Edit and Delete */
@@ -150,7 +150,7 @@ ul.buddyforms-list .publish-date {
     text-decoration: none;
     background: #f9f9f9;
     border: 1px solid #aaa;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     text-shadow: none;
     box-shadow: none;
     border-radius: 3px;
@@ -160,8 +160,8 @@ ul.buddyforms-list .publish-date {
 
 .buddyforms-list .edit_links a:hover,
 .buddyforms-list .edit_links a:focus {
-  border: 1px solid #8f8f8f;
-  border: 1px solid rgba(0,0,0,0.4);
+    border: 1px solid #8f8f8f;
+    border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 .buddyforms-list .edit_links .dashicons:before {
@@ -175,13 +175,12 @@ ul.buddyforms-list .publish-date {
 
 @media (min-width: 768px) {
 
-  .buddyforms-list .edit_links {
-      display: block;
-      margin: 10px 0 5px;
-  }
+    .buddyforms-list .edit_links {
+        display: block;
+        margin: 10px 0 5px;
+    }
 
 }
-
 
 
 /* BuddyForms Sub List */
@@ -200,7 +199,7 @@ ul.buddyforms-list .publish-date {
 
 .bf-submission-sub {
     padding: 15px 0 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .buddyforms-list .buddyforms-list-sub img.thumb {
@@ -212,12 +211,12 @@ ul.buddyforms-list .publish-date {
 }
 
 .buddyforms-list .buddyforms-list-sub .item-desc {
-  display: none;
+    display: none;
 }
 
 .buddyforms-list .buddyforms-list-sub .action {
-  clear: none;
-  margin-left: 85px;
+    clear: none;
+    margin-left: 85px;
 }
 
 @media (min-width: 768px) {
@@ -233,11 +232,11 @@ ul.buddyforms-list .publish-date {
     }
 
     .buddyforms-list .buddyforms-list-sub .item-desc {
-      display: block;
+        display: block;
     }
 
     .buddyforms-list .buddyforms-list-sub .action {
-      margin-left: 0;
+        margin-left: 0;
     }
 
 }
@@ -297,14 +296,14 @@ ul.buddyforms-list .publish-date {
     min-width: 165px;
 }
 
-.buddyforms_posts_table .table-striped>tbody>tr:nth-of-type(odd) {
+.buddyforms_posts_table .table-striped > tbody > tr:nth-of-type(odd) {
     border-top: none;
     background: transparent;
 }
 
-.buddyforms_posts_table .table-striped>tbody>tr:nth-of-type(2n) {
+.buddyforms_posts_table .table-striped > tbody > tr:nth-of-type(2n) {
     border-top: none;
-    background: rgba(0,0,0,0.04);
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .buddyforms_posts_table .table th, .buddyforms_posts_table .table td {
@@ -428,7 +427,7 @@ ul.buddyforms-list .publish-date {
 .buddyforms_posts_table .publish .draft .table-item-status:before,
 .buddyforms_posts_table .edit-draft .table-item-status:before,
 .buddyforms_posts_table .publish .edit-draft .table-item-status:before {
-  background-color: #e3e3e3;
+    background-color: #e3e3e3;
 }
 
 .buddyforms_posts_table .bf-pending .table-item-status:before,
@@ -552,6 +551,7 @@ ul.buddyforms-list .publish-date {
     width: auto;
     height: auto;
 }
+
 .buddyforms-posts-content .dashicons:before {
     font-size: 19px;
 }
@@ -584,7 +584,7 @@ ul.buddyforms-list .publish-date {
 .ui-dialog {
     background: #fff;
     padding: 30px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 .ui-dialog-titlebar-close {
@@ -598,6 +598,7 @@ ul.buddyforms-list .publish-date {
     text-transform: uppercase;
     padding: 5px;
 }
+
 .bf-popup-button {
     margin: 15px 0 30px;
 }

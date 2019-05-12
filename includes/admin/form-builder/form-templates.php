@@ -56,16 +56,16 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 
 	$buddyform = json_decode( $template['json'] );
 
-	$dependencies = __('None', 'buddyforms');
+	$dependencies = __( 'None', 'buddyforms' );
 	$deps         = '';
 
 	if ( ! ( $buddyform->post_type == 'post' || $buddyform->post_type == 'page' || $buddyform->post_type == 'bf_submissions' ) ) {
-		$deps .= __('BuddyForms Professional', 'buddyforms');
+		$deps .= __( 'BuddyForms Professional', 'buddyforms' );
 	}
 
 	if ( isset( $buddyform->form_fields ) ) : foreach ( $buddyform->form_fields as $field_key => $field ) {
 		if ( $field->slug == 'taxonomy' ) {
-			$deps .= __('BuddyForms Professional', 'buddyforms');
+			$deps .= __( 'BuddyForms Professional', 'buddyforms' );
 		}
 	}
 	endif;
@@ -125,7 +125,7 @@ function buddyforms_form_builder_templates() {
 
 	?>
     <div class="buddyforms_template buddyforms_wizard_types">
-        <h5><?php _e('Choose a pre-configured form template or start a new one:', 'buddyforms') ?></h5>
+        <h5><?php _e( 'Choose a pre-configured form template or start a new one:', 'buddyforms' ) ?></h5>
 
 		<?php add_thickbox(); ?>
 
@@ -150,21 +150,21 @@ function buddyforms_form_builder_templates() {
                     <div class="bf-tile-preview-wrap">
                         <p>
                             <a href="#TB_inline?width=600&height=550&inlineId=template-<?php echo $key ?>"
-                              data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>"
-                              title="<?php echo $template['title'] ?>" class="thickbox button bf-preview">
+                               data-src="<?php echo $template['url'] ?>" data-key="<?php echo $key ?>"
+                               title="<?php echo $template['title'] ?>" class="thickbox button bf-preview">
                                 <span class="dashicons dashicons-visibility"> </span> <?php _e( 'Preview', 'buddyforms' ) ?>
                             </a>
                         </p>
                     </div>
 					<?php if ( $dependencies != 'None' ) { ?>
-                        <p class="bf-tile-dependencies"><?php _e('Dependencies: ', 'buddyforms') ?><?php echo $dependencies ?></p>
+                        <p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
 					<?php } else { ?>
                         <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
                                                         data-type="<?php echo $sort_key ?>"
                                                         data-template="<?php echo $key ?>"
                                                         class="bf_wizard_types bf_form_template btn btn-primary btn-50"
                                                         onclick="">
-	                        <?php _e( 'Use This Template', 'buddyforms' ) ?>
+							<?php _e( 'Use This Template', 'buddyforms' ) ?>
                         </button>
 					<?php } ?>
                     <div id="template-<?php echo $key ?>" style="display:none;">
@@ -176,7 +176,7 @@ function buddyforms_form_builder_templates() {
                                                             class="bf_wizard_types bf_form_template button button-primary"
                                                             onclick="">
                                 <!-- <span class="dashicons dashicons-plus"></span>  -->
-	                            <?php _e( 'Use This Template', 'buddyforms' ) ?>
+								<?php _e( 'Use This Template', 'buddyforms' ) ?>
                             </button>
                         </div>
                         <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"

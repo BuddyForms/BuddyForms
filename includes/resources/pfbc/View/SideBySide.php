@@ -60,11 +60,11 @@ class View_SideBySide extends FormView {
 		$label = $element->getLabel();
 
 		//TODO improve required flag position
-		if ( ! $this->noLabel &&  $element->isRequired() ) {
+		if ( ! $this->noLabel && $element->isRequired() ) {
 			$label = $label . $this->renderRequired();
 		}
 
-		echo sprintf('<label class="text-left-xs col-xs-12 col-md-4 control-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label);
+		echo sprintf( '<label class="text-left-xs col-xs-12 col-md-4 control-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label );
 	}
 
 	public function renderCSS() {

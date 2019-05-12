@@ -64,14 +64,14 @@ services:
   PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer: ~
 
 imports:
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/comments.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/control-structures.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/docblock.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/namespaces.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/phpunit.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/spaces.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/common/strict.yml', ignore_errors: true }
-- { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/comments.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/control-structures.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/docblock.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/namespaces.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/phpunit.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/spaces.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/common/strict.yml', ignore_errors: true }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml', ignore_errors: true }
 parameters:
   skip:
     # code to skip for all files

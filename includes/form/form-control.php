@@ -156,8 +156,8 @@ function buddyforms_process_submission( $args = Array() ) {
 			 * @since 2.1.7
 			 *
 			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
-			 * @param string  $type  The type of information for the next parameter. Possible values is 'browser data' and 'field'.
-			 * @param array   $data  This parameter holds the information what wil be saved.
+			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array $data This parameter holds the information what wil be saved.
 			 */
 			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
 			if ( $save_usermeta ) {
@@ -176,8 +176,8 @@ function buddyforms_process_submission( $args = Array() ) {
 				 * @since 2.1.7
 				 *
 				 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
-				 * @param string  $type  The type of information for the next parameter. Possible values is 'browser data' and 'field'.
-				 * @param array   $data  This parameter holds the information what wil be saved.
+				 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+				 * @param array $data This parameter holds the information what wil be saved.
 				 */
 				$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'field', $r_field );
 				if ( $save_usermeta ) {
@@ -227,8 +227,8 @@ function buddyforms_process_submission( $args = Array() ) {
 			 * @since 2.1.7
 			 *
 			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
-			 * @param string  $type  The type of information for the next parameter. Possible values is 'browser data' and 'field'.
-			 * @param array   $data  This parameter holds the information what wil be saved.
+			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array $data This parameter holds the information what wil be saved.
 			 */
 			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
 			if ( $save_usermeta ) {
@@ -312,11 +312,11 @@ function buddyforms_process_submission( $args = Array() ) {
 		$post_excerpt  = $content_field['generate_post_excerpt'];
 		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
-	
-	$action      = 'save';//Base action
-	$is_draft_enabled = true; // todo this from option need to be implemented
-	$post_status = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
-	$post_status_action =  ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
+
+	$action             = 'save';//Base action
+	$is_draft_enabled   = true; // todo this from option need to be implemented
+	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
+	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
 	//Check the current post status
 	if ( $post_id != 0 ) {
 		$post_current_status = get_post_status( $post_id );
@@ -325,11 +325,11 @@ function buddyforms_process_submission( $args = Array() ) {
 				$post_status = 'draft';
 			}
 		} else {
-			$action = 'update';
+			$action      = 'update';
 			$post_status = $post_status_action; // Keep the same action status selected by the user from the form
 		}
 	}
-	
+
 	//Override the post status if exist a status field
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! empty( $args['status'] ) && $exist_field_status ) {
@@ -337,7 +337,7 @@ function buddyforms_process_submission( $args = Array() ) {
 	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
 	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
-	
+
 	$args = Array(
 		'post_id'        => $post_id,
 		'action'         => $action,
@@ -465,7 +465,7 @@ function buddyforms_process_submission( $args = Array() ) {
  * @return array|bool
  */
 function buddyforms_update_post( $args ) {
-	
+
 	$action         = '';
 	$post_author    = '';
 	$post_type      = '';
@@ -546,7 +546,7 @@ function buddyforms_update_post( $args ) {
 
 /**
  * @param integer $post_id
- * @param array   $customfields
+ * @param array $customfields
  *
  * @return mixed
  */

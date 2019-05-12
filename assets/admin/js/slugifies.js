@@ -46,13 +46,13 @@
         for (var char, i = 0, l = string.length; i < l; i++) {
             char = string[i];
             if (!lengths.some(function (len) {
-                    var str = string.substr(i, len);
-                    if (opts.multicharmap[str]) {
-                        i += len - 1;
-                        char = opts.multicharmap[str];
-                        return true;
-                    } else return false;
-                })) {
+                var str = string.substr(i, len);
+                if (opts.multicharmap[str]) {
+                    i += len - 1;
+                    char = opts.multicharmap[str];
+                    return true;
+                } else return false;
+            })) {
                 if (opts.charmap[char]) {
                     char = opts.charmap[char];
                     code = char.charCodeAt(0);
@@ -77,8 +77,7 @@
         if (opts.lower)
             result = result.toLowerCase();
         return result;
-    };
-
+    }
     slug.defaults = {
         mode: 'pretty',
     };

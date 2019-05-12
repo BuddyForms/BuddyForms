@@ -6,20 +6,14 @@
 class BuddyFormsMetaBoxRegistration {
 
 	public function __construct() {
-		add_action( 'buddyforms_form_setup_nav_li_last', array( $this, 'buddyforms_form_setup_nav_li_registration' ), 50 );
-		add_action( 'buddyforms_form_setup_tab_pane_last', array( $this, 'buddyforms_form_setup_tab_pane_registration' ) );
-	}
-
-	/**
-	 * Return an li item to add to the metaBox panel
-	 *
-	 * @param $id
-	 * @param $name
-	 *
-	 * @return string
-	 */
-	private function tab_panel_nav_li( $id, $name ) {
-		return sprintf( '<li class="registrations_nav"><a href="#%s" data-toggle="tab">%s</a></li>', $id, $name );
+		add_action( 'buddyforms_form_setup_nav_li_last', array(
+			$this,
+			'buddyforms_form_setup_nav_li_registration'
+		), 50 );
+		add_action( 'buddyforms_form_setup_tab_pane_last', array(
+			$this,
+			'buddyforms_form_setup_tab_pane_registration'
+		) );
 	}
 
 	/**
@@ -32,18 +26,15 @@ class BuddyFormsMetaBoxRegistration {
 	}
 
 	/**
-	 * Get an array with string necessary to build the container to show the options
+	 * Return an li item to add to the metaBox panel
 	 *
 	 * @param $id
-	 * @param $class
+	 * @param $name
 	 *
-	 * @return array['start', 'end']
+	 * @return string
 	 */
-	private function tab_panel_html_array( $id, $class ) {
-		return array(
-			'start' => sprintf( '<div class="tab-pane fade in" id="%s"><div class="%s">', $id, $class ),
-			'end'   => '</div></div>',
-		);
+	private function tab_panel_nav_li( $id, $name ) {
+		return sprintf( '<li class="registrations_nav"><a href="#%s" data-toggle="tab">%s</a></li>', $id, $name );
 	}
 
 	/**
@@ -62,6 +53,21 @@ class BuddyFormsMetaBoxRegistration {
 		echo $user_update_tab_array_html['end'];
 	}
 
+	/**
+	 * Get an array with string necessary to build the container to show the options
+	 *
+	 * @param $id
+	 * @param $class
+	 *
+	 * @return array['start', 'end']
+	 */
+	private function tab_panel_html_array( $id, $class ) {
+		return array(
+			'start' => sprintf( '<div class="tab-pane fade in" id="%s"><div class="%s">', $id, $class ),
+			'end'   => '</div></div>',
+		);
+	}
+
 	public function buddyforms_registration_screen() {
 		global $post, $buddyform;
 
@@ -76,7 +82,7 @@ class BuddyFormsMetaBoxRegistration {
 		$generate_password = isset( $buddyform['registration']['generate_password'] ) ? $buddyform['registration']['generate_password'] : '';
 		$element           = new Element_Checkbox( '<b>' . __( 'Generate Password', 'buddyforms' ) . '</b>', "buddyforms_options[registration][generate_password]", array( 'yes' => __( 'Auto generate the password.', 'buddyforms' ) ), array(
 			'value'     => $generate_password,
-			'shortDesc' => __('If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.', 'buddyforms')
+			'shortDesc' => __( 'If generate password is enabled the password field is not required and can be removed from the form. How ever if the password field exist and a passowrd was entered the password from the password field is used instad of the auto generated password.', 'buddyforms' )
 		) );
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
@@ -87,7 +93,7 @@ class BuddyFormsMetaBoxRegistration {
 		$public_submit_username_from_email = ! isset( $buddyform['public_submit_username_from_email'] ) ? '' : 'public_submit_username_from_email';
 		$element                           = new Element_Checkbox( '<b>' . __( 'Automatically generate username from eMail', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_username_from_email]", array( 'public_submit_username_from_email' => __( 'Generate Username from eMail', 'buddyforms' ) ), array(
 			'value'     => $public_submit_username_from_email,
-			'shortDesc' => __('This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.', 'buddyforms')
+			'shortDesc' => __( 'This option only works with the eMail Form Element added to the Form. Please make sure you have the User eMail form element added to the form.', 'buddyforms' )
 		) );
 		if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 			$element->setAttribute( 'disabled', 'disabled' );
@@ -116,7 +122,7 @@ class BuddyFormsMetaBoxRegistration {
 		// activation_message_text
 		$activation_message_text = isset( $buddyform['registration']['activation_message_text'] )
 			? $buddyform['registration']['activation_message_text']
-			: __('Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]', 'buddyforms');
+			: __( 'Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]', 'buddyforms' );
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_message_text]", array(
 			'value'     => $activation_message_text,
 			'shortDesc' => '',
@@ -255,7 +261,7 @@ class BuddyFormsMetaBoxRegistration {
 		// activation_message_text
 		$activation_message_text = isset( $buddyform['on_user_update']['activation_message_text'] )
 			? $buddyform['on_user_update']['activation_message_text']
-			: __("Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]", 'buddyforms');
+			: __( "Hi [user_login], Great to see you come on board! Just one small step left to make your registration complete.<br><b>Click the link below to activate your account.</b><br>[activation_link]<br><br>[blog_title]", 'buddyforms' );
 		$form_setup[]            = new Element_Textarea( '<b>' . __( "Activation Message Text", 'buddyforms' ) . '</b>', "buddyforms_options[on_user_update][activation_message_text]", array(
 			'value'     => $activation_message_text,
 			'shortDesc' => '',

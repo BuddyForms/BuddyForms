@@ -34,7 +34,7 @@ class Element_Button extends Element {
 			$class .= " btn-primary bf-submit";
 		}
 
-		if(!empty($type) && $type === 'button' && $properties['name'] === 'draft'){
+		if ( ! empty( $type ) && $type === 'button' && $properties['name'] === 'draft' ) {
 			$class .= " btn-alt bf-draft";
 		}
 

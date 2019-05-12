@@ -5,8 +5,8 @@ function uploadHandler() {
 
     function getFirstSubmitButton(submitButtons) {
         submitButton = jQuery.map(submitButtons, function (element) {
-		    return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
-	    })[0];
+            return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
+        })[0];
         existingHtmlInsideSubmitButton = submitButton.html();
     }
 
@@ -29,7 +29,7 @@ function uploadHandler() {
         //Container field
         var dropzoneStringId = '#' + id;
         //Set default values
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             var options = {
                 url: buddyformsGlobal.admin_url,
                 maxFilesize: maxSize,
@@ -142,7 +142,7 @@ function uploadHandler() {
     }
 
     function disableSubmitButtons(showButtonText) {
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             if (submitButtons.length > 0) {
                 showButtonText = !!(showButtonText);
                 submitButtons.attr("disabled", "disabled");
@@ -192,14 +192,14 @@ function uploadHandler() {
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
     if (jQuery.validator) {
-        jQuery.validator.addMethod("upload-ensure-amount", function (value, element,param) {
+        jQuery.validator.addMethod("upload-ensure-amount", function (value, element, param) {
             if (Dropzone) {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
                     var validation_result = currentDropZone.files.length == param;
                     if (validation_result === false) {
-                        jQuery.validator.messages['upload-ensure-amount'] = 'This field must have : '+param+' files';
+                        jQuery.validator.messages['upload-ensure-amount'] = 'This field must have : ' + param + ' files';
                     }
                     return validation_result;
 

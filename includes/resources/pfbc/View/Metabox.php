@@ -52,6 +52,6 @@ class View_Metabox extends FormView {
 			$label = $label . $this->renderRequired();
 		}
 
-		return sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
+		return sprintf( '<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label );
 	}
 }

@@ -20,8 +20,7 @@ class Element_jQueryUIDate extends Element_Textbox {
 	 * @return array
 	 */
 	public function getCSSFiles() {
-		return array(
-//			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css"
+		return array(//			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css"
 		);
 	}
 

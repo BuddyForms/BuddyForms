@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <th class="title">
 						<?php if ( $buddyforms[ $form_slug ]['form_type'] === 'contact' ) : ?>
                             <span><?php _e( 'Subject', 'buddyforms' ); ?></span>
-						<?php elseif ($buddyforms[ $form_slug ]['form_type'] === 'registration' ) : ?>
+						<?php elseif ( $buddyforms[ $form_slug ]['form_type'] === 'registration' ) : ?>
                             <span><?php _e( 'Name', 'buddyforms' ); ?></span>
 						<?php else : ?>
                             <span><?php _e( 'Title', 'buddyforms' ); ?></span>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span><?php _e( 'Actions', 'buddyforms' ); ?></span>
                         </th>
 					<?php } ?>
-	                <?php do_action( 'buddyforms_the_thead_tr_inner_last', get_the_ID(), $form_slug ); ?>
+					<?php do_action( 'buddyforms_the_thead_tr_inner_last', get_the_ID(), $form_slug ); ?>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
                                data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
                                title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
-	                        <?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
+							<?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
                         </td>
                         <td colspan="2" class="table-wrapper">
                             <table class="table table-inner">
@@ -134,7 +134,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p><?php echo $empty_post_message; ?></p>
             </div>
 
-        <?php endif; ?>
+		<?php endif; ?>
 
         <div class="bf_modal">
             <div style="display: none;"><?php wp_editor( '', 'buddyforms_form_content' ); ?></div>

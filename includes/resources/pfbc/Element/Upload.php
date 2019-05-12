@@ -37,7 +37,11 @@ class Element_Upload extends Element_Textbox {
 	public static function submission_default_value( $bf_value, $item, $field_type, $field_slug ) {
 		if ( $field_type === 'featured_image' ) {
 			$featured_img_url = get_the_post_thumbnail_url( $item->ID );
-			$result = '<a target="blank" href="' . esc_url( $featured_img_url ) . '" rel="lightbox">' . get_the_post_thumbnail( $item->ID,  array(64, 64) ) . '</a>';
+			$result           = '<a target="blank" href="' . esc_url( $featured_img_url ) . '" rel="lightbox">' . get_the_post_thumbnail( $item->ID, array(
+					64,
+					64
+				) ) . '</a>';
+
 			return $result;
 		}
 

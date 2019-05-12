@@ -85,7 +85,7 @@ function buddyforms_metabox_admin_form_metabox() {
 	$metabox_fields = array();
 	foreach ( $fields as $field_key => $field ) {
 		if ( isset( $field['metabox_enabled'] ) ) {
-			$metabox_fields[$field_key] = $field;
+			$metabox_fields[ $field_key ] = $field;
 		}
 	}
 

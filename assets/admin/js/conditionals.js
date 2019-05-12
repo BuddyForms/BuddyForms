@@ -138,7 +138,7 @@ function from_setup_create_account() {
 
 function bf_taxonomy_input(id) {
 
-    var taxonomy = jQuery( '#taxonomy_field_id_' + id ).val();
+    var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
 
     jQuery('#table_row_' + id + '_taxonomy_default').hide();
     jQuery('#table_row_' + id + '_taxonomy_include').hide();
@@ -211,7 +211,7 @@ jQuery(document).ready(function (jQuery) {
         //if(tax_field_length > 1 ){
         //    console.log('form_post_type_length neu ' + tax_field_length);
         //} else {
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -250,7 +250,7 @@ jQuery(document).ready(function (jQuery) {
 
         var attached_page = jQuery('#attached_page').val();
         var form_slug = jQuery('#attached_page').attr('data-slug');
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             from_setup_attached_page();
             jQuery.ajax({
                 type: 'POST',
@@ -402,53 +402,53 @@ jQuery(document).ready(function (jQuery) {
 
             // if (val != 'none') {
 
-                jQuery('#table_row_' + id + '_post_type_no_taxonomy_error').hide();
-                //jQuery('#table_row_' + id + '_disabled').hide();
+            jQuery('#table_row_' + id + '_post_type_no_taxonomy_error').hide();
+            //jQuery('#table_row_' + id + '_disabled').hide();
 
-                var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
-                var taxonomy_default = jQuery("#taxonomy_default_" + id);
-                var taxonomy_include = jQuery("#taxonomy_include" + id);
-                var taxonomy_exclude = jQuery("#taxonomy_exclude" + id);
-                if(buddyformsGlobal) {
-                    jQuery.ajax({
-                        type: 'POST',
-                        url: buddyformsGlobal.admin_url,
-                        data: {
-                            "action": "buddyforms_update_taxonomy_default",
-                            "taxonomy": taxonomy,
-                        },
-                        success: function (data) {
-                            if (data != 'false') {
-                                taxonomy_default.val(null).trigger("change");
-                                taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
-                                taxonomy_default.html(data);
+            var taxonomy = jQuery('#taxonomy_field_id_' + id).val();
+            var taxonomy_default = jQuery("#taxonomy_default_" + id);
+            var taxonomy_include = jQuery("#taxonomy_include" + id);
+            var taxonomy_exclude = jQuery("#taxonomy_exclude" + id);
+            if (buddyformsGlobal) {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: buddyformsGlobal.admin_url,
+                    data: {
+                        "action": "buddyforms_update_taxonomy_default",
+                        "taxonomy": taxonomy,
+                    },
+                    success: function (data) {
+                        if (data != 'false') {
+                            taxonomy_default.val(null).trigger("change");
+                            taxonomy_default.select2({placeholder: "Select default term"}).trigger("change");
+                            taxonomy_default.html(data);
 
-                                taxonomy_include.val(null).trigger("change");
-                                taxonomy_include.select2({placeholder: "Include Items"}).trigger("change");
-                                taxonomy_include.html(data);
+                            taxonomy_include.val(null).trigger("change");
+                            taxonomy_include.select2({placeholder: "Include Items"}).trigger("change");
+                            taxonomy_include.html(data);
 
-                                taxonomy_exclude.val(null).trigger("change");
-                                taxonomy_exclude.select2({placeholder: "Exclude Items"}).trigger("change");
-                                taxonomy_exclude.html(data);
-                            }
-                        },
-                        error: function () {
-                            jQuery('<div></div>').dialog({
-                                modal: true,
-                                title: "Info",
-                                open: function () {
-                                    var markup = 'Something went wrong ;-(sorry)';
-                                    jQuery(this).html(markup);
-                                },
-                                buttons: {
-                                    Ok: function () {
-                                        jQuery(this).dialog("close");
-                                    }
-                                }
-                            });
+                            taxonomy_exclude.val(null).trigger("change");
+                            taxonomy_exclude.select2({placeholder: "Exclude Items"}).trigger("change");
+                            taxonomy_exclude.html(data);
                         }
-                    });
-                }
+                    },
+                    error: function () {
+                        jQuery('<div></div>').dialog({
+                            modal: true,
+                            title: "Info",
+                            open: function () {
+                                var markup = 'Something went wrong ;-(sorry)';
+                                jQuery(this).html(markup);
+                            },
+                            buttons: {
+                                Ok: function () {
+                                    jQuery(this).dialog("close");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
 
             // }
             bf_taxonomy_input(id);
@@ -468,29 +468,29 @@ jQuery(document).ready(function (jQuery) {
     jQuery(".public_submit_select input:radio:checked").trigger("click");
 
     var selectorForTaxAjaxOption = 'label.bf_taxonomy_ajax_ready>input[type="checkbox"][name^="buddyforms_options[form_fields]"][name$="[ajax][]"]';
-	jQuery(document.body).on('change', selectorForTaxAjaxOption, function () {
-		bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
-	});
+    jQuery(document.body).on('change', selectorForTaxAjaxOption, function () {
+        bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
+    });
 
-	if(jQuery(selectorForTaxAjaxOption).length > 0){
-		jQuery.each(jQuery(selectorForTaxAjaxOption), function(){
-			bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
-		});
-	}
+    if (jQuery(selectorForTaxAjaxOption).length > 0) {
+        jQuery.each(jQuery(selectorForTaxAjaxOption), function () {
+            bfTaxFieldShowAjaxRelatedOptions(jQuery(this));
+        });
+    }
 
-	function bfTaxFieldShowAjaxRelatedOptions(element){
-		var fieldId = element.attr('data');
-		if(fieldId) {
-			var minCharContainer = jQuery('#table_row_' + fieldId + '_minimumInputLength');
-			var input = minCharContainer.find('input.bf_hide_if_not_ajax_ready');
-			if(element.is(':checked')){
-				minCharContainer.show();
-				input.show();
-			} else {
-				minCharContainer.hide();
-				input.show();
-			}
-		}
-	}
+    function bfTaxFieldShowAjaxRelatedOptions(element) {
+        var fieldId = element.attr('data');
+        if (fieldId) {
+            var minCharContainer = jQuery('#table_row_' + fieldId + '_minimumInputLength');
+            var input = minCharContainer.find('input.bf_hide_if_not_ajax_ready');
+            if (element.is(':checked')) {
+                minCharContainer.show();
+                input.show();
+            } else {
+                minCharContainer.hide();
+                input.show();
+            }
+        }
+    }
 
 });

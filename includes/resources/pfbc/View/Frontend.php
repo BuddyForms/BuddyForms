@@ -132,7 +132,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
+		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label );
 	}
 }
 
@@ -142,7 +142,7 @@ function buddyforms_layout_style( $field_id ) {
 
 	$layout_style = isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ? $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] : '1';
 
-	$custom_class =isset( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) : '';
+	$custom_class = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['custom_class'] ) : '';
 
 	switch ( $layout_style ) {
 		case '1' :

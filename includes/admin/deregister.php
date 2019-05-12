@@ -14,7 +14,7 @@ function buddyforms_remove_admin_scripts( $hook_suffix ) {
 	global $wp_scripts, $wp_styles, $post;
 
 	// Add a check for WordPress.com to make sure its working on .com
-	if( defined('VIP_GO_ENV')){
+	if ( defined( 'VIP_GO_ENV' ) ) {
 		return;
 	}
 

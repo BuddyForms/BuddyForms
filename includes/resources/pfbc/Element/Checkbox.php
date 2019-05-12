@@ -39,7 +39,7 @@ class Element_Checkbox extends OptionElement {
 			// get optional ID
 			$id = isset( $this->_attributes["id"] ) ? ' id="' . $this->_attributes["id"] . '-' . $count . '"' : '';
 
-			echo '<label class="' , $labelClass , ' ' , sanitize_title($value) , '">';
+			echo '<label class="', $labelClass, ' ', sanitize_title( $value ), '">';
 			echo '<input', $id, $this->getAttributes( array(
 				"id",
 				"class",

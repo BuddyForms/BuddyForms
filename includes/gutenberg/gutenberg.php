@@ -1,6 +1,6 @@
 <?php
 
-if(function_exists('register_block_type')) {
+if ( function_exists( 'register_block_type' ) ) {
 	// Require all needed files
 	require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/shortcodes/shortcodes-to-blocks.php' );
 }

@@ -21,7 +21,7 @@ jQuery(document).ready(function (jQuery) {
                 return false;
             }
         }
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -52,7 +52,6 @@ jQuery(document).ready(function (jQuery) {
 
                 },
                 error: function () {
-                    ;
                     jQuery('<div></div>').dialog({
                         modal: true,
                         title: "Info",

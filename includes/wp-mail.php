@@ -196,28 +196,28 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 				}
 
 				// Replace From name Shortcodes with form element values
-				$from_name = buddyforms_email_replace_shortcode( $from_name, sprintf('[%s]', $field['slug']), $field_value );
+				$from_name = buddyforms_email_replace_shortcode( $from_name, sprintf( '[%s]', $field['slug'] ), $field_value );
 
 				// Replace Buddytext Shortcodes with form element values
-				$emailBody = buddyforms_email_replace_shortcode( $emailBody, sprintf('[%s]', $field['slug'] ), $field_value );
+				$emailBody = buddyforms_email_replace_shortcode( $emailBody, sprintf( '[%s]', $field['slug'] ), $field_value );
 			}
 		}
 
-		$post_link_html = ! empty( $postperma ) ? sprintf( '<a href="%s" target="_blank">%s</a>', $postperma , $postperma ) : '';
+		$post_link_html = ! empty( $postperma ) ? sprintf( '<a href="%s" target="_blank">%s</a>', $postperma, $postperma ) : '';
 
 		$short_codes_and_values = array(
-			'[user_login]' => $usernameauth,
-			'[user_nicename]' => $user_nicename,
-			'[user_email]' => $user_email,
-			'[first_name]' => $first_name,
-			'[last_name]' => $last_name,
+			'[user_login]'                => $usernameauth,
+			'[user_nicename]'             => $user_nicename,
+			'[user_email]'                => $user_email,
+			'[first_name]'                => $first_name,
+			'[last_name]'                 => $last_name,
 			'[published_post_link_plain]' => $postperma,
-			'[published_post_link_html]' => $post_link_html,
-			'[published_post_title]' => $post_title,
-			'[site_name]' => $blog_title,
-			'[site_url]' => $siteurl,
-			'[site_url_html]' => $siteurlhtml,
-			'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
+			'[published_post_link_html]'  => $post_link_html,
+			'[published_post_title]'      => $post_title,
+			'[site_name]'                 => $blog_title,
+			'[site_url]'                  => $siteurl,
+			'[site_url_html]'             => $siteurlhtml,
+			'[form_elements_table]'       => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
 		);
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
@@ -234,7 +234,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		}
 	}
 
-	buddyforms_email($mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc);
+	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc );
 }
 
 /**
@@ -250,17 +250,17 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param array $mail_to_cc
  * @param array $mail_to_bcc
  */
-function buddyforms_email($mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array()){
+function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array() ) {
 	// Create the email header
 	$mail_header = "MIME-Version: 1.0\n";
 	$mail_header .= "X-Priority: 1\n";
 	$mail_header .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mail_header .= "Content-Transfer-Encoding: 7bit\n\n";
 	$mail_header .= "From: $from_name <$from_email>" . "\r\n";
-	$message    = '<html><head></head><body>' . $email_body . '</body></html>';
+	$message     = '<html><head></head><body>' . $email_body . '</body></html>';
 
-	$mail_header .= buddyforms_email_prepare_cc_bcc($mail_to_cc);
-	$mail_header .= buddyforms_email_prepare_cc_bcc($mail_to_bcc, 'Bcc');
+	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_cc );
+	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'Bcc' );
 
 	// OK Let us sent the mail
 	wp_mail( $mail_to, $subject, $message, $mail_header );
@@ -323,9 +323,9 @@ add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
-    if ($new_status === $old_status) {
-        return;
-    }
+	if ( $new_status === $old_status ) {
+		return;
+	}
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
@@ -396,7 +396,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 					if ( ! empty( $field ) ) {
 						if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
 							foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
-								if( $field['slug'] === $meta_value['key'] ){
+								if ( $field['slug'] === $meta_value['key'] ) {
 									$mail_address = $meta_value['value'];
 									break;
 								}
@@ -427,18 +427,18 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$post_link_html = "<a href='$postperma' target='_blank'>$postperma</a>";
 
 	$short_codes_and_values = array(
-		'[user_login]' => $usernameauth,
-		'[user_nicename]' => $user_nicename,
-		'[user_email]' => $user_email,
-		'[first_name]' => $first_name,
-		'[last_name]' => $last_name,
+		'[user_login]'                => $usernameauth,
+		'[user_nicename]'             => $user_nicename,
+		'[user_email]'                => $user_email,
+		'[first_name]'                => $first_name,
+		'[last_name]'                 => $last_name,
 		'[published_post_link_plain]' => $postperma,
-		'[published_post_link_html]' => $post_link_html,
-		'[published_post_title]' => $post_title,
-		'[site_name]' => $blog_title,
-		'[site_url]' => $siteurl,
-		'[site_url_html]' => $siteurlhtml,
-		'[form_elements_table]' => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
+		'[published_post_link_html]'  => $post_link_html,
+		'[published_post_title]'      => $post_title,
+		'[site_name]'                 => $blog_title,
+		'[site_url]'                  => $siteurl,
+		'[site_url_html]'             => $siteurlhtml,
+		'[form_elements_table]'       => buddyforms_mail_notification_form_elements_as_table( $form_slug ),
 	);
 
 	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
@@ -447,7 +447,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	$emailBody = nl2br( $emailBody );
 
- 	buddyforms_email($mail_to, $subject, $from_name, $from_email, $emailBody);
+	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody );
 }
 
 
@@ -516,7 +516,7 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug ) {
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
 		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
-		unset($value, $field_value);
+		unset( $value, $field_value );
 	}
 	// Table end
 	$message .= "</table>";

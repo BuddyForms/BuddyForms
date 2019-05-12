@@ -257,7 +257,7 @@ function buddyforms_form_elements( $form, $args ) {
 								}
 								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 							} else {
-								$wp_editor_label = '<label for="buddyforms_form_content">'  . $name . $required . '</label>';
+								$wp_editor_label = '<label for="buddyforms_form_content">' . $name . $required . '</label>';
 							}
 
 							//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
@@ -349,7 +349,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 					case 'status' :
 
-						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) && count($customfield['post_status']) > 0 ) {
+						if ( isset( $customfield['post_status'] ) && is_array( $customfield['post_status'] ) && count( $customfield['post_status'] ) > 0 ) {
 							$post_status = array();
 							if ( in_array( 'pending', $customfield['post_status'] ) ) {
 								$post_status['pending'] = __( 'Pending Review', 'buddyforms' );
@@ -465,8 +465,8 @@ function buddyforms_form_elements( $form, $args ) {
 						);
 
 						//check if post has manual excerpt
-						if (has_excerpt($post_id)) {
-							$customfield_val = get_the_excerpt($post_id);
+						if ( has_excerpt( $post_id ) ) {
+							$customfield_val = get_the_excerpt( $post_id );
 						}
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
@@ -542,23 +542,23 @@ function buddyforms_form_elements( $form, $args ) {
 						$id                              = $slug;
 						$action                          = isset( $_GET['action'] ) ? $_GET['action'] : "";
 						$page                            = isset( $_GET['page'] ) ? $_GET['page'] : "";
-						$result         = "";
-						$result_value   = "";
-						$entries        = array();
-						$entries_result = "";
+						$result                          = "";
+						$result_value                    = "";
+						$entries                         = array();
+						$entries_result                  = "";
 						if ( $post_id > 0 ) {
 							//Load the current feature image
-							$post_feature_image_id = get_post_thumbnail_id($post_id);
-							$metadata = wp_prepare_attachment_for_js( $post_feature_image_id );
+							$post_feature_image_id = get_post_thumbnail_id( $post_id );
+							$metadata              = wp_prepare_attachment_for_js( $post_feature_image_id );
 							if ( $metadata != null ) {
-								$url                     = wp_get_attachment_thumb_url( $post_feature_image_id );
-								$result                  .= $post_feature_image_id . ",";
-								$mockFile                = new stdClass();
-								$mockFile->name          = $metadata['filename'];
-								$mockFile->url           = $url;
-								$mockFile->attachment_id = $post_feature_image_id;
-								$mockFile->size          = $metadata['filesizeInBytes'];
-								$entries[ $post_feature_image_id ]    = $mockFile;
+								$url                               = wp_get_attachment_thumb_url( $post_feature_image_id );
+								$result                            .= $post_feature_image_id . ",";
+								$mockFile                          = new stdClass();
+								$mockFile->name                    = $metadata['filename'];
+								$mockFile->url                     = $url;
+								$mockFile->attachment_id           = $post_feature_image_id;
+								$mockFile->size                    = $metadata['filesizeInBytes'];
+								$entries[ $post_feature_image_id ] = $mockFile;
 							}
 						}
 						if ( count( $entries ) > 0 ) {
@@ -788,8 +788,8 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$taxonomy = isset( $customfield['taxonomy'] ) && $customfield['taxonomy'] != 'none' ? $customfield['taxonomy'] : '';
 						$order    = $customfield['taxonomy_order'];
-						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode(',', $customfield['taxonomy_exclude']) : '';
-						$include  = isset( $customfield['taxonomy_include'] ) ? implode(',', $customfield['taxonomy_include']) : '';
+						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode( ',', $customfield['taxonomy_exclude'] ) : '';
+						$include  = isset( $customfield['taxonomy_include'] ) ? implode( ',', $customfield['taxonomy_include'] ) : '';
 
 						$args = array(
 							'hide_empty'    => 0,
@@ -819,7 +819,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
 						}
 
-						$args     = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
+						$args = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
 
 						$dropdown = wp_dropdown_categories( $args );
 
@@ -857,32 +857,32 @@ function buddyforms_form_elements( $form, $args ) {
 
 						$tags                   = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
 						$maximumSelectionLength = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
-						$minimumInputLength = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
-						$ajax_options = '';
-						$is_ajax = isset( $customfield['ajax'] );
-						if($is_ajax){
+						$minimumInputLength     = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
+						$ajax_options           = '';
+						$is_ajax                = isset( $customfield['ajax'] );
+						if ( $is_ajax ) {
 							$ajax_options .= $minimumInputLength;
 							$ajax_options .= 'ajax:{ ' .
-								                 'url: "'.admin_url( 'admin-ajax.php' ).'", ' .
-								                 'delay: 250, ' .
-								                 'dataType: "json", ' .
-								                 'cache: true, ' .
-								                 'method : "POST", ' .
-								                 'data: function (params) { ' .
-									                 'var query = { ' .
-										                 'search: params.term, ' .
-										                 'type: "public", ' .
-										                 'action: "bf_load_taxonomy", ' .
-										                 'nonce: "'.wp_create_nonce( 'bf_tax_loading') .'", ' .
-										                 'form_slug: "'. $form_slug .'", ' .
-										                 'taxonomy: "' . $taxonomy . '", ' .
-										                 'order: "' . $order . '", ' .
-										                 'exclude: "' . $exclude . '", ' .
-										                 'include: "' . $include . '" ' .
-								                        '}; ' .
+							                 'url: "' . admin_url( 'admin-ajax.php' ) . '", ' .
+							                 'delay: 250, ' .
+							                 'dataType: "json", ' .
+							                 'cache: true, ' .
+							                 'method : "POST", ' .
+							                 'data: function (params) { ' .
+							                 'var query = { ' .
+							                 'search: params.term, ' .
+							                 'type: "public", ' .
+							                 'action: "bf_load_taxonomy", ' .
+							                 'nonce: "' . wp_create_nonce( 'bf_tax_loading' ) . '", ' .
+							                 'form_slug: "' . $form_slug . '", ' .
+							                 'taxonomy: "' . $taxonomy . '", ' .
+							                 'order: "' . $order . '", ' .
+							                 'exclude: "' . $exclude . '", ' .
+							                 'include: "' . $include . '" ' .
+							                 '}; ' .
 
-								                    'return query; ' .
-								                 ' } ' .
+							                 'return query; ' .
+							                 ' } ' .
 							                 '}, ';
 						}
 						$dropdown = '
@@ -972,7 +972,7 @@ function buddyforms_form_elements( $form, $args ) {
 						}
 						break;
 					case 'form_actions':
-						$form = buddyforms_form_action_buttons($form, $form_slug, $post_id, $customfield);
+						$form = buddyforms_form_action_buttons( $form, $form_slug, $post_id, $customfield );
 						break;
 
 					default:

@@ -304,14 +304,14 @@ function buddyforms_form_elements_select_options() {
 
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 
-			$elements_select_options['post']['fields']['taxonomy']       =
+			$elements_select_options['post']['fields']['taxonomy'] =
 				array(
 					'label' => __( 'Taxonomy', 'buddyforms' ),
 				);
 
-			$elements_select_options['basic']['fields']['form_actions']   =
+			$elements_select_options['basic']['fields']['form_actions'] =
 				array(
-					'label'  => __( 'Form Actions', 'buddyforms' ),
+					'label' => __( 'Form Actions', 'buddyforms' ),
 				);
 
 			$elements_select_options['user']['fields']['date'] =

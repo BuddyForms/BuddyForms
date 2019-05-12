@@ -70,7 +70,8 @@
 
                                 <div class="misc-pub-section">
                                     <span class="dashicons dashicons-format-aside wp-media-buttons-icon"></span>&nbsp;<a
-                                            href="#" onclick="window.print();return false;"><?php _e( 'Print', 'buddyforms' ) ?></a>
+                                            href="#"
+                                            onclick="window.print();return false;"><?php _e( 'Print', 'buddyforms' ) ?></a>
                                 </div>
 
                                 <div class="misc-pub-section">
@@ -90,7 +91,7 @@
 
                     <div class="misc-pub-section">
                         <span class="dashicons dashicons-id wp-media-buttons-icon"></span>
-	                    <?php _e( 'Entry ID', 'buddyforms' ) ?>:
+						<?php _e( 'Entry ID', 'buddyforms' ) ?>:
                         <b><?php echo $post_id; ?></b>
                     </div>
 
@@ -107,7 +108,7 @@
                         <h3 class="hndle"><span><?php _e( 'WordPress User', 'buddyforms' ) ?></span></h3>
                         <div class="inside">
                             <div class="misc-pub-section">
-                                <p><?php _e( 'User ID:', 'buddyforms' ) ?> <?php echo $bf_registration_user_id ?></p>
+                                <p><?php _e( 'User ID:', 'buddyforms' ) ?><?php echo $bf_registration_user_id ?></p>
                                 <p>
                                     <span class="dashicons dashicons-admin-users"></span>&nbsp;
                                     <a href="<?php echo get_edit_user_link( $bf_registration_user_id ) ?>"><?php _e( 'Edit User', 'buddyforms' ) ?></a>

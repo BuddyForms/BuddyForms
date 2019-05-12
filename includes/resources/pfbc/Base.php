@@ -109,7 +109,7 @@ abstract class Base {
 
 		return $str;
 	}
-	
+
 	/**
 	 * Filter special characters
 	 *
@@ -124,7 +124,7 @@ abstract class Base {
 			return htmlspecialchars( $str );
 		}
 	}
-	
+
 	/**
 	 * Convert special characters to HTML entities
 	 *
@@ -151,15 +151,6 @@ abstract class Base {
 	}
 
 	/**
-	 * Get the Required Signal by default &nbsp;*&nbsp;
-	 *
-	 * @return string
-	 */
-	public function getRequiredSignal() {
-		return apply_filters( 'buddyforms_render_required_signal', '&nbsp;&ast;&nbsp;' );
-	}
-
-	/**
 	 * Output or return the required flag
 	 *
 	 * @param bool $echo
@@ -167,11 +158,20 @@ abstract class Base {
 	 * @return string
 	 */
 	public function renderRequired( $echo = false ) {
-		$html   = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
+		$html = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
 		if ( $echo ) {
 			echo $html;
 		} else {
 			return $html;
 		}
+	}
+
+	/**
+	 * Get the Required Signal by default &nbsp;*&nbsp;
+	 *
+	 * @return string
+	 */
+	public function getRequiredSignal() {
+		return apply_filters( 'buddyforms_render_required_signal', '&nbsp;&ast;&nbsp;' );
 	}
 }
