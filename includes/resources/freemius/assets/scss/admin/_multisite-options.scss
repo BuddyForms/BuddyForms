@@ -1,40 +1,40 @@
 #multisite_options_container {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    padding: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
 
-    a {
-        text-decoration: none;
+  a {
+    text-decoration: none;
 
-        &:focus {
-            box-shadow: none;
-        }
-
-        &.selected {
-            font-weight: bold;
-        }
+    &:focus {
+      box-shadow: none;
     }
 
-    &.apply-on-all-sites {
-        border: 0 none;
-        padding: 0;
-
-        #all_sites_options {
-            border-spacing: 0;
-
-            td:not(:first-child) {
-                display: none;
-            }
-        }
+    &.selected {
+      font-weight: bold;
     }
+  }
 
-    #sites_list_container {
+  &.apply-on-all-sites {
+    border: 0 none;
+    padding: 0;
+
+    #all_sites_options {
+      border-spacing: 0;
+
+      td:not(:first-child) {
         display: none;
-        overflow: auto;
-
-        table td {
-            border-top: 1px solid #ccc;
-            padding: 4px 2px;
-        }
+      }
     }
+  }
+
+  #sites_list_container {
+    display: none;
+    overflow: auto;
+
+    table td {
+      border-top: 1px solid #ccc;
+      padding: 4px 2px;
+    }
+  }
 }

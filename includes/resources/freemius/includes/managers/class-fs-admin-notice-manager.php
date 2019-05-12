@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class FS_Admin_Notice_Manager {
 	/**
+	 * @var FS_Admin_Notice_Manager[]
+	 */
+	private static $_instances = array();
+	private static $_added_sticky_javascript = false;
+	/**
 	 * @since 1.2.2
 	 *
 	 * @var string
@@ -26,6 +31,10 @@ class FS_Admin_Notice_Manager {
 	 */
 	protected $_title;
 	/**
+	 * @var FS_Logger
+	 */
+	protected $_logger;
+	/**
 	 * @var array[string]array
 	 */
 	private $_notices = array();
@@ -33,10 +42,6 @@ class FS_Admin_Notice_Manager {
 	 * @var FS_Key_Value_Storage
 	 */
 	private $_sticky_storage;
-	/**
-	 * @var FS_Logger
-	 */
-	protected $_logger;
 	/**
 	 * @since 2.0.0
 	 * @var int The ID of the blog that is associated with the current site level admin notices.
@@ -47,59 +52,6 @@ class FS_Admin_Notice_Manager {
 	 * @var bool
 	 */
 	private $_is_network_notices;
-
-	/**
-	 * @var FS_Admin_Notice_Manager[]
-	 */
-	private static $_instances = array();
-
-	/**
-	 * @param string $id
-	 * @param string $title
-	 * @param string $module_unique_affix
-	 * @param bool $is_network_and_blog_admins Whether or not the message should be shown both on
-	 *                                                     network and blog admin pages.
-	 * @param bool $network_level_or_blog_id Since 2.0.0
-	 *
-	 * @return \FS_Admin_Notice_Manager
-	 */
-	static function instance(
-		$id,
-		$title = '',
-		$module_unique_affix = '',
-		$is_network_and_blog_admins = false,
-		$network_level_or_blog_id = false
-	) {
-		if ( $is_network_and_blog_admins ) {
-			$network_level_or_blog_id = true;
-		}
-
-		$key = strtolower( $id );
-
-		if ( is_multisite() ) {
-			if ( true === $network_level_or_blog_id ) {
-				$key .= ':ms';
-			} else if ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
-				$key .= ":{$network_level_or_blog_id}";
-			} else {
-				$network_level_or_blog_id = get_current_blog_id();
-
-				$key .= ":{$network_level_or_blog_id}";
-			}
-		}
-
-		if ( ! isset( self::$_instances[ $key ] ) ) {
-			self::$_instances[ $key ] = new FS_Admin_Notice_Manager(
-				$id,
-				$title,
-				$module_unique_affix,
-				$is_network_and_blog_admins,
-				$network_level_or_blog_id
-			);
-		}
-
-		return self::$_instances[ $key ];
-	}
 
 	/**
 	 * @param string $id
@@ -168,15 +120,128 @@ class FS_Admin_Notice_Manager {
 	}
 
 	/**
-	 * Remove sticky message by ID.
+	 * Add admin message to admin messages queue, and hook to admin_notices / all_admin_notices if not yet hooked.
 	 *
 	 * @author Vova Feldman (@svovaf)
-	 * @since  1.0.7
+	 * @since  1.0.4
 	 *
+	 * @param string $message
+	 * @param string $title
+	 * @param string $type
+	 * @param bool $is_sticky
+	 * @param string $id Message ID
+	 * @param bool $store_if_sticky
+	 * @param number|null $wp_user_id
+	 * @param string|null $plugin_title
+	 * @param bool $is_network_and_blog_admins Whether or not the message should be shown both on network
+	 *                                                and blog admin pages.
+	 *
+	 * @uses   add_action()
 	 */
-	function dismiss_notice_ajax_callback() {
-		$this->_sticky_storage->remove( $_POST['message_id'] );
-		wp_die();
+	function add(
+		$message,
+		$title = '',
+		$type = 'success',
+		$is_sticky = false,
+		$id = '',
+		$store_if_sticky = true,
+		$wp_user_id = null,
+		$plugin_title = null,
+		$is_network_and_blog_admins = false
+	) {
+		$notices_type = $this->get_notices_type();
+
+		if ( empty( $this->_notices ) ) {
+			if ( ! $is_network_and_blog_admins ) {
+				add_action( $notices_type, array( &$this, "_admin_notices_hook" ) );
+			} else {
+				add_action( 'network_admin_notices', array( &$this, "_admin_notices_hook" ) );
+				add_action( 'admin_notices', array( &$this, "_admin_notices_hook" ) );
+			}
+
+			add_action( 'admin_enqueue_scripts', array( &$this, '_enqueue_styles' ) );
+		}
+
+		if ( '' === $id ) {
+			$id = md5( $title . ' ' . $message . ' ' . $type );
+		}
+
+		$message_object = array(
+			'message'    => $message,
+			'title'      => $title,
+			'type'       => $type,
+			'sticky'     => $is_sticky,
+			'id'         => $id,
+			'manager_id' => $this->_id,
+			'plugin'     => ( ! is_null( $plugin_title ) ? $plugin_title : $this->_title ),
+			'wp_user_id' => $wp_user_id,
+		);
+
+		if ( $is_sticky && $store_if_sticky ) {
+			$this->_sticky_storage->{$id} = $message_object;
+		}
+
+		$this->_notices[ $id ] = $message_object;
+	}
+
+	/**
+	 * @author Vova Feldman (@svovaf)
+	 * @since  2.0.0
+	 *
+	 * @return string
+	 */
+	private function get_notices_type() {
+		return $this->_is_network_notices ?
+			'network_admin_notices' :
+			'admin_notices';
+	}
+
+	/**
+	 * @param string $id
+	 * @param string $title
+	 * @param string $module_unique_affix
+	 * @param bool $is_network_and_blog_admins Whether or not the message should be shown both on
+	 *                                                     network and blog admin pages.
+	 * @param bool $network_level_or_blog_id Since 2.0.0
+	 *
+	 * @return \FS_Admin_Notice_Manager
+	 */
+	static function instance(
+		$id,
+		$title = '',
+		$module_unique_affix = '',
+		$is_network_and_blog_admins = false,
+		$network_level_or_blog_id = false
+	) {
+		if ( $is_network_and_blog_admins ) {
+			$network_level_or_blog_id = true;
+		}
+
+		$key = strtolower( $id );
+
+		if ( is_multisite() ) {
+			if ( true === $network_level_or_blog_id ) {
+				$key .= ':ms';
+			} else if ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
+				$key .= ":{$network_level_or_blog_id}";
+			} else {
+				$network_level_or_blog_id = get_current_blog_id();
+
+				$key .= ":{$network_level_or_blog_id}";
+			}
+		}
+
+		if ( ! isset( self::$_instances[ $key ] ) ) {
+			self::$_instances[ $key ] = new FS_Admin_Notice_Manager(
+				$id,
+				$title,
+				$module_unique_affix,
+				$is_network_and_blog_admins,
+				$network_level_or_blog_id
+			);
+		}
+
+		return self::$_instances[ $key ];
 	}
 
 	/**
@@ -190,18 +255,16 @@ class FS_Admin_Notice_Manager {
 		fs_require_once_template( 'sticky-admin-notice-js.php', $params );
 	}
 
-	private static $_added_sticky_javascript = false;
-
 	/**
-	 * Hook to the admin_footer to add sticky message dismiss JavaScript handler.
+	 * Remove sticky message by ID.
 	 *
 	 * @author Vova Feldman (@svovaf)
 	 * @since  1.0.7
+	 *
 	 */
-	private static function has_sticky_messages() {
-		if ( ! self::$_added_sticky_javascript ) {
-			add_action( 'admin_footer', array( 'FS_Admin_Notice_Manager', '_add_sticky_dismiss_javascript' ) );
-		}
+	function dismiss_notice_ajax_callback() {
+		$this->_sticky_storage->remove( $_POST['message_id'] );
+		wp_die();
 	}
 
 	/**
@@ -281,16 +344,6 @@ class FS_Admin_Notice_Manager {
 	}
 
 	/**
-	 * Enqueue common stylesheet to style admin notice.
-	 *
-	 * @author Vova Feldman (@svovaf)
-	 * @since  1.0.7
-	 */
-	function _enqueue_styles() {
-		fs_enqueue_local_style( 'fs_common', '/admin/common.css' );
-	}
-
-	/**
 	 * Check if the current page is the Gutenberg block editor.
 	 *
 	 * @author Vova Feldman (@svovaf)
@@ -319,68 +372,25 @@ class FS_Admin_Notice_Manager {
 	}
 
 	/**
-	 * Add admin message to admin messages queue, and hook to admin_notices / all_admin_notices if not yet hooked.
+	 * Hook to the admin_footer to add sticky message dismiss JavaScript handler.
 	 *
 	 * @author Vova Feldman (@svovaf)
-	 * @since  1.0.4
-	 *
-	 * @param string $message
-	 * @param string $title
-	 * @param string $type
-	 * @param bool $is_sticky
-	 * @param string $id Message ID
-	 * @param bool $store_if_sticky
-	 * @param number|null $wp_user_id
-	 * @param string|null $plugin_title
-	 * @param bool $is_network_and_blog_admins Whether or not the message should be shown both on network
-	 *                                                and blog admin pages.
-	 *
-	 * @uses   add_action()
+	 * @since  1.0.7
 	 */
-	function add(
-		$message,
-		$title = '',
-		$type = 'success',
-		$is_sticky = false,
-		$id = '',
-		$store_if_sticky = true,
-		$wp_user_id = null,
-		$plugin_title = null,
-		$is_network_and_blog_admins = false
-	) {
-		$notices_type = $this->get_notices_type();
-
-		if ( empty( $this->_notices ) ) {
-			if ( ! $is_network_and_blog_admins ) {
-				add_action( $notices_type, array( &$this, "_admin_notices_hook" ) );
-			} else {
-				add_action( 'network_admin_notices', array( &$this, "_admin_notices_hook" ) );
-				add_action( 'admin_notices', array( &$this, "_admin_notices_hook" ) );
-			}
-
-			add_action( 'admin_enqueue_scripts', array( &$this, '_enqueue_styles' ) );
+	private static function has_sticky_messages() {
+		if ( ! self::$_added_sticky_javascript ) {
+			add_action( 'admin_footer', array( 'FS_Admin_Notice_Manager', '_add_sticky_dismiss_javascript' ) );
 		}
+	}
 
-		if ( '' === $id ) {
-			$id = md5( $title . ' ' . $message . ' ' . $type );
-		}
-
-		$message_object = array(
-			'message'    => $message,
-			'title'      => $title,
-			'type'       => $type,
-			'sticky'     => $is_sticky,
-			'id'         => $id,
-			'manager_id' => $this->_id,
-			'plugin'     => ( ! is_null( $plugin_title ) ? $plugin_title : $this->_title ),
-			'wp_user_id' => $wp_user_id,
-		);
-
-		if ( $is_sticky && $store_if_sticky ) {
-			$this->_sticky_storage->{$id} = $message_object;
-		}
-
-		$this->_notices[ $id ] = $message_object;
+	/**
+	 * Enqueue common stylesheet to style admin notice.
+	 *
+	 * @author Vova Feldman (@svovaf)
+	 * @since  1.0.7
+	 */
+	function _enqueue_styles() {
+		fs_enqueue_local_style( 'fs_common', '/admin/common.css' );
 	}
 
 	/**
@@ -442,6 +452,10 @@ class FS_Admin_Notice_Manager {
 		$this->add( $message, $title, $type, true, $id, true, $wp_user_id, $plugin_title, $is_network_and_blog_admins );
 	}
 
+	#--------------------------------------------------------------------------------
+	#region Helper Method
+	#--------------------------------------------------------------------------------
+
 	/**
 	 * Clear all sticky messages.
 	 *
@@ -450,22 +464,6 @@ class FS_Admin_Notice_Manager {
 	 */
 	function clear_all_sticky() {
 		$this->_sticky_storage->clear_all();
-	}
-
-	#--------------------------------------------------------------------------------
-	#region Helper Method
-	#--------------------------------------------------------------------------------
-
-	/**
-	 * @author Vova Feldman (@svovaf)
-	 * @since  2.0.0
-	 *
-	 * @return string
-	 */
-	private function get_notices_type() {
-		return $this->_is_network_notices ?
-			'network_admin_notices' :
-			'admin_notices';
 	}
 
 	#endregion
