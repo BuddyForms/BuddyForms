@@ -152,7 +152,7 @@ jQuery(document).ready(function (jQuery) {
 
         jQuery('#post').html(poststuff);
         jQuery('#post, #postbox-container-1, #postbox-container-2').show();
-        if (buddyformsGlobal) {
+        if(buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -166,7 +166,7 @@ jQuery(document).ready(function (jQuery) {
 
     // Get the Form Type Templates for Step 1
     function select_form_type() {
-        if (buddyformsGlobal) {
+        if(buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -241,7 +241,7 @@ jQuery(document).ready(function (jQuery) {
 
         function add_form_elements_select() {
             // Get all form elements for the selected form type and add them to the form builder
-            if (buddyformsGlobal) {
+            if(buddyformsGlobal) {
                 jQuery.ajax({
                     type: 'POST',
                     url: buddyformsGlobal.admin_url,
@@ -252,10 +252,9 @@ jQuery(document).ready(function (jQuery) {
                 });
             }
         }
-
-        function load_field_containers() {
+		function load_field_containers() {
             jQuery(document.body).trigger({type: "buddyform:load_fields"});
-        }
+		}
 
         add_form_elements_select();
 
@@ -332,7 +331,7 @@ jQuery(document).ready(function (jQuery) {
                     return true;
                 }
                 if (currentIndex == 2) {
-                    load_field_containers();
+	                load_field_containers();
                     return true;
                 }
                 if (currentIndex == 3) {
@@ -372,7 +371,7 @@ jQuery(document).ready(function (jQuery) {
             },
             onFinished: function (event, currentIndex) {
                 var FormData = jQuery(form).serialize();
-                if (buddyformsGlobal) {
+                if(buddyformsGlobal) {
                     jQuery.ajax({
                         type: 'POST',
                         url: buddyformsGlobal.admin_url,

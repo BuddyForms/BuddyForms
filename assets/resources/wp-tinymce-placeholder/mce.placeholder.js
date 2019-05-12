@@ -89,7 +89,7 @@
                 this.hide();
             }
 
-        };
+        }
 
         Label.prototype.setPosition = function () {
             var padding_top = tinymce.DOM.getStyle(this.contentAreaContainer, 'padding-top');
@@ -98,7 +98,7 @@
                 tinymce.DOM.setStyle(this.el, 'top', padding_top);
             }
 
-        };
+        }
 
         Label.prototype.hide = function () {
             tinymce.DOM.setStyle(this.el, 'display', 'none');

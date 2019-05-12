@@ -4,7 +4,8 @@
     // Namespace.
     global.FS = global.FS || {};
 
-    global.FS.PostMessage = function () {
+    global.FS.PostMessage = function ()
+    {
         var
             _is_child = false,
             _postman = new NoJQueryPostMessageMixin('postMessage', 'receiveMessage'),
@@ -29,12 +30,13 @@
             $html = $('html');
 
         return {
-            init: function (url, iframes) {
+            init : function (url, iframes)
+            {
                 _base_url = url;
                 _init();
 
                 // Automatically receive forward messages.
-                FS.PostMessage.receiveOnce('forward', function (data) {
+                FS.PostMessage.receiveOnce('forward', function (data){
                     window.location = data.url;
                 });
 
@@ -48,7 +50,8 @@
                     });
                 }
             },
-            init_child: function () {
+            init_child : function ()
+            {
                 this.init(_parent_subdomain);
 
                 _is_child = true;
@@ -61,32 +64,36 @@
                     FS.PostMessage.post('loaded');
                 });
             },
-            hasParent: function () {
+            hasParent : function ()
+            {
                 return _hasParent;
             },
-            postHeight: function (diff, wrapper) {
+            postHeight : function (diff, wrapper) {
                 diff = diff || 0;
                 wrapper = wrapper || '#wrap_section';
                 this.post('height', {
                     height: diff + $(wrapper).outerHeight(true)
                 });
             },
-            postScroll: function (iframe) {
+            postScroll : function (iframe) {
                 this.post('scroll', {
                     top: $window.scrollTop(),
                     height: ($window.height() - parseFloat($html.css('paddingTop')) - parseFloat($html.css('marginTop')))
                 }, iframe);
             },
-            post: function (type, data, iframe) {
+            post : function (type, data, iframe)
+            {
                 console.debug('PostMessage.post', type);
 
-                if (iframe) {
+                if (iframe)
+                {
                     // Post to iframe.
                     _postman.postMessage(JSON.stringify({
                         type: type,
                         data: data
                     }), iframe.src, iframe.contentWindow);
-                } else {
+                }
+                else {
                     // Post to parent.
                     _postman.postMessage(JSON.stringify({
                         type: type,
@@ -94,7 +101,8 @@
                     }), _parent_url, window.parent);
                 }
             },
-            receive: function (type, callback) {
+            receive: function (type, callback)
+            {
                 console.debug('PostMessage.receive', type);
 
                 if (undef === _callbacks[type])
@@ -102,20 +110,24 @@
 
                 _callbacks[type].push(callback);
             },
-            receiveOnce: function (type, callback) {
+            receiveOnce: function (type, callback)
+            {
                 if (this.is_set(type))
                     return;
 
                 this.receive(type, callback);
             },
             // Check if any callbacks assigned to a specified message type.
-            is_set: function (type) {
+            is_set: function (type)
+            {
                 return (undef != _callbacks[type]);
             },
-            parent_url: function () {
+            parent_url: function ()
+            {
                 return _parent_url;
             },
-            parent_subdomain: function () {
+            parent_subdomain: function ()
+            {
                 return _parent_subdomain;
             }
         };

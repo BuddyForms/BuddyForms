@@ -43,6 +43,6 @@ class View_Inline extends FormView {
 			$label = $label . $this->renderRequired();
 		}
 
-		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label );
+		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
 	}
 }

@@ -71,8 +71,7 @@ $post_id = get_the_ID();
         <div id="bf-submissions-entry-actions" class="bf-submission-metabox bf-col-50">
             <div class="inner-wrap">
                 <h3><?php _e( 'Entry Actions', 'buddyforms' ) ?></h3>
-                <p>
-                    <span id="timestamp-<?php echo $post_id; ?>"><?php _e( 'Submitted on:', 'buddyforms' ) ?> <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
+                <p><span id="timestamp-<?php echo $post_id; ?>"><?php _e( 'Submitted on:', 'buddyforms' ) ?> <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
                 </p>
                 <p>
                     <span class="dashicons dashicons-format-aside wp-media-buttons-icon"> </span>

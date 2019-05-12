@@ -1,4 +1,4 @@
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
     var submitButton;
     if (submitButtons.length > 0) {
@@ -15,7 +15,7 @@ jQuery(document).ready(function () {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
-                    var validation_result = currentDropZone.files.length > 0;
+                    var validation_result= currentDropZone.files.length > 0;
                     if (validation_result === false) {
                         jQuery.validator.messages['featured-image-required'] = validation_error_message;
                     }
@@ -49,22 +49,22 @@ jQuery(document).ready(function () {
 
     }
 
-    jQuery(".featured-image-uploader").each(function (index, value) {
+    jQuery(".featured-image-uploader").each(function(index, value) {
         var current = jQuery(this),
             id = current.attr('id'),
             max_file_size = current.attr('max_file_size'),
             action = current.attr('action'),
             page = current.attr('page'),
             uploadFields = current.data('entry')
-        ;
-        var entrada = current.find('input:text');
+          ;
+       var entrada= current.find('input:text');
 
 
         Dropzone.autoDiscover = false;
         var clickeable = page !== 'buddyforms_submissions';
         var currentField = jQuery('#field_' + id);
 
-        if (buddyformsGlobal) {
+        if(buddyformsGlobal) {
             var myDropzone = new Dropzone("div#" + id, {
                 url: buddyformsGlobal.admin_url,
                 maxFilesize: max_file_size,

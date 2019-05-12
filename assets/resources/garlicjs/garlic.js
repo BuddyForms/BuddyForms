@@ -16,7 +16,7 @@
      * =============================== */
     var Storage = function (options) {
         this.defined = 'undefined' !== typeof localStorage;
-    };
+    }
 
     Storage.prototype = {
 
@@ -63,14 +63,14 @@
             localStorage.clear();
             return 'function' === typeof fn ? fn() : true;
         }
-    };
+    }
 
     /* GARLIC PUBLIC CLASS DEFINITION
      * =============================== */
 
     var Garlic = function (element, storage, options) {
         this.init('garlic', element, storage, options);
-    };
+    }
 
     Garlic.prototype = {
 
@@ -85,7 +85,7 @@
             this.path = this.options.getPath(this.$element) || this.getPath();
             this.parentForm = this.$element.closest('form');
             this.$element.addClass('garlic-auto-save');
-            this.expiresFlag = !this.options.expires ? false : (this.$element.data('expires') ? this.path : this.getPath(this.parentForm)) + '_flag';
+            this.expiresFlag = !this.options.expires ? false : ( this.$element.data('expires') ? this.path : this.getPath(this.parentForm) ) + '_flag';
 
             // bind garlic events
             this.$element.on(this.options.events.join('.' + this.type + ' '), false, $.proxy(this.persist, this));
@@ -114,7 +114,7 @@
 
             // if auto-expires is enabled, set the expiration date for future auto-deletion
             if (this.options.expires) {
-                this.storage.set(this.expiresFlag, (new Date().getTime() + this.options.expires * 1000).toString());
+                this.storage.set(this.expiresFlag, ( new Date().getTime() + this.options.expires * 1000 ).toString());
             }
 
             this.storage.set(this.path, this.getVal());
@@ -123,7 +123,7 @@
         }
 
         , getVal: function () {
-            return !this.$element.is('input[type=checkbox]') ? this.$element.val() : (this.$element.prop('checked') ? 'checked' : 'unchecked');
+            return !this.$element.is('input[type=checkbox]') ? this.$element.val() : ( this.$element.prop('checked') ? 'checked' : 'unchecked' );
         }
 
         /* retrieve localStorage data / state and update elem accordingly */
@@ -137,7 +137,7 @@
                         this.storage.destroy(this.path);
                         return;
                     } else {
-                        this.$element.attr('expires-in', Math.floor((parseInt(this.storage.get(this.expiresFlag)) - date) / 1000));
+                        this.$element.attr('expires-in', Math.floor(( parseInt(this.storage.get(this.expiresFlag)) - date ) / 1000));
                     }
                 }
 
@@ -172,7 +172,7 @@
                 // trigger custom user function when data is retrieved
                 this.options.onRetrieve(this.$element, storedValue);
 
-
+                return;
             }
         }
 
@@ -196,7 +196,7 @@
                     this.$element.find('option').each(function () {
                         if ($(this).index() !== 0 && $(this).attr('selected') && $(this).val() !== self.storage.get(this.path)) {
                             selectConflictDetected = true;
-
+                            return;
                         }
                     });
 
@@ -321,7 +321,7 @@
                     name += ':eq(' + siblings.index(realNode) + ')';
                 }
 
-                path = name + (path ? '>' + path : '');
+                path = name + ( path ? '>' + path : '' );
 
                 // break once we came up to form:eq(x), no need to go further
                 if ('form' == realNode.nodeName.toLowerCase()) {
@@ -331,13 +331,13 @@
                 node = parent;
             }
 
-            return 'garlic:' + document.domain + (this.options.domain ? '*' : window.location.pathname) + '>' + path;
+            return 'garlic:' + document.domain + ( this.options.domain ? '*' : window.location.pathname ) + '>' + path;
         }
 
         , getStorage: function () {
             return this.storage;
         }
-    };
+    }
 
     /* GARLIC PLUGIN DEFINITION
      * ========================= */
@@ -369,7 +369,7 @@
 
             // if data never binded, bind it right now!
             if (!data) {
-                $this.data('garlic', (data = new Garlic(self, storage, fieldOptions)));
+                $this.data('garlic', ( data = new Garlic(self, storage, fieldOptions) ));
             }
 
             // here is our garlic public function accessor, currently does not support args
@@ -401,7 +401,7 @@
         });
 
         return 'function' === typeof fn ? fn() : returnValue;
-    };
+    }
 
     /* GARLIC CONFIGS & OPTIONS
      * ========================= */
@@ -429,7 +429,7 @@
         }                                                           // This function will be triggered each time Garlic find an retrieve a local stored data for a field
         , onPersist: function ($item, storedVal) {
         }                                                            // This function will be triggered each time Garlic stores a field to local storage
-    };
+    }
 
 
     /* GARLIC DATA-API

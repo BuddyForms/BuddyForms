@@ -77,7 +77,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 		$trigger = substr( md5( time() * rand() ), 0, 10 );
 	}
 
-	$shortDesc = sprintf( "<br><h4>%s</h4><p>%s</p>", __( 'User Shortcodes', 'buddyforms' ), __( 'You can use any form element slug as shortcode [FIELD SLUG].', 'buddyforms' ) );
+	$shortDesc = sprintf("<br><h4>%s</h4><p>%s</p>", __( 'User Shortcodes', 'buddyforms' ), __( 'You can use any form element slug as shortcode [FIELD SLUG].', 'buddyforms' ));
 
 	$form_setup[] = new Element_Hidden( "buddyforms_options[mail_submissions][" . $trigger . "][mail_trigger_id]", $trigger, array( 'class' => 'trigger' . $trigger ) );
 
@@ -134,8 +134,8 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 
 	$mail_to_cc = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) && in_array( 'cc', $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? '' : 'hidden';
 	$attrs      = array(
-		"class" => 'mail_to_cc_address ' . $mail_to_cc,
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
+		"class"    => 'mail_to_cc_address ' . $mail_to_cc,
+		'value'    => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to_cc_address'] : ''
 	);
 	if ( empty( $mail_to_cc ) ) {
 		$attrs['required'] = 1;
@@ -181,9 +181,9 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	$wp_editor    = '<div class="bf_field_group bf_form_content">
 	<label for="form_title"><b>' . __( 'eMail Message Content', 'buddyforms' ) . '</b><br>
 
-		<p><strong>' . __( 'Important: ', 'buddyforms' ) . '</strong>' . __( 'If you use the "Message" form element you can leave this field empty and the "Message" form element value will be used . If you enter content in here, this content will overwrite the "Message" form element .', 'buddyforms' ) . '</p>
-		<p>' . __( 'You can add any form element with tags [] e . g . [ message ] will be replaced with the form element "Message" [ form_elements_table ] will add a table of all form elements .', 'buddyforms' ) . '</p>
-		<p>' . __( 'If no "Message" form element is uses and "no content" is added a table with all form elements will get auto generated .', 'buddyforms' ) . '</p>
+		<p><strong>'. __( 'Important: ', 'buddyforms' ).'</strong>'. __( 'If you use the "Message" form element you can leave this field empty and the "Message" form element value will be used . If you enter content in here, this content will overwrite the "Message" form element .', 'buddyforms' ).'</p>
+		<p>'.__( 'You can add any form element with tags [] e . g . [ message ] will be replaced with the form element "Message" [ form_elements_table ] will add a table of all form elements .', 'buddyforms' ).'</p>
+		<p>'. __( 'If no "Message" form element is uses and "no content" is added a table with all form elements will get auto generated .', 'buddyforms' ).'</p>
 	</label>
 	<div class="bf_inputs bf-texteditor">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
@@ -210,11 +210,9 @@ function buddyforms_mail_notification_form( $trigger = false ) {
                             <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
-                                         title="<?php _e( 'Edit this Field', 'buddyforms' ) ?>"
-                                         href="javascript:"><?php _e( 'Edit', 'buddyforms' ) ?></a> | </span>
-                                <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>"
-                                         title="<?php _e( 'Delete this Field', 'buddyforms' ) ?>"
-                                         href="javascript:"><?php _e( 'Delete', 'buddyforms' ) ?></a></span>
+                                         title="<?php _e( 'Edit this Field', 'buddyforms' ) ?>" href="javascript:;"><?php _e( 'Edit', 'buddyforms' ) ?></a> | </span>
+                                <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>" title="<?php _e( 'Delete this Field', 'buddyforms' ) ?>"
+                                         href="javascript:;"><?php _e( 'Delete', 'buddyforms' ) ?></a></span>
                             </td>
                         </tr>
                         </tbody>
@@ -248,25 +246,25 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
 
 	$shortDesc = "
     <br>
-    <h4>" . __( 'User Shortcodes', 'buddyforms' ) . "</h4>
+    <h4>". __('User Shortcodes', 'buddyforms')."</h4>
     <ul>
         <li><p><b>[user_login] </b>Username</p></li>
-        <li><p><b>[user_nicename] </b>" . __( 'user_nicename is a url - sanitized version of user_login . For example, if a user’s login is user@example . com, their user_nicename will be userexample - com .', 'buddyforms' ) . "</p></li>
-        <li><p><b>[user_email]</b> " . __( 'user email', 'buddyforms' ) . "</p></li>
-        <li><p><b>[first_name]</b> " . __( 'user first name', 'buddyforms' ) . "</p></li>
-        <li><p><b>[last_name] </b> " . __( 'user last name', 'buddyforms' ) . "</p></li>
+        <li><p><b>[user_nicename] </b>". __( 'user_nicename is a url - sanitized version of user_login . For example, if a user’s login is user@example . com, their user_nicename will be userexample - com .', 'buddyforms' )."</p></li>
+        <li><p><b>[user_email]</b> ". __( 'user email', 'buddyforms' )."</p></li>
+        <li><p><b>[first_name]</b> ". __( 'user first name', 'buddyforms' )."</p></li>
+        <li><p><b>[last_name] </b> ". __( 'user last name', 'buddyforms' )."</p></li>
     </ul>
-    <h4>" . __( 'Published Post Shortcodes', 'buddyforms' ) . "</h4>
+    <h4>". __( 'Published Post Shortcodes', 'buddyforms' )."</h4>
     <ul>
-        <li><p><b>[published_post_link_html]</b> " . __( 'the published post link in html', 'buddyforms' ) . "</p></li>
-        <li><p><b>[published_post_link_plain]</b> " . __( 'the published post link in plain', 'buddyforms' ) . "</p></li>
-        <li><p><b>[published_post_title]</b> " . __( 'the published post title', 'buddyforms' ) . "</p></li>
+        <li><p><b>[published_post_link_html]</b> ". __( 'the published post link in html', 'buddyforms' )."</p></li>
+        <li><p><b>[published_post_link_plain]</b> ". __( 'the published post link in plain', 'buddyforms' )."</p></li>
+        <li><p><b>[published_post_title]</b> ". __( 'the published post title', 'buddyforms' )."</p></li>
     </ul>
-    <h4>" . __( 'Site Shortcodes', 'buddyforms' ) . "</h4>
+    <h4>". __( 'Site Shortcodes', 'buddyforms' )."</h4>
     <ul>
-        <li><p><b>[site_name]</b> " . __( 'the site name', 'buddyforms' ) . " </p></li>
-        <li><p><b>[site_url]</b> " . __( 'the site url', 'buddyforms' ) . "</p></li>
-        <li><p><b>[site_url_html]</b> " . __( 'the site url in html', 'buddyforms' ) . "</p></li>
+        <li><p><b>[site_name]</b> ". __( 'the site name', 'buddyforms' )." </p></li>
+        <li><p><b>[site_url]</b> ". __( 'the site url', 'buddyforms' )."</p></li>
+        <li><p><b>[site_url_html]</b> ". __( 'the site url in html', 'buddyforms' )."</p></li>
     </ul>
         ";
 
@@ -338,11 +336,9 @@ function buddyforms_new_post_status_mail_notification_form( $trigger ) {
                             <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"
                                          data-parent="#accordion_text" href="#accordion_<?php echo $trigger ?>"
-                                         title="<?php _e( 'Edit this Field', 'buddyforms' ) ?>"
-                                         href="javascript:"><?php _e( 'Edit', 'buddyforms' ) ?></a> | </span>
-                                <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>"
-                                         title="<?php _e( 'Delete this Field', 'buddyforms' ) ?>"
-                                         href="javascript:"><?php _e( 'Delete', 'buddyforms' ) ?></a></span>
+                                         title="<?php _e( 'Edit this Field', 'buddyforms' ) ?>" href="javascript:;"><?php _e( 'Edit', 'buddyforms' ) ?></a> | </span>
+                                <span><a class="bf_delete_trigger" id="<?php echo $trigger ?>" title="<?php _e( 'Delete this Field', 'buddyforms' ) ?>"
+                                         href="javascript:;"><?php _e( 'Delete', 'buddyforms' ) ?></a></span>
                             </td>
                         </tr>
                         </tbody>

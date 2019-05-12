@@ -50,8 +50,7 @@ function buddyforms_metabox_shortcodes() {
         </div>
         <br>
         <p>
-            <a target="_blank"
-               href="http://docs.buddyforms.com/article/141-shortcodes"><?php _e( 'List of all Available Shortcodes', 'buddyforms' ); ?> </a>
+            <a target="_blank" href="http://docs.buddyforms.com/article/141-shortcodes"><?php _e( 'List of all Available Shortcodes', 'buddyforms' ); ?> </a>
         </p>
     </div>
 	<?php

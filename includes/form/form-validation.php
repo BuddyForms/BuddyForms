@@ -82,10 +82,10 @@ function buddyforms_jquery_validation() {
 	$form_html = '<script type="text/javascript">';
 
 	foreach ( $buddyforms as $form_slug => $form ) {
-		// Create the needed Validation JS.
-		$form_html      .= '
+			// Create the needed Validation JS.
+      $form_html .=  '
       jQuery(function() { ';
-		$validator_init = '
+    $validator_init = '
       jQuery("#buddyforms_form_' . $form_slug . '").submit(function(){}).validate({
         errorPlacement: function(label, element) {
           if (element.is("TEXTAREA")) {
@@ -98,20 +98,17 @@ function buddyforms_jquery_validation() {
         }
       });';
 
-		//allow the validate script to be altered
-		$form_html .= apply_filters( 'buddyforms_jquery_validator_init', $validator_init, $form_slug );
+    //allow the validate script to be altered
+    $form_html .= apply_filters('buddyforms_jquery_validator_init', $validator_init, $form_slug);
 
-		$field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array(
-			'upload',
-			'featured_image'
-		) );
+    $field_types_avoid_jquery_validation = apply_filters( 'buddyforms_jquery_validator_field_to_pass', array( 'upload', 'featured_image' ) );
 
-		$form_html .= 'if (jQuery.validator) {
+    $form_html .= 'if (jQuery.validator) {
       setTimeout(function() {';
 
 		if ( isset( $form['form_fields'] ) ) {
 			foreach ( $form['form_fields'] as $key => $form_field ) {
-				if ( in_array( $form_field['type'], $field_types_avoid_jquery_validation ) ) {
+				if(in_array($form_field['type'], $field_types_avoid_jquery_validation)){
 					continue;
 				}
 

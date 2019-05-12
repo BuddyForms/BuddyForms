@@ -111,7 +111,7 @@ function buddyforms_the_loop( $args ) {
 
 	$query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 
-	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] ) ) {
+	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] )) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
@@ -340,7 +340,7 @@ function buddyforms_button_add_new( $args ) {
 	BuddyForms::front_js_css();
 	BuddyForms::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $label_add . '</a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $label_add . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 

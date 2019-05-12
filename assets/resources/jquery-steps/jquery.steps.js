@@ -141,7 +141,8 @@
         // Validate content
         if (stepTitles.length > stepContents.length) {
             throwError(_missingCorrespondingElementErrorMessage, "contents");
-        } else if (stepTitles.length < stepContents.length) {
+        }
+        else if (stepTitles.length < stepContents.length) {
             throwError(_missingCorrespondingElementErrorMessage, "titles");
         }
 
@@ -259,7 +260,8 @@
         if (wizard.triggerHandler("finishing", [state.currentIndex])) {
             currentStep.addClass("done").removeClass("error");
             wizard.triggerHandler("finished", [state.currentIndex]);
-        } else {
+        }
+        else {
             currentStep.addClass("error");
         }
     }
@@ -461,7 +463,8 @@
             startTransitionEffect(wizard, options, state, index, oldIndex, function () {
                 wizard.triggerHandler("stepChanged", [index, oldIndex]);
             });
-        } else {
+        }
+        else {
             wizard.find(".steps li").eq(oldIndex).addClass("error");
         }
 
@@ -524,11 +527,11 @@
      * @param step {Object} The step object to add
      * @example
      *     $("#wizard").steps().insert(0, {
-     *         title: "Title",
-     *         content: "", // optional
-     *         contentMode: "async", // optional
-     *         contentUrl: "/Content/Step/1" // optional
-     *     });
+ *         title: "Title",
+ *         content: "", // optional
+ *         contentMode: "async", // optional
+ *         contentUrl: "/Content/Step/1" // optional
+ *     });
      * @chainable
      **/
     function insertStep(wizard, options, state, index, step) {
@@ -557,7 +560,8 @@
 
         if (index === 0) {
             contentContainer.prepend(body).prepend(header);
-        } else {
+        }
+        else {
             getStepPanel(wizard, (index - 1)).after(body).after(header);
         }
 
@@ -608,7 +612,8 @@
         if (event.keyCode === keyCodes.left) {
             event.preventDefault();
             goToPreviousStep(wizard, options, state);
-        } else if (event.keyCode === keyCodes.right) {
+        }
+        else if (event.keyCode === keyCodes.right) {
             event.preventDefault();
             goToNextStep(wizard, options, state);
         }
@@ -747,7 +752,8 @@
             if (options.enableFinishButton && options.showFinishButtonAlways) {
                 finish._enableAria(state.stepCount > 0);
                 next._enableAria(state.stepCount > 1 && state.stepCount > (state.currentIndex + 1));
-            } else {
+            }
+            else {
                 finish._showAria(options.enableFinishButton && state.stepCount === (state.currentIndex + 1));
                 next._showAria(state.stepCount === 0 || state.stepCount > (state.currentIndex + 1))._enableAria(state.stepCount > (state.currentIndex + 1) || !options.enableFinishButton);
             }
@@ -1034,7 +1040,8 @@
 
         if (index === 0) {
             stepCollection.prepend(stepItem);
-        } else {
+        }
+        else {
             stepCollection.find("li").eq(index - 1).after(stepItem);
         }
 
@@ -1181,9 +1188,11 @@
     $.fn.steps = function (method) {
         if ($.fn.steps[method]) {
             return $.fn.steps[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === "object" || !method) {
+        }
+        else if (typeof method === "object" || !method) {
             return initialize.apply(this, arguments);
-        } else {
+        }
+        else {
             $.error("Method " + method + " does not exist on jQuery.steps");
         }
     };
@@ -1259,11 +1268,11 @@
      * @param step {Object} The step object to add
      * @example
      *     $("#wizard").steps().insert(0, {
-     *         title: "Title",
-     *         content: "", // optional
-     *         contentMode: "async", // optional
-     *         contentUrl: "/Content/Step/1" // optional
-     *     });
+ *         title: "Title",
+ *         content: "", // optional
+ *         contentMode: "async", // optional
+ *         contentUrl: "/Content/Step/1" // optional
+ *     });
      * @chainable
      **/
     $.fn.steps.insert = function (index, step) {

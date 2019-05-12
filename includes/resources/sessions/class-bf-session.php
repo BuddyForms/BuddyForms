@@ -77,7 +77,7 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 			// Update the session expiration if we're past the variant time
 			if ( time() > $this->exp_variant ) {
 				$this->set_expiration();
-				delete_transient( "_wp_session_{$this->session_id}" );
+				delete_transient("_wp_session_{$this->session_id}");
 			}
 		} else {
 			$this->session_id = $this->generate_id();
@@ -108,7 +108,7 @@ final class BF_Session extends Recursive_ArrayAccess implements Iterator, Counta
 	 */
 	public function regenerate_id( $delete_old = false ) {
 		if ( $delete_old ) {
-			delete_transient( "_wp_session_{$this->session_id}" );
+			delete_transient("_wp_session_{$this->session_id}");
 		}
 
 		$this->session_id = $this->generate_id();

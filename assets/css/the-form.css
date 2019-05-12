@@ -58,7 +58,7 @@
 }
 
 #loginform input.input {
-    max-width: 300px;
+  max-width: 300px;
 }
 
 #loginform input.input,
@@ -190,16 +190,15 @@ ul.bf_files {
 
 #poststuff {
     padding-top: 0;
-    min-width: auto;
+     min-width: auto;
 }
-
 .bf_inputs li {
     list-style: none;
 }
 
 button.bf-draft:disabled,
-button.bf-submit:disabled {
-    background-color: #c4c4c4;
+button.bf-submit:disabled{
+	background-color: #c4c4c4;
 }
 
 .bf-draft {
@@ -212,12 +211,12 @@ button.bf-submit:disabled {
     display: none !important;
 }
 
-#wp-admin-bar-buddyforms-admin-edit-form > a.ab-item:before {
-    content: "\e000";
-    font-family: 'icomoon';
-    font-size: 27px;
-    padding: 0;
-    padding-right: 10px;
+#wp-admin-bar-buddyforms-admin-edit-form>a.ab-item:before {
+	content: "\e000";
+	font-family: 'icomoon';
+	font-size: 27px;
+	padding: 0;
+	padding-right: 10px;
 }
 
 #bf_hweb {

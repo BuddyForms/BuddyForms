@@ -101,7 +101,7 @@ function buddyforms_welcome_screen_content() {
 
         <div class="wrap about-wrap buddyforms-welcome">
 
-            <h1><?php _e( 'Welcome to BuddyForms', 'buddyforms' ) ?><?php echo BUDDYFORMS_VERSION ?></h1>
+            <h1><?php _e( 'Welcome to BuddyForms', 'buddyforms' ) ?> <?php echo BUDDYFORMS_VERSION ?></h1>
 
             <p class="about-text"><?php _e( 'Enjoy Groundbreaking New Features and Add-ons!', 'buddyforms' ) ?></p>
 
@@ -117,7 +117,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( 'Gutenberg Support', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'BuddyForms support now Gutenberg out of the box and comes with 5 different Gutenberg Blocks ', 'buddyforms' ) ?>
+	                    <?php _e( 'BuddyForms support now Gutenberg out of the box and comes with 5 different Gutenberg Blocks ', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -139,7 +139,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( 'Embed Forms', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar', 'buddyforms' ) ?>
+				        <?php _e( 'Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -160,7 +160,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( 'List Submissions', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.', 'buddyforms' ) ?>
+				        <?php _e( 'You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -181,7 +181,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( 'Embed Navigation', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder', 'buddyforms' ) ?>
+				        <?php _e( 'Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -202,7 +202,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( 'Login/ Logout Form', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'Display a login form or a logout button if the user is logged in.', 'buddyforms' ) ?>
+				        <?php _e( 'Display a login form or a logout button if the user is logged in.', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -223,7 +223,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="xcol col-big">
                     <h2><?php _e( ' Password Reset', 'buddyforms' ) ?></h2>
                     <p class="lead">
-						<?php _e( 'Display a password reset form. This can be helpful if you want to create a registration form and ask the user to create a password first after he clicks on the activation link. Select the page with the password reset block as a redirect link in the registration form settings if you like to create this kind of funnel.', 'buddyforms' ) ?>
+				        <?php _e( 'Display a password reset form. This can be helpful if you want to create a registration form and ask the user to create a password first after he clicks on the activation link. Select the page with the password reset block as a redirect link in the registration form settings if you like to create this kind of funnel.', 'buddyforms' ) ?>
                     </p>
                 </div>
 
@@ -243,14 +243,12 @@ function buddyforms_welcome_screen_content() {
                 <div class="bfw-col bfw-col-50">
                     <h2 class="bfw-title"><?php _e( 'Latest Blogpost', 'buddyforms' ) ?></h2>
                     <p class="lead"><?php _e( 'Read all about this new BuddyForms version Tips and Tricks:', 'buddyforms' ) ?></p>
-                    <a href="https://themekraft.com/buddyforms-news/" target="_new"
-                       class="button button-primary"><?php _e( 'Read Blogpost', 'buddyforms' ) ?></a>
+                    <a href="https://themekraft.com/buddyforms-news/" target="_new" class="button button-primary"><?php _e( 'Read Blogpost', 'buddyforms' ) ?></a>
                 </div>
                 <div class="bfw-col bfw-col-50">
                     <h2 class="bfw-title"><?php _e( 'Changelog', 'buddyforms' ) ?></h2>
-                    <p class="lead"><?php echo __( 'Check out the changelog for the version', 'buddyforms' ) . ' ' . BUDDYFORMS_VERSION ?></p>
-                    <a href="https://wordpress.org/plugins/buddyforms/changelog/" target="_new"
-                       class="button button-primary"><?php _e( 'View Changelog', 'buddyforms' ) ?></a></p>
+                    <p class="lead"><?php echo __( 'Check out the changelog for the version', 'buddyforms' ). ' ' .BUDDYFORMS_VERSION ?></p>
+                    <a href="https://wordpress.org/plugins/buddyforms/changelog/" target="_new" class="button button-primary"><?php _e( 'View Changelog', 'buddyforms' ) ?></a></p>
                 </div>
             </div>
 
@@ -261,8 +259,7 @@ function buddyforms_welcome_screen_content() {
                 <div class="bfw-col bfw-col-50">
                     <div class="well">
                         <h3 class="bfw-title"><?php _e( 'First Time Here?', 'buddyforms' ) ?></h3>
-                        <a class="button xbutton-primary" href="http://docs.buddyforms.com/category/122-form-creation"
-                           title="" target="new"><?php _e( 'Getting Started', 'buddyforms' ) ?></a>
+                        <a class="button xbutton-primary" href="http://docs.buddyforms.com/category/122-form-creation" title="" target="new"><?php _e( 'Getting Started', 'buddyforms' ) ?></a>
                     </div>
                 </div>
                 <div class="bfw-col bfw-col-50">

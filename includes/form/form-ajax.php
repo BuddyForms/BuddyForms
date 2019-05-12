@@ -16,12 +16,12 @@ function buddyforms_ajax_edit_post() {
 
 add_action( 'wp_ajax_bf_load_taxonomy', 'buddyforms_ajax_load_taxonomy' );
 add_action( 'wp_ajax_nopriv_bf_load_taxonomy', 'buddyforms_ajax_load_taxonomy' );
-function buddyforms_ajax_load_taxonomy() {
-	if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+function buddyforms_ajax_load_taxonomy(){
+	if (! (is_array($_POST) && defined('DOING_AJAX') && DOING_AJAX)) {
 		return;
 	}
 
-	if ( ! isset( $_POST['action'] ) || wp_verify_nonce( $_POST['nonce'], 'bf_tax_loading' ) === false ) {
+	if ( ! isset($_POST['action']) || wp_verify_nonce($_POST['nonce'], 'bf_tax_loading') === false ) {
 		wp_die();
 	}
 
@@ -97,13 +97,13 @@ function buddyforms_ajax_process_edit_post() {
 
 	$args = buddyforms_process_submission( $formdata );
 
-	$hasError    = false;
+	$hasError = false;
 	$form_notice = '';
-	$form_slug   = '';
+	$form_slug = '';
 
 	$json_array = array();
 
-	$error_message = __( 'There was an error please check the form!', 'buddyforms' );
+    $error_message = __('There was an error please check the form!', 'buddyforms');
 
 	extract( $args );
 
@@ -127,8 +127,8 @@ function buddyforms_ajax_process_edit_post() {
 
 		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
 
-		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
-		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$form_type = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 		$message_source = 'after_submit_message_text';
 		if ( 'registration' === $form_type ) {
 			if ( is_user_logged_in() ) {
@@ -139,7 +139,7 @@ function buddyforms_ajax_process_edit_post() {
 				$message_source = 'after_update_submit_message_text';
 			}
 		}
-		$display_message     = buddyforms_form_display_message( $form_slug, $args['post_id'], $message_source );
+		$display_message = buddyforms_form_display_message($form_slug, $args['post_id'], $message_source);
 		$args['form_notice'] = $display_message;
 
 		if ( isset( $buddyforms[ $_POST['form_slug'] ]['after_submit'] ) ) {
@@ -158,8 +158,8 @@ function buddyforms_ajax_process_edit_post() {
 					break;
 				case 'display_posts_list':
 					$json_array['form_remove'] = 'true';
-					$permalink                 = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
-					$post_list_link            = $permalink . 'view/' . $args['form_slug'] . '/';
+					$permalink           = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
+					$post_list_link      = $permalink . 'view/' . $args['form_slug'] . '/';
 					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
 					$json_array['form_notice'] .= $display_message;
 					break;
@@ -212,29 +212,29 @@ function buddyforms_ajax_delete_post() {
 	}
 
 	//Delete Files from server option
-	$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
-	foreach ( $buddyFData as $key => $value ) {
+    $buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
+    foreach ( $buddyFData as $key => $value ) {
 
-		$field = $value['slug'];
-		$type  = $value['type'];
-		if ( $type == 'upload' ) {
-			//Check if the option Delete Files When Remove Entry is ON.
-			$can_delete_files = isset( $value['delete_files'] ) ? true : false;
-			if ( $can_delete_files ) {
-				// If true then Delete the files attached to the entry
-				$column_val = get_post_meta( $post_id, $field, true );
-				if ( ! empty( $column_val ) ) {
-					$attachmet_id = explode( ",", $column_val );
-					foreach ( $attachmet_id as $id ) {
-						wp_delete_attachment( $id, true );
-					}
+        $field = $value['slug'];
+        $type  = $value['type'];
+        if ( $type == 'upload' ) {
+            //Check if the option Delete Files When Remove Entry is ON.
+            $can_delete_files = isset( $value['delete_files'] ) ? true : false;
+            if ( $can_delete_files ) {
+                // If true then Delete the files attached to the entry
+                $column_val   = get_post_meta( $post_id, $field, true );
+                if(!empty($column_val)){
+                    $attachmet_id = explode( ",", $column_val );
+                    foreach ( $attachmet_id as $id ) {
+                        wp_delete_attachment( $id, true );
+                    }
 
-				}
+                }
 
-			}
+            }
 
-		}
-	}
+        }
+    }
 
 
 	// Check if the user is author of the post

@@ -18,10 +18,7 @@ class BuddyFormsSubmissionPage {
 	}
 
 	public function buddyforms_create_submissions_page() {
-		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), $this->bf_submission_capability, 'buddyforms_submissions', array(
-			$this,
-			'buddyforms_submissions_screen'
-		) );
+		$buddyforms_submission_admin_page = add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Submissions', 'buddyforms' ), __( 'Submissions', 'buddyforms' ), $this->bf_submission_capability, 'buddyforms_submissions', array( $this, 'buddyforms_submissions_screen' ) );
 		add_action( "load-$buddyforms_submission_admin_page", array( $this, 'buddyforms_submissions_add_options' ) );
 	}
 
@@ -85,8 +82,7 @@ class BuddyFormsSubmissionPage {
 							<?php if ( ! $this->has_the_capability( $form_slug ) ) : ?>
 								<?php continue; ?>
 							<?php endif; ?>
-                            <option <?php selected( $selected_form, $form_slug ) ?>
-                                    value="<?php echo $form_slug ?>"><?php echo $form['name']; ?></option>
+                            <option <?php selected( $selected_form, $form_slug ) ?> value="<?php echo $form_slug ?>"><?php echo $form['name']; ?></option>
 						<?php endforeach; ?>
                     </select>
                 </li>
@@ -224,7 +220,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$form_slug = isset( $_GET['form_slug'] ) ? $_GET['form_slug'] : "";
 		$actions   = array(
 			'edit'   => sprintf( '<a href="post.php?post=%s&action=%s">%s</a>', $item->ID, 'edit', __( 'Edit', 'buddyforms' ) ),
-			'delete' => '<a href="' . get_delete_post_link( $item->ID, '', true ) . '&form_slug=' . $form_slug . '" class="submitdelete deletion" onclick="return confirm(\'' . __( 'Are you sure you want to delete that entry?', 'buddyforms' ) . ' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>',
+			'delete' => '<a href="' . get_delete_post_link( $item->ID, '', true ) . '&form_slug=' . $form_slug . '" class="submitdelete deletion" onclick="return confirm(\'' . __( 'Are you sure you want to delete that entry?', 'buddyforms' ) . '\');" title="' . __( 'Delete', 'buddyforms' ) . '">' . __( 'Delete', 'buddyforms' ) . '</a>',
 		);
 
 		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && $buddyforms[ $_GET['form_slug'] ]['post_type'] == 'bf_submissions' ) {

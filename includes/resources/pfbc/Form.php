@@ -484,6 +484,27 @@ class Form extends Base {
 		echo '</style>';
 	}
 
+	protected function renderCSSFiles() {
+		$urls = array();
+		foreach ( $this->_elements as $element ) {
+			$elementUrls = $element->getCSSFiles();
+			if ( is_array( $elementUrls ) ) {
+				$urls = array_merge( $urls, $elementUrls );
+			}
+		}
+
+		/*This section prevents duplicate css files from being loaded.*/
+		if ( ! empty( $urls ) ) {
+			$urls = array_values( array_unique( $urls ) );
+			foreach ( $urls as $url ) {
+				echo '<link type="text/css" rel="stylesheet" href="', $url, '"/>';
+			}
+		}
+	}
+
+	/*When ajax is used to submit the form's data, validation errors need to be manually sent back to the
+	form using json.*/
+
 	protected function renderJS() {
 		$this->renderJSFiles();
 
@@ -562,7 +583,7 @@ JS;
                         },
                         success: function(response) {
     
-                        console.log(response);
+                        console.log(response)
     
                         jQuery.each(response, function (i, val) {
     
@@ -613,19 +634,15 @@ JS;
                              scrollTop: (jQuery("#buddyforms_form_hero_$form_slug"))
                          }, 2000);
                         }
-                    })
-
+                    });
                 }
                 return false;
-            })
+            });
 JS;
 		}
 
 		echo '}); </script>';
 	}
-
-	/*When ajax is used to submit the form's data, validation errors need to be manually sent back to the
-	form using json.*/
 
 	protected function renderJSFiles() {
 		$urls = array();
@@ -702,6 +719,8 @@ JS;
 		return self::_call( self::$form, $type, $props );
 	}
 
+	/*The save method serialized the form's instance and saves it in the session.*/
+
 	/**
 	 * @param $form
 	 * @param $type
@@ -725,7 +744,8 @@ JS;
 		return $form;
 	}
 
-	/*The save method serialized the form's instance and saves it in the session.*/
+	/*Valldation errors are saved in the session after the form submission, and will be displayed to the user
+	when redirected back to the form.*/
 
 	/**
 	 * @return array
@@ -734,9 +754,6 @@ JS;
 		return array( "_attributes", "_elements", "errorView" );
 	}
 
-	/*Valldation errors are saved in the session after the form submission, and will be displayed to the user
-	when redirected back to the form.*/
-
 	/**
 	 * @return mixed
 	 */
@@ -744,15 +761,15 @@ JS;
 		return $this->ajax;
 	}
 
+	/*An associative array is used to pre-populate form elements.  The keys of this array correspond with
+	the element names.*/
+
 	/**
 	 * @return array
 	 */
 	public function getElements() {
 		return $this->_elements;
 	}
-
-	/*An associative array is used to pre-populate form elements.  The keys of this array correspond with
-	the element names.*/
 
 	/**
 	 * @return ErrorView_Standard
@@ -842,23 +859,5 @@ JS;
 		$this->view->renderFormClose();
 
 		return true;
-	}
-
-	protected function renderCSSFiles() {
-		$urls = array();
-		foreach ( $this->_elements as $element ) {
-			$elementUrls = $element->getCSSFiles();
-			if ( is_array( $elementUrls ) ) {
-				$urls = array_merge( $urls, $elementUrls );
-			}
-		}
-
-		/*This section prevents duplicate css files from being loaded.*/
-		if ( ! empty( $urls ) ) {
-			$urls = array_values( array_unique( $urls ) );
-			foreach ( $urls as $url ) {
-				echo '<link type="text/css" rel="stylesheet" href="', $url, '"/>';
-			}
-		}
 	}
 }

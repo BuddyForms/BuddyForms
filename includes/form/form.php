@@ -128,7 +128,7 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 	// if post edit screen is displayed
-	if ( ! empty( $post_id ) && $buddyforms[ $form_slug ]['form_type'] !== 'registration' ) {
+	if ( ! empty( $post_id ) && $buddyforms[ $form_slug ]['form_type'] !== 'registration') {
 
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
@@ -175,10 +175,10 @@ function buddyforms_create_edit_form( $args ) {
 	$customfields = $buddyforms[ $form_slug ]['form_fields'];
 
 	if ( ! empty( $the_post ) ) {
-		if ( empty( $post_parent ) && ! empty( $the_post->post_parent ) ) {
+		if(empty($post_parent) && ! empty( $the_post->post_parent )) {
 			$post_parent = $the_post->post_parent;
 		}
-		if ( empty( $post_status ) && ! empty( $the_post->post_status ) ) {
+		if(empty($post_status) && ! empty( $the_post->post_status )) {
 			$post_status = $the_post->post_status;
 		}
 	}
@@ -196,8 +196,8 @@ function buddyforms_create_edit_form( $args ) {
 
 	if ( isset( $_POST['form_slug'] ) ) {
 		//decide if the update of create message will show.
-		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
-		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$form_type = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 		$message_source = 'after_submit_message_text';
 		if ( 'registration' === $form_type ) {
 			if ( is_user_logged_in() ) {
@@ -208,7 +208,7 @@ function buddyforms_create_edit_form( $args ) {
 				$message_source = 'after_update_submit_message_text';
 			}
 		}
-		$display_message     = buddyforms_form_display_message( $_POST['form_slug'], $args['post_id'], $message_source );
+		$display_message = buddyforms_form_display_message($_POST['form_slug'], $args['post_id'], $message_source);
 		$args['form_notice'] = $display_message;
 
 		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_message' ) {

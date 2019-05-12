@@ -137,7 +137,6 @@ function buddyforms_get_template_directory() {
  * @param $slug
  *
  * @param $form_slug
- *
  * @since 2.3.1
  */
 function buddyforms_locate_template( $slug, $form_slug = '' ) {
@@ -205,17 +204,17 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 
 	$wp_login_form = '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form(
-		array(
-			'echo'           => false,
-			'redirect'       => $redirect_url,
-			'id_username'    => 'bf_user_name',
-			'id_password'    => 'bf_user_pass',
-			'label_username' => $label_username,
-			'label_password' => $label_password,
-			'label_remember' => $label_remember,
-			'label_log_in'   => $label_log_in,
-		)
-	);
+	        array(
+	                'echo' => false,
+                    'redirect' => $redirect_url,
+                    'id_username' => 'bf_user_name',
+                    'id_password' => 'bf_user_pass' ,
+                    'label_username' => $label_username,
+                    'label_password' => $label_password,
+                    'label_remember' => $label_remember,
+                    'label_log_in'   => $label_log_in,
+            )
+    );
 
 	if ( $form_slug != 'none' ) {
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
@@ -348,21 +347,19 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 function buddyforms_post_entry_actions( $form_slug ) {
 	if ( empty( $form_slug ) ) {
 		echo '';
-
 		return;
 	}
 	global $buddyforms, $post;
 	if ( ! isset( $buddyforms[ $form_slug ] ) || $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
 		echo '';
-
 		return;
 	}
 	?>
     <ul class="edit_links">
 		<?php
-		$is_author               = buddyforms_is_author( $post->ID );
-		$user_can_all_submission = current_user_can( 'buddyforms_' . $form_slug . '_all' );
-		if ( $is_author || $user_can_all_submission && ( isset( $buddyforms[ $form_slug ]['attached_page'] ) ) ) {
+        $is_author = buddyforms_is_author( $post->ID );
+        $user_can_all_submission = current_user_can( 'buddyforms_' . $form_slug . '_all' );
+		if ( $is_author || $user_can_all_submission && (isset($buddyforms[ $form_slug ]['attached_page']))) {
 
 			$permalink = '';
 			if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
@@ -403,7 +400,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
 					} else {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ), '', '', 0, false), get_the_ID(), $form_slug );
 					}
 					echo '</li>';
 				}
@@ -706,7 +703,7 @@ function buddyforms_get_form_fields( $form_slug ) {
  */
 function buddyforms_exist_field_type_in_form( $form_slug, $field_type ) {
 	$fields = buddyforms_get_form_fields( $form_slug );
-	$exist  = false;
+	$exist = false;
 	if ( empty( $fields ) ) {
 		return $exist;
 	}
@@ -998,7 +995,7 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 			$display_message = buddyforms_default_message_on_update();
 		}
 	}
-	if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
+	if(!empty($buddyforms[ $form_slug ]['attached_page'])) {
 		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
 	}
@@ -1011,17 +1008,7 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 }
 
 function buddyforms_user_fields_array() {
-	return array(
-		'user_login',
-		'user_email',
-		'user_first',
-		'user_last',
-		'user_pass',
-		'user_website',
-		'user_bio',
-		'country',
-		'state'
-	);
+	return array( 'user_login', 'user_email', 'user_first', 'user_last', 'user_pass', 'user_website', 'user_bio', 'country', 'state' );
 }
 
 function buddyforms_default_message_on_update() {
@@ -1041,7 +1028,7 @@ add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_me
 function buddyforms_upload_handle_dropped_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
 	status_header( 200 );
-	$newupload = 0;
+	$newupload   = 0;
 	if ( ! empty( $_FILES ) ) {
 		$files = $_FILES;
 		foreach ( $files as $file_id => $file ) {
@@ -1090,13 +1077,13 @@ function buddyforms_check_loaded_file( $file_name ) {
 }
 
 
+
 function buddyform_get_role_names() {
 
 	global $wp_roles;
 
-	if ( ! isset( $wp_roles ) ) {
+	if ( ! isset( $wp_roles ) )
 		$wp_roles = new WP_Roles();
-	}
 
 	return $wp_roles->get_names();
 }
@@ -1148,20 +1135,20 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
  */
 function buddyforms_get_form_slug_from_html( $content ) {
 	if ( ! empty( $content ) ) {
-		try {
-			libxml_use_internal_errors( true );
-			$dom                  = new DOMDocument();
-			$dom->validateOnParse = false;
-			$content              = mb_convert_encoding( $content, 'HTML-ENTITIES', "UTF-8" );
-			$dom->loadHTML( $content );
-			$form_input_node = $dom->getElementById( 'form_slug' );
-			libxml_use_internal_errors( false );
-			if ( ! empty( $form_input_node ) && $form_input_node instanceof DOMElement ) {
-				return $form_input_node->getAttribute( 'value' );
-			}
-		} catch ( Exception $e ) {
+	    try {
+	        libxml_use_internal_errors(true);
+		    $dom                  = new DOMDocument();
+		    $dom->validateOnParse = false;
+		    $content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
+		    $dom->loadHTML( $content );
+		    $form_input_node = $dom->getElementById( 'form_slug' );
+		    libxml_use_internal_errors(false);
+		    if ( ! empty( $form_input_node ) && $form_input_node instanceof DOMElement ) {
+			    return $form_input_node->getAttribute( 'value' );
+		    }
+	    } catch (Exception $e){
 
-		}
+        }
 	}
 
 	return '';
@@ -1206,7 +1193,7 @@ function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( '
 			$form_slug = $regex[1][0];
 		}
 		if ( empty( $form_slug ) ) {
-			$regex = array();
+		    $regex = array();
 			preg_match( '/"bf_form_slug":"(.*)",/m', $content, $regex );//gutenberg block
 			if ( ! empty( $regex ) && isset( $regex[1] ) ) {
 				$form_slug = $regex[1];
@@ -1237,8 +1224,8 @@ function buddyforms_is_gutenberg_page() {
 		return true;
 	}
 
-	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
-	require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+	require_once(ABSPATH . 'wp-admin/includes/screen.php');
+	require_once(ABSPATH . 'wp-admin/includes/admin.php');
 	$current_screen = get_current_screen();
 	if ( method_exists( $current_screen, 'is_block_editor' ) &&
 	     $current_screen->is_block_editor()
@@ -1264,17 +1251,14 @@ function buddyforms_is_gutenberg_page() {
 function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id ) {
 	/**
 	 * Let the user change the user granted options to use in the frontend global variable buddyformsGlobal
-	 *
-	 * @param array granted keys from the options
+     *
+     * @param array granted keys from the options
 	 * @param string The form slug from the global wp_query
 	 * @param number The current post id form the wp_query. This can be empty when the form is creating an entry.
-	 *
+     *
 	 * @since 2.4.0
 	 */
-	$granted = apply_filters( 'buddyforms_frontend_granted_forms_option', array(
-		'status',
-		'form_fields'
-	), $form_slug, $bf_post_id );
+	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields' ), $form_slug, $bf_post_id);
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
@@ -1346,8 +1330,8 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	global $buddyforms;
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 
-	$is_draft_enabled = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
-	$user_can_draft   = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
+	$is_draft_enabled   = !empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$user_can_draft     = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
 		$user_can_draft = true;
 	}
