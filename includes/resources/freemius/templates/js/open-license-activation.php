@@ -1,15 +1,15 @@
 <?php
-/**
- * @package     Freemius
- * @copyright   Copyright (c) 2015, Freemius, Inc.
- * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
- * @since       2.0.0
- */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+    /**
+     * @package     Freemius
+     * @copyright   Copyright (c) 2015, Freemius, Inc.
+     * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License Version 3
+     * @since       2.0.0
+     */
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
-$license_id = $VARS['license_id'];
+    $license_id = $VARS['license_id'];
 ?>
 <script type="text/javascript">
     (function ($) {
@@ -20,9 +20,9 @@ $license_id = $VARS['license_id'];
             $($('.activate-license-trigger')[0]).click();
 
 //            setTimeout(function(){
-            $dialog.find('select#licenses option[data-id=<?php echo $license_id ?>]')
-                .prop('selected', true)
-                .change();
+                $dialog.find('select#licenses option[data-id=<?php echo $license_id ?>]')
+                    .prop('selected', true)
+                    .change();
 //            }, 100);
 
         };
