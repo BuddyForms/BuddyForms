@@ -245,6 +245,32 @@ function BuddyForms() {
         }, "Please enter a valid URL.");// todo need il18n
     }
 
+    function addValidationForTextareaMinLength() {
+        jQuery.validator.addMethod("minlength", function (value, element, param) {
+            var count = value.length;
+            if (count < param) {
+                jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
+                return false;
+            }
+            return true;
+        }, "");
+    }
+
+    function addValidationForTextareaMaxLength() {
+        jQuery.validator.addMethod("maxlength", function (value, element, param) {
+
+            if(param==0){
+                return true;
+            }
+            var count = value.length;
+            if (count > param) {
+                jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
+                return false;
+            }
+            return true;
+        }, "");
+    }
+
     function enabledGarlic() {
         var bf_garlic = jQuery('.bf-garlic');
         if (bf_garlic.length > 0) {
@@ -306,17 +332,20 @@ function BuddyForms() {
         event.preventDefault();
         var target = jQuery(this).data('target');
         var formOptions = 'publish';
-        if (buddyformsGlobal && buddyformsGlobal[target]) {
+        var draftAction = false;
+        if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].status) {
             formOptions = buddyformsGlobal[target].status;
         }
-        var post_status = jQuery(this).data('status') || formOptions;
+        if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].draft_action) {
+            draftAction = (buddyformsGlobal[target].draft_action[0] === 'Enable Draft');
+        }
         var targetForms = jQuery('form#buddyforms_form_' + target);
         if (targetForms && targetForms.length > 0) {
-            var statusElement;
             var fieldStatus = getFieldDataBy(target, 'status');
             if (fieldStatus === false) { //Not exist the field,
-                statusElement = targetForms.find('input[type="hidden"][name="status"]');
+                var statusElement = targetForms.find('input[type="hidden"][name="status"]');
                 if (statusElement && statusElement.length > 0) {
+                    var post_status = jQuery(this).data('status') || formOptions;
                     statusElement.val(post_status);
                 }
             }
@@ -359,6 +388,8 @@ function BuddyForms() {
 
             if (jQuery && jQuery.validator) {
                 addValidationForUserWebsite();
+                addValidationForTextareaMinLength();
+                addValidationForTextareaMaxLength();
             }
 
             bf_form_errors();
@@ -376,5 +407,12 @@ function BuddyForms() {
 
 var fncBuddyForms = BuddyForms();
 jQuery(document).ready(function () {
+
+
+    fncBuddyForms.init();
+});
+
+jQuery(document).on('buddyforms:init', function () {
+
     fncBuddyForms.init();
 });

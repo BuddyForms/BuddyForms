@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[feature-request]"
+title: "Small Title for the request"
 labels: Missing Functionality, enhancement
 assignees: gfirem
 
@@ -18,3 +18,6 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+
+**Support**
+If applicable, a link to the helpscout ticket.

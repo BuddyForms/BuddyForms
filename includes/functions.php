@@ -251,7 +251,9 @@ function buddyforms_register_link( $wp_login_form ) {
 
 add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
 function buddyforms_add_lost_password_link( $wp_login_form ) {
-	return $wp_login_form .= '<a href="' . esc_url( wp_lostpassword_url() ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
+    $lost_password_url = apply_filters( 'buddyforms_lost_password_url', wp_lostpassword_url() );
+    $wp_login_form .= '<a href="' . esc_url( $lost_password_url ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
+	return $wp_login_form;
 }
 
 
@@ -1036,7 +1038,13 @@ function buddyforms_upload_handle_dropped_media() {
 		}
 	}
 
-	echo $newupload;
+	if ( is_wp_error( $newupload ) ) {
+	    status_header( '500' );
+		echo $newupload->get_error_message();
+	} else {
+	    status_header( '200' );
+		echo $newupload;
+	}
 	die();
 }
 
@@ -1194,7 +1202,7 @@ function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( '
 		}
 		if ( empty( $form_slug ) ) {
 		    $regex = array();
-			preg_match( '/"bf_form_slug":"(.*)",/m', $content, $regex );//gutenberg block
+			preg_match( '/"bf_form_slug":"(.*)"/m', $content, $regex );//gutenberg block
 			if ( ! empty( $regex ) && isset( $regex[1] ) ) {
 				$form_slug = $regex[1];
 			}
@@ -1258,7 +1266,7 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
      *
 	 * @since 2.4.0
 	 */
-	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields' ), $form_slug, $bf_post_id);
+	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields', 'draft_action' ), $form_slug, $bf_post_id);
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
@@ -1344,6 +1352,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	}
 	$bfdesign  = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+	$form_status = isset( $buddyforms[ $form_slug ]['status'] ) ? $buddyforms[ $form_slug ]['status'] : 'publish';
 
 	$button_class = ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
 
@@ -1379,7 +1388,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 			'class'       => $bf_publish_button_classes,
 			'name'        => 'submitted',
 			'data-target' => $form_slug,
-			'data-status' => 'publish',
+			'data-status' => $form_status,
 		) );
 
 		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );

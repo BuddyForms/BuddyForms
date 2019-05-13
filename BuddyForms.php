@@ -152,6 +152,13 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				define( 'BUDDYFORMS_TEMPLATE_PATH', BUDDYFORMS_INSTALL_PATH . 'templates/' );
 			}
 
+			if ( ! defined( 'BUDDYFORMS_ADMIN_VIEW' ) ) {
+				/**
+				 * Define the template path
+				 */
+				define( 'BUDDYFORMS_ADMIN_VIEW', BUDDYFORMS_INCLUDES_PATH . 'admin/view/' );
+			}
+
 		}
 
 		/**
@@ -356,7 +363,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			global $post;
 
 			if (
-				( isset( $post ) && $post->post_type == 'buddyforms' && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+				( isset( $post ) && ($post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 				  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
@@ -573,7 +580,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
 
 			wp_enqueue_style( 'buddyforms-the-loop-css', plugins_url( 'assets/css/the-loop.css', __FILE__ ) );
-			wp_enqueue_style( 'buddyforms-the-form-css', plugins_url( 'assets/css/the-form.css', __FILE__ ) );
 
 			// load dashicons
 			wp_enqueue_style( 'dashicons' );

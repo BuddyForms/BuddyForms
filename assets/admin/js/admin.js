@@ -32,8 +32,8 @@ function buddyformsMakeFieldId() {
 //
 // Validate an email using regex
 //
-function buddyformsIsEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+function buddyformsIsEmailOrShortcode(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})|\[(.*?)(\s.*?)?\]$/;
     return regex.test(email);
 }
 
@@ -47,13 +47,13 @@ function buddyformsValidateMultiEmail(string) {
         if (isMulti) {
             var values = string.split(/[;,]+/);
             jQuery.each(values, function (index, email) {
-                result = buddyformsIsEmail(email.trim());
+                result = buddyformsIsEmailOrShortcode(email.trim());
                 if (!result) {
                     return result;
                 }
             });
         } else {
-            result = buddyformsIsEmail(string);
+            result = buddyformsIsEmailOrShortcode(string);
             if (!result) {
                 return result;
             }
@@ -314,10 +314,10 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
-    //
-    // Click on the button to preview a form type from the demo site
-    // @since 2.4.0
-    //
+    /**
+     * Click on the button to preview a form type from the demo site
+     * @since 2.4.0
+     */
     jQuery(document.body).on('click', '.bf-preview', function() {
         var key = jQuery(this).attr('data-key');
         var src = jQuery(this).attr('data-src');
@@ -326,6 +326,18 @@ jQuery(document).ready(function (jQuery) {
             iFrame.attr('src', src);
         }
     });
+
+    /**
+     * Add Sortable to radiobutton, checkbox, dropdown and gdpr
+     *
+     * @since 2.4.1
+     */
+    var sortableTable = jQuery('table.wp-list-table.element_field_table_sortable');
+    if(sortableTable && sortableTable.length > 0){
+        sortableTable.sortable({
+          items: "tr.field_item"
+        });
+    }
 
     // Mail Notifications from email display only if selected
     jQuery(document.body).on('change', '.bf_mail_from_name_multi_checkbox input', function() {
@@ -400,6 +412,12 @@ jQuery(document).ready(function (jQuery) {
             errors.push({isValid: result, element: mail_to_address, type: 'settings'});
         });
 
+        var mail_from = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_from_custom]"]');
+        if(mail_from.length > 0) {
+            var result = buddyforms_validate_notifications_email(mail_from);
+            errors.push({isValid: result, element: mail_from, type: 'settings'});
+        }
+
         //Fill and avoid duplicates of field slugs
         var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
         findFieldsSlugs.each(function() {
@@ -463,7 +481,7 @@ jQuery(document).ready(function (jQuery) {
             var action = jQuery(this);
             var gdpr_type = jQuery(this).attr('data-gdpr-type');
 
-            var numItems = jQuery('#table_row_' + gdpr_type + '_select_options ul li').size();
+            var numItems = jQuery('#table_row_' + gdpr_type + '_select_options table.element_field_table_sortable tbody tr').size();
 
             var type = jQuery('#gdpr_option_type').val();
 
@@ -478,52 +496,68 @@ jQuery(document).ready(function (jQuery) {
             }
 
             numItems = numItems + 1;
-            jQuery('#table_row_' + gdpr_type + '_select_options ul').append(
-                '<li class="field_item field_item_' + gdpr_type + '_' + numItems + '">' +
-                '<table class="wp-list-table widefat posts striped"><tbody><tr><td>' +
-                '<textarea rows="5" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
-                '<textarea rows="2" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
-                '</td><td class="manage-column column-author">' +
+            jQuery('#table_row_' + gdpr_type + '_select_options table.element_field_table_sortable tbody').append(
+                '<tr class="field_item field_item_' + gdpr_type + '_' + numItems + '">'+
+                '<td><div class="dashicons dashicons-image-flip-vertical"></div></td>'+
+                '<td>'+
+                '<p><b>Agreement Text</b></p>'+
+                '<textarea rows="3" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][label]" cols="50">' + message + '</textarea>' +
+                '<p><b>Error Message</b></p>'+
+                '<textarea rows="3" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][error_message]" cols="50">' + error_message + '</textarea>' +
+                '</td>'+
+                '<td class="manage-column column-author">'+
                 '<div class="checkbox">' +
                 '   <label class="">' +
-                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][checked][]" value="checked"><span> Checked</span>' +
+                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][checked][]" value="checked"><span>Checked</span>' +
                 '   </label>' +
                 '</div>' +
                 '<div class="checkbox">' +
                 '   <label class="">' +
-                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][required][]" value="required"><span> Required</span>' +
+                '       <input type="checkbox" name="buddyforms_options[form_fields][' + gdpr_type + '][options][' + numItems + '][required][]" value="required"><span>Required</span>' +
                 '   </label>' +
                 '</div>' +
-                '</td><td class="manage-column column-author">' +
+                '</td>'+
+                '<td class="manage-column column-author">'+
                 '<a href="#" id="' + gdpr_type + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
-                '</td></tr></li></tbody></table><hr>');
+                '</td>'+
+                '</tr>');
             return false;
         }
     });
 
-    //
-    // Add new options to gdpr, checkbox form element. The js will add one more line for value and label
-    //
-    jQuery(document).on('click', '.bf_add_input', function() {
+    /**
+	 * Reset option for multiple choice fields radio and checkboxes for backend
+	 *
+	 * @since 2.4.1
+	 */
+    jQuery(document.body).on('click', '.button.bf_reset_multi_input', function (event) {
+        event.preventDefault();
+        var groupName = jQuery(this).attr('data-group-name');
+        var fieldId = jQuery(this).attr('data-field-id');
+        jQuery('input[name="buddyforms_options[form_fields][' + fieldId + '][default]"][value="' + groupName + '"]').attr('checked', false);
+        return false;
+    });
 
+    /**
+     * Add new options to gdpr, checkbox form element. The js will add one more line for value and label
+     *
+     * @since 2.4.1
+     */
+    jQuery(document).on('click', '.bf_add_input', function() {
         var action = jQuery(this);
         var args = action.attr('href').split("/");
-        var numItems = jQuery('#table_row_' + args[0] + '_select_options ul li').size();
+        var numItems = jQuery('#table_row_' + args[0] + '_select_options table.element_field_table_sortable tbody tr').size();
 
         numItems = numItems + 1;
-        jQuery('#table_row_' + args[0] + '_select_options ul').append(
-            '<li class="field_item field_item_' + args[0] + '_' + numItems + '">' +
-            '<table class="wp-list-table widefat fixed posts"><tbody><tr><td>' +
-            '<input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]">' +
-            '</td><td>' +
-            '<input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][value]">' +
-            '</td><td class="manage-column column-default">' +
-            'You need to Save the Form before you can set this option as default' +
-            '</td><td class="manage-column column-author">' +
-            '<a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a>' +
-            '</td></tr></li></tbody></table>');
+        jQuery('#table_row_' + args[0] + '_select_options table.element_field_table_sortable tbody').append(
+            '<tr class="field_item field_item_' + args[0] + '_' + numItems + '">'+
+            '<td><div class="dashicons dashicons-image-flip-vertical"></div></td>'+
+            '<td><input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][label]"></td>'+
+            '<td><input class="field-sortable" required="required" type="text" name="buddyforms_options[form_fields][' + args[0] + '][options][' + numItems + '][value]"></td>'+
+            '<td class="manage-column column-default"><p>Save the Form</p></td>'+
+            '<td class="manage-column column-default"><a href="#" id="' + args[0] + '_' + numItems + '" class="bf_delete_input">Delete</a></td>'+
+            '</tr>');
         return false;
-
     });
 
     //
@@ -548,8 +582,11 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
-    if (buddyformsGlobal) {
-        jQuery('#mail_notification_add_new').on('click', function() {
+    //
+    // Add notification inside the wizard
+    //
+    jQuery(document).on('click', '#mail_notification_add_new', function() {
+        if (buddyformsGlobal) {
             jQuery.ajax({
                 type: 'POST',
                 dataType: "json",
@@ -567,17 +604,17 @@ jQuery(document).ready(function (jQuery) {
 
                     bf_update_list_item_number_mail();
 
+                    jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                 }
             });
-            return false;
-        });
-    }
+        }
+        return false;
+    });
 
     //
     // Add new mail notification
     //
-    jQuery('#post_status_mail_notification_add_new').on('click', function () {
-
+    jQuery(document).on('click', '#post_status_mail_notification_add_new', function() {
         var error = false;
         var trigger = jQuery('.post_status_mail_notification_trigger select').val();
 
@@ -585,14 +622,14 @@ jQuery(document).ready(function (jQuery) {
             return false;
         }
 
-        if (trigger == 'none') {
+        if (trigger === 'none') {
             bf_alert('You have to select a trigger first.');
             return false;
         }
 
         // traverse all the required elements looking for an empty one
         jQuery("#post-status-mail-container li.bf_trigger_list_item").each(function () {
-            if (jQuery(this).attr('id') == 'trigger' + trigger) {
+            if (jQuery(this).attr('id') =='trigger' + trigger) {
                 bf_alert('Trigger already exists');
                 error = true;
             }
@@ -606,7 +643,6 @@ jQuery(document).ready(function (jQuery) {
                 url: buddyformsGlobal.admin_url,
                 data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
                 success: function(data) {
-
                     if (data == 0) {
                         bf_alert('trigger already exists');
                         return false;
@@ -619,6 +655,7 @@ jQuery(document).ready(function (jQuery) {
 
                     bf_update_list_item_number_mail();
 
+                    jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                 }
             });
         }

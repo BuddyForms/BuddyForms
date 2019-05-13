@@ -328,6 +328,7 @@ jQuery(document).ready(function (jQuery) {
                             return false;
                         }
                     }
+                    jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                     return true;
                 }
                 if (currentIndex == 2) {
@@ -355,7 +356,6 @@ jQuery(document).ready(function (jQuery) {
                             return false;
                         }
                     }
-
                     return true;
                 }
                 if (currentIndex == 4) {
@@ -364,7 +364,6 @@ jQuery(document).ready(function (jQuery) {
                 if (currentIndex == 5) {
                     return true;
                 }
-
             },
             onFinishing: function (event, currentIndex) {
                 return true;

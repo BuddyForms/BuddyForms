@@ -46,9 +46,28 @@ jQuery(function () {
 		}
 	});
 
+	jQuery(document).on('buddyform:load_notifications', function () {
+		var buddyforms_notification_builder = jQuery(this).find('.buddyforms_accordion_notification');
+		if (buddyforms_notification_builder.length > 0) {
+			var accordionNotificationContainer = buddyforms_notification_builder.find("li.bf_trigger_list_item");
+			jQuery.each(accordionNotificationContainer, function(){
+				var currentAccordionNotificationContainer = jQuery(this);
+				if (!currentAccordionNotificationContainer.hasClass('buddyforms-ready')) {
+					currentAccordionNotificationContainer.accordion({
+						collapsible: true,
+						active: false,
+						header: "div.accordion-heading-options",
+						heightStyle: "content"
+					});
+					currentAccordionNotificationContainer.addClass('buddyforms-ready');
+				}
+			});
+		}
+	});
 });
 jQuery(document).ready(function () {
 	jQuery(document.body).trigger({type: "buddyform:load_fields"});
+	jQuery(document.body).trigger({type: "buddyform:load_notifications"});
 
 	//
 	// Handle the hide/show moderation of user on update
@@ -203,6 +222,7 @@ jQuery(document).ready(function () {
 		load_formbuilder_template(template, function() {
 			button.parent().LoadingOverlay('hide');
 			jQuery('button.bf_form_template').prop('disabled', false);
+			jQuery(document.body).trigger({type: "buddyform:load_notifications"});
 		});
 		return false;
 	});
@@ -226,14 +246,5 @@ jQuery(document).ready(function () {
 			jQuery('tr .slug' + field_id).val(slug(field_name, {lower: true}));
 		}
 		jQuery(this).unbind('blur');
-	});
-	//
-	// Reset option for multiple choice fields radio and checkboxes
-	//
-	jQuery(document.body).on('click', '.button.bf_reset_multi_input', function (event) {
-		event.preventDefault();
-		var group_name = jQuery(this).attr('data-group-name');
-		jQuery('input[name="' + group_name + '"]').attr('checked', false);
-		return false;
 	});
 });

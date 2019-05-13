@@ -264,8 +264,8 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 				break;
 			case 'content':
 				$post = get_post( $item->ID );
-
-				$content = str_replace( ']]>', ']]&gt;', $post->post_content );
+				$content = apply_filters('the_content', $post->post_content);
+				$content = str_replace( ']]>', ']]&gt;', $content );
 				$content = strip_shortcodes( $content );
 
 				/**

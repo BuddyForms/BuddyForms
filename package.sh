@@ -23,6 +23,7 @@ echo "-Generating the zip in progress..."
 
 echo "-Cleaning in Progress..."
 rm -rf ./.git*
+rm -rf ./.github*
 rm -rf ./.sass-cache
 rm -rf ./.directory
 rm -rf ./node_modules
