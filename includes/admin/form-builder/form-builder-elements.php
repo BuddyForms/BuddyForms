@@ -567,17 +567,17 @@ function buddyforms_display_form_element( $args ) {
 
 			unset( $form_fields['advanced']['metabox_enabled'] );
 
-
-			if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-				$error                              = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
+            if( sanitize_title( $field_type ) == 'taxonomy' ) {
+	            if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+		            $error                              = '<table style="width:100%;"id="table_row_' . $field_id . '_is_not_paying" class="wp-list-table posts fixed">
                         <td colspan="2">
                             <div class="is_not_paying bf-error"><p>'. __( 'BuddyForms Professional is required to use this form Element . You need to upgrade to the Professional Plan . The Free and Starter Versions does not support Categories tags nad Taxonomies.', 'buddyforms' ).' <a href="edit.php?post_type=buddyforms&amp;page=buddyforms-pricing">'. __( 'Upgrade Now', 'buddyforms' ).'</a></p></div>
                         </td>
                         </table>';
-				$form_fields['general']['disabled'] = new Element_HTML( $error );
-				break;
-			}
-
+		            $form_fields['general']['disabled'] = new Element_HTML( $error );
+		            break;
+	            }
+            }
 
 			$error = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_error" class="wp-list-table posts fixed bf_hide_if_post_type_none taxonomy_no_post_type">
                         <td colspan="2">
@@ -628,10 +628,11 @@ function buddyforms_display_form_element( $args ) {
 			$taxonomy_default = isset( $customfield['taxonomy_default'] ) ? $customfield['taxonomy_default'] : 'false';
 			$taxonomy_order   = isset( $customfield['taxonomy_order'] ) ? $customfield['taxonomy_order'] : 'false';
 
-			if ( $customfield['taxonomy'] == 'none' ) {
-				$taxonomy = 'category';
-			}
-
+            if( sanitize_title( $field_type ) == 'taxonomy' ) {
+                if ( $customfield['taxonomy'] == 'none' ) {
+                    $taxonomy = 'category';
+                }
+            }
 
 			$wp_dropdown_categories_args = array(
 				'hide_empty'    => 0,

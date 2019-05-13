@@ -15,7 +15,7 @@
  */
 class BfAdminNotices {
 	public function __construct() {
-		add_action('post_submitbox_start', array($this, 'buddyforms_notice'));
+		add_action( 'post_submitbox_start', array( $this, 'buddyforms_notice' ) );
 	}
 
 	public function buddyforms_notice() {
@@ -40,12 +40,12 @@ class BfAdminNotices {
 			return;
 		}
 
-		switch ($buddyform['form_type']){
+		switch ( $buddyform['form_type'] ) {
 			case 'post':
-				$this->validate_post_form($buddyform);
+				$this->validate_post_form( $buddyform );
 				break;
 			case 'registration':
-				$this->validate_registration_form($buddyform);
+				$this->validate_registration_form( $buddyform );
 				break;
 		}
 	}
@@ -62,7 +62,7 @@ class BfAdminNotices {
 		$this->show_form_notices( $messages );
 	}
 
-	public function validate_post_form($buddyform) {
+	public function validate_post_form( $buddyform ) {
 		//
 		// OK let us start with the form validation
 		//
@@ -89,11 +89,7 @@ class BfAdminNotices {
 
 		if ( isset( $buddyform['form_fields'] ) ) {
 			foreach ( $buddyform['form_fields'] as $field_key => $field ) {
-				if ( $field['type'] == 'taxonomy'
-				     || $field['type'] == 'category'
-				     || $field['type'] == 'tags'
-				     || $field['type'] == 'featured_image'
-				) {
+				if ( $field['type'] == 'taxonomy' ) {
 					$messages['pro'] = __( 'BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href="edit.php?post_type=buddyforms&page=buddyforms-pricing">Go Pro Now</a>', 'buddyforms' );
 				}
 			}
@@ -107,7 +103,7 @@ class BfAdminNotices {
 
 		$messages = apply_filters( 'buddyforms_broken_form_error_messages', $messages );
 
-		$this->show_form_notices($messages);
+		$this->show_form_notices( $messages );
 	}
 
 	public function show_form_notices( $messages ) {

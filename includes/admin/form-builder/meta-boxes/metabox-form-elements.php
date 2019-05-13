@@ -267,44 +267,46 @@ function buddyforms_form_elements_select_options() {
 	);
 
 
+	// Post Fields
+	$elements_select_options['post']['fields']['category']       =
+		array(
+			'label'  => __( 'Category', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+	$elements_select_options['post']['fields']['tags']           =
+		array(
+			'label'  => __( 'Tags', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+	$elements_select_options['post']['fields']['post_formats']   =
+		array(
+			'label'  => __( 'Post Formats', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+	$elements_select_options['post']['fields']['comments']       =
+		array(
+			'label'  => __( 'Comments', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+	$elements_select_options['post']['fields']['status']         =
+		array(
+			'label'  => __( 'Post Status', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+	$elements_select_options['post']['fields']['featured_image'] =
+		array(
+			'label'  => __( 'Featured Image', 'buddyforms' ),
+			'unique' => 'unique'
+		);
+
+
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 
-
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
-			// Post Fields
-			$elements_select_options['post']['fields']['category']       =
-				array(
-					'label'  => __( 'Category', 'buddyforms' ),
-					'unique' => 'unique'
-				);
-			$elements_select_options['post']['fields']['tags']           =
-				array(
-					'label'  => __( 'Tags', 'buddyforms' ),
-					'unique' => 'unique'
-				);
+
 			$elements_select_options['post']['fields']['taxonomy']       =
 				array(
 					'label' => __( 'Taxonomy', 'buddyforms' ),
-				);
-			$elements_select_options['post']['fields']['post_formats']   =
-				array(
-					'label'  => __( 'Post Formats', 'buddyforms' ),
-					'unique' => 'unique'
-				);
-			$elements_select_options['post']['fields']['comments']       =
-				array(
-					'label'  => __( 'Comments', 'buddyforms' ),
-					'unique' => 'unique'
-				);
-			$elements_select_options['post']['fields']['status']         =
-				array(
-					'label'  => __( 'Post Status', 'buddyforms' ),
-					'unique' => 'unique'
-				);
-			$elements_select_options['post']['fields']['featured_image'] =
-				array(
-					'label'  => __( 'Featured Image', 'buddyforms' ),
-					'unique' => 'unique'
 				);
 
 			$elements_select_options['basic']['fields']['form_actions']   =
