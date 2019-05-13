@@ -1301,9 +1301,11 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 
 	return $tmp;
 }
+
 /**
  * @param $form_fields
  * @param string $field_id
+ * @param string $striped
  */
 function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped' ) {
 	?>
