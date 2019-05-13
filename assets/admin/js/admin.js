@@ -242,11 +242,15 @@ function buddyform_apply_template_to_element(element, value){
 // Process the form errors and scroll to it
 //
 function buddyforms_process_errors(errors) {
+    var form_with_no_errors = true;
     if (errors.length > 0) {
         jQuery.each(errors, function (index, current_error) {
             if (!current_error.isValid) {
+                form_with_no_errors = false;
                 var type = current_error.type || 'accordion';
                 switch (type) {
+
+
                     case 'accordion': {
                         //close all
                         var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
@@ -278,13 +282,65 @@ function buddyforms_process_errors(errors) {
             }
         });
     }
-    return true;
+
+    return form_with_no_errors;
+}
+var errors = [];
+function validateRule(fieldId,option,elem){
+   var element_min = jQuery("[field_id="+fieldId+"_validation_minlength]")[0];
+    var element_max = jQuery("[field_id="+fieldId+"_validation_maxlength]")[0];
+    if(element_max && element_min){
+
+        var element_min_value = parseInt(element_min.value);
+        var element_max_value = parseInt(element_max.value);
+        var element_min_parent = jQuery(element_min).parent();
+        var element_max_parent = jQuery(element_max).parent();
+        //Celan previous messages
+        jQuery(element_min_parent).find("label#"+fieldId+"_validation_error_message").remove();
+        jQuery(element_max_parent).find("label#"+fieldId+"_validation_error_message").remove();
+
+        if(option === "min"){
+            if(element_min_value >= element_max_value){
+                //If the min length validation fails, add the error to the array
+                errors.push({isValid: false, element: element_min, type: 'textarea',field_id : fieldId});
+                //Add the label with the validation error message
+                jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Min value must be lesser than Max.</label>");
+            }else{
+                //If the Validation for Min Length was succesful the remove the error from the array
+                errors = errors.filter(function( obj ) {
+                    return obj.field_id !== fieldId;
+                });
+            }
+        }else if (option === "max"){
+
+            if(element_max_value <= element_min_value){
+                //If the max length validation fails, add the error to the array
+                errors.push({isValid: false, element: element_max, type: 'textarea',field_id : fieldId});
+                //Add the label with the validation error message
+                jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Max value must be greater than Min.</label>");
+            }
+            else{
+                //If the Validation for Min Length was succesful the remove the error from the array
+                errors = errors.filter(function( obj ) {
+                    return obj.field_id !== fieldId;
+                });
+            }
+
+        }
+
+
+    }
+
+
+
 }
 
 //
 // Lets do some stuff after the document is loaded
 //
 jQuery(document).ready(function (jQuery) {
+
+
 
     var post = jQuery('#post');
 
@@ -382,7 +438,7 @@ jQuery(document).ready(function (jQuery) {
     jQuery('#publish').click(function() {
 
         var post_title = jQuery('[name="post_title"]');
-        var errors = [];
+
 
         if (post_title.val() === '') {
             post_title.removeClass('bf-ok');
@@ -392,6 +448,8 @@ jQuery(document).ready(function (jQuery) {
             post_title.removeClass('bf-error');
             post_title.addClass('bf-ok');
         }
+
+
 
         //Validate emails notifications
         var mail_to_cc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_cc_address]"]');
@@ -442,8 +500,9 @@ jQuery(document).ready(function (jQuery) {
                 return false;
             }
         });
+        var validation_result = buddyforms_process_errors(errors);
 
-        return buddyforms_process_errors(errors);
+        return validation_result;
 
     });
 
