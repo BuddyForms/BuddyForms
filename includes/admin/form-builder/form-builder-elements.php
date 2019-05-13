@@ -317,10 +317,11 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['advanced']['textarea_opt_a'] = new Element_Checkbox( '<b>' . __( 'Turn on wp editor features', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_textarea_options]", $post_textarea_options_array, array( 'value' => $post_textarea_options ) );
 
 			$validation_minlength                              = isset( $customfield['validation_minlength'] ) ? stripcslashes( $customfield['validation_minlength'] ) : 0;
-			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength ) );
+			$form_fields['validation']['validation_minlength'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength]", array( 'value' => $validation_minlength,'min'=>0 ,'class'=>'textarea-minlength','field_id'=>$field_id.'_validation_minlength','onchange'=>'validateRule("'.$field_id.'","min",this)' ) );
 
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
-			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ) );
+			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength,'min'=>0 ,'class'=>'textarea-maxlength','field_id'=>$field_id.'_validation_maxlength','onchange'=>'validateRule("'.$field_id.'","max",this)' ) );
+
 
 			$hidden                            = isset( $customfield['hidden_field'] ) ? $customfield['hidden_field'] : false;
 			$form_fields['advanced']['hidden_field'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden_field]", array( 'hidden_field' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
