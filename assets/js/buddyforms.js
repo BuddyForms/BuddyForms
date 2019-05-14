@@ -245,7 +245,7 @@ function BuddyForms() {
         }, "Please enter a valid URL.");// todo need il18n
     }
 
-    function addValidationForTextareaMinLength() {
+    function addValidationMinLength() {
         jQuery.validator.addMethod("minlength", function (value, element, param) {
             var count = value.length;
             if (count < param) {
@@ -256,7 +256,18 @@ function BuddyForms() {
         }, "");
     }
 
-    function addValidationForTextareaMaxLength() {
+    function addValidationMinValue() {
+        jQuery.validator.addMethod("min-value", function (value, element, param) {
+
+            if (value < param) {
+                jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + " . Please check.";
+                return false;
+            }
+            return true;
+        }, "");
+    }
+
+    function addValidationMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
 
             if(param==0){
@@ -265,6 +276,21 @@ function BuddyForms() {
             var count = value.length;
             if (count > param) {
                 jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
+                return false;
+            }
+            return true;
+        }, "");
+    }
+
+    function addValidationMaxValue() {
+        jQuery.validator.addMethod("max-value", function (value, element, param) {
+
+            if(param==0){
+                return true;
+            }
+
+            if (value > param) {
+                jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + " . Please check.";
                 return false;
             }
             return true;
@@ -388,8 +414,10 @@ function BuddyForms() {
 
             if (jQuery && jQuery.validator) {
                 addValidationForUserWebsite();
-                addValidationForTextareaMinLength();
-                addValidationForTextareaMaxLength();
+                addValidationMinLength();
+                addValidationMaxLength();
+                addValidationMaxValue();
+                addValidationMinValue();
             }
 
             bf_form_errors();

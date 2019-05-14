@@ -399,10 +399,10 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'number':
 			$validation_min                              = isset( $customfield['validation_min'] ) ? stripcslashes( $customfield['validation_min'] ) : 0;
-			$form_fields['validation']['validation_min'] = new Element_Number( '<b>' . __( 'Validation Min Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_min]", array( 'value' => $validation_min ) );
+			$form_fields['validation']['validation_min'] = new Element_Number( '<b>' . __( 'Validation Min Value', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_min]", array( 'value' => $validation_min,'data-rule-min-value'=>'['.$validation_min.']' ) );
 
 			$validation_max                              = isset( $customfield['validation_max'] ) ? stripcslashes( $customfield['validation_max'] ) : 0;
-			$form_fields['validation']['validation_max'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array( 'value' => $validation_max ) );
+			$form_fields['validation']['validation_max'] = new Element_Number( '<b>' . __( 'Validation Max Value', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array( 'value' => $validation_max ,'data-rule-max-value' => '['.$validation_max.']') );
 			break;
 		case 'dropdown':
 			$is_frontend_checked                      = isset( $customfield['frontend_reset'] ) ? $customfield['frontend_reset'] : 'false';

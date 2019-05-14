@@ -97,6 +97,13 @@ function buddyforms_form_elements( $form, $args ) {
 				switch ( sanitize_title( $customfield['type'] ) ) {
 
 					case 'subject':
+
+                        $subject_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                        $subject_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
+
+
+                        $element_attr['data-rule-minlength'] ='['.$subject_minlength.']';
+                        $element_attr['data-rule-maxlength'] ='['.$subject_maxlength.']';
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
@@ -109,6 +116,13 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'message':
+
+                        $message_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                        $message_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
+
+
+                        $element_attr['data-rule-minlength'] ='['.$message_minlength.']';
+                        $element_attr['data-rule-maxlength'] ='['.$message_maxlength.']';
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;
 
@@ -171,6 +185,10 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'number':
+                        $number_min_value = isset( $customfield['validation_min'] ) ? $customfield['validation_min'] : 0;
+                        $number_max_value = isset( $customfield['validation_max'] ) ? $customfield['validation_max'] : 0;
+                        $element_attr['data-rule-min-value'] ='['.$number_min_value.']';
+                        $element_attr['data-rule-max-value'] ='['.$number_max_value.']';
 						$form->addElement( new Element_Number( $name, $slug, $element_attr ) );
 						break;
 
@@ -196,8 +214,14 @@ function buddyforms_form_elements( $form, $args ) {
 							$element_attr['id']        = 'buddyforms_form_title';
 							$element_attr['value']     = $post_title;
 							$element_attr['shortDesc'] = $description;
+                            $title_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                            $title_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
 
-							if ( isset( $customfield['required'] ) ) {
+                            $element_attr['data-rule-minlength'] ='['.$title_minlength.']';
+                            $element_attr['data-rule-maxlength'] ='['.$title_maxlength.']';
+
+
+                            if ( isset( $customfield['required'] ) ) {
 								$element_attr = array_merge( $element_attr, array( 'required' => true ) );
 							}
 
@@ -247,8 +271,13 @@ function buddyforms_form_elements( $form, $args ) {
 								$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 								$required  = $form->renderRequired();
 							}
+                            $content_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                            $content_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
+                            $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $content_minlength . "]\"", $wp_editor );
+                            $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $content_maxlength . "]\"", $wp_editor );
 
-							$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+
+                            $labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
 							$wp_editor_label = '';
 							if ( $labels_layout == 'inline' ) {
@@ -491,6 +520,10 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 							$required  = $form->renderRequired();
 						}
+                        $excerpt_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                        $excerpt_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
+                        $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $excerpt_minlength . "]\"", $wp_editor );
+                        $wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $excerpt_maxlength . "]\"", $wp_editor );
 
 						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
@@ -521,7 +554,12 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'text' :
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+                        $text_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
+                        $text_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
+                        $element_attr['data-rule-minlength'] ='['.$text_minlength.']';
+                        $element_attr['data-rule-maxlength'] ='['.$text_maxlength.']';
+
+                        $form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'range' :
