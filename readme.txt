@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.1
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,18 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.4.1 – 14 May 2019
+* Added the option to define the number of rows for a textarea.
+* Fixed the option `Make this field Hidden` because it was not appearing in the form designer.
+* Fixed: To load the assets on the admin pages and show the upload field on the admin pages.
+* Added the ability to sort the item inside the next field types: checkbox, dropdown, radiobutton and gpdr
+* Fixed the Ajax Validation, broken for the text aria.
+* Fixed the issue related to the post status. Now the post will keep the post status when is created or edited if not exist a status field.
+* Fixed the css for "Required field" messages in the dropdowns, checkboxes, radiobuttons and GDPRs are misplaced.
+* Fixed the email notification to process the field shortcode user_email.
+* Fixed the notification issue. The bug was throw when a field shortcode was used in the notification options and was not process correctly. Now even is possible to use field shortcodes inline with strings.
+* Fixed the validation for min and max length.
+* Fixed the validation for min and max number.
 
 = 2.4.0 – 29 March 2019
 * Change to use SEM Version

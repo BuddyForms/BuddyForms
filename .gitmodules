@@ -1,0 +1,3 @@
+[submodule ".tk"]
+	path = .tk
+	url = git@github.com:gfirem/tk_scripts.git

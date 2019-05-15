@@ -32,6 +32,10 @@
     "brainmaestro/composer-git-hooks": "dev-master"
   },
   "scripts": {
+    "package": "sh .tk/package.sh BuddyForms",
+    "wp-release": "sh .tk/wp_release.sh",
+    "beta-release": "sh .tk/full-deploy.sh BuddyForms 391 false beta",
+    "full-release": "sh .tk/full-deploy.sh BuddyForms 391 false released",
     "cghooks": "vendor/bin/cghooks",
     "tests": "composer lints",
     "sniffs": [
