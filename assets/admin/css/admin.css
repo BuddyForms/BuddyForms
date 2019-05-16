@@ -1094,6 +1094,11 @@ div#buddyforms_metabox_sidebar p {
     }
 }
 
+label.error{
+    color: red;
+    font-weight: bold;
+}
+
 .wizard > .content {
     display: block;
     margin: 0;

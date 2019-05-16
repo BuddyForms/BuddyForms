@@ -286,7 +286,7 @@ function buddyforms_process_errors(errors) {
     return form_with_no_errors;
 }
 var errors = [];
-function validateRule(fieldId,option,elem){
+function validateRule(fieldId,option,elem,field_type){
    var element_min = jQuery("[field_id="+fieldId+"_validation_minlength]")[0];
     var element_max = jQuery("[field_id="+fieldId+"_validation_maxlength]")[0];
     if(element_max && element_min){
@@ -302,7 +302,7 @@ function validateRule(fieldId,option,elem){
         if(option === "min"){
             if(element_min_value >= element_max_value){
                 //If the min length validation fails, add the error to the array
-                errors.push({isValid: false, element: element_min, type: 'textarea',field_id : fieldId});
+                errors.push({isValid: false, element: element_min, type: field_type,field_id : fieldId});
                 //Add the label with the validation error message
                 jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Min value must be lesser than Max.</label>");
             }else{
@@ -315,7 +315,7 @@ function validateRule(fieldId,option,elem){
 
             if(element_max_value <= element_min_value){
                 //If the max length validation fails, add the error to the array
-                errors.push({isValid: false, element: element_max, type: 'textarea',field_id : fieldId});
+                errors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
                 //Add the label with the validation error message
                 jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Max value must be greater than Min.</label>");
             }
