@@ -350,9 +350,6 @@ jQuery(document).ready(function (jQuery) {
 
     jQuery(window).scrollTop(0);
 
-    // Hide all post box metaboxes except the buddyforms meta boxes
-    jQuery('div .postbox').not('.buddyforms-metabox').hide();
-
     // Show the submit metabox
     jQuery('#submitdiv').show();
     jQuery('#post').removeClass('hidden');
