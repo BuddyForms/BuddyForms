@@ -21,6 +21,12 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 	if ( isset( $form['form_fields'] ) ) {
 		foreach ( $form['form_fields'] as $key => $form_field ) {
 
+			//if field not have a value send in the $_POST pass to next one
+			// @since 4.2.3
+			if ( ! isset( $_POST[ $form_field['slug'] ] ) ) {
+				continue;
+			}
+
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 && isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] === $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] !== $form_field['validation_min'] ) ) {
 					$valid                    = false;

@@ -10,7 +10,7 @@
  *
  * @return array
  */
-function buddyforms_process_submission( $args = Array() ) {
+function buddyforms_process_submission( $args = array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
 
 	$hasError      = false;
