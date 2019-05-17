@@ -211,19 +211,26 @@ add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
 function buddyforms_registration_page_content( $content ) {
 	global $post;
 
+	if ( empty( $post ) || empty( $post->post_name ) ) {
+		return $content;
+	}
+
+	$page_id = buddyforms_get_ID_by_page_name( $post->post_name );
+
+	if ( empty( $page_id ) ) {
+		return $content;
+	}
+
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
 
-	if( ! $buddyforms_registration_page){
+	if ( empty( $buddyforms_registration_page ) ) {
 		return $content;
 	}
 
-	if( ! $buddyforms_registration_form){
+	if ( empty( $buddyforms_registration_form ) ) {
 		return $content;
 	}
-
-		$page_id = buddyforms_get_ID_by_page_name( $post->post_name );
-
 
 	if ( $page_id == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ) {
 		if( $buddyforms_registration_form == 'page' ){
