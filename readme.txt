@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.1
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.4.3 - 17 May 2019 =
+* Fixed fields with ajax validations allows to enter a lower number in Max Length than the entered in Min Length.
+* Fixed the empty editor with gutenberg.
+* Fixed the issue reported in https://wordpress.org/support/topic/buddy-forms-not-working-with-5-1-1/.
+* Fix to avoid hide all metaboxes when BF is adding his own metabox.
+
 = 2.4.2 - 16 May 2019 =
 * Fixed the assets issue caused by the automation script used to generate and deployed the new version.
 
