@@ -333,6 +333,33 @@ function validateRule(fieldId,option,elem,field_type){
 // Lets do some stuff after the document is loaded
 //
 jQuery(document).ready(function (jQuery) {
+
+    if(buddyformsGlobal){
+        //Fix to show the form editor and hide all unrelated meta-boxes it suppose to only apply in certain pages
+        var currentScreen = buddyformsGlobal.current_screen || false;
+        var isAdmin = buddyformsGlobal.is_admin || false;
+        if(currentScreen && isAdmin){
+            if(
+                currentScreen.id === 'edit-buddyforms' || currentScreen.id === 'buddyforms' ||
+                currentScreen.id === 'buddyforms_page_buddyforms_submissions' || currentScreen.id === 'buddyforms_page_buddyforms_settings' ||
+                currentScreen.id === 'buddyforms_page_bf_add_ons'
+            ) {
+                var post = jQuery('#post');
+                jQuery('#wpbody-content').html('<div class="wrap"></div>');
+                jQuery('#wpbody-content .wrap').html(post);
+
+                jQuery(window).scrollTop(0);
+
+                // Hide all post box metaboxes except the buddyforms meta boxes
+                jQuery('div .postbox').not('.buddyforms-metabox').hide();
+
+                // Show the submit metabox
+                jQuery('#submitdiv').show();
+                post.removeClass('hidden');
+            }
+        }
+    }
+
     // Add Select2 Support
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
