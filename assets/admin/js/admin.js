@@ -285,7 +285,7 @@ function buddyforms_process_errors(errors) {
 
     return form_with_no_errors;
 }
-var errors = [];
+var bfErrors = [];
 function validateRule(fieldId,option,elem,field_type){
    var element_min = jQuery("[field_id="+fieldId+"_validation_minlength]")[0];
     var element_max = jQuery("[field_id="+fieldId+"_validation_maxlength]")[0];
@@ -302,12 +302,12 @@ function validateRule(fieldId,option,elem,field_type){
         if(option === "min"){
             if(element_min_value >= element_max_value){
                 //If the min length validation fails, add the error to the array
-                errors.push({isValid: false, element: element_min, type: field_type,field_id : fieldId});
+                bfErrors.push({isValid: false, element: element_min, type: field_type,field_id : fieldId});
                 //Add the label with the validation error message
                 jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Min value must be lesser than Max.</label>");
             }else{
                 //If the Validation for Min Length was succesful the remove the error from the array
-                errors = errors.filter(function( obj ) {
+                bfErrors = bfErrors.filter(function( obj ) {
                     return obj.field_id !== fieldId;
                 });
             }
@@ -315,45 +315,24 @@ function validateRule(fieldId,option,elem,field_type){
 
             if(element_max_value <= element_min_value){
                 //If the max length validation fails, add the error to the array
-                errors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
+                bfErrors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
                 //Add the label with the validation error message
                 jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Max value must be greater than Min.</label>");
             }
             else{
                 //If the Validation for Min Length was succesful the remove the error from the array
-                errors = errors.filter(function( obj ) {
+                bfErrors = bfErrors.filter(function( obj ) {
                     return obj.field_id !== fieldId;
                 });
             }
-
         }
-
-
     }
-
-
-
 }
 
 //
 // Lets do some stuff after the document is loaded
 //
 jQuery(document).ready(function (jQuery) {
-
-
-
-    var post = jQuery('#post');
-
-    jQuery('#wpbody-content').html('<div class="wrap"></div>');
-
-    jQuery('#wpbody-content .wrap').html(post);
-
-    jQuery(window).scrollTop(0);
-
-    // Show the submit metabox
-    jQuery('#submitdiv').show();
-    jQuery('#post').removeClass('hidden');
-
     // Add Select2 Support
     jQuery(".bf-select2").select2({
         placeholder: "Select an option"
@@ -361,7 +340,7 @@ jQuery(document).ready(function (jQuery) {
 
     // Prevent form submission if enter key is pressed on text fields
     jQuery(document).on('keyup keypress', 'form input[type="text"]', function(e) {
-        if (e.which == 13) {
+        if (e.which === 13) {
             e.preventDefault();
             return false;
         }
@@ -440,7 +419,7 @@ jQuery(document).ready(function (jQuery) {
         if (post_title.val() === '') {
             post_title.removeClass('bf-ok');
             post_title.addClass('bf-error');
-            errors.push({isValid: false, element: post_title, type: 'title'});
+            bfErrors.push({isValid: false, element: post_title, type: 'title'});
         } else {
             post_title.removeClass('bf-error');
             post_title.addClass('bf-ok');
@@ -452,25 +431,25 @@ jQuery(document).ready(function (jQuery) {
         var mail_to_cc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_cc_address]"]');
         jQuery.each(mail_to_cc_addresses, function(index, mail_to_cc_address) {
             var result = buddyforms_validate_notifications_email(mail_to_cc_address);
-            errors.push({isValid: result, element: mail_to_cc_address, type: 'settings'});
+            bfErrors.push({isValid: result, element: mail_to_cc_address, type: 'settings'});
         });
 
         var mail_to_bcc_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_bcc_address]"]');
         jQuery.each(mail_to_bcc_addresses, function(index, mail_to_bcc_address) {
             var result = buddyforms_validate_notifications_email(mail_to_bcc_address);
-            errors.push({isValid: result, element: mail_to_bcc_address, type: 'settings'});
+            bfErrors.push({isValid: result, element: mail_to_bcc_address, type: 'settings'});
         });
 
         var mail_to_addresses = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_to_address]"]');
         jQuery.each(mail_to_addresses, function(index, mail_to_address) {
             var result = buddyforms_validate_notifications_email(mail_to_address);
-            errors.push({isValid: result, element: mail_to_address, type: 'settings'});
+            bfErrors.push({isValid: result, element: mail_to_address, type: 'settings'});
         });
 
         var mail_from = jQuery('input[name^="buddyforms_options[mail_submissions]"][name$="[mail_from_custom]"]');
         if(mail_from.length > 0) {
             var result = buddyforms_validate_notifications_email(mail_from);
-            errors.push({isValid: result, element: mail_from, type: 'settings'});
+            bfErrors.push({isValid: result, element: mail_from, type: 'settings'});
         }
 
         //Fill and avoid duplicates of field slugs
@@ -489,7 +468,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#post input[required]").each(function() {
             // if the value is empty, that means that is invalid
             var isValid = (jQuery(this).val() != "");
-            errors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion'});
+            bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion'});
             if (isValid) {
                 jQuery(this).removeClass("bf-error");
             } else {
@@ -497,7 +476,7 @@ jQuery(document).ready(function (jQuery) {
                 return false;
             }
         });
-        var validation_result = buddyforms_process_errors(errors);
+        var validation_result = buddyforms_process_errors(bfErrors);
 
         return validation_result;
 
