@@ -106,13 +106,12 @@ function buddyforms_restrict_media_library( $wp_query_obj ) {
  */
 add_action( 'init', 'buddyforms_allow_subscriber_uploads' );
 function buddyforms_allow_subscriber_uploads() {
-
 	if ( current_user_can( 'subscriber' ) && ! current_user_can( 'upload_files' ) ) {
-		$contributor = get_role( 'subscriber' );
-
-		$contributor->add_cap( 'upload_files' );
+		$role = get_role( 'subscriber' );
+		if ( ! empty( $role ) ) {
+			$role->add_cap( 'upload_files' );
+		}
 	}
-
 }
 
 /**
