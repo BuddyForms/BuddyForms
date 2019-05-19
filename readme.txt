@@ -391,7 +391,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 = 2.4.5 - 19 May 2019 =
 * Adding a copy to clipboard into the form designer to copy the field slug.
-* Improving the field default value and the way to override the default value from url.
+* Fixing the extra weigh of the plugin zip.
 
 = 2.4.4 - 19 May 2019 =
 * Fixed the editor issue in order to only apply the fix related to the form designer in certain pages.
