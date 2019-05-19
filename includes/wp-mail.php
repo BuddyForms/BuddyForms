@@ -173,46 +173,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	// If we have content let us check if there are any tags we need to replace with the correct values.
 	if ( ! empty( $emailBody ) ) {
 		$emailBody = stripslashes( $emailBody );
-		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
-
-				$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
-
-				// Check if is array
-				if ( is_array( $value ) ) {
-					$field_value = implode( ',', $value );
-				} else {
-					$field_value = $value;
-				}
-
-				switch ( $field['type'] ) {
-					case 'taxonomy':
-						if ( is_array( $value ) ) {
-							foreach ( $value as $cat ) {
-								$term    = get_term( $cat, $field['taxonomy'] );
-								$terms[] = $term->name;
-							}
-							$field_value = implode( ',', $terms );
-						} else {
-							$term        = get_term( $value, $field['taxonomy'] );
-							$field_value = $term->name;
-						}
-						break;
-					case 'link':
-						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-						break;
-					case 'user_website':
-						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-						break;
-				}
-
-				// Replace From name Shortcodes with form element values
-				$from_name = buddyforms_replace_shortcode_for_value( $from_name, sprintf( '[%s]', $field['slug'] ), $field_value );
-
-				// Replace Buddytext Shortcodes with form element values
-				$emailBody = buddyforms_replace_shortcode_for_value( $emailBody, sprintf( '[%s]', $field['slug'] ), $field_value );
-			}
-		}
+		$emailBody = buddyforms_get_field_value_from_string( $emailBody, $post_ID, $form_slug );
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
 			$emailBody = buddyforms_replace_shortcode_for_value( $emailBody, $shortcode, $short_code_value );
@@ -322,8 +283,11 @@ function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
  * @param $post
  */
 function buddyforms_send_post_status_change_notification( $post ) {
-
 	global $form_slug, $buddyforms;
+
+	if ( ! isset( $buddyforms[ $form_slug ] ) ) {
+		return;
+	}
 
 	$post_ID  = $post->ID;
 
@@ -399,46 +363,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	// If we have content let us check if there are any tags we need to replace with the correct values.
 	if ( ! empty( $emailBody ) ) {
 		$emailBody = stripslashes( $emailBody );
-		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_id => $field ) {
-
-				$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
-
-				// Check if is array
-				if ( is_array( $value ) ) {
-					$field_value = implode( ',', $value );
-				} else {
-					$field_value = $value;
-				}
-
-				switch ( $field['type'] ) {
-					case 'taxonomy':
-						if ( is_array( $value ) ) {
-							foreach ( $value as $cat ) {
-								$term    = get_term( $cat, $field['taxonomy'] );
-								$terms[] = $term->name;
-							}
-							$field_value = implode( ',', $terms );
-						} else {
-							$term        = get_term( $value, $field['taxonomy'] );
-							$field_value = $term->name;
-						}
-						break;
-					case 'link':
-						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-						break;
-					case 'user_website':
-						$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-						break;
-				}
-
-				// Replace From name Shortcodes with form element values
-				$from_name = buddyforms_replace_shortcode_for_value( $from_name, sprintf( '[%s]', $field['slug'] ), $field_value );
-
-				// Replace Buddytext Shortcodes with form element values
-				$emailBody = buddyforms_replace_shortcode_for_value( $emailBody, sprintf( '[%s]', $field['slug'] ), $field_value );
-			}
-		}
+		$emailBody = buddyforms_get_field_value_from_string( $emailBody, $post_ID, $form_slug );
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
 			$emailBody = buddyforms_replace_shortcode_for_value( $emailBody, $shortcode, $short_code_value );
@@ -469,66 +394,15 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug, $post 
 	$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
-
-		if ( ! empty( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
-			foreach ( $_POST['meta'] as $meta_key => $meta_value ) {
-				if ( $field['slug'] === $meta_value['key'] ) {
-					$value = $meta_value['value'];
-					break;
-				}
-			}
-		}
-		if ( empty( $value ) ) {
-			$value = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : '';
-		}
-
-		if ( empty( $value ) && ! empty( $post ) && ! empty( $post->ID ) ) {
-			$value = get_post_meta( $post->ID, $field['slug'], true );
-		}
-
-		if ( empty( $value ) ) {
-			continue;
-		}
-
-		// Check if is array
-		if ( is_array( $value ) ) {
-			$field_value = implode( ',', $value );
-		} else {
-			$field_value = $value;
-		}
-
-		switch ( $field['type'] ) {
-			case 'taxonomy':
-				if ( is_array( $value ) ) {
-					foreach ( $value as $cat ) {
-						$term = get_term( $cat, $field['taxonomy'] );
-						if ( isset( $term ) ) {
-							$terms[] = $term->name;
-						}
-					}
-					$field_value = implode( ',', $terms );
-				} else {
-					$term = get_term( $value, $field['taxonomy'] );
-					if ( isset( $term ) ) {
-						$field_value = $term->name;
-					}
-				}
-				break;
-			case 'link':
-				$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-				break;
-			case 'user_website':
-				$field_value = "<p><a href='" . $value . "' " . $field['name'] . ">" . $value . " </a></p>";
-				break;
-		}
-
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
-		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>" . $field_value . "</td></tr>";
-		unset($value, $field_value);
+		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
 	}
 	// Table end
 	$message .= "</table>";
+
+	//Convert all field shortcode into field values
+	$message = buddyforms_get_field_value_from_string( $message, $post->ID, $form_slug );
 
 	// Let us return the form elements table
 	return $message;

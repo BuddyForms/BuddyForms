@@ -565,9 +565,8 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug )
 					continue;
 				}
 				$result_field = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug );
-				if ( ! empty( $result_field['value'] ) ) {
-					return buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), $result_field['value'] );
-				}
+				$field_result_value = ! empty( $result_field['value'] )? $result_field['value'] : apply_filters('buddyforms_field_shortcode_empty_value', '', $result_field, $form_slug, $post_id, $target_slug);
+				$string = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), $field_result_value );
 			}
 		}
 	}
@@ -667,7 +666,7 @@ function buddyforms_extract_all_shortcode($string, $field_pattern = '.*?'){
 }
 
 /**
- * Get one field with values from the given field slug
+ * Get one field and add values property from the given field slug
  *
  * @since 2.4.1
  *
@@ -787,6 +786,25 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
 							$meta_value = $author->user_login;
 						}
 					}
+					break;
+				case 'taxonomy':
+					if ( is_array( $meta_value ) ) {
+						$terms = array();
+						foreach ( $meta_value as $cat ) {
+							$term    = get_term( $cat, $custom_field['taxonomy'] );
+							$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : '';
+						}
+						$meta_value = implode( ',', $terms );
+					} else {
+						$term        = get_term( $meta_value, $custom_field['taxonomy'] );
+						$meta_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : '';
+					}
+					break;
+				case 'link':
+					$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
+					break;
+				case 'user_website':
+					$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
 					break;
 				default:
 					if ( is_array( $meta_value ) ) {
