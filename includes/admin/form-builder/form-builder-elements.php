@@ -1147,7 +1147,12 @@ JS;
                             </strong>
 
                         </td>
-                        <td class="field_name"><?php echo $field_slug ?></td>
+                        <td class="field_name">
+                            <div class="tooltip">
+                                <span class="field_name_text bf-ready-to-copy"><?php echo $field_slug ?></span>
+                                <span class="tooltip-container"><?php _e('Copy to clipboard', 'buddyforms')?></span>
+                            </div>
+                        </td>
                         <td class="field_type"><?php echo $field_type ?></td>
                         <td class="field_delete">
                                 <span><a class="accordion-toggle collapsed" data-toggle="collapse"

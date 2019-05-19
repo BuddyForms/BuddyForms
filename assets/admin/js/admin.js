@@ -329,6 +329,31 @@ function validateRule(fieldId,option,elem,field_type){
     }
 }
 
+/**
+ * Copy element to clipboard
+ *
+ * @since 2.4.5
+ */
+function buddyformsCopyStringToClipboard(string) {
+    var el = document.createElement('textarea');
+    el.value = string;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    var selected =
+        document.getSelection().rangeCount > 0
+            ? document.getSelection().getRangeAt(0)
+            : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+    }
+}
+
 //
 // Lets do some stuff after the document is loaded
 //
@@ -899,5 +924,17 @@ jQuery(document).ready(function (jQuery) {
 			}
 		}
 	}
+
+	jQuery(document).on('click', '.bf-ready-to-copy', function (e) {
+	    e.preventDefault();
+	    e.stopPropagation();
+        var parentHeader = jQuery(this).closest('.accordion-heading-options');
+        var accordionBody = parentHeader.parent().find('.accordion-body');
+        accordionBody.removeClass('ui-accordion-content-active').hide();
+	    var elementString = jQuery(this).text();
+	    buddyformsCopyStringToClipboard(elementString);
+	    accordionBody.addClass('ui-accordion-content-active');
+	    return false;
+    });
 
 });
