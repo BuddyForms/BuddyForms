@@ -635,10 +635,10 @@ function buddyforms_form_elements( $form, $args ) {
                                               <span>$message</span>
                                          </div>
                                         <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
-                                 </div></div></div>";
+                                 </div></div></div> <span class='help-inline'>$description</span>";
 
 						$form->addElement( new Element_HTML( $box ) );
-						$form->addElement( new Element_HTML( "<span class='help-inline'>$description</span>" ) );
+						
 
 						// always add slug
 						$featured_image_params = array( 'id' => $slug );
