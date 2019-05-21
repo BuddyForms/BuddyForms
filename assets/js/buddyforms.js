@@ -258,7 +258,9 @@ function BuddyForms() {
 
     function addValidationMinValue() {
         jQuery.validator.addMethod("min-value", function (value, element, param) {
-
+            if( value ===""){
+                return true;
+            }
             if (value < param) {
                 jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + " . Please check.";
                 return false;
@@ -285,7 +287,7 @@ function BuddyForms() {
     function addValidationMaxValue() {
         jQuery.validator.addMethod("max-value", function (value, element, param) {
 
-            if(param==0){
+            if(param==0 || value ===""){
                 return true;
             }
 
