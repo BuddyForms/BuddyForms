@@ -300,31 +300,46 @@ function validateRule(fieldId,option,elem,field_type){
         jQuery(element_max_parent).find("label#"+fieldId+"_validation_error_message").remove();
 
         if(option === "min"){
-            if(element_min_value >= element_max_value){
-                //If the min length validation fails, add the error to the array
+            if(element_min_value < 0){
                 bfErrors.push({isValid: false, element: element_min, type: field_type,field_id : fieldId});
-                //Add the label with the validation error message
-                jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Min value must be lesser than Max.</label>");
-            }else{
-                //If the Validation for Min Length was succesful the remove the error from the array
-                bfErrors = bfErrors.filter(function( obj ) {
-                    return obj.field_id !== fieldId;
-                });
-            }
-        }else if (option === "max"){
-
-            if(element_max_value <= element_min_value){
-                //If the max length validation fails, add the error to the array
-                bfErrors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
-                //Add the label with the validation error message
-                jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Max value must be greater than Min.</label>");
+                jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Value must be greater or equals zero.</label>");
             }
             else{
-                //If the Validation for Min Length was succesful the remove the error from the array
-                bfErrors = bfErrors.filter(function( obj ) {
-                    return obj.field_id !== fieldId;
-                });
+                if(element_min_value >= element_max_value){
+                    //If the min length validation fails, add the error to the array
+                    bfErrors.push({isValid: false, element: element_min, type: field_type,field_id : fieldId});
+                    //Add the label with the validation error message
+                    jQuery(element_min_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Min value must be lesser than Max.</label>");
+                }else{
+                    //If the Validation for Min Length was succesful the remove the error from the array
+                    bfErrors = bfErrors.filter(function( obj ) {
+                        return obj.field_id !== fieldId;
+                    });
+                }
             }
+
+        }else if (option === "max"){
+
+            if(element_max_value < 0){
+                bfErrors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
+                jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Value must be greater or equals zero.</label>");
+            }else{
+
+                if(element_max_value <= element_min_value){
+                    //If the max length validation fails, add the error to the array
+                    bfErrors.push({isValid: false, element: element_max, type: field_type,field_id : fieldId});
+                    //Add the label with the validation error message
+                    jQuery(element_max_parent).append("<label id='"+fieldId+"_validation_error_message' class='error'>Max value must be greater than Min.</label>");
+                }
+                else{
+                    //If the Validation for Min Length was succesful the remove the error from the array
+                    bfErrors = bfErrors.filter(function( obj ) {
+                        return obj.field_id !== fieldId;
+                    });
+                }
+            }
+
+
         }
     }
 }
