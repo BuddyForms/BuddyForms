@@ -248,6 +248,9 @@ function BuddyForms() {
     function addValidationMinLength() {
         jQuery.validator.addMethod("minlength", function (value, element, param) {
             var count = value.length;
+            if( value ===""){
+                return true;
+            }
             if (count < param) {
                 jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
                 return false;
@@ -272,7 +275,7 @@ function BuddyForms() {
     function addValidationMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
 
-            if(param==0){
+            if(param==0 || value ===""){
                 return true;
             }
             var count = value.length;
