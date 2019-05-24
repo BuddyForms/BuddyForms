@@ -852,7 +852,8 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
-			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] ) );
+			$field_value = apply_filters('buddyforms_before_update_post_meta', $_POST[ $slug ], $customfield, $post_id, $form_slug);
+			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $field_value ) );
 		} else {
 			if ( ! is_admin() ) {
 				update_post_meta( $post_id, $slug, '' );
