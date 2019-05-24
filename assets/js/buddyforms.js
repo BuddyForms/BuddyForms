@@ -237,23 +237,33 @@ function BuddyForms() {
 
     function addValidationForUserWebsite() {
         jQuery.validator.addMethod("user-website", function (value, element) {
-            var match = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
-            if (match) {
-                return true;
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
             }
-            return false;
+            return true;
+
         }, "Please enter a valid URL.");// todo need il18n
     }
 
     function addValidationMinLength() {
         jQuery.validator.addMethod("minlength", function (value, element, param) {
-            var count = value.length;
-            if( value ===""){
-                return true;
-            }
-            if (count < param) {
-                jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
-                return false;
+            var formSlug = getFormSlugFromFormElement(element);
+            if(
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                var count = value.length;
+                if (value === "") {
+                    return true;
+                }
+                if (count < param) {
+                    jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
+                    return false;
+                }
             }
             return true;
         }, "");
@@ -261,12 +271,18 @@ function BuddyForms() {
 
     function addValidationMinValue() {
         jQuery.validator.addMethod("min-value", function (value, element, param) {
-            if( value ===""){
-                return true;
-            }
-            if (value < param) {
-                jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + " . Please check.";
-                return false;
+            var formSlug = getFormSlugFromFormElement(element);
+            if(
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                if (value === "") {
+                    return true;
+                }
+                if (value < param) {
+                    jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + " . Please check.";
+                    return false;
+                }
             }
             return true;
         }, "");
@@ -274,14 +290,19 @@ function BuddyForms() {
 
     function addValidationMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
-
-            if(param==0 || value ===""){
-                return true;
-            }
-            var count = value.length;
-            if (count > param) {
-                jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
-                return false;
+            var formSlug = getFormSlugFromFormElement(element);
+            if(
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                if (param === 0 || value === "") {
+                    return true;
+                }
+                var count = value.length;
+                if (count > param) {
+                    jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
+                    return false;
+                }
             }
             return true;
         }, "");
@@ -289,17 +310,29 @@ function BuddyForms() {
 
     function addValidationMaxValue() {
         jQuery.validator.addMethod("max-value", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if(
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                if (param === 0 || value === "") {
+                    return true;
+                }
 
-            if(param==0 || value ===""){
-                return true;
-            }
-
-            if (value > param) {
-                jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + " . Please check.";
-                return false;
+                if (value > param) {
+                    jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + " . Please check.";
+                    return false;
+                }
             }
             return true;
         }, "");
+    }
+
+    function getFormSlugFromFormElement(element) {
+        var form = jQuery(element).closest('form');
+        var formId = form.attr('id');
+        var formSlug = formId.split('buddyforms_form_');
+        return (formSlug[1]) ? formSlug[1] : false;
     }
 
     function enabledGarlic() {
@@ -440,12 +473,9 @@ function BuddyForms() {
 
 var fncBuddyForms = BuddyForms();
 jQuery(document).ready(function () {
-
-
     fncBuddyForms.init();
 });
 
 jQuery(document).on('buddyforms:init', function () {
-
     fncBuddyForms.init();
 });

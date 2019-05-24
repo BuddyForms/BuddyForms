@@ -56,6 +56,7 @@ function buddyforms_metabox_form_setup() {
 
 	$local_storage = isset( $buddyform['local_storage'] ) ? $buddyform['local_storage'] : '';
 
+	$js_validation = isset( $buddyform['js_validation'] ) ? $buddyform['js_validation'] : '';
 
 	// Create The Form Array
 	$form_setup = array();
@@ -133,6 +134,15 @@ function buddyforms_metabox_form_setup() {
 	$element = new Element_Checkbox( '<b>' . __( 'Local Storage', 'buddyforms' ) . '</b>', "buddyforms_options[local_storage]", array( 'disable' => __( 'Disable Local Storage', 'buddyforms' ) ), array(
 		'shortDesc' => __( 'The form elements content is stored in the browser so it not gets lost if the tab gets closed by accident', 'buddyforms' ),
 		'value'     => $local_storage
+	) );
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+		$element->setAttribute( 'disabled', 'disabled' );
+	}
+	$form_setup['Form Submission'][] = $element;
+
+	$element = new Element_Checkbox( '<b>' . __( 'Validate using JS', 'buddyforms' ) . '</b>', "buddyforms_options[js_validation]", array( 'enabled' => __( 'Enable JavaScript Validation', 'buddyforms' ) ), array(
+		'shortDesc' => __( 'Enabled Javascript validations on client side, for example required fields will be trigger instantly.', 'buddyforms' ),
+		'value'     => $js_validation
 	) );
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );

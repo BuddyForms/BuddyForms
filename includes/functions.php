@@ -1265,7 +1265,7 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
      *
 	 * @since 2.4.0
 	 */
-	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields', 'draft_action' ), $form_slug, $bf_post_id);
+	$granted = apply_filters('buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields', 'draft_action', 'js_validation' ), $form_slug, $bf_post_id);
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
