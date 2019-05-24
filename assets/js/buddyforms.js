@@ -261,7 +261,7 @@ function BuddyForms() {
                     return true;
                 }
                 if (count < param) {
-                    jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + " . Please check.";
+                    jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + ". Please check.";
                     return false;
                 }
             }
@@ -280,9 +280,37 @@ function BuddyForms() {
                     return true;
                 }
                 if (value < param) {
-                    jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + " . Please check.";
+                    jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + ". Please check.";
                     return false;
                 }
+            }
+            return true;
+        }, "");
+    }
+
+    function addValidationRequired() {
+        jQuery.validator.addMethod("required", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if(
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+            ) {
+                var bf = buddyformsGlobal[formSlug];
+                var fieldSlug = jQuery(element).attr('id');
+                var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+
+                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [fieldData, formSlug]);
+                var result = false;
+                switch (fieldData.type) {
+                    case 'post_formats':
+                        result = value !== 'Select a Post Format';
+                        break;
+                    default:
+                      result = value.length > 0;
+                }
+
+                jQuery.validator.messages['required'] = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+                return result;
             }
             return true;
         }, "");
@@ -300,7 +328,7 @@ function BuddyForms() {
                 }
                 var count = value.length;
                 if (count > param) {
-                    jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + " . Please check.";
+                    jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + ". Please check.";
                     return false;
                 }
             }
@@ -320,7 +348,7 @@ function BuddyForms() {
                 }
 
                 if (value > param) {
-                    jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + " . Please check.";
+                    jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + ". Please check.";
                     return false;
                 }
             }
@@ -333,6 +361,18 @@ function BuddyForms() {
         var formId = form.attr('id');
         var formSlug = formId.split('buddyforms_form_');
         return (formSlug[1]) ? formSlug[1] : false;
+    }
+
+    function getFieldFromSlug(fieldSlug, formSlug) {
+        if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function(fielId){
+                return buddyformsGlobal[formSlug].form_fields[fielId].slug.toLowerCase() === fieldSlug.toLowerCase();
+            });
+            if(fieldIdResult){
+                return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
+            }
+        }
+        return false;
     }
 
     function enabledGarlic() {
@@ -456,6 +496,7 @@ function BuddyForms() {
                 addValidationMaxLength();
                 addValidationMaxValue();
                 addValidationMinValue();
+                addValidationRequired();
             }
 
             bf_form_errors();

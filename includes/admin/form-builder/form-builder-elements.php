@@ -891,15 +891,11 @@ JS;
 			$form_fields['general']['value'] = new Element_Textbox( '<b>' . __( 'Value:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][value]", array( 'value' => $value ) );
 			break;
 		case 'comments':
-			unset( $form_fields );
-			$required                           = isset( $customfield['required'] ) ? $customfield['required'] : 'false';
-			$form_fields['general']['required'] = new Element_Checkbox( '<b>' . __( 'Required', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][required]", array( 'required' => '<b>' . __( 'Required', 'buddyforms' ) . '</b>' ), array(
-				'value' => $required,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
-			) );
-
+            unset( $form_fields['validation'] );
+            unset( $form_fields['advanced']['slug'] );
+            unset( $form_fields['advanced']['metabox_enabled'] );
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Comments', 'buddyforms' );
-			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
 				'required' => 1
 			) );

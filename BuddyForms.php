@@ -620,7 +620,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			//Loading shared assets
 			self::shared_styles( '' );
 
-			add_action( 'wp_head', 'buddyforms_jquery_validation' );
+			//Add jQuery validation from php
+//			add_action( 'wp_head', 'buddyforms_jquery_validation' );
 
 			do_action( 'buddyforms_front_js_css_after_enqueue', $content );
 		}
