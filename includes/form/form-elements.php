@@ -411,7 +411,7 @@ function buddyforms_form_elements( $form, $args ) {
 								$post_status['private'] = __( 'Privately Published', 'buddyforms' );
 							}
 
-							if ( in_array( 'private', $customfield['post_status'] ) ) {
+							if ( in_array( 'trash', $customfield['post_status'] ) ) {
 								$post_status['trash'] = __( 'Trash', 'buddyforms' );
 							}
 
@@ -638,7 +638,7 @@ function buddyforms_form_elements( $form, $args ) {
                                  </div></div></div> <span class='help-inline'>$description</span>";
 
 						$form->addElement( new Element_HTML( $box ) );
-						
+
 
 						// always add slug
 						$featured_image_params = array( 'id' => $slug );
