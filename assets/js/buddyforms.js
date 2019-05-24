@@ -291,25 +291,33 @@ function BuddyForms() {
     function addValidationRequired() {
         jQuery.validator.addMethod("required", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
                 var bf = buddyformsGlobal[formSlug];
                 var fieldSlug = jQuery(element).attr('id');
                 var fieldData = getFieldFromSlug(fieldSlug, formSlug);
-
-                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [fieldData, formSlug]);
                 var result = false;
+                var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+
                 switch (fieldData.type) {
                     case 'post_formats':
                         result = value !== 'Select a Post Format';
                         break;
                     default:
-                      result = value.length > 0;
+                        result = value.length > 0;
                 }
 
-                jQuery.validator.messages['required'] = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+                var requiredCallback = function (isValid, message) {
+                    result = isValid || false;
+                    if (message && message.length > 0) {
+                        requiredMessage = message;
+                    }
+                };
+                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [value, element, fieldData, formSlug, requiredCallback]);
+
+                jQuery.validator.messages['required'] = requiredMessage;
                 return result;
             }
             return true;
@@ -520,3 +528,12 @@ jQuery(document).ready(function () {
 jQuery(document).on('buddyforms:init', function () {
     fncBuddyForms.init();
 });
+
+// Example to extend the required validation using events
+// jQuery(document).on('buddyforms:validation:required', function (event, value, element, fieldData, formSlug, requiredCallback) {
+//     var isValid = false;
+//     if(fieldData.type === 'title'){
+//         isValid = value.length > 0;
+//     }
+//     requiredCallback(isValid, 'The Title field is required...');
+// });
