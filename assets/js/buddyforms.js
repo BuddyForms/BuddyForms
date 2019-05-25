@@ -90,12 +90,11 @@ function BuddyForms() {
             var pass1 = jQuery('input[name=buddyforms_user_pass]').val();
             var pass2 = jQuery('input[name=buddyforms_user_pass_confirm]').val();
             var strengthResult = jQuery('#password-strength');
-            var submitButton = jQuery('.bf-submit');
             var blacklistArray = ['black', 'listed', 'word'];
             var passwordHint = jQuery('.buddyforms-password-hint');
 
             // Reset the form & meter
-            submitButton.attr('disabled', 'disabled');
+            jQuery(document.body).trigger({type: "buddyforms:submit:disable"});
             strengthResult.removeClass('short bad good strong');
 
             // Extend our blacklist array with those from the inputs & site data
@@ -142,7 +141,7 @@ function BuddyForms() {
 
             if (buddyformsGlobal.pwsL10n.required_strength <= strength && strength !== 5 && '' !== pass2.trim()) {
                 passwordHint.remove();
-                submitButton.removeAttr('disabled');
+                jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
             } else {
                 strengthResult.after(hint_html);
             }
@@ -291,25 +290,36 @@ function BuddyForms() {
     function addValidationRequired() {
         jQuery.validator.addMethod("required", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
                 var bf = buddyformsGlobal[formSlug];
                 var fieldSlug = jQuery(element).attr('id');
                 var fieldData = getFieldFromSlug(fieldSlug, formSlug);
-
-                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [fieldData, formSlug]);
+                if (!fieldData) {//if not field data is not possible to validate it
+                    return true;
+                }
                 var result = false;
+                var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+
                 switch (fieldData.type) {
                     case 'post_formats':
                         result = value !== 'Select a Post Format';
                         break;
                     default:
-                      result = value.length > 0;
+                        result = value.length > 0;
                 }
 
-                jQuery.validator.messages['required'] = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+                var requiredCallback = function (isValid, message) {
+                    result = isValid || false;
+                    if (message && message.length > 0) {
+                        requiredMessage = message;
+                    }
+                };
+                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [value, element, fieldData, formSlug, requiredCallback]);
+
+                jQuery.validator.messages['required'] = requiredMessage;
                 return result;
             }
             return true;
@@ -457,6 +467,26 @@ function BuddyForms() {
         }
     }
 
+    function disableFormSubmit(){
+        var submitButton = jQuery('button.bf-submit');
+        if(submitButton){
+            var target = submitButton.data('target');
+            if(target){
+                submitButton.attr('disabled', 'disabled');
+            }
+        }
+    }
+
+    function enableFormSubmit() {
+        var submitButton = jQuery('button.bf-submit');
+        if (submitButton) {
+            var target = submitButton.data('target');
+            if (target) {
+                submitButton.removeAttr('disabled');
+            }
+        }
+    }
+
     return {
         submissionModal: function (target) {
             submissionModal = target;
@@ -487,6 +517,10 @@ function BuddyForms() {
             jQuery(document).on("click", '.bf-submission-modal', openSubmissionModal);
             jQuery(document).on("click", '.bf-close-submissions-modal', closeSubmissionModal);
             jQuery(document).on("click", '.create-new-tax-item', createTaxItem);
+
+            //Events
+            jQuery(document).on('buddyforms:submit:enable', enableFormSubmit);
+            jQuery(document).on('buddyforms:submit:disable', disableFormSubmit());
 
             disableACFPopup();
 
@@ -520,3 +554,12 @@ jQuery(document).ready(function () {
 jQuery(document).on('buddyforms:init', function () {
     fncBuddyForms.init();
 });
+
+// Example to extend the required validation using events
+// jQuery(document).on('buddyforms:validation:required', function (event, value, element, fieldData, formSlug, requiredCallback) {
+//     var isValid = false;
+//     if(fieldData.type === 'title'){
+//         isValid = value.length > 0;
+//     }
+//     requiredCallback(isValid, 'The Title field is required...');
+// });
