@@ -1284,7 +1284,7 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
  */
 function buddyforms_get_form_slug() {
 	$form_slug = '';
-	global $wp_query;
+	global $wp_query, $post;
 	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
 	} elseif ( ! empty( $_GET['form_slug'] ) ) {

@@ -88,7 +88,8 @@ function buddyforms_form_elements( $form, $args ) {
 					'value'     => $customfield_val,
 					'class'     => 'settings-input',
 					'shortDesc' => $description,
-					'field_id'  => $field_id
+					'field_id'  => $field_id,
+					'data-form'  => $form_slug
 //				"view" => "Inline"
 				);
 

@@ -533,6 +533,35 @@ function buddyforms_display_form_element( $args ) {
 	        $form_fields['general']['upload_delete_files']   = $element_delete;
 
             break;
+        case 'date':
+            $enable_date                          = isset( $customfield['enable_date'] ) ? $customfield['enable_date'] : false;
+            $form_fields['general']['enable_date'] = new Element_Checkbox( '<b>' . __( 'Enable Date', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_date]", array( 'enable_date' => '<b>' . __( 'Include the Date Picker in the element', 'buddyforms' ) . '</b>' ), array(
+		        'value' => $enable_date,
+	        ) );
+            //More formats in https://php.net/manual/en/function.date.php
+	        $element_date_format = isset( $customfield['element_date_format'] ) ? stripcslashes( $customfield['element_date_format'] ) : 'Y/m/d';
+            $form_fields['general']['element_date_format'] = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_date_format]", array( 'value' => $element_date_format ) );
+
+            $enable_time                           = isset( $customfield['enable_time'] ) ? $customfield['enable_time'] : false;
+	        $form_fields['general']['enable_time'] = new Element_Checkbox( '<b>' . __( 'Enable Time', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_time]", array( 'enable_time' => '<b>' . __( 'Include the Time Picker in the element', 'buddyforms' ) . '</b>' ), array(
+		        'value' => $enable_time,
+	        ) );
+	        $element_time_format = isset( $customfield['element_time_format'] ) ? stripcslashes( $customfield['element_time_format'] ) : 'H:i';
+            $form_fields['general']['element_time_format'] = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_format]", array( 'value' => $element_time_format ) );
+
+            $element_time_step                          = isset( $customfield['element_time_step'] ) ? stripcslashes( $customfield['element_time_step'] ) : 60;
+			$form_fields['general']['element_time_step'] = new Element_Number( '<b>' . __( 'Time Step', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_step]", array(
+				'value'     => $element_time_step,
+			) );
+
+            $is_inline                           = isset( $customfield['is_inline'] ) ? $customfield['is_inline'] : false;
+	        $form_fields['general']['is_inline'] = new Element_Checkbox( '<b>' . __( 'Is inline', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][is_inline]", array( 'is_inline' => '<b>' . __( 'Show the element inline', 'buddyforms' ) . '</b>' ), array(
+		        'value' => $is_inline,
+	        ) );
+	        $element_save_format = isset( $customfield['element_save_format'] ) ? stripcslashes( $customfield['element_save_format'] ) : 'Y/m/d H:i';
+            $form_fields['general']['element_save_format'] = new Element_Textbox( '<b>' . __( 'Save Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_save_format]", array( 'value' => $element_save_format ) );
+
+            break;
 		case 'post_formats':
 			unset( $form_fields['advanced']['slug'] );
 			unset( $form_fields['advanced']['metabox_enabled'] );

@@ -295,7 +295,7 @@ function BuddyForms() {
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
                 var bf = buddyformsGlobal[formSlug];
-                var fieldSlug = jQuery(element).attr('id');
+                var fieldSlug = jQuery(element).attr('name');
                 var fieldData = getFieldFromSlug(fieldSlug, formSlug);
                 if (!fieldData) {//if not field data is not possible to validate it
                     return true;
@@ -367,10 +367,14 @@ function BuddyForms() {
     }
 
     function getFormSlugFromFormElement(element) {
-        var form = jQuery(element).closest('form');
-        var formId = form.attr('id');
-        var formSlug = formId.split('buddyforms_form_');
-        return (formSlug[1]) ? formSlug[1] : false;
+        var formSlug = jQuery(element).data('form');
+        if (!formSlug) {
+            var form = jQuery(element).closest('form');
+            var formId = form.attr('id');
+            formSlug = formId.split('buddyforms_form_');
+            formSlug = (formSlug[1]) ? formSlug[1] : false;
+        }
+        return formSlug;
     }
 
     function getFieldFromSlug(fieldSlug, formSlug) {
@@ -411,11 +415,42 @@ function BuddyForms() {
     }
 
     function enabledDateTime() {
-        var dateElements = jQuery('.bf_datetime');
+        var dateElements = jQuery('.bf_datetimepicker');
         if (dateElements && dateElements.length > 0) {
-            dateElements.datetimepicker({// todo add more options to control from the field
-                controlType: 'select',
-                timeFormat: 'hh:mm tt'
+            jQuery.each(dateElements, function(i, element){
+                var currentFieldSlug = jQuery(element).attr('name');
+                var formSlug = getFormSlugFromFormElement(element);
+                if (currentFieldSlug && formSlug) {
+                    var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                    var fieldTimeStep = (fieldData.element_time_step) ? fieldData.element_time_step : 60;
+                    var fieldSaveFormat = (fieldData.element_save_format) ? fieldData.element_save_format : 'Y/m/d H:i';
+                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'Y/m/d';
+                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'H:i';
+                    var enableTime = (fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
+                    var enableDate = (fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
+                    var isInline = (fieldData.is_inline && fieldData.is_inline[0] && fieldData.is_inline[0] === 'is_inline');
+                    if (!enableDate && !enableTime) {
+                        enableDate = true;
+                    }
+                    var dateTimePickerConfig = {
+                        format: fieldSaveFormat,
+                        formatDate: fieldDateFormat,
+                        formatTime: fieldTimeFormat,
+                        timepicker: enableTime || false,
+                        datepicker: enableDate || false,
+                        inline: isInline,
+                        step: parseInt(fieldTimeStep)
+                    };
+
+                    var dateTimePickerConfigCallback = function (config) {
+                        if(config) {
+                            dateTimePickerConfig = config;
+                        }
+                    };
+                    jQuery(document.body).trigger({type: "buddyforms:field:date"}, [dateTimePickerConfig, element, fieldData, formSlug, dateTimePickerConfigCallback]);
+
+                    jQuery(element).datetimepicker(dateTimePickerConfig);
+                }
             });
         }
     }
@@ -519,8 +554,8 @@ function BuddyForms() {
             jQuery(document).on("click", '.create-new-tax-item', createTaxItem);
 
             //Events
+            jQuery(document).on('buddyforms:submit:disable', disableFormSubmit);
             jQuery(document).on('buddyforms:submit:enable', enableFormSubmit);
-            jQuery(document).on('buddyforms:submit:disable', disableFormSubmit());
 
             disableACFPopup();
 
@@ -534,6 +569,8 @@ function BuddyForms() {
             }
 
             bf_form_errors();
+
+            enabledDateTime();
 
             enabledGarlic();
 

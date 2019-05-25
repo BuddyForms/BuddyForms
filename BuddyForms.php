@@ -77,7 +77,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			$this->load_constants();
 
-			self::$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
+			self::$assets = plugin_dir_url( __FILE__ ) . 'assets/';
 
 			//Load the necessary files to start the sessions
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
@@ -294,9 +294,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Shared assets between frontend and backend
 		 *
+		 * @param $hook_suffix
+		 *
 		 * @since 2.4.0
 		 *
-		 * @param $hook_suffix
 		 */
 		public static function shared_styles( $hook_suffix ) {
 			wp_enqueue_script( 'buddyforms-loadingoverlay', plugins_url( 'assets/resources/loadingoverlay/loadingoverlay.min.js', __FILE__ ), array( 'jquery' ) );
@@ -314,10 +315,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Enqueue the needed CSS for the admin screen
 		 *
-		 * @package buddyforms
+		 * @param $hook_suffix
+		 *
 		 * @since 0.1-beta
 		 *
-		 * @param $hook_suffix
+		 * @package buddyforms
 		 */
 		function admin_styles( $hook_suffix ) {
 			global $post;
@@ -355,16 +357,17 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Enqueue the needed JS for the admin screen
 		 *
-		 * @package buddyforms
+		 * @param $hook_suffix
+		 *
 		 * @since 0.1-beta
 		 *
-		 * @param $hook_suffix
+		 * @package buddyforms
 		 */
 		function admin_js( $hook_suffix ) {
-			global $post;
+			global $post, $wp_query, $buddyforms;
 
 			if (
-				( isset( $post ) && ($post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
+				( isset( $post ) && ( $post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 				  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
 				|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 				|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
@@ -388,7 +391,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					$admin_text_array[ $key ] = $template;
 				}
 
-				self::buddyforms_js_global_set_parameters( array(
+				$back_js_arguments = array(
 					'admin_text'     => $admin_text_array,
 					'admin_url'      => admin_url( 'admin-ajax.php' ),
 					'ajaxnonce'      => wp_create_nonce( 'fac_drop' ),
@@ -396,7 +399,15 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'current_screen' => get_current_screen(),
 					'is_admin'       => is_admin(),
 					'localize'       => self::localize_fields()
-				) );
+				);
+
+				$form_slug  = buddyforms_get_form_slug();
+				$bf_post_id = $wp_query->get( 'bf_post_id' );
+				if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+					$options                         = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $bf_post_id );
+					$back_js_arguments[ $form_slug ] = $options;
+				}
+				self::buddyforms_js_global_set_parameters( $back_js_arguments );
 
 				wp_enqueue_script( 'buddyforms-admin-js' );
 
@@ -482,8 +493,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			$found = false;
 
-			if(!empty($post->post_content)) {
-				$form_slug    = buddyforms_get_form_slug_from_content( $post->post_content, array( 'bf-list-submissions','buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
+			if ( ! empty( $post->post_content ) ) {
+				$form_slug = buddyforms_get_form_slug_from_content( $post->post_content, array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
 				// check the post content for the short code
 				$found = ( ! empty( $form_slug ) );
 			}
@@ -510,11 +521,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Enqueue the needed JS for the form in the frontend
 		 *
-		 * @package buddyforms
+		 * @param string $content This is the page content,
+		 *
+		 * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
 		 * @since 1.0
 		 *
-		 * @param string $content This is the page content,
-         * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
+		 * @package buddyforms
 		 */
 		public static function front_js_css( $content = '' ) {
 			global $wp_scripts, $buddyforms, $wp_query;
@@ -532,7 +544,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'password-strength-meter' );
 
-            $password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
+			$password_strength_settings = get_option( 'buddyforms_password_strength_settings' );
 
 			self::buddyforms_js_global_set_parameters( array(
 				'pwsL10n' => array(
@@ -556,22 +568,18 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			//DropZone
 			wp_enqueue_script( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.js', __FILE__ ), array( 'jquery' ) );
-            wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION,  true);
+			wp_enqueue_script( 'buddyforms_dropzone_initializer', plugins_url( 'assets/resources/dropzone/initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, true );
 			wp_enqueue_style( 'buddyforms-dropzone-basic', plugins_url( 'assets/resources/dropzone/basic.css', __FILE__ ) );
 			wp_enqueue_style( 'buddyforms-dropzone', plugins_url( 'assets/resources/dropzone/dropzone.css', __FILE__ ) );
 
-            //Featured image
-            wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, true );
+			//Featured image
+			wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, true );
 			// jQuery Select2 // https://select2.github.io/
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 
-			wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', __FILE__ ), array(
-				'jquery-ui-core',
-				'jquery-ui-datepicker',
-				'jquery-ui-slider'
-			), BUDDYFORMS_VERSION );
-			wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', plugins_url( 'assets/resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css', __FILE__ ) );
+			wp_enqueue_script( 'buddyforms-datetimepicker', plugins_url( 'assets/resources/datetimepicker/jquery.datetimepicker.full.min.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
+			wp_enqueue_style( 'buddyforms-datetimepicker', plugins_url( 'assets/resources/datetimepicker/jquery.datetimepicker.min.css', __FILE__ ) );
 
 			wp_enqueue_script( 'buddyforms-js', plugins_url( 'assets/js/buddyforms.js', __FILE__ ), array(
 				'jquery-ui-core',
@@ -591,11 +599,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
 
-			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, false  );
+			wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, false );
 
 			$gpdr_translations = array(
-				'gdpr_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
-				'gdpr_errors'   => __( 'Some errors occurred:', 'buddyforms' ),
+				'gdpr_success' => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
+				'gdpr_errors'  => __( 'Some errors occurred:', 'buddyforms' ),
 			);
 
 			$front_js_arguments = array(
@@ -608,14 +616,14 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			);
 			$form_slug          = buddyforms_get_form_slug();
 			$bf_post_id         = $wp_query->get( 'bf_post_id' );
-			if ( ! empty( $form_slug ) && !empty($buddyforms) && isset( $buddyforms[ $form_slug ] ) ) {
-			    $options = buddyforms_filter_frontend_js_form_options($buddyforms[ $form_slug ], $form_slug, $bf_post_id);
+			if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+				$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $bf_post_id );
 				$front_js_arguments[ $form_slug ] = $options;
 			}
 			self::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 			//Global frontend vars
-			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters('buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
+			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
 
 			//Loading shared assets
 			self::shared_styles( '' );
@@ -678,11 +686,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Change the admin footer text on BuddyForms admin pages.
 		 *
-		 * @since  1.6
-		 *
-		 * @param  string $footer_text
+		 * @param string $footer_text
 		 *
 		 * @return string
+		 * @since  1.6
+		 *
 		 */
 		public function admin_footer_text( $footer_text ) {
 			global $post;
@@ -726,7 +734,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'post_content' => __( 'This is a preview of how this form will appear on your website', 'buddyforms' ),
 					'post_status'  => 'draft',
 					'post_type'    => 'page',
-					'post_name'    => sanitize_title('BuddyForms Preview Page')
+					'post_name'    => sanitize_title( 'BuddyForms Preview Page' )
 				);
 
 				// Insert the page into the database
@@ -774,22 +782,22 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
 			$buddyforms_core_fs = fs_dynamic_init( array(
-				'id'                  => '391',
-				'slug'                => 'buddyforms',
-				'type'                => 'plugin',
-				'public_key'          => 'pk_dea3d8c1c831caf06cfea10c7114c',
-				'is_premium'          => true,
-				'has_addons'          => true,
-				'has_paid_plans'      => true,
-				'trial'               => array(
+				'id'              => '391',
+				'slug'            => 'buddyforms',
+				'type'            => 'plugin',
+				'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
+				'is_premium'      => true,
+				'has_addons'      => true,
+				'has_paid_plans'  => true,
+				'trial'           => array(
 					'days'               => 14,
 					'is_require_payment' => true,
 				),
-				'has_affiliation'     => false,
-				'menu'                => array(
-					'slug'           => 'edit.php?post_type=buddyforms',
+				'has_affiliation' => false,
+				'menu'            => array(
+					'slug'       => 'edit.php?post_type=buddyforms',
 					'first-path' => $first_path,
-					'support'        => false,
+					'support'    => false,
 					'contact'    => true,
 					'addons'     => true,
 				),
@@ -801,11 +809,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 	function buddyforms_php_version_admin_notice() {
 		?>
-		<div class="notice notice-error is-dismissible">
-			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
-			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
-		</div>
+        <div class="notice notice-error is-dismissible">
+            <p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+            <p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
+            <p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+        </div>
 		<?php
 	}
 
@@ -821,7 +829,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			// Signal that parent SDK was initiated.
 			do_action( 'buddyforms_core_fs_loaded' );
 			// GDPR Admin Notice
-			buddyforms_core_fs()->add_filter( 'handle_gdpr_admin_notice', '__return_true');
+			buddyforms_core_fs()->add_filter( 'handle_gdpr_admin_notice', '__return_true' );
 
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				define( 'BUDDYFORMS_PRO_VERSION', 'pro' );
