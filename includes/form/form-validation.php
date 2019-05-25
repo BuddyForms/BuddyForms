@@ -27,13 +27,14 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				continue;
 			}
 
-			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 && isset( $form_field['validation_max'] ) && $form_field['validation_max'] > 0 ) {
-				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] === $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] !== $form_field['validation_min'] ) ) {
-					$valid                    = false;
-					$validation_error_message = __( 'Please enter a value equal to ', 'buddyforms' ) . $form_field['validation_min'];
-					Form::setError( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] );
-				}
-			}
+			//If the value of the field is empty then don´t run the validation
+            //This means that the field is not mandatory and empty values are allowed.
+            if (isset( $_POST[ $form_field['slug'] ] ) ) {
+			    $field_value = $_POST[ $form_field['slug'] ];
+			    if(empty($field_value)){
+                    continue;
+                }
+            }
 
 			if ( isset( $form_field['validation_min'] ) && $form_field['validation_min'] > 0 ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) ) {
