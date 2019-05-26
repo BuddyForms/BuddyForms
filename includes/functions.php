@@ -670,6 +670,33 @@ function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
 }
 
 /**
+ * Get field by ID
+ *
+ * @since 2.4.6
+ *
+ * @param $form_slug
+ * @param $field_id
+ *
+ * @return bool|array
+ */
+function buddyforms_get_form_field_by_id( $form_slug, $field_id ) {
+	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_id . '_in_form_' . $form_slug, 'buddyforms' );
+	if ( $result_field === false ) {
+		global $buddyforms;
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] ) ) {
+				$result_field = $buddyforms[ $form_slug ]['form_fields'][ $field_id ];
+				wp_cache_set( 'buddyforms_get_field_' . $field_id . '_in_form_' . $form_slug, $result_field, 'buddyforms' );
+
+				return $result_field;
+			}
+		}
+	}
+
+	return $result_field;
+}
+
+/**
  * Return teh array of field belong to the form.
  *
  * @param $form_slug

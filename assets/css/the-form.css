@@ -147,7 +147,8 @@
     font-weight: bold;
 }
 
-.the_buddyforms_form .bf_field_group input.error {
+.the_buddyforms_form .bf_field_group span.select2-selection.select2-selection--multiple.error,
+.the_buddyforms_form .bf_field_group span.select2-selection.select2-selection--single.error{
     border: 1px solid red;
 }
 

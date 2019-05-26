@@ -205,6 +205,10 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'date':
+						$show_label = isset( $customfield['is_inline']) && isset($customfield['is_inline'][0]) && $customfield['is_inline'][0] === 'is_inline';
+						if($show_label){
+							$element_attr['label'] = $name;
+						}
 						$form->addElement( new Element_Date( $name, $slug, $element_attr ) );
 						break;
 
@@ -892,6 +896,7 @@ function buddyforms_form_elements( $form, $args ) {
 							$dropdown = str_replace( 'id=', 'required id=', $dropdown );
 						}
 
+						$dropdown = str_replace( 'id=', 'data-form="' . $form_slug . '" id=', $dropdown );
 						$dropdown = str_replace( 'id=', 'data-placeholder="' . $placeholder . '" id=', $dropdown );
 						$dropdown = str_replace( 'id=', 'style="width:100%;" id=', $dropdown );
 
@@ -959,7 +964,11 @@ function buddyforms_form_elements( $form, $args ) {
                                      allowClear: true,
 							        ' . $tags . '
 							        tokenSeparators: [\',\']
-							    });
+							    })
+							    jQuery(".bf-select2-' . $field_id . '").on("change", function () {
+				                     var formSlug = jQuery(this).data("form");
+				                     jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
+				                });
 						    });
 						</script>
 						<div class="bf_field_group">

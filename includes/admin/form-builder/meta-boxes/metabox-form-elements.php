@@ -334,8 +334,7 @@ function buddyforms_form_elements_select_options() {
 				);
 			$elements_select_options['extra']['fields']['date']   =
 				array(
-					'label'  => __( 'Date', 'buddyforms' ),
-					'unique' => 'unique'
+					'label'  => __( 'Date', 'buddyforms' )
 				);
 			$elements_select_options['extra']['fields']['range']  =
 				array(

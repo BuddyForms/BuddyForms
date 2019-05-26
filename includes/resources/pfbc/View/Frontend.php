@@ -86,8 +86,15 @@ class View_Frontend extends FormView {
 			return;
 		}
 
+		$date_is_inline = false;
+		if ( $element instanceof Element_Date ) {
+			$date_is_inline = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
+			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
+		}
 
-		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
+		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File && ! $date_is_inline ) {
 
 			$element->appendAttribute( "class", "form-control" );
 
@@ -124,9 +131,18 @@ class View_Frontend extends FormView {
 		global $form_slug, $buddyforms;
 
 		$label = $element->getLabel();
+		$field_id = $element->getAttribute( "field_id" );
 
-		//TODO improve required flag position
-		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' ) {
+		$date_is_inline = false;
+		if ( $element instanceof Element_Date ) {
+			$date_is_inline = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
+			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
+		}
+
+		//TODO improve required flag position adding new layout option to place before/after the label or the placeholder
+		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' || $date_is_inline ) {
 			if ( $element->isRequired() ) {
 				$label = $label . $this->renderRequired();
 			}

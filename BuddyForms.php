@@ -499,6 +499,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$found = ( ! empty( $form_slug ) );
 			}
 
+			if ( isset( $post->ID ) && empty( $form_slug ) ) {
+				$form_slug = get_post_meta( $post->ID, '_bf_form_slug', true );
+				// check the post content for the short code
+				$found = ( ! empty( $form_slug ) );
+			}
+
 			if ( isset( $wp_query->query['bf_action'] ) ) {
 				$found = true;
 			}

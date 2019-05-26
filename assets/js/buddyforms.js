@@ -291,24 +291,40 @@ function BuddyForms() {
         jQuery.validator.addMethod("required", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
             if (
-                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+              formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+              buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
-                var bf = buddyformsGlobal[formSlug];
                 var fieldSlug = jQuery(element).attr('name');
                 var fieldData = getFieldFromSlug(fieldSlug, formSlug);
                 if (!fieldData) {//if not field data is not possible to validate it
                     return true;
                 }
+
+                var passValidationFieldTypes = ['upload', 'featured_image'];
+                var passValidationCallback = function (fieldTypeArray) {
+                    passValidationFieldTypes = fieldTypeArray || false;
+                };
+                jQuery(document.body).trigger({ type: 'buddyforms:validation:pass' }, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
+
+                if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
+                    var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
+                    if (exist && exist >= 0) {
+                        return true;
+                    }
+                }
+
                 var result = false;
                 var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
 
                 switch (fieldData.type) {
                     case 'post_formats':
-                        result = value !== 'Select a Post Format';
+                        result = value && value !== 'Select a Post Format';
+                        break;
+                    case 'taxonomy':
+                        result = value && value !== "-1";
                         break;
                     default:
-                        result = value.length > 0;
+                        result = value && value.length > 0;
                 }
 
                 var requiredCallback = function (isValid, message) {
@@ -379,8 +395,9 @@ function BuddyForms() {
 
     function getFieldFromSlug(fieldSlug, formSlug) {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
-            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function(fielId){
-                return buddyformsGlobal[formSlug].form_fields[fielId].slug.toLowerCase() === fieldSlug.toLowerCase();
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function(fieldId){
+                fieldSlug = fieldSlug.replace('[]', '');
+                return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
             });
             if(fieldIdResult){
                 return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
@@ -400,6 +417,7 @@ function BuddyForms() {
         var bf_select_2 = jQuery('.bf-select2');
         if (bf_select_2.length > 0) {
             bf_select_2.each(function () {
+
                 var reset = jQuery(this).attr('data-reset');
                 var options = {
                     placeholder: "Select an option", // todo need il18n
@@ -410,6 +428,11 @@ function BuddyForms() {
                     options['allowClear'] = true;
                 }
                 jQuery(this).select2(options);
+
+                jQuery(this).on('change', function () {
+                     var formSlug = jQuery(this).data('form');
+                     jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
+                });
             });
         }
     }
@@ -439,7 +462,10 @@ function BuddyForms() {
                         timepicker: enableTime || false,
                         datepicker: enableDate || false,
                         inline: isInline,
-                        step: parseInt(fieldTimeStep)
+                        step: parseInt(fieldTimeStep),
+                        onChangeDateTime: function(){
+                            jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
+                        }
                     };
 
                     var dateTimePickerConfigCallback = function (config) {
@@ -522,6 +548,48 @@ function BuddyForms() {
         }
     }
 
+    function validateGlobalConfig () {
+        var forms = jQuery('form[id^="buddyforms_form_"]');
+        if (forms && forms.length > 0) {
+            jQuery.each(forms, function () {
+                jQuery(this).submit(function () {}).validate({
+                    ignore: [],
+                    errorPlacement: function (label, element) {
+                        if(! element.hasClass('select2-hidden-accessible')) {
+                            if (element.is('TEXTAREA')) {
+                                label.insertAfter(element);
+                            } else if (element.is('input[type="radio"]')) {
+                                var labelElement = jQuery('label[for="'+element.attr('name')+'"]');
+                                label.insertAfter(labelElement);
+                            } else {
+                                label.insertAfter(element);
+                            }
+                        } else {
+                            element.parent().find('span.select2-selection');
+                            label.insertAfter(element);
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        var elem = jQuery(element);
+                        if (elem.hasClass('select2-hidden-accessible')) {
+                            elem.parent().find('span.select2-selection').addClass(errorClass);
+                        } else {
+                            elem.addClass(errorClass);
+                        }
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        var elem = jQuery(element);
+                        if (elem.hasClass('select2-hidden-accessible')) {
+                            elem.parent().find('span.select2-selection').removeClass(errorClass);
+                        } else {
+                            elem.removeClass(errorClass);
+                        }
+                    },
+                });
+            });
+        }
+    }
+
     return {
         submissionModal: function (target) {
             submissionModal = target;
@@ -560,21 +628,20 @@ function BuddyForms() {
             disableACFPopup();
 
             if (jQuery && jQuery.validator) {
+                validateGlobalConfig();
                 addValidationForUserWebsite();
                 addValidationMinLength();
                 addValidationMaxLength();
                 addValidationMaxValue();
                 addValidationMinValue();
                 addValidationRequired();
+                enabledSelect2();
+                enabledDateTime();
             }
 
             bf_form_errors();
 
-            enabledDateTime();
-
             enabledGarlic();
-
-            enabledSelect2();
 
             handleFeaturePost();
 
