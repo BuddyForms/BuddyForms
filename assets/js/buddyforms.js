@@ -555,18 +555,27 @@ function BuddyForms() {
                 jQuery(this).submit(function () {}).validate({
                     ignore: [],
                     errorPlacement: function (label, element) {
-                        if(! element.hasClass('select2-hidden-accessible')) {
-                            if (element.is('TEXTAREA')) {
+                        var formSlug = getFormSlugFromFormElement(element);
+                        var fieldSlug = jQuery(element).attr('name');
+                        var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+                        if (!fieldData) {//if not field data is not possible to validate it
+                            return true;
+                        }
+                        switch (fieldData.type) {
+                            case "taxonomy":
+                            case "category":
+                            case "tags":
+                                element.parent().find('span.select2-selection');
                                 label.insertAfter(element);
-                            } else if (element.is('input[type="radio"]')) {
-                                var labelElement = jQuery('label[for="'+element.attr('name')+'"]');
+                                break;
+                            case "checkbox":
+                            case "date":
+                            case "radiobutton":
+                                var labelElement = jQuery('label[for="'+fieldSlug+'"]');
                                 label.insertAfter(labelElement);
-                            } else {
-                                label.insertAfter(element);
-                            }
-                        } else {
-                            element.parent().find('span.select2-selection');
-                            label.insertAfter(element);
+                                break;
+                            default:
+                                 label.insertAfter(element);
                         }
                     },
                     highlight: function (element, errorClass, validClass) {
