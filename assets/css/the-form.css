@@ -89,6 +89,55 @@
     width: 100%;
     box-sizing: border-box;
 }
+.the_buddyforms_form form fieldset .col-md-9 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.the_buddyforms_form form fieldset .col-md-8 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.the_buddyforms_form form fieldset .col-md-6 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.the_buddyforms_form form fieldset .col-md-4 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.the_buddyforms_form form fieldset .col-md-3 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    float: left;
+    width: 100%;
+    box-sizing: border-box;
+}
 
 @media (min-width: 992px) {
     .the_buddyforms_form form fieldset .col-md-9 {
@@ -109,6 +158,15 @@
 
     .the_buddyforms_form form fieldset .col-md-3 {
         width: 25%;
+    }
+
+    .the_buddyforms_form form fieldset .col-md-12.bf-start-row,
+    .the_buddyforms_form form fieldset .col-md-9.bf-start-row,
+    .the_buddyforms_form form fieldset .col-md-8.bf-start-row,
+    .the_buddyforms_form form fieldset .col-md-6.bf-start-row,
+    .the_buddyforms_form form fieldset .col-md-4.bf-start-row,
+    .the_buddyforms_form form fieldset .col-md-3.bf-start-row{
+        clear: both;
     }
 }
 
@@ -150,6 +208,15 @@
 .the_buddyforms_form .bf_field_group span.select2-selection.select2-selection--multiple.error,
 .the_buddyforms_form .bf_field_group span.select2-selection.select2-selection--single.error{
     border: 1px solid red;
+}
+
+.the_buddyforms_form form fieldset .col-md-12.bf-start-row,
+.the_buddyforms_form form fieldset .col-md-9.bf-start-row,
+.the_buddyforms_form form fieldset .col-md-8.bf-start-row,
+.the_buddyforms_form form fieldset .col-md-6.bf-start-row,
+.the_buddyforms_form form fieldset .col-md-4.bf-start-row,
+.the_buddyforms_form form fieldset .col-md-3.bf-start-row {
+    clear: both;
 }
 
 /* Alerts */

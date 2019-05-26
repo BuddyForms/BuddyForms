@@ -33,7 +33,6 @@ class View_Frontend extends FormView {
 		$elementCount = 0;
 		for ( $e = 0; $e < $elementSize; ++ $e ) {
 			$element = $elements[ $e ];
-
 			if ( $element instanceof Element_Button ) {
 				if ( $e == 0 || ! $elements[ ( $e - 1 ) ] instanceof Element_Button ) {
 					echo '<div class="form-actions ' . $layout_style . '">';
@@ -48,7 +47,6 @@ class View_Frontend extends FormView {
 			} else {
 				$this->renderElement( $element );
 			}
-
 			++ $elementCount;
 		}
 
@@ -61,9 +59,27 @@ class View_Frontend extends FormView {
 	public function renderElement( $element ) {
 		global $form_slug, $buddyforms;
 
-		$field_id = $element->getAttribute( "field_id" );
-
+		$field_id     = $element->getAttribute( "field_id" );
 		$layout_style = buddyforms_layout_style( $field_id );
+
+		$is_first_row = false;
+
+		if ( ! empty( $buddyforms[ $form_slug ]['layout']['cords'] ) && isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ) {
+			$reverse_layout_fields = array_reverse( $buddyforms[ $form_slug ]['layout']['cords'] );
+			foreach ( $buddyforms[ $form_slug ]['layout']['cords'] as $key => $val ) {
+				$reverse_layout_fields[ $key ] = 100 / intval( $val );
+			}
+			$total_width = 0;
+			foreach ( $reverse_layout_fields as $reverse_field_id => $width ) {
+				$total_width                                                       += $width;
+				$buddyforms[ $form_slug ]['form_fields'][ $reverse_field_id ]['first_row'] = ( $total_width === 100 );
+				if ( $total_width === 100 ) {
+					$total_width = 0;
+				}
+			}
+
+			$is_first_row = $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['first_row'];
+		}
 
 		if ( $element instanceof Element_Hidden ) {
 			$element->render();
@@ -77,7 +93,8 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		echo '<div class="' . $layout_style . '">';
+		$style_first_row = !empty($is_first_row)? ' bf-start-row' : '';
+		echo '<div class="' . $layout_style . $style_first_row . '">';
 
 		if ( $element instanceof Element_HTML ) {
 			$element->render();
@@ -158,26 +175,29 @@ function buddyforms_layout_style( $field_id ) {
 
 	$layout_style = isset( $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] ) ? $buddyforms[ $form_slug ]['layout']['cords'][ $field_id ] : '1';
 
-	$custom_class =isset( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][$field_id]['custom_class'] ) : '';
+	$custom_class = '';
+	if ( ! empty( $field_id ) && ! empty( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+		$custom_class = ! empty( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['custom_class'] ) ? 'col-' . stripcslashes( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['custom_class'] ) : '';
+	}
 
 	switch ( $layout_style ) {
 		case '1' :
 			$layout_style = 'col-xs-12';
 			break;
 		case '2' :
-			$layout_style = 'col-xs-12 col-md-6';
+			$layout_style = 'col-md-6';
 			break;
 		case '3' :
-			$layout_style = 'col-xs-12 col-md-4';
+			$layout_style = 'col-md-4';
 			break;
 		case '4' :
-			$layout_style = 'col-xs-12 col-md-3';
+			$layout_style = 'col-md-3';
 			break;
 		case '5' :
-			$layout_style = 'col-xs-12 col-md-8';
+			$layout_style = 'col-md-8';
 			break;
 		case '6' :
-			$layout_style = 'col-xs-12 col-md-9';
+			$layout_style = 'col-md-9';
 			break;
 		default:
 			$layout_style = 'col-xs-12';
