@@ -291,9 +291,11 @@ function buddyforms_nav( $args ) {
 	BuddyForms::front_js_css();
 	BuddyForms::load_tk_font_icons();
 
-	$tmp = buddyforms_button_view_posts( $args );
-	$tmp .= $separator;
-	$tmp .= buddyforms_button_add_new( $args );
+	$args['label'] = isset( $args['label_view'] ) ? $args['label_view'] : __( 'View', 'buddyforms' );
+	$tmp           = buddyforms_button_view_posts( $args );
+	$tmp           .= $separator;
+	$args['label'] = isset( $args['label_add'] ) ? $args['label_add'] : __( 'Add New', 'buddyforms' );
+	$tmp           .= buddyforms_button_add_new( $args );
 
 	return $tmp;
 }
@@ -310,13 +312,13 @@ function buddyforms_button_view_posts( $args ) {
 	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
 		'form_slug'  => '',
-		'label_view' => __( 'View', 'buddyforms' ),
+		'label' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
 	BuddyForms::front_js_css();
 	BuddyForms::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $args['label'] . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
 
@@ -334,13 +336,13 @@ function buddyforms_button_add_new( $args ) {
 	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label_add' => __( 'Add New', 'buddyforms' ),
+		'label' => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
 	BuddyForms::front_js_css();
 	BuddyForms::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $label_add . '</a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $args['label']  . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 
