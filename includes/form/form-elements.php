@@ -260,14 +260,14 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
 						} else {
-
+							$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_post_content_default_rows', 18 );
 							ob_start();
 							$settings = array(
 								'wpautop'       => true,
 								'media_buttons' => isset( $customfield['post_content_options'] ) ? in_array( 'media_buttons', $customfield['post_content_options'] ) ? false : true : true,
 								'tinymce'       => isset( $customfield['post_content_options'] ) ? in_array( 'tinymce', $customfield['post_content_options'] ) ? false : true : true,
 								'quicktags'     => isset( $customfield['post_content_options'] ) ? in_array( 'quicktags', $customfield['post_content_options'] ) ? false : true : true,
-								'textarea_rows' => 18,
+								'textarea_rows' => $textarea_rows,
 								'textarea_name' => 'buddyforms_form_content',
 								'editor_class'  => 'textInMce',
 							);
@@ -287,6 +287,11 @@ function buddyforms_form_elements( $form, $args ) {
 								$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 								$required  = $form->renderRequired();
 							}
+
+							if ( $textarea_rows ) {
+								$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
+							}
+
 							$content_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
 							$content_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
 							$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $content_minlength . "]\"", $wp_editor );
@@ -448,13 +453,14 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'textarea' :
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 
+						$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_textarea_default_rows', 3 );
 						ob_start();
 						$settings = array(
 							'wpautop'       => false,
 							'media_buttons' => isset( $customfield['post_textarea_options'] ) ? in_array( 'media_buttons', $customfield['post_textarea_options'] ) ? true : false : false,
 							'tinymce'       => isset( $customfield['post_textarea_options'] ) ? in_array( 'tinymce', $customfield['post_textarea_options'] ) ? true : false : false,
 							'quicktags'     => isset( $customfield['post_textarea_options'] ) ? in_array( 'quicktags', $customfield['post_textarea_options'] ) ? true : false : false,
-							'textarea_rows' => 18,
+							'textarea_rows' => $textarea_rows,
 							'textarea_name' => $slug,
 							'editor_class'  => 'textInMce',
 						);
@@ -483,7 +489,6 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
-						$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_textarea_text_area_default_rows', 3 );
 						if ( $textarea_rows ) {
 							$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
 						}
@@ -508,13 +513,15 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'post_excerpt':
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 
+						$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_post_excerpt_default_rows', 3 );
+
 						ob_start();
 						$settings = array(
 							'wpautop'       => false,
 							'media_buttons' => isset( $customfield['post_excerpt_options'] ) ? in_array( 'media_buttons', $customfield['post_excerpt_options'] ) ? true : false : false,
 							'tinymce'       => isset( $customfield['post_excerpt_options'] ) ? in_array( 'tinymce', $customfield['post_excerpt_options'] ) ? true : false : false,
 							'quicktags'     => isset( $customfield['post_excerpt_options'] ) ? in_array( 'quicktags', $customfield['post_excerpt_options'] ) ? true : false : false,
-							'textarea_rows' => 18,
+							'textarea_rows' => $textarea_rows,
 							'textarea_name' => $slug,
 							'editor_class'  => 'textInMce',
 						);
@@ -536,6 +543,11 @@ function buddyforms_form_elements( $form, $args ) {
 							$wp_editor = str_replace( '<textarea', '<textarea required="required"', $wp_editor );
 							$required  = $form->renderRequired();
 						}
+
+						if ( $textarea_rows ) {
+							$wp_editor = preg_replace( '/<textarea/', "<textarea rows=\"" . $textarea_rows . "\"", $wp_editor );
+						}
+
 						$excerpt_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
 						$excerpt_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
 						$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $excerpt_minlength . "]\"", $wp_editor );

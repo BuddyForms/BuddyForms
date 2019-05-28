@@ -943,12 +943,16 @@ jQuery(document).ready(function (jQuery) {
 	jQuery(document).on('click', '.bf-ready-to-copy', function (e) {
 	    e.preventDefault();
 	    e.stopPropagation();
-        var parentHeader = jQuery(this).closest('.accordion-heading-options');
-        var accordionBody = parentHeader.parent().find('.accordion-body');
-        accordionBody.removeClass('ui-accordion-content-active').hide();
-	    var elementString = jQuery(this).text();
-	    buddyformsCopyStringToClipboard(elementString);
-	    accordionBody.addClass('ui-accordion-content-active');
+	    var currentElement = jQuery(this);
+        if(currentElement.is('input')){
+            buddyformsCopyStringToClipboard(currentElement.val());
+        } else {
+            var parentHeader = jQuery(this).closest('.accordion-heading-options');
+            var accordionBody = parentHeader.parent().find('.accordion-body');
+            accordionBody.removeClass('ui-accordion-content-active').hide();
+            buddyformsCopyStringToClipboard(currentElement.text());
+            accordionBody.addClass('ui-accordion-content-active');
+        }
 	    return false;
     });
 

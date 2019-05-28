@@ -1958,7 +1958,7 @@ input.screen-per-page{
 table .element_field_table_sortable tbody{
     cursor: ns-resize;
 }
-
+#buddyforms_form_shortcodes .bf-shortcode div.tooltip > span.dashicons.dashicons-admin-page,
 #buddyforms_forms_builder .field_name > div.tooltip > span.dashicons.dashicons-admin-page {
     width: 14px;
     height: 14px;
@@ -1969,6 +1969,7 @@ table .element_field_table_sortable tbody{
     cursor: pointer;
 }
 
+#buddyforms_form_shortcodes .bf-shortcode  div.tooltip > span.field_name_text,
 #buddyforms_forms_builder .field_name > div.tooltip > span.field_name_text {
     cursor: pointer;
     position: absolute;
@@ -1979,6 +1980,7 @@ table .element_field_table_sortable tbody{
  *  For now this only work inside the editor
  */
 
+#buddyforms_form_shortcodes .bf-shortcode div.tooltip > .tooltip-container,
 #buddyforms_forms_builder .field_name .tooltip-container {
     display: none;
     width: 150px;
@@ -1993,6 +1995,7 @@ table .element_field_table_sortable tbody{
     z-index: 99;
 }
 
+#buddyforms_form_shortcodes .bf-shortcode div.tooltip:hover .tooltip-container,
 #buddyforms_forms_builder .tooltip:hover .tooltip-container {
     display: block;
 }
