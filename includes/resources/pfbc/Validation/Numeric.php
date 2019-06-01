@@ -11,14 +11,13 @@ class Validation_Numeric extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
-		if ( $this->isNotApplicable( $value ) || is_numeric( $value ) ) {
-			return true;
-		}
+	public function isValid( $value, $element ) {
+		$result = $this->isNotApplicable( $value ) || is_numeric( $value );
 
-		return false;
+		return apply_filters( 'buddyforms_element_numeric_validation', $result, $element );
 	}
 }

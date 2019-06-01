@@ -52,8 +52,11 @@ abstract class Validation extends Base {
 
 	/**
 	 * @param $value
+	 * @param $element
+	 *
+	 * @since 2.4.6 added the $element parameter
 	 *
 	 * @return mixed
 	 */
-	public abstract function isValid( $value );
+	public abstract function isValid( $value, $element );
 }

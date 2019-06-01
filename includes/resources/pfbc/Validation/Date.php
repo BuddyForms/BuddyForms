@@ -11,14 +11,17 @@ class Validation_Date extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
+	public function isValid( $value, $element ) {
 		try {
 			$d = DateTime::createFromFormat( $this->field_options['element_save_format'], $value );
 
-			return $d && $d->format( $this->field_options['element_save_format'] ) === $value;
+			$result = $d && $d->format( $this->field_options['element_save_format'] ) === $value;
+
+			return apply_filters('buddyforms_element_date_validation', $result, $element );
 		} catch ( Exception $e ) {
 			return false;
 		}

@@ -26,14 +26,13 @@ class Validation_RegExp extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
-		if ( $this->isNotApplicable( $value ) || preg_match( $this->pattern, $value ) ) {
-			return true;
-		}
+	public function isValid( $value, $element ) {
+		$result = $this->isNotApplicable( $value ) || preg_match( $this->pattern, $value );
 
-		return false;
+		return apply_filters( 'buddyforms_element_regex_validation', $result, $element );
 	}
 }

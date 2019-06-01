@@ -296,3 +296,11 @@ button.bf-submit:disabled{
     display: none !important;
 }
 
+.the_buddyforms_form .bf-input textarea, .the_buddyforms_form .bf-input #comments.form-control {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 15px;
+    float: unset;
+}
+

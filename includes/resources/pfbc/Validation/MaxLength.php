@@ -30,14 +30,13 @@ class MaxLength extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
-		if ( $this->isNotApplicable( $value ) || strlen( $value ) <= $this->limit ) {
-			return true;
-		}
+	public function isValid( $value, $element ) {
+		$result = $this->isNotApplicable( $value ) || strlen( $value ) <= $this->limit;
 
-		return false;
+		return apply_filters( 'buddyforms_element_maxlength_validation', $result, $element );
 	}
 }

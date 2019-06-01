@@ -157,6 +157,9 @@ abstract class Element extends Base {
 
 	/**
 	 * @param $value
+	 * @param $field
+	 *
+	 * @since 2.4.6 added the $element parameter
 	 *
 	 * @return bool
 	 */
@@ -187,7 +190,7 @@ abstract class Element extends Base {
 			}
 
 			foreach ( $this->validation as $validation ) {
-				if ( ! $validation->isValid( $value ) ) {
+				if ( ! $validation->isValid( $value, $this ) ) {
 					/*In the error message, %element% will be replaced by the element's label (or
 					name if label is not provided).*/
 					$this->_errors[] = str_replace( "%element%", $element, $validation->getMessage() );

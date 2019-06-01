@@ -11,14 +11,13 @@ class Validation_Url extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
-		if ( $this->isNotApplicable( $value ) || filter_var( $value, FILTER_VALIDATE_URL ) ) {
-			return true;
-		}
+	public function isValid( $value, $element ) {
+		$result = $this->isNotApplicable( $value ) || filter_var( $value, FILTER_VALIDATE_URL );
 
-		return false;
+		return apply_filters( 'buddyforms_element_url_validation', $result, $element );
 	}
 }

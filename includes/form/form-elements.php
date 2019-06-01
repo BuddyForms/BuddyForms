@@ -836,7 +836,7 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
 						} else {
-							$form->addElement( new Element_Select( $name, $slug, $post_formats, $element_attr ) );
+							$form->addElement( new Element_PostFormats( $name, $slug, $post_formats, $element_attr ) );
 						}
 
 						break;

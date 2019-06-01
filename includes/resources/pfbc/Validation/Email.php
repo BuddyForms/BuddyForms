@@ -11,14 +11,13 @@ class Validation_Email extends Validation {
 
 	/**
 	 * @param $value
+	 * @param $element
 	 *
 	 * @return bool
 	 */
-	public function isValid( $value ) {
-		if ( $this->isNotApplicable( $value ) || filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
-			return true;
-		}
+	public function isValid( $value, $element ) {
+		$result = $this->isNotApplicable( $value ) || filter_var( $value, FILTER_VALIDATE_EMAIL );
 
-		return false;
+		return apply_filters( 'buddyforms_element_email_validation', $result, $element );
 	}
 }
