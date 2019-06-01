@@ -8,15 +8,25 @@ abstract class Validation extends Base {
 	 * @var string
 	 */
 	protected $message = "%element% is invalid.";
+	/**
+	 * @since 2.4.6
+	 * @var array|null
+	 */
+	protected $field_options;
 
 	/**
 	 * Validation constructor.
 	 *
 	 * @param string $message
+	 * @param array $field_options
 	 */
-	public function __construct( $message = "" ) {
+	public function __construct( $message = "", array $field_options = null ) {
 		if ( ! empty( $message ) ) {
 			$this->message = $message;
+		}
+
+		if ( ! empty( $field_options ) ) {
+			$this->field_options = $field_options;
 		}
 	}
 

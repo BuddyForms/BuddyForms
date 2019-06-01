@@ -155,7 +155,7 @@ function buddyforms_wp_insert_post_data($data, $postarr){
 
 	if ( ! empty( $data['post_type'] ) && $data['post_type'] === 'buddyforms' && ! empty( $_POST['buddyforms_options'] ) && ! empty( $_POST['buddyforms_options']['slug'] ) ) {
 		$new_slug = sanitize_title( $_POST['buddyforms_options']['slug'] );
-		if ( ! empty( $data['post_name'] ) ) {
+		if ( ! empty( $data['post_name'] ) && $data['post_name'] !== $new_slug ) {
 			$result = buddyforms_update_form_slug( $data['post_name'], $new_slug );
 			if ( $result ) {
 				$data['post_name'] = $new_slug;

@@ -39,13 +39,19 @@ abstract class Element extends Base {
 	protected $validation = array();
 
 	/**
+	 * @var array
+	 */
+	protected $field_options = array();
+
+	/**
 	 * Element constructor.
 	 *
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties
+	 * @param array|null $field_options
 	 */
-	public function __construct( $label, $name, array $properties = null ) {
+	public function __construct( $label, $name, array $properties = null, array $field_options = null ) {
 		$configuration = array(
 			"label" => $label,
 			"name"  => $name
@@ -55,6 +61,10 @@ abstract class Element extends Base {
 		and name properties.*/
 		if ( is_array( $properties ) ) {
 			$configuration = array_merge( $configuration, $properties );
+		}
+
+		if ( ! empty( $field_options ) ) {
+			$this->field_options = $field_options;
 		}
 
 		$this->configure( $configuration );

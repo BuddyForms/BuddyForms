@@ -16,9 +16,9 @@ class Validation_Date extends Validation {
 	 */
 	public function isValid( $value ) {
 		try {
-			// $date = new DateTime( $value ); // todo: validate date and time with custom settings
+			$d = DateTime::createFromFormat( $this->field_options['element_save_format'], $value );
 
-			return true;
+			return $d && $d->format( $this->field_options['element_save_format'] ) === $value;
 		} catch ( Exception $e ) {
 			return false;
 		}

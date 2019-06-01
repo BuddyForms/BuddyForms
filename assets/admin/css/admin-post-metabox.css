@@ -3,12 +3,18 @@
     clear: both;
 }
 
+.edit-post-layout__metaboxes .bf_field_group .bf-label {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
 .bf_field_group .bf-label {
     width: 30%;
     display: inline-block;
 }
 
 .bf_field_group .bf-label label {
+    font-weight: bold;
     vertical-align: top;
 }
 

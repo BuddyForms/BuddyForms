@@ -205,11 +205,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'date':
-						$show_label = isset( $customfield['is_inline']) && isset($customfield['is_inline'][0]) && $customfield['is_inline'][0] === 'is_inline';
-						if($show_label){
-							$element_attr['label'] = $name;
-						}
-						$form->addElement( new Element_Date( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Date( $name, $slug, $customfield, $element_attr ) );
 						break;
 
 					case 'title':
