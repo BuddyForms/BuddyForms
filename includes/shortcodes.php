@@ -21,6 +21,10 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 		'id'          => '',
 	), $args ) );
 
+	if ( ! is_numeric( $id ) ) {
+		$form_slug = $id;
+	}
+
 	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
 	}
@@ -102,10 +106,15 @@ function buddyforms_the_loop( $args ) {
 	// if multisite is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
-	if ( empty( $form_slug ) && ! empty( $id ) ) {
+	if ( empty( $form_slug ) && ! empty( $id ) && is_numeric( $id ) ) {
 		$post      = get_post( $id );
 		$form_slug = $post->post_name;
 	}
+
+	if ( ! is_numeric( $id ) ) {
+		$form_slug = $id;
+	}
+
 	$args['form_slug'] = $form_slug;
 	unset( $args['id'] );
 

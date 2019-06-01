@@ -23,7 +23,7 @@ function buddyforms_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) 
  */
 function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) {
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-		
+
 		$tmp = '<div id="bf-gopro-sidebar">';
 		$tmp .= ! empty( $h2 ) ? '<h2>' . $h2 . '</h2>' : '';
 		$tmp .= '<div style="padding: 0 12px;">';
@@ -33,13 +33,13 @@ function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = tru
 			$tmp .= '<li>' . $pro . '</li>';
 		}
 		$tmp .= '</ul>';
-		
+
 		if ( $link ) {
 			$tmp .= '<a class="buddyforms_get_pro button button-primary" href="' . buddyforms_core_fs()->get_upgrade_url() . '">' . __( "Upgrade Now!", "buddyforms" ) . '</a>';
 		}
-		
+
 		$tmp .= '</div></div>';
-		
+
 		return $tmp;
 	}
 }
@@ -52,8 +52,8 @@ function buddyforms_version_type() {
  * @return string|void
  */
 function buddyforms_get_version_type() {
-	
-	
+
+
 	// This "if" block will be auto removed from the Free version.
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'starter', true ) ) {
@@ -64,17 +64,17 @@ function buddyforms_get_version_type() {
 			return '<b>' . __( 'Business', 'buddyforms' ) . '</b>';
 		}
 	}
-	
+
 	return '<b>' . __( 'Free', 'buddyforms' ) . '</b>';
 }
 
 add_action( 'admin_notices', 'buddyforms_rating_admin_notice' );
 function buddyforms_rating_admin_notice() {
-	
+
 	if ( defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
 		return;
 	}
-	
+
 	$user_id = get_current_user_id();
 	if ( ! get_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed' ) ) {
 		?>
@@ -94,7 +94,7 @@ function buddyforms_rating_admin_notice() {
 		</div>
 		<?php
 	}
-	
+
 }
 
 add_action( 'admin_init', 'buddyforms_rating_admin_notice_dismissed' );
@@ -146,4 +146,25 @@ function buddyforms_strip_html_title_for_entries_in_post_screen( $title, $id = n
 	}
 
 	return $title;
+}
+
+/**
+ * Update the metas of a form to match the new form slug
+ *
+ * @param $old_slug
+ * @param $new_slug
+ *
+ * @return bool
+ * @since 2.4.6
+ *
+ */
+function buddyforms_update_form_slug( $old_slug, $new_slug ) {
+	if ( empty( $new_slug ) || empty( $old_slug ) ) {
+		return false;
+	}
+	global $wpdb;
+
+	$result = $wpdb->update( $wpdb->postmeta, array( 'meta_value' => $new_slug ), array( 'meta_value' => $old_slug ) );
+
+	return ! empty( $result );
 }

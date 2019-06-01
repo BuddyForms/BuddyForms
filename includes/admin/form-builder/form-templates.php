@@ -208,10 +208,6 @@ function buddyforms_form_template() {
 		$post = new stdClass();
 	}
 
-	if ( ! empty( $_POST['title'] ) ) {
-		$post->post_name = sanitize_title( $_POST['title'] );
-	}
-
 	$post->post_type = 'buddyforms';
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
@@ -228,6 +224,11 @@ function buddyforms_form_template() {
 	$buddyform = $buddyforms_templates[ $_POST['template'] ];
 
 	$buddyform = json_decode( $buddyform['json'], true );
+
+	if ( ! empty( $_POST['title'] ) ) {
+		$post->post_name = sanitize_title( $_POST['title'] );
+		$buddyform['slug'] = $post->post_name;
+	}
 
 	ob_start();
 	buddyforms_metabox_form_elements( $post, $buddyform );

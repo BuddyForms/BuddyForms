@@ -142,22 +142,49 @@ function buddyforms_post_edit_form_tag() {
 }
 
 /**
+ * Update the post
+ * @param $data
+ * @param $postarr
+ *
+ * @return mixed
+ */
+function buddyforms_wp_insert_post_data($data, $postarr){
+    if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+		return $data;
+	}
+
+	if ( ! empty( $data['post_type'] ) && $data['post_type'] === 'buddyforms' && ! empty( $_POST['buddyforms_options'] ) && ! empty( $_POST['buddyforms_options']['slug'] ) ) {
+		$new_slug = sanitize_title( $_POST['buddyforms_options']['slug'] );
+		if ( ! empty( $data['post_name'] ) ) {
+			$result = buddyforms_update_form_slug( $data['post_name'], $new_slug );
+			if ( $result ) {
+				$data['post_name'] = $new_slug;
+			}
+		}
+	}
+
+    return $data;
+}
+
+add_filter('wp_insert_post_data', 'buddyforms_wp_insert_post_data', 10, 2);
+
+/**
  * Adds a box to the main column on the Post and Page edit screens.
  *
  * @param $post_id
  */
 function buddyforms_edit_form_save_meta_box_data( $post_id ) {
-	$post = WP_Post::get_instance($post_id);
-
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
 	}
 
-	if ( ! isset( $post->post_type ) || $post->post_type != 'buddyforms' ) {
+	if ( ! isset( $_POST['buddyforms_options'] ) ) {
 		return;
 	}
 
-	if ( ! isset( $_POST['buddyforms_options'] ) ) {
+	$post = WP_Post::get_instance($post_id);
+
+	if ( ! isset( $post->post_type ) || $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
