@@ -1168,15 +1168,15 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 
 add_filter( 'buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 10 );
 function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
-	global $buddyforms;
-
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		$customfields = $buddyforms[ $form_slug ]['form_fields'];
-	}
-
 	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
 
-	if ( isset( $title_field['generate_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+	if ( empty( $_POST['buddyforms_form_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+		global $buddyforms;
+
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			$customfields = $buddyforms[ $form_slug ]['form_fields'];
+		}
+
 		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $title_field['generate_title'], $customfields, $post_id );
 	}
 
@@ -1186,15 +1186,15 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 
 add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 2, 10 );
 function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
-	global $buddyforms;
-
-	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
-		$customfields = $buddyforms[ $form_slug ]['form_fields'];
-	}
-
 	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
 
-	if ( isset( $content_field['generate_content'] ) && ! empty( $content_field['generate_content'] ) ) {
+	if ( empty( $_POST['buddyforms_form_content'] ) && ! empty( $content_field['generate_content'] ) ) {
+		global $buddyforms;
+
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			$customfields = $buddyforms[ $form_slug ]['form_fields'];
+		}
+
 		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_content'], $customfields, $post_id );
 	}
 
