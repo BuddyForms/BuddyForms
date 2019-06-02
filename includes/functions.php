@@ -1417,11 +1417,10 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 			'data-status' => $form_status,
 		) );
 
+		$form->addElement( $bf_submit_button );
+
 		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
 
-		if ( $bf_submit_button ) {
-			$form->addElement( $bf_submit_button );
-		}
 	}
 
 	return $form;

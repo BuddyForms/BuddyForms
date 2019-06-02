@@ -776,6 +776,20 @@ JS;
 	}
 
 	/**
+	 * Remove one element from the array of elements
+	 *
+	 * @since 2.4.6
+	 *
+	 * @param $position
+	 */
+	public function removeElement( $position ) {
+		if ( $position >= 0 ) {
+			unset( $this->_elements[ $position ] );
+			$this->_elements = array_values( $this->_elements );
+		}
+	}
+
+	/**
 	 * @return ErrorView_Standard
 	 */
 	public function getErrorView() {
