@@ -249,9 +249,34 @@ function buddyforms_process_errors(errors) {
                 form_with_no_errors = false;
                 var type = current_error.type || 'accordion';
                 switch (type) {
-
-
+                    case 'title':
+                    case 'content':
+                    case 'textarea':
+                    case 'text':
+                    case 'post_excerpt':
+                    case 'number':
+                    case 'subject':
+                    case 'message':{
+                        jQuery("a[href='#validation-"+type+"-"+current_error.field_id+"']").click();
+                        var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
+                        sortableBuddyformsElements.accordion({
+                            active: false
+                        });
+                        //Find the parent, the element id and expand it
+                        jQuery(current_error.element).closest(".accordion-body.ui-accordion-content.collapse").addClass("ui-accordion-content-active").css("height", "auto");
+                        var li_id = jQuery(current_error.element).closest('li.bf_list_item');
+                        var li_position = jQuery('#sortable_buddyforms_elements li.bf_list_item').index(jQuery(li_id));
+                        sortableBuddyformsElements.accordion({
+                            active: li_position
+                        });
+                        jQuery('#buddyforms_form_setup').removeClass('closed');
+                        jQuery('#buddyforms_form_elements').removeClass('closed');
+                        break;
+                    }
                     case 'accordion': {
+                        var general_tab_id = jQuery(current_error.element).closest('div').parent().attr("id");
+                        jQuery("a[href='#"+general_tab_id+"']").click();
+
                         //close all
                         var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
                         sortableBuddyformsElements.accordion({
@@ -535,10 +560,18 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#post input[required]").each(function() {
             // if the value is empty, that means that is invalid
             var isValid = (jQuery(this).val() != "");
-            bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion'});
+
             if (isValid) {
                 jQuery(this).removeClass("bf-error");
+                var element_name = jQuery(this).eq(0).attr('name');
+                bfErrors = bfErrors.filter(function( obj ) {
+                    return obj.field_name !== element_name;
+                });
+
+
             } else {
+                var element_name = jQuery(this).eq(0).attr('name');
+                bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion',field_name:element_name});
                 jQuery(this).addClass("bf-error");
                 return false;
             }
