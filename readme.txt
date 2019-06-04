@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.1
-Stable tag: 2.4.5
+Stable tag: 2.4.6
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,46 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.4.6 - 3 Jun 2019 =
+* Fix : Feature Image Field layout.
+* Fix: Validation min/max value for number field type.
+* Fixed the trash option inside the post status field.
+* Added a filter (`buddyforms_before_update_post_meta`). to hook before the form meta is saved in order to customize it.
+* Added an option inside the form to enabled or disabled the js validation in the frontend.
+* Removing the jQuery validation from php code.
+* Added the required validtion inside JS file.
+* Removed the validation tab and required option for the comment field.
+* Added an event to the required validation to be extended from 3rd extensions for custom fields using JS.
+* Fix the required validation to pass the field with no data like password second field.
+* Added a global event to enabled or disabled the form submit button, this give the possibility to improve the integration of 3rd party code.
+* Fixed the repeated Date field. Fixes #498
+* Added the current form into the JS global var to be used in the backend to load or apply the field related code.
+* Change the Date field to jQuery DateTimePicker and added more options to get more control of this field.
+* The new Date field is enabled to use with Time or Date or both at same time and handle custom formats and time steps. Also is possible to customize from external JS using event callback.
+* Improving the validation for the hidden fields like the taxonomies, dates.
+* Fixing the placement of the validation error.
+* Fixing the error validation to work with taxonomy fields.
+* Removing the limit to have more than one Date field in a form.
+* Added the label to the Date field this field is inline.
+* Added a function to get the field by ID.
+* Added a code to get the form slug from the post meta to define to include the assets.
+* Improved the label position for the error validation.
+* Fixed the column row to styles. Added a new class for the first element row `bf-start-row`.
+* Added an option inside the fields Excerpt, Content and Textarea to control the amount of rows.
+* Added the ability to copy the shortcodes from the side bar using a single click inside the form builder.
+* Fixed the option to generate the title and content for a post to not take precedence over the submitted value if the field is not hidden.
+* Added one option inside the form to change the Form slug.
+* Added server side validation for Date fields.
+* Fixed the styles for the Date field when is show in the edit post screen inside a metabox.
+* Improved the form slug option to be process only if it change.
+* Improved the Element Class and Validation Class to accept the field options as a property to handle the field options inside the Field Class.
+* Moved the Date field options inside the Date field Class.
+* Added the server side validation for the PostFormat field.
+* Added PostFormat as a new Field type in the code.
+* Improve the server side validation to extend existing using filters.
+* Fixing the shortcodes to only show the requested form by the provided form slug.
+* Fixing a hook to override the submit button.
+
 = 2.4.5 - 19 May 2019 =
 * Adding a copy to clipboard into the form designer to copy the field slug.
 * Fixing the extra weigh of the plugin zip.
