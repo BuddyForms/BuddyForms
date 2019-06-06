@@ -1061,7 +1061,11 @@ function buddyforms_form_elements( $form, $args ) {
 							'post_parent'     => "",//$post_parent,
 							'form_slug'       => $form_slug,
 							'customfield'     => $customfield,
-							'customfield_val' => $customfield_val
+							'customfield_val' => $customfield_val,
+							'element_attr'    => $element_attr,
+							'slug'            => $slug,
+							'name'            => $name,
+							'field_type'      => $field_type,
 						);
 
 						// hook to add your form element

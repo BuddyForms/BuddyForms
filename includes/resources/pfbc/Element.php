@@ -44,6 +44,11 @@ abstract class Element extends Base {
 	protected $field_options = array();
 
 	/**
+	 * @var string
+	 */
+	protected $name;
+
+	/**
 	 * Element constructor.
 	 *
 	 * @param $label
@@ -94,6 +99,20 @@ abstract class Element extends Base {
 	/*If an element requires external javascript file, this method is used to return an
 	array of entries that will be applied after the form is rendered.*/
 	public function getJSFiles() {
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @param mixed $name
+	 */
+	public function setName( $name ) {
+		$this->name = $name;
 	}
 
 	/**
@@ -285,5 +304,19 @@ abstract class Element extends Base {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFieldOptions() {
+		return $this->field_options;
+	}
+
+	/**
+	 * @param array $field_options
+	 */
+	public function setFieldOptions( $field_options ) {
+		$this->field_options = $field_options;
 	}
 }
