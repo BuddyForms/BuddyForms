@@ -604,9 +604,23 @@ function BuddyForms() {
         var priceElements = jQuery('.bf_woo_price');
         if (priceElements.length > 0 && jQuery.fn.priceFormat) {
             jQuery.each(priceElements, function (i, currentElement) {
-                jQuery(currentElement).priceFormat({
-                    clearOnEmpty: true
-                });
+                var currentFieldSlug = jQuery(currentElement).attr('name');
+                var formSlug = getFormSlugFromFormElement(currentElement);
+                if (currentFieldSlug && formSlug) {
+                    var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                    var thousandsSeparator = (fieldData.thousands_separator) ? fieldData.thousands_separator : '.';
+                    var prefix = (fieldData.prefix) ? fieldData.prefix : '$';
+                    var suffix = (fieldData.suffix) ? fieldData.suffix : ' ';
+                    var centsSeparator = (fieldData.cents_separator) ? fieldData.cents_separator : ',';
+
+                    jQuery(currentElement).priceFormat({
+                        clearOnEmpty: true,
+                        thousandsSeparator: thousandsSeparator,
+                        prefix: prefix,
+                        suffix: suffix,
+                        centsSeparator: centsSeparator
+                    });
+                }
             });
         }
     }
