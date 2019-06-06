@@ -113,7 +113,12 @@ function buddyforms_process_submission( $args = array() ) {
 
 		if ( ! is_user_logged_in() ) {
 
-			$users_can_register = get_site_option( 'users_can_register' );
+			$users_can_register = false;
+			if ( is_multisite() ) {
+				$users_can_register = users_can_register_signup_filter();
+			} else {
+				$users_can_register = get_site_option( 'users_can_register' );
+			}
 
 			if ( empty( $users_can_register ) ) {
 				$args = array(

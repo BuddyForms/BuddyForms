@@ -51,15 +51,18 @@ class BfAdminNotices {
 	}
 
 	public function validate_registration_form( $buddyform ) {
-		$messages = array();
-
-		$users_can_register = get_site_option( 'users_can_register' );
-
-		if ( empty( $users_can_register ) ) {
-			$messages[] = __( 'Registration is disabled on your site. Please enable registration if you like to use this form for registration purpose. You can still use it to update existing Users. <a href="/wp-admin/options-general.php">Set</a> registration to Anyone can register.', 'buddyforms' );
+		$users_can_register = false;
+		if ( is_multisite() ) {
+			$users_can_register = users_can_register_signup_filter();
+		} else {
+			$users_can_register = get_site_option( 'users_can_register' );
 		}
 
-		$this->show_form_notices( $messages );
+		if ( empty( $users_can_register ) ) {
+			$messages   = array();
+			$messages[] = __( 'Registration is disabled on your site. Please enable registration if you like to use this form for registration purpose. You can still use it to update existing Users. <a href="/wp-admin/options-general.php">Set</a> registration to Anyone can register.', 'buddyforms' );
+			$this->show_form_notices( $messages );
+		}
 	}
 
 	public function validate_post_form( $buddyform ) {

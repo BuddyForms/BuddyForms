@@ -49,7 +49,12 @@ function buddyforms_form_html( $args ) {
 		$user_can_edit = true;
 	}
 
-	$users_can_register = get_site_option( 'users_can_register' );
+	$users_can_register = false;
+	if ( is_multisite() ) {
+		$users_can_register = users_can_register_signup_filter();
+	} else {
+		$users_can_register = get_site_option( 'users_can_register' );
+	}
 
 	if ( ! empty( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] == 'registration' && empty( $users_can_register ) ) {
 		$error_message = apply_filters( 'buddyforms_disable_registration_error_message', __( 'Sorry, but registration is disabled on this site at the moment.', 'buddyforms' ) );
