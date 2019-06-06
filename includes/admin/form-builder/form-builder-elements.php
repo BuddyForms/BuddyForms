@@ -1130,7 +1130,9 @@ JS;
 		        'id'    => "buddyforms_options[form_fields][" . $field_id . "][enable_publish]"
 	        ) );
             break;
-
+        case 'price':
+            $form_fields = Element_Price::builder_element_options($form_fields, $form_slug, $field_type, $field_id, $buddyform );
+            break;
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );
 			break;

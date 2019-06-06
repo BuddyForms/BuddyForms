@@ -204,10 +204,6 @@ function buddyforms_form_elements_select_options() {
 				'state'        => array(
 					'label' => __( 'State', 'buddyforms' ),
 				),
-				'captcha'      => array(
-					'label'  => __( 'Captcha', 'buddyforms' ),
-					'unique' => 'unique'
-				),
 			),
 		),
 		'post'    => array(
@@ -260,12 +256,15 @@ function buddyforms_form_elements_select_options() {
 				'gdpr'        => array(
 					'label'  => __( 'GDPR Agreement', 'buddyforms' ),
 					'unique' => 'unique'
-				)
+				),
+				'captcha'      => array(
+					'label'  => __( 'Captcha', 'buddyforms' ),
+					'unique' => 'unique'
+				),
 			),
 		),
 
 	);
-
 
 	// Post Fields
 	$elements_select_options['post']['fields']['category']       =
@@ -339,6 +338,10 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['extra']['fields']['range']  =
 				array(
 					'label' => __( 'Range', 'buddyforms' ),
+				);
+			$elements_select_options['extra']['fields']['price']  =
+				array(
+					'label'  => __( 'Price', 'buddyforms' ),
 				);
 		}
 

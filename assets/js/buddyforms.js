@@ -251,7 +251,7 @@ function BuddyForms() {
     function addValidationMinLength() {
         jQuery.validator.addMethod("minlength", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
@@ -271,7 +271,7 @@ function BuddyForms() {
     function addValidationMinValue() {
         jQuery.validator.addMethod("min-value", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
@@ -291,8 +291,8 @@ function BuddyForms() {
         jQuery.validator.addMethod("required", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
             if (
-              formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-              buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
                 var fieldSlug = jQuery(element).attr('name');
                 var fieldData = getFieldFromSlug(fieldSlug, formSlug);
@@ -304,7 +304,7 @@ function BuddyForms() {
                 var passValidationCallback = function (fieldTypeArray) {
                     passValidationFieldTypes = fieldTypeArray || false;
                 };
-                jQuery(document.body).trigger({ type: 'buddyforms:validation:pass' }, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
+                jQuery(document.body).trigger({type: 'buddyforms:validation:pass'}, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
 
                 if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
                     var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
@@ -345,7 +345,7 @@ function BuddyForms() {
     function addValidationMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
@@ -365,7 +365,7 @@ function BuddyForms() {
     function addValidationMaxValue() {
         jQuery.validator.addMethod("max-value", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
-            if(
+            if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
             ) {
@@ -395,11 +395,11 @@ function BuddyForms() {
 
     function getFieldFromSlug(fieldSlug, formSlug) {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
-            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function(fieldId){
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
                 return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
             });
-            if(fieldIdResult){
+            if (fieldIdResult) {
                 return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
             }
         }
@@ -430,8 +430,8 @@ function BuddyForms() {
                 jQuery(this).select2(options);
 
                 jQuery(this).on('change', function () {
-                     var formSlug = jQuery(this).data('form');
-                     jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
+                    var formSlug = jQuery(this).data('form');
+                    jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                 });
             });
         }
@@ -440,7 +440,7 @@ function BuddyForms() {
     function enabledDateTime() {
         var dateElements = jQuery('.bf_datetimepicker');
         if (dateElements && dateElements.length > 0) {
-            jQuery.each(dateElements, function(i, element){
+            jQuery.each(dateElements, function (i, element) {
                 var currentFieldSlug = jQuery(element).attr('name');
                 var formSlug = getFormSlugFromFormElement(element);
                 if (currentFieldSlug && formSlug) {
@@ -463,13 +463,13 @@ function BuddyForms() {
                         datepicker: enableDate || false,
                         inline: isInline,
                         step: parseInt(fieldTimeStep),
-                        onChangeDateTime: function(){
-                            jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
+                        onChangeDateTime: function () {
+                            jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                         }
                     };
 
                     var dateTimePickerConfigCallback = function (config) {
-                        if(config) {
+                        if (config) {
                             dateTimePickerConfig = config;
                         }
                     };
@@ -528,11 +528,11 @@ function BuddyForms() {
         }
     }
 
-    function disableFormSubmit(){
+    function disableFormSubmit() {
         var submitButton = jQuery('button.bf-submit');
-        if(submitButton){
+        if (submitButton) {
             var target = submitButton.data('target');
-            if(target){
+            if (target) {
                 submitButton.attr('disabled', 'disabled');
             }
         }
@@ -548,11 +548,12 @@ function BuddyForms() {
         }
     }
 
-    function validateGlobalConfig () {
+    function validateGlobalConfig() {
         var forms = jQuery('form[id^="buddyforms_form_"]');
         if (forms && forms.length > 0) {
             jQuery.each(forms, function () {
-                jQuery(this).submit(function () {}).validate({
+                jQuery(this).submit(function () {
+                }).validate({
                     ignore: [],
                     errorPlacement: function (label, element) {
                         var formSlug = getFormSlugFromFormElement(element);
@@ -571,11 +572,11 @@ function BuddyForms() {
                             case "checkbox":
                             case "date":
                             case "radiobutton":
-                                var labelElement = jQuery('label[for="'+fieldSlug+'"]');
+                                var labelElement = jQuery('label[for="' + fieldSlug + '"]');
                                 label.insertAfter(labelElement);
                                 break;
                             default:
-                                 label.insertAfter(element);
+                                label.insertAfter(element);
                         }
                     },
                     highlight: function (element, errorClass, validClass) {
@@ -594,6 +595,17 @@ function BuddyForms() {
                             elem.removeClass(errorClass);
                         }
                     },
+                });
+            });
+        }
+    }
+
+    function enablePriceField() {
+        var priceElements = jQuery('.bf_woo_price');
+        if (priceElements.length > 0 && jQuery.fn.priceFormat) {
+            jQuery.each(priceElements, function (i, currentElement) {
+                jQuery(currentElement).priceFormat({
+                    clearOnEmpty: true
                 });
             });
         }
@@ -646,6 +658,7 @@ function BuddyForms() {
                 addValidationRequired();
                 enabledSelect2();
                 enabledDateTime();
+                enablePriceField();
             }
 
             bf_form_errors();

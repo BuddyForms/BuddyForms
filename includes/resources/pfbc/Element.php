@@ -44,11 +44,6 @@ abstract class Element extends Base {
 	protected $field_options = array();
 
 	/**
-	 * @var string
-	 */
-	protected $name;
-
-	/**
 	 * Element constructor.
 	 *
 	 * @param $label
@@ -105,14 +100,14 @@ abstract class Element extends Base {
 	 * @return mixed
 	 */
 	public function getName() {
-		return $this->name;
+		return $this->_attributes['name'];
 	}
 
 	/**
 	 * @param mixed $name
 	 */
 	public function setName( $name ) {
-		$this->name = $name;
+		$this->_attributes['name'] = $name;
 	}
 
 	/**

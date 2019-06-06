@@ -1052,6 +1052,9 @@ function buddyforms_form_elements( $form, $args ) {
 					case 'form_actions':
 						$form = buddyforms_form_action_buttons( $form, $form_slug, $post_id, $customfield );
 						break;
+					case 'price':
+						$form->addElement( new Element_Price($name, $slug, $element_attr, $customfield) );
+						break;
 
 					default:
 
