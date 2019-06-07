@@ -952,6 +952,10 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 
 	$form = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
 
+	if ( empty( $form ) ) {
+		return;
+	}
+
 	$post_url = sprintf( 'post.php?post=%s&action=edit', $form->ID );
 
 	$args = array(

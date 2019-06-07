@@ -387,8 +387,12 @@ function BuddyForms() {
         if (!formSlug) {
             var form = jQuery(element).closest('form');
             var formId = form.attr('id');
-            formSlug = formId.split('buddyforms_form_');
-            formSlug = (formSlug[1]) ? formSlug[1] : false;
+            if(formId) {
+                formSlug = formId.split('buddyforms_form_');
+                formSlug = (formSlug[1]) ? formSlug[1] : false;
+            } else {
+                formSlug = false;
+            }
         }
         return formSlug;
     }
