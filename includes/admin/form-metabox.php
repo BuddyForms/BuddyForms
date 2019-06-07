@@ -41,7 +41,9 @@ function buddyforms_admin_form_metabox() {
 	}
 
 	if ( $metabox_enabled ) {
-		add_meta_box( 'buddyforms_form_' . $form_slug, 'BuddyForms Form: ' . $form['name'], 'buddyforms_metabox_admin_form_metabox', $form['post_type'], 'normal', 'high' );
+		add_meta_box( 'buddyforms_form_' . $form_slug, 'BuddyForms Form: ' . $form['name'], 'buddyforms_metabox_admin_form_metabox', $form['post_type'], 'normal', 'high', array(
+			'__block_editor_compatible_meta_box' => false,
+		) );
 	}
 
 }
