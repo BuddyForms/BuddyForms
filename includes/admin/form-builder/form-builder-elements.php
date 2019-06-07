@@ -1108,15 +1108,10 @@ JS;
             break;
         case 'form_actions':
             unset($form_fields);
-
-            $name                           = isset(  $buddyform['form_fields'][$field_id]['name'] ) ? stripcslashes( $buddyform['form_fields'][$field_id]['name'] ) : __( 'Form Actions', 'buddyforms' );
-            $form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
-                'value'    => $name,
-                'required' => 1
-            ) );
-
-
-            $form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'form_actions' );
+            $name = __( 'Form Actions', 'buddyforms' );
+            $field_slug = 'form_actions';
+            $form_fields['general']['name'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $name );
+            $form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", $field_slug );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 	        $is_draft_enabled                         = isset( $customfield['enable_draft'] ) ? $customfield['enable_draft'] : 'false';
