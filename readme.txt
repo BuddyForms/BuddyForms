@@ -390,7 +390,15 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 = 2.4.7 - 3 Jun 2019 =
-*
+* Improved required field messages to be more user friendly.
+* Fixed the function to register users from multisite.
+* Added more argument to extend the fields form 3rd parties.
+* Moved the captcha field to the basic field group.
+* Added a Price field.
+* Removed the label option from the From Action field.
+* Fixed the option to change the form slug, because it was not working if the form not have any submitted entry.
+* Fixed JS incompatibility with external plugins.
+* Code improvement.
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
