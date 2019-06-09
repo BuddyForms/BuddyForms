@@ -492,9 +492,10 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			global $post, $wp_query, $buddyforms;
 
 			$found = false;
+			$form_slug = '';
 
 			if ( ! empty( $post->post_content ) ) {
-				$form_slug = buddyforms_get_form_slug_from_content( $post->post_content, array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) );
+				$form_slug = buddyforms_get_form_slug_from_content( $post->post_content );
 				// check the post content for the short code
 				$found = ( ! empty( $form_slug ) );
 			}
@@ -518,7 +519,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$found = apply_filters( 'buddyforms_front_js_css_loader', $found );
 
 			if ( $found ) {
-				BuddyForms::front_js_css();
+				BuddyForms::front_js_css($post->post_content, $form_slug);
 				self::load_tk_font_icons();
 			}
 
@@ -529,12 +530,16 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 *
 		 * @param string $content This is the page content,
 		 *
+		 * @param string $form_slug
+		 *
 		 * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
 		 * @since 1.0
+         *
+         * @since 2.4.6 added the $form_slug as parameter
 		 *
 		 * @package buddyforms
 		 */
-		public static function front_js_css( $content = '' ) {
+		public static function front_js_css( $content = '', $form_slug = '' ) {
 			global $wp_scripts, $buddyforms, $wp_query;
 
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
@@ -620,9 +625,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'is_admin'                 => is_admin(),
 				'localize'                 => self::localize_fields()
 			);
-			$form_slug          = buddyforms_get_form_slug();
-			$bf_post_id         = $wp_query->get( 'bf_post_id' );
+			if ( empty( $form_slug ) ) {
+				$form_slug = buddyforms_get_form_slug();
+			}
 			if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+				$bf_post_id                       = $wp_query->get( 'bf_post_id' );
 				$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $bf_post_id );
 				$front_js_arguments[ $form_slug ] = $options;
 			}
