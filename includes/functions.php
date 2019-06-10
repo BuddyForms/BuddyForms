@@ -351,7 +351,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 		return;
 	}
 	global $buddyforms, $post;
-	if ( ! isset( $buddyforms[ $form_slug ] ) || $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
+	if ( ! isset( $buddyforms[ $form_slug ] ) || !empty($buddyforms[ $form_slug ]['attached_page']) || $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
 		echo '';
 		return;
 	}
