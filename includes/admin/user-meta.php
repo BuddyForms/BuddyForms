@@ -192,7 +192,7 @@ function buddyforms_get_mapped_slug_from_user_meta( $slug ) {
 		case 'user_pass':
 			$slug = 'first_name';
 			break;
-		case 'user_website':
+		case 'website':
 			$slug = 'user_url';
 			break;
 		case 'user_bio':
@@ -233,6 +233,7 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
  */
 function buddyforms_avoid_user_fields_in_forms() {
 	return apply_filters( 'buddyforms_avoid_user_fields', array(
+		'captcha',
 		'user_login',
 		'user_email',
 		'user_first',

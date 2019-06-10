@@ -7,7 +7,10 @@
 function buddyforms_form_elements( $form, $args ) {
 	global $buddyforms, $field_id;
 
-	$customfields = $post_id = $form_slug = '';
+	$post_id = 0;
+	$form_slug = '';
+	$action = 'new';
+	$customfields = array();
 
 	if ( empty( $args ) ) {
 		return;
@@ -15,8 +18,33 @@ function buddyforms_form_elements( $form, $args ) {
 
 	extract( $args );
 
+	if ( empty( $form_slug ) ) {
+		return;
+	}
+
+	$form_type = $buddyforms[ $form_slug ]['form_type'];
+
+	if ( empty( $form_type ) ) {
+		return;
+	}
+
 	if ( empty( $customfields ) ) {
 		return;
+	}
+
+	if ( empty( $action ) ) {
+		$post = false;
+		if ( ! empty( $post_id ) ) {
+			$post = get_post( $post_id );
+		}
+
+		$action = ! empty( $post ) && $post->post_status !== 'auto-draft' ? 'edit' : 'new';
+	}
+
+	$current_user = false;
+	if ( $form_type === 'registration' && ! empty( $post_id ) ) {
+		$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
+		$current_user         = get_userdata( $bf_registration_user_id );
 	}
 
 	foreach ( $customfields as $field_id => $customfield ) {
@@ -32,29 +60,21 @@ function buddyforms_form_elements( $form, $args ) {
 		if ( $slug != '' ) {
 
 			$customfield_val = '';
-			if ( isset( $_POST[ $slug ] ) ) {
-				$customfield_val = $_POST[ $slug ];
-			} elseif ( is_user_logged_in() ) {
-
-				if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
-
-					if ( is_admin() ) {
-						$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
-						$current_user            = get_userdata( $bf_registration_user_id );
-					} else {
-						$current_user = get_userdata( get_current_user_id() );
+			//Get form field value
+			switch ( $form_type ) {
+				case 'registration':
+					if(!empty($current_user->ID)) {
+						$customfield_val = buddyforms_get_value_from_user_meta( $current_user->ID, $slug );
 					}
-
-					if ( ! $current_user ) {
-						continue;
-					}
-
-					$customfield_val = buddyforms_get_value_from_user_meta( $current_user->ID, $slug );
-
-				} else {
+					break;
+				case 'contact':
+				case 'post':
 					$customfield_val = get_post_meta( $post_id, $slug, true );
-				}
+					break;
+			}
 
+			if ( isset( $_POST[ $slug ] ) && empty( $customfield_val ) ) {
+				$customfield_val = $_POST[ $slug ];
 			}
 
 			if ( isset( $customfield['type'] ) ) {
@@ -138,16 +158,13 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( ! is_admin() ) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-									if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
-										$element_attr['value'] = $current_user->user_login;
-									}
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 								}
 							} else {
 								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug,  $current_user->user_login ) );
+							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );
 						}
 						break;
 
@@ -155,50 +172,35 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( ! is_admin() ) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-									if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
-										$element_attr['value'] = $current_user->user_email;
-									}
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 								}
 							} else {
 								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug,  $current_user->user_email ) );
+							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );
 						}
 						break;
 
 					case 'user_first':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							$element_attr['value'] = $current_user->user_firstname;
-						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_last':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							$element_attr['value'] = $current_user->user_lastname;
-						}
 						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_pass':
-						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() ) {
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
 							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr ) );
 						}
 						break;
 
 					case 'user_website':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							$element_attr['value'] = $current_user->user_url;
-						}
 						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
 						break;
 
 					case 'user_bio':
-						if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-							$element_attr['value'] = $current_user->user_description;
-						}
 						$form->addElement( new Element_Textarea( $name, $slug, $element_attr ) );
 						break;
 
@@ -601,7 +603,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'captcha' :
-						if ( ! is_user_logged_in() ) {
+						if ( ! is_user_logged_in() && ($action === 'new' || $action === 'edit')) {
 							$element = new Element_Captcha( "Captcha", $attributes = null );
 							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
 							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );

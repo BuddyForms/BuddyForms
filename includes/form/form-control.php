@@ -354,6 +354,7 @@ function buddyforms_process_submission( $args = array() ) {
 		'comment_status' => $comment_status,
 		'form_type'      => $form_type,
 		'current_user'   => $current_user,
+		'new_user_id'   => $user_id,
 	);
 
 	if ( ! empty( $post_excerpt ) ) {
@@ -481,6 +482,7 @@ function buddyforms_update_post( $args ) {
 	$post_id        = 0;
 	$form_type      = '';
 	$current_user   = 0;
+	$new_user_id   = 0;
 
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
 
@@ -492,8 +494,12 @@ function buddyforms_update_post( $args ) {
 		return false;
 	}
 
-	if ( 'registration' === $form_type ) {
-		$default_post_title = ! empty( $current_user->user_nicename ) ? $current_user->user_nicename : __( 'none', 'buddyforms' );
+	$default_post_title = __( 'none', 'buddyforms' );
+	if ( 'registration' === $form_type && $new_user_id > 0) {
+		$new_user = get_user_by('ID', $new_user_id);
+		if(!empty($new_user) && !is_wp_error($new_user)) {
+			$default_post_title = ! empty( $new_user->user_nicename ) ? $new_user->user_nicename : ! empty( $new_user->user_login ) ? $new_user->user_login : __( 'none', 'buddyforms' );
+		}
 	} else if ( 'contact' === $form_type ) {
 		$default_post_title = ! empty( $_POST['subject'] ) ? stripslashes( $_POST['subject'] ) : __( 'none', 'buddyforms' );
 	} else {
