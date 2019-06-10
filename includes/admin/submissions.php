@@ -194,6 +194,10 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * Class BuddyForms_Submissions_List_Table
  */
 class BuddyForms_Submissions_List_Table extends WP_List_Table {
+	/**
+	 * @var void
+	 */
+	public $exclude_columns;
 
 	/**
 	 * BuddyForms_Submissions_List_Table constructor.
@@ -207,6 +211,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'ajax'     => false            //does this table support ajax?
 		) );
 
+		$this->exclude_columns = apply_filters('buddyforms_submission_exclude_columns', array('user_pass', 'captcha'));
 	}
 
 	/**
@@ -388,7 +393,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $_GET['form_slug'] ]['form_fields'] as $key => $field ) {
-				if ( ! empty( $field['slug'] ) && ! empty( $field['name'] ) && $field['slug'] != 'user_pass' ) {
+				if ( ! empty( $field['slug'] ) && ! empty( $field['name'] ) && !in_array($field['slug'], $this->exclude_columns) ) {
 					$columns[ $field['slug'] ] = $field['name'];
 				}
 			}
