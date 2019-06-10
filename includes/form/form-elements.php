@@ -135,26 +135,36 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						// @since 2.3 we remove is_admin form the if because is not clear
-						// old condition
-						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
-						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-								$element_attr['value'] = $current_user->user_login;
+						if ( ! is_admin() ) {
+							if ( is_user_logged_in() ) {
+								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
+									if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
+										$element_attr['value'] = $current_user->user_login;
+									}
+									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+								}
+							} else {
+								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 							}
-							$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug,  $current_user->user_login ) );
 						}
 						break;
 
 					case 'user_email':
-						// @since 2.3 we remove is_admin form the if because is not clear
-						// old condition
-						//if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() )
-						if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-							if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-								$element_attr['value'] = $current_user->user_email;
+						if ( ! is_admin() ) {
+							if ( is_user_logged_in() ) {
+								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
+									if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' ) {
+										$element_attr['value'] = $current_user->user_email;
+									}
+									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+								}
+							} else {
+								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 							}
-							$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug,  $current_user->user_email ) );
 						}
 						break;
 
