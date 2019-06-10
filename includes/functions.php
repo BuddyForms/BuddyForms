@@ -1141,10 +1141,19 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
 	if ( ! is_array( $shortcodes ) || ! is_array( $targets_tags ) ) {
 		return '';
 	}
+
+	foreach ( $shortcodes as $shortcode ) {
+		$regrex = sprintf( '(\[%s)(.*?)form_slug=\"(.*?)\"', $shortcode );
+		preg_match_all( "/$regrex/m", $content, $match );
+		if ( ! empty( $match ) && ! empty( $match[1][0] ) && $match[1][0] === '[' . $shortcode && ! empty( ( $match[3][0] ) ) ) {
+			return $match[3][0];
+		}
+	}
+
 	$pattern = get_shortcode_regex();
 	$result  = '';
 
-	preg_replace_callback( "/$pattern/s", function ( $tag ) use ( $shortcodes, $targets_tags, &$result ) {
+	preg_replace_callback( "/$pattern/m", function ( $tag ) use ( $shortcodes, $targets_tags, &$result ) {
 		foreach ( $shortcodes as $shortcode_item ) {
 			if ( $shortcode_item === $tag[2] ) {
 				$attributes = shortcode_parse_atts( $tag[3] );
@@ -1219,7 +1228,7 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf', 'buddyforms_form' ) ) {
+function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) ) {
 	//Extract from the a shortcode inside the content
 	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 	//Extract form the html inside the content, reading the hidden input form_slug
