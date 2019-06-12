@@ -58,13 +58,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		private static $global_js_parameters;
 
 		/**
-		 * Instance of this class.
-		 *
-		 * @var object
-		 */
-		protected static $instance = null;
-
-		/**
 		 * Initiate the class
 		 *
 		 * @package buddyforms
@@ -94,20 +87,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 9999, 1 );
 
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
-		}
-
-		/**
-		 * Return an instance of this class.
-		 *
-		 * @return object A single instance of this class.
-		 */
-		public static function get_instance() {
-			// If the single instance hasn't been set, set it now.
-			if ( null == self::$instance ) {
-				self::$instance = new self;
-			}
-
-			return self::$instance;
 		}
 
 		/**
@@ -209,6 +188,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/FieldControl.php' );
 				new FieldControl();
+
+				$global_error = ErrorHandler::get_instance();
 			}
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/class-bf-admin-notices.php' );

@@ -33,7 +33,11 @@ function PFBC_Load( $class ) {
 	}
 }
 
-spl_autoload_register( "PFBC_Load" );
+try {
+	spl_autoload_register( "PFBC_Load" );
+} catch ( Exception $e ) {
+	trigger_error( 'BF::PFBC_Load::Autoload_Error', E_USER_NOTICE );
+}
 
 /**
  * Class Form

@@ -399,14 +399,14 @@ function buddyforms_reset_password_form( $args ) {
 
 		$bf_pw_redirect_url = get_user_meta( get_current_user_id(), 'bf_pw_redirect_url', true );
 
-		if ( $bf_pw_redirect_url ) {
+		if ( ! empty( $bf_pw_redirect_url ) ) {
 			$redirect_url = $bf_pw_redirect_url;
 		}
 
 		return buddyforms_change_password_form( $redirect_url );
 	} else {
 
-		$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
+		$buddyforms_registration_form = get_option( 'buddyforms_registration_form', 'none' );
 
 		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __( 'You need to login to change your password.' ) );
 	}

@@ -65,25 +65,17 @@ function buddyforms_wp_update_user() {
 	}
 
 	if ( isset( $_POST["user_pass"] ) ) {
+		$global_error = ErrorHandler::get_instance();
 		if ( $user_args['user_pass'] == '' || $user_args['user_pass_confirm'] == '' ) {
 			// password(s) field empty
-			buddyforms_reset_password_errors()->add( 'password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) );
+			$global_error->add_error( new BF_Error( 'password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) ) );
 		}
 		if ( $user_args['user_pass'] != $user_args['user_pass_confirm'] ) {
 			// passwords do not match
-			buddyforms_reset_password_errors()->add( 'password_mismatch', __( 'Passwords do not match', 'buddyforms' ) );
+			$global_error->add_error( new BF_Error( 'password_mismatch', __( 'Passwords do not match', 'buddyforms' ), '', $form_slug ) );
 		}
 
-		// retrieve all error messages, if any
-		$errors = buddyforms_reset_password_errors()->get_error_messages();
-
-		if ( ! empty( $errors ) ) {
-			$hasError = true;
-			foreach ( $errors as $error ) {
-				$message = buddyforms_reset_password_errors()->get_error_message();
-				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
-			}
-		}
+		buddyforms_insert_user_set_error($form_slug);
 	}
 
 	// Let us check if we run into any error.
@@ -206,30 +198,23 @@ function buddyforms_wp_insert_user() {
 			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
 		}
 
+		$global_error = ErrorHandler::get_instance();
+
 		if ( $user_pass == '' ) {
 			// Generate the password if generate_password is set
 			if ( isset( $buddyforms[ $form_slug ]['registration']['generate_password'] ) ) {
 				$user_pass = $pass_confirm = wp_generate_password( 12, true );
 			} else {
-				buddyforms_reset_password_errors()->add( 'password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) );
+				$global_error->add_error( new BF_Error('password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ), '', $form_slug ));
 			}
 		}
 
 		if ( $user_pass != $pass_confirm ) {
 			// passwords do not match
-			buddyforms_reset_password_errors()->add( 'password_mismatch', __( 'Passwords do not match', 'buddyforms' ) );
+			$global_error->add_error( new BF_Error('password_mismatch', __( 'Passwords do not match', 'buddyforms' ),'', $form_slug ));
 		}
 
-		// retrieve all error messages, if any
-		$errors = buddyforms_reset_password_errors()->get_error_messages();
-
-		if ( ! empty( $errors ) ) {
-			$hasError = true;
-			foreach ( $errors as $error ) {
-				$message = buddyforms_reset_password_errors()->get_error_message();
-				Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
-			}
-		}
+		buddyforms_insert_user_set_error($form_slug);
 
 	} else {
 		// General error message that one of the required fields are missing
@@ -298,6 +283,31 @@ function buddyforms_wp_insert_user() {
 	}
 
 	return false;
+}
+
+/**
+ * Add Errors to the Form
+ *
+ * @param string $form_slug
+ *
+ * @since 2.4.7
+ */
+function buddyforms_insert_user_set_error($form_slug = '') {
+	$global_error = ErrorHandler::get_instance();
+	if ( $global_error->get_global_error()->has_errors() ) {
+		$hasError = true;
+		/**
+		 * @var int|string $code
+		 * @var  BF_Error|WP_Error $error
+		 */
+		foreach ( $global_error->get_global_error()->errors as $code => $error ) {
+			$message = $global_error->get_global_error()->get_error_message( $code );
+			if ( empty( $form_slug ) ) {
+				$form_slug = $global_error->get_global_error()->get_form_slug();
+			}
+			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
+		}
+	}
 }
 
 function buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyforms, $source = 'registration' ) {

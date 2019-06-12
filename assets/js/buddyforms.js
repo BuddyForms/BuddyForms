@@ -533,7 +533,7 @@ function BuddyForms() {
     }
 
     function disableFormSubmit() {
-        var submitButton = jQuery('button.bf-submit');
+        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit');
         if (submitButton) {
             var target = submitButton.data('target');
             if (target) {
@@ -543,7 +543,7 @@ function BuddyForms() {
     }
 
     function enableFormSubmit() {
-        var submitButton = jQuery('button.bf-submit');
+        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit');
         if (submitButton) {
             var target = submitButton.data('target');
             if (target) {

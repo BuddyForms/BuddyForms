@@ -176,8 +176,13 @@ function buddyforms_wp_login_form() {
 	echo buddyforms_get_wp_login_form();
 }
 
-// Create the BuddyForms Login Form
 /**
+ * Create the BuddyForms Login Form
+ *
+ * @param string $form_slug
+ * @param string $title
+ * @param array $args
+ *
  * @return string|boolean
  */
 function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array() ) {
@@ -1157,11 +1162,13 @@ function buddyforms_get_shortcode_tag( $shortcodes, $targets_tags, $content ) {
 		foreach ( $shortcodes as $shortcode_item ) {
 			if ( $shortcode_item === $tag[2] ) {
 				$attributes = shortcode_parse_atts( $tag[3] );
-				foreach ( $targets_tags as $target_item ) {
-					if ( array_key_exists( $target_item, $attributes ) ) {
-						$result = $attributes[ $target_item ];
+				if ( ! empty( $attributes ) ) {
+					foreach ( $targets_tags as $target_item ) {
+						if ( array_key_exists( $target_item, $attributes ) ) {
+							$result = $attributes[ $target_item ];
 
-						return $tag[0];
+							return $tag[0];
+						}
 					}
 				}
 			}
@@ -1228,7 +1235,7 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf' ) ) {
+function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf', 'buddyforms_reset_password' ) ) {
 	//Extract from the a shortcode inside the content
 	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 	//Extract form the html inside the content, reading the hidden input form_slug
@@ -1437,4 +1444,32 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	}
 
 	return $form;
+}
+
+if ( ! function_exists( 'buddyforms_show_error_messages' ) ) {
+	// displays error messages from form submissions
+	function buddyforms_show_error_messages() {
+		$global_error = ErrorHandler::get_instance();
+		if ( $global_error->get_global_error()->has_errors() ) {
+			echo '<div class="bf-alert error">';
+			/**
+			 * @var string|int $code
+			 * @var  BF_Error|WP_Error $error
+			 */
+			foreach ( $global_error->get_global_error()->errors as $code => $error ) {
+				$message = $global_error->get_global_error()->get_error_message( $code );
+				echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
+			}
+			echo '</div>';
+		}
+	}
+}
+
+if ( ! function_exists( 'buddyforms_reset_password_errors' ) ) {
+	// used for tracking error messages
+	function buddyforms_reset_password_errors() {
+		$global_error = ErrorHandler::get_instance();
+
+		return $global_error->get_global_error();
+	}
 }
