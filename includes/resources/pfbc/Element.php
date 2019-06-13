@@ -268,9 +268,9 @@ abstract class Element extends Base {
 		$this->_form = $form;
 	}
 
-	/*This method provides a shortcut for applying the Required validation class to an element.*/
-
 	/**
+	 * This method provides a shortcut for applying the Required validation class to an element.
+	 *
 	 * @param $required
 	 */
 	public function setRequired( $required ) {
@@ -280,9 +280,9 @@ abstract class Element extends Base {
 		$this->_attributes["required"] = "";
 	}
 
-	/*This method applies one or more validation rules to an element.  If can accept a single concrete
-	validation class or an array of entries.*/
 	/**
+	 * This method applies one or more validation rules to an element.  If can accept a single concrete validation class or an array of entries.
+	 *
 	 * @param $validation
 	 */
 	public function setValidation( $validation ) {

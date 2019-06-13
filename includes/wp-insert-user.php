@@ -44,24 +44,26 @@ function buddyforms_wp_update_user() {
 		$user_args['description'] = esc_textarea( $_POST["user_bio"] );
 	}
 
+	$global_error = ErrorHandler::get_instance();
+
 	// invalid email?
 	if ( ! is_email( $user_args['user_email'] ) ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) );
+		$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) ));
 	}
 	// invalid username?
 	if ( ! validate_username( $user_args['user_login'] ) ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+		$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) ));
 	}
 	// empty username?
 	if ( $user_args['user_login'] == '' ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+		$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) ));
 	}
 	if ( $user_args['user_pass'] == '' ) {
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span>' . __( 'Error: Please enter a password', 'buddyforms' ) );
+		$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span>' . __( 'Error: Please enter a password', 'buddyforms' ) ));
 	}
 
 	if ( isset( $_POST["user_pass"] ) ) {
@@ -116,7 +118,7 @@ function buddyforms_wp_update_user() {
 				$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $user_id );
 				if ( ! $was_send_activation_email ) {
 					// General error message that one of the required field sis missing
-					Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
+					$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) ));
 				}
 				wp_logout();
 			}
@@ -136,6 +138,8 @@ function buddyforms_wp_insert_user() {
 	global $buddyforms, $form_slug;
 
 	$hasError = false;
+
+	$global_error = ErrorHandler::get_instance();
 
 	if ( ! empty( $_POST["user_email"] ) ) {
 		$buddyforms_form_nonce_value = $_POST['_wpnonce'];
@@ -168,15 +172,17 @@ function buddyforms_wp_insert_user() {
 			? esc_textarea( $_POST["user_bio"] )
 			: '';
 
+		$global_error = ErrorHandler::get_instance();
+
 		// invalid email?
 		if ( ! is_email( $user_email ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Invalid email', 'buddyforms' ) ));
 		}
 		// Email address already registered?
 		if ( email_exists( $user_email ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Email already registered', 'buddyforms' ) );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_email"> </span>' . __( 'Error: Email already registered', 'buddyforms' ) ));
 		}
 		if ( isset( $buddyforms[ $form_slug ]['public_submit_username_from_email'] ) ) {
 			$user_login = explode( '@', $user_email );
@@ -185,17 +191,17 @@ function buddyforms_wp_insert_user() {
 		// Username already registered?
 		if ( username_exists( $user_login ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Username already taken', 'buddyforms' ) );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Username already taken', 'buddyforms' ) ));
 		}
 		// invalid username?
 		if ( ! validate_username( $user_login ) ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Invalid username', 'buddyforms' ) ));
 		}
 		// empty username?
 		if ( $user_login == '' ) {
 			$hasError = true;
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_login"> </span>' . __( 'Error: Please enter a username', 'buddyforms' ) ));
 		}
 
 		$global_error = ErrorHandler::get_instance();
@@ -219,7 +225,7 @@ function buddyforms_wp_insert_user() {
 	} else {
 		// General error message that one of the required fields are missing
 		$hasError = true;
-		Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: eMail Address is a required fields. You need to add the email address field to the form.', 'buddyforms' ) );
+		$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, __( 'Error: eMail Address is a required fields. You need to add the email address field to the form.', 'buddyforms' ) ));
 	}
 
 	$user_role = isset( $buddyforms[ $form_slug ]['registration']['new_user_role'] ) ? $buddyforms[ $form_slug ]['registration']['new_user_role'] : 'subscriber';
@@ -275,7 +281,7 @@ function buddyforms_wp_insert_user() {
 			$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $new_user_id );
 			if ( ! $was_send_activation_email ) {
 				// General error message that one of the required field sis missing
-				Form::setError( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) );
+				$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, __( 'Error: Send Activation eMail failed ', 'buddyforms' ) ));
 			}
 		}
 
@@ -305,7 +311,7 @@ function buddyforms_insert_user_set_error($form_slug = '') {
 			if ( empty( $form_slug ) ) {
 				$form_slug = $global_error->get_global_error()->get_form_slug();
 			}
-			Form::setError( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message );
+			$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, '<span data-field-id="user_pass"> </span> Error: ' . $message ));
 		}
 	}
 }

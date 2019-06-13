@@ -418,7 +418,10 @@ function buddyforms_form_html( $args ) {
 		'method'  => 'post'
 	) );
 
-	$form->addElement( new Element_HTML( do_action( 'template_notices' ) ) );
+	ob_start();
+	do_action( 'template_notices' );
+	$template_notices = ob_get_contents();
+	$form->addElement( new Element_HTML( $template_notices ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
 	//Honey Pot
 	$honey_pot = new Element_HTML( '<input data-storage="false" type="text" value="" style="display: none" id="bf_hweb" name="bf_hweb" />');

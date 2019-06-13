@@ -13,6 +13,8 @@
 function buddyforms_process_submission( $args = array() ) {
 	global $current_user, $buddyforms, $form_slug, $_SERVER;
 
+	$global_error = ErrorHandler::get_instance();
+
 	$hasError      = false;
 	$error_message = '';
 
@@ -88,7 +90,7 @@ function buddyforms_process_submission( $args = array() ) {
 	 *
 	 * Validation can be extended
 	 */
-	if ( Form::isValid( "buddyforms_form_" . $form_slug, false ) ) {
+	if ( Form::isValid( $form_slug, false ) ) {
 		if ( ! apply_filters( 'buddyforms_form_custom_validation', true, $form_slug ) ) {
 			$args = array(
 				'hasError'  => true,
@@ -413,7 +415,7 @@ function buddyforms_process_submission( $args = array() ) {
 	} else {
 		$hasError      = true;
 		$error_message = $post_id->get_error_message();
-		Form::setError( 'buddyforms_form_' . $form_slug, $post_id->get_error_message() );
+		$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ));
 	}
 
 	// Display the message

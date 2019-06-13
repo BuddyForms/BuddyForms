@@ -22,6 +22,7 @@ class View_Frontend extends FormView {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
 
+		//TODO aqui hay que ajustar la forma en la que se hace el render de los errores
 		$this->_form->getErrorView()->render();
 		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
 		if ( $onlyElement && $onlyElement == 'open' ) {

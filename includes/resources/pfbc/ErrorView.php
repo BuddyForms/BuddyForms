@@ -5,7 +5,7 @@
  */
 abstract class ErrorView extends Base {
 	/**
-	 * @var
+	 * @var Form
 	 */
 	protected $_form;
 
@@ -18,23 +18,13 @@ abstract class ErrorView extends Base {
 		$this->configure( $properties );
 	}
 
-	public abstract function applyAjaxErrorResponse();
-
-	public function clear() {
-		echo 'jQuery("#', $this->_form->getAttribute( "id" ), ' .alert-error").remove();';
-	}
-
 	public abstract function render();
+
+	public abstract function renderCSS();
 
 	public abstract function renderAjaxErrorResponse();
 
-	public function renderCSS() {
-	}
-
-	/**
-	 * @param Form $form
-	 */
-	public function _setForm( Form $form ) {
-		$this->_form = $form;
+	public function clear() {
+		echo 'jQuery("#', 'errororroroor', ' .alert-error").remove();';
 	}
 }

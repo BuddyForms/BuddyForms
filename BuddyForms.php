@@ -73,7 +73,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			self::$assets = plugin_dir_url( __FILE__ ) . 'assets/';
 
 			//Load the necessary files to start the sessions
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
+//			require_once( BUDDYFORMS_INCLUDES_PATH . '/class-buddyforms-session.php' );
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
@@ -285,12 +285,19 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		}
 
 		/**
-		 * Enable the localization of the fields adding the strings to js
+		 * Enable the localization of the fields adding the strings to js and hold the global localization
 		 *
 		 * @return array
 		 */
 		public static function localize_fields() {
-			return apply_filters( 'buddyforms_field_localization', array() );
+			return apply_filters( 'buddyforms_field_localization', array(
+				'error_strings' => array(
+					'error_string_start'    => __( 'The following', 'buddyforms' ),
+					'error_string_singular' => __( 'error was', 'buddyforms' ),
+					'error_string_plural'   => __( 'errors were', 'buddyforms' ),
+					'error_string_end'      => __( 'found: ', 'buddyforms' ),
+				)
+			) );
 		}
 
 		/**

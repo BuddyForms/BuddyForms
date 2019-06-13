@@ -89,13 +89,16 @@ add_action( 'wp_ajax_nopriv_buddyforms_ajax_process_edit_post', 'buddyforms_ajax
 function buddyforms_ajax_process_edit_post() {
 	global $buddyforms;
 
+	$form_data = array();
+
 	if ( isset( $_POST['data'] ) ) {
-		parse_str( $_POST['data'], $formdata );
-		$_POST = $formdata;
+		parse_str( $_POST['data'], $form_data );
+		$_POST = $form_data;
 	}
 
+	$global_error = ErrorHandler::get_instance();
 
-	$args = buddyforms_process_submission( $formdata );
+	$args = buddyforms_process_submission( $form_data );
 
 	$hasError = false;
 	$form_notice = '';
@@ -103,29 +106,31 @@ function buddyforms_ajax_process_edit_post() {
 
 	$json_array = array();
 
-    $error_message = __('There was an error please check the form!', 'buddyforms');
-
 	extract( $args );
 
 	if ( empty( $form_slug ) ) {
-		$form_slug = $formdata['form_slug'];
+		$form_slug = $form_data['form_slug'];
 	}
 
 	if ( $hasError == true ) {
 
 		if ( $form_notice ) {
-			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
+			$global_error->add_error(new BF_Error('buddyforms_form_' . $form_slug, $form_notice, $form_data, $form_slug));
+//			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}
 
-		if ( $error_message ) {
-			Form::setError( 'buddyforms_form_' . $form_slug, $error_message );
+		if ( ! empty( $error_message ) ) {
+			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, $form_data, $form_slug ) );
+//			Form::setError( 'buddyforms_form_' . $form_slug, $error_message );
 		}
 
-		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
+		$global_error->renderAjaxErrorResponse();
+
+//		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
 
 	} else {
-
-		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
+		$global_error->renderAjaxErrorResponse();
+//		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
 
 		$form_type = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
 		$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';

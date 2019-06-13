@@ -4,71 +4,40 @@
  * Class ErrorView_Standard
  */
 class ErrorView_Standard extends ErrorView {
-	public function applyAjaxErrorResponse() {
-		$id                    = $this->_form->getAttribute( "id" );
-		$error_string_start    = __( 'The following', 'buddyforms' );
-		$error_string_singular = __( 'error was', 'buddyforms' );
-		$error_string_plural   = __( 'errors were', 'buddyforms' );
-		$error_string_end      = __( 'found: ', 'buddyforms' );
-		echo <<<JS
-        var errorSize = response.errors.length;
-        if(errorSize == 1)
-            var errorFormat = "$error_string_singular";
-        else
-            var errorFormat = errorSize + " $error_string_plural";
-
-        jQuery('.bf-alert').remove();
-        var errorHTML = '<div class="bf-alert error"><strong class="alert-heading">$error_string_start ' + errorFormat + ' $error_string_end</strong><ul>';
-        for(e = 0; e < errorSize; ++e)
-            errorHTML += '<li>' + response.errors[e] + '</li>';
-        errorHTML += '</ul></div>';
-        jQuery("#$id").prepend(errorHTML);
-JS;
-
-	}
-
 	public function render() {
-		$errors = $this->_form->getErrors();
-		if ( ! empty( $errors ) ) {
-			$size   = sizeof( $errors );
-			$errors = implode( "</li><li>", $errors );
+		$global_error = ErrorHandler::get_instance();
+		if ( $global_error->get_global_error()->has_errors() ) {
+			$all_errors = $global_error->get_global_error()->errors;
+			$size   = sizeof( $all_errors );
+			$errors = implode( "</li><li>", $all_errors );
 
-			$error_heading_text = _n( 'The following error was found:', 'The following errors were found:', $size, 'buddyforms' );
+			ob_start();
 
-			echo <<<HTML
-            <div class="bf-alert error">
-                <strong class="alert-heading">$error_heading_text</strong>
-                <ul><li>$errors</li></ul>
-            </div>
-HTML;
+			// create the plugin template path
+			$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/bf-error-container.php';
+
+			// Check if template exist in the child or parent theme and use this path if available
+			if ( $template_file = locate_template( "buddyforms/bf-error-container.php", false, false ) ) {
+				$template_path = $template_file;
+			}
+
+			// Do the include
+			include $template_path;
+
+			echo ob_get_clean();
 		}
 	}
 
 	public function renderAjaxErrorResponse() {
-		$errors = $this->_form->getErrors();
-		if ( ! empty( $errors ) ) {
+		$global_error = ErrorHandler::get_instance();
+		if ( $global_error->get_global_error()->has_errors() ) {
 			header( "Content-type: application/json" );
-			echo json_encode( array( "errors" => $errors ) );
+			echo wp_json_encode( array( "errors" => $global_error->get_global_error()->errors) );
 			die;
 		}
 	}
 
-	/**
-	 * @param $errors
-	 *
-	 * @return array
-	 */
-	private function parse( $errors ) {
+	public function renderCSS() {
 
-		$list = array();
-		if ( ! empty( $errors ) ) {
-			$keys    = array_keys( $errors );
-			$keySize = sizeof( $keys );
-			for ( $k = 0; $k < $keySize; ++ $k ) {
-				$list = array_merge( $list, $errors[ $keys[ $k ] ] );
-			}
-		}
-
-		return $list;
 	}
 }

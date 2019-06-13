@@ -37,7 +37,8 @@ class Element_Upload extends Element_Textbox {
 	public static function submission_default_value( $bf_value, $item, $field_type, $field_slug ) {
 		if ( $field_type === 'featured_image' ) {
 			$featured_img_url = get_the_post_thumbnail_url( $item->ID );
-			$result = '<a target="blank" href="' . esc_url( $featured_img_url ) . '" rel="lightbox">' . get_the_post_thumbnail( $item->ID,  array(64, 64) ) . '</a>';
+			$result           = '<a target="blank" href="' . esc_url( $featured_img_url ) . '" rel="lightbox">' . get_the_post_thumbnail( $item->ID, array( 64, 64 ) ) . '</a>';
+
 			return $result;
 		}
 
@@ -49,16 +50,16 @@ class Element_Upload extends Element_Textbox {
 	 *
 	 * @param $default
 	 *
+	 * @return array
 	 * @since 2.4.0
 	 *
-	 * @return array
 	 */
 	public static function localize_string( $default ) {
-		return array(
+		return array_merge( $default, array(
 			'upload' => array(
 				'submitButton' => __( 'Upload in progress', 'buddyforms' )
 			)
-		);
+		) );
 	}
 
 	public static function upload_process_field_submission( $field_slug, $field_type, $field, $post_id, $form_slug, $args, $action ) {

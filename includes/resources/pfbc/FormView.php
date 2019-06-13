@@ -44,7 +44,7 @@ abstract class FormView extends Base {
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
-
+		//TODO aqui se hace render de los errores
 		$this->_form->getErrorView()->render();
 		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
 		if ( $onlyElement && $onlyElement == 'open' ) {

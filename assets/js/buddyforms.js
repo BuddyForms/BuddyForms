@@ -387,7 +387,7 @@ function BuddyForms() {
         if (!formSlug) {
             var form = jQuery(element).closest('form');
             var formId = form.attr('id');
-            if(formId) {
+            if (formId) {
                 formSlug = formId.split('buddyforms_form_');
                 formSlug = (formSlug[1]) ? formSlug[1] : false;
             } else {
@@ -508,7 +508,7 @@ function BuddyForms() {
     }
 
     function actionFromButton(event) {
-        event.preventDefault();
+        // event.preventDefault();
         var target = jQuery(this).data('target');
         var formOptions = 'publish';
         var draftAction = false;
@@ -528,7 +528,8 @@ function BuddyForms() {
                     statusElement.val(post_status);
                 }
             }
-            targetForms.trigger('submit');
+            // jQuery(document.body).trigger({type: "buddyforms:form:render"}, ["$form_slug", $prevent, "$this->ajax", "$method"]);
+            // targetForms.trigger('submit');
         }
     }
 
@@ -629,6 +630,116 @@ function BuddyForms() {
         }
     }
 
+    function triggerFormError(event, form_id, errors) {
+        if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
+            var id = form_id;
+            var errorSize = errors.errors[id].length;
+            var errorFormat;
+            if (errorSize === 1) {
+                errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
+            } else {
+                errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
+            }
+
+            jQuery('.bf-alert').remove();
+            var errorHTML = '<div class="bf-alert error"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul>';
+            for (i = 0; i < errorSize; ++i) {
+                errorHTML += '<li>' + errors.errors[id][i] + '</li>';
+            }
+            errorHTML += '</ul></div>';
+            jQuery('#buddyforms_form_' + id).prepend(errorHTML);
+        }
+    }
+
+    function renderForm(event, id, prevent, ajax, method) {
+        var formId = 'buddyforms_form_' + id;
+        if (typeof (tinyMCE) != "undefined") {
+            tinyMCE.triggerSave();
+        }
+        var currentForm = jQuery("#" + formId);
+        var formMessage = jQuery('#form_message_' + id);
+        //When the form is submitted, disable all submit buttons to prevent duplicate submissions
+        jQuery(document.body).trigger({type: "buddyforms:submit:disable"});
+
+        //For ajax, an anonymous onsubmit javascript function is bound to the form using jQuery.  jQuery's serialize function is used to grab each element's name/value pair.
+        if (ajax) {
+            if (jQuery.validator && !currentForm.valid()) {
+                return false;
+            }
+
+            jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("show", {
+                fade: [2000, 1000]
+            });
+
+            var FormData = currentForm.serialize();
+            if (buddyformsGlobal) {
+                jQuery.ajax({
+                    url: buddyformsGlobal.admin_url,
+                    type: method,
+                    dataType: 'json',
+                    data: {"action": "buddyforms_ajax_process_edit_post", "data": FormData},
+                    error: function (xhr, status, error) {
+                        formMessage.addClass('bf-alert error');
+                        formMessage.html(xhr.responseText);
+                        console.log(xhr.responseText);
+                        currentForm.find("input[type=submit]").removeAttr("disabled");
+                        bf_form_errors();
+                        jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("hide");
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        jQuery.each(response, function (i, val) {
+                            switch (i) {
+                                case 'form_notice':
+                                    formMessage.addClass('bf-alert success');
+                                    formMessage.html(val);
+                                    break;
+                                case 'display_page':
+                                    formMessage.html(val);
+                                    break;
+                                case 'form_remove':
+                                    jQuery("#buddyforms_form_hero_" + id + " .form_wrapper").fadeOut("normal", function () {
+                                        jQuery("#buddyforms_form_hero_" + id + " .form_wrapper").remove();
+                                    });
+                                    break;
+                                case 'form_actions':
+                                    jQuery("#buddyforms_form_" + id + " .form-actions").html(val);
+                                    break;
+                                default:
+                                    jQuery('input[name="' + i + '"]').val(val);
+                            }
+                            jQuery('#recaptcha_reload').trigger('click');
+                            jQuery(document.body).trigger({type: "buddyforms:init"});
+
+                        });
+                        if (response !== undefined && typeof response == "object" && response.errors) {
+                            jQuery(document.body).trigger({type: "buddyforms:error:trigger"}, ["$form_slug", response]);
+                        }
+                        //After the form has finished submitting, re-enable all submit buttons to allow additional submissions.
+                        jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
+                        bf_form_errors();
+                        jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("hide");
+
+                        // scroll to message after submit
+                        jQuery('html, body')
+                            .animate({
+                                scrollTop: (jQuery("#buddyforms_form_hero_" + id))
+                            }, 2000)
+                            .on("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove", function () {
+                                jQuery('html, body').stop();
+                            });
+                    }
+                });
+            }
+            return false;
+        }
+
+        //jQuery is used to set the focus of the form's initial element.
+        if (!prevent.includes('focus')) {
+            jQuery("#" + formId + ":input:visible:enabled:first").focus();
+        }
+    }
+
     return {
         submissionModal: function (target) {
             submissionModal = target;
@@ -663,6 +774,8 @@ function BuddyForms() {
             //Events
             jQuery(document).on('buddyforms:submit:disable', disableFormSubmit);
             jQuery(document).on('buddyforms:submit:enable', enableFormSubmit);
+            jQuery(document).on('buddyforms:error:trigger', triggerFormError);
+            jQuery(document).on('buddyforms:form:render', renderForm);
 
             disableACFPopup();
 

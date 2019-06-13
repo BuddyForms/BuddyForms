@@ -25,13 +25,23 @@ class ErrorHandler {
 	 * @var BF_Error
 	 */
 	private $global_error;
+	/**
+	 * @var ErrorView_Standard
+	 */
+	private $error_view;
+	/**
+	 * @var Form
+	 */
+	private $form;
 
 	public function __construct() {
 		$this->set_global_error( new BF_Error( null, null, null, null ) );
+		$this->error_view = new ErrorView_Standard;
 	}
 
 	/**
 	 * Return an instance of this class.
+	 *
 	 *
 	 * @return ErrorHandler A single instance of this class.
 	 */
@@ -85,5 +95,33 @@ class ErrorHandler {
 		} else {
 			$this->get_global_error()->add( null, $error );
 		}
+	}
+
+	/**
+	 * Render errors when the form is process using Ajax
+	 */
+	public function renderAjaxErrorResponse() {
+		$this->error_view->renderAjaxErrorResponse();
+	}
+
+	/**
+	 * @return Form
+	 */
+	public function get_form() {
+		return $this->form;
+	}
+
+	/**
+	 * @param Form $form
+	 */
+	public function set_form( $form ) {
+		$this->form = $form;
+	}
+
+	/**
+	 * @return ErrorView_Standard
+	 */
+	public function get_error_view() {
+		return $this->error_view;
 	}
 }

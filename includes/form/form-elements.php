@@ -329,7 +329,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 							$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor, $post_id );
 
-							$form->addElement( new Element_HTML( $wp_editor ) );
+							$form->addElement( new Element_Content( $wp_editor ) );
 						}
 						break;
 
