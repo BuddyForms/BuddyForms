@@ -90,7 +90,7 @@ function buddyforms_process_submission( $args = array() ) {
 	 *
 	 * Validation can be extended
 	 */
-	if ( Form::isValid( $form_slug, false ) ) {
+	if ( Form::isValid( $form_slug ) ) {
 		if ( ! apply_filters( 'buddyforms_form_custom_validation', true, $form_slug ) ) {
 			$args = array(
 				'hasError'  => true,

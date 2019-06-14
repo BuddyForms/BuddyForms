@@ -138,16 +138,14 @@ class Form extends Base {
 		}
 	}
 
-	/*When a form is serialized and stored in the session, this function prevents any non-essential
-	information from being included.*/
-
 	/**
+     * Check if the form Element is valid or not
+     *
 	 * @param string $id
-	 * @param bool $clearValues
 	 *
 	 * @return bool
 	 */
-	public static function isValid( $id, $clearValues = true ) {
+	public static function isValid( $id ) {
 		$valid = true;
 		if ( ! empty( $id ) ) {
 			$global_error = ErrorHandler::get_instance();
@@ -325,8 +323,7 @@ class Form extends Base {
 		}
 		$this->_elements[] = $element;
 
-		/*For ease-of-use, the form tag's encytype attribute is automatically set if the File element
-		class is added.*/
+		//For ease-of-use, the form tag's encytype attribute is automatically set if the File element class is added.
 		if ( $element instanceof Element_File ) {
 			$this->_attributes["enctype"] = "multipart/form-data";
 		}
@@ -382,14 +379,14 @@ class Form extends Base {
 		}
 	}
 
-	/*This method restores the serialized form instance.*/
-
+	/**
+     * This method restores the serialized form instance.
+     */
 	protected function renderCSS() {
-		//$this->renderCSSFiles();
+		$this->renderCSSFiles();
 
 		echo '<style type="text/css">';
 		$this->view->renderCSS();
-//		$this->errorView->renderCSS();
 		foreach ( $this->_elements as $element ) {
 			$element->renderCSS();
 		}
@@ -405,7 +402,7 @@ class Form extends Base {
 			}
 		}
 
-		/*This section prevents duplicate css files from being loaded.*/
+		//This section prevents duplicate css files from being loaded.
 		if ( ! empty( $urls ) ) {
 			$urls = array_values( array_unique( $urls ) );
 			foreach ( $urls as $url ) {
@@ -414,9 +411,9 @@ class Form extends Base {
 		}
 	}
 
-	/*When ajax is used to submit the form's data, validation errors need to be manually sent back to the
-	form using json.*/
-
+    /**
+     * When ajax is used to submit the form's data, validation errors need to be manually sent back to the form using json.
+     */
 	protected function renderJS() {
 		$this->renderJSFiles();
 
@@ -458,7 +455,7 @@ JS;
 			}
 		}
 
-		/*This section prevents duplicate js files from being loaded.*/
+		//This section prevents duplicate js files from being loaded.
 		if ( ! empty( $urls ) ) {
 			$urls = array_values( array_unique( $urls ) );
 			foreach ( $urls as $url ) {
@@ -511,15 +508,15 @@ JS;
 				$props[0] = 1;
 			}
 
-			return self::$form->_close( $props[0] );
+			return self::_close( $props[0] );
 		}
 
 		return self::_call( self::$form, $type, $props );
 	}
 
-	/*The save method serialized the form's instance and saves it in the session.*/
-
 	/**
+     * The save method serialized the form's instance and saves it in the session.
+     *
 	 * @param $form
 	 * @param $type
 	 * @param $props
@@ -542,10 +539,9 @@ JS;
 		return $form;
 	}
 
-	/*Valldation errors are saved in the session after the form submission, and will be displayed to the user
-	when redirected back to the form.*/
-
 	/**
+     * Valldation errors are saved in the session after the form submission, and will be displayed to the user when redirected back to the form.
+     *
 	 * @return array
 	 */
 	public function __sleep() {
@@ -559,10 +555,9 @@ JS;
 		return $this->ajax;
 	}
 
-	/*An associative array is used to pre-populate form elements.  The keys of this array correspond with
-	the element names.*/
-
 	/**
+     * An associative array is used to pre-populate form elements.  The keys of this array correspond with the element names.
+     *
 	 * @return array
 	 */
 	public function getElements() {
