@@ -454,7 +454,6 @@ function buddyforms_process_submission( $args = array() ) {
 	$args = array_merge( $args, $args2 );
 
 	do_action( 'buddyforms_process_submission_end', $args );
-	Form::clearValues( "buddyforms_form_" . $form_slug );
 
 	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
