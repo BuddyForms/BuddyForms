@@ -126,12 +126,7 @@ function buddyforms_ajax_process_edit_post() {
 
 		$global_error->renderAjaxErrorResponse();
 
-//		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
-
 	} else {
-		$global_error->renderAjaxErrorResponse();
-//		Form::renderAjaxErrorResponse( 'buddyforms_form_' . $form_slug );
-
 		$form_type = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
 		$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 		$message_source = 'after_submit_message_text';

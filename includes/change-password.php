@@ -57,11 +57,11 @@ function buddyforms_reset_password() {
 			$global_error = ErrorHandler::get_instance();
 			if ( $_POST['buddyforms_user_pass'] == '' || $_POST['buddyforms_user_pass_confirm'] == '' ) {
 				// password(s) field empty
-				$global_error->add_error( new BF_Error( 'password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) ) );
+				$global_error->add_error( new BF_Error( 'buddyforms_form_password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) ) );
 			}
 			if ( $_POST['buddyforms_user_pass'] != $_POST['buddyforms_user_pass_confirm'] ) {
 				// passwords do not match
-				$global_error->add_error( new BF_Error( 'password_mismatch', __( 'Passwords do not match', 'buddyforms' ) ) );
+				$global_error->add_error( new BF_Error( 'buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ) ) );
 			}
 
 			$has_errors = $global_error->get_global_error()->has_errors();

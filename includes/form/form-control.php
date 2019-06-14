@@ -96,7 +96,6 @@ function buddyforms_process_submission( $args = array() ) {
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
-			Form::clearValues( "buddyforms_form_" . $form_slug );
 
 			return $args;
 		}
@@ -105,7 +104,6 @@ function buddyforms_process_submission( $args = array() ) {
 			'hasError'  => true,
 			'form_slug' => $form_slug,
 		);
-		Form::clearValues( "buddyforms_form_" . $form_slug );
 
 		return $args;
 	}

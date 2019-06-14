@@ -25,6 +25,6 @@ abstract class ErrorView extends Base {
 	public abstract function renderAjaxErrorResponse();
 
 	public function clear() {
-		echo 'jQuery("#', 'errororroroor', ' .alert-error").remove();';
+		echo 'jQuery("#', $this->_form->getAttribute( "id" ), ' .alert-error").remove();';
 	}
 }

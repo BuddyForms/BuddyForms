@@ -70,11 +70,11 @@ function buddyforms_wp_update_user() {
 		$global_error = ErrorHandler::get_instance();
 		if ( $user_args['user_pass'] == '' || $user_args['user_pass_confirm'] == '' ) {
 			// password(s) field empty
-			$global_error->add_error( new BF_Error( 'password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) ) );
+			$global_error->add_error( new BF_Error( 'buddyforms_form_password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ) ) );
 		}
 		if ( $user_args['user_pass'] != $user_args['user_pass_confirm'] ) {
 			// passwords do not match
-			$global_error->add_error( new BF_Error( 'password_mismatch', __( 'Passwords do not match', 'buddyforms' ), '', $form_slug ) );
+			$global_error->add_error( new BF_Error( 'buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ), '', $form_slug ) );
 		}
 
 		buddyforms_insert_user_set_error($form_slug);
@@ -211,13 +211,13 @@ function buddyforms_wp_insert_user() {
 			if ( isset( $buddyforms[ $form_slug ]['registration']['generate_password'] ) ) {
 				$user_pass = $pass_confirm = wp_generate_password( 12, true );
 			} else {
-				$global_error->add_error( new BF_Error('password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ), '', $form_slug ));
+				$global_error->add_error( new BF_Error('buddyforms_form_password_empty', __( 'Please enter a password, and confirm it', 'buddyforms' ), '', $form_slug ));
 			}
 		}
 
 		if ( $user_pass != $pass_confirm ) {
 			// passwords do not match
-			$global_error->add_error( new BF_Error('password_mismatch', __( 'Passwords do not match', 'buddyforms' ),'', $form_slug ));
+			$global_error->add_error( new BF_Error('buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ),'', $form_slug ));
 		}
 
 		buddyforms_insert_user_set_error($form_slug);
