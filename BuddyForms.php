@@ -139,6 +139,13 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				define( 'BUDDYFORMS_ADMIN_VIEW', BUDDYFORMS_INCLUDES_PATH . 'admin/view/' );
 			}
 
+			if ( ! defined( 'BUDDYFORMS_ASSETS' ) ) {
+				/**
+				 * Define the template path
+				 */
+				define( 'BUDDYFORMS_ASSETS', plugins_url( 'assets/', __FILE__ ) );
+			}
+
 		}
 
 		/**

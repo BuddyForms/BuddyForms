@@ -204,6 +204,9 @@ jQuery(document).ready(function () {
 							}
 						}
 					});
+				},
+				complete: function(){
+					jQuery('#formbuilder-show-templates').hide();
 				}
 			});
 		}

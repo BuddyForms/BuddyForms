@@ -124,12 +124,21 @@ function buddyforms_form_builder_templates() {
 	ob_start();
 
 	?>
-    <div class="buddyforms_template buddyforms_wizard_types">
-        <h5><?php _e('Choose a pre-configured form template or start a new one:', 'buddyforms') ?></h5>
+    <div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
+        <div id="buddyforms_template_header_container">
+            <div id="buddyforms_template_header_container_h3">
+                <h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
+            </div>
+            <div id="buddyforms_template_arrow_container">
+                <img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
+            </div>
+        </div>
 
 		<?php add_thickbox(); ?>
 
-		<?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
+        <div id="buddyforms_template_list_container">
+            <h5><?php _e('Choose a pre-configured form template or start a new fields from the bottom.', 'buddyforms') ?></h5>
+		    <?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 
             <h2><?php echo strtoupper( $sort_key ) ?> FORMS</h2>
 
@@ -187,7 +196,7 @@ function buddyforms_form_builder_templates() {
                 </div>
 			<?php }
 		} ?>
-
+        </div>
     </div>
 
 	<?php

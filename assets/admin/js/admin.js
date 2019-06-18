@@ -211,6 +211,7 @@ function load_formbuilder_template(template, completeCallBack) {
                 });
             },
             complete: function(jqXHR, textStatus) {
+                jQuery('#formbuilder-show-templates').hide();
                 if (typeof completeCallBack === 'function') {
                     completeCallBack(jqXHR, textStatus);
                 }
@@ -580,6 +581,16 @@ jQuery(document).ready(function (jQuery) {
 
         return validation_result;
 
+    });
+
+    /**
+     *
+     * @since 2.5.0
+     */
+    jQuery(document).on('click', 'a.formbuilder-show-templates, #formbuilder-show-templates', function(){
+        jQuery('#buddyforms_template_header_container').hide('fast');
+        jQuery('#buddyforms_template_list_container').show('slow');
+        jQuery('#formbuilder-show-templates').hide();
     });
 
     //
