@@ -114,10 +114,16 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 
 }
 
-//
-// Template HTML Loop the array of all available form builder templates
-//
-function buddyforms_form_builder_templates() {
+/**
+ * Template HTML Loop the array of all available form builder templates
+ *
+ * @since 2.5.0
+ *
+ * @param bool $is_wizard
+ *
+ * @return false|string
+ */
+function buddyforms_form_builder_templates($is_wizard = false) {
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
 
@@ -125,18 +131,20 @@ function buddyforms_form_builder_templates() {
 
 	?>
     <div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
-        <div id="buddyforms_template_header_container">
-            <div id="buddyforms_template_header_container_h3">
-                <h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
+	    <?php if ( ! $is_wizard ): ?>
+            <div id="buddyforms_template_header_container">
+                <div id="buddyforms_template_header_container_h3">
+                    <h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
+                </div>
+                <div id="buddyforms_template_arrow_container">
+                    <img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
+                </div>
             </div>
-            <div id="buddyforms_template_arrow_container">
-                <img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
-            </div>
-        </div>
+	    <?php endif; ?>
 
 		<?php add_thickbox(); ?>
 
-        <div id="buddyforms_template_list_container">
+        <div <?php echo ( ! $is_wizard ) ? 'id="buddyforms_template_list_container"' : '' ?>>
             <h5><?php _e('Choose a pre-configured form template or start a new fields from the bottom.', 'buddyforms') ?></h5>
 		    <?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 

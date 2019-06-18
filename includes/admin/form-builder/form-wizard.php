@@ -5,7 +5,7 @@
 //
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_builder_wizard_types' );
 function buddyforms_form_builder_wizard_types() {
-	echo buddyforms_form_builder_templates();
+	echo buddyforms_form_builder_templates(true);
 	die();
 }
 
