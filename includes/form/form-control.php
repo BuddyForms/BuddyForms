@@ -203,8 +203,6 @@ function buddyforms_process_submission( $args = array() ) {
 		);
 
 		do_action( 'buddyforms_process_submission_end', $args );
-		//Form::clearValues( "buddyforms_form_" . $form_slug );
-
 	}
 
 	// Check if user is logged in and if not check if registration during submission is enabled.
@@ -219,7 +217,6 @@ function buddyforms_process_submission( $args = array() ) {
 				'hasError'  => true,
 				'form_slug' => $form_slug,
 			);
-			Form::clearValues( "buddyforms_form_" . $form_slug );
 
 			return $args;
 		}

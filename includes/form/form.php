@@ -153,8 +153,15 @@ function buddyforms_create_edit_form( $args ) {
 
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
-		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		$the_post = get_default_post_to_edit( $post_type, true );
+		require_once( ABSPATH . 'wp-admin/includes/post.php' );
+		//check if auto-draft exist
+		global $wpdb;
+		$query   = "SELECT ID FROM {$wpdb->posts} WHERE 1=1  AND post_title ='Auto Draft' AND post_content = '' AND post_type = 'bf_submissions' ORDER BY ID DESC";
+		$post_id = (int) $wpdb->get_var( $query );
+		if ( empty( $post_id ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+			$the_post = get_default_post_to_edit( $post_type, true );
+		}
 	}
 
 	if ( empty( $post_type ) ) {
