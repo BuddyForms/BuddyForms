@@ -1303,10 +1303,10 @@ function buddyforms_form_element_multiple( $form_fields, $args ) {
 		}
 	}
 
-	$field_options = $buddyform['form_fields'][ $field_id ]['options'];
-	$field_type = $buddyform['form_fields'][ $field_id ]['type'];
+	$field_options = !empty($buddyform['form_fields'][ $field_id ]['options'])? $buddyform['form_fields'][ $field_id ]['options']: array();
+	$field_type = !empty($buddyform['form_fields'][ $field_id ]['type'])?$buddyform['form_fields'][ $field_id ]['type']: '';
 	$count = 1;
-	$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
+	$default_option = !empty( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
 
 	ob_start();
 
