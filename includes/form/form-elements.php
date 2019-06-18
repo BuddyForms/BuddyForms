@@ -987,7 +987,9 @@ function buddyforms_form_elements( $form, $args ) {
 							    })
 							    jQuery(".bf-select2-' . $field_id . '").on("change", function () {
 				                     var formSlug = jQuery(this).data("form");
-				                     jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
+				                     if(formSlug){
+				                        jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
+				                     }
 				                });
 						    });
 						</script>

@@ -421,7 +421,6 @@ function BuddyForms() {
         var bf_select_2 = jQuery('.bf-select2');
         if (bf_select_2.length > 0) {
             bf_select_2.each(function () {
-
                 var reset = jQuery(this).attr('data-reset');
                 var options = {
                     placeholder: "Select an option", // todo need il18n
@@ -435,7 +434,9 @@ function BuddyForms() {
 
                 jQuery(this).on('change', function () {
                     var formSlug = jQuery(this).data('form');
-                    jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                    if(formSlug) {
+                        jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                    }
                 });
             });
         }
