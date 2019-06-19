@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.1
-Stable tag: 2.4.7
+Stable tag: 2.5.0
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.4.7 - 3 Jun 2019 =
+= 2.5.0 - 19 Jun 2019 =
 * Improved required field messages to be more user friendly.
 * Fixed the function to register users from multisite.
 * Added more argument to extend the fields form 3rd parties.
@@ -398,7 +398,30 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Removed the label option from the From Action field.
 * Fixed the option to change the form slug, because it was not working if the form not have any submitted entry.
 * Fixed JS incompatibility with external plugins.
-* Code improvement.
+* Code improvement and cleaning.
+* Improved the detection of the bf shortcodes from the post content.
+* Fixed the fields user_login and user_email because the option `hide to logged in` was hiding this field for logged out users and not make sense for a registration form.
+* Added a filter to exclude columns in the submission list from the administration.
+* Updated the user meta mapping to load the user website from user metas.
+* Improved the default submission title for the registration forms.
+* Fixed to show the User meta values when a list of entries shortcode is used.
+* Fixed the user_login and user_email field to load the value from the user meta.
+* Fixed the show captcha when the submission is in the action view.
+* Code fix to the action column of the list of entries of a contact form.
+* Added a custom class to the list of submissions.
+* Fixed the password reset shortcode.
+* Improved the code related to the error handling.
+* Added the possibility to override the template/output used to change the password.
+* Removing the session from the form submission and the error handling.
+* Adding the Content element to handle the server validation for that component.
+* Added a filter to change the output used to replace by a shortcode. `apply_filters('buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug )`
+* Fixed to avoid jQuery validate crash.
+* Fixed the undefined index when the dropdown don't have any item created yet.
+* Added the option to create a form from scratch or select the existing templates when a form is added trough the option add new.
+* Fixed the wizard to not show the new builder background.
+* Fixed the issue related to the creation of auto-draft in each visit of the form in the frontend.
+
+
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
