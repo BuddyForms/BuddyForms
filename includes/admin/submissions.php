@@ -312,7 +312,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 					foreach ( $bf_value as $key => $val ) {
 						$result[] = ( $field_type == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
 					}
-					$bf_value = implode( ',', $result );
+					$bf_value = implode( apply_filters('buddyforms_implode_separator', ', ', $field_type, $field_slug), $result );
 				}
 				break;
 			case 'status':

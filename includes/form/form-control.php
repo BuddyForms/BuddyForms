@@ -694,7 +694,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 
 	$field_with_value_result = wp_cache_get( 'buddyforms_get_field_with_meta_' . $form_slug  . '_' .$post_id.'_' .$field_slug, 'buddyforms' );
 
-	if($field_with_value_result === false) {
+	if ( $field_with_value_result === false ) {
 		$form_fields = $buddyforms[ $form_slug ]['form_fields'];
 		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields );
 		foreach ( $form_fields as $custom_field ) {
@@ -707,7 +707,8 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 			}
 
 			if ( $field_slug === $slug ) {
-				wp_cache_set( 'buddyforms_get_field_with_meta_' . $form_slug  . '_' .$post_id.'_' .$field_slug, $custom_field, 'buddyforms' );
+				wp_cache_set( 'buddyforms_get_field_with_meta_' . $form_slug . '_' . $post_id . '_' . $field_slug, $custom_field, 'buddyforms' );
+
 				return $custom_field;
 			}
 		}
@@ -779,7 +780,7 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
 						foreach ( $meta_value as $key => $val ) {
 							$result[] = ( $custom_field['type'] == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
 						}
-						$meta_value = implode( ',', $result );
+						$meta_value = implode( apply_filters('buddyforms_implode_separator', ', ', $custom_field['type'], $slug), $result );
 					}
 					break;
 				case 'status':
@@ -799,12 +800,12 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
 						$terms = array();
 						foreach ( $meta_value as $cat ) {
 							$term    = get_term( $cat, $custom_field['taxonomy'] );
-							$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : '';
+							$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $cat;
 						}
-						$meta_value = implode( ',', $terms );
+						$meta_value = implode( apply_filters('buddyforms_implode_separator', ', ', $custom_field['type'], $slug), $terms );
 					} else {
 						$term        = get_term( $meta_value, $custom_field['taxonomy'] );
-						$meta_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : '';
+						$meta_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $meta_value;
 					}
 					break;
 				case 'link':
@@ -860,7 +861,8 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
 			$field_value = apply_filters('buddyforms_before_update_post_meta', $_POST[ $slug ], $customfield, $post_id, $form_slug);
-			update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $field_value ) );
+			$field_value = buddyforms_sanitize( $customfield['type'], $field_value );
+			update_post_meta( $post_id, $slug, $field_value );
 		} else {
 			if ( ! is_admin() ) {
 				update_post_meta( $post_id, $slug, '' );
@@ -996,7 +998,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 				// Check if the taxonomy is hierarchical and prepare the string
 				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
-					$cat_string = implode( ', ', array_map(
+					$cat_string = implode( apply_filters('buddyforms_implode_separator', ', ', 'taxonomy', $slug), array_map(
 						function ( $v, $k ) {
 							return sprintf( "%s", $k );
 						},
@@ -1004,7 +1006,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 						array_keys( $new_tax_items )
 					) );
 				} else {
-					$cat_string = implode( ', ', $new_tax_items );
+					$cat_string = implode( apply_filters('buddyforms_implode_separator', ', ', 'taxonomy', $slug), $new_tax_items );
 				}
 
 				// We need to check if an excluded term was added via the backend edit screen.
@@ -1141,7 +1143,7 @@ function buddyforms_get_browser() {
 }
 
 function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id ) {
-	if ( isset( $customfields ) ) {
+	if ( isset( $customfields ) && ! empty( $string ) ) {
 		foreach ( $customfields as $f_slug => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
 

@@ -220,7 +220,11 @@ function buddyforms_sanitize( $type, $value ) {
 			$value = esc_url( $value );
 			break;
 		default :
-			$value = apply_filters( 'buddyforms_sanitize', sanitize_text_field($value), $type );
+			if ( is_array( $value ) ) {
+				array_walk_recursive( $value, 'sanitize_text_field' );
+			} else {
+				$value = apply_filters( 'buddyforms_sanitize', sanitize_text_field( $value ), $type );
+			}
 			break;
 	}
 
