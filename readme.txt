@@ -420,8 +420,9 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added the option to create a form from scratch or select the existing templates when a form is added trough the option add new.
 * Fixed the wizard to not show the new builder background.
 * Fixed the issue related to the creation of auto-draft in each visit of the form in the frontend.
-
-
+* Added a filter to change the array separator. `apply_filters('buddyforms_implode_separator', ', ', $field_type, $field_slug)`
+* Fixed the validation to process the array correctly, it affect the taxonomy fields.
+* Added the taxonomy field value for the submission column in the administration.
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
