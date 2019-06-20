@@ -247,7 +247,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$bf_value = get_post_meta( intval( $item->ID ), $column_name, true );
 		$bf_field = buddyforms_get_form_field_by_slug( $_GET['form_slug'], $column_name );
 		if ( $bf_field !== false ) {
-			$this->get_column_values( $column_name, $bf_field['type'], $item, $bf_value );
+			$this->get_column_values( $column_name, $bf_field['type'], $item, $bf_value, $bf_field );
 		}
 		if ( $column_name == 'Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
@@ -262,7 +262,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		}
 	}
 
-	public function get_column_values( $field_slug, $field_type, $item, $bf_value ) {
+	public function get_column_values( $field_slug, $field_type, $item, $bf_value, $bf_field ) {
 		switch ( $field_type ) {
 			case 'title':
 				$bf_value = get_the_title( $item->ID );
@@ -313,6 +313,19 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 						$result[] = ( $field_type == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
 					}
 					$bf_value = implode( apply_filters('buddyforms_implode_separator', ', ', $field_type, $field_slug), $result );
+				}
+				break;
+			case 'taxonomy':
+				if ( is_array( $bf_value ) ) {
+					$terms = array();
+					foreach ( $bf_value as $cat ) {
+						$term    = get_term( $cat, $bf_field['taxonomy'] );
+						$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $cat;
+					}
+					$bf_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $bf_field['type'], $slug ), $terms );
+				} else {
+					$term       = get_term( $bf_value, $bf_field['taxonomy'] );
+					$bf_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $bf_value;
 				}
 				break;
 			case 'status':
