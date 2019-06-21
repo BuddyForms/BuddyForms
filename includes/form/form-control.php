@@ -371,6 +371,7 @@ function buddyforms_process_submission( $args = array() ) {
 	}
 
 	$args = buddyforms_update_post( $args );
+
 	extract( $args );
 
 	/*
@@ -437,15 +438,9 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 
 	} else {
-		if ( empty( $error_message ) ) {
-			$error_message = apply_filters( 'buddyforms_error_submitting_form', __( 'Error! There was a problem submitting the post ;-(', 'buddyforms' ) );
-		}
-		$form_notice = '<div class="bf-alert error">' . $error_message . '</div>';
-
 		if ( ! empty( $fileError ) ) {
-			$form_notice = '<div class="bf-alert error">' . $fileError . '</div>';
+			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $fileError, '', $form_slug ) );
 		}
-
 	}
 
 	do_action( 'buddyforms_after_save_post', $post_id );
@@ -476,10 +471,9 @@ function buddyforms_process_submission( $args = array() ) {
  *
  * @param $args
  *
- * @return array|bool
+ * @return array|bool|WP_Error
  */
 function buddyforms_update_post( $args ) {
-
 	$action         = '';
 	$post_author    = '';
 	$post_type      = '';
@@ -497,8 +491,10 @@ function buddyforms_update_post( $args ) {
 
 	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
 
-	if ( ! wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' ) ) {
-		return false;
+	$nonce_result = wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' );
+
+	if ( ! $nonce_result ) {
+		return array( 'post_id' => new WP_Error( '401', 'Form submit error. Please contact the site administrator.' ) );
 	}
 
 	$default_post_title = __( 'none', 'buddyforms' );
