@@ -27,8 +27,6 @@ function buddyforms_process_submission( $args = array() ) {
 	$post_parent = 0;
 	$bf_hweb     = '';
 
-
-
 	extract( shortcode_atts( array(
 		'post_type'   => '',
 		'the_post'    => 0,

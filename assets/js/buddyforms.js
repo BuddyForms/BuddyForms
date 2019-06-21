@@ -687,6 +687,7 @@ function BuddyForms() {
                         formMessage.html(xhr.responseText);
                     },
                     success: function (response) {
+                        console.log(response);
                         jQuery.each(response, function (i, val) {
                             switch (i) {
                                 case 'form_notice':

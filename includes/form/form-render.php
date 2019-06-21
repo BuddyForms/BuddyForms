@@ -15,7 +15,9 @@ function buddyforms_form_html( $args ) {
 		return $args;
 	}
 
-	$post_type = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = $current_user = '';
+	/** @var WP_User $current_user */
+	$current_user = '';
+	$post_type = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
 
 	// Extract the form args
 	extract( shortcode_atts( array(
@@ -44,9 +46,9 @@ function buddyforms_form_html( $args ) {
 	}
 
 	$user_can_edit = false;
-	if ( empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
+	if ( empty( $post_id ) && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( ! empty( $post_id ) && current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
+	} elseif ( ! empty( $post_id ) && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 

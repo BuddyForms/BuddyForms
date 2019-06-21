@@ -191,6 +191,8 @@ function buddyforms_ajax_process_edit_post() {
 
 	$json_array = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json_array );
 
+	$json_array['custom_error'] = $global_error->get_global_error()->errors;
+
 	echo json_encode( $json_array );
 
 	die();
@@ -251,7 +253,7 @@ function buddyforms_ajax_delete_post() {
 	// check if the user has the roles roles and capabilities
 	$user_can_delete = false;
 
-	if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) ) {
+	if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_delete', array(), $form_slug ) ) {
 		$user_can_delete = true;
 	}
 	$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );

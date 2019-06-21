@@ -142,6 +142,8 @@ function update_extra_profile_fields( $user_id ) {
 			foreach ( $buddyforms as $form_slug => $buddyform ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
+						//TODO this need to be improved, because exist the possibility to write
+						// the 2 field in different forms just becasue they have the same slug
 						buddyforms_update_user_meta( $user_id, $user_meta['type'], $user_meta['slug'] );
 					}
 				}

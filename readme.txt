@@ -423,6 +423,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added a filter to change the array separator. `apply_filters('buddyforms_implode_separator', ', ', $field_type, $field_slug)`
 * Fixed the validation to process the array correctly, it affect the taxonomy fields.
 * Added the taxonomy field value for the submission column in the administration.
+* Fixed the permission issue when the post is created using buddyforms.
+* Added a helper function to check the user capability. `bf_user_can`
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
