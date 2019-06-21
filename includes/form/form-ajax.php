@@ -191,8 +191,6 @@ function buddyforms_ajax_process_edit_post() {
 
 	$json_array = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json_array );
 
-	$json_array['custom_error'] = $global_error->get_global_error()->errors;
-
 	echo json_encode( $json_array );
 
 	die();
