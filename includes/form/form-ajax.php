@@ -9,9 +9,11 @@ function buddyforms_ajax_edit_post() {
 		'post_id'   => $post_id,
 		'form_slug' => $form_slug
 	);
-	echo buddyforms_create_edit_form( $args );
+	ob_start();
+	buddyforms_create_edit_form( $args );
+	$content = ob_get_clean();
+	echo $content;
 	die();
-
 }
 
 add_action( 'wp_ajax_bf_load_taxonomy', 'buddyforms_ajax_load_taxonomy' );
@@ -116,12 +118,10 @@ function buddyforms_ajax_process_edit_post() {
 
 		if ( $form_notice ) {
 			$global_error->add_error(new BF_Error('buddyforms_form_' . $form_slug, $form_notice, $form_data, $form_slug));
-//			Form::setError( 'buddyforms_form_' . $form_slug, $form_notice );
 		}
 
 		if ( ! empty( $error_message ) ) {
 			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, $form_data, $form_slug ) );
-//			Form::setError( 'buddyforms_form_' . $form_slug, $error_message );
 		}
 
 		$global_error->renderAjaxErrorResponse();

@@ -15,7 +15,7 @@ function buddyforms_form_html( $args ) {
 		return $args;
 	}
 
-	$post_type = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
+	$post_type = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = $current_user = '';
 
 	// Extract the form args
 	extract( shortcode_atts( array(
@@ -29,6 +29,7 @@ function buddyforms_form_html( $args ) {
 		'form_slug'    => '',
 		'post_status'    => '',
 		'form_notice'  => '',
+		'current_user'  => false,
 	), $args ) );
 
 	$is_registration_form   = ! empty( $buddyforms[ $form_slug ]['form_type'] ) && 'registration' === $buddyforms[ $form_slug ]['form_type'];
@@ -429,6 +430,9 @@ function buddyforms_form_html( $args ) {
 
 	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
 	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
+	if ( is_user_logged_in() ) {
+		$form->addElement( new Element_Hidden( "post_author", ! empty( $current_user ) ? $current_user->ID : 0 ) );
+	}
 	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
 	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
 	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );

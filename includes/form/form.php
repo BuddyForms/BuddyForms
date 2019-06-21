@@ -156,7 +156,7 @@ function buddyforms_create_edit_form( $args ) {
 		require_once( ABSPATH . 'wp-admin/includes/post.php' );
 		//check if auto-draft exist
 		global $wpdb;
-		$query   = "SELECT ID FROM {$wpdb->posts} WHERE 1=1  AND post_title ='Auto Draft' AND post_content = '' AND post_type = 'bf_submissions' ORDER BY ID DESC";
+		$query   = $wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE 1=1  AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s ORDER BY ID DESC", $current_user->ID);
 		$post_id = (int) $wpdb->get_var( $query );
 		if ( empty( $post_id ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/admin.php' );
@@ -165,8 +165,8 @@ function buddyforms_create_edit_form( $args ) {
 	}
 
 	if ( empty( $post_type ) ) {
-		$post_type = $the_post->post_type;
-	} //buddyforms??
+		$post_type = $the_post->post_type;//buddyforms??
+	}
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = apply_filters( 'buddyforms_the_form_to_use', $form_slug, $post_type );
@@ -199,6 +199,7 @@ function buddyforms_create_edit_form( $args ) {
 		'post_id'      => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
 		'form_slug'    => $form_slug,
 		'form_notice'  => $form_notice,
+		'current_user' => $current_user
 	);
 
 	if ( isset( $_POST['form_slug'] ) ) {

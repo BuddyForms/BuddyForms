@@ -23,11 +23,11 @@ function buddyforms_process_submission( $args = array() ) {
 	$revision_id = '';
 	$redirect_to = '';
 	$post_id     = 0;
+	$post_author = 0;
 	$post_parent = 0;
 	$bf_hweb     = '';
 
-	$current_user = wp_get_current_user();
-	$user_id      = $current_user->ID;
+
 
 	extract( shortcode_atts( array(
 		'post_type'   => '',
@@ -38,7 +38,27 @@ function buddyforms_process_submission( $args = array() ) {
 		'form_slug'   => 0,
 		'redirect_to' => $_SERVER['REQUEST_URI'],
 		'bf_hweb'     => '',
+		'post_author' => 0,
 	), $args ) );
+
+
+	if ( empty( $current_user ) ) {
+		/** @var WP_User $current_user */
+		$current_user = wp_get_current_user();
+	}
+
+	if ( ! empty( $current_user ) ) {
+		$user_id = $current_user->ID;
+	} elseif(empty($user_id)) {
+		$user_id = get_current_user_id();
+	}
+
+	if ( empty( $user_id ) && ! empty( $post_author ) ) {
+		$user_id = $post_author;
+	}
+
+	$current_user = get_user_by('ID', $user_id );
+
 
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
@@ -274,9 +294,9 @@ function buddyforms_process_submission( $args = array() ) {
 
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
-	if ( $post_id == 0 && current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
+	if ( $post_id == 0 && bf_user_can($user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( $post_id != 0 && current_user_can( 'buddyforms_' . $form_slug . '_edit' ) ) {
+	} elseif ( $post_id != 0 && bf_user_can($user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
@@ -290,12 +310,6 @@ function buddyforms_process_submission( $args = array() ) {
 		);
 
 		return $args;
-	}
-
-	// If post_id == 0 a new post is created
-	if ( $post_id == 0 ) {
-		require_once( ABSPATH . 'wp-admin/includes/admin.php' );//todo delete this block
-//		 $the_post = get_default_post_to_edit( $post_type, true );
 	}
 
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
@@ -338,7 +352,7 @@ function buddyforms_process_submission( $args = array() ) {
 		$post_status = $args['status'];
 	}
 	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
-	$the_author_id = apply_filters( 'buddyforms_the_author_id', $user_id, $form_slug, $post_id );
+	$the_author_id = apply_filters( 'buddyforms_the_author_id', $the_post->post_author, $form_slug, $post_id );
 
 	$args = Array(
 		'post_id'        => $post_id,
@@ -351,14 +365,14 @@ function buddyforms_process_submission( $args = array() ) {
 		'comment_status' => $comment_status,
 		'form_type'      => $form_type,
 		'current_user'   => $current_user,
-		'new_user_id'   => $user_id,
+		'new_user_id'    => $user_id,
 	);
 
 	if ( ! empty( $post_excerpt ) ) {
 		$args['post_excerpt'] = $post_excerpt;
 	}
-	$post_author = '';
-	$args        = buddyforms_update_post( $args );
+
+	$args = buddyforms_update_post( $args );
 	extract( $args );
 
 	/*
@@ -477,7 +491,6 @@ function buddyforms_update_post( $args ) {
 	$form_slug      = '';
 	$post_id        = 0;
 	$form_type      = '';
-	$current_user   = 0;
 	$new_user_id   = 0;
 
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
@@ -694,7 +707,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 
 	$field_with_value_result = wp_cache_get( 'buddyforms_get_field_with_meta_' . $form_slug  . '_' .$post_id.'_' .$field_slug, 'buddyforms' );
 
-	if ( $field_with_value_result === false ) {
+	if($field_with_value_result === false) {
 		$form_fields = $buddyforms[ $form_slug ]['form_fields'];
 		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields );
 		foreach ( $form_fields as $custom_field ) {
@@ -707,8 +720,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 			}
 
 			if ( $field_slug === $slug ) {
-				wp_cache_set( 'buddyforms_get_field_with_meta_' . $form_slug . '_' . $post_id . '_' . $field_slug, $custom_field, 'buddyforms' );
-
+				wp_cache_set( 'buddyforms_get_field_with_meta_' . $form_slug  . '_' .$post_id.'_' .$field_slug, $custom_field, 'buddyforms' );
 				return $custom_field;
 			}
 		}

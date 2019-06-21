@@ -1473,3 +1473,39 @@ if ( ! function_exists( 'buddyforms_reset_password_errors' ) ) {
 		return $global_error->get_global_error();
 	}
 }
+
+/**
+ * Check whether the specified user has a given capability on a given site.
+ *
+ * @param int $user_id
+ * @param string $capability Capability or role name.
+ * @param string $form_slug
+ * @param array|int $args {
+ *     Array of extra arguments applicable to the capability check.
+ *
+ * @return bool True if the user has the cap for the given parameters.
+ * @since 2.5.0
+ *
+ */
+function bf_user_can( $user_id, $capability, $args = array(), $form_slug = '' ) {
+	if ( ! empty( $form_slug ) ) {
+		$switched = buddyforms_switch_to_form_blog( $form_slug );
+	}
+
+    $user = get_user_by('ID', $user_id );
+
+	if ( ! $user || ! $user->exists() ) {
+		return false;
+	}
+
+	$args = array_slice( func_get_args(), 2 );
+	$args = array_merge( array( $capability ), $args );
+
+	$result = call_user_func_array( array( $user, 'has_cap' ), $args );
+
+	if ( $switched ) {
+		restore_current_blog();
+	}
+
+	return $result;
+}
