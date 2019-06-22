@@ -274,20 +274,21 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 
 		// Check if the user is author of the post
-		$user_can_edit = false;
-		if ( $the_post->post_author == $user_id ) {
-			$user_can_edit = true;
-		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
-		if ( $user_can_edit == false ) {
-			$args = array(
-				'hasError'      => true,
-				'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
-			);
+		if ( is_user_logged_in() ) {
+			$user_can_edit = false;
+			if ( $the_post->post_author == $user_id ) {
+				$user_can_edit = true;
+			}
+			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
+			if ( $user_can_edit == false ) {
+				$args = array(
+					'hasError'      => true,
+					'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
+				);
 
-			return $args;
+				return $args;
+			}
 		}
-
 	}
 
 	// check if the user has the roles and capabilities

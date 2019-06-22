@@ -211,7 +211,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			'ajax'     => false            //does this table support ajax?
 		) );
 
-		$this->exclude_columns = apply_filters('buddyforms_submission_exclude_columns', array('user_pass', 'captcha'));
+		$this->exclude_columns = buddyforms_get_exclude_field_slugs();
 	}
 
 	/**
@@ -322,7 +322,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 						$term    = get_term( $cat, $bf_field['taxonomy'] );
 						$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $cat;
 					}
-					$bf_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $bf_field['type'], $slug ), $terms );
+					$bf_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $bf_field['type'], $field_slug ), $terms );
 				} else {
 					$term       = get_term( $bf_value, $bf_field['taxonomy'] );
 					$bf_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $bf_value;

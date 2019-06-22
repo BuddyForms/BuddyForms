@@ -1509,3 +1509,13 @@ function bf_user_can( $user_id, $capability, $args = array(), $form_slug = '' ) 
 
 	return $result;
 }
+
+/**
+ * Array of fields slug to exclude from the submission columns and email table
+ *
+ * since 2.5.0
+ * @return mixed|void
+ */
+function buddyforms_get_exclude_field_slugs() {
+	return apply_filters( 'buddyforms_submission_exclude_columns', array( 'user_pass', 'captcha', 'html' ) );
+}

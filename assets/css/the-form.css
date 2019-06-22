@@ -304,3 +304,7 @@ button.bf-submit:disabled{
     float: unset;
 }
 
+.bf_field_group .radio > label, .bf_field_group .radio > label> input[type='radio']{
+    cursor: pointer;
+}
+

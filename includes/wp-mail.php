@@ -43,19 +43,19 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 	$postperma  = get_permalink( $post_ID );
 	$user_info  = get_userdata( $author_id );
 
-	$usernameauth  = $user_info->user_login;
-	$user_nicename = $user_info->user_nicename;
+	$usernameauth  = !empty($user_info)? $user_info->user_login : '';
+	$user_nicename = !empty($user_info)? $user_info->user_nicename : '';
 
 	$mail_notification_trigger = $notification;
 
-	$user_email = isset( $_POST['user_email'] ) ? $_POST['user_email'] : $user_info->user_email;
+	$user_email = isset( $_POST['user_email'] ) ? $_POST['user_email'] : !empty($user_info)? $user_info->user_email : '';
 
 	$mail_to = array();
 
 	// Check the Sent mail to checkbox
 	if ( isset( $mail_notification_trigger['mail_to'] ) ) {
 		foreach ( $mail_notification_trigger['mail_to'] as $key => $mail_address ) {
-			if ( $mail_address == 'submitter' ) {
+			if ( $mail_address == 'submitter' && !empty($user_email)) {
 				array_push( $mail_to, $user_email );
 			}
 
@@ -100,8 +100,8 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		}
 	}
 
-	$first_name = isset( $_POST['user_first'] ) ? $_POST['user_first'] : $user_info->user_firstname;
-	$last_name  = isset( $_POST['user_last'] ) ? $_POST['user_last'] : $user_info->user_lastname;
+	$first_name = isset( $_POST['user_first'] ) ? $_POST['user_first'] : !empty($user_info)? $user_info->user_firstname : '';
+	$last_name  = isset( $_POST['user_last'] ) ? $_POST['user_last'] : !empty($user_info)? $user_info->user_lastname : '';
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
@@ -296,20 +296,20 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$postperma  = get_permalink( $post_ID );
 	$user_info  = get_userdata( $author_id );
 
-	$usernameauth  = $user_info->user_login;
-	$user_nicename = $user_info->user_nicename;
+	$usernameauth  = !empty($user_info)? $user_info->user_login : '';
+	$user_nicename = !empty($user_info)? $user_info->user_nicename : '';
 
 	$post_status = get_post_status( $post_ID );
 
 	$mail_notification_trigger = $buddyforms[ $form_slug ]['mail_notification'][ $post_status ];
 
-	$user_email = $user_info->user_email;
+	$user_email = !empty($user_info)? $user_info->user_email : '';
 
 	$mail_to = array();
 
 	if ( isset( $mail_notification_trigger['mail_to'] ) ) {
 		foreach ( $mail_notification_trigger['mail_to'] as $key => $mail_address ) {
-			if ( $mail_address == 'author' ) {
+			if ( $mail_address == 'author' && !empty($user_email)) {
 				array_push( $mail_to, $user_email );
 			}
 
@@ -329,8 +329,8 @@ function buddyforms_send_post_status_change_notification( $post ) {
 		}
 	}
 
-	$first_name = $user_info->user_firstname;
-	$last_name  = $user_info->user_lastname;
+	$first_name = !empty($user_info)? $user_info->user_firstname : '';
+	$last_name  = !empty($user_info)? $user_info->user_lastname : '';
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
@@ -394,6 +394,9 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug, $post 
 	$message = '<table rules="all" style="border-color: #666;" cellpadding="10">';
 	// Loop all form elements and add as table row
 	foreach ( $buddyforms[ $form_slug ]['form_fields'] as $key => $field ) {
+		if ( in_array( $field['slug'], buddyforms_get_exclude_field_slugs() ) ) {
+			continue;
+		}
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
 		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
