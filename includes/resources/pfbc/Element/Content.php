@@ -14,7 +14,7 @@ class Element_Content extends Element {
 	 * @var string
 	 */
 	protected $message = "Error: %element% is a required field.";
-	private $pattern = '/<textarea(.*?)+>((.*?)+)<\/textarea>/';
+	private $pattern = '/<textarea .*?>((.*?)+)<\/textarea>/ms';
 
 	/**
 	 * Element_Content constructor.
@@ -35,9 +35,9 @@ class Element_Content extends Element {
 		$validation = new Validation_Required($this->message, $this->field_options);
 
 		$value = $this->getAttribute('value');
-		preg_match_all( $this->pattern, $value, $matches );
+		preg_match_all('/<textarea .*?>(.*?)<\/textarea>/s', $value, $matches);
 
-		$result = $validation->isNotApplicable( $value ) || !empty($matches[2][0]) ;
+		$result = $validation->isNotApplicable( $value ) || !empty($matches[1][0]) ;
 
         if (!$result) {
             $this->_errors[] = str_replace( "%element%", $this->getLabel(), $validation->getMessage() );
