@@ -351,12 +351,24 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
  * @param $form_slug
  */
 function buddyforms_post_entry_actions( $form_slug ) {
+    if (!is_user_logged_in()) {
+        echo '';
+        return;
+    }
 	if ( empty( $form_slug ) ) {
 		echo '';
 		return;
 	}
 	global $buddyforms, $post;
-	if ( ! isset( $buddyforms[ $form_slug ] ) || !empty($buddyforms[ $form_slug ]['attached_page']) || $buddyforms[ $form_slug ]['attached_page'] == 'none' ) {
+
+    if (!isset($buddyforms[$form_slug]) || empty($buddyforms[$form_slug]['attached_page'])) {
+        echo '';
+        return;
+    }
+
+	$attached_page = !empty($buddyforms[ $form_slug ]['attached_page']) ? $buddyforms[ $form_slug ]['attached_page'] : 'none';
+
+	if ( $attached_page == 'none' ) {
 		echo '';
 		return;
 	}
