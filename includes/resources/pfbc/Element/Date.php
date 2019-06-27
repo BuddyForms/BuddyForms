@@ -13,7 +13,7 @@ class Element_Date extends Element_Textbox {
 	 * @param array|null $properties
 	 */
 	public function __construct( $label, $name, $field_options, array $properties = null ) {
-		$properties["class"] .= ' bf_datetimepicker ' . $properties["class"];
+		$properties['class'] .= ' bf_datetimepicker ' . !empty($properties["class"])? $properties['class']:'';
 
 		$show_label = isset( $field_options['is_inline'] ) && isset( $field_options['is_inline'][0] ) && $field_options['is_inline'][0] === 'is_inline';
 		if ( $show_label ) {

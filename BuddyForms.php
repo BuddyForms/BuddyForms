@@ -442,7 +442,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				wp_enqueue_script( 'buddyforms_featured_image_initializer', plugins_url( 'assets/resources/featured-image/featured-image-initializer.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
 
 				//Global frontend vars
-				wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
+				wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters($form_slug) ) );
 
 				//Loading shared assets
 				self::shared_styles( $hook_suffix );
@@ -471,10 +471,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Get the global variables to put in the frontend
 		 *
+		 * @param string $form_slug
+		 *
 		 * @return array
 		 */
-		private static function buddyforms_js_global_get_parameters() {
-			return apply_filters( 'buddyforms_js_parameters', self::$global_js_parameters );
+		private static function buddyforms_js_global_get_parameters($form_slug = '') {
+			return apply_filters( 'buddyforms_js_parameters', self::$global_js_parameters, $form_slug );
 		}
 
 		/**
@@ -631,7 +633,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			self::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 			//Global frontend vars
-			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters() ) );
+			wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', self::buddyforms_js_global_get_parameters($form_slug) ) );
 
 			//Loading shared assets
 			self::shared_styles( '' );

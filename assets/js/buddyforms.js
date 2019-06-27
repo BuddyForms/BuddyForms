@@ -302,7 +302,7 @@ function BuddyForms() {
 
                 var passValidationFieldTypes = ['upload', 'featured_image'];
                 var passValidationCallback = function (fieldTypeArray) {
-                    passValidationFieldTypes = fieldTypeArray || false;
+                    passValidationFieldTypes = fieldTypeArray || passValidationFieldTypes;
                 };
                 jQuery(document.body).trigger({type: 'buddyforms:validation:pass'}, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
 
@@ -328,7 +328,7 @@ function BuddyForms() {
                 }
 
                 var requiredCallback = function (isValid, message) {
-                    result = isValid || false;
+                    result = isValid || result;
                     if (message && message.length > 0) {
                         requiredMessage = message;
                     }
@@ -401,6 +401,10 @@ function BuddyForms() {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
+                var filteredFieldSlugCallback = function(filteredFieldSlug){
+                      fieldSlug = filteredFieldSlug || fieldSlug;
+                };
+                jQuery(document.body).trigger({type: 'buddyforms:field:slug'}, [fieldSlug, formSlug, fieldId, buddyformsGlobal[formSlug], filteredFieldSlugCallback]);
                 return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
             });
             if (fieldIdResult) {

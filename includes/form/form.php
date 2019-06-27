@@ -156,7 +156,7 @@ function buddyforms_create_edit_form( $args ) {
 		require_once( ABSPATH . 'wp-admin/includes/post.php' );
 		//check if auto-draft exist
 		global $wpdb;
-		$query   = $wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE 1=1  AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s ORDER BY ID DESC", $current_user->ID);
+		$query   = $wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE 1=1  AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s AND post_type = %s ORDER BY ID DESC", $current_user->ID, $post_type);
 		$post_id = (int) $wpdb->get_var( $query );
 		if ( empty( $post_id ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/admin.php' );
