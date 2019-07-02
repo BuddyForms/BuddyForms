@@ -164,7 +164,7 @@ function buddyforms_update_form_slug( $old_slug, $new_slug ) {
 	}
 	global $wpdb;
 
-	$count = $wpdb->get_var($wpdb->prepare("select count(meta_id) from {$wpdb->postmeta} where meta_value = %s", $wpdb->postmeta, $old_slug));
+	$count = $wpdb->get_var($wpdb->prepare("select count(meta_id) from {$wpdb->postmeta} where meta_value = %s", $old_slug));
 
 	if ( empty( $count ) ) {
 		return true;

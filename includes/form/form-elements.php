@@ -329,7 +329,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 							$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor, $post_id );
 
-							$form->addElement( new Element_Content( $name, $slug, $wp_editor ) );
+							$form->addElement( new Element_Content( $name, $slug, $wp_editor, $customfield ) );
 						}
 						break;
 
@@ -395,7 +395,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'comments' :
-						if ( isset( $the_post ) ) {
+						if ( !empty($the_post) && !empty( $the_post->comment_status ) ) {
 							$element_attr['value'] = $the_post->comment_status;
 						}
 
