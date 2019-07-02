@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.0 - 19 Jun 2019 =
+= 2.5.0 - 3 July 2019 =
 * Improved required field messages to be more user friendly.
 * Fixed the function to register users from multisite.
 * Added more argument to extend the fields form 3rd parties.
@@ -425,6 +425,18 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added the taxonomy field value for the submission column in the administration.
 * Fixed the permission issue when the post is created using buddyforms.
 * Added a helper function to check the user capability. `bf_user_can`
+* Added a nonce error message.
+* Added a cursos pointer to the checkbox input.
+* Fixed the permission to submit a form for anonymous users.
+* Fixed a notice in the email notifications.
+* Fixed the edit and delete buttons.
+* Fixed the required validation for the content field.
+* Fixed the auto-draft error for different post types.
+* Added a Js hook to extend the function to get field data.
+* Change "Check to enabled" to "Check to enable".
+* Updating Freemius to version 2.3.0.
+* Added the ability to join the beta tester groups.
+
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
