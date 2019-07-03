@@ -56,7 +56,7 @@ function buddyforms_metabox_form_setup() {
 
 	$local_storage = isset( $buddyform['local_storage'] ) ? $buddyform['local_storage'] : '';
 
-	$js_validation = isset( $buddyform['js_validation'] ) ? $buddyform['js_validation'] : '';
+	$js_validation = isset( $buddyform['js_validation'] ) ? $buddyform['js_validation'] : 'enabled';
 
 	// Create The Form Array
 	$form_setup = array();
