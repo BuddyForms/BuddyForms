@@ -239,12 +239,11 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
+                return true;
             }
-            return true;
-
+            return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
         }, "Please enter a valid URL.");// todo need il18n
     }
 
@@ -253,16 +252,17 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                var count = value.length;
-                if (value === "") {
-                    return true;
-                }
-                if (count < param) {
-                    jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + ". Please check.";
-                    return false;
-                }
+                return true;
+            }
+            var count = value.length;
+            if (value === "") {
+                return true;
+            }
+            if (count < param) {
+                jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + ". Please check.";
+                return false;
             }
             return true;
         }, "");
@@ -273,15 +273,16 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                if (value === "") {
-                    return true;
-                }
-                if (value < param) {
-                    jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + ". Please check.";
-                    return false;
-                }
+                return true;
+            }
+            if (value === "") {
+                return true;
+            }
+            if (value < param) {
+                jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + ". Please check.";
+                return false;
             }
             return true;
         }, "");
@@ -292,53 +293,53 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                var fieldSlug = jQuery(element).attr('name');
-                var fieldData = getFieldFromSlug(fieldSlug, formSlug);
-                if (!fieldData) {//if not field data is not possible to validate it
+                return true;
+            }
+            var fieldSlug = jQuery(element).attr('name');
+            var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+            if (!fieldData) {//if not field data is not possible to validate it
+                return true;
+            }
+
+            var passValidationFieldTypes = ['upload', 'featured_image'];
+            var passValidationCallback = function (fieldTypeArray) {
+                passValidationFieldTypes = fieldTypeArray || passValidationFieldTypes;
+            };
+            jQuery(document.body).trigger({type: 'buddyforms:validation:pass'}, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
+
+            if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
+                var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
+                if (exist && exist >= 0) {
                     return true;
                 }
-
-                var passValidationFieldTypes = ['upload', 'featured_image'];
-                var passValidationCallback = function (fieldTypeArray) {
-                    passValidationFieldTypes = fieldTypeArray || passValidationFieldTypes;
-                };
-                jQuery(document.body).trigger({type: 'buddyforms:validation:pass'}, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
-
-                if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
-                    var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
-                    if (exist && exist >= 0) {
-                        return true;
-                    }
-                }
-
-                var result = false;
-                var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
-
-                switch (fieldData.type) {
-                    case 'post_formats':
-                        result = value && value !== 'Select a Post Format';
-                        break;
-                    case 'taxonomy':
-                        result = value && value !== "-1";
-                        break;
-                    default:
-                        result = value && value.length > 0;
-                }
-
-                var requiredCallback = function (isValid, message) {
-                    result = isValid || result;
-                    if (message && message.length > 0) {
-                        requiredMessage = message;
-                    }
-                };
-                jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [value, element, fieldData, formSlug, requiredCallback]);
-
-                jQuery.validator.messages['required'] = requiredMessage;
-                return result;
             }
-            return true;
+
+            var result = false;
+            var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+
+            switch (fieldData.type) {
+                case 'post_formats':
+                    result = value && value !== 'Select a Post Format';
+                    break;
+                case 'taxonomy':
+                    result = value && value !== "-1";
+                    break;
+                default:
+                    result = value && value.length > 0;
+            }
+
+            var requiredCallback = function (isValid, message) {
+                result = isValid || result;
+                if (message && message.length > 0) {
+                    requiredMessage = message;
+                }
+            };
+            jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [value, element, fieldData, formSlug, requiredCallback]);
+
+            jQuery.validator.messages['required'] = requiredMessage;
+            return result;
         }, "");
     }
 
@@ -347,17 +348,19 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                if (param === 0 || value === "") {
-                    return true;
-                }
-                var count = value.length;
-                if (count > param) {
-                    jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + ". Please check.";
-                    return false;
-                }
+                return true;
             }
+            if (param === 0 || value === "") {
+                return true;
+            }
+            var count = value.length;
+            if (count > param) {
+                jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + ". Please check.";
+                return false;
+            }
+
             return true;
         }, "");
     }
@@ -367,17 +370,20 @@ function BuddyForms() {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'enabled'
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
             ) {
-                if (param === 0 || value === "") {
-                    return true;
-                }
-
-                if (value > param) {
-                    jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + ". Please check.";
-                    return false;
-                }
+                return true;
             }
+
+            if (param === 0 || value === "") {
+                return true;
+            }
+
+            if (value > param) {
+                jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + ". Please check.";
+                return false;
+            }
+
             return true;
         }, "");
     }
@@ -401,8 +407,8 @@ function BuddyForms() {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
-                var filteredFieldSlugCallback = function(filteredFieldSlug){
-                      fieldSlug = filteredFieldSlug || fieldSlug;
+                var filteredFieldSlugCallback = function (filteredFieldSlug) {
+                    fieldSlug = filteredFieldSlug || fieldSlug;
                 };
                 jQuery(document.body).trigger({type: 'buddyforms:field:slug'}, [fieldSlug, formSlug, fieldId, buddyformsGlobal[formSlug], filteredFieldSlugCallback]);
                 return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
@@ -438,7 +444,7 @@ function BuddyForms() {
 
                 jQuery(this).on('change', function () {
                     var formSlug = jQuery(this).data('form');
-                    if(formSlug) {
+                    if (formSlug) {
                         jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                     }
                 });
@@ -637,7 +643,7 @@ function BuddyForms() {
 
     function triggerFormError(event, form_id, errors) {
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
-            var id = 'buddyforms_form_'+form_id;
+            var id = 'buddyforms_form_' + form_id;
             var errorSize = errors.errors[id].length;
             var errorFormat;
             if (errorSize === 1) {
@@ -719,14 +725,14 @@ function BuddyForms() {
                             jQuery(document.body).trigger({type: "buddyforms:error:trigger"}, [id, response]);
                         }
                     },
-                    complete: function(){
+                    complete: function () {
                         jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
-                         // scroll to message after submit
+                        // scroll to message after submit
                         jQuery('html, body')
                             .animate({
                                 scrollTop: (jQuery("#buddyforms_form_hero_" + id))
                             }, 2000)
-                            .on('mousewheel', function() {
+                            .on('mousewheel', function () {
                                 jQuery('html, body').stop();
                             });
                         jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("hide");

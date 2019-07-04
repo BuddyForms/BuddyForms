@@ -56,7 +56,7 @@ function buddyforms_metabox_form_setup() {
 
 	$local_storage = isset( $buddyform['local_storage'] ) ? $buddyform['local_storage'] : '';
 
-	$js_validation = isset( $buddyform['js_validation'] ) ? $buddyform['js_validation'] : 'enabled';
+	$js_validation = isset( $buddyform['js_validation'] ) ? $buddyform['js_validation'] : '';
 
 	// Create The Form Array
 	$form_setup = array();
@@ -151,8 +151,8 @@ function buddyforms_metabox_form_setup() {
 	}
 	$form_setup['Form Submission'][] = $element;
 
-	$element = new Element_Checkbox( '<b>' . __( 'Validate using JS', 'buddyforms' ) . '</b>', "buddyforms_options[js_validation]", array( 'enabled' => __( 'Enable JavaScript Validation', 'buddyforms' ) ), array(
-		'shortDesc' => __( 'Enabled Javascript validations on client side, for example required fields will be trigger instantly.', 'buddyforms' ),
+	$element = new Element_Checkbox( '<b>' . __( 'Javascript Validations', 'buddyforms' ) . '</b>', "buddyforms_options[js_validation]", array( 'disabled' => __( 'Disable JavaScript Validation', 'buddyforms' ) ), array(
+		'shortDesc' => __( 'By default the Javascript validations are enabled. Check to disable it.', 'buddyforms' ),
 		'value'     => $js_validation
 	) );
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
