@@ -139,8 +139,8 @@ class Form extends Base {
 	}
 
 	/**
-     * Check if the form Element is valid or not
-     *
+	 * Check if the form Element is valid or not
+	 *
 	 * @param string $id
 	 *
 	 * @return bool
@@ -155,14 +155,20 @@ class Form extends Base {
 				$data = $_GET;
 			}
 
-			$post_id           = ! empty( $data ) && ! empty( $data['post_id'] ) ? $data['post_id'] : 0;
-			$form_instance     = self::recover_instance($id, $post_id);
+			$post_id       = ! empty( $data ) && ! empty( $data['post_id'] ) ? $data['post_id'] : 0;
+			$form_instance = self::recover_instance( $id, $post_id );
 
 			//Each element's value is saved in the session and checked against any validation rules applied to the element.
 			if ( ! empty( $form_instance ) && ! empty( $form_instance->_elements ) ) {
 				/** @var Element $element */
 				foreach ( $form_instance->_elements as $element ) {
 					$name = $element->getAttribute( "name" );
+
+					if ( $element instanceof Element_Upload ) {
+						$field_options = $element->getFieldOptions();
+						$name          = $field_options['slug'];
+					}
+
 					if ( substr( $name, - 2 ) == "[]" ) {
 						$name = substr( $name, 0, - 2 );
 					}
@@ -190,13 +196,13 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
-								$global_error->add_error( new BF_Error('buddyforms_form_' . $id, $element->getErrors(), $name, $id));
-                                $valid = false;
-                            }
-                        }
-                    } else {
-                        if (!$element->isValid($value)) {
-                            $global_error->add_error(new BF_Error('buddyforms_form_' . $id, $element->getErrors(), $name, $id));
+								$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $name, $id ) );
+								$valid = false;
+							}
+						}
+					} else {
+						if ( ! $element->isValid( $value ) ) {
+							$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $name, $id ) );
 							$valid = false;
 						}
 					}
@@ -380,8 +386,8 @@ class Form extends Base {
 	}
 
 	/**
-     * This method restores the serialized form instance.
-     */
+	 * This method restores the serialized form instance.
+	 */
 	protected function renderCSS() {
 		$this->renderCSSFiles();
 
@@ -411,9 +417,9 @@ class Form extends Base {
 		}
 	}
 
-    /**
-     * When ajax is used to submit the form's data, validation errors need to be manually sent back to the form using json.
-     */
+	/**
+	 * When ajax is used to submit the form's data, validation errors need to be manually sent back to the form using json.
+	 */
 	protected function renderJS() {
 		$this->renderJSFiles();
 
@@ -426,9 +432,9 @@ class Form extends Base {
 
 		$id        = $this->_attributes["id"];
 		$form_slug = str_replace( 'buddyforms_form_', '', $id );
-		$method = $this->_attributes['method'];
-		$prevent = wp_json_encode($this->prevent);
-		echo<<<JS
+		$method    = $this->_attributes['method'];
+		$prevent   = wp_json_encode( $this->prevent );
+		echo <<<JS
 		jQuery(document.body).on('submit', '#$id', function (event) {
             event.preventDefault();
             jQuery(document.body).trigger({type: "buddyforms:form:render"}, ["$form_slug", $prevent, "$this->ajax", "$method"]);
@@ -515,8 +521,8 @@ JS;
 	}
 
 	/**
-     * The save method serialized the form's instance and saves it in the session.
-     *
+	 * The save method serialized the form's instance and saves it in the session.
+	 *
 	 * @param $form
 	 * @param $type
 	 * @param $props
@@ -540,8 +546,8 @@ JS;
 	}
 
 	/**
-     * Valldation errors are saved in the session after the form submission, and will be displayed to the user when redirected back to the form.
-     *
+	 * Valldation errors are saved in the session after the form submission, and will be displayed to the user when redirected back to the form.
+	 *
 	 * @return array
 	 */
 	public function __sleep() {
@@ -556,8 +562,8 @@ JS;
 	}
 
 	/**
-     * An associative array is used to pre-populate form elements.  The keys of this array correspond with the element names.
-     *
+	 * An associative array is used to pre-populate form elements.  The keys of this array correspond with the element names.
+	 *
 	 * @return array
 	 */
 	public function getElements() {

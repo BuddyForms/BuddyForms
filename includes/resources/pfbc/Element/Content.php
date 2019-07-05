@@ -14,7 +14,6 @@ class Element_Content extends Element {
 	 * @var string
 	 */
 	protected $message = "Error: %element% is a required field.";
-	private $pattern = '/<textarea .*?>((.*?)+)<\/textarea>/ms';
 
 	/**
 	 * Element_Content constructor.

@@ -737,7 +737,7 @@ function buddyforms_form_elements( $form, $args ) {
 							"upload_error_validation_message"   => $upload_error_validation_message,
 							"shortDesc"                         => $description,
 							"form_slug"                         => $form_slug
-						) );
+						),  $customfield);
 						$form->addElement( $upload_element );
 						break;
 					case 'file':

@@ -365,6 +365,195 @@ function BuddyForms() {
         }, "");
     }
 
+    function addFeatureImageValidations(){
+        jQuery.validator.addMethod("featured-image-required", function (value, element) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            var validation_error_message = jQuery(element).attr('validation_error_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    var validation_result= currentDropZone.files.length > 0;
+                    if (validation_result === false) {
+                        jQuery.validator.messages['featured-image-required'] = validation_error_message;
+                    }
+                    return validation_result;
+                }
+            }
+            return false;
+        }, "");
+        //Validation for error on upload fields
+        var upload_error_validation_message = '';
+        jQuery.validator.addMethod("featured-image-error", function (value, element) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+
+                    for (var i = 0; i < currentDropZone.files.length; i++) {
+                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
+                        if (validation_result === true) {
+                            jQuery.validator.messages['featured-image-error'] = upload_error_validation_message;
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }, '');
+    }
+
+    function addUploadFieldValidations() {
+        jQuery.validator.addMethod("upload-ensure-amount", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    var validation_result = currentDropZone.files.length == param;
+                    if (validation_result === false) {
+                        jQuery.validator.messages['upload-ensure-amount'] = 'This field must have : ' + param + ' files';
+                    }
+                    return validation_result;
+
+                }
+            }
+            return false;
+        }, "");
+        jQuery.validator.addMethod("upload-required", function (value, element) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    return currentDropZone.files.length > 0;
+                }
+            }
+            return false;
+        }, "This field is required.");
+        var multiple_files_validation_message = '';
+        jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            multiple_files_validation_message = jQuery(element).attr('multiple_files_validation_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+                    var validation_result = param >= currentDropZone.files.length;
+                    if (validation_result === false) {
+                        jQuery.validator.messages['upload-max-exceeded'] = multiple_files_validation_message;
+                    }
+                    return validation_result;
+                }
+            }
+            return false;
+        }, '');
+        jQuery.validator.addMethod("upload-group", function (value, element) {
+            var formSlug =  getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            var $fields = jQuery('.upload_field_input', element.form),
+                $fieldsFirst = $fields.eq(0),
+                validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
+                result = $fields.filter(function (key) {
+                    var dropZoneId = jQuery(this).attr('name');
+                    var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                    if (currentDropZone.files.length > 0) {
+                        return currentDropZone.files.filter(function (file) {
+                            return file.status !== Dropzone.SUCCESS;
+                        });
+                    } else {
+                        return true;
+                    }
+                });
+            var isValid = true;
+            if (jQuery.isArray(result)) {
+                isValid = result.length === 0;
+            }
+
+            // Store the cloned validator for future validation
+            $fieldsFirst.data("valid_req_grp", validator);
+
+            // If element isn't being validated, run each require_from_group field's validation rules
+            if (!jQuery(element).data("being_validated")) {
+                $fields.data("being_validated", true);
+                $fields.each(function () {
+                    validator.element(this);
+                });
+                $fields.data("being_validated", false);
+            }
+            return isValid;
+        }, '');
+
+        //Validation for error on upload fields
+        var upload_error_validation_message = '';
+        jQuery.validator.addMethod("upload-error", function (value, element) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
+            if (Dropzone) {
+                var dropZoneId = jQuery(element).attr('name');
+                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+                if (currentDropZone) {
+
+                    for (var i = 0; i < currentDropZone.files.length; i++) {
+                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
+                        if (validation_result === true) {
+                            jQuery.validator.messages['upload-error'] = upload_error_validation_message;
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }, '');
+    }
+
     function addValidationMaxValue() {
         jQuery.validator.addMethod("max-value", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
@@ -762,6 +951,9 @@ function BuddyForms() {
         getSubmissionModalContent: function () {
             return submissionModalContent;
         },
+        getFormSlugFromFormElement: function (element) {
+            return getFormSlugFromFormElement(element);
+        },
         init: function (id) {
             id = id || false;
 
@@ -810,6 +1002,8 @@ function BuddyForms() {
                 enabledSelect2();
                 enabledDateTime();
                 enablePriceField();
+                addUploadFieldValidations();
+                addFeatureImageValidations();
             }
 
             bf_form_errors();

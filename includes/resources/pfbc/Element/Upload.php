@@ -6,6 +6,11 @@
 class Element_Upload extends Element_Textbox {
 
 	/**
+	 * @var string
+	 */
+	protected $message = "Error: %element% is a required field.";
+
+	/**
 	 * @var array
 	 */
 	protected $_attributes = array(
@@ -17,6 +22,22 @@ class Element_Upload extends Element_Textbox {
 		"description"    => "",
 		"mandatory"      => ""
 	);
+
+	public function isValid( $value ) {
+		if ( ! empty( $this->field_options ) && ! empty( $this->field_options['required'] ) && $this->field_options['required'][0] === 'required' ) {
+			$validation = new Validation_Required( $this->message, $this->field_options );
+
+			$result = $validation->isValid($value, $this);
+
+			if ( ! $result ) {
+				$this->_errors[] = str_replace( "%element%", $this->getLabel(), $validation->getMessage() );
+			}
+
+			return apply_filters( 'buddyforms_element_content_validation', $result, $this );
+		} else {
+			return true;
+		}
+	}
 
 	public static function save_post_meta( $customfield, $post_id ) {
 		if ( $customfield['type'] == 'featured_image' ) {

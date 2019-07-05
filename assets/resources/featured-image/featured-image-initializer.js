@@ -7,47 +7,6 @@ jQuery(document).ready(function() {
         })[0];
         var existingHtmlInsideSubmitButton = submitButton.html();
     }
-    if (jQuery.validator) {
-
-        jQuery.validator.addMethod("featured-image-required", function (value, element) {
-            var validation_error_message = jQuery(element).attr('validation_error_message');
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-                    var validation_result= currentDropZone.files.length > 0;
-                    if (validation_result === false) {
-                        jQuery.validator.messages['featured-image-required'] = validation_error_message;
-                    }
-                    return validation_result;
-                }
-            }
-            return false;
-        }, "");
-        //Validation for error on upload fields
-        var upload_error_validation_message = '';
-        jQuery.validator.addMethod("featured-image-error", function (value, element) {
-            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-
-                    for (var i = 0; i < currentDropZone.files.length; i++) {
-                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
-                        if (validation_result === true) {
-                            jQuery.validator.messages['featured-image-error'] = upload_error_validation_message;
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-            }
-            return false;
-        }, '');
-
-    }
 
     jQuery(".featured-image-uploader").each(function(index, value) {
         var current = jQuery(this),

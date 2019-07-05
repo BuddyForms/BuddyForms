@@ -5,8 +5,8 @@ function uploadHandler() {
 
     function getFirstSubmitButton(submitButtons) {
         submitButton = jQuery.map(submitButtons, function (element) {
-		    return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
-	    })[0];
+            return (jQuery(element).attr('type') === 'submit' && jQuery(element).hasClass('bf-submit')) ? jQuery(element) : null;
+        })[0];
         existingHtmlInsideSubmitButton = submitButton.html();
     }
 
@@ -19,7 +19,7 @@ function uploadHandler() {
             var multipleFiles = current.attr('multiple_files');
             var entry = current.data('entry');
             var form_slug = current.attr('form-slug');
-            jQuery('#buddyforms_form_'+form_slug).show();
+            jQuery('#buddyforms_form_' + form_slug).show();
 
             initSingleDropZone(current, current.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
         })
@@ -31,7 +31,7 @@ function uploadHandler() {
         //Container field
         var dropzoneStringId = '#' + id;
         //Set default values
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             var options = {
                 url: buddyformsGlobal.admin_url,
                 maxFilesize: maxSize,
@@ -144,7 +144,7 @@ function uploadHandler() {
     }
 
     function disableSubmitButtons(showButtonText) {
-        if(buddyformsGlobal) {
+        if (buddyformsGlobal) {
             if (submitButtons.length > 0) {
                 showButtonText = !!(showButtonText);
                 submitButtons.attr("disabled", "disabled");
@@ -193,104 +193,5 @@ function uploadHandler() {
 
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
-    if (jQuery.validator) {
-        jQuery.validator.addMethod("upload-ensure-amount", function (value, element,param) {
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-                    var validation_result = currentDropZone.files.length == param;
-                    if (validation_result === false) {
-                        jQuery.validator.messages['upload-ensure-amount'] = 'This field must have : '+param+' files';
-                    }
-                    return validation_result;
-
-                }
-            }
-            return false;
-        }, "");
-        jQuery.validator.addMethod("upload-required", function (value, element) {
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-                    return currentDropZone.files.length > 0;
-                }
-            }
-            return false;
-        }, "This field is required.");
-        var multiple_files_validation_message = '';
-        jQuery.validator.addMethod("upload-max-exceeded", function (value, element, param) {
-            multiple_files_validation_message = jQuery(element).attr('multiple_files_validation_message');
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-                    var validation_result = param >= currentDropZone.files.length;
-                    if (validation_result === false) {
-                        jQuery.validator.messages['upload-max-exceeded'] = multiple_files_validation_message;
-                    }
-                    return validation_result;
-                }
-            }
-            return false;
-        }, '');
-        jQuery.validator.addMethod("upload-group", function (value, element) {
-            var $fields = jQuery('.upload_field_input', element.form),
-                $fieldsFirst = $fields.eq(0),
-                validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-                result = $fields.filter(function (key) {
-                    var dropZoneId = jQuery(this).attr('name');
-                    var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                    if (currentDropZone.files.length > 0) {
-                        return currentDropZone.files.filter(function (file) {
-                            return file.status !== Dropzone.SUCCESS;
-                        });
-                    } else {
-                        return true;
-                    }
-                });
-            var isValid = true;
-            if (jQuery.isArray(result)) {
-                isValid = result.length === 0;
-            }
-
-            // Store the cloned validator for future validation
-            $fieldsFirst.data("valid_req_grp", validator);
-
-            // If element isn't being validated, run each require_from_group field's validation rules
-            if (!jQuery(element).data("being_validated")) {
-                $fields.data("being_validated", true);
-                $fields.each(function () {
-                    validator.element(this);
-                });
-                $fields.data("being_validated", false);
-            }
-            return isValid;
-        }, '');
-
-        //Validation for error on upload fields
-        var upload_error_validation_message = '';
-        jQuery.validator.addMethod("upload-error", function (value, element) {
-            upload_error_validation_message = jQuery(element).attr('upload_error_validation_message');
-            if (Dropzone) {
-                var dropZoneId = jQuery(element).attr('name');
-                var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                if (currentDropZone) {
-
-                    for (var i = 0; i < currentDropZone.files.length; i++) {
-                        var validation_result = currentDropZone.files[i].status === Dropzone.ERROR;
-                        if (validation_result === true) {
-                            jQuery.validator.messages['upload-error'] = upload_error_validation_message;
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-            }
-            return false;
-        }, '');
-    }
     uploadImplementation.init();
 });
