@@ -365,7 +365,7 @@ function BuddyForms() {
         }, "");
     }
 
-    function addFeatureImageValidations(){
+    function addFeatureImageValidations() {
         jQuery.validator.addMethod("featured-image-required", function (value, element) {
             var formSlug = getFormSlugFromFormElement(element);
             if (
@@ -379,7 +379,7 @@ function BuddyForms() {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
-                    var validation_result= currentDropZone.files.length > 0;
+                    var validation_result = currentDropZone.files.length > 0;
                     if (validation_result === false) {
                         jQuery.validator.messages['featured-image-required'] = validation_error_message;
                     }
@@ -483,7 +483,7 @@ function BuddyForms() {
             return false;
         }, '');
         jQuery.validator.addMethod("upload-group", function (value, element) {
-            var formSlug =  getFormSlugFromFormElement(element);
+            var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
                 buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
