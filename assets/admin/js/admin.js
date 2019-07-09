@@ -312,7 +312,7 @@ function buddyforms_process_errors(errors) {
     return form_with_no_errors;
 }
 var bfErrors = [];
-function validateRule(fieldId,option,elem,field_type){
+function bfValidateRule(fieldId,option,elem,field_type){
    var element_min = jQuery("[field_id="+fieldId+"_validation_minlength]")[0];
     var element_max = jQuery("[field_id="+fieldId+"_validation_maxlength]")[0];
     if(element_max && element_min) {
