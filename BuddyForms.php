@@ -537,7 +537,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @package buddyforms
 		 */
 		public static function front_js_css( $content = '', $form_slug = '' ) {
-			global $wp_scripts, $buddyforms, $wp_query, $form_slug;
+			global $wp_scripts, $buddyforms, $wp_query;
 
 			$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 

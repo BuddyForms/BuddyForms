@@ -172,10 +172,10 @@ function buddyforms_form_elements( $form, $args ) {
 						if ( ! is_admin() ) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+									$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 								}
 							} else {
-								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+								$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
 							}
 						} else {
 							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );
