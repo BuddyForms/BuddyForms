@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.0 - 3 July 2019 =
+= 2.5.0 - 9 July 2019 =
 * Improved required field messages to be more user friendly.
 * Fixed the function to register users from multisite.
 * Added more argument to extend the fields form 3rd parties.
@@ -436,7 +436,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Change "Check to enabled" to "Check to enable".
 * Updating Freemius to version 2.3.0.
 * Added the ability to join the beta tester groups.
-
+* Fixed the way is added the scripts when the form is load from a shortcode.
+* Fixed the user email element to be an email input to validate with html5.
 
 = 2.4.6 - 3 Jun 2019 =
 * Fix : Feature Image Field layout.
