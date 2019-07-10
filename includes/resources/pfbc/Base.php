@@ -109,7 +109,7 @@ abstract class Base {
 
 		return $str;
 	}
-	
+
 	/**
 	 * Filter special characters
 	 *
@@ -124,7 +124,7 @@ abstract class Base {
 			return htmlspecialchars( $str );
 		}
 	}
-	
+
 	/**
 	 * Convert special characters to HTML entities
 	 *
@@ -164,7 +164,7 @@ abstract class Base {
 	 *
 	 * @param bool $echo
 	 *
-	 * @return string
+	 * @return string|void
 	 */
 	public function renderRequired( $echo = false ) {
 		$html   = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );

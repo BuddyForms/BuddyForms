@@ -97,7 +97,7 @@ class View_Frontend extends FormView {
 		$style_first_row = !empty($is_first_row)? ' bf-start-row' : '';
 		echo '<div class="' . $layout_style . $style_first_row . '">';
 
-		if ( $element instanceof Element_HTML ) {
+		if ( $element instanceof Element_HTML || $element instanceof Element_Content) {
 			$element->render();
 			echo "</div>";
 
