@@ -42,7 +42,6 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	// Ok we have the form. let us switch back to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
-
 	// add the form slug to the args array to render the form
 	$args['form_slug'] = $form_slug;
 
@@ -53,10 +52,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	BuddyForms::front_js_css('',  $form_slug);
 	BuddyForms::load_tk_font_icons();
 
-	ob_start();
-	buddyforms_create_edit_form( $args );
-	$create_edit_form = ob_get_contents();
-	ob_clean();
+	$create_edit_form = buddyforms_create_edit_form( $args, false );
 
 	return $create_edit_form;
 }
