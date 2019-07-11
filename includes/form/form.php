@@ -6,11 +6,11 @@
  * @param $args
  * @param bool $echo
  *
- * @since 2.4.0 The function only return string or empty
- * @since 2.5.1 Added the parameter $echo to return the output instead of echo it directly
- * @package buddyforms
- * @since 0.1-beta
  *
+ * @since 2.5.1 Added the parameter $echo to return the output instead of echo it directly
+ * @since 2.4.0 The function only return string or empty
+ *
+ * @return string|void
  */
 function buddyforms_create_edit_form( $args, $echo = true ) {
 	global $current_user, $buddyforms, $wp_query, $bf_form_response_args, $bf_form_error;
