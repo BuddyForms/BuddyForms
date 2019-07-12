@@ -585,9 +585,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_enqueue_script( 'buddyforms-select2-js', plugins_url( 'assets/resources/select2/dist/js/select2.min.js', __FILE__ ), array( 'jquery' ), '4.0.3' );
 			wp_enqueue_style( 'buddyforms-select2-css', plugins_url( 'assets/resources/select2/dist/css/select2.min.css', __FILE__ ) );
 
-			wp_enqueue_script( 'buddyforms-datetimepicker', plugins_url( 'assets/resources/datetimepicker/jquery.datetimepicker.full.min.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION );
-			wp_enqueue_style( 'buddyforms-datetimepicker', plugins_url( 'assets/resources/datetimepicker/jquery.datetimepicker.min.css', __FILE__ ) );
-
 			wp_enqueue_script( 'buddyforms-js', plugins_url( 'assets/js/buddyforms.js', __FILE__ ), array(
 				'jquery-ui-core',
 				'jquery-ui-datepicker',
