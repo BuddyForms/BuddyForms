@@ -22,7 +22,6 @@ class View_Frontend extends FormView {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
 
-		//TODO aqui hay que ajustar la forma en la que se hace el render de los errores
 		$this->_form->getErrorView()->render();
 		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
 		if ( $onlyElement && $onlyElement == 'open' ) {
@@ -72,7 +71,7 @@ class View_Frontend extends FormView {
 			}
 			$total_width = 0;
 			foreach ( $reverse_layout_fields as $reverse_field_id => $width ) {
-				$total_width                                                       += $width;
+				$total_width                                                               += $width;
 				$buddyforms[ $form_slug ]['form_fields'][ $reverse_field_id ]['first_row'] = ( $total_width === 100 );
 				if ( $total_width === 100 ) {
 					$total_width = 0;
@@ -94,10 +93,10 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		$style_first_row = !empty($is_first_row)? ' bf-start-row' : '';
+		$style_first_row = ! empty( $is_first_row ) ? ' bf-start-row' : '';
 		echo '<div class="' . $layout_style . $style_first_row . '">';
 
-		if ( $element instanceof Element_HTML || $element instanceof Element_Content) {
+		if ( $element instanceof Element_HTML || $element instanceof Element_Content ) {
 			$element->render();
 			echo "</div>";
 
@@ -148,7 +147,7 @@ class View_Frontend extends FormView {
 	protected function renderLabel( Element $element ) {
 		global $form_slug, $buddyforms;
 
-		$label = $element->getLabel();
+		$label    = $element->getLabel();
 		$field_id = $element->getAttribute( "field_id" );
 
 		$date_is_inline = false;
@@ -166,7 +165,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
+		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label );
 	}
 }
 
