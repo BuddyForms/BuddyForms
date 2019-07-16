@@ -596,6 +596,8 @@ function buddyforms_display_form_element( $args ) {
 		case 'taxonomy':
 		case 'category':
 		case 'tags':
+		    //Load the assets
+		    BuddyFormsAssets::load_select2_assets();
 
 			unset( $form_fields['advanced']['metabox_enabled'] );
 

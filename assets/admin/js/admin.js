@@ -434,9 +434,12 @@ jQuery(document).ready(function (jQuery) {
     }
 
     // Add Select2 Support
-    jQuery(".bf-select2").select2({
-        placeholder: "Select an option"
-    });
+    var adminSelect2 = jQuery(".bf-select2");
+    if (adminSelect2.length > 0) {
+        adminSelect2.select2({
+            placeholder: "Select an option"
+        });
+    }
 
     // Prevent form submission if enter key is pressed on text fields
     jQuery(document).on('keyup keypress', 'form input[type="text"]', function(e) {

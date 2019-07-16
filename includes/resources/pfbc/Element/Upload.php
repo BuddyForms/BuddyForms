@@ -27,7 +27,7 @@ class Element_Upload extends Element_Textbox {
 		if ( ! empty( $this->field_options ) && ! empty( $this->field_options['required'] ) && $this->field_options['required'][0] === 'required' ) {
 			$validation = new Validation_Required( $this->message, $this->field_options );
 
-			$result = $validation->isValid($value, $this);
+			$result = $validation->isValid( $value, $this );
 
 			if ( ! $result ) {
 				$this->_errors[] = str_replace( "%element%", $this->getLabel(), $validation->getMessage() );
@@ -209,7 +209,17 @@ class Element_Upload extends Element_Textbox {
 		}
 	}
 
+	public static function loadAssets() {
+		wp_enqueue_script( 'buddyforms-dropzone', BUDDYFORMS_ASSETS . 'resources/dropzone/dropzone.js', array( 'jquery' ) );
+		wp_enqueue_style( 'buddyforms-dropzone-basic', BUDDYFORMS_ASSETS . 'resources/dropzone/basic.css' );
+		wp_enqueue_style( 'buddyforms-dropzone', BUDDYFORMS_ASSETS . 'resources/dropzone/dropzone.css' );
+	}
+
 	public function render() {
+		self::loadAssets();
+		//DropZone
+		wp_enqueue_script( 'buddyforms_dropzone_initializer', BUDDYFORMS_ASSETS . 'resources/dropzone/initializer.js', array( 'jquery' ), BUDDYFORMS_VERSION, true );
+
 		global $buddyforms, $post_id;
 
 		$id     = $this->getAttribute( 'id' );

@@ -242,8 +242,8 @@ function buddyforms_registration_page_content( $content ) {
 	}
 
 	//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
-	BuddyForms::front_js_css($content, $buddyforms_registration_form);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css($content, $buddyforms_registration_form);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	return $content;
 }

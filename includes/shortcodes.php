@@ -49,8 +49,8 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	unset( $args['slug'] );
 	unset( $args['id'] );
 
-	BuddyForms::front_js_css('',  $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('',  $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	$create_edit_form = buddyforms_create_edit_form( $args, false );
 
@@ -203,8 +203,8 @@ function buddyforms_the_loop( $args ) {
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
-	BuddyForms::front_js_css('', $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( $list_posts_style == 'table' ) {
 		buddyforms_locate_template( 'the-table', $form_slug );
@@ -288,8 +288,8 @@ function buddyforms_nav( $args ) {
 		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
-	BuddyForms::front_js_css('', $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	$args['label'] = isset( $args['label_view'] ) ? $args['label_view'] : __( 'View', 'buddyforms' );
 	$tmp           = buddyforms_button_view_posts( $args );
@@ -315,8 +315,8 @@ function buddyforms_button_view_posts( $args ) {
 		'label' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
-	BuddyForms::front_js_css('', $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $args['label'] . ' </a>';
 
@@ -339,8 +339,8 @@ function buddyforms_button_add_new( $args ) {
 		'label' => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
-	BuddyForms::front_js_css('', $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $args['label']  . '</a>';
 
@@ -368,8 +368,8 @@ function buddyforms_view_login_form( $args ) {
 		'label_log_in'   => __( 'Log In', 'buddyforms' ),
 	), $args ) );
 
-	BuddyForms::front_js_css('', $form_slug);
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( is_user_logged_in() ) {
 		$tmp = '<a href="' . wp_logout_url( $current_url ) . '">' . __( 'Logout', 'buddyforms' ) . '</a>';
@@ -388,8 +388,8 @@ function buddyforms_reset_password_form( $args ) {
 		'redirect_url' => '',
 	), $args ) );
 
-	BuddyForms::front_js_css();
-	BuddyForms::load_tk_font_icons();
+	BuddyFormsAssets::front_js_css();
+	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( is_user_logged_in() ) {
 
