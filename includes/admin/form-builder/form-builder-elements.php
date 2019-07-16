@@ -723,7 +723,7 @@ function buddyforms_display_form_element( $args ) {
 			) );
 
 			$tmaximumSelectionLength                          = isset( $customfield['maximumSelectionLength'] ) ? stripcslashes( $customfield['maximumSelectionLength'] ) : 0;
-			$form_fields['general']['maximumSelectionLength'] = new Element_Number( '<b>' . __( 'Limit Selections', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][maximumSelectionLength]", array(
+			$form_fields['validation']['maximumSelectionLength'] = new Element_Number( '<b>' . __( 'Limit Selections', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][maximumSelectionLength]", array(
 				'data'      => $field_id,
 				'value'     => $tmaximumSelectionLength,
 				'shortDesc' => __( 'Add a number to limit the Selection amount', 'buddyforms' )
