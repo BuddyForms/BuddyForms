@@ -28,6 +28,9 @@ class Element_Date extends Element_Textbox {
 	}
 
 	public function render() {
+		wp_enqueue_script( 'buddyforms-datetimepicker', BUDDYFORMS_ASSETS . 'resources/datetimepicker/jquery.datetimepicker.full.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+		wp_enqueue_style( 'buddyforms-datetimepicker', BUDDYFORMS_ASSETS . 'resources/datetimepicker/jquery.datetimepicker.min.css' );
+
 		$expected_format = ! empty( $this->field_options['element_save_format'] ) ? $this->field_options['element_save_format'] : '';
 
 		if ( ! empty( $expected_format ) ) {

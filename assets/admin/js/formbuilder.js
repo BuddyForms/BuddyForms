@@ -307,7 +307,12 @@ jQuery(document).ready(function () {
 
 						jQuery('#buddyforms_form_elements').removeClass('closed');
 						jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
-						jQuery('.bf-select2').select2();
+						var adminSelect2 = jQuery(".bf-select2");
+						if (adminSelect2.length > 0) {
+							adminSelect2.select2({
+								placeholder: "Select an option"
+							});
+						}
 
 						var form_post_type = jQuery('#form_post_type').val();
 

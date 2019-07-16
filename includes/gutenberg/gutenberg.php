@@ -32,7 +32,7 @@ add_filter( 'block_categories', 'buddyforms_block_category', 10, 2 );
  * @todo: load only the js/ css needed by individual blocks. For now all css/is loaded.
  */
 function buddyforms_editor_assets() {
-	BuddyForms::front_js_css();
+	BuddyFormsAssets::front_js_css();
 }
 
 add_action( 'enqueue_block_editor_assets', 'buddyforms_editor_assets' );
