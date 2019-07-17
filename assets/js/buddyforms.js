@@ -261,7 +261,7 @@ function BuddyForms() {
                 return true;
             }
             if (count < param) {
-                jQuery.validator.messages['minlength'] = "The minimum character length is : " + param + ". Please check.";
+                jQuery.validator.messages['minlength'] = "The minimum character length is " + param + ". Please check.";
                 return false;
             }
             return true;
@@ -357,7 +357,7 @@ function BuddyForms() {
             }
             var count = value.length;
             if (count > param) {
-                jQuery.validator.messages['maxlength'] = "The maximum character length is : " + param + ". Please check.";
+                jQuery.validator.messages['maxlength'] = "The maximum character length is " + param + ". Please check.";
                 return false;
             }
 
