@@ -154,6 +154,7 @@ function BuddyForms() {
                     if(pass1.trim() ==="" && pass2.trim() ===""){
                         strengthResult.removeClass('short bad good strong');
                         strengthResult.html("");
+                        jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
 
                     }else{
                         strengthResult.after(hint_html);
