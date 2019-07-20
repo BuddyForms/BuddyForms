@@ -748,7 +748,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 					case 'file':
 
-						wp_enqueue_script( 'media-uploader-js', plugins_url( 'assets/js/media-uploader.js', __FILE__ ), array( 'jquery' ) );
+						wp_enqueue_script( 'media-uploader-js', BUDDYFORMS_ASSETS. 'js/media-uploader.js', array( 'jquery' ) );
 
 						$attachment_ids = $customfield_val;
 
@@ -1026,7 +1026,7 @@ function buddyforms_form_elements( $form, $args ) {
 
 						if ( isset( $customfield['options'] ) && is_array( $customfield['options'] ) ) {
 							//Add the script for gdpr
-							wp_enqueue_script( 'buddyforms-gdpr-js', plugins_url( 'assets/js/gdpr.js', __FILE__ ), array( 'jquery' ), BUDDYFORMS_VERSION, false );
+							wp_enqueue_script( 'buddyforms-gdpr-js', BUDDYFORMS_ASSETS. 'js/gdpr.js', array( 'jquery' ), BUDDYFORMS_VERSION, false );
 
 							$label = $name;
 
