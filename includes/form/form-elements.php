@@ -197,7 +197,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_website':
-						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					case 'user_bio':
@@ -617,7 +617,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'link' :
-						$form->addElement( new Element_Url( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					case 'featured_image':
