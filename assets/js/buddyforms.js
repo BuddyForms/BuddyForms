@@ -143,7 +143,25 @@ function BuddyForms() {
                 passwordHint.remove();
                 jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
             } else {
-                strengthResult.after(hint_html);
+                var formSlug = getFormSlugFromFormElement(this);
+                var fieldData = getFieldFromSlug('user_pass', formSlug);
+                if(fieldData && fieldData['required'] ){
+
+                    strengthResult.after(hint_html);
+                }
+                else{
+                    //If The field is not required  and the value is emprty don´t valdiate.
+                    if(pass1.trim() ==="" && pass2.trim() ===""){
+                        strengthResult.removeClass('short bad good strong');
+                        strengthResult.html("");
+                        jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
+
+                    }else{
+                        strengthResult.after(hint_html);
+
+                    }
+                }
+
             }
 
             return strength;
