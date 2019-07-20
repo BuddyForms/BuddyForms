@@ -263,95 +263,10 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	public function get_column_values( $field_slug, $field_type, $item, $bf_value, $bf_field ) {
-		switch ( $field_type ) {
-			case 'title':
-				$bf_value = get_the_title( $item->ID );
-				break;
-			case 'content':
-				$post = get_post( $item->ID );
-				$content = apply_filters('the_content', $post->post_content);
-				$content = str_replace( ']]>', ']]&gt;', $content );
-				$content = strip_shortcodes( $content );
+	    $post = get_post( $item->ID );
 
-				/**
-				 * Filters the number of words in an excerpt.
-				 *
-				 * @since 2.7.0
-				 *
-				 * @param int $number The number of words. Default 55.
-				 */
-				$excerpt_length = apply_filters( 'excerpt_length', 55 );
-				/**
-				 * Filters the string in the "more" link displayed after a trimmed excerpt.
-				 *
-				 * @since 2.9.0
-				 *
-				 * @param string $more_string The string shown within the more link.
-				 */
-				$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
-				$bf_value     = wp_trim_words( $content, $excerpt_length, $excerpt_more );
-				break;
-			case 'upload':
-				$result        = '';
-				$attachment_id = explode( ",", $bf_value );
-				foreach ( $attachment_id as $id ) {
-					if ( ! empty( $id ) ) {
-						$url    = wp_get_attachment_url( $id );
-						$result .= " <a style='vertical-align: top;' target='_blank' href='" . $url . "'>$id</a>,";
-					}
-				}
-				$bf_value = ( ! empty( $result ) ) ? rtrim( trim( $result ), ',' ) : '';
-				break;
-			case 'Date':
-				$bf_value = get_the_date( 'F j, Y', $item->ID );
-				break;
-			case 'category':
-			case 'tags':
-				if ( is_array( $bf_value ) ) {
-					$result = array();
-					foreach ( $bf_value as $key => $val ) {
-						$result[] = ( $field_type == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
-					}
-					$bf_value = implode( apply_filters('buddyforms_implode_separator', ', ', $field_type, $field_slug), $result );
-				}
-				break;
-			case 'taxonomy':
-				if ( is_array( $bf_value ) ) {
-					$terms = array();
-					foreach ( $bf_value as $cat ) {
-						$term    = get_term( $cat, $bf_field['taxonomy'] );
-						$terms[] = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $cat;
-					}
-					$bf_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $bf_field['type'], $field_slug ), $terms );
-				} else {
-					$term       = get_term( $bf_value, $bf_field['taxonomy'] );
-					$bf_value = ( ! empty( $term ) && ! is_wp_error( $term ) ) ? $term->name : $bf_value;
-				}
-				break;
-			case 'status':
-				$bf_value = buddyforms_get_post_status_readable( get_post_status( $item->ID ) );
-				break;
-			case 'user_login':
-				$author_id = ( ! empty( $item->post_author ) ) ? $item->post_author : 0;
-				if ( ! empty( $author_id ) ) {
-					$author = get_user_by( 'ID', $author_id );
-					if ( $author instanceof WP_User ) {
-						$bf_value = $author->user_login;
-					}
-				}
-				break;
-			default:
-				if ( is_array( $bf_value ) ) {
-					$str_result = '';
-					foreach ( $bf_value as $key => $val ) {
-						$str_result .= $val;
-					}
-					$bf_value = $str_result;
-				} else {
-					$bf_value = wp_trim_words( $bf_value, 25 );
-				}
-				break;
-		}
+	    $bf_value = buddyforms_get_field_output($item->ID, $bf_field, $post, $bf_value, $field_slug);
+
 		echo apply_filters( "bf_submission_column_default", $bf_value, $item, $field_type, $field_slug );
 	}
 
