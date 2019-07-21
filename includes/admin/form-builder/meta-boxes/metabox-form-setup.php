@@ -260,6 +260,10 @@ function buddyforms_metabox_form_setup() {
 	// Edit Submissions
 	//
 
+    if( ! $attached_page || $attached_page == 'none'){
+	    $attached_page = 'default';
+    }
+
 	$siteurl           = get_bloginfo( 'wpurl' );
 	$attached_page_url = get_permalink( $attached_page );
 
