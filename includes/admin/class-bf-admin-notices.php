@@ -119,8 +119,7 @@ class BfAdminNotices {
 add_action( 'admin_notices', 'buddyforms_settings_missing_admin_notice' );
 
 function buddyforms_settings_missing_admin_notice() {
-
-delete_option('buddyforms_submissions_page');
+    
 	$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
 
 	// Check if the submissions management page is selected in the general settings
