@@ -260,8 +260,12 @@ function buddyforms_metabox_form_setup() {
 	// Edit Submissions
 	//
 
-    if( ! $attached_page || $attached_page == 'none'){
-	    $attached_page = 'default';
+    // Make sure to use the default submissions management page if non exist!
+    if( ! $attached_page || $attached_page == 'none' ||  $attached_page == 'false'){
+	    	    $buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
+	    if($buddyforms_submissions_page){
+		    $attached_page = $buddyforms_submissions_page;
+        }
     }
 
 	$siteurl           = get_bloginfo( 'wpurl' );
