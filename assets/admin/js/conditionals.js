@@ -46,12 +46,12 @@ function from_setup_form_type(value) {
 
             // Set post type value to bf_submissions to make sure it is a contact form if hidden
             jQuery('#form_post_type').val('bf_submissions');
-            jQuery('#attached_page').val('none');
+            //jQuery('#attached_page').val('none');
 
             jQuery('.registrations_nav, .bf_hide_if_attached_page_none').show();
 
             // Hide
-            jQuery('.permission_nav, .edit-submissions_nav, .create-content_nav, .notifications_nav').hide();
+            jQuery('.permission_nav, .edit-submissions_navxx, .create-content_nav, .notifications_nav').hide();
             jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
 
             // Show/Hide the corresponding form elements in the form select

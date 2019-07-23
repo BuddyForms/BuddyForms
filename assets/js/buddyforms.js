@@ -1,4 +1,4 @@
-function bf_form_errors() {
+ function bf_form_errors() {
     jQuery('input').removeClass('error');
     var errors = jQuery('.bf-alert-wrap ul li span');
     jQuery.each(errors, function (i, error) {
