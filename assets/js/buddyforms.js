@@ -276,7 +276,6 @@ function BuddyForms() {
                 var formSlug = getFormSlugFromFormElement(this);
                 var fieldData = getFieldFromSlug('user_pass', formSlug);
                 if (fieldData && fieldData['required']) {
-
                     strengthResult.after(hint_html);
                 } else {
                     //If The field is not required  and the value is emprty don´t valdiate.
@@ -956,7 +955,7 @@ function BuddyForms() {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
                     var thousandsSeparator = (fieldData.thousands_separator) ? fieldData.thousands_separator : '.';
                     var prefix = (fieldData.prefix) ? fieldData.prefix : '$';
-                    var suffix = (fieldData.suffix) ? fieldData.suffix : ' ';
+                    var suffix = (fieldData.suffix) ? fieldData.suffix : '';
                     var centsSeparator = (fieldData.cents_separator) ? fieldData.cents_separator : ',';
 
                     jQuery(currentElement).priceFormat({
@@ -1141,6 +1140,7 @@ function BuddyForms() {
                 addValidationMaxValue();
                 addValidationMinValue();
                 addValidationRequired();
+                addValidationEmail();
                 enabledSelect2();
                 enabledDateTime();
                 enablePriceField();
