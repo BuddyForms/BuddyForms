@@ -3,8 +3,9 @@
 /**
  * @param Form $form
  * @param $args
+ * @param bool $recovering
  */
-function buddyforms_form_elements( $form, $args ) {
+function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	global $buddyforms, $field_id;
 
 	$post_id = 0;
@@ -155,7 +156,7 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_login':
-						if ( ! is_admin() ) {
+						if ( ! is_admin() || $recovering ) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
@@ -169,13 +170,13 @@ function buddyforms_form_elements( $form, $args ) {
 						break;
 
 					case 'user_email':
-						if ( ! is_admin() ) {
+						if ( ! is_admin() || $recovering) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-									$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
+									$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
 								}
 							} else {
-								$form->addElement( new Element_Email( $name, $slug, $element_attr ) );
+								$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
 							}
 						} else {
 							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );

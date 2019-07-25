@@ -1,3 +1,132 @@
+/**
+ * Frontend Hooks object
+ *
+ * This object needs to be declared early so that it can be used in code.
+ * Preferably at a global scope.
+ */
+var BuddyFormsHooks = BuddyFormsHooks || {};
+
+BuddyFormsHooks.actions = BuddyFormsHooks.actions || {};
+BuddyFormsHooks.filters = BuddyFormsHooks.filters || {};
+
+/**
+ * Add a new Action callback to BuddyFormsHooks.actions
+ *
+ * @param tag The tag specified by do_action()
+ * @param callback The callback function to call when do_action() is called
+ * @param priority The order in which to call the callbacks. Default: 10 (like WordPress)
+ */
+BuddyFormsHooks.addAction = function (tag, callback, priority) {
+    if (typeof priority === "undefined") {
+        priority = 10;
+    }
+    // If the tag doesn't exist, create it.
+    BuddyFormsHooks.actions[tag] = BuddyFormsHooks.actions[tag] || [];
+    BuddyFormsHooks.actions[tag].push({priority: priority, callback: callback});
+};
+
+/**
+ * Add a new Filter callback to BuddyFormsHooks.filters
+ *
+ * @param tag The tag specified by apply_filters()
+ * @param callback The callback function to call when apply_filters() is called
+ * @param priority Priority of filter to apply. Default: 10 (like WordPress)
+ */
+BuddyFormsHooks.addFilter = function (tag, callback, priority) {
+    if (typeof priority === "undefined") {
+        priority = 10;
+    }
+    // If the tag doesn't exist, create it.
+    BuddyFormsHooks.filters[tag] = BuddyFormsHooks.filters[tag] || [];
+    BuddyFormsHooks.filters[tag].push({priority: priority, callback: callback});
+};
+
+/**
+ * Remove an Action callback from BuddyFormsHooks.actions
+ *
+ * Must be the exact same callback signature.
+ * Warning: Anonymous functions can not be removed.
+ * @param tag The tag specified by do_action()
+ * @param callback The callback function to remove
+ */
+BuddyFormsHooks.removeAction = function (tag, callback) {
+    BuddyFormsHooks.actions[tag] = BuddyFormsHooks.actions[tag] || [];
+    BuddyFormsHooks.actions[tag].forEach(function (filter, i) {
+        if (filter.callback === callback) {
+            BuddyFormsHooks.actions[tag].splice(i, 1);
+        }
+    });
+};
+
+/**
+ * Remove a Filter callback from BuddyFormsHooks.filters
+ *
+ * Must be the exact same callback signature.
+ * Warning: Anonymous functions can not be removed.
+ * @param tag The tag specified by apply_filters()
+ * @param callback The callback function to remove
+ */
+BuddyFormsHooks.removeFilter = function (tag, callback) {
+    BuddyFormsHooks.filters[tag] = BuddyFormsHooks.filters[tag] || [];
+    BuddyFormsHooks.filters[tag].forEach(function (filter, i) {
+        if (filter.callback === callback) {
+            BuddyFormsHooks.filters[tag].splice(i, 1);
+        }
+    });
+};
+
+/**
+ * Calls actions that are stored in BuddyFormsHooks.actions for a specific tag or nothing
+ * if there are no actions to call.
+ *
+ * @param tag A registered tag in Hook.actions
+ * @param options Optional JavaScript object to pass to the callbacks
+ */
+BuddyFormsHooks.doAction = function (tag, options) {
+    var actions = [];
+    if (typeof BuddyFormsHooks.actions[tag] !== "undefined" && BuddyFormsHooks.actions[tag].length > 0) {
+        BuddyFormsHooks.actions[tag].forEach(function (hook) {
+            actions[hook.priority] = actions[hook.priority] || [];
+            actions[hook.priority].push(hook.callback);
+        });
+
+        actions.forEach(function (BuddyFormsHooks) {
+            BuddyFormsHooks.forEach(function (callback) {
+                callback(options);
+            });
+        });
+    }
+};
+
+/**
+ * Calls filters that are stored in BuddyFormsHooks.filters for a specific tag or return
+ * original value if no filters exist.
+ *
+ * @param tag A registered tag in Hook.filters
+ * @param value The value
+ * @param options Optional JavaScript object to pass to the callbacks
+ * @options
+ */
+BuddyFormsHooks.applyFilters = function (tag, value, options) {
+    var filters = [];
+    if (typeof BuddyFormsHooks.filters[tag] !== "undefined" && BuddyFormsHooks.filters[tag].length > 0) {
+        BuddyFormsHooks.filters[tag].forEach(function (hook) {
+            filters[hook.priority] = filters[hook.priority] || [];
+            filters[hook.priority].push(hook.callback);
+        });
+        filters.forEach(function (BuddyFormsBuilderHook) {
+            BuddyFormsBuilderHook.forEach(function (callback) {
+                value = callback(value, options);
+            });
+        });
+    }
+    return value;
+};
+
+/**
+ * Frontend Hooks object End
+ */
+
 function bf_form_errors() {
     jQuery('input').removeClass('error');
     var errors = jQuery('.bf-alert-wrap ul li span');
@@ -94,11 +223,12 @@ function BuddyForms() {
             var passwordHint = jQuery('.buddyforms-password-hint');
 
             // Reset the form & meter
-            jQuery(document.body).trigger({type: "buddyforms:submit:disable"});
+            BuddyFormsHooks.doAction('buddyforms:submit:disable');
+
             strengthResult.removeClass('short bad good strong');
 
             // Extend our blacklist array with those from the inputs & site data
-            blacklistArray = blacklistArray.concat(wp.passwordStrength.userInputBlacklist())
+            blacklistArray = blacklistArray.concat(wp.passwordStrength.userInputBlacklist());
 
             // Get the password strength
             var strength = wp.passwordStrength.meter(pass1, blacklistArray, pass2);
@@ -141,27 +271,23 @@ function BuddyForms() {
 
             if (buddyformsGlobal.pwsL10n.required_strength <= strength && strength !== 5 && '' !== pass2.trim()) {
                 passwordHint.remove();
-                jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
+                BuddyFormsHooks.doAction('buddyforms:submit:enable');
             } else {
                 var formSlug = getFormSlugFromFormElement(this);
                 var fieldData = getFieldFromSlug('user_pass', formSlug);
-                if(fieldData && fieldData['required'] ){
+                if (fieldData && fieldData['required']) {
 
                     strengthResult.after(hint_html);
-                }
-                else{
+                } else {
                     //If The field is not required  and the value is emprty don´t valdiate.
-                    if(pass1.trim() ==="" && pass2.trim() ===""){
+                    if (pass1.trim() === "" && pass2.trim() === "") {
                         strengthResult.removeClass('short bad good strong');
                         strengthResult.html("");
-                        jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
-
-                    }else{
+                        BuddyFormsHooks.doAction('buddyforms:submit:enable');
+                    } else {
                         strengthResult.after(hint_html);
-
                     }
                 }
-
             }
 
             return strength;
@@ -265,6 +391,20 @@ function BuddyForms() {
         }, "Please enter a valid URL.");// todo need il18n
     }
 
+    function addValidationEmail(){
+        jQuery.validator.addMethod("bf-email", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+            jQuery.validator.messages['minlength'] = "Enter a valid email.";
+            return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
+        }, "");
+    }
+
     function addValidationMinLength() {
         jQuery.validator.addMethod("minlength", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
@@ -322,10 +462,7 @@ function BuddyForms() {
             }
 
             var passValidationFieldTypes = ['upload', 'featured_image'];
-            var passValidationCallback = function (fieldTypeArray) {
-                passValidationFieldTypes = fieldTypeArray || passValidationFieldTypes;
-            };
-            jQuery(document.body).trigger({type: 'buddyforms:validation:pass'}, [value, element, fieldData, formSlug, passValidationFieldTypes, passValidationCallback]);
+            passValidationFieldTypes = BuddyFormsHooks.applyFilters('buddyforms:validation:pass', passValidationFieldTypes, [value, element, fieldData, formSlug]);
 
             if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
                 var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
@@ -348,13 +485,8 @@ function BuddyForms() {
                     result = value && value.length > 0;
             }
 
-            var requiredCallback = function (isValid, message) {
-                result = isValid || result;
-                if (message && message.length > 0) {
-                    requiredMessage = message;
-                }
-            };
-            jQuery(document.body).trigger({type: "buddyforms:validation:required"}, [value, element, fieldData, formSlug, requiredCallback]);
+            result = BuddyFormsHooks.applyFilters('buddyforms:validation:required', result, [value, element, fieldData, formSlug]);
+            requiredMessage = BuddyFormsHooks.applyFilters('buddyforms:validation:required:message', requiredMessage, [value, element, fieldData, formSlug]);
 
             jQuery.validator.messages['required'] = requiredMessage;
             return result;
@@ -614,10 +746,7 @@ function BuddyForms() {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
-                var filteredFieldSlugCallback = function (filteredFieldSlug) {
-                    fieldSlug = filteredFieldSlug || fieldSlug;
-                };
-                jQuery(document.body).trigger({type: 'buddyforms:field:slug'}, [fieldSlug, formSlug, fieldId, buddyformsGlobal[formSlug], filteredFieldSlugCallback]);
+                fieldSlug = BuddyFormsHooks.applyFilters('buddyforms:field:slug', fieldSlug, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
                 return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
             });
             if (fieldIdResult) {
@@ -690,13 +819,7 @@ function BuddyForms() {
                         }
                     };
 
-                    var dateTimePickerConfigCallback = function (config) {
-                        if (config) {
-                            dateTimePickerConfig = config;
-                        }
-                    };
-                    jQuery(document.body).trigger({type: "buddyforms:field:date"}, [dateTimePickerConfig, element, fieldData, formSlug, dateTimePickerConfigCallback]);
-
+                    dateTimePickerConfig = BuddyFormsHooks.applyFilters('buddyforms:field:date', dateTimePickerConfig, [element, fieldData, formSlug]);
                     jQuery(element).datetimepicker(dateTimePickerConfig);
                 }
             });
@@ -848,7 +971,8 @@ function BuddyForms() {
         }
     }
 
-    function triggerFormError(event, form_id, errors) {
+    function triggerFormError(options) {
+        var form_id = options[0], errors = options[1];
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
             var id = 'buddyforms_form_' + form_id;
             var errorSize = errors.errors[id].length;
@@ -869,7 +993,8 @@ function BuddyForms() {
         }
     }
 
-    function renderForm(event, id, prevent, ajax, method) {
+    function renderForm(options) {
+        var id = options[0], prevent = options[1], ajax = options[2], method = options[3];
         var formId = 'buddyforms_form_' + id;
         if (typeof (tinyMCE) != "undefined") {
             tinyMCE.triggerSave();
@@ -879,8 +1004,7 @@ function BuddyForms() {
             var formMessage = jQuery('#form_message_' + id);
             currentForm.data('initialize', buddyformsGlobal.ajaxnonce);
             //When the form is submitted, disable all submit buttons to prevent duplicate submissions
-            jQuery(document.body).trigger({type: "buddyforms:submit:disable"});
-
+            BuddyFormsHooks.doAction('buddyforms:submit:disable');
             //For ajax, an anonymous onsubmit javascript function is bound to the form using jQuery.  jQuery's serialize function is used to grab each element's name/value pair.
             if (ajax) {
                 if (jQuery.validator && !currentForm.valid()) {
@@ -926,14 +1050,14 @@ function BuddyForms() {
                                     jQuery('input[name="' + i + '"]').val(val);
                             }
                             jQuery('#recaptcha_reload').trigger('click');
-                            jQuery(document.body).trigger({type: "buddyforms:init"}, [id]);
+                            BuddyFormsHooks.doAction('buddyforms:init', [id]);
                         });
                         if (response !== undefined && typeof response == "object" && response.errors) {
-                            jQuery(document.body).trigger({type: "buddyforms:error:trigger"}, [id, response]);
+                            BuddyFormsHooks.doAction('buddyforms:error:trigger', [id, response]);
                         }
                     },
                     complete: function () {
-                        jQuery(document.body).trigger({type: "buddyforms:submit:enable"});
+                        BuddyFormsHooks.doAction('buddyforms:submit:enable');
                         // scroll to message after submit
                         jQuery('html, body')
                             .animate({
@@ -1002,10 +1126,10 @@ function BuddyForms() {
             jQuery(document).on("click", '.create-new-tax-item', createTaxItem);
 
             //Events
-            jQuery(document).on('buddyforms:submit:disable', disableFormSubmit);
-            jQuery(document).on('buddyforms:submit:enable', enableFormSubmit);
-            jQuery(document).on('buddyforms:error:trigger', triggerFormError);
-            jQuery(document).on('buddyforms:form:render', renderForm);
+            BuddyFormsHooks.addAction('buddyforms:submit:disable', disableFormSubmit);
+            BuddyFormsHooks.addAction('buddyforms:submit:enable', enableFormSubmit);
+            BuddyFormsHooks.addAction('buddyforms:error:trigger', triggerFormError);
+            BuddyFormsHooks.addAction('buddyforms:form:render', renderForm);
 
             disableACFPopup();
 
@@ -1037,15 +1161,22 @@ jQuery(document).ready(function () {
     fncBuddyForms.init();
 });
 
-jQuery(document).on('buddyforms:init', function (e, id) {
-    fncBuddyForms.init(id);
-});
+if (BuddyFormsHooks) {
+    BuddyFormsHooks.addAction('buddyforms:init', function (id) {
+        fncBuddyForms.init(id);
+    }, 10);
+}
 
 // Example to extend the required validation using events
-// jQuery(document).on('buddyforms:validation:required', function (event, value, element, fieldData, formSlug, requiredCallback) {
-//     var isValid = false;
-//     if(fieldData.type === 'title'){
-//         isValid = value.length > 0;
+// BuddyFormsHooks.addFilter('buddyforms:validation:required', function (isValid, arguments) {
+//     if (arguments.fieldData.type === 'title') {
+//         isValid = arguments.value.length > 0;
 //     }
-//     requiredCallback(isValid, 'The Title field is required...');
-// });
+//     return isValid;
+// }, 10);
+// BuddyFormsHooks.addFilter('buddyforms:validation:required:message', function (requiredMessage, arguments) {
+//     if (arguments.fieldData.type === 'title') {
+//         requiredMessage = 'Custom message';
+//     }
+//     return requiredMessage;
+// }, 10);

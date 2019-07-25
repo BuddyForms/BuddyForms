@@ -7,7 +7,7 @@ class Validation_Email extends Validation {
 	/**
 	 * @var string
 	 */
-	protected $message = "Error: %element% must contain an email address.";
+	protected $message = "Error: %element% is not a valid email address.";
 
 	/**
 	 * @param $value

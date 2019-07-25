@@ -237,7 +237,7 @@ class Form extends Base {
 			);
 
 			// if the form has custom field to save as post meta data they get displayed here
-			buddyforms_form_elements( $form_instance, $form_instance_arg );
+			buddyforms_form_elements( $form_instance, $form_instance_arg, true );
 		}
 
 		return $form_instance;
@@ -437,7 +437,11 @@ class Form extends Base {
 		echo <<<JS
 		jQuery(document.body).on('submit', '#$id', function (event) {
             event.preventDefault();
-            jQuery(document.body).trigger({type: "buddyforms:form:render"}, ["$form_slug", $prevent, "$this->ajax", "$method"]);
+            if(BuddyFormsHooks){
+            	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method"]);
+            } else {
+                alert('Error, contact the admin!');
+            }
             return false;
         });
 JS;
