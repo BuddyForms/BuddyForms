@@ -79,6 +79,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 /*
  * Browser Validation - Generate the jquery validation js
  *
+ * @deprecated since 2.5.0
  */
 function buddyforms_jquery_validation() {
 	global $buddyforms;

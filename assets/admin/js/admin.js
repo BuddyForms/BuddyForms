@@ -200,7 +200,9 @@ function load_formbuilder_template(template, completeCallBack) {
                 if (!postTitle.val()) {
                     postTitle.val(buddyformsMakeFieldId());
                     jQuery('input#title').focus();
+                    jQuery('#title-prompt-text').addClass('screen-reader-text');
                 }
+                jQuery('[name="buddyforms_options[slug]"]').val('');
             },
             error: function () {
                 jQuery('<div></div>').dialog({
