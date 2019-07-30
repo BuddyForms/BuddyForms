@@ -399,7 +399,7 @@ function BuddyForms() {
             ) {
                 return true;
             }
-            jQuery.validator.messages['minlength'] = "Enter a valid email.";
+            jQuery.validator.messages['bf-email'] = "Enter a valid email.";
             return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
         }, "");
     }
