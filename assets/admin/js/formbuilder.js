@@ -302,27 +302,19 @@ jQuery(document).ready(function () {
 
 						jQuery('#sortable_buddyforms_elements').append(data);
 						jQuery('.formbuilder-spinner').removeClass('is-active');
-
 						bf_update_list_item_number();
-
 						jQuery('#buddyforms_form_elements').removeClass('closed');
 						jQuery("html, body").animate({scrollTop: jQuery('#buddyforms_form_elements ul li:last').offset().top - 200}, 1000);
-						var adminSelect2 = jQuery(".bf-select2");
-						if (adminSelect2.length > 0) {
-							adminSelect2.select2({
-								placeholder: "Select an option"
-							});
-						}
-
 						var form_post_type = jQuery('#form_post_type').val();
-
 						if (form_post_type == 'bf_submissions') {
-
 							var field_id = jQuery(data).find('#this_field_id').val();
-
 							bf_taxonomy_input(field_id)
 						}
 						jQuery(document.body).trigger({type: "buddyform:load_fields"});
+						var adminSelect2 = jQuery(".bf-select2");
+						if (adminSelect2.length > 0) {
+							buddyforms_load_select2(adminSelect2);
+						}
 					},
 					error: function () {
 						jQuery('.formbuilder-spinner').removeClass('is-active');

@@ -139,6 +139,7 @@ class BuddyFormsAssets {
 
 		$front_js_arguments = array(
 			'admin_url'                => admin_url( 'admin-ajax.php' ),
+			'assets'                   => self::frontend_assets(),
 			'ajaxnonce'                => wp_create_nonce( 'fac_drop' ),
 			'buddyforms_gdpr_localize' => $gpdr_translations,
 			'current_screen'           => '',//Keep for compatibility
@@ -214,6 +215,13 @@ class BuddyFormsAssets {
 		wp_enqueue_style( 'buddyforms-tk-icons', BUDDYFORMS_ASSETS . 'resources/tk_icons/style.css' );
 	}
 
+	static public function frontend_assets() {
+		return array(
+			'select2_js'  => BUDDYFORMS_ASSETS . 'resources/select2/dist/js/select2.min.js',
+			'select2_css' => BUDDYFORMS_ASSETS . 'resources/select2/dist/css/select2.min.css',
+		);
+	}
+
 	/**
 	 * Enqueue the needed JS for the admin screen
 	 *
@@ -274,6 +282,7 @@ class BuddyFormsAssets {
 			$back_js_arguments = array(
 				'admin_text'     => $admin_text_array,
 				'admin_url'      => admin_url( 'admin-ajax.php' ),
+				'assets'         => self::frontend_assets(),
 				'ajaxnonce'      => wp_create_nonce( 'fac_drop' ),
 				'post_type'      => get_post_type(),
 				'current_screen' => get_current_screen(),
