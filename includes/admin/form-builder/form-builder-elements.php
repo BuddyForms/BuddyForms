@@ -1170,10 +1170,13 @@ JS;
                         </td>
                         <td class="field_label">
                             <strong>
-                                <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse"
-                                   data-parent="#accordion_text"
-                                   href="#accordion_<?php echo $field_type . '_' . $field_id; ?>"
-                                   title="Edit this Field" href="javascript:;"><?php echo $name ?></a>
+                                <a class="bf_edit_field row-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_text" href="#accordion_<?php echo $field_type . '_' . $field_id; ?>" title="Edit this Field" href="javascript:;">
+										<?php if ( ! empty( $customfield ) && ! empty( $customfield['required'] ) && $customfield['required'][0] === 'required' ) {
+											if ( is_subclass_of( $form_field, 'Base' ) ) {
+												$form_field->renderRequired( true );
+											}
+										}
+										echo $name ?></a>
                             </strong>
 
                         </td>
