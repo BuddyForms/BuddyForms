@@ -164,6 +164,10 @@ class Form extends Base {
 				foreach ( $form_instance->_elements as $element ) {
 					$name = $element->getAttribute( "name" );
 
+                    if ( $element instanceof Element_Email ) {
+                        $element->setValidation(new Validation_Email());
+                    }
+
 					if ( $element instanceof Element_Upload ) {
 						$field_options = $element->getFieldOptions();
 						$name          = $field_options['slug'];
