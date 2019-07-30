@@ -225,7 +225,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$post_title = '';
 						if ( isset( $_POST['buddyforms_form_title'] ) ) {
 							$post_title = stripslashes( $_POST['buddyforms_form_title'] );
-						} elseif ( isset( $the_post->post_title ) ) {
+						} elseif ( isset( $the_post->post_title ) && $action !== 'new' ) {
 							$post_title = $the_post->post_title;
 						}
 						if ( isset( $customfield['hidden_field'] ) ) {
@@ -253,13 +253,13 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'content':
+						$buddyforms_form_content_val = '';
 						remove_filter( 'the_content', 'do_shortcode', 11 );
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
-						$buddyforms_form_content_val = false;
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
 							$buddyforms_form_content_val = stripslashes( $_POST['buddyforms_form_content'] );
 						} else {
-							if ( ! empty( $the_post->post_content ) ) {
+							if ( ! empty( $the_post->post_content ) && ( $action !== 'new' ) ) {
 								$buddyforms_form_content_val = $the_post->post_content;
 							} elseif ( empty( $buddyforms_form_content_val ) && ! empty( $element_attr['value'] ) ) {
 								$buddyforms_form_content_val = $element_attr['value'];
