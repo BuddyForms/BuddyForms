@@ -1815,11 +1815,6 @@ nav{
 	border-bottom: 0;
 }
 
-.tab-content > .tab-pane,
-.pill-content > .pill-pane {
-	display: none;
-}
-
 .tab-content > .ui-tabs-active,
 .pill-content > .ui-tabs-active {
 	display: block;

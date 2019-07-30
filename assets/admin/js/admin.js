@@ -1,3 +1,16 @@
+(function($) {
+  $.getStylesheet = function (href) {
+    var $d = $.Deferred();
+    var $link = $('<link/>', {
+       rel: 'stylesheet',
+       type: 'text/css',
+       href: href
+    }).appendTo('head');
+    $d.resolve($link);
+    return $d.promise();
+  };
+})(jQuery);
+
 //
 // Helper function to get the post id from url
 //
@@ -125,6 +138,21 @@ function bf_update_list_item_number_mail() {
     })
 }
 
+function buddyforms_load_select2(element) {
+    jQuery.when(jQuery.getStylesheet(buddyformsGlobal.assets.select2_css), jQuery.getScript(buddyformsGlobal.assets.select2_js))
+        .then(function () {
+            if (jQuery.fn.select2) {
+                element.select2({
+                    placeholder: "Select an option"
+                });
+            } else {
+                console.log('BF-Error loading select2 assets, please contact support.');
+            }
+        }, function () {
+            console.log('BF-Error loading select2 assets, please contact support.');
+        });
+}
+
 //
 // Helper Function to lode form element templates depend on the form type
 //
@@ -184,9 +212,7 @@ function load_formbuilder_template(template, completeCallBack) {
                                 // Add Select2 Support
                                 var adminSelect2 = jQuery(".bf-select2");
                                 if (adminSelect2.length > 0) {
-                                    adminSelect2.select2({
-                                        placeholder: "Select an option"
-                                    });
+                                    buddyforms_load_select2(adminSelect2);
                                 }
                                 // Check the form type and only display the relevant form setup tabs
                                 from_setup_form_type(jQuery('#bf-form-type-select').val());
@@ -444,9 +470,7 @@ jQuery(document).ready(function (jQuery) {
     // Add Select2 Support
     var adminSelect2 = jQuery(".bf-select2");
     if (adminSelect2.length > 0) {
-        adminSelect2.select2({
-            placeholder: "Select an option"
-        });
+        buddyforms_load_select2(adminSelect2);
     }
 
     // Prevent form submission if enter key is pressed on text fields
