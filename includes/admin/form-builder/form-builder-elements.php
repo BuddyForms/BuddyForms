@@ -907,8 +907,6 @@ JS;
 				$js                           .= '</script>';
 				$form_fields['general']['js'] = new Element_HTML( $js );
 			}
-//            Load the assets
-//		    BuddyFormsAssets::load_select2_assets();
 			break;
 		case 'hidden':
 			unset( $form_fields );
