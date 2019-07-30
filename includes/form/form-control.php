@@ -25,6 +25,7 @@ function buddyforms_process_submission( $args = array() ) {
 	$post_id     = 0;
 	$post_author = 0;
 	$post_parent = 0;
+	$post_category = '';
 	$bf_hweb     = '';
 
 	extract( shortcode_atts( array(
@@ -374,8 +375,6 @@ function buddyforms_process_submission( $args = array() ) {
 		$args['post_excerpt'] = $post_excerpt;
 	}
 
-	$args = buddyforms_update_post( $args );
-
 	extract( $args );
 
 	/*
@@ -392,6 +391,10 @@ function buddyforms_process_submission( $args = array() ) {
 		foreach ( $customfields as $customfield ) {
 			if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
 				$have_user_fields = true;
+				break;
+			}
+			if ( in_array( $customfield['type'], array( 'category' ) ) ) {
+				$args['has_post_category'] = true;
 				break;
 			}
 		}
@@ -429,6 +432,9 @@ function buddyforms_process_submission( $args = array() ) {
 		$error_message = $post_id->get_error_message();
 		$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
+
+	//Create the post
+	$args = buddyforms_update_post( $args );
 
 	// Display the message
 	if ( ! $hasError ) {
@@ -478,16 +484,17 @@ function buddyforms_process_submission( $args = array() ) {
  * @return array|bool|WP_Error
  */
 function buddyforms_update_post( $args ) {
-	$action         = '';
-	$post_author    = '';
-	$post_type      = '';
-	$post_status    = '';
-	$comment_status = '';
-	$post_parent    = 0;
-	$form_slug      = '';
-	$post_id        = 0;
-	$form_type      = '';
-	$new_user_id    = 0;
+	$action            = '';
+	$post_author       = '';
+	$post_type         = '';
+	$post_status       = '';
+	$comment_status    = '';
+	$post_parent       = 0;
+	$form_slug         = '';
+	$post_id           = 0;
+	$form_type         = '';
+	$new_user_id       = 0;
+	$has_post_category = false;
 
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
 
@@ -526,6 +533,10 @@ function buddyforms_update_post( $args ) {
 		'comment_status' => $comment_status,
 		'post_parent'    => $post_parent,
 	);
+
+	if($has_post_category){
+		$bf_post['post_category'] = wp_get_post_categories($bf_post['ID']);
+	}
 
 	if ( ! empty( $post_excerpt ) ) {
 		$bf_post['post_excerpt'] = $post_excerpt;
