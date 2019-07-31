@@ -906,11 +906,11 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$placeholder = isset( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
 						if ( ! isset( $customfield['multiple'] ) ) {
-							$args = array_merge( $args, Array( 'show_option_none' => $placeholder ) );
+							$args = array_merge( $args, Array( 'placeholder' => $placeholder,'allowClear'=> true ) );
 						}
 
 						if ( isset( $customfield['multiple'] ) ) {
-							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'] ) );
+							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'],'placeholder' => $placeholder ) );
 						}
 
 						$args = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
