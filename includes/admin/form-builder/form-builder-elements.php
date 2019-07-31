@@ -1324,7 +1324,7 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 	$buddyform = '';
 	extract( $args );
 
-	$field_options = $buddyform['form_fields'][ $field_id ]['options'];
+	$field_options = isset($buddyform['form_fields'][ $field_id ]['options']) ? $buddyform['form_fields'][ $field_id ]['options'] : '' ;
 	$field_type = $buddyform['form_fields'][ $field_id ]['type'];
 	$count = 1;
 	$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
