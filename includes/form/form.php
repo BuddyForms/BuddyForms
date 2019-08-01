@@ -171,6 +171,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$post_id = (int) $wpdb->get_var( $query );
 		if ( empty( $post_id ) ) {
 			$the_post = bf_get_default_post_to_edit( $post_type, true );
+			$post_id = $the_post->ID;
 		}
 	}
 
