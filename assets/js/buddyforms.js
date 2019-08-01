@@ -1058,13 +1058,14 @@ function BuddyForms() {
                     complete: function () {
                         BuddyFormsHooks.doAction('buddyforms:submit:enable');
                         // scroll to message after submit
-                        jQuery('html, body')
-                            .animate({
-                                scrollTop: (jQuery("#buddyforms_form_hero_" + id))
-                            }, 2000)
-                            .on('mousewheel', function () {
-                                jQuery('html, body').stop();
-                            });
+                        var scrollElement =  jQuery("#buddyforms_form_hero_" + id);
+                        if(scrollElement.length > 1) {
+                            jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
+                                duration: 500, complete: function () {
+                                    jQuery('html, body').on("click", function(){ jQuery('html, body').stop() });
+                                }
+                            }).one("click", function(){ jQuery('html, body').stop() });
+                        }
                         jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("hide");
                         bf_form_errors();
                     }
