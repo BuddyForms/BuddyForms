@@ -11,6 +11,55 @@
   };
 })(jQuery);
 
+function createNewpageOpenModal () {
+
+    var dialog = jQuery('<div></div>').dialog({
+        modal: true,
+        title: "Info",
+        open: function () {
+            var markup = 'Name your Page' +
+                '<input id="bf_create_page_name" type="text" value="">';
+            jQuery(this).html(markup);
+        },
+        buttons: {
+            'Add': function () {
+
+                var page_name = jQuery('#bf_create_page_name').val();
+                dialog.html('<span class="spinner is-active"></span>');
+                if (buddyformsGlobal) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        dataType: "json",
+                        url: buddyformsGlobal.admin_url,
+                        data: {
+                            "action": "buddyforms_new_page",
+                            "page_name": page_name
+                        },
+                        success: function (data) {
+                            if (data['error']) {
+                                console.log(data['error']);
+                            } else {
+                                jQuery('#attached_page').append(jQuery('<option>', {
+                                    value: data['id'],
+                                    text: data['name']
+                                }));
+                                jQuery('#attached_page').val(data['id']);
+                            }
+                            dialog.dialog("close");
+                        },
+                        error: function () {
+                            dialog.dialog("close");
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    return false;
+
+};
+
 //
 // Helper function to get the post id from url
 //
@@ -881,55 +930,8 @@ jQuery(document).ready(function (jQuery) {
     jQuery('.bf_check').trigger('click');
     //
     // #bf-create-page-modal
-    //
-    jQuery('#bf_create_page_modal').on('click', function () {
+    
 
-        var dialog = jQuery('<div></div>').dialog({
-            modal: true,
-            title: "Info",
-            open: function () {
-                var markup = 'Name your Page' +
-                    '<input id="bf_create_page_name" type="text" value="">';
-                jQuery(this).html(markup);
-            },
-            buttons: {
-                'Add': function () {
-
-                    var page_name = jQuery('#bf_create_page_name').val();
-                    dialog.html('<span class="spinner is-active"></span>');
-                    if (buddyformsGlobal) {
-                        jQuery.ajax({
-                            type: 'POST',
-                            dataType: "json",
-                            url: buddyformsGlobal.admin_url,
-                            data: {
-                                "action": "buddyforms_new_page",
-                                "page_name": page_name
-                            },
-                            success: function (data) {
-                                if (data['error']) {
-                                    console.log(data['error']);
-                                } else {
-                                    jQuery('#attached_page').append(jQuery('<option>', {
-                                        value: data['id'],
-                                        text: data['name']
-                                    }));
-                                    jQuery('#attached_page').val(data['id']);
-                                }
-                                dialog.dialog("close");
-                            },
-                            error: function () {
-                                dialog.dialog("close");
-                            }
-                        });
-                    }
-                }
-            }
-        });
-
-        return false;
-
-    });
 
     //
     // At last let as remove elements added by other plugins we could not remove with the default functions.
