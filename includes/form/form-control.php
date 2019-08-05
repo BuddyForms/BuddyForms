@@ -401,8 +401,12 @@ function buddyforms_process_submission( $args = array() ) {
 
 		//TODO gfirem this need to be in other way review with @sven
 		// Check if user is logged in and update user relevant fields if used in the form
-		if ( is_user_logged_in() && 'registration' !== $form_type && $have_user_fields === true ) {
+		if ( is_user_logged_in() && 'registration' == $form_type && $have_user_fields === true ) {
 			$user_id = buddyforms_wp_update_user();
+			// If this was a registration form save the user id
+			if ( isset( $user_id ) ) {
+				update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
+			}
 		}
 
 		/*
@@ -417,11 +421,6 @@ function buddyforms_process_submission( $args = array() ) {
 
 		// Save the Form slug as post meta
 		update_post_meta( $post_id, "_bf_form_slug", $form_slug );
-
-		// If this was a registration form save the user id
-		if ( isset( $user_id ) ) {
-			update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
-		}
 
 		if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && ! empty( $user_data ) ) {
 			// Save the User Data like browser ip etc
