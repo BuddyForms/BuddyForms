@@ -7,7 +7,7 @@ class Validation_Captcha extends Validation {
 	/**
 	 * @var string
 	 */
-	protected $message = "Error: The reCATPCHA response provided was incorrect.  Please re-try.";
+	protected $message = "Error: The reCATPCHA response provided was incorrect.  Please try again.";
 	/**
 	 * @var string
 	 */
