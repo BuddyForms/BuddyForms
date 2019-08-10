@@ -193,7 +193,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		}
 	}
 
-	$customfields = $buddyforms[ $form_slug ]['form_fields'];
+	$customfields = ( ! empty( $buddyforms[ $form_slug ]['form_fields'] ) ) ? $buddyforms[ $form_slug ]['form_fields'] : array();
 
 	if ( ! empty( $the_post ) ) {
 		if(empty($post_parent) && ! empty( $the_post->post_parent )) {
