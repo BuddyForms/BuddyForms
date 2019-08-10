@@ -820,11 +820,25 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$meta_value = get_the_date( 'F j, Y', $post_id );
 			break;
 		case 'category':
+			if ( is_array( $meta_value ) ) {
+				$result = array();
+				foreach ( $meta_value as $key => $val ) {
+					$cat      = get_the_category_by_ID( $val );
+					$result[] = ( ! empty( $cat ) && ! is_wp_error( $cat ) ) ? $cat : '';
+				}
+				$meta_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $custom_field['type'], $slug ), $result );
+			}
+			break;
 		case 'tags':
 			if ( is_array( $meta_value ) ) {
 				$result = array();
 				foreach ( $meta_value as $key => $val ) {
-					$result[] = ( $custom_field['type'] == 'tags' ) ? get_tag( $val )->name : get_the_category_by_ID( $val );
+					if ( is_numeric( $val ) ) {
+						$tag = get_tag( $val );
+					} else {
+						$tag = get_term_by( 'slug', $val, 'post_tag' );
+					}
+					$result[] = ( ! empty( $tag ) && ! is_wp_error( $tag ) ) ? $tag->name : '';
 				}
 				$meta_value = implode( apply_filters( 'buddyforms_implode_separator', ', ', $custom_field['type'], $slug ), $result );
 			}
