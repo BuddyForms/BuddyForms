@@ -362,8 +362,10 @@ jQuery(document).ready(function (jQuery) {
                     return true;
                 }
                 if (currentIndex == 5) {
+                    jQuery('#registration').show();
                     return true;
                 }
+
             },
             onFinishing: function (event, currentIndex) {
                 return true;
