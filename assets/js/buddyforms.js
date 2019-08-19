@@ -390,7 +390,7 @@ function BuddyForms() {
         }, "Please enter a valid URL.");// todo need il18n
     }
 
-    function addValidationEmail(){
+    function addValidationEmail() {
         jQuery.validator.addMethod("bf-email", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
             if (
@@ -825,6 +825,32 @@ function BuddyForms() {
         }
     }
 
+    function enableJQueryTimeAddOn() {
+        var timeElements = jQuery('.bf_jquerytimeaddon');
+        if (timeElements && timeElements.length > 0) {
+            jQuery.each(timeElements, function (i, element) {
+                var currentFieldSlug = jQuery(element).attr('name');
+                var formSlug = getFormSlugFromFormElement(element);
+                if (currentFieldSlug && formSlug) {
+                    var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+
+                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : "HH:mm";
+                    var fieldStepHour = (fieldData.element_time_hour_step) ? fieldData.element_time_hour_step : 1;
+                    var fieldStepMinute = (fieldData.element_time_minute_step) ? fieldData.element_time_minute_step : 1;
+
+                    var timePickerConfig = {
+                        timeFormat: fieldTimeFormat,
+                        stepHour: fieldStepHour,
+                        stepMinute: fieldStepMinute
+                    };
+
+                    timePickerConfig = BuddyFormsHooks.applyFilters('buddyforms:field:time', timePickerConfig, [element, fieldData, formSlug]);
+                    jQuery(element).timepicker(timePickerConfig);
+                }
+            });
+        }
+    }
+
     function handleFeaturePost() {
         var statusElement = jQuery('select[name=status]');
         if (statusElement && statusElement.length > 0) {
@@ -1058,13 +1084,17 @@ function BuddyForms() {
                     complete: function () {
                         BuddyFormsHooks.doAction('buddyforms:submit:enable');
                         // scroll to message after submit
-                        var scrollElement =  jQuery("#buddyforms_form_hero_" + id);
-                        if(scrollElement.length > 1) {
+                        var scrollElement = jQuery("#buddyforms_form_hero_" + id);
+                        if (scrollElement.length > 1) {
                             jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
                                 duration: 500, complete: function () {
-                                    jQuery('html, body').on("click", function(){ jQuery('html, body').stop() });
+                                    jQuery('html, body').on("click", function () {
+                                        jQuery('html, body').stop()
+                                    });
                                 }
-                            }).one("click", function(){ jQuery('html, body').stop() });
+                            }).one("click", function () {
+                                jQuery('html, body').stop()
+                            });
                         }
                         jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("hide");
                         bf_form_errors();
@@ -1144,6 +1174,7 @@ function BuddyForms() {
                 addValidationEmail();
                 enabledSelect2();
                 enabledDateTime();
+                enableJQueryTimeAddOn();
                 enablePriceField();
                 addUploadFieldValidations();
                 addFeatureImageValidations();

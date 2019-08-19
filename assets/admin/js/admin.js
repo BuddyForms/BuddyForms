@@ -1,17 +1,17 @@
-(function($) {
-  $.getStylesheet = function (href) {
-    var $d = $.Deferred();
-    var $link = $('<link/>', {
-       rel: 'stylesheet',
-       type: 'text/css',
-       href: href
-    }).appendTo('head');
-    $d.resolve($link);
-    return $d.promise();
-  };
+(function ($) {
+    $.getStylesheet = function (href) {
+        var $d = $.Deferred();
+        var $link = $('<link/>', {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: href
+        }).appendTo('head');
+        $d.resolve($link);
+        return $d.promise();
+    };
 })(jQuery);
 
-function createNewpageOpenModal () {
+function createNewpageOpenModal() {
 
     var dialog = jQuery('<div></div>').dialog({
         modal: true,
@@ -639,6 +639,18 @@ jQuery(document).ready(function (jQuery) {
         var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
         findFieldsSlugs.each(function () {
             var fieldSlugs = jQuery(this);
+            if (!fieldSlugs.val()) {
+                console.log('empty field slug');
+                var field_id = fieldSlugs.attr('data');
+                var fieldContainer = jQuery('li#field_' + field_id);
+                if (fieldContainer && fieldContainer.length > 0) {
+                    var fieldNameValue = fieldContainer.find('tr.use_as_slug input[name="buddyforms_options[form_fields][' + field_id + '][name]"]').val();
+                    if (fieldNameValue) {
+                        var slugFromName = slug(fieldNameValue, {lower: true});
+                        fieldContainer.find('tr.slug' + field_id + ' input[name="buddyforms_options[form_fields][' + field_id + '][slug]"]').val(slugFromName);
+                    }
+                }
+            }
             findFieldsSlugs.each(function () {
                 if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
                     fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
@@ -930,7 +942,6 @@ jQuery(document).ready(function (jQuery) {
     jQuery('.bf_check').trigger('click');
     //
     // #bf-create-page-modal
-    
 
 
     //

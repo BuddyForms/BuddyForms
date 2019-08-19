@@ -267,6 +267,12 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'Captcha', 'buddyforms' ),
 					'unique' => 'unique'
 				),
+				'date'      => array(
+					'label'  => __( 'Date', 'buddyforms' ),
+				),
+				'time'      => array(
+					'label'  => __( 'Time', 'buddyforms' ),
+				),
 			),
 		),
 
@@ -336,10 +342,6 @@ function buddyforms_form_elements_select_options() {
 			$elements_select_options['basic']['fields']['html']   =
 				array(
 					'label' => __( 'HTML', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['date']   =
-				array(
-					'label'  => __( 'Date', 'buddyforms' )
 				);
 			$elements_select_options['extra']['fields']['range']  =
 				array(

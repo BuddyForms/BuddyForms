@@ -220,7 +220,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					case 'date':
 						$form->addElement( new Element_Date( $name, $slug, $customfield, $element_attr ) );
 						break;
-
+					case 'time':
+						$form->addElement( new Element_Time( $name, $slug, $customfield, $element_attr ) );
+						break;
 					case 'title':
 						$post_title = '';
 						if ( isset( $_POST['buddyforms_form_title'] ) ) {

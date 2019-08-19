@@ -362,24 +362,4 @@ jQuery(document).ready(function () {
 		return false;
 	});
 
-	//
-	// Generate the field slug from the label
-	//
-	jQuery(document.body).on('blur', '.use_as_slug', function () {
-
-		var field_name = jQuery(this).val();
-		if (field_name === '')
-			return;
-
-		var field_id = jQuery(this).attr('data');
-		if (field_id === '')
-			return;
-
-		var field_slug_val = jQuery('tr .slug' + field_id).val();
-
-		if (field_slug_val === '') {
-			jQuery('tr .slug' + field_id).val(slug(field_name, {lower: true}));
-		}
-		jQuery(this).unbind('blur');
-	});
 });
