@@ -270,9 +270,9 @@ function buddyforms_form_elements_select_options() {
 				'date'      => array(
 					'label'  => __( 'Date', 'buddyforms' ),
 				),
-				'time'      => array(
-					'label'  => __( 'Time', 'buddyforms' ),
-				),
+//				'time'      => array(
+//					'label'  => __( 'Time', 'buddyforms' ),
+//				),
 			),
 		),
 

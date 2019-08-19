@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.1
+Stable tag: 2.5.2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,36 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.2 - 19 Aug 2019 =
+* Improved the way the styles of the forms are loaded and how the are apply to the form. Now this improve let to edit the css of specific form even if exist multiples forms in the same page.
+* Improved the load of the assets.
+* Fixed the password validation to take in count if the field is required or not. Useful for Forms to edit the user profile.
+* Fixed the GDPR output.
+* Fixed the validation of the website and link field to only apply the JS validation when correspond.
+* Added a new general settings for the frontend submissions management.
+* Added the submissions management page to the form select as pre selected if n o attached page exist.
+* Fixed the email validation for the field user_email and email.
+* Added a hook system for frontend JS.
+* Fixed the suffix for the price field.
+* Added required signal for the fields in the builder, to easy identify what fields are required.
+* Fixed the email validation message for the email field.
+* Fixed the issue originated by the form slug coming from the templates.
+* Added 2 function to load the assets using JS.
+* Fixed the field dependent on select2 to load correctly in the builder.
+* Improve the compatibility with the plugin email-subscribers. https://wordpress.org/support/topic/compatibility-with-email-subscribers
+* Fixed the auto-load of the content of the default page to manage submitions.
+* Fixed to get back the post_id used when a form is loaded and the auto-draft is created.
+* Fixed the scroll after the form is submitted.
+* Fixed the creation of the form from the Wizard.
+* Fixed the captcha field.
+* Fixed the email notification for the user not logged in.
+* Fixed the user_email field was changing the email of the current user logged in in all forms.
+* Fixed the output of the tags in the admin submission screen.
+* Fixed the wizard registration tab.
+* Fixed the auto-generate slug for the fields in the form designer.
+* Move the Date field to the basic fields.
+* Adding the field name for all fields when they are added to the builder.
+
 = 2.5.1 - 11 July 2019 =
 * Fixed the double Label for the content field.
 * Updated the way of the form render using echo or simply returning the html.

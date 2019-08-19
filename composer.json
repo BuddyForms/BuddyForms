@@ -14,8 +14,8 @@
     "forms",
     "frontend post"
   ],
-  "homepage": "https://themekraft.com/buddyforms//",
-  "license": "Apache-2.0",
+  "homepage": "https://themekraft.com/buddyforms/",
+  "license": "GPLv2 or later",
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.6"
