@@ -683,6 +683,7 @@ function buddyforms_display_form_element( $args ) {
 		case 'category':
 		case 'tags':
 			unset( $form_fields['advanced']['metabox_enabled'] );
+            $error_field_type_name = '';
 
 			if(isset( $customfield['name'] )){
 			    $name = stripcslashes( $customfield['name'] );
@@ -690,12 +691,15 @@ function buddyforms_display_form_element( $args ) {
 				switch ( $field_type ) {
 					case 'taxonomy':
 						$name = __( 'Taxonomy', 'buddyforms' );
+                        $error_field_type_name = __( 'Taxonomies', 'buddyforms' );
 						break;
 					case 'category':
 					    $name = __( 'Category', 'buddyforms' );
+                        $error_field_type_name = __( 'Categories', 'buddyforms' );
 						break;
 					case 'tags':
 					    $name = __( 'Tags', 'buddyforms' );
+                        $error_field_type_name = __( 'Tags', 'buddyforms' );
 						break;
 				}
 			}
@@ -737,7 +741,7 @@ function buddyforms_display_form_element( $args ) {
 				if ( isset( $post_type ) ) {
 					$error                                             = '<table style="width:100%;"id="table_row_' . $field_id . '_post_type_no_taxonomy_error" class="wp-list-table posts fixed">
                         <td colspan="2">
-                            <div class="post_type_no_taxonomy_error bf-error">' . __( 'This Post Type does not have any Taxonomies.', 'buddyforms' ) . '</div>
+                            <div class="post_type_no_taxonomy_error bf-error">' . __( 'This Post Type does not have any '.$error_field_type_name.'.', 'buddyforms' ) . '</div>
                         </td>
                         </table>';
 					$form_fields['general']['post_type_no_taxonomies'] = new Element_HTML( $error );
