@@ -4,13 +4,14 @@
 /** @var $is_registration_form bool Determinate if the current form is a registration form */
 /** @var $need_registration_form bool Determinate if the current form need a registration form include */
 $css_form_id = 'buddyforms_form_' . $form_slug;
+$css_form_class = 'buddyforms-' . $form_slug;
 ?>
 <style type="text/css" <?php echo apply_filters( 'buddyforms_add_form_style_attributes', '', $css_form_id ); ?>>
     <?php
 			// only output CSS for labels if the option to disable CSS is unchecked
     if( $bfdesign['labels_disable_css'] == '' ) { ?>
     /* Design Options - Labels */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group label {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label {
         margin-right: 10px;
     <?php
 		// Font Size
@@ -41,11 +42,11 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 	// only output CSS for these form elements if the option to disable CSS is unchecked
 	if( $bfdesign['other_elements_disable_css'] == '' ) { ?>
     /* Design Options - Form Elements */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input .radio {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .radio {
         display: <?php echo esc_attr( $bfdesign['radio_button_alignment']); ?>;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input .checkbox {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .checkbox {
         display: <?php echo esc_attr( $bfdesign['checkbox_alignment']); ?>;
     }
 
@@ -55,8 +56,8 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 	// only output CSS for form elements if the option to disable CSS is unchecked
 	if( empty($bfdesign['field_disable_css']) ) { ?>
     /* Design Options - Text Fields */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input textarea,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input .form-control {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
         display: block;
         width: 100%;
     <?php
@@ -95,8 +96,8 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     }
 
     /* Design Options - Text Fields Active */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input textarea:focus,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input .form-control:focus {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea:focus,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:focus {
     <?php
 			// Background Color
 			if( $bfdesign['field_active_background_color']['style'] == 'color' ) {
@@ -129,8 +130,8 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 	if( empty($bfdesign['desc_disable_css']) ) { ?>
 
     /* Design Options - Descriptions */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> span.help-inline,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> span.help-block {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block {
         padding: 5px 0;
     <?php
 			// Font Size
@@ -156,7 +157,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 	// only output CSS for buttons if the option to disable CSS is unchecked
 	if( empty($bfdesign['button_disable_css']) ) { ?>
     /* Design Options - Buttons */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-submit, .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-draft {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
     <?php
 			// Button Width
 			if( $bfdesign['button_width'] != 'inline' ) {
@@ -197,14 +198,14 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 			} ?>
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions {
         text-align: <?php echo esc_attr( $bfdesign['button_alignment']); ?>;
     }
 
     /*Button Width Behaviour -- if always on block*/
     <?php if( $bfdesign['button_width'] != 'block' ) : ?>
     @media (min-width: 768px) {
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-submit, .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-draft {
+        .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
             display: inline;
             width: auto;
         }
@@ -213,10 +214,10 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     <?php endif; ?>
 
     /* Design Options - Buttons Hover State */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-submit:hover,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-draft:hover,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-submit:focus,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .form-actions button.bf-draft:focus {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:hover,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft:hover,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:focus,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft:focus {
     <?php
 		 // Background Color
 		 if( $bfdesign['button_background_color_hover']['style'] == 'color' ) {
@@ -241,11 +242,11 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     <?php echo esc_attr( $bfdesign['custom_css']); ?>
     /* The BuddyForms Form */
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
         margin-top: 20px;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> form {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
         margin: 0 -15px;
     }
 
@@ -253,46 +254,46 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         margin: 15px 0;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group .bf_inputs {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs {
         margin: 0;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group .bf_inputs .wp-editor-container table tr {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs .wp-editor-container table tr {
         background: transparent;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> label {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> label {
         display: block;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> span.help-inline,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> span.help-block {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block {
         display: block;
         font-size: 80%;
         font-style: italic;
         font-weight: normal;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .revision {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .revision {
         overflow: auto;
         overflow-x: hidden;
         margin: 40px 0 20px 0;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> ul.post-revisions {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions {
         list-style: none outside none;
         margin: 10px 0;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> ul.post-revisions li {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li {
         margin: 5px 0;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> ul.post-revisions li img {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li img {
         margin-right: 10px;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .post-revisions li {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .post-revisions li {
         float: left;
         padding: 5px;
         width: 100%;
@@ -303,12 +304,12 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     }
 
     #loginform input.input,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form textarea,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form input[type=url],
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form input[type=link],
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form input[type=text],
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form input[type=email],
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .standard-form input[type=password] {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form textarea,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=url],
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=link],
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=text],
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=email],
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=password] {
         width: 100%;
         background: #fff;
         border: 1px solid #ccc;
@@ -321,7 +322,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         padding: 6px;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-xs-12 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-xs-12 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -331,7 +332,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         box-sizing: border-box;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-9 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -341,7 +342,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         box-sizing: border-box;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-8 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -351,7 +352,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         box-sizing: border-box;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-6 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -361,7 +362,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         box-sizing: border-box;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-4 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -371,7 +372,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         box-sizing: border-box;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-3 {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3 {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
@@ -382,86 +383,86 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     }
 
     @media (min-width: 992px) {
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-9 {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9 {
             width: 75%;
         }
 
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-8 {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8 {
             width: 66.66%;
         }
 
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-6 {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6 {
             width: 50%;
         }
 
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-4 {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4 {
             width: 33.33%;
         }
 
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-3 {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3 {
             width: 25%;
         }
 
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-12.bf-start-row,
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-9.bf-start-row,
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-8.bf-start-row,
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-6.bf-start-row,
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-4.bf-start-row,
-        .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-3.bf-start-row {
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6.bf-start-row,
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4.bf-start-row,
+        .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3.bf-start-row {
             clear: both;
         }
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> #insert-media-button {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #insert-media-button {
         padding: 1px 7px 1px 5px;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> #wp-buddyforms_form_content-editor-tools .wp-switch-editor {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-tools .wp-switch-editor {
         height: auto !important;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> #wp-buddyforms_form_content-editor-container {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container {
         border: 1px solid rgba(0, 0, 0, 0.2) !important;
 
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> #wp-buddyforms_form_content-editor-container iframe {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container iframe {
         width: 99% !important;
     }
 
     /* --- Form A --- */
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group input.error {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error {
         border: 1px solid red;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group.a textarea.error {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
         border: 1px solid red;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group label.error {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label.error {
         color: red;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group .checkbox label label.error {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .checkbox label label.error {
         color: red;
         font-weight: bold;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group span.select2-selection.select2-selection--single.error {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--single.error {
         border: 1px solid red;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-12.bf-start-row,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-9.bf-start-row,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-8.bf-start-row,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-6.bf-start-row,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-4.bf-start-row,
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> fieldset .col-md-3.bf-start-row {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6.bf-start-row,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4.bf-start-row,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3.bf-start-row {
         clear: both;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input textarea, .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf-input #comments.form-control {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input #comments.form-control {
         display: block;
         width: 100%;
         padding: 15px;
@@ -469,7 +470,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         float: unset;
     }
 
-    .the_buddyforms_form form#<?php echo esc_attr($css_form_id) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'] {
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'] {
         cursor: pointer;
     }
 </style>
