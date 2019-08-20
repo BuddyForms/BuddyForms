@@ -904,15 +904,16 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'order'         => $order,
 							'exclude'       => $exclude,
 							'include'       => $include,
+							'allowClear'    => true,
 						);
 
-						$placeholder = isset( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
-						if ( ! isset( $customfield['multiple'] ) ) {
-							$args = array_merge( $args, Array( 'placeholder' => $placeholder,'allowClear'=> true ) );
+						$placeholder = !empty( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
+						if ( ! isset( $customfield['multiple'] ) || empty( $customfield['taxonomy_default'] ) ) {
+							$args = array_merge( $args, Array( 'placeholder' => $placeholder, 'show_option_none' => $placeholder, 'option_none_value' => '' ) );
 						}
 
 						if ( isset( $customfield['multiple'] ) ) {
-							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'],'placeholder' => $placeholder ) );
+							$args = array_merge( $args, Array( 'multiple' => $customfield['multiple'], 'placeholder' => $placeholder, 'show_option_none' => '', 'option_none_value' => '' ) );
 						}
 
 						$args = apply_filters( 'buddyforms_wp_dropdown_categories_args', $args, $post_id );
@@ -952,11 +953,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$required = $form->renderRequired();
 						}
 
-						$tags                   = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
-						$maximumSelectionLength = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
-						$minimumInputLength     = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
-						$ajax_options           = '';
-						$is_ajax                = isset( $customfield['ajax'] );
+						$minimumResultsForSearch = empty( $customfield['taxonomy_default'] ) ? 'minimumResultsForSearch: -1,' : '';
+						$tags                    = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
+						$maximumSelectionLength  = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
+						$minimumInputLength      = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
+						$ajax_options            = '';
+						$is_ajax                 = isset( $customfield['ajax'] );
 						if ( $is_ajax ) {
 							$ajax_options .= $minimumInputLength;
 							$ajax_options .= 'ajax:{ ' .
@@ -986,7 +988,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						<script>
 							jQuery(document).ready(function () {
 							    jQuery(".bf-select2-' . $field_id . '").select2({
-//							            minimumResultsForSearch: -1,
+							            ' . $minimumResultsForSearch . '
 										' . $maximumSelectionLength . '
 										' . $ajax_options . '
 										    placeholder: function(){
