@@ -633,7 +633,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$validation_error_message        = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] : '';
 						$required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" : '';
 						$id                              = $slug;
-						$action                          = isset( $_GET['action'] ) ? $_GET['action'] : "";
+						$feature_action                  = isset( $_GET['action'] ) ? $_GET['action'] : "";
 						$page                            = isset( $_GET['page'] ) ? $_GET['page'] : "";
 						$result                          = "";
 						$result_value                    = "";
@@ -664,7 +664,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$message = __( 'Drop the image here to upload', 'buddyforms' );
 						$box     = "<h2 class=\"hndle bf_woo\"><span class=\"woo_element_span\">$label_name</span></h2>
-                                    <div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
+                                    <div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$feature_action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                               <span>$message</span>
                                          </div>
