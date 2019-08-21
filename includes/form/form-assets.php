@@ -302,7 +302,15 @@ class BuddyFormsAssets {
 			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
 
 			do_action( 'buddyforms_admin_js_css_enqueue' );
-		}
+		}else{
+
+            wp_register_script( 'buddyforms-admin-all-js', BUDDYFORMS_ASSETS . 'admin/js/admin-all.js', array(), BUDDYFORMS_VERSION );
+            wp_enqueue_script( 'buddyforms-admin-all-js' );
+            $params = array(
+                'admin_url'            => admin_url( 'admin-ajax.php' )
+            );
+            wp_localize_script( 'buddyforms-admin-all-js', 'php_vars', $params );
+        }
 	}
 
 	/**

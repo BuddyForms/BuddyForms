@@ -120,12 +120,12 @@ add_action( 'admin_notices', 'buddyforms_settings_missing_admin_notice' );
 
 function buddyforms_settings_missing_admin_notice() {
     
-	$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
+	$buddyforms_submissions_page = get_option( 'close_submission_default_page_notification' );
 
 	// Check if the submissions management page is selected in the general settings
-	if ( ! $buddyforms_submissions_page || $buddyforms_submissions_page == 'none' ) {
+	if ( ! $buddyforms_submissions_page ) {
 		?>
-        <div class="notice notice-error is-dismissible">
+        <div id="submission_default_page" class="notice notice-error is-dismissible">
             <p><?php _e( 'BuddyForms Submissions Page Missing!', 'buddyforms' ); ?></p>
             <p><?php _e( 'Please select a default page for your submissions in the BuddyForms general settings ', 'buddyforms' ); ?><a href="<?php menu_page_url('buddyforms_settings'); ?>"><?php _e( 'Select the Page Now!', 'buddyforms' ); ?></a></p>
         </div>

@@ -20,6 +20,18 @@ function buddyforms_post_types_taxonomies() {
 
 }
 
+add_action( 'wp_ajax_buddyforms_close_submission_default_page_notification', 'buddyforms_close_submission_default_page_notification' );
+
+
+/**
+ * @return bool
+ */
+function buddyforms_close_submission_default_page_notification() {
+
+    update_option( 'close_submission_default_page_notification',1,true );
+    die();
+}
+
 add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
 function buddyforms_update_taxonomy_default() {
 
