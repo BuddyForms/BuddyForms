@@ -233,7 +233,8 @@ class BuddyFormsAssets {
 	 */
 	function admin_js( $hook_suffix ) {
 		global $post, $wp_query, $buddyforms;
-
+		//WP Backend global scripts
+		wp_enqueue_script( 'buddyforms-admin-all-js', BUDDYFORMS_ASSETS . 'admin/js/admin-all.js', array('jquery'), BUDDYFORMS_VERSION );
 		if (
 			( isset( $post ) && ( $post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )
@@ -302,6 +303,15 @@ class BuddyFormsAssets {
 			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
 
 			do_action( 'buddyforms_admin_js_css_enqueue' );
+		} else {
+			wp_localize_script( "buddyforms-admin-all-js", "buddyformsGlobal",
+				apply_filters( 'buddyforms_global_localize_scripts', array(
+						'admin_url' => admin_url( 'admin-ajax.php' ),
+						'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
+					)
+				)
+			);
+			do_action( 'buddyforms_all_admin_js_css_enqueue' );
 		}
 	}
 
