@@ -516,6 +516,8 @@ jQuery(document).ready(function (jQuery) {
         }
     }
 
+
+
     // Add Select2 Support
     var adminSelect2 = jQuery(".bf-select2");
     if (adminSelect2.length > 0) {

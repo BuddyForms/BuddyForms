@@ -1,18 +1,11 @@
 jQuery(document).ready(function (jQuery) {
-
-
-
-    jQuery(document.body).on('click', '#submission_default_page :button', function () {
-
+    //Remove submission default page notification
+    jQuery(document.body).on('click', '#buddyforms_submission_default_page button.notice-dismiss', function () {
         jQuery.ajax({
             type: 'POST',
             dataType: "json",
-            url: php_vars.admin_url,
-            data: {"action": "buddyforms_close_submission_default_page_notification"},
-            success: function (data) {
-
-                //console.log(data);
-            }
+            url: buddyformsGlobal.admin_url,
+            data: {"action": "buddyforms_close_submission_default_page_notification", "nonce":buddyformsGlobal.ajaxnonce},
         })
     });
-})
+});
