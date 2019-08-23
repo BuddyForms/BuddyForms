@@ -12,6 +12,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	$form_slug = '';
 	$action = 'new';
 	$customfields = array();
+	$post = false;
 
 	if ( empty( $args ) ) {
 		return;
@@ -33,12 +34,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 		return;
 	}
 
-	if ( empty( $action ) ) {
-		$post = false;
-		if ( ! empty( $post_id ) ) {
-			$post = get_post( $post_id );
-		}
-
+	if ( ! empty( $post_id ) ) {
+		$post = get_post( $post_id );
 		$action = ! empty( $post ) && $post->post_status !== 'auto-draft' ? 'edit' : 'new';
 	}
 
