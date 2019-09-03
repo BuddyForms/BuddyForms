@@ -499,6 +499,8 @@ function buddyforms_activate_action() {
 	delete_user_meta( $user_id, 'has_to_be_activated' );
 	delete_user_meta( $user_id, 'bf_activation_link' );
 
+	do_action('buddyforms_after_user_activation', $user_id);
+
 	wp_safe_redirect( add_query_arg( 'bf_activate_user_notice', 'true', 'users.php' ) );
 }
 
@@ -681,6 +683,8 @@ function buddyforms_activate_user() {
 		if ( ! empty( $code ) && $code === $req_code ) {
 			delete_user_meta( $user_id, 'has_to_be_activated' );
 			delete_user_meta( $user_id, 'bf_activation_link' );
+
+			do_action('buddyforms_after_user_activation', $user_id);
 
 			// Set the current user variables, and give him a cookie.
 			wp_set_current_user( $user_id );
