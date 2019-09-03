@@ -296,7 +296,7 @@ function buddyforms_metabox_form_setup() {
 
 	$form_setup['Edit Submissions'][] = new Element_Select( '<b>' . __( "Enable site members to manage their submissions", 'buddyforms' ) . '</b>', "buddyforms_options[attached_page]", $all_pages, array(
 		'value'     => $attached_page,
-		'shortDesc' => sprintf( '<b><a href="#" onclick="createNewpageOpenModal()" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) ),
+		'shortDesc' => sprintf( '<b><a href="javascript:void(0);" onclick="createNewPageOpenModal()" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) ),
 		'id'        => 'attached_page',
 		'data-slug' => $slug
 	) );

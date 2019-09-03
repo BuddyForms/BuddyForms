@@ -11,8 +11,7 @@
     };
 })(jQuery);
 
-function createNewpageOpenModal() {
-
+function createNewPageOpenModal(e) {
     var dialog = jQuery('<div></div>').dialog({
         modal: true,
         title: "Info",
@@ -23,7 +22,6 @@ function createNewpageOpenModal() {
         },
         buttons: {
             'Add': function () {
-
                 var page_name = jQuery('#bf_create_page_name').val();
                 dialog.html('<span class="spinner is-active"></span>');
                 if (buddyformsGlobal) {
@@ -55,10 +53,9 @@ function createNewpageOpenModal() {
             }
         }
     });
-
+    e.preventDefault();
     return false;
-
-};
+}
 
 //
 // Helper function to get the post id from url
@@ -515,7 +512,6 @@ jQuery(document).ready(function (jQuery) {
             }
         }
     }
-
 
 
     // Add Select2 Support

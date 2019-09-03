@@ -268,7 +268,7 @@ function buddyforms_settings_page_tabs_content() {
 													}
 													echo '</select>';
 												}
-												echo sprintf( '<b><a href="#" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) )
+												echo sprintf( '<b><a href="javascript:void(0);" onclick="createNewPageOpenModal()" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) )
 												?>
 
                                             </td>
