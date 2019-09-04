@@ -3,7 +3,7 @@
 /** @var $form_slug string Form slug */
 /** @var $is_registration_form bool Determinate if the current form is a registration form */
 /** @var $need_registration_form bool Determinate if the current form need a registration form include */
-$css_form_id = 'buddyforms_form_' . $form_slug;
+$css_form_id    = 'buddyforms_form_' . $form_slug;
 $css_form_class = 'buddyforms-' . $form_slug;
 ?>
 <style type="text/css" <?php echo apply_filters( 'buddyforms_add_form_style_attributes', '', $css_form_id ); ?>>

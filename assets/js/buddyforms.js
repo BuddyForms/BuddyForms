@@ -801,7 +801,6 @@ function BuddyForms() {
                     var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'H:i';
                     var enableTime = (fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
                     var enableDate = (fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
-                    var isInline = (fieldData.is_inline && fieldData.is_inline[0] && fieldData.is_inline[0] === 'is_inline');
                     if (!enableDate && !enableTime) {
                         enableDate = true;
                     }
@@ -809,11 +808,9 @@ function BuddyForms() {
                         format: fieldSaveFormat,
                         formatDate: fieldDateFormat,
                         formatTime: fieldTimeFormat,
-                        timepicker: enableTime || false,
-                        datepicker: enableDate || false,
-                        inline: isInline,
+                        showTimepicker: enableTime || false,
                         step: parseInt(fieldTimeStep),
-                        onChangeDateTime: function () {
+                        onSelect: function () {
                             jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                         }
                     };
@@ -834,14 +831,17 @@ function BuddyForms() {
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
 
-                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : "HH:mm";
+                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : "hh:mm tt";
                     var fieldStepHour = (fieldData.element_time_hour_step) ? fieldData.element_time_hour_step : 1;
                     var fieldStepMinute = (fieldData.element_time_minute_step) ? fieldData.element_time_minute_step : 1;
 
                     var timePickerConfig = {
                         timeFormat: fieldTimeFormat,
-                        stepHour: fieldStepHour,
-                        stepMinute: fieldStepMinute
+                        stepHour: parseInt(fieldStepHour),
+                        timeOnly: true,
+                        stepMinute: parseInt(fieldStepMinute),
+                        controlType: 'select',
+                        oneLine: true
                     };
 
                     timePickerConfig = BuddyFormsHooks.applyFilters('buddyforms:field:time', timePickerConfig, [element, fieldData, formSlug]);
@@ -965,7 +965,7 @@ function BuddyForms() {
                         } else {
                             elem.removeClass(errorClass);
                         }
-                    },
+                    }
                 });
             });
         }
