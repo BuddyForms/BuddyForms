@@ -456,6 +456,7 @@ function BuddyForms() {
             }
             var fieldSlug = jQuery(element).attr('name');
             var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+            fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
             if (!fieldData) {//if not field data is not possible to validate it
                 return true;
             }
@@ -475,10 +476,10 @@ function BuddyForms() {
 
             switch (fieldData.type) {
                 case 'post_formats':
-                    result = value && value !== 'Select a Post Format';
+                    result = (value && value !== 'Select a Post Format');
                     break;
                 case 'taxonomy':
-                    result = value && value !== "-1";
+                    result = (value && value !== "-1");
                     break;
                 default:
                     result = value && value.length > 0;
@@ -488,7 +489,7 @@ function BuddyForms() {
             requiredMessage = BuddyFormsHooks.applyFilters('buddyforms:validation:required:message', requiredMessage, [value, element, fieldData, formSlug]);
 
             jQuery.validator.messages['required'] = requiredMessage;
-            return result;
+            return (result);
         }, "");
     }
 
@@ -830,7 +831,6 @@ function BuddyForms() {
                 var formSlug = getFormSlugFromFormElement(element);
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-
                     var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : "hh:mm tt";
                     var fieldStepHour = (fieldData.element_time_hour_step) ? fieldData.element_time_hour_step : 1;
                     var fieldStepMinute = (fieldData.element_time_minute_step) ? fieldData.element_time_minute_step : 1;
@@ -930,6 +930,7 @@ function BuddyForms() {
                         var formSlug = getFormSlugFromFormElement(element);
                         var fieldSlug = jQuery(element).attr('name');
                         var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+                        fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
                         if (!fieldData) {//if not field data is not possible to validate it
                             return true;
                         }
