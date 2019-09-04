@@ -1,7 +1,7 @@
 <?php
 $css_form_id = 'buddyforms_form_' . $form_slug;
 ?>
-<style type="text/css" <?php echo apply_filters( 'buddyforms_add_global_style_attributes', '', $css_form_id ); ?>>
+<style data-target="global" type="text/css" <?php echo apply_filters( 'buddyforms_add_global_style_attributes', '', $css_form_id ); ?>>
 
     /* Alerts */
     .bf-alert {

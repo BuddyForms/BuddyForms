@@ -83,11 +83,10 @@ function buddyforms_form_html( $args ) {
 	// Form HTML Start. The Form is rendered as last step.
 	//Add the global css
 	ob_start();
-	require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
+	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
 	$global_css = ob_get_clean();
 	$global_css = buddyforms_minify_css( $global_css );
 	$form_html  = $global_css;
-
 
 	if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
 		$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $post_id );

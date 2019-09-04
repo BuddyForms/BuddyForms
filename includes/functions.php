@@ -1060,7 +1060,7 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
 
 
-	return $display_message;
+	return do_shortcode($display_message);
 }
 
 function buddyforms_user_fields_array() {
