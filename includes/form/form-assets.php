@@ -146,18 +146,7 @@ class BuddyFormsAssets {
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields()
 		);
-		if ( empty( $form_slug ) ) {
-			$form_slug = buddyforms_get_form_slug();
-		}
-		if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
-			$bf_post_id                       = $wp_query->get( 'bf_post_id' );
-			$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $bf_post_id );
-			$front_js_arguments[ $form_slug ] = $options;
-		}
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
-
-		//Global frontend vars
-		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
 
 		do_action( 'buddyforms_front_js_css_after_enqueue', $content );
 	}

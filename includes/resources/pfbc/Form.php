@@ -164,9 +164,9 @@ class Form extends Base {
 				foreach ( $form_instance->_elements as $element ) {
 					$name = $element->getAttribute( "name" );
 
-                    if ( $element instanceof Element_Email ) {
-                        $element->setValidation(new Validation_Email());
-                    }
+					if ( $element instanceof Element_Email ) {
+						$element->setValidation( new Validation_Email() );
+					}
 
 					if ( $element instanceof Element_Upload ) {
 						$field_options = $element->getFieldOptions();
@@ -338,6 +338,22 @@ class Form extends Base {
 			$this->_attributes["enctype"] = "multipart/form-data";
 		}
 	}
+
+	/**
+	 * Override element in the element list for other element of the same type
+	 *
+	 * @param Element $new_element
+	 * @param $element_position
+	 *
+	 * @since 2.5.5
+	 *
+	 */
+	public function overrideExistingElement( Element $new_element, $element_position ) {
+		if ( ! empty( $this->_elements ) && isset( $this->_elements[ $element_position ] ) ) {
+			$this->_elements[ $element_position ] = $new_element;
+		}
+	}
+
 
 	/**
 	 * @param array $values

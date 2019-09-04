@@ -108,8 +108,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					'shortDesc' => $description,
 					'field_id'  => $field_id,
 					'data-form'  => $form_slug
-//				"view" => "Inline"
 				);
+
+				$customfield['field_id'] = $field_id;
 
 				if ( isset( $customfield['required'] ) ) {
 					$element_attr = array_merge( $element_attr, array( 'required' => true ) );

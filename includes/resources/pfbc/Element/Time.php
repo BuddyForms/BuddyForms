@@ -28,12 +28,12 @@ class Element_Time extends Element_Textbox {
 	}
 
 	public function render() {
-		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', BUDDYFORMS_ASSETS. 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', array(
+		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js', array(
 			'jquery-ui-core',
 			'jquery-ui-datepicker',
 			'jquery-ui-slider'
 		) );
-		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', BUDDYFORMS_ASSETS. 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css');
+		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css' );
 
 		$expected_format = ! empty( $this->field_options['element_time_format'] ) ? $this->field_options['element_time_format'] : '';
 

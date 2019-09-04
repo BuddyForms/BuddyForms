@@ -592,32 +592,27 @@ function buddyforms_display_form_element( $args ) {
 		        'required' => 1
 	        ) );
 
-            $enable_date                          = isset( $customfield['enable_date'] ) ? $customfield['enable_date'] : false;
-            $form_fields['general']['enable_date'] = new Element_Checkbox( '<b>' . __( 'Enable Date', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_date]", array( 'enable_date' => '<b>' . __( 'Include the Date Picker in the element', 'buddyforms' ) . '</b>' ), array(
-		        'value' => $enable_date,
+            //More formats in https://trentrichardson.com/examples/timepicker
+	        $element_date_format                           = isset( $customfield['element_date_format'] ) ? stripcslashes( $customfield['element_date_format'] ) : 'mm/dd/yy';
+	        $form_fields['general']['element_date_format'] = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_date_format]", array(
+		        'value'     => $element_date_format,
+		        'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://api.jqueryui.com/datepicker/#utility-formatDate">at.</a>', 'buddyforms' )
 	        ) );
-            //More formats in https://php.net/manual/en/function.date.php
-	        $element_date_format = isset( $customfield['element_date_format'] ) ? stripcslashes( $customfield['element_date_format'] ) : 'Y/m/d';
-            $form_fields['general']['element_date_format'] = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_date_format]", array( 'value' => $element_date_format ) );
 
             $enable_time                           = isset( $customfield['enable_time'] ) ? $customfield['enable_time'] : false;
 	        $form_fields['general']['enable_time'] = new Element_Checkbox( '<b>' . __( 'Enable Time', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][enable_time]", array( 'enable_time' => '<b>' . __( 'Include the Time Picker in the element', 'buddyforms' ) . '</b>' ), array(
 		        'value' => $enable_time,
 	        ) );
-	        $element_time_format = isset( $customfield['element_time_format'] ) ? stripcslashes( $customfield['element_time_format'] ) : 'H:i';
-            $form_fields['general']['element_time_format'] = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_format]", array( 'value' => $element_time_format ) );
+	        $element_time_format                           = isset( $customfield['element_time_format'] ) ? stripcslashes( $customfield['element_time_format'] ) : 'hh:mm tt';
+	        $form_fields['general']['element_time_format'] = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_format]", array(
+		        'value'     => $element_time_format,
+		        'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://trentrichardson.com/examples/timepicker/#tp-formatting">at.</a>', 'buddyforms' )
+	        ) );
 
             $element_time_step                          = isset( $customfield['element_time_step'] ) ? stripcslashes( $customfield['element_time_step'] ) : 60;
 			$form_fields['general']['element_time_step'] = new Element_Number( '<b>' . __( 'Time Step', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_step]", array(
 				'value'     => $element_time_step,
 			) );
-
-            $is_inline                           = isset( $customfield['is_inline'] ) ? $customfield['is_inline'] : false;
-	        $form_fields['general']['is_inline'] = new Element_Checkbox( '<b>' . __( 'Is inline', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][is_inline]", array( 'is_inline' => '<b>' . __( 'Show the element inline', 'buddyforms' ) . '</b>' ), array(
-		        'value' => $is_inline,
-	        ) );
-	        $element_save_format = isset( $customfield['element_save_format'] ) ? stripcslashes( $customfield['element_save_format'] ) : 'Y/m/d H:i';
-            $form_fields['general']['element_save_format'] = new Element_Textbox( '<b>' . __( 'Save Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_save_format]", array( 'value' => $element_save_format ) );
 
             break;
         case 'time':
@@ -630,8 +625,12 @@ function buddyforms_display_form_element( $args ) {
 			) );
 
             //More formats in https://trentrichardson.com/examples/timepicker/
-	        $element_time_format = isset( $customfield['element_time_format'] ) ? stripcslashes( $customfield['element_time_format'] ) : 'HH:mm';
-            $form_fields['general']['element_time_format'] = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_format]", array( 'value' => $element_time_format ) );
+	        $element_time_format                           = isset( $customfield['element_time_format'] ) ? stripcslashes( $customfield['element_time_format'] ) : 'hh:mm tt';
+	        $form_fields['general']['element_time_format'] = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_format]", array(
+		        'value'     => $element_time_format,
+		        'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://trentrichardson.com/examples/timepicker/#tp-formatting">at.</a>', 'buddyforms' )
+	        ) );
+
 
             $element_time_hour_step                          = isset( $customfield['element_time_hour_step'] ) ? stripcslashes( $customfield['element_time_hour_step'] ) : 1;
 			$form_fields['general']['element_time_hour_step'] = new Element_Number( '<b>' . __( 'Hour Step', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_time_hour_step]", array(
@@ -1264,7 +1263,7 @@ JS;
 	$custom_class                            = isset( $customfield['custom_class'] ) ? stripcslashes( $customfield['custom_class'] ) : '';
 	$form_fields['advanced']['custom_class'] = new Element_Textbox( '<b>' . __( 'Add custom class to the form element', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][custom_class]", array( 'value' => $custom_class ) );
 
-	$form_fields = apply_filters( 'buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id, $form_slug );
+	$form_fields = apply_filters( 'buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id, $form_slug, $customfield );
 
 
 	if ( is_array( $form_fields ) ) {

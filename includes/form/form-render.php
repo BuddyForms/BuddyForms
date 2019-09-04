@@ -88,8 +88,27 @@ function buddyforms_form_html( $args ) {
 	$global_css = buddyforms_minify_css( $global_css );
 	$form_html  = $global_css;
 
+
+	if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+		$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $post_id );
+		$front_js_arguments[ $form_slug ] = $options;
+		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
+	}
+
+	$buddyforms_global_js_data = apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) );
+	if ( is_array( $buddyforms_global_js_data ) ) {
+		$output = 'var buddyformsGlobal = ' . wp_json_encode( $buddyforms_global_js_data );
+		ob_start();
+		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
+		echo "/* <![CDATA[ */\n";
+		echo "$output\n";
+		echo "/* ]]> */\n";
+		echo "</script>\n";
+		$global_js = ob_get_clean();
+		$form_html .= $global_js;
+	}
 	// Form start point
-	$form_html  .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
+	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
 
 	// Hook above the form inside the BuddyForms form div
 	$form_html = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
@@ -163,8 +182,8 @@ function buddyforms_form_html( $args ) {
 	if ( $bfdesign['extras_disable_all_css'] == '' ) {
 		ob_start();
 		require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php' );
-		$layout = ob_get_clean();
-		$layout = buddyforms_minify_css($layout);
+		$layout    = ob_get_clean();
+		$layout    = buddyforms_minify_css( $layout );
 		$form_html .= $layout;
 	}
 
@@ -279,37 +298,38 @@ function buddyforms_get_login_form_template() {
  *
  * @return mixed|string|string[]|null
  */
-function buddyforms_minify_css($css) {
-  // from the awesome CSS JS Booster: https://github.com/Schepp/CSS-JS-Booster
-  // all credits to Christian Schaefer: http://twitter.com/derSchepp
-  // remove comments
-  $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
-  // backup values within single or double quotes
-  preg_match_all('/(\'[^\']*?\'|"[^"]*?")/ims', $css, $hit, PREG_PATTERN_ORDER);
-  for ($i=0; $i < count($hit[1]); $i++) {
-    $css = str_replace($hit[1][$i], '##########' . $i . '##########', $css);
-  }
-  // remove traling semicolon of selector's last property
-  $css = preg_replace('/;[\s\r\n\t]*?}[\s\r\n\t]*/ims', "}\r\n", $css);
-  // remove any whitespace between semicolon and property-name
-  $css = preg_replace('/;[\s\r\n\t]*?([\r\n]?[^\s\r\n\t])/ims', ';$1', $css);
-  // remove any whitespace surrounding property-colon
-  $css = preg_replace('/[\s\r\n\t]*:[\s\r\n\t]*?([^\s\r\n\t])/ims', ':$1', $css);
-  // remove any whitespace surrounding selector-comma
-  $css = preg_replace('/[\s\r\n\t]*,[\s\r\n\t]*?([^\s\r\n\t])/ims', ',$1', $css);
-  // remove any whitespace surrounding opening parenthesis
-  $css = preg_replace('/[\s\r\n\t]*{[\s\r\n\t]*?([^\s\r\n\t])/ims', '{$1', $css);
-  // remove any whitespace between numbers and units
-  $css = preg_replace('/([\d\.]+)[\s\r\n\t]+(px|em|pt|%)/ims', '$1$2', $css);
-  // shorten zero-values
-  $css = preg_replace('/([^\d\.]0)(px|em|pt|%)/ims', '$1', $css);
-  // constrain multiple whitespaces
-  $css = preg_replace('/\p{Zs}+/ims',' ', $css);
-  // remove newlines
-  $css = str_replace(array("\r\n", "\r", "\n"), '', $css);
-  // Restore backupped values within single or double quotes
-  for ($i=0; $i < count($hit[1]); $i++) {
-    $css = str_replace('##########' . $i . '##########', $hit[1][$i], $css);
-  }
-  return $css;
+function buddyforms_minify_css( $css ) {
+	// from the awesome CSS JS Booster: https://github.com/Schepp/CSS-JS-Booster
+	// all credits to Christian Schaefer: http://twitter.com/derSchepp
+	// remove comments
+	$css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css );
+	// backup values within single or double quotes
+	preg_match_all( '/(\'[^\']*?\'|"[^"]*?")/ims', $css, $hit, PREG_PATTERN_ORDER );
+	for ( $i = 0; $i < count( $hit[1] ); $i ++ ) {
+		$css = str_replace( $hit[1][ $i ], '##########' . $i . '##########', $css );
+	}
+	// remove traling semicolon of selector's last property
+	$css = preg_replace( '/;[\s\r\n\t]*?}[\s\r\n\t]*/ims', "}\r\n", $css );
+	// remove any whitespace between semicolon and property-name
+	$css = preg_replace( '/;[\s\r\n\t]*?([\r\n]?[^\s\r\n\t])/ims', ';$1', $css );
+	// remove any whitespace surrounding property-colon
+	$css = preg_replace( '/[\s\r\n\t]*:[\s\r\n\t]*?([^\s\r\n\t])/ims', ':$1', $css );
+	// remove any whitespace surrounding selector-comma
+	$css = preg_replace( '/[\s\r\n\t]*,[\s\r\n\t]*?([^\s\r\n\t])/ims', ',$1', $css );
+	// remove any whitespace surrounding opening parenthesis
+	$css = preg_replace( '/[\s\r\n\t]*{[\s\r\n\t]*?([^\s\r\n\t])/ims', '{$1', $css );
+	// remove any whitespace between numbers and units
+	$css = preg_replace( '/([\d\.]+)[\s\r\n\t]+(px|em|pt|%)/ims', '$1$2', $css );
+	// shorten zero-values
+	$css = preg_replace( '/([^\d\.]0)(px|em|pt|%)/ims', '$1', $css );
+	// constrain multiple whitespaces
+	$css = preg_replace( '/\p{Zs}+/ims', ' ', $css );
+	// remove newlines
+	$css = str_replace( array( "\r\n", "\r", "\n" ), '', $css );
+	// Restore backupped values within single or double quotes
+	for ( $i = 0; $i < count( $hit[1] ); $i ++ ) {
+		$css = str_replace( '##########' . $i . '##########', $hit[1][ $i ], $css );
+	}
+
+	return $css;
 }
