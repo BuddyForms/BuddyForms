@@ -104,7 +104,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 				$element_attr = array(
 					'id'        => str_replace( "-", "", $slug ),
 					'value'     => $customfield_val,
-					'class'     => 'settings-input',
+					'class'     => 'settings-input form-control',
 					'shortDesc' => $description,
 					'field_id'  => $field_id,
 					'data-form'  => $form_slug
@@ -278,7 +278,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								'quicktags'     => isset( $customfield['post_content_options'] ) ? in_array( 'quicktags', $customfield['post_content_options'] ) ? false : true : true,
 								'textarea_rows' => $textarea_rows,
 								'textarea_name' => 'buddyforms_form_content',
-								'editor_class'  => 'textInMce',
+								'editor_class'  => 'textInMce form-control',
 							);
 
 							if ( isset( $post_id ) ) {

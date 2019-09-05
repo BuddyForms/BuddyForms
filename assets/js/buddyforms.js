@@ -446,7 +446,7 @@ function BuddyForms() {
     }
 
     function addValidationRequired() {
-        jQuery.validator.addMethod("required", function (value, element, param) {
+        jQuery.validator.addMethod(".form-control:required", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
             if (
                 formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
@@ -458,6 +458,7 @@ function BuddyForms() {
             var fieldData = getFieldFromSlug(fieldSlug, formSlug);
             fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
             if (!fieldData) {//if not field data is not possible to validate it
+                console.log('no data', element);
                 return true;
             }
 
@@ -923,7 +924,9 @@ function BuddyForms() {
         var forms = jQuery('form[id^="buddyforms_form_"]');
         if (forms && forms.length > 0) {
             jQuery.each(forms, function () {
-                jQuery(this).submit(function () {
+                var currentForms = jQuery(this);
+                currentForms.submit(function () {
+                    BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
                 }).validate({
                     ignore: [],
                     errorPlacement: function (label, element) {
