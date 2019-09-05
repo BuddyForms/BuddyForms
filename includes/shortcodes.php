@@ -49,7 +49,7 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	unset( $args['slug'] );
 	unset( $args['id'] );
 
-	BuddyFormsAssets::front_js_css('',  $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	$create_edit_form = buddyforms_create_edit_form( $args, false );
@@ -57,19 +57,19 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 	return $create_edit_form;
 }
 
-
 /**
  * Shortcode to display author posts of a specific post type
  *
- * @package BuddyForms
+ * @param $args
+ *
  * @since 0.3 beta
  *
- * @param $args
+ * @package BuddyForms
  */
 function buddyforms_the_loop( $args ) {
 	global $the_lp_query, $buddyforms, $form_slug, $paged;
 
-	$caller = $posts_per_page = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_value = '';
+	$caller = $posts_per_page = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_compare = $meta_value = '';
 
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
@@ -82,14 +82,17 @@ function buddyforms_the_loop( $args ) {
 		'caller'              => $caller,
 		'post_parent'         => 0,
 		'query_option'        => '',
+		'list_posts_option'   => '',
 		'user_logged_in_only' => 'logged_in_only',
 		'meta_key'            => '',
 		'meta_value'          => '',
+		'meta_compare'        => '=',
 		'list_posts_style'    => '',
-		'posts_per_page'      => '10'
+		'posts_per_page'      => '10',
+		'posts_status'        => array( 'publish', 'pending', 'draft', 'future' )
 	), $args ) );
 
-	if ( ($user_logged_in_only == 'logged_in_only' ||  $user_logged_in_only == 'true' )&& ! is_user_logged_in() ) {
+	if ( ( $user_logged_in_only == 'logged_in_only' || $user_logged_in_only == 'true' ) && ! is_user_logged_in() ) {
 		buddyforms_wp_login_form();
 
 		return;
@@ -110,7 +113,7 @@ function buddyforms_the_loop( $args ) {
 		$query_option = isset( $buddyforms[ $form_slug ]['list_posts_option'] ) ? $buddyforms[ $form_slug ]['list_posts_option'] : '';
 	}
 
-	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] )) {
+	if ( empty( $post_type ) && ! empty( $buddyforms[ $form_slug ]['post_type'] ) ) {
 		$post_type = $buddyforms[ $form_slug ]['post_type'];
 	}
 
@@ -125,8 +128,6 @@ function buddyforms_the_loop( $args ) {
 	}
 
 	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', $author, $form_slug );
-
-	$post_status = array( 'publish', 'pending', 'draft', 'future' );
 
 	if ( ! $the_author_id ) {
 		$post_status = array( 'publish' );
@@ -154,7 +155,7 @@ function buddyforms_the_loop( $args ) {
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 				'meta_key'       => $meta_key,
-				'meta_compare'   => '=',
+				'meta_compare'   => $meta_compare,
 				'meta_value'     => $meta_value
 			);
 			break;
@@ -203,7 +204,7 @@ function buddyforms_the_loop( $args ) {
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 
-	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( $list_posts_style == 'table' ) {
@@ -288,7 +289,7 @@ function buddyforms_nav( $args ) {
 		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
-	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	$args['label'] = isset( $args['label_view'] ) ? $args['label_view'] : __( 'View', 'buddyforms' );
@@ -311,11 +312,11 @@ function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
-		'form_slug'  => '',
-		'label' => __( 'View', 'buddyforms' ),
+		'form_slug' => '',
+		'label'     => __( 'View', 'buddyforms' ),
 	), $args ) );
 
-	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $args['label'] . ' </a>';
@@ -336,13 +337,13 @@ function buddyforms_button_add_new( $args ) {
 	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label' => __( 'Add New', 'buddyforms' ),
+		'label'     => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
-	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' .  $args['label']  . '</a>';
+	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $args['label'] . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 
@@ -368,7 +369,7 @@ function buddyforms_view_login_form( $args ) {
 		'label_log_in'   => __( 'Log In', 'buddyforms' ),
 	), $args ) );
 
-	BuddyFormsAssets::front_js_css('', $form_slug);
+	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( is_user_logged_in() ) {
