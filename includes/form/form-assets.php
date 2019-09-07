@@ -58,8 +58,10 @@ class BuddyFormsAssets {
 
 		$found = apply_filters( 'buddyforms_front_js_css_loader', $found );
 
-		if ( $found && ! empty( $post ) && ! empty( $post->post_content ) ) {
-			self::front_js_css( $post->post_content, $form_slug );
+		$post_content = ! empty( $post ) && ! empty( $post->post_content ) ? $post->post_content : '';
+
+		if ( $found  ) {
+			self::front_js_css( $post_content, $form_slug );
 			self::load_tk_font_icons();
 		}
 
