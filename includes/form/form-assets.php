@@ -146,7 +146,7 @@ class BuddyFormsAssets {
 			'buddyforms_gdpr_localize' => $gpdr_translations,
 			'current_screen'           => '',//Keep for compatibility
 			'is_admin'                 => is_admin(),
-			'localize'                 => BuddyForms::localize_fields(),
+			'localize'                 => BuddyForms::localize_fields()
 		);
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 

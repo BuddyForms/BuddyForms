@@ -47,6 +47,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<?php while ( $the_lp_query->have_posts() ) : $the_lp_query->the_post();
 
+					$form_slug = apply_filters('buddyforms_loop_form_slug', $form_slug, get_the_ID());
+
 					$the_permalink = get_permalink();
 
 					if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) {
