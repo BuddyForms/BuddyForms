@@ -158,6 +158,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	if( empty($bfdesign['button_disable_css']) ) { ?>
     /* Design Options - Buttons */
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
+        margin-bottom: 10px;
     <?php
 			// Button Width
 			if( $bfdesign['button_width'] != 'inline' ) {

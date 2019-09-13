@@ -146,9 +146,12 @@ class BuddyFormsAssets {
 			'buddyforms_gdpr_localize' => $gpdr_translations,
 			'current_screen'           => '',//Keep for compatibility
 			'is_admin'                 => is_admin(),
-			'localize'                 => BuddyForms::localize_fields()
+			'localize'                 => BuddyForms::localize_fields(),
 		);
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
+
+		//Global frontend vars
+		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
 
 		do_action( 'buddyforms_front_js_css_after_enqueue', $content );
 	}
