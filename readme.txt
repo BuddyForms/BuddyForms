@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.5-beta1
+Stable tag: 2.5.5-beta2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.5-beta2 - 13 Sept 2019 =
+* Fixed the styles to be included in the shortcodes.
+* Fixed the category element to include the default value and the correct items.
+
 = 2.5.5-beta - 6 Sept 2019 =
 * Fixed the modal to create the pages from the wizard, the setting page and the form builder.
 * Added a new hook buddyforms_after_user_activation to hook after the user activation.
