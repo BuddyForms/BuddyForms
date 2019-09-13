@@ -8,11 +8,11 @@
 function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	global $buddyforms, $field_id;
 
-	$post_id = 0;
-	$form_slug = '';
-	$action = 'new';
+	$post_id      = 0;
+	$form_slug    = '';
+	$action       = 'new';
 	$customfields = array();
-	$post = false;
+	$post         = false;
 
 	if ( empty( $args ) ) {
 		return;
@@ -35,14 +35,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	}
 
 	if ( ! empty( $post_id ) ) {
-		$post = get_post( $post_id );
+		$post   = get_post( $post_id );
 		$action = ! empty( $post ) && $post->post_status !== 'auto-draft' ? 'edit' : 'new';
 	}
 
 	$current_user = false;
 	if ( $form_type === 'registration' && ! empty( $post_id ) ) {
 		$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
-		$current_user         = get_userdata( $bf_registration_user_id );
+		$current_user            = get_userdata( $bf_registration_user_id );
 	}
 
 	foreach ( $customfields as $field_id => $customfield ) {
@@ -61,7 +61,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			//Get form field value
 			switch ( $form_type ) {
 				case 'registration':
-					if(!empty($current_user->ID)) {
+					if ( ! empty( $current_user->ID ) ) {
 						$customfield_val = buddyforms_get_value_from_user_meta( $current_user->ID, $slug );
 					}
 					break;
@@ -107,7 +107,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					'class'     => 'settings-input form-control',
 					'shortDesc' => $description,
 					'field_id'  => $field_id,
-					'data-form'  => $form_slug
+					'data-form' => $form_slug
 				);
 
 				$customfield['field_id'] = $field_id;
@@ -163,12 +163,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield_val ) );
 						}
 						break;
 
 					case 'user_email':
-						if ( ! is_admin() || $recovering) {
+						if ( ! is_admin() || $recovering ) {
 							if ( is_user_logged_in() ) {
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
 									$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
@@ -177,7 +177,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug,  $customfield_val ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield_val ) );
 						}
 						break;
 
@@ -398,7 +398,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'comments' :
-						if ( !empty($the_post) && !empty( $the_post->comment_status ) ) {
+						if ( ! empty( $the_post ) && ! empty( $the_post->comment_status ) ) {
 							$element_attr['value'] = $the_post->comment_status;
 						}
 
@@ -606,7 +606,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'captcha' :
-						if ( ! is_user_logged_in() && ($action === 'new' || $action === 'edit')) {
+						if ( ! is_user_logged_in() && ( $action === 'new' || $action === 'edit' ) ) {
 							$element = new Element_Captcha( "Captcha", $attributes = null );
 							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
 							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );
@@ -624,7 +624,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					case 'featured_image':
 						Element_Upload::loadAssets();
 						//Featured image
-						wp_enqueue_script( 'buddyforms_featured_image_initializer',BUDDYFORMS_ASSETS .'resources/featured-image/featured-image-initializer.js', array( 'jquery' ), BUDDYFORMS_VERSION, true );
+						wp_enqueue_script( 'buddyforms_featured_image_initializer', BUDDYFORMS_ASSETS . 'resources/featured-image/featured-image-initializer.js', array( 'jquery' ), BUDDYFORMS_VERSION, true );
 
 						$upload_error_validation_message = isset( $customfield['upload_error_validation_message'] ) ? $customfield['upload_error_validation_message'] : "";
 						$max_file_size                   = isset( $customfield['max_file_size'] ) ? $customfield['max_file_size'] : 1;
@@ -744,12 +744,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							"upload_error_validation_message"   => $upload_error_validation_message,
 							"shortDesc"                         => $description,
 							"form_slug"                         => $form_slug
-						),  $customfield);
+						), $customfield );
 						$form->addElement( $upload_element );
 						break;
 					case 'file':
 
-						wp_enqueue_script( 'media-uploader-js', BUDDYFORMS_ASSETS. 'js/media-uploader.js', array( 'jquery' ) );
+						wp_enqueue_script( 'media-uploader-js', BUDDYFORMS_ASSETS . 'js/media-uploader.js', array( 'jquery' ) );
 
 						$attachment_ids = $customfield_val;
 
@@ -905,7 +905,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'allowClear'    => true,
 						);
 
-						$placeholder = !empty( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
+						$placeholder = ! empty( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
 						if ( ! isset( $customfield['multiple'] ) || empty( $customfield['taxonomy_default'] ) ) {
 							$args = array_merge( $args, Array( 'placeholder' => $placeholder, 'show_option_none' => $placeholder, 'option_none_value' => '' ) );
 						}
@@ -951,14 +951,18 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$required = $form->renderRequired();
 						}
 
-						$minimumResultsForSearch = empty( $customfield['taxonomy_default'] ) ? 'minimumResultsForSearch: -1,' : '';
-						$tags                    = isset( $customfield['create_new_tax'] ) ? 'tags: true,' : '';
-						$maximumSelectionLength  = isset( $customfield['maximumSelectionLength'] ) ? 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ',' : '';
-						$minimumInputLength      = isset( $customfield['minimumInputLength'] ) ? 'minimumInputLength: ' . $customfield['minimumInputLength'] . ',' : '';
-						$ajax_options            = '';
-						$is_ajax                 = isset( $customfield['ajax'] );
+						$minimumResultsForSearch = empty( $customfield['taxonomy_default'] ) ? 'minimumResultsForSearch: -1, ' : '';
+						$tags                    = isset( $customfield['create_new_tax'] ) ? 'tags: true, ' : '';
+						$maximumSelectionLength  = '';
+						if ( isset( $customfield['multiple'] ) && isset( $customfield['maximumSelectionLength'] ) ) {
+							$maximumSelectionLength = 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ', ';
+						}
+						$ajax_options = '';
+						$is_ajax      = isset( $customfield['ajax'] );
 						if ( $is_ajax ) {
-							$ajax_options .= $minimumInputLength;
+							if ( isset( $customfield['minimumInputLength'] ) ) {
+								$ajax_options .= 'minimumInputLength: ' . $customfield['minimumInputLength'] . ', ';
+							}
 							$ajax_options .= 'ajax:{ ' .
 							                 'url: "' . admin_url( 'admin-ajax.php' ) . '", ' .
 							                 'delay: 250, ' .
@@ -995,7 +999,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
                                      allowClear: true,
 							        ' . $tags . '
 							        tokenSeparators: [\',\']
-							    })
+							    });
 							    jQuery(".bf-select2-' . $field_id . '").on("change", function () {
 				                     var formSlug = jQuery(this).data("form");
 				                     if(formSlug){
@@ -1029,7 +1033,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						if ( isset( $customfield['options'] ) && is_array( $customfield['options'] ) ) {
 							//Add the script for gdpr
-							wp_enqueue_script( 'buddyforms-gdpr-js', BUDDYFORMS_ASSETS. 'js/gdpr.js', array( 'jquery' ), BUDDYFORMS_VERSION, false );
+							wp_enqueue_script( 'buddyforms-gdpr-js', BUDDYFORMS_ASSETS . 'js/gdpr.js', array( 'jquery' ), BUDDYFORMS_VERSION, false );
 
 							$label = $name;
 
@@ -1079,7 +1083,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$form = buddyforms_form_action_buttons( $form, $form_slug, $post_id, $customfield );
 						break;
 					case 'price':
-						$form->addElement( new Element_Price($name, $slug, $element_attr, $customfield) );
+						$form->addElement( new Element_Price( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					default:
