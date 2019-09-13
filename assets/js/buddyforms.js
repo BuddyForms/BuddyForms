@@ -808,10 +808,10 @@ function BuddyForms() {
                     }
                     var dateTimePickerConfig = {
                         format: fieldSaveFormat,
-                        formatDate: fieldDateFormat,
-                        formatTime: fieldTimeFormat,
+                        dateFormat: fieldDateFormat,
+                        timeFormat: fieldTimeFormat,
                         showTimepicker: enableTime || false,
-                        step: parseInt(fieldTimeStep),
+                        stepMinute: parseInt(fieldTimeStep),
                         onSelect: function () {
                             jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                         }
