@@ -458,7 +458,10 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 			// Display all actions
 			echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
-		} ?>
+		}
+
+		do_action( 'buddyforms_the_loop_actions_last', get_the_ID() );
+		?>
     </ul>
 	<?php
 }
