@@ -1506,6 +1506,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	}
 
+
 	$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
 
 
