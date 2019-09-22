@@ -424,12 +424,11 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			}
 
 
-			$current_user_can_edit    = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post, 'edit' );
-			$current_user_can_all     = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post, 'all' );
-			$current_user_can_delete  = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post, 'delete' );
+			$current_user_can_edit   = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post, 'edit' );
+			$current_user_can_all    = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post, 'all' );
+			$current_user_can_delete = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post, 'delete' );
 
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
-
 
 
 				if ( $current_user_can_edit || $current_user_can_all ) {
@@ -442,7 +441,6 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					echo '</li>';
 				}
 			}
-
 
 
 			if ( $current_user_can_delete || $current_user_can_all ) {
@@ -1449,6 +1447,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	global $buddyforms;
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 
+
 	$is_draft_enabled = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
 	$user_can_draft   = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
@@ -1504,9 +1503,11 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 		$form->addElement( $bf_submit_button );
 
-		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
 
 	}
+
+	$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
+
 
 	return $form;
 }
