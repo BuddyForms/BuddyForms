@@ -1447,7 +1447,6 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	global $buddyforms;
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 
-
 	$is_draft_enabled = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
 	$user_can_draft   = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
@@ -1466,7 +1465,9 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	$button_class = ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
 
-	if ( $is_draft_enabled && $user_can_draft ) {
+	$include_form_draft_button = apply_filters( 'buddyforms_include_form_draft_button', true, $form_slug, $form, $post_id );
+
+	if ( $is_draft_enabled && $user_can_draft && $include_form_draft_button ) {
 		if ( ! $exist_field_status && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() ) {
 			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
@@ -1484,7 +1485,9 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 		}
 	}
 
-	if ( $is_field_publish_enabled ) {
+	$include_form_submit_button = apply_filters( 'buddyforms_include_form_submit_button', true, $form_slug, $form, $post_id );
+
+	if ( $is_field_publish_enabled && $include_form_submit_button ) {
 		$bf_publish_button_classes = 'bf-submit ' . $button_class;
 
 		if ( ! empty( $form_type ) && $form_type === 'post' && ! $exist_field_status ) {
@@ -1502,8 +1505,6 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 		) );
 
 		$form->addElement( $bf_submit_button );
-
-
 	}
 
 
