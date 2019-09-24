@@ -297,7 +297,12 @@ function BuddyForms() {
     function bf_delete_post() {
         var post_id = jQuery(this).attr('id');
 
-        if (confirm('Delete Permanently')) {// todo need il18n
+        buddyformsGlobal.delete_text = 'Delete Permanently';
+
+        buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id] );
+
+
+        if (confirm(buddyformsGlobal.delete_text)) {// todo need il18n
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,

@@ -364,6 +364,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 		return;
 	}
+
 	global $buddyforms, $post;
 
 	if ( ! isset( $buddyforms[ $form_slug ] ) || empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
@@ -379,6 +380,8 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 		return;
 	}
+
+
 	?>
     <ul class="edit_links">
 		<?php
@@ -419,8 +422,15 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				$form_slug = $post_form_slug;
 			}
 
+
+			$current_user_can_edit   = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post, 'edit' );
+			$current_user_can_all    = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post, 'all' );
+			$current_user_can_delete = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post, 'delete' );
+
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
-				if ( current_user_can( 'buddyforms_' . $form_slug . '_edit' ) || current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+
+
+				if ( $current_user_can_edit || $current_user_can_all ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
@@ -430,7 +440,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					echo '</li>';
 				}
 			}
-			if ( current_user_can( 'buddyforms_' . $form_slug . '_delete' ) || current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+
+
+			if ( $current_user_can_delete || $current_user_can_all ) {
 				echo '<li>';
 				echo '<a title="' . __( 'Delete', 'buddyforms' ) . '"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"> </span> ' . __( 'Delete', 'buddyforms' ) . '</a></li>';
 				echo '</li>';
@@ -443,7 +455,10 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 			// Display all actions
 			echo apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp );
-		} ?>
+		}
+
+		do_action( 'buddyforms_the_loop_actions_last', get_the_ID() );
+		?>
     </ul>
 	<?php
 }
@@ -1060,11 +1075,21 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
 
 
-	return do_shortcode($display_message);
+	return do_shortcode( $display_message );
 }
 
 function buddyforms_user_fields_array() {
-	return array( 'user_login', 'user_email', 'user_first', 'user_last', 'user_pass', 'user_website', 'user_bio', 'country', 'state' );
+	return array(
+		'user_login',
+		'user_email',
+		'user_first',
+		'user_last',
+		'user_pass',
+		'user_website',
+		'user_bio',
+		'country',
+		'state'
+	);
 }
 
 function buddyforms_default_message_on_update() {
@@ -1254,7 +1279,7 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf', 'buddyforms_reset_password' ) ) {
+function buddyforms_get_form_slug_from_content($content, $shortcodes = array('bf-list-submissions','buddyforms_form','buddyforms_list_all','buddyforms_the_loop','bf','buddyforms_reset_password') ) {
 	//Extract from the a shortcode inside the content
 	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 	//Extract form the html inside the content, reading the hidden input form_slug
@@ -1335,7 +1360,12 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
 	 *
 	 * @since 2.4.0
 	 */
-	$granted = apply_filters( 'buddyforms_frontend_granted_forms_option', array( 'status', 'form_fields', 'draft_action', 'js_validation' ), $form_slug, $bf_post_id );
+	$granted = apply_filters( 'buddyforms_frontend_granted_forms_option', array(
+		'status',
+		'form_fields',
+		'draft_action',
+		'js_validation'
+	), $form_slug, $bf_post_id );
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
@@ -1425,7 +1455,9 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	$button_class = ! empty( $bfdesign['button_class'] ) ? $bfdesign['button_class'] : '';
 
-	if ( $is_draft_enabled && $user_can_draft ) {
+	$include_form_draft_button = apply_filters( 'buddyforms_include_form_draft_button', true, $form_slug, $form, $post_id );
+
+	if ( $is_draft_enabled && $user_can_draft && $include_form_draft_button ) {
 		if ( ! $exist_field_status && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() ) {
 			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
@@ -1443,7 +1475,9 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 		}
 	}
 
-	if ( $is_field_publish_enabled ) {
+	$include_form_submit_button = apply_filters( 'buddyforms_include_form_submit_button', true, $form_slug, $form, $post_id );
+
+	if ( $is_field_publish_enabled && $include_form_submit_button ) {
 		$bf_publish_button_classes = 'bf-submit ' . $button_class;
 
 		if ( ! empty( $form_type ) && $form_type === 'post' && ! $exist_field_status ) {
@@ -1461,10 +1495,11 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 		) );
 
 		$form->addElement( $bf_submit_button );
-
-		$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
-
 	}
+
+
+	$form = apply_filters( 'buddyforms_create_edit_form_button', $form, $form_slug, $post_id );
+
 
 	return $form;
 }

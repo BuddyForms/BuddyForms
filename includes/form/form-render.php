@@ -6,7 +6,7 @@
  * @return mixed|string
  */
 function buddyforms_form_html( $args ) {
-	global $buddyforms, $bf_form_error, $bf_submit_button, $post_id, $form_slug;
+	global $buddyforms, $bf_form_error, $post_id, $form_slug;
 
 	// First check if any form error exist
 	if ( ! empty( $bf_form_error ) ) {

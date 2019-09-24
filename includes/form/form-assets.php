@@ -147,6 +147,7 @@ class BuddyFormsAssets {
 			'current_screen'           => '',//Keep for compatibility
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields(),
+			'delete_text'              => __('Delete Permanently', 'buddyforms')
 		);
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 

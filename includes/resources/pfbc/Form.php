@@ -354,6 +354,11 @@ class Form extends Base {
 		}
 	}
 
+	public function overrideAllExistingElements( $new_elements ) {
+		if ( isset( $new_elements ) ) {
+			$this->_elements = array_values( $new_elements );
+		}
+	}
 
 	/**
 	 * @param array $values
