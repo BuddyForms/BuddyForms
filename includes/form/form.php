@@ -83,25 +83,24 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	}
 
 	// if post edit screen is displayed in pages
-	if ( isset( $wp_query->query_vars['bf_action'] ) ) {
+	if ( !empty( $wp_query->query_vars['bf_action'] ) ) {
 
-		$form_slug = '';
-		if ( isset( $wp_query->query_vars['bf_form_slug'] ) ) {
+		if ( !empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 			$form_slug = $wp_query->query_vars['bf_form_slug'];
 		}
 
 		$post_id = 0;
-		if ( isset( $wp_query->query_vars['bf_post_id'] ) ) {
+		if ( !empty( $wp_query->query_vars['bf_post_id'] ) ) {
 			$post_id = $wp_query->query_vars['bf_post_id'];
 		}
 
 		$post_parent = 0;
-		if ( isset( $wp_query->query_vars['bf_parent_post_id'] ) ) {
+		if ( !empty( $wp_query->query_vars['bf_parent_post_id'] ) ) {
 			$post_parent = $wp_query->query_vars['bf_parent_post_id'];
 		}
 
 		$revision_id = 0;
-		if ( isset( $wp_query->query_vars['bf_rev_id'] ) ) {
+		if ( !empty( $wp_query->query_vars['bf_rev_id'] ) ) {
 			$revision_id = $wp_query->query_vars['bf_rev_id'];
 		}
 
