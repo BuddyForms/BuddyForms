@@ -354,8 +354,6 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
  * @param $form_slug
  */
 function buddyforms_post_entry_actions( $form_slug ) {
-	global $buddyforms, $post;
-
 	if ( ! is_user_logged_in() ) {
 		echo '';
 
@@ -367,6 +365,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 		return;
 	}
 
+	global $buddyforms, $post;
 
 	if ( ! isset( $buddyforms[ $form_slug ] ) || empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
 		echo '';
@@ -1280,16 +1279,7 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content(
-	$content, $shortcodes = array(
-	'bf-list-submissions',
-	'buddyforms_form',
-	'buddyforms_list_all',
-	'buddyforms_the_loop',
-	'bf',
-	'buddyforms_reset_password'
-)
-) {
+function buddyforms_get_form_slug_from_content($content, $shortcodes = array('bf-list-submissions','buddyforms_form','buddyforms_list_all','buddyforms_the_loop','bf','buddyforms_reset_password') ) {
 	//Extract from the a shortcode inside the content
 	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 	//Extract form the html inside the content, reading the hidden input form_slug

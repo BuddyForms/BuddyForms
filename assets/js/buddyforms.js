@@ -297,7 +297,7 @@ function BuddyForms() {
     function bf_delete_post() {
         var post_id = jQuery(this).attr('id');
 
-        buddyformsGlobal.delete_text = '22Delete Permanently';
+        buddyformsGlobal.delete_text = 'Delete Permanently';
 
         buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id] );
 
