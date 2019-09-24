@@ -522,7 +522,7 @@ function buddyforms_update_post( $args ) {
 	$post_title = apply_filters( 'buddyforms_update_form_title', $default_post_title, $form_slug, $post_id );
 
 	$bf_post = array(
-		'ID'             => intval( $_POST['post_id'] ),
+		'ID'             => intval( $post_id ),
 		'post_author'    => $post_author,
 		'post_title'     => $post_title,
 		'post_name'      => sanitize_title( $post_title ),
