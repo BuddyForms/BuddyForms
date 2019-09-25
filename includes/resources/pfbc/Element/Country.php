@@ -256,6 +256,9 @@ class Element_Country extends Element_Select {
 			"ZM" => "Zambia",
 			"ZW" => "Zimbabwe"
 		);
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
+			$options = apply_filters( 'buddyforms_country_values', $options, $properties );
+		}
 		parent::__construct( $label, $name, $options, $properties );
 	}
 }

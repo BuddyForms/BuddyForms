@@ -16,8 +16,9 @@ abstract class OptionElement extends Element {
 	 * @param $name
 	 * @param array|null $options
 	 * @param array|null $properties
+	 * @param array|null $field_options
 	 */
-	public function __construct( $label, $name, $options, array $properties = null ) {
+	public function __construct( $label, $name, $options, array $properties = null, array $field_options = null ) {
 		if ( ! is_array( $options ) ) {
 			$options = Array();
 		}
@@ -26,7 +27,7 @@ abstract class OptionElement extends Element {
 			$this->options = array_combine( $this->options, $this->options );
 		}
 
-		parent::__construct( $label, $name, $properties );
+		parent::__construct( $label, $name, $properties, $field_options );
 	}
 
 	/**

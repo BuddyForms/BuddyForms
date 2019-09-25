@@ -67,6 +67,9 @@ class Element_State extends Element_Select {
 			"WI"      => "Wisconsin",
 			"WY"      => "Wyoming"
 		);
+		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
+			$options = apply_filters( 'buddyforms_state_values', $options, $properties );
+		}
 		parent::__construct( $label, $name, $options, $properties );
 	}
 }
