@@ -81,12 +81,15 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Form HTML Start. The Form is rendered as last step.
+	$form_html = '';
 	//Add the global css
 	ob_start();
 	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
 	$global_css = ob_get_clean();
-	$global_css = buddyforms_minify_css( $global_css );
-	$form_html  = $global_css;
+	if ( ! empty( $global_css ) ) {
+		$global_css = buddyforms_minify_css( $global_css );
+		$form_html  = $global_css;
+	}
 
 	if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
 		$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug, $post_id );
@@ -104,7 +107,9 @@ function buddyforms_form_html( $args ) {
 		echo "/* ]]> */\n";
 		echo "</script>\n";
 		$global_js = ob_get_clean();
-		$form_html .= $global_js;
+		if ( ! empty( $global_js ) ) {
+			$form_html .= $global_js;
+		}
 	}
 	// Form start point
 	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
@@ -181,9 +186,11 @@ function buddyforms_form_html( $args ) {
 	if ( $bfdesign['extras_disable_all_css'] == '' ) {
 		ob_start();
 		require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php' );
-		$layout    = ob_get_clean();
-		$layout    = buddyforms_minify_css( $layout );
-		$form_html .= $layout;
+		$layout = ob_get_clean();
+		if ( ! empty( $layout ) ) {
+			$layout    = buddyforms_minify_css( $layout );
+			$form_html .= $layout;
+		}
 	}
 
 
@@ -252,10 +259,11 @@ function buddyforms_form_html( $args ) {
 	$form = apply_filters( 'buddyforms_form_before_render', $form, $args );
 
 	// That's it! render the form!
-	ob_start();
 	$form->render();
-	$form_html .= ob_get_contents();
-	ob_clean();
+	$output = ob_get_clean();
+	if ( ! empty( $output ) ) {
+		$form_html .= $output;
+	}
 
 	$form_html .= '<div class="bf_modal"></div></div>';
 
@@ -263,8 +271,10 @@ function buddyforms_form_html( $args ) {
 	if ( isset( $buddyforms[ $form_slug ]['revision'] ) && $post_id != 0 ) {
 		ob_start();
 		buddyforms_wp_list_post_revisions( $post_id );
-		$form_html .= ob_get_contents();
-		ob_clean();
+		$output = ob_get_clean();
+		if ( ! empty( $output ) ) {
+			$form_html .= $output;
+		}
 	}
 
 	// Hook under the form inside the BuddyForms form div

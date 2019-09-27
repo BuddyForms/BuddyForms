@@ -288,8 +288,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$post    = 0; // todo: Not sure $post = 0 is needed.
 								wp_editor( $content, 'buddyforms_form_content', $settings );
 							}
-							$wp_editor = ob_get_contents();
-							ob_clean();
+							$wp_editor = ob_get_clean();
 
 							$required = '';
 							if ( isset( $customfield['required'] ) ) {
@@ -330,6 +329,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor, $post_id );
 
+							add_filter( 'the_content', 'do_shortcode', 11 );
 							$form->addElement( new Element_Content( $name, $slug, $wp_editor, $customfield ) );
 						}
 						break;
@@ -477,8 +477,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						);
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
-						$wp_editor = ob_get_contents();
-						ob_clean();
+						$wp_editor = ob_get_clean();
 
 						$wp_editor = str_replace( '<textarea', '<textarea name="' . $slug . '"', $wp_editor );
 
@@ -544,8 +543,6 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
 						$wp_editor = ob_get_contents();
-						ob_clean();
-
 
 						$wp_editor = str_replace( '<textarea', '<textarea name="' . $slug . '"', $wp_editor );
 

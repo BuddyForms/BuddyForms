@@ -38,8 +38,7 @@ function buddyforms_append_preview_page( $content ) {
 	// get the preview form
 	ob_start();
 	buddyforms_create_edit_form( $args );
-	$bf_form = ob_get_contents();
-	ob_clean();
+	$bf_form = ob_get_clean();
 
 	// Add the preview form to the content
 	$content .= $bf_form;
