@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.5-beta3
+Stable tag: 2.5.5
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,14 +389,19 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.5-beta3 - 13 Sept 2019 =
+= 2.5.5 - 30 Sept 2019 =
+* Added a new filter `buddyforms_current_user_can` to change the permission. The filter has 4 parameter permission, form slug, post, type (edit, delete, all).
+* Moved the BuddyForms js global above buddyforms_front_js_css_after_enqueue.
+* Add a new filter buddyforms_loop_form_slug to overwrite the form slug on a post basis in the loop.
+* Reformat the code of the-loop.php
+* Added 2 hooks to let 3rd party addons not include the form action buttons.
+* Added a new do action `buddyforms_the_loop_after_actions` to add actions buttons outside the normal action workflow.
+* Improved the compatibility with the BF UM addon. This change avoid to override the form slug from the query arguments coming from 3rd party addons.
+* Added hooks to change the Country and State list from the code in the professional version.
+* Disabled the select2 to include elements if the option is not activated.
 * Fixed the format for the date element.
-
-= 2.5.5-beta2 - 13 Sept 2019 =
 * Fixed the styles to be included in the shortcodes.
 * Fixed the category element to include the default value and the correct items.
-
-= 2.5.5-beta - 6 Sept 2019 =
 * Fixed the modal to create the pages from the wizard, the setting page and the form builder.
 * Added a new hook buddyforms_after_user_activation to hook after the user activation.
 * Added the time field using the jquery ui datepicker.
