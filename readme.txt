@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.5
+Stable tag: 2.5.6-beta1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.6-beta1 - 2 Oct 2019 =
+* Fixed the issue with the dropdown element where they let the user add text always.
+* Added support to use the element properties name with Upper letters, this changes improve compatibility with other extensions. Thanks to Joanna Pantages to bring this topic to us.
+
 = 2.5.5 - 30 Sept 2019 =
 * Added a new filter `buddyforms_current_user_can` to change the permission. The filter has 4 parameter permission, form slug, post, type (edit, delete, all).
 * Moved the BuddyForms js global above buddyforms_front_js_css_after_enqueue.
