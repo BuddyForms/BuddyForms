@@ -385,12 +385,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 
 							$element_attr['class']     = $element_attr['class'] . ' bf-select2';
-							$element_attr['data-tags'] = 'false';
+
 							$element                   = new Element_Select( $name, $slug, $options, $element_attr );
 
 							if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 								$element->setAttribute( 'multiple', 'multiple' );
 							}
+
+							$element->unsetAttribute( 'data-tags' );
 
 							BuddyFormsAssets::load_select2_assets();
 

@@ -299,7 +299,7 @@ function BuddyForms() {
 
         buddyformsGlobal.delete_text = 'Delete Permanently';
 
-        buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id] );
+        buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id]);
 
 
         if (confirm(buddyformsGlobal.delete_text)) {// todo need il18n
@@ -779,7 +779,6 @@ function BuddyForms() {
                     placeholder: "Select an option", // todo need il18n
                     tokenSeparators: [',', ' ']
                 };
-                options['tags'] = !!tags;
                 if (reset) {
                     options['allowClear'] = true;
                 }

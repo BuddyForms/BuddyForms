@@ -66,6 +66,16 @@ abstract class Base {
 		}
 	}
 
+	/**
+	 * @param $attribute
+	 */
+	public function unsetAttribute( $attribute ) {
+		if ( isset ( $this->_attributes ) ) {
+			unset( $this->_attributes[ $attribute ] );
+		}
+	}
+
+
 	/*This method prevents double/single quotes in html attributes from breaking the markup.*/
 
 	public function debug() {
@@ -167,7 +177,7 @@ abstract class Base {
 	 * @return string|void
 	 */
 	public function renderRequired( $echo = false ) {
-		$html   = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
+		$html = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
 		if ( $echo ) {
 			echo $html;
 		} else {
