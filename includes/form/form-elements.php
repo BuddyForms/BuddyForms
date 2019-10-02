@@ -545,7 +545,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
-						$wp_editor = ob_get_contents();
+						$wp_editor = ob_get_clean();
 
 						$wp_editor = str_replace( '<textarea', '<textarea name="' . $slug . '"', $wp_editor );
 
