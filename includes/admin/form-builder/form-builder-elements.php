@@ -75,7 +75,7 @@ function buddyforms_display_form_element( $args ) {
 		'required' => 1
 	) );
 
-	$field_slug                      = isset( $customfield['slug'] ) ? sanitize_title( $customfield['slug'] ) : $name;
+	$field_slug                      = isset( $customfield['slug'] ) ? buddyforms_sanitize_slug( $customfield['slug'] ) : $name;
 	$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b>' . sprintf( '<small>(%s)</small>', __( 'optional', 'buddyforms' ) ), "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
 		'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
 		'value'     => $field_slug,
@@ -1170,7 +1170,7 @@ JS;
 			$form_fields['general']['description'] = new Element_Textbox( '<b>' . __( 'Description:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][description]", array( 'value' => $description ) );
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
-            $field_slug                      = isset( $customfield['slug'] ) ? sanitize_title( $customfield['slug'] ) : 'featured_image';
+            $field_slug                      = isset( $customfield['slug'] ) ? buddyforms_sanitize_slug( $customfield['slug'] ) : 'featured_image';
             $form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b> <small>(optional)</small>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
                 'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
                 'value'     => $field_slug,

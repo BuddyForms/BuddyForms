@@ -197,7 +197,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// make sure the form fields slug and type is sanitised
 	if ( isset( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
 		foreach ( $buddyform['form_fields'] as $key => $field ) {
-			$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
+			$buddyform['form_fields'][ $key ]['slug'] = buddyforms_sanitize_slug( $field['slug'] );
 			$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
 		}
 	}

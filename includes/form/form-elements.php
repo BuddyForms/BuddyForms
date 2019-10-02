@@ -48,11 +48,11 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	foreach ( $customfields as $field_id => $customfield ) {
 
 		if ( isset( $customfield['slug'] ) ) {
-			$slug = sanitize_title( $customfield['slug'] );
+			$slug = buddyforms_sanitize_slug( $customfield['slug'] );
 		}
 
 		if ( empty( $slug ) ) {
-			$slug = sanitize_title( $customfield['name'] );
+			$slug = buddyforms_sanitize_slug( $customfield['name'] );
 		}
 
 		if ( $slug != '' ) {

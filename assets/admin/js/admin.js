@@ -644,7 +644,7 @@ jQuery(document).ready(function (jQuery) {
                 if (fieldContainer && fieldContainer.length > 0) {
                     var fieldNameValue = fieldContainer.find('tr.use_as_slug input[name="buddyforms_options[form_fields][' + field_id + '][name]"]').val();
                     if (fieldNameValue) {
-                        var slugFromName = slug(fieldNameValue, {lower: true});
+                        var slugFromName = slug(fieldNameValue, {lower: false});
                         fieldContainer.find('tr.slug' + field_id + ' input[name="buddyforms_options[form_fields][' + field_id + '][slug]"]').val(slugFromName);
                     }
                 }

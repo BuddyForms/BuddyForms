@@ -18,7 +18,7 @@ abstract class Base {
 			$available          = array_keys( get_class_vars( $class ) );
 			$property_reference = array();
 			foreach ( $available as $property ) {
-				$property_reference[ strtolower( $property ) ] = $property;
+				$property_reference[ trim( $property ) ] = $property;
 			}
 
 			/*The method reference lookup array is created so that "set" methods can be called
@@ -26,11 +26,11 @@ abstract class Base {
 			$available        = get_class_methods( $class );
 			$method_reference = array();
 			foreach ( $available as $method ) {
-				$method_reference[ strtolower( $method ) ] = $method;
+				$method_reference[ trim( $method ) ] = $method;
 			}
 
 			foreach ( $properties as $property => $value ) {
-				$property = strtolower( $property );
+				$property = trim( $property );
 				/*Properties beginning with "_" cannot be set directly.*/
 				if ( $property[0] != "_" ) {
 					/*If the appropriate class has a "set" method for the property provided, then

@@ -660,7 +660,7 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
 			}
 
 			if ( empty( $slug ) ) {
-				$slug = sanitize_title( $custom_field['name'] );
+				$slug = buddyforms_sanitize_slug( $custom_field['name'] );
 			}
 
 			$fields_slugs[] = $slug;
@@ -724,7 +724,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 			}
 
 			if ( empty( $slug ) ) {
-				$slug = sanitize_title( $custom_field['name'] );
+				$slug = buddyforms_sanitize_slug( $custom_field['name'] );
 			}
 
 			if ( $field_slug === $slug ) {
@@ -765,7 +765,7 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
 			}
 
 			if ( empty( $slug ) ) {
-				$slug = sanitize_title( $custom_field['name'] );
+				$slug = buddyforms_sanitize_slug( $custom_field['name'] );
 			}
 
 			$meta_value = get_post_meta( $post_id, $slug, true );
@@ -949,7 +949,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 		}
 
 		if ( empty( $slug ) ) {
-			$slug = sanitize_title( $customfield['name'] );
+			$slug = buddyforms_sanitize_slug( $customfield['name'] );
 		}
 
 		// Update the post
@@ -1326,7 +1326,7 @@ function buddyforms_after_update_post( $post_ID, $post ) {
 				$slug = $field['slug'];
 			}
 			if ( empty( $slug ) ) {
-				$slug = sanitize_title( $field['name'] );
+				$slug = buddyforms_sanitize_slug( $field['name'] );
 			}
 			switch ( $field['type'] ) {
 				case 'title':

@@ -56,12 +56,12 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 
 			// Sanitize the field slug
 			if ( isset( $customfield['slug'] ) ) {
-				$field_slug = sanitize_title( $customfield['slug'] );
+				$field_slug = buddyforms_sanitize_slug( $customfield['slug'] );
 			}
 
 			// If the field slug is empty generate one from the name
 			if ( empty( $field_slug ) ) {
-				$field_slug = sanitize_title( $customfield['name'] );
+				$field_slug = buddyforms_sanitize_slug( $customfield['name'] );
 			}
 
 			// Make sure we have a field slug and name

@@ -5,7 +5,7 @@
 //
 add_action( 'wp_ajax_buddyforms_form_builder_wizard_types', 'buddyforms_form_builder_wizard_types' );
 function buddyforms_form_builder_wizard_types() {
-	echo buddyforms_form_builder_templates(true);
+	echo buddyforms_form_builder_templates( true );
 	die();
 }
 
@@ -73,10 +73,12 @@ function buddyforms_form_builder_wizard_save() {
 	$buddyform['slug'] = $post->post_name;
 
 	// make sure the form fields slug and type is sanitised
-	if ( isset( $buddyform['form_fields'] ) ) : foreach ( $buddyform['form_fields'] as $key => $field ) {
-		$buddyform['form_fields'][ $key ]['slug'] = sanitize_title( $field['slug'] );
-		$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
-	} endif;
+	if ( isset( $buddyform['form_fields'] ) ) {
+		foreach ( $buddyform['form_fields'] as $key => $field ) {
+			$buddyform['form_fields'][ $key ]['slug'] = buddyforms_sanitize_slug( $field['slug'] );
+			$buddyform['form_fields'][ $key ]['type'] = sanitize_title( $field['type'] );
+		}
+	}
 
 	// Update post meta
 	update_post_meta( $form, '_buddyforms_options', $buddyform );

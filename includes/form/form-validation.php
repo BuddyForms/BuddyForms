@@ -203,7 +203,7 @@ function buddyforms_sanitize( $type, $value ) {
 			$value = is_numeric( $value ) ? $value : 0;
 			break;
 		case 'title':
-			$value = sanitize_title( $value );
+			$value = sanitize_text_field( $value );
 			break;
 		case 'content':
 			$value = esc_textarea( $value );

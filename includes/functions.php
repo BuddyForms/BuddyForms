@@ -1577,3 +1577,92 @@ function bf_user_can( $user_id, $capability, $args = array(), $form_slug = '' ) 
 function buddyforms_get_exclude_field_slugs() {
 	return apply_filters( 'buddyforms_submission_exclude_columns', array( 'user_pass', 'captcha', 'html' ) );
 }
+
+/**
+ * Sanitizes a slug for an element, replacing whitespace and a few other characters with dashes.
+ *
+ * @param string $slug The title to be sanitized.
+ * @param string $context Optional. The operation for which the string is sanitized.
+ *
+ * @return string The sanitized title.
+ * @since 2.5.6
+ *
+ * @see sanitize_title_with_dashes
+ */
+function buddyforms_sanitize_slug( $slug, $context = 'save' ) {
+	$slug = strip_tags( $slug );
+	// Preserve escaped octets.
+	$slug = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $slug );
+	// Remove percent signs that are not part of an octet.
+	$slug = str_replace( '%', '', $slug );
+	// Restore octets.
+	$slug = preg_replace( '|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $slug );
+
+	if ( seems_utf8( $slug ) ) {
+		$slug = utf8_uri_encode( $slug, 200 );
+	}
+
+	if ( 'save' == $context ) {
+		// Convert nbsp, ndash and mdash to hyphens
+		$slug = str_replace( array( '%c2%a0', '%e2%80%93', '%e2%80%94' ), '-', $slug );
+		// Convert nbsp, ndash and mdash HTML entities to hyphens
+		$slug = str_replace( array( '&nbsp;', '&#160;', '&ndash;', '&#8211;', '&mdash;', '&#8212;' ), '-', $slug );
+		// Convert forward slash to hyphen
+		$slug = str_replace( '/', '-', $slug );
+
+		// Strip these characters entirely
+		$slug = str_replace(
+			array(
+				// soft hyphens
+				'%c2%ad',
+				// iexcl and iquest
+				'%c2%a1',
+				'%c2%bf',
+				// angle quotes
+				'%c2%ab',
+				'%c2%bb',
+				'%e2%80%b9',
+				'%e2%80%ba',
+				// curly quotes
+				'%e2%80%98',
+				'%e2%80%99',
+				'%e2%80%9c',
+				'%e2%80%9d',
+				'%e2%80%9a',
+				'%e2%80%9b',
+				'%e2%80%9e',
+				'%e2%80%9f',
+				// copy, reg, deg, hellip and trade
+				'%c2%a9',
+				'%c2%ae',
+				'%c2%b0',
+				'%e2%80%a6',
+				'%e2%84%a2',
+				// acute accents
+				'%c2%b4',
+				'%cb%8a',
+				'%cc%81',
+				'%cd%81',
+				// grave accent, macron, caron
+				'%cc%80',
+				'%cc%84',
+				'%cc%8c',
+			),
+			'',
+			$slug
+		);
+
+		// Convert times to x
+		$slug = str_replace( '%c3%97', 'x', $slug );
+	}
+
+	$slug = preg_replace( '/&.+?;/', '', $slug ); // kill entities
+	$slug = str_replace( '.', '-', $slug );
+
+	$slug = preg_replace( '/[^%a-zA-Z0-9 _-]/', '', $slug );
+	$slug = preg_replace( '/\s+/', '-', $slug );
+	$slug = preg_replace( '|-+|', '-', $slug );
+	$slug = trim( $slug, '-' );
+
+	return $slug;
+}
