@@ -774,11 +774,12 @@ function BuddyForms() {
         if (bf_select_2.length > 0) {
             bf_select_2.each(function () {
                 var reset = jQuery(this).attr('data-reset');
+                var tags = jQuery(this).attr('data-tags');
                 var options = {
                     placeholder: "Select an option", // todo need il18n
-                    tags: true,
                     tokenSeparators: [',', ' ']
                 };
+                options['tags'] = !!tags;
                 if (reset) {
                     options['allowClear'] = true;
                 }
