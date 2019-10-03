@@ -115,11 +115,11 @@ class BuddyFormsSubmissionPage {
 	 * Determine if the user have the capability to get the submission for this form.
 	 * Note: This return true for user with admin role, checking the `activate_plugins` capability
 	 *
-	 * @since 2.3.1
-	 *
 	 * @param $form_slug
 	 *
 	 * @return bool
+	 * @since 2.3.1
+	 *
 	 */
 	function has_the_capability( $form_slug ) {
 		if ( empty( $form_slug ) ) {
@@ -249,7 +249,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( $bf_field !== false ) {
 			$this->get_column_values( $column_name, $bf_field['type'], $item, $bf_value, $bf_field );
 		}
-		if ( $column_name == 'Date' ) {
+		if ( $column_name == 'Creation_Date' ) {
 			echo get_the_date( 'F j, Y', $item->ID );
 		}
 		if ( $column_name == 'Author' ) {
@@ -263,9 +263,9 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	}
 
 	public function get_column_values( $field_slug, $field_type, $item, $bf_value, $bf_field ) {
-	    $post = get_post( $item->ID );
+		$post = get_post( $item->ID );
 
-	    $bf_value = buddyforms_get_field_output($item->ID, $bf_field, $post, $bf_value, $field_slug);
+		$bf_value = buddyforms_get_field_output( $item->ID, $bf_field, $post, $bf_value, $field_slug );
 
 		echo apply_filters( "bf_submission_column_default", $bf_value, $item, $field_type, $field_slug );
 	}
@@ -314,15 +314,15 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		global $buddyforms;
 
 		$columns = array(
-			'ID'     => 'ID',
-			'Author' => __( 'Author', 'buddyforms' ),
-			'Date'   => __( 'Date', 'buddyforms' ),
+			'ID'            => 'ID',
+			'Author'        => __( 'Author', 'buddyforms' ),
+			'Creation_Date' => __( 'Creation Date', 'buddyforms' ),
 		);
 
 		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $_GET['form_slug'] ]['form_fields'] as $key => $field ) {
-				if ( ! empty( $field['slug'] ) && ! empty( $field['name'] ) && !in_array($field['slug'], $this->exclude_columns) ) {
-					$columns[ $field['slug'] ] = $field['name'];
+				if ( ! empty( $field['slug'] ) && ! in_array( $field['slug'], $this->exclude_columns ) ) {
+					$columns[ $field['slug'] ] = ! empty( $field['name'] ) ? $field['name'] : $field['slug'];
 				}
 			}
 

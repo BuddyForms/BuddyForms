@@ -816,7 +816,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			$meta_value = ( ! empty( $result ) ) ? trim( $result ) : '';
 			break;
-		case 'Date':
+		case 'Creation_Date':
 			$meta_value = get_the_date( 'F j, Y', $post_id );
 			break;
 		case 'category':

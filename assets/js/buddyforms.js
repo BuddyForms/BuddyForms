@@ -802,16 +802,14 @@ function BuddyForms() {
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
                     var fieldTimeStep = (fieldData.element_time_step) ? fieldData.element_time_step : 60;
-                    var fieldSaveFormat = (fieldData.element_save_format) ? fieldData.element_save_format : 'Y/m/d H:i';
-                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'Y/m/d';
-                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'H:i';
+                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'mm/dd/yy';
+                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'hh:mm tt';
                     var enableTime = (fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
                     var enableDate = (fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
                     if (!enableDate && !enableTime) {
                         enableDate = true;
                     }
                     var dateTimePickerConfig = {
-                        format: fieldSaveFormat,
                         dateFormat: fieldDateFormat,
                         timeFormat: fieldTimeFormat,
                         showTimepicker: enableTime || false,

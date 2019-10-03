@@ -92,6 +92,11 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					$name = stripcslashes( $customfield['name'] );
 				}
 
+				//Fix to avoid element with no name, because they submit will not include it
+				if ( empty( $name ) && ! empty( $slug ) ) {
+					$name = $slug;
+				}
+
 				$name = apply_filters( 'buddyforms_form_field_name', $name, $post_id );
 
 				$description = '';
