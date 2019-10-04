@@ -930,7 +930,20 @@ function BuddyForms() {
                 currentForms.submit(function () {
                     BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
                 }).validate({
-                    ignore: [],
+                    ignore: function(index, element){
+                        var formSlug = getFormSlugFromFormElement(element);
+                        var targetElement = jQuery(element);
+                        if(!targetElement.is(':hidden')) {
+                            var ignore = true;
+                            if (targetElement.hasClass('form-control')) {
+                                ignore = false;
+                            }
+
+                            return BuddyFormsHooks.applyFilters('buddyforms:validation:ignore', ignore, [targetElement, index, formSlug]);
+                        } else {
+                            return true;
+                        }
+                    },
                     errorPlacement: function (label, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var fieldSlug = jQuery(element).attr('name');
