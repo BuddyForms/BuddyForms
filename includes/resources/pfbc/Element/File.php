@@ -16,7 +16,8 @@ class Element_File extends Element_Textbox {
 	public function render() {
 		ob_start();
 		parent::render();
-		$box = ob_get_clean();
+		$box = ob_get_contents();
+		ob_end_clean();
 		if ( $this->bootstrapVersion == 3 ) {
 			echo $box;
 		} else {

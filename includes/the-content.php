@@ -66,13 +66,15 @@ function buddyforms_attached_page_content( $content ) {
 		if ( $action == 'create' || $action == 'edit' || $action == 'revision' ) {
 			ob_start();
 			buddyforms_create_edit_form( $args );
-			$bf_form = ob_get_clean();
+			$bf_form = ob_get_contents();
+			ob_clean();
 			$new_content = $bf_form;
 		}
 		if ( $action == 'view' ) {
 			ob_start();
 			buddyforms_the_loop( $args );
-			$bf_form = ob_get_clean();
+			$bf_form = ob_get_contents();
+			ob_clean();
 			$new_content = $bf_form;
 		}
 

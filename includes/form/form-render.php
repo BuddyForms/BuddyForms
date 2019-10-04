@@ -217,7 +217,7 @@ function buddyforms_form_html( $args ) {
 
 	ob_start();
 	do_action( 'template_notices' );
-	$template_notices = ob_get_clean();
+	$template_notices = ob_get_contents();
 	$form->addElement( new Element_HTML( $template_notices ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
 	//Honey Pot

@@ -390,7 +390,8 @@ class Form extends Base {
 		$this->view->render( $element );
 
 		if ( $returnHTML ) {
-			$html = ob_get_clean();
+			$html = ob_get_contents();
+			ob_end_clean();
 
 			return $html;
 		}

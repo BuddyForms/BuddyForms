@@ -1401,7 +1401,8 @@ JS;
     </div>
     </li>
 	<?php
-	$field_html = ob_get_clean();
+	$field_html = ob_get_contents();
+	ob_end_clean();
 
 	if ( is_array( $args ) ) {
 		return $field_html;
