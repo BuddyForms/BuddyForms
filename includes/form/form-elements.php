@@ -667,11 +667,11 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$message = __( 'Drop the image here to upload', 'buddyforms' );
 						$box     = "<h2 class=\"hndle bf_woo\"><span class=\"woo_element_span\">$label_name</span></h2>
-                                    <div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone featured-image-uploader dz-clickable\" id=\"$id\"  action='$feature_action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
+                                    <div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone form-control featured-image-uploader dz-clickable\" id=\"$id\"  action='$feature_action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
                                          <div class=\"dz-default dz-message\" data-dz-message=\"\">
                                               <span>$message</span>
                                          </div>
-                                        <input type='text' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
+                                        <input type='text' class='form-control' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
                                  </div></div></div> <span class='help-inline'>$description</span>";
 
 						$form->addElement( new Element_HTML( $box ) );
