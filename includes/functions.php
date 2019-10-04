@@ -1279,7 +1279,7 @@ function buddyforms_get_form_slug_from_shortcode( $content, $shortcodes = array(
  *
  * @return string
  */
-function buddyforms_get_form_slug_from_content($content, $shortcodes = array('bf-list-submissions','buddyforms_form','buddyforms_list_all','buddyforms_the_loop','bf','buddyforms_reset_password') ) {
+function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( 'bf-list-submissions', 'buddyforms_form', 'buddyforms_list_all', 'buddyforms_the_loop', 'bf', 'buddyforms_reset_password' ) ) {
 	//Extract from the a shortcode inside the content
 	$form_slug = buddyforms_get_shortcode_tag( $shortcodes, array( 'form_slug', 'id' ), $content );
 	//Extract form the html inside the content, reading the hidden input form_slug
@@ -1462,11 +1462,12 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
 			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'button', array(
-				'id'          => $form_slug . '-draft',
-				'class'       => $bf_draft_button_classes,
-				'name'        => 'draft',
-				'data-target' => $form_slug,
-				'data-status' => 'draft',
+				'id'             => $form_slug . '-draft',
+				'class'          => $bf_draft_button_classes,
+				'name'           => 'draft',
+				'formnovalidate' => 'formnovalidate',
+				'data-target'    => $form_slug,
+				'data-status'    => 'draft',
 			) );
 
 			if ( $bf_draft_button ) {

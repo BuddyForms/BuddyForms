@@ -933,16 +933,16 @@ function BuddyForms() {
                     ignore: function(index, element){
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
-                        if(!targetElement.is(':hidden')) {
-                            var ignore = true;
-                            if (targetElement.hasClass('form-control')) {
-                                ignore = false;
-                            }
-
-                            return BuddyFormsHooks.applyFilters('buddyforms:validation:ignore', ignore, [targetElement, index, formSlug]);
-                        } else {
-                            return true;
+                        var hasControlClass = targetElement.hasClass('form-control');
+                        var hasFormAttr = targetElement.attr('data-form');
+                        var ignore = true;
+                        if ( hasFormAttr || hasControlClass) {
+                            ignore = false;
                         }
+
+                        ignore = BuddyFormsHooks.applyFilters('buddyforms:validation:ignore', ignore, [targetElement, index, formSlug]);
+
+                        return ignore;
                     },
                     errorPlacement: function (label, element) {
                         var formSlug = getFormSlugFromFormElement(element);
