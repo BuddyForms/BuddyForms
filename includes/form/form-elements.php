@@ -140,11 +140,11 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'country':
-						$form->addElement( new Element_Country( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Country( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					case 'state':
-						$form->addElement( new Element_State( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_State( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					case 'message':

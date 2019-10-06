@@ -930,13 +930,13 @@ function BuddyForms() {
                 currentForms.submit(function () {
                     BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
                 }).validate({
-                    ignore: function(index, element){
+                    ignore: function (index, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
                         var hasControlClass = targetElement.hasClass('form-control');
                         var hasFormAttr = targetElement.attr('data-form');
                         var ignore = true;
-                        if ( hasFormAttr || hasControlClass) {
+                        if (hasFormAttr || hasControlClass) {
                             ignore = false;
                         }
 
@@ -1129,6 +1129,44 @@ function BuddyForms() {
         }
     }
 
+    function onCountryChange() {
+        var currentElement = jQuery(this);
+        var countryCodeSelected = currentElement.val();
+        var formSlug = getFormSlugFromFormElement(currentElement);
+        if (formSlug) {
+            var currentForm = jQuery('#buddyforms_form_' + formSlug);
+            if (currentForm.length > 0) {
+                var stateElement = currentForm.find('.bf-state').first();
+                var currentFieldSlug = jQuery(currentElement).attr('name');
+                if (currentFieldSlug && formSlug) {
+                    var fieldStateData = getFieldFromSlug(currentFieldSlug, formSlug);
+                    var isLinkedCountry = (fieldStateData.link_with_state) ? fieldStateData.link_with_state : false;
+                    if(isLinkedCountry && isLinkedCountry[0] && isLinkedCountry[0] === 'link') {
+                        if (stateElement.length > 0) {
+                            if (countryCodeSelected) {
+                                var existState = stateElement.children('option[data-country="' + countryCodeSelected + '"]');
+                                if (existState.length > 0) {
+                                    stateElement.children('option').hide();
+                                    stateElement.children('option[data-country="nostate"]').hide();
+                                    existState.show();
+                                } else {
+                                    stateElement.children('option').hide();
+                                    stateElement.children('option[data-country="nostate"]').show();
+                                }
+                            } else {
+                                stateElement.children('option').hide();
+                                stateElement.children('option[data-country="nostate"]').show();
+                            }
+                        }
+                        stateElement.val('');
+                    } else {
+                        stateElement.children('option').show();
+                    }
+                }
+            }
+        }
+    }
+
     return {
         submissionModal: function (target) {
             submissionModal = target;
@@ -1173,6 +1211,7 @@ function BuddyForms() {
             jQuery(document).on("click", '.bf-submission-modal', openSubmissionModal);
             jQuery(document).on("click", '.bf-close-submissions-modal', closeSubmissionModal);
             jQuery(document).on("click", '.create-new-tax-item', createTaxItem);
+            jQuery(document).on("change", '.bf-country', onCountryChange);
 
             //Events
             BuddyFormsHooks.addAction('buddyforms:submit:disable', disableFormSubmit);

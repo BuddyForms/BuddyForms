@@ -108,8 +108,40 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength,'min'=>0, 'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"text")' ) );
             break;
 		case 'country':
+		    $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Country', 'buddyforms' );
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'class'    => "use_as_slug",
+				'value'    => $name,
+				'required' => 1
+			) );
+			$country_json_list                      = !empty( $customfield['country_list'] ) ? stripcslashes( $customfield['country_list'] ) : wp_json_encode( Element_Country::get_country_list() );
+			$form_fields['general']['country_list'] = new Element_Textarea( '<b>' . __( 'Country JSON:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][country_list]", array(
+				'value'     => $country_json_list,
+				'style'     => 'resize: both; width:100%',
+				'shortDesc' => __( 'This is the list of Countries with code and name. Consider the Code is used to match with the State element when they are link. Provide a valid JSON. Leave empty to reset the list. Read more in the documentation.', 'buddyforms' )
+			) );
+			$link_with_state                         = isset( $customfield['link_with_state'] ) ? $customfield['link_with_state'] : 'show';
+			$form_fields['general']['link_with_state'] = new Element_Checkbox( '<b>' . __( 'Link with State', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][link_with_state]", array( 'link' => '<b>' . __( 'Show the State from the selected Country', 'buddyforms' ) . '</b>' ), array(
+				'value'     => $link_with_state,
+				'id'        => "buddyforms_options[form_fields][" . $field_id . "][link_with_state]",
+				'shortDesc' => __( 'Select this option to show the State from the item selected in the Country list.', 'buddyforms' )
+			) );
 			break;
 		case 'state':
+		    $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'State', 'buddyforms' );
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'data'     => $field_id,
+				'class'    => "use_as_slug",
+				'value'    => $name,
+				'required' => 1
+			) );
+			$state_json_list                      = !empty( $customfield['state_list'] ) ? stripcslashes( $customfield['state_list'] ) : wp_json_encode( Element_State::get_state_list() );
+			$form_fields['general']['state_list'] = new Element_Textarea( '<b>' . __( 'State JSON:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][state_list]", array(
+				'value'     => $state_json_list,
+				'style'     => 'resize: both; width:100%',
+				'shortDesc' => __( 'This is the list of State with Country code, State code and name. Provide a valid JSON. Leave empty to reset the list. Read more in the documentation.', 'buddyforms' )
+			) );
 			break;
 		case 'subject':
 			unset( $form_fields['advanced']['slug'] );
@@ -1022,6 +1054,7 @@ JS;
 			break;
 		case 'hidden':
 			unset( $form_fields );
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Hidden', 'buddyforms' );
 			$form_fields['hidden']['name']   = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", $field_slug );
 			$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
 				'required' => true,
@@ -1185,7 +1218,13 @@ JS;
 
 			break;
 		case 'file':
-
+            $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'File', 'buddyforms' );
+            $form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'value'    => $name,
+				'data'     => $field_id,
+				'class'    => "use_as_slug",
+				'required' => 1
+			) );
 			$validation_multiple                            = isset( $customfield['validation_multiple'] ) ? $customfield['validation_multiple'] : 0;
 			$form_fields['advanced']['validation_multiple'] = new Element_Checkbox( '<b>' . __( 'Only one file or multiple?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_multiple]", array( 'multiple' => '<b>' . __( 'Allow multiple file upload', 'buddyforms' ) . '</b>' ), array( 'value' => $validation_multiple ) );
 
@@ -1196,6 +1235,7 @@ JS;
 			break;
 		case 'html':
 			unset( $form_fields );
+			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'HTML', 'buddyforms' );
 			$html                                  = isset( $customfield['html'] ) ? stripcslashes( $customfield['html'] ) : '';
 			$form_fields['general']['description'] = new Element_Textarea( '<b>' . __( 'HTML:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][html]", array( 'value' => $html ) );
 			$form_fields['hidden']['name']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][name]", 'HTML' );
@@ -1204,7 +1244,6 @@ JS;
 			break;
 		case 'gdpr':
 			unset( $form_fields );
-
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'GDPR Agreement', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'value'    => $name,
@@ -1255,6 +1294,15 @@ JS;
 			) );
             $form_fields = Element_Price::builder_element_options($form_fields, $form_slug, $field_type, $field_id, $buddyform );
             break;
+        case 'range':
+            $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Range', 'buddyforms' );
+			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+				'value'    => $name,
+				'data'     => $field_id,
+				'class'    => "use_as_slug",
+				'required' => 1
+			) );
+        break;
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );
 			break;
