@@ -49,7 +49,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 		}
 	}
 
-	$current_user_id = apply_filters( 'buddyforms_current_user_id', $current_user_id, $form_type, $form_slug, $post_id, $action );
+	$current_user_id = apply_filters( 'buddyforms_current_user_id', $current_user_id, $form_type, $form_slug, $post_id );
 
 	foreach ( $customfields as $field_id => $customfield ) {
 

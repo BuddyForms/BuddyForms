@@ -56,13 +56,14 @@ function buddyforms_process_submission( $args = array() ) {
 		$user_id = $post_author;
 	}
 
-	$current_user = get_user_by( 'ID', $user_id );
-
-
 	// Check if multisite is enabled and switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
 	$form_type = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
+
+	$user_id = apply_filters( 'buddyforms_current_user_id', $user_id, $form_type, $form_slug, $post_id );
+
+	$current_user = get_user_by( 'ID', $user_id );
 
 	$user_data = array();
 	if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && isset( $buddyforms[ $form_slug ]['user_data'] ) ) {
@@ -406,8 +407,10 @@ function buddyforms_process_submission( $args = array() ) {
 
 		//TODO gfirem this need to be in other way review with @sven
 		// Check if user is logged in and update user relevant fields if used in the form
-		if ( is_user_logged_in() && 'registration' == $form_type && $have_user_fields === true ) {
-			$user_id = buddyforms_wp_update_user();
+		if ( is_user_logged_in() && 'registration' == $form_type ) {
+			if($have_user_fields === true) {
+				$user_id = buddyforms_wp_update_user();
+			}
 			// If this was a registration form save the user id
 			if ( isset( $user_id ) ) {
 				update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
