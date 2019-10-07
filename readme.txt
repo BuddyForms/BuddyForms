@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.7
+Stable tag: 2.5.8-beta1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,14 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.8-beta1 - 7 Oct 2019 =
+* Added an implementation to avoid acf field from form validation.
+* Added a new way to edit the list of Countries and States from the elements options.
+* Added a new option into the Country element to load the States for the next State element base on the Country key present in State list. More in the documentation https://docs.buddyforms.com/article/582-country-and-state-elements.
+* Added the default name of does fields which not was adding it when they was added to the form.
+* Fixed the store/load values for elements like the number field in a registration form.
+* Fixed the store/load values for elements from a registration form.
+
 = 2.5.7 - 4 Oct 2019 =
 * Fixed the issue with the output buffer.
 
