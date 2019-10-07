@@ -18,15 +18,15 @@ function buddyforms_process_submission( $args = array() ) {
 	$hasError      = false;
 	$error_message = '';
 
-	$post_type   = '';
-	$the_post    = '';
-	$revision_id = '';
-	$redirect_to = '';
-	$post_id     = 0;
-	$post_author = 0;
-	$post_parent = 0;
+	$post_type     = '';
+	$the_post      = '';
+	$revision_id   = '';
+	$redirect_to   = '';
+	$post_id       = 0;
+	$post_author   = 0;
+	$post_parent   = 0;
 	$post_category = '';
-	$bf_hweb     = '';
+	$bf_hweb       = '';
 
 	extract( shortcode_atts( array(
 		'post_type'   => '',
@@ -354,8 +354,13 @@ function buddyforms_process_submission( $args = array() ) {
 	if ( ! empty( $args['status'] ) && $exist_field_status ) {
 		$post_status = $args['status'];
 	}
-	$post_status   = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
-	$the_author_id = apply_filters( 'buddyforms_the_author_id', $the_post->post_author, $form_slug, $post_id );
+	$post_status = apply_filters( 'buddyforms_create_edit_form_post_status', $post_status, $form_slug );
+	if ( $post_id != 0 && $form_type !== 'registration' ) {
+		$the_author_id = $the_post->post_author;
+	} else {
+		$the_author_id = $user_id;
+	}
+	$the_author_id = apply_filters( 'buddyforms_the_author_id', $the_author_id, $form_slug, $post_id, $form_type );
 
 	$args = Array(
 		'post_id'        => $post_id,
@@ -513,7 +518,7 @@ function buddyforms_update_post( $args ) {
 		if ( ! empty( $new_user ) && ! is_wp_error( $new_user ) ) {
 			$default_post_title = ! empty( $new_user->user_nicename ) ? $new_user->user_nicename : ! empty( $new_user->user_login ) ? $new_user->user_login : __( 'none', 'buddyforms' );
 		}
-	} else if ( 'contact' === $form_type ) {
+	} elseif ( 'contact' === $form_type ) {
 		$default_post_title = ! empty( $_POST['subject'] ) ? stripslashes( $_POST['subject'] ) : __( 'none', 'buddyforms' );
 	} else {
 		$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( $_POST['buddyforms_form_title'] ) : __( 'none', 'buddyforms' );
@@ -533,8 +538,8 @@ function buddyforms_update_post( $args ) {
 		'post_parent'    => $post_parent,
 	);
 
-	if($has_post_category){
-		$bf_post['post_category'] = wp_get_post_categories($bf_post['ID']);
+	if ( $has_post_category ) {
+		$bf_post['post_category'] = wp_get_post_categories( $bf_post['ID'] );
 	}
 
 	if ( ! empty( $post_excerpt ) ) {
@@ -879,7 +884,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$gdpr_result = array();
 			if ( ! empty( $meta_value ) && is_array( $meta_value ) ) {
 				foreach ( $meta_value as $item ) {
-					$gdpr_result[] = apply_filters( 'buddyforms_get_gdpr_field_meta_message',sprintf( '<p>%s <strong>(%s)</strong></p>',  buddyforms_add_ellipsis($item['label']), ! empty( $item['checked'] ) ? __( 'Checked', 'buddyforms' ) : __( 'Unchecked', 'buddyforms' ) ), $meta_value, $post_id, $slug );
+					$gdpr_result[] = apply_filters( 'buddyforms_get_gdpr_field_meta_message', sprintf( '<p>%s <strong>(%s)</strong></p>', buddyforms_add_ellipsis( $item['label'] ), ! empty( $item['checked'] ) ? __( 'Checked', 'buddyforms' ) : __( 'Unchecked', 'buddyforms' ) ), $meta_value, $post_id, $slug );
 				}
 			}
 			if ( ! empty( $gdpr_result ) ) {
@@ -1071,7 +1076,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 				if ( isset( $tax_terms ) && is_array( $tax_terms ) ) {
 					foreach ( $tax_terms as $term_key => $term ) {
 
-						if (empty($term) || (integer) $term == - 1 ) {
+						if ( empty( $term ) || (integer) $term == - 1 ) {
 							continue;
 						}
 						// Check if the term exist

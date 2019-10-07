@@ -39,11 +39,17 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 		$action = ! empty( $post ) && $post->post_status !== 'auto-draft' ? 'edit' : 'new';
 	}
 
-	$current_user = false;
+	$current_user    = false;
+	$current_user_id = get_current_user_id();
 	if ( $form_type === 'registration' && ! empty( $post_id ) ) {
 		$bf_registration_user_id = get_post_meta( $post_id, '_bf_registration_user_id', true );
 		$current_user            = get_userdata( $bf_registration_user_id );
+		if ( ! empty( $current_user ) && ! is_wp_error( $current_user ) ) {
+			$current_user_id = $current_user->ID;
+		}
 	}
+
+	$current_user_id = apply_filters( 'buddyforms_current_user_id', $current_user_id, $form_type, $form_slug, $post_id, $action );
 
 	foreach ( $customfields as $field_id => $customfield ) {
 
@@ -61,8 +67,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			//Get form field value
 			switch ( $form_type ) {
 				case 'registration':
-					if ( ! empty( $current_user->ID ) ) {
-						$customfield_val = buddyforms_get_value_from_user_meta( $current_user->ID, $slug );
+					if ( ! empty( $current_user_id ) ) {
+						$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
 					}
 					break;
 				case 'contact':
@@ -389,9 +395,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$element_attr['data-reset'] = 'true';
 							}
 
-							$element_attr['class']     = $element_attr['class'] . ' bf-select2';
+							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
 
-							$element                   = new Element_Select( $name, $slug, $options, $element_attr );
+							$element = new Element_Select( $name, $slug, $options, $element_attr );
 
 							if ( isset( $customfield['multiple'] ) && is_array( $customfield['multiple'] ) ) {
 								$element->setAttribute( 'multiple', 'multiple' );
