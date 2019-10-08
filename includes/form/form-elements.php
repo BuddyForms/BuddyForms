@@ -824,10 +824,10 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$name_inline = __( 'Attache File', 'buddyforms' );
 						if ( isset( $customfield['required'] ) && $labels_layout == 'inline' ) {
-							$name_inline = $form->getRequiredSignal() . $name;
+							$name_inline = $name . $form->getRequiredSignal();
 						}
 
-						$str .= '<a href="#" class="button btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</a>';
+						$str .= '<button class="form-control btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</button>';
 						$str .= '</span>';
 
 						$str .= '</div><span class="help-inline">';

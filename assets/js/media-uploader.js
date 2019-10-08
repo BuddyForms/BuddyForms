@@ -1,8 +1,5 @@
 (function ($) {
-
-
-
-    jQuery(document).on('click', '.bf_add_files a', function (event) {
+    jQuery(document).on('click', '.bf_add_files button', function (event) {
 
         var $el = $(this);
         // BuddyForms gallery file uploads
