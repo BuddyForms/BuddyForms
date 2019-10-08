@@ -259,7 +259,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$element_attr = array_merge( $element_attr, array( 'required' => true ) );
 							}
 
-							$form->addElement( new Element_Textbox( $name, "buddyforms_form_title", $element_attr ) );
+							$form->addElement( new Element_Textbox( $name, "buddyforms_form_title", $element_attr, $customfield ) );
 						}
 						break;
 

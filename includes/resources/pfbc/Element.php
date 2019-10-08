@@ -67,6 +67,8 @@ abstract class Element extends Base {
 			$this->field_options = $field_options;
 		}
 
+		$this->setRequired( ! empty( $configuration['required'] ) );
+
 		$this->configure( $configuration );
 	}
 
@@ -173,9 +175,9 @@ abstract class Element extends Base {
 	 * @param $value
 	 * @param $field
 	 *
+	 * @return bool
 	 * @since 2.4.6 added the $element parameter
 	 *
-	 * @return bool
 	 */
 	public function isValid( $value ) {
 		$valid = true;

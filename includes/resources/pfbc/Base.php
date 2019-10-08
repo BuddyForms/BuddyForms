@@ -170,6 +170,15 @@ abstract class Base {
 	}
 
 	/**
+	 * Get the Required Signal in plain string by default ` * `
+	 *
+	 * @return string
+	 */
+	public function getRequiredPlainSignal() {
+		return apply_filters( 'buddyforms_render_plain_required_signal', ' * ' );
+	}
+
+	/**
 	 * Output or return the required flag
 	 *
 	 * @param bool $echo
