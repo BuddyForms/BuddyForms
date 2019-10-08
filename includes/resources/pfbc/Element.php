@@ -278,8 +278,9 @@ abstract class Element extends Base {
 	public function setRequired( $required ) {
 		if ( ! empty( $required ) ) {
 			$this->validation[] = new Validation_Required;
+			$this->_attributes["required"] = "";
 		}
-		$this->_attributes["required"] = "";
+
 	}
 
 	/**
