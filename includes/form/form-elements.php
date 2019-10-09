@@ -856,19 +856,30 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						break;
 					case 'post_formats' :
-
-						$post_formats = get_theme_support( 'post-formats' );
-						$post_formats = isset( $post_formats[0] ) ? $post_formats[0] : array();
-						array_unshift( $post_formats, 'Select a Post Format' );
-
+						$post_formats  = array();
+						$theme_format  = get_theme_support( 'post-formats' );
+						$theme_format  = isset( $theme_format[0] ) ? $theme_format[0] : array();
+						$default_value = __( 'Select a Post Format', 'buddyforms' );
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+						$i             = 0;
+						foreach ( $theme_format as $format ) {
+							if ( $i === 0 ) {
+								if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) && $labels_layout === 'inline' ) {
+									$default_value =  $name . ' ' . $form->getRequiredPlainSignal();
+								}
+								$post_formats[ '' ] = $default_value;
+							} else {
+								$post_formats[ $format ] = $format;
+							}
+							$i ++;
+						}
 						if ( empty( $element_attr['value'] ) ) {
 							$element_attr['value'] = $customfield['post_formats_default'];
 						}
-
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
 						} else {
-							$form->addElement( new Element_PostFormats( $name, $slug, $post_formats, $element_attr ) );
+							$form->addElement( new Element_PostFormats( $name, $slug, $post_formats, $element_attr, $customfield ) );
 						}
 
 						break;

@@ -485,7 +485,7 @@ function BuddyForms() {
 
         switch (fieldData.type) {
             case 'post_formats':
-                result = (value && value !== 'Select a Post Format');
+                result = (value && (value !== 'Select a Post Format' || value !== 'Select a Post Format *' || value !== fieldData.name + ' *'));
                 break;
             case 'taxonomy':
                 result = (value && value !== "-1");
