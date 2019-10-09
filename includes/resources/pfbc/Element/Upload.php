@@ -298,7 +298,7 @@ class Element_Upload extends Element_Textbox {
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 		$box = sprintf( '<div class="dropzone upload_field dz-clickable" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
 		$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
-		$box .= sprintf( '<input type="text" style="visibility: hidden" class="upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
+		$box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
 		$box .= '</div>';
 		if ( ! empty( $description ) ) {
 			$box .= sprintf( '<span class="help-inline">%s</span>', $description );
