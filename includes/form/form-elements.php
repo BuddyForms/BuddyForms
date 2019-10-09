@@ -669,12 +669,23 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						if ( ! empty( $result ) ) {
 							$result_value = rtrim( trim( $result ), ',' );
 						}
-						$label_name = $customfield['name'];
+						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
-						$message = __( 'Drop the image here to upload', 'buddyforms' );
-						$box     = "<h2 class=\"hndle bf_woo\"><span class=\"woo_element_span\">$label_name</span></h2>
-                                    <div class='bf_field_group elem-$slug'><div class='bf-input'><div class=\"dropzone form-control featured-image-uploader dz-clickable\" id=\"$id\"  action='$feature_action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>
-                                         <div class=\"dz-default dz-message\" data-dz-message=\"\">
+						$label_name = $customfield['name'];
+						if ( $required ) {
+							$label_name = $label_name . html_entity_decode( $form->renderRequired() );
+						}
+
+						$message         = __( 'Drop the image here to upload', 'buddyforms' );
+						$box = "<div class='bf_field_group elem-$slug'>";
+						if ( $labels_layout !== 'inline' ) {
+							$box .= sprintf( '<label for="%s">%s</label>', $customfield['name'], $label_name );
+						}
+						$box .= "<div class='bf-input'><div class=\"dropzone form-control featured-image-uploader dz-clickable\" id=\"$id\"  action='$feature_action' data-entry='$entries_result' page='$page' max_file_size='$max_file_size'>";
+						if ( $labels_layout === 'inline' ) {
+							$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label_name );
+						}
+						$box .= "<div class=\"dz-default dz-message\" data-dz-message=\"\">
                                               <span>$message</span>
                                          </div>
                                         <input type='text' class='form-control' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
@@ -865,9 +876,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						foreach ( $theme_format as $format ) {
 							if ( $i === 0 ) {
 								if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) && $labels_layout === 'inline' ) {
-									$default_value =  $name . ' ' . $form->getRequiredPlainSignal();
+									$default_value = $name . ' ' . $form->getRequiredPlainSignal();
 								}
-								$post_formats[ '' ] = $default_value;
+								$post_formats[''] = $default_value;
 							} else {
 								$post_formats[ $format ] = $format;
 							}
