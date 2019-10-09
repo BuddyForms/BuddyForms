@@ -39,6 +39,11 @@ class Element_Upload extends Element_Textbox {
 		}
 	}
 
+	public function isRequired() {
+		return ! empty( $this->getAttribute( 'mandatory' ) );
+	}
+
+
 	public static function save_post_meta( $customfield, $post_id ) {
 		if ( $customfield['type'] == 'featured_image' ) {
 			if ( ! empty( $_POST[ $customfield['slug'] ] ) ) {
@@ -295,8 +300,18 @@ class Element_Upload extends Element_Textbox {
 			$ensure_amount = "data-rule-upload-ensure-amount ='$multiple_files'";
 		}
 
+		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 		$box = sprintf( '<div class="dropzone upload_field dz-clickable" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
+		if ( $labels_layout === 'inline' ) {
+			$label = $this->getAttribute( 'placeholder' );
+			if ( $required ) {
+				$label = $label . html_entity_decode( $this->renderRequired() );
+			}
+			$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
+		}
+
 		$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
 		$box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
 		$box .= '</div>';
