@@ -983,6 +983,11 @@ function BuddyForms() {
                             case "tags":
                                 element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label);
                                 break;
+                            case 'textarea':
+                            case 'buddyforms_form_content':
+                            case 'post_excerpt':
+                                element.closest('div.wp-core-ui.wp-editor-wrap').append(label);
+                                break;
                             case "checkbox":
                             case "radiobutton":
                                 var parentElement = jQuery(element).closest('.bf_field_group.elem-'+fieldData.slug);

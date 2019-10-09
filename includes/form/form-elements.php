@@ -487,7 +487,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'quicktags'     => isset( $customfield['post_textarea_options'] ) ? in_array( 'quicktags', $customfield['post_textarea_options'] ) ? true : false : false,
 							'textarea_rows' => $textarea_rows,
 							'textarea_name' => $slug,
-							'editor_class'  => 'textInMce',
+							'editor_class'  => 'textInMce form-control',
 						);
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
@@ -547,7 +547,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'quicktags'     => isset( $customfield['post_excerpt_options'] ) ? in_array( 'quicktags', $customfield['post_excerpt_options'] ) ? true : false : false,
 							'textarea_rows' => $textarea_rows,
 							'textarea_name' => $slug,
-							'editor_class'  => 'textInMce',
+							'editor_class'  => 'textInMce form-control',
 						);
 
 						//check if post has manual excerpt
