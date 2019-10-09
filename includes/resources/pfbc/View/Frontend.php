@@ -121,8 +121,10 @@ class View_Frontend extends FormView {
 					$label = $element->getLabel();
 				}
 
-				if ( $element->isRequired() ) {
-					$label = $label . html_entity_decode( $this->getRequiredPlainSignal() );
+				if ( ! $element instanceof Element_Upload && ! $element instanceof Element_File ) {
+					if ( $element->isRequired() ) {
+						$label = $label . html_entity_decode( $this->getRequiredPlainSignal() );
+					}
 				}
 
 				$element->setAttribute( "placeholder", $label );

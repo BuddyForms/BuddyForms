@@ -459,6 +459,10 @@ function BuddyForms() {
             return true;
         }
         var fieldSlug = jQuery(element).attr('name');
+        var hasPredefinedType = jQuery(element).attr('data-element-slug');
+        if (hasPredefinedType) {
+            fieldSlug = hasPredefinedType;
+        }
         var fieldData = getFieldFromSlug(fieldSlug, formSlug);
         fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
         if (!fieldData) {//if not field data is not possible to validate it
@@ -991,7 +995,7 @@ function BuddyForms() {
                             case "checkbox":
                             case "radiobutton":
                                 var parentElement = jQuery(element).closest('.bf_field_group');
-                                if(parentElement){
+                                if (parentElement) {
                                     label.insertAfter(parentElement.find('.bf-input'));
                                 }
                                 break;
