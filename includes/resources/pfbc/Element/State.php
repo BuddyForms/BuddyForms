@@ -39,7 +39,7 @@ class Element_State extends Element_Select {
 	private static function init_state_list() {
 		if ( empty( self::$state_list ) ) {
 			self::$state_list = array(
-				''        => __( '--Select State--', 'buddyforms' ),
+				''        => __( 'Select State', 'buddyforms' ),
 				"nostate" => __( 'No State', 'buddyforms' ),
 				'US'      => array(
 					"AL" => "Alabama",
@@ -120,13 +120,23 @@ class Element_State extends Element_Select {
 
 		$is_link_with_country = ! empty( $this->field_options['link_with_country'] ) && ! empty( $this->field_options['link_with_country'][0] ) && $this->field_options['link_with_country'][0] === 'link';
 
+		$is_required = $this->isRequired();
+
+		global $buddyforms;
+
+		$form_slug = $this->getAttribute( 'data-form' );
+
+		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+
 		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
 		$selected = false;
+		$i        = 0;
 		foreach ( $this->options as $country_key => $state ) {
+			$country_key = $this->filter( $country_key );
 			if ( is_array( $state ) ) {
 				foreach ( $state as $value => $text ) {
 					$value = $this->getOptionValue( $value );
-					echo '<option data-country="' . $country_key . '" value="', $this->filter( $value ), '"';
+					echo '<option data-country="' . $country_key . '" value="', $country_key, '"';
 					if ( in_array( $value, $this->_attributes["value"] ) ) {
 						if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
 							continue;
@@ -141,8 +151,12 @@ class Element_State extends Element_Select {
 					echo '>', $text, '</option>';
 				}
 			} else {
-				echo '<option data-country="' . $country_key . '" value="', $this->filter( $country_key ), '">' . $state . "</option>";
+				if ( $i == 0 && empty( $country_key ) && $is_required && $labels_layout === 'inline' ) {
+					$state = $state . ' ' . $this->getRequiredPlainSignal();
+				}
+				echo '<option data-country="' . $country_key . '" value="', $country_key, '">' . $state . "</option>";
 			}
+			$i ++;
 		}
 		echo '</select>';
 	}

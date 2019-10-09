@@ -34,7 +34,7 @@ class Element_Country extends Element_Select {
 	private static function init_country_list() {
 		if ( empty( self::$country_list ) ) {
 			self::$country_list = array(
-				''   => __( '--Select Country--', 'buddyforms' ),
+				''   => __( 'Select Country', 'buddyforms' ),
 				'AF' => 'Afghanistan',
 				'AX' => 'Aland Islands',
 				'AL' => 'Albania',
@@ -294,5 +294,49 @@ class Element_Country extends Element_Select {
 		self::init_country_list();
 
 		return apply_filters( 'buddyforms_country_element_values', self::$country_list );
+	}
+
+	public function render() {
+		$this->appendAttribute( 'class', 'c-select' );
+		if ( isset( $this->_attributes["value"] ) ) {
+			if ( ! is_array( $this->_attributes["value"] ) ) {
+				$this->_attributes["value"] = array( $this->_attributes["value"] );
+			}
+		} else {
+			$this->_attributes["value"] = array();
+		}
+
+		if ( ! empty( $this->_attributes["multiple"] ) && substr( $this->_attributes["name"], - 2 ) != "[]" ) {
+			$this->_attributes["name"] .= "[]";
+		}
+
+		$is_required = $this->isRequired();
+
+		global $buddyforms;
+
+		$form_slug = $this->getAttribute( 'data-form' );
+
+		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
+
+		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
+		$selected = false;
+		$i        = 0;
+		foreach ( $this->options as $value => $text ) {
+			$value = $this->getOptionValue( $value );
+			echo '<option value="', $this->filter( $value ), '"';
+			if ( in_array( $value, $this->_attributes["value"] ) ) {
+				if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
+					continue;
+				}
+				echo ' selected="selected"';
+				$selected = true;
+			}
+			if ( $i == 0 && empty( $value ) && $is_required && $labels_layout === 'inline' ) {
+				$text = $text . ' ' . $this->getRequiredPlainSignal();
+			}
+			echo '>', $text, '</option>';
+			$i ++;
+		}
+		echo '</select>';
 	}
 }
