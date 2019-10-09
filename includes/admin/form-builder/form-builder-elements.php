@@ -625,7 +625,7 @@ function buddyforms_display_form_element( $args ) {
 	        ) );
 
             //More formats in https://trentrichardson.com/examples/timepicker
-	        $element_date_format                           = isset( $customfield['element_date_format'] ) ? stripcslashes( $customfield['element_date_format'] ) : 'mm/dd/yy';
+	        $element_date_format                           = isset( $customfield['element_date_format'] ) ? stripcslashes( $customfield['element_date_format'] ) : 'dd/mm/yy';
 	        $form_fields['general']['element_date_format'] = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_date_format]", array(
 		        'value'     => $element_date_format,
 		        'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://api.jqueryui.com/datepicker/#utility-formatDate">at.</a>', 'buddyforms' )

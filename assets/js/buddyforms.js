@@ -450,53 +450,52 @@ function BuddyForms() {
         }, "");
     }
 
-    function addValidationRequired() {
-        jQuery.validator.addMethod(".form-control:required", function (value, element, param) {
-            var formSlug = getFormSlugFromFormElement(element);
-            if (
-                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
-                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
-            ) {
+    function bfRequiredValidation(value, element, param) {
+        var formSlug = getFormSlugFromFormElement(element);
+        if (
+            formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+            buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+        ) {
+            return true;
+        }
+        var fieldSlug = jQuery(element).attr('name');
+        var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+        fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
+        if (!fieldData) {//if not field data is not possible to validate it
+            console.log('no data', element);
+            return true;
+        }
+
+        var passValidationFieldTypes = ['upload', 'featured_image'];
+        passValidationFieldTypes = BuddyFormsHooks.applyFilters('buddyforms:validation:pass', passValidationFieldTypes, [value, element, fieldData, formSlug]);
+
+        if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
+            var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
+            if (exist && exist >= 0) {
                 return true;
             }
-            var fieldSlug = jQuery(element).attr('name');
-            var fieldData = getFieldFromSlug(fieldSlug, formSlug);
-            fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
-            if (!fieldData) {//if not field data is not possible to validate it
-                console.log('no data', element);
-                return true;
-            }
+        }
 
-            var passValidationFieldTypes = ['upload', 'featured_image'];
-            passValidationFieldTypes = BuddyFormsHooks.applyFilters('buddyforms:validation:pass', passValidationFieldTypes, [value, element, fieldData, formSlug]);
+        var result = false;
+        var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
 
-            if (passValidationFieldTypes && passValidationFieldTypes.length > 0) {
-                var exist = jQuery.inArray(fieldData.type, passValidationFieldTypes);
-                if (exist && exist >= 0) {
-                    return true;
-                }
-            }
+        switch (fieldData.type) {
+            case 'post_formats':
+                result = (value && value !== 'Select a Post Format');
+                break;
+            case 'taxonomy':
+                result = (value && value !== "-1");
+                break;
+            default:
+                result = value && value.length > 0;
+        }
 
-            var result = false;
-            var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+        result = BuddyFormsHooks.applyFilters('buddyforms:validation:required', result, [value, element, fieldData, formSlug]);
+        requiredMessage = BuddyFormsHooks.applyFilters('buddyforms:validation:required:message', requiredMessage, [value, element, fieldData, formSlug]);
 
-            switch (fieldData.type) {
-                case 'post_formats':
-                    result = (value && value !== 'Select a Post Format');
-                    break;
-                case 'taxonomy':
-                    result = (value && value !== "-1");
-                    break;
-                default:
-                    result = value && value.length > 0;
-            }
+        jQuery.validator.messages['required'] = requiredMessage;
 
-            result = BuddyFormsHooks.applyFilters('buddyforms:validation:required', result, [value, element, fieldData, formSlug]);
-            requiredMessage = BuddyFormsHooks.applyFilters('buddyforms:validation:required:message', requiredMessage, [value, element, fieldData, formSlug]);
-
-            jQuery.validator.messages['required'] = requiredMessage;
-            return (result);
-        }, "");
+        return result;
     }
 
     function addValidationMaxLength() {
@@ -802,7 +801,7 @@ function BuddyForms() {
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
                     var fieldTimeStep = (fieldData.element_time_step) ? fieldData.element_time_step : 60;
-                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'mm/dd/yy';
+                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'dd/mm/yy';
                     var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'hh:mm tt';
                     var enableTime = (fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
                     var enableDate = (fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
@@ -929,7 +928,34 @@ function BuddyForms() {
                 var currentForms = jQuery(this);
                 currentForms.submit(function () {
                     BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
-                }).validate({
+                });
+                var formSlug = getFormSlugFromFormElement(currentForms);
+                if (formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation && buddyformsGlobal[formSlug].js_validation[0] === 'disabled') {
+                    return true;
+                }
+
+                jQuery.extend(jQuery.validator, {
+                    methods: {
+                        required: function (b, c, d) {
+                            console.log('extending', c);
+                            var targetElement = jQuery(c);
+                            var hasControlClass = targetElement.hasClass('form-control');
+                            var hasFormAttr = targetElement.attr('data-form');
+                            if (hasFormAttr || hasControlClass) {
+                                return bfRequiredValidation(b, c, d);
+                            } else {
+                                if (!this.depend(d, c)) return "dependency-mismatch";
+                                if ("select" === c.nodeName.toLowerCase()) {
+                                    var e = a(c).val();
+                                    return e && e.length > 0
+                                }
+                                return this.checkable(c) ? this.getLength(b, c) > 0 : b.length > 0
+                            }
+                        }
+                    }
+                });
+
+                currentForms.validate({
                     ignore: function (index, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
@@ -960,7 +986,6 @@ function BuddyForms() {
                                 label.insertAfter(element);
                                 break;
                             case "checkbox":
-                            case "date":
                             case "radiobutton":
                                 var labelElement = jQuery('label[for="' + fieldSlug + '"]');
                                 label.insertAfter(labelElement);
@@ -984,7 +1009,8 @@ function BuddyForms() {
                         } else {
                             elem.removeClass(errorClass);
                         }
-                    }
+                    },
+                    rules: {}
                 });
             });
         }
@@ -1051,8 +1077,10 @@ function BuddyForms() {
             BuddyFormsHooks.doAction('buddyforms:submit:disable');
             //For ajax, an anonymous onsubmit javascript function is bound to the form using jQuery.  jQuery's serialize function is used to grab each element's name/value pair.
             if (ajax) {
-                if (jQuery.validator && !currentForm.valid()) {
-                    return false;
+                if (id && buddyformsGlobal[id] && typeof buddyformsGlobal[id].js_validation == "undefined") {
+                    if (jQuery.validator && !currentForm.valid()) {
+                        return false;
+                    }
                 }
 
                 jQuery("#buddyforms_form_hero_" + id + " .form_wrapper form").LoadingOverlay("show");
@@ -1141,7 +1169,7 @@ function BuddyForms() {
                 if (currentFieldSlug && formSlug) {
                     var fieldStateData = getFieldFromSlug(currentFieldSlug, formSlug);
                     var isLinkedCountry = (fieldStateData.link_with_state) ? fieldStateData.link_with_state : false;
-                    if(isLinkedCountry && isLinkedCountry[0] && isLinkedCountry[0] === 'link') {
+                    if (isLinkedCountry && isLinkedCountry[0] && isLinkedCountry[0] === 'link') {
                         if (stateElement.length > 0) {
                             if (countryCodeSelected) {
                                 var existState = stateElement.children('option[data-country="' + countryCodeSelected + '"]');
@@ -1228,7 +1256,6 @@ function BuddyForms() {
                 addValidationMaxLength();
                 addValidationMaxValue();
                 addValidationMinValue();
-                addValidationRequired();
                 addValidationEmail();
                 enabledSelect2();
                 enabledDateTime();
