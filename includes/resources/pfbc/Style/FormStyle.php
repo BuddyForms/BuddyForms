@@ -431,8 +431,9 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 99% !important;
     }
 
-    /* --- Form A --- */
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error {
+    /* --- Form Errors --- */
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group textarea.error {
         border: 1px solid red;
     }
 
