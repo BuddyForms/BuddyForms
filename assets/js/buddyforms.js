@@ -1072,7 +1072,7 @@ function BuddyForms() {
     }
 
     function renderForm(options) {
-        var id = options[0], prevent = options[1], ajax = options[2], method = options[3];
+        var id = options[0], prevent = options[1], ajax = options[2], method = options[3], formTargetStatus = options[4];
         var formId = 'buddyforms_form_' + id;
         if (typeof (tinyMCE) != "undefined") {
             tinyMCE.triggerSave();
@@ -1086,8 +1086,10 @@ function BuddyForms() {
             //For ajax, an anonymous onsubmit javascript function is bound to the form using jQuery.  jQuery's serialize function is used to grab each element's name/value pair.
             if (ajax) {
                 if (id && buddyformsGlobal[id] && typeof buddyformsGlobal[id].js_validation == "undefined") {
-                    if (jQuery.validator && !currentForm.valid()) {
-                        return false;
+                    if (typeof (formTargetStatus) == "undefined" || (formTargetStatus && formTargetStatus !== 'draft')) {
+                        if (jQuery.validator && !currentForm.valid()) {
+                            return false;
+                        }
                     }
                 }
 
