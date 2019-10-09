@@ -375,7 +375,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							foreach ( $customfield['options'] as $key => $option ) {
 								$options[ $option['value'] ] = $option['label'];
 							}
-							$element = new Element_Checkbox( $name, $slug, $options, $element_attr );
+							$element = new Element_Checkbox( $name, $slug, $options, $element_attr, $customfield );
 							$element->setAttribute( 'frontend_reset', ! empty( $customfield['frontend_reset'][0] ) );
 							$form->addElement( $element );
 

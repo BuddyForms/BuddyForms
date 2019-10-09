@@ -937,7 +937,6 @@ function BuddyForms() {
                 jQuery.extend(jQuery.validator, {
                     methods: {
                         required: function (b, c, d) {
-                            console.log('extending', c);
                             var targetElement = jQuery(c);
                             var hasControlClass = targetElement.hasClass('form-control');
                             var hasFormAttr = targetElement.attr('data-form');
@@ -987,8 +986,10 @@ function BuddyForms() {
                                 break;
                             case "checkbox":
                             case "radiobutton":
-                                var labelElement = jQuery('label[for="' + fieldSlug + '"]');
-                                label.insertAfter(labelElement);
+                                var parentElement = jQuery(element).closest('.bf_field_group.elem-'+fieldData.slug);
+                                if(parentElement){
+                                    label.insertAfter(parentElement.find('.bf-input'));
+                                }
                                 break;
                             default:
                                 label.insertAfter(element);
@@ -1009,8 +1010,7 @@ function BuddyForms() {
                         } else {
                             elem.removeClass(errorClass);
                         }
-                    },
-                    rules: {}
+                    }
                 });
             });
         }

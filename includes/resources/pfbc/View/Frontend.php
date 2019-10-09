@@ -122,7 +122,7 @@ class View_Frontend extends FormView {
 				}
 
 				if ( $element->isRequired() ) {
-					$label = $label . html_entity_decode($this->getRequiredPlainSignal());
+					$label = $label . html_entity_decode( $this->getRequiredPlainSignal() );
 				}
 
 				$element->setAttribute( "placeholder", $label );
@@ -159,9 +159,9 @@ class View_Frontend extends FormView {
 		}
 
 		//TODO improve required flag position adding new layout option to place before/after the label or the placeholder
-		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' || $date_is_inline ) {
+		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' || $date_is_inline || $element instanceof Element_Checkbox || $element instanceof Element_Radio ) {
 			if ( $element->isRequired() ) {
-				$label = $label . html_entity_decode($this->renderRequired());
+				$label = $label . html_entity_decode( $this->renderRequired() );
 			}
 		}
 

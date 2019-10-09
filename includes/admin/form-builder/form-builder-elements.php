@@ -512,8 +512,8 @@ function buddyforms_display_form_element( $args ) {
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 		case 'checkbox':
-		    $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Checkbox', 'buddyforms' );
-			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+			$name                                     = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Checkbox', 'buddyforms' );
+			$form_fields['general']['name']           = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'data'     => $field_id,
 				'class'    => "use_as_slug",
 				'value'    => $name,
