@@ -981,8 +981,7 @@ function BuddyForms() {
                             case "taxonomy":
                             case "category":
                             case "tags":
-                                element.parent().find('span.select2-selection');
-                                label.insertAfter(element);
+                                element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label);
                                 break;
                             case "checkbox":
                             case "radiobutton":
