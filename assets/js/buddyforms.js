@@ -990,7 +990,7 @@ function BuddyForms() {
                                 break;
                             case "checkbox":
                             case "radiobutton":
-                                var parentElement = jQuery(element).closest('.bf_field_group.elem-'+fieldData.slug);
+                                var parentElement = jQuery(element).closest('.bf_field_group');
                                 if(parentElement){
                                     label.insertAfter(parentElement.find('.bf-input'));
                                 }
