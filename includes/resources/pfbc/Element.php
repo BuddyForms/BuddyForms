@@ -312,6 +312,19 @@ abstract class Element extends Base {
 	}
 
 	/**
+	 * @param $attribute
+	 *
+	 * @return string
+	 */
+	public function getOption( $attribute ) {
+		if ( ! empty ( $this->field_options[ $attribute ] ) ) {
+			return $this->field_options[ $attribute ];
+		}
+
+		return '';
+	}
+
+	/**
 	 * @param array $field_options
 	 */
 	public function setFieldOptions( $field_options ) {

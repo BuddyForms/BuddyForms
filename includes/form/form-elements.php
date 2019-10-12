@@ -618,7 +618,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 					case 'captcha' :
 						if ( ! is_user_logged_in() && ( $action === 'new' || $action === 'edit' ) ) {
-							$element = new Element_Captcha( "Captcha", $attributes = null );
+							$element = new Element_Captcha( $name, $element_attr, $customfield );
 							$element->setAttribute( 'site_key', ( ! empty( $customfield['captcha_site_key'] ) ) ? $customfield['captcha_site_key'] : '' );
 							$element->setAttribute( 'private_key', ! empty( $customfield['captcha_private_key'] ) ? $customfield['captcha_private_key'] : '' );
 							$element->setAttribute( 'data_theme', ! empty( $customfield['captcha_data_theme'] ) ? $customfield['captcha_data_theme'] : 'dark' );
