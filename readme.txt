@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.8-beta1
+Stable tag: 2.5.8
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,13 +389,37 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.8-beta1 - 7 Oct 2019 =
+= 2.5.8 - 11 Oct 2019 =
 * Added an implementation to avoid acf field from form validation.
 * Added a new way to edit the list of Countries and States from the elements options.
 * Added a new option into the Country element to load the States for the next State element base on the Country key present in State list. More in the documentation https://docs.buddyforms.com/article/582-country-and-state-elements.
 * Added the default name of does fields which not was adding it when they was added to the form.
 * Fixed the store/load values for elements like the number field in a registration form.
 * Fixed the store/load values for elements from a registration form.
+* Fixed the required signal for the textarea element.
+* Changing the file element from a link to a button.
+* Changing the file element * place to be after the label.
+* Changing the default date format to `dd/mm/yy`.
+* Fixed the jQuery form validation to override the default required jQuery validate by buddyforms internal implementation where external element will not process and letting 3rd addOns to hook into the process.
+* Fixed the form option to stop the Js validation.
+* Fixed error position for the checkbox and the radio buttons.
+* Fixed the red border for the bio element.
+* Fixed the validation for the upload element.
+* Added a * to the first empty element of the country and state element when they are required and the label is inline.
+* Added the placeholder for the upload element with the corresponding *. Now it have the correct label when the form is showing the placeholder or labels.
+* Fixed the error placement for the category, taxonomy and tag element, now the error will appear after the element.
+* Fixed the error placement for the elements textarea, post_excerpt and buddyform_form_content.
+* Fixed the error placement fo the radio buttons.
+* Fixed the red border for password element.
+* Improved the password element label and placeholder. Now the label is showed when the form is configured in the other way the password element will show the placeholder inside the input with the * if the element is required.
+* Fixed the JS validation for the post_formats element.
+* Fixed the placeholder and label for the post_formats element.
+* Fixed the label for the feature image element and added a label inside the element to work as placeholder.
+* Fixed the Category and Tag element missing placeholder.
+* Fixed the captcha form element label and description.
+* Added a new option inside the captcha form element to override the language.
+* Added a hook to customize the Js parameters to include in the request for the captcha form element. `buddyforms_captcha_js_source_parameter`.
+* Improved the honey-pot anti spam.
 
 = 2.5.7 - 4 Oct 2019 =
 * Fixed the issue with the output buffer.
