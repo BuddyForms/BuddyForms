@@ -999,6 +999,11 @@ function BuddyForms() {
                                     label.insertAfter(parentElement.find('.bf-input'));
                                 }
                                 break;
+                            case "featured_image":
+                            case "upload":
+                                element.closest('div.dropzone.dz-clickable').addClass('error');
+                                label.insertAfter(element);
+                                break;
                             default:
                                 label.insertAfter(element);
                         }
