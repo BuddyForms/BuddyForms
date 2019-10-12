@@ -307,7 +307,7 @@ function buddyforms_display_form_element( $args ) {
 			) );
 
 			$captcha_site_key                           = ! empty( $customfield['captcha_site_key'] ) ? $customfield['captcha_site_key'] : '';
-			$short_description                                      = sprintf( '%s <a target="_blank" href="%s">reCaptcha</a> %s', __( "Sign up for a free", 'buddyforms' ), 'https://www.google.com/recaptcha/', __( 'Keys.', 'buddyforms' ) );
+			$short_description                          = sprintf( '%s <a target="_blank" href="%s">reCaptcha</a> %s', __( "Sign up for a free", 'buddyforms' ), 'https://www.google.com/recaptcha/', __( 'Keys.', 'buddyforms' ) );
 			$form_fields['general']['captcha_site_key'] = new Element_Textbox( '<b>' . __( "Site Key.", 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_site_key]", array(
 				'data'     => $field_id,
 				'value'    => $captcha_site_key,
@@ -319,6 +319,14 @@ function buddyforms_display_form_element( $args ) {
 				'data'     => $field_id,
 				'value'    => $captcha_private_key,
 				'required' => 1
+			) );
+
+			$captcha_language                           = ! empty( $customfield['captcha_language'] ) ? $customfield['captcha_language'] : '';
+			$form_fields['general']['captcha_language'] = new Element_Textbox( '<b>' . __( 'Language', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_language]", array(
+				'data'     => $field_id,
+				'value'    => $captcha_language,
+				'required' => 1,
+                'shortDesc' => sprintf( '%s <a target="_blank" href="%s">Language Codes</a>', __( "Forces the element to render in a specific language, if empty will try to auto-detects the user's language, check the possibles", 'buddyforms' ), 'https://developers.google.com/recaptcha/docs/language' )
 			) );
 
 			$form_fields['general']['captcha_data_theme'] = new Element_Select( '<b>' . __( 'The color theme of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_theme]",
