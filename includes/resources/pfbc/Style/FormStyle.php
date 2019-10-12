@@ -431,6 +431,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 99% !important;
     }
 
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message{
+            text-align: left;
+    }
+
     /* --- Form Errors --- */
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
