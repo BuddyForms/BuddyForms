@@ -1501,18 +1501,22 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 	$buddyform = '';
 	extract( $args );
 
-	$field_options = isset($buddyform['form_fields'][ $field_id ]['options']) ? $buddyform['form_fields'][ $field_id ]['options'] : '' ;
-	$field_type = $buddyform['form_fields'][ $field_id ]['type'];
-	$count = 1;
-	$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '' ;
+	if ( ! empty( $field_id ) && ! empty( $buddyform ) ) {
+		$field_options  = isset( $buddyform['form_fields'][ $field_id ]['options'] ) ? $buddyform['form_fields'][ $field_id ]['options'] : '';
+		$field_type     = $buddyform['form_fields'][ $field_id ]['type'];
+		$count          = 1;
+		$default_option = isset( $buddyform['form_fields'][ $field_id ]['default'] ) ? $buddyform['form_fields'][ $field_id ]['default'] : '';
 
-	ob_start();
+		ob_start();
 
-	require BUDDYFORMS_ADMIN_VIEW.'buddyforms-form-gdpr-element-multiple.php';
+		require BUDDYFORMS_ADMIN_VIEW . 'buddyforms-form-gdpr-element-multiple.php';
 
-	$tmp = ob_get_clean();
+		$tmp = ob_get_clean();
 
-	return $tmp;
+		return $tmp;
+	} else {
+		return '';
+	}
 }
 
 /**
