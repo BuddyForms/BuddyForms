@@ -937,8 +937,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'include'       => $include,
 							'allowClear'    => true,
 						);
-
+						$is_required = isset( $customfield['required'] ) && is_array( $customfield['required'] )? true : false;
+                        $labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 						$placeholder = ! empty( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
+						if($is_required &&$labels_layout === 'inline'){
+                            $placeholder .= ' * ';
+                        }
 						if ( ! isset( $customfield['multiple'] ) || empty( $customfield['taxonomy_default'] ) ) {
 							$args = array_merge( $args, Array( 'placeholder' => $placeholder, 'show_option_none' => $placeholder, 'option_none_value' => '' ) );
 						}
@@ -1019,6 +1023,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							                 ' } ' .
 							                 '}, ';
 						}
+
+						$label_name = $labels_layout ==='label'?  $name . $required :'';
 						$dropdown = '
 						<script>
 							jQuery(document).ready(function () {
@@ -1041,9 +1047,10 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 				                });
 						    });
 						</script>
+						
 						<div class="bf_field_group">
 	                        <label for="editpost-element-' . $field_id . '">
-	                            ' . $name . $required . '
+	                            ' . $label_name . '
 	                        </label>
 	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
 		                	<span class="help-inline">' . $description . '</span>
