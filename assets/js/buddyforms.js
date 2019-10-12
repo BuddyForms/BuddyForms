@@ -459,10 +459,6 @@ function BuddyForms() {
             return true;
         }
         var fieldSlug = jQuery(element).attr('name');
-        var hasPredefinedType = jQuery(element).attr('data-element-slug');
-        if (hasPredefinedType) {
-            fieldSlug = hasPredefinedType;
-        }
         var fieldData = getFieldFromSlug(fieldSlug, formSlug);
         fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
         if (!fieldData) {//if not field data is not possible to validate it
@@ -753,6 +749,10 @@ function BuddyForms() {
 
     function getFieldFromSlug(fieldSlug, formSlug) {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var hasPredefinedType = jQuery('[name="'+fieldSlug+'"]').attr('data-element-slug');
+            if (hasPredefinedType) {
+                fieldSlug = hasPredefinedType;
+            }
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
                 fieldSlug = BuddyFormsHooks.applyFilters('buddyforms:field:slug', fieldSlug, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
