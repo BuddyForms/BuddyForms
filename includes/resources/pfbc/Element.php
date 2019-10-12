@@ -247,11 +247,19 @@ abstract class Element extends Base {
 		}
 	}
 
-	/*If an element requires inline stylesheet definitions, this method is used send them to the browser before
-	the form is rendered.*/
-
+	/**
+	 * If an element requires inline stylesheet definitions, this method is used send them to the browser before the form is rendered.
+	 */
 	public function render() {
-		echo '<input', $this->getAttributes(), '/>';
+		echo $this->html();
+	}
+
+	/**
+	 * Get the element html instead of render it
+	 * @return string
+	 */
+	public function html() {
+		return '<input'. $this->getAttributes(). '/>';
 	}
 
 	/*If an element requires javascript to be loaded, this method is used send them to the browser after

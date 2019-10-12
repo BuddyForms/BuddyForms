@@ -775,7 +775,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$attachment_ids = $customfield_val;
 
-						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container"><ul class="bf_files">';
+						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container bf_field_group"><ul class="bf_files">';
 
 						$attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -838,12 +838,16 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$name_inline = $name . $form->getRequiredSignal();
 						}
 
-						$str .= '<button class="form-control btn btn-primary" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</button>';
+						$str .= '<button class="form-control btn btn-primary" field_id="'.$field_id.'" data-form="'.$form_slug.'" data-slug="' . $slug . '" ' . $data_multiple . ' ' . $allowed_types . ' ' . $library_types . 'data-choose="' . __( 'Add into', 'buddyforms' ) . '" data-update="' . __( 'Add ', 'buddyforms' ) . $name . '" data-delete="' . __( 'Delete ', 'buddyforms' ) . '" data-text="' . __( 'Delete', 'buddyforms' ) . '">' . $name_inline . '</button>';
 						$str .= '</span>';
 
-						$str .= '</div><span class="help-inline">';
-						$str .= $description;
-						$str .= '</span>';
+						$str .= '</div>';
+
+						if ( ! empty( $description ) ) {
+							$str .= '<span class="help-inline">';
+							$str .= $description;
+							$str .= '</span>';
+						}
 
 						$file_element = '<div class="bf_field_group">';
 						if ( $labels_layout != 'inline' ) {
@@ -856,14 +860,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$file_element .= '</label>';
 						}
 
+						$hidden_file_element = new Element_Hidden( $slug, $customfield_val, $element_attr );
+						$str                 .= $hidden_file_element->html();
+
 						$file_element .= '<div class="bf_inputs bf-input">
                             ' . $str . '
                             </div></div>
                         ';
 						$form->addElement( new Element_HTML( $file_element ) );
-
-						$form->addElement( new Element_Hidden( $slug, $customfield_val, array( 'id' => $slug ) ) );
-
 
 						break;
 					case 'post_formats' :
