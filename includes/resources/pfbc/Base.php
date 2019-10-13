@@ -5,6 +5,11 @@
  */
 abstract class Base {
 	/**
+	 * @var array
+	 */
+	protected $field_options = array();
+
+	/**
 	 * @param array|null $properties
 	 *
 	 * @return $this
@@ -108,6 +113,13 @@ abstract class Base {
 			if ( ! is_array( $ignore ) ) {
 				$ignore = array( $ignore );
 			}
+			if ( ! empty( $this->_errors ) ) {
+				if ( isset( $this->_attributes['class'] ) ) {
+					$this->_attributes['class'] .= ' error';
+				} else {
+					$this->_attributes['class'] = 'error ';
+				}
+			}
 			$attributes = array_diff( array_keys( $this->_attributes ), $ignore );
 			foreach ( $attributes as $attribute ) {
 				$str .= ' ' . $attribute;
@@ -138,9 +150,10 @@ abstract class Base {
 	/**
 	 * Convert special characters to HTML entities
 	 *
+	 * @param $str
+	 *
 	 * @internal
 	 *
-	 * @param $str
 	 */
 	public function apply_filter( &$str ) {
 		$str = htmlspecialchars( $str );
@@ -192,5 +205,32 @@ abstract class Base {
 		} else {
 			return $html;
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFieldOptions() {
+		return $this->field_options;
+	}
+
+	/**
+	 * @param $attribute
+	 *
+	 * @return string
+	 */
+	public function getOption( $attribute ) {
+		if ( ! empty ( $this->field_options[ $attribute ] ) ) {
+			return $this->field_options[ $attribute ];
+		}
+
+		return '';
+	}
+
+	/**
+	 * @param array $field_options
+	 */
+	public function setFieldOptions( $field_options ) {
+		$this->field_options = $field_options;
 	}
 }

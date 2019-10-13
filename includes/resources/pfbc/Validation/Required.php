@@ -9,6 +9,17 @@ class Validation_Required extends Validation {
 	 */
 	protected $message = "Error: %element% is a required field.";
 
+	public function getMessage() {
+		$message      = $this->message;
+		$user_message = $this->getOption( 'validation_error_message' );
+		if ( ! empty( $user_message ) ) {
+			$message = $user_message;
+		}
+
+		return $message;
+	}
+
+
 	/**
 	 * @param $value
 	 * @param $element
@@ -21,6 +32,6 @@ class Validation_Required extends Validation {
 			$valid = true;
 		}
 
-		return apply_filters('buddyforms_element_required_validation', $valid, $value, $element );
+		return apply_filters( 'buddyforms_element_required_validation', $valid, $value, $element );
 	}
 }

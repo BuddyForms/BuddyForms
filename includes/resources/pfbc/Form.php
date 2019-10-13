@@ -163,13 +163,12 @@ class Form extends Base {
 				/** @var Element $element */
 				foreach ( $form_instance->_elements as $element ) {
 					$name = $element->getAttribute( "name" );
-
+					$field_options = $element->getFieldOptions();
 					if ( $element instanceof Element_Email ) {
 						$element->setValidation( new Validation_Email() );
 					}
 
 					if ( $element instanceof Element_Upload ) {
-						$field_options = $element->getFieldOptions();
 						$name          = $field_options['slug'];
 					}
 
@@ -200,13 +199,14 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
-								$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $name, $id ) );
+								$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
 								$valid = false;
 							}
 						}
 					} else {
 						if ( ! $element->isValid( $value ) ) {
-							$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $name, $id ) );
+							$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
+							$element->setAttribute('class', 'error');
 							$valid = false;
 						}
 					}
@@ -459,7 +459,8 @@ class Form extends Base {
 		$form_slug = str_replace( 'buddyforms_form_', '', $id );
 		$method    = $this->_attributes['method'];
 		$prevent   = wp_json_encode( $this->prevent );
-		echo <<<JS
+		if ( $this->ajax ) {
+			echo <<<JS
 		jQuery(document.body).on('submit', '#$id', function (event) {
             event.preventDefault();
             if(BuddyFormsHooks){
@@ -470,6 +471,7 @@ class Form extends Base {
             return false;
         });
 JS;
+		}
 		$this->view->jQueryDocumentReady();
 		foreach ( $this->_elements as $element ) {
 			$element->jQueryDocumentReady();

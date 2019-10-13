@@ -10,7 +10,7 @@ class View_Vertical extends FormView {
 	private $sharedCount = 0;
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	public function renderElement( $element ) {
 		if ( $element instanceof Element_Hidden || $element instanceof Element_HTML || $element instanceof Element_Button ) {
@@ -20,6 +20,12 @@ class View_Vertical extends FormView {
 		}
 		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
 			$element->appendAttribute( "class", "form-control" );
+		}
+
+		$attr_error   = $element->getAttribute( 'error' );
+		$opt_error    = $element->getOption( 'error' );
+		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
+			$element->appendAttribute( 'class', 'error' );
 		}
 
 		if ( $this->sharedCount == 0 ) {

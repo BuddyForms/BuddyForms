@@ -8,11 +8,6 @@ abstract class Validation extends Base {
 	 * @var string
 	 */
 	protected $message = "%element% is invalid.";
-	/**
-	 * @since 2.4.6
-	 * @var array|null
-	 */
-	protected $field_options;
 
 	/**
 	 * Validation constructor.

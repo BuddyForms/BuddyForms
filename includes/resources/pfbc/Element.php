@@ -39,11 +39,6 @@ abstract class Element extends Base {
 	protected $validation = array();
 
 	/**
-	 * @var array
-	 */
-	protected $field_options = array();
-
-	/**
 	 * Element constructor.
 	 *
 	 * @param $label
@@ -207,9 +202,9 @@ abstract class Element extends Base {
 
 			foreach ( $this->validation as $validation ) {
 				if ( ! $validation->isValid( $value, $this ) ) {
-					/*In the error message, %element% will be replaced by the element's label (or
-					name if label is not provided).*/
-					$this->_errors[] = str_replace( "%element%", $element, $validation->getMessage() );
+					//In the error message, %element% will be replaced by the element's label or name if label is not provided.
+					$message =  $validation->getMessage();
+					$this->_errors[] = str_replace( "%element%", $element, $message);
 					$valid           = false;
 				}
 			}
@@ -285,7 +280,8 @@ abstract class Element extends Base {
 	 */
 	public function setRequired( $required ) {
 		if ( ! empty( $required ) ) {
-			$this->validation[] = new Validation_Required;
+
+			$this->validation[] = new Validation_Required('', $this->field_options);
 			$this->_attributes["required"] = "";
 		}
 
@@ -310,32 +306,5 @@ abstract class Element extends Base {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getFieldOptions() {
-		return $this->field_options;
-	}
-
-	/**
-	 * @param $attribute
-	 *
-	 * @return string
-	 */
-	public function getOption( $attribute ) {
-		if ( ! empty ( $this->field_options[ $attribute ] ) ) {
-			return $this->field_options[ $attribute ];
-		}
-
-		return '';
-	}
-
-	/**
-	 * @param array $field_options
-	 */
-	public function setFieldOptions( $field_options ) {
-		$this->field_options = $field_options;
 	}
 }

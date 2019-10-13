@@ -7,9 +7,20 @@ class ErrorView_Standard extends ErrorView {
 	public function render() {
 		$global_error = ErrorHandler::get_instance();
 		if ( $global_error->get_global_error()->has_errors() ) {
-			$all_errors = $global_error->get_global_error()->errors;
+			$all_errors_groups = $global_error->get_global_error()->errors;
+			$all_errors        = array();
+			foreach ( $all_errors_groups as $code => $errors ) {
+				if(is_array($errors)) {
+					foreach ( $errors as $error ) {
+						$all_errors[] =  $error[0];
+					}
+				} else {
+					$all_errors[] = $global_error->get_global_error()->get_error_message( $code );
+				}
+			}
 			$size   = sizeof( $all_errors );
-			$errors = implode( "</li><li>", $all_errors );
+
+			$errors_string = implode( "</li><li>", $all_errors );
 
 			ob_start();
 
@@ -32,7 +43,7 @@ class ErrorView_Standard extends ErrorView {
 		$global_error = ErrorHandler::get_instance();
 		if ( $global_error->get_global_error()->has_errors() ) {
 			header( "Content-type: application/json" );
-			echo wp_json_encode( array( "errors" => $global_error->get_global_error()->errors) );
+			echo wp_json_encode( array( "errors" => $global_error->get_global_error()->errors ) );
 			die;
 		}
 	}

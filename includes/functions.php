@@ -1517,6 +1517,9 @@ if ( ! function_exists( 'buddyforms_show_error_messages' ) ) {
 			 */
 			foreach ( $global_error->get_global_error()->errors as $code => $error ) {
 				$message = $global_error->get_global_error()->get_error_message( $code );
+				if(is_array($message)){
+				    $message = $message[0];
+                }
 				echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
 			}
 			echo '</div>';

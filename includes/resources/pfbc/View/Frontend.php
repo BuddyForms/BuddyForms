@@ -103,6 +103,12 @@ class View_Frontend extends FormView {
 			return;
 		}
 
+		$attr_error   = $element->getAttribute( 'error' );
+		$opt_error    = $element->getOption( 'error' );
+		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
+			$element->appendAttribute( 'class', 'error' );
+		}
+
 		$date_is_inline = false;
 		if ( $element instanceof Element_Date ) {
 			$date_is_inline = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
