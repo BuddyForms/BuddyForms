@@ -3,6 +3,10 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 ?>
 <style data-target="global" type="text/css" <?php echo apply_filters( 'buddyforms_add_global_style_attributes', '', $css_form_id ); ?>>
 
+    #bf_hweb{
+        display: none;
+    }
+
     /* Alerts */
     .bf-alert {
         padding: 15px;

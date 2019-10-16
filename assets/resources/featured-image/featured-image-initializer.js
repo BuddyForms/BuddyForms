@@ -55,6 +55,7 @@ jQuery(document).ready(function() {
                     });
 
                     this.on('success', function (file, response) {
+                        current.removeClass('error');
                         file.previewElement.classList.add("dz-success");
                         file['attachment_id'] = response; // push the id for future reference
                         var ids = currentField.val() + ',' + response;

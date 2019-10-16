@@ -302,8 +302,14 @@ class Element_Upload extends Element_Textbox {
 
 		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
+		$has_error = ( ! empty( $element_attr['error'] ) || ! empty( $customfield['error'] ) );
+
+		$classes = 'dropzone upload_field dz-clickable';
+		if ( $has_error ) {
+			$classes .= ' error';
+		}
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
-		$box = sprintf( '<div class="dropzone upload_field dz-clickable" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
+		$box = sprintf( '<div class="%s" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $classes, $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
 		if ( $labels_layout === 'inline' ) {
 			$label = $this->getAttribute( 'placeholder' );
 			if ( $required ) {

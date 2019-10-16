@@ -39,11 +39,6 @@ abstract class Element extends Base {
 	protected $validation = array();
 
 	/**
-	 * @var array
-	 */
-	protected $field_options = array();
-
-	/**
 	 * Element constructor.
 	 *
 	 * @param $label
@@ -207,9 +202,9 @@ abstract class Element extends Base {
 
 			foreach ( $this->validation as $validation ) {
 				if ( ! $validation->isValid( $value, $this ) ) {
-					/*In the error message, %element% will be replaced by the element's label (or
-					name if label is not provided).*/
-					$this->_errors[] = str_replace( "%element%", $element, $validation->getMessage() );
+					//In the error message, %element% will be replaced by the element's label or name if label is not provided.
+					$message =  $validation->getMessage();
+					$this->_errors[] = str_replace( "%element%", $element, $message);
 					$valid           = false;
 				}
 			}
@@ -247,11 +242,19 @@ abstract class Element extends Base {
 		}
 	}
 
-	/*If an element requires inline stylesheet definitions, this method is used send them to the browser before
-	the form is rendered.*/
-
+	/**
+	 * If an element requires inline stylesheet definitions, this method is used send them to the browser before the form is rendered.
+	 */
 	public function render() {
-		echo '<input', $this->getAttributes(), '/>';
+		echo $this->html();
+	}
+
+	/**
+	 * Get the element html instead of render it
+	 * @return string
+	 */
+	public function html() {
+		return '<input'. $this->getAttributes(). '/>';
 	}
 
 	/*If an element requires javascript to be loaded, this method is used send them to the browser after
@@ -277,7 +280,8 @@ abstract class Element extends Base {
 	 */
 	public function setRequired( $required ) {
 		if ( ! empty( $required ) ) {
-			$this->validation[] = new Validation_Required;
+
+			$this->validation[] = new Validation_Required('', $this->field_options);
 			$this->_attributes["required"] = "";
 		}
 
@@ -302,19 +306,5 @@ abstract class Element extends Base {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getFieldOptions() {
-		return $this->field_options;
-	}
-
-	/**
-	 * @param array $field_options
-	 */
-	public function setFieldOptions( $field_options ) {
-		$this->field_options = $field_options;
 	}
 }

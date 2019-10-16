@@ -128,7 +128,6 @@ BuddyFormsHooks.applyFilters = function (tag, value, options) {
  */
 
 function bf_form_errors() {
-    jQuery('input').removeClass('error');
     var errors = jQuery('.bf-alert-wrap ul li span');
     jQuery.each(errors, function (i, error) {
         var field_id = jQuery(error).attr('data-field-id');
@@ -459,10 +458,6 @@ function BuddyForms() {
             return true;
         }
         var fieldSlug = jQuery(element).attr('name');
-        var hasPredefinedType = jQuery(element).attr('data-element-slug');
-        if (hasPredefinedType) {
-            fieldSlug = hasPredefinedType;
-        }
         var fieldData = getFieldFromSlug(fieldSlug, formSlug);
         fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
         if (!fieldData) {//if not field data is not possible to validate it
@@ -753,10 +748,28 @@ function BuddyForms() {
 
     function getFieldFromSlug(fieldSlug, formSlug) {
         if (fieldSlug && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var hasPredefinedType = jQuery('[name="' + fieldSlug + '"]').attr('data-element-slug');
+            if (hasPredefinedType) {
+                fieldSlug = hasPredefinedType;
+            }
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldSlug = fieldSlug.replace('[]', '');
                 fieldSlug = BuddyFormsHooks.applyFilters('buddyforms:field:slug', fieldSlug, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
                 return buddyformsGlobal[formSlug].form_fields[fieldId].slug.toLowerCase() === fieldSlug.toLowerCase();
+            });
+            if (fieldIdResult) {
+                return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
+            }
+        }
+        return false;
+    }
+
+    function getFieldFromName(fieldName, formSlug) {
+        if (fieldName && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
+                fieldName = fieldName.replace('[]', '');
+                fieldName = BuddyFormsHooks.applyFilters('buddyforms:field:name', fieldName, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
+                return buddyformsGlobal[formSlug].form_fields[fieldId].name.toLowerCase() === fieldName.toLowerCase();
             });
             if (fieldIdResult) {
                 return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
@@ -788,7 +801,7 @@ function BuddyForms() {
 
                 jQuery(this).on('change', function () {
                     var formSlug = jQuery(this).data('form');
-                    if (formSlug) {
+                    if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
                         jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                     }
                 });
@@ -818,7 +831,9 @@ function BuddyForms() {
                         showTimepicker: enableTime || false,
                         stepMinute: parseInt(fieldTimeStep),
                         onSelect: function () {
-                            jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                            if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
+                                jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                            }
                         }
                     };
 
@@ -999,6 +1014,11 @@ function BuddyForms() {
                                     label.insertAfter(parentElement.find('.bf-input'));
                                 }
                                 break;
+                            case "featured_image":
+                            case "upload":
+                                element.closest('div.dropzone.dz-clickable').addClass('error');
+                                label.insertAfter(element);
+                                break;
                             default:
                                 label.insertAfter(element);
                         }
@@ -1062,12 +1082,37 @@ function BuddyForms() {
             }
 
             jQuery('.bf-alert').remove();
-            var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul>';
-            for (i = 0; i < errorSize; ++i) {
-                errorHTML += '<li>' + errors.errors[id][i] + '</li>';
-            }
+            var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; padding-inline-start: 40px;">';
+            jQuery.each(errors.errors[id], function (i, e) {
+                errorHTML += '<li data-target-field="' + i + '">' + e + '</li>';
+                var fieldData = getFieldFromName(i, form_id);
+                if (!fieldData) {
+                    return true;
+                }
+                var targetField = jQuery('[name="' + fieldData.slug + '"]');
+                if (targetField && targetField.length > 0) {
+                    targetField.addClass('error');
+                } else {
+                    targetField = jQuery('[data-element-slug="' + fieldData.slug + '"]');
+                    if (targetField && targetField.length > 0) {
+                        targetField.addClass('error');
+                    }
+                }
+            });
             errorHTML += '</ul></div>';
             jQuery('#' + id).prepend(errorHTML);
+            var scrollElement = jQuery("#buddyforms_form_hero_" + form_id);
+            if (scrollElement.length > 0) {
+                jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
+                    duration: 500, complete: function () {
+                        jQuery('html, body').on("click", function () {
+                            jQuery('html, body').stop()
+                        });
+                    }
+                }).one("click", function () {
+                    jQuery('html, body').stop()
+                });
+            }
         }
     }
 
@@ -1140,7 +1185,7 @@ function BuddyForms() {
                         BuddyFormsHooks.doAction('buddyforms:submit:enable');
                         // scroll to message after submit
                         var scrollElement = jQuery("#buddyforms_form_hero_" + id);
-                        if (scrollElement.length > 1) {
+                        if (scrollElement.length > 0) {
                             jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
                                 duration: 500, complete: function () {
                                     jQuery('html, body').on("click", function () {

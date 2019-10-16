@@ -55,6 +55,8 @@ function buddyforms_attached_page_query_vars( $query_vars ) {
 	$query_vars[] = 'bf_parent_post_id';
 	$query_vars[] = 'bf_rev_id';
 	$query_vars[] = 'form_slug';
+	$query_vars[] = 'post_id';
+	$query_vars[] = '_wpnonce';
 
 	return $query_vars;
 }

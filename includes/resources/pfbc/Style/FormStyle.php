@@ -431,12 +431,21 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 99% !important;
     }
 
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message{
+            text-align: left;
+    }
+
     /* --- Form Errors --- */
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group button.error,
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group textarea.error {
         border: 1px solid red;
     }
+
+     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error{
+         border: 2px dashed red;
+     }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
         border: 1px solid red;

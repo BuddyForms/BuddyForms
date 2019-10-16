@@ -42,7 +42,7 @@ function uploadHandler() {
                 addRemoveLinks: clickeable,
                 init: function () {
                     this.on('queuecomplete', function () {
-                        console.log('DropZoneQueueComplete');
+                        current.removeClass('error');
                     });
                     this.on('addedfile', function () {
                         DropZoneAddedFile(dropzoneStringId);

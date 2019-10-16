@@ -54,6 +54,10 @@ class ErrorHandler {
 		return self::$instance;
 	}
 
+	public static function set_instance( $instance ) {
+		self::$instance = $instance;
+	}
+
 	/**
 	 * @return BF_Error
 	 */

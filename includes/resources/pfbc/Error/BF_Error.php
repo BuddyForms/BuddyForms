@@ -33,7 +33,13 @@ class BF_Error extends WP_Error {
 		if ( ! empty( $form_slug ) ) {
 			$this->set_form_slug( $form_slug );
 		}
-		parent::add( $code, $message, $data );
+
+		if ( ! empty( $data ) ) {
+			$this->error_data[ $code ]      = $data;
+			$this->errors[ $code ][ $data ] = $message;
+		} else {
+			$this->errors[ $code ][] = $message;
+		}
 	}
 
 

@@ -22,6 +22,12 @@ class View_Inline extends FormView {
 			$element->appendAttribute( "class", "form-control" );
 		}
 
+		$attr_error   = $element->getAttribute( 'error' );
+		$opt_error    = $element->getOption( 'error' );
+		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
+			$element->appendAttribute( 'class', 'error' );
+		}
+
 		if ( $this->noLabel ) {
 			$label = $element->getLabel();
 			$element->setAttribute( "placeholder", $label );

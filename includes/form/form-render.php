@@ -8,13 +8,6 @@
 function buddyforms_form_html( $args ) {
 	global $buddyforms, $bf_form_error, $post_id, $form_slug;
 
-	// First check if any form error exist
-	if ( ! empty( $bf_form_error ) ) {
-		echo '<div class="bf-alert error">' . $bf_form_error . '</div>';
-
-		return $args;
-	}
-
 	/** @var WP_User $current_user */
 	$current_user = '';
 	$post_type    = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
@@ -27,7 +20,7 @@ function buddyforms_form_html( $args ) {
 		'post_id'      => false,
 		'revision_id'  => false,
 		'post_parent'  => 0,
-		'redirect_to'  => esc_url( $_SERVER['REQUEST_URI'] ),
+		'redirect_to'  => esc_url_raw( $_SERVER['REQUEST_URI'] ),
 		'form_slug'    => '',
 		'post_status'  => '',
 		'form_notice'  => '',
@@ -120,7 +113,10 @@ function buddyforms_form_html( $args ) {
 
 	$notice_class = apply_filters( 'buddyforms_form_notice_class', $form_notice != '' ? 'bf-alert success' : '', $form_slug );
 
-	$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
+	$global_error = ErrorHandler::get_instance();
+	if ( ! $global_error->get_global_error()->has_errors() ) {
+		$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
+	}
 	$form_html .= '<div class="form_wrapper">';
 
 	$bfdesign = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
@@ -221,7 +217,7 @@ function buddyforms_form_html( $args ) {
 	$form->addElement( new Element_HTML( $template_notices ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
 	//Honey Pot
-	$honey_pot = new Element_HTML( '<input data-storage="false" type="text" value="" style="display: none" id="bf_hweb" name="bf_hweb" />' );
+	$honey_pot = new Element_HTML( '<input type="text" value="" id="bf_hweb" name="bf_hweb" />' );
 	$form->addElement( $honey_pot );
 
 	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
