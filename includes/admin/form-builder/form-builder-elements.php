@@ -259,6 +259,21 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
+            $new_password_placeholder                           = isset( $customfield['new_password_placeholder'] ) ? stripcslashes( $customfield['new_password_placeholder'] ) : __( 'New Password ', 'buddyforms' );
+            $form_fields['general']['new_password_placeholder'] = new Element_Textbox( '<b>' . __( 'New Password Placeholder', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][new_password_placeholder]", array(
+                'data'     => $field_id,
+                'value'    => $new_password_placeholder,
+                'class'    => "use_as_slug",
+                'required' => 1
+            ) );
+            $confirm_password_placeholder                           = isset( $customfield['confirm_password_placeholder'] ) ? stripcslashes( $customfield['confirm_password_placeholder'] ) : __( 'Confirm Password', 'buddyforms' );
+            $form_fields['general']['confirm_password_placeholder'] = new Element_Textbox( '<b>' . __( 'Confirm Password Placeholder', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][confirm_password_placeholder]", array(
+                'data'     => $field_id,
+                'value'    => $confirm_password_placeholder,
+                'class'    => "use_as_slug",
+                'required' => 1
+            ) );
+
 			$hide_if_logged_in                           = isset( $customfield['hide_if_logged_in'] ) ? $customfield['hide_if_logged_in'] : 'show';
 			$form_fields['general']['hide_if_logged_in'] = new Element_Checkbox( '<b>' . __( 'Hide Password Form Element for LoggedIn User', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]", array( 'hide' => '<b>' . __( 'Hide for logged in user', 'buddyforms' ) . '</b>' ), array(
 				'value'     => $hide_if_logged_in,
