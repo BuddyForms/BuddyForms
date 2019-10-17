@@ -15,8 +15,8 @@ class Element_Password extends Element_Textbox {
 		$required_string     = ! empty( $is_required ) ? 'required' : '';
 		$form_slug           = $this->getAttribute( 'data-form' );
 		$labels_layout       = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
-		$placeholder_label_1 = __( 'New Password', 'buddyforms' );
-		$placeholder_label_2 = __( 'Password Confirm', 'buddyforms' );
+		$placeholder_label_1 = isset( $this->field_options['new_password_placeholder'] ) ? $this->field_options['new_password_placeholder'] : __( 'New Password', 'buddyforms' );
+		$placeholder_label_2 = isset( $this->field_options['confirm_password_placeholder'] ) ? $this->field_options['confirm_password_placeholder'] :__( 'Password Confirm', 'buddyforms' );
 		if ( $labels_layout === 'inline' && $is_required ) {
 			$placeholder_label_1 .= ' ' . $this->getRequiredPlainSignal();
 			$placeholder_label_2 .= ' ' . $this->getRequiredPlainSignal();
