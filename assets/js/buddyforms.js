@@ -310,10 +310,11 @@ function BuddyForms() {
                     if (isNaN(data)) {
                         alert(data);
                     } else {
-                        var id = "#bf_post_li_";
-                        var li = id + data;
-                        li = li.replace(/\s+/g, '');
-                        jQuery(li).remove();
+                        // var id = "#bf_post_li_";
+                        // var li = id + data;
+                        // li = li.replace(/\s+/g, '');
+                        // jQuery(li).remove();
+                        location.reload();
                     }
                 },
                 error: function (request) {
