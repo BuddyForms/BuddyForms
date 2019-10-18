@@ -245,6 +245,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	if ( isset( $_POST['bf_submitted'] ) ) {
 		$args = $bf_form_response_args;
+		$args['current_user'] = $current_user;
 	}
 
 	$echo_content = buddyforms_form_html( $args );
@@ -394,7 +395,7 @@ function buddyforms_form_response_no_ajax() {
 
 		extract( $bf_form_response_args );
 
-		if ( isset( $hasError ) && ! empty( $_POST ) && ! empty( $post_id ) ) {
+		if ( !empty( $hasError ) && ! empty( $_POST ) && ! empty( $post_id ) ) {
 			$global_error = ErrorHandler::get_instance();
 			if ( ! empty( $transient_name ) && ! empty( $global_error ) ) {
 				unset( $_POST['bf_submitted'] );

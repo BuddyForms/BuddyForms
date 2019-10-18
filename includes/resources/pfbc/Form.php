@@ -56,6 +56,10 @@ class Form extends Base {
 	 */
 	protected $_elements = array();
 	/**
+	 * @var null
+	 */
+	protected $errorView;
+	/**
 	 * @var string
 	 */
 	protected $_prefix = "http";
