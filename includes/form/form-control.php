@@ -815,6 +815,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$meta_value = strip_shortcodes( $content );
 			break;
 		case 'upload':
+		case 'featured_image':
 			$result        = '';
 			$attachment_id = explode( ",", $meta_value );
 			foreach ( $attachment_id as $id ) {
