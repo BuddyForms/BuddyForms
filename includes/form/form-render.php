@@ -6,11 +6,11 @@
  * @return mixed|string
  */
 function buddyforms_form_html( $args ) {
-	global $buddyforms, $bf_form_error, $post_id, $form_slug, $wp_query;
+	global $buddyforms, $bf_form_error, $post_id, $form_slug;
 
 	/** @var WP_User $current_user */
 	$current_user = '';
-	$post_type    = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_type = $form_notice = '';
+	$post_type    = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_notice = '';
 
 	// Extract the form args
 	extract( shortcode_atts( array(
@@ -111,35 +111,12 @@ function buddyforms_form_html( $args ) {
 	$form_html = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
 	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template() : '';
 
+	$notice_class = apply_filters( 'buddyforms_form_notice_class', $form_notice != '' ? 'bf-alert success' : '', $form_slug );
 
-	//decide if the update of create message will show.
-	$form_type      = ( ! empty( $form_type ) ) ? $form_type : 'submission';
-	$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
-	$message_source = 'after_submit_message_text';
-	if ( 'registration' === $form_type ) {
-		if ( is_user_logged_in() ) {
-			$message_source = 'after_submit_message_text';
-		}
-	} else {
-		if ( 'update' === $form_action ) {
-			$message_source = 'after_update_submit_message_text';
-		}
-	}
-	$form_notice  = buddyforms_form_display_message( $form_slug, $post_id, $message_source );
-	$notice_class = '';
-	if(isset( $_POST['bf_submitted'] )) {
-		$notice_class = apply_filters( 'buddyforms_form_notice_class', ! empty( $form_notice ) ? 'bf-alert success' : '', $form_slug );
-	}
-	$form_html    .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
 	$global_error = ErrorHandler::get_instance();
-	if ( ! $global_error->get_global_error()->has_errors() && isset( $_POST['bf_submitted'] ) ) {
-		$form_html .= $form_notice;
-		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $form_slug ]['after_submit'] == 'display_message' ) {
-			return $form_html . '</div></div>';
-		}
+	if ( ! $global_error->get_global_error()->has_errors() ) {
+		$form_html .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">' . $form_notice . '</div>';
 	}
-
-	$form_html .= '</div>';
 	$form_html .= '<div class="form_wrapper">';
 
 	$bfdesign = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();

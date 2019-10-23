@@ -214,12 +214,37 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		'post_id'      => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
 		'form_slug'    => $form_slug,
 		'form_notice'  => $form_notice,
-		'current_user' => $current_user,
-		'action'       => $wp_query->query_vars['bf_action'],
+		'current_user' => $current_user
 	);
 
+	if ( isset( $_POST['form_slug'] ) ) {
+		//decide if the update of create message will show.
+		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$message_source = 'after_submit_message_text';
+		if ( 'registration' === $form_type ) {
+			if ( is_user_logged_in() ) {
+				$message_source = 'after_update_submit_message_text';
+			}
+		} else {
+			if ( 'update' === $form_action ) {
+				$message_source = 'after_update_submit_message_text';
+			}
+		}
+		$display_message     = buddyforms_form_display_message( $_POST['form_slug'], $args['post_id'], $message_source );
+		$args['form_notice'] = $display_message;
+
+		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $_POST['form_slug'] ]['after_submit'] == 'display_message' ) {
+			if ( $echo ) {
+				echo $display_message;
+			} else {
+				return $display_message;
+			}
+		}
+	}
+
 	if ( isset( $_POST['bf_submitted'] ) ) {
-		$args                 = $bf_form_response_args;
+		$args = $bf_form_response_args;
 		$args['current_user'] = $current_user;
 	}
 
@@ -351,6 +376,7 @@ function buddyforms_form_response_no_ajax() {
 	global $buddyforms, $bf_form_response_args;
 	// If the form is submitted we will get in action
 	if ( ! empty( $_REQUEST['bf_submitted'] ) ) {
+		unset( $_REQUEST['bf_submitted'] );
 		$_POST     = buddyforms_sanitize( '', $_POST );
 		$form_slug = get_query_var( 'form_slug' );
 		if ( isset( $_REQUEST['post_id'] ) && isset( $_REQUEST['_wpnonce'] ) ) {
@@ -369,22 +395,21 @@ function buddyforms_form_response_no_ajax() {
 
 		extract( $bf_form_response_args );
 
-		if ( ! empty( $hasError ) && ! empty( $_POST ) && ! empty( $post_id ) ) {
+		if ( !empty( $hasError ) && ! empty( $_POST ) && ! empty( $post_id ) ) {
 			$global_error = ErrorHandler::get_instance();
-			$action       = ! empty( $action ) ? $action : 'create';
 			if ( ! empty( $transient_name ) && ! empty( $global_error ) ) {
 				unset( $_POST['bf_submitted'] );
-				set_transient( $transient_name, array( 'error' => $global_error, 'post' => $_POST, 'action' => $action ) );
+				set_transient( $transient_name, array( 'error' => $global_error, 'post' => $_POST ) );
 			}
 			$sendback = remove_query_arg( array( 'form_slug', 'post_id', '_wpnonce', 'bf_submitted' ), wp_get_referer() );
-			$sendback = rtrim( $sendback, "/" );
+			$sendback = rtrim($sendback,"/");
 
 			$sendback = add_query_arg( 'form_slug', $form_slug, $sendback );
 			$sendback = add_query_arg( 'post_id', $post_id, $sendback );
-			$sendback = add_query_arg( 'bf_action', $action, $sendback );
 			$sendback = add_query_arg( '_wpnonce', $wp_nonce, $sendback );
+			$sendback = add_query_arg( 'bf_submitted', ! empty( $_REQUEST['bf_submitted'] ), $sendback );
 
-			wp_redirect( $sendback, 302 );
+			wp_redirect( $sendback );
 			exit;
 		}
 
