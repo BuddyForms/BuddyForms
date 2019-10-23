@@ -104,14 +104,29 @@ function buddyforms_process_submission( $args = array() ) {
 		);
 	}
 
-	/* Servers site validation
-	 * First we have browser validation. Now let us check from the server site if all is in place
-	 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
-	 *
-	 * Validation can be extended
-	 */
-	if ( Form::isValid( $form_slug ) ) {
-		if ( ! apply_filters( 'buddyforms_form_custom_validation', true, $form_slug ) ) {
+	$is_draft_enabled   = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
+	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
+
+	$is_draft_not_need_validation = ( $is_draft_enabled && $post_status_action === 'draft' );
+	//Avoid validation if the form is save as draft
+	if ( ! $is_draft_not_need_validation ) {
+		/* Servers site validation
+		 * First we have browser validation. Now let us check from the server site if all is in place
+		 * 7 types of validation rules: AlphaNumeric, Captcha, Date, Email, Numeric, RegExp, Required, and Url
+		 *
+		 * Validation can be extended
+		 */
+		if ( Form::isValid( $form_slug ) ) {
+			if ( ! apply_filters( 'buddyforms_form_custom_validation', true, $form_slug ) ) {
+				$args = array(
+					'hasError'  => true,
+					'form_slug' => $form_slug,
+				);
+
+				return $args;
+			}
+		} else {
 			$args = array(
 				'hasError'  => true,
 				'form_slug' => $form_slug,
@@ -119,13 +134,6 @@ function buddyforms_process_submission( $args = array() ) {
 
 			return $args;
 		}
-	} else {
-		$args = array(
-			'hasError'  => true,
-			'form_slug' => $form_slug,
-		);
-
-		return $args;
 	}
 
 	// Check if this is a registration form only
@@ -333,10 +341,7 @@ function buddyforms_process_submission( $args = array() ) {
 		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
 	}
 
-	$action             = 'save';//Base action
-	$is_draft_enabled   = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
-	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
-	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
+	$action = 'save';//Base action
 	//Check the current post status
 	if ( $post_id != 0 ) {
 		$post_current_status = get_post_status( $post_id );
@@ -408,7 +413,7 @@ function buddyforms_process_submission( $args = array() ) {
 		//TODO gfirem this need to be in other way review with @sven
 		// Check if user is logged in and update user relevant fields if used in the form
 		if ( is_user_logged_in() && 'registration' == $form_type ) {
-			if($have_user_fields === true) {
+			if ( $have_user_fields === true ) {
 				$user_id = buddyforms_wp_update_user();
 			}
 			// If this was a registration form save the user id
