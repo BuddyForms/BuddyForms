@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.8
+Stable tag: 2.5.9-beta1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,22 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.9-beta1 - 24 Oct 2019 =
+* Fixed the required validation for the File element.
+* Correct the align text for the feature image and upload form element.
+* Added the red dots to the feature and upload form element, to be shown on error.
+* Added the error label for the password form element when is required and the validation is performed in JS.
+* Fixed the serve side validations and error signals.
+* Improved the way the error was handled by the plugin.
+* Fixed Enfold theme compatibility issue.
+* Fixed password place holder.
+* Added a location.reload(); to the delete js to make sure it also works with custom templates including the delete button.
+* Added a featured image as case to the function preparing the form element values.
+* Fixed the form submission with no ajax.
+* New feature, now the save draft will not trigger the form validation.
+* Fixed the form permission to edit the post or create a new one.
+* Fixed the permission to check if the user have the capability `edit_others_posts` or `edit_others_pages` to grant the edit other users entry.
+
 = 2.5.8 - 11 Oct 2019 =
 * Added an implementation to avoid acf field from form validation.
 * Added a new way to edit the list of Countries and States from the elements options.
