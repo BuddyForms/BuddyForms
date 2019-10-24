@@ -121,6 +121,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 			if ( $the_post->post_author == $current_user->ID ) {
 				$user_can_edit = true;
 			}
+			if ( current_user_can( 'edit_others_posts' ) || current_user_can( 'edit_others_pages' ) ) {
+				$user_can_edit = true;
+			}
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
 			if ( $user_can_edit == false ) {
@@ -132,9 +135,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					return $echo_content;
 				}
 			}
-
 		}
-
 	}
 
 	// if post edit screen is displayed
@@ -145,22 +146,6 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		} else {
 			$post_id  = apply_filters( 'buddyforms_create_edit_form_post_id', $post_id );
 			$the_post = get_post( $post_id );
-		}
-
-		$user_can_edit = false;
-		if ( $the_post->post_author == $current_user->ID ) {
-			$user_can_edit = true;
-		}
-		$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
-
-		if ( $user_can_edit == false ) {
-			$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
-			$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
-			if ( $echo ) {
-				echo $echo_content;
-			} else {
-				return $echo_content;
-			}
 		}
 	}
 
