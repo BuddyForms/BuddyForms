@@ -1118,7 +1118,7 @@ function BuddyForms() {
     }
 
     function renderForm(options) {
-        var id = options[0], prevent = options[1], ajax = options[2], method = options[3];
+        var id = options[0], prevent = options[1], ajax = options[2], method = options[3], formTargetStatus = options[4];
         var formId = 'buddyforms_form_' + id;
         if (typeof (tinyMCE) != "undefined") {
             tinyMCE.triggerSave();
@@ -1132,8 +1132,10 @@ function BuddyForms() {
             //For ajax, an anonymous onsubmit javascript function is bound to the form using jQuery.  jQuery's serialize function is used to grab each element's name/value pair.
             if (ajax) {
                 if (id && buddyformsGlobal[id] && typeof buddyformsGlobal[id].js_validation == "undefined") {
-                    if (jQuery.validator && !currentForm.valid()) {
-                        return false;
+                    if (typeof (formTargetStatus) == "undefined" || (formTargetStatus && formTargetStatus !== 'draft')) {
+                        if (jQuery.validator && !currentForm.valid()) {
+                            return false;
+                        }
                     }
                 }
 
@@ -1285,7 +1287,7 @@ function BuddyForms() {
             if (bf_submission_modal_content.length > 0) {
                 fncBuddyForms.submissionModalContent(bf_submission_modal_content);
             }
-            jQuery(document.body).on('click', 'button[type="button"][name="draft"].bf-draft', actionFromButton);
+            jQuery(document.body).on('click', 'button[type="submit"][name="draft"].bf-draft', actionFromButton);
             jQuery(document.body).on('click', 'button[type="submit"][name="submitted"].bf-submit', actionFromButton);
             jQuery(document.body).on('click', '.button.bf_reset_multi_input', resetInputMultiplesChoices);
             jQuery(document.body).on('keyup', 'input[name=buddyforms_user_pass], input[name=buddyforms_user_pass_confirm]', checkPasswordStrength);

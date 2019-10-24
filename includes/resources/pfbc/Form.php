@@ -468,7 +468,12 @@ class Form extends Base {
 		jQuery(document.body).on('submit', '#$id', function (event) {
             event.preventDefault();
             if(BuddyFormsHooks){
-            	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method"]);
+                var formTargetStatus = 'publish';
+                var formTargetStatusElement = jQuery(this).find("button[type=submit]:focus" );
+                if(formTargetStatusElement){
+                    formTargetStatus = formTargetStatusElement.attr('data-status');
+                }
+            	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
             } else {
                 alert('Error, contact the admin!');
             }
