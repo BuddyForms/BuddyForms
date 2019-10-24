@@ -215,7 +215,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		'form_slug'    => $form_slug,
 		'form_notice'  => $form_notice,
 		'current_user' => $current_user,
-		'action'       => $wp_query->query_vars['bf_action'],
+		'action'       => ( isset( $wp_query->query_vars['bf_action'] ) ) ? $wp_query->query_vars['bf_action'] : 'save',
 	);
 
 	if ( isset( $_POST['bf_submitted'] ) ) {
