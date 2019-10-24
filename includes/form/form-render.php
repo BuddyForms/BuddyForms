@@ -38,10 +38,12 @@ function buddyforms_form_html( $args ) {
 		$post_id = $the_post->ID;
 	}
 
+	$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+
 	$user_can_edit = false;
-	if ( empty( $post_id ) && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
+	if ( $form_action !== 'update' && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( ! empty( $post_id ) && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+	} elseif ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 
@@ -114,7 +116,6 @@ function buddyforms_form_html( $args ) {
 
 	//decide if the update of create message will show.
 	$form_type      = ( ! empty( $form_type ) ) ? $form_type : 'submission';
-	$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 	$message_source = 'after_submit_message_text';
 	if ( 'registration' === $form_type ) {
 		if ( is_user_logged_in() ) {

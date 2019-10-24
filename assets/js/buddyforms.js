@@ -1074,7 +1074,7 @@ function BuddyForms() {
         var form_id = options[0], errors = options[1];
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
             var id = 'buddyforms_form_' + form_id;
-            var errorSize = errors.errors[id].length;
+            var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
             var errorFormat;
             if (errorSize === 1) {
                 errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;

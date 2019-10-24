@@ -292,6 +292,9 @@ function buddyforms_process_submission( $args = array() ) {
 			if ( $the_post->post_author == $user_id ) {
 				$user_can_edit = true;
 			}
+			if ( current_user_can( 'edit_others_posts' ) || current_user_can( 'edit_others_pages' ) ) {
+				$user_can_edit = true;
+			}
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 			if ( $user_can_edit == false ) {
 				$args = array(
@@ -304,11 +307,28 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 	}
 
+	$action             = 'save';//Base action
+	$is_draft_enabled   = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
+	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
+	//Check the current post status
+	if ( $post_id != 0 ) {
+		$post_current_status = get_post_status( $post_id );
+		if ( $post_current_status === 'auto-draft' ) {
+			if ( $is_draft_enabled && $post_status_action === 'draft' ) {
+				$post_status = 'draft';
+			}
+		} else {
+			$action      = 'update';
+			$post_status = $post_status_action; // Keep the same action status selected by the user from the form
+		}
+	}
+
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
-	if ( $post_id == 0 && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
+	if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( $post_id != 0 && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+	} elseif ( $action == 'update' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
@@ -339,20 +359,6 @@ function buddyforms_process_submission( $args = array() ) {
 		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );//todo add check here
 		$post_excerpt  = $content_field['generate_post_excerpt'];
 		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
-	}
-
-	$action = 'save';//Base action
-	//Check the current post status
-	if ( $post_id != 0 ) {
-		$post_current_status = get_post_status( $post_id );
-		if ( $post_current_status === 'auto-draft' ) {
-			if ( $is_draft_enabled && $post_status_action === 'draft' ) {
-				$post_status = 'draft';
-			}
-		} else {
-			$action      = 'update';
-			$post_status = $post_status_action; // Keep the same action status selected by the user from the form
-		}
 	}
 
 	//Override the post status if exist a status field
