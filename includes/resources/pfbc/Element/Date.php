@@ -38,7 +38,12 @@ class Element_Date extends Element_Textbox {
 		wp_enqueue_style( 'buddyforms-jquery-ui-themes', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui.css', 'all', '1.1.0' );
 		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.css' );
 
-		$expected_format = ! empty( $this->field_options['element_save_format'] ) ? $this->field_options['element_save_format'] : '';
+		$expected_format = ! empty( $this->field_options['element_date_format'] ) ? $this->field_options['element_date_format'] : 'y/m/d';
+
+		if(!empty($this->field_options['enable_time']) && $this->field_options['enable_time'][0] == 'enable_time'){
+			$expected_format .= ' ';
+			$expected_format .= ! empty( $this->field_options['element_time_format'] ) ? $this->field_options['element_time_format'] : 'hh:mm tt';
+		}
 
 		if ( ! empty( $expected_format ) ) {
 			$this->validation[] = new Validation_Date ( "Error: The %element% field must match the following date format: " . ! empty( $expected_format ) ? $expected_format : '', $this->field_options );

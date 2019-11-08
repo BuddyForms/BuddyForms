@@ -17,11 +17,18 @@ class Validation_Date extends Validation {
 	 */
 	public function isValid( $value, $element ) {
 		try {
-			$d = DateTime::createFromFormat( $this->field_options['element_save_format'], $value );
+			$format = ! empty( $this->field_options['element_date_format'] ) ? $this->field_options['element_date_format'] : 'y/m/d';
 
-			$result = $d && $d->format( $this->field_options['element_save_format'] ) === $value;
+			if ( ! empty( $this->field_options['enable_time'] ) && $this->field_options['enable_time'][0] == 'enable_time' ) {
+				$format .= ' ';
+				$format .= ! empty( $this->field_options['element_time_format'] ) ? $this->field_options['element_time_format'] : 'hh:mm tt';
+			}
 
-			return apply_filters('buddyforms_element_date_validation', $result, $element );
+			$d = DateTime::createFromFormat( $format, $value );
+
+			$result = $d && $d->format( $format ) === $value;
+
+			return apply_filters( 'buddyforms_element_date_validation', $result, $element );
 		} catch ( Exception $e ) {
 			return false;
 		}
