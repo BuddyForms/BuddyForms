@@ -104,6 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         <div class="meta">
                                             <span class="mobile-th"><?php _e( 'Actions', 'buddyforms' ); ?></span>
 											<?php buddyforms_post_entry_actions( $form_slug ); ?>
+	                                        <?php do_action( 'buddyforms_the_loop_after_actions', get_the_ID(), $form_slug ); ?>
                                         </div>
                                     </td>
                                 </tr>

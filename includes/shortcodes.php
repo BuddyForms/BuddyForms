@@ -71,7 +71,14 @@ function buddyforms_the_loop( $args ) {
 
 	$caller = $posts_per_page = $list_posts_style = $author = $post_type = $form_slug = $id = $post_parent = $query_option = $user_logged_in_only = $meta_key = $meta_compare = $meta_value = '';
 
-	$post_status = array( 'publish', 'pending', 'draft', 'future' );
+//	$post_status = array( 'publish', 'pending', 'draft', 'future' );
+
+	$post_status = apply_filters( 'buddyforms_shortcode_the_loop_post_status', array(
+		'publish',
+		'pending',
+		'draft',
+		'future'
+	), $form_slug );
 	
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
