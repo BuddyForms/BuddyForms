@@ -613,7 +613,7 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug )
 				}
 				$result_field       = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug );
 				$field_result_value = ! empty( $result_field['value'] ) ? $result_field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $result_field, $form_slug, $post_id, $target_slug );
-				$string             = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug ) );
+				$string             = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
 			}
 		}
 	}
