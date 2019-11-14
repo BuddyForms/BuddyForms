@@ -427,7 +427,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'is_premium'      => true,
 				'has_addons'      => true,
 				'has_paid_plans'  => true,
-				'navigation'  => 'tabs',
 				'trial'           => array(
 					'days'               => 14,
 					'is_require_payment' => true,
