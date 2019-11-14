@@ -1140,9 +1140,10 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							foreach ( $customfield['options'] as $key => $option ) {
 
 								if ( isset( $option['checked'] ) ) {
-									$value = 'checked';
+									$element_attr['value'] = 'checked';
 								} else {
-									$value = '';
+
+                                    unset($element_attr['value']);
 								}
 
 
@@ -1160,22 +1161,36 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 									}
 								}
 
-								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), array(
-									'value'     => $value,
-									'shortDesc' => $shortDesc,
-								), $customfield );
+
+
+                                if ( isset( $option['required'] ) ) {
+                                    $element_attr['required'] = true;
+                                    $customfield['default']= true;
+                                    if (strpos($element_attr['class'], 'gdpragreement-required') == false) {
+                                        $element_attr['class'] = $element_attr['class'] . ' gdpragreement-required';
+                                    }
+
+                                }else{
+								    unset($element_attr['required']);
+                                    $new_class = str_replace('gdpragreement-required','',$element_attr['class']);
+                                    $element_attr['class'] = $new_class;
+                                }
+                                $element_attr['data-element-slug'] = $slug;
+                                $element_attr['id'] = 'gdpragreement-'.$key;
+
+
+                                $element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), $element_attr, $customfield );
 
 								$element->setAttribute( 'data-storage', 'false' );
 
-								if ( isset( $option['required'] ) ) {
-									$element->setAttribute( 'required', 'required' );
-								}
 
 								$form->addElement( $element );
+
 
 								$label = '';
 
 							}
+                            echo '<style> .gdpragreement-required:before { content:"* ";  color: #B94A48; } </style>';
 						}
 						break;
 					case 'form_actions':
