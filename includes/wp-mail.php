@@ -213,19 +213,22 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  *
  */
 function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array() ) {
+	mb_internal_encoding( 'UTF-8' );
+	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
+	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
 	// Create the email header
 	$mail_header = "MIME-Version: 1.0\n";
 	$mail_header .= "X-Priority: 1\n";
 	$mail_header .= "Content-Type: text/html; charset=\"UTF-8\"\n";
 	$mail_header .= "Content-Transfer-Encoding: 7bit\n\n";
-	$mail_header .= "From: $from_name <$from_email>" . "\r\n";
+	$mail_header .= "From: $encoded_from_name <$from_email>" . "\r\n";
 	$message     = '<html><head></head><body>' . $email_body . '</body></html>';
 
 	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_cc );
 	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
 	// OK Let us sent the mail
-	wp_mail( $mail_to, $subject, $message, $mail_header );
+	wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
 }
 
 /**

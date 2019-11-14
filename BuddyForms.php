@@ -408,6 +408,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 	 * Create a helper function for easy SDK access.
 	 *
 	 * @return Freemius
+	 * @throws Freemius_Exception
 	 */
 	function buddyforms_core_fs() {
 		global $buddyforms_core_fs;
