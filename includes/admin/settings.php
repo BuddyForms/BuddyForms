@@ -5,6 +5,7 @@
 //
 function buddyforms_settings_menu() {
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Account', 'buddyforms' ), __( 'Account', 'freemius' ), 'manage_options', 'buddyforms-account' );
 }
 
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
@@ -49,6 +50,7 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	//$tabs['layout'] = 'Form Layout';
 	$tabs['import'] = __( 'Import Forms', 'buddyforms' );
 	$tabs['gdpr']   = 'GDPR';
+	$tabs['info']   = __( 'Info', 'buddyforms' );
 
 
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
@@ -434,10 +436,8 @@ function buddyforms_settings_page_tabs_content() {
                     </div><!-- .metabox-holder -->
 					<?php
 					break;
-
 				default:
 					do_action( 'buddyforms_settings_page_tab', $tab );
-
 					break;
 			}
 		}

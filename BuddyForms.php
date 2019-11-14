@@ -385,7 +385,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			$options = get_option( 'buddyforms_forms', true );
 
-			update_option( 'buddyforms_first_path_after_install', is_array( $options ) && count( $options ) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1' );
+			update_option( 'buddyforms_first_path_after_install', is_array( $options ) && count( $options ) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_settings&tab=info' : 'post-new.php?post_type=buddyforms&wizard=1' );
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
@@ -408,6 +408,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 	 * Create a helper function for easy SDK access.
 	 *
 	 * @return Freemius
+	 * @throws Freemius_Exception
 	 */
 	function buddyforms_core_fs() {
 		global $buddyforms_core_fs;
@@ -427,7 +428,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				'is_premium'      => true,
 				'has_addons'      => true,
 				'has_paid_plans'  => true,
-				'navigation'  => 'tabs',
+				'navigation'      => 'tabs',
 				'trial'           => array(
 					'days'               => 14,
 					'is_require_payment' => true,
