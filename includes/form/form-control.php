@@ -635,7 +635,7 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug )
  */
 function buddyforms_replace_shortcode_for_value( $string, $shortcode, $value ) {
 	if ( strpos( $string, $shortcode ) >= 0 ) {
-		$string = str_replace( $shortcode, $value, $string );
+		$string = str_replace( $shortcode, mb_convert_encoding( $value, 'UTF-8' ), $string );
 	}
 
 	return $string;
@@ -1281,7 +1281,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 						break;
 				}
 
-				$string = str_replace( '[' . $t_field['slug'] . ']', $string_tmp, $string );
+				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding($string_tmp, 'UTF-8'), $string );
 			} else {
 				$string = str_replace( '[' . $t_field['slug'] . ']', '', $string );
 			}

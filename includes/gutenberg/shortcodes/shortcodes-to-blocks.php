@@ -8,7 +8,7 @@
 function buddyforms_shortcodes_to_block_init() {
 	global $buddyforms;
 
-	if (empty($buddyforms)) {
+	if ( empty( $buddyforms ) ) {
 		return;
 	}
 
@@ -40,7 +40,7 @@ function buddyforms_shortcodes_to_block_init() {
 
 	$forms = array();
 	foreach ( $buddyforms as $form_slug => $form ) {
-		if ( !empty($form['attached_page']) && $form['attached_page'] != 'none' ) {
+		if ( ! empty( $form['attached_page'] ) && $form['attached_page'] != 'none' ) {
 			$forms[ $form_slug ] = $form['name'];
 		}
 	}
@@ -193,10 +193,10 @@ function buddyforms_block_render_login_form( $attributes ) {
 		'form_slug'      => empty( $attributes['bf_form_slug'] ) ? 'none' : $attributes['bf_form_slug'],
 		'redirect_url'   => empty( $attributes['bf_redirect_url'] ) ? '' : $attributes['bf_redirect_url'],
 		'title'          => empty( $attributes['bf_title'] ) ? __( 'Login', 'buddyforms' ) : $attributes['bf_title'],
-		'label_username' => empty( $attributes['bf_label_username'] ) ? __( 'Username or Email Address', 'buddyforms'  ) : $attributes['bf_label_username'],
-		'label_password' => empty( $attributes['bf_label_password'] ) ? __( 'Password', 'buddyforms'  ) : $attributes['bf_label_password'],
-		'label_remember' => empty( $attributes['bf_label_remember'] ) ? __( 'Remember Me', 'buddyforms'  ) : $attributes['bf_label_remember'],
-		'label_log_in'   => empty( $attributes['bf_label_log_in'] ) ? __( 'Log In', 'buddyforms'  ) : $attributes['bf_label_log_in'],
+		'label_username' => empty( $attributes['bf_label_username'] ) ? __( 'Username or Email Address', 'buddyforms' ) : $attributes['bf_label_username'],
+		'label_password' => empty( $attributes['bf_label_password'] ) ? __( 'Password', 'buddyforms' ) : $attributes['bf_label_password'],
+		'label_remember' => empty( $attributes['bf_label_remember'] ) ? __( 'Remember Me', 'buddyforms' ) : $attributes['bf_label_remember'],
+		'label_log_in'   => empty( $attributes['bf_label_log_in'] ) ? __( 'Log In', 'buddyforms' ) : $attributes['bf_label_log_in'],
 	);
 
 	return buddyforms_view_login_form( $attr );
@@ -372,8 +372,14 @@ function buddyforms_blocks_the_loop( $args ) {
 
 	$posts_per_page = apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page );
 
-	$post_status = array( 'publish', 'pending', 'draft', 'future' );
-	$paged       = buddyforms_get_url_var( 'page' );
+	$post_status = apply_filters( 'buddyforms_blocks_the_loop_post_status', array(
+		'publish',
+		'pending',
+		'draft',
+		'future'
+	), $form_slug );
+
+	$paged = buddyforms_get_url_var( 'page' );
 
 	if ( empty( $author ) ) {
 		$author = get_current_user_id();
