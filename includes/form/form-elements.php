@@ -1190,7 +1190,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$label = '';
 
 							}
-                            echo '<style> .gdpragreement-required:before { content:"* ";  color: #B94A48; } </style>';
+                            
 						}
 						break;
 					case 'form_actions':
