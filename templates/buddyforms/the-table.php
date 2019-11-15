@@ -32,6 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php endif; ?>
 
                     </th>
+	                <?php do_action( 'buddyforms_the_thead_th_after_title', get_the_ID(), $form_slug ); ?>
                     <th class="status">
                         <span><?php _e( 'Status', 'buddyforms' ); ?></span>
                     </th>
@@ -84,12 +85,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php the_time( 'F j, Y' ) ?>
                         </td>
                         <td>
-                            <span class="mobile-th"><?php _e( 'Title', 'buddyforms' ); ?></span>
+<!--                            <span class="mobile-th">--><?php //_e( 'Title', 'buddyforms' ); ?><!--</span>-->
                             <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
                                data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
                                title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
 	                        <?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
                         </td>
+	                    <?php do_action( 'buddyforms_the_table_td_after_title_last', get_the_ID(), $form_slug ); ?>
                         <td colspan="2" class="table-wrapper">
                             <table class="table table-inner">
                                 <tbody>
