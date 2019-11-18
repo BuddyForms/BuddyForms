@@ -38,10 +38,11 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$post_ID = $post->ID;
 
-	$author_id  = $post->post_author;
-	$post_title = $post->post_title;
-	$postperma  = get_permalink( $post_ID );
-	$user_info  = get_userdata( $author_id );
+	$author_id   = $post->post_author;
+	$post_title  = $post->post_title;
+	$postperma   = get_permalink( $post_ID );
+	$user_info   = get_userdata( $author_id );
+	$admin_email = get_option( 'admin_email' );
 
 	$usernameauth  = ! empty( $user_info ) ? $user_info->user_login : '';
 	$user_nicename = ! empty( $user_info ) ? $user_info->user_nicename : '';
@@ -63,7 +64,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			}
 
 			if ( $mail_address == 'admin' ) {
-				array_push( $mail_to, get_option( 'admin_email' ) );
+				array_push( $mail_to, $admin_email );
 			}
 		}
 	}
@@ -144,12 +145,17 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$from_email = isset( $mail_notification_trigger['mail_from'] ) ? $mail_notification_trigger['mail_from'] : 'admin';
 
+
 	switch ( $from_email ) {
 		case 'submitter':
-			$from_email = $user_email;
+			if ( ! empty( $user_email ) ) {
+				$from_email = $user_email;
+			} else {
+				$from_email = $admin_email;
+			}
 			break;
 		case 'admin':
-			$from_email = get_option( 'admin_email' );
+			$from_email = $admin_email;
 			break;
 		case 'custom':
 			$from_email = isset( $mail_notification_trigger['mail_from_custom'] ) ? $mail_notification_trigger['mail_from_custom'] : $from_email;
@@ -412,7 +418,7 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug, $post 
 		}
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
-		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
+		$message .= "<tr " . $striped . "><td><strong>" . mb_convert_encoding( $field['name'], 'UTF-8' ) . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
 	}
 	// Table end
 	$message .= "</table>";

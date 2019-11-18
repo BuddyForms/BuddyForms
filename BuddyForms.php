@@ -408,39 +408,45 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 	 * Create a helper function for easy SDK access.
 	 *
 	 * @return Freemius
-	 * @throws Freemius_Exception
 	 */
 	function buddyforms_core_fs() {
 		global $buddyforms_core_fs;
 
-		$first_path = get_option( 'buddyforms_first_path_after_install' );
+		try {
+			$first_path = get_option( 'buddyforms_first_path_after_install' );
 
-		if ( ! isset( $buddyforms_core_fs ) ) {
+			if ( ! isset( $buddyforms_core_fs ) ) {
 
-			// Include Freemius SDK.
-			require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
+				// Include Freemius SDK.
+				require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
-			$buddyforms_core_fs = fs_dynamic_init( array(
-				'id'              => '391',
-				'slug'            => 'buddyforms',
-				'type'            => 'plugin',
-				'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
-				'is_premium'      => true,
-				'has_addons'      => true,
-				'has_paid_plans'  => true,
-				'trial'           => array(
-					'days'               => 14,
-					'is_require_payment' => true,
-				),
-				'has_affiliation' => false,
-				'menu'            => array(
-					'slug'       => 'edit.php?post_type=buddyforms',
-					'first-path' => $first_path,
-					'support'    => false,
-					'contact'    => true,
-					'addons'     => true,
-				),
-			) );
+
+				$buddyforms_core_fs = fs_dynamic_init( array(
+					'id'              => '391',
+					'slug'            => 'buddyforms',
+					'type'            => 'plugin',
+					'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
+					'is_premium'      => true,
+					'has_addons'      => true,
+					'has_paid_plans'  => true,
+					'trial'           => array(
+						'days'               => 14,
+						'is_require_payment' => true,
+					),
+					'has_affiliation' => false,
+					'menu'            => array(
+						'slug'       => 'edit.php?post_type=buddyforms',
+						'first-path' => $first_path,
+						'support'    => false,
+						'contact'    => true,
+						'addons'     => true,
+					),
+				) );
+
+			}
+
+		} catch ( Freemius_Exception $e ) {
+
 		}
 
 		return $buddyforms_core_fs;
