@@ -223,16 +223,20 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
 	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
 	// Create the email header
-	$mail_header = "MIME-Version: 1.0\n";
-	$mail_header .= "X-Priority: 1\n";
-	$mail_header .= "Content-Type: text/html; charset=\"UTF-8\"\n";
-	$mail_header .= "Content-Transfer-Encoding: 7bit\n\n";
-	$mail_header .= "From: $encoded_from_name <$from_email>" . "\r\n";
-	$message     = '<html><head></head><body>' . $email_body . '</body></html>';
+	$mail_header[] = "MIME-Version: 1.0";
+	$mail_header[] = "X-Priority: 1";
+	$mail_header[] = "Content-Type: text/html; charset='UTF-8'";
+	$mail_header[] = "Content-Transfer-Encoding: 7bit";
+	$mail_header[] = "From: $encoded_from_name <$from_email>";
+	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
+	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
-	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_cc );
-	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
+	$message = '<html><head></head><body>' . $email_body . '</body></html>';
 
+	/**
+	 * @since 2.5.9
+	 */
+	$mail_header = apply_filters( 'buddyforms_email_headers', $mail_header, $subject, $from_name, $from_email, $mail_to_cc, $mail_to_bcc );
 	// OK Let us sent the mail
 	wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
 }
@@ -251,7 +255,7 @@ function buddyforms_email_prepare_cc_bcc( $email_array, $type = 'cc' ) {
 	$result = '';
 	if ( ! empty( $email_array ) && is_array( $email_array ) ) {
 		foreach ( $email_array as $email ) {
-			$result .= sprintf( "%s: %s\r\n", $type, $email );
+			$result .= sprintf( "%s: %s", $type, $email );
 		}
 	}
 
