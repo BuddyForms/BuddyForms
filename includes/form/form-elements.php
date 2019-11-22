@@ -570,7 +570,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$element->setValidation( new Validation_Required( $customfield['validation_error_message'], $customfield ) );
 							}
 
-							$form->addElement( $element );
+							$form->addElement( new Element_Textarea($name, $slug, $wp_editor, $customfield) );
 						}
 						break;
 					case 'post_excerpt':
@@ -1190,7 +1190,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$label = '';
 
 							}
-                            
+
 						}
 						break;
 					case 'form_actions':
