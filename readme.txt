@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.2.2
-Stable tag: 2.5.9-beta1
+Stable tag: 2.5.9-beta2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,21 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.9-beta2 - 22 Nov 2019 =
+* Added new hook buddyforms_the_loop_after_actions to the table.
+* Added a new filter buddyforms_shortcode_the_loop_post_status.
+* Fixed an issue in the Gutenberg blocks for the post listings.
+* Update Freemius to 2.3.1.
+* Removed the dependency of the templates from the demo site.
+* Improved the GDPR form element.
+* Improved the conversion to UTF8 and the subject UTF8 conversion.
+* Improved the string to be ready for localizations.
+* Fixed the email sending for the anonymous user. The default notification setup include `From Email` as submitter and this value is only available if the user is logged in, now when is send by a user not logged the notification will use the admin email form the wp config.
+* Improved the email notification header to be more compatible with 3rd party systems like SendGrid.
+* Added a hook to modify the emails header before pass to wp_mail.
+* Improved the textarea element code and validation.
+* Added a function inside the date element to check if the date is valid in certain format.
+
 = 2.5.9-beta1 - 24 Oct 2019 =
 * Fixed the required validation for the File element.
 * Correct the align text for the feature image and upload form element.
