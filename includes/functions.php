@@ -1560,10 +1560,7 @@ function bf_user_can( $user_id, $capability, $args = array(), $form_slug = '' ) 
 		return false;
 	}
 
-	$args = array_slice( func_get_args(), 2 );
-	$args = array_merge( array( $capability ), $args );
-
-	$result = call_user_func_array( array( $user, 'has_cap' ), $args );
+	$result = $user->has_cap($capability);
 
 	if ( ! empty( $switched ) ) {
 		restore_current_blog();
