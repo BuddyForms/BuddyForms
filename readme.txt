@@ -389,7 +389,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.9-beta3 - 25 Nov 2019 =
+== 2.5.9-beta3 - 25 Nov 2019 ==
 * Fixed the permission to let other user roles to edit others users post.
 * Fixed the missing CSS file for the gpdr element.
 
