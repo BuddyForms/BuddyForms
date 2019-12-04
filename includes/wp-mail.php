@@ -228,7 +228,7 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
 	// OK Let us sent the mail
-	wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
+	return wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
 }
 
 /**
