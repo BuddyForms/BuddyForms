@@ -1376,6 +1376,10 @@ label.error{
     background: #f1f1f1;
 }
 
+.buddyforms-metabox textarea {
+    width: 100%;
+}
+
 #fs_promo_tab {
     display: none !important;
 }
