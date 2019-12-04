@@ -38,10 +38,11 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$post_ID = $post->ID;
 
-	$author_id  = $post->post_author;
-	$post_title = $post->post_title;
-	$postperma  = get_permalink( $post_ID );
-	$user_info  = get_userdata( $author_id );
+	$author_id   = $post->post_author;
+	$post_title  = $post->post_title;
+	$postperma   = get_permalink( $post_ID );
+	$user_info   = get_userdata( $author_id );
+	$admin_email = get_option( 'admin_email' );
 
 	$usernameauth  = ! empty( $user_info ) ? $user_info->user_login : '';
 	$user_nicename = ! empty( $user_info ) ? $user_info->user_nicename : '';
@@ -63,7 +64,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 			}
 
 			if ( $mail_address == 'admin' ) {
-				array_push( $mail_to, get_option( 'admin_email' ) );
+				array_push( $mail_to, $admin_email );
 			}
 		}
 	}
@@ -144,12 +145,17 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$from_email = isset( $mail_notification_trigger['mail_from'] ) ? $mail_notification_trigger['mail_from'] : 'admin';
 
+
 	switch ( $from_email ) {
 		case 'submitter':
-			$from_email = $user_email;
+			if ( ! empty( $user_email ) ) {
+				$from_email = $user_email;
+			} else {
+				$from_email = $admin_email;
+			}
 			break;
 		case 'admin':
-			$from_email = get_option( 'admin_email' );
+			$from_email = $admin_email;
 			break;
 		case 'custom':
 			$from_email = isset( $mail_notification_trigger['mail_from_custom'] ) ? $mail_notification_trigger['mail_from_custom'] : $from_email;
@@ -217,16 +223,20 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
 	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
 	// Create the email header
-	$mail_header = "MIME-Version: 1.0\n";
-	$mail_header .= "X-Priority: 1\n";
-	$mail_header .= "Content-Type: text/html; charset=\"UTF-8\"\n";
-	$mail_header .= "Content-Transfer-Encoding: 7bit\n\n";
-	$mail_header .= "From: $encoded_from_name <$from_email>" . "\r\n";
-	$message     = '<html><head></head><body>' . $email_body . '</body></html>';
+	$mail_header[] = "MIME-Version: 1.0";
+	$mail_header[] = "X-Priority: 1";
+	$mail_header[] = "Content-Type: text/html; charset='UTF-8'";
+	$mail_header[] = "Content-Transfer-Encoding: 7bit";
+	$mail_header[] = "From: $encoded_from_name <$from_email>";
+	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
+	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
-	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_cc );
-	$mail_header .= buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
+	$message = '<html><head></head><body>' . $email_body . '</body></html>';
 
+	/**
+	 * @since 2.5.9
+	 */
+	$mail_header = apply_filters( 'buddyforms_email_headers', $mail_header, $subject, $from_name, $from_email, $mail_to_cc, $mail_to_bcc );
 	// OK Let us sent the mail
 	return wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
 }
@@ -245,7 +255,7 @@ function buddyforms_email_prepare_cc_bcc( $email_array, $type = 'cc' ) {
 	$result = '';
 	if ( ! empty( $email_array ) && is_array( $email_array ) ) {
 		foreach ( $email_array as $email ) {
-			$result .= sprintf( "%s: %s\r\n", $type, $email );
+			$result .= sprintf( "%s: %s", $type, $email );
 		}
 	}
 
@@ -412,7 +422,7 @@ function buddyforms_mail_notification_form_elements_as_table( $form_slug, $post 
 		}
 		$striped = ( $striped_c ++ % 2 == 1 ) ? "style='background: #eee;'" : '';
 		// Check if the form element exist and have is not empty.
-		$message .= "<tr " . $striped . "><td><strong>" . $field['name'] . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
+		$message .= "<tr " . $striped . "><td><strong>" . mb_convert_encoding( $field['name'], 'UTF-8' ) . "</strong> </td><td>[" . $field['slug'] . "]</td></tr>";
 	}
 	// Table end
 	$message .= "</table>";

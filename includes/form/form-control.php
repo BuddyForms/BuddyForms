@@ -295,6 +295,9 @@ function buddyforms_process_submission( $args = array() ) {
 			if ( current_user_can( 'edit_others_posts' ) || current_user_can( 'edit_others_pages' ) ) {
 				$user_can_edit = true;
 			}
+			if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+				$user_can_edit = true;
+			}
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 			if ( $user_can_edit == false ) {
 				$args = array(

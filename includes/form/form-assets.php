@@ -134,6 +134,8 @@ class BuddyFormsAssets {
 		// load dashicons
 		wp_enqueue_style( 'dashicons' );
 
+        wp_enqueue_style( 'gdpr-agreement', BUDDYFORMS_ASSETS.'css/gdpr.css',array());
+
 		$gpdr_translations = array(
 			'gdpr_success' => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
 			'gdpr_errors'  => __( 'Some errors occurred:', 'buddyforms' ),

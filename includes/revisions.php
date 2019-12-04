@@ -178,7 +178,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision, $post_id, $link 
 		_x( '%1$s %2$s, %3$s ago (%4$s)', 'post revision title' ),
 		$gravatar,
 		$author,
-		human_time_diff( strtotime( $revision->post_modified ), current_time( 'timestamp' ) ),
+		human_time_diff( strtotime( $revision->post_modified ), time() ),
 		$date
 	);
 

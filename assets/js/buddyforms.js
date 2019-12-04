@@ -998,6 +998,10 @@ function BuddyForms() {
                             return true;
                         }
                         switch (fieldData.type) {
+                            case "gdpr":
+                                element.parent().append(label);
+
+                                break;
                             case "taxonomy":
                             case "category":
                             case "tags":
