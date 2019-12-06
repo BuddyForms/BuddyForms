@@ -29,6 +29,13 @@ class Element_Textarea extends Element {
 			"value"    => $value,
 			"field_id" => $field_id
 		);
+		if ( ! empty( $properties["value"] ) && is_array( $properties["value"] ) ) {
+			//Only include this attributes if the textarea to build is not a HTML string
+			$this->shortDesc = ! empty( $field_options['description'] ) ? $field_options['description'] : null;
+			if ( ! empty( $field_options ) && ! empty( $field_options['required'] ) && $field_options['required'][0] === 'required' ) {
+				$this->setValidation( new Validation_Required( $field_options['validation_error_message'], $field_options ) );
+			}
+		}
 		parent::__construct( $label, $name, $properties, $field_options );
 	}
 
