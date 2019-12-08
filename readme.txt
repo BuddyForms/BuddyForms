@@ -396,6 +396,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Updated the code to check the user permission.
 * Updated the form field element option name by label.
 * Fixed the Bio field to include the required signal and the description, also to make the correct validation.
+* Improved compatibility with Elementor.
+* Added a $wp_query var to get the form slug in 3rd party addons.
 
 = 2.5.9-beta3 - 25 Nov 2019 =
 * Fixed the permission to let other user roles to edit others users post.
