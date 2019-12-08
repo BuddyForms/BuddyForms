@@ -60,7 +60,7 @@ class BuddyFormsAssets {
 
 		$post_content = ! empty( $post ) && ! empty( $post->post_content ) ? $post->post_content : '';
 
-		if ( $found  ) {
+		if ( $found ) {
 			self::front_js_css( $post_content, $form_slug );
 			self::load_tk_font_icons();
 		}
@@ -84,16 +84,23 @@ class BuddyFormsAssets {
 	 * @param string $form_slug
 	 *
 	 * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
-	 * @since 1.0
+	 * @return string
 	 *
+	 * @since 2.5.9 return the form slug
 	 * @since 2.4.6 added the $form_slug as parameter
 	 *
 	 * @package buddyforms
+	 * @since 1.0
+	 *
 	 */
 	public static function front_js_css( $content = '', $form_slug = '' ) {
-		global $wp_scripts, $buddyforms, $wp_query;
+		global $wp_query;
 
 		do_action( 'buddyforms_front_js_css_enqueue' );
+
+		if ( ! empty( $form_slug ) ) {
+			$wp_query->query_vars['bf_form_slug'] = $form_slug;
+		}
 
 		//Scripts needed by the form core
 		wp_enqueue_script( 'jquery-ui-core' );
@@ -134,7 +141,7 @@ class BuddyFormsAssets {
 		// load dashicons
 		wp_enqueue_style( 'dashicons' );
 
-        wp_enqueue_style( 'gdpr-agreement', BUDDYFORMS_ASSETS.'css/gdpr.css',array());
+		wp_enqueue_style( 'gdpr-agreement', BUDDYFORMS_ASSETS . 'css/gdpr.css', array() );
 
 		$gpdr_translations = array(
 			'gdpr_success' => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'buddyforms' ),
@@ -149,14 +156,17 @@ class BuddyFormsAssets {
 			'current_screen'           => '',//Keep for compatibility
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields(),
-			'delete_text'              => __('Delete Permanently', 'buddyforms')
+			'delete_text'              => __( 'Delete Permanently', 'buddyforms' )
 		);
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 		//Global frontend vars
-		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
+		$js_params = BuddyForms::buddyforms_js_global_get_parameters( $form_slug );
+		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', $js_params ) );
 
 		do_action( 'buddyforms_front_js_css_after_enqueue', $content );
+
+		return $form_slug;
 	}
 
 	/**
@@ -231,7 +241,7 @@ class BuddyFormsAssets {
 	function admin_js( $hook_suffix ) {
 		global $post, $wp_query, $buddyforms;
 		//WP Backend global scripts
-		wp_enqueue_script( 'buddyforms-admin-all-js', BUDDYFORMS_ASSETS . 'admin/js/admin-all.js', array('jquery'), BUDDYFORMS_VERSION );
+		wp_enqueue_script( 'buddyforms-admin-all-js', BUDDYFORMS_ASSETS . 'admin/js/admin-all.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 		if (
 			( isset( $post ) && ( $post->post_type == 'buddyforms' || $post->post_type == 'post' ) && isset( $_GET['action'] ) && $_GET['action'] == 'edit'
 			  || isset( $post ) && $post->post_type == 'buddyforms' && $hook_suffix == 'post-new.php' )

@@ -79,7 +79,7 @@ function buddyforms_the_loop( $args ) {
 		'draft',
 		'future'
 	), $form_slug );
-	
+
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
@@ -210,10 +210,11 @@ function buddyforms_the_loop( $args ) {
 	$the_lp_query = new WP_Query( $query_args );
 	$the_lp_query = apply_filters( 'buddyforms_the_lp_query', $the_lp_query );
 
+	if ( ! empty( $the_lp_query->query_vars['form_slug'] ) && $form_slug != $the_lp_query->query_vars['form_slug'] ) {
+		$form_slug = $the_lp_query->query_vars['form_slug'];
+	}
 
-	$form_slug = $the_lp_query->query_vars['form_slug'];
-
-	BuddyFormsAssets::front_js_css( '', $form_slug );
+	$form_slug = BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( $list_posts_style == 'table' ) {

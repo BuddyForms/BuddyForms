@@ -389,7 +389,15 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-== 2.5.9-beta3 - 25 Nov 2019 ===
+= 2.5.9-beta4 - 8 Dec 2019 =
+* Removed the create account option for the template basic post field.
+* Fixed the textarea style for the form designer.
+* Improved compatibility with WP 5.3.
+* Updated the code to check the user permission.
+* Updated the form field element option name by label.
+* Fixed the Bio field to include the required signal and the description, also to make the correct validation.
+
+= 2.5.9-beta3 - 25 Nov 2019 =
 * Fixed the permission to let other user roles to edit others users post.
 * Fixed the missing CSS file for the gpdr element.
 

@@ -37,8 +37,7 @@ echo buddyforms_minify_css( $css );
 
 					?>
 
-                    <li id="bf_post_li_<?php the_ID() ?>"
-                        class="bf-submission <?php echo $post_status_css; ?> bf_posts_<?php the_ID() ?>">
+                    <li id="bf_post_li_<?php the_ID() ?>" class="bf-submission <?php echo $post_status_css; ?> bf_posts_<?php the_ID() ?>">
 
 						<?php // Create the modal for the submissions single view
 						if ( isset( $buddyforms[ $form_slug ]['post_type'] ) && $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
@@ -96,7 +95,7 @@ echo buddyforms_minify_css( $css );
                             <div class="meta">
                                 <div class="item-status"><?php echo $post_status_name; ?></div>
 								<?php buddyforms_post_entry_actions( $form_slug ); ?>
-	                            <?php do_action( 'buddyforms_the_loop_after_actions', get_the_ID(), $form_slug ); ?>
+								<?php do_action( 'buddyforms_the_loop_after_actions', get_the_ID(), $form_slug ); ?>
                                 <div class="publish-date"><?php _e( 'Created ', 'buddyforms' ); ?><?php the_time( 'M j, Y' ) ?></div>
                             </div>
                         </div>
