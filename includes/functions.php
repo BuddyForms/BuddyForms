@@ -852,16 +852,15 @@ function buddyforms_get_form_slug_by_post_id( $post_id ) {
 		$value = get_post_meta( $post_id, '_bf_form_slug', true );
 
 		if ( empty( $value ) || ( isset( $value ) && $value == 'none' ) ) {
-			return $value;
+			$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
+
+			$post_type = get_post_type( $post_id );
+
+			if ( isset( $buddyforms_posttypes_default[ $post_type ] ) ) {
+				$value = $buddyforms_posttypes_default[ $post_type ];
+			}
 		}
 
-		$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
-
-		$post_type = get_post_type( $post_id );
-
-		if ( isset( $buddyforms_posttypes_default[ $post_type ] ) ) {
-			$value = $buddyforms_posttypes_default[ $post_type ];
-		}
 		wp_cache_set( 'buddyform_form_slug_' . $post_id, $value, 'buddyforms' );
 	}
 
