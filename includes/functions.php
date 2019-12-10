@@ -424,13 +424,12 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 
 			$current_user_can_edit   = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post, 'edit' );
-			$current_user_can_all    = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post, 'all' );
 			$current_user_can_delete = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post, 'delete' );
 
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
 
 
-				if ( $current_user_can_edit || $current_user_can_all ) {
+				if ( $current_user_can_edit ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
@@ -442,7 +441,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			}
 
 
-			if ( $current_user_can_delete || $current_user_can_all ) {
+			if ( $current_user_can_delete ) {
 				echo '<li>';
 				echo '<a title="' . __( 'Delete', 'buddyforms' ) . '"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"> </span> ' . __( 'Delete', 'buddyforms' ) . '</a></li>';
 				echo '</li>';
