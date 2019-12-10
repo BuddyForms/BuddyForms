@@ -461,3 +461,31 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 }
 
 add_shortcode( 'bf_new_submission_link', 'buddyforms_create_submission_link_shortcode' );
+
+function buddyforms_post_meta_key_count( $args ) {
+	$arguments = shortcode_atts( array(
+		'slug'      => '',
+		'form-slug' => '',
+	), $args );
+
+	if ( empty( $arguments['slug'] ) ) {
+		return '';
+	}
+
+	global $wpdb;
+
+	$where = '';
+
+	if ( ! empty( $arguments['form-slug'] ) ) {
+		$where .= $wpdb->prepare( "pm.post_id in (SELECT pm1.post_id FROM {$wpdb->postmeta} pm1 WHERE pm1.meta_key='_bf_form_slug' and pm1.meta_value = '%s') AND ", $arguments['form-slug'] );
+	}
+
+	$where .= $wpdb->prepare( "pm.post_id in (SELECT pm2.post_id FROM {$wpdb->postmeta} pm2 WHERE pm2.meta_key = '%s')", $arguments['slug'] );
+
+	// Query the db to return the post count according to key and value if value is set
+	$count = $wpdb->get_var( "SELECT count(DISTINCT pm.post_id) FROM {$wpdb->postmeta} pm WHERE {$where}" );
+
+	return $count;
+}
+
+add_shortcode( 'bf_meta_key_count', 'buddyforms_post_meta_key_count' );
