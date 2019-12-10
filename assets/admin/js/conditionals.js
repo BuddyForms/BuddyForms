@@ -26,7 +26,6 @@ function from_setup_form_type(value) {
             // Hide
             jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
             jQuery('.create-content_nav').hide();
-           // jQuery('.permission_nav').hide();
 
             // Show/Hide the corresponding form elements in the form select
             jQuery('.bf_show_if_f_type_post').hide();
@@ -51,9 +50,6 @@ function from_setup_form_type(value) {
                 jQuery("#permission_for_"+role_name+"-5").attr("disabled", true);
 
             });
-
-
-
 
             break;
         case 'registration':
