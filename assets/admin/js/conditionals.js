@@ -26,7 +26,7 @@ function from_setup_form_type(value) {
             // Hide
             jQuery('.buddyforms-metabox-hide-if-form-type-contact').hide();
             jQuery('.create-content_nav').hide();
-            jQuery('.permission_nav').hide();
+           // jQuery('.permission_nav').hide();
 
             // Show/Hide the corresponding form elements in the form select
             jQuery('.bf_show_if_f_type_post').hide();
@@ -39,6 +39,20 @@ function from_setup_form_type(value) {
             jQuery('#bf-after-submission-action option[value=display_form]').hide();
             jQuery('#bf-after-submission-action option[value=display_post]').hide();
             jQuery('#bf-after-submission-action option[value=display_posts_list]').hide();
+
+            var roles = jQuery("tbody#the-list").find("tr");
+            jQuery.each( roles, function( key, value ) {
+
+               var role_name = value.className.trim();
+               jQuery("#permission_for_"+role_name+"-0").attr("disabled", true);
+                jQuery("#permission_for_"+role_name+"-1").attr("disabled", true);
+                jQuery("#permission_for_"+role_name+"-2").attr("disabled", true);
+                jQuery("#permission_for_"+role_name+"-3").attr("disabled", true);
+                jQuery("#permission_for_"+role_name+"-5").attr("disabled", true);
+
+            });
+
+
 
 
             break;

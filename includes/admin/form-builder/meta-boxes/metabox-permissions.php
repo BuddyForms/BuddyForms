@@ -152,6 +152,13 @@ function buddyforms_permissions_screen() {
 				unset( $form_user_role['admin-submission'] );
 			}
 		}
+		if($buddyform['form_type']==='contact'){
+            unset( $form_user_role['create'] );
+            unset( $form_user_role['edit'] );
+            unset( $form_user_role['delete'] );
+            unset( $form_user_role['draft'] );
+            unset( $form_user_role['admin-submission'] );
+        }
 
 		$element = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 			'value'  => $form_user_role,
