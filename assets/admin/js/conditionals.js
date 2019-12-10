@@ -195,6 +195,7 @@ function buddyforms_disable_contact_extra_permissions(formType) {
         if (formType === 'contact') {
             jQuery.each(roles, function (key, value) {
                 var role_name = value.className.trim();
+                jQuery("#permission_for_" + role_name + "-0").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-1").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-2").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-3").attr("disabled", true).val('').removeAttr('checked');
@@ -203,6 +204,7 @@ function buddyforms_disable_contact_extra_permissions(formType) {
         } else {
             jQuery.each(roles, function (key, value) {
                 var role_name = value.className.trim();
+                jQuery("#permission_for_" + role_name + "-0").removeAttr("disabled");
                 jQuery("#permission_for_" + role_name + "-1").removeAttr("disabled");
                 jQuery("#permission_for_" + role_name + "-2").removeAttr("disabled");
                 jQuery("#permission_for_" + role_name + "-3").removeAttr("disabled");
