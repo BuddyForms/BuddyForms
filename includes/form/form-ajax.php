@@ -198,6 +198,9 @@ function buddyforms_ajax_process_edit_post() {
 
 add_action( 'wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post' );
 //add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+/**
+ *
+ */
 function buddyforms_ajax_delete_post() {
 	global $current_user, $buddyforms;
 	$current_user = wp_get_current_user();
@@ -211,10 +214,37 @@ function buddyforms_ajax_delete_post() {
 		die();
 	}
 
+	$user_can_delete = false;
+	if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
+		// Check if the user is author of the post
+		if ( $the_post->post_author == $current_user->ID ) {
+			$user_can_delete = true;
+		}
+		$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
+		if ( $user_can_delete == false ) {
+			_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
+			die();
+		}
+		// check if the user has the roles roles and capabilities
+		$user_can_delete = false;
+		if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_delete', array(), $form_slug ) ) {
+			$user_can_delete = true;
+		}
+	} else {
+		$user_can_delete = true;
+	}
+	$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
+	if ( $user_can_delete == false ) {
+		_e( 'You do not have the required user role to use this form', 'buddyforms' );
+		die();
+	}
+
+	do_action( 'buddyforms_delete_post', $post_id );
+	wp_delete_post( $post_id );
+
 	//Delete Files from server option
 	$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
 	foreach ( $buddyFData as $key => $value ) {
-
 		$field = $value['slug'];
 		$type  = $value['type'];
 		if ( $type == 'upload' ) {
@@ -228,40 +258,10 @@ function buddyforms_ajax_delete_post() {
 					foreach ( $attachmet_id as $id ) {
 						wp_delete_attachment( $id, true );
 					}
-
 				}
-
 			}
-
 		}
 	}
-
-
-	// Check if the user is author of the post
-	$user_can_delete = false;
-	if ( $the_post->post_author == $current_user->ID ) {
-		$user_can_delete = true;
-	}
-	$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
-	if ( $user_can_delete == false ) {
-		_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
-		die();
-	}
-
-	// check if the user has the roles roles and capabilities
-	$user_can_delete = false;
-
-	if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_delete', array(), $form_slug ) ) {
-		$user_can_delete = true;
-	}
-	$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
-	if ( $user_can_delete == false ) {
-		_e( 'You do not have the required user role to use this form', 'buddyforms' );
-		die();
-	}
-
-	do_action( 'buddyforms_delete_post', $post_id );
-	wp_delete_post( $post_id );
 
 	echo $post_id;
 	die();

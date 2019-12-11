@@ -51,6 +51,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	extract( $short_array );
 
+	if ( empty( $form_slug ) ) {
+		return '';
+	}
+
 	if ( empty( $buddyforms[ $form_slug ] ) ) {
 		return '';
 	}
@@ -82,6 +86,14 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		if ( ! empty( $current_user_entry->posts ) ) {
 			$post_id = $current_user_entry->posts[0];
 		}
+	}
+
+	ob_start();
+	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
+	$global_css = ob_get_clean();
+	if ( ! empty( $global_css ) ) {
+		$global_css = buddyforms_minify_css( $global_css );
+		echo $global_css;
 	}
 
 	// if post edit screen is displayed in pages
@@ -116,15 +128,37 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		}
 
 		if ( $wp_query->query_vars['bf_action'] == 'edit' ) {
+			$the_post_form_slug = get_post_meta( $post_id, '_bf_form_slug', true );
+			if ( $the_post_form_slug !== $form_slug ) {
+				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
+				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
+				if ( $echo ) {
+					echo $echo_content;
+
+					return;
+				} else {
+					return $echo_content;
+				}
+			}
+			//Check if the post to edit match with the form setting
+			if ( $the_post->post_type !== $post_type ) {
+				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
+				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
+				if ( $echo ) {
+					echo $echo_content;
+
+					return;
+				} else {
+					return $echo_content;
+				}
+			}
 
 			$user_can_edit = false;
-			if ( $the_post->post_author == $current_user->ID ) {
-				$user_can_edit = true;
-			}
-			if ( current_user_can( 'edit_others_posts' ) || current_user_can( 'edit_others_pages' ) ) {
-				$user_can_edit = true;
-			}
-			if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+			if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
+				if ( $the_post->post_author == $current_user->ID && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+					$user_can_edit = true;
+				}
+			} else {
 				$user_can_edit = true;
 			}
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
@@ -134,6 +168,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
 					echo $echo_content;
+
+					return;
 				} else {
 					return $echo_content;
 				}

@@ -288,14 +288,21 @@ function buddyforms_process_submission( $args = array() ) {
 
 		// Check if the user is author of the post
 		if ( is_user_logged_in() ) {
+			//Check if the post to edit match with the form setting
+			if ( $the_post->post_type !== $post_type ) {
+				$args = array(
+					'hasError'      => true,
+					'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
+				);
+
+				return $args;
+			}
 			$user_can_edit = false;
-			if ( $the_post->post_author == $user_id ) {
-				$user_can_edit = true;
-			}
-			if ( current_user_can( 'edit_others_posts' ) || current_user_can( 'edit_others_pages' ) ) {
-				$user_can_edit = true;
-			}
-			if ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+			if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
+				if ( $the_post->post_author == $user_id && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+					$user_can_edit = true;
+				}
+			} else {
 				$user_can_edit = true;
 			}
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
@@ -331,7 +338,7 @@ function buddyforms_process_submission( $args = array() ) {
 	$user_can_edit = false;
 	if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( $action == 'update' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
+	} elseif ( $action == 'update' && (bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) )) {
 		$user_can_edit = true;
 	}
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
