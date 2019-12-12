@@ -1177,6 +1177,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
                                 }
                                 $element_attr['data-element-slug'] = $slug;
                                 $element_attr['id'] = 'gdpragreement-'.$key;
+                                $element_attr['validation_error_message'] = $customfield['options'][$key]['error_message'];
 
 
                                 $element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), $element_attr, $customfield );
