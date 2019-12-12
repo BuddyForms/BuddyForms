@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.9-beta5
+Stable tag: 2.5.9-beta6
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.9-beta6 - 12 Dec 2019 =
+* Fixed the global style to include before the error messages.
+* Fixed to show the user defined error message for the GDPR field.
+* Fixed the permission for the Entries list action button now the hooks are compatible with the uses in other addons and the core plugin.
+* Hooks changes `buddyforms_user_can_edit`, `buddyforms_user_can_all` and `buddyforms_user_can_delete` using the next params, 1st boolean if the user can edit, 2nd the form slug and 3er the post id.
+
 = 2.5.9-beta5 - 10 Dec 2019 =
 * Updated the function `buddyforms_get_form_slug_by_post_id` to get the correct form_slug base on the global default form base on the post type.
 * New shortcode to count how may time a field appear with value in the post-meta table. `[bf_meta_key_count slug="user_first" form-slug="test-contact-form-with-user-at-the-same-time"]`
