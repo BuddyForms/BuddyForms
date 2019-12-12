@@ -422,14 +422,11 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				$form_slug = $post_form_slug;
 			}
 
-
-			$current_user_can_edit   = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post, 'edit' );
-			$current_user_can_all    = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post, 'all' );
-			$current_user_can_delete = apply_filters( 'buddyforms_current_user_can', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post, 'delete' );
+			$current_user_can_edit   = apply_filters( 'buddyforms_user_can_edit', current_user_can( 'buddyforms_' . $form_slug . '_edit' ), $form_slug, $post->ID );
+			$current_user_can_all    = apply_filters( 'buddyforms_user_can_all', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post->ID );
+			$current_user_can_delete = apply_filters( 'buddyforms_user_can_delete', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post->ID );
 
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
-
-
 				if ( $current_user_can_edit || $current_user_can_all ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
