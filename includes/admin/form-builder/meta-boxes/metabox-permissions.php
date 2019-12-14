@@ -108,27 +108,27 @@ function buddyforms_permissions_screen() {
 
 	// Display all user roles
 	foreach ( get_editable_roles() as $role_name => $role_info ) {
-
 		$default_roles['create']           = '';
 		$default_roles['edit']             = '';
 		$default_roles['delete']           = '';
 		$default_roles['draft']            = '';
 		$default_roles['all']              = '';
 		$default_roles['admin-submission'] = '';
-
+		$user_role                         = get_role( $role_name );
 		$form_user_role = array();
-
 		foreach ( $role_info['capabilities'] as $capability => $_ ) {
 			$capability_array = explode( '_', $capability );
 			if ( $capability_array[0] == 'buddyforms' ) {
 				if ( $capability_array[1] == $form_slug ) {
-					$form_user_role[ $capability_array[2] ] = $capability_array[2];
+					if ( $user_role->has_cap( $capability ) ) {
+						$form_user_role[ $capability_array[2] ] = $capability_array[2];
+					}
 				}
 			}
 		}
 
 		$screen = get_current_screen();
-		if ( empty( $form_user_role ) && ! empty( $screen ) && $screen->action === 'add' && $screen->id === 'buddyforms' ) {
+		if ( empty( $form_user_role ) && ! empty( $screen ) && $screen->id === 'buddyforms' ) {
 			if ( ! buddyforms_core_fs()->is_paying_or_trial() ) {
 				foreach ( $default_roles as $role_n_a => $role_a ) {
 					if ( $role_n_a !== 'all' || $role_n_a !== 'admin-submission' || $role_n_a !== 'draft' ) {

@@ -374,7 +374,7 @@ function buddyforms_display_form_element( $args ) {
 				)
 			);
 
-			$form_fields['general']['html'] = new Element_HTML( sprintf('<p><b>%s<b><p>', __( 'reCaptcha is only visible to logged off users . Logged in users not need to get checked.', 'buddyforms') ) );
+			$form_fields['general']['html'] = new Element_HTML( sprintf('<p><b>%s<b><p>', __( 'reCaptcha is only visible to logged off users. Logged in users not need to get checked.', 'buddyforms') ) );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'captcha' );
 			$form_fields['hidden']['type'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );

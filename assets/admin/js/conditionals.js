@@ -189,26 +189,39 @@ function bf_taxonomy_input(id) {
     }
 }
 
+function buddyforms_disable_contact_extra_permissions_handler(formType, force) {
+    if(!force) {
+        var postStatus = jQuery('#original_post_status');
+        if (postStatus && postStatus.length > 0) {
+            var isNew = postStatus.val() === 'auto-draft';
+            if (isNew) {
+                buddyforms_disable_contact_extra_permissions(formType);
+            }
+        }
+    } else {
+        buddyforms_disable_contact_extra_permissions(formType);
+    }
+}
+
 function buddyforms_disable_contact_extra_permissions(formType) {
     var roles = jQuery("table.bf_permissions tbody").find("tr");
     if (formType && roles && roles.length > 0) {
-        if (formType === 'contact') {
-            jQuery.each(roles, function (key, value) {
-                var role_name = value.className.trim();
+        jQuery.each(roles, function (key, value) {
+            var role_name = value.className.trim();
+            if (formType === 'contact') {
                 jQuery("#permission_for_" + role_name + "-1").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-2").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-3").attr("disabled", true).val('').removeAttr('checked');
                 jQuery("#permission_for_" + role_name + "-5").attr("disabled", true).val('').removeAttr('checked');
-            });
-        } else {
-            jQuery.each(roles, function (key, value) {
-                var role_name = value.className.trim();
-                jQuery("#permission_for_" + role_name + "-1").removeAttr("disabled");
-                jQuery("#permission_for_" + role_name + "-2").removeAttr("disabled");
-                jQuery("#permission_for_" + role_name + "-3").removeAttr("disabled");
-                jQuery("#permission_for_" + role_name + "-5").removeAttr("disabled");
-            });
-        }
+            } else {
+                jQuery("#permission_for_" + role_name + "-0").val('create').removeAttr("disabled").attr('checked', true);
+                jQuery("#permission_for_" + role_name + "-1").val('edit').removeAttr("disabled").attr('checked', true);
+                jQuery("#permission_for_" + role_name + "-2").val('delete').removeAttr("disabled").attr('checked', true);
+                jQuery("#permission_for_" + role_name + "-3").val('draft').removeAttr("disabled");
+                jQuery("#permission_for_" + role_name + "-4").val('all').removeAttr("disabled");
+                jQuery("#permission_for_" + role_name + "-5").val('admin-submission').removeAttr("disabled");
+            }
+        });
     }
 }
 
@@ -217,7 +230,7 @@ jQuery(document).ready(function (jQuery) {
     if (BuddyFormsBuilderHooks) {
         BuddyFormsBuilderHooks.addAction('buddyforms-change-form-type', function (opt) {
             console.log('change-form-type', opt[0]);
-            buddyforms_disable_contact_extra_permissions(opt[0]);
+            buddyforms_disable_contact_extra_permissions_handler(opt[0], true);
         }, 10);
     }
 
@@ -225,8 +238,9 @@ jQuery(document).ready(function (jQuery) {
     var currentFormType = jQuery('#bf-form-type-select').val();
     if (currentFormType) {
         from_setup_form_type(currentFormType);
-        buddyforms_disable_contact_extra_permissions(currentFormType);
+        buddyforms_disable_contact_extra_permissions_handler(currentFormType);
     }
+
     // On Change listener for the post type select
     jQuery(document.body).on('change', '#public_submit_create_account-0', function () {
         from_setup_create_account();

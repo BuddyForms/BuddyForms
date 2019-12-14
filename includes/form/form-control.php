@@ -297,23 +297,6 @@ function buddyforms_process_submission( $args = array() ) {
 
 				return $args;
 			}
-			$user_can_edit = false;
-			if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
-				if ( $the_post->post_author == $user_id && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
-					$user_can_edit = true;
-				}
-			} else {
-				$user_can_edit = true;
-			}
-			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
-			if ( $user_can_edit == false ) {
-				$args = array(
-					'hasError'      => true,
-					'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
-				);
-
-				return $args;
-			}
 		}
 	}
 
@@ -336,9 +319,13 @@ function buddyforms_process_submission( $args = array() ) {
 
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
-	if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
-		$user_can_edit = true;
-	} elseif ( $action == 'update' && (bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) )) {
+	if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
+		if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
+			$user_can_edit = true;
+		} elseif ( $action == 'update' && ( bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) ) {
+			$user_can_edit = true;
+		}
+	} else {
 		$user_can_edit = true;
 	}
 	if ( isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' ) {
