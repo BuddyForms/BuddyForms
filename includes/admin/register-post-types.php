@@ -7,7 +7,7 @@ add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 function buddyforms_add_meta_boxes() {
 	global $post, $buddyform;
 
-	if ( $post->post_type != 'buddyforms' ) {
+	if ( !$post || $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
