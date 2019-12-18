@@ -79,7 +79,7 @@ function buddyforms_the_loop( $args ) {
 		'draft',
 		'future'
 	), $form_slug );
-	
+
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
@@ -210,10 +210,11 @@ function buddyforms_the_loop( $args ) {
 	$the_lp_query = new WP_Query( $query_args );
 	$the_lp_query = apply_filters( 'buddyforms_the_lp_query', $the_lp_query );
 
+	if ( ! empty( $the_lp_query->query_vars['form_slug'] ) && $form_slug != $the_lp_query->query_vars['form_slug'] ) {
+		$form_slug = $the_lp_query->query_vars['form_slug'];
+	}
 
-	$form_slug = $the_lp_query->query_vars['form_slug'];
-
-	BuddyFormsAssets::front_js_css( '', $form_slug );
+	$form_slug = BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( $list_posts_style == 'table' ) {
@@ -460,3 +461,31 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 }
 
 add_shortcode( 'bf_new_submission_link', 'buddyforms_create_submission_link_shortcode' );
+
+function buddyforms_post_meta_key_count( $args ) {
+	$arguments = shortcode_atts( array(
+		'slug'      => '',
+		'form-slug' => '',
+	), $args );
+
+	if ( empty( $arguments['slug'] ) ) {
+		return '';
+	}
+
+	global $wpdb;
+
+	$where = '';
+
+	if ( ! empty( $arguments['form-slug'] ) ) {
+		$where .= $wpdb->prepare( "pm.post_id in (SELECT pm1.post_id FROM {$wpdb->postmeta} pm1 WHERE pm1.meta_key='_bf_form_slug' and pm1.meta_value = '%s') AND ", $arguments['form-slug'] );
+	}
+
+	$where .= $wpdb->prepare( "pm.post_id in (SELECT pm2.post_id FROM {$wpdb->postmeta} pm2 WHERE pm2.meta_key = '%s')", $arguments['slug'] );
+
+	// Query the db to return the post count according to key and value if value is set
+	$count = $wpdb->get_var( "SELECT count(DISTINCT pm.post_id) FROM {$wpdb->postmeta} pm WHERE {$where}" );
+
+	return $count;
+}
+
+add_shortcode( 'bf_meta_key_count', 'buddyforms_post_meta_key_count' );

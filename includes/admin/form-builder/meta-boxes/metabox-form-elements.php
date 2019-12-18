@@ -49,7 +49,7 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
 
 	$has_fields = false;
-	if ( !empty( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
+	if ( ! empty( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
 
 		// Loop all form elements
 		foreach ( $buddyform['form_fields'] as $field_id => $customfield ) {
@@ -93,11 +93,11 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 		<div id="formbuilder-actions-wrap">
 			<div class="formbuilder-actions-select-wrap">
 				<div id="formbuilder-action-templates">
-					'.$select_a_template_button.'
+					' . $select_a_template_button . '
 				</div>
 				<div id="formbuilder-action-add">
 					<span class="formbuilder-spinner spinner"></span>
-					<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="'.__('+ Add Field', 'buddyforms').'">
+					<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="' . __( '+ Add Field', 'buddyforms' ) . '">
 				</div>
 				<div id="formbuilder-action-select">
 					<select id="bf_add_new_form_element">' . buddyforms_form_builder_form_elements_select() . '</select>
@@ -138,7 +138,9 @@ function buddyforms_form_builder_form_elements_select() {
 			$el_sel_options .= '<optgroup style="display:none;" class="' . $class . '" label="' . $optgroup['label'] . '">';
 			foreach ( $optgroup['fields'] as $es_val => $es_label ) {
 				if ( is_array( $es_label ) ) {
-					$el_sel_options .= '<option data-unique="' . ( isset( $es_label['unique'] ) ? $es_label['unique'] : '' ) . '" value="' . $es_val . '">' . $es_label['label'] . '</option>';
+					$pro_text       = ( ! empty( $es_label['is_pro'] ) && buddyforms_core_fs()->is_free_plan() ) ? ' - PRO' : '';
+					$pro_disabled   = ( ! empty( $es_label['is_pro'] ) && buddyforms_core_fs()->is_free_plan() ) ? 'disabled' : '';
+					$el_sel_options .= sprintf( "<option %s data-unique=\"%s\" value=\"%s\">%s %s</option>", $pro_disabled, isset( $es_label['unique'] ) ? $es_label['unique'] : '', $es_val, $es_label['label'], $pro_text );
 				} else {
 					$el_sel_options .= '<option value="' . $es_val . '">' . $es_label . '</option>';
 				}
@@ -263,15 +265,15 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'GDPR Agreement', 'buddyforms' ),
 					'unique' => 'unique'
 				),
-				'captcha'      => array(
+				'captcha'     => array(
 					'label'  => __( 'Captcha', 'buddyforms' ),
 					'unique' => 'unique'
 				),
-				'date'      => array(
-					'label'  => __( 'Date', 'buddyforms' ),
+				'date'        => array(
+					'label' => __( 'Date', 'buddyforms' ),
 				),
-				'time'      => array(
-					'label'  => __( 'Time', 'buddyforms' ),
+				'time'        => array(
+					'label' => __( 'Time', 'buddyforms' ),
 				),
 			),
 		),
@@ -311,49 +313,50 @@ function buddyforms_form_elements_select_options() {
 		);
 
 
-	if ( buddyforms_core_fs()->is__premium_only() ) {
+	$elements_select_options['post']['fields']['taxonomy']      =
+		array(
+			'label'  => __( 'Taxonomy', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['basic']['fields']['form_actions'] =
+		array(
+			'label'  => __( 'Form Actions', 'buddyforms' ),
+			'is_pro' => true,
+		);
 
-		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
+	$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
+	$elements_select_options['extra']['class']            = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
+	$elements_select_options['extra']['fields']['file']   =
+		array(
+			'label'  => __( 'File', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['extra']['fields']['upload'] =
+		array(
+			'label'  => __( 'Upload', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['basic']['fields']['hidden'] =
+		array(
+			'label'  => __( 'Hidden', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['basic']['fields']['html']   =
+		array(
+			'label'  => __( 'HTML', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['extra']['fields']['range']  =
+		array(
+			'label'  => __( 'Range', 'buddyforms' ),
+			'is_pro' => true,
+		);
+	$elements_select_options['extra']['fields']['price']  =
+		array(
+			'label'  => __( 'Price', 'buddyforms' ),
+			'is_pro' => true,
+		);
 
-			$elements_select_options['post']['fields']['taxonomy']       =
-				array(
-					'label' => __( 'Taxonomy', 'buddyforms' ),
-				);
-
-			$elements_select_options['basic']['fields']['form_actions']   =
-				array(
-					'label'  => __( 'Form Actions', 'buddyforms' ),
-				);
-
-			$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
-			$elements_select_options['extra']['class']            = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
-			$elements_select_options['extra']['fields']['file']   =
-				array(
-					'label' => __( 'File', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['upload'] =
-				array(
-					'label' => __( 'Upload', 'buddyforms' ),
-				);
-			$elements_select_options['basic']['fields']['hidden'] =
-				array(
-					'label' => __( 'Hidden', 'buddyforms' ),
-				);
-			$elements_select_options['basic']['fields']['html']   =
-				array(
-					'label' => __( 'HTML', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['range']  =
-				array(
-					'label' => __( 'Range', 'buddyforms' ),
-				);
-			$elements_select_options['extra']['fields']['price']  =
-				array(
-					'label'  => __( 'Price', 'buddyforms' ),
-				);
-		}
-
-	}
 
 	// Allow others to filter the array
 	$elements_select_options = apply_filters( 'buddyforms_add_form_element_select_option', $elements_select_options );

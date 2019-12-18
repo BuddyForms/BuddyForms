@@ -70,7 +70,7 @@ abstract class FormView extends Base {
 	}
 
 	/**
-	 * @param $element
+	 * @param Element $element
 	 */
 	protected function renderDescriptions( $element ) {
 		$shortDesc = $element->getShortDesc();

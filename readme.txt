@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.9-beta4
+Stable tag: 2.5.9
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,11 +389,27 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-== 2.5.9-beta3 - 25 Nov 2019 ===
+= 2.5.9 - 14 Dec 2019 =
+* Fixed the global style to include before the error messages.
+* Fixed to show the user defined error message for the GDPR field.
+* Fixed the permission for the Entries list action button now the hooks are compatible with the uses in other addons and the core plugin.
+* Hooks changes `buddyforms_user_can_edit`, `buddyforms_user_can_all` and `buddyforms_user_can_delete` using the next params, 1st boolean if the user can edit, 2nd the form slug and 3er the post id.
+* Updated the function `buddyforms_get_form_slug_by_post_id` to get the correct form_slug base on the global default form base on the post type.
+* New shortcode to count how may time a field appear with value in the post-meta table. `[bf_meta_key_count slug="user_first" form-slug="test-contact-form-with-user-at-the-same-time"]`
+* Improved compatibility with the last version of BuddyPress.
+* Updated the way to show PRO fields to the Free plan users.
+* Added the permission tab for the contact form.
+* Enabled the Contact form to use the permission `all submission` for specific roles. So the user can check the entries from different users.
+* Removed the create account option for the template basic post field.
+* Fixed the textarea style for the form designer.
+* Improved compatibility with WP 5.3.
+* Updated the code to check the user permission.
+* Updated the form field element option name by label.
+* Fixed the Bio field to include the required signal and the description, also to make the correct validation.
+* Improved compatibility with Elementor.
+* Added a $wp_query var to get the form slug in 3rd party addons.
 * Fixed the permission to let other user roles to edit others users post.
 * Fixed the missing CSS file for the gpdr element.
-
-= 2.5.9-beta2 - 22 Nov 2019 =
 * Added new hook buddyforms_the_loop_after_actions to the table.
 * Added a new filter buddyforms_shortcode_the_loop_post_status.
 * Fixed an issue in the Gutenberg blocks for the post listings.
@@ -407,8 +423,6 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added a hook to modify the emails header before pass to wp_mail.
 * Improved the textarea element code and validation.
 * Added a function inside the date element to check if the date is valid in certain format.
-
-= 2.5.9-beta1 - 24 Oct 2019 =
 * Fixed the required validation for the File element.
 * Correct the align text for the feature image and upload form element.
 * Added the red dots to the feature and upload form element, to be shown on error.

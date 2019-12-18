@@ -478,6 +478,12 @@ function BuddyForms() {
 
         var result = false;
         var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
+        if(fieldData.type){
+            if(fieldData.type ==='gdpr'){
+
+                var requiredMessage = jQuery(element).attr('validation_error_message');
+            }
+        }
 
         switch (fieldData.type) {
             case 'post_formats':

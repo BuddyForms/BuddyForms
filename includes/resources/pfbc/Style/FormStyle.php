@@ -485,4 +485,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'] {
         cursor: pointer;
     }
+
+    /* Avoid red style over the elements comming from BuddyPress */
+    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
+    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid{
+        border-color: #d6d6d6;
+    }
 </style>
