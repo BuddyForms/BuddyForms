@@ -816,11 +816,13 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
+			$meta_value = buddyforms_add_ellipsis( $meta_value );
 			break;
 		case 'content':
 			$content    = apply_filters( 'the_content', $post->post_content );
 			$content    = str_replace( ']]>', ']]&gt;', $content );
 			$meta_value = strip_shortcodes( $content );
+			$meta_value = buddyforms_add_ellipsis( $meta_value );
 			break;
 		case 'upload':
 		case 'featured_image':
@@ -1257,7 +1259,7 @@ function buddyforms_get_browser() {
 
 function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id ) {
 	if ( isset( $customfields ) && ! empty( $string ) ) {
-		foreach ( $customfields as $f_slug => $t_field ) {
+		foreach ( $customfields as $f_id => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
 
 				$field_val = $_POST[ $t_field['slug'] ];
@@ -1292,7 +1294,7 @@ add_filter( 'buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 1
 function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
 
-	if ( empty( $_POST['buddyforms_form_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+	if ( ! empty( $title_field['generate_title'] ) ) {
 		global $buddyforms;
 
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {

@@ -142,7 +142,7 @@ function buddyforms_get_template_directory() {
 function buddyforms_locate_template( $slug, $form_slug = '' ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $post_id;
 
-	//Backguard compatibility @sinde 2.3.3.
+	//Backward compatibility @sinde 2.3.3.
 	if ( empty( $form_slug ) ) {
 		global $form_slug;
 	}
@@ -152,6 +152,13 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 	// create the plugin template path
 	$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/' . $slug . '.php';
+
+	/**
+	 * Extend the template from 3rd party plugins
+     *
+     * @since 2.5.9
+	 */
+    $template_path = apply_filters('buddyforms_locate_template', $template_path, $slug, $form_slug);
 
 	// Check if template exist in the child or parent theme and use this path if available
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
@@ -169,6 +176,10 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 	// Do the include
 	include( $template_path );
 
+}
+
+function buddyforms_granted_list_posts_style(){
+    return apply_filters('buddyforms_granted_list_post_style', array('list', 'table'));
 }
 
 // Display the WordPress Login Form

@@ -84,17 +84,19 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 		if ( $slug != '' ) {
 
 			$customfield_val = '';
-			//Get form field value
-			switch ( $form_type ) {
-				case 'registration':
-					if ( ! empty( $current_user_id ) ) {
-						$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
-					}
-					break;
-				case 'contact':
-				case 'post':
-					$customfield_val = get_post_meta( $post_id, $slug, true );
-					break;
+			//Get form field value when the form is editing
+			if ( $action === 'edit' ) {
+				switch ( $form_type ) {
+					case 'registration':
+						if ( ! empty( $current_user_id ) ) {
+							$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
+						}
+						break;
+					case 'contact':
+					case 'post':
+						$customfield_val = get_post_meta( $post_id, $slug, true );
+						break;
+				}
 			}
 
 			if ( isset( $_POST[ $slug ] ) && empty( $customfield_val ) ) {

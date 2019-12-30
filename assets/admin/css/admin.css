@@ -2041,3 +2041,16 @@ div#formbuilder-action-templates {
     width: 30%;
     float: left;
 }
+
+/*
+ * Marketing styles
+ */
+
+.bf-marketing-action-container{
+    display: flex;
+    padding: 5px;
+}
+
+.bf-marketing-btn{
+    margin: 3px;
+}

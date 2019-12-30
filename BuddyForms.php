@@ -267,6 +267,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-marketing.php' );
 
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
