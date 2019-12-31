@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.9
+Stable tag: 2.5.10-beta1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.10-beta1 - 30 Dec 2019 =
+* Start the inbound marketing development process.
+* Added a hook to extend form output templates from 3rd party addons.
+* Fixed bug related to the shortcode and the way to override the output template.
+* Added the ellipsis to the title and content form elements output in the submissions and frontend table, to avoid break the views when the content is too big.
+* Fixed the issue of the form element loading the values when the form was in create mode.
+
 = 2.5.9 - 14 Dec 2019 =
 * Fixed the global style to include before the error messages.
 * Fixed to show the user defined error message for the GDPR field.
