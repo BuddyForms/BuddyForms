@@ -87,7 +87,7 @@ class BuddyFormsAssets {
 	 *
 	 * @param string $form_slug
 	 *
-	 * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the asstes reading teh content
+	 * @note Used in the filter buddyforms_front_js_css_after_enqueue as parameter to 3rd addons determinate if include or not the assets reading the content
 	 * @return string
 	 *
 	 * @since 2.5.9 return the form slug
@@ -100,7 +100,10 @@ class BuddyFormsAssets {
 	public static function front_js_css( $content = '', $form_slug = '' ) {
 		global $wp_query;
 
-		do_action( 'buddyforms_front_js_css_enqueue' );
+		/**
+		 * @since 2.5.10 added the $content and $form_slug parameters
+		 */
+		do_action( 'buddyforms_front_js_css_enqueue', $content, $form_slug );
 
 		if ( ! empty( $form_slug ) ) {
 			$wp_query->query_vars['bf_form_slug'] = $form_slug;
@@ -168,7 +171,10 @@ class BuddyFormsAssets {
 		$js_params = BuddyForms::buddyforms_js_global_get_parameters( $form_slug );
 		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', $js_params ) );
 
-		do_action( 'buddyforms_front_js_css_after_enqueue', $content );
+		/**
+		 * @since 2.5.10 added the $form_slug parameter
+		 */
+		do_action( 'buddyforms_front_js_css_after_enqueue', $content, $form_slug );
 
 		return $form_slug;
 	}
