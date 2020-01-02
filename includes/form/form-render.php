@@ -38,12 +38,12 @@ function buddyforms_form_html( $args ) {
 		$post_id = $the_post->ID;
 	}
 
-	$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+	$form_action = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 
 	$user_can_edit = false;
 	if ( $form_action !== 'update' && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug )) {
+	} elseif ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 
@@ -68,7 +68,7 @@ function buddyforms_form_html( $args ) {
 
 	$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
- 	if ( $user_can_edit == false ) {
+	if ( $user_can_edit == false ) {
 
 		$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) );
 
@@ -123,9 +123,10 @@ function buddyforms_form_html( $args ) {
 	if ( isset( $_POST['bf_submitted'] ) ) {
 		$notice_class = apply_filters( 'buddyforms_form_notice_class', ! empty( $form_notice ) ? 'bf-alert success' : '', $form_slug );
 	}
-	$form_html    .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
-	$global_error = ErrorHandler::get_instance();
-	if ( ! $global_error->get_global_error()->has_errors() && isset( $_POST['bf_submitted'] ) ) {
+	$form_html       .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
+	$global_error    = ErrorHandler::get_instance();
+	$global_bf_error = $global_error->get_global_error();
+	if ( ! empty( $global_bf_error ) && ! $global_bf_error->has_errors() && isset( $_POST['bf_submitted'] ) ) {
 		$form_html .= $form_notice;
 		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $form_slug ]['after_submit'] == 'display_message' ) {
 			return $form_html . '</div></div>';

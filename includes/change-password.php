@@ -64,28 +64,31 @@ function buddyforms_reset_password() {
 				$global_error->add_error( new BF_Error( 'buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ) ) );
 			}
 
-			$has_errors = $global_error->get_global_error()->has_errors();
-			if ( ! $has_errors ) {
-				// change the password here
-				$user_data = array(
-					'ID'        => $user_ID,
-					'user_pass' => $_POST['buddyforms_user_pass']
-				);
-				wp_update_user( $user_data );
+			$global_bf_error = $global_error->get_global_error();
+			if ( ! empty( $global_bf_error ) ) {
+				$has_errors = $global_bf_error->has_errors();
+				if ( ! $has_errors ) {
+					// change the password here
+					$user_data = array(
+						'ID'        => $user_ID,
+						'user_pass' => $_POST['buddyforms_user_pass']
+					);
+					wp_update_user( $user_data );
 
-				// send password change email here (if WP doesn't)
-				$redirect_url = apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] );
+					// send password change email here (if WP doesn't)
+					$redirect_url = apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] );
 
-				$bf_pw_redirect_url = get_user_meta( $user_ID, 'bf_pw_redirect_url', true );
+					$bf_pw_redirect_url = get_user_meta( $user_ID, 'bf_pw_redirect_url', true );
 
-				if ( $bf_pw_redirect_url ) {
-					$redirect_url = $bf_pw_redirect_url;
-					delete_user_meta( $user_ID, 'bf_pw_redirect_url' );
+					if ( $bf_pw_redirect_url ) {
+						$redirect_url = $bf_pw_redirect_url;
+						delete_user_meta( $user_ID, 'bf_pw_redirect_url' );
+					}
+
+
+					wp_redirect( add_query_arg( 'bf-password-reset', 'true', $redirect_url ) );
+					exit;
 				}
-
-
-				wp_redirect( add_query_arg( 'bf-password-reset', 'true', $redirect_url ) );
-				exit;
 			}
 		}
 	}

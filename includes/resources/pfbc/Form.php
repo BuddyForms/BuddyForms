@@ -661,9 +661,12 @@ JS;
 	 *
 	 */
 	public function getErrors() {
-		$global_error = ErrorHandler::get_instance();
-		if ( $global_error->get_global_error()->has_errors() ) {
-			return $global_error->get_global_error()->errors;
+		$global_error    = ErrorHandler::get_instance();
+		$global_bf_error = $global_error->get_global_error();
+		if ( ! empty( $global_bf_error ) ) {
+			if ( $global_bf_error->has_errors() ) {
+				return $global_error->get_global_error()->errors;
+			}
 		}
 
 		return array();

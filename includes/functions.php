@@ -155,10 +155,10 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 	/**
 	 * Extend the template from 3rd party plugins
-     *
-     * @since 2.5.9
+	 *
+	 * @since 2.5.9
 	 */
-    $template_path = apply_filters('buddyforms_locate_template', $template_path, $slug, $form_slug);
+	$template_path = apply_filters( 'buddyforms_locate_template', $template_path, $slug, $form_slug );
 
 	// Check if template exist in the child or parent theme and use this path if available
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
@@ -178,8 +178,8 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 }
 
-function buddyforms_granted_list_posts_style(){
-    return apply_filters('buddyforms_granted_list_post_style', array('list', 'table'));
+function buddyforms_granted_list_posts_style() {
+	return apply_filters( 'buddyforms_granted_list_post_style', array( 'list', 'table' ) );
 }
 
 // Display the WordPress Login Form
@@ -1519,21 +1519,24 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 if ( ! function_exists( 'buddyforms_show_error_messages' ) ) {
 	// displays error messages from form submissions
 	function buddyforms_show_error_messages() {
-		$global_error = ErrorHandler::get_instance();
-		if ( $global_error->get_global_error()->has_errors() ) {
-			echo '<div class="bf-alert error">';
-			/**
-			 * @var string|int $code
-			 * @var  BF_Error|WP_Error $error
-			 */
-			foreach ( $global_error->get_global_error()->errors as $code => $error ) {
-				$message = $global_error->get_global_error()->get_error_message( $code );
-				if ( is_array( $message ) ) {
-					$message = $message[0];
+		$global_error    = ErrorHandler::get_instance();
+		$global_bf_error = $global_error->get_global_error();
+		if ( ! empty( $global_bf_error ) ) {
+			if ( $global_bf_error->has_errors() ) {
+				echo '<div class="bf-alert error">';
+				/**
+				 * @var string|int $code
+				 * @var  BF_Error|WP_Error $error
+				 */
+				foreach ( $global_error->get_global_error()->errors as $code => $error ) {
+					$message = $global_error->get_global_error()->get_error_message( $code );
+					if ( is_array( $message ) ) {
+						$message = $message[0];
+					}
+					echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
 				}
-				echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
+				echo '</div>';
 			}
-			echo '</div>';
 		}
 	}
 }

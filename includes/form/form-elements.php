@@ -52,17 +52,20 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 	}
 
 	$all_errors = array();
-	if ( $global_error->get_global_error()->has_errors() ) {
-		$all_errors_groups = $global_error->get_global_error()->errors;
-		$target_form_slug  = 'buddyforms_form_' . $form_slug;
-		foreach ( $all_errors_groups as $error_form_slug => $errors ) {
-			if ( $target_form_slug === $error_form_slug ) {
-				if ( is_array( $errors ) ) {
-					foreach ( $errors as $target_field_slug => $error_message ) {
-						if ( $target_field_slug === 'buddyforms_user_pass' ) {
-							$target_field_slug = 'user_pass';
+	$global_bf_error = $global_error->get_global_error();
+	if ( ! empty( $global_bf_error ) ) {
+		if ( $global_bf_error->has_errors() ) {
+			$all_errors_groups = $global_error->get_global_error()->errors;
+			$target_form_slug  = 'buddyforms_form_' . $form_slug;
+			foreach ( $all_errors_groups as $error_form_slug => $errors ) {
+				if ( $target_form_slug === $error_form_slug ) {
+					if ( is_array( $errors ) ) {
+						foreach ( $errors as $target_field_slug => $error_message ) {
+							if ( $target_field_slug === 'buddyforms_user_pass' ) {
+								$target_field_slug = 'user_pass';
+							}
+							$all_errors[ $target_field_slug ] = $error_message[0];
 						}
-						$all_errors[ $target_field_slug ] = $error_message[0];
 					}
 				}
 			}
