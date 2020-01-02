@@ -445,7 +445,7 @@ function buddyforms_process_submission( $args = array() ) {
 	} else {
 		$hasError      = true;
 		$error_message = $post_id->get_error_message();
-		$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
+		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
 
 	//Create the post
@@ -464,7 +464,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 	} else {
 		if ( ! empty( $fileError ) ) {
-			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $fileError, '', $form_slug ) );
+			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $fileError, '', $form_slug ) );
 		}
 	}
 

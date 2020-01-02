@@ -1526,7 +1526,7 @@ if ( ! function_exists( 'buddyforms_show_error_messages' ) ) {
 				echo '<div class="bf-alert error">';
 				/**
 				 * @var string|int $code
-				 * @var  BF_Error|WP_Error $error
+				 * @var  BuddyForms_Error|WP_Error $error
 				 */
 				foreach ( $global_error->get_global_error()->errors as $code => $error ) {
 					$message = $global_error->get_global_error()->get_error_message( $code );

@@ -41,7 +41,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] < $form_field['validation_min'] ) ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value greater than or equal to ', 'buddyforms' ) . $form_field['validation_min'];
-					$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
+					$global_error->add_error(new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
 				}
 			}
 
@@ -49,7 +49,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( ! is_numeric( $_POST[ $form_field['slug'] ] ) || ( ( $form_field['validation_min'] !== $form_field['validation_max'] ) && $_POST[ $form_field['slug'] ] > $form_field['validation_max'] ) ) {
 					$valid                    = false;
 					$validation_error_message = __( 'Please enter a value less than or equal to ', 'buddyforms' ) . $form_field['validation_max'];
-					$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
+					$global_error->add_error(new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
 				}
 			}
 
@@ -57,7 +57,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) < $form_field['validation_minlength'] ) {
 					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter at least %d characters.', 'buddyforms' ), $form_field['validation_minlength'] );
-					$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
+					$global_error->add_error(new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
 				}
 			}
 
@@ -65,7 +65,7 @@ function buddyforms_server_validation( $valid, $form_slug ) {
 				if ( strlen( trim( $_POST[ $form_field['slug'] ] ) ) > $form_field['validation_maxlength'] ) {
 					$valid                    = false;
 					$validation_error_message = sprintf( __( 'Please enter no more than %d characters.', 'buddyforms' ), $form_field['validation_maxlength'] );
-					$global_error->add_error(new BF_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
+					$global_error->add_error(new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $validation_error_message, $form_field['name'] ));
 				}
 			}
 

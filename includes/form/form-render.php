@@ -123,13 +123,15 @@ function buddyforms_form_html( $args ) {
 	if ( isset( $_POST['bf_submitted'] ) ) {
 		$notice_class = apply_filters( 'buddyforms_form_notice_class', ! empty( $form_notice ) ? 'bf-alert success' : '', $form_slug );
 	}
-	$form_html       .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
-	$global_error    = ErrorHandler::get_instance();
-	$global_bf_error = $global_error->get_global_error();
-	if ( ! empty( $global_bf_error ) && ! $global_bf_error->has_errors() && isset( $_POST['bf_submitted'] ) ) {
-		$form_html .= $form_notice;
-		if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $form_slug ]['after_submit'] == 'display_message' ) {
-			return $form_html . '</div></div>';
+	$form_html    .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
+	$global_error = ErrorHandler::get_instance();
+	if ( ! empty( $global_error ) ) {
+		$global_bf_error = $global_error->get_global_error();
+		if ( ! empty( $global_bf_error ) && ! $global_bf_error->has_errors() && isset( $_POST['bf_submitted'] ) ) {
+			$form_html .= $form_notice;
+			if ( isset( $_POST['bf_submitted'] ) && $buddyforms[ $form_slug ]['after_submit'] == 'display_message' ) {
+				return $form_html . '</div></div>';
+			}
 		}
 	}
 

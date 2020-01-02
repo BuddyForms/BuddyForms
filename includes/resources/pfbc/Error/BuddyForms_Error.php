@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class BF_Error extends WP_Error {
+class BuddyForms_Error extends WP_Error {
 	/**
 	 * @var string
 	 */
