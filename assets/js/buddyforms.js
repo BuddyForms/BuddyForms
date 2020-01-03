@@ -738,6 +738,29 @@ function BuddyForms() {
         }, "");
     }
 
+    function addDateFormatValidation() {
+        jQuery.validator.addMethod("date-validation", function (value, element, param) {
+            var formSlug = getFormSlugFromFormElement(element);
+            if (
+                formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation &&
+                buddyformsGlobal[formSlug].js_validation[0] === 'disabled'
+            ) {
+                return true;
+            }
+
+            var formatAttr = jQuery(element).attr('data-format');
+            var format = (formatAttr) ? formatAttr.toUpperCase() : 'DD/MM/YYYY';
+            var isValid = moment(value, format).isValid();
+
+            if (!isValid) {
+                jQuery.validator.messages['date-validation'] = "Invalid date.";
+            }
+
+            return isValid;
+
+        });
+    }
+
     function getFormSlugFromFormElement(element) {
         var formSlug = jQuery(element).data('form');
         if (!formSlug) {
@@ -1325,6 +1348,7 @@ function BuddyForms() {
                 addValidationMaxLength();
                 addValidationMaxValue();
                 addValidationMinValue();
+                addDateFormatValidation();
                 addValidationEmail();
                 enabledSelect2();
                 enabledDateTime();
