@@ -33,6 +33,7 @@ class View_Frontend extends FormView {
 		$elementCount = 0;
 		for ( $e = 0; $e < $elementSize; ++ $e ) {
 			$element = $elements[ $e ];
+			$element = apply_filters( 'buddyforms_pre_render_element', $element, $this );
 			if ( $element instanceof Element_Button ) {
 				if ( $e == 0 || ! $elements[ ( $e - 1 ) ] instanceof Element_Button ) {
 					echo '<div class="form-actions ' . $layout_style . '">';

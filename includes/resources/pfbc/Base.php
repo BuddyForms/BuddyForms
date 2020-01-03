@@ -121,6 +121,7 @@ abstract class Base {
 				}
 			}
 			$attributes = array_diff( array_keys( $this->_attributes ), $ignore );
+			$attributes = apply_filters( 'buddyforms_element_attribute', $attributes, $this );
 			foreach ( $attributes as $attribute ) {
 				$str .= ' ' . $attribute;
 				if ( $this->_attributes[ $attribute ] !== "" ) {
