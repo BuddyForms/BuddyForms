@@ -478,8 +478,8 @@ function BuddyForms() {
 
         var result = false;
         var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
-        if(fieldData.type){
-            if(fieldData.type ==='gdpr'){
+        if (fieldData.type) {
+            if (fieldData.type === 'gdpr') {
 
                 var requiredMessage = jQuery(element).attr('validation_error_message');
             }
@@ -841,6 +841,9 @@ function BuddyForms() {
                             if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
                                 jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                             }
+                        },
+                        beforeShow: function () {
+                            jQuery('#ui-datepicker-div').addClass('buddyforms');
                         }
                     };
 
