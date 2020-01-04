@@ -988,7 +988,7 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 	global $wp_query;
 	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
-	} else if ( ! empty( $post->post_name ) ) {
+	} elseif ( ! empty( $post->post_name ) ) {
 		$form_slug = $post->post_name;
 	}
 
@@ -1040,16 +1040,19 @@ function buddyforms_form_footer_terms( $html ) {
 }
 
 /**
- * Generate a nonce for certain user. This is used to generate the activation link for other user
- * NOTE: when the nonce is generate for other user the token is an empty string,
- * because the nonce will be validate when the session not exist yet.
+ * This function is an internal implementation to generate the nonce base on specific user.
+ * We create this to generate nonce for user not logged in
+ *
+ * @readmore wp-includes/pluggable.php:2147
  *
  * @param int $action
  * @param int $user_id
+ * @param string $token
  *
  * @return bool|string
+ * @since 2.5.10 Added the token parameter to emulate loggout user nonce
  */
-function buddyforms_create_nonce( $action = - 1, $user_id = 0 ) {
+function buddyforms_create_nonce( $action = - 1, $user_id = 0, $token = '' ) {
 	$token = '';
 	if ( $user_id === 0 ) {
 		$user = wp_get_current_user();
