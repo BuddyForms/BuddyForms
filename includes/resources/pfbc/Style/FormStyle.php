@@ -93,6 +93,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
 			} ?>
+        min-height: 40px;
     }
 
     /* Design Options - Text Fields Active */
@@ -478,6 +479,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
         display: block;
         width: 100%;
         padding: 15px;
+        min-height: 40px;
         font-size: 15px;
         float: unset;
     }
