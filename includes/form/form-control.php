@@ -413,12 +413,9 @@ function buddyforms_process_submission( $args = array() ) {
 			}
 		}
 
-		//TODO gfirem this need to be in other way review with @sven
-		// Check if user is logged in and update user relevant fields if used in the form
-		if ( is_user_logged_in() && 'registration' == $form_type ) {
-			if ( $have_user_fields === true ) {
-				$user_id = buddyforms_wp_update_user();
-			}
+		// Check if user is logged in and update user relevant fields
+		if ( is_user_logged_in() && $have_user_fields === true ) {
+			$user_id = buddyforms_wp_update_user();
 			// If this was a registration form save the user id
 			if ( isset( $user_id ) ) {
 				update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
@@ -1280,7 +1277,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 						break;
 				}
 
-				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding($string_tmp, 'UTF-8'), $string );
+				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding( $string_tmp, 'UTF-8' ), $string );
 			} else {
 				$string = str_replace( '[' . $t_field['slug'] . ']', '', $string );
 			}

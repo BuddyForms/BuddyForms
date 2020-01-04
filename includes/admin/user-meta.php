@@ -191,7 +191,7 @@ function buddyforms_get_mapped_slug_from_user_meta( $slug ) {
 			$slug = 'last_name';
 			break;
 		case 'user_pass':
-			$slug = 'first_name';
+			$slug = 'user_pass';
 			break;
 		case 'website':
 			$slug = 'user_url';

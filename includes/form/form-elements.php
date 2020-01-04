@@ -51,7 +51,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 		}
 	}
 
-	$all_errors = array();
+	$all_errors      = array();
 	$global_bf_error = $global_error->get_global_error();
 	if ( ! empty( $global_bf_error ) ) {
 		if ( $global_bf_error->has_errors() ) {
@@ -89,17 +89,10 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			$customfield_val = '';
 			//Get form field value when the form is editing
 			if ( $action === 'edit' ) {
-				switch ( $form_type ) {
-					case 'registration':
-						if ( ! empty( $current_user_id ) ) {
-							$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
-						}
-						break;
-					case 'contact':
-					case 'post':
-						$customfield_val = get_post_meta( $post_id, $slug, true );
-						break;
-				}
+				$customfield_val = get_post_meta( $post_id, $slug, true );
+			}
+			if ( empty( $customfield_val ) && is_user_logged_in() ) {
+				$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
 			}
 
 			if ( isset( $_POST[ $slug ] ) && empty( $customfield_val ) ) {
@@ -107,9 +100,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			}
 
 			if ( isset( $customfield['type'] ) ) {
-
 				$field_type = sanitize_title( $customfield['type'] );
-
 				if ( empty( $customfield_val ) ) {
 					$default_value = isset( $customfield['default'] ) ? $customfield['default'] : '';
 					if ( ! empty( $_GET[ $slug ] ) && ! in_array( $field_type, array( 'user_login', 'user_pass' ) ) ) {
@@ -575,7 +566,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$element->setValidation( new Validation_Required( $customfield['validation_error_message'], $customfield ) );
 							}
 
-							$form->addElement( new Element_Textarea($name, $slug, $wp_editor, $customfield) );
+							$form->addElement( new Element_Textarea( $name, $slug, $wp_editor, $customfield ) );
 						}
 						break;
 					case 'post_excerpt':
@@ -1148,7 +1139,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 									$element_attr['value'] = 'checked';
 								} else {
 
-                                    unset($element_attr['value']);
+									unset( $element_attr['value'] );
 								}
 
 
@@ -1167,25 +1158,24 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								}
 
 
+								if ( isset( $option['required'] ) ) {
+									$element_attr['required'] = true;
+									$customfield['default']   = true;
+									if ( strpos( $element_attr['class'], 'gdpragreement-required' ) == false ) {
+										$element_attr['class'] = $element_attr['class'] . ' gdpragreement-required';
+									}
 
-                                if ( isset( $option['required'] ) ) {
-                                    $element_attr['required'] = true;
-                                    $customfield['default']= true;
-                                    if (strpos($element_attr['class'], 'gdpragreement-required') == false) {
-                                        $element_attr['class'] = $element_attr['class'] . ' gdpragreement-required';
-                                    }
-
-                                }else{
-								    unset($element_attr['required']);
-                                    $new_class = str_replace('gdpragreement-required','',$element_attr['class']);
-                                    $element_attr['class'] = $new_class;
-                                }
-                                $element_attr['data-element-slug'] = $slug;
-                                $element_attr['id'] = 'gdpragreement-'.$key;
-                                $element_attr['validation_error_message'] = $customfield['options'][$key]['error_message'];
+								} else {
+									unset( $element_attr['required'] );
+									$new_class             = str_replace( 'gdpragreement-required', '', $element_attr['class'] );
+									$element_attr['class'] = $new_class;
+								}
+								$element_attr['data-element-slug']        = $slug;
+								$element_attr['id']                       = 'gdpragreement-' . $key;
+								$element_attr['validation_error_message'] = $customfield['options'][ $key ]['error_message'];
 
 
-                                $element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), $element_attr, $customfield );
+								$element = new Element_Checkbox( $label, $slug . '_' . $key, array( 'checked' => $option['label'] ), $element_attr, $customfield );
 
 								$element->setAttribute( 'data-storage', 'false' );
 
