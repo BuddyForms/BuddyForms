@@ -190,9 +190,99 @@ jQuery(function () {
 		}
 	});
 });
+
+function BuddyFormsAdmin() {
+  jQuery.fn.extend({
+    insertShortCode: function(short) {
+      return this.each(function(i) {
+        if (document.selection) {
+          //For browsers like Internet Explorer
+          this.focus();
+          var sel = document.selection.createRange();
+          sel.text = short;
+          this.focus();
+        }
+        else if (this.selectionStart || this.selectionStart == '0') {
+          //For browsers like Firefox and Webkit based
+          var startPos = this.selectionStart;
+          var endPos = this.selectionEnd;
+          var scrollTop = this.scrollTop;
+          this.value = this.value.substring(0, startPos) + short + this.value.substring(endPos, this.value.length);
+          this.focus();
+          this.selectionStart = startPos + short.length;
+          this.selectionEnd = startPos + short.length;
+          this.scrollTop = scrollTop;
+        }
+        else {
+          this.value += short;
+          this.focus();
+        }
+      });
+    },
+  });
+
+  function insertShortCode(target, short) {
+    if (!target || !short) {
+      return false;
+    }
+    return target.each(function() {
+      if (document.selection) {
+        //For browsers like Internet Explorer
+        target.focus();
+        var sel = document.selection.createRange();
+        sel.text = short;
+        target.focus();
+      }
+      else if (target.selectionStart || target.selectionStart == '0') {
+        //For browsers like Firefox and Webkit based
+        var startPos = target.selectionStart;
+        var endPos = target.selectionEnd;
+        var scrollTop = target.scrollTop;
+        target.value = target.value.substring(0, startPos) + short + target.value.substring(endPos, target.value.length);
+        target.focus();
+        target.selectionStart = startPos + short.length;
+        target.selectionEnd = startPos + short.length;
+        target.scrollTop = scrollTop;
+      }
+      else {
+        target.value += short;
+        target.focus();
+      }
+    });
+  }
+
+  function insertShortCodeEvent(e) {
+    e.stopPropagation();
+    var currentElement = jQuery(this);
+    if (currentElement) {
+      var target = currentElement.attr('data-target');
+      var elemTarget = jQuery('[name="' + target + '"]');
+      if (elemTarget && elemTarget.length > 0) {
+        var short = currentElement.attr('data-short');
+        if(short && short.length > 0) {
+          elemTarget.insertShortCode(short);
+          return false;
+        }
+      }
+    }
+  }
+
+  return {
+    init: function() {
+      var existBuilder = jQuery('.buddyforms-metabox');
+      if(existBuilder && existBuilder.length > 0){
+        jQuery(document).on('click', '.buddyforms-shortcodes-action', insertShortCodeEvent)
+      }
+    }
+  }
+}
+
+var buddyFormsAdminInstance = BuddyFormsAdmin();
 jQuery(document).ready(function () {
 	jQuery(document.body).trigger({type: "buddyform:load_fields"});
 	jQuery(document.body).trigger({type: "buddyform:load_notifications"});
+
+	buddyFormsAdminInstance.init();
 
 	//
 	// Handle the hide/show moderation of user on update
