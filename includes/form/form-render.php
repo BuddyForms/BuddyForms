@@ -31,7 +31,7 @@ function buddyforms_form_html( $args ) {
 	$need_registration_form = ! empty( $buddyforms[ $form_slug ]['public_submit'] ) && 'registration_form' === $buddyforms[ $form_slug ]['public_submit'];
 
 	if ( ! is_user_logged_in() && ! $is_registration_form && $need_registration_form ) {
-		return buddyforms_get_wp_login_form( $form_slug );
+		return buddyforms_get_wp_login_form( $form_slug, '', array( 'redirect_url' => $redirect_to ) );
 	}
 
 	if ( empty( $post_id ) && ! empty( $the_post ) ) {

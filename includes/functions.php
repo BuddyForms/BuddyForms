@@ -185,7 +185,7 @@ function buddyforms_granted_list_posts_style() {
 // Display the WordPress Login Form
 function buddyforms_wp_login_form( $hide = false ) {
 	// Get The Login Form
-	echo buddyforms_get_wp_login_form( 'none', '', array(), $hide );
+	echo buddyforms_get_wp_login_form( 'none', '', array( 'caller' => 'template' ), $hide );
 }
 
 /**
@@ -206,9 +206,10 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		return false;
 	}
 
-	$redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
+	$caller = $redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
 
 	extract( shortcode_atts( array(
+		'caller'         => 'direct',
 		'redirect_url'   => home_url(),
 		'label_username' => __( 'Username or Email Address', 'buddyforms' ),
 		'label_password' => __( 'Password', 'buddyforms' ),
@@ -245,6 +246,12 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		)
 	);
 
+	if ( $form_slug !== 'none' ) {
+		$wp_login_form = str_replace( '</form>', '<input type="hidden" name="form_slug" value="' . esc_attr( $form_slug ) . '"></form>', $wp_login_form );
+	}
+
+	$wp_login_form = str_replace( '</form>', '<input type="hidden" name="caller" value="' . esc_attr( $caller ) . '"></form>', $wp_login_form );
+
 	if ( $form_slug != 'none' ) {
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
@@ -254,7 +261,6 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 			$wp_login_form = do_shortcode( '[bf form_slug="' . $reg_form_slug . '"]' );
 		}
 	}
-
 	$wp_login_form .= '</div>';
 
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
