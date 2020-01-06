@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.10-beta4
+Stable tag: 2.5.10-beta5
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.10-beta5 - 6 Jan 2019 =
+* Improved the bf login form to include the form slug related.
+* Improved the redirect after login to execute by 3rd party extensions when the form is not a registration form.
+* Fixed the redirection of the bf login when a form is for logged user only, in this case will be redirect to the same form page.
+
 = 2.5.10-beta4 - 6 Jan 2019 =
 * Added a function to output a list of pages with his child included.
 * Added styles for the login block.
