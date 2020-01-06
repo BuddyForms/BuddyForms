@@ -183,9 +183,9 @@ function buddyforms_granted_list_posts_style() {
 }
 
 // Display the WordPress Login Form
-function buddyforms_wp_login_form() {
+function buddyforms_wp_login_form( $hide = false ) {
 	// Get The Login Form
-	echo buddyforms_get_wp_login_form();
+	echo buddyforms_get_wp_login_form( 'none', '', array(), $hide );
 }
 
 /**
@@ -195,9 +195,11 @@ function buddyforms_wp_login_form() {
  * @param string $title
  * @param array $args
  *
+ * @param bool $hide
+ *
  * @return string|boolean
  */
-function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array() ) {
+function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array(), $hide = false ) {
 	global $buddyforms;
 
 	if ( is_admin() ) {
@@ -218,7 +220,18 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		$title = __( 'You need to be logged in to view this page', 'buddyforms' );
 	}
 
-	$wp_login_form = '<h3>' . $title . '</h3>';
+	$hide_style    = ( $hide ) ? 'style="display:none"' : '';
+	$wp_login_form = '<div class="bf-show-login-form" ' . $hide_style . '>';
+	//include own login basic style
+	ob_start();
+	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoginStyle.php' );
+	$style = ob_get_clean();
+	if ( ! empty( $style ) ) {
+		$style         = buddyforms_minify_css( $style );
+		$wp_login_form .= $style;
+	}
+
+	$wp_login_form .= '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form(
 		array(
 			'echo'           => false,
@@ -241,6 +254,8 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 			$wp_login_form = do_shortcode( '[bf form_slug="' . $reg_form_slug . '"]' );
 		}
 	}
+
+	$wp_login_form .= '</div>';
 
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
@@ -924,6 +939,56 @@ function buddyforms_get_post_types() {
 	return $post_types;
 }
 
+/**
+ * This function return the dropdown populated with the pages of the site including the childs
+ *
+ * @param $name
+ * @param $selected
+ * @param string $id
+ * @param string $default_option_string
+ * @param string $default_option_value
+ * @param string $view
+ *
+ * @return string
+ * @author gfirem
+ *
+ * @since 2.5.10
+ */
+function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default_option_string = 'WordPress Default', $default_option_value = 'none', $view = "form_builder" ) {
+	if ( $default_option_string === 'WordPress Default' ) {
+		$default_option_string = __( 'WordPress Default', 'buddyforms' );
+	}
+	$exclude       = array();
+	$page_on_front = get_option( 'page_on_front' );
+	if ( ! empty( $page_on_front ) && $page_on_front !== 'none' && is_numeric( $page_on_front ) && $page_on_front != $selected ) {
+		$exclude[] = intval( $page_on_front );
+	}
+
+	if ( $view == 'form_builder' ) {
+		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+		if ( ! empty( $buddyforms_registration_page ) && $buddyforms_registration_page !== 'none' && is_numeric( $buddyforms_registration_page ) && $buddyforms_registration_page != $selected ) {
+			$exclude[] = intval( $buddyforms_registration_page );
+		}
+	}
+
+	$args = array(
+		'depth'             => 0,
+		'post_type'         => 'page',
+		'exclude_tree'      => $exclude,
+		'selected'          => $selected,
+		'name'              => $name,
+		'id'                => ! empty( $id ) ? $id : $name,
+		'show_option_none'  => $default_option_string,
+		'option_none_value' => $default_option_value,
+		'sort_column'       => 'post_title',
+		'echo'              => 0,
+	);
+
+	$output = wp_dropdown_pages( $args );
+
+	return $output;
+}
+
 
 function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 
@@ -936,11 +1001,10 @@ function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 		$exclude                      .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
 	}
 
-
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
-		'parent'      => 0,
+		'parent'      => - 1,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
 		'exclude'     => $exclude

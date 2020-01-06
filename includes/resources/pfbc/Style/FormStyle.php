@@ -92,8 +92,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			// Font Color
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
-			} ?>
-        min-height: 40px;
+			} ?> min-height: 40px;
     }
 
     /* Design Options - Text Fields Active */
@@ -432,8 +431,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 99% !important;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message{
-            text-align: left;
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message {
+        text-align: left;
     }
 
     /* --- Form Errors --- */
@@ -444,9 +443,9 @@ $css_form_class = 'buddyforms-' . $form_slug;
         border: 1px solid red;
     }
 
-     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error{
-         border: 2px dashed red;
-     }
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error {
+        border: 2px dashed red;
+    }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
         border: 1px solid red;
@@ -490,7 +489,17 @@ $css_form_class = 'buddyforms-' . $form_slug;
 
     /* Avoid red style over the elements comming from BuddyPress */
     .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
-    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid{
+    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid {
         border-color: #d6d6d6;
+    }
+
+    #content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset {
+        border: 1px solid #d6d6d6;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 </style>
