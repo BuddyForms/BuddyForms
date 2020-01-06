@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.10-beta3
+Stable tag: 2.5.10-beta4
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,20 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.10-beta4 - 6 Jan 2019 =
+* Added a function to output a list of pages with his child included.
+* Added styles for the login block.
+* Fixed the border of the form.
+* Improved the nonce function to generate nonce for logged out users.
+* Updated form element styles to have a minimum height.
+* Fixed the textarea to include the description.
+* Started the process to add a helper section at the bottom of the places where the shortcodes of the form elements can be used to be replaced by the values. Like the email notifications.
+* Fixed the user related field to be saved form any form and load the related user meta if the user is logged in.
+* Added a filter hook (`buddyforms_element_attribute`) to customize the form elements before render it.
+* Added a Date format validation.
+* Avoided collision of the date element style with other plugins with jquery-ui.
+* Added the create date of the license to the inbound marketing process.
+
 = 2.5.10-beta3 - 2 Jan 2019 =
 * Refactored the class BF_Error to BuddyForms_Error to avoid class collision.
 
