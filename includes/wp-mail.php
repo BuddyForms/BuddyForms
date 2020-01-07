@@ -215,6 +215,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param array $mail_to_cc
  * @param array $mail_to_bcc
  *
+ * @return bool
  * @since 2.2.8
  *
  */
