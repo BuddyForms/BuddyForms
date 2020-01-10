@@ -178,14 +178,14 @@ function buddyforms_update_form_slug( $old_slug, $new_slug ) {
 /**
  * Convert an array of shortcodes into a html
  *
- * @since 2.5.10
- *
- * @author gfirem
- *
  * @param $shortcodes_array
  * @param $target_element
  *
  * @return string
+ * @author gfirem
+ *
+ * @since 2.5.10
+ *
  */
 function buddyforms_get_shortcode_string( $shortcodes_array, $target_element ) {
 	$all_shortcodes = array();
@@ -193,5 +193,45 @@ function buddyforms_get_shortcode_string( $shortcodes_array, $target_element ) {
 		$action_html              = sprintf( '<a href="" class="buddyforms-shortcodes-action" data-short="%s" data-target="%s">%s</a>', $short, $target_element, $short );
 		$all_shortcodes[ $index ] = $action_html;
 	}
-	return '<div class="buddyforms-shortcodes-container">'.implode(', ', $all_shortcodes).'</div>';
+
+	return '<div class="buddyforms-shortcodes-container">' . implode( ', ', $all_shortcodes ) . '</div>';
+}
+
+/**
+ * Return array with the default shortcodes to use in the helper
+ *
+ * @param $form_slug
+ * @param $element_name
+ *
+ * @return array
+ * @author gfirem
+ * @since 2.5.10
+ */
+function buddyforms_available_shortcodes( $form_slug, $element_name ) {
+	return apply_filters( 'buddyforms_available_shortcodes', array(
+		'[user_login]',
+		'[user_nicename]',
+		'[first_name]',
+		'[last_name]',
+		'[published_post_link_plain]',
+		'[published_post_link_html]',
+		'[published_post_title]',
+		'[site_name]',
+		'[site_url]',
+		'[site_url_html]',
+	), $form_slug, $element_name );
+}
+
+/**
+ * Return array of the fields type to not include in the list of shortcodes in the helper
+ *
+ * @param $form_slug
+ * @param $element_name
+ *
+ * @return array
+ * @author gfirem
+ * @since 2.5.10
+ */
+function buddyforms_unauthorized_shortcodes_field_type( $form_slug, $element_name ) {
+	return apply_filters( 'buddyforms_unauthorized_shortcodes_field_type', array(), $form_slug, $element_name );
 }
