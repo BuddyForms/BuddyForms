@@ -78,7 +78,7 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 	}
 
 	$all_shortcodes       = array();
-	$element_name    = 'buddyforms_options[mail_submissions][' . $trigger . '][mail_body]';
+	$element_name         = 'buddyforms_options[mail_submissions][' . $trigger . '][mail_body]';
 	$available_shortcodes = buddyforms_available_shortcodes( $buddyform['slug'], $element_name );
 	if ( ! empty( $buddyform['form_fields'] ) ) {
 		foreach ( $buddyform['form_fields'] as $form_field ) {
@@ -139,9 +139,9 @@ function buddyforms_mail_notification_form( $trigger = false ) {
 		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
 		'cc'        => __( 'CC', 'buddyforms' ),
-		'bcc'       => __( 'BCC', 'buddyforms' )
+		'bcc'       => __( 'BCC', 'buddyforms' ),
 	), array(
-		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : 'admin',
+		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : '',
 		'id'    => 'mail_submissions' . $trigger,
 		'class' => 'mail_to_checkbox bf_sent_mail_to_multi_checkbox'
 	) );
