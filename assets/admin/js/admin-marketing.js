@@ -6,12 +6,12 @@ jQuery(document).ready(function (jQuery) {
             slide: 1,
             slideTop: 1,
             escClose: 1,
-            colors: "#048914",
+            colors: "#2ba7a7",
             bgcolor: "#fff",
             bordercolor: "#efefef",
             textcolor: "#181818",
-            iconcolor: "#108923",
-            btncolor: "#891e12",
+            iconcolor: "#2ba7a7",
+            btncolor: "#f4a141",
             btntextcolor: "#fff",
             content: buddyformsMarketingHandler.content
         });
