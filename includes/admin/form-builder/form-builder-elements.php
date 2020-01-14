@@ -89,7 +89,7 @@ function buddyforms_display_form_element( $args ) {
 	$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 
 	$validation_error_message                              = isset( $customfield['validation_error_message'] ) ? stripcslashes( $customfield['validation_error_message'] ) : __( 'This field is required.', 'buddyforms' );
-	$form_fields['validation']['validation_error_message'] = new Element_Textbox( '<b>' . __( 'Validation Error Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_error_message]", array( 'value' => $validation_error_message ) );
+	$form_fields['validation']['validation_error_message'] = new Element_Textbox( '<b>' . __( 'Required Error Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_error_message]", array( 'value' => $validation_error_message ) );
 
 	switch ( sanitize_title( $field_type ) ) {
 
@@ -106,6 +106,19 @@ function buddyforms_display_form_element( $args ) {
 
             $validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength,'min'=>0, 'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"text")' ) );
+
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
+
             break;
 		case 'country':
 		    $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Country', 'buddyforms' );
@@ -161,6 +174,18 @@ function buddyforms_display_form_element( $args ) {
 
             $validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"subject")' ) );
+
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
             break;
 		case 'message':
 			unset( $form_fields['advanced']['slug'] );
@@ -180,6 +205,18 @@ function buddyforms_display_form_element( $args ) {
 
             $validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"message")' ) );
+
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
             break;
 		case 'user_login':
 			unset( $form_fields['advanced']['slug'] );
@@ -218,6 +255,11 @@ function buddyforms_display_form_element( $args ) {
 				'value'     => $hide_if_logged_in,
 				'id'        => "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]",
 				'shortDesc' => __( 'If you want to use this form to allow your users to edit there profile you can hide the password for logged in users to prevent change the password with every update.', 'buddyforms' )
+			) );
+
+			$validation_email_msj                              = isset( $customfield['validation_email_msj'] ) ? $customfield['validation_email_msj'] : __( 'Enter a valid email.', 'buddyforms' );
+			$form_fields['validation']['validation_email_msj'] = new Element_Textbox( '<b>' . __( 'Invalid Email Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_email_msj]", array(
+				'value' => $validation_email_msj,
 			) );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_email' );
@@ -401,6 +443,17 @@ function buddyforms_display_form_element( $args ) {
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength,'min'=>0 ,'class'=>'textarea-maxlength','field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"textarea")' ) );
 
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
 
 			$hidden                            = isset( $customfield['hidden_field'] ) ? $customfield['hidden_field'] : false;
 			$form_fields['advanced']['hidden_field'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden_field]", array( 'hidden_field' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
@@ -440,6 +493,18 @@ function buddyforms_display_form_element( $args ) {
             $validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"post_excerpt")' ) );
 
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
+
             $hidden                            = isset( $customfield['hidden_field'] ) ? $customfield['hidden_field'] : false;
 			$form_fields['advanced']['hidden_field'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden_field]", array( 'hidden_field' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );
 
@@ -465,6 +530,11 @@ function buddyforms_display_form_element( $args ) {
 				'class'    => "use_as_slug",
 				'value'    => $name,
 				'required' => 1
+			) );
+
+			$validation_email_msj                              = isset( $customfield['validation_email_msj'] ) ? $customfield['validation_email_msj'] : __( 'Enter a valid email.', 'buddyforms' );
+			$form_fields['validation']['validation_email_msj'] = new Element_Textbox( '<b>' . __( 'Invalid Email Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_email_msj]", array(
+				'value' => $validation_email_msj,
 			) );
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'email' );
@@ -495,6 +565,18 @@ function buddyforms_display_form_element( $args ) {
 
             $validation_max                              = isset( $customfield['validation_max'] ) ? stripcslashes( $customfield['validation_max'] ) : 0;
 			$form_fields['validation']['validation_max'] = new Element_Number( '<b>' . __( 'Validation Max Value', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max]", array( 'value' => $validation_max ,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"number")' ) );
+
+			$validation_min_msj                              = isset( $customfield['validation_min_msj'] ) ? $customfield['validation_min_msj'] : __( 'The minimum value allowed is: %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_min_msj'] = new Element_Textbox( '<b>' . __( 'Min Value Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_min_msj]", array(
+				'value' => $validation_min_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Value as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_max_msj                              = isset( $customfield['validation_max_msj'] ) ? $customfield['validation_max_msj'] : __( 'The maximum value allowed is: %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_max_msj'] = new Element_Textbox( '<b>' . __( 'Max Value Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_max_msj]", array(
+				'value' => $validation_max_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Value as part of the error message.', 'buddyforms' ),
+			) );
             break;
 		case 'dropdown':
 		    $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Dropdown', 'buddyforms' );
@@ -1121,6 +1203,18 @@ JS;
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : '';
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"title")' ) );
 
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
+
 			$hidden                            = isset( $customfield['hidden_field'] ) ? $customfield['hidden_field'] : false;
 			$form_fields['advanced']['hidden_field'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden_field]", array( 'hidden_field' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ),
 				array(
@@ -1162,6 +1256,18 @@ JS;
 
 			$validation_maxlength                              = isset( $customfield['validation_maxlength'] ) ? stripcslashes( $customfield['validation_maxlength'] ) : 0;
 			$form_fields['validation']['validation_maxlength'] = new Element_Number( '<b>' . __( 'Validation Max Length', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength]", array( 'value' => $validation_maxlength ,'min'=>0,'field_id'=>$field_id.'_validation_maxlength','onchange'=>'bfValidateRule("'.$field_id.'","max",this,"content")' ) );
+
+			$validation_minlength_msj                              = isset( $customfield['validation_minlength_msj'] ) ? $customfield['validation_minlength_msj'] : __( 'The minimum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_minlength_msj'] = new Element_Textbox( '<b>' . __( 'Min Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_minlength_msj]", array(
+				'value' => $validation_minlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Min Length as part of the error message.', 'buddyforms' ),
+			) );
+
+			$validation_maxlength_msj                              = isset( $customfield['validation_maxlength_msj'] ) ? $customfield['validation_maxlength_msj'] : __( 'The maximum character length is %s. Please check.', 'buddyforms' );
+			$form_fields['validation']['validation_maxlength_msj'] = new Element_Textbox( '<b>' . __( 'Max Length Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][validation_maxlength_msj]", array(
+				'value' => $validation_maxlength_msj,
+                'shortDesc' => __( 'You need to keep the %s in your new string to include the Max Length as part of the error message.', 'buddyforms' ),
+			) );
 
 			$hidden                            = isset( $customfield['hidden_field'] ) ? $customfield['hidden_field'] : false;
 			$form_fields['advanced']['hidden_field'] = new Element_Checkbox( '<b>' . __( 'Hidden?', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hidden_field]", array( 'hidden_field' => '<b>' . __( 'Make this field Hidden', 'buddyforms' ) . '</b>' ), array( 'value' => $hidden ) );

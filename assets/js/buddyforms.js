@@ -404,7 +404,16 @@ function BuddyForms() {
             ) {
                 return true;
             }
-            jQuery.validator.messages['bf-email'] = "Enter a valid email.";
+            var msjString = 'Enter a valid email.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if(fieldData.validation_email_msj){
+                    msjString = fieldData.validation_email_msj;
+                }
+            }
+
+            jQuery.validator.messages['bf-email'] = msjString;
             return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
         }, "");
     }
@@ -422,8 +431,20 @@ function BuddyForms() {
             if (value === "") {
                 return true;
             }
+
+            var msjString = 'The minimum character length is %s. Please check.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if(fieldData.validation_min_msj){
+                    msjString = fieldData.validation_min_msj;
+                }
+            }
+
+            msjString = msjString.replace('%s', param);
+
             if (count < param) {
-                jQuery.validator.messages['minlength'] = "The minimum character length is " + param + ". Please check.";
+                jQuery.validator.messages['minlength'] = msjString;
                 return false;
             }
             return true;
@@ -442,8 +463,20 @@ function BuddyForms() {
             if (value === "") {
                 return true;
             }
+
+            var msjString = 'The minimum value allowed is: %s. Please check.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if(fieldData.validation_min_msj){
+                    msjString = fieldData.validation_min_msj;
+                }
+            }
+
+            msjString = msjString.replace('%s', param);
+
             if (value < param) {
-                jQuery.validator.messages['min-value'] = "The minimum value allowed is : " + param + ". Please check.";
+                jQuery.validator.messages['min-value'] = msjString;
                 return false;
             }
             return true;
@@ -516,9 +549,21 @@ function BuddyForms() {
             if (param === 0 || value === "") {
                 return true;
             }
+
+            var msjString = 'The maximum character length is %s. Please check.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if(fieldData.validation_min_msj){
+                    msjString = fieldData.validation_min_msj;
+                }
+            }
+
+            msjString = msjString.replace('%s', param);
+
             var count = value.length;
             if (count > param) {
-                jQuery.validator.messages['maxlength'] = "The maximum character length is " + param + ". Please check.";
+                jQuery.validator.messages['maxlength'] = msjString;
                 return false;
             }
 
@@ -729,8 +774,19 @@ function BuddyForms() {
                 return true;
             }
 
+            var msjString = 'The maximum value allowed is: %s. Please check.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if(fieldData.validation_max_msj){
+                    msjString = fieldData.validation_max_msj;
+                }
+            }
+
+            msjString = msjString.replace('%s', param);
+
             if (value > param) {
-                jQuery.validator.messages['max-value'] = "The maximum value allowed  is : " + param + ". Please check.";
+                jQuery.validator.messages['max-value'] = msjString;
                 return false;
             }
 
