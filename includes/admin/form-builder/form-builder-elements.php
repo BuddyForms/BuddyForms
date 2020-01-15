@@ -652,6 +652,7 @@ function buddyforms_display_form_element( $args ) {
 	        }
 
 	        $delete_files   = isset( $buddyform['form_fields'][ $field_id ]['delete_files'] ) ? $buddyform['form_fields'][ $field_id ]['delete_files'][0] : '';
+            $upload_from_url   = isset( $buddyform['form_fields'][ $field_id ]['upload_from_url'] ) ? $buddyform['form_fields'][ $field_id ]['upload_from_url'][0] : '';
 
 	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
 		        'value' => floatval( $file_limit ),
@@ -715,6 +716,11 @@ function buddyforms_display_form_element( $args ) {
 		        'id' => 'upload_delete_files' . $field_id,
 		        'value' => $delete_files
 	        ) );
+
+            $element_delete = new Element_Checkbox( '<b>' . __( 'Upload Image From Url', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][upload_from_url]", array( 'upload_from_url' => __( 'Upload Images From Url. ', 'buddyforms' ) ), array(
+                'id' => 'upload_from_url' . $field_id,
+                'value' => $upload_from_url
+            ) );
 
 
 	        $form_fields['general']['upload_delete_files']   = $element_delete;

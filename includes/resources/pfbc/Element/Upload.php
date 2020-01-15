@@ -282,6 +282,7 @@ class Element_Upload extends Element_Textbox {
 		$mime_type_result                  = '';
 		$allowed_types                     = get_allowed_mime_types();
 		$form_slug                         = $this->getAttribute( 'form_slug' );
+        $upload_from_url                   = $this->getAttribute( 'upload_from_url' );
 		foreach ( $accepted_files as $key => $value ) {
 			$mime_type .= $allowed_types[ $value ] . ',';
 		}
@@ -308,23 +309,50 @@ class Element_Upload extends Element_Textbox {
 		if ( $has_error ) {
 			$classes .= ' error';
 		}
+            if($upload_from_url ==='upload_from_url'){
+
+                $url = empty($column_val)== false ?  wp_get_attachment_url( $column_val ): "";
+                $box="";
+                $attachmet_id = empty($column_val)== false ?  $column_val : "";
+
+                $label = $this->getAttribute( 'placeholder' );
+                if ( $required ) {
+                    $label = $label . html_entity_decode( $this->renderRequired() );
+                }
+                $box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
+
+
+                $box .= sprintf('<span><input placeholder="Image Url" type="text" style="%s"id="%s"  %s field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s" onclick="validateAndUploadImage(this)">upload</button></span>','width:75%',$id."_upload_from_url",$required,$id,$url,$id,$id);
+                $box .= sprintf('<label  id="%s_label" class="error" ></label>',$id);
+                $box .= sprintf('<img  id="%s_image" src="%s" ></img>',$id,$url);
+                $box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" />', $id, $attachmet_id, $id   );
+
+                if ( ! empty( $description ) ) {
+                        $box .= sprintf( '<span class="help-inline">%s</span>', $description );
+                    }
+        }
+        else{
+            $box = sprintf( '<div class="%s" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $classes, $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
+            if ( $labels_layout === 'inline' ) {
+                $label = $this->getAttribute( 'placeholder' );
+                if ( $required ) {
+                    $label = $label . html_entity_decode( $this->renderRequired() );
+                }
+                $box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
+            }
+
+            $box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
+            $box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
+            $box .= '</div>';
+            if ( ! empty( $description ) ) {
+                $box .= sprintf( '<span class="help-inline">%s</span>', $description );
+            }
+
+
+
+        }
+        echo $box;
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
-		$box = sprintf( '<div class="%s" id="%s" file_limit="%s" accepted_files="%s" multiple_files="%s" action="%s" data-entry="%s" page="%s" form-slug ="%s">', $classes, $id, $max_size, $mime_type_result, $multiple_files, $action, $entries_result, $page, $form_slug );
-		if ( $labels_layout === 'inline' ) {
-			$label = $this->getAttribute( 'placeholder' );
-			if ( $required ) {
-				$label = $label . html_entity_decode( $this->renderRequired() );
-			}
-			$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
-		}
 
-		$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
-		$box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
-		$box .= '</div>';
-		if ( ! empty( $description ) ) {
-			$box .= sprintf( '<span class="help-inline">%s</span>', $description );
-		}
-
-		echo $box;
 	}
 }

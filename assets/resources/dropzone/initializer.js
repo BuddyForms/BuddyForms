@@ -190,8 +190,66 @@ function uploadHandler() {
         }
     }
 }
+function validateAndUploadImage(field){
 
+    var current = jQuery(field);
+    var id = current.attr("field-id");
+    jQuery("#"+id+"_label").text("");
+    var url = jQuery("#"+id+"_upload_from_url").val();
+
+    if(checkURL(url)){
+
+        jQuery("#"+id+"_upload_button").text("Uploading..");
+        jQuery("#"+id+"_upload_button").attr('disabled',true);
+        var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
+        submitButtons.attr('disabled',true);
+
+        jQuery.ajax({
+            url : buddyformsGlobal.admin_url,
+            type : 'post',
+            data : {
+                action : 'upload_image_from_url',
+                url : encodeURIComponent(url),
+                id : id
+            },
+            success : function( response ) {
+                var result = JSON.parse(response);
+                jQuery("#"+id+"_image").attr('src',result.response);
+                jQuery("#"+id+"_image").attr('width',300);
+                jQuery("#"+id+"_image").attr('height',300);
+                jQuery("#field_"+id).val(result.attachment_id);
+
+                jQuery("#"+id+"_upload_button").text("Upload");
+                jQuery("#"+id+"_upload_button").attr('disabled',false);
+                submitButtons.attr('disabled',false);
+
+
+            },
+            error : function(error){
+                var result = JSON.parse(error);
+                jQuery("#"+id+"_label").text(result.response);
+                jQuery("#"+id+"_upload_button").text("Upload");
+                jQuery("#"+id+"_upload_button").attr('disabled',false);
+                submitButtons.attr('disabled',false);
+
+
+            }
+
+        });
+
+    }
+    else{
+        jQuery("#"+id+"_label").text("Wrong Url Format");
+
+
+    }
+}
+function checkURL(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
     uploadImplementation.init();
+
+
 });
