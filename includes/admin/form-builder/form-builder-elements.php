@@ -657,7 +657,7 @@ function buddyforms_display_form_element( $args ) {
 	        $form_fields['general']['upload_file_limts'] = new Element_Number( '<b>' . __( 'Max File Size in MB', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][file_limit]", array(
 		        'value' => floatval( $file_limit ),
 		        'id'    => 'upload_file_limit' . $field_id,
-		        'step'=> '.01'
+		        'step'=> '1'
 	        ) );
 	        $original_mimes_types                        = get_allowed_mime_types();
 	        $sorted_mimes_types                          = array();
