@@ -238,7 +238,7 @@ jQuery(document).ready(function (jQuery) {
     var currentFormType = jQuery('#bf-form-type-select').val();
     if (currentFormType) {
         from_setup_form_type(currentFormType);
-        buddyforms_disable_contact_extra_permissions_handler(currentFormType);
+        buddyforms_disable_contact_extra_permissions_handler(currentFormType,true);
     }
 
     // On Change listener for the post type select
