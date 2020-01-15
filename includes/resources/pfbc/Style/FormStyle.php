@@ -488,6 +488,13 @@ $css_form_class = 'buddyforms-' . $form_slug;
         float: unset;
         width: 100%;
         background-color: #fafafa !important;
+    <?php
+    if( $bfdesign['field_padding'] != '' ) {
+        $padding = intval($bfdesign['field_padding'])+11;
+        echo 'padding-top: ' . $padding . 'px !important;';
+        echo 'padding-bottom: ' . $padding . 'px !important;';
+    }
+    ?>
     }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__arrow:before {
@@ -543,6 +550,11 @@ $css_form_class = 'buddyforms-' . $form_slug;
         background-repeat: no-repeat, repeat;
         background-position: right .7em top 50%, 0 0;
         background-size: .65em auto, 100%;
+    <?php
+	if( $bfdesign['field_padding'] != '' ) {
+		echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
+	}
+	?>
     }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control::-ms-expand {
