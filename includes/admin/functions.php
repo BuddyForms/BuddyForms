@@ -58,9 +58,9 @@ function buddyforms_get_version_type() {
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'starter', true ) ) {
 			return '<b>' . __( 'Starter', 'buddyforms' ) . '</b>';
-		} else if ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
+		} elseif ( buddyforms_core_fs()->is_plan( 'professional' ) ) {
 			return '<b>' . __( 'Professional', 'buddyforms' ) . '</b>';
-		} else if ( buddyforms_core_fs()->is_plan( 'business' ) ) {
+		} elseif ( buddyforms_core_fs()->is_plan( 'business' ) ) {
 			return '<b>' . __( 'Business', 'buddyforms' ) . '</b>';
 		}
 	}
@@ -78,20 +78,20 @@ function buddyforms_rating_admin_notice() {
 	$user_id = get_current_user_id();
 	if ( ! get_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed' ) ) {
 		?>
-		<div class="notice notice-success is-dismissible">
-			<h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo BUDDYFORMS_VERSION ?> version of BuddyForms – that’s awesome!</h4>
-			<p style="line-height: 2.2; font-size: 13px;">Could you please do me a BIG favor and give it a 5-star rating
-				on WordPress? Just to help us spread the word and boost our motivation.
-			<p>
-			<p style="margin: 20px 0;">
-				<a class="button xbutton-primary"
-				   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1;"
-				   href="?buddyforms_rating_admin_notice_dismissed">Dismiss</a>
-				<a class="button button-primary"
-				   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1; box-shadow: none; text-shadow: none; background: #46b450; color: #fff; border: 1px solid rgba(0,0,0,0.1);"
-				   href="https://wordpress.org/support/plugin/buddyforms/reviews/" target="_blank">Review Now</a>
-			</p>
-		</div>
+        <div class="notice notice-success is-dismissible">
+            <h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo BUDDYFORMS_VERSION ?> version of BuddyForms – that’s awesome!</h4>
+            <p style="line-height: 2.2; font-size: 13px;">Could you please do me a BIG favor and give it a 5-star rating
+                on WordPress? Just to help us spread the word and boost our motivation.
+            <p>
+            <p style="margin: 20px 0;">
+                <a class="button xbutton-primary"
+                   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1;"
+                   href="?buddyforms_rating_admin_notice_dismissed">Dismiss</a>
+                <a class="button button-primary"
+                   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1; box-shadow: none; text-shadow: none; background: #46b450; color: #fff; border: 1px solid rgba(0,0,0,0.1);"
+                   href="https://wordpress.org/support/plugin/buddyforms/reviews/" target="_blank">Review Now</a>
+            </p>
+        </div>
 		<?php
 	}
 
@@ -164,7 +164,7 @@ function buddyforms_update_form_slug( $old_slug, $new_slug ) {
 	}
 	global $wpdb;
 
-	$count = $wpdb->get_var($wpdb->prepare("select count(meta_id) from {$wpdb->postmeta} where meta_value = %s", $old_slug));
+	$count = $wpdb->get_var( $wpdb->prepare( "select count(meta_id) from {$wpdb->postmeta} where meta_value = %s", $old_slug ) );
 
 	if ( empty( $count ) ) {
 		return true;
@@ -173,4 +173,65 @@ function buddyforms_update_form_slug( $old_slug, $new_slug ) {
 	$result = $wpdb->update( $wpdb->postmeta, array( 'meta_value' => $new_slug ), array( 'meta_value' => $old_slug ) );
 
 	return ! empty( $result );
+}
+
+/**
+ * Convert an array of shortcodes into a html
+ *
+ * @param $shortcodes_array
+ * @param $target_element
+ *
+ * @return string
+ * @author gfirem
+ *
+ * @since 2.5.10
+ *
+ */
+function buddyforms_get_shortcode_string( $shortcodes_array, $target_element ) {
+	$all_shortcodes = array();
+	foreach ( $shortcodes_array as $index => $short ) {
+		$action_html              = sprintf( '<a href="" class="buddyforms-shortcodes-action" data-short="%s" data-target="%s">%s</a>', $short, $target_element, $short );
+		$all_shortcodes[ $index ] = $action_html;
+	}
+
+	return '<div class="buddyforms-shortcodes-container">' . implode( ', ', $all_shortcodes ) . '</div>';
+}
+
+/**
+ * Return array with the default shortcodes to use in the helper
+ *
+ * @param $form_slug
+ * @param $element_name
+ *
+ * @return array
+ * @author gfirem
+ * @since 2.5.10
+ */
+function buddyforms_available_shortcodes( $form_slug, $element_name ) {
+	return apply_filters( 'buddyforms_available_shortcodes', array(
+		'[user_login]',
+		'[user_nicename]',
+		'[first_name]',
+		'[last_name]',
+		'[published_post_link_plain]',
+		'[published_post_link_html]',
+		'[published_post_title]',
+		'[site_name]',
+		'[site_url]',
+		'[site_url_html]',
+	), $form_slug, $element_name );
+}
+
+/**
+ * Return array of the fields type to not include in the list of shortcodes in the helper
+ *
+ * @param $form_slug
+ * @param $element_name
+ *
+ * @return array
+ * @author gfirem
+ * @since 2.5.10
+ */
+function buddyforms_unauthorized_shortcodes_field_type( $form_slug, $element_name ) {
+	return apply_filters( 'buddyforms_unauthorized_shortcodes_field_type', array(), $form_slug, $element_name );
 }

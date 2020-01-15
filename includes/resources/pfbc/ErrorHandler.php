@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-include_once 'Error/BF_Error.php';
+include_once 'Error/BuddyForms_Error.php';
 
 /**
  * Class ErrorHandler
@@ -22,7 +22,7 @@ class ErrorHandler {
 	 */
 	protected static $instance = null;
 	/**
-	 * @var BF_Error
+	 * @var BuddyForms_Error
 	 */
 	private $global_error;
 	/**
@@ -35,7 +35,7 @@ class ErrorHandler {
 	private $form;
 
 	public function __construct() {
-		$this->set_global_error( new BF_Error( null, null, null, null ) );
+		$this->set_global_error( new BuddyForms_Error( null, null, null, null ) );
 		$this->error_view = new ErrorView_Standard;
 	}
 
@@ -59,18 +59,18 @@ class ErrorHandler {
 	}
 
 	/**
-	 * @return BF_Error
+	 * @return BuddyForms_Error
 	 */
 	public function get_global_error() {
 		return $this->global_error;
 	}
 
 	public function clean_all_errors() {
-		$this->global_error = new BF_Error( null, null, null, null );
+		$this->global_error = new BuddyForms_Error( null, null, null, null );
 	}
 
 	/**
-	 * @param BF_Error $global_error
+	 * @param BuddyForms_Error $global_error
 	 */
 	public function set_global_error( $global_error ) {
 		$this->global_error = $global_error;
@@ -79,16 +79,16 @@ class ErrorHandler {
 	/**
 	 * Add an error to the global error object
 	 *
-	 * @param WP_Error|BF_Error|string $error
+	 * @param WP_Error|BuddyForms_Error|string $error
 	 */
 	public function add_error( $error ) {
-		if ( $error instanceof BF_Error ) {
+		if ( $error instanceof BuddyForms_Error ) {
 			$this->get_global_error()->add( $error->get_error_code(), $error->get_error_message(), $error->get_error_data(), $error->get_form_slug() );
 		} elseif ( $error instanceof WP_Error ) {
 			$this->get_global_error()->add( $error->get_error_code(), $error->get_error_message(), $error->get_error_data() );
 		} elseif ( is_array( $error ) ) {
 			foreach ( $error as $item ) {
-				if ( $item instanceof BF_Error || $item instanceof WP_Error ) {
+				if ( $item instanceof BuddyForms_Error || $item instanceof WP_Error ) {
 					$this->get_global_error()->add( $item->get_error_code(), $item->get_error_message(), $item->get_error_data(), $item->get_form_slug() );
 				} elseif ( $item instanceof WP_Error ) {
 					$this->get_global_error()->add( $item->get_error_code(), $item->get_error_message(), $item->get_error_data() );

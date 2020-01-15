@@ -115,7 +115,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
-	$siteurlhtml = "<a href='$siteurl' target='_blank' >$siteurl</a>";
+	$siteurlhtml = "<a href='" . esc_url( $siteurl ) . "' target='_blank' >" . esc_url( $siteurl ) . "</a>";
 
 	$subject = isset( $_POST['subject'] ) ? $_POST['subject'] : $mail_notification_trigger['mail_subject'];
 	$subject = buddyforms_get_field_value_from_string( $subject, $post_ID, $form_slug );
@@ -168,7 +168,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$emailBody = isset( $mail_notification_trigger['mail_body'] ) ? $mail_notification_trigger['mail_body'] : '';
 
-	$post_link_html = ! empty( $postperma ) ? sprintf( '<a href="%s" target="_blank">%s</a>', $postperma, $postperma ) : '';
+	$post_link_html = ! empty( $postperma ) ? sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( $postperma ), $postperma ) : '';
 
 	$short_codes_and_values = array(
 		'[user_login]'                => $usernameauth,
@@ -201,7 +201,7 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 
 	$emailBody = nl2br( $emailBody );
 
-	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc );
+	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc, $form_slug, $post_ID );
 }
 
 /**
@@ -215,28 +215,37 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param array $mail_to_cc
  * @param array $mail_to_bcc
  *
- * @since 2.2.8
+ * @param string $form_slug
+ * @param string $post_id
  *
+ * @return bool
+ * @since 2.5.10 Added the $form_slug and $post_id as parameter.
+ *                Also added the filters `buddyforms_email_body`, `buddyforms_email_headers_priority`, `buddyforms_email_headers_mime_version`,
+ *                `buddyforms_email_headers_content_type` and `buddyforms_email_headers_content_transfer_encoding`
+ * @since 2.2.8
  */
-function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array() ) {
+function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array(), $form_slug = '', $post_id = '' ) {
 	mb_internal_encoding( 'UTF-8' );
 	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
 	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
 	// Create the email header
-	$mail_header[] = "MIME-Version: 1.0";
-	$mail_header[] = "X-Priority: 1";
-	$mail_header[] = "Content-Type: text/html; charset='UTF-8'";
-	$mail_header[] = "Content-Transfer-Encoding: 7bit";
+	$mail_header[] = apply_filters( 'buddyforms_email_headers_mime_version', "MIME-Version: 1.0", $subject, $from_name, $from_email, $form_slug, $post_id );
+	$mail_header[] = apply_filters( 'buddyforms_email_headers_priority', "X-Priority: 1", $subject, $from_name, $from_email, $form_slug, $post_id );
+	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_type', "Content-Type: text/html; charset='UTF-8'", $subject, $from_name, $from_email, $form_slug, $post_id );
+	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_transfer_encoding', "Content-Transfer-Encoding: 7bit", $subject, $from_name, $from_email, $form_slug, $post_id );
 	$mail_header[] = "From: $encoded_from_name <$from_email>";
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
-	$message = '<html><head></head><body>' . $email_body . '</body></html>';
+	$email_body         = apply_filters( 'buddyforms_email_body', $email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
+	$encoded_email_body = mb_convert_encoding( $email_body, 'UTF-8', 'AUTO' );
+	$message            = '<html><head></head><body>' . $encoded_email_body . '</body></html>';
 
 	/**
 	 * @since 2.5.9
 	 */
 	$mail_header = apply_filters( 'buddyforms_email_headers', $mail_header, $subject, $from_name, $from_email, $mail_to_cc, $mail_to_bcc );
+
 	// OK Let us sent the mail
 	return wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
 }
@@ -357,7 +366,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	$blog_title  = get_bloginfo( 'name' );
 	$siteurl     = get_bloginfo( 'wpurl' );
-	$siteurlhtml = "<a href='$siteurl' target='_blank' >$siteurl</a>";
+	$siteurlhtml = "<a href='" . esc_url( $siteurl ) . "' target='_blank' >" . esc_url( $siteurl ) . "</a>";
 
 	$subject    = isset( $_POST['subject'] ) ? $_POST['subject'] : $mail_notification_trigger['mail_subject'];
 	$subject    = buddyforms_get_field_value_from_string( $subject, $post_ID, $form_slug );
@@ -366,7 +375,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 	$emailBody  = $mail_notification_trigger['mail_body'];
 	$emailBody  = stripslashes( $emailBody );
 
-	$post_link_html = "<a href='$postperma' target='_blank'>$postperma</a>";
+	$post_link_html = "<a href='" . esc_url( $postperma ) . "' target='_blank'>" . esc_url( $postperma ) . "</a>";
 
 	$short_codes_and_values = array(
 		'[user_login]'                => $usernameauth,
@@ -399,7 +408,7 @@ function buddyforms_send_post_status_change_notification( $post ) {
 
 	$emailBody = nl2br( $emailBody );
 
-	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody );
+	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, array(), array(), $form_slug, $post_ID );
 }
 
 

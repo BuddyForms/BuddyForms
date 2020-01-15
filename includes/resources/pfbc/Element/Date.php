@@ -28,7 +28,11 @@ class Element_Date extends Element_Textbox {
 		parent::__construct( $label, $name, $properties, $field_options );
 	}
 
-	public static function validateDate( $date, $format = 'y/m/d hh:mm tt' ) {
+	public static function create_from_format( $date, $format = 'd/m/Y h:i a' ) {
+		return DateTime::createFromFormat( $format, $date );
+	}
+
+	public static function validateDate( $date, $format = 'd/m/Y h:i a' ) {
 		$d = DateTime::createFromFormat( $format, $date );
 
 		return $d && $d->format( $format ) == $date;
@@ -41,6 +45,7 @@ class Element_Date extends Element_Textbox {
 			'jquery-ui-core',
 
 		) );
+		wp_enqueue_script( 'buddyforms-moment-js', BUDDYFORMS_ASSETS . 'resources/moment.min.js', array( 'jquery' ), '2.24.0' );
 		wp_enqueue_style( 'buddyforms-jquery-ui-themes', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui.css', 'all', '1.1.0' );
 		wp_enqueue_style( 'buddyforms-jquery-ui-timepicker-addon-css', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.css' );
 
@@ -49,6 +54,11 @@ class Element_Date extends Element_Textbox {
 		if ( ! empty( $this->field_options['enable_time'] ) && $this->field_options['enable_time'][0] == 'enable_time' ) {
 			$expected_format .= ' ';
 			$expected_format .= ! empty( $this->field_options['element_time_format'] ) ? $this->field_options['element_time_format'] : 'hh:mm tt';
+		}
+
+		if ( ! empty( $this->field_options['element_date_format'] ) ) {
+			$this->setAttribute( 'data-format', $this->field_options['element_date_format'] );
+			$this->setAttribute( 'date-validation', true );
 		}
 
 		if ( ! empty( $expected_format ) ) {

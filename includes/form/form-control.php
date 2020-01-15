@@ -413,12 +413,9 @@ function buddyforms_process_submission( $args = array() ) {
 			}
 		}
 
-		//TODO gfirem this need to be in other way review with @sven
-		// Check if user is logged in and update user relevant fields if used in the form
-		if ( is_user_logged_in() && 'registration' == $form_type ) {
-			if ( $have_user_fields === true ) {
-				$user_id = buddyforms_wp_update_user();
-			}
+		// Check if user is logged in and update user relevant fields
+		if ( is_user_logged_in() && $have_user_fields === true ) {
+			$user_id = buddyforms_wp_update_user();
 			// If this was a registration form save the user id
 			if ( isset( $user_id ) ) {
 				update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
@@ -445,7 +442,7 @@ function buddyforms_process_submission( $args = array() ) {
 	} else {
 		$hasError      = true;
 		$error_message = $post_id->get_error_message();
-		$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
+		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
 
 	//Create the post
@@ -464,7 +461,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 	} else {
 		if ( ! empty( $fileError ) ) {
-			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $fileError, '', $form_slug ) );
+			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $fileError, '', $form_slug ) );
 		}
 	}
 
@@ -567,9 +564,14 @@ function buddyforms_update_post( $args ) {
 	} else {
 		// Add optional scheduled post dates
 		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
-			$post_date                = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
-			$bf_post['post_date']     = $post_date;
-			$bf_post['post_date_gmt'] = $post_date;
+			$post_schedule_request = sanitize_text_field( $_POST['schedule'] );
+			$post_schedule         = Element_Date::create_from_format( $post_schedule_request );
+			if ( ! empty( $post_schedule ) ) {
+				$post_schedule_ts         = $post_schedule->getTimestamp();
+				$post_date                = date( 'Y-m-d H:i:s', $post_schedule_ts );
+				$bf_post['post_date']     = $post_date;
+				$bf_post['post_date_gmt'] = get_date_from_gmt( $post_schedule->format( 'Y-m-d H:i:s' ), 'Y-m-d H:i:s' );
+			}
 		}
 
 		$bf_post = apply_filters( 'buddyforms_wp_insert_post_args', $bf_post, $form_slug );
@@ -816,11 +818,13 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
+			$meta_value = buddyforms_add_ellipsis( $meta_value );
 			break;
 		case 'content':
 			$content    = apply_filters( 'the_content', $post->post_content );
 			$content    = str_replace( ']]>', ']]&gt;', $content );
 			$meta_value = strip_shortcodes( $content );
+			$meta_value = buddyforms_add_ellipsis( $meta_value );
 			break;
 		case 'upload':
 		case 'featured_image':
@@ -1257,7 +1261,7 @@ function buddyforms_get_browser() {
 
 function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id ) {
 	if ( isset( $customfields ) && ! empty( $string ) ) {
-		foreach ( $customfields as $f_slug => $t_field ) {
+		foreach ( $customfields as $f_id => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
 
 				$field_val = $_POST[ $t_field['slug'] ];
@@ -1278,7 +1282,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 						break;
 				}
 
-				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding($string_tmp, 'UTF-8'), $string );
+				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding( $string_tmp, 'UTF-8' ), $string );
 			} else {
 				$string = str_replace( '[' . $t_field['slug'] . ']', '', $string );
 			}
@@ -1292,7 +1296,7 @@ add_filter( 'buddyforms_update_form_title', 'buddyforms_update_form_title', 2, 1
 function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 	$title_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_title' );
 
-	if ( empty( $_POST['buddyforms_form_title'] ) && ! empty( $title_field['generate_title'] ) ) {
+	if ( ! empty( $title_field['generate_title'] ) ) {
 		global $buddyforms;
 
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {

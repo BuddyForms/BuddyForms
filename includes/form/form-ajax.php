@@ -117,11 +117,11 @@ function buddyforms_ajax_process_edit_post() {
 	if ( $hasError == true ) {
 
 		if ( $form_notice ) {
-			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $form_notice, $form_slug ) );
+			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $form_notice, $form_slug ) );
 		}
 
 		if ( ! empty( $error_message ) ) {
-			$global_error->add_error( new BF_Error( 'buddyforms_form_' . $form_slug, $error_message, $form_slug ) );
+			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, $form_slug ) );
 		}
 
 		$global_error->renderAjaxErrorResponse();

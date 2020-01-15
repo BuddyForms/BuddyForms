@@ -2041,3 +2041,36 @@ div#formbuilder-action-templates {
     width: 30%;
     float: left;
 }
+
+/*
+ * Marketing styles
+ */
+
+.bf-marketing-action-container{
+    display: flex;
+    padding: 5px;
+}
+
+.bf-marketing-btn{
+    margin: 3px;
+}
+
+/*
+    Shortcode container
+ */
+
+.buddyforms-shortcodes-container{
+	height: 50px;
+	overflow-y: scroll;
+}
+
+.buddyforms-shortcodes-container::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+.buddyforms-shortcodes-container::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}

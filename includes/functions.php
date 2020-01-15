@@ -142,7 +142,7 @@ function buddyforms_get_template_directory() {
 function buddyforms_locate_template( $slug, $form_slug = '' ) {
 	global $buddyforms, $bp, $the_lp_query, $current_user, $post_id;
 
-	//Backguard compatibility @sinde 2.3.3.
+	//Backward compatibility @sinde 2.3.3.
 	if ( empty( $form_slug ) ) {
 		global $form_slug;
 	}
@@ -152,6 +152,13 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 	// create the plugin template path
 	$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/' . $slug . '.php';
+
+	/**
+	 * Extend the template from 3rd party plugins
+	 *
+	 * @since 2.5.9
+	 */
+	$template_path = apply_filters( 'buddyforms_locate_template', $template_path, $slug, $form_slug );
 
 	// Check if template exist in the child or parent theme and use this path if available
 	if ( $template_file = locate_template( "buddyforms/{$slug}.php", false, false ) ) {
@@ -171,10 +178,14 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 }
 
+function buddyforms_granted_list_posts_style() {
+	return apply_filters( 'buddyforms_granted_list_post_style', array( 'list', 'table' ) );
+}
+
 // Display the WordPress Login Form
-function buddyforms_wp_login_form() {
+function buddyforms_wp_login_form( $hide = false ) {
 	// Get The Login Form
-	echo buddyforms_get_wp_login_form();
+	echo buddyforms_get_wp_login_form( 'none', '', array( 'caller' => 'template' ), $hide );
 }
 
 /**
@@ -184,18 +195,21 @@ function buddyforms_wp_login_form() {
  * @param string $title
  * @param array $args
  *
+ * @param bool $hide
+ *
  * @return string|boolean
  */
-function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array() ) {
+function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array(), $hide = false ) {
 	global $buddyforms;
 
 	if ( is_admin() ) {
 		return false;
 	}
 
-	$redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
+	$caller = $redirect_url = $label_username = $label_password = $label_remember = $label_log_in = '';
 
 	extract( shortcode_atts( array(
+		'caller'         => 'direct',
 		'redirect_url'   => home_url(),
 		'label_username' => __( 'Username or Email Address', 'buddyforms' ),
 		'label_password' => __( 'Password', 'buddyforms' ),
@@ -207,7 +221,18 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		$title = __( 'You need to be logged in to view this page', 'buddyforms' );
 	}
 
-	$wp_login_form = '<h3>' . $title . '</h3>';
+	$hide_style    = ( $hide ) ? 'style="display:none"' : '';
+	$wp_login_form = '<div class="bf-show-login-form" ' . $hide_style . '>';
+	//include own login basic style
+	ob_start();
+	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoginStyle.php' );
+	$style = ob_get_clean();
+	if ( ! empty( $style ) ) {
+		$style         = buddyforms_minify_css( $style );
+		$wp_login_form .= $style;
+	}
+
+	$wp_login_form .= '<h3>' . $title . '</h3>';
 	$wp_login_form .= wp_login_form(
 		array(
 			'echo'           => false,
@@ -221,6 +246,12 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		)
 	);
 
+	if ( $form_slug !== 'none' ) {
+		$wp_login_form = str_replace( '</form>', '<input type="hidden" name="form_slug" value="' . esc_attr( $form_slug ) . '"></form>', $wp_login_form );
+	}
+
+	$wp_login_form = str_replace( '</form>', '<input type="hidden" name="caller" value="' . esc_attr( $caller ) . '"></form>', $wp_login_form );
+
 	if ( $form_slug != 'none' ) {
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
@@ -230,6 +261,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 			$wp_login_form = do_shortcode( '[bf form_slug="' . $reg_form_slug . '"]' );
 		}
 	}
+	$wp_login_form .= '</div>';
 
 	$wp_login_form = apply_filters( 'buddyforms_wp_login_form', $wp_login_form );
 
@@ -913,6 +945,56 @@ function buddyforms_get_post_types() {
 	return $post_types;
 }
 
+/**
+ * This function return the dropdown populated with the pages of the site including the childs
+ *
+ * @param $name
+ * @param $selected
+ * @param string $id
+ * @param string $default_option_string
+ * @param string $default_option_value
+ * @param string $view
+ *
+ * @return string
+ * @author gfirem
+ *
+ * @since 2.5.10
+ */
+function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default_option_string = 'WordPress Default', $default_option_value = 'none', $view = "form_builder" ) {
+	if ( $default_option_string === 'WordPress Default' ) {
+		$default_option_string = __( 'WordPress Default', 'buddyforms' );
+	}
+	$exclude       = array();
+	$page_on_front = get_option( 'page_on_front' );
+	if ( ! empty( $page_on_front ) && $page_on_front !== 'none' && is_numeric( $page_on_front ) && $page_on_front != $selected ) {
+		$exclude[] = intval( $page_on_front );
+	}
+
+	if ( $view == 'form_builder' ) {
+		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+		if ( ! empty( $buddyforms_registration_page ) && $buddyforms_registration_page !== 'none' && is_numeric( $buddyforms_registration_page ) && $buddyforms_registration_page != $selected ) {
+			$exclude[] = intval( $buddyforms_registration_page );
+		}
+	}
+
+	$args = array(
+		'depth'             => 0,
+		'post_type'         => 'page',
+		'exclude_tree'      => $exclude,
+		'selected'          => $selected,
+		'name'              => $name,
+		'id'                => ! empty( $id ) ? $id : $name,
+		'show_option_none'  => $default_option_string,
+		'option_none_value' => $default_option_value,
+		'sort_column'       => 'post_title',
+		'echo'              => 0,
+	);
+
+	$output = wp_dropdown_pages( $args );
+
+	return $output;
+}
+
 
 function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 
@@ -925,11 +1007,10 @@ function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
 		$exclude                      .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
 	}
 
-
 	$pages = get_pages( array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
-		'parent'      => 0,
+		'parent'      => - 1,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
 		'exclude'     => $exclude
@@ -977,7 +1058,7 @@ function buddyform_admin_bar_shortcut( $wp_admin_bar ) {
 	global $wp_query;
 	if ( ! empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 		$form_slug = sanitize_title( $wp_query->query_vars['bf_form_slug'] );
-	} else if ( ! empty( $post->post_name ) ) {
+	} elseif ( ! empty( $post->post_name ) ) {
 		$form_slug = $post->post_name;
 	}
 
@@ -1029,16 +1110,19 @@ function buddyforms_form_footer_terms( $html ) {
 }
 
 /**
- * Generate a nonce for certain user. This is used to generate the activation link for other user
- * NOTE: when the nonce is generate for other user the token is an empty string,
- * because the nonce will be validate when the session not exist yet.
+ * This function is an internal implementation to generate the nonce base on specific user.
+ * We create this to generate nonce for user not logged in
+ *
+ * @readmore wp-includes/pluggable.php:2147
  *
  * @param int $action
  * @param int $user_id
+ * @param string $token
  *
  * @return bool|string
+ * @since 2.5.10 Added the token parameter to emulate loggout user nonce
  */
-function buddyforms_create_nonce( $action = - 1, $user_id = 0 ) {
+function buddyforms_create_nonce( $action = - 1, $user_id = 0, $token = '' ) {
 	$token = '';
 	if ( $user_id === 0 ) {
 		$user = wp_get_current_user();
@@ -1548,21 +1632,24 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 if ( ! function_exists( 'buddyforms_show_error_messages' ) ) {
 	// displays error messages from form submissions
 	function buddyforms_show_error_messages() {
-		$global_error = ErrorHandler::get_instance();
-		if ( $global_error->get_global_error()->has_errors() ) {
-			echo '<div class="bf-alert error">';
-			/**
-			 * @var string|int $code
-			 * @var  BF_Error|WP_Error $error
-			 */
-			foreach ( $global_error->get_global_error()->errors as $code => $error ) {
-				$message = $global_error->get_global_error()->get_error_message( $code );
-				if ( is_array( $message ) ) {
-					$message = $message[0];
+		$global_error    = ErrorHandler::get_instance();
+		$global_bf_error = $global_error->get_global_error();
+		if ( ! empty( $global_bf_error ) ) {
+			if ( $global_bf_error->has_errors() ) {
+				echo '<div class="bf-alert error">';
+				/**
+				 * @var string|int $code
+				 * @var  BuddyForms_Error|WP_Error $error
+				 */
+				foreach ( $global_error->get_global_error()->errors as $code => $error ) {
+					$message = $global_error->get_global_error()->get_error_message( $code );
+					if ( is_array( $message ) ) {
+						$message = $message[0];
+					}
+					echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
 				}
-				echo '<span class="buddyforms_error" data-error-code="' . $code . '"><strong>' . __( 'Error', 'buddyforms' ) . '</strong>: ' . $message . '</span><br/>';
+				echo '</div>';
 			}
-			echo '</div>';
 		}
 	}
 }

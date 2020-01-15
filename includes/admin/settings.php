@@ -36,10 +36,9 @@ function buddyforms_settings_page() { ?>
 	<?php
 }
 
-//
-// Settings Tabs Navigation
-//
 /**
+ * Settings Tabs Navigation
+ *
  * @param string $current
  */
 function buddyforms_admin_tabs( $current = 'homepage' ) {
@@ -55,7 +54,6 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	foreach ( $tabs as $tab => $name ) {
 		$class = ( $tab == $current ) ? ' nav-tab-active' : '';
 		echo "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=buddyforms_settings&tab=$tab'>$name</a>";
-
 	}
 	echo '</h2>';
 }
@@ -120,7 +118,6 @@ function buddyforms_settings_page_tabs_content() {
 					$buddyforms_posttypes_default = get_option( 'buddyforms_posttypes_default' );
 					$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
 
-
 					$pages = buddyforms_get_all_pages( 'id', 'settings' );
 					?>
                     <div class="metabox-holder">
@@ -149,14 +146,10 @@ function buddyforms_settings_page_tabs_content() {
 												<?php _e( 'Registration Page', 'buddyforms' ); ?>
                                             </th>
                                             <td>
-												<?php
-												if ( isset( $pages ) && is_array( $pages ) ) {
-													echo '<select name="buddyforms_registration_page" id="buddyforms_registration_page">';
-													$pages['none'] = 'WordPress Default';
-													foreach ( $pages as $page_id => $page_name ) {
-														echo '<option ' . selected( $buddyforms_registration_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
-													}
-													echo '</select>';
+                                                <?php
+												$pages_dropdown = buddyforms_get_all_pages_dropdown( 'buddyforms_registration_page', $buddyforms_registration_page );
+												if ( ! empty( $pages_dropdown ) ) {
+													echo $pages_dropdown;
 												}
 												?>
                                             </td>

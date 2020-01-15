@@ -136,7 +136,7 @@ class Element_State extends Element_Select {
 			if ( is_array( $state ) ) {
 				foreach ( $state as $value => $text ) {
 					$value = $this->getOptionValue( $value );
-					echo '<option data-country="' . $country_key . '" value="', $country_key, '"';
+					echo '<option data-country="' . $country_key . '" value="', $value, '"';
 					if ( in_array( $value, $this->_attributes["value"] ) ) {
 						if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
 							continue;

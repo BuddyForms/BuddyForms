@@ -92,7 +92,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			// Font Color
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
-			} ?>
+			} ?> min-height: 40px;
     }
 
     /* Design Options - Text Fields Active */
@@ -431,8 +431,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 99% !important;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message{
-            text-align: left;
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message {
+        text-align: left;
     }
 
     /* --- Form Errors --- */
@@ -443,9 +443,9 @@ $css_form_class = 'buddyforms-' . $form_slug;
         border: 1px solid red;
     }
 
-     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error{
-         border: 2px dashed red;
-     }
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error {
+        border: 2px dashed red;
+    }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
         border: 1px solid red;
@@ -478,8 +478,78 @@ $css_form_class = 'buddyforms-' . $form_slug;
         display: block;
         width: 100%;
         padding: 15px;
+        min-height: 40px;
         font-size: 15px;
         float: unset;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection {
+        padding-top: 26px !important;
+        padding-bottom: 26px !important;
+        min-height: 40px;
+        font-size: 15px;
+        float: unset;
+        width: 100%;
+        background-color: #fafafa !important;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__arrow:before {
+        content: "" !important;
+        width: 100% !important;
+        display: block;
+        height: 100%;
+        line-height: 35px;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .40em auto, 100%;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear {
+        right: 0;
+        top: 2px;
+        margin-left: 3px;
+        font-size: 1rem;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__placeholder {
+        color: #666666;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection.select2-selection--multiple .select2-selection__rendered {
+        width: 97%;
+        overflow-y: auto;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered {
+        height: 40px;
+        position: absolute;
+        top: 10px;
+        left: 1em;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered .select2-search--inline {
+        display: none;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fafafa;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;
+    }
+
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control::-ms-expand {
+        display: none;
     }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'] {
@@ -488,7 +558,17 @@ $css_form_class = 'buddyforms-' . $form_slug;
 
     /* Avoid red style over the elements comming from BuddyPress */
     .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
-    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid{
+    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid {
         border-color: #d6d6d6;
+    }
+
+    #content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset {
+        border: 1px solid #d6d6d6;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 </style>

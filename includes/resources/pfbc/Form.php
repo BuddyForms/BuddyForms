@@ -203,13 +203,13 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
-								$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
+								$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
 								$valid = false;
 							}
 						}
 					} else {
 						if ( ! $element->isValid( $value ) ) {
-							$global_error->add_error( new BF_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
+							$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
 							$element->setAttribute('class', 'error');
 							$valid = false;
 						}
@@ -656,14 +656,17 @@ JS;
 	/**
 	 * Return an array errors
 	 *
-	 * @return WP_Error[]|BF_Error[]
+	 * @return WP_Error[]|BuddyForms_Error[]
 	 * @since 2.4.7
 	 *
 	 */
 	public function getErrors() {
-		$global_error = ErrorHandler::get_instance();
-		if ( $global_error->get_global_error()->has_errors() ) {
-			return $global_error->get_global_error()->errors;
+		$global_error    = ErrorHandler::get_instance();
+		$global_bf_error = $global_error->get_global_error();
+		if ( ! empty( $global_bf_error ) ) {
+			if ( $global_bf_error->has_errors() ) {
+				return $global_error->get_global_error()->errors;
+			}
 		}
 
 		return array();

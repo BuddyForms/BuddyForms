@@ -64,7 +64,7 @@ function buddyforms_metabox_form_setup() {
 	//
 	// Submission
 	//
-    $element = new Element_Textbox( '<b>' . __( "From Slug", 'buddyforms' ), "buddyforms_options[slug]", array(
+    $element = new Element_Textbox( '<b>' . __( "From Slug", 'buddyforms' ). '</b>', "buddyforms_options[slug]", array(
 		'value'     => $slug,
 		'shortDesc' => __( 'The Form Slug is used in shortcodes and other places, please take care changing this option.', 'buddyforms' ),
 	) );
