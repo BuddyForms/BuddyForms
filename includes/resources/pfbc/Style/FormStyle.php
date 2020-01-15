@@ -484,8 +484,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
     }
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection {
-        padding-top: 26px !important;
-        padding-bottom: 26px !important;
         min-height: 40px;
         font-size: 15px;
         float: unset;
@@ -524,7 +522,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered {
         height: 40px;
         position: absolute;
-        top: 10px;
+        top: 5px;
         left: 1em;
     }
 
