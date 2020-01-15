@@ -28,7 +28,11 @@ class Element_Date extends Element_Textbox {
 		parent::__construct( $label, $name, $properties, $field_options );
 	}
 
-	public static function validateDate( $date, $format = 'y/m/d hh:mm tt' ) {
+	public static function create_from_format( $date, $format = 'd/m/Y h:i a' ) {
+		return DateTime::createFromFormat( $format, $date );
+	}
+
+	public static function validateDate( $date, $format = 'd/m/Y h:i a' ) {
 		$d = DateTime::createFromFormat( $format, $date );
 
 		return $d && $d->format( $format ) == $date;

@@ -564,9 +564,14 @@ function buddyforms_update_post( $args ) {
 	} else {
 		// Add optional scheduled post dates
 		if ( isset( $_POST['status'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
-			$post_date                = date( 'Y-m-d H:i:s', strtotime( $_POST['schedule'] ) );
-			$bf_post['post_date']     = $post_date;
-			$bf_post['post_date_gmt'] = $post_date;
+			$post_schedule_request = sanitize_text_field( $_POST['schedule'] );
+			$post_schedule         = Element_Date::create_from_format( $post_schedule_request );
+			if ( ! empty( $post_schedule ) ) {
+				$post_schedule_ts         = $post_schedule->getTimestamp();
+				$post_date                = date( 'Y-m-d H:i:s', $post_schedule_ts );
+				$bf_post['post_date']     = $post_date;
+				$bf_post['post_date_gmt'] = get_date_from_gmt( $post_schedule->format( 'Y-m-d H:i:s' ), 'Y-m-d H:i:s' );
+			}
 		}
 
 		$bf_post = apply_filters( 'buddyforms_wp_insert_post_args', $bf_post, $form_slug );

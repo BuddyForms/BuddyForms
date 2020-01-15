@@ -489,13 +489,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$form->addElement( new Element_Select( $name, 'status', $post_status, $element_attr, $customfield ) );
 
-							if ( isset( $_POST[ $slug ] ) ) {
-								$schedule_val = $_POST['schedule'];
-							} else {
-								$schedule_val = get_post_meta( $post_id, 'schedule', true );
-							}
-
-							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap';
+							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap bf_datetimepicker';
 							$element_attr['id']          = $element_attr['id'] . '_bf_datetime';
 							$element_attr['placeholder'] = __( 'Schedule Time', 'buddyforms' );
 							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr, $customfield ) );

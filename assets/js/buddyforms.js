@@ -408,7 +408,7 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if(fieldData.validation_email_msj){
+                if (fieldData.validation_email_msj) {
                     msjString = fieldData.validation_email_msj;
                 }
             }
@@ -436,7 +436,7 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if(fieldData.validation_min_msj){
+                if (fieldData.validation_min_msj) {
                     msjString = fieldData.validation_min_msj;
                 }
             }
@@ -468,7 +468,7 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if(fieldData.validation_min_msj){
+                if (fieldData.validation_min_msj) {
                     msjString = fieldData.validation_min_msj;
                 }
             }
@@ -554,7 +554,7 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if(fieldData.validation_min_msj){
+                if (fieldData.validation_min_msj) {
                     msjString = fieldData.validation_min_msj;
                 }
             }
@@ -778,7 +778,7 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if(fieldData.validation_max_msj){
+                if (fieldData.validation_max_msj) {
                     msjString = fieldData.validation_max_msj;
                 }
             }
@@ -903,14 +903,15 @@ function BuddyForms() {
                 var formSlug = getFormSlugFromFormElement(element);
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                    var fieldTimeStep = (fieldData.element_time_step) ? fieldData.element_time_step : 60;
-                    var fieldDateFormat = (fieldData.element_date_format) ? fieldData.element_date_format : 'dd/mm/yy';
-                    var fieldTimeFormat = (fieldData.element_time_format) ? fieldData.element_time_format : 'hh:mm tt';
-                    var enableTime = (fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
-                    var enableDate = (fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
+                    var fieldTimeStep = (fieldData && fieldData.element_time_step) ? fieldData.element_time_step : 60;
+                    var fieldDateFormat = (fieldData && fieldData.element_date_format) ? fieldData.element_date_format : 'dd/mm/yy';
+                    var fieldTimeFormat = (fieldData && fieldData.element_time_format) ? fieldData.element_time_format : 'hh:mm tt';
+                    var enableTime = (fieldData && fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
+                    var enableDate = (fieldData && fieldData.enable_date && fieldData.enable_date[0] && fieldData.enable_date[0] === 'enable_date');
                     if (!enableDate && !enableTime) {
                         enableDate = true;
                     }
+
                     var dateTimePickerConfig = {
                         dateFormat: fieldDateFormat,
                         timeFormat: fieldTimeFormat,
@@ -925,6 +926,14 @@ function BuddyForms() {
                             jQuery('#ui-datepicker-div').addClass('buddyforms');
                         }
                     };
+
+                    if(currentFieldSlug === 'schedule'){
+                        dateTimePickerConfig['minDate'] = 0;
+                        dateTimePickerConfig['stepMinute'] = 5;
+                        dateTimePickerConfig['showTimepicker'] = true;
+                        dateTimePickerConfig['dateFormat'] = 'dd/mm/yy';
+                        dateTimePickerConfig['timeFormat'] = 'hh:mm tt';
+                    }
 
                     dateTimePickerConfig = BuddyFormsHooks.applyFilters('buddyforms:field:date', dateTimePickerConfig, [element, fieldData, formSlug]);
                     jQuery(element).datetimepicker(dateTimePickerConfig);
