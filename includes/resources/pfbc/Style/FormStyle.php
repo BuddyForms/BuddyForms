@@ -477,7 +477,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input #comments.form-control {
         display: block;
         width: 100%;
-        padding: 15px;
         min-height: 40px;
         font-size: 15px;
         float: unset;
