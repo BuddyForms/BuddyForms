@@ -60,10 +60,13 @@ $css_form_class = 'buddyforms-' . $form_slug;
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
         display: block;
         width: 100%;
+
     <?php
 			// Padding
-			if( $bfdesign['field_padding'] != '' ) {
+			if( !empty($bfdesign['field_padding']) ) {
 				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
+			} else {
+			    echo 'padding-left: 5px;';
 			}
 			// Background Color
 			if( $bfdesign['field_background_color']['style'] == 'color' ) {
@@ -489,10 +492,11 @@ $css_form_class = 'buddyforms-' . $form_slug;
         width: 100%;
         background-color: #fafafa !important;
     <?php
-    if( $bfdesign['field_padding'] != '' ) {
+    if( !empty($bfdesign['field_padding']) ) {
         $padding = intval($bfdesign['field_padding'])+11;
-        echo 'padding-top: ' . $padding . 'px !important;';
-        echo 'padding-bottom: ' . $padding . 'px !important;';
+        echo 'padding: ' . $padding . 'px !important;';
+    } else {
+        echo 'padding-left: 5px;';
     }
     ?>
     }
@@ -551,8 +555,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
         background-position: right .7em top 50%, 0 0;
         background-size: .65em auto, 100%;
     <?php
-	if( $bfdesign['field_padding'] != '' ) {
+	if( !empty($bfdesign['field_padding'])) {
 		echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
+	} else {
+	    echo 'padding-left: 5px;';
 	}
 	?>
     }
