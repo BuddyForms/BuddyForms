@@ -755,6 +755,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$upload_error_validation_message   = "";
 						$label_name                        = "";
 						$multiple_files_validation_message = "";
+                        $upload_from_url   = isset( $customfield['upload_from_url'] ) ?$customfield['upload_from_url'][0] : '';
 						if ( isset( $customfield['name'] ) ) {
 							$label_name = $customfield['name'];
 						}
@@ -806,7 +807,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							"multiple_files_validation_message" => $multiple_files_validation_message,
 							"upload_error_validation_message"   => $upload_error_validation_message,
 							"shortDesc"                         => $description,
-							"form_slug"                         => $form_slug
+							"form_slug"                         => $form_slug,
+                            "upload_from_url"                   => $upload_from_url
 						), $customfield );
 						$form->addElement( $upload_element );
 						break;
