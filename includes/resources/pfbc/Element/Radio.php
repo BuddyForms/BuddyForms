@@ -23,18 +23,26 @@ class Element_Radio extends OptionElement {
 		echo '<div class="radio">';
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
-
-			echo '<label class="', $labelClass . '">';
-			echo '<input id="', isset( $this->_attributes["id"] ) ? $this->_attributes["id"] : '', '-', $count, '"', $this->getAttributes( array(
-				"id",
-				"class",
-				"value",
-				"checked"
-			) ), ' value="', $this->filter( $value ), '"';
-			if ( isset( $this->_attributes["value"] ) && $this->_attributes["value"] == $value ) {
-				echo ' checked="checked"';
+			if ( ! empty( $labelClass ) ) {
+				$label_start = sprintf( '<label class="%s">', $labelClass );
+			} else {
+				$label_start = '<label>';
 			}
-			echo '/> ', $text, ' </label> ';
+			$label_end = '</label>';
+			$input     = array( '<input' );
+			if ( ! empty( $this->_attributes['id'] ) ) {
+				$input[] = sprintf( 'id="%s"', $this->_attributes['id'] . '-' . $count );
+			}
+			$input[] = $this->getAttributes( array( "id", "class", "value", "checked" ) );
+			$input[] = sprintf( 'value="%s"', $this->filter( $value ) );
+			if ( isset( $this->_attributes["value"] ) && $this->_attributes["value"] == $value ) {
+				$input[] = 'checked="checked"';
+			}
+			$input[] = '/>';
+
+			$text_out = sprintf( ' %s ', esc_attr( $text ) );
+			echo $label_start . join( ' ', $input ) . $text_out . $label_end;
+
 			++ $count;
 			if ( $labelClass != 'radio-inline' ) {
 				echo '</div><div class="radio">';

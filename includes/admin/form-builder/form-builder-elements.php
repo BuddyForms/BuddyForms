@@ -61,7 +61,7 @@ function buddyforms_display_form_element( $args ) {
 			$metabox_enabled                            = isset( $customfield['metabox_enabled'] ) ? $customfield['metabox_enabled'] : 'false';
 			$form_fields['advanced']['metabox_enabled'] = new Element_Checkbox( '<b>' . __( 'Add as admin post meta box to the edit screen', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]", array( 'metabox_enabled' => '<b>' . __( 'Add this field to the MetaBox', 'buddyforms' ) . '</b>' ), array(
 				'value' => $metabox_enabled,
-				'id'    => "buddyforms_options[form_fields][" . $field_id . "][required]"
+				'id'    => "buddyforms_options[form_fields][" . $field_id . "][metabox_enabled]"
 			) );
 		}
 	}
@@ -1454,10 +1454,9 @@ JS;
 	}
 
 	ob_start(); ?>
-    <li id="field_<?php echo $field_id ?>"
-    class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>" data-field_id="<?php echo $field_id ?> ">
+    <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>" data-field_id="<?php echo $field_id ?> ">
 
-    <input id="this_field_id" type="hidden" value="<?php echo $field_id ?>">
+    <input id="this_field_id_<?php echo esc_attr($field_id) ?>" type="hidden" value="<?php echo esc_attr($field_id) ?>">
 
     <div style="display:none;" class="hidden">
 		<?php if ( isset( $form_fields['hidden'] ) ) {

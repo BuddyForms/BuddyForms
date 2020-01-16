@@ -209,17 +209,17 @@ function buddyforms_disable_contact_extra_permissions(formType) {
         jQuery.each(roles, function (key, value) {
             var role_name = value.className.trim();
             if (formType === 'contact') {
-                jQuery("#permission_for_" + role_name + "-1").attr("disabled", true).val('').removeAttr('checked');
-                jQuery("#permission_for_" + role_name + "-2").attr("disabled", true).val('').removeAttr('checked');
-                jQuery("#permission_for_" + role_name + "-3").attr("disabled", true).val('').removeAttr('checked');
-                jQuery("#permission_for_" + role_name + "-5").attr("disabled", true).val('').removeAttr('checked');
+                jQuery("#permission_for_" + role_name + "-1").prop("disabled", true).val('').removeProp('checked');
+                jQuery("#permission_for_" + role_name + "-2").prop("disabled", true).val('').removeProp('checked');
+                jQuery("#permission_for_" + role_name + "-3").prop("disabled", true).val('').removeProp('checked');
+                jQuery("#permission_for_" + role_name + "-5").prop("disabled", true).val('').removeProp('checked');
             } else {
-                jQuery("#permission_for_" + role_name + "-0").val('create').removeAttr("disabled").attr('checked', true);
-                jQuery("#permission_for_" + role_name + "-1").val('edit').removeAttr("disabled").attr('checked', true);
-                jQuery("#permission_for_" + role_name + "-2").val('delete').removeAttr("disabled").attr('checked', true);
-                jQuery("#permission_for_" + role_name + "-3").val('draft').removeAttr("disabled");
-                jQuery("#permission_for_" + role_name + "-4").val('all').removeAttr("disabled");
-                jQuery("#permission_for_" + role_name + "-5").val('admin-submission').removeAttr("disabled");
+                jQuery("#permission_for_" + role_name + "-0").val('create').removeProp("disabled").prop('checked', true);
+                jQuery("#permission_for_" + role_name + "-1").val('edit').removeProp("disabled").prop('checked', true);
+                jQuery("#permission_for_" + role_name + "-2").val('delete').removeProp("disabled").prop('checked', true);
+                jQuery("#permission_for_" + role_name + "-3").val('draft').removeProp("disabled");
+                jQuery("#permission_for_" + role_name + "-4").val('all').removeProp("disabled");
+                jQuery("#permission_for_" + role_name + "-5").val('admin-submission').removeProp("disabled");
             }
         });
     }

@@ -42,9 +42,9 @@ class Element_Color extends Element {
 
 		echo '
 		<p style="display: inline; font-size: 11px; line-height: 2.5;">
-		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'auto', false ) . ' id="" type="radio" name="' . $style . '" value="auto"> Auto 
-		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'transparent', false ) . ' id="" type="radio" name="' . $style . '" value="transparent"> Transparent 
-		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'color', false ) . ' id="" type="radio" name="' . $style . '" value="color"> Color
+		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'auto', false ) . ' type="radio" name="' . $style . '" value="auto"> Auto 
+		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'transparent', false ) . ' type="radio" name="' . $style . '" value="transparent"> Transparent 
+		<input data-field_id="' . sanitize_title( $this->_attributes["name"] ) . '" class="bf-color-radio" ' . checked( $value_style, 'color', false ) . ' type="radio" name="' . $style . '" value="color"> Color
 		</p><br><br>
 		';
 
