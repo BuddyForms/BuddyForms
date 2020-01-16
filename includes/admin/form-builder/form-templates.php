@@ -5,7 +5,13 @@
 //
 function buddyforms_form_builder_register_templates() {
 
-	$response['body'] = buddyforms_default_form_templates_json();
+    // Get the templates form demo.buddyforms.com as json string
+	$response = wp_remote_get( 'http://demo.buddyforms.com/templates/wp-json/buddyforms/v1/all/' );
+
+	if ( is_wp_error( $response ) || $response['response']['code'] != 200 ) {
+		$response         = array();
+		$response['body'] = buddyforms_default_form_templates_json();
+	}
 
 	// Decode the json
 	$buddyforms = json_decode( $response['body'] );
