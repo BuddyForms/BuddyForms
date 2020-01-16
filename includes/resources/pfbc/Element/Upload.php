@@ -322,7 +322,7 @@ class Element_Upload extends Element_Textbox {
                 $box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
 
 
-                $box .= sprintf('<span><input placeholder="Image Url" type="text" style="%s"id="%s"  %s field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s" onclick="validateAndUploadImage(this)">upload</button></span>','width:75%',$id."_upload_from_url",$required,$id,$url,$id,$id);
+                $box .= sprintf('<input placeholder="Image Url" type="text" style="%s"id="%s"  %s field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s" onclick="validateAndUploadImage(this)">upload</button>','width:75%; margin-right: 3px;',$id."_upload_from_url",$required,$id,$url,$id,$id);
                 $box .= sprintf('<label  id="%s_label" class="error" ></label>',$id);
                 $box .= sprintf('<img  id="%s_image" src="%s" ></img>',$id,$url);
                 $box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" />', $id, $attachmet_id, $id   );
