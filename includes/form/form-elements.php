@@ -533,8 +533,6 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$required = $form->getRequiredSignal();
 							}
 							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
-						} else {
-							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
 						if ( $textarea_rows ) {
@@ -550,9 +548,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
+								$wp_editor = '<div class="bf_inputs bf-input">' . $wp_editor . '</div>';
 							} else {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+								$wp_editor = '<div class="bf_inputs bf-input">' . $wp_editor . '<span class="help-inline">' . $description . '</span></div>';
 							}
 
 							$element = new Element_HTML( $wp_editor, $name, $name, $customfield );
