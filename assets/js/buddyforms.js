@@ -1043,8 +1043,13 @@ function BuddyForms() {
         if (forms && forms.length > 0) {
             jQuery.each(forms, function () {
                 var currentForms = jQuery(this);
-                currentForms.submit(function () {
+                currentForms.on('submit', function (e) {
                     BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
+                    var prevent = BuddyFormsHooks.applyFilters('buddyforms:submit:prevent', false, [currentForms, formSlug]);
+                    if(prevent === true){
+                        e.preventDefault();
+                        return false;
+                    }
                 });
                 var formSlug = getFormSlugFromFormElement(currentForms);
                 if (formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation && buddyformsGlobal[formSlug].js_validation[0] === 'disabled') {

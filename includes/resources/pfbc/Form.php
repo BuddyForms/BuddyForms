@@ -453,7 +453,7 @@ class Form extends Base {
 		$this->renderJSFiles();
 
 		ob_start();
-		echo '<script dfd type="text/javascript">';
+		echo '<script type="text/javascript">';
 		$this->view->renderJS();
 		foreach ( $this->_elements as $element ) {
 			$element->renderJS();
