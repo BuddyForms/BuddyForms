@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.10-beta5
+Stable tag: 2.5.10
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,12 +389,26 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.10-beta5 - 6 Jan 2019 =
+= 2.5.10 - 18 Jan 2020 =
+* Added the shortcode helper for the submission notification.
+* Shortcode helper now is compatible with tinymce.
+* Added filters to tweak the email headers, `buddyforms_email_headers_priority`,`buddyforms_email_headers_mime_version`, `buddyforms_email_headers_content_type` and `buddyforms_email_headers_content_transfer_encoding`.
+* Added a filter to extend the email body `buddyforms_email_body`.
+* Improved the UTF-8 encoding of the email body.
+* Fixed the email option to let the user send only email to custom.
+* Added error messages for invalid email, min/max value and length. Now is possible to translate this messages from the field options.
+* Improved the styles for the dropdown and the select related form elements.
+* Fixed the functionality to schedule post. Thanks to @Azila92 to report it.
+* Fixed the Contact form is not applying the permission new logic when the form is loaded the first time.
+* Added the option to upload images from URL inside the Upload form element.
+* Fixed the form templates, now they are loaded from a new website.
+* Improved the templates system and connected to a new services.
+* Fixed the notice in the chrome console about field with the same id.
+* Fixed the duplicate label for the textarea elements.
+* Added a JS hook to let 3rd party Addons handle the form submission like BuddyForms ACF.
 * Improved the bf login form to include the form slug related.
 * Improved the redirect after login to execute by 3rd party extensions when the form is not a registration form.
 * Fixed the redirection of the bf login when a form is for logged user only, in this case will be redirect to the same form page.
-
-= 2.5.10-beta4 - 6 Jan 2019 =
 * Added a function to output a list of pages with his child included.
 * Added styles for the login block.
 * Fixed the border of the form.
@@ -407,16 +421,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Added a Date format validation.
 * Avoided collision of the date element style with other plugins with jquery-ui.
 * Added the create date of the license to the inbound marketing process.
-
-= 2.5.10-beta3 - 2 Jan 2019 =
 * Refactored the class BF_Error to BuddyForms_Error to avoid class collision.
-
-= 2.5.10-beta2 - 2 Jan 2019 =
 * Fixed issue in the State element not including the correct field value.
 * Added form_slug parameter to internal hook to include assets from extensions.
 * Code improved to avoid the issue with BF_Error class.
-
-= 2.5.10-beta1 - 30 Dec 2019 =
 * Start the inbound marketing development process.
 * Added a hook to extend form output templates from 3rd party addons.
 * Fixed bug related to the shortcode and the way to override the output template.
