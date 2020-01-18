@@ -52,7 +52,9 @@ BuddyFormsHooks.addFilter = function (tag, callback, priority) {
 BuddyFormsHooks.removeAction = function (tag, callback) {
     BuddyFormsHooks.actions[tag] = BuddyFormsHooks.actions[tag] || [];
     BuddyFormsHooks.actions[tag].forEach(function (filter, i) {
-        if (filter.callback === callback) {
+        var originCall = filter.callback.name;
+        var call = callback.toString();
+        if (originCall == call) {
             BuddyFormsHooks.actions[tag].splice(i, 1);
         }
     });
@@ -927,7 +929,7 @@ function BuddyForms() {
                         }
                     };
 
-                    if(currentFieldSlug === 'schedule'){
+                    if (currentFieldSlug === 'schedule') {
                         dateTimePickerConfig['minDate'] = 0;
                         dateTimePickerConfig['stepMinute'] = 5;
                         dateTimePickerConfig['showTimepicker'] = true;
@@ -992,9 +994,17 @@ function BuddyForms() {
         }
     }
 
-    function actionFromButton(event) {
-        event.preventDefault();
+    function actionFromButtonWrapper(event) {
         var target = jQuery(this).data('target');
+        var targetForms = jQuery('form#buddyforms_form_' + target);
+        BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, event]);
+    }
+
+    function actionFromButton(args) {
+        var targetForms = args[0];
+        var target = args[1];
+        var event = args[2];
+        event.preventDefault();
         var formOptions = 'publish';
         var draftAction = false;
         if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].status) {
@@ -1003,7 +1013,6 @@ function BuddyForms() {
         if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].draft_action) {
             draftAction = (buddyformsGlobal[target].draft_action[0] === 'Enable Draft');
         }
-        var targetForms = jQuery('form#buddyforms_form_' + target);
         if (targetForms && targetForms.length > 0) {
             var fieldStatus = getFieldDataBy(target, 'status');
             if (fieldStatus === false) { //Not exist the field,
@@ -1044,11 +1053,10 @@ function BuddyForms() {
             jQuery.each(forms, function () {
                 var currentForms = jQuery(this);
                 currentForms.on('submit', function (e) {
-                    BuddyFormsHooks.doAction('buddyforms:submit', currentForms);
+                    BuddyFormsHooks.doAction('buddyforms:submit', [currentForms, e]);
                     var prevent = BuddyFormsHooks.applyFilters('buddyforms:submit:prevent', false, [currentForms, formSlug]);
-                    if(prevent === true){
+                    if (!prevent) {
                         e.preventDefault();
-                        return false;
                     }
                 });
                 var formSlug = getFormSlugFromFormElement(currentForms);
@@ -1373,6 +1381,9 @@ function BuddyForms() {
         getFormSlugFromFormElement: function (element) {
             return getFormSlugFromFormElement(element);
         },
+        actionFromButton: function (e) {
+            return actionFromButton(e);
+        },
         init: function (id) {
             id = id || false;
 
@@ -1393,8 +1404,8 @@ function BuddyForms() {
             if (bf_submission_modal_content.length > 0) {
                 fncBuddyForms.submissionModalContent(bf_submission_modal_content);
             }
-            jQuery(document.body).on('click', 'button[type="submit"][name="draft"].bf-draft', actionFromButton);
-            jQuery(document.body).on('click', 'button[type="submit"][name="submitted"].bf-submit', actionFromButton);
+            jQuery(document.body).on('click', 'button[type="submit"][name="draft"].bf-draft', actionFromButtonWrapper);
+            jQuery(document.body).on('click', 'button[type="submit"][name="submitted"].bf-submit', actionFromButtonWrapper);
             jQuery(document.body).on('click', '.button.bf_reset_multi_input', resetInputMultiplesChoices);
             jQuery(document.body).on('keyup', 'input[name=buddyforms_user_pass], input[name=buddyforms_user_pass_confirm]', checkPasswordStrength);
             jQuery(document).on("click", '.bf_delete_post', bf_delete_post);
@@ -1408,6 +1419,7 @@ function BuddyForms() {
             BuddyFormsHooks.addAction('buddyforms:submit:enable', enableFormSubmit);
             BuddyFormsHooks.addAction('buddyforms:error:trigger', triggerFormError);
             BuddyFormsHooks.addAction('buddyforms:form:render', renderForm);
+            BuddyFormsHooks.addAction('buddyforms:submit:click', actionFromButton);
 
             disableACFPopup();
 

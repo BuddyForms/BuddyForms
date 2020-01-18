@@ -41,6 +41,8 @@ abstract class FormView extends Base {
 	 * @param null $onlyElement
 	 */
 	public function render( $onlyElement = null ) {
+		global $form_slug;
+		$this->class = apply_filters('buddyforms_forms_classes', $this->class, $this, $form_slug);
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
 		}

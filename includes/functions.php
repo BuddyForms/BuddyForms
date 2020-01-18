@@ -738,6 +738,36 @@ function buddyforms_get_form_field_by_slug( $form_slug, $field_slug ) {
 }
 
 /**
+ * Get field by slug
+ *
+ * @param $form_slug
+ * @param $field_slug
+ * @param string $by
+ *
+ * @return bool|array
+ * @since 2.5.11 Added the $by parameter to specify the comparison parameter
+ * @author Sven edited by gfirem
+ */
+function buddyforms_get_form_field_by( $form_slug, $field_slug, $by = 'slug' ) {
+	$result_field = wp_cache_get( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, 'buddyforms' );
+	if ( $result_field === false ) {
+		global $buddyforms;
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
+				if ( $field[$by] == $field_slug ) {
+					$result_field = $field;
+					wp_cache_set( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyforms' );
+
+					return $result_field;
+				}
+			}
+		}
+	}
+
+	return $result_field;
+}
+
+/**
  * Get field by ID
  *
  * @param $form_slug
@@ -1230,44 +1260,44 @@ function buddyforms_upload_handle_delete_media() {
 
 	die();
 }
+
 add_action( 'wp_ajax_nopriv_upload_image_from_url', 'buddyforms_upload_image_from_url' );
 add_action( 'wp_ajax_upload_image_from_url', 'buddyforms_upload_image_from_url' );
-function buddyforms_upload_image_from_url(){
-    $url = isset($_REQUEST['url']) ? $_REQUEST['url'] : '';
-    $file_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
-    if(!empty($url) && !empty($file_id)){
-        $upload_dir    = wp_upload_dir();
-        $image_url= urldecode($url);
-        $image_data       = file_get_contents($image_url); // Get image data
-        if($image_data){
-            $file_name     = $file_id . ".png";
-            $full_path     = wp_normalize_path( $upload_dir['path'] . DIRECTORY_SEPARATOR . $file_name );
-            $upload_file   = wp_upload_bits( $file_name, null, $image_data );
-            if ( ! $upload_file['error'] ) {
-                $wp_filetype = wp_check_filetype($file_name, null);
-                $attachment = array(
-                    'post_mime_type' => $wp_filetype['type'],
-                    'post_title' => preg_replace('/\.[^.]+$/', '', $file_name),
-                    'post_content' => '',
-                    'post_status' => 'inherit'
-                );
-                $attachment_id = wp_insert_attachment($attachment, $upload_file['file']);
-                $url                     = wp_get_attachment_thumb_url( $attachment_id );
-                echo wp_json_encode( array( 'status' => 'OK' ,'response'=>$url,'attachment_id'=> $attachment_id));
-                die();
-            }
-            else{
-                echo wp_json_encode( array( 'status' => 'FAILED','response'=>'Error uploading image.' ) );
-                die();
-            }
+function buddyforms_upload_image_from_url() {
+	$url     = isset( $_REQUEST['url'] ) ? $_REQUEST['url'] : '';
+	$file_id = isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : '';
+	if ( ! empty( $url ) && ! empty( $file_id ) ) {
+		$upload_dir = wp_upload_dir();
+		$image_url  = urldecode( $url );
+		$image_data = file_get_contents( $image_url ); // Get image data
+		if ( $image_data ) {
+			$file_name   = $file_id . ".png";
+			$full_path   = wp_normalize_path( $upload_dir['path'] . DIRECTORY_SEPARATOR . $file_name );
+			$upload_file = wp_upload_bits( $file_name, null, $image_data );
+			if ( ! $upload_file['error'] ) {
+				$wp_filetype   = wp_check_filetype( $file_name, null );
+				$attachment    = array(
+					'post_mime_type' => $wp_filetype['type'],
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
+				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'] );
+				$url           = wp_get_attachment_thumb_url( $attachment_id );
+				echo wp_json_encode( array( 'status' => 'OK', 'response' => $url, 'attachment_id' => $attachment_id ) );
+				die();
+			} else {
+				echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'Error uploading image.' ) );
+				die();
+			}
 
-        }
+		}
 
-    }else{
-        echo wp_json_encode( array( 'status' => 'FAILED','response'=>'Wrong Format or Empty Url.' ) );
-        die();
+	} else {
+		echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'Wrong Format or Empty Url.' ) );
+		die();
 
-    }
+	}
 }
 
 /**

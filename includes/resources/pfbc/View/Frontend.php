@@ -18,6 +18,7 @@ class View_Frontend extends FormView {
 		$field_id     = $this->_form->getAttribute( "field_id" );
 		$layout_style = buddyforms_layout_style( $field_id );
 
+		$this->class = apply_filters('buddyforms_forms_classes', $this->class, $this, $form_slug);
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
