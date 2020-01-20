@@ -87,13 +87,17 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 			$post_id = $current_user_entry->posts[0];
 		}
 	}
-
+	$form_output = '';
 	ob_start();
 	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
 	$global_css = ob_get_clean();
 	if ( ! empty( $global_css ) ) {
 		$global_css = buddyforms_minify_css( $global_css );
-		echo $global_css;
+		if ( $echo ) {
+			echo $global_css;
+		} else {
+			$form_output .= $global_css;
+		}
 	}
 
 	// if post edit screen is displayed in pages
@@ -137,7 +141,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $echo_content;
+					return $form_output . $echo_content;
 				}
 			}
 			//Check if the post to edit match with the form setting
@@ -149,7 +153,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $echo_content;
+					return $form_output . $echo_content;
 				}
 			}
 
@@ -171,7 +175,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $echo_content;
+					return $form_output . $echo_content;
 				}
 			}
 		}
@@ -214,7 +218,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		if ( $echo ) {
 			echo $echo_content;
 		} else {
-			return $echo_content;
+			return $form_output . $echo_content;
 		}
 	}
 
@@ -249,9 +253,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
-		echo $echo_content;
+		echo $form_output . $echo_content;
 	} else {
-		return $echo_content;
+		return $form_output . $echo_content;
 	}
 
 	if ( ! empty( $transient_name ) ) {
