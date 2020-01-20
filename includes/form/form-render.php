@@ -84,7 +84,7 @@ function buddyforms_form_html( $args ) {
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 	}
 
-	$buddyforms_global_js_data = apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) );
+	$buddyforms_global_js_data = apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ), $form_slug );
 	if ( is_array( $buddyforms_global_js_data ) ) {
 		$output = 'var buddyformsGlobal = ' . wp_json_encode( $buddyforms_global_js_data );
 		ob_start();

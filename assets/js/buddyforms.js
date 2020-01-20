@@ -515,8 +515,7 @@ function BuddyForms() {
         var requiredMessage = fieldData.validation_error_message ? fieldData.validation_error_message : 'This field is required.'; //todo need il18n
         if (fieldData.type) {
             if (fieldData.type === 'gdpr') {
-
-                var requiredMessage = jQuery(element).attr('validation_error_message');
+                requiredMessage = jQuery(element).attr('validation_error_message');
             }
         }
 
@@ -1055,7 +1054,7 @@ function BuddyForms() {
                 currentForms.on('submit', function (e) {
                     BuddyFormsHooks.doAction('buddyforms:submit', [currentForms, e]);
                     var prevent = BuddyFormsHooks.applyFilters('buddyforms:submit:prevent', false, [currentForms, formSlug]);
-                    if (!prevent) {
+                    if (prevent && prevent === true) {
                         e.preventDefault();
                     }
                 });

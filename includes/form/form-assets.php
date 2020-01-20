@@ -169,7 +169,7 @@ class BuddyFormsAssets {
 
 		//Global frontend vars
 		$js_params = BuddyForms::buddyforms_js_global_get_parameters( $form_slug );
-		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', $js_params ) );
+		wp_localize_script( "buddyforms-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', $js_params, $form_slug ) );
 
 		/**
 		 * @since 2.5.10 added the $form_slug parameter
@@ -317,7 +317,7 @@ class BuddyFormsAssets {
 			BuddyForms::buddyforms_js_global_set_parameters( $back_js_arguments );
 
 			//Global frontend vars
-			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ) ) );
+			wp_localize_script( "buddyforms-admin-js", "buddyformsGlobal", apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ), $form_slug ) );
 
 			do_action( 'buddyforms_admin_js_css_enqueue' );
 		} else {
@@ -325,7 +325,7 @@ class BuddyFormsAssets {
 				apply_filters( 'buddyforms_global_localize_scripts', array(
 						'admin_url' => admin_url( 'admin-ajax.php' ),
 						'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
-					)
+					), ''
 				)
 			);
 			do_action( 'buddyforms_all_admin_js_css_enqueue' );
