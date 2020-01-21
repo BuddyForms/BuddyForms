@@ -237,8 +237,9 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
-	$email_body         = apply_filters( 'buddyforms_email_body', $email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
-	$encoded_email_body = mb_convert_encoding( $email_body, 'UTF-8', 'AUTO' );
+	$encoded_email_body = BuddyFormsEncoding::fixUTF8( $email_body );
+	$encoded_email_body = BuddyFormsEncoding::toUTF8( $encoded_email_body );
+	$encoded_email_body = apply_filters( 'buddyforms_email_body', $encoded_email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
 	$message            = '<html><head></head><body>' . $encoded_email_body . '</body></html>';
 
 	/**

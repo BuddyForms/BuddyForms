@@ -220,6 +220,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
+            require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
