@@ -2074,3 +2074,18 @@ div#formbuilder-action-templates {
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
+
+#buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container{
+     cursor: pointer;
+}
+#buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container td.field_order{
+    width: 10%;
+}
+#buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container td.field_delete{
+    width: 30%;
+}
+#buddyforms_form_setup table.wp-list-table .bf_test_trigger{
+    width: 30%;
+    text-align: center;
+}
+

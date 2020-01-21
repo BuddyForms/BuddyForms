@@ -828,6 +828,42 @@ jQuery(document).ready(function (jQuery) {
 
     bf_update_list_item_number_mail();
 
+     //
+    // Trigger the email test notification
+    //
+	jQuery(document).on('click', '.bf_test_trigger:not(disabled)', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var test_id = jQuery(this).attr('id');
+		var actionLink = jQuery(this);
+		actionLink.attr('disabled', true);
+		actionLink.text('Sending...');
+		jQuery.ajax({
+			type: 'POST',
+			dataType: 'json',
+			// contentType: 'application/x-www-form-urlencoded; utf-8',
+			url: buddyformsGlobal.admin_url,
+			data: {
+				'action': 'buddyforms_test_email',
+				'notification_id': test_id,
+				'form_slug': actionLink.attr('data-form-slug'),
+				'nonce': buddyformsGlobal.ajaxnonce,
+			},
+			success: function(data) {
+				alert(data);
+			},
+			error: function(request) {
+				alert(request.responseText);
+			},
+			complete: function(){
+				actionLink.removeAttr('disabled');
+				actionLink.text('Test');
+			}
+		});
+
+		return false;
+	});
+
     //
     // Add notification inside the wizard
     //
@@ -837,9 +873,12 @@ jQuery(document).ready(function (jQuery) {
                 type: 'POST',
                 dataType: "json",
                 url: buddyformsGlobal.admin_url,
-                data: {"action": "buddyforms_new_mail_notification"},
+                data: {
+                    "action": "buddyforms_new_mail_notification",
+                    'form_slug': jQuery(this).attr('data-form-slug'),
+					'nonce': buddyformsGlobal.ajaxnonce,
+                },
                 success: function (data) {
-
                     //console.log(data);
 
                     jQuery('#no-trigger-mailcontainer').hide();
@@ -887,7 +926,12 @@ jQuery(document).ready(function (jQuery) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
-                data: {"action": "buddyforms_new_post_status_mail_notification", "trigger": trigger},
+                data: {
+                    "action": "buddyforms_new_post_status_mail_notification",
+                    'form_slug': jQuery(this).attr('data-form-slug'),
+					'nonce': buddyformsGlobal.ajaxnonce,
+                    "trigger": trigger
+                },
                 success: function (data) {
                     if (data == 0) {
                         bf_alert('trigger already exists');

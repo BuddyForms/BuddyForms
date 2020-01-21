@@ -214,17 +214,18 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param $email_body
  * @param array $mail_to_cc
  * @param array $mail_to_bcc
- *
  * @param string $form_slug
  * @param string $post_id
+ * @param $is_testing
  *
  * @return bool
+ * @since 2.5.12 Added the flag $is_testing to include a header to track test emails.
  * @since 2.5.10 Added the $form_slug and $post_id as parameter.
  *                Also added the filters `buddyforms_email_body`, `buddyforms_email_headers_priority`, `buddyforms_email_headers_mime_version`,
  *                `buddyforms_email_headers_content_type` and `buddyforms_email_headers_content_transfer_encoding`
  * @since 2.2.8
  */
-function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array(), $form_slug = '', $post_id = '' ) {
+function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array(), $form_slug = '', $post_id = '', $is_testing = false ) {
 	mb_internal_encoding( 'UTF-8' );
 	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
 	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
@@ -237,6 +238,9 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
 
+	if ( $is_testing ) {
+		$mail_header[] = 'X-Mailer-Type:WPMailSMTP/Admin/Test';
+	}
 	$encoded_email_body = BuddyFormsEncoding::fixUTF8( $email_body );
 	$encoded_email_body = BuddyFormsEncoding::toUTF8( $encoded_email_body );
 	$encoded_email_body = apply_filters( 'buddyforms_email_body', $encoded_email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
