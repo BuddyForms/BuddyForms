@@ -212,7 +212,7 @@ function buddyforms_sanitize( $type, $value ) {
 			$value = sanitize_email( $value );
 			break;
 		case 'textarea':
-			$value = esc_textarea( $value );
+			$value = sanitize_textarea_field( $value );
 			break;
 		case 'text':
 			$value = sanitize_text_field( $value );

@@ -355,7 +355,7 @@ function buddyforms_process_submission( $args = array() ) {
 	if ( empty( $post_excerpt ) ) {
 		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );//todo add check here
 		$post_excerpt  = $content_field['generate_post_excerpt'];
-		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id );
+		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id, $form_slug );
 	}
 
 	//Override the post status if exist a status field
@@ -402,14 +402,16 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 
 		$have_user_fields = false;
-		foreach ( $customfields as $customfield ) {
-			if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
-				$have_user_fields = true;
-				break;
-			}
-			if ( in_array( $customfield['type'], array( 'category' ) ) ) {
-				$args['has_post_category'] = true;
-				break;
+		if ( ! empty( $customfields ) ) {
+			foreach ( $customfields as $customfield ) {
+				if ( in_array( $customfield['type'], buddyforms_user_fields_array() ) ) {
+					$have_user_fields = true;
+					break;
+				}
+				if ( in_array( $customfield['type'], array( 'category' ) ) ) {
+					$args['has_post_category'] = true;
+					break;
+				}
 			}
 		}
 
@@ -425,6 +427,7 @@ function buddyforms_process_submission( $args = array() ) {
 		/*
 		 * Process field submission for 3rd party and internal code. For example the Upload Field and Feature Image
 		 */
+
 		foreach ( $customfields as $customfield ) {
 			$field_slug = $customfield['slug'];
 			$field_type = $customfield['type'];
@@ -975,8 +978,8 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
-			$field_value = apply_filters( 'buddyforms_before_update_post_meta', $_POST[ $slug ], $customfield, $post_id, $form_slug );
-			$field_value = buddyforms_sanitize( $customfield['type'], $field_value );
+			$field_value = buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] );
+			$field_value = apply_filters( 'buddyforms_before_update_post_meta', $field_value, $customfield, $post_id, $form_slug );
 			update_post_meta( $post_id, $slug, $field_value );
 		} else {
 			if ( ! is_admin() ) {
@@ -992,24 +995,6 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 			}
 			update_post_meta( $post_id, $slug, $gdpr_data );
-		}
-
-		//
-		// Check if file is new and needs to get reassigned to the correct parent
-		//
-		if ( $customfield['type'] == 'textarea' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
-
-			$textarea = apply_filters( 'buddyforms_update_form_textarea', isset( $_POST[ $customfield['slug'] ] ) && ! empty( $customfield['slug'] ) ? $_POST[ $customfield['slug'] ] : '' );
-			if ( empty( $textarea ) ) {
-
-				$this_customfield = buddyforms_get_form_field_by_slug( $form_slug, $customfield['slug'] );
-				$textarea         = $this_customfield['generate_textarea'];
-
-				$textarea = buddyforms_str_replace_form_fields_val_by_slug( $textarea, $custom_fields, $post_id );
-
-				update_post_meta( $post_id, $slug, buddyforms_sanitize( $customfield['type'], $textarea ) );
-
-			}
 		}
 
 		//
@@ -1259,27 +1244,51 @@ function buddyforms_get_browser() {
 	);
 }
 
-function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id ) {
+add_filter( 'buddyforms_form_field_include_extra_html', 'buddyforms_example_remove_inline_html', 10, 4 );
+function buddyforms_example_remove_inline_html( $include, $form_slug, $field_slug, $post_id ) {
+	if ( ! empty( $form_slug ) && $form_slug === 'dykiu' ) {
+		return false;
+	}
+
+	return $include;
+}
+
+/**
+ * Replace the content of a string using a field slug
+ *
+ * @param $string
+ * @param $customfields
+ * @param $post_id
+ * @param string $form_slug
+ *
+ * @return mixed
+ * @since 2.5.12 Include a hook `buddyforms_form_field_include_extra_html` to avoid inline HTML and the parameter $form_slug by gfirem
+ */
+function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id, $form_slug = '' ) {
 	if ( isset( $customfields ) && ! empty( $string ) ) {
 		foreach ( $customfields as $f_id => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
 
 				$field_val = $_POST[ $t_field['slug'] ];
 
-				switch ( $t_field['type'] ) {
-					case 'taxonomy' :
-					case 'category' :
-					case 'tags' :
-						if ( ! is_wp_error( $post_id ) && ! empty( $post_id ) ) {
-							$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
-						}
-						break;
-					case 'user_website':
-						$string_tmp = "<span class='" . $t_field['slug'] . "'><a href='" . $field_val . "' " . $t_field['name'] . ">" . $field_val . " </a></span>";
-						break;
-					default:
-						$string_tmp = "<span class='" . $t_field['slug'] . "'>" . $field_val . "</span>";
-						break;
+				$string_tmp          = $field_val;
+				$include_inline_html = apply_filters( 'buddyforms_form_field_include_extra_html', true, $form_slug, $t_field['slug'], $post_id );
+				if ( $include_inline_html ) {
+					switch ( $t_field['type'] ) {
+						case 'taxonomy' :
+						case 'category' :
+						case 'tags' :
+							if ( ! is_wp_error( $post_id ) && ! empty( $post_id ) ) {
+								$string_tmp = get_the_term_list( $post_id, $t_field['taxonomy'], "<span class='" . $t_field['slug'] . "'>", ' - ', "</span>" );
+							}
+							break;
+						case 'user_website':
+							$string_tmp = "<span class='" . $t_field['slug'] . "'><a href='" . $field_val . "' " . $t_field['name'] . ">" . $field_val . " </a></span>";
+							break;
+						default:
+							$string_tmp = "<span class='" . $t_field['slug'] . "'>" . $field_val . "</span>";
+							break;
+					}
 				}
 
 				$string = str_replace( '[' . $t_field['slug'] . ']', mb_convert_encoding( $string_tmp, 'UTF-8' ), $string );
@@ -1303,12 +1312,41 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
 			$customfields = $buddyforms[ $form_slug ]['form_fields'];
 		}
 
-		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $title_field['generate_title'], $customfields, $post_id );
+		$post_title = buddyforms_str_replace_form_fields_val_by_slug( $title_field['generate_title'], $customfields, $post_id, $form_slug );
 	}
 
 	return $post_title;
 
 }
+
+/**
+ * Process the textarea auto-generate content functionality
+ *
+ * @param $field_value
+ * @param $customfield
+ * @param $post_id
+ * @param $form_slug
+ *
+ * @return mixed|void
+ * @author gfirem
+ * @since 2.5.12
+ */
+function buddyforms_update_textarea_generated_content( $field_value, $customfield, $post_id, $form_slug ) {
+	if ( $customfield['type'] == 'textarea' && ! empty( $customfield['slug'] ) && ! empty( $customfield['generate_textarea'] ) && ! empty( $form_slug ) && empty( $field_value ) ) {
+		global $buddyforms;
+
+		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
+			$custom_fields = $buddyforms[ $form_slug ]['form_fields'];
+			$textarea_val  = buddyforms_str_replace_form_fields_val_by_slug( $customfield['generate_textarea'], $custom_fields, $post_id, $form_slug );
+			$field_value   = apply_filters( 'buddyforms_update_form_textarea', $textarea_val, $customfield, $post_id, $form_slug );
+		}
+	}
+
+	return $field_value;
+}
+
+add_filter( 'buddyforms_before_update_post_meta', 'buddyforms_update_textarea_generated_content', 10, 4 );
+
 
 add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 2, 10 );
 function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
@@ -1321,7 +1359,7 @@ function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 			$customfields = $buddyforms[ $form_slug ]['form_fields'];
 		}
 
-		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_content'], $customfields, $post_id );
+		$post_content = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_content'], $customfields, $post_id, $form_slug );
 	}
 
 	return $post_content;
