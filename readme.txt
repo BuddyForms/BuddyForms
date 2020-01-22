@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.11
+Stable tag: 2.5.12
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,19 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.12 - 18 Jan 2020 =
+* Fixed the message for the required gdpr form element.
+* Added a $form_slug parameter to hook filter where the form elements are added to JS.
+* Fixed an issue related with the shortcode to output the form and a hide element echo out of the context.
+* Fixed the auto-generate content option for the textarea form element.
+* Added a helper class to handled mail utf8 encoding.
+* Added a test option to try the Form Notifications.
+* Added a hook filter (`buddyforms_test_email`) to change the test email receiver.
+* Added a hook to change the Redirect.. string after a form is submit with ajax.
+* Fixed the auto generate option for the form elements post excerpt, post title, textarea and post content.
+* Fixed the styles for the date form element * Improved the date format validation for the date form element.
+* Added invalid format error message option to the Date Form Element.
+
 = 2.5.11 - 18 Jan 2020 =
 * Fixed the validation issue when the form not have any invalid fields.
 * Added a hook to extend the form classes.
