@@ -806,10 +806,13 @@ function BuddyForms() {
             }
 
             var formatAttr = jQuery(element).attr('data-format');
-            var format = (formatAttr) ? formatAttr.toUpperCase() : 'DD/MM/YYYY';
-            var isValid = moment(value, format).isValid();
+            var format = (formatAttr) ? formatAttr : 'dd/mm/yy';
+            //Convert year to year moment format
+            var newFormat = dateFormat.convert(format, dateFormat.datepicker, dateFormat.momentJs);
+            var momentFnc = moment(value, newFormat, true);
+            var isValid = momentFnc.isValid();
 
-            if (!isValid) {
+            if (isValid !== true) {
                 jQuery.validator.messages['date-validation'] = "Invalid date.";
             }
 
@@ -922,9 +925,6 @@ function BuddyForms() {
                             if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
                                 jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
                             }
-                        },
-                        beforeShow: function () {
-                            jQuery('#ui-datepicker-div').addClass('buddyforms');
                         }
                     };
 
