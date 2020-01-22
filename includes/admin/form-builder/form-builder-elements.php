@@ -757,6 +757,11 @@ function buddyforms_display_form_element( $args ) {
 				'value'     => $element_time_step,
 			) );
 
+			$element_date_invalid_format                           = isset( $customfield['element_date_invalid_format'] ) ? stripcslashes( $customfield['element_date_invalid_format'] ) : __( 'Invalid Format', 'buddyforms' );
+	        $form_fields['validation']['element_date_invalid_format'] = new Element_Textbox( '<b>' . __( 'Invalid Format Message', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][element_date_invalid_format]", array(
+		        'value'     => $element_date_invalid_format,
+	        ) );
+
             break;
         case 'time':
             $name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Time', 'buddyforms' );

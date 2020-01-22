@@ -804,18 +804,24 @@ function BuddyForms() {
             ) {
                 return true;
             }
-
+            var msjString = 'Invalid Format';
             var formatAttr = jQuery(element).attr('data-format');
             var format = (formatAttr) ? formatAttr : 'dd/mm/yy';
             //Convert year to year moment format
             var newFormat = dateFormat.convert(format, dateFormat.datepicker, dateFormat.momentJs);
             var momentFnc = moment(value, newFormat, true);
             var isValid = momentFnc.isValid();
-
-            if (isValid !== true) {
-                jQuery.validator.messages['date-validation'] = "Invalid date.";
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (fieldData.element_date_invalid_format) {
+                    msjString = fieldData.element_date_invalid_format;
+                }
             }
-
+            if (isValid !== true) {
+                jQuery.validator.messages['date-validation'] = msjString;
+            }
+//
             return isValid;
 
         });
