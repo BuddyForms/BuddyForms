@@ -351,12 +351,21 @@ function buddyforms_process_submission( $args = array() ) {
 	}
 
 	// Check if post_excerpt form element exist and if has values if empty check for default
-	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', ! empty( $_POST['post_excerpt'] ) ? $_POST['post_excerpt'] : '' );
-	if ( empty( $post_excerpt ) ) {
-		$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );//todo add check here
-		$post_excerpt  = $content_field['generate_post_excerpt'];
-		$post_excerpt  = buddyforms_str_replace_form_fields_val_by_slug( $post_excerpt, $customfields, $post_id, $form_slug );
+	$post_excerpt = ! empty( $_POST['post_excerpt'] ) ? sanitize_text_field( $_POST['post_excerpt'] ) : '';
+	$post_excerpt = apply_filters( 'buddyforms_update_post_excerpt', $post_excerpt );
+	/**
+	 * @since 2.5.12
+	 */
+	$post_excerpt = apply_filters( 'buddyforms_before_update_post_excerpt', $post_excerpt, $post_id, $form_slug );
+
+	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'post_excerpt' );
+	if ( ! empty( $content_field['generate_post_excerpt'] ) ) {
+		$post_excerpt = buddyforms_str_replace_form_fields_val_by_slug( $content_field['generate_post_excerpt'], $customfields, $post_id, $form_slug );
 	}
+	/**
+	 * @since 2.5.12
+	 */
+	$post_excerpt = apply_filters( 'buddyforms_after_update_post_excerpt', $post_excerpt, $post_excerpt, $post_id, $form_slug );
 
 	//Override the post status if exist a status field
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
@@ -979,6 +988,9 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
 			$field_value = buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] );
+			/**
+			 * @since 2.5.12
+			 */
 			$field_value = apply_filters( 'buddyforms_before_update_post_meta', $field_value, $customfield, $post_id, $form_slug );
 			update_post_meta( $post_id, $slug, $field_value );
 		} else {
@@ -1332,7 +1344,7 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
  * @since 2.5.12
  */
 function buddyforms_update_textarea_generated_content( $field_value, $customfield, $post_id, $form_slug ) {
-	if ( $customfield['type'] == 'textarea' && ! empty( $customfield['slug'] ) && ! empty( $customfield['generate_textarea'] ) && ! empty( $form_slug ) && empty( $field_value ) ) {
+	if ( $customfield['type'] == 'textarea' && ! empty( $customfield['slug'] ) && ! empty( $customfield['generate_textarea'] ) && ! empty( $form_slug )) {
 		global $buddyforms;
 
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
@@ -1352,7 +1364,7 @@ add_filter( 'buddyforms_update_form_content', 'buddyforms_update_form_content', 
 function buddyforms_update_form_content( $post_content, $form_slug, $post_id ) {
 	$content_field = buddyforms_get_form_field_by_slug( $form_slug, 'buddyforms_form_content' );
 
-	if ( empty( $_POST['buddyforms_form_content'] ) && ! empty( $content_field['generate_content'] ) ) {
+	if ( ! empty( $content_field['generate_content'] ) ) {
 		global $buddyforms;
 
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
