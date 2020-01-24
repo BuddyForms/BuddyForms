@@ -536,10 +536,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
         left: 1em;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered .select2-search--inline {
-        display: none;
-    }
-
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control {
         display: block;
         width: 100%;

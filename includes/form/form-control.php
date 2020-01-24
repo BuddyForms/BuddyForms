@@ -1075,7 +1075,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 				// Let us delete all and re assign.
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
 
-				// Ctreate a new empty arry for our taxonomy terms
+				// Create a new empty array for our taxonomy terms
 				$new_tax_items = array();
 
 				// If no tax items are available check if we have some defaults we can use
@@ -1110,6 +1110,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 					}
 				}
 
+				$cat_string = array();
 				// Check if the taxonomy is hierarchical and prepare the string
 				if ( isset( $taxonomy->hierarchical ) && $taxonomy->hierarchical == true ) {
 					$cat_string = implode( apply_filters( 'buddyforms_implode_separator', ', ', 'taxonomy', $slug ), array_map(
@@ -1120,7 +1121,11 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 						array_keys( $new_tax_items )
 					) );
 				} else {
-					$cat_string = implode( apply_filters( 'buddyforms_implode_separator', ', ', 'taxonomy', $slug ), $new_tax_items );
+					$cat_string = array_values( $new_tax_items );
+				}
+
+				if ( ! empty( $new_tax_items ) ) {
+					$cat_string = array_keys( $new_tax_items );
 				}
 
 				// We need to check if an excluded term was added via the backend edit screen.
@@ -1134,7 +1139,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 				}
 
 				// Add the new terms to the taxonomy
-				wp_set_post_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
+				wp_set_object_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 
 			} else {
 				wp_delete_object_term_relationships( $post_id, $customfield['taxonomy'] );
@@ -1279,7 +1284,7 @@ function buddyforms_example_remove_inline_html( $include, $form_slug, $field_slu
 function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields, $post_id, $form_slug = '' ) {
 	if ( isset( $customfields ) && ! empty( $string ) ) {
 		foreach ( $customfields as $f_id => $t_field ) {
-			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) ) {
+			if ( isset( $t_field['slug'] ) && isset ( $_POST[ $t_field['slug'] ] ) && is_string( $_POST[ $t_field['slug'] ] ) ) {
 
 				$field_val = $_POST[ $t_field['slug'] ];
 
@@ -1344,7 +1349,7 @@ function buddyforms_update_form_title( $post_title, $form_slug, $post_id ) {
  * @since 2.5.12
  */
 function buddyforms_update_textarea_generated_content( $field_value, $customfield, $post_id, $form_slug ) {
-	if ( $customfield['type'] == 'textarea' && ! empty( $customfield['slug'] ) && ! empty( $customfield['generate_textarea'] ) && ! empty( $form_slug )) {
+	if ( $customfield['type'] == 'textarea' && ! empty( $customfield['slug'] ) && ! empty( $customfield['generate_textarea'] ) && ! empty( $form_slug ) ) {
 		global $buddyforms;
 
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
