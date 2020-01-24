@@ -68,15 +68,21 @@ class Element_Textarea extends Element {
 			$validation = new Validation_Required( $this->message, $this->field_options );
 
 			$value = $this->getAttribute( 'value' );
+			if ( ! empty( $value ) && is_array( $value ) ) {
+				$value = $value['value'];
+			}
 			preg_match_all( '/<textarea .*?>(.*?)<\/textarea>/s', $value, $matches );
 
-			$result = $validation->isNotApplicable( $value ) || ! empty( $matches[1][0] );
+			$is_empty      = ! empty( $matches[1][0] );
+			$is_applicable = $validation->isNotApplicable( $value );
 
-			if ( ! $result ) {
+			$is_valid = ! $is_empty || ! $is_applicable;
+
+			if ( ! $is_valid ) {
 				$this->_errors[] = str_replace( "%element%", $this->getLabel(), $validation->getMessage() );
 			}
 
-			return apply_filters( 'buddyforms_element_textarea_validation', $result, $this );
+			return apply_filters( 'buddyforms_element_textarea_validation', $is_valid, $this );
 		} else {
 			return true;
 		}

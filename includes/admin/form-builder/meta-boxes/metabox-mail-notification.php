@@ -85,7 +85,7 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	if ( ! empty( $buddyform['form_fields'] ) ) {
 		foreach ( $buddyform['form_fields'] as $form_field ) {
 			if ( ! in_array( $form_field['type'], buddyforms_unauthorized_shortcodes_field_type( $buddyform['slug'], $element_name ) ) ) {
-				$all_shortcodes[] = '[' . $form_field['name'] . ']';
+				$all_shortcodes[] = '[' . $form_field['slug'] . ']';
 			}
 		}
 	}
