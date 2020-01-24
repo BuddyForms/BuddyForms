@@ -40,7 +40,7 @@ class Element_Radio extends OptionElement {
 			}
 			$input[] = '/>';
 
-			$text_out = sprintf( ' %s ', esc_attr( $text ) );
+			$text_out = sprintf( ' %s ',  $text );
 			echo $label_start . join( ' ', $input ) . $text_out . $label_end;
 
 			++ $count;

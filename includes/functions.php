@@ -268,10 +268,29 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	return $wp_login_form;
 }
 
+/**
+ * since 2.5.13
+ * author @gfirem
+ *
+ * @param $wp_register_url
+ *
+ * @return string
+ */
+function buddyforms_register_url( $wp_register_url ) {
+	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
+	if ( $buddyforms_registration_page != 'none' ) {
+		$new_url = get_permalink( $buddyforms_registration_page );
+		if ( ! empty( $new_url ) ) {
+			return $new_url;
+		}
+	}
+
+	return $wp_register_url;
+}
+add_filter( 'register_url', 'buddyforms_register_url' );
 
 add_filter( 'login_form_bottom', 'buddyforms_register_link' );
 function buddyforms_register_link( $wp_login_form ) {
-
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
 		$permalink = get_permalink( $buddyforms_registration_page );
@@ -280,7 +299,7 @@ function buddyforms_register_link( $wp_login_form ) {
 	}
 
 	// new login page
-	$wp_login_form .= '<a href="' . $permalink . '">' . __( 'Register', 'buddyforms' ) . '</a> ';
+	$wp_login_form .= '<span class="buddyforms-register"><a href="' . $permalink . '">' . __( 'Register', 'buddyforms' ) . '</a></span> &nbsp;';
 
 	return $wp_login_form;
 }

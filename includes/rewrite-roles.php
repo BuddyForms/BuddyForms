@@ -201,7 +201,7 @@ function buddyforms_login_redirect( $redirect_to, $request, $user ) {
 			if ( ! empty( $_REQUEST['form_slug'] ) && $_REQUEST['form_slug'] !== 'none' ) {
 				$form_slug = buddyforms_sanitize_slug( $_REQUEST['form_slug'] );
 				global $buddyforms;
-				if ( ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) && $buddyforms[ $form_slug ]['form_type'] === 'registration') {
+				if ( ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) && $buddyforms[ $form_slug ]['form_type'] === 'registration' ) {
 					$redirect_url = apply_filters( 'buddyforms_login_form_redirect_url', $_REQUEST['redirect_to'] );
 				}
 			} else {
@@ -235,18 +235,18 @@ function buddyforms_registration_page_content( $content ) {
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	$buddyforms_registration_form = get_option( 'buddyforms_registration_form' );
 
-	if ( empty( $buddyforms_registration_page ) ) {
+	if ( empty( $buddyforms_registration_page ) || empty( $buddyforms_registration_form ) ) {
 		return $content;
 	}
 
-	if ( empty( $buddyforms_registration_form ) ) {
-		return $content;
-	}
+	$bp_get_signup_slug = bp_get_signup_slug();
 
-	if ( $page_id == $buddyforms_registration_page && $buddyforms_registration_form != 'none' ) {
+	if ( ( $page_id == $buddyforms_registration_page || $post->post_name == $bp_get_signup_slug ) && $buddyforms_registration_form != 'none' ) {
 		if ( $buddyforms_registration_form == 'page' ) {
 			$regpage = get_post( $buddyforms_registration_page );
-			$content = $regpage->post_content;
+			if ( ! empty( $reg_page ) ) {
+				$content = $regpage->post_content;
+			}
 		} else {
 			$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
 		}
