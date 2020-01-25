@@ -214,11 +214,11 @@ function buddyforms_permissions_screen() {
 					$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 					if ( $type == 'html' ) {
-						echo '<tr id="table_row_' . $field->getAttribute( 'id' ) . '_' . $key . '" class="' . $class . '"><td colspan="2">';
+						echo '<tr id="table_row_' . $field->getAttribute( 'id' ) . '_' . $key . '" data-target-role="'.$class.'" class="' . $class . '"><td colspan="2">';
 						$field->render();
 						echo '</td></tr>';
 					} else { ?>
-                        <tr id="table_row_<?php echo $field->getAttribute( 'id' ); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
+                        <tr data-target-role="<?php echo $class ?>" id="table_row_<?php echo $field->getAttribute( 'id' ); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
                             <th scope="row">
                                 <label for="role_role"><?php echo $field->getLabel() ?></label>
                             </th>

@@ -11,12 +11,12 @@ function buddyforms_mail_notification_screen() {
 
 	$form_setup[] = new Element_HTML( '<h4>' . __( 'Mail Notifications', 'buddyforms' ) . '</h4>
 		<p>' . __( 'By default no notification is sent out. Any submission get stored under Submissions. This makes sure you never lose any submission. Of course you can create individual mail notification for the submitter, inform your moderators or sent out a notification to any email address.', 'buddyforms' ) . '</p>
-		<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new" data-form-slug="' . $buddyform['slug'] . '">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br><br><br>' );
+		<a class="button-primary btn btn-primary" href="#" id="mail_notification_add_new" data-form-slug="' . ! empty( $buddyform ) && ! empty( $buddyform['slug'] ) ? $buddyform['slug'] : '' . '">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a><br><br><br>' );
 
 	buddyforms_display_field_group_table( $form_setup );
 
 	echo '<ul>';
-	if ( isset( $buddyform['mail_submissions'] ) ) {
+	if ( isset( $buddyform['mail_submissions'] ) && ! empty( $buddyform ) &&  ! empty( $buddyform['slug'] ) ) {
 		foreach ( $buddyform['mail_submissions'] as $key => $mail_submission ) {
 			buddyforms_mail_notification_form( $key, $buddyform['slug'] );
 		}
@@ -37,7 +37,7 @@ function buddyforms_post_status_mail_notification_screen() {
 
 	$form_setup = array();
 
-	$shortDesc = '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new" style="font-style: normal" data-form-slug="' . $buddyform['slug'] . '">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>';
+	$shortDesc = '<a class="button-primary btn btn-primary" href="#" id="post_status_mail_notification_add_new" style="font-style: normal" data-form-slug="' . ! empty( $buddyform ) && ! empty( $buddyform['slug'] ) ? $buddyform['slug'] : '' . '">' . __( 'Create New Mail Notification', 'buddyforms' ) . '</a>';
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$shortDesc = '<b>' . __( 'Get the Pro version to add Post Status Change Mail Notification', 'buddyforms' ) . '</b>';
 	}
@@ -52,7 +52,7 @@ function buddyforms_post_status_mail_notification_screen() {
 	$form_setup[] = $element;
 	buddyforms_display_field_group_table( $form_setup );
 	echo '<ul>';
-	if ( isset( $buddyform['mail_notification'] ) ) {
+	if ( isset( $buddyform['mail_notification'] ) && ! empty( $buddyform ) &&  ! empty( $buddyform['slug'] ) ) {
 		foreach ( $buddyform['mail_notification'] as $key => $value ) {
 			buddyforms_new_post_status_mail_notification_form( $buddyform['mail_notification'][ $key ]['mail_trigger'], $buddyform['slug'] );
 		}

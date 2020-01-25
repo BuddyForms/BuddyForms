@@ -207,7 +207,7 @@ function buddyforms_disable_contact_extra_permissions(formType) {
     var roles = jQuery("table.bf_permissions tbody").find("tr");
     if (formType && roles && roles.length > 0) {
         jQuery.each(roles, function (key, value) {
-            var role_name = value.className.trim();
+            var role_name = jQuery(value).attr('data-target-role').trim();
             if (formType === 'contact') {
                 jQuery("#permission_for_" + role_name + "-1").prop("disabled", true).val('').removeProp('checked');
                 jQuery("#permission_for_" + role_name + "-2").prop("disabled", true).val('').removeProp('checked');
