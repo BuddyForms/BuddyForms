@@ -439,34 +439,36 @@ $css_form_class = 'buddyforms-' . $form_slug;
     }
 
     /* --- Form Errors --- */
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group button.error,
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group textarea.error {
-        border: 1px solid red;
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group button.error,
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group textarea.error {
+        border: 1px solid red !important;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error {
-        border: 2px dashed red;
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error {
+        border: 1px solid red !important;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
-        border: 1px solid red;
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
+        border: 1px solid red !important;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label.error {
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label.error {
         color: red;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .checkbox label label.error {
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .checkbox label label.error {
         color: red;
         font-weight: bold;
     }
 
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
-    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--single.error {
-        border: 1px solid red;
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
+    html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--single.error {
+        border: 1px solid red !important;
     }
+
+     /* --- Form Errors --- */
 
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
@@ -571,6 +573,11 @@ $css_form_class = 'buddyforms-' . $form_slug;
     .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
     .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid {
         border-color: #d6d6d6;
+    }
+
+    /* Fix to avoid BP override the width of the MCE editor on the text tab */
+    .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form .wp-editor-wrap input:not(.small){
+		width: initial;
     }
 
     #content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset {

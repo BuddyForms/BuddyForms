@@ -48,7 +48,8 @@ class ErrorView_Standard extends ErrorView {
 		if ( ! empty( $global_bf_error ) ) {
 			if ( $global_bf_error->has_errors() ) {
 				header( "Content-type: application/json" );
-				echo wp_json_encode( array( "errors" => $global_bf_error->errors ) );
+				$errors = (array) $global_bf_error->errors;
+				echo wp_json_encode( array( "errors" => $errors ) );
 				die;
 			}
 		}

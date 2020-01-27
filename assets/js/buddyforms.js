@@ -1052,6 +1052,46 @@ function BuddyForms() {
         }
     }
 
+    function errorPlacement(label, element) {
+        var formSlug = getFormSlugFromFormElement(element);
+        var fieldSlug = jQuery(element).attr('name');
+        var fieldData = getFieldFromSlug(fieldSlug, formSlug);
+        fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
+        if (!fieldData) {//if not field data is not possible to validate it
+            return true;
+        }
+        switch (fieldData.type) {
+            case "gdpr":
+                element.parent().append(label);
+
+                break;
+            case "taxonomy":
+            case "category":
+            case "tags":
+                element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label);
+                break;
+            case 'textarea':
+            case 'buddyforms_form_content':
+            case 'post_excerpt':
+                element.closest('div.wp-core-ui.wp-editor-wrap').append(label);
+                break;
+            case "checkbox":
+            case "radiobutton":
+                var parentElement = jQuery(element).closest('.bf_field_group');
+                if (parentElement) {
+                    label.insertAfter(parentElement.find('.bf-input'));
+                }
+                break;
+            case "featured_image":
+            case "upload":
+                element.closest('div.dropzone.dz-clickable').addClass('error');
+                label.insertAfter(element);
+                break;
+            default:
+                label.insertAfter(element);
+        }
+    }
+
     function validateGlobalConfig() {
         var forms = jQuery('form[id^="buddyforms_form_"]');
         if (forms && forms.length > 0) {
@@ -1104,45 +1144,7 @@ function BuddyForms() {
 
                         return ignore;
                     },
-                    errorPlacement: function (label, element) {
-                        var formSlug = getFormSlugFromFormElement(element);
-                        var fieldSlug = jQuery(element).attr('name');
-                        var fieldData = getFieldFromSlug(fieldSlug, formSlug);
-                        fieldData = BuddyFormsHooks.applyFilters('buddyforms:validation:field:data', fieldData, [fieldSlug, formSlug, fieldData]);
-                        if (!fieldData) {//if not field data is not possible to validate it
-                            return true;
-                        }
-                        switch (fieldData.type) {
-                            case "gdpr":
-                                element.parent().append(label);
-
-                                break;
-                            case "taxonomy":
-                            case "category":
-                            case "tags":
-                                element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label);
-                                break;
-                            case 'textarea':
-                            case 'buddyforms_form_content':
-                            case 'post_excerpt':
-                                element.closest('div.wp-core-ui.wp-editor-wrap').append(label);
-                                break;
-                            case "checkbox":
-                            case "radiobutton":
-                                var parentElement = jQuery(element).closest('.bf_field_group');
-                                if (parentElement) {
-                                    label.insertAfter(parentElement.find('.bf-input'));
-                                }
-                                break;
-                            case "featured_image":
-                            case "upload":
-                                element.closest('div.dropzone.dz-clickable').addClass('error');
-                                label.insertAfter(element);
-                                break;
-                            default:
-                                label.insertAfter(element);
-                        }
-                    },
+                    errorPlacement: errorPlacement,
                     highlight: function (element, errorClass, validClass) {
                         var elem = jQuery(element);
                         if (elem.hasClass('select2-hidden-accessible')) {
@@ -1202,25 +1204,25 @@ function BuddyForms() {
             }
 
             jQuery('.bf-alert').remove();
-            var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; padding-inline-start: 40px;">';
+            //Clean all error
+            jQuery('#'+id+' .form-control').removeClass('error');
+            jQuery('#'+id+' label.error').remove();
             jQuery.each(errors.errors[id], function (i, e) {
-                errorHTML += '<li data-target-field="' + i + '">' + e + '</li>';
                 var fieldData = getFieldFromName(i, form_id);
                 if (!fieldData) {
                     return true;
                 }
                 var targetField = jQuery('[name="' + fieldData.slug + '"]');
+                if (targetField && targetField.length === 0) {
+                    targetField = jQuery('[data-element-slug="' + fieldData.slug + '"]');
+                }
                 if (targetField && targetField.length > 0) {
                     targetField.addClass('error');
-                } else {
-                    targetField = jQuery('[data-element-slug="' + fieldData.slug + '"]');
-                    if (targetField && targetField.length > 0) {
-                        targetField.addClass('error');
-                    }
+                    var labelSlug = fieldData.slug + '-error';
+                    var labelElement = jQuery('<label>').attr({id: labelSlug, class: 'error', for: fieldData.slug}).text(e);
+                    errorPlacement(labelElement, targetField);
                 }
             });
-            errorHTML += '</ul></div>';
-            jQuery('#' + id).prepend(errorHTML);
             var scrollElement = jQuery("#buddyforms_form_hero_" + form_id);
             if (scrollElement.length > 0) {
                 jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {

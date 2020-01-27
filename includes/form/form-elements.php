@@ -626,12 +626,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
-							$element = new Element_HTML( $wp_editor, $slug, $name, $customfield );
-							if ( ! empty( $customfield['required'] ) && $customfield['required'][0] === 'required' ) {
-								$element->setValidation( new Validation_Required( $customfield['validation_error_message'], $customfield ) );
-							}
-
-							$form->addElement( $element );
+							add_filter( 'the_content', 'do_shortcode', 11 );
+							$form->addElement( new Element_PostExcerpt( $name, $slug, $wp_editor, $customfield ) );
 						}
 						break;
 					case 'hidden' :
