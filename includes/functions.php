@@ -1172,7 +1172,6 @@ function buddyforms_form_footer_terms( $html ) {
  * @since 2.5.10 Added the token parameter to emulate loggout user nonce
  */
 function buddyforms_create_nonce( $action = - 1, $user_id = 0, $token = '' ) {
-	$token = '';
 	if ( $user_id === 0 ) {
 		$user = wp_get_current_user();
 		$uid  = (int) $user->ID;
