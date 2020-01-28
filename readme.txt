@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.12
+Stable tag: 2.5.13
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,17 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.13 - 28 Jan 2020 =
+* Fixed the dependency error from a BuddyPress function `bp_get_signup_slug`.
+* Moved the Form submit JS action to the same form onsubmit where the form is render to give more priority.
+* Fixed the required validation for the Post Excerpt Form Element.
+* Removed the Error box above the form when the error are process by the server. Now they will appear in each Form Element using the same error placement from JS.
+* Fixed the permission change when the form switch from Contact to Post Form type for the free version.
+* Fixed the Registration Settings functionality.
+* Fixed for the email shortcode insert helper.
+* Fixed the textarea validation.
+* Fixed the issue related to the taxonomy field not letting create or search for a tag.
+
 = 2.5.12 - 18 Jan 2020 =
 * Fixed the message for the required gdpr form element.
 * Added a $form_slug parameter to hook filter where the form elements are added to JS.
