@@ -1097,13 +1097,6 @@ function BuddyForms() {
         if (forms && forms.length > 0) {
             jQuery.each(forms, function () {
                 var currentForms = jQuery(this);
-                currentForms.on('submit', function (e) {
-                    BuddyFormsHooks.doAction('buddyforms:submit', [currentForms, e]);
-                    var prevent = BuddyFormsHooks.applyFilters('buddyforms:submit:prevent', false, [currentForms, formSlug]);
-                    if (prevent && prevent === true) {
-                        e.preventDefault();
-                    }
-                });
                 var formSlug = getFormSlugFromFormElement(currentForms);
                 if (formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].js_validation && buddyformsGlobal[formSlug].js_validation[0] === 'disabled') {
                     return true;
@@ -1129,7 +1122,8 @@ function BuddyForms() {
                     }
                 });
 
-                currentForms.validate({
+
+                var validationSettings = {
                     ignore: function (index, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
@@ -1161,7 +1155,10 @@ function BuddyForms() {
                             elem.removeClass(errorClass);
                         }
                     }
-                });
+                };
+
+                validationSettings = BuddyFormsHooks.applyFilters('buddyforms:validation:settings', validationSettings, [formSlug]);
+                currentForms.validate(validationSettings);
             });
         }
     }
@@ -1195,18 +1192,11 @@ function BuddyForms() {
         var form_id = options[0], errors = options[1];
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
             var id = 'buddyforms_form_' + form_id;
-            var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
-            var errorFormat;
-            if (errorSize === 1) {
-                errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
-            } else {
-                errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
-            }
-
-            jQuery('.bf-alert').remove();
+            var labelErrors = jQuery('#'+id+' label.error');
             //Clean all error
+            jQuery('.bf-alert').remove();
             jQuery('#'+id+' .form-control').removeClass('error');
-            jQuery('#'+id+' label.error').remove();
+            labelErrors.remove();
             jQuery.each(errors.errors[id], function (i, e) {
                 var fieldData = getFieldFromName(i, form_id);
                 if (!fieldData) {
@@ -1223,7 +1213,7 @@ function BuddyForms() {
                     errorPlacement(labelElement, targetField);
                 }
             });
-            var scrollElement = jQuery("#buddyforms_form_hero_" + form_id);
+            var scrollElement = labelErrors.first();
             if (scrollElement.length > 0) {
                 jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {
                     duration: 500, complete: function () {
@@ -1239,7 +1229,8 @@ function BuddyForms() {
     }
 
     function renderForm(options) {
-        var id = options[0], prevent = options[1], ajax = options[2], method = options[3], formTargetStatus = options[4];
+        var id = options[0], prevent = options[1], ajax = options[2], method = options[3],
+            formTargetStatus = options[4];
         var formId = 'buddyforms_form_' + id;
         if (typeof (tinyMCE) != "undefined") {
             tinyMCE.triggerSave();
@@ -1390,6 +1381,9 @@ function BuddyForms() {
         },
         actionFromButton: function (e) {
             return actionFromButton(e);
+        },
+        getFieldFromSlug: function (fieldSlug, formSlug) {
+            return getFieldFromSlug(fieldSlug, formSlug);
         },
         init: function (id) {
             id = id || false;

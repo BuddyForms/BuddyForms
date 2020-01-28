@@ -489,9 +489,6 @@ function buddyforms_wp_mail_failed( $error ) {
 
 add_action( 'wp_mail_failed', 'buddyforms_wp_mail_failed' );
 
-/**
- * @return bool
- */
 function buddyforms_new_post_status_mail_notification() {
 
 	try {

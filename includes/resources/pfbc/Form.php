@@ -473,6 +473,7 @@ class Form extends Base {
                 if(formTargetStatusElement){
                     formTargetStatus = formTargetStatusElement.attr('data-status');
                 }
+                BuddyFormsHooks.doAction('buddyforms:submit', [jQuery(this), event]);
             	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
             } else {
                 alert('Error, contact the admin!');

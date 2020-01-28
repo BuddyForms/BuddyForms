@@ -239,9 +239,12 @@ function buddyforms_registration_page_content( $content ) {
 		return $content;
 	}
 
-	$bp_get_signup_slug = bp_get_signup_slug();
+	$bp_get_signup_slug = false;
+	if ( function_exists( 'bp_get_signup_slug' ) ) {
+		$bp_get_signup_slug = bp_get_signup_slug();
+	}
 
-	if ( ( $page_id == $buddyforms_registration_page || $post->post_name == $bp_get_signup_slug ) && $buddyforms_registration_form != 'none' ) {
+	if ( ( $page_id == $buddyforms_registration_page || ($bp_get_signup_slug !== false && $post->post_name == $bp_get_signup_slug) ) && $buddyforms_registration_form != 'none' ) {
 		if ( $buddyforms_registration_form == 'page' ) {
 			$regpage = get_post( $buddyforms_registration_page );
 			if ( ! empty( $reg_page ) ) {
