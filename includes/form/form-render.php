@@ -103,7 +103,7 @@ function buddyforms_form_html( $args ) {
 
 	// Hook above the form inside the BuddyForms form div
 	$form_html = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
-	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template() : '';
+	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template($form_slug) : '';
 
 
 	//decide if the update of create message will show.
@@ -294,7 +294,7 @@ function buddyforms_form_html( $args ) {
 
 	// Hook under the form inside the BuddyForms form div
 	$form_html = apply_filters( 'buddyforms_form_hero_last', $form_html, $form_slug );
-	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template() : '';
+	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template($form_slug) : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$form_html .= '<div style="text-align: right; opacity: 0.4; font-size: 12px; margin: 30px 0 0;" clss="branding">' . __( 'Proudly brought to you by', 'buddyforms' ) . ' <a href="https://themekraft.com/buddyforms/" target="_blank" rel="nofollow">BuddyForms</a></div>';
@@ -306,12 +306,14 @@ function buddyforms_form_html( $args ) {
 }
 
 /**
+ * @param string $form_slug
+ *
  * @return string
  */
-function buddyforms_get_login_form_template() {
+function buddyforms_get_login_form_template($form_slug = '') {
 
 	ob_start();
-	buddyforms_locate_template( 'login-form', 'none' );
+	buddyforms_locate_template( 'login-form', $form_slug );
 	$login_form = ob_get_clean();
 
 	return $login_form;

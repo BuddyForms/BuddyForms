@@ -183,9 +183,9 @@ function buddyforms_granted_list_posts_style() {
 }
 
 // Display the WordPress Login Form
-function buddyforms_wp_login_form( $hide = false ) {
+function buddyforms_wp_login_form( $hide = false, $form_slug = 'none' ) {
 	// Get The Login Form
-	echo buddyforms_get_wp_login_form( 'none', '', array( 'caller' => 'template' ), $hide );
+	echo buddyforms_get_wp_login_form( $form_slug, '', array( 'caller' => 'template', 'redirect_url' => esc_url_raw( $_SERVER['REQUEST_URI'] ) ), $hide );
 }
 
 /**
@@ -287,6 +287,7 @@ function buddyforms_register_url( $wp_register_url ) {
 
 	return $wp_register_url;
 }
+
 add_filter( 'register_url', 'buddyforms_register_url' );
 
 add_filter( 'login_form_bottom', 'buddyforms_register_link' );
@@ -434,7 +435,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 
 	?>
-    <ul class="edit_links">
+	<ul class="edit_links">
 		<?php
 		$is_author               = buddyforms_is_author( $post->ID );
 		$user_can_all_submission = current_user_can( 'buddyforms_' . $form_slug . '_all' );
@@ -507,7 +508,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 		do_action( 'buddyforms_the_loop_actions_last', get_the_ID() );
 		?>
-    </ul>
+	</ul>
 	<?php
 }
 
@@ -773,7 +774,7 @@ function buddyforms_get_form_field_by( $form_slug, $field_slug, $by = 'slug' ) {
 		global $buddyforms;
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ $form_slug ]['form_fields'] as $field_key => $field ) {
-				if ( $field[$by] == $field_slug ) {
+				if ( $field[ $by ] == $field_slug ) {
 					$result_field = $field;
 					wp_cache_set( 'buddyforms_get_field_' . $field_slug . '_in_form_' . $form_slug, $result_field, 'buddyforms' );
 

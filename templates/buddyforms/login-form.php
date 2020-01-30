@@ -18,7 +18,7 @@ if ( is_user_logged_in() ) {
 
 <script>
     jQuery(document).ready(function () {
-        jQuery(document).on("click", '.bf-show-login', function (evt) {
+        jQuery(document).on("click", '.bf-show-login', function () {
             jQuery('.bf-show-login-form').toggle();
         });
     });
@@ -26,5 +26,5 @@ if ( is_user_logged_in() ) {
 <div class="buddyforms-info"><?php _e( 'Returning user?', 'buddyforms' ) ?>
     <a href="#" class="bf-show-login"><?php _e( 'Click here to login', 'buddyforms' ) ?></a>
 </div>
-<?php buddyforms_wp_login_form(true); ?>
+<?php buddyforms_wp_login_form(true, $form_slug); ?>
 

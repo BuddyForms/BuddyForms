@@ -102,7 +102,7 @@ function buddyforms_the_loop( $args ) {
 	), $args ) );
 
 	if ( ( $user_logged_in_only == 'logged_in_only' || $user_logged_in_only == 'true' ) && ! is_user_logged_in() ) {
-		buddyforms_wp_login_form();
+		buddyforms_wp_login_form(false, $form_slug);
 
 		return;
 	}
