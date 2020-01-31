@@ -1921,17 +1921,17 @@ input.screen-per-page{
 }
 
 .buddyforms_accordion_permission label.checkbox-inline.draft > input {
-    margin-left: 5% !important;
+    margin-left: 3% !important;
     float: left;
 }
 
 .buddyforms_accordion_permission label.checkbox-inline.admin-submission > input {
-    margin-left: 13% !important;
+    margin-left: 3% !important;
     float: left;
 }
 
 .buddyforms_accordion_permission label.checkbox-inline.all > input {
-    margin-left: 8% !important;
+    margin-left: 3% !important;
     float: left;
 }
 
@@ -1948,6 +1948,27 @@ input.screen-per-page{
 .buddyforms_accordion_permission label.checkbox-inline.create > input {
     margin-left: 3% !important;
     float: left;
+}
+
+.bf_permissions thead tr th.field_label{
+    width: 30%;
+}
+.bf_permissions thead tr th.field_name span{
+    display: inline-block;
+    bottom: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    transform: rotate(-90deg);
+    transform-origin: left;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.bf_permissions thead tr{
+    height: 150px;
+    vertical-align: bottom;
+    overflow: hidden;
 }
 
 .bf_hide_if_not_ajax_ready {

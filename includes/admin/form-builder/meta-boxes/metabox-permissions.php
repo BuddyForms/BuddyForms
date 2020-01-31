@@ -103,7 +103,7 @@ function buddyforms_permissions_screen() {
 	// User Roles Description
 	echo $shortDesc_permission;
 
-	$checkbox_style_group_1 = 'margin-left: 2%; float: left;';
+	$checkbox_style_group_1 = 'margin-left: 5%; float: left;';
 	$checkbox_style_group_2 = 'margin-left: 3%; float: left;';
 
 	// Display all user roles
@@ -188,9 +188,9 @@ function buddyforms_permissions_screen() {
                 <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
                 <th class="field_name">
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Create', 'buddyforms' ) ) ?>
-					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Edit', 'buddyforms' ) ) ?>
-					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Delete', 'buddyforms' ) ) ?>
-					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Draft', 'buddyforms' ) ) ?>
+					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Edit', 'buddyforms' ) ) ?>
+					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Delete', 'buddyforms' ) ) ?>
+					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Draft', 'buddyforms' ) ) ?>
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'All Submissions', 'buddyforms' ) ) ?>
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Admin Submission', 'buddyforms' ) ) ?>
 					<?php if ( buddyforms_core_fs()->is_paying_or_trial() ): ?>

@@ -11,7 +11,7 @@ function buddyforms_user_profile_fields( $user ) {
 
 	global $buddyforms;
 
-	if ( !empty( $buddyforms ) && is_array($buddyforms) ) {
+	if ( ! empty( $buddyforms ) && is_array( $buddyforms ) ) {
 		foreach ( $buddyforms as $form_slug => $buddyform ) {
 			if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 
@@ -92,8 +92,12 @@ function buddyforms_user_profile_fields( $user ) {
 										$options[ $option['value'] ] = $option['label'];
 									}
 
-									$element_attr['class'] = $element_attr['class'] . ' bf-select2';
-									$element               = new Element_Select( $name, $slug, $options, $element_attr );
+									if ( isset( $element_attr['class'] ) ) {
+										$element_attr['class'] = $element_attr['class'] . ' bf-select2';
+									} else {
+										$element_attr['class'] = ' bf-select2';
+									}
+									$element = new Element_Select( $name, $slug, $options, $element_attr );
 
 									if ( isset( $user_meta['multiple'] ) && is_array( $user_meta['multiple'] ) ) {
 										$element->setAttribute( 'multiple', 'multiple' );
