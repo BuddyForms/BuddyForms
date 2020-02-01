@@ -832,6 +832,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$meta_value = get_the_title( $post_id );
 			$meta_value = buddyforms_add_ellipsis( $meta_value );
 			break;
+		case 'post_excerpt':
 		case 'content':
 			$content    = apply_filters( 'the_content', $post->post_content );
 			$content    = str_replace( ']]>', ']]&gt;', $content );

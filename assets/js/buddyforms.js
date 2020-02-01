@@ -804,16 +804,23 @@ function BuddyForms() {
             ) {
                 return true;
             }
-            var msjString = 'Invalid Format';
-            var formatAttr = jQuery(element).attr('data-format');
-            var format = (formatAttr) ? formatAttr : 'dd/mm/yy';
-            //Convert year to year moment format
-            var newFormat = dateFormat.convert(format, dateFormat.datepicker, dateFormat.momentJs);
-            var momentFnc = moment(value, newFormat, true);
-            var isValid = momentFnc.isValid();
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                var msjString = 'Invalid Format';
+                var fieldDateFormat = (fieldData && fieldData.element_date_format) ? fieldData.element_date_format : 'dd/mm/yy';
+                var enableTime = (fieldData && fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
+                fieldDateFormat = dateFormat.convert(fieldDateFormat, dateFormat.datepicker, dateFormat.momentJs);
+                var newFormat = fieldDateFormat;
+                if (enableTime) {
+                    var fieldTimeFormat = (fieldData && fieldData.element_time_format) ? fieldData.element_time_format : 'hh:mm tt';
+                    fieldTimeFormat = dateFormat.convert(fieldTimeFormat, dateFormat.timepicker, dateFormat.momentJs);
+                    newFormat += ' ' + fieldTimeFormat;
+                }
+                //Convert year to year moment format
+                var momentFnc = moment(value, newFormat, true);
+                var isValid = momentFnc.isValid();
+
                 if (fieldData.element_date_invalid_format) {
                     msjString = fieldData.element_date_invalid_format;
                 }
@@ -821,7 +828,6 @@ function BuddyForms() {
             if (isValid !== true) {
                 jQuery.validator.messages['date-validation'] = msjString;
             }
-//
             return isValid;
 
         });
