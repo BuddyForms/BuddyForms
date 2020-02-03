@@ -109,7 +109,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     ul.buddyforms-list .item-status:before {
         background-color: #e3e3e3;
         content: "";
-        padding: 0px 7px;
+        padding: 0px 8px;
         border-radius: 50%;
         margin-right: 4px;
     }
