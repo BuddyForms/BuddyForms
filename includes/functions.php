@@ -478,8 +478,13 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			$current_user_can_all    = apply_filters( 'buddyforms_user_can_all', current_user_can( 'buddyforms_' . $form_slug . '_all' ), $form_slug, $post->ID );
 			$current_user_can_delete = apply_filters( 'buddyforms_user_can_delete', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post->ID );
 
+			$current_user_can_create = apply_filters( 'buddyforms_user_can_create', current_user_can( 'buddyforms_' . $form_slug . '_create' ), $form_slug, $post->ID );
+			$current_user_can_draft = apply_filters( 'buddyforms_user_can_draft', current_user_can( 'buddyforms_' . $form_slug . '_draft' ), $form_slug, $post->ID );
+			$current_post_is_draft   = $post->post_status == 'draft';
+			$current_user_edit_draft = ($current_user_can_create && !$current_user_can_edit && $current_post_is_draft && $current_user_can_draft);
+
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
-				if ( $current_user_can_edit || $current_user_can_all ) {
+				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
@@ -1595,6 +1600,32 @@ function buddyforms_get_form_slug() {
 }
 
 /**
+ * Check if the draft is enabled for the given form slug
+ *
+ * @param $form_slug
+ * @param string $permission
+ *
+ * @return bool
+ * @since 2.5.14
+ * @author gfirem
+ */
+function buddyforms_is_permission_enabled( $form_slug, $permission = 'draft' ) {
+	$result = wp_cache_get( 'buddyforms_user_capability_for_' . $form_slug . '_draft', 'buddyforms' );
+	if ( ! empty( $form_slug ) && $result === false ) {
+		/** @var WP_User $current_user */
+		$current_user = wp_get_current_user();
+		if ( empty( $current_user ) ) {
+			$result = false;
+		} else {
+			$result = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_' . $permission, array(), $form_slug );
+		}
+		wp_cache_set( 'buddyforms_user_capability_for_' . $form_slug . '_draft', $result, 'buddyforms' );
+	}
+
+	return $result;
+}
+
+/**
  * Get the form actions. This function is used to handle the form actions if the form have a form_action element or if not
  *
  * @param $form Form
@@ -1610,18 +1641,18 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	global $buddyforms;
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 
-	$is_draft_enabled = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
-	$user_can_draft   = current_user_can( 'buddyforms_' . $form_slug . '_draft' );
-	if ( current_user_can( 'buddyforms_' . $form_slug . '_draft' ) ) {
-		$user_can_draft = true;
+	$is_draft_permission_enabled = buddyforms_is_permission_enabled( $form_slug );
+
+	$is_form_action = ! empty( $field_options );
+	if ( $is_form_action ) {
+		$is_field_publish_enabled   = empty( $field_options['disabled_publish'] );
+		$is_edit_permission_enabled = buddyforms_is_permission_enabled( $form_slug, 'edit' );
+		$is_draft_enabled           = $is_edit_permission_enabled || $is_draft_permission_enabled;
+	} else {
+		$is_draft_enabled         = $is_draft_permission_enabled;
+		$is_field_publish_enabled = true;
 	}
 
-	$is_field_publish_enabled = true;
-	$is_field_draft_enabled   = true;
-	if ( ! empty( $field_options ) ) {
-		$is_field_publish_enabled = isset( $field_options['enable_publish'] ) && isset( $field_options['enable_publish'][0] ) && $field_options['enable_publish'][0] === 'enable_publish';
-		$is_field_draft_enabled   = isset( $field_options['enable_draft'] ) && isset( $field_options['enable_draft'][0] ) && $field_options['enable_draft'][0] === 'enable_draft';
-	}
 	$bfdesign    = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 	$form_type   = isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '';
 	$form_status = isset( $buddyforms[ $form_slug ]['status'] ) ? $buddyforms[ $form_slug ]['status'] : 'publish';
@@ -1630,8 +1661,8 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	$include_form_draft_button = apply_filters( 'buddyforms_include_form_draft_button', true, $form_slug, $form, $post_id );
 
-	if ( $is_draft_enabled && $user_can_draft && $include_form_draft_button ) {
-		if ( ! $exist_field_status && $is_field_draft_enabled && $form_type === 'post' && is_user_logged_in() ) {
+	if ( $is_draft_enabled && $include_form_draft_button ) {
+		if ( ! $exist_field_status && $form_type === 'post' && is_user_logged_in() ) {
 			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
 			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'submit', array(

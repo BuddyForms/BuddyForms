@@ -43,7 +43,8 @@ function buddyforms_form_html( $args ) {
 	$user_can_edit = false;
 	if ( $form_action !== 'update' && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
 		$user_can_edit = true;
-	} elseif ( bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
+	}
+	if ( $form_action === 'update' && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) || bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
 		$user_can_edit = true;
 	}
 

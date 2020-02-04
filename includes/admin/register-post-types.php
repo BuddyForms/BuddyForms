@@ -210,13 +210,10 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 
 	// Save the Roles and capabilities.
 	if ( isset( $_POST['buddyforms_roles'] ) ) {
-
 		foreach ( get_editable_roles() as $role_name => $role_info ) {
 			$role = get_role( $role_name );
 			foreach ( $role_info['capabilities'] as $capability => $_ ) {
-
 				$capability_array = explode( '_', $capability );
-
 				if ( $capability_array[0] == 'buddyforms' ) {
 					if ( $capability_array[1] == $buddyform['slug'] ) {
 						$role->remove_cap( $capability );

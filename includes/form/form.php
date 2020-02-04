@@ -159,8 +159,17 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 			$user_can_edit = false;
 			if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
-				if ( $the_post->post_author == $current_user->ID && bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) {
-					$user_can_edit = true;
+				$current_post_is_draft = $the_post->post_status == 'draft';
+				$current_user_can_edit = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
+				if ( $current_post_is_draft ) {
+					//Let the user edit the draft until is published
+					$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
+					$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );
+					$user_can_edit           = ( $current_user_can_draft || $current_user_can_edit ) && $current_user_can_create;
+				} else {
+					if ( $the_post->post_author == $current_user->ID && $current_user_can_edit ) {
+						$user_can_edit = true;
+					}
 				}
 			} else {
 				$user_can_edit = true;

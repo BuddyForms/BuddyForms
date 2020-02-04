@@ -1007,29 +1007,27 @@ function BuddyForms() {
 
     function actionFromButtonWrapper(event) {
         var target = jQuery(this).data('target');
+        var status = jQuery(this).data('status');
         var targetForms = jQuery('form#buddyforms_form_' + target);
-        BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, event]);
+        BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, status, event]);
     }
 
     function actionFromButton(args) {
         var targetForms = args[0];
         var target = args[1];
-        var event = args[2];
+        var status = args[2];
+        var event = args[3];
         event.preventDefault();
         var formOptions = 'publish';
-        var draftAction = false;
         if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].status) {
             formOptions = buddyformsGlobal[target].status;
-        }
-        if (buddyformsGlobal && buddyformsGlobal[target] && buddyformsGlobal[target].draft_action) {
-            draftAction = (buddyformsGlobal[target].draft_action[0] === 'Enable Draft');
         }
         if (targetForms && targetForms.length > 0) {
             var fieldStatus = getFieldDataBy(target, 'status');
             if (fieldStatus === false) { //Not exist the field,
                 var statusElement = targetForms.find('input[type="hidden"][name="status"]');
                 if (statusElement && statusElement.length > 0) {
-                    var post_status = jQuery(this).data('status') || formOptions;
+                    var post_status = status || formOptions;
                     statusElement.val(post_status);
                 }
             }

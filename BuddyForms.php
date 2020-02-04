@@ -220,7 +220,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
-            require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
@@ -456,11 +456,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 	function buddyforms_php_version_admin_notice() {
 		?>
-        <div class="notice notice-error is-dismissible">
-            <p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-            <p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
-            <p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
-        </div>
+		<div class="notice notice-error is-dismissible">
+			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
+			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+		</div>
 		<?php
 	}
 

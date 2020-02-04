@@ -104,7 +104,7 @@ function buddyforms_process_submission( $args = array() ) {
 		);
 	}
 
-	$is_draft_enabled   = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
 	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
 
@@ -301,7 +301,7 @@ function buddyforms_process_submission( $args = array() ) {
 	}
 
 	$action             = 'save';//Base action
-	$is_draft_enabled   = ! empty( $buddyforms[ $form_slug ]['draft_action'] );
+	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
 	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
 	//Check the current post status
@@ -320,10 +320,20 @@ function buddyforms_process_submission( $args = array() ) {
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
 	if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
-		if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
-			$user_can_edit = true;
-		} elseif ( $action == 'update' && ( bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) ) {
-			$user_can_edit = true;
+		$current_post_is_draft   = $the_post->post_status == 'draft';
+		$current_user_can_edit   = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
+		$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
+		$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );
+		if ( $current_post_is_draft ) {
+			//Let the user edit the draft until is published
+			$user_can_edit = ( $current_user_can_draft || $current_user_can_edit ) && $current_user_can_create;
+		} else {
+			if ( $action == 'save' && bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_create', array(), $form_slug ) ) {
+				$user_can_edit = true;
+			}
+			if ( $action == 'update' && ( bf_user_can( $user_id, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug ) ) ) {
+				$user_can_edit = true;
+			}
 		}
 	} else {
 		$user_can_edit = true;

@@ -100,6 +100,7 @@ function buddyforms_permissions_screen() {
 		}
 	}
 
+	$form_action = ! empty( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : 'create';
 	// User Roles Description
 	echo $shortDesc_permission;
 
@@ -115,30 +116,32 @@ function buddyforms_permissions_screen() {
 		$default_roles['all']              = '';
 		$default_roles['admin-submission'] = '';
 		$user_role                         = get_role( $role_name );
-		$form_user_role = array();
-		foreach ( $role_info['capabilities'] as $capability => $_ ) {
-			$capability_array = explode( '_', $capability );
-			if ( $capability_array[0] == 'buddyforms' ) {
-				if ( $capability_array[1] == $form_slug ) {
-					if ( $user_role->has_cap( $capability ) ) {
-						$form_user_role[ $capability_array[2] ] = $capability_array[2];
-					}
+		$form_user_role                    = array();
+
+		//is free
+		if ( ! buddyforms_core_fs()->is_paying_or_trial() ) {
+			foreach ( $default_roles as $role_n_a => $role_a ) {
+				if ( $role_n_a !== 'all' || $role_n_a !== 'admin-submission' || $role_n_a !== 'draft' ) {
+					$form_user_role[ $role_n_a ] = $role_n_a;
 				}
 			}
-		}
-
-		$screen = get_current_screen();
-		if ( empty( $form_user_role ) && ! empty( $screen ) && $screen->id === 'buddyforms' ) {
-			if ( ! buddyforms_core_fs()->is_paying_or_trial() ) {
+		} else { //is paying or trial
+			if ( $form_action === 'create' ) {
 				foreach ( $default_roles as $role_n_a => $role_a ) {
-					if ( $role_n_a !== 'all' || $role_n_a !== 'admin-submission' || $role_n_a !== 'draft' ) {
+					if ( ( 'administrator' === $role_name || 'editor' === $role_name ) && $role_n_a !== 'all' && $role_n_a !== 'admin-submission' && $role_n_a !== 'draft' ) {
 						$form_user_role[ $role_n_a ] = $role_n_a;
 					}
 				}
 			} else {
-				foreach ( $default_roles as $role_n_a => $role_a ) {
-					if ( ( 'administrator' === $role_name || 'editor' === $role_name ) && $role_n_a !== 'all' && $role_n_a !== 'admin-submission' && $role_n_a !== 'draft' ) {
-						$form_user_role[ $role_n_a ] = $role_n_a;
+				//Check existing capabilities
+				foreach ( $role_info['capabilities'] as $capability => $_ ) {
+					$capability_array = explode( '_', $capability );
+					if ( $capability_array[0] == 'buddyforms' ) {
+						if ( $capability_array[1] == $form_slug ) {
+							if ( $user_role->has_cap( $capability ) ) {
+								$form_user_role[ $capability_array[2] ] = $capability_array[2];
+							}
+						}
 					}
 				}
 			}
@@ -181,12 +184,12 @@ function buddyforms_permissions_screen() {
 		$form_setup[] = $element;
 	}
 	?>
-    <div class="fields_header">
-        <table class="wp-list-table widefat posts striped bf_permissions">
-            <thead>
-            <tr>
-                <th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
-                <th class="field_name">
+	<div class="fields_header">
+		<table class="wp-list-table widefat posts striped bf_permissions">
+			<thead>
+			<tr>
+				<th class="field_label"><?php _e( 'Role', 'buddyforms' ) ?></th>
+				<th class="field_name">
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_1, __( 'Create', 'buddyforms' ) ) ?>
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Edit', 'buddyforms' ) ) ?>
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Delete', 'buddyforms' ) ) ?>
@@ -194,12 +197,12 @@ function buddyforms_permissions_screen() {
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'All Submissions', 'buddyforms' ) ) ?>
 					<?php echo sprintf( '<span style="%s">%s</span>', $checkbox_style_group_2, __( 'Admin Submission', 'buddyforms' ) ) ?>
 					<?php if ( buddyforms_core_fs()->is_paying_or_trial() ): ?>
-                        <a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
+						<a style="float: right;" href="#" class="bf_check_all"><?php _e( 'Check all', 'buddyforms' ) ?></a>
 					<?php endif; ?>
-                </th>
-            </tr>
-            </thead>
-            <tbody id="the-list">
+				</th>
+			</tr>
+			</thead>
+			<tbody id="the-list">
 			<?php
 			if ( isset( $form_setup ) ) {
 				/**
@@ -214,45 +217,45 @@ function buddyforms_permissions_screen() {
 					$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
 
 					if ( $type == 'html' ) {
-						echo '<tr id="table_row_' . $field->getAttribute( 'id' ) . '_' . $key . '" data-target-role="'.$class.'" class="' . $class . '"><td colspan="2">';
+						echo '<tr id="table_row_' . $field->getAttribute( 'id' ) . '_' . $key . '" data-target-role="' . $class . '" class="' . $class . '"><td colspan="2">';
 						$field->render();
 						echo '</td></tr>';
 					} else { ?>
-                        <tr data-target-role="<?php echo $class ?>" id="table_row_<?php echo $field->getAttribute( 'id' ); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
-                            <th scope="row">
-                                <label for="role_role"><?php echo $field->getLabel() ?></label>
-                            </th>
-                            <td>
+						<tr data-target-role="<?php echo $class ?>" id="table_row_<?php echo $field->getAttribute( 'id' ); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
+							<th scope="row">
+								<label for="role_role"><?php echo $field->getLabel() ?></label>
+							</th>
+							<td>
 								<?php echo $field->render() ?>
-                                <p class="description"><?php echo $field->getShortDesc() ?></p>
-                            </td>
-                        </tr>
+								<p class="description"><?php echo $field->getShortDesc() ?></p>
+							</td>
+						</tr>
 					<?php }
 				}
 			}
 			?>
-            </tbody>
-        </table>
-    </div>
+			</tbody>
+		</table>
+	</div>
 	<?php
 
 }
 
 function buddyforms_form_setup_nav_li_permission() {
 	?>
-    <li class="permission_nav"><a class="permission" href="#permission" data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a></li><?php
+	<li class="permission_nav"><a class="permission" href="#permission" data-toggle="tab"><?php _e( 'Permission', 'buddyforms' ); ?></a></li><?php
 }
 
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_permission' );
 
 function buddyforms_form_setup_tab_pane_permission() {
 	?>
-    <div class="tab-pane fade in" id="permission">
-    <div class="buddyforms_accordion_permission">
+	<div class="tab-pane fade in" id="permission">
+	<div class="buddyforms_accordion_permission">
 		<?php buddyforms_permissions_unregistered_screen() ?>
 		<?php buddyforms_permissions_screen(); ?>
-    </div>
-    </div><?php
+	</div>
+	</div><?php
 }
 
 add_action( 'buddyforms_form_setup_tab_pane_last', 'buddyforms_form_setup_tab_pane_permission' );
