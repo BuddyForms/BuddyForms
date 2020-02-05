@@ -15,6 +15,32 @@ add_action( 'admin_init', 'buddyforms_marketing_init' );
 
 function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
+	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
+}
+
+function buddyforms_marketing_offer_bundle( $hook ) {
+	if ( $hook !== 'buddyforms_page_buddyforms-addons' ) {
+		return;
+	}
+	$user_id = get_current_user_id();
+	if ( empty( $user_id ) || ! is_user_logged_in() ) {
+		return;
+	}
+	if ( ! current_user_can( 'administrator' ) ) {
+		return;
+	}
+	$base_content = "<p class=\"corner-head\">By ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
+	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
+	buddyforms_marketing_include_assets( $content, $base_content );
+}
+
+function buddyforms_marketing_include_assets( $content, $base_content ) {
+	wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
+	wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+	wp_enqueue_script( 'buddyforms-marketing-popup-handler', BUDDYFORMS_ASSETS . 'admin/js/admin-marketing.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+	wp_localize_script( 'buddyforms-marketing-popup-handler', 'buddyformsMarketingHandler', array(
+		'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
+	) );
 }
 
 function buddyforms_marketing_assets() {
@@ -72,7 +98,7 @@ function buddyforms_marketing_assets() {
 		wp_localize_script( 'buddyforms-marketing-popup-handler', 'buddyformsMarketingHandler', array(
 			'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
 		) );
-	} catch (Exception $ex){
+	} catch ( Exception $ex ) {
 
 	}
 }

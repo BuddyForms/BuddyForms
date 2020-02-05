@@ -59,14 +59,14 @@ li.fs-cta a, #fs_addons h2 {
     display: none !important;
 }
 
-.bf-auto-generated-title{
-	background-color: #ccc;
-	border-radius: 3px;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	font-size: 11px;
+.bf-auto-generated-title {
+    background-color: #ccc;
+    border-radius: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 11px;
 }
 
 #TB_window {
@@ -74,10 +74,44 @@ li.fs-cta a, #fs_addons h2 {
     overflow: hidden;
 }
 
-#TB_ajaxContent{
+#TB_ajaxContent {
     width: auto !important;
 }
 
 .the_buddyforms_form .bf-input textarea, .the_buddyforms_form .bf-input .form-control {
     width: 99% !important;
+}
+
+#corner-popup.buddyforms-marketing-bundle-container {
+    background: #2ba7a7;
+    box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, .58);
+    border: 1px solid #2ba7a7;
+    font-family: 'Oswald', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+
+#corner-popup.buddyforms-marketing-bundle-container .corner-close:after, #corner-popup.buddyforms-marketing-bundle-container .corner-close:before {
+    background-color: #fff;
+}
+
+#corner-popup.buddyforms-marketing-bundle-container .corner-close {
+    background: #2ba7a7;
+    box-shadow: 3px 5px 10px 0 rgba(0, 0, 0, .58);
+}
+
+#corner-popup.buddyforms-marketing-bundle-container .corner-btn-close {
+    background: #f4a141;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+#corner-popup.buddyforms-marketing-bundle-container .corner-head {
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Oswald', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+
+#corner-popup.buddyforms-marketing-bundle-container .corner-text {
+    color: #fff;
+    font-size: 1rem;
 }
