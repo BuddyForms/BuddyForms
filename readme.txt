@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.13
+Stable tag: 2.5.14-beta1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,21 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.14-beta1 - 5 Feb 2020 =
+* Fixed the mail notification functionality.
+* Fixed the login redirection to return to the same form after login over a form.
+* Improved the permission table. * Fixed notice error.
+* Improved the post_excerpt to show the ellipsis ... when the content is visualized.
+* Fixed the Date Form Element error for invalid format when a time was included in the element.
+* Fixed the style of the circle in the list of post in the frontend.
+* Fixed the permissions for draft, create and edit.
+* Fixed the state of the permission when they get changed.
+* Removed the option to enabled the draft, now is direct from the permission.
+* Removed the draft option from the Form Action element.
+* Improved the Form Action options to show the button by default and the options only disabled them.
+* Added a popup modal to the Add-ons page to direct the user to the TK Bundle offer.
+
+
 = 2.5.13 - 28 Jan 2020 =
 * Fixed the dependency error from a BuddyPress function `bp_get_signup_slug`.
 * Moved the Form submit JS action to the same form onsubmit where the form is render to give more priority.
