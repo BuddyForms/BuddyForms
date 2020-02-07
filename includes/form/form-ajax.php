@@ -187,6 +187,12 @@ function buddyforms_ajax_process_edit_post() {
 			}
 		}
 
+		//change the form actions base on form permissions
+		$is_draft_permission_enabled  = buddyforms_is_permission_enabled( $form_slug );
+		$is_edit_permission_enabled   = buddyforms_is_permission_enabled( $form_slug, 'edit' );
+		$is_create_permission_enabled = buddyforms_is_permission_enabled( $form_slug, 'create' );
+		$is_draft_enabled             = $is_draft_permission_enabled || ( $is_create_permission_enabled && ! $is_edit_permission_enabled && $is_draft_permission_enabled );
+		$json_array['remove_draft']   = $is_draft_enabled;
 	}
 
 	$json_array = apply_filters( 'buddyforms_ajax_process_edit_post_json_response', $json_array );

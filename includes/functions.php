@@ -479,9 +479,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			$current_user_can_delete = apply_filters( 'buddyforms_user_can_delete', current_user_can( 'buddyforms_' . $form_slug . '_delete' ), $form_slug, $post->ID );
 
 			$current_user_can_create = apply_filters( 'buddyforms_user_can_create', current_user_can( 'buddyforms_' . $form_slug . '_create' ), $form_slug, $post->ID );
-			$current_user_can_draft = apply_filters( 'buddyforms_user_can_draft', current_user_can( 'buddyforms_' . $form_slug . '_draft' ), $form_slug, $post->ID );
+			$current_user_can_draft  = apply_filters( 'buddyforms_user_can_draft', current_user_can( 'buddyforms_' . $form_slug . '_draft' ), $form_slug, $post->ID );
 			$current_post_is_draft   = $post->post_status == 'draft';
-			$current_user_edit_draft = ($current_user_can_create && !$current_user_can_edit && $current_post_is_draft && $current_user_can_draft);
+			$current_user_edit_draft = ( $current_user_can_create && ! $current_user_can_edit && $current_post_is_draft && $current_user_can_draft );
 
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
 				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
@@ -1643,11 +1643,12 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	$is_draft_permission_enabled = buddyforms_is_permission_enabled( $form_slug );
 
-	$is_form_action = ! empty( $field_options );
-	if ( $is_form_action ) {
-		$is_field_publish_enabled   = empty( $field_options['disabled_publish'] );
-		$is_edit_permission_enabled = buddyforms_is_permission_enabled( $form_slug, 'edit' );
-		$is_draft_enabled           = $is_edit_permission_enabled || $is_draft_permission_enabled;
+	$is_form_element_action = ! empty( $field_options );
+	if ( $is_form_element_action ) {
+		$is_field_publish_enabled     = empty( $field_options['disabled_publish'] );
+		$is_edit_permission_enabled   = buddyforms_is_permission_enabled( $form_slug, 'edit' );
+		$is_create_permission_enabled = buddyforms_is_permission_enabled( $form_slug, 'create' );
+		$is_draft_enabled             = $is_draft_permission_enabled || ( $is_create_permission_enabled && ! $is_edit_permission_enabled && $is_draft_permission_enabled );
 	} else {
 		$is_draft_enabled         = $is_draft_permission_enabled;
 		$is_field_publish_enabled = true;

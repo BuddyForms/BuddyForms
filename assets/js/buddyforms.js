@@ -1196,10 +1196,10 @@ function BuddyForms() {
         var form_id = options[0], errors = options[1];
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
             var id = 'buddyforms_form_' + form_id;
-            var labelErrors = jQuery('#'+id+' label.error');
+            var labelErrors = jQuery('#' + id + ' label.error');
             //Clean all error
             jQuery('.bf-alert').remove();
-            jQuery('#'+id+' .form-control').removeClass('error');
+            jQuery('#' + id + ' .form-control').removeClass('error');
             labelErrors.remove();
             jQuery.each(errors.errors[id], function (i, e) {
                 var fieldData = getFieldFromName(i, form_id);
@@ -1289,6 +1289,11 @@ function BuddyForms() {
                                     break;
                                 case 'form_actions':
                                     jQuery("#buddyforms_form_" + id + " .form-actions").html(val);
+                                    break;
+                                case 'remove_draft':
+                                    if (val && val == true) {
+                                        jQuery("#buddyforms_form_" + id + " .form-actions .bf-draft").remove();
+                                    }
                                     break;
                                 default:
                                     jQuery('input[name="' + i + '"]').val(val);
