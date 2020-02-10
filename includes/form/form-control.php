@@ -320,7 +320,7 @@ function buddyforms_process_submission( $args = array() ) {
 	// check if the user has the roles and capabilities
 	$user_can_edit = false;
 	if ( ! bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_all', array(), $form_slug ) ) {
-		$current_post_is_draft   = $the_post->post_status == 'draft';
+		$current_post_is_draft   = ( ! empty( $the_post ) && $the_post->post_status == 'draft' );
 		$current_user_can_edit   = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
 		$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
 		$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );

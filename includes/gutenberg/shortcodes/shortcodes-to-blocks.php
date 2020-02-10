@@ -52,7 +52,6 @@ function buddyforms_shortcodes_to_block_init() {
 	$roles = buddyform_get_role_names();
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
-
 	//
 	// Embed a form
 	//

@@ -1,0 +1,40 @@
+{
+  "name": "buddyforms",
+  "description": "Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!",
+  "author": "ThemeKraft Team.",
+  "license": "GPLv2 or later",
+  "homepage": "https://themekraft.com/buddyforms/",
+  "version": "2.5.14",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "@wordpress/scripts": "^7.0.1",
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "BuddyForms/BuddyForms.git",
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
+    "eslint-config-wordpress": "^2.0.0",
+    "eslint-plugin-jest": "^21.7.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-wordpress": "^0.1.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-deporder": "^1.1.0",
+    "gulp-eslint": "^4.0.2",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglifycss": "^1.1.0",
+    "gulp-util": "^3.0.8",
+    "install": "^0.12.0",
+    "npm": "^6.1.0"
+  }
+}

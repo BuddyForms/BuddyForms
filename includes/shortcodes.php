@@ -102,7 +102,7 @@ function buddyforms_the_loop( $args ) {
 	), $args ) );
 
 	if ( ( $user_logged_in_only == 'logged_in_only' || $user_logged_in_only == 'true' ) && ! is_user_logged_in() ) {
-		buddyforms_wp_login_form(false, $form_slug);
+		buddyforms_wp_login_form( false, $form_slug );
 
 		return;
 	}
@@ -127,7 +127,7 @@ function buddyforms_the_loop( $args ) {
 	}
 
 	$granted_list_posts_style = buddyforms_granted_list_posts_style();
-	if ( ! empty( $args['list_posts_style'] ) && in_array( $args['list_posts_style'], $granted_list_posts_style) ) {
+	if ( ! empty( $args['list_posts_style'] ) && in_array( $args['list_posts_style'], $granted_list_posts_style ) ) {
 		$list_posts_style = $args['list_posts_style'];
 	} else {
 		$list_posts_style = isset( $buddyforms[ $form_slug ]['list_posts_style'] ) ? $buddyforms[ $form_slug ]['list_posts_style'] : 'list';
@@ -490,3 +490,49 @@ function buddyforms_post_meta_key_count( $args ) {
 }
 
 add_shortcode( 'bf_meta_key_count', 'buddyforms_post_meta_key_count' );
+
+/**
+ * Output a form to be used in the admin metabox. This function was placed here to make it available for gutenberg blocks
+ *
+ * @param $form_slug
+ * @param $custom_fields
+ * @param $post_id
+ * @param $post_type
+ *
+ * @return false|string
+ * @author gfirem
+ *
+ * @since 2.5.14
+ */
+function buddyforms_create_form_metabox( $form_slug, $custom_fields, $post_id, $post_type ) {
+	ob_start();
+	BuddyFormsAssets::front_js_css( '', $form_slug );
+	// Create the form object
+	$form = new Form( "metabox_" . $form_slug );
+
+	// Set the form attribute
+	$form->configure( array(
+		"view"  => new View_Metabox,
+		'class' => 'standard-form',
+	) );
+
+	$args = array(
+		'post_type'    => $post_type,
+		'customfields' => $custom_fields,
+		'post_id'      => $post_id,
+		'form_slug'    => $form_slug,
+	);
+
+	// if the form has custom field to save as post meta data they get displayed here
+	buddyforms_form_elements( $form, $args );
+
+	$form->render();
+
+	echo '<script type="text/javascript">';
+	echo "if(BuddyFormsHooks) { BuddyFormsHooks.doAction('buddyforms:render:after'); console.log('buddyforms:rendered');}";
+	echo '</script>';
+
+	$content = ob_get_clean();
+
+	return $content;
+}
