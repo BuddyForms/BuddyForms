@@ -1437,6 +1437,9 @@ JS;
 				'class'    => "use_as_slug",
 				'required' => 1
 			) );
+			unset($form_fields['validation']['required']);
+			unset($form_fields['validation']);
+			
         break;
 		default:
 			$form_fields = apply_filters( 'buddyforms_form_element_add_field', $form_fields, $form_slug, $field_type, $field_id );

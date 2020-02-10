@@ -119,7 +119,7 @@ class View_Frontend extends FormView {
 			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
 		}
 
-		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File && ! $date_is_inline ) {
+		if ( ! $element instanceof Element_Range && ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File && ! $date_is_inline ) {
 
 			$element->appendAttribute( "class", "form-control" );
 
