@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.14-beta1
+Stable tag: 2.5.14
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,10 +389,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.14-beta1 - 5 Feb 2020 =
+= 2.5.14 - 11 Feb 2020 =
 * Fixed the mail notification functionality.
 * Fixed the login redirection to return to the same form after login over a form.
-* Improved the permission table. * Fixed notice error.
+* Improved the permission table.
+* Fixed notice error.
 * Improved the post_excerpt to show the ellipsis ... when the content is visualized.
 * Fixed the Date Form Element error for invalid format when a time was included in the element.
 * Fixed the style of the circle in the list of post in the frontend.
@@ -402,6 +403,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Removed the draft option from the Form Action element.
 * Improved the Form Action options to show the button by default and the options only disabled them.
 * Added a popup modal to the Add-ons page to direct the user to the TK Bundle offer.
+* Fixed the option After Form submission, it was not removing the draft button on specific permission use case.
+* Fixed the draft permission.
+* Fixed the Label on the Range element and to remove the validation tab from the Range Field.
+* Improved the compatibility with gutenberg and the Form Element option to show as a metabox when the Post is edited.
+
 
 
 = 2.5.13 - 28 Jan 2020 =
