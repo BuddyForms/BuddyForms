@@ -2110,3 +2110,18 @@ div#formbuilder-action-templates {
     text-align: center;
 }
 
+.bf_list_item.bf_html div[id^='general-html-'] table tbody th {
+    width: 15%;
+}
+
+.upload_accepted_fields_container td {
+    max-height: 100px;
+    overflow-x: scroll;
+    display: inline-grid;
+    border: 1px solid #7e8993;
+    width: 85%;
+    margin-left: 10px;
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    overflow-y: scroll;
+}

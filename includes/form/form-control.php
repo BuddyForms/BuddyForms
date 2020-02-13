@@ -104,6 +104,21 @@ function buddyforms_process_submission( $args = array() ) {
 		);
 	}
 
+	//Check nonce
+	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
+
+	$nonce_result = wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' );
+
+	if ( ! $nonce_result ) {
+		$args = array(
+			'hasError'      => true,
+			'form_slug'     => $form_slug,
+			'error_message' => __( 'Form submit error. Please contact the site administrator.', 'buddyforms' )
+		);
+
+		return $args;
+	}
+
 	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; //Post status setup in the form
 	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; //Post status from the form. default actions draft and publish or setup option
@@ -533,14 +548,6 @@ function buddyforms_update_post( $args ) {
 	$args = apply_filters( 'buddyforms_update_post_args', $args );
 
 	extract( $args );
-
-	$buddyforms_form_nonce_value = $_POST['_wpnonce'];
-
-	$nonce_result = wp_verify_nonce( $buddyforms_form_nonce_value, 'buddyforms_form_nonce' );
-
-	if ( ! $nonce_result ) {
-		return array( 'post_id' => new WP_Error( '401', 'Form submit error. Please contact the site administrator.' ) );
-	}
 
 	$default_post_title = __( 'none', 'buddyforms' );
 	if ( 'registration' === $form_type && $new_user_id > 0 ) {
@@ -1098,17 +1105,22 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 				// Check if new term to insert
 				if ( isset( $tax_terms ) && is_array( $tax_terms ) ) {
-					foreach ( $tax_terms as $term_key => $term ) {
+					foreach ( $tax_terms as $term_key => $term_val ) {
 
-						if ( empty( $term ) || (integer) $term == - 1 ) {
+						if ( empty( $term_val ) || (integer) $term_val == - 1 ) {
 							continue;
 						}
+
+						if ( is_array( $term_val ) && isset( $term_val[0] ) ) {
+							$term_val = $term_val[0];
+						}
+
 						// Check if the term exist
-						$term_exist = term_exists( (integer) $term, $customfield['taxonomy'] );
+						$term_exist = term_exists( (integer) $term_val, $customfield['taxonomy'] );
 
 						// Create new term if need and add to the new tax items array
 						if ( empty( $term_exist ) ) {
-							$new_term = wp_insert_term( $term, $customfield['taxonomy'] );
+							$new_term = wp_insert_term( $term_val, $customfield['taxonomy'] );
 							if ( ! empty( $new_term ) && ! is_wp_error( $new_term ) ) {
 								$term                                  = get_term_by( 'id', $new_term['term_id'], $customfield['taxonomy'] );
 								$new_tax_items[ $new_term['term_id'] ] = $term->slug;

@@ -56,6 +56,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	// only output CSS for form elements if the option to disable CSS is unchecked
 	if( empty($bfdesign['field_disable_css']) ) { ?>
     /* Design Options - Text Fields */
+    .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"]{
+		width: 95%;
+    }
+
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
     .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
         display: block;
