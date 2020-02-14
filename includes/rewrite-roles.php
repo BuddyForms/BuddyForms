@@ -244,20 +244,28 @@ function buddyforms_registration_page_content( $content ) {
 		$bp_get_signup_slug = bp_get_signup_slug();
 	}
 
-	if ( ( $page_id == $buddyforms_registration_page || ($bp_get_signup_slug !== false && $post->post_name == $bp_get_signup_slug) ) && $buddyforms_registration_form != 'none' ) {
+	if ( ( $page_id == $buddyforms_registration_page || ( $bp_get_signup_slug !== false && $post->post_name == $bp_get_signup_slug ) ) && $buddyforms_registration_form != 'none' ) {
 		if ( $buddyforms_registration_form == 'page' ) {
 			$regpage = get_post( $buddyforms_registration_page );
-			if ( ! empty( $reg_page ) ) {
-				$content = $regpage->post_content;
+			if ( ! empty( $regpage ) ) {
+				// Remove the filter to make sure it not end up in a infinity loop
+				remove_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
+
+				$content = apply_filters( 'the_content', $regpage->post_content );
+				$content = str_replace( ']]>', ']]&gt;', $content );
+
+				// Rebuild the removed filters
+				add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
+
 			}
 		} else {
 			$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
 		}
-	}
 
-	//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
-	BuddyFormsAssets::front_js_css( $content, $buddyforms_registration_form );
-	BuddyFormsAssets::load_tk_font_icons();
+		//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
+		BuddyFormsAssets::front_js_css( $content, $buddyforms_registration_form );
+		BuddyFormsAssets::load_tk_font_icons();
+	}
 
 	return $content;
 }

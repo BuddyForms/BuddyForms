@@ -584,6 +584,11 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		width: initial;
     }
 
+    /* Fix to avoid BP override the width of text inputs */
+    #buddypress .the_buddyforms_form .standard-form input[type="text"]{
+        width: 100%;
+    }
+
     #content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset {
         border: 1px solid #d6d6d6;
         padding: 0;
