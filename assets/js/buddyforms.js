@@ -1067,7 +1067,6 @@ function BuddyForms() {
         switch (fieldData.type) {
             case "gdpr":
                 element.parent().append(label);
-
                 break;
             case "taxonomy":
             case "category":
@@ -1076,10 +1075,13 @@ function BuddyForms() {
                 break;
             case 'textarea':
             case 'buddyforms_form_content':
+            case 'content':
             case 'post_excerpt':
                 element.closest('div.wp-core-ui.wp-editor-wrap').append(label);
+                element.closest('div.wp-core-ui.wp-editor-wrap').find('.wp-editor-container').addClass('error');
                 break;
             case "checkbox":
+            case "dropdown":
             case "radiobutton":
                 var parentElement = jQuery(element).closest('.bf_field_group');
                 if (parentElement) {
@@ -1197,8 +1199,16 @@ function BuddyForms() {
         if (buddyformsGlobal && form_id && errors && buddyformsGlobal[form_id] && buddyformsGlobal.localize.error_strings) {
             var id = 'buddyforms_form_' + form_id;
             var labelErrors = jQuery('#' + id + ' label.error');
+            var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
+            var errorFormat;
+            if (errorSize === 1) {
+                errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
+            } else {
+                errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
+            }
             //Clean all error
             jQuery('.bf-alert').remove();
+            var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; padding-inline-start: 40px;">';
             jQuery('#' + id + ' .form-control').removeClass('error');
             labelErrors.remove();
             jQuery.each(errors.errors[id], function (i, e) {

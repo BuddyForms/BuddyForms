@@ -487,7 +487,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID() );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
 					} else {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
 					}
@@ -850,16 +850,19 @@ function buddyforms_get_form_fields( $form_slug ) {
  * @param $form_slug
  * @param $field_type
  *
+ * @param string $search_by
+ *
  * @return bool
+ * @since 2.5.15 added $search_by
  */
-function buddyforms_exist_field_type_in_form( $form_slug, $field_type ) {
+function buddyforms_exist_field_type_in_form( $form_slug, $field_type, $search_by = 'type' ) {
 	$fields = buddyforms_get_form_fields( $form_slug );
 	$exist  = false;
 	if ( empty( $fields ) ) {
 		return $exist;
 	}
 	foreach ( $fields as $field ) {
-		if ( $field['type'] == $field_type ) {
+		if ( $field[ $search_by ] == $field_type ) {
 			$exist = true;
 			break;
 		}

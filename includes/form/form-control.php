@@ -1171,7 +1171,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 		// Update meta do_action to hook into. This can be needed if you added
 		// new form elements and need to manipulate how they get saved.
-		do_action( 'buddyforms_update_post_meta', $customfield, $post_id );
+		do_action( 'buddyforms_update_post_meta', $customfield, $post_id, $form_slug );
 
 	}
 

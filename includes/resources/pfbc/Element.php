@@ -189,13 +189,25 @@ abstract class Element extends Base {
 				$element = substr( $element, 0, - 1 );
 			}
 
+			$global_error = ErrorHandler::get_instance();
+			$form_slug    = $this->_attributes['data-form'];
+			$slug = $this->getAttribute('name');
 			if ( strlen( $value > 0 ) ) {
 				if ( ! empty( $this->_attributes['minlength'] ) && strlen( $value ) < $this->_attributes['minlength'] ) {
-					$this->_errors[] = $element . " should be at least {$this->_attributes['minlength']} characters";
+					$message = sprintf( "%s should be at least %s characters", $element, $this->_attributes['minlength'] );
+					if ( ! empty( $form_slug ) ) {
+						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					}
+
+					$this->_errors[] = $message;
 					$valid           = false;
 				}
 				if ( ! empty( $this->_attributes['maxlength'] ) && strlen( $value ) > $this->_attributes['maxlength'] ) {
-					$this->_errors[] = $element . " should be not more then {$this->_attributes['maxlength']} characters";
+					$message = sprintf( "%s should be not more then %s characters", $element, $this->_attributes['maxlength'] );
+					if ( ! empty( $form_slug ) ) {
+						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					}
+					$this->_errors[] = $message;
 					$valid           = false;
 				}
 			}
@@ -203,8 +215,11 @@ abstract class Element extends Base {
 			foreach ( $this->validation as $validation ) {
 				if ( ! $validation->isValid( $value, $this ) ) {
 					//In the error message, %element% will be replaced by the element's label or name if label is not provided.
-					$message =  $validation->getMessage();
-					$this->_errors[] = str_replace( "%element%", $element, $message);
+					$message         = $validation->getMessage();
+					if ( ! empty( $form_slug ) ) {
+						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					}
+					$this->_errors[] = str_replace( "%element%", $element, $message );
 					$valid           = false;
 				}
 			}
@@ -254,7 +269,7 @@ abstract class Element extends Base {
 	 * @return string
 	 */
 	public function html() {
-		return '<input'. $this->getAttributes(). '/>';
+		return '<input' . $this->getAttributes() . '/>';
 	}
 
 	/*If an element requires javascript to be loaded, this method is used send them to the browser after
@@ -281,7 +296,7 @@ abstract class Element extends Base {
 	public function setRequired( $required ) {
 		if ( ! empty( $required ) ) {
 
-			$this->validation[] = new Validation_Required('', $this->field_options);
+			$this->validation[]            = new Validation_Required( '', $this->field_options );
 			$this->_attributes["required"] = "";
 		}
 
