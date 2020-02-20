@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.15-beta1
+Stable tag: 2.5.15-beta2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,17 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.15-beta2 - 20 Feb 2020 =
+* Fixed the error placement for the Content Form Element.
+* Code improvement.
+* Added a new parameter `$customfield` with the field options to the hook filter `buddyforms_form_element_add_field`.
+* Fixed the default value of the email notification option mail to, by default is the admin option.
+* Added a new parameter `$form_slug` to the hook action `buddyforms_update_post_meta`.
+* Fixed the error placement for the requirement form elements.
+* Removed the recently added styles for the dropdown and select2 form Elements.
+* Fixed the language loader.
+* Updated the Spanish language.
+
 = 2.5.15-beta1 - 11 Feb 2020 =
 * Fixed styles for files types in the upload form element.
 * Fixed a nonce issue.
