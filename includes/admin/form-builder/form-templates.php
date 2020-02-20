@@ -142,6 +142,7 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 
 	$buddyforms_templates = buddyforms_form_builder_register_templates();
 
+	$none_dependency_string = __( 'None', 'buddyforms' );
 	ob_start();
 
 	?>
@@ -169,10 +170,10 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 
 					$dependencies = buddyforms_form_builder_template_get_dependencies( $template );
 
-					$disabled = $dependencies != 'None' ? 'disabled' : '';
+					$disabled = $dependencies != $none_dependency_string ? 'disabled' : '';
 
 					?>
-                    <div class="bf-3-tile bf-tile <?php if ( $dependencies != 'None' ) {
+                    <div class="bf-3-tile bf-tile <?php if ( $dependencies != $none_dependency_string ) {
 						echo 'disabled ';
 					} ?>">
                         <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
@@ -180,7 +181,7 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
                             <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
                         </div>
                         <div class="bf-tile-preview-wrap"></div>
-						<?php if ( $dependencies != 'None' ) { ?>
+						<?php if ( $dependencies != $none_dependency_string ) { ?>
                             <p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
 						<?php } else { ?>
                             <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
