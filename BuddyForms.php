@@ -308,7 +308,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'buddyforms', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			load_plugin_textdomain( 'buddyforms', false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 
 		/**
