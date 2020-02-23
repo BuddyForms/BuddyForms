@@ -567,4 +567,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		margin-top: 0.5em;
 		margin-bottom: 0.5em;
 	}
+	/* Solution to avoid the select2 dropdown not left behind the popups */
+	span.select2-dropdown.buddyforms-dropdown{
+		z-index: 200000;
+	}
 </style>

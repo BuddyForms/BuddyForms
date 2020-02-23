@@ -261,6 +261,9 @@ function buddyforms_form_elements_select_options() {
 				'checkbox'    => array(
 					'label' => __( 'Checkbox', 'buddyforms' ),
 				),
+				'link'    => array(
+					'label' => __( 'Url', 'buddyforms' ),
+				),
 				'gdpr'        => array(
 					'label'  => __( 'GDPR Agreement', 'buddyforms' ),
 					'unique' => 'unique'

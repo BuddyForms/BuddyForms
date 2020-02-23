@@ -76,7 +76,7 @@ class BuddyFormsAssets {
 	 */
 	public static function load_select2_assets() {
 		// jQuery Select2 // https://select2.github.io/
-		wp_enqueue_script( 'buddyforms-select2-js', BUDDYFORMS_ASSETS . 'resources/select2/dist/js/select2.min.js', array( 'jquery' ), '4.0.3' );
+		wp_enqueue_script( 'buddyforms-select2-js', BUDDYFORMS_ASSETS . 'resources/select2/dist/js/select2.full.min.js', array( 'jquery' ), '4.0.3' );
 		wp_enqueue_style( 'buddyforms-select2-css', BUDDYFORMS_ASSETS . 'resources/select2/dist/css/select2.min.css' );
 	}
 

@@ -447,6 +447,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			}
 
+			// Signal that parent SDK was initiated.
+			do_action( 'buddyforms_core_fs_loaded' );
+
 		} catch ( Freemius_Exception $e ) {
 
 		}
@@ -473,8 +476,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$GLOBALS['buddyforms_new'] = new BuddyForms();
 			// Init Freemius.
 			buddyforms_core_fs();
-			// Signal that parent SDK was initiated.
-			do_action( 'buddyforms_core_fs_loaded' );
 			// GDPR Admin Notice
 			buddyforms_core_fs()->add_filter( 'handle_gdpr_admin_notice', '__return_true' );
 
