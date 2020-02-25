@@ -18,7 +18,7 @@ class View_Frontend extends FormView {
 		$field_id     = $this->_form->getAttribute( "field_id" );
 		$layout_style = buddyforms_layout_style( $field_id );
 
-		$this->class = apply_filters('buddyforms_forms_classes', $this->class, $this, $form_slug);
+		$this->class = apply_filters( 'buddyforms_forms_classes', $this->class, $this, $form_slug );
 		if ( $this->class ) {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
@@ -105,8 +105,8 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		$attr_error   = $element->getAttribute( 'error' );
-		$opt_error    = $element->getOption( 'error' );
+		$attr_error = $element->getAttribute( 'error' );
+		$opt_error  = $element->getOption( 'error' );
 		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
 			$element->appendAttribute( 'class', 'error' );
 		}
@@ -168,16 +168,27 @@ class View_Frontend extends FormView {
 			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
 		}
 
+		//TODO not echo label if the textarea already have it
+		if ( $element instanceof Element_Textarea || $element instanceof Element_PostExcerpt ) {
+			$val = $element->getAttribute("value");
+			if ( ! empty( $val) && is_string( $val ) ) {
+				$have_label_string = strpos( $val, '</label>' );
+				if ( $have_label_string !== false ) {
+					return;
+				}
+			}
+		}
+
 		//TODO improve required flag position adding new layout option to place before/after the label or the placeholder
 		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' || $date_is_inline || $element instanceof Element_Checkbox || $element instanceof Element_Radio ) {
 			if ( $element->isRequired() ) {
-                $gdpr_required = false;
-			    if($element->getAttribute('data-element-slug')){
-                    $gdpr_required = $element->getAttribute('data-element-slug')==='gdpr-agreement'? true : false;
-                }
-                if(!$gdpr_required){
-                    $label = $label . html_entity_decode( $this->renderRequired() );
-                }
+				$gdpr_required = false;
+				if ( $element->getAttribute( 'data-element-slug' ) ) {
+					$gdpr_required = $element->getAttribute( 'data-element-slug' ) === 'gdpr-agreement' ? true : false;
+				}
+				if ( ! $gdpr_required ) {
+					$label = $label . html_entity_decode( $this->renderRequired() );
+				}
 
 			}
 		}

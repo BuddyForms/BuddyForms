@@ -203,13 +203,11 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
-								$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
 								$valid = false;
 							}
 						}
 					} else {
 						if ( ! $element->isValid( $value ) ) {
-							$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $id, $element->getErrors(), $field_options['name'], $id ) );
 							$element->setAttribute('class', 'error');
 							$valid = false;
 						}

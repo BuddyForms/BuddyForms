@@ -16,6 +16,8 @@ class Validation_Required extends Validation {
 			$message = $user_message;
 		}
 
+		$message = str_replace( "%element%", $this->getOption('name'), $message );
+
 		return $message;
 	}
 

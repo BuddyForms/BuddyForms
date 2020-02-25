@@ -28,8 +28,8 @@ class View_SideBySide extends FormView {
 			$element->appendAttribute( "class", "form-control" );
 		}
 
-		$attr_error   = $element->getAttribute( 'error' );
-		$opt_error    = $element->getOption( 'error' );
+		$attr_error = $element->getAttribute( 'error' );
+		$opt_error  = $element->getOption( 'error' );
 		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
 			$element->appendAttribute( 'class', 'error' );
 		}
@@ -63,14 +63,14 @@ class View_SideBySide extends FormView {
 	 * @param Element $element
 	 */
 	protected function renderLabel( Element $element ) {
-		$label = $element->getLabel();
-
+		$label       = $element->getLabel();
+		$is_required = $element->isRequired();
 		//TODO improve required flag position
-		if ( ! $this->noLabel &&  $element->isRequired() ) {
+		if ( ! $this->noLabel && $is_required ) {
 			$label = $label . $this->renderRequired();
 		}
 
-		echo sprintf('<label class="text-left-xs col-xs-12 col-md-4 control-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label);
+		echo sprintf( '<label class="text-left-xs col-xs-12 col-md-4 control-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label );
 	}
 
 	public function renderCSS() {

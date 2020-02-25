@@ -36,7 +36,9 @@ class Element_Password extends Element_Textbox {
                 <input data-element-slug="user_pass" data-form="<?php echo $form_slug ?>" placeholder="<?php echo $placeholder_label_2 ?>" <?php echo $required_string ?> name="<?php echo $this->_attributes["name"]; ?>_confirm" id="<?php echo $this->_attributes["id"]; ?>2" class="<?php echo $classes ?>" type="password"/>
             </div>
             <p>
-            <div><span id="password-strength"></span></div>
+            <div style="margin: 1em;">
+		        <span id="password-strength"></span>
+	        </div>
             </p>
         </fieldset>
 		<?php

@@ -233,7 +233,7 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	$mail_header[] = apply_filters( 'buddyforms_email_headers_mime_version', "MIME-Version: 1.0", $subject, $from_name, $from_email, $form_slug, $post_id );
 	$mail_header[] = apply_filters( 'buddyforms_email_headers_priority', "X-Priority: 1", $subject, $from_name, $from_email, $form_slug, $post_id );
 	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_type', "Content-Type: text/html; charset='UTF-8'", $subject, $from_name, $from_email, $form_slug, $post_id );
-	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_transfer_encoding', "Content-Transfer-Encoding: 7bit", $subject, $from_name, $from_email, $form_slug, $post_id );
+//	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_transfer_encoding', "Content-Transfer-Encoding: 7bit", $subject, $from_name, $from_email, $form_slug, $post_id );
 	$mail_header[] = "From: $encoded_from_name <$from_email>";
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );

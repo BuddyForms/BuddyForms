@@ -197,7 +197,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug, $customfield_val ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
 						}
 						break;
 
@@ -211,7 +211,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
 							}
 						} else {
-							$form->addElement( new Element_Hidden( $slug, $customfield_val ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
 						}
 						break;
 
@@ -263,7 +263,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$post_title = $the_post->post_title;
 						}
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title ) );
+							$form->addElement( new Element_Hidden( 'buddyforms_form_title', $post_title, $customfields ) );
 						} else {
 
 							$element_attr['id'] = 'buddyforms_form_title';
@@ -301,7 +301,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val ) );
+							$form->addElement( new Element_Hidden( 'buddyforms_form_content', $buddyforms_form_content_val, $customfields ) );
 						} else {
 							$textarea_rows = isset( $customfield['textarea_rows'] ) ? $customfield['textarea_rows'] : apply_filters( 'buddyforms_post_content_default_rows', 18 );
 							ob_start();
@@ -489,6 +489,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$form->addElement( new Element_Select( $name, 'status', $post_status, $element_attr, $customfield ) );
 
+							Element_Date::include_assets();
 							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap bf_datetimepicker';
 							$element_attr['id']          = $element_attr['id'] . '_bf_datetime';
 							$element_attr['placeholder'] = __( 'Schedule Time', 'buddyforms' );
@@ -533,6 +534,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								$required = $form->getRequiredSignal();
 							}
 							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
+						} else {
+							$wp_editor_label = '<label aa for="' . $slug . '">' . $name . $required . '</label>';
 						}
 
 						if ( $textarea_rows ) {
@@ -545,12 +548,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $maxlength . "]\"", $wp_editor );
 
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
+							$form->addElement( new Element_Hidden( $name, $customfield_val, $customfields ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-								$wp_editor = '<div class="bf_inputs bf-input">' . $wp_editor . '</div>';
+								$wp_editor = '<div class="bf_field_group ' . $slug . '">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
-								$wp_editor = '<div class="bf_inputs bf-input">' . $wp_editor . '<span class="help-inline">' . $description . '</span></div>';
+								$wp_editor = '<div class="bf_field_group ' . $slug . '">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
 							$element = new Element_HTML( $wp_editor, $name, $name, $customfield );
@@ -618,7 +621,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( $name, $customfield_val ) );
+							$form->addElement( new Element_Hidden( $name, $customfield_val, $customfields ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
@@ -631,7 +634,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 						break;
 					case 'hidden' :
-						$form->addElement( new Element_Hidden( $name, $customfield['value'] ) );
+						$form->addElement( new Element_Hidden( $name, $customfield['value'], $customfields ) );
 						break;
 
 					case 'text' :
@@ -640,7 +643,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$element_attr['data-rule-minlength'] = '[' . $text_minlength . ']';
 						$element_attr['data-rule-maxlength'] = '[' . $text_maxlength . ']';
 
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr ) );
+						$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
 						break;
 
 					case 'range' :
@@ -749,7 +752,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$upload_error_validation_message   = "";
 						$label_name                        = "";
 						$multiple_files_validation_message = "";
-                        $upload_from_url   = isset( $customfield['upload_from_url'] ) ?$customfield['upload_from_url'][0] : '';
+						$upload_from_url                   = isset( $customfield['upload_from_url'] ) ? $customfield['upload_from_url'][0] : '';
 						if ( isset( $customfield['name'] ) ) {
 							$label_name = $customfield['name'];
 						}
@@ -802,7 +805,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							"upload_error_validation_message"   => $upload_error_validation_message,
 							"shortDesc"                         => $description,
 							"form_slug"                         => $form_slug,
-                            "upload_from_url"                   => $upload_from_url
+							"upload_from_url"                   => $upload_from_url
 						), $customfield );
 						$form->addElement( $upload_element );
 						break;
@@ -933,7 +936,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$element_attr['value'] = $customfield['post_formats_default'];
 						}
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'] ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield['post_formats_default'], $customfields ) );
 						} else {
 							$form->addElement( new Element_PostFormats( $name, $slug, $post_formats, $element_attr, $customfield ) );
 						}
@@ -1104,7 +1107,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						if ( isset( $customfield['hidden_field'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {
 								foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
-									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax ) );
+									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax, $customfields ) );
 								}
 							}
 						} else {

@@ -191,23 +191,24 @@ abstract class Element extends Base {
 
 			$global_error = ErrorHandler::get_instance();
 			$form_slug    = $this->_attributes['data-form'];
-			$slug = $this->getAttribute('name');
+			$slug         = $this->getAttribute( 'name' );
 			if ( strlen( $value > 0 ) ) {
 				if ( ! empty( $this->_attributes['minlength'] ) && strlen( $value ) < $this->_attributes['minlength'] ) {
 					$message = sprintf( "%s should be at least %s characters", $element, $this->_attributes['minlength'] );
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					} else {
+						$this->_errors[] = $message;
 					}
-
-					$this->_errors[] = $message;
 					$valid           = false;
 				}
 				if ( ! empty( $this->_attributes['maxlength'] ) && strlen( $value ) > $this->_attributes['maxlength'] ) {
 					$message = sprintf( "%s should be not more then %s characters", $element, $this->_attributes['maxlength'] );
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					} else {
+						$this->_errors[] = $message;
 					}
-					$this->_errors[] = $message;
 					$valid           = false;
 				}
 			}
@@ -215,12 +216,13 @@ abstract class Element extends Base {
 			foreach ( $this->validation as $validation ) {
 				if ( ! $validation->isValid( $value, $this ) ) {
 					//In the error message, %element% will be replaced by the element's label or name if label is not provided.
-					$message         = $validation->getMessage();
+					$message = $validation->getMessage();
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
+					} else {
+						$this->_errors[] = str_replace( "%element%", $element, $message );
 					}
-					$this->_errors[] = str_replace( "%element%", $element, $message );
-					$valid           = false;
+					$valid = false;
 				}
 			}
 		}

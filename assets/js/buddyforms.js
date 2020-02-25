@@ -807,6 +807,14 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (!fieldData) {
+                    return true;
+                }
+                //If the field is not required and is empty validate as true
+                if (typeof fieldData['required'] === "undefined" && !value) {
+                    return true;
+                }
+
                 var msjString = 'Invalid Format';
                 var fieldDateFormat = (fieldData && fieldData.element_date_format) ? fieldData.element_date_format : 'dd/mm/yy';
                 var enableTime = (fieldData && fieldData.enable_time && fieldData.enable_time[0] && fieldData.enable_time[0] === 'enable_time');
@@ -867,7 +875,7 @@ function BuddyForms() {
     }
 
     function getFieldFromName(fieldName, formSlug) {
-        if (fieldName && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+        if (fieldName && typeof fieldName === "string" && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
             var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
                 fieldName = fieldName.replace('[]', '');
                 fieldName = BuddyFormsHooks.applyFilters('buddyforms:field:name', fieldName, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
@@ -1201,19 +1209,20 @@ function BuddyForms() {
             var labelErrors = jQuery('#' + id + ' label.error');
             var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
             var errorFormat;
-            if (errorSize === 1) {
+            if (errorSize == 1) {
                 errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
             } else {
                 errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
             }
             //Clean all error
             jQuery('.bf-alert').remove();
-            var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; padding-inline-start: 40px;">';
+            var errorHTMLItems = [];
             jQuery('#' + id + ' .form-control').removeClass('error');
             labelErrors.remove();
             jQuery.each(errors.errors[id], function (i, e) {
-                var fieldData = getFieldFromName(i, form_id);
+                var fieldData = getFieldFromSlug(i, form_id);
                 if (!fieldData) {
+                    errorHTMLItems.push({id: i, message: e});
                     return true;
                 }
                 var targetField = jQuery('[name="' + fieldData.slug + '"]');
@@ -1227,6 +1236,18 @@ function BuddyForms() {
                     errorPlacement(labelElement, targetField);
                 }
             });
+
+            if (errorHTMLItems.length > 0) {
+                var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; margin-left: 1em; padding-inline-start: 0.5em;">';
+                jQuery.each(errorHTMLItems, function (i, e) {
+                    if (e && e.message && e.message !== '') {
+                        errorHTML += '<li data-target-field="' + e.id + '">' + e.message + '</li>'
+                    }
+                });
+                errorHTML += '</ul></div>';
+                jQuery('#' + id).prepend(errorHTML);
+            }
+
             var scrollElement = labelErrors.first();
             if (scrollElement.length > 0) {
                 jQuery('html, body').animate({scrollTop: scrollElement.offset().top - 100}, {

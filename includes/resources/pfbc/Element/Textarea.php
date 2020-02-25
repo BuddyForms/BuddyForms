@@ -36,8 +36,9 @@ class Element_Textarea extends Element {
 			} elseif ( ! empty( $value['shortDesc'] ) ) {
 				$this->shortDesc = $value['shortDesc'];
 			}
-			if ( ! empty( $field_options ) && ! empty( $field_options['required'] ) && $field_options['required'][0] === 'required' ) {
-				$this->setValidation( new Validation_Required( $field_options['validation_error_message'], $field_options ) );
+			if ( ! empty( $field_options ) && ! empty( $field_options['required'] ) && ( $field_options['required'][0] === 'required' || $field_options['required'] == 'required' || $field_options['required'] ) ) {
+				$validation_message = ! empty( $field_options['validation_error_message'] ) ? $field_options['validation_error_message'] : str_replace( "%element%", $this->getLabel(), $this->message );
+				$this->setValidation( new Validation_Required( $validation_message, $field_options ) );
 			}
 		}
 		parent::__construct( $label, $name, $properties, $field_options );

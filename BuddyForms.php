@@ -435,7 +435,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'days'               => 14,
 						'is_require_payment' => true,
 					),
-					'has_affiliation' => false,
+					'has_affiliation' => 'selected',
 					'menu'            => array(
 						'slug'       => 'edit.php?post_type=buddyforms',
 						'first-path' => $first_path,
@@ -444,7 +444,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'addons'     => true,
 					),
 				) );
-
 			}
 
 			// Signal that parent SDK was initiated.
