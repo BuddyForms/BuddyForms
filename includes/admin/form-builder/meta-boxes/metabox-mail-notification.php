@@ -446,8 +446,11 @@ function buddyforms_test_email() {
 		$result = false;
 		if ( ! empty( $buddyforms ) && ! empty( $buddyforms[ $form_slug ] ) && ! empty( $buddyforms[ $form_slug ]['mail_submissions'] ) ) {
 			$notification = ! empty( $buddyforms[ $form_slug ]['mail_submissions'][ $notification_id ] ) ? $buddyforms[ $form_slug ]['mail_submissions'][ $notification_id ] : false;
-			$subject      = __( 'BuddyForms Test Email', 'buddyforms' );
-			$body         = __( 'You body was empty, please try when you have something in place.', 'buddyforms' );
+			if ( empty( $notification ) ) {
+				$notification = ! empty( $buddyforms[ $form_slug ]['mail_notification'][ $notification_id ] ) ? $buddyforms[ $form_slug ]['mail_notification'][ $notification_id ] : false;
+			}
+			$subject = __( 'BuddyForms Test Email', 'buddyforms' );
+			$body    = __( 'You body was empty, please try when you have something in place.', 'buddyforms' );
 			if ( ! empty( $notification ) ) {
 				if ( ! empty( $notification['mail_body'] ) ) {
 					$body = $notification['mail_body'];
