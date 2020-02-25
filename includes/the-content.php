@@ -28,7 +28,7 @@ function buddyforms_template_include( $template ) {
  */
 add_filter( 'the_content', 'buddyforms_attached_page_content', 50, 1 );
 function buddyforms_attached_page_content( $content ) {
-	global $buddyforms;
+	global $buddyforms, $wp_query;
 
 	$form_slug      = get_query_var( 'bf_form_slug' );
 	$post_id        = get_query_var( 'bf_post_id' );
@@ -64,7 +64,7 @@ function buddyforms_attached_page_content( $content ) {
 				$new_content = $bf_form;
 			}
 
-			$content = $new_content;
+			$content .= $new_content;
 		}
 	}
 	// Rebuild the removed filters
