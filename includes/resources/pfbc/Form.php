@@ -203,6 +203,7 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
+								$element->setAttribute('class', 'error');
 								$valid = false;
 							}
 						}

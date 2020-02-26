@@ -1079,7 +1079,7 @@ function BuddyForms() {
             case "taxonomy":
             case "category":
             case "tags":
-                element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label);
+                element.closest('div.bf_field_group').find('.bf_inputs.bf-input').append(label).find('.select2-container span.select2-selection').addClass('error');
                 break;
             case 'textarea':
             case 'buddyforms_form_content':
@@ -1217,7 +1217,10 @@ function BuddyForms() {
             //Clean all error
             jQuery('.bf-alert').remove();
             var errorHTMLItems = [];
-            jQuery('#' + id + ' .form-control').removeClass('error');
+            var targetForm = jQuery('#' + id);
+            targetForm.find('.form-control').removeClass('error');
+            targetForm.find('.bf_inputs.bf-input .select2-container span.select2-selection').removeClass('error');
+            targetForm.find('.wp-editor-container').removeClass('error');
             labelErrors.remove();
             jQuery.each(errors.errors[id], function (i, e) {
                 var fieldData = getFieldFromSlug(i, form_id);
@@ -1225,7 +1228,12 @@ function BuddyForms() {
                     errorHTMLItems.push({id: i, message: e});
                     return true;
                 }
-                var targetField = jQuery('[name="' + fieldData.slug + '"]');
+                var targetField;
+                if (fieldData.type === 'category' || fieldData.type === 'taxonomy' || fieldData.type === 'tags' || fieldData.type === 'checkbox') {
+                    targetField = jQuery('[name="' + fieldData.slug + '[]"]');
+                } else {
+                    targetField = jQuery('[name="' + fieldData.slug + '"]');
+                }
                 if (targetField && targetField.length === 0) {
                     targetField = jQuery('[data-element-slug="' + fieldData.slug + '"]');
                 }
@@ -1245,7 +1253,7 @@ function BuddyForms() {
                     }
                 });
                 errorHTML += '</ul></div>';
-                jQuery('#' + id).prepend(errorHTML);
+                targetForm.prepend(errorHTML);
             }
 
             var scrollElement = labelErrors.first();
@@ -1473,7 +1481,6 @@ function BuddyForms() {
                 addValidationMinValue();
                 addDateFormatValidation();
                 addValidationEmail();
-                enabledSelect2();
                 enabledDateTime();
                 enableJQueryTimeAddOn();
                 enablePriceField();
@@ -1481,6 +1488,7 @@ function BuddyForms() {
                 addFeatureImageValidations();
             }
 
+            enabledSelect2();
             bf_form_errors();
             enabledGarlic();
             handleFeaturePost();

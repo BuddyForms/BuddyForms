@@ -340,8 +340,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$content_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
 							$content_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
-							$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $content_minlength . "]\"", $wp_editor );
-							$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $content_maxlength . "]\"", $wp_editor );
+							$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-minlength=\"[%d]\"", $content_minlength ), $wp_editor );
+							$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-maxlength=\"[%d]\"", $content_maxlength ), $wp_editor );
+							$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-form='%s'", $form_slug ), $wp_editor );
 
 
 							$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
@@ -544,8 +545,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
 						$maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 100;
-						$wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $minlength . "]\"", $wp_editor );
-						$wp_editor = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $maxlength . "]\"", $wp_editor );
+						$wp_editor = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-minlength=\"[%d]\"", $minlength ), $wp_editor );
+						$wp_editor = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-maxlength=\"[%d]\"", $maxlength ), $wp_editor );
+						$wp_editor = preg_replace( '/<textarea/', sprintf( "<textarea data-form='%s'", $form_slug ), $wp_editor );
 
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val, $customfields ) );
@@ -605,8 +607,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$excerpt_minlength = isset( $customfield['validation_minlength'] ) ? $customfield['validation_minlength'] : 0;
 						$excerpt_maxlength = isset( $customfield['validation_maxlength'] ) ? $customfield['validation_maxlength'] : 0;
-						$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-minlength=\"[" . $excerpt_minlength . "]\"", $wp_editor );
-						$wp_editor         = preg_replace( '/<textarea/', "<textarea data-rule-maxlength=\"[" . $excerpt_maxlength . "]\"", $wp_editor );
+						$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-minlength=\"[%d]\"", $excerpt_minlength ), $wp_editor );
+						$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-rule-maxlength=\"[%d]\"", $excerpt_maxlength ), $wp_editor );
+						$wp_editor         = preg_replace( '/<textarea/', sprintf( "<textarea data-form='%s'", $form_slug ), $wp_editor );
 
 						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
@@ -1090,7 +1093,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							    jQuery(".bf-select2-' . $field_id . '").on("change", function () {
 				                     var formSlug = jQuery(this).data("form");
 				                     if(formSlug){
-				                        jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
+			                         	if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
+				                        	jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
+				                        }
 				                     }
 				                });
 						    });
@@ -1112,7 +1117,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 						} else {
 							//Load select2
-							$form->addElement( new Element_HTML( $dropdown ) );
+							$element = new Element_Select2( $dropdown, $name, $slug, $customfield );
+							$form->addElement( $element );
 						}
 
 						break;

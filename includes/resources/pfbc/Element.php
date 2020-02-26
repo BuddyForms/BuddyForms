@@ -190,7 +190,10 @@ abstract class Element extends Base {
 			}
 
 			$global_error = ErrorHandler::get_instance();
-			$form_slug    = $this->_attributes['data-form'];
+			$form_slug    = $this->getAttribute('data-form');
+			if(empty($form_slug)){
+				$form_slug = $this->_form->getAttribute('id');
+			}
 			$slug         = $this->getAttribute( 'name' );
 			if ( strlen( $value > 0 ) ) {
 				if ( ! empty( $this->_attributes['minlength'] ) && strlen( $value ) < $this->_attributes['minlength'] ) {
