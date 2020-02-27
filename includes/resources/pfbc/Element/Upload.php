@@ -281,7 +281,8 @@ class Element_Upload extends Element_Textbox {
 		$mime_type                         = '';
 		$mime_type_result                  = '';
 		$allowed_types                     = get_allowed_mime_types();
-		$form_slug                         = $this->getAttribute( 'form_slug' );
+        $allowed_types['mp3']              = 'audio/mp3';
+        $form_slug                         = $this->getAttribute( 'form_slug' );
         $upload_from_url                   = $this->getAttribute( 'upload_from_url' );
 		foreach ( $accepted_files as $key => $value ) {
 			$mime_type .= $allowed_types[ $value ] . ',';

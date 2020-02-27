@@ -669,6 +669,7 @@ function buddyforms_display_form_element( $args ) {
 				'step'  => '1'
 			) );
 			$original_mimes_types                        = get_allowed_mime_types();
+            $original_mimes_types['mp3']                 = 'audio/mp3';
 			$sorted_mimes_types                          = array();
 
 			if ( isset( $accepted_files ) && is_array( $accepted_files ) ) {
