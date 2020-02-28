@@ -64,7 +64,7 @@ function buddyforms_attached_page_content( $content ) {
 				$new_content = $bf_form;
 			}
 
-			$content .= $new_content;
+			$content = $new_content;
 		}
 	}
 	// Rebuild the removed filters
