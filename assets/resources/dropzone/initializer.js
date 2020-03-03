@@ -75,7 +75,17 @@ function uploadHandler() {
                             }
                         }
                     }
-                }
+                },
+                //Language options
+                dictMaxFilesExceeded: buddyformsGlobal.localize.upload.dictMaxFilesExceeded || "You can not upload any more files.",
+                dictRemoveFile: buddyformsGlobal.localize.upload.dictRemoveFile || "Remove file",
+                dictCancelUploadConfirmation: buddyformsGlobal.localize.upload.dictCancelUploadConfirmation || "Are you sure you want to cancel this upload?",
+                dictCancelUpload: buddyformsGlobal.localize.upload.dictCancelUpload || "Cancel upload",
+                dictResponseError: buddyformsGlobal.localize.upload.dictResponseError || "Server responded with {{statusCode}} code.",
+                dictInvalidFileType: buddyformsGlobal.localize.upload.dictInvalidFileType || "You can't upload files of this type.",
+                dictFileTooBig: buddyformsGlobal.localize.upload.dictFileTooBig || "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+                dictFallbackMessage: buddyformsGlobal.localize.upload.dictFallbackMessage || "Your browser does not support drag'n'drop file uploads.",
+                dictDefaultMessage: buddyformsGlobal.localize.upload.dictDefaultMessage || "Drop files here to upload",
             };
             jQuery(current).dropzone(options);
         }
@@ -190,63 +200,65 @@ function uploadHandler() {
         }
     }
 }
-function validateAndUploadImage(field){
+
+function validateAndUploadImage(field) {
 
     var current = jQuery(field);
     var id = current.attr("field-id");
-    jQuery("#"+id+"_label").text("");
-    var url = jQuery("#"+id+"_upload_from_url").val();
+    jQuery("#" + id + "_label").text("");
+    var url = jQuery("#" + id + "_upload_from_url").val();
 
-    if(checkURL(url)){
+    if (checkURL(url)) {
 
-        jQuery("#"+id+"_upload_button").text("Uploading..");
-        jQuery("#"+id+"_upload_button").attr('disabled',true);
+        jQuery("#" + id + "_upload_button").text("Uploading..");
+        jQuery("#" + id + "_upload_button").attr('disabled', true);
         var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
-        submitButtons.attr('disabled',true);
+        submitButtons.attr('disabled', true);
 
         jQuery.ajax({
-            url : buddyformsGlobal.admin_url,
-            type : 'post',
-            data : {
-                action : 'upload_image_from_url',
-                url : encodeURIComponent(url),
-                id : id
+            url: buddyformsGlobal.admin_url,
+            type: 'post',
+            data: {
+                action: 'upload_image_from_url',
+                url: encodeURIComponent(url),
+                id: id
             },
-            success : function( response ) {
+            success: function (response) {
                 var result = JSON.parse(response);
-                jQuery("#"+id+"_image").attr('src',result.response);
-                jQuery("#"+id+"_image").attr('width',300);
-                jQuery("#"+id+"_image").attr('height',300);
-                jQuery("#field_"+id).val(result.attachment_id);
+                jQuery("#" + id + "_image").attr('src', result.response);
+                jQuery("#" + id + "_image").attr('width', 300);
+                jQuery("#" + id + "_image").attr('height', 300);
+                jQuery("#field_" + id).val(result.attachment_id);
 
-                jQuery("#"+id+"_upload_button").text("Upload");
-                jQuery("#"+id+"_upload_button").attr('disabled',false);
-                submitButtons.attr('disabled',false);
+                jQuery("#" + id + "_upload_button").text("Upload");
+                jQuery("#" + id + "_upload_button").attr('disabled', false);
+                submitButtons.attr('disabled', false);
 
 
             },
-            error : function(error){
+            error: function (error) {
                 var result = JSON.parse(error);
-                jQuery("#"+id+"_label").text(result.response);
-                jQuery("#"+id+"_upload_button").text("Upload");
-                jQuery("#"+id+"_upload_button").attr('disabled',false);
-                submitButtons.attr('disabled',false);
+                jQuery("#" + id + "_label").text(result.response);
+                jQuery("#" + id + "_upload_button").text("Upload");
+                jQuery("#" + id + "_upload_button").attr('disabled', false);
+                submitButtons.attr('disabled', false);
 
 
             }
 
         });
 
-    }
-    else{
-        jQuery("#"+id+"_label").text("Wrong Url Format");
+    } else {
+        jQuery("#" + id + "_label").text("Wrong Url Format");
 
 
     }
 }
+
 function checkURL(url) {
-    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
+
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
     uploadImplementation.init();

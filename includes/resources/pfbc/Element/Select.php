@@ -23,20 +23,29 @@ class Element_Select extends OptionElement {
 			$this->_attributes["name"] .= "[]";
 		}
 
-		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
-		$selected = false;
+		ob_start();
+		$selected_count = array();
+		echo sprintf( "<select %s>", $this->getAttributes( array( "value", "selected" ) ) );
 		foreach ( $this->options as $value => $text ) {
-			$value = $this->getOptionValue( $value );
-			echo '<option value="', $this->filter( $value ), '"';
-			if ( in_array( $value, $this->_attributes["value"] ) ) {
-				if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
-					continue;
-				}
-				echo ' selected="selected"';
-				$selected = true;
+			$value            = $this->getOptionValue( $value );
+			$current_selected = in_array( $value, $this->_attributes["value"] );
+			if($current_selected) {
+				$selected_count[] = $current_selected;
 			}
-			echo '>', $text, '</option>';
+			$selected         = '';
+			if ( empty ( $this->_attributes["multiple"] ) ) {
+				if ( count( $selected_count ) == 1 ) {
+					$selected = selected( $current_selected, true, false );
+				}
+			} else {
+				$selected = selected( $current_selected, true, false );
+			}
+			$option = sprintf( '<option value="%s" %s>%s</option>', $this->filter( $value ), $selected, $text );
+			echo $option;
 		}
 		echo '</select>';
+		$content = ob_get_clean();
+
+		echo $content;
 	}
 }

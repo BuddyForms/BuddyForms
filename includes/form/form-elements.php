@@ -1112,7 +1112,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						if ( isset( $customfield['hidden_field'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {
 								foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
-									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax, $customfields ) );
+									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax, $customfield ) );
 								}
 							}
 						} else {
@@ -1208,6 +1208,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'slug'            => $slug,
 							'name'            => $name,
 							'field_type'      => $field_type,
+							'action'          => $action,
 						);
 
 						// hook to add your form element
