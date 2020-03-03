@@ -37,7 +37,7 @@ class Element_Password extends Element_Textbox {
             </div>
             <p>
             <div style="margin: 1em;">
-		        <span id="password-strength"></span>
+		        <div id="password-strength"></div>
 	        </div>
             </p>
         </fieldset>

@@ -234,12 +234,12 @@ function BuddyForms() {
             // Get the password strength
             var strength = wp.passwordStrength.meter(pass1, blacklistArray, pass2);
 
-            var hint_html = '<p><small class="buddyforms-password-hint">' + buddyformsGlobal.pwsL10n.hint_text + '</small></p>';
+            var hint_html = '<small class="buddyforms-password-hint">' + buddyformsGlobal.pwsL10n.hint_text + '</small>';
 
             // Add the strength meter results
             console.log('strength ' + strength + 'required_strength ' + buddyformsGlobal.pwsL10n.required_strength);
             passwordHint.remove();
-
+            strengthResult.html('');
             switch (strength) {
                 case 0:
                 case 1:
@@ -282,7 +282,6 @@ function BuddyForms() {
                     //If The field is not required  and the value is emprty don´t valdiate.
                     if (pass1.trim() === "" && pass2.trim() === "") {
                         strengthResult.removeClass('short bad good strong');
-                        strengthResult.html("");
                         BuddyFormsHooks.doAction('buddyforms:submit:enable');
                     } else {
                         strengthResult.after(hint_html);
