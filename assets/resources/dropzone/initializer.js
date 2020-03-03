@@ -190,7 +190,7 @@ function uploadHandler() {
     return {
         init: function () {
             var uploadFields = jQuery(".upload_field");
-            submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
+            submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=submit]");
             if (submitButtons.length > 0) {
                 getFirstSubmitButton(submitButtons);
             }
