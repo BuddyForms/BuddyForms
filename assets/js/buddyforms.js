@@ -1444,6 +1444,8 @@ function BuddyForms() {
                 }
             }
 
+            jQuery(document).trigger('buddyforms-ready', [currentForm, id ]);
+
             var redirect = bf_getUrlParameter('redirect_url');
             if (redirect) {
                 specialPasswordRedirectAfterRegistration(redirect);
