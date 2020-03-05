@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.15-beta5
+Stable tag: 2.5.15
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,29 +389,23 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.15-beta5 - 28 Feb 2020 =
+= 2.5.15 - 5 March 2020 =
 * Fixed the Test email Notification empty body for the Change Status email notifications.
 * Fixed the page submission with content.
 * Fixed the server validation for the Content Form element.
 * Fixed the server validation for the Taxonomy, Category and Tags Form element.
 * Fixed the styles for the Dropdown, Taxonomy, Category and Tags Form element.
 * Fixed add the mp3/audio file type to the Upload field.
-
-= 2.5.15-beta4 - 25 Feb 2020 =
 * Added the Affiliation menu option to bring new ambassadors for BuddyForms.
 * Fixed the JS error for invalid date when the field was not required and it not have value.
 * Fixed the registration form error messages.
 * Fixed the missing Date assets for the Schedule Status Form Element.
 * Fixed the double label for the Post Excerpt and Textarea Form Elements.
 * Improve compatibility with SendGrid email provider.
-
-= 2.5.15-beta3 - 23 Feb 2020 =
 * Fixed the Link Form Element.
 * Fixed the select2 to use the full version.
 * Fixed the dropdown and autocomplete Form Element to show correctly in the popups.
 * Fixed the template system, it was not detecting well when the site had another language.
-
-= 2.5.15-beta2 - 20 Feb 2020 =
 * Fixed the error placement for the Content Form Element.
 * Code improvement.
 * Added a new parameter `$customfield` with the field options to the hook filter `buddyforms_form_element_add_field`.
@@ -421,8 +415,6 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Removed the recently added styles for the dropdown and select2 form Elements.
 * Fixed the language loader.
 * Updated the Spanish language.
-
-= 2.5.15-beta1 - 11 Feb 2020 =
 * Fixed styles for files types in the upload form element.
 * Fixed a nonce issue.
 * Fixed the style of the HTML form element.
