@@ -149,8 +149,17 @@ function buddyforms_ajax_process_edit_post() {
 					$json_array['form_notice'] = buddyforms_after_save_post_redirect( get_permalink( $args['post_id'] ) );
 					break;
 				case 'display_page':
-					$json_array['form_remove']  = 'true';
-					$json_array['display_page'] = apply_filters( 'the_content', get_post_field( 'post_content', $buddyforms[ $form_slug ]['after_submission_page'] ) );
+					$json_array['form_remove']     = 'true';
+					$after_submission_page_content = '';
+					$after_submission_page_id      = ! empty( $buddyforms[ $form_slug ]['after_submission_page'] ) ? $buddyforms[ $form_slug ]['after_submission_page'] : false;
+					if ( ! empty( $after_submission_page_id ) ) {
+						$after_submission_page = get_post( $after_submission_page_id );
+						if ( ! empty( $after_submission_page ) ) {
+							$after_submission_page_content = apply_filters( 'the_content', $after_submission_page->post_content );
+							$after_submission_page_content = str_replace( ']]>', ']]&gt;', $after_submission_page_content );
+						}
+					}
+					$json_array['display_page'] = apply_filters( 'the_content', $after_submission_page_content );
 					break;
 				case 'redirect':
 					$json_array['form_remove'] = 'true';

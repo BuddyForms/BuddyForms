@@ -437,8 +437,8 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if (fieldData.validation_min_msj) {
-                    msjString = fieldData.validation_min_msj;
+                if (fieldData.validation_minlength_msj) {
+                    msjString = fieldData.validation_minlength_msj;
                 }
             }
 
@@ -554,8 +554,8 @@ function BuddyForms() {
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
                 var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                if (fieldData.validation_min_msj) {
-                    msjString = fieldData.validation_min_msj;
+                if (fieldData.validation_maxlength_msj) {
+                    msjString = fieldData.validation_maxlength_msj;
                 }
             }
 
