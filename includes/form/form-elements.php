@@ -713,8 +713,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$label_name = $label_name . html_entity_decode( $form->renderRequired() );
 						}
 
-						$message = __( 'Drop the image here to upload', 'buddyforms' );
-						$box     = "<div class='bf_field_group elem-$slug'>";
+						$localized_strings = Element_Upload::strings();
+						$message           = $localized_strings['dictDefaultMessage'];
+						$box               = "<div class='bf_field_group elem-$slug'>";
 						if ( $labels_layout !== 'inline' ) {
 							$box .= sprintf( '<label for="%s">%s</label>', $customfield['name'], $label_name );
 						}
@@ -726,11 +727,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						if ( $labels_layout === 'inline' ) {
 							$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label_name );
 						}
-						$box .= "<div class=\"dz-default dz-message\" data-dz-message=\"\">
-                                              <span>$message</span>
-                                         </div>
-                                        <input type='text' class='form-control' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true'   upload_error_validation_message='$upload_error_validation_message' $required  />
-                                 </div></div></div> <span class='help-inline'>$description</span>";
+						$box .= "<div class=\"dz-default dz-message\" data-dz-message=\"\"><span>$message</span></div><input type='text' class='form-control' style='visibility: hidden' name='$id' value='$result_value' id='field_$id' data-rule-featured-image-error='true' upload_error_validation_message='$upload_error_validation_message' $required  /></div></div></div><span class='help-inline'>$description</span>";
 
 						$form->addElement( new Element_HTML( $box ) );
 

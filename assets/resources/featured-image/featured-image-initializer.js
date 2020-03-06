@@ -119,7 +119,17 @@ jQuery(document).ready(function() {
                             }
                         }
                     }
-                }
+                },
+                //Language options
+                dictMaxFilesExceeded: buddyformsGlobal.localize.upload.dictMaxFilesExceeded || "You can not upload any more files.",
+                dictRemoveFile: buddyformsGlobal.localize.upload.dictRemoveFile || "Remove file",
+                dictCancelUploadConfirmation: buddyformsGlobal.localize.upload.dictCancelUploadConfirmation || "Are you sure you want to cancel this upload?",
+                dictCancelUpload: buddyformsGlobal.localize.upload.dictCancelUpload || "Cancel upload",
+                dictResponseError: buddyformsGlobal.localize.upload.dictResponseError || "Server responded with {{statusCode}} code.",
+                dictInvalidFileType: buddyformsGlobal.localize.upload.dictInvalidFileType || "You can't upload files of this type.",
+                dictFileTooBig: buddyformsGlobal.localize.upload.dictFileTooBig || "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+                dictFallbackMessage: buddyformsGlobal.localize.upload.dictFallbackMessage || "Your browser does not support drag'n'drop file uploads.",
+                dictDefaultMessage: buddyformsGlobal.localize.upload.dictDefaultMessage || "Drop files here to upload",
             });
         }
 

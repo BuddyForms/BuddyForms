@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: BuddyForms\n"
-"POT-Creation-Date: 2020-03-02 21:33-0300\n"
+"POT-Creation-Date: 2020-03-05 16:16-0300\n"
 "PO-Revision-Date: 2019-02-20 16:43-0300\n"
 "Last-Translator: Guillermo Figueroa Mesa <gfirem@gmail.com>\n"
 "Language-Team: Guillermo Figueroa Mesa <gfirem@gmail.com>\n"
@@ -19,39 +19,39 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: BuddyForms.php:160
+#: BuddyForms.php:161
 msgid "The following"
 msgstr ""
 
-#: BuddyForms.php:161
+#: BuddyForms.php:162
 msgid "error was"
 msgstr ""
 
-#: BuddyForms.php:162
+#: BuddyForms.php:163
 msgid "errors were"
 msgstr ""
 
-#: BuddyForms.php:163
+#: BuddyForms.php:164
 msgid "found: "
 msgstr ""
 
-#: BuddyForms.php:368
+#: BuddyForms.php:369
 msgid "BuddyForms Preview Page"
 msgstr ""
 
-#: BuddyForms.php:374
+#: BuddyForms.php:375
 msgid "This is a preview of how this form will appear on your website"
 msgstr ""
 
-#: BuddyForms.php:462
+#: BuddyForms.php:463
 msgid "PHP Version Update Required!"
 msgstr ""
 
-#: BuddyForms.php:463
+#: BuddyForms.php:464
 msgid "You are using PHP Version "
 msgstr ""
 
-#: BuddyForms.php:464
+#: BuddyForms.php:465
 msgid "Please make sure you have at least php version 5.3 installed."
 msgstr ""
 
