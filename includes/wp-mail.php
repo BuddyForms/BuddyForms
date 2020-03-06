@@ -241,8 +241,7 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	if ( $is_testing ) {
 		$mail_header[] = 'X-Mailer-Type:WPMailSMTP/Admin/Test';
 	}
-	$encoded_email_body = BuddyFormsEncoding::fixUTF8( $email_body );
-	$encoded_email_body = BuddyFormsEncoding::toUTF8( $encoded_email_body );
+	$encoded_email_body = BuddyFormsEncoding::toUTF8( $email_body );
 	$encoded_email_body = apply_filters( 'buddyforms_email_body', $encoded_email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
 	$message            = '<html><head></head><body>' . $encoded_email_body . '</body></html>';
 
