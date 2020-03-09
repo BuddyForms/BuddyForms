@@ -1,4 +1,5 @@
 jQuery(document).ready(function (jQuery) {
+    //Popup for the themekraft bundle insisde the addons page
     var addonsContainer = jQuery('#fs_addons');
     var targetContainer = jQuery('#buddyforms_form_elements');
     if (((addonsContainer && addonsContainer.length > 0) || (targetContainer && targetContainer.length > 0)) && buddyformsMarketingHandler && buddyformsGlobal) {
@@ -17,4 +18,19 @@ jQuery(document).ready(function (jQuery) {
             jQuery('div#corner-popup').addClass('buddyforms-marketing-container buddyforms-marketing-bundle-container');
         }
     }
+    //Popup for the viral share in the list of forms
+    // var formsList = jQuery('.type-buddyforms');
+    // if ((formsList && formsList.length > 3) && buddyformsMarketingHandler && buddyformsGlobal) {
+    //     targetContainer.cornerpopup({
+    //         variant: 10,
+    //         slide: 1,
+    //         slideTop: 1,
+    //         escClose: 1,
+    //         bgcolor: "#fff",
+    //         bordercolor: "#efefef",
+    //         textcolor: "#181818",
+    //         btntextcolor: "#fff",
+    //         content: buddyformsMarketingHandler.content,
+    //     });
+    // }
 });

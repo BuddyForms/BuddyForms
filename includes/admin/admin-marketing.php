@@ -16,6 +16,7 @@ add_action( 'admin_init', 'buddyforms_marketing_init' );
 function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
+//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_viral_share', 10, 1 );
 }
 
 function buddyforms_marketing_offer_bundle( $hook ) {
@@ -32,6 +33,33 @@ function buddyforms_marketing_offer_bundle( $hook ) {
 	$base_content = "<p class=\"corner-head\">By ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
 	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
 	buddyforms_marketing_include_assets( $content, $base_content );
+}
+
+function buddyforms_marketing_viral_share( $hook ) {
+	if ( $hook !== 'edit.php' ) {
+		return;
+	}
+	if ( ! current_user_can( 'administrator' ) ) {
+		return;
+	}
+	$current_screen = get_current_screen();
+	if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' ) {
+		$base_content = "<span>%content</span>";
+		$content      = array( '%content' => buddyforms_marketing_viral_share_gleam_content() );
+		buddyforms_marketing_include_assets( $content, $base_content );
+	}
+
+}
+
+function buddyforms_marketing_viral_share_gleam_content() {
+	ob_start();
+	?>
+	<a class="e-widget no-button" href="https://gleam.io/yHzVl/inline-reward" rel="nofollow">Inline reward</a>
+	<script type="text/javascript" src="https://widget.gleamjs.io/e.js" async="true"></script>
+	<?php
+	$content = ob_get_clean();
+
+	return $content;
 }
 
 function buddyforms_marketing_include_assets( $content, $base_content ) {
