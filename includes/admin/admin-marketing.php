@@ -16,7 +16,9 @@ add_action( 'admin_init', 'buddyforms_marketing_init' );
 function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
-//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_viral_share', 10, 1 );
+	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
+	add_action( 'wp_ajax_buddyforms_marketing_form_list_coupon_for_free_close', 'buddyforms_marketing_form_list_coupon_for_free_close' );
+	add_action( 'wp_ajax_buddyforms_marketing_reset_permissions', 'buddyforms_marketing_reset_permissions' );
 }
 
 function buddyforms_marketing_offer_bundle( $hook ) {
@@ -30,36 +32,74 @@ function buddyforms_marketing_offer_bundle( $hook ) {
 	if ( ! current_user_can( 'administrator' ) ) {
 		return;
 	}
-	$base_content = "<p class=\"corner-head\">By ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
+	$base_content = "<p class=\"corner-head\">By ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
 	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
 	buddyforms_marketing_include_assets( $content, $base_content );
 }
 
-function buddyforms_marketing_viral_share( $hook ) {
+function buddyforms_marketing_form_list_coupon_for_free_close() {
+	try {
+		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			die();
+		}
+		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
+			die();
+		}
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+			die();
+		}
+
+		update_option( 'buddyforms_marketing_form_list_coupon_for_free_close', true );
+
+		wp_send_json( '' );
+	} catch ( Exception $ex ) {
+		BuddyFormsContactAuthor::error_log( $ex->getMessage() );
+	}
+	die();
+}
+
+function buddyforms_marketing_reset_permissions() {
+	try {
+		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			die();
+		}
+		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
+			die();
+		}
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+			die();
+		}
+
+		$result = delete_option( 'buddyforms_marketing_form_list_coupon_for_free_close' );
+
+		wp_send_json( $result );
+	} catch ( Exception $ex ) {
+		BuddyFormsContactAuthor::error_log( $ex->getMessage() );
+	}
+	die();
+}
+
+function buddyforms_marketing_form_list_coupon_for_free( $hook ) {
 	if ( $hook !== 'edit.php' ) {
 		return;
 	}
 	if ( ! current_user_can( 'administrator' ) ) {
 		return;
 	}
-	$current_screen = get_current_screen();
-	if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' ) {
-		$base_content = "<span>%content</span>";
-		$content      = array( '%content' => buddyforms_marketing_viral_share_gleam_content() );
+	$freeemius = buddyforms_core_fs();
+	if ( empty( $freeemius ) ) {
+		return;
+	}
+	$is_able_to_open = get_option( 'buddyforms_marketing_form_list_coupon_for_free_close' );
+	$is_free         = $freeemius->is_free_plan();
+	$is_trial        = $freeemius->is_trial();
+	$current_screen  = get_current_screen();
+	if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && ( $is_free || $is_trial ) && empty( $is_able_to_open ) ) {
+		$base_content = "<p class=\"corner-head\">30% off .:. 50% off</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://themekraft.com/price-off-in-5-minutos?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
+		$content      = array( '%content' => 'UNLOCK the complete POWER of this tools to provide better solutions to your clients.', '%cta' => 'Let\'s do it' );
 		buddyforms_marketing_include_assets( $content, $base_content );
 	}
 
-}
-
-function buddyforms_marketing_viral_share_gleam_content() {
-	ob_start();
-	?>
-	<a class="e-widget no-button" href="https://gleam.io/yHzVl/inline-reward" rel="nofollow">Inline reward</a>
-	<script type="text/javascript" src="https://widget.gleamjs.io/e.js" async="true"></script>
-	<?php
-	$content = ob_get_clean();
-
-	return $content;
 }
 
 function buddyforms_marketing_include_assets( $content, $base_content ) {

@@ -261,9 +261,17 @@ function buddyforms_settings_page_tabs_content() {
 													}
 													echo '</select>';
 												}
-												echo sprintf( '<b><a href="javascript:void(0);" onclick="createNewPageOpenModal()" id="bf_create_page_modal">%s </a></b> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) )
+												echo sprintf( '<p><a href="javascript:void(0);" onclick="createNewPageOpenModal()" id="bf_create_page_modal">%s </a></p> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) )
 												?>
 
+                                            </td>
+                                        </tr>
+                                        <tr valign="top">
+                                            <th scope="row" valign="top">
+												<?php _e( 'Reset all marketing permissions', 'buddyforms' ); ?>
+                                            </th>
+                                            <td>
+	                                            <input type="button" name="buddyforms_marketing_reset" id="buddyforms_marketing_reset" class="button button-secondary" value="<?php _e( 'Reset', 'buddyforms' ); ?>">
                                             </td>
                                         </tr>
                                         </tbody>
