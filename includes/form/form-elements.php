@@ -587,7 +587,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						//check if post has manual excerpt
 						if ( has_excerpt( $post_id ) ) {
-							$customfield_val = get_the_excerpt( $post_id );
+							$customfield_val = buddyforms_get_the_excerpt( $post_id );
 						}
 
 						wp_editor( stripslashes( $customfield_val ), $slug, $settings );
@@ -1098,13 +1098,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						    });
 						</script>
 						
-						<div class="bf_field_group">
-	                        <label for="editpost-element-' . $field_id . '">
-	                            ' . $label_name . '
-	                        </label>
 	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
 		                	<span class="help-inline">' . $description . '</span>
-		                </div>';
+		                ';
 
 						if ( isset( $customfield['hidden_field'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {

@@ -178,6 +178,27 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 
 }
 
+/**
+ * Retrieves the post excerpt.
+ *
+ * @since 2.5.17
+ *
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
+ * @return string Post excerpt.
+ */
+function buddyforms_get_the_excerpt( $post = null ) {
+	$post = get_post( $post );
+	if ( empty( $post ) ) {
+		return '';
+	}
+
+	if ( post_password_required( $post ) ) {
+		return __( 'There is no excerpt because this is a protected post.' );
+	}
+
+	return apply_filters( 'buddyforms_get_the_excerpt', $post->post_excerpt, $post );
+}
+
 function buddyforms_granted_list_posts_style() {
 	return apply_filters( 'buddyforms_granted_list_post_style', array( 'list', 'table' ) );
 }
@@ -1472,6 +1493,13 @@ function buddyforms_get_form_slug_from_content( $content, $shortcodes = array( '
 			if ( is_array( $regex[1] ) ) {
 				$form_slug = $regex[1][0];
 			} else {
+				$form_slug = $regex[1];
+			}
+		}
+		if ( empty( $form_slug ) ) {
+			$regex = array();
+			preg_match( '/"bf_form_slug":"(.+?)"(?=.")/m', $content, $regex );//gutenberg block
+			if ( ! empty( $regex ) && isset( $regex[1] ) ) {
 				$form_slug = $regex[1];
 			}
 		}

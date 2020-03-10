@@ -80,7 +80,7 @@ echo buddyforms_minify_css( $css );
 								<?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
                             </div>
 
-                            <div class="item-desc"><?php echo wp_trim_words( get_the_excerpt(), 9, '..' ); ?></div>
+                            <div class="item-desc"><?php echo wp_trim_words( buddyforms_get_the_excerpt(), 9, '..' ); ?></div>
 
 							<?php do_action( 'buddyforms_the_loop_item_excerpt_after', get_the_ID() ); ?>
 

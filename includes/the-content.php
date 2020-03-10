@@ -30,18 +30,18 @@ add_filter( 'the_content', 'buddyforms_attached_page_content', 50, 1 );
 function buddyforms_attached_page_content( $content ) {
 	global $buddyforms, $wp_query;
 
-	$form_slug      = get_query_var( 'bf_form_slug' );
-	$post_id        = get_query_var( 'bf_post_id' );
-	$parent_post_id = get_query_var( 'bf_parent_post_id', 0 );
-	$action         = get_query_var( 'bf_action' );
+	$form_slug      = isset( $wp_query->query_vars['bf_form_slug'] ) ? $wp_query->query_vars['bf_form_slug'] : '';
+	$post_id        = isset( $wp_query->query_vars['bf_post_id'] ) ? $wp_query->query_vars['bf_post_id'] : '';
+	$parent_post_id = isset( $wp_query->query_vars['bf_parent_post_id'] ) ? $wp_query->query_vars['bf_parent_post_id'] : 0;
+	$action         = isset( $wp_query->query_vars['bf_action'] ) ? $wp_query->query_vars['bf_action'] : '';
 
 	// Remove the filter to make sure it not end up in a infinity loop
 	remove_filter( 'the_content', 'buddyforms_attached_page_content', 50 );
 
-	if ( ! is_admin() && isset( $buddyforms ) ) {
+	if ( ! is_admin() && ! empty( $buddyforms ) ) {
 		if ( ! empty( $action ) && isset( $buddyforms[ $form_slug ]['post_type'] ) ) {
 			$post_type   = $buddyforms[ $form_slug ]['post_type'];
-			$new_content = $content;
+			$new_content = '';
 			$args        = array(
 				'form_slug'   => $form_slug,
 				'post_id'     => $post_id,
@@ -52,15 +52,13 @@ function buddyforms_attached_page_content( $content ) {
 			if ( $action == 'create' || $action == 'edit' || $action == 'revision' ) {
 				ob_start();
 				buddyforms_create_edit_form( $args );
-				$bf_form = ob_get_contents();
-				ob_clean();
+				$bf_form = ob_get_clean();
 				$new_content = $bf_form;
 			}
 			if ( $action == 'view' ) {
 				ob_start();
 				buddyforms_the_loop( $args );
-				$bf_form = ob_get_contents();
-				ob_clean();
+				$bf_form = ob_get_clean();
 				$new_content = $bf_form;
 			}
 

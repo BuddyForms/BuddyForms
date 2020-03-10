@@ -315,6 +315,7 @@ function buddyforms_block_list_submissions( $attributes ) {
 		}
 	}
 
+	return '';
 }
 
 
@@ -384,6 +385,12 @@ function buddyforms_blocks_the_loop( $args ) {
 		$author = get_current_user_id();
 	}
 
+	$the_author_id = apply_filters( 'buddyforms_the_loop_author_id', $author, $form_slug );
+
+	if ( ! $the_author_id ) {
+		$post_status = array( 'publish' );
+	}
+
 	switch ( $query_option ) {
 		case 'logged_in_user':
 			$query_args = array(
@@ -393,7 +400,6 @@ function buddyforms_blocks_the_loop( $args ) {
 				'post_status'    => 'publish',
 				'posts_per_page' => $posts_per_page,
 				'paged'          => $paged,
-				'author'         => $author,
 			);
 			break;
 		case 'author_ids':
@@ -404,7 +410,6 @@ function buddyforms_blocks_the_loop( $args ) {
 				'post_status'    => 'publish',
 				'posts_per_page' => $posts_per_page,
 				'paged'          => $paged,
-				'author'         => $author_ids
 			);
 			break;
 		case 'list_all':
@@ -436,9 +441,14 @@ function buddyforms_blocks_the_loop( $args ) {
 		$query_args['meta_value'] = $form_slug;
 	}
 
+	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+		$query_args['author'] = $the_author_id;
+	}
+
+	$query_args = apply_filters( 'buddyforms_user_posts_query_args', $query_args );
+
 	$the_lp_query = new WP_Query( $query_args );
 	$the_lp_query = apply_filters( 'buddyforms_the_lp_query', $the_lp_query );
-
 
 	$form_slug = $the_lp_query->query_vars['form_slug'];
 

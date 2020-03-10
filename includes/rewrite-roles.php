@@ -169,8 +169,9 @@ function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	return apply_filters( 'get_edit_post_link', admin_url( sprintf( $post_type_object->_edit_link . $action, $post->ID ) ), $post->ID, $context );
 }
 
-// Redirect Registration Page
-add_filter( 'init', 'buddyforms_registration_page_redirect' );
+/**
+ * Redirect Registration Page
+ */
 function buddyforms_registration_page_redirect() {
 	global $pagenow;
 
@@ -189,9 +190,17 @@ function buddyforms_registration_page_redirect() {
 
 	}
 }
+add_filter( 'init', 'buddyforms_registration_page_redirect' );
 
-// Redirect after login
-add_filter( 'login_redirect', 'buddyforms_login_redirect', 99999, 3 );
+/**
+ * Redirect after login
+ *
+ * @param $redirect_to
+ * @param $request
+ * @param $user
+ *
+ * @return mixed|void
+ */
 function buddyforms_login_redirect( $redirect_to, $request, $user ) {
 	global $pagenow;
 
@@ -218,7 +227,15 @@ function buddyforms_login_redirect( $redirect_to, $request, $user ) {
 	return $redirect_to;
 }
 
-add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
+add_filter( 'login_redirect', 'buddyforms_login_redirect', 99999, 3 );
+
+/**
+ * Function to control how is processed the registration page
+ *
+ * @param $content
+ *
+ * @return mixed|string|void
+ */
 function buddyforms_registration_page_content( $content ) {
 	global $post;
 
@@ -269,6 +286,8 @@ function buddyforms_registration_page_content( $content ) {
 
 	return $content;
 }
+
+add_filter( 'the_content', 'buddyforms_registration_page_content', 99999 );
 
 function buddyforms_get_ID_by_page_name( $page_name ) {
 	global $wpdb;

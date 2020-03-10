@@ -105,7 +105,7 @@ class BuddyFormsAssets {
 		 */
 		do_action( 'buddyforms_front_js_css_enqueue', $content, $form_slug );
 
-		if ( ! empty( $form_slug ) && $form_slug !== 'none' ) {
+		if ( ! empty( $form_slug ) && $form_slug !== 'none' && empty($wp_query->query_vars['bf_form_slug'])) {
 			$wp_query->query_vars['bf_form_slug'] = $form_slug;
 		}
 
