@@ -20,7 +20,7 @@ jQuery(document).ready(function (jQuery) {
     }
     //Popup for the viral share in the list of forms
     var formsList = jQuery('.type-buddyforms');
-    if ((formsList && formsList.length > 3) && buddyformsMarketingHandler && buddyformsGlobal && buddyformsMarketingHandler.content) {
+    if ((formsList && formsList.length >= 3) && buddyformsMarketingHandler && buddyformsGlobal && buddyformsMarketingHandler.content) {
         targetContainer.cornerpopup({
             variant: 10,
             slide: 1,
