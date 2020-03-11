@@ -9,7 +9,7 @@ class Validation_Captcha extends Validation {
 	 */
 	protected $message = "Error: The reCATPCHA response provided was incorrect.  Please try again.";
 	/**
-	 * @var string
+	 * @var string Represent the Secret from reCaptcha
 	 */
 	protected $privateKey;
 
@@ -18,12 +18,16 @@ class Validation_Captcha extends Validation {
 	 *
 	 * @param string $privateKey
 	 * @param string $message
+	 * @param $field_options
 	 */
-	public function __construct( $privateKey, $message = "" ) {
+	public function __construct( $privateKey, $message = "", $field_options = array() ) {
 		$this->privateKey = $privateKey;
 		if ( ! empty( $message ) ) {
 			$this->message = $message;
+		} else {
+			$this->message = __( "Error: The reCATPCHA response provided was incorrect.  Please try again.", 'buddyforms' );
 		}
+		parent::__construct( $message, $field_options );
 	}
 
 	/**
@@ -32,9 +36,40 @@ class Validation_Captcha extends Validation {
 	 * @return bool
 	 */
 	public function isValid( $value, $element ) {
-		$captcha = sanitize_text_field( $_POST["g-recaptcha-response"] );
-		$resp    = $this->validate_google_captcha( $captcha, $this->privateKey );
-		$result  = ! empty( $resp['success'] ) && boolval( $resp['success'] ) === true;
+		$version = $this->getOption( 'version' );
+		if ( empty( $version ) ) {
+			$version = 'v2';
+		}
+		if ( $version === 'v2' ) {
+			$captcha = sanitize_text_field( $_POST["g-recaptcha-response"] );
+			$resp    = $this->validate_google_captcha( $captcha, $this->privateKey );
+			$result  = ! empty( $resp['success'] ) && boolval( $resp['success'] ) === true;
+		} else {
+			$score  = $this->getOption( 'captcha_v3_score' );
+			$action = $this->getOption( 'captcha_v3_action' );
+			if ( empty( $score ) ) {
+				$score = 0.5;
+			}
+			if ( empty( $action ) ) {
+				$action = 'form';
+			}
+			$action = preg_replace( "/[^A-Za-z0-9 ]/", '', $action );
+			$captcha    = sanitize_text_field( $_POST["bf-cpchtk"] );
+			$recaptcha  = new \ReCaptcha\ReCaptcha( $this->privateKey );
+			$resp       = $recaptcha->setExpectedHostname( $_SERVER['HTTP_HOST'] )
+			                        ->setExpectedAction( $action )
+			                        ->setScoreThreshold( floatval( $score ) )
+			                        ->verify( $captcha, $_SERVER['REMOTE_ADDR'] );
+			$is_success = $resp->isSuccess();
+			if ( ! $is_success ) {
+				$errors = $resp->getErrorCodes();//Todo write to the logs
+				if ( ! empty( $errors ) ) {
+					BuddyForms::error_log( join( ', ', $errors ) );
+				}
+			}
+			$result = ! empty( $is_success ) && boolval( $is_success ) === true;
+		}
+
 
 		return apply_filters( 'buddyforms_element_captcha_validation', $result, $element );
 	}

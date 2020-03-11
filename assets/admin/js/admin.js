@@ -1080,6 +1080,19 @@ jQuery(document).ready(function (jQuery) {
         }
     }
 
+    jQuery(document).on('change', 'select.captcha-version', function (e) {
+        var selectedVersion = jQuery(this).val();
+        if(selectedVersion === 'v3') {
+            jQuery('tr[id$="_captcha_v3_action"]').show();
+            jQuery('tr[id$="_captcha_v3_score"]').show();
+            jQuery('.bf_hide_captcha_v2_options').show();
+        } else {
+            jQuery('tr[id$="_captcha_v3_action"]').hide();
+            jQuery('tr[id$="_captcha_v3_score"]').hide();
+            jQuery('.bf_hide_captcha_v2_options').hide();
+        }
+    });
+
     jQuery(document).on('click', '.bf-ready-to-copy', function (e) {
         e.preventDefault();
         e.stopPropagation();

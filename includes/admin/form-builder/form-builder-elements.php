@@ -378,12 +378,12 @@ function buddyforms_display_form_element( $args ) {
 				'required' => 1
 			) );
 
-			$captcha_language                           = ! empty( $customfield['captcha_language'] ) ? $customfield['captcha_language'] : '';
+			$captcha_language                           = ! empty( $customfield['captcha_language'] ) ? $customfield['captcha_language'] : 'en';
 			$form_fields['general']['captcha_language'] = new Element_Textbox( '<b>' . __( 'Language', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_language]", array(
 				'data'      => $field_id,
 				'value'     => $captcha_language,
 				'required'  => 1,
-				'shortDesc' => sprintf( '%s <a target="_blank" href="%s">Language Codes</a>', __( "Forces the element to render in a specific language, if empty will try to auto-detects the user's language, check the possibles", 'buddyforms' ), 'https://developers.google.com/recaptcha/docs/language' )
+				'shortDesc' => sprintf( '%s <a target="_blank" href="%s">%s</a>', __( "Forces the element to render in a specific language, if empty will try to auto-detects the user's language, check the possibles", 'buddyforms' ), 'https://developers.google.com/recaptcha/docs/language', __( 'Language Codes', 'buddyforms' ) )
 			) );
 
 			$form_fields['general']['captcha_data_theme'] = new Element_Select( '<b>' . __( 'The color theme of the widget', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_data_theme]",
@@ -415,6 +415,40 @@ function buddyforms_display_form_element( $args ) {
 					'field_id' => $field_id,
 				)
 			);
+
+			$captcha_version                   = isset( $customfield['version'] ) ? $customfield['version'] : 'v2';
+			$hide_captcha_v3_options           = ( $captcha_version === 'v2' ) ? 'bf_hide_captcha_v2_options' : '';
+			$form_fields['general']['version'] = new Element_Select( '<b>' . __( 'Version of Captcha', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][version]",
+				array(
+					'v2' => __( 'Version 2', 'buddyform' ),
+					'v3' => __( 'Version 3', 'buddyform' ),
+				), array(
+					'value'    => $captcha_version,
+					'field_id' => $field_id,
+					'class'    => 'captcha-version',
+				)
+			);
+
+			$captcha_v3_action                           = ! empty( $customfield['captcha_v3_action'] ) ? $customfield['captcha_v3_action'] : 'form';
+			$form_fields['general']['captcha_v3_action'] = new Element_Textbox( '<b>' . __( 'Action', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_v3_action]", array(
+				'data'      => $field_id,
+				'value'     => $captcha_v3_action,
+				'required'  => 1,
+				'class'     => $hide_captcha_v3_options,
+				'shortDesc' => sprintf( '%s <a target="_blank" href="%s">%s</a>', __( "Only apply to v3. Identification of this captcha in the ", 'buddyforms' ), 'https://g.co/recaptcha/admin/', __( 'Admin console', 'buddyforms' ) )
+			) );
+
+			$captcha_v3_score                           = ! empty( $customfield['captcha_v3_score'] ) ? $customfield['captcha_v3_score'] : '0.5';
+			$form_fields['general']['captcha_v3_score'] = new Element_Number( '<b>' . __( 'Score', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][captcha_v3_score]", array(
+				'data'      => $field_id,
+				'step'      => '0.1',
+				'max'       => '1.0',
+				'min'       => '0.0',
+				'class'     => $hide_captcha_v3_options,
+				'value'     => $captcha_v3_score,
+				'required'  => 1,
+				'shortDesc' => sprintf( '%s', __( "Only apply to v3. The score values with 1.0 is very likely a good interaction, 0.0 is very likely a bot.", 'buddyforms' ) )
+			) );
 
 			$form_fields['general']['html'] = new Element_HTML( sprintf( '<p><b>%s<b><p>', __( 'reCaptcha is only visible to logged off users. Logged in users not need to get checked.', 'buddyforms' ) ) );
 
@@ -669,7 +703,7 @@ function buddyforms_display_form_element( $args ) {
 				'step'  => '1'
 			) );
 			$original_mimes_types                        = get_allowed_mime_types();
-            $original_mimes_types['mp3']                 = 'audio/mp3';
+			$original_mimes_types['mp3']                 = 'audio/mp3';
 			$sorted_mimes_types                          = array();
 
 			if ( isset( $accepted_files ) && is_array( $accepted_files ) ) {

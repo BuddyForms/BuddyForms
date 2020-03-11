@@ -221,6 +221,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
+			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor/autoload.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
@@ -404,6 +405,12 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			wp_delete_post( $buddyforms_preview_page, true );
 
 			delete_option( 'buddyforms_preview_page' );
+		}
+
+		public static function error_log( $message ) {
+			if ( ! empty( $message ) ) {
+				error_log( 'buddyforms -- ' . $message );
+			}
 		}
 	}
 
