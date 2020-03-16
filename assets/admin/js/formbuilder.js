@@ -450,6 +450,7 @@ jQuery(document).ready(function () {
     jQuery(document.body).on('click', '.bf_form_template', function () {
         var button = jQuery(this);
         button.parent().LoadingOverlay('show');
+        var defaultPage = jQuery('#attached_page option:selected').val();
         var targetType = button.attr('data-type');
         jQuery('button.bf_form_template').prop('disabled', true);
         var template = button.data('template');
@@ -458,6 +459,9 @@ jQuery(document).ready(function () {
             jQuery('button.bf_form_template').prop('disabled', false);
             jQuery(document.body).trigger({type: 'buddyform:load_notifications'});
             BuddyFormsBuilderHooks.doAction('buddyforms-change-form-type', [targetType]);
+            if(defaultPage && defaultPage.length > 0) {
+                jQuery('#attached_page').val(defaultPage).change();
+            }
         });
         return false;
     });
