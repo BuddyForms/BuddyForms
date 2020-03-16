@@ -35,7 +35,7 @@ const {__} = wp.i18n;
 //
 // Embed a form
 //
-registerBlockType('buddyforms/bf-embed-form', {
+registerBlockType('buddyforms/bf-insert-form', {
     title: __('BuddyForm Form', 'buddyforms'),
     icon: iconBuddyForms,
     category: 'buddyforms',
@@ -49,7 +49,7 @@ registerBlockType('buddyforms/bf-embed-form', {
         post_id: {
             type: 'string',
         },
-        form_slug: {
+        bf_form_slug: {
             type: 'string',
         },
     },
@@ -65,7 +65,7 @@ registerBlockType('buddyforms/bf-embed-form', {
         return [
 
             el(ServerSideRender, {
-                block: 'buddyforms/bf-embed-form',
+                block: 'buddyforms/bf-insert-form',
                 attributes: props.attributes,
             }),
 

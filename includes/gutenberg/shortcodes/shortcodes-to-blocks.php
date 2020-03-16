@@ -55,7 +55,7 @@ function buddyforms_shortcodes_to_block_init() {
 	//
 	// Embed a form
 	//
-	register_block_type( 'buddyforms/bf-embed-form', array(
+	register_block_type( 'buddyforms/bf-insert-form', array(
 		'attributes'      => array(
 			'bf_form_slug' => array(
 				'type' => 'string',
@@ -186,7 +186,6 @@ function buddyforms_block_render_form( $attributes ) {
  */
 function buddyforms_block_render_login_form( $attributes ) {
 	global $buddyforms;
-
 
 	$attr = array(
 		'form_slug'      => empty( $attributes['bf_form_slug'] ) ? 'none' : $attributes['bf_form_slug'],
