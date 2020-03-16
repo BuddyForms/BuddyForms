@@ -6,7 +6,6 @@
 function buddyforms_settings_menu() {
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
 }
-
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
 
 //
@@ -14,25 +13,25 @@ add_action( 'admin_menu', 'buddyforms_settings_menu' );
 //
 function buddyforms_settings_page() { ?>
 
-    <div id="post" class="wrap">
+	<div id="post" class="wrap">
 
 		<?php
 		// Display the BuddyForms Header
 		include( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php' );
 		?>
-        <div id="poststuff">
-            <div id="post-body" class="metabox-holder columns-2">
+		<div id="poststuff">
+			<div id="post-body" class="metabox-holder columns-2">
 
-                <div id="postbox-container-1" class="postbox-container">
+				<div id="postbox-container-1" class="postbox-container">
 					<?php buddyforms_settings_page_sidebar(); ?>
-                </div>
-                <div id="postbox-container-2" class="postbox-container">
+				</div>
+				<div id="postbox-container-2" class="postbox-container">
 					<?php buddyforms_settings_page_tabs_content(); ?>
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
-    </div> <!-- .wrap -->
+	</div> <!-- .wrap -->
 	<?php
 }
 
@@ -48,7 +47,6 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	//$tabs['layout'] = 'Form Layout';
 	$tabs['import'] = __( 'Import Forms', 'buddyforms' );
 	$tabs['gdpr']   = 'GDPR';
-
 
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
 	foreach ( $tabs as $tab => $name ) {
@@ -88,7 +86,7 @@ function buddyforms_default_sanitize( $new ) {
 
 function buddyforms_settings_page_tabs_content() {
 	global $pagenow, $buddyforms; ?>
-    <div id="poststuff">
+	<div id="poststuff">
 
 		<?php
 
@@ -120,45 +118,45 @@ function buddyforms_settings_page_tabs_content() {
 
 					$pages = buddyforms_get_all_pages( 'id', 'settings' );
 					?>
-                    <div class="metabox-holder">
-                        <div class="postbox buddyforms-metabox">
+					<div class="metabox-holder">
+						<div class="postbox buddyforms-metabox">
 
-                            <div class="inside">
+							<div class="inside">
 
 
-                                <form method="post" action="options.php">
+								<form method="post" action="options.php">
 
 									<?php settings_fields( 'buddyforms_general' ); ?>
 
-                                    <table class="form-table">
-                                        <tbody>
+									<table class="form-table">
+										<tbody>
 
-                                        <!-- Registration Settings -->
-                                        <tr>
-                                            <th colspan="2">
-                                                <h3><span><?php _e( 'Registration Settings', 'buddyforms' ); ?></span>
-                                                </h3>
-                                                <p><?php _e( 'Select the Registration Page and Form to overwrite the WordPress default Registration.', 'buddyforms' ); ?></p>
-                                            </th>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+										<!-- Registration Settings -->
+										<tr>
+											<th colspan="2">
+												<h3><span><?php _e( 'Registration Settings', 'buddyforms' ); ?></span>
+												</h3>
+												<p><?php _e( 'Select the Registration Page and Form to overwrite the WordPress default Registration.', 'buddyforms' ); ?></p>
+											</th>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'Registration Page', 'buddyforms' ); ?>
-                                            </th>
-                                            <td>
-                                                <?php
+											</th>
+											<td>
+												<?php
 												$pages_dropdown = buddyforms_get_all_pages_dropdown( 'buddyforms_registration_page', $buddyforms_registration_page );
 												if ( ! empty( $pages_dropdown ) ) {
 													echo $pages_dropdown;
 												}
 												?>
-                                            </td>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+											</td>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'Registration Form', 'buddyforms' ); ?>
-                                            </th>
-                                            <td>
+											</th>
+											<td>
 												<?php
 												if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 													echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
@@ -172,8 +170,8 @@ function buddyforms_settings_page_tabs_content() {
 													echo '</select>';
 												}
 												?>
-                                            </td>
-                                        </tr>
+											</td>
+										</tr>
 										<?php
 										if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
 											$post_types_forms = Array();
@@ -186,32 +184,32 @@ function buddyforms_settings_page_tabs_content() {
 											}
 											?>
 
-                                            <!-- POST TYPES Settings -->
-                                            <tr>
-                                                <th colspan="2">
+											<!-- POST TYPES Settings -->
+											<tr>
+												<th colspan="2">
 
-                                                    <h3>
-                                                        <span><?php _e( 'Posts - Pages and Custom Post Types', 'buddyforms' ); ?></span>
-                                                    </h3>
+													<h3>
+														<span><?php _e( 'Posts - Pages and Custom Post Types', 'buddyforms' ); ?></span>
+													</h3>
 
-                                                    <p><?php _e( 'Select a default form for every post type.', 'buddyforms' ); ?></p>
-                                                    <p><?php _e( 'This will make sure that posts created before BuddyForms will have a form associated. If you select none the post edit link will point to the admin for posts not create with BuddyForms', 'buddyforms' ); ?>
-                                                    </p>
-                                                </th>
-                                            </tr>
+													<p><?php _e( 'Select a default form for every post type.', 'buddyforms' ); ?></p>
+													<p><?php _e( 'This will make sure that posts created before BuddyForms will have a form associated. If you select none the post edit link will point to the admin for posts not create with BuddyForms', 'buddyforms' ); ?>
+													</p>
+												</th>
+											</tr>
 											<?php
 											foreach ( $post_types_forms as $post_type => $post_types_form ) : ?>
-                                                <tr valign="top">
-                                                    <th scope="row" valign="top">
+												<tr valign="top">
+													<th scope="row" valign="top">
 														<?php
 														$post_type_object = get_post_type_object( $post_type );
 														echo $post_type_object->labels->name; ?>
-                                                    </th>
-                                                    <td>
-                                                        <select
-                                                                name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
-                                                                class="regular-radio">
-                                                            <option value="none"><?php _e( 'None', 'buddyforms' ) ?></option>
+													</th>
+													<td>
+														<select
+															name="buddyforms_posttypes_default[<?php echo $post_type ?>]"
+															class="regular-radio">
+															<option value="none"><?php _e( 'None', 'buddyforms' ) ?></option>
 															<?php foreach ( $post_types_form as $form_key => $form ) {
 
 																$default = '';
@@ -219,39 +217,39 @@ function buddyforms_settings_page_tabs_content() {
 																	$default = $buddyforms_posttypes_default[ $post_type ];
 																}
 																?>
-                                                                <option <?php echo selected( $default, $form_key, true ) ?>
-                                                                        value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
+																<option <?php echo selected( $default, $form_key, true ) ?>
+																	value="<?php echo $form_key ?>"><?php echo $form['name'] ?></option>
 															<?php } ?>
-                                                        </select>
-                                                    </td>
-                                                </tr>
+														</select>
+													</td>
+												</tr>
 											<?php endforeach;
 										} else {
 											echo '<h3>' . __( 'You need to create at least one form to select a post type default.', 'buddyforms' ) . '</h3>';
 										} ?>
-                                        <tr>
-                                            <th colspan="2">
-                                                <h3>
-                                                    <span><?php _e( 'Frontend Submissions Management', 'buddyforms' ); ?></span>
-                                                </h3>
-                                                <p><?php _e( 'Select the Page to use for the frontend submissions management.', 'buddyforms' ); ?></p>
-                                                <p><?php _e( ' The original page content does not get changed. You are free to use any kind of content on the page itself. Link to different form or list the users submissions.
+										<tr>
+											<th colspan="2">
+												<h3>
+													<span><?php _e( 'Frontend Submissions Management', 'buddyforms' ); ?></span>
+												</h3>
+												<p><?php _e( 'Select the Page to use for the frontend submissions management.', 'buddyforms' ); ?></p>
+												<p><?php _e( ' The original page content does not get changed. You are free to use any kind of content on the page itself. Link to different form or list the users submissions.
                                                  For the submissions management new endpoints get create for you. You can combine forms under the same page', 'buddyforms' ); ?></p>
 
-                                                <p><?php _e( 'Example:', 'buddyforms' ); ?></p>
-                                                <p><?php _e( 'http://domain.com/PAGE/create/FORM_SLUG', 'buddyforms' ); ?></p>
-                                                <p><?php _e( 'http://domain.com/PAGE/view/FORM_SLUG', 'buddyforms' ); ?></p>
+												<p><?php _e( 'Example:', 'buddyforms' ); ?></p>
+												<p><?php _e( 'http://domain.com/PAGE/create/FORM_SLUG', 'buddyforms' ); ?></p>
+												<p><?php _e( 'http://domain.com/PAGE/view/FORM_SLUG', 'buddyforms' ); ?></p>
 
-                                                <p><?php _e( 'This settings can be overwritten on a form basis. Every form can have there individual page if needed. This url will alwaysw be redirected to the corect place. If you use BuddyPress or Ultimate Member as example this link will redirect to the user profile edit or create.', 'buddyforms' ); ?></p>
+												<p><?php _e( 'This settings can be overwritten on a form basis. Every form can have there individual page if needed. This url will alwaysw be redirected to the corect place. If you use BuddyPress or Ultimate Member as example this link will redirect to the user profile edit or create.', 'buddyforms' ); ?></p>
 
 
-                                            </th>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+											</th>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'Default Page for your Submissions Management in the Frontend', 'buddyforms' ); ?>
-                                            </th>
-                                            <td>
+											</th>
+											<td>
 												<?php
 												if ( isset( $pages ) && is_array( $pages ) ) {
 													echo '<select name="buddyforms_submissions_page" required="required" id="attached_page">';
@@ -264,73 +262,73 @@ function buddyforms_settings_page_tabs_content() {
 												echo sprintf( '<p><a href="javascript:void(0);" onclick="createNewPageOpenModal()" id="bf_create_page_modal">%s </a></p> %s', __( 'Create a new Page', 'buddyforms' ), __( 'The page is used to create the endpoints for the create - list and edit submissions views. ', 'buddyforms' ) )
 												?>
 
-                                            </td>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+											</td>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'Reset all marketing permissions', 'buddyforms' ); ?>
-                                            </th>
-                                            <td>
-	                                            <input type="button" name="buddyforms_marketing_reset" id="buddyforms_marketing_reset" class="button button-secondary" value="<?php _e( 'Reset', 'buddyforms' ); ?>">
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+											</th>
+											<td>
+												<input type="button" name="buddyforms_marketing_reset" id="buddyforms_marketing_reset" class="button button-secondary" value="<?php _e( 'Reset', 'buddyforms' ); ?>">
+											</td>
+										</tr>
+										</tbody>
+									</table>
 
 									<?php submit_button(); ?>
 
-                                </form>
-                            </div><!-- .inside -->
-                        </div><!-- .postbox -->
-                    </div><!-- .metabox-holder -->
+								</form>
+							</div><!-- .inside -->
+						</div><!-- .postbox -->
+					</div><!-- .metabox-holder -->
 					<?php
 					break;
 				case 'import' : ?>
-                    <div class="metabox-holder">
-                        <div class="postbox buddyforms-metabox">
-                            <h3><span><?php _e( 'Import Forms', 'buddyforms' ); ?></span></h3>
-                            <div class="inside">
-                                <p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
-                                <form method="post" enctype="multipart/form-data">
-                                    <!--									<p>-->
-                                    <!--										<b>Type:</b>-->
-                                    <!--										<select name="import-type" class="regular-radio">-->
-                                    <!--											--><?php //echo do_action('buddyforms_import_type_options'); ?>
-                                    <!--											<option value="buddyforms">BuddyForms</option>-->
-                                    <!--											<option value="custom">Custom</option>-->
-                                    <!--										</select>-->
-                                    <!--									</p>-->
-                                    <p>
-                                        <input type="file" name="import_file"/>
-                                    </p>
-                                    <p>
-                                        <input type="hidden" name="buddyforms_action" value="import_settings"/>
+					<div class="metabox-holder">
+						<div class="postbox buddyforms-metabox">
+							<h3><span><?php _e( 'Import Forms', 'buddyforms' ); ?></span></h3>
+							<div class="inside">
+								<p><?php _e( 'Import the form from a .json file. This file can be obtained by exporting the form from the list view.' ); ?></p>
+								<form method="post" enctype="multipart/form-data">
+									<!--									<p>-->
+									<!--										<b>Type:</b>-->
+									<!--										<select name="import-type" class="regular-radio">-->
+									<!--											--><?php //echo do_action('buddyforms_import_type_options'); ?>
+									<!--											<option value="buddyforms">BuddyForms</option>-->
+									<!--											<option value="custom">Custom</option>-->
+									<!--										</select>-->
+									<!--									</p>-->
+									<p>
+										<input type="file" name="import_file"/>
+									</p>
+									<p>
+										<input type="hidden" name="buddyforms_action" value="import_settings"/>
 										<?php wp_nonce_field( 'buddyforms_import_nonce', 'buddyforms_import_nonce' ); ?>
 										<?php submit_button( __( 'Import' ), 'secondary', 'submit', false ); ?>
-                                    </p>
-                                </form>
-                            </div><!-- .inside -->
-                        </div><!-- .postbox -->
-                    </div><!-- .metabox-holder -->
+									</p>
+								</form>
+							</div><!-- .inside -->
+						</div><!-- .postbox -->
+					</div><!-- .metabox-holder -->
 					<?php
 					break;
 				case 'layout' : ?>
 
-                    <div class="metabox-holder">
-                        <div class="postbox buddyforms-metabox">
-                            <h3><span><?php _e( 'Form Layout', 'buddyforms' ); ?></span></h3>
-                            <div class="inside">
-                                <p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ', 'buddyforms' ); ?></p>
+					<div class="metabox-holder">
+						<div class="postbox buddyforms-metabox">
+							<h3><span><?php _e( 'Form Layout', 'buddyforms' ); ?></span></h3>
+							<div class="inside">
+								<p><?php _e( 'Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting ', 'buddyforms' ); ?></p>
 
-                                <form method="post" action="options.php">
+								<form method="post" action="options.php">
 									<?php settings_fields( 'buddyforms_layout' ); ?>
 									<?php buddyforms_layout_screen( 'buddyforms_layout_options' ); ?>
 									<?php submit_button( __( 'Save', 'buddyforms' ), 'secondary', 'submit', false ); ?>
-                                </form>
+								</form>
 
-                            </div><!-- .inside -->
-                        </div><!-- .postbox -->
-                    </div><!-- .metabox-holder -->
+							</div><!-- .inside -->
+						</div><!-- .postbox -->
+					</div><!-- .metabox-holder -->
 					<?php
 					break;
 				case 'gdpr' :
@@ -343,75 +341,75 @@ function buddyforms_settings_page_tabs_content() {
 					$contact_templat      = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
 					$terms_label          = '';
 					?>
-                    <div class="metabox-holder">
-                        <div class="postbox buddyforms-metabox">
+					<div class="metabox-holder">
+						<div class="postbox buddyforms-metabox">
 
-                            <div class="inside">
+							<div class="inside">
 
 
-                                <form method="post" action="options.php">
+								<form method="post" action="options.php">
 
 									<?php settings_fields( 'buddyforms_gdpr' ); ?>
 
-                                    <table class="form-table">
-                                        <tbody>
+									<table class="form-table">
+										<tbody>
 
-                                        <!-- Registration Settings -->
-                                        <tr>
-                                            <th colspan="2">
-                                                <h3>
-                                                    <span><?php _e( 'General Data Protection Regulation - Settings', 'buddyforms' ); ?></span>
-                                                </h3>
-                                            </th>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+										<!-- Registration Settings -->
+										<tr>
+											<th colspan="2">
+												<h3>
+													<span><?php _e( 'General Data Protection Regulation - Settings', 'buddyforms' ); ?></span>
+												</h3>
+											</th>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'GDPR Agreement Templates', 'buddyforms' ); ?>
-                                                <p>
-                                                    <small><?php _e( 'These templates are available in our new „GDPR Agreement form element“.  
+												<p>
+													<small><?php _e( 'These templates are available in our new „GDPR Agreement form element“.  
                                                 To give it a start, we inserted some adequate default text.
                                                 <br><br>
                                                 !! Please note that you should buy into professional legal advice for to be safe regarding reliable legal texts. !! 
                                                 <br><br>
                                                 Please edit these texts according to your needs here.', 'buddyforms' ); ?></small>
-                                                </p>
-                                            </th>
-                                            <td>
-                                                <label for="buddyforms_gdpr_registration">
-                                                    <p><?php _e( 'Registration Form', 'buddyforms' ) ?></p></label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_registration"
-                                                          name="buddyforms_gdpr[templates][registration]"><?php echo empty( $buddyforms_gdpr['templates']['registration'] ) ? $registration_templat : $buddyforms_gdpr['templates']['registration']; ?></textarea>
-                                                <label for="buddyforms_gdpr_post">
-                                                    <p><?php _e( 'Post Submission', 'buddyforms' ) ?></p></label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_post"
-                                                          name="buddyforms_gdpr[templates][post]"><?php echo empty( $buddyforms_gdpr['templates']['post'] ) ? $post_template : $buddyforms_gdpr['templates']['post']; ?></textarea>
-                                                <label for="buddyforms_gdpr_contact">
-                                                    <p><?php _e( 'Contact Form', 'buddyforms' ) ?></p></label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_contact"
-                                                          name="buddyforms_gdpr[templates][contact]"><?php echo empty( $buddyforms_gdpr['templates']['contact'] ) ? $contact_templat : $buddyforms_gdpr['templates']['contact']; ?></textarea>
-                                                <label for="buddyforms_gdpr_other">
-                                                    <p><?php _e( 'Custom', 'buddyforms' ) ?></p></label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_other"
-                                                          name="buddyforms_gdpr[templates][other]"><?php echo empty( $buddyforms_gdpr['templates']['other'] ) ? '' : $buddyforms_gdpr['templates']['other']; ?></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr valign="top">
-                                            <th scope="row" valign="top">
+												</p>
+											</th>
+											<td>
+												<label for="buddyforms_gdpr_registration">
+													<p><?php _e( 'Registration Form', 'buddyforms' ) ?></p></label>
+												<textarea cols="70" rows="5" id="buddyforms_gdpr_registration"
+												          name="buddyforms_gdpr[templates][registration]"><?php echo empty( $buddyforms_gdpr['templates']['registration'] ) ? $registration_templat : $buddyforms_gdpr['templates']['registration']; ?></textarea>
+												<label for="buddyforms_gdpr_post">
+													<p><?php _e( 'Post Submission', 'buddyforms' ) ?></p></label>
+												<textarea cols="70" rows="5" id="buddyforms_gdpr_post"
+												          name="buddyforms_gdpr[templates][post]"><?php echo empty( $buddyforms_gdpr['templates']['post'] ) ? $post_template : $buddyforms_gdpr['templates']['post']; ?></textarea>
+												<label for="buddyforms_gdpr_contact">
+													<p><?php _e( 'Contact Form', 'buddyforms' ) ?></p></label>
+												<textarea cols="70" rows="5" id="buddyforms_gdpr_contact"
+												          name="buddyforms_gdpr[templates][contact]"><?php echo empty( $buddyforms_gdpr['templates']['contact'] ) ? $contact_templat : $buddyforms_gdpr['templates']['contact']; ?></textarea>
+												<label for="buddyforms_gdpr_other">
+													<p><?php _e( 'Custom', 'buddyforms' ) ?></p></label>
+												<textarea cols="70" rows="5" id="buddyforms_gdpr_other"
+												          name="buddyforms_gdpr[templates][other]"><?php echo empty( $buddyforms_gdpr['templates']['other'] ) ? '' : $buddyforms_gdpr['templates']['other']; ?></textarea>
+											</td>
+										</tr>
+										<tr valign="top">
+											<th scope="row" valign="top">
 												<?php _e( 'Form Footer Links', 'buddyforms' ); ?>
-                                                <p>
-                                                    <small><?php _e( 'Please select your Terms and Conditions and and your Privacy Policy page. These will be displayed below the form and remain visible after pressing „submit“ - when the form disappears.', 'buddyforms' ); ?></small>
-                                                </p>
-                                            </th>
-                                            <td>
-                                                <label for="buddyforms_gdpr_terms_label">
-                                                    <p><?php _e( 'Terms Label ( Will be displayed under the form )', 'buddyforms' ) ?></p>
-                                                </label>
-                                                <textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label"
-                                                          name="buddyforms_gdpr[terms_label]"><?php echo empty( $buddyforms_gdpr['terms_label'] ) ? $terms_label : $buddyforms_gdpr['terms_label']; ?></textarea>
+												<p>
+													<small><?php _e( 'Please select your Terms and Conditions and and your Privacy Policy page. These will be displayed below the form and remain visible after pressing „submit“ - when the form disappears.', 'buddyforms' ); ?></small>
+												</p>
+											</th>
+											<td>
+												<label for="buddyforms_gdpr_terms_label">
+													<p><?php _e( 'Terms Label ( Will be displayed under the form )', 'buddyforms' ) ?></p>
+												</label>
+												<textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label"
+												          name="buddyforms_gdpr[terms_label]"><?php echo empty( $buddyforms_gdpr['terms_label'] ) ? $terms_label : $buddyforms_gdpr['terms_label']; ?></textarea>
 
-                                                <label for="buddyforms_gdpr_terms">
-                                                    <p><?php _e( 'Terms Page ( Will be displayed as link after the terms label)', 'buddyforms' ) ?></p>
-                                                </label>
+												<label for="buddyforms_gdpr_terms">
+													<p><?php _e( 'Terms Page ( Will be displayed as link after the terms label)', 'buddyforms' ) ?></p>
+												</label>
 												<?php
 												if ( isset( $pages ) && is_array( $pages ) ) {
 													echo '<select name="buddyforms_gdpr[terms]" id="buddyforms_gdpr_terms">';
@@ -422,20 +420,19 @@ function buddyforms_settings_page_tabs_content() {
 													echo '</select>';
 												}
 												?>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+											</td>
+										</tr>
+										</tbody>
+									</table>
 
 									<?php submit_button(); ?>
 
-                                </form>
-                            </div><!-- .inside -->
-                        </div><!-- .postbox -->
-                    </div><!-- .metabox-holder -->
+								</form>
+							</div><!-- .inside -->
+						</div><!-- .postbox -->
+					</div><!-- .metabox-holder -->
 					<?php
 					break;
-
 				default:
 					do_action( 'buddyforms_settings_page_tab', $tab );
 
@@ -443,7 +440,7 @@ function buddyforms_settings_page_tabs_content() {
 			}
 		}
 		?>
-    </div> <!-- #poststuff -->
+	</div> <!-- #poststuff -->
 	<?php
 }
 

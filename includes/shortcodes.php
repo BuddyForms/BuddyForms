@@ -324,13 +324,13 @@ function buddyforms_button_view_posts( $args ) {
 	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label'     => __( 'View', 'buddyforms' ),
+		'label_view'     => __( 'View', 'buddyforms' ),
 	), $args ) );
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $args['label'] . ' </a>';
+	$button = '<a class="button bf-navigation bf-navigation-view" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
 
@@ -348,13 +348,13 @@ function buddyforms_button_add_new( $args ) {
 	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label'     => __( 'Add New', 'buddyforms' ),
+		'label_add'     => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $args['label'] . '</a>';
+	$button = '<a class="button bf-navigation bf-navigation-create" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $label_add . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 

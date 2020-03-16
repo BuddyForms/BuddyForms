@@ -1906,3 +1906,23 @@ function buddyforms_sanitize_slug( $slug, $context = 'save' ) {
 
 	return $slug;
 }
+
+/**
+ * Override the form_slug from the loop to get the correct base on the current post
+ *
+ * @param $form_slug
+ * @param $post_id
+ *
+ * @return string
+ *
+ * @since 2.5.17
+ */
+function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
+	if ( ! empty( $post_id ) && function_exists( 'buddyforms_get_form_slug_by_post_id' ) ) {
+		$form_slug = buddyforms_get_form_slug_by_post_id( $post_id );
+	}
+
+	return $form_slug;
+}
+
+add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );

@@ -351,7 +351,7 @@ function buddyforms_blocks_the_loop( $args ) {
 	), $args ) );
 
 
-	// if multisite is enabled switch to the form blog id
+	// if multi site is enabled switch to the form blog id
 	buddyforms_switch_to_form_blog( $form_slug );
 
 	if ( empty( $form_slug ) && ! empty( $id ) ) {
@@ -441,8 +441,10 @@ function buddyforms_blocks_the_loop( $args ) {
 		$query_args['meta_value'] = $form_slug;
 	}
 
-	if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
-		$query_args['author'] = $the_author_id;
+	if ( $query_option !== 'all_users' ) {
+		if ( ! current_user_can( 'buddyforms_' . $form_slug . '_all' ) ) {
+			$query_args['author'] = $the_author_id;
+		}
 	}
 
 	$query_args = apply_filters( 'buddyforms_user_posts_query_args', $query_args );

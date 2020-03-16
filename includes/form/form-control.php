@@ -625,12 +625,13 @@ function buddyforms_update_post( $args ) {
  * @param $string
  * @param $post_id
  * @param $form_slug
+ * @param bool $full_string
  *
  * @return string
  * @since 2.4.1
- *
+ * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
  */
-function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug ) {
+function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug, $full_string = false ) {
 	if ( false !== strpos( $string, '[' ) ) {
 		$matches_fields_slugs = buddyforms_extract_form_fields_shortcode( $form_slug, $string );
 
@@ -639,7 +640,7 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug )
 				if ( empty( $target_slug ) ) {
 					continue;
 				}
-				$result_field       = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug );
+				$result_field       = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug, $full_string );
 				$field_result_value = ! empty( $result_field['value'] ) ? $result_field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $result_field, $form_slug, $post_id, $target_slug );
 				$string             = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
 			}
@@ -747,11 +748,13 @@ function buddyforms_extract_all_shortcode( $string, $field_pattern = '.*?' ) {
  * @param $post_id
  * @param $field_slug
  *
+ * @param bool $full_string
+ *
  * @return array
  * @since 2.4.1
- *
+ * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
  */
-function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
+function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $full_string = false ) {
 	if ( ! isset( $form_slug ) || ! isset( $post_id ) ) {
 		return array();
 	}
@@ -764,7 +767,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
 
 	if ( $field_with_value_result === false ) {
 		$form_fields = $buddyforms[ $form_slug ]['form_fields'];
-		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields );
+		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields, $full_string );
 		foreach ( $form_fields as $custom_field ) {
 			if ( isset( $custom_field['slug'] ) ) {
 				$slug = $custom_field['slug'];
@@ -791,11 +794,13 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug ) {
  * @param $post_id
  * @param $custom_fields
  *
+ * @param bool $full_string
+ *
  * @return array
  * @since 2.4.1
- *
+ * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
  */
-function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
+function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string = false ) {
 	if ( ! isset( $custom_fields ) ) {
 		return $post_id;
 	}
@@ -820,7 +825,7 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
 			$post = get_post( $post_id );
 
 			//Map field with his meta values
-			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug );
+			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string );
 
 			$result_custom_fields[ $field_id ]['value'] = $meta_value;
 		}
@@ -839,22 +844,28 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields ) {
  * @param $meta_value
  * @param $slug
  *
+ * @param bool $full_string
+ *
  * @return false|string
  * @since 2.5.2
- *
+ * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
  */
-function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug ) {
+function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false ) {
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
-			$meta_value = buddyforms_add_ellipsis( $meta_value );
+			if ( ! $full_string ) {
+				$meta_value = buddyforms_add_ellipsis( $meta_value );
+			}
 			break;
 		case 'post_excerpt':
 		case 'content':
 			$content    = apply_filters( 'the_content', $post->post_content );
 			$content    = str_replace( ']]>', ']]&gt;', $content );
 			$meta_value = strip_shortcodes( $content );
-			$meta_value = buddyforms_add_ellipsis( $meta_value );
+			if ( ! $full_string ) {
+				$meta_value = buddyforms_add_ellipsis( $meta_value );
+			}
 			break;
 		case 'upload':
 		case 'featured_image':
@@ -930,7 +941,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$gdpr_result = array();
 			if ( ! empty( $meta_value ) && is_array( $meta_value ) ) {
 				foreach ( $meta_value as $item ) {
-					$gdpr_result[] = apply_filters( 'buddyforms_get_gdpr_field_meta_message', sprintf( '<p>%s <strong>(%s)</strong></p>', buddyforms_add_ellipsis( $item['label'] ), ! empty( $item['checked'] ) ? __( 'Checked', 'buddyforms' ) : __( 'Unchecked', 'buddyforms' ) ), $meta_value, $post_id, $slug );
+					$gdpr_result[] = apply_filters( 'buddyforms_get_gdpr_field_meta_message', sprintf( '<p>%s <strong>(%s)</strong></p>', ( ! $full_string ) ? buddyforms_add_ellipsis( $item['label'] ) : $item['label'], ! empty( $item['checked'] ) ? __( 'Checked', 'buddyforms' ) : __( 'Unchecked', 'buddyforms' ) ), $meta_value, $post_id, $slug );
 				}
 			}
 			if ( ! empty( $gdpr_result ) ) {
@@ -1019,12 +1030,16 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 		// Save the GDPR Agreement
 		if ( $customfield['type'] == 'gdpr' && isset( $customfield['options'] ) ) {
+			$gdpr_data = array();
 			foreach ( $customfield['options'] as $gdpr_key => $option ) {
-				$gdpr_data[ $gdpr_key ]['checked'] = buddyforms_sanitize( $customfield['type'], $_POST[ $slug . '_' . $gdpr_key ] );
-				$gdpr_data[ $gdpr_key ]['label']   = $option['label'];
-
+				if ( ! empty( $_POST[ $slug . '_' . $gdpr_key ] ) ) {
+					$gdpr_data[ $gdpr_key ]['checked'] = buddyforms_sanitize( $customfield['type'], $_POST[ $slug . '_' . $gdpr_key ] );
+					$gdpr_data[ $gdpr_key ]['label']   = $option['label'];
+				}
 			}
-			update_post_meta( $post_id, $slug, $gdpr_data );
+			if ( ! empty( $gdpr_data ) ) {
+				update_post_meta( $post_id, $slug, $gdpr_data );
+			}
 		}
 
 		//

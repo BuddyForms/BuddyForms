@@ -2129,3 +2129,8 @@ div#formbuilder-action-templates {
 .bf_hide_captcha_v2_options {
     display: none;
 }
+
+table.wp-list-table.widefat.posts.striped.fixed [id^="table_row_"] th[scope="row"], table.wp-list-table.widefat.posts.striped.fixed tr th[scope="row"] {
+    height: 100%;
+    vertical-align: text-top;
+}
