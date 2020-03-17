@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.16
+Stable tag: 2.5.17
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -389,6 +389,19 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.17 - 17 March 2020 =
+* Fixed the duplicate labels for the Category, Tag and Taxonomy form element.
+* Fixed the template system to show the parent page and not duplicate the content.
+* Added a reste option for the marketing popups.
+* Added a marketing popup to show an offer to free and trial clients.
+* Added the localization files.
+* Added compatibility with reCaptcha.
+* Fixed the global dashboard to get the correct form-slug from the current entry.
+* Fixed the Gutenberg navigation to use the correct labels.
+* Improved the Gutenberg block to show submission filter by current user.
+* Fixed the default page for manage the submission to keep selected when the user select a template.
+* Fixed the Gutenberg block to publish a form.
+
 = 2.5.16 - 6 March 2020 =
 * Fixed the string localization for the Feature Image and Upload Form Element.
 * Improved the compatibility with LOCO translate.
