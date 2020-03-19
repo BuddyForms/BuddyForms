@@ -1140,10 +1140,13 @@ label.error{
 }
 
 .wizard > .content > .body label {
-    display: inline-block;
+    /*display: inline-block;*/
     margin-bottom: 0.5em;
 }
-
+.wizard label.checkbox-inline.create > input[type="checkbox"] {
+    margin-left: 4% !important;
+    float: left;
+}
 .wizard > .content > .body label.error {
     color: #8a1f11;
     display: inline-block;
