@@ -8,6 +8,11 @@ BuddyForms is a commercial plugin available from [BuddyForms](https://themekraft
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/gfirem/akamai-release-node/tags). 
 
+
+## Dependencies Manager 
+If you want to use the last version of BuddyForms from the develop branch you need to install composer and run the next command from the plugin folder 
+* composer install --no-dev
+
 ## Contributors
 * [Sven Lehnert](https://github.com/svenl77)
 * [Konrad Sroka](https://github.com/konradS)
