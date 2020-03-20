@@ -635,14 +635,15 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug, 
 	if ( false !== strpos( $string, '[' ) ) {
 		$matches_fields_slugs = buddyforms_extract_form_fields_shortcode( $form_slug, $string );
 
-		if ( ! empty( $matches_fields_slugs ) && ! empty( $matches_fields_slugs[1] ) ) {
-			foreach ( $matches_fields_slugs[1] as $target_slug ) {
-				if ( empty( $target_slug ) ) {
+		if ( ! empty( $matches_fields_slugs ) && ! empty( $matches_fields_slugs[2] ) ) {
+			foreach ( $matches_fields_slugs[2] as $target_key => $target_slug ) {
+				if ( empty( $target_slug ) || empty( $matches_fields_slugs[0][ $target_key ] ) ) {
 					continue;
 				}
+				$shortcode_string   = $matches_fields_slugs[0][ $target_key ];
 				$result_field       = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug, $full_string );
 				$field_result_value = ! empty( $result_field['value'] ) ? $result_field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $result_field, $form_slug, $post_id, $target_slug );
-				$string             = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
+				$string             = buddyforms_replace_shortcode_for_value( $string, $shortcode_string, apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
 			}
 		}
 	}
@@ -701,7 +702,7 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
 
 	$result = wp_cache_get( 'buddyforms_get_post_field_meta_' . $form_slug . '_' . $fields_key, 'buddyforms' );
 	if ( $result === false ) {
-		$fields_slugs = array();
+		$fields_slugs = array( 'if' );
 		foreach ( $custom_fields as $custom_field ) {
 			if ( isset( $custom_field['slug'] ) ) {
 				$slug = $custom_field['slug'];
@@ -713,8 +714,18 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
 
 			$fields_slugs[] = $slug;
 		}
-		$field_pattern = join( '|', $fields_slugs );
-		$result        = buddyforms_extract_all_shortcode( $string, $field_pattern );
+
+		$result = buddyforms_extract_all_shortcode( $string, $fields_slugs );
+
+		//Process shortcode tags
+		if ( ! empty( $result ) && ! empty( $result[2] ) ) {
+			foreach ( $result[2] as $target => $shortcode_name ) {
+				if ( ! empty( $shortcode_name ) && ! empty( $result[3][ $target ] ) ) {
+					$attr_str             = html_entity_decode( $result[3][ $target ] );
+					$result[3][ $target ] = shortcode_parse_atts( $attr_str );
+				}
+			}
+		}
 
 		wp_cache_set( 'buddyforms_get_post_field_meta_' . $form_slug . '_' . $fields_key, $result, 'buddyforms' );
 	}
@@ -726,17 +737,16 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
  * Extract all shortcodes from the given string. Ideally use to extract the fields slugs from strings.
  *
  * @param $string
- * @param string $field_pattern
+ * @param $fields_slugs
  *
  * @return mixed
  *
  * @since 2.4.1
- *
  */
-function buddyforms_extract_all_shortcode( $string, $field_pattern = '.*?' ) {
-	$pattern = sprintf( "/\\[(%s)(\\s.*?)?\\]/", $field_pattern );
+function buddyforms_extract_all_shortcode( $string, $fields_slugs ) {
+	$pattern = get_shortcode_regex( $fields_slugs );
 	$matches = array();
-	preg_match_all( $pattern, $string, $matches );
+	preg_match_all( '/' . $pattern . '/', $string, $matches );
 
 	return $matches;
 }
@@ -818,6 +828,10 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
 
 			if ( empty( $slug ) ) {
 				$slug = buddyforms_sanitize_slug( $custom_field['name'] );
+			}
+
+			if ( in_array( $slug, apply_filters( 'buddyforms_submission_exclude_columns', array( 'user_pass', 'captcha' ) ) ) ) {
+				continue;
 			}
 
 			$meta_value = get_post_meta( $post_id, $slug, true );
@@ -931,10 +945,10 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			break;
 		case 'link':
-			$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
+			$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			break;
 		case 'user_website':
-			$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
+			$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			break;
 		case 'gdpr':
 			$gdpr_empty  = apply_filters( 'buddyforms_get_gdpr_field_meta_empty', __( '<p>Empty Agreement(s)</p>', 'buddyforms' ), $meta_value, $post_id, $slug );
