@@ -124,6 +124,13 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			} ?>
 	}
 
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:disabled {
+		background: rgba(255, 255, 255, 0.5);
+		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+		color: rgba(51, 51, 51, 0.5);
+		cursor: not-allowed;
+	}
+
 	<?php // Placeholder Font Color
 	if( $bfdesign['field_placeholder_font_color']['style'] == 'color' ) {
 		echo '.the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input textarea::placeholder, .the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input .form-control::placeholder { color: ' . $bfdesign['field_placeholder_font_color']['color'] . '; }';
