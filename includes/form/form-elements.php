@@ -192,6 +192,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							if ( is_user_logged_in() ) {
 								$element_attr = array_merge( $element_attr, array( 'disabled' => 'disabled' ) );
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
+									if ( isset( $customfield['required'] ) ) {
+										unset( $customfield['required'] );
+									}
+									if ( isset( $element_attr['required'] ) ) {
+										unset( $element_attr['required'] );
+									}
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
 								}
 							} else {

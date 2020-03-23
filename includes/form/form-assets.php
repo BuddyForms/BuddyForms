@@ -105,7 +105,7 @@ class BuddyFormsAssets {
 		 */
 		do_action( 'buddyforms_front_js_css_enqueue', $content, $form_slug );
 
-		if ( ! empty( $form_slug ) && $form_slug !== 'none' && empty($wp_query->query_vars['bf_form_slug'])) {
+		if ( ! empty( $form_slug ) && $form_slug !== 'none' && empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 			$wp_query->query_vars['bf_form_slug'] = $form_slug;
 		}
 
@@ -125,14 +125,14 @@ class BuddyFormsAssets {
 
 		BuddyForms::buddyforms_js_global_set_parameters( array(
 			'pwsL10n' => array(
-				'empty'             => isset( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator', 'buddyforms' ),
-				'short'             => isset( $password_strength_settings['lavel_1'] ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.', 'buddyforms' ),
-				'bad'               => isset( $password_strength_settings['lavel_2'] ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak', 'buddyforms' ),
-				'good'              => isset( $password_strength_settings['lavel_3'] ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'buddyforms' ),
-				'strong'            => isset( $password_strength_settings['lavel_4'] ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong', 'buddyforms' ),
-				'mismatch'          => isset( $password_strength_settings['mismatch'] ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch', 'buddyforms' ),
-				'hint_text'         => isset( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).', 'buddyforms' ),
-				'required_strength' => isset( $password_strength_settings['required_strength'] ) && ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
+				'empty'             => ! empty( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator', 'buddyforms' ),
+				'short'             => ! empty( $password_strength_settings['lavel_1'] ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.', 'buddyforms' ),
+				'bad'               => ! empty( $password_strength_settings['lavel_2'] ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak', 'buddyforms' ),
+				'good'              => ! empty( $password_strength_settings['lavel_3'] ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'buddyforms' ),
+				'strong'            => ! empty( $password_strength_settings['lavel_4'] ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong', 'buddyforms' ),
+				'mismatch'          => ! empty( $password_strength_settings['mismatch'] ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch', 'buddyforms' ),
+				'hint_text'         => ! empty( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).', 'buddyforms' ),
+				'required_strength' => ! empty( $password_strength_settings ) && isset( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : apply_filters( 'buddyforms_password_strength_default_strength', 3, $form_slug ),
 			)
 		) );
 
@@ -323,9 +323,9 @@ class BuddyFormsAssets {
 		} else {
 			wp_localize_script( "buddyforms-admin-all-js", "buddyformsGlobal",
 				apply_filters( 'buddyforms_global_localize_scripts', array(
-						'admin_url' => admin_url( 'admin-ajax.php' ),
-						'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
-					), ''
+					'admin_url' => admin_url( 'admin-ajax.php' ),
+					'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
+				), ''
 				)
 			);
 			do_action( 'buddyforms_all_admin_js_css_enqueue' );
