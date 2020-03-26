@@ -249,10 +249,8 @@ function BuddyForms() {
             // Get the password strength
             var strength = checkPasswordStrengthInternal(pass1, blacklistArray, pass2);
 
-            var showHint = false;
             var hint_html = '<small class="buddyforms-password-hint">';
             if (strength && strength.feedback) {
-                console.log(strength.feedback);
                 if (strength.feedback.warning) {
                     hint_html += 'Warning: ' + strength.feedback.warning + '<br/>';
                 }
@@ -261,7 +259,6 @@ function BuddyForms() {
                 }
             }
             hint_html += '</small>';
-
             passwordHint.remove();
             strengthResult.html('');
             switch (strength.score) {
@@ -293,7 +290,7 @@ function BuddyForms() {
             // The meter function returns a result even if pass2 is empty,
             // enable only the submit button if the password is strong and
             // both passwords are filled up
-            if (buddyformsGlobal.pwsL10n.required_strength <= strength && strength !== 5 && '' !== pass2.trim()) {
+            if (buddyformsGlobal.pwsL10n.required_strength <= strength.score && strength.score !== 5 && '' !== pass2.trim()) {
                 BuddyFormsHooks.doAction('buddyforms:submit:enable');
                 strengthResult.after(hint_html);
             } else {
@@ -312,7 +309,7 @@ function BuddyForms() {
                 }
             }
 
-            return strength;
+            return strength.score;
         }
         return '';
     }
