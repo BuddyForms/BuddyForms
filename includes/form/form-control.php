@@ -517,6 +517,7 @@ function buddyforms_process_submission( $args = array() ) {
 	$args = array_merge( $args, $args2 );
 
 	do_action( 'buddyforms_process_submission_end', $args );
+	do_action( 'buddyforms_after_submission_end', $args );
 
 	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();

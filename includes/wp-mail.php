@@ -1,6 +1,5 @@
 <?php
 
-add_action( 'buddyforms_process_submission_end', 'mail_submission_trigger_sent' );
 /**
  * Start the email notification process
  *
@@ -19,12 +18,18 @@ function mail_submission_trigger_sent( $args ) {
 	$post = get_post( $post_id );
 
 	if ( isset( $buddyforms[ $form_slug ]['mail_submissions'] ) && is_array( $buddyforms[ $form_slug ]['mail_submissions'] ) ) {
-		foreach ( $buddyforms[ $form_slug ]['mail_submissions'] as $notification ) {
-			buddyforms_send_mail_submissions( $notification, $post );
+		$continue = apply_filters( 'buddyforms_trigger_mail_submission', true, $post_id, $form_slug );
+		if ( $continue ) {
+			foreach ( $buddyforms[ $form_slug ]['mail_submissions'] as $notification ) {
+				buddyforms_send_mail_submissions( $notification, $post );
+			}
 		}
 	}
 
 }
+
+add_action( 'buddyforms_process_submission_end', 'mail_submission_trigger_sent' );
+
 
 /**
  *
@@ -283,12 +288,6 @@ function buddyforms_email_prepare_cc_bcc( $email_array, $type = 'cc' ) {
  * @param $old_status
  * @param $post
  */
-add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
-/**
- * @param $new_status
- * @param $old_status
- * @param $post
- */
 function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	global $form_slug, $buddyforms;
 
@@ -307,10 +306,13 @@ function buddyforms_transition_post_status( $new_status, $old_status, $post ) {
 	if ( ! isset( $buddyforms[ $form_slug ]['mail_notification'][ $new_status ] ) ) {
 		return;
 	}
-
-	buddyforms_send_post_status_change_notification( $post );
-
+	$continue = apply_filters( 'buddyforms_trigger_mail_transition', true, $post->ID, $form_slug );
+	if ( $continue ) {
+		buddyforms_send_post_status_change_notification( $post );
+	}
 }
+
+add_action( 'transition_post_status', 'buddyforms_transition_post_status', 10, 3 );
 
 /**
  *

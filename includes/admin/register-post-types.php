@@ -246,6 +246,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
+	do_action('buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post);
 }
 
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );

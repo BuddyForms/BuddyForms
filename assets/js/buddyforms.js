@@ -931,7 +931,7 @@ function BuddyForms() {
                 jQuery(this).on('change', function () {
                     var formSlug = jQuery(this).data('form');
                     if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-                        jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                        jQuery('#buddyforms_form_' + formSlug).valid();
                     }
                 });
             });
@@ -962,7 +962,7 @@ function BuddyForms() {
                         stepMinute: parseInt(fieldTimeStep),
                         onSelect: function () {
                             if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-                                jQuery('form[id="buddyforms_form_' + formSlug + '"]').valid();
+                                jQuery('#buddyforms_form_' + formSlug).valid();
                             }
                         }
                     };
@@ -1035,7 +1035,7 @@ function BuddyForms() {
     function actionFromButtonWrapper(event) {
         var target = jQuery(this).data('target');
         var status = jQuery(this).data('status');
-        var targetForms = jQuery('form#buddyforms_form_' + target);
+        var targetForms = jQuery('#buddyforms_form_' + target);
         BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, status, event]);
     }
 
@@ -1126,7 +1126,7 @@ function BuddyForms() {
     }
 
     function validateGlobalConfig() {
-        var forms = jQuery('form[id^="buddyforms_form_"]');
+        var forms = jQuery('.standard-form.buddyforms-active-form');
         if (forms && forms.length > 0) {
             jQuery.each(forms, function () {
                 var currentForms = jQuery(this);

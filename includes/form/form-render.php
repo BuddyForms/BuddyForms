@@ -215,7 +215,7 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
-	$form_class = 'standard-form buddyforms-' . $form_slug . ' ';
+	$form_class = 'standard-form buddyforms-active-form buddyforms-' . $form_slug . ' ';
 
 	if ( ! isset( $buddyforms[ $form_slug ]['local_storage'] ) ) {
 		$form_class .= ' bf-garlic';
