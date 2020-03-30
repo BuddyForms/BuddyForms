@@ -21,17 +21,6 @@ function buddyforms_permissions_unregistered_screen() {
 		)
 	);
 
-	$public_submit_login = isset( $buddyform['public_submit_login'] ) ? $buddyform['public_submit_login'] : 'above';
-	$form_setup[]        = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array(
-		'none'  => __( 'None', 'buddyforms' ),
-		'above' => __( 'Above the Form', 'buddyforms' ),
-		'under' => __( 'Under the Form', 'buddyforms' )
-	), array(
-		'value'     => $public_submit_login,
-		'shortDesc' => __( 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.', 'buddyforms' ),
-		'class'     => 'public-submit-option'
-	) );
-
 	$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
 	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
 		array(
