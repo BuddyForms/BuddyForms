@@ -211,6 +211,7 @@ function buddyforms_form_html( $args ) {
 
 
 	// Create the form object
+	/** @var Form $form */
 	$form = new Form( "buddyforms_form_" . $form_slug );
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
@@ -245,6 +246,11 @@ function buddyforms_form_html( $args ) {
 	if ( is_user_logged_in() ) {
 		$form->addElement( new Element_Hidden( "post_author", ! empty( $current_user ) ? $current_user->ID : 0 ) );
 	}
+	//wpml compatibility
+	if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
+		$form->addElement( new Element_Hidden( "bf_language_code", ICL_LANGUAGE_CODE ) );
+	}
+
 	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
 	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
 	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );

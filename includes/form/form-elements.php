@@ -121,12 +121,18 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 				$name = apply_filters( 'buddyforms_form_field_name', $name, $post_id );
 
+				//wpml compatibility
+				$name = apply_filters( 'wpml_translate_string', $name, $slug, buddyforms_wpml_packages( $form_slug ) );
+
 				$description = '';
-				if ( isset( $customfield['description'] ) ) {
+				if ( ! empty( $customfield['description'] ) ) {
 					$description = stripcslashes( $customfield['description'] );
 				}
 
 				$description = apply_filters( 'buddyforms_form_field_description', $description, $post_id );
+
+				//wpml compatibility
+				$description = apply_filters( 'wpml_translate_string', $description, $slug, buddyforms_wpml_packages( $form_slug ) );
 
 				$element_attr = array(
 					'id'        => str_replace( "-", "", $slug ),
@@ -1225,6 +1231,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 				}
+
+				//Compatibility with WPML
+				do_action( 'wpml_register_string', $name, $slug, buddyforms_wpml_packages( $form_slug ), $name, 'LINE' );
 			}
 
 		}

@@ -1720,6 +1720,10 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 	if ( $is_draft_enabled && $include_form_draft_button ) {
 		if ( ! $exist_field_status && $form_type === 'post' && is_user_logged_in() ) {
 			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
+
+			do_action( 'wpml_register_string', $bf_draft_button_text, 'draft', buddyforms_wpml_packages($form_slug), $bf_draft_button_text, 'LINE' );
+			$bf_draft_button_text = apply_filters( 'wpml_translate_string', $bf_draft_button_text, 'draft', buddyforms_wpml_packages($form_slug) );
+
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
 			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'submit', array(
 				'id'             => $form_slug . '-draft',
@@ -1746,6 +1750,9 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 		} else {
 			$bf_button_text = ! empty( $bfdesign['submit_text'] ) ? $bfdesign['submit_text'] : __( 'Submit', 'buddyforms' );
 		}
+
+		do_action( 'wpml_register_string', $bf_button_text, 'submitted', buddyforms_wpml_packages($form_slug), $bf_button_text, 'LINE' );
+		$bf_button_text = apply_filters( 'wpml_translate_string', $bf_button_text, 'submitted', buddyforms_wpml_packages($form_slug) );
 
 		$bf_submit_button = new Element_Button( $bf_button_text, 'submit', array(
 			'id'          => $form_slug,
@@ -1950,3 +1957,26 @@ function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
 }
 
 add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );
+
+/**
+ * Return the wpml packages
+ *
+ * @param $form_slug
+ * @param string $edit_link
+ * @param string $view_link
+ *
+ * @return array
+ * @since 2.5.19
+ *
+ */
+function buddyforms_wpml_packages( $form_slug, $edit_link = '', $view_link = '' ) {
+	global $buddyforms;
+
+	return array(
+		'kind'      => 'BuddyForms Forms',
+		'name'      => $form_slug,
+		'title'     => $buddyforms[ $form_slug ]['name'],
+		'edit_link' => $edit_link,
+		'view_link' => $view_link
+	);
+}

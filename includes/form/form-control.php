@@ -615,6 +615,15 @@ function buddyforms_update_post( $args ) {
 
 	}
 
+	do_action( 'wpml_set_element_language_details',
+		array(
+			'element_id'    => $post_id,
+			'element_type'  => 'post_post',
+			'trid'          => false,
+			'language_code' => 'es',
+		)
+	);
+
 	$bf_post['post_id'] = $post_id;
 
 	return $bf_post;

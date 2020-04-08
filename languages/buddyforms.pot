@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: BuddyForms\n"
-"POT-Creation-Date: 2020-03-10 20:55-0300\n"
+"POT-Creation-Date: 2020-04-07 21:50-0300\n"
 "PO-Revision-Date: 2019-02-20 16:43-0300\n"
 "Last-Translator: Guillermo Figueroa Mesa <gfirem@gmail.com>\n"
 "Language-Team: Guillermo Figueroa Mesa <gfirem@gmail.com>\n"
@@ -35,23 +35,23 @@ msgstr ""
 msgid "found: "
 msgstr ""
 
-#: BuddyForms.php:369
+#: BuddyForms.php:370
 msgid "BuddyForms Preview Page"
 msgstr ""
 
-#: BuddyForms.php:375
+#: BuddyForms.php:376
 msgid "This is a preview of how this form will appear on your website"
 msgstr ""
 
-#: BuddyForms.php:463
+#: BuddyForms.php:470
 msgid "PHP Version Update Required!"
 msgstr ""
 
-#: BuddyForms.php:464
+#: BuddyForms.php:471
 msgid "You are using PHP Version "
 msgstr ""
 
-#: BuddyForms.php:465
+#: BuddyForms.php:472
 msgid "Please make sure you have at least php version 5.3 installed."
 msgstr ""
 
@@ -63,15 +63,15 @@ msgstr ""
 msgid "Please enter a name"
 msgstr ""
 
-#: includes/admin/admin-header.php:17 includes/admin/mce-editor-button.php:115 includes/admin/register-post-types.php:316 includes/admin/register-post-types.php:556 includes/shortcodes.php:299 includes/shortcodes.php:309 includes/shortcodes.php:351
+#: includes/admin/admin-header.php:17 includes/admin/mce-editor-button.php:115 includes/admin/register-post-types.php:317 includes/admin/register-post-types.php:557 includes/shortcodes.php:299 includes/shortcodes.php:309 includes/shortcodes.php:351
 msgid "Add New"
 msgstr ""
 
-#: includes/admin/admin-header.php:19 includes/admin/register-post-types.php:556
+#: includes/admin/admin-header.php:19 includes/admin/register-post-types.php:557
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/admin-header.php:21 includes/admin/register-post-types.php:556
+#: includes/admin/admin-header.php:21 includes/admin/register-post-types.php:557
 msgid "Contact Us"
 msgstr ""
 
@@ -124,17 +124,17 @@ msgid "Add this field to the MetaBox"
 msgstr ""
 
 #: includes/admin/form-builder/form-builder-elements.php:71 includes/admin/form-builder/form-builder-elements.php:125 includes/admin/form-builder/form-builder-elements.php:146 includes/admin/form-builder/form-builder-elements.php:163 includes/admin/form-builder/form-builder-elements.php:194
-#: includes/admin/form-builder/form-builder-elements.php:225 includes/admin/form-builder/form-builder-elements.php:246 includes/admin/form-builder/form-builder-elements.php:271 includes/admin/form-builder/form-builder-elements.php:284 includes/admin/form-builder/form-builder-elements.php:297
-#: includes/admin/form-builder/form-builder-elements.php:332 includes/admin/form-builder/form-builder-elements.php:345 includes/admin/form-builder/form-builder-elements.php:359 includes/admin/form-builder/form-builder-elements.php:426 includes/admin/form-builder/form-builder-elements.php:435
-#: includes/admin/form-builder/form-builder-elements.php:484 includes/admin/form-builder/form-builder-elements.php:537 includes/admin/form-builder/form-builder-elements.php:555 includes/admin/form-builder/form-builder-elements.php:566 includes/admin/form-builder/form-builder-elements.php:592
-#: includes/admin/form-builder/form-builder-elements.php:612 includes/admin/form-builder/form-builder-elements.php:630 includes/admin/form-builder/form-builder-elements.php:648 includes/admin/form-builder/form-builder-elements.php:741 includes/admin/form-builder/form-builder-elements.php:778
-#: includes/admin/form-builder/form-builder-elements.php:806 includes/admin/form-builder/form-builder-elements.php:864 includes/admin/form-builder/form-builder-elements.php:1200 includes/admin/form-builder/form-builder-elements.php:1214 includes/admin/form-builder/form-builder-elements.php:1256
-#: includes/admin/form-builder/form-builder-elements.php:1312 includes/admin/form-builder/form-builder-elements.php:1338 includes/admin/form-builder/form-builder-elements.php:1372 includes/admin/form-builder/form-builder-elements.php:1398 includes/admin/form-builder/form-builder-elements.php:1434
-#: includes/admin/form-builder/form-builder-elements.php:1444 includes/admin/view/buddyforms-form-element-multiple.php:12
+#: includes/admin/form-builder/form-builder-elements.php:225 includes/admin/form-builder/form-builder-elements.php:247 includes/admin/form-builder/form-builder-elements.php:272 includes/admin/form-builder/form-builder-elements.php:292 includes/admin/form-builder/form-builder-elements.php:312
+#: includes/admin/form-builder/form-builder-elements.php:347 includes/admin/form-builder/form-builder-elements.php:367 includes/admin/form-builder/form-builder-elements.php:388 includes/admin/form-builder/form-builder-elements.php:489 includes/admin/form-builder/form-builder-elements.php:498
+#: includes/admin/form-builder/form-builder-elements.php:547 includes/admin/form-builder/form-builder-elements.php:600 includes/admin/form-builder/form-builder-elements.php:618 includes/admin/form-builder/form-builder-elements.php:629 includes/admin/form-builder/form-builder-elements.php:655
+#: includes/admin/form-builder/form-builder-elements.php:675 includes/admin/form-builder/form-builder-elements.php:693 includes/admin/form-builder/form-builder-elements.php:711 includes/admin/form-builder/form-builder-elements.php:804 includes/admin/form-builder/form-builder-elements.php:841
+#: includes/admin/form-builder/form-builder-elements.php:869 includes/admin/form-builder/form-builder-elements.php:927 includes/admin/form-builder/form-builder-elements.php:1263 includes/admin/form-builder/form-builder-elements.php:1277 includes/admin/form-builder/form-builder-elements.php:1319
+#: includes/admin/form-builder/form-builder-elements.php:1375 includes/admin/form-builder/form-builder-elements.php:1401 includes/admin/form-builder/form-builder-elements.php:1430 includes/admin/form-builder/form-builder-elements.php:1456 includes/admin/form-builder/form-builder-elements.php:1492
+#: includes/admin/form-builder/form-builder-elements.php:1502 includes/admin/view/buddyforms-form-element-multiple.php:12
 msgid "Label"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:79 includes/admin/form-builder/form-builder-elements.php:1185 includes/admin/form-builder/form-builder-elements.php:1357
+#: includes/admin/form-builder/form-builder-elements.php:79 includes/admin/form-builder/form-builder-elements.php:1248 includes/admin/form-builder/form-builder-elements.php:1415
 msgid "Slug"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "optional"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:80 includes/admin/form-builder/form-builder-elements.php:1358
+#: includes/admin/form-builder/form-builder-elements.php:80 includes/admin/form-builder/form-builder-elements.php:1416
 msgid "Underscore before the slug like _name will create a hidden post meta field"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr ""
 msgid "Required Error Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:97 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:241
+#: includes/admin/form-builder/form-builder-elements.php:97 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:235
 msgid "Text"
 msgstr ""
 
@@ -166,51 +166,51 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:105 includes/admin/form-builder/form-builder-elements.php:173 includes/admin/form-builder/form-builder-elements.php:204 includes/admin/form-builder/form-builder-elements.php:450 includes/admin/form-builder/form-builder-elements.php:500
-#: includes/admin/form-builder/form-builder-elements.php:1222 includes/admin/form-builder/form-builder-elements.php:1276
+#: includes/admin/form-builder/form-builder-elements.php:105 includes/admin/form-builder/form-builder-elements.php:173 includes/admin/form-builder/form-builder-elements.php:204 includes/admin/form-builder/form-builder-elements.php:513 includes/admin/form-builder/form-builder-elements.php:563
+#: includes/admin/form-builder/form-builder-elements.php:1285 includes/admin/form-builder/form-builder-elements.php:1339
 msgid "Validation Min Length"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:108 includes/admin/form-builder/form-builder-elements.php:176 includes/admin/form-builder/form-builder-elements.php:207 includes/admin/form-builder/form-builder-elements.php:453 includes/admin/form-builder/form-builder-elements.php:503
-#: includes/admin/form-builder/form-builder-elements.php:1225 includes/admin/form-builder/form-builder-elements.php:1279
+#: includes/admin/form-builder/form-builder-elements.php:108 includes/admin/form-builder/form-builder-elements.php:176 includes/admin/form-builder/form-builder-elements.php:207 includes/admin/form-builder/form-builder-elements.php:516 includes/admin/form-builder/form-builder-elements.php:566
+#: includes/admin/form-builder/form-builder-elements.php:1288 includes/admin/form-builder/form-builder-elements.php:1342
 msgid "Validation Max Length"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:110 includes/admin/form-builder/form-builder-elements.php:178 includes/admin/form-builder/form-builder-elements.php:209 includes/admin/form-builder/form-builder-elements.php:455 includes/admin/form-builder/form-builder-elements.php:505
-#: includes/admin/form-builder/form-builder-elements.php:1227 includes/admin/form-builder/form-builder-elements.php:1281
+#: includes/admin/form-builder/form-builder-elements.php:110 includes/admin/form-builder/form-builder-elements.php:178 includes/admin/form-builder/form-builder-elements.php:209 includes/admin/form-builder/form-builder-elements.php:518 includes/admin/form-builder/form-builder-elements.php:568
+#: includes/admin/form-builder/form-builder-elements.php:1290 includes/admin/form-builder/form-builder-elements.php:1344
 #, php-format
 msgid "The minimum character length is %s. Please check."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:111 includes/admin/form-builder/form-builder-elements.php:179 includes/admin/form-builder/form-builder-elements.php:210 includes/admin/form-builder/form-builder-elements.php:456 includes/admin/form-builder/form-builder-elements.php:506
-#: includes/admin/form-builder/form-builder-elements.php:1228 includes/admin/form-builder/form-builder-elements.php:1282
+#: includes/admin/form-builder/form-builder-elements.php:111 includes/admin/form-builder/form-builder-elements.php:179 includes/admin/form-builder/form-builder-elements.php:210 includes/admin/form-builder/form-builder-elements.php:519 includes/admin/form-builder/form-builder-elements.php:569
+#: includes/admin/form-builder/form-builder-elements.php:1291 includes/admin/form-builder/form-builder-elements.php:1345
 msgid "Min Length Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:113 includes/admin/form-builder/form-builder-elements.php:181 includes/admin/form-builder/form-builder-elements.php:212 includes/admin/form-builder/form-builder-elements.php:458 includes/admin/form-builder/form-builder-elements.php:508
-#: includes/admin/form-builder/form-builder-elements.php:1230 includes/admin/form-builder/form-builder-elements.php:1284
+#: includes/admin/form-builder/form-builder-elements.php:113 includes/admin/form-builder/form-builder-elements.php:181 includes/admin/form-builder/form-builder-elements.php:212 includes/admin/form-builder/form-builder-elements.php:521 includes/admin/form-builder/form-builder-elements.php:571
+#: includes/admin/form-builder/form-builder-elements.php:1293 includes/admin/form-builder/form-builder-elements.php:1347
 #, php-format
 msgid "You need to keep the %s in your new string to include the Min Length as part of the error message."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:116 includes/admin/form-builder/form-builder-elements.php:184 includes/admin/form-builder/form-builder-elements.php:215 includes/admin/form-builder/form-builder-elements.php:461 includes/admin/form-builder/form-builder-elements.php:511
-#: includes/admin/form-builder/form-builder-elements.php:1233 includes/admin/form-builder/form-builder-elements.php:1287
+#: includes/admin/form-builder/form-builder-elements.php:116 includes/admin/form-builder/form-builder-elements.php:184 includes/admin/form-builder/form-builder-elements.php:215 includes/admin/form-builder/form-builder-elements.php:524 includes/admin/form-builder/form-builder-elements.php:574
+#: includes/admin/form-builder/form-builder-elements.php:1296 includes/admin/form-builder/form-builder-elements.php:1350
 #, php-format
 msgid "The maximum character length is %s. Please check."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:117 includes/admin/form-builder/form-builder-elements.php:185 includes/admin/form-builder/form-builder-elements.php:216 includes/admin/form-builder/form-builder-elements.php:462 includes/admin/form-builder/form-builder-elements.php:512
-#: includes/admin/form-builder/form-builder-elements.php:1234 includes/admin/form-builder/form-builder-elements.php:1288
+#: includes/admin/form-builder/form-builder-elements.php:117 includes/admin/form-builder/form-builder-elements.php:185 includes/admin/form-builder/form-builder-elements.php:216 includes/admin/form-builder/form-builder-elements.php:525 includes/admin/form-builder/form-builder-elements.php:575
+#: includes/admin/form-builder/form-builder-elements.php:1297 includes/admin/form-builder/form-builder-elements.php:1351
 msgid "Max Length Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:119 includes/admin/form-builder/form-builder-elements.php:187 includes/admin/form-builder/form-builder-elements.php:218 includes/admin/form-builder/form-builder-elements.php:464 includes/admin/form-builder/form-builder-elements.php:514
-#: includes/admin/form-builder/form-builder-elements.php:1236 includes/admin/form-builder/form-builder-elements.php:1290
+#: includes/admin/form-builder/form-builder-elements.php:119 includes/admin/form-builder/form-builder-elements.php:187 includes/admin/form-builder/form-builder-elements.php:218 includes/admin/form-builder/form-builder-elements.php:527 includes/admin/form-builder/form-builder-elements.php:577
+#: includes/admin/form-builder/form-builder-elements.php:1299 includes/admin/form-builder/form-builder-elements.php:1353
 #, php-format
 msgid "You need to keep the %s in your new string to include the Max Length as part of the error message."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:124 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:210
+#: includes/admin/form-builder/form-builder-elements.php:124 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:326
 msgid "Country"
 msgstr ""
 
@@ -234,7 +234,7 @@ msgstr ""
 msgid "Select this option to show the State from the item selected in the Country list."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:145 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:213
+#: includes/admin/form-builder/form-builder-elements.php:145 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:329
 msgid "State"
 msgstr ""
 
@@ -258,636 +258,674 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:233
-msgid "Hide Username Form Element for LoggedIn User"
+#: includes/admin/form-builder/form-builder-elements.php:230
+msgid "Due to a restriction from WordPress this field is not possible to be updated."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:233 includes/admin/form-builder/form-builder-elements.php:254 includes/admin/form-builder/form-builder-elements.php:320
+#: includes/admin/form-builder/form-builder-elements.php:234 includes/admin/form-builder/form-builder-elements.php:255 includes/admin/form-builder/form-builder-elements.php:280 includes/admin/form-builder/form-builder-elements.php:300 includes/admin/form-builder/form-builder-elements.php:355
+#: includes/admin/form-builder/form-builder-elements.php:375
+msgid "Hide Form Element for LoggedIn User"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:234 includes/admin/form-builder/form-builder-elements.php:255 includes/admin/form-builder/form-builder-elements.php:280 includes/admin/form-builder/form-builder-elements.php:300 includes/admin/form-builder/form-builder-elements.php:335
+#: includes/admin/form-builder/form-builder-elements.php:355 includes/admin/form-builder/form-builder-elements.php:375
 msgid "Hide for logged in user"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:236 includes/admin/form-builder/form-builder-elements.php:257 includes/admin/form-builder/form-builder-elements.php:323
-msgid "If you want to use this form to allow your users to edit there profile you can hide the password for logged in users to prevent change the password with every update."
+#: includes/admin/form-builder/form-builder-elements.php:237
+msgid "If you dont't want to show this field for logged in users."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:245
+#: includes/admin/form-builder/form-builder-elements.php:246
 msgid "User eMail"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:254
-msgid "Hide User eMail Form Element for LoggedIn User"
+#: includes/admin/form-builder/form-builder-elements.php:258 includes/admin/form-builder/form-builder-elements.php:283 includes/admin/form-builder/form-builder-elements.php:303 includes/admin/form-builder/form-builder-elements.php:358 includes/admin/form-builder/form-builder-elements.php:378
+msgid "If you dont't want to allow your users to edit their profile you can hide this field for logged in users to prevent change with every update."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:260 includes/admin/form-builder/form-builder-elements.php:544
+#: includes/admin/form-builder/form-builder-elements.php:261 includes/admin/form-builder/form-builder-elements.php:607
 msgid "Enter a valid email."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:261 includes/admin/form-builder/form-builder-elements.php:545
+#: includes/admin/form-builder/form-builder-elements.php:262 includes/admin/form-builder/form-builder-elements.php:608
 msgid "Invalid Email Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:270 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:110
+#: includes/admin/form-builder/form-builder-elements.php:271 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:110
 msgid "First Name"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:283 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:111
+#: includes/admin/form-builder/form-builder-elements.php:291 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:111
 msgid "Last Name"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:296 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:198 includes/functions.php:236 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:196 includes/shortcodes.php:378
+#: includes/admin/form-builder/form-builder-elements.php:311 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:198 includes/functions.php:237 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:195 includes/shortcodes.php:378
 msgid "Password"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:304
+#: includes/admin/form-builder/form-builder-elements.php:319
 msgid "New Password "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:305
+#: includes/admin/form-builder/form-builder-elements.php:320
 msgid "New Password Placeholder"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:311
+#: includes/admin/form-builder/form-builder-elements.php:326
 msgid "Confirm Password"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:312
+#: includes/admin/form-builder/form-builder-elements.php:327
 msgid "Confirm Password Placeholder"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:320
+#: includes/admin/form-builder/form-builder-elements.php:335
 msgid "Hide Password Form Element for LoggedIn User"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:331 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:202
+#: includes/admin/form-builder/form-builder-elements.php:338
+msgid "If you want to use this form to allow your users to edit their profile you can hide the password for logged in users to prevent change the password with every update."
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:346 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:202
 msgid "Website"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:344
+#: includes/admin/form-builder/form-builder-elements.php:366
 msgid "Bio"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:358 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:272
+#: includes/admin/form-builder/form-builder-elements.php:387 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:266
 msgid "Captcha"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:367
+#: includes/admin/form-builder/form-builder-elements.php:396
 msgid "Sign up for a free"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:367
+#: includes/admin/form-builder/form-builder-elements.php:396
 msgid "Keys."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:368
+#: includes/admin/form-builder/form-builder-elements.php:397
 msgid "Site Key."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:375
+#: includes/admin/form-builder/form-builder-elements.php:404
 msgid "Private Key"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:382
+#: includes/admin/form-builder/form-builder-elements.php:411
 msgid "Language"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:386
+#: includes/admin/form-builder/form-builder-elements.php:415
 msgid "Forces the element to render in a specific language, if empty will try to auto-detects the user's language, check the possibles"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:389
+#: includes/admin/form-builder/form-builder-elements.php:415
+msgid "Language Codes"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:418
 msgid "The color theme of the widget"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:391
+#: includes/admin/form-builder/form-builder-elements.php:420
 msgid "Dark"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:392
+#: includes/admin/form-builder/form-builder-elements.php:421
 msgid "Light"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:399
+#: includes/admin/form-builder/form-builder-elements.php:428
 msgid "The type of CAPTCHA to serve"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:401
+#: includes/admin/form-builder/form-builder-elements.php:430
 msgid "Image"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:402
+#: includes/admin/form-builder/form-builder-elements.php:431
 msgid "Audio"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:409
+#: includes/admin/form-builder/form-builder-elements.php:438
 msgid "The size of the widget"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:411 includes/admin/form-builder/meta-boxes/metabox-layout.php:153 includes/admin/form-builder/meta-boxes/metabox-layout.php:197
+#: includes/admin/form-builder/form-builder-elements.php:440 includes/admin/form-builder/meta-boxes/metabox-layout.php:153 includes/admin/form-builder/meta-boxes/metabox-layout.php:197
 msgid "Normal"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:412
+#: includes/admin/form-builder/form-builder-elements.php:441
 msgid "Compact"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:419
-msgid "reCaptcha is only visible to logged off users. Logged in users not need to get checked."
+#: includes/admin/form-builder/form-builder-elements.php:450
+msgid "Version of Captcha"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:425 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:265
-msgid "Url"
+#: includes/admin/form-builder/form-builder-elements.php:452
+msgid "Version 2"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:434 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:247
-msgid "Textarea"
+#: includes/admin/form-builder/form-builder-elements.php:453
+msgid "Version 3"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:447 includes/admin/form-builder/form-builder-elements.php:497
-msgid "Turn on wp editor features"
+#: includes/admin/form-builder/form-builder-elements.php:462 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:40 includes/admin/view/buddyforms-form-element-multiple.php:15 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:14
+msgid "Action"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:468 includes/admin/form-builder/form-builder-elements.php:518 includes/admin/form-builder/form-builder-elements.php:1240 includes/admin/form-builder/form-builder-elements.php:1294
-msgid "Hidden?"
+#: includes/admin/form-builder/form-builder-elements.php:467
+msgid "Only apply to v3. Identification of this captcha in the "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:468 includes/admin/form-builder/form-builder-elements.php:518 includes/admin/form-builder/form-builder-elements.php:832 includes/admin/form-builder/form-builder-elements.php:1115 includes/admin/form-builder/form-builder-elements.php:1240
-#: includes/admin/form-builder/form-builder-elements.php:1294
-msgid "Make this field Hidden"
+#: includes/admin/form-builder/form-builder-elements.php:467
+msgid "Admin console"
 msgstr ""
 
 #: includes/admin/form-builder/form-builder-elements.php:471
+msgid "Score"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:479
+msgid "Only apply to v3. The score values with 1.0 is very likely a good interaction, 0.0 is very likely a bot."
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:482
+msgid "reCaptcha is only visible to logged off users. Logged in users not need to get checked."
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:488 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:259
+msgid "Url"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:497 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:241
+msgid "Textarea"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:510 includes/admin/form-builder/form-builder-elements.php:560
+msgid "Turn on wp editor features"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:531 includes/admin/form-builder/form-builder-elements.php:581 includes/admin/form-builder/form-builder-elements.php:1303 includes/admin/form-builder/form-builder-elements.php:1357
+msgid "Hidden?"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:531 includes/admin/form-builder/form-builder-elements.php:581 includes/admin/form-builder/form-builder-elements.php:895 includes/admin/form-builder/form-builder-elements.php:1178 includes/admin/form-builder/form-builder-elements.php:1303
+#: includes/admin/form-builder/form-builder-elements.php:1357
+msgid "Make this field Hidden"
+msgstr ""
+
+#: includes/admin/form-builder/form-builder-elements.php:534
 msgid "Generate textarea"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:474 includes/admin/form-builder/form-builder-elements.php:523 includes/admin/form-builder/form-builder-elements.php:1249 includes/admin/form-builder/form-builder-elements.php:1302
+#: includes/admin/form-builder/form-builder-elements.php:537 includes/admin/form-builder/form-builder-elements.php:586 includes/admin/form-builder/form-builder-elements.php:1312 includes/admin/form-builder/form-builder-elements.php:1365
 msgid "You can use any other field value by using the shortcodes [field_slug]"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:478 includes/admin/form-builder/form-builder-elements.php:527 includes/admin/form-builder/form-builder-elements.php:1297
+#: includes/admin/form-builder/form-builder-elements.php:541 includes/admin/form-builder/form-builder-elements.php:590 includes/admin/form-builder/form-builder-elements.php:1360
 msgid "Amount of rows"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:483
+#: includes/admin/form-builder/form-builder-elements.php:546
 msgid "Post Excerpt"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:521
+#: includes/admin/form-builder/form-builder-elements.php:584
 msgid "Generate Post Excerpt"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:536 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:244
+#: includes/admin/form-builder/form-builder-elements.php:599 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:238
 msgid "eMail"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:554
+#: includes/admin/form-builder/form-builder-elements.php:617
 msgid "Telephone Number"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:565 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:253
+#: includes/admin/form-builder/form-builder-elements.php:628 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:247
 msgid "Number"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:573
+#: includes/admin/form-builder/form-builder-elements.php:636
 msgid "Validation Min Value"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:576
+#: includes/admin/form-builder/form-builder-elements.php:639
 msgid "Validation Max Value"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:578
+#: includes/admin/form-builder/form-builder-elements.php:641
 #, php-format
 msgid "The minimum value allowed is: %s. Please check."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:579
+#: includes/admin/form-builder/form-builder-elements.php:642
 msgid "Min Value Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:581
+#: includes/admin/form-builder/form-builder-elements.php:644
 #, php-format
 msgid "You need to keep the %s in your new string to include the Min Value as part of the error message."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:584
+#: includes/admin/form-builder/form-builder-elements.php:647
 #, php-format
 msgid "The maximum value allowed is: %s. Please check."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:585
+#: includes/admin/form-builder/form-builder-elements.php:648
 msgid "Max Value Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:587
+#: includes/admin/form-builder/form-builder-elements.php:650
 #, php-format
 msgid "You need to keep the %s in your new string to include the Max Value as part of the error message."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:591 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:256
+#: includes/admin/form-builder/form-builder-elements.php:654 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:250
 msgid "Dropdown"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:599 includes/admin/form-builder/form-builder-elements.php:623 includes/admin/form-builder/form-builder-elements.php:641 includes/admin/form-builder/meta-boxes/metabox-layout.php:447 includes/admin/settings.php:274
+#: includes/admin/form-builder/form-builder-elements.php:662 includes/admin/form-builder/form-builder-elements.php:686 includes/admin/form-builder/form-builder-elements.php:704 includes/admin/form-builder/meta-boxes/metabox-layout.php:447 includes/admin/settings.php:272
 #: includes/admin/view/buddyforms-form-element-multiple.php:50 includes/resources/pfbc/Element/Checkbox.php:61
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:599 includes/admin/form-builder/form-builder-elements.php:623 includes/admin/form-builder/form-builder-elements.php:641
+#: includes/admin/form-builder/form-builder-elements.php:662 includes/admin/form-builder/form-builder-elements.php:686 includes/admin/form-builder/form-builder-elements.php:704
 msgid "Enable Frontend Reset Option"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:603 includes/admin/form-builder/form-builder-elements.php:989
+#: includes/admin/form-builder/form-builder-elements.php:666 includes/admin/form-builder/form-builder-elements.php:1052
 msgid "Multiple Selection"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:603 includes/admin/form-builder/form-builder-elements.php:989
+#: includes/admin/form-builder/form-builder-elements.php:666 includes/admin/form-builder/form-builder-elements.php:1052
 msgid "Multiple"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:611
+#: includes/admin/form-builder/form-builder-elements.php:674
 msgid "Radio Button"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:629 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:262
+#: includes/admin/form-builder/form-builder-elements.php:692 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:256
 msgid "Checkbox"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:647 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:339
+#: includes/admin/form-builder/form-builder-elements.php:710 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:322
 msgid "Upload"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:666 includes/admin/form-builder/form-builder-elements.php:1331
+#: includes/admin/form-builder/form-builder-elements.php:729 includes/admin/form-builder/form-builder-elements.php:1394
 msgid "Max File Size in MB"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:700
+#: includes/admin/form-builder/form-builder-elements.php:763
 msgid "Allowed File Types"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:706
+#: includes/admin/form-builder/form-builder-elements.php:769
 msgid "Allowed File Types Resume"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:709
+#: includes/admin/form-builder/form-builder-elements.php:772
 msgid "Ensure Amount"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:709
+#: includes/admin/form-builder/form-builder-elements.php:772
 msgid "Files in the field should be equals to Max Number of Files. "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:713
+#: includes/admin/form-builder/form-builder-elements.php:776
 msgid "Max number of files that will be handled"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:720
+#: includes/admin/form-builder/form-builder-elements.php:783
 msgid "The number of files is greater than allowed."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:721
+#: includes/admin/form-builder/form-builder-elements.php:784
 msgid "Max files Validation Error Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:722 includes/admin/form-builder/form-builder-elements.php:1365
+#: includes/admin/form-builder/form-builder-elements.php:785 includes/admin/form-builder/form-builder-elements.php:1423
 msgid "One or more files have errors, please check."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:723 includes/admin/form-builder/form-builder-elements.php:1366
+#: includes/admin/form-builder/form-builder-elements.php:786 includes/admin/form-builder/form-builder-elements.php:1424
 msgid "Upload Error Validation Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:725
+#: includes/admin/form-builder/form-builder-elements.php:788
 msgid "Delete Files"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:725
+#: includes/admin/form-builder/form-builder-elements.php:788
 msgid "Remove Files when Entry is deleted. "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:730
+#: includes/admin/form-builder/form-builder-elements.php:793
 msgid "Upload Image From Url"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:730
+#: includes/admin/form-builder/form-builder-elements.php:793
 msgid "Upload Images From Url. "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:740 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:276
+#: includes/admin/form-builder/form-builder-elements.php:803 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:270
 msgid "Date"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:750
+#: includes/admin/form-builder/form-builder-elements.php:813
 msgid "Date Format"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:752
+#: includes/admin/form-builder/form-builder-elements.php:815
 msgid "Read more about the format <a target=\"_blank\" href=\"https://api.jqueryui.com/datepicker/#utility-formatDate\">at.</a>"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:756
+#: includes/admin/form-builder/form-builder-elements.php:819
 msgid "Enable Time"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:756
+#: includes/admin/form-builder/form-builder-elements.php:819
 msgid "Include the Time Picker in the element"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:760 includes/admin/form-builder/form-builder-elements.php:787
+#: includes/admin/form-builder/form-builder-elements.php:823 includes/admin/form-builder/form-builder-elements.php:850
 msgid "Time Format"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:762 includes/admin/form-builder/form-builder-elements.php:789
+#: includes/admin/form-builder/form-builder-elements.php:825 includes/admin/form-builder/form-builder-elements.php:852
 msgid "Read more about the format <a target=\"_blank\" href=\"https://trentrichardson.com/examples/timepicker/#tp-formatting\">at.</a>"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:766
+#: includes/admin/form-builder/form-builder-elements.php:829
 msgid "Time Step"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:770
+#: includes/admin/form-builder/form-builder-elements.php:833
 msgid "Invalid Format"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:771
+#: includes/admin/form-builder/form-builder-elements.php:834
 msgid "Invalid Format Message"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:777 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:279
+#: includes/admin/form-builder/form-builder-elements.php:840 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:273
 msgid "Time"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:794
+#: includes/admin/form-builder/form-builder-elements.php:857
 msgid "Hour Step"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:799
+#: includes/admin/form-builder/form-builder-elements.php:862
 msgid "Minute Step"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:805
+#: includes/admin/form-builder/form-builder-elements.php:868
 msgid "Post Format"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:824
+#: includes/admin/form-builder/form-builder-elements.php:887
 msgid "Post Formats Default"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:832 includes/admin/form-builder/form-builder-elements.php:1115 includes/admin/form-builder/form-builder-elements.php:1183 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:344
+#: includes/admin/form-builder/form-builder-elements.php:895 includes/admin/form-builder/form-builder-elements.php:1178 includes/admin/form-builder/form-builder-elements.php:1246 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:333
 msgid "Hidden"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:850 includes/admin/form-builder/form-builder-elements.php:920 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:321
+#: includes/admin/form-builder/form-builder-elements.php:913 includes/admin/form-builder/form-builder-elements.php:983 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:307
 msgid "Taxonomy"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:851
+#: includes/admin/form-builder/form-builder-elements.php:914
 msgid "Taxonomies"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:854 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:289
+#: includes/admin/form-builder/form-builder-elements.php:917 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:281
 msgid "Category"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:855
+#: includes/admin/form-builder/form-builder-elements.php:918
 msgid "Categories"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:858 includes/admin/form-builder/form-builder-elements.php:859 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:294
+#: includes/admin/form-builder/form-builder-elements.php:921 includes/admin/form-builder/form-builder-elements.php:922 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:285
 msgid "Tags"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:875
+#: includes/admin/form-builder/form-builder-elements.php:938
 msgid "BuddyForms Professional is required to use this form Element . You need to upgrade to the Professional Plan . The Free and Starter Versions does not support Categories tags nad Taxonomies."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:875
+#: includes/admin/form-builder/form-builder-elements.php:938
 msgid "Upgrade Now"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:885
+#: includes/admin/form-builder/form-builder-elements.php:948
 msgid "Please select a post type in the \"Form Setup\" tab \"Create Content\" to get the post type taxonomies."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:901
+#: includes/admin/form-builder/form-builder-elements.php:964
 msgid "This Post Type does not have any "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:968
+#: includes/admin/form-builder/form-builder-elements.php:1031
 msgid "Default Terms"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:969
+#: includes/admin/form-builder/form-builder-elements.php:1032
 msgid "You can select a default category"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:974
+#: includes/admin/form-builder/form-builder-elements.php:1037
 msgid "Taxonomy Placeholder"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:977
+#: includes/admin/form-builder/form-builder-elements.php:1040
 msgid "You can change the placeholder to something meaningful like Select a Category or what make sense for your taxonomy."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:980
+#: includes/admin/form-builder/form-builder-elements.php:1043
 msgid "Taxonomy Order"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:995
+#: includes/admin/form-builder/form-builder-elements.php:1058
 msgid "Limit Selections"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:998
+#: includes/admin/form-builder/form-builder-elements.php:1061
 msgid "Add a number to limit the Selection amount"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1036
+#: includes/admin/form-builder/form-builder-elements.php:1099
 msgid "Include Items"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1040 includes/admin/form-builder/form-builder-elements.php:1085
+#: includes/admin/form-builder/form-builder-elements.php:1103 includes/admin/form-builder/form-builder-elements.php:1148
 msgid "You can select multiple items"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1081
+#: includes/admin/form-builder/form-builder-elements.php:1144
 msgid "Exclude Items"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1094
+#: includes/admin/form-builder/form-builder-elements.php:1157
 msgid "New Taxonomy Item"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1094
+#: includes/admin/form-builder/form-builder-elements.php:1157
 msgid "User can create new"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1100
+#: includes/admin/form-builder/form-builder-elements.php:1163
 msgid "Ajax"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1100
+#: includes/admin/form-builder/form-builder-elements.php:1163
 msgid "Enabled Ajax"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1107
+#: includes/admin/form-builder/form-builder-elements.php:1170
 msgid "Minimum characters "
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1110
+#: includes/admin/form-builder/form-builder-elements.php:1173
 msgid "Minimum number of characters required to start a search."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1193
+#: includes/admin/form-builder/form-builder-elements.php:1256
 msgid "Value:"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1199 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:304
+#: includes/admin/form-builder/form-builder-elements.php:1262 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:293
 msgid "Comments"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1206
+#: includes/admin/form-builder/form-builder-elements.php:1269
 msgid "This Post Field allows users to override the global comments settings so they can open and close comments as they wish."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1213 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:222 includes/admin/personal-data-exporter.php:26 templates/buddyforms/the-table.php:31
+#: includes/admin/form-builder/form-builder-elements.php:1276 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:216 includes/admin/personal-data-exporter.php:26 templates/buddyforms/the-table.php:31
 msgid "Title"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1243
+#: includes/admin/form-builder/form-builder-elements.php:1306
 msgid "If you want to generate the title you can set the title to hidden. If the title is visible and a title is entered the entered tiltle is stronger than the generated title. If you want to make sure the generated title is used hide the title field"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1247
+#: includes/admin/form-builder/form-builder-elements.php:1310
 msgid "Generate Title"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1255 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:226 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:351 includes/admin/personal-data-exporter.php:30
+#: includes/admin/form-builder/form-builder-elements.php:1318 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:220 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:351 includes/admin/personal-data-exporter.php:30
 msgid "Content"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1269
+#: includes/admin/form-builder/form-builder-elements.php:1332
 msgid "Turn off wp editor features"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1300
+#: includes/admin/form-builder/form-builder-elements.php:1363
 msgid "Generate Content"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1311 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:202 templates/buddyforms/the-table.php:37 templates/buddyforms/the-table.php:100
+#: includes/admin/form-builder/form-builder-elements.php:1374 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:215 templates/buddyforms/the-table.php:37 templates/buddyforms/the-table.php:100
 msgid "Status"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1321
+#: includes/admin/form-builder/form-builder-elements.php:1384
 msgid "Select the post status you want to make available in the frontend form"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1324
+#: includes/admin/form-builder/form-builder-elements.php:1387
 msgid "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock)."
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1337 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:314
+#: includes/admin/form-builder/form-builder-elements.php:1400 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:301
 msgid "Featured Image"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1345
-msgid "Add Image"
-msgstr ""
-
-#: includes/admin/form-builder/form-builder-elements.php:1346
-msgid "Button Label"
-msgstr ""
-
-#: includes/admin/form-builder/form-builder-elements.php:1353 includes/admin/form-builder/form-builder-elements.php:1406
+#: includes/admin/form-builder/form-builder-elements.php:1411 includes/admin/form-builder/form-builder-elements.php:1464
 msgid "Description:"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1371 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:334
+#: includes/admin/form-builder/form-builder-elements.php:1429 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:318
 msgid "File"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1379
+#: includes/admin/form-builder/form-builder-elements.php:1437
 msgid "Only one file or multiple?"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1379
+#: includes/admin/form-builder/form-builder-elements.php:1437
 msgid "Allow multiple file upload"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1384
+#: includes/admin/form-builder/form-builder-elements.php:1442
 msgid "Select allowed file Types"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1388 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:349
+#: includes/admin/form-builder/form-builder-elements.php:1446 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:337
 msgid "HTML"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1390
+#: includes/admin/form-builder/form-builder-elements.php:1448
 msgid "HTML:"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1397 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:268
+#: includes/admin/form-builder/form-builder-elements.php:1455 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:262
 msgid "GDPR Agreement"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1405
+#: includes/admin/form-builder/form-builder-elements.php:1463
 msgid "Please agree to our privacy police"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1420 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:326
+#: includes/admin/form-builder/form-builder-elements.php:1478 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:311
 msgid "Form Actions"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1427
+#: includes/admin/form-builder/form-builder-elements.php:1485
 msgid "Publish Button"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1427
+#: includes/admin/form-builder/form-builder-elements.php:1485
 msgid "Check to disabled"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1433 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:359
+#: includes/admin/form-builder/form-builder-elements.php:1491 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:345
 msgid "Price"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1443 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:354
+#: includes/admin/form-builder/form-builder-elements.php:1501 includes/admin/form-builder/meta-boxes/metabox-form-elements.php:341
 msgid "Range"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1460
+#: includes/admin/form-builder/form-builder-elements.php:1518
 msgid "Add custom class to the form element"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1507 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:15 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:26 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:38
+#: includes/admin/form-builder/form-builder-elements.php:1565 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:15 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:26 includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:38
 #: includes/admin/form-builder/meta-boxes/metabox-shortcodes.php:47
 msgid "Copy to clipboard"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1515
+#: includes/admin/form-builder/form-builder-elements.php:1573
 msgid "Edit this Field"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1515 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:243 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:376 includes/admin/form-builder/meta-boxes/metabox-permissions.php:194 includes/admin/submissions.php:227
-#: includes/functions.php:405 includes/functions.php:511 includes/functions.php:513
+#: includes/admin/form-builder/form-builder-elements.php:1573 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:243 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:376 includes/admin/form-builder/meta-boxes/metabox-permissions.php:187 includes/admin/submissions.php:227
+#: includes/functions.php:406 includes/functions.php:512 includes/functions.php:514
 msgid "Edit"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1516
+#: includes/admin/form-builder/form-builder-elements.php:1574
 msgid "Delete this Field"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1517 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:245 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:378 includes/admin/form-builder/meta-boxes/metabox-permissions.php:195 includes/admin/submissions.php:228
-#: includes/admin/view/buddyforms-form-element-multiple.php:37 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:41 includes/form/form-elements.php:837 includes/form/form-elements.php:885 includes/functions.php:522
+#: includes/admin/form-builder/form-builder-elements.php:1575 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:245 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:378 includes/admin/form-builder/meta-boxes/metabox-permissions.php:188 includes/admin/submissions.php:228
+#: includes/admin/view/buddyforms-form-element-multiple.php:37 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:41 includes/form/form-elements.php:852 includes/form/form-elements.php:900 includes/functions.php:523
 msgid "Delete"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1524
+#: includes/admin/form-builder/form-builder-elements.php:1582
 msgid "Full Width"
 msgstr ""
 
-#: includes/admin/form-builder/form-builder-elements.php:1588
+#: includes/admin/form-builder/form-builder-elements.php:1646
 msgid "Please Save the form once for the form element to work."
 msgstr ""
 
-#: includes/admin/form-builder/form-templates.php:62 includes/admin/form-builder/form-templates.php:145 includes/admin/form-builder/meta-boxes/metabox-permissions.php:26 includes/admin/form-builder/meta-boxes/metabox-select-form.php:62 includes/admin/settings.php:214
+#: includes/admin/form-builder/form-templates.php:62 includes/admin/form-builder/form-templates.php:145 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:165 includes/admin/form-builder/meta-boxes/metabox-select-form.php:62 includes/admin/settings.php:212
 msgid "None"
 msgstr ""
 
@@ -931,10 +969,6 @@ msgstr ""
 msgid "Field Type"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:40 includes/admin/view/buddyforms-form-element-multiple.php:15 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:14
-msgid "Action"
-msgstr ""
-
 #: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:41
 msgid "Layout"
 msgstr ""
@@ -975,35 +1009,35 @@ msgstr ""
 msgid "About / Bio"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:218
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:212
 msgid "Post Fields"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:230
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:224
 msgid "Excerpt"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:236
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:230
 msgid "Basic Fields"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:250
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:244
 msgid "Phone"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:259
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:253
 msgid "Radiobutton"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:299
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:289
 msgid "Post Formats"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:309
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:297
 msgid "Post Status"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:330
+#: includes/admin/form-builder/meta-boxes/metabox-form-elements.php:315
 msgid "Extra Fields"
 msgstr ""
 
@@ -1083,11 +1117,11 @@ msgstr ""
 msgid "AJAX"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:135 includes/functions.php:729
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:135 includes/functions.php:730
 msgid "Disable ajax form submission"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:145 includes/functions.php:730
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:145 includes/functions.php:731
 msgid "Local Storage"
 msgstr ""
 
@@ -1111,199 +1145,215 @@ msgstr ""
 msgid "By default the Javascript validations are enabled. Check to disable it."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:163
-msgid "User Data"
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:164
-msgid "Disable IP Address"
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:165
-msgid "Disable Referer"
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:164 includes/functions.php:744
+msgid "Enable Login on the form"
 msgstr ""
 
 #: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:166
-msgid "Disable Browser"
+msgid "Above the Form"
 msgstr ""
 
 #: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:167
+msgid "Under the Form"
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:170 includes/admin/form-builder/meta-boxes/metabox-permissions.php:54
+msgid "Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user."
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:176
+msgid "User Data"
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:177
+msgid "Disable IP Address"
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:178
+msgid "Disable Referer"
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:179
+msgid "Disable Browser"
+msgstr ""
+
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:180
 msgid "Disable Browser Version"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:168
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:181
 msgid "Disable Platform"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:169
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:182
 msgid "Disable Reports"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:170
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:183
 msgid "Disable User Agent"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:173
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:186
 msgid "By default all above user data will not be stored. In some country's for example in the EU you are not allowed to save the ip. Please make sure you not against the low in your country and adjust if needed"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:183
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:196
 msgid "Use any POST TYPE with the PRO Version!"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:184 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:189
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:197 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:202
 msgid "Select a post type if you want to create posts from form submissions. "
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:185 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:189 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:292
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:198 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:202 includes/admin/form-builder/meta-boxes/metabox-form-setup.php:305
 msgid "Read the Documentation"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:195
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:208
 msgid "Post Type"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:215 includes/functions.php:742
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:228 includes/functions.php:743
 msgid "Comment Status"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:227 includes/revisions.php:40
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:240 includes/revisions.php:40
 msgid "Revision"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:227
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:240
 msgid "Enable frontend revision control"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:238
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:251
 msgid "Singular Name"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:240
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:253
 msgid "The Single Name is used by other plugins and Navigation ( Display Books, Add Book )"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:288
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:301
 msgid "Enable your site members to view their submissions"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:289
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:302
 msgid "Select a page or create a new on if you like to turn on submission management for your logged in users."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:291
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:304
 msgid "Important!"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:291
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:304
 msgid "The original page content does not get changed. You are free to use any kind of content on the page itself. View a form or list the users submissions with Shortcodes. For the submissions management new endpoints get create for you. You can combine forms under the same page. Its a powerful option."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:293
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:306
 msgid "Form URL"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:294
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:307
 msgid "User Submissions URL"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:297
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:310
 msgid "Enable site members to manage their submissions"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:299 includes/admin/settings.php:264
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:312 includes/admin/settings.php:262
 msgid "Create a new Page"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:299 includes/admin/settings.php:264
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:312 includes/admin/settings.php:262
 msgid "The page is used to create the endpoints for the create - list and edit submissions views. "
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:304
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:317
 msgid "Admin Bar"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:304
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:317
 msgid "Add to Admin Bar"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:314
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:327
 msgid "Overwrite Frontend 'Edit Post' Link"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:316
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:329
 msgid "All Edit Links"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:317
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:330
 msgid "Only in My Posts List"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:321
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:334
 msgid "The link to the backend will be changed to use the frontend editing."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:329
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:342
 msgid "List Posts Options"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:330
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:343
 msgid "List all Author Posts created with this Form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:331
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:344
 msgid "List all Author Posts of the PostType"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:342
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:355
 msgid "List Style"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:347
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:360
 msgid "Do you want to list post in a ul li list or as table."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:372
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:385
 msgid "Select a Blog"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:374
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:387
 msgid "You can post with BuddyForms from one Blog to the other. If you use BuddyPress you can have a centralised Profile on the main Blog and let the user submit to the multisite network from a centralised place."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:384
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:397
 msgid "Form Submission"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:385
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:398
 msgid "Create Content"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:386
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:399
 msgid "Edit Submissions"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:396 includes/admin/register-post-types.php:465 includes/admin/register-post-types.php:467 includes/admin/settings.php:389 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:57 includes/admin/welcome-screen.php:270
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:409 includes/admin/register-post-types.php:466 includes/admin/register-post-types.php:468 includes/admin/settings.php:387 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:57 includes/admin/welcome-screen.php:270
 msgid "Contact Form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:397 includes/admin/register-post-types.php:471 includes/admin/settings.php:159 includes/admin/settings.php:381 includes/admin/welcome-screen.php:273
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:410 includes/admin/register-post-types.php:472 includes/admin/settings.php:157 includes/admin/settings.php:379 includes/admin/welcome-screen.php:273
 msgid "Registration Form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:398 includes/admin/welcome-screen.php:276
+#: includes/admin/form-builder/meta-boxes/metabox-form-setup.php:411 includes/admin/welcome-screen.php:276
 msgid "Post Form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-layout.php:36 includes/functions.php:58 includes/functions.php:1721
+#: includes/admin/form-builder/meta-boxes/metabox-layout.php:36 includes/functions.php:58 includes/functions.php:1745
 msgid "Publish"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-layout.php:36 includes/functions.php:1723 includes/resources/pfbc/Element/Button.php:47
+#: includes/admin/form-builder/meta-boxes/metabox-layout.php:36 includes/functions.php:1747 includes/resources/pfbc/Element/Button.php:47
 msgid "Submit"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-layout.php:38 includes/functions.php:1698
+#: includes/admin/form-builder/meta-boxes/metabox-layout.php:38 includes/functions.php:1722
 msgid "Save as draft"
 msgstr ""
 
@@ -1705,7 +1755,7 @@ msgstr ""
 msgid "Blog Title"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:114 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:133 includes/admin/settings.php:393
+#: includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:114 includes/admin/form-builder/meta-boxes/metabox-mail-notification.php:133 includes/admin/settings.php:391
 msgid "Custom"
 msgstr ""
 
@@ -1897,99 +1947,83 @@ msgstr ""
 msgid "Display Login Form For Unregistered Users with optional Link to a Registration Form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:25 includes/functions.php:743
-msgid "Enable Login on the form"
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:27
-msgid "Above the Form"
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:28
-msgid "Under the Form"
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:31 includes/admin/form-builder/meta-boxes/metabox-permissions.php:65
-msgid "Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user."
-msgstr ""
-
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:36
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:25
 msgid "Create an account?"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:36
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:25
 msgid "Create account during submission"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:39
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:28
 msgid "Create a new user during form submission"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:51
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:40
 msgid "No Registration"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:61
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:50
 msgid "Enable Registration on the login form"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:85 includes/admin/form-builder/meta-boxes/metabox-permissions.php:95
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:74 includes/admin/form-builder/meta-boxes/metabox-permissions.php:84
 msgid "Logged in User"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:86
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:75
 msgid "Get full control with the pro version"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:87
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:76
 msgid "Control who can create, edit and delete content that is created from this form for each user role with the pro version."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:88
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:77
 msgid "In the free version all roles can create and edit / delete there own posts"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:96
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:85
 msgid "Control who can create, edit and delete content that is created with this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:97
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:86
 msgid "If you check the All Submission the user role will get all users submission in the frontend."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:98
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:87
 msgid "The Admin Submission capability give the ability to the user to access to submission from the administration, take in count it need the minimum permission to access to WordPress administration."
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:177
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:170
 msgid "Admin rights can not get changed"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:191
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:184
 msgid "Role"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:193 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:81
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:186 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:81
 msgid "Create"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:196 includes/form/form-elements.php:466 includes/functions.php:60 includes/functions.php:581
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:189 includes/form/form-elements.php:481 includes/functions.php:60 includes/functions.php:582
 msgid "Draft"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:197
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:190
 msgid "All Submissions"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:198
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:191
 msgid "Admin Submission"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:200 includes/form/form-assets.php:293
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:193 includes/form/form-assets.php:294
 msgid "Check all"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:246
+#: includes/admin/form-builder/meta-boxes/metabox-permissions.php:239
 msgid "Permission"
 msgstr ""
 
@@ -2069,7 +2103,7 @@ msgstr ""
 msgid "Select the User Role the user should have after successful registration"
 msgstr ""
 
-#: includes/admin/form-builder/meta-boxes/metabox-registration.php:171 includes/functions.php:1100
+#: includes/admin/form-builder/meta-boxes/metabox-registration.php:171 includes/functions.php:1082
 msgid "Select a Page"
 msgstr ""
 
@@ -2237,80 +2271,80 @@ msgstr ""
 msgid "Please select a List Type"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:34
+#: includes/admin/password-strengh-settings.php:37
 msgid "Strength Requirement"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:39
+#: includes/admin/password-strengh-settings.php:42
 msgid "Level 0 - Anything"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:40
+#: includes/admin/password-strengh-settings.php:43
 msgid "Level 1 - Weakest"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:41
+#: includes/admin/password-strengh-settings.php:44
 msgid "Level 2 - Weak"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:42
+#: includes/admin/password-strengh-settings.php:45
 msgid "Level 3 - Medium (Default)"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:43
+#: includes/admin/password-strengh-settings.php:46
 msgid "Level 4 - Strong"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:49
+#: includes/admin/password-strengh-settings.php:52
 msgid "Level 1 Message"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:53 includes/form/form-assets.php:129
+#: includes/admin/password-strengh-settings.php:56 includes/form/form-assets.php:129
 msgid "Short: Your password is too short."
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:58
+#: includes/admin/password-strengh-settings.php:61
 msgid "Level 2 Message"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:62 includes/form/form-assets.php:130
+#: includes/admin/password-strengh-settings.php:65 includes/form/form-assets.php:130
 msgid "Password Strength: Weak"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:67
+#: includes/admin/password-strengh-settings.php:70
 msgid "Level 3 Message"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:71
+#: includes/admin/password-strengh-settings.php:74
 msgid "Password Strength: OK"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:76
+#: includes/admin/password-strengh-settings.php:79
 msgid "Level 4 Message"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:80 includes/form/form-assets.php:132
+#: includes/admin/password-strengh-settings.php:83 includes/form/form-assets.php:132
 msgid "Password Strength: Strong"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:85 includes/admin/password-strengh-settings.php:88 includes/form/form-assets.php:133
+#: includes/admin/password-strengh-settings.php:88 includes/admin/password-strengh-settings.php:91 includes/form/form-assets.php:133
 msgid "Mismatch"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:92
+#: includes/admin/password-strengh-settings.php:95
 msgid "Password Hint Text"
 msgstr ""
 
-#: includes/admin/password-strengh-settings.php:95
+#: includes/admin/password-strengh-settings.php:98
 msgid "Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like !  ? $ % ^ &amp; )."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: includes/admin/personal-data-exporter.php:70 includes/admin/register-post-types.php:314 includes/gutenberg/gutenberg.php:19
+#: includes/admin/personal-data-exporter.php:70 includes/admin/register-post-types.php:315 includes/gutenberg/gutenberg.php:19
 msgid "BuddyForms"
 msgstr ""
 
-#: includes/admin/register-post-types.php:19 includes/admin/settings.php:451
+#: includes/admin/register-post-types.php:19 includes/admin/settings.php:448
 msgid "Awesome Premium Features"
 msgstr ""
 
@@ -2330,146 +2364,146 @@ msgstr ""
 msgid "Form Designer"
 msgstr ""
 
-#: includes/admin/register-post-types.php:315
+#: includes/admin/register-post-types.php:316
 msgid "BuddyForm"
 msgstr ""
 
-#: includes/admin/register-post-types.php:317
+#: includes/admin/register-post-types.php:318
 msgid "Add New Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:318
+#: includes/admin/register-post-types.php:319
 msgid "Edit Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:319
+#: includes/admin/register-post-types.php:320
 msgid "New Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:320 includes/admin/register-post-types.php:491
+#: includes/admin/register-post-types.php:321 includes/admin/register-post-types.php:492
 msgid "View Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:321
+#: includes/admin/register-post-types.php:322
 msgid "Search BuddyForms"
 msgstr ""
 
-#: includes/admin/register-post-types.php:322
+#: includes/admin/register-post-types.php:323
 msgid "No BuddyForm found"
 msgstr ""
 
-#: includes/admin/register-post-types.php:323
+#: includes/admin/register-post-types.php:324
 msgid "No Forms found in Trash"
 msgstr ""
 
-#: includes/admin/register-post-types.php:345 includes/admin/register-post-types.php:346 includes/admin/register-post-types.php:627 includes/admin/submissions.php:21
+#: includes/admin/register-post-types.php:346 includes/admin/register-post-types.php:347 includes/admin/register-post-types.php:628 includes/admin/submissions.php:21
 msgid "Submissions"
 msgstr ""
 
-#: includes/admin/register-post-types.php:410 includes/admin/register-post-types.php:413
+#: includes/admin/register-post-types.php:411 includes/admin/register-post-types.php:414
 msgid "Form updated."
 msgstr ""
 
-#: includes/admin/register-post-types.php:411
+#: includes/admin/register-post-types.php:412
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/admin/register-post-types.php:412
+#: includes/admin/register-post-types.php:413
 msgid "Custom field deleted."
 msgstr ""
 
 #. translators: %s: date and time of the revision
-#: includes/admin/register-post-types.php:415
+#: includes/admin/register-post-types.php:416
 #, php-format
 msgid "Form restored to revision from %s"
 msgstr ""
 
-#: includes/admin/register-post-types.php:416
+#: includes/admin/register-post-types.php:417
 msgid "Form published."
 msgstr ""
 
-#: includes/admin/register-post-types.php:417
+#: includes/admin/register-post-types.php:418
 msgid "Form saved."
 msgstr ""
 
-#: includes/admin/register-post-types.php:418
+#: includes/admin/register-post-types.php:419
 msgid "Form submitted."
 msgstr ""
 
-#: includes/admin/register-post-types.php:419
+#: includes/admin/register-post-types.php:420
 #, php-format
 msgid "Form scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: includes/admin/register-post-types.php:419
+#: includes/admin/register-post-types.php:420
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/admin/register-post-types.php:420
+#: includes/admin/register-post-types.php:421
 msgid "Form draft updated."
 msgstr ""
 
-#: includes/admin/register-post-types.php:438
+#: includes/admin/register-post-types.php:439
 msgid "Form Type"
 msgstr ""
 
-#: includes/admin/register-post-types.php:439
+#: includes/admin/register-post-types.php:440
 msgid "Logged In User Access"
 msgstr ""
 
-#: includes/admin/register-post-types.php:440
+#: includes/admin/register-post-types.php:441
 msgid "Shortcode"
 msgstr ""
 
-#: includes/admin/register-post-types.php:469
+#: includes/admin/register-post-types.php:470
 msgid "Post Submissions"
 msgstr ""
 
-#: includes/admin/register-post-types.php:469
+#: includes/admin/register-post-types.php:470
 msgid "Post Type: "
 msgstr ""
 
-#: includes/admin/register-post-types.php:478
+#: includes/admin/register-post-types.php:479
 msgid "No Page Attached"
 msgstr ""
 
-#: includes/admin/register-post-types.php:480
+#: includes/admin/register-post-types.php:481
 msgid "On"
 msgstr ""
 
-#: includes/admin/register-post-types.php:494
+#: includes/admin/register-post-types.php:495
 msgid "View Entries"
 msgstr ""
 
-#: includes/admin/register-post-types.php:563
+#: includes/admin/register-post-types.php:564
 msgid "Version"
 msgstr ""
 
-#: includes/admin/register-post-types.php:610 includes/admin/register-post-types.php:679
+#: includes/admin/register-post-types.php:611 includes/admin/register-post-types.php:680
 msgid "Preview Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:617
+#: includes/admin/register-post-types.php:618
 msgid "Frontend"
 msgstr ""
 
-#: includes/admin/register-post-types.php:618
+#: includes/admin/register-post-types.php:619
 msgid "Your Submissions"
 msgstr ""
 
-#: includes/admin/register-post-types.php:619
+#: includes/admin/register-post-types.php:620
 msgid "The Form"
 msgstr ""
 
-#: includes/admin/register-post-types.php:626
+#: includes/admin/register-post-types.php:627
 msgid "Admin"
 msgstr ""
 
-#: includes/admin/register-post-types.php:677
+#: includes/admin/register-post-types.php:678
 msgid "Export"
 msgstr ""
 
-#: includes/admin/register-post-types.php:678
+#: includes/admin/register-post-types.php:679
 msgid "View Submissions"
 msgstr ""
 
@@ -2481,125 +2515,125 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/settings.php:49 includes/admin/settings.php:291
+#: includes/admin/settings.php:48 includes/admin/settings.php:289
 msgid "Import Forms"
 msgstr ""
 
-#: includes/admin/settings.php:139
+#: includes/admin/settings.php:137
 msgid "Registration Settings"
 msgstr ""
 
-#: includes/admin/settings.php:141
+#: includes/admin/settings.php:139
 msgid "Select the Registration Page and Form to overwrite the WordPress default Registration."
 msgstr ""
 
-#: includes/admin/settings.php:146
+#: includes/admin/settings.php:144
 msgid "Registration Page"
 msgstr ""
 
-#: includes/admin/settings.php:165 includes/functions.php:1044
+#: includes/admin/settings.php:163 includes/functions.php:1045
 msgid "WordPress Default"
 msgstr ""
 
-#: includes/admin/settings.php:166
+#: includes/admin/settings.php:164
 msgid "No Form"
 msgstr ""
 
-#: includes/admin/settings.php:194
+#: includes/admin/settings.php:192
 msgid "Posts - Pages and Custom Post Types"
 msgstr ""
 
-#: includes/admin/settings.php:197
+#: includes/admin/settings.php:195
 msgid "Select a default form for every post type."
 msgstr ""
 
-#: includes/admin/settings.php:198
+#: includes/admin/settings.php:196
 msgid "This will make sure that posts created before BuddyForms will have a form associated. If you select none the post edit link will point to the admin for posts not create with BuddyForms"
 msgstr ""
 
-#: includes/admin/settings.php:230
+#: includes/admin/settings.php:228
 msgid "You need to create at least one form to select a post type default."
 msgstr ""
 
-#: includes/admin/settings.php:235
+#: includes/admin/settings.php:233
 msgid "Frontend Submissions Management"
 msgstr ""
 
-#: includes/admin/settings.php:237
+#: includes/admin/settings.php:235
 msgid "Select the Page to use for the frontend submissions management."
 msgstr ""
 
-#: includes/admin/settings.php:238
+#: includes/admin/settings.php:236
 msgid ""
 " The original page content does not get changed. You are free to use any kind of content on the page itself. Link to different form or list the users submissions.\n"
 "                                                 For the submissions management new endpoints get create for you. You can combine forms under the same page"
 msgstr ""
 
-#: includes/admin/settings.php:241
+#: includes/admin/settings.php:239
 msgid "Example:"
 msgstr ""
 
-#: includes/admin/settings.php:242
+#: includes/admin/settings.php:240
 msgid "http://domain.com/PAGE/create/FORM_SLUG"
 msgstr ""
 
-#: includes/admin/settings.php:243
+#: includes/admin/settings.php:241
 msgid "http://domain.com/PAGE/view/FORM_SLUG"
 msgstr ""
 
-#: includes/admin/settings.php:245
+#: includes/admin/settings.php:243
 msgid "This settings can be overwritten on a form basis. Every form can have there individual page if needed. This url will alwaysw be redirected to the corect place. If you use BuddyPress or Ultimate Member as example this link will redirect to the user profile edit or create."
 msgstr ""
 
-#: includes/admin/settings.php:252
+#: includes/admin/settings.php:250
 msgid "Default Page for your Submissions Management in the Frontend"
 msgstr ""
 
-#: includes/admin/settings.php:271
+#: includes/admin/settings.php:269
 msgid "Reset all marketing permissions"
 msgstr ""
 
-#: includes/admin/settings.php:293
+#: includes/admin/settings.php:291
 msgid "Import the form from a .json file. This file can be obtained by exporting the form from the list view."
 msgstr ""
 
-#: includes/admin/settings.php:309
+#: includes/admin/settings.php:307
 msgid "Import"
 msgstr ""
 
-#: includes/admin/settings.php:321
+#: includes/admin/settings.php:319
 msgid "Form Layout"
 msgstr ""
 
-#: includes/admin/settings.php:323
+#: includes/admin/settings.php:321
 msgid "Define the form layout for all forms. The global form settings can be overwritten in the Form Builder Stetting "
 msgstr ""
 
-#: includes/admin/settings.php:328
+#: includes/admin/settings.php:326
 msgid "Save"
 msgstr ""
 
-#: includes/admin/settings.php:341
+#: includes/admin/settings.php:339
 msgid "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   "
 msgstr ""
 
-#: includes/admin/settings.php:342
+#: includes/admin/settings.php:340
 msgid "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  "
 msgstr ""
 
-#: includes/admin/settings.php:343
+#: includes/admin/settings.php:341
 msgid "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail."
 msgstr ""
 
-#: includes/admin/settings.php:363
+#: includes/admin/settings.php:361
 msgid "General Data Protection Regulation - Settings"
 msgstr ""
 
-#: includes/admin/settings.php:369
+#: includes/admin/settings.php:367
 msgid "GDPR Agreement Templates"
 msgstr ""
 
-#: includes/admin/settings.php:371
+#: includes/admin/settings.php:369
 msgid ""
 "These templates are available in our new „GDPR Agreement form element“.  \n"
 "                                                To give it a start, we inserted some adequate default text.\n"
@@ -2609,47 +2643,47 @@ msgid ""
 "                                                Please edit these texts according to your needs here."
 msgstr ""
 
-#: includes/admin/settings.php:385 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:58
+#: includes/admin/settings.php:383 includes/admin/view/buddyforms-form-gdpr-element-multiple.php:58
 msgid "Post Submission"
 msgstr ""
 
-#: includes/admin/settings.php:400
+#: includes/admin/settings.php:398
 msgid "Form Footer Links"
 msgstr ""
 
-#: includes/admin/settings.php:402
+#: includes/admin/settings.php:400
 msgid "Please select your Terms and Conditions and and your Privacy Policy page. These will be displayed below the form and remain visible after pressing „submit“ - when the form disappears."
 msgstr ""
 
-#: includes/admin/settings.php:407
+#: includes/admin/settings.php:405
 msgid "Terms Label ( Will be displayed under the form )"
 msgstr ""
 
-#: includes/admin/settings.php:413
+#: includes/admin/settings.php:411
 msgid "Terms Page ( Will be displayed as link after the terms label)"
 msgstr ""
 
-#: includes/admin/settings.php:452 includes/functions.php:721
+#: includes/admin/settings.php:449 includes/functions.php:722
 msgid "Priority Support"
 msgstr ""
 
-#: includes/admin/settings.php:453
+#: includes/admin/settings.php:450
 msgid "More Post Types"
 msgstr ""
 
-#: includes/admin/settings.php:454 includes/functions.php:722
+#: includes/admin/settings.php:451 includes/functions.php:723
 msgid "More Form Elements"
 msgstr ""
 
-#: includes/admin/settings.php:455
+#: includes/admin/settings.php:452
 msgid "Admin Metabox Support"
 msgstr ""
 
-#: includes/admin/settings.php:477
+#: includes/admin/settings.php:474
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: includes/admin/settings.php:482
+#: includes/admin/settings.php:479
 msgid "Please upload a file to import"
 msgstr ""
 
@@ -2697,27 +2731,27 @@ msgstr ""
 msgid "Get all insights about your user"
 msgstr ""
 
-#: includes/admin/submission-single.php:151 includes/functions.php:748
+#: includes/admin/submission-single.php:151 includes/functions.php:749
 msgid "IP Address"
 msgstr ""
 
-#: includes/admin/submission-single.php:152 includes/functions.php:749
+#: includes/admin/submission-single.php:152 includes/functions.php:750
 msgid "Referer"
 msgstr ""
 
-#: includes/admin/submission-single.php:153 includes/functions.php:750
+#: includes/admin/submission-single.php:153 includes/functions.php:751
 msgid "Browser"
 msgstr ""
 
-#: includes/admin/submission-single.php:154 includes/functions.php:751
+#: includes/admin/submission-single.php:154 includes/functions.php:752
 msgid "Platform"
 msgstr ""
 
-#: includes/admin/submission-single.php:155 includes/functions.php:752
+#: includes/admin/submission-single.php:155 includes/functions.php:753
 msgid "Reports"
 msgstr ""
 
-#: includes/admin/submission-single.php:156 includes/functions.php:753
+#: includes/admin/submission-single.php:156 includes/functions.php:754
 msgid "User Agent"
 msgstr ""
 
@@ -2919,15 +2953,15 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
-#: includes/form/form-ajax.php:228 includes/form/form-ajax.php:240
+#: includes/form/form-ajax.php:230 includes/form/form-ajax.php:242
 msgid "You are not allowed to delete this entry! What are you doing here?"
 msgstr ""
 
-#: includes/form/form-ajax.php:253 includes/form/form-control.php:310 includes/form/form-control.php:363 includes/form/form-render.php:74
+#: includes/form/form-ajax.php:255 includes/form/form-control.php:310 includes/form/form-control.php:363 includes/form/form-render.php:74
 msgid "You do not have the required user role to use this form"
 msgstr ""
 
-#: includes/form/form-ajax.php:292
+#: includes/form/form-ajax.php:294
 msgid "Redirecting.."
 msgstr ""
 
@@ -2956,16 +2990,16 @@ msgstr ""
 msgid "Delete Permanently"
 msgstr ""
 
-#: includes/form/form-assets.php:294
+#: includes/form/form-assets.php:295
 msgid "Uncheck all"
 msgstr ""
 
-#: includes/form/form-assets.php:365
+#: includes/form/form-assets.php:366
 #, php-format
 msgid "If you like <strong>BuddyForms</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from BuddyForms in advance!"
 msgstr ""
 
-#: includes/form/form-assets.php:365
+#: includes/form/form-assets.php:366
 msgid "Thanks :)"
 msgstr ""
 
@@ -2993,87 +3027,87 @@ msgstr ""
 msgid " has been successfully created "
 msgstr ""
 
-#: includes/form/form-control.php:552 includes/form/form-control.php:556 includes/form/form-control.php:559 includes/form/form-control.php:561 includes/functions.php:1001
+#: includes/form/form-control.php:553 includes/form/form-control.php:557 includes/form/form-control.php:560 includes/form/form-control.php:562 includes/functions.php:1002
 msgid "none"
 msgstr ""
 
-#: includes/form/form-control.php:929
+#: includes/form/form-control.php:955
 msgid "<p>Empty Agreement(s)</p>"
 msgstr ""
 
-#: includes/form/form-control.php:933
+#: includes/form/form-control.php:959
 msgid "Checked"
 msgstr ""
 
-#: includes/form/form-control.php:933
+#: includes/form/form-control.php:959
 msgid "Unchecked"
 msgstr ""
 
-#: includes/form/form-control.php:1195 includes/form/form-control.php:1206
+#: includes/form/form-control.php:1225 includes/form/form-control.php:1236
 msgid "Sorry, you cannot upload this file type for this field."
 msgstr ""
 
-#: includes/form/form-elements.php:458 includes/functions.php:59 includes/functions.php:585
+#: includes/form/form-elements.php:473 includes/functions.php:59 includes/functions.php:586
 msgid "Pending Review"
 msgstr ""
 
-#: includes/form/form-elements.php:462 includes/functions.php:577
+#: includes/form/form-elements.php:477 includes/functions.php:578
 msgid "Published"
 msgstr ""
 
-#: includes/form/form-elements.php:470 includes/functions.php:589
+#: includes/form/form-elements.php:485 includes/functions.php:590
 msgid "Scheduled"
 msgstr ""
 
-#: includes/form/form-elements.php:474
+#: includes/form/form-elements.php:489
 msgid "Privately Published"
 msgstr ""
 
-#: includes/form/form-elements.php:478 includes/functions.php:63
+#: includes/form/form-elements.php:493 includes/functions.php:63
 msgid "Trash"
 msgstr ""
 
-#: includes/form/form-elements.php:496
+#: includes/form/form-elements.php:511
 msgid "Schedule Time"
 msgstr ""
 
-#: includes/form/form-elements.php:833
+#: includes/form/form-elements.php:848
 msgid "Name: "
 msgstr ""
 
-#: includes/form/form-elements.php:834
+#: includes/form/form-elements.php:849
 msgid "Type: "
 msgstr ""
 
-#: includes/form/form-elements.php:837
+#: includes/form/form-elements.php:852
 msgid "Delete image"
 msgstr ""
 
-#: includes/form/form-elements.php:838 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:236 includes/shortcodes.php:300 includes/shortcodes.php:306 includes/shortcodes.php:327
+#: includes/form/form-elements.php:853 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:235 includes/shortcodes.php:300 includes/shortcodes.php:306 includes/shortcodes.php:327
 msgid "View"
 msgstr ""
 
-#: includes/form/form-elements.php:876
+#: includes/form/form-elements.php:891
 msgid "Attache File"
 msgstr ""
 
-#: includes/form/form-elements.php:885
+#: includes/form/form-elements.php:900
 msgid "Add into"
 msgstr ""
 
-#: includes/form/form-elements.php:885
+#: includes/form/form-elements.php:900
 msgid "Add "
 msgstr ""
 
-#: includes/form/form-elements.php:885
+#: includes/form/form-elements.php:900
 msgid "Delete "
 msgstr ""
 
-#: includes/form/form-elements.php:921
+#: includes/form/form-elements.php:936
 msgid "Select a Post Format"
 msgstr ""
 
-#: includes/form/form-render.php:301
+#: includes/form/form-render.php:302
 msgid "Proudly brought to you by"
 msgstr ""
 
@@ -3127,155 +3161,155 @@ msgstr ""
 msgid "There were no posts found. Create your first post now! "
 msgstr ""
 
-#: includes/functions.php:196
+#: includes/functions.php:197
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
-#: includes/functions.php:235 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:195 includes/shortcodes.php:377
+#: includes/functions.php:236 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:194 includes/shortcodes.php:377
 msgid "Username or Email Address"
 msgstr ""
 
-#: includes/functions.php:237 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:197 includes/shortcodes.php:379
+#: includes/functions.php:238 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:196 includes/shortcodes.php:379
 msgid "Remember Me"
 msgstr ""
 
-#: includes/functions.php:238 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:198 includes/shortcodes.php:380
+#: includes/functions.php:239 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:197 includes/shortcodes.php:380
 msgid "Log In"
 msgstr ""
 
-#: includes/functions.php:242
+#: includes/functions.php:243
 msgid "You need to be logged in to view this page"
 msgstr ""
 
-#: includes/functions.php:324
+#: includes/functions.php:325
 msgid "Register"
 msgstr ""
 
-#: includes/functions.php:333
+#: includes/functions.php:334
 msgid "Lost Password?"
 msgstr ""
 
-#: includes/functions.php:402
+#: includes/functions.php:403
 msgid "Edit This"
 msgstr ""
 
-#: includes/functions.php:593
+#: includes/functions.php:594
 msgid "Awaiting Review"
 msgstr ""
 
-#: includes/functions.php:597
+#: includes/functions.php:598
 msgid "Edit Draft"
 msgstr ""
 
-#: includes/functions.php:723
+#: includes/functions.php:724
 msgid "More Options"
 msgstr ""
 
-#: includes/functions.php:725
+#: includes/functions.php:726
 msgid "Full Control"
 msgstr ""
 
-#: includes/functions.php:726
+#: includes/functions.php:727
 msgid "Use your form in the backend admin edit screen like ACF"
 msgstr ""
 
-#: includes/functions.php:727
+#: includes/functions.php:728
 msgid "Control who can create, edit and delete content"
 msgstr ""
 
-#: includes/functions.php:728
+#: includes/functions.php:729
 msgid "Registration Options"
 msgstr ""
 
-#: includes/functions.php:731
+#: includes/functions.php:732
 msgid "More Notification Options"
 msgstr ""
 
-#: includes/functions.php:732
+#: includes/functions.php:733
 msgid "Import - Export Forms"
 msgstr ""
 
-#: includes/functions.php:734
+#: includes/functions.php:735
 msgid "Permissions Management"
 msgstr ""
 
-#: includes/functions.php:735
+#: includes/functions.php:736
 msgid "Manage User Roles"
 msgstr ""
 
-#: includes/functions.php:736
+#: includes/functions.php:737
 msgid "Manage Capabilities"
 msgstr ""
 
-#: includes/functions.php:737
+#: includes/functions.php:738
 msgid "More Validation Options"
 msgstr ""
 
-#: includes/functions.php:739
+#: includes/functions.php:740
 msgid "More Post Options"
 msgstr ""
 
-#: includes/functions.php:740
+#: includes/functions.php:741
 msgid "All Post Types"
 msgstr ""
 
-#: includes/functions.php:741
+#: includes/functions.php:742
 msgid "Posts Revision"
 msgstr ""
 
-#: includes/functions.php:744
+#: includes/functions.php:745
 msgid "Create an account during submission?"
 msgstr ""
 
-#: includes/functions.php:745
+#: includes/functions.php:746
 msgid "Featured Image Support"
 msgstr ""
 
-#: includes/functions.php:747
+#: includes/functions.php:748
 msgid "Know Your User"
 msgstr ""
 
-#: includes/functions.php:747
+#: includes/functions.php:748
 msgid "Get deep Insights about your Submitter"
 msgstr ""
 
-#: includes/functions.php:1002
+#: includes/functions.php:1003
 msgid "Post"
 msgstr ""
 
-#: includes/functions.php:1003
+#: includes/functions.php:1004
 msgid "Page"
 msgstr ""
 
-#: includes/functions.php:1162
+#: includes/functions.php:1186
 msgid "Edit BuddyForm"
 msgstr ""
 
-#: includes/functions.php:1233
+#: includes/functions.php:1257
 msgid "Edit Post"
 msgstr ""
 
-#: includes/functions.php:1233
+#: includes/functions.php:1257
 msgid "Continue Editing"
 msgstr ""
 
-#: includes/functions.php:1237
+#: includes/functions.php:1261
 msgid "Display Post"
 msgstr ""
 
-#: includes/functions.php:1258
+#: includes/functions.php:1282
 msgid "Form Updated Successfully."
 msgstr ""
 
-#: includes/functions.php:1262
+#: includes/functions.php:1286
 msgid "There were no posts found. Create your first post [bf_new_submission_link name=\"Now\"]!"
 msgstr ""
 
-#: includes/functions.php:1266
+#: includes/functions.php:1290
 msgid "Form Submitted Successfully."
 msgstr ""
 
-#: includes/functions.php:1761
+#: includes/functions.php:1785
 msgid "Error"
 msgstr ""
 
@@ -3339,15 +3373,15 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:177 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:256 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:314
+#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:177 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:255 includes/gutenberg/shortcodes/shortcodes-to-blocks.php:313
 msgid "Please select a form in the block settings sidebar!"
 msgstr ""
 
-#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:194
+#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:193
 msgid "Login"
 msgstr ""
 
-#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:235
+#: includes/gutenberg/shortcodes/shortcodes-to-blocks.php:234
 msgid "Add"
 msgstr ""
 
@@ -3425,6 +3459,10 @@ msgstr ""
 
 #: includes/resources/pfbc/Element/Upload.php:100
 msgid "Drop files here to upload"
+msgstr ""
+
+#: includes/resources/pfbc/Validation/Captcha.php:28
+msgid "Error: The reCATPCHA response provided was incorrect.  Please try again."
 msgstr ""
 
 #. translators: revision date format, see http://php.net/date

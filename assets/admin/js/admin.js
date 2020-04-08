@@ -498,13 +498,13 @@ jQuery(document).ready(function (jQuery) {
                 currentScreen.id === 'buddyforms_page_bf_add_ons'
             ) {
                 var post = jQuery('#post');
-                jQuery('#wpbody-content').html('<div class="wrap"></div>');
-                jQuery('#wpbody-content .wrap').html(post);
+                // jQuery('#wpbody-content').html('<div class="wrap"></div>');
+                // jQuery('#wpbody-content .wrap').html(post);
 
-                jQuery(window).scrollTop(0);
+                // jQuery(window).scrollTop(0);
 
                 // Hide all post box metaboxes except the buddyforms meta boxes
-                jQuery('div .postbox').not('.buddyforms-metabox').hide();
+                // jQuery('div .postbox').not('.buddyforms-metabox').hide();
 
                 // Show the submit metabox
                 jQuery('#submitdiv').show();
