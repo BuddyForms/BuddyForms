@@ -346,7 +346,7 @@ function buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyfor
 	add_user_meta( $user_id, 'has_to_be_activated', $code, true );
 	add_user_meta( $user_id, 'bf_activation_link', $activation_link, true );
 
-	return $activation_link;
+	return sprintf('<a target="_blank" href="%s">%s</a>',$activation_link, __( 'Activate your account', 'buddyforms' ));
 }
 
 // used for tracking error messages
