@@ -9,7 +9,7 @@
 // This functions create conflicts with WordPress.com and I think it is not needed anymore. It was importand before we switch from Bootstrap to jQuery.
 // we should keep it and check if we get any support requests with plugin conflicts and than only dectivate the scripts loaded by this plugins.
 
-add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 );
+//add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 );
 function buddyforms_remove_admin_scripts( $hook_suffix ) {
 	global $wp_scripts, $wp_styles, $post;
 
