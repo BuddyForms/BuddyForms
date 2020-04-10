@@ -46,10 +46,19 @@ class Element_Textarea extends Element {
 
 	public function render( $echo = true ) {
 		if ( ! empty( $this->_attributes["value"] ) && is_array( $this->_attributes["value"] ) ) {
-			$output = '<textarea' . $this->getAttributes( "value" ) . '>';
+		    $data_rule_minlength = "";
+            $data_rule_maxlength = "";
+            if ( ! empty( $this->_attributes["value"]['data-rule-minlength'] ) ) {
+                $data_rule_minlength = sprintf('data-rule-minlength ="%s"', $this->_attributes["value"]['data-rule-minlength'] );
+            }
+            if ( ! empty( $this->_attributes["value"]['data-rule-maxlength'] ) ) {
+                $data_rule_maxlength = sprintf('data-rule-maxlength ="%s"', $this->_attributes["value"]['data-rule-maxlength'] );
+            }
+			$output = '<textarea' . $this->getAttributes("value" ) .$data_rule_maxlength .' '.$data_rule_minlength.'>';
 			if ( ! empty( $this->_attributes["value"]['value'] ) ) {
 				$output .= $this->filter( $this->_attributes["value"]['value'] );
 			}
+
 			$output .= '</textarea>';
 		} elseif ( ! empty( $this->_attributes["value"] ) && is_string( $this->_attributes["value"] ) ) {
 			$output = $this->_attributes["value"];
