@@ -26,6 +26,7 @@ class Element_Select extends OptionElement {
 		ob_start();
 		$selected_count = array();
 		echo sprintf( "<select %s>", $this->getAttributes( array( "value", "selected" ) ) );
+        echo '<option value=""></option>';
 		foreach ( $this->options as $value => $text ) {
 			$value            = $this->getOptionValue( $value );
 			$current_selected = in_array( $value, $this->_attributes["value"] );

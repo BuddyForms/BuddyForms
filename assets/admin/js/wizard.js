@@ -309,24 +309,33 @@ jQuery(document).ready(function (jQuery) {
                         }
 
                     } else {
-                        var error = false;
+
                         // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
                             // if the value is empty, that means that is invalid
-                            if (jQuery(this).val() == "") {
+                            var isValid = (jQuery(this).val() != "");
 
-                                jQuery(this).addClass('bf-error');
-                                error = true;
-                                jQuery(".accordion-body.collapse.in").removeClass("in");
-                                jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height", "auto");
-                                jQuery('#buddyforms_form_setup').removeClass('closed');
-                                jQuery('#buddyforms_form_elements').removeClass('closed');
+                            if (isValid) {
+                                jQuery(this).removeClass("bf-error");
+                                var element_name = jQuery(this).eq(0).attr('name');
+                                bfErrors = bfErrors.filter(function (obj) {
+                                    return obj.field_name !== element_name;
+                                });
+
+
+                            } else {
+                                var element_name = jQuery(this).eq(0).attr('name');
+                                bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
+                                jQuery(this).addClass("bf-error");
+                                return false;
                             }
                         });
-                        if (error === true) {
-                            return false;
-                        }
+                        var validation_result = buddyforms_process_errors(bfErrors);
+
+                        return validation_result;
+
+
                     }
                     jQuery(document.body).trigger({type: "buddyform:load_notifications"});
                     return true;
@@ -337,24 +346,29 @@ jQuery(document).ready(function (jQuery) {
                 }
                 if (currentIndex == 3) {
                     if (type == 'post') {
-                        var error = false;
-                        // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
                             // if the value is empty, that means that is invalid
-                            if (jQuery(this).val() == "") {
+                            var isValid = (jQuery(this).val() != "");
 
-                                jQuery(this).addClass('bf-error');
-                                error = true;
-                                jQuery(".accordion-body.collapse.in").removeClass("in");
-                                jQuery(this).closest(".accordion-body.collapse").addClass("in").css("height", "auto");
-                                jQuery('#buddyforms_form_setup').removeClass('closed');
-                                jQuery('#buddyforms_form_elements').removeClass('closed');
+                            if (isValid) {
+                                jQuery(this).removeClass("bf-error");
+                                var element_name = jQuery(this).eq(0).attr('name');
+                                bfErrors = bfErrors.filter(function (obj) {
+                                    return obj.field_name !== element_name;
+                                });
+
+
+                            } else {
+                                var element_name = jQuery(this).eq(0).attr('name');
+                                bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
+                                jQuery(this).addClass("bf-error");
+                                return false;
                             }
                         });
-                        if (error === true) {
-                            return false;
-                        }
+                        var validation_result = buddyforms_process_errors(bfErrors);
+
+                        return validation_result;
                     }
                     return true;
                 }

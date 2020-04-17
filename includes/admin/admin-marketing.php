@@ -16,7 +16,7 @@ add_action( 'admin_init', 'buddyforms_marketing_init' );
 function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
-	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
+//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
 	add_action( 'wp_ajax_buddyforms_marketing_form_list_coupon_for_free_close', 'buddyforms_marketing_form_list_coupon_for_free_close' );
 	add_action( 'wp_ajax_buddyforms_marketing_reset_permissions', 'buddyforms_marketing_reset_permissions' );
 }

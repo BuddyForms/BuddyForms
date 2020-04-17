@@ -246,6 +246,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
+	do_action('buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post);
 }
 
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
@@ -374,20 +375,9 @@ function buddyforms_register_post_type() {
 
 add_action( 'init', 'buddyforms_register_post_type' );
 
-function menue_icon_admin_head_css() { ?>
-    <style>
-
-        .wp-menu-image.dashicons-before.dashicons-buddyforms:before {
-            content: "\e000";
-            font-family: 'icomoon';
-            font-size: 27px;
-            padding: 0;
-            padding-right: 10px;
-        }
-
-    </style>
-
-<?php }
+function menue_icon_admin_head_css() {
+	BuddyFormsAssets::load_tk_font_icons();
+}
 
 add_action( 'admin_head', 'menue_icon_admin_head_css' );
 

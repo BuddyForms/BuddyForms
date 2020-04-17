@@ -247,13 +247,6 @@ function buddyforms_wp_insert_user() {
 
 		if ( ! is_wp_error( $new_user_id ) && is_int( $new_user_id ) ) {
 
-			if ( apply_filters( 'buddyforms_wp_insert_user_activation_mail', true, $new_user_id ) != true ) {
-				// send an email to the admin alerting them of the registration
-				wp_new_user_notification( $new_user_id );
-
-				return $new_user_id;
-			}
-
 			// if multisite is enabled we need to make sure the user will become a member of the form blog id
 			if ( buddyforms_is_multisite() ) {
 				if ( isset( $buddyforms[ $form_slug ]['blog_id'] ) ) {
@@ -272,10 +265,17 @@ function buddyforms_wp_insert_user() {
 				add_user_meta( $new_user_id, 'bf_pw_redirect_url', $bf_pw_redirect_url, true );
 			}
 
-			// send an email to the admin alerting them of the registration
-			wp_new_user_notification( $new_user_id );
+			$user_activation_admin_mail = apply_filters( 'buddyforms_wp_insert_user_activation_admin_mail', true, $new_user_id, $form_slug );
+			if ( $user_activation_admin_mail === true ) {
+				// send an email to the admin alerting them of the registration
+				wp_new_user_notification( $new_user_id );
+			}
 
-			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
+			$mail = true;
+			$insert_user_activation_mail = apply_filters( 'buddyforms_wp_insert_user_activation_mail', true, $new_user_id, $form_slug );
+			if (  $insert_user_activation_mail === true ) {
+				$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
+			}
 
 			// send an activation link to the user asking them to activate there account
 			$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $new_user_id );
@@ -346,7 +346,7 @@ function buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyfor
 	add_user_meta( $user_id, 'has_to_be_activated', $code, true );
 	add_user_meta( $user_id, 'bf_activation_link', $activation_link, true );
 
-	return $activation_link;
+	return sprintf('<a target="_blank" href="%s">%s</a>',$activation_link, __( 'Activate your account', 'buddyforms' ));
 }
 
 // used for tracking error messages

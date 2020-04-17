@@ -465,7 +465,12 @@ class Form extends Base {
 		if ( $this->ajax ) {
 			echo <<<JS
 		jQuery(document.body).on('submit', '#$id', function (event) {
+		    var formIsInitialized = jQuery(this).data('initialize');
+		    if(typeof formIsInitialized !== 'undefined'){
+		        return false;
+		    }
             event.preventDefault();
+            console.log('internal submit');
             if(BuddyFormsHooks){
                 var formTargetStatus = 'publish';
                 var formTargetStatusElement = jQuery(this).find("button[type=submit]:focus" );
@@ -473,7 +478,7 @@ class Form extends Base {
                     formTargetStatus = formTargetStatusElement.attr('data-status');
                 }
                 BuddyFormsHooks.doAction('buddyforms:submit', [jQuery(this), event]);
-            	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
+                BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
             } else {
                 alert('Error, contact the admin!');
             }

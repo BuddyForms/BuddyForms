@@ -181,10 +181,11 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 /**
  * Retrieves the post excerpt.
  *
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
+ *
+ * @return string Post excerpt.
  * @since 2.5.17
  *
- * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
- * @return string Post excerpt.
  */
 function buddyforms_get_the_excerpt( $post = null ) {
 	$post = get_post( $post );
@@ -1075,29 +1076,52 @@ function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default
 }
 
 
-function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
-
+function buddyforms_get_all_pages( $type = 'id', $view = "form_builder", $exclude_global_submission_endpoint = false, $extra_exclude_ids = array(), $default_string = '' ) {
+	$exclude = array();
+	if ( empty( $default_string ) ) {
+		$default_string = __( 'Select a Page', 'buddyforms' );
+	}
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
 	$page_on_front = get_option( 'page_on_front' );
-	$exclude       = isset( $page_on_front ) ? $page_on_front : '';
+	if ( ! empty( $page_on_front ) ) {
+		$exclude[] = $page_on_front;
+	}
 
 	if ( $view == 'form_builder' ) {
 		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-		$exclude                      .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
+		if ( ! empty( $buddyforms_registration_page ) ) {
+			$exclude[] = $buddyforms_registration_page;
+		}
 	}
 
-	$pages = get_pages( array(
+	if ( ! empty( $exclude_global_submission_endpoint ) ) {
+		$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
+		if ( ! empty( $buddyforms_submissions_page ) ) {
+			$exclude[] = $buddyforms_submissions_page;
+		}
+	}
+
+	if ( ! empty( $extra_exclude_ids ) ) {
+		$exclude = array_merge( $extra_exclude_ids, $exclude );
+	}
+
+	$args = array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
 		'parent'      => - 1,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
-		'exclude'     => $exclude
-	) );
+	);
+
+	if ( ! empty( $exclude ) ) {
+		$args['exclude'] = $exclude;
+	}
+
+	$pages = get_pages( $args );
 
 
 	$all_pages         = Array();
-	$all_pages['none'] = __( 'Select a Page', 'buddyforms' );
+	$all_pages['none'] = $default_string;
 
 	if ( $type == 'id' ) {
 		// Generate the pages array by id

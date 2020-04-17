@@ -190,7 +190,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					case 'user_login':
 						if ( ! is_admin() || $recovering ) {
 							if ( is_user_logged_in() ) {
+								$element_attr = array_merge( $element_attr, array( 'disabled' => 'disabled' ) );
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
+									if ( isset( $customfield['required'] ) ) {
+										unset( $customfield['required'] );
+									}
+									if ( isset( $element_attr['required'] ) ) {
+										unset( $element_attr['required'] );
+									}
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
 								}
 							} else {
@@ -216,11 +223,15 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'user_first':
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						}
 						break;
 
 					case 'user_last':
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						}
 						break;
 
 					case 'user_pass':
@@ -230,11 +241,15 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'user_website':
-						$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
+						}
 						break;
 
 					case 'user_bio':
-						$form->addElement( new Element_Textarea( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textarea( $name, $slug, $element_attr, $customfield ) );
+						}
 						break;
 
 					case 'number':
