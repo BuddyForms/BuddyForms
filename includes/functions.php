@@ -1950,3 +1950,47 @@ function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
 }
 
 add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );
+
+/**
+ * Get the form action url. This function work with the permalink
+ *
+ * @param $form_slug
+ * @param $post_id
+ * @param string $action
+ * @param int $attached_page_id
+ *
+ * @return string
+ * @since 2.5.19
+ *
+ */
+function buddyforms_get_form_action_url( $form_slug, $post_id, $action = 'view', $attached_page_id = 0 ) {
+	if ( empty( $form_slug ) || empty( $post_id ) ) {
+		return '';
+	}
+
+	if ( empty( $attached_page_id ) ) {
+		$buddyform_options = buddyforms_get_form_by_slug( $form_slug );
+		if ( ! empty( $buddyform_options ) && ! empty( $buddyform_options['attached_page'] ) ) {
+			$attached_page_id = $buddyform_options['attached_page'];
+		}
+	}
+
+	if ( empty( $attached_page_id ) ) {
+		return '';
+	}
+	$attached_page_permalink = get_permalink( $attached_page_id );
+	if ( ! empty( $attached_page_permalink ) ) {
+		$structure = get_option( 'permalink_structure' );
+		if ( ! empty( $structure ) ) {
+			$attached_page      = WP_Post::get_instance( $post_id );
+			$attached_page_name = $attached_page->post_name;
+
+			return sprintf( '%s/%s/%s', $attached_page_permalink, $action, $attached_page_name );
+		} else {
+			return sprintf( '%s&bf_action=%s&bf_form_slug=%s', $attached_page_permalink, $action, $form_slug );
+		}
+	}
+
+	return '';
+
+}
