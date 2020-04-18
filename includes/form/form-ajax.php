@@ -128,10 +128,10 @@ function buddyforms_ajax_process_edit_post() {
 		$global_error->renderAjaxErrorResponse();
 
 	} else {
-		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
-		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$form_type                 = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action               = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 		$json_array['form_action'] = $form_action;
-		$message_source = 'after_submit_message_text';
+		$message_source            = 'after_submit_message_text';
 		if ( 'registration' === $form_type ) {
 			if ( is_user_logged_in() ) {
 				$message_source = 'after_update_submit_message_text';
@@ -169,8 +169,7 @@ function buddyforms_ajax_process_edit_post() {
 					break;
 				case 'display_posts_list':
 					$json_array['form_remove'] = 'true';
-					$permalink                 = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
-					$post_list_link            = $permalink . 'view/' . $args['form_slug'] . '/';
+					$post_list_link            = buddyforms_get_form_action_url( $args['form_slug'], $args['post_id'], 'view', $buddyforms[ $args['form_slug'] ]['attached_page'] );
 					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
 					$json_array['form_notice'] .= $display_message;
 					break;

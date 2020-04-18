@@ -445,8 +445,7 @@ function buddyforms_form_response_no_ajax() {
 				exit;
 			}
 			if ( $buddyforms[ $form_slug ]['after_submit'] == 'display_posts_list' ) {
-				$permalink      = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
-				$post_list_link = $permalink . 'view/' . $form_slug . '/';
+				$post_list_link = buddyforms_get_form_action_url( $form_slug, $post_id, 'view', $buddyforms[ $form_slug ]['attached_page'] );
 				$post_list_link = apply_filters( 'buddyforms_after_save_post_redirect', $post_list_link );
 				wp_redirect( $post_list_link, 302 );
 				exit;

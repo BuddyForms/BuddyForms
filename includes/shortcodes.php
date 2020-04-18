@@ -75,6 +75,7 @@ function buddyforms_the_loop( $args ) {
 
 	$post_status = apply_filters( 'buddyforms_shortcode_the_loop_post_status', array(
 		'publish',
+		'private',
 		'pending',
 		'draft',
 		'future'
@@ -323,14 +324,14 @@ function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 	$form_slug = $label_view = '';
 	extract( shortcode_atts( array(
-		'form_slug' => '',
-		'label_view'     => __( 'View', 'buddyforms' ),
+		'form_slug'  => '',
+		'label_view' => __( 'View', 'buddyforms' ),
 	), $args ) );
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
-
-	$button = '<a class="button bf-navigation bf-navigation-view" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
+	$view_link = buddyforms_get_form_action_url( $form_slug, 0, 'view', $buddyforms[ $form_slug ]['attached_page'] );
+	$button    = '<a class="button bf-navigation bf-navigation-view" href="' . esc_url( $view_link ) . '"> ' . $label_view . ' </a>';
 
 	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
 
@@ -348,13 +349,13 @@ function buddyforms_button_add_new( $args ) {
 	$form_slug = $label_add = '';
 	extract( shortcode_atts( array(
 		'form_slug' => '',
-		'label_add'     => __( 'Add New', 'buddyforms' ),
+		'label_add' => __( 'Add New', 'buddyforms' ),
 	), $args ) );
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
-
-	$button = '<a class="button bf-navigation bf-navigation-create" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $label_add . '</a>';
+	$create_link = buddyforms_get_form_action_url( $form_slug, 0, 'create', $buddyforms[ $form_slug ]['attached_page'] );
+	$button      = '<a class="button bf-navigation bf-navigation-create" href="' . esc_url( $create_link ) . '"> ' . $label_add . '</a>';
 
 	return apply_filters( 'buddyforms_button_add_new', $button, $args );
 
@@ -430,19 +431,11 @@ add_shortcode( 'buddyforms_reset_password', 'buddyforms_reset_password_form' );
  * @return string
  */
 function buddyforms_create_submission_link_shortcode( $args ) {
-	global $buddyforms, $form_slug;
+	global $form_slug;
 
 	$default_link = '';
 	if ( ! empty( $form_slug ) ) {
-		$attached_page     = isset( $buddyforms[ $form_slug ]['attached_page'] ) ? $buddyforms[ $form_slug ]['attached_page'] : 'false';
-		$siteurl           = get_bloginfo( 'wpurl' );
-		$attached_page_url = get_permalink( $attached_page );
-
-		if ( ! empty( $attached_page_url ) ) {
-			$default_link = $attached_page_url . "create/" . $form_slug;
-		} else {
-			$default_link = $siteurl . '/' . $attached_page . '/create/' . $form_slug;
-		}
+		$default_link = buddyforms_get_form_action_url( $form_slug, 0, 'create' );
 	}
 	$arguments = shortcode_atts( array(
 		'name'   => __( 'Now', 'buddyforms' ),

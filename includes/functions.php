@@ -508,8 +508,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
 				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
 					echo '<li>';
+					$edit_link = buddyforms_get_form_action_url( $form_slug, $post->ID, 'edit', $attached_page, array( $attached_page, $form_slug, $post->ID)  );
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . esc_url($edit_link) .'"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
 					} else {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
 					}
@@ -1955,16 +1956,17 @@ add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_sl
  * Get the form action url. This function work with the permalink
  *
  * @param $form_slug
- * @param $post_id
+ * @param int $post_id
  * @param string $action
  * @param int $attached_page_id
  *
+ * @param array $arguments
+ *
  * @return string
  * @since 2.5.19
- *
  */
-function buddyforms_get_form_action_url( $form_slug, $post_id, $action = 'view', $attached_page_id = 0 ) {
-	if ( empty( $form_slug ) || empty( $post_id ) ) {
+function buddyforms_get_form_action_url( $form_slug, $post_id = 0, $action = 'view', $attached_page_id = 0, $arguments = array() ) {
+	if ( empty( $form_slug ) ) {
 		return '';
 	}
 
@@ -1978,17 +1980,10 @@ function buddyforms_get_form_action_url( $form_slug, $post_id, $action = 'view',
 	if ( empty( $attached_page_id ) ) {
 		return '';
 	}
-	$attached_page_permalink = get_permalink( $attached_page_id );
-	if ( ! empty( $attached_page_permalink ) ) {
-		$structure = get_option( 'permalink_structure' );
-		if ( ! empty( $structure ) ) {
-			$attached_page      = WP_Post::get_instance( $post_id );
-			$attached_page_name = $attached_page->post_name;
+	if ( ! empty( $attached_page_id ) ) {
+		$action_url = buddyform_get_action_rewrite_rule( $action, $attached_page_id, $post_id, $form_slug, $arguments );
 
-			return sprintf( '%s/%s/%s', $attached_page_permalink, $action, $attached_page_name );
-		} else {
-			return sprintf( '%s&bf_action=%s&bf_form_slug=%s', $attached_page_permalink, $action, $form_slug );
-		}
+		return $action_url;
 	}
 
 	return '';

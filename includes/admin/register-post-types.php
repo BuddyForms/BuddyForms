@@ -593,8 +593,6 @@ function buddyforms_add_button_to_submit_box() {
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 
-	$base = home_url();
-
 	$preview_page_id        = get_option( 'buddyforms_preview_page', true );
 	$preview_page_permalink = get_permalink( $preview_page_id );
 

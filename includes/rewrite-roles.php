@@ -19,7 +19,15 @@ function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) 
 	}
 
 	foreach ( $buddyforms as $key => $buddyform ) {
-		buddyforms_form_rewrite_rules( $buddyform );
+		if ( isset( $buddyform['attached_page'] ) ) {
+			$post_data = get_post( $buddyform['attached_page'], ARRAY_A ); // todo: remove this query and make the post_name available in the $buddyforms
+			add_rewrite_rule( $post_data['post_name'] . '/create/([^/]+)/([^/]+)/?', 'index.php?pagename=' . $post_data['post_name'] . '&bf_action=create&bf_form_slug=$matches[1]&bf_parent_post_id=$matches[2]', 'top' );
+			add_rewrite_rule( $post_data['post_name'] . '/create/([^/]+)/?', 'index.php?pagename=' . $post_data['post_name'] . '&bf_action=create&bf_form_slug=$matches[1]', 'top' );
+			add_rewrite_rule( $post_data['post_name'] . '/view/([^/]+)/?', 'index.php?pagename=' . $post_data['post_name'] . '&bf_action=view&bf_form_slug=$matches[1]', 'top' );
+			add_rewrite_rule( $post_data['post_name'] . '/edit/([^/]+)/([^/]+)/?', 'index.php?pagename=' . $post_data['post_name'] . '&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]', 'top' );
+			add_rewrite_rule( $post_data['post_name'] . '/revision/([^/]+)/([^/]+)/([^/]+)/?', 'index.php?pagename=' . $post_data['post_name'] . '&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]', 'top' );
+		}
+//		buddyforms_form_rewrite_rules( $buddyform );
 	}
 	if ( $flush_rewrite_rules ) {
 		flush_rewrite_rules();
@@ -35,39 +43,230 @@ function buddyforms_form_rewrite_rules( $buddyform ) {
 
 	$structure = get_option( 'permalink_structure' );
 
+	$page_parameter = 'pagename';
 	if ( ! empty( $structure ) ) {
 		if ( ! empty( $buddyform['attached_page_name'] ) ) {
 			$attached_page_name = $buddyform['attached_page_name'];
 		} else {
-			$attached_page      = WP_Post::get_instance( $buddyform['attached_page'] );
-			$attached_page_name = $attached_page->post_name;
+			if ( ! empty( $buddyform['attached_page'] ) && $buddyform['attached_page'] !== 'none' ) {
+				$attached_page      = WP_Post::get_instance( $buddyform['attached_page'] );
+				$attached_page_name = $attached_page->post_name;
+			}
 		}
-		$bf_structure = array(
-			sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'create' )           => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]&bf_parent_post_id=\$matches[2]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'create' )                   => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'edit' )             => sprintf( "index.php?pagename=%s&bf_action=edit&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'view' )                     => sprintf( "index.php?pagename=%s&bf_action=view&bf_form_slug=\$matches[1]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/([^/]+)/([^/]+)/?', $attached_page_name, 'revision' ) => sprintf( "index.php?pagename=%s&bf_action=revision&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]&bf_rev_id=\$matches[3]", $attached_page_name ),
-		);
-		add_rewrite_rule( $attached_page_name . '/create/([^/]+)/([^/]+)/?', sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]&bf_parent_post_id=\$matches[2]", $attached_page_name ), 'top' );
-		add_rewrite_rule( $attached_page_name . '/create/([^/]+)/?', sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]", $attached_page_name ), 'top' );
-		add_rewrite_rule( $attached_page_name . '/view/([^/]+)/?', sprintf( "index.php?pagename=%s&bf_action=view&bf_form_slug=\$matches[1]", $attached_page_name ), 'top' );
-		add_rewrite_rule( $attached_page_name . '/edit/([^/]+)/([^/]+)/?', sprintf( "index.php?pagename=%s&bf_action=edit&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]", $attached_page_name ), 'top' );
-		add_rewrite_rule( $attached_page_name . '/revision/([^/]+)/([^/]+)/([^/]+)/?', sprintf( "index.php?pagename=%s&bf_action=revision&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]&bf_rev_id=\$matches[3]", $attached_page_name ), 'top' );
 	} else {
+		$page_parameter     = 'page_id';
 		$attached_page_name = $buddyform['attached_page'];
-		$bf_structure       = array(
-			sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'create' )           => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]&bf_parent_post_id=\$matches[2]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'create' )                   => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'edit' )             => sprintf( "index.php?pagename=%s&bf_action=edit&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'view' )                     => sprintf( "index.php?pagename=%s&bf_action=view&bf_form_slug=\$matches[1]", $attached_page_name ),
-			sprintf( '%s/%s/([^/]+)/([^/]+)/([^/]+)/?', $attached_page_name, 'revision' ) => sprintf( "index.php?pagename=%s&bf_action=revision&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]&bf_rev_id=\$matches[3]", $attached_page_name ),
-		);
 	}
-	if ( ! empty( $bf_structure ) ) {
-		foreach ( $bf_structure as $regex => $url ) {
-			add_rewrite_rule( $regex, $url, 'top' );
+
+	if ( empty( $attached_page_name ) ) {
+		return;
+	}
+
+	$bf_actions = array( 'create', 'view', 'edit', 'revision' );
+//	$bf_structure = array(
+//		sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'create' )           => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]&bf_parent_post_id=\$matches[2]", $attached_page_name ),
+//		sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'create' )                   => sprintf( "index.php?pagename=%s&bf_action=create&bf_form_slug=\$matches[1]", $attached_page_name ),
+//		sprintf( '%s/%s/([^/]+)/([^/]+)/?', $attached_page_name, 'edit' )             => sprintf( "index.php?pagename=%s&bf_action=edit&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]", $attached_page_name ),
+//		sprintf( '%s/%s/([^/]+)/?', $attached_page_name, 'view' )                     => sprintf( "index.php?pagename=%s&bf_action=view&bf_form_slug=\$matches[1]", $attached_page_name ),
+//		sprintf( '%s/%s/([^/]+)/([^/]+)/([^/]+)/?', $attached_page_name, 'revision' ) => sprintf( "index.php?pagename=%s&bf_action=revision&bf_form_slug=\$matches[1]&bf_post_id=\$matches[2]&bf_rev_id=\$matches[3]", $attached_page_name ),
+//	);
+
+	foreach ( $bf_actions as $item_action ) {
+		$bf_internal_rules = buddyforms_get_rewrite_rule( $item_action );
+		foreach ( $bf_internal_rules as $bf_internal_rule ) {
+			$bf_structure[] = array(
+				'regex' => sprintf( $bf_internal_rule['regex'], $attached_page_name, $item_action ),
+				'url'   => sprintf( $bf_internal_rule['url'], $page_parameter, $attached_page_name )
+			);
 		}
+	}
+
+	if ( empty( $bf_structure ) ) {
+		return;
+	}
+
+	foreach ( $bf_structure as $rule ) {
+		BuddyForms::error_log( $rule['regex'] . ', ' . $rule['url'] );
+		add_rewrite_rule( $rule['regex'], $rule['url'], 'top' );
+	}
+}
+
+function buddyform_get_action_rewrite_rule( $action, $attached_page_id, $post_id, $form_slug, $arguments = array() ) {
+	if ( ! empty( $attached_page_id ) && $attached_page_id !== 'none' ) {
+		$structure              = get_option( 'permalink_structure' );
+		$page_parameter         = ! empty( $structure ) ? 'pagename' : 'page_id';
+		$is_rewrite_structure   = ! empty( $structure );
+		$rewrite_rules_internal = buddyforms_get_rewrite_rule( $action );
+
+		$attached_page_permalink = get_permalink( $attached_page_id );
+		$attached_page_permalink = rtrim( $attached_page_permalink, '/' );
+		$match_rewrite_rule      = false;
+		foreach ( $rewrite_rules_internal as $rewrite_rule ) {
+			$item = array(
+				'action' => $rewrite_rule['action'],
+				'regex'  => $rewrite_rule['regex'],
+				'url'    => $rewrite_rule['url'],
+			);
+			if ( $is_rewrite_structure ) {
+				$item['regex'] = preg_replace( '/%s/', $attached_page_permalink, $item['regex'], 1 );
+			} else {
+				$item['url'] = str_replace( '?%s=', sprintf( '?%s=', $page_parameter ), $item['url'] );
+			}
+
+//			if ( ! empty( $param_count ) ) {
+//				$existing_parameter_count = substr_count( $rewrite_rule['url'], '$matches' );
+//				if ( ! empty( $existing_parameter_count ) && $existing_parameter_count === $param_count ) {
+//					$item_url = str_replace( '?%s=', sprintf( '?%s=', $page_parameter ), $rewrite_rule['url'] );
+//				} else {
+//					continue;
+//				}
+//			} else {
+//				$item_url = str_replace( '?%s=', sprintf( '?%s=', $page_parameter ), $rewrite_rule['url'] );
+//			}
+
+			if ( ! $is_rewrite_structure ) {
+				//replace $match[] with %s
+				$all_parameters_count = substr_count( $item['url'], '$matches' );
+				for ( $i = 1; $i <= $all_parameters_count; $i ++ ) {
+					$str_search  = sprintf( '$matches[%s]', $i );
+					$item['url'] = str_replace( $str_search, '%s', $item['url'] );
+				}
+			} else {
+				//replace ([^/]+) with %s
+				$item['regex'] = str_replace( '([^/]+)', '%s', $item['regex'] );
+			}
+			$match_rewrite_rule = $item;
+		}
+		if ( ! empty( $match_rewrite_rule ) ) {
+			$base = home_url();
+			if ( $is_rewrite_structure ) {
+				switch ( $action ) {
+					case 'create':
+						if ( ! empty( $post_id ) ) {
+							$attached_page      = WP_Post::get_instance( $post_id );
+							$attached_page_name = $attached_page->post_name;
+							if ( empty( $arguments ) ) {
+								$arguments = array( $attached_page_permalink, $action, $attached_page_name );
+							}
+						} else {
+							if ( empty( $arguments ) ) {
+								$arguments = array( $attached_page_permalink, $action );
+							}
+						}
+						break;
+					case 'edit':
+
+						break;
+					case 'view':
+						if ( empty( $arguments ) ) {
+							$arguments = array( $action, $form_slug );
+						}
+						break;
+					case 'review':
+
+						break;
+				}
+
+				return vsprintf( $match_rewrite_rule['regex'], $arguments );
+			} else {
+				switch ( $action ) {
+					case 'create':
+						if ( ! empty( $post_id ) ) {
+							$attached_page      = WP_Post::get_instance( $post_id );
+							$attached_page_name = $attached_page->post_name;
+							if ( empty( $arguments ) ) {
+								$arguments = array( $attached_page_permalink, $action, $attached_page_name );
+							}
+						} else {
+							if ( empty( $arguments ) ) {
+								$arguments = array( $attached_page_id, $form_slug );
+							}
+						}
+						break;
+					case 'edit':
+
+						break;
+					case 'view':
+						if ( empty( $arguments ) ) {
+							$arguments = array( $attached_page_id, $form_slug );
+						}
+						break;
+					case 'review':
+
+						break;
+				}
+
+				return vsprintf( $base . $match_rewrite_rule['url'], $arguments );
+			}
+
+//			if ( ! empty( $match_rewrite_rule ) ) {
+//				if ( $is_rewrite_structure ) {
+//					if ( ! empty( $post_id ) ) {
+//						$attached_page      = WP_Post::get_instance( $post_id );
+//						$attached_page_name = $attached_page->post_name;
+//						if ( empty( $arguments ) ) {
+//							$arguments = array( $attached_page_permalink, $action, $attached_page_name );
+//						}
+//					} else {
+//						if ( empty( $arguments ) ) {
+//							$arguments = array( $attached_page_permalink, $action );
+//						}
+//					}
+//
+//					return vsprintf( $match_rewrite_rule['regex'], $arguments );
+//				} else {
+//					if ( empty( $arguments ) ) {
+//						$arguments = array( $attached_page_id, $form_slug );
+//					}
+//
+//					return vsprintf( $base . $match_rewrite_rule['url'], $arguments );
+//				}
+//			}
+		}
+	}
+
+	return '';
+}
+
+function buddyforms_get_rewrite_rule( $action = '' ) {
+	$rules = array(
+		array(
+			'action' => 'create',
+			'regex'  => '%s/%s/([^/]+)/([^/]+)/',
+			'url'    => '?%s=%s&bf_action=create&bf_form_slug=$matches[1]&bf_parent_post_id=$matches[2]',
+		),
+		array(
+			'action' => 'create',
+			'regex'  => '%s/%s/([^/]+)/',
+			'url'    => '?%s=%s&bf_action=create&bf_form_slug=$matches[1]',
+		),
+		array(
+			'action' => 'edit',
+			'regex'  => '%s/%s/([^/]+)/([^/]+)/',
+			'url'    => '?%s=%s&bf_action=edit&bf_form_slug=$matches[1]&bf_post_id=$matches[2]',
+		),
+		array(
+			'action' => 'view',
+			'regex'  => '%s/%s/([^/]+)/',
+			'url'    => '?%s=%s&bf_action=view&bf_form_slug=$matches[1]',
+		),
+		array(
+			'action' => 'revision',
+			'regex'  => '%s/%s/([^/]+)/([^/]+)/([^/]+)/',
+			'url'    => '?%s=%s&bf_action=revision&bf_form_slug=$matches[1]&bf_post_id=$matches[2]&bf_rev_id=$matches[3]',
+		),
+	);
+	if ( empty( $action ) ) {
+		return $rules;
+	} else {
+		$action_rules = array();
+		foreach ( $rules as $item_action ) {
+			if ( $item_action['action'] === $action ) {
+				$action_rules[] = $item_action;
+			}
+		}
+
+		return $action_rules;
 	}
 }
 
