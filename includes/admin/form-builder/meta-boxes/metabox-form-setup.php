@@ -284,15 +284,18 @@ function buddyforms_metabox_form_setup() {
 	$siteurl           = get_bloginfo( 'wpurl' );
 	$attached_page_url = get_permalink( $attached_page );
 
+	$view_link   = buddyforms_get_form_action_url( $slug, 0, 'view', $attached_page );
+	$create_link = buddyforms_get_form_action_url( $slug, 0, 'create', $attached_page );
+
 	if ( ! empty( $attached_page_url ) ) {
-		$siteurl_page_html   = "<a style='color:#7ad03a;' id='siteurl_page' class='' href='" . $attached_page_url . "' target='_blank' >" . $attached_page_url . "</a>";
-		$siteurl_create_html = "<a style='color:#7ad03a;' id='siteurl_create' class='' href='" . $attached_page_url . "create/" . $slug . "' target='_blank' >" . $attached_page_url . "create/" . $slug . "</a>";
-		$siteurl_edit_html   = "<a style='color:#7ad03a;' id='siteurl_edit' class='' href='" . $attached_page_url . "view/" . $slug . "' target='_blank' >" . $attached_page_url . "view/" . $slug . "</a>";
+		$siteurl_page_html   = "<a style='color:#7ad03a;' id='siteurl_page' class='' href='" . esc_url( $attached_page_url ) . "' target='_blank' >" . esc_url( $attached_page_url ) . "</a>";
+		$siteurl_create_html = "<a style='color:#7ad03a;' id='siteurl_create' class='' href='" . esc_url( $create_link ) . "' target='_blank' >" . esc_url( $create_link ) . "</a>";
+		$siteurl_edit_html   = "<a style='color:#7ad03a;' id='siteurl_edit' class='' href='" . esc_url( $view_link ) . "' target='_blank' >" . esc_url( $view_link ) . "</a>";
 
 	} else {
-		$siteurl_page_html   = $siteurl . '/' . $attached_page;
-		$siteurl_create_html = $siteurl . '/' . $attached_page . '/create/' . $slug;
-		$siteurl_edit_html   = $siteurl . '/' . $attached_page . '/view/' . $slug;
+		$siteurl_page_html   = esc_url( $siteurl . '/' . $attached_page );
+		$siteurl_create_html = esc_url( $create_link );
+		$siteurl_edit_html   = esc_url( $view_link );
 	}
 
 	$admin_email = get_option( 'admin_email' );

@@ -7,7 +7,7 @@
  */
 add_action( 'wp_before_admin_bar_render', 'buddyforms_wp_before_admin_bar_render', 1, 2 );
 function buddyforms_wp_before_admin_bar_render() {
-	global $wp_admin_bar, $buddyforms;
+	global $wp_admin_bar, $buddyforms, $post;
 
 	if ( ! $buddyforms ) {
 		return;
@@ -22,24 +22,26 @@ function buddyforms_wp_before_admin_bar_render() {
 		if ( isset( $buddyform['admin_bar'][0] ) && $buddyform['post_type'] != 'none' && ! empty( $buddyform['attached_page'] ) ) {
 
 			if ( current_user_can( 'buddyforms_' . $key . '_create' ) ) {
-				$permalink = get_permalink( $buddyform['attached_page'] );
+				$permalink   = get_permalink( $buddyform['attached_page'] );
+				$view_link   = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'view', $buddyform['attached_page'] );
+				$create_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'create', $buddyform['attached_page'] );
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'my-account',
 					'id'     => 'my-account-' . $buddyform['slug'],
 					'title'  => $buddyform['name'],
-					'href'   => $permalink
+					'href'   => esc_url( $permalink )
 				) );
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'my-account-' . $buddyform['slug'],
 					'id'     => 'my-account-' . $buddyform['slug'] . '-view',
 					'title'  => __( 'View my ', 'buddyforms' ) . $buddyform['name'],
-					'href'   => $permalink . '/view/' . $buddyform['slug'] . '/'
+					'href'   => esc_url( $view_link )
 				) );
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'my-account-' . $buddyform['slug'],
 					'id'     => 'my-account-' . $buddyform['slug'] . '-new',
 					'title'  => __( 'New ', 'buddyforms' ) . $buddyform['singular_name'],
-					'href'   => $permalink . 'create/' . $buddyform['slug'] . '/'
+					'href'   => esc_url( $create_link )
 				) );
 			}
 		}
@@ -508,9 +510,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			if ( isset( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] != 'contact' ) {
 				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
 					echo '<li>';
-					$edit_link = buddyforms_get_form_action_url( $form_slug, $post->ID, 'edit', $attached_page, array( $attached_page, $form_slug, $post->ID)  );
+					$edit_link = buddyforms_get_form_action_url( $form_slug, $post->ID, 'edit', $attached_page );
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . esc_url($edit_link) .'"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . __( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . esc_url( $edit_link ) . '"><span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
 					} else {
 						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . __( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . __( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
 					}
@@ -1254,8 +1256,8 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 		}
 	}
 	if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
-		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
-		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
+		$edit_link       = buddyforms_get_form_action_url( $form_slug, $post_id, 'edit', $buddyforms[ $form_slug ]['attached_page'] );
+		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . esc_url( $edit_link ) . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
 	}
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
@@ -1960,12 +1962,13 @@ add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_sl
  * @param string $action
  * @param int $attached_page_id
  *
+ * @param int $revision_id
  * @param array $arguments
  *
  * @return string
  * @since 2.5.19
  */
-function buddyforms_get_form_action_url( $form_slug, $post_id = 0, $action = 'view', $attached_page_id = 0, $arguments = array() ) {
+function buddyforms_get_form_action_url( $form_slug, $post_id = 0, $action = 'view', $attached_page_id = 0, $revision_id = 0, $arguments = array() ) {
 	if ( empty( $form_slug ) ) {
 		return '';
 	}
@@ -1981,7 +1984,7 @@ function buddyforms_get_form_action_url( $form_slug, $post_id = 0, $action = 'vi
 		return '';
 	}
 	if ( ! empty( $attached_page_id ) ) {
-		$action_url = buddyform_get_action_rewrite_rule( $action, $attached_page_id, $post_id, $form_slug, $arguments );
+		$action_url = buddyform_get_action_rewrite_rule( $action, $attached_page_id, $post_id, $form_slug, $revision_id, $arguments );
 
 		return $action_url;
 	}

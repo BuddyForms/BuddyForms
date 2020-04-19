@@ -481,13 +481,15 @@ function custom_buddyforms_column( $column, $post_id ) {
 			echo $attached_page;
 
 			if ( $attached_page != 'Off' ) {
-				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
+				$view_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'view', $buddyform['attached_page']  );
+				$create_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'create', $buddyform['attached_page']  );
+				?>
 				<div class="row-actions">
 					<span class="view-form">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
+						<a target="_blank" href="<?php echo esc_url($view_link) ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
 					</span>
 					<span class="view-entryies">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
+						<a target="_blank" href="<?php echo esc_url($create_link) ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
 					</span>
 
 				</div>

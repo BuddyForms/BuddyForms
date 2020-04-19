@@ -2,11 +2,12 @@
 /**
  * These functions are taken from the WORDPRESS 3.6-BETA3-24432 release and heavily modified to work for us in the frontend.
  *
+ * @param int $post_id
+ * @param string $type
+ *
  * @package BuddyForms
  * @since 0.1 beta
  *
- * @param int $post_id
- * @param string $type
  */
 function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	if ( ! $post = get_post( $post_id ) ) {
@@ -50,8 +51,8 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 		$date      = date_i18n( $datef, strtotime( $restored_from_meta['restored_time'] ) );
 		$time_diff = human_time_diff( $restored_from_meta['restored_time'] );
 		?>
-        <hr/>
-        <div id="revisions-meta-restored">
+		<hr/>
+		<div id="revisions-meta-restored">
 			<?php
 			printf(
 			/* translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date */
@@ -62,7 +63,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 				$date
 			);
 			?>
-        </div>
+		</div>
 		<?php
 	}
 	echo "</ul>";
@@ -168,9 +169,10 @@ function buddyforms_wp_post_revision_title_expanded( $revision, $post_id, $link 
 
 	$gravatar = get_avatar( $revision->post_author, 24 );
 
-	$date = date_i18n( $datef, strtotime( $revision->post_modified ) );
-	if ( $link && current_user_can( 'edit_post', $revision->ID ) && isset( $permalink ) && $link = $permalink . 'revision/' . $form_slug . '/' . $post_id . '/' . $revision->ID ) {
-		$date = "<a href='$link'>$date</a>";
+	$date          = date_i18n( $datef, strtotime( $revision->post_modified ) );
+	$revision_link = buddyforms_get_form_action_url( $form_slug, $post_id, 'revision', $buddyforms[ $form_slug ]['attached_page'], $revision->ID );
+	if ( $revision_link && current_user_can( 'edit_post', $revision->ID ) && isset( $permalink ) ) {
+		$date = "<a href='" . esc_url( $revision_link ) . "'>" . esc_attr( $date ) . "</a>";
 	}
 
 	$revision_date_author = sprintf(
