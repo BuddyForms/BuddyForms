@@ -481,15 +481,15 @@ function custom_buddyforms_column( $column, $post_id ) {
 			echo $attached_page;
 
 			if ( $attached_page != 'Off' ) {
-				$view_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'view', $buddyform['attached_page']  );
-				$create_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'create', $buddyform['attached_page']  );
+				$view_link   = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'view', $buddyform['attached_page'] );
+				$create_link = buddyforms_get_form_action_url( $buddyform['slug'], $post->ID, 'create', $buddyform['attached_page'] );
 				?>
 				<div class="row-actions">
 					<span class="view-form">
-						<a target="_blank" href="<?php echo esc_url($view_link) ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
+						<a target="_blank" href="<?php echo esc_url( $view_link ) ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
 					</span>
 					<span class="view-entryies">
-						<a target="_blank" href="<?php echo esc_url($create_link) ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
+						<a target="_blank" href="<?php echo esc_url( $create_link ) ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
 					</span>
 
 				</div>
@@ -594,6 +594,10 @@ function buddyforms_add_button_to_submit_box() {
 	}
 
 	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
+
+	if ( empty( $buddyform ) || empty( $buddyform['slug'] ) ) {
+		return;
+	}
 
 	$preview_page_id        = get_option( 'buddyforms_preview_page', true );
 	$preview_page_permalink = get_permalink( $preview_page_id );
