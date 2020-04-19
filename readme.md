@@ -24,8 +24,6 @@ If you want to use the last version of BuddyForms from the develop branch you ne
 * [Konrad Sroka](https://github.com/konradS)
 * [Guillermo Figueroa](https://github.com/gfirem)
 * [Victor Marin](https://github.com/marin250189)
-* [Edilson Nuñez Prieto](https://github.com/edisoft00)
-* [Jairo Niño](https://github.com/jnfDev)
 
 ## License
 
