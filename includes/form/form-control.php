@@ -250,42 +250,6 @@ function buddyforms_process_submission( $args = array() ) {
 		do_action( 'buddyforms_process_submission_end', $args );
 	}
 
-	// Check if user is logged in and if not check if registration during submission is enabled.
-	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
-
-		// ok let us try to register a user
-		$user_id = buddyforms_wp_insert_user();
-
-		// Check if registration was successful
-		if ( ! $user_id ) {
-			$args = array(
-				'hasError'  => true,
-				'form_slug' => $form_slug,
-			);
-
-			return $args;
-		}
-		if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && ! empty( $user_data ) ) {
-			/**
-			 * Avoid save user meta data.
-			 *
-			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
-			 *
-			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
-			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
-			 * @param array $data This parameter holds the information what wil be saved.
-			 *
-			 * @since 2.1.7
-			 *
-			 */
-			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
-			if ( $save_usermeta ) {
-				// Save the Browser user data
-				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
-			}
-		}
-	}
-
 	// Ok let us start processing the post form
 	do_action( 'buddyforms_process_submission_start', $args );
 
@@ -311,6 +275,43 @@ function buddyforms_process_submission( $args = array() ) {
 				);
 
 				return $args;
+			}
+		}
+	}
+
+	// Check if user is logged in and if not check if registration during submission is enabled.
+	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
+		// ok let us try to register a user
+		$user_id = buddyforms_wp_insert_user();
+		// Check if registration was successful
+		if ( ! $user_id ) {
+			$args = array(
+				'hasError'  => true,
+				'form_slug' => $form_slug,
+			);
+
+			return $args;
+		}
+		//Assign the created post to the new register author
+		$the_post->post_author = $user_id;
+
+		if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && ! empty( $user_data ) ) {
+			/**
+			 * Avoid save user meta data.
+			 *
+			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
+			 *
+			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
+			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array $data This parameter holds the information what wil be saved.
+			 *
+			 * @since 2.1.7
+			 *
+			 */
+			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
+			if ( $save_usermeta ) {
+				// Save the Browser user data
+				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 			}
 		}
 	}

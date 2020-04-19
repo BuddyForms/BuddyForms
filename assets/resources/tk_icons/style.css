@@ -28,7 +28,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.tk-icon-store, .tk-icon-support, .tk-icon-blog, .tk-icon-buddyforms {
+.tk-icon-store, .tk-icon-support, .tk-icon-blog, .tk-icon-buddyforms, .wp-menu-image.dashicons-before.dashicons-buddyforms {
     font-family: 'icomoon';
     speak: none;
     font-style: normal;
@@ -40,8 +40,16 @@ you can use the generic selector below, but it's slower:
     -webkit-font-smoothing: antialiased;
 }
 
-.tk-icon-store:before {
+.tk-icon-store:before, .wp-menu-image.dashicons-before.dashicons-buddyforms:before {
     content: "\e002";
+}
+
+.wp-menu-image.dashicons-before.dashicons-buddyforms:before {
+    content: "\e000";
+    font-family: 'icomoon';
+    font-size: 27px;
+    padding: 0;
+    padding-right: 10px;
 }
 
 .tk-icon-support:before {
@@ -52,6 +60,6 @@ you can use the generic selector below, but it's slower:
     content: "\e003";
 }
 
-.tk-icon-buddyforms:before {
+.tk-icon-buddyforms:before  {
     content: "\e000";
 }
