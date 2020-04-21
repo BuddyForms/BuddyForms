@@ -171,6 +171,9 @@ class Form extends Base {
 					if ( $element instanceof Element_Email ) {
 						$element->setValidation( new Validation_Email() );
 					}
+                    if ( $element instanceof Element_Phone ) {
+                        $element->setValidation( new Validation_Phone() );
+                    }
 
 					if ( $element instanceof Element_Upload ) {
 						$name          = $field_options['slug'];

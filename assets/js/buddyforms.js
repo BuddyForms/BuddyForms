@@ -557,6 +557,19 @@ function BuddyForms() {
         return result;
     }
 
+    function addValidationPhone() {
+        jQuery.validator.addMethod("bf-tel", function (value, element, param) {
+
+            $valid_phone_number = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value);
+            if(!$valid_phone_number){
+                jQuery.validator.messages['bf-tel'] = "Invalid Phone Number";
+                return false;
+            }
+            return  true;
+
+        },"");
+    }
+
     function addValidationMaxLength() {
         jQuery.validator.addMethod("maxlength", function (value, element, param) {
             var formSlug = getFormSlugFromFormElement(element);
@@ -1502,6 +1515,7 @@ function BuddyForms() {
                 addValidationMinValue();
                 addDateFormatValidation();
                 addValidationEmail();
+                addValidationPhone();
                 enabledDateTime();
                 enableJQueryTimeAddOn();
                 enablePriceField();
