@@ -959,7 +959,7 @@ jQuery(document).ready(function (jQuery) {
 
         if (buddyformsGlobal) {
 
-                jQuery('.bf_permissions :checkbox').prop('checked', true);
+                jQuery('.bf_permissions :checkbox').not("[disabled]").prop('checked', true);
                 jQuery(this).removeClass();
                 jQuery(this).addClass("bf_uncheck_all");
                 jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
@@ -970,7 +970,7 @@ jQuery(document).ready(function (jQuery) {
 
         if (buddyformsGlobal) {
 
-                jQuery('.bf_permissions :checkbox').prop('checked', false);
+                jQuery('.bf_permissions :checkbox').not("[disabled]").prop('checked', false);
                 jQuery(this).removeClass();
                 jQuery(this).addClass("bf_check_all");
                 jQuery(this).text(buddyformsGlobal.admin_text.check);
