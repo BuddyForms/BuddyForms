@@ -958,13 +958,23 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document).on('click', '.bf_check_all', function (e) {
 
         if (buddyformsGlobal) {
-            if (jQuery(".bf_permissions input[type='checkbox']").prop("checked")) {
-                jQuery('.bf_permissions :checkbox').prop('checked', false);
-                jQuery(this).text(buddyformsGlobal.admin_text.check);
-            } else {
+
                 jQuery('.bf_permissions :checkbox').prop('checked', true);
+                jQuery(this).removeClass();
+                jQuery(this).addClass("bf_uncheck_all");
                 jQuery(this).text(buddyformsGlobal.admin_text.uncheck);
-            }
+        }
+        e.preventDefault();
+    });
+    jQuery(document).on('click', '.bf_uncheck_all', function (e) {
+
+        if (buddyformsGlobal) {
+
+                jQuery('.bf_permissions :checkbox').prop('checked', false);
+                jQuery(this).removeClass();
+                jQuery(this).addClass("bf_check_all");
+                jQuery(this).text(buddyformsGlobal.admin_text.check);
+
         }
         e.preventDefault();
     });
