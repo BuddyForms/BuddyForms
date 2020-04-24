@@ -869,6 +869,14 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
  */
 function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false ) {
+	$author = false;
+	if ( in_array( $custom_field['type'], buddyforms_user_fields_array() ) ) {
+		$author_id = ( ! empty( $post->post_author ) ) ? $post->post_author : 0;
+		if ( ! empty( $author_id ) ) {
+			$author = get_user_by( 'ID', $author_id );
+		}
+	}
+
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
@@ -927,12 +935,34 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$meta_value = buddyforms_get_post_status_readable( get_post_status( $post_id ) );
 			break;
 		case 'user_login':
-			$author_id = ( ! empty( $post->post_author ) ) ? $post->post_author : 0;
-			if ( ! empty( $author_id ) ) {
-				$author = get_user_by( 'ID', $author_id );
-				if ( $author instanceof WP_User ) {
-					$meta_value = $author->user_login;
-				}
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->user_login;
+			}
+			break;
+		case 'user_email':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->user_email;
+			}
+			break;
+		case 'user_first':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->first_name;
+			}
+			break;
+		case 'user_last':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->last_name;
+			}
+			break;
+		case 'user_website':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = "<p><a href='" . esc_url( $author->user_url ) . "' " . $custom_field['name'] . ">" . esc_attr( $author->user_url ) . " </a></p>";
+//				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
+			}
+			break;
+		case 'user_bio':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->description;
 			}
 			break;
 		case 'taxonomy':
@@ -949,9 +979,6 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			break;
 		case 'link':
-			$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
-			break;
-		case 'user_website':
 			$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			break;
 		case 'gdpr':
