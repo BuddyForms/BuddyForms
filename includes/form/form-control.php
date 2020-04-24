@@ -764,11 +764,14 @@ function buddyforms_extract_all_shortcode( $string, $fields_slugs ) {
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return array
  * @since 2.4.1
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $full_string = false ) {
+function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $full_string = false, $html = true ) {
 	if ( ! isset( $form_slug ) || ! isset( $post_id ) ) {
 		return array();
 	}
@@ -781,7 +784,7 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $ful
 
 	if ( $field_with_value_result === false ) {
 		$form_fields = $buddyforms[ $form_slug ]['form_fields'];
-		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields, $full_string );
+		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields, $full_string, $html );
 		foreach ( $form_fields as $custom_field ) {
 			if ( isset( $custom_field['slug'] ) ) {
 				$slug = $custom_field['slug'];
@@ -810,11 +813,14 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $ful
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return array
  * @since 2.4.1
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string = false ) {
+function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string = false, $html = true ) {
 	if ( ! isset( $custom_fields ) ) {
 		return $post_id;
 	}
@@ -843,7 +849,7 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
 			$post = get_post( $post_id );
 
 			//Map field with his meta values
-			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string );
+			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string, $html );
 
 			$result_custom_fields[ $field_id ]['value'] = $meta_value;
 		}
@@ -864,11 +870,14 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return false|string
  * @since 2.5.2
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false ) {
+function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false, $html = true ) {
 	$author = false;
 	if ( in_array( $custom_field['type'], buddyforms_user_fields_array() ) ) {
 		$author_id = ( ! empty( $post->post_author ) ) ? $post->post_author : 0;
@@ -956,7 +965,11 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			break;
 		case 'user_website':
 			if ( ! empty( $author ) && $author instanceof WP_User ) {
-				$meta_value = "<p><a href='" . esc_url( $author->user_url ) . "' " . $custom_field['name'] . ">" . esc_attr( $author->user_url ) . " </a></p>";
+				if($html) {
+					$meta_value = "<p><a href='" . esc_url( $author->user_url ) . "' " . $custom_field['name'] . ">" . esc_attr( $author->user_url ) . " </a></p>";
+				} else {
+					$meta_value =  esc_url( $author->user_url );
+				}
 //				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			}
 			break;
@@ -979,7 +992,11 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			break;
 		case 'link':
-			$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
+			if($html) {
+				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
+			} else {
+				$meta_value =  esc_url( $author->user_url );
+			}
 			break;
 		case 'gdpr':
 			$gdpr_empty  = apply_filters( 'buddyforms_get_gdpr_field_meta_empty', __( '<p>Empty Agreement(s)</p>', 'buddyforms' ), $meta_value, $post_id, $slug );
@@ -1006,7 +1023,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			break;
 	}
 
-	return apply_filters( 'buddyforms_get_post_field_meta', $meta_value, $post_id, $slug );
+	return apply_filters( 'buddyforms_get_post_field_meta', $meta_value, $post_id, $slug, $custom_field );
 }
 
 /**
