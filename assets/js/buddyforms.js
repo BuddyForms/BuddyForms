@@ -561,13 +561,13 @@ function BuddyForms() {
         jQuery.validator.addMethod("bf-tel", function (value, element, param) {
 
             $valid_phone_number = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value);
-            if(!$valid_phone_number){
+            if (!$valid_phone_number) {
                 jQuery.validator.messages['bf-tel'] = "Invalid Phone Number";
                 return false;
             }
-            return  true;
+            return true;
 
-        },"");
+        }, "");
     }
 
     function addValidationMaxLength() {
@@ -1148,26 +1148,23 @@ function BuddyForms() {
                     return true;
                 }
 
-                jQuery.extend(jQuery.validator, {
-                    methods: {
-                        required: function (b, c, d) {
-                            var targetElement = jQuery(c);
-                            var hasControlClass = targetElement.hasClass('form-control');
-                            var hasFormAttr = targetElement.attr('data-form');
-                            if (hasFormAttr || hasControlClass) {
-                                return bfRequiredValidation(b, c, d);
-                            } else {
-                                if (!this.depend(d, c)) return "dependency-mismatch";
-                                if ("select" === c.nodeName.toLowerCase()) {
-                                    var e = a(c).val();
-                                    return e && e.length > 0
-                                }
-                                return this.checkable(c) ? this.getLength(b, c) > 0 : b.length > 0
-                            }
+                jQuery.validator.methods.required = function (b, c, d) {
+                    var targetElement = jQuery(c);
+                    var hasControlClass = targetElement.hasClass('form-control');
+                    var hasFormAttr = targetElement.attr('data-form');
+                    if (hasFormAttr || hasControlClass) {
+                        return bfRequiredValidation(b, c, d);
+                    } else {
+                        if (!this.depend(d, c)) {
+                            return 'dependency-mismatch';
                         }
+                        if ('select' === c.nodeName.toLowerCase()) {
+                            var e = a(c).val();
+                            return e && e.length > 0;
+                        }
+                        return this.checkable(c) ? this.getLength(b, c) > 0 : b.length > 0;
                     }
-                });
-
+                };
 
                 var validationSettings = {
                     ignore: function (index, element) {
