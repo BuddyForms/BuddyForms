@@ -55,7 +55,7 @@ class Validation_Captcha extends Validation {
 			}
 			$action = preg_replace( "/[^A-Za-z0-9 ]/", '', $action );
 			$captcha    = sanitize_text_field( $_POST["bf-cpchtk"] );
-			$recaptcha  = new \ReCaptcha\ReCaptcha( $this->privateKey );
+			$recaptcha  = new \ReCaptcha\ReCaptcha( $this->privateKey, new \ReCaptcha\RequestMethod\SocketPost() );
 			$resp       = $recaptcha->setExpectedHostname( $_SERVER['HTTP_HOST'] )
 			                        ->setExpectedAction( $action )
 			                        ->setScoreThreshold( floatval( $score ) )
