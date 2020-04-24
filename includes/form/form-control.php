@@ -443,6 +443,8 @@ function buddyforms_process_submission( $args = array() ) {
 					$have_user_fields = true;
 					break;
 				}
+			}
+			foreach ( $customfields as $customfield ) {
 				if ( in_array( $customfield['type'], array( 'category' ) ) ) {
 					$args['has_post_category'] = true;
 					break;
@@ -1191,7 +1193,6 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 						}
 					}
 				}
-
 				// Add the new terms to the taxonomy
 				wp_set_object_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 
