@@ -34,19 +34,36 @@ function buddyforms_attached_page_rewrite_rules( $flush_rewrite_rules = false ) 
 	do_action( 'buddyforms_after_attache_page_rewrite_rules', $flush_rewrite_rules );
 }
 
+function dfgdgfd( $post_id ) {
+	$lang = pll_current_language();
+	if ( ! empty( $lang ) ) {
+		$lang_array = pll_get_post_translations( $post_id );
+		if ( ! empty( $lang_array ) ) {
+			if ( isset( $lang_array[ $lang ] ) ) {
+				return $lang_array[ $lang ];
+			}
+		}
+	}
+
+	return $post_id;
+}
+
 function buddyforms_form_rewrite_rules( $buddyform ) {
 	if ( empty( $buddyform ) ) {
 		return;
 	}
 
-	$structure = get_option( 'permalink_structure' );
-
-	$page_parameter = 'pagename';
+	$structure            = get_option( 'permalink_structure' );
+	$is_rewrite_structure = ! empty( $structure );
+	$attached_page_id     = 0;
+	$page_parameter       = 'pagename';
 	if ( ! empty( $structure ) ) {
 		if ( ! empty( $buddyform['attached_page_name'] ) ) {
 			$attached_page_name = $buddyform['attached_page_name'];
+			$attached_page_id   = $attached_page_name;
 		} else {
 			if ( ! empty( $buddyform['attached_page'] ) && $buddyform['attached_page'] !== 'none' ) {
+				$attached_page_id   = $buddyform['attached_page'];
 				$attached_page      = WP_Post::get_instance( $buddyform['attached_page'] );
 				$attached_page_name = $attached_page->post_name;
 			}
@@ -67,7 +84,31 @@ function buddyforms_form_rewrite_rules( $buddyform ) {
 		foreach ( $bf_internal_rules as $bf_internal_rule ) {
 			$view_regex = sprintf( $bf_internal_rule['regex'], $attached_page_name, $item_action );
 			$view_url   = sprintf( $bf_internal_rule['url'], $page_parameter, $attached_page_name );
+			$view_regex = apply_filters( 'buddyforms_rewrite_regex', $view_regex, $bf_internal_rule['regex'], $attached_page_name, $item_action );
+			$view_url   = apply_filters( 'buddyforms_rewrite_url', $view_url, $bf_internal_rule['url'], $page_parameter, $attached_page_name );
 			add_rewrite_rule( $view_regex, $view_url, 'top' );
+			//Add extra rule for each translation of the attached page
+			if ( ! empty( $attached_page_id ) ) {
+				$lang_array = pll_get_post_translations( $attached_page_id );
+				if ( ! empty( $lang_array ) ) {
+					foreach ( $lang_array as $lang_code => $attached_page_id_translated ) {
+						if ( empty( $attached_page_id_translated ) ) {
+							continue;
+						}
+						if ( ! empty( $structure ) ) {
+							$attached_page      = WP_Post::get_instance( $attached_page_id_translated );
+							$attached_page_name = $attached_page->post_name;
+						} else {
+							$page_parameter     = 'page_id';
+							$attached_page_name = $attached_page_id_translated;
+						}
+
+						$view_regex = sprintf( $bf_internal_rule['regex'], $attached_page_name, $item_action );
+						$view_url   = sprintf( $bf_internal_rule['url'], $page_parameter, $attached_page_name );
+						add_rewrite_rule( $lang_code . '/' . $view_regex, $view_url, 'top' );
+					}
+				}
+			}
 		}
 	}
 }
@@ -165,7 +206,7 @@ function buddyform_get_action_rewrite_rule( $action, $attached_page_id, $post_id
 				$result_url = vsprintf( $base . $match_rewrite_rule['url'], $arguments );
 			}
 
-			return $result_url;
+			return apply_filters( 'buddyforms_action_rewrite_rule', $result_url, $action, $attached_page_id, $post_id, $form_slug, $revision_id );
 		}
 	}
 
@@ -210,6 +251,9 @@ function buddyforms_get_rewrite_rule( $action = '' ) {
 			'rewrite_url'   => "?%s=%s&bf_action=revision&bf_form_slug=%s&bf_post_id=%s&bf_rev_id=%s",
 		),
 	);
+
+	$rules = apply_filters( 'buddyforms_rewrite_rules', $rules );
+
 	if ( empty( $action ) ) {
 		return $rules;
 	} else {
