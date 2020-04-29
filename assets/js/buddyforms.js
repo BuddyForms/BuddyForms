@@ -1251,6 +1251,7 @@ function BuddyForms() {
             targetForm.find('.bf_inputs.bf-input .select2-container span.select2-selection').removeClass('error');
             targetForm.find('.wp-editor-container').removeClass('error');
             labelErrors.remove();
+            buddyformsGlobal[form_id].errors = errors.errors;
             jQuery.each(errors.errors[id], function (i, e) {
                 var fieldData = getFieldFromSlug(i, form_id);
                 if (!fieldData) {
@@ -1297,6 +1298,41 @@ function BuddyForms() {
                     jQuery('html, body').stop()
                 });
             }
+        }
+    }
+
+    function reCaptchaV3(options, callback) {
+        var currentElement = jQuery('#buddyforms_form_' + options[0]).find('#bf-cpchtk');
+        if (currentElement && currentElement.length > 0) {
+            var formSlug = getFormSlugFromFormElement(currentElement);
+            var currentFieldSlug = jQuery(currentElement).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldStateData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (typeof grecaptcha !== "undefined") {
+                    grecaptcha.ready(function () {
+                        var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
+                        grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
+                            jQuery(currentElement).val(token).change();
+                            var recaptchaResponse = document.getElementById('bf-cpchtk');
+                            recaptchaResponse.value = token;
+                            callback(options);
+                        });
+                    });
+                }
+            }
+        } else {
+            callback(options);
+        }
+    }
+
+    function renderFormWrapper(options) {
+        var captchaValidate = BuddyFormsHooks.applyFilters('buddyforms:captcha:validate', true, options);
+        if (captchaValidate) {
+            reCaptchaV3(options, function (arguments_options) {
+                renderForm(arguments_options);
+            });
+        } else {
+            renderForm(options);
         }
     }
 
@@ -1498,7 +1534,7 @@ function BuddyForms() {
             BuddyFormsHooks.addAction('buddyforms:submit:disable', disableFormSubmit);
             BuddyFormsHooks.addAction('buddyforms:submit:enable', enableFormSubmit);
             BuddyFormsHooks.addAction('buddyforms:error:trigger', triggerFormError);
-            BuddyFormsHooks.addAction('buddyforms:form:render', renderForm);
+            BuddyFormsHooks.addAction('buddyforms:form:render', renderFormWrapper);
             BuddyFormsHooks.addAction('buddyforms:submit:click', actionFromButton);
 
             disableACFPopup();
