@@ -780,6 +780,10 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $ful
 		return array();
 	}
 
+	if ( in_array( $field_slug, array( 'captcha' ) ) ) {
+		return array();
+	}
+
 	$field_with_value_result = wp_cache_get( 'buddyforms_get_field_with_meta_' . $form_slug . '_' . $post_id . '_' . $field_slug, 'buddyforms' );
 
 	if ( $field_with_value_result === false ) {
@@ -886,6 +890,8 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 		}
 	}
 
+	$html = apply_filters( 'buddyforms_force_field_html', $html, $post_id, $custom_field, $post, $meta_value, $slug );
+
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
@@ -965,10 +971,10 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			break;
 		case 'user_website':
 			if ( ! empty( $author ) && $author instanceof WP_User ) {
-				if($html) {
+				if ( $html ) {
 					$meta_value = "<p><a href='" . esc_url( $author->user_url ) . "' " . $custom_field['name'] . ">" . esc_attr( $author->user_url ) . " </a></p>";
 				} else {
-					$meta_value =  esc_url( $author->user_url );
+					$meta_value = esc_url( $author->user_url );
 				}
 //				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			}
@@ -992,10 +998,10 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			break;
 		case 'link':
-			if($html) {
+			if ( $html ) {
 				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			} else {
-				$meta_value =  esc_url( $author->user_url );
+				$meta_value = esc_url( $author->user_url );
 			}
 			break;
 		case 'gdpr':
