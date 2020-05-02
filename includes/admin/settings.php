@@ -6,6 +6,7 @@
 function buddyforms_settings_menu() {
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'BuddyForms Settings', 'buddyforms' ), __( 'Settings', 'buddyforms' ), 'manage_options', 'buddyforms_settings', 'buddyforms_settings_page' );
 }
+
 add_action( 'admin_menu', 'buddyforms_settings_menu' );
 
 //
@@ -108,6 +109,8 @@ function buddyforms_settings_page_tabs_content() {
 			} else {
 				$tab = 'general';
 			}
+
+			buddyforms_track( 'settings', array( 'tab' => $tab ) );
 
 			switch ( $tab ) {
 				case 'general' :
