@@ -367,6 +367,16 @@ function buddyforms_process_submission( $args = array() ) {
 		return $args;
 	}
 
+	$process_submission_ok = apply_filters( 'buddyforms_process_submission_ok', true, $form_slug, $post_id );
+	if ( $process_submission_ok == false ) {
+		$args = array(
+			'hasError'      => true,
+			'error_message' => apply_filters( 'buddyforms_process_submission_ok_error_message', __( 'Sorry you are not allow to submit this Form.', 'buddyforms' ), $form_slug, $post_id ),
+		);
+
+		return $args;
+	}
+
 	if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
 		$customfields = $buddyforms[ $form_slug ]['form_fields'];
 	}
