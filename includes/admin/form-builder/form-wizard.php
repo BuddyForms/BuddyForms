@@ -87,9 +87,9 @@ function buddyforms_form_builder_wizard_save() {
 	// Save the Roles and capabilities.
 	if ( isset( $formdata['buddyforms_roles'] ) ) {
 
-		foreach ( get_editable_roles() as $role_name => $role_info ):
+		foreach ( get_editable_roles() as $role_name => $role_info ) {
 			$role = get_role( $role_name );
-			foreach ( $role_info['capabilities'] as $capability => $_ ):
+			foreach ( $role_info['capabilities'] as $capability => $_ ) {
 
 				$capability_array = explode( '_', $capability );
 
@@ -97,12 +97,10 @@ function buddyforms_form_builder_wizard_save() {
 					if ( $capability_array[1] == $buddyform['slug'] ) {
 
 						$role->remove_cap( $capability );
-
 					}
 				}
-
-			endforeach;
-		endforeach;
+			}
+		}
 
 		foreach ( $formdata['buddyforms_roles'] as $form_role => $capabilities ) {
 			$role = get_role( $form_role );
@@ -111,8 +109,9 @@ function buddyforms_form_builder_wizard_save() {
 				$role->add_cap( $cap_slug );
 			}
 		}
-
 	}
+
+	buddyforms_track( 'wizard-end', array( 'form-type' => $buddyform['form_type'] ) );
 
 	// Regenerate the global $buddyforms.
 	// The global$buddyforms is sored in the option table and provides all forms and form fields

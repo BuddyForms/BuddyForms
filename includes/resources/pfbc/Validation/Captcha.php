@@ -53,7 +53,7 @@ class Validation_Captcha extends Validation {
 			if ( empty( $action ) ) {
 				$action = 'form';
 			}
-			$action = preg_replace( "/[^A-Za-z0-9 ]/", '', $action );
+			$action = preg_replace( "/[^a-zA-Z0-9]+/g", '', $action );
 			$captcha    = sanitize_text_field( $_POST["bf-cpchtk"] );
 			$recaptcha  = new \ReCaptcha\ReCaptcha( $this->privateKey );
 			$resp       = $recaptcha->setExpectedHostname( $_SERVER['HTTP_HOST'] )

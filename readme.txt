@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 2.5.19-beta2
+Stable tag: 2.5.19-beta3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,22 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.19-beta3 - 24 April 2020 =
+* Fixed the issue related to the lost of osme core styles when the form builder was loaded.
+* Fixed validation message show in the direct input form builder wizzard.
+* Fixed the min and max lenght validation message not showing for the message field.
+* Fixed the add the valid phone number validation.  Client and Server side validation.
+* Fixed the field slug missing for some Form Elements.
+* Fixed tje check All option on the permissions tab.
+* Fixed the CheckAll option to not check the disabled columns.
+* Updated the last version of jquery validation.
+* Fixed the override of the required method of jQuery validate to not lose the other methods.
+* Added form element output for all user form elements.
+* Fixed the Category assign for creating post with user form elements.
+* Formatting the code for the Phone Validation.
+* Fixed the issue related to the Form Element category not create categories when the entry is created.
+* Added form element output for all user form elements.
+
 = 2.5.19-beta2 - 9 April 2020 =
 * Moved the option `Enable Login on the form` to the Form submission tab inside the Form Setup metabox.
 * Fixed disable all the grid columns and rows on the permission tab when the free version is installed.

@@ -1604,6 +1604,19 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
 			$result[ $item ] = $options[ $item ];
 		}
 	}
+	//Filter the field options
+	$remove_field_options = apply_filters( 'buddyforms_remove_frontend_forms_fields_option', array(
+		'captcha_private_key',
+	), $form_slug, $bf_post_id );
+	if ( ! empty( $result['form_fields'] ) ) {
+		foreach ( $remove_field_options as $remove_field ) {
+			foreach ( $result['form_fields'] as $field_id => $field ) {
+				if ( isset( $field[ $remove_field ] ) ) {
+					unset( $result['form_fields'][ $field_id ][ $remove_field ] );
+				}
+			}
+		}
+	}
 
 	return $result;
 }

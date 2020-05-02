@@ -7,7 +7,7 @@ add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 function buddyforms_add_meta_boxes() {
 	global $post, $buddyform;
 
-	if ( !$post || $post->post_type != 'buddyforms' ) {
+	if ( ! $post || $post->post_type != 'buddyforms' ) {
 		return;
 	}
 
@@ -30,7 +30,6 @@ function buddyforms_add_meta_boxes() {
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	buddyforms_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
-
 }
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
@@ -246,7 +245,9 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
-	do_action('buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post);
+	buddyforms_track( 'builder-end', array( 'form-type' => $buddyform['form_type'] ) );
+
+	do_action( 'buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post );
 }
 
 add_action( 'save_post', 'buddyforms_edit_form_save_meta_box_data' );
@@ -476,15 +477,15 @@ function custom_buddyforms_column( $column, $post_id ) {
 
 			if ( $attached_page != 'Off' ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
-                <div class="row-actions">
+				<div class="row-actions">
 					<span class="view-form">
 						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
 					</span>
-                    <span class="view-entryies">
+					<span class="view-entryies">
 						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
 					</span>
 
-                </div>
+				</div>
 				<?php
 			}
 			break;
@@ -503,43 +504,43 @@ function buddyforms_hide_publishing_actions() {
 	global $post;
 
 	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
-        <style type="text/css">
-            .misc-pub-visibility,
-            .misc-pub-curtime,
-            .misc-pub-post-status {
-                display: none;
-            }
+		<style type="text/css">
+			.misc-pub-visibility,
+			.misc-pub-curtime,
+			.misc-pub-post-status {
+				display: none;
+			}
 
-            h1 {
-                display: none;
-            }
+			h1 {
+				display: none;
+			}
 
-            .metabox-prefs label {
-                /* float: right; */
-                /* margin-top: 57px; */
-                width: 100%;
-            }
+			.metabox-prefs label {
+				/* float: right; */
+				/* margin-top: 57px; */
+				width: 100%;
+			}
 
-            /* Sven Quick Fix ToDo: Konrad please check it;) */
-            .wrap .wp-heading-inline + .page-title-action {
-                display: none;
-            }
+			/* Sven Quick Fix ToDo: Konrad please check it;) */
+			.wrap .wp-heading-inline + .page-title-action {
+				display: none;
+			}
 
-            @media screen and (max-width: 790px) {
-                #buddyforms_version {
-                    display: none;
-                }
-            }
+			@media screen and (max-width: 790px) {
+				#buddyforms_version {
+					display: none;
+				}
+			}
 
-        </style>
+		</style>
 		<?php
 		if ( get_post_type( $post ) == 'buddyforms' && ! isset( $_GET['wizard'] ) || isset( $_GET['wizard'] ) && $_GET['wizard'] != 'done' || ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms' ) ) { ?>
-            <script>
-                jQuery(document).ready(function (jQuery) {
-                    jQuery('body').find('h1:first').css('line-height', '58px');
-                    jQuery('body').find('h1:first').css('margin-top', '20px');
-                    jQuery('body').find('h1:first').css('font-size', '30px');
-                    jQuery('body').find('h1:first').css('width', '100%');
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					jQuery('body').find('h1:first').css('line-height', '58px');
+					jQuery('body').find('h1:first').css('margin-top', '20px');
+					jQuery('body').find('h1:first').css('font-size', '30px');
+					jQuery('body').find('h1:first').css('width', '100%');
 					<?php
 					$tmp = '<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms';
 					if ( ! isset( $_GET['wizard'] ) ) {
@@ -555,17 +556,17 @@ function buddyforms_hide_publishing_actions() {
 
 					//echo "jQuery('" . $tmp . "').insertAfter(h1);";
 					?>
-                    jQuery('h1').show();
-                });
-            </script>
+					jQuery('h1').show();
+				});
+			</script>
 			<?php
 		} else {
 			?>
-            <script>
-                jQuery(document).ready(function (jQuery) {
-                    jQuery('body').find('h1:first').remove();
-                });
-            </script>
+			<script>
+				jQuery(document).ready(function (jQuery) {
+					jQuery('body').find('h1:first').remove();
+				});
+			</script>
 			<?php
 		}
 	}
@@ -592,35 +593,35 @@ function buddyforms_add_button_to_submit_box() {
 
 	$preview_page_id = get_option( 'buddyforms_preview_page', true );
 	?>
-    <div id="buddyforms-actions" class="misc-pub-section">
+	<div id="buddyforms-actions" class="misc-pub-section">
 		<?php if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-            <div id="frontend-actions">
-                <a class="button button-large bf_button_action" target="_blank"
-                   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
-                            class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?>
-                </a>
-            </div>
+			<div id="frontend-actions">
+				<a class="button button-large bf_button_action" target="_blank"
+				   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
+						class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?>
+				</a>
+			</div>
 		<?php } ?>
 		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
-            <div class="bf-tile actions">
-                <div id="frontend-actions">
-                    <label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
+			<div class="bf-tile actions">
+				<div id="frontend-actions">
+					<label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
 					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
                 <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
-                </div>
-            </div>
+				</div>
+			</div>
 		<?php }
 		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-            <div class="bf-tile actions">
-                <div id="admin-actions">
-                    <label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
+			<div class="bf-tile actions">
+				<div id="admin-actions">
+					<label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
 					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
-                </div>
-            </div>
+				</div>
+			</div>
 		<?php } ?>
 
-        <div class="clear"></div>
-    </div>
+		<div class="clear"></div>
+	</div>
 
 	<?php
 

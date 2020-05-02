@@ -41,14 +41,8 @@ class Element_Captcha extends Element {
 			echo sprintf( '<script src="//www.google.com/recaptcha/api.js%s"></script>', $captcha_attributes_string );
 			echo '<div data-type="' . esc_attr( $this->getAttribute( 'data_type' ) ) . '" data-size="' . esc_attr( $this->getAttribute( 'data_size' ) ) . '" data-theme="' . esc_attr( $this->getAttribute( 'data_theme' ) ) . '" class="g-recaptcha" data-sitekey="' . esc_attr( $this->getAttribute( 'site_key' ) ) . '"></div>';
 		} else {
-			$action = $this->getOption( 'captcha_v3_action' );
-			if ( empty( $action ) ) {
-				$action = 'form';
-			}
-			$action = preg_replace( "/[^A-Za-z0-9 ]/", '', $action );
 			echo sprintf( '<script src="//www.google.com/recaptcha/api.js?render=%s"></script>', esc_attr( $this->getAttribute( 'site_key' ) ) );
-			echo sprintf( "<script> grecaptcha.ready(function () { grecaptcha.execute('%s', { action: '%s' }).then(function (token) { var recaptchaResponse = document.getElementById('bf-cpchtk'); recaptchaResponse.value = token; }); }); </script>", esc_attr( $this->getAttribute( 'site_key' ) ), esc_attr($action) );
-			echo "<input type='hidden' name='bf-cpchtk' id='bf-cpchtk' value=''>";
+			echo "<input type='hidden' name='bf-cpchtk' id='bf-cpchtk' value='' data-element-slug='captcha' data-sitekey='" . esc_attr( $this->getAttribute( 'site_key' ) ) . "'>";
 		}
 	}
 }

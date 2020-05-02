@@ -146,25 +146,25 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 	ob_start();
 
 	?>
-    <div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
+	<div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
 		<?php if ( ! $is_wizard ): ?>
-            <div id="buddyforms_template_header_container">
-                <div id="buddyforms_template_header_container_h3">
-                    <h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
-                </div>
-                <div id="buddyforms_template_arrow_container">
-                    <img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
-                </div>
-            </div>
+			<div id="buddyforms_template_header_container">
+				<div id="buddyforms_template_header_container_h3">
+					<h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
+				</div>
+				<div id="buddyforms_template_arrow_container">
+					<img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
+				</div>
+			</div>
 		<?php endif; ?>
 
 		<?php add_thickbox(); ?>
 
-        <div <?php echo ( ! $is_wizard ) ? 'id="buddyforms_template_list_container"' : '' ?>>
-            <h5><?php _e( 'Choose a pre-configured form template or start a new fields from the bottom.', 'buddyforms' ) ?></h5>
+		<div <?php echo ( ! $is_wizard ) ? 'id="buddyforms_template_list_container"' : '' ?>>
+			<h5><?php _e( 'Choose a pre-configured form template or start a new fields from the bottom.', 'buddyforms' ) ?></h5>
 			<?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 
-                <h2><?php echo strtoupper( $sort_key ) ?> FORMS</h2>
+				<h2><?php echo strtoupper( $sort_key ) ?> FORMS</h2>
 
 				<?php foreach ( $sort_item as $key => $template ) {
 
@@ -173,47 +173,47 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 					$disabled = $dependencies != $none_dependency_string ? 'disabled' : '';
 
 					?>
-                    <div class="bf-3-tile bf-tile <?php if ( $dependencies != $none_dependency_string ) {
+					<div class="bf-3-tile bf-tile <?php if ( $dependencies != $none_dependency_string ) {
 						echo 'disabled ';
 					} ?>">
-                        <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
-                        <div class="xbf-col-50 bf-tile-desc-wrap">
-                            <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
-                        </div>
-                        <div class="bf-tile-preview-wrap"></div>
+						<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+						<div class="xbf-col-50 bf-tile-desc-wrap">
+							<p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
+						</div>
+						<div class="bf-tile-preview-wrap"></div>
 						<?php if ( $dependencies != $none_dependency_string ) { ?>
-                            <p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
+							<p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
 						<?php } else { ?>
-                            <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
-                                                            data-type="<?php echo $sort_key ?>"
-                                                            data-template="<?php echo $key ?>"
-                                                            class="bf_wizard_types bf_form_template btn btn-primary btn-50"
-                                                            onclick="">
+							<button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
+							                                data-type="<?php echo $sort_key ?>"
+							                                data-template="<?php echo $key ?>"
+							                                class="bf_wizard_types bf_form_template btn btn-primary btn-50"
+							                                onclick="">
 								<?php _e( 'Use This Template', 'buddyforms' ) ?>
-                            </button>
+							</button>
 						<?php } ?>
-                        <div id="template-<?php echo $key ?>" style="display:none;">
-                            <div class="bf-tile-desc-wrap">
-                                <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-                                <button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
-                                                                data-type="<?php echo $sort_key ?>"
-                                                                data-template="<?php echo $key ?>"
-                                                                class="bf_wizard_types bf_form_template button button-primary"
-                                                                onclick="">
-                                    <!-- <span class="dashicons dashicons-plus"></span>  -->
+						<div id="template-<?php echo $key ?>" style="display:none;">
+							<div class="bf-tile-desc-wrap">
+								<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+								<button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
+								                                data-type="<?php echo $sort_key ?>"
+								                                data-template="<?php echo $key ?>"
+								                                class="bf_wizard_types bf_form_template button button-primary"
+								                                onclick="">
+									<!-- <span class="dashicons dashicons-plus"></span>  -->
 									<?php _e( 'Use This Template', 'buddyforms' ) ?>
-                                </button>
-                            </div>
-                            <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"
-                                    frameborder="0" class="bf-frame"
-                                    style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
-                        </div>
+								</button>
+							</div>
+							<iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"
+							        frameborder="0" class="bf-frame"
+							        style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
+						</div>
 
-                    </div>
+					</div>
 				<?php }
 			} ?>
-        </div>
-    </div>
+		</div>
+	</div>
 
 	<?php
 
@@ -246,7 +246,9 @@ function buddyforms_form_template() {
 
 	$buddyforms_templates = $forms;
 
-	$buddyform = $buddyforms_templates[ $_POST['template'] ];
+	$target_template = sanitize_text_field( $_POST['template'] );
+
+	$buddyform = $buddyforms_templates[ $target_template ];
 
 	$buddyform = json_decode( $buddyform['json'], true );
 
@@ -254,6 +256,8 @@ function buddyforms_form_template() {
 		$post->post_name   = sanitize_title( $_POST['title'] );
 		$buddyform['slug'] = $post->post_name;
 	}
+
+	buddyforms_track( 'selected-form-template', array( 'template' => $target_template, 'type' => $buddyform['form_type'] ) );
 
 	ob_start();
 	buddyforms_metabox_form_elements( $post, $buddyform );
@@ -265,13 +269,13 @@ function buddyforms_form_template() {
 	ob_start();
 
 	?>
-    <div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
+	<div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 
 	<?php buddyforms_mail_notification_screen() ?>
 
-    <div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
+	<div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
 		<?php buddyforms_post_status_mail_notification_screen() ?>
-    </div>
+	</div>
 	<?php
 	$mail_notification = ob_get_clean();
 
