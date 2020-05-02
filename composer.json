@@ -19,6 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.6",
+    "guzzlehttp/guzzle" : "6.5.3",
     "google/recaptcha": "^1.2"
   },
   "require-dev": {},
