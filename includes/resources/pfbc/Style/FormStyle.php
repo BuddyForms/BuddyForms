@@ -570,8 +570,20 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear {
 		right: 0;
 		top: 1px;
-		margin-left: 3px;
+		margin-left: 5px !important;
 		font-size: 1rem;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice {
+		color: #444;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice__remove {
+		color: #666666;
+		cursor: pointer;
+		display: inline-block;
+		font-weight: bold;
+		margin-right: 5px;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__clear {
@@ -594,9 +606,25 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered {
 		height: 40px;
 		position: absolute;
-		top: 5px;
 		left: 1em;
 		line-height: 40px;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field {
+		color: #666666;
+		background-color: #fafafa !important
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::-webkit-input-placeholder { /* Edge */
+		color: #666666;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		color: #666666;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::placeholder {
+		color: #666666;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control {

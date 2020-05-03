@@ -920,6 +920,20 @@ function BuddyForms() {
         return false;
     }
 
+    function getFieldFrom(fieldValue, formSlug, from = 'name') {
+        if (fieldValue && typeof fieldValue === "string" && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
+                fieldValue = fieldValue.replace('[]', '');
+                fieldValue = BuddyFormsHooks.applyFilters('buddyforms:field:from', fieldValue, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
+                return buddyformsGlobal[formSlug].form_fields[fieldId][from].toLowerCase() === fieldValue.toLowerCase();
+            });
+            if (fieldIdResult) {
+                return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
+            }
+        }
+        return false;
+    }
+
     function enabledGarlic() {
         var bf_garlic = jQuery('.bf-garlic');
         if (bf_garlic.length > 0) {
@@ -1494,6 +1508,12 @@ function BuddyForms() {
         },
         actionFromButton: function (e) {
             return actionFromButton(e);
+        },
+        getFieldFromName: function(fieldName, formSlug){
+          return getFieldFromName(fieldName, formSlug);
+        },
+        getFieldFrom: function(fieldValue, formSlug, from){
+          return getFieldFrom(fieldValue, formSlug, from);
         },
         getFieldFromSlug: function (fieldSlug, formSlug) {
             return getFieldFromSlug(fieldSlug, formSlug);
