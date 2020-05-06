@@ -28,7 +28,8 @@ class Element_Select2 extends Element {
 
 		$properties = array(
 			"value"    => $value,
-			"field_id" => $field_id
+			"field_id" => $field_id,
+            "shortDesc" => $field_options['description']
 		);
 
 		if ( ! empty( $field_options ) && ! empty( $field_options['type'] ) ) {

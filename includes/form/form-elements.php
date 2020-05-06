@@ -1116,7 +1116,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						</script>
 						
 	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
-		                	<span class="help-inline">' . $description . '</span>
+		                	
 		                ';
 
 						if ( isset( $customfield['hidden_field'] ) ) {
