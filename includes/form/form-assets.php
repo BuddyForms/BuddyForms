@@ -38,6 +38,8 @@ class BuddyFormsAssets {
 		$found     = false;
 		$form_slug = '';
 
+		$this->register_bf_thickbox();
+
 		if ( ! empty( $post->post_content ) ) {
 			$form_slug = buddyforms_get_form_slug_from_content( $post->post_content );
 			// check the post content for the short code
@@ -69,6 +71,23 @@ class BuddyFormsAssets {
 			self::load_tk_font_icons();
 		}
 
+	}
+
+	/**
+	 * Register buddyforms thickbox this library is used from other buddyforms extension
+	 */
+	function register_bf_thickbox() {
+		wp_register_style( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.css', array(), BUDDYFORMS_VERSION );
+		wp_register_script( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+		wp_localize_script( 'buddyforms-thickbox', 'bf_thickboxL10n', array(
+			'next'             => __( 'Next &gt;' ),
+			'prev'             => __( '&lt; Prev' ),
+			'image'            => __( 'Image' ),
+			'of'               => __( 'of' ),
+			'close'            => __( 'Close' ),
+			'noiframes'        => __( 'This feature requires inline frames. You have iframes disabled or your browser does not support them.' ),
+			'loadingAnimation' => includes_url( 'js/thickbox/loadingAnimation.gif' ),
+		) );
 	}
 
 	/**
@@ -164,7 +183,7 @@ class BuddyFormsAssets {
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields(),
 			'delete_text'              => __( 'Delete Permanently', 'buddyforms' ),
-			'tb_pathToImage'            => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
+			'tb_pathToImage'           => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
 		);
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 

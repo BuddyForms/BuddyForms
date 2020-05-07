@@ -947,6 +947,32 @@ function buddyforms_get_form_by_slug( $form_slug ) {
 }
 
 /**
+ * Get form option
+ *
+ * @param $form_slug
+ * @param string $option
+ *
+ * @return string|bool
+ * @since 2.5.19
+ */
+function buddyforms_get_form_option( $form_slug, $option ) {
+	$value = false;
+	if ( ! empty( $form_slug ) && ! empty( $option ) ) {
+		$cache_key = 'buddyforms_form_' . $form_slug . '_option_' . $option;
+		$value     = wp_cache_get( $cache_key, 'buddyforms' );
+		if ( $value === false ) {
+			$bf_form = buddyforms_get_form_by_slug( $form_slug );
+			if ( ! empty( $bf_form ) ) {
+				$value = ( isset( $bf_form[ $option ] ) ) ? $bf_form[ $option ] : false;
+				wp_cache_set( $cache_key, $value, 'buddyforms' );
+			}
+		}
+	}
+
+	return $value;
+}
+
+/**
  * Will return the form slug from post meta or the default. none if no form is attached
  *
  * @param $post_id
@@ -1963,3 +1989,12 @@ function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
 }
 
 add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );
+
+/**
+ * Enqueue buddyforms thickbox wrapper
+ * @since 2.5.19
+ */
+function buddyforms_add_bf_thickbox() {
+	wp_enqueue_script( 'buddyforms-thickbox' );
+	wp_enqueue_style( 'buddyforms-thickbox' );
+}
