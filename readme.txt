@@ -429,7 +429,9 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed media buttons notice.
 * Fixed description position option for tag element.
 * Added own implementation of thickbox.
-
+* Fixed the user website field validation when not was correct.
+* Added a filter to let 3rd party extension change the form submission message.
+* Added a filter to let 3rd party extension change the submission link shortcode url.
 
 = 2.5.18 - 23 March 2020 =
 * Fixed the permission tab style for the wizard.
