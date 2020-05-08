@@ -1278,13 +1278,14 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 			$display_message = buddyforms_default_message_on_update();
 		}
 	}
+	$display_message = apply_filters('buddyforms_form_display_message', $display_message, $form_slug, $post_id, $source);
 	if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
 		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
 	}
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
-	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
+	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
 
 
 	return do_shortcode( $display_message );

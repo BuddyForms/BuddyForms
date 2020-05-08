@@ -412,6 +412,17 @@ function BuddyForms() {
             ) {
                 return true;
             }
+            var msjString = 'Please enter a valid URL.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (fieldData.validation_email_msj) {
+                    msjString = fieldData.validation_email_msj;
+                }
+            }
+
+            jQuery.validator.messages['bf-email'] = msjString;
+
             return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
         }, "Please enter a valid URL.");// todo need il18n
     }
