@@ -508,25 +508,18 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	}
 
 	#content .buddypress-wrap .the_buddyforms_form .standard-form li.select2-selection__choice {
-	<?php
-		if( !empty($bfdesign['field_padding']) ) {
-			$padding = intval($bfdesign['field_padding'])/3;
-			echo 'padding: ' . $padding . 'px !important;';
-		} else {
-			echo 'padding-left: 5px;';
-		}
-	?>
+		padding: 0 5px !important;
 	}
 
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.bf-input .select2-selection,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection {
 		min-height: 40px;
 		font-size: 15px;
 		float: unset;
 		width: 100%;
 		background-color: #fafafa !important;
-		padding: 25px;
 		appearance: none;
-
+		height: 54px !important;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__arrow:before {
@@ -563,8 +556,17 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		margin-right: 5px;
 		margin-top: 5px;
 		padding: 0 5px;
-		height: 30px;
+		height: 35px;
+		line-height: 35px;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.acf-field .select2-selection--multiple .select2-selection__rendered li {
 		line-height: 30px;
+	}
+
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li {
+		height: 35px;
+		line-height: 15px;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear {
@@ -591,7 +593,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		float: right;
 		font-weight: bold;
 		margin-top: 5px;
-		margin-right: 5px;
+		line-height: 50px;
+		font-size: 1em;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__placeholder {
@@ -604,15 +607,15 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered {
-		height: 40px;
+		height: 54px;
 		position: absolute;
-		left: 1em;
-		line-height: 40px;
+		line-height: 50px;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field {
 		color: #666666;
-		background-color: #fafafa !important
+		background-color: #fafafa !important;
+		line-height: 40px;
 	}
 
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::-webkit-input-placeholder { /* Edge */
