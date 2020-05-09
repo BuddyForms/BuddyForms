@@ -605,7 +605,7 @@ function buddyforms_add_button_to_submit_box() {
 		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
 			<div class="bf-tile actions">
 				<div id="frontend-actions">
-					<label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
+					<label class="buddyforms-form-label" for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
 					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
                 <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
 				</div>
@@ -614,7 +614,7 @@ function buddyforms_add_button_to_submit_box() {
 		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
 			<div class="bf-tile actions">
 				<div id="admin-actions">
-					<label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
+					<label class="buddyforms-form-label" for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
 					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
 				</div>
 			</div>

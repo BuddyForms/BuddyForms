@@ -34,7 +34,7 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						<tbody>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength"><?php _e( 'Strength Requirement', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength"><?php _e( 'Strength Requirement', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span>
 							</th>
 							<td class="forminp forminp-select">
@@ -49,7 +49,7 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength_lavel_1"><?php _e( 'Level 1 Message', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength_lavel_1"><?php _e( 'Level 1 Message', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span>
 							</th>
 							<td class="forminp forminp-text">
@@ -58,7 +58,7 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength_lavel_2"><?php _e( 'Level 2 Message', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength_lavel_2"><?php _e( 'Level 2 Message', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span>
 							</th>
 							<td class="forminp forminp-text">
@@ -67,7 +67,7 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength_lavel_3"><?php _e( 'Level 3 Message', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength_lavel_3"><?php _e( 'Level 3 Message', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span>
 							</th>
 							<td class="forminp forminp-text">
@@ -76,7 +76,7 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength_lavel_4"><?php _e( 'Level 4 Message', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength_lavel_4"><?php _e( 'Level 4 Message', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span>
 							</th>
 							<td class="forminp forminp-text">
@@ -85,14 +85,14 @@ function buddyforms_password_strength_settings_page_tab( $tab ) {
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_password_strength_error"><?php _e( 'Mismatch', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_password_strength_error"><?php _e( 'Mismatch', 'buddyforms' ) ?></label>
 								<span class="buddyforms-password-strength-help-tip"> </span></th>
 							<td class="forminp forminp-text">
 								<input name="buddyforms_password_strength_settings[mismatch]" id="buddyforms_password_error" type="text" style="min-width:350px;" value="<?php echo isset( $password_strength_settings['mismatch'] ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( "Mismatch", 'buddyforms' ); ?>" class="" placeholder="<?php __( "Mismatch", 'buddyforms' ); ?>">
 							</td>
 						<tr valign="top">
 							<th scope="row" class="titledesc">
-								<label for="buddyforms_hint_text"><?php _e( 'Password Hint Text', 'buddyforms' ) ?></label>
+								<label class="buddyforms-form-label" for="buddyforms_hint_text"><?php _e( 'Password Hint Text', 'buddyforms' ) ?></label>
 								<span class="buddyforms-help-tip"> </span></th>
 							<td class="forminp forminp-text">
 								<input name="buddyforms_password_strength_settings[hint_text]" id="buddyforms_hint_text" type="text" style="min-width:350px;" value="<?php echo isset( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( "Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like !  ? $ % ^ &amp; ).", 'buddyforms' ); ?>">

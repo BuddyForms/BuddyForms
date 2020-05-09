@@ -403,7 +403,7 @@ function buddyforms_metabox_form_setup() {
 	// Display all Form Elements in a nice Tab UI and List them in a Table
 	?>
     <span class="bf-form-type-wrap"> —
-			<label for="bf-form-type-select">
+			<label class="buddyforms-form-label" for="bf-form-type-select">
 				<select id="bf-form-type-select" name="buddyforms_options[form_type]">
 					<optgroup label="Form Type">
 						<option <?php selected( $form_type, 'contact' ) ?> value="contact"><?php _e( 'Contact Form', 'buddyforms' ) ?></option>
@@ -461,7 +461,7 @@ function buddyforms_metabox_form_setup() {
 									?>
                                     <tr class="<?php echo $classes ?>">
                                         <th scope="row">
-                                            <label for="form_title"><?php echo $field->getLabel() ?></label>
+                                            <label class="buddyforms-form-label" for="form_title"><?php echo $field->getLabel() ?></label>
                                         </th>
                                         <td>
 											<?php echo $field->render() ?>

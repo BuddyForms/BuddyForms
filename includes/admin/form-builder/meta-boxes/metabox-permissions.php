@@ -216,7 +216,7 @@ function buddyforms_permissions_screen() {
 					} else { ?>
 						<tr data-target-role="<?php echo $class ?>" id="table_row_<?php echo $field->getAttribute( 'id' ); ?>_<?php echo $key; ?>" class=" <?php echo $classes ?>">
 							<th scope="row">
-								<label for="role_role"><?php echo $field->getLabel() ?></label>
+								<label class="buddyforms-form-label" for="role_role"><?php echo $field->getLabel() ?></label>
 							</th>
 							<td>
 								<?php echo $field->render() ?>

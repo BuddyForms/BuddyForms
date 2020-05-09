@@ -49,7 +49,7 @@ function buddyforms_gdpr_shortcode_data_request( $atts ) {
                 </p>
 
                 <input id="buddyforms-gdpr-data-type-export" class="buddyforms-gdpr-data-type-input" type="radio" name="buddyforms_gdpr_data_type" value="export_personal_data">
-                <label for="buddyforms-gdpr-data-type-export" class="buddyforms-gdpr-data-type-label">
+                <label class="buddyforms-form-label buddyforms-form-label" for="buddyforms-gdpr-data-type-export" class="buddyforms-gdpr-data-type-label">
                     <?php esc_html_e( 'Export Personal Data', 'buddyforms' ); ?>
                 </label>
                 <br />
@@ -60,14 +60,14 @@ function buddyforms_gdpr_shortcode_data_request( $atts ) {
             </div>
 
             <p class="buddyforms-gdpr-field buddyforms-gdpr-field-email">
-                <label for="buddyforms-gdpr-data-email">
+                <label class="buddyforms-form-label" for="buddyforms-gdpr-data-email">
                     <?php esc_html_e( 'Your email address (required)', 'buddyforms' ); ?>
                 </label>
                 <input type="email" id="buddyforms-gdpr-data-email" name="buddyforms_gdpr_data_email" required />
             </p>
 
             <p class="buddyforms-gdpr-field buddyforms-gdpr-field-human">
-                <label for="buddyforms-gdpr-data-human">
+                <label class="buddyforms-form-label" for="buddyforms-gdpr-data-human">
                     <?php esc_html_e( 'Human verification (required):', 'buddyforms' ); ?>
                     <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?>
                 </label>

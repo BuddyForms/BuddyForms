@@ -208,8 +208,8 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	$mail_content = isset( $buddyform['mail_submissions'][ $trigger ]['mail_body'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_body'] : '';
 	wp_editor( BuddyFormsEncoding::toUTF8( $mail_content ), "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
-	$wp_editor    = '<div class="bf_field_group bf_form_content">
-	<label for="form_title"><b>' . __( 'Email Message Content', 'buddyforms' ) . '</b><br>
+	$wp_editor    = '<div class="buddyforms-field-group bf_form_content">
+	<label class="buddyforms-form-label" for="form_title"><b>' . __( 'Email Message Content', 'buddyforms' ) . '</b><br>
 
 		<p><strong>' . __( 'Important: ', 'buddyforms' ) . '</strong>' . __( 'If you use the "Message" form element you can leave this field empty and the "Message" form element value will be used . If you enter content in here, this content will overwrite the "Message" form element .', 'buddyforms' ) . '</p>
 		<p>' . __( 'You can add any form element with tags [] e . g . [ message ] will be replaced with the form element "Message" [ form_elements_table ] will add a table of all form elements .', 'buddyforms' ) . '</p>
@@ -348,7 +348,7 @@ function buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug
 	);
 	wp_editor( isset( $buddyform['mail_notification'][ $trigger ]['mail_body'] ) ? BuddyFormsEncoding::toUTF8( $buddyform['mail_notification'][ $trigger ]['mail_body'] ) : '', "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
-	$wp_editor    = '<div class="bf_field_group bf_form_content"><label><h2>' . __( 'Content', 'buddyforms' ) . '</h2></label><div class="bf_inputs">' . $wp_editor . '</div></div>';
+	$wp_editor    = '<div class="buddyforms-field-group bf_form_content"><label><h2>' . __( 'Content', 'buddyforms' ) . '</h2></label><div class="bf_inputs">' . $wp_editor . '</div></div>';
 	$form_setup[] = new Element_HTML( $wp_editor . $shortDesc );
 	?>
 

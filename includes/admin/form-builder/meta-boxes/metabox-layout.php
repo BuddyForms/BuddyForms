@@ -496,7 +496,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 									?>
                                     <tr class="<?php echo $classes ?>">
                                         <th scope="row">
-                                            <label for="form_title"><?php echo $field->getLabel() ?></label>
+                                            <label class="buddyforms-form-label" for="form_title"><?php echo $field->getLabel() ?></label>
                                         </th>
                                         <td>
 											<?php echo $field->render() ?>

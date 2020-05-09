@@ -100,7 +100,7 @@ function buddyforms_form_html( $args ) {
 		}
 	}
 	// Form start point
-	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
+	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form buddyforms-form-container' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
 
 	// Hook above the form inside the BuddyForms form div
 	$form_html = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
@@ -201,12 +201,13 @@ function buddyforms_form_html( $args ) {
 	// only output the whole CSS if the option to disable CSS is unchecked
 	if ( $bfdesign['extras_disable_all_css'] == '' ) {
 		ob_start();
-		require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php' );
-		$layout = ob_get_clean();
-		if ( ! empty( $layout ) ) {
-			$layout    = buddyforms_minify_css( $layout );
-			$form_html .= $layout;
-		}
+//		require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php' );
+//		$layout = ob_get_clean();
+//		if ( ! empty( $layout ) ) {
+//			$layout    = buddyforms_minify_css( $layout );
+//			$form_html .= $layout;
+//		}
+		wp_enqueue_style( 'buddyforms', BUDDYFORMS_ASSETS . 'css/buddyforms.css', array() );
 	}
 
 
@@ -215,7 +216,7 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
-	$form_class = 'standard-form buddyforms-active-form buddyforms-' . $form_slug . ' ';
+	$form_class = 'buddyforms-form standard-form buddyforms-active-form buddyforms-' . $form_slug . ' ';
 
 	if ( ! isset( $buddyforms[ $form_slug ]['local_storage'] ) ) {
 		$form_class .= ' bf-garlic';

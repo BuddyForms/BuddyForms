@@ -54,7 +54,7 @@ function buddyforms_inner_custom_box( $post ) {
 		$value = $buddyforms_posttypes_default[ $post->post_type ];
 	}
 
-	echo '<label for="_bf_form_slug">';
+	echo '<label class="buddyforms-form-label" for="_bf_form_slug">';
 	_e( "Select the form", 'buddyforms' );
 	echo '</label> ';
 	//echo '<input type="text" id="_bf_form_slug" name="_bf_form_slug" value="' . esc_attr( $value ) . '" size="25" />';

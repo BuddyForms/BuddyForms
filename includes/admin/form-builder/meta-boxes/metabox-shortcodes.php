@@ -9,7 +9,7 @@ function buddyforms_metabox_shortcodes() {
         <div id="bf-shortcode">
 
             <div class="bf-tile">
-                <label for="the-form"><?php _e( 'Display Form', 'buddyforms' ); ?></label>
+                <label class="buddyforms-form-label" for="the-form"><?php _e( 'Display Form', 'buddyforms' ); ?></label>
                 <div class="tooltip">
                     <input id="the-form" type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf form_slug="<?php echo $post->post_name; ?>"]'>
                     <span class="tooltip-container"><?php _e( 'Copy to clipboard', 'buddyforms' ) ?></span>
@@ -20,7 +20,7 @@ function buddyforms_metabox_shortcodes() {
 			<?php if ( $buddyform['form_type'] == 'post' ) { ?>
 
                 <div class="bf-tile">
-                    <label for="post-list"><?php _e( 'User Posts List', 'buddyforms' ); ?></label>
+                    <label class="buddyforms-form-label" for="post-list"><?php _e( 'User Posts List', 'buddyforms' ); ?></label>
                     <div class="tooltip">
                         <input id="post-list" type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_user_posts_list form_slug="<?php echo $post->post_name; ?>"]'>
                         <span class="tooltip-container"><?php _e( 'Copy to clipboard', 'buddyforms' ) ?></span>
@@ -32,7 +32,7 @@ function buddyforms_metabox_shortcodes() {
 
                     <div class="bf-row">
                         <div class="bf-tile alt">
-                            <label for="link-to-form"><?php _e( 'Link to Form', 'buddyforms' ); ?></label>
+                            <label class="buddyforms-form-label" for="link-to-form"><?php _e( 'Link to Form', 'buddyforms' ); ?></label>
                             <div class="tooltip">
                                 <input id="link-to-form" type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_form form_slug="<?php echo $post->post_name; ?>"]'>
                                 <span class="tooltip-container"><?php _e( 'Copy to clipboard', 'buddyforms' ) ?></span>
@@ -41,7 +41,7 @@ function buddyforms_metabox_shortcodes() {
                         </div>
 
                         <div class="bf-tile alt">
-                            <label for="link-to-posts"><?php _e( 'Link to Users Posts', 'buddyforms' ); ?></label>
+                            <label class="buddyforms-form-label" for="link-to-posts"><?php _e( 'Link to Users Posts', 'buddyforms' ); ?></label>
                             <div class="tooltip">
                                 <input id="link-to-posts" type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value='[bf_link_to_user_posts form_slug="<?php echo $post->post_name; ?>"]'>
                                 <span class="tooltip-container"><?php _e( 'Copy to clipboard', 'buddyforms' ) ?></span>

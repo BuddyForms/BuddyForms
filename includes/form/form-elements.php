@@ -299,6 +299,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$element_attr['data-rule-minlength'] = '[' . $title_minlength . ']';
 							$element_attr['data-rule-maxlength'] = '[' . $title_maxlength . ']';
+							$element_attr['class'] .= ' buddyforms-form-input';
 
 
 							if ( isset( $customfield['required'] ) ) {
@@ -377,16 +378,16 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								}
 								$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 							} else {
-								$wp_editor_label = '<label for="buddyforms_form_content">' . $name . $required . '</label>';
+								$wp_editor_label = '<label class="buddyforms-form-label" for="buddyforms_form_content">' . $name . $required . '</label>';
 							}
 
 							//						echo '<div id="buddyforms_form_content_val" style="display: none">' . $buddyforms_form_content_val . '</div>';
 
 
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
+								$wp_editor = '<div class="buddyforms-field-group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+								$wp_editor = '<div class="buddyforms-field-group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
 							$wp_editor = apply_filters( 'buddyforms_wp_editor', $wp_editor, $post_id );
@@ -576,9 +577,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val, $customfields ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-								$wp_editor = '<div class="bf_field_group ' . $slug . '">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
+								$wp_editor = '<div class="buddyforms-field-group ' . $slug . '">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
-								$wp_editor = '<div class="bf_field_group ' . $slug . '">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+								$wp_editor = '<div class="buddyforms-field-group ' . $slug . '">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
 							$element = new Element_HTML( $wp_editor, $name, $name, $customfield );
@@ -643,16 +644,16 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 						} else {
-							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
+							$wp_editor_label = '<label class="buddyforms-form-label" for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
 						}
 
 						if ( isset( $customfield['hidden_field'] ) ) {
 							$form->addElement( new Element_Hidden( $name, $customfield_val, $customfields ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
+								$wp_editor = '<div class="buddyforms-field-group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
 							} else {
-								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
+								$wp_editor = '<div class="buddyforms-field-group bf_form_content">' . $wp_editor_label . '<div class="bf_inputs bf-input">' . $wp_editor . '</div><span class="help-inline">' . $description . '</span></div>';
 							}
 
 							add_filter( 'the_content', 'do_shortcode', 11 );
@@ -738,9 +739,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$localized_strings = Element_Upload::strings();
 						$message           = $localized_strings['dictDefaultMessage'];
-						$box               = "<div class='bf_field_group elem-$slug'>";
+						$box               = "<div class='buddyforms-field-group elem-$slug'>";
 						if ( $labels_layout !== 'inline' ) {
-							$box .= sprintf( '<label for="%s">%s</label>', $customfield['name'], $label_name );
+							$box .= sprintf( '<label class="buddyforms-form-label" for="%s">%s</label>', $customfield['name'], $label_name );
 						}
 						$classes = 'dropzone form-control featured-image-uploader dz-clickable';
 						if ( $has_error ) {
@@ -838,7 +839,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 						$attachment_ids = $customfield_val;
 
-						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container bf_field_group"><ul class="bf_files">';
+						$str = '<div id="bf_files_container_' . $slug . '" class="bf_files_container buddyforms-field-group"><ul class="bf_files">';
 
 						$attachments = array_filter( explode( ',', $attachment_ids ) );
 
@@ -916,9 +917,9 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$str .= '</span>';
 						}
 
-						$file_element = '<div class="bf_field_group">';
+						$file_element = '<div class="buddyforms-field-group">';
 						if ( $labels_layout != 'inline' ) {
-							$file_element .= '<label for="_' . $slug . '">' . $name;
+							$file_element .= '<label class="buddyforms-form-label" for="_' . $slug . '">' . $name;
 
 							if ( isset( $customfield['required'] ) ) {
 								$file_element .= $form->renderRequired();

@@ -1044,7 +1044,7 @@ function buddyforms_display_form_element( $args ) {
 			}
 
 			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr><th scope="row">
-				<label for="form_title"><b style="margin-left: -10px;">' . __( 'Default Terms', 'buddyforms' ) . '</b></label></th>
+				<label  class="buddyforms-form-label" for="form_title"><b style="margin-left: -10px;">' . __( 'Default Terms', 'buddyforms' ) . '</b></label></th>
 				<td><div>' . $dropdown . '<p class="description">' . __( 'You can select a default category', 'buddyforms' ) . '</p></div></td></table>';
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
@@ -1112,7 +1112,7 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_include" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
-                        <label for="form_title"><b style="margin-left: -10px;">' . __( 'Include Items', 'buddyforms' ) . '</b></label>
+                        <label class="buddyforms-form-label" for="form_title"><b style="margin-left: -10px;">' . __( 'Include Items', 'buddyforms' ) . '</b></label>
                     </th>
                     <td>
                         <div>' . $dropdown . '
@@ -1157,7 +1157,7 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_exclude" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr>
                     <th scope="row">
-                        <label for="form_title"><b style="margin-left: -10px;">' . __( 'Exclude Items', 'buddyforms' ) . '</b></label>
+                        <label class="buddyforms-form-label" for="form_title"><b style="margin-left: -10px;">' . __( 'Exclude Items', 'buddyforms' ) . '</b></label>
                     </th>
                     <td>
                         <div>' . $dropdown . '
@@ -1766,7 +1766,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 						?>
 						<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
 							<th scope="row">
-								<label for="form_title"><?php echo $field->getLabel() ?></label>
+								<label class="buddyforms-form-label" for="form_title"><?php echo $field->getLabel() ?></label>
 							</th>
 							<td>
 								<?php echo $field->render() ?>

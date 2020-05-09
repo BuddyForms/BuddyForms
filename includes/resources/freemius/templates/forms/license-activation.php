@@ -164,7 +164,7 @@ HTML;
                     <tr>
                         <td><input type="radio" name="license_type" value="other"></td>
                         <td class="fs-other-license-key-container">
-                            <label for="other_license_key_{$unique_affix}">Other: </label>
+                            <label class="buddyforms-form-label" for="other_license_key_{$unique_affix}">Other: </label>
                             <div>
                                 <input id="other_license_key_{$unique_affix}" class="fs-license-key" type="text" placeholder="Enter license key" tabindex="1">
                             </div>

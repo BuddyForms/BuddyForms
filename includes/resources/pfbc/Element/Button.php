@@ -29,9 +29,9 @@ class Element_Button extends Element {
 			$properties["type"] = $type;
 		}
 
-		$class = "btn";
+		$class = "buddyforms-btn";
 		if ( empty( $type ) || $type == "submit" ) {
-			$class .= " btn-primary";
+			$class .= " buddyforms-btn-primary";
 		}
 
 		if(!empty($type) && $type === 'button' && $properties['name'] === 'draft'){

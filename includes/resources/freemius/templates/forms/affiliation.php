@@ -196,11 +196,11 @@
                                         <label class="input-label"><?php fs_esc_html_echo_inline( 'Promotion methods', 'promotion-methods', $slug ) ?></label>
                                         <div>
                                             <input id="promotion_method_social_media" type="checkbox" <?php checked( $promotion_method_social_media ) ?> <?php disabled( $is_affiliate ) ?>/>
-                                            <label for="promotion_method_social_media"><?php fs_esc_html_echo_inline( 'Social media (Facebook, Twitter, etc.)', 'social-media', $slug ) ?></label>
+                                            <label class="buddyforms-form-label" for="promotion_method_social_media"><?php fs_esc_html_echo_inline( 'Social media (Facebook, Twitter, etc.)', 'social-media', $slug ) ?></label>
                                         </div>
                                         <div>
                                             <input id="promotion_method_mobile_apps" type="checkbox" <?php checked( $promotion_method_mobile_apps ) ?> <?php disabled( $is_affiliate ) ?>/>
-                                            <label for="promotion_method_mobile_apps"><?php fs_esc_html_echo_inline( 'Mobile apps', 'mobile-apps', $slug ) ?></label>
+                                            <label class="buddyforms-form-label" for="promotion_method_mobile_apps"><?php fs_esc_html_echo_inline( 'Mobile apps', 'mobile-apps', $slug ) ?></label>
                                         </div>
                                     </div>
                                     <div class="input-container input-container-text">

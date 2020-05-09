@@ -140,7 +140,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
+		echo '<div class="buddyforms-field-group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input buddyforms-form-group">';
 		if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 			echo $this->renderDescriptions( $element );
 			echo $element->render();
@@ -198,7 +198,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label );
+		echo sprintf( ' <label class="buddyforms-form-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label );
 	}
 }
 

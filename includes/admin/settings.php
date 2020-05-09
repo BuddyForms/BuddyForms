@@ -378,19 +378,19 @@ function buddyforms_settings_page_tabs_content() {
 												</p>
 											</th>
 											<td>
-												<label for="buddyforms_gdpr_registration">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_registration">
 													<p><?php _e( 'Registration Form', 'buddyforms' ) ?></p></label>
 												<textarea cols="70" rows="5" id="buddyforms_gdpr_registration"
 												          name="buddyforms_gdpr[templates][registration]"><?php echo empty( $buddyforms_gdpr['templates']['registration'] ) ? $registration_templat : $buddyforms_gdpr['templates']['registration']; ?></textarea>
-												<label for="buddyforms_gdpr_post">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_post">
 													<p><?php _e( 'Post Submission', 'buddyforms' ) ?></p></label>
 												<textarea cols="70" rows="5" id="buddyforms_gdpr_post"
 												          name="buddyforms_gdpr[templates][post]"><?php echo empty( $buddyforms_gdpr['templates']['post'] ) ? $post_template : $buddyforms_gdpr['templates']['post']; ?></textarea>
-												<label for="buddyforms_gdpr_contact">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_contact">
 													<p><?php _e( 'Contact Form', 'buddyforms' ) ?></p></label>
 												<textarea cols="70" rows="5" id="buddyforms_gdpr_contact"
 												          name="buddyforms_gdpr[templates][contact]"><?php echo empty( $buddyforms_gdpr['templates']['contact'] ) ? $contact_templat : $buddyforms_gdpr['templates']['contact']; ?></textarea>
-												<label for="buddyforms_gdpr_other">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_other">
 													<p><?php _e( 'Custom', 'buddyforms' ) ?></p></label>
 												<textarea cols="70" rows="5" id="buddyforms_gdpr_other"
 												          name="buddyforms_gdpr[templates][other]"><?php echo empty( $buddyforms_gdpr['templates']['other'] ) ? '' : $buddyforms_gdpr['templates']['other']; ?></textarea>
@@ -404,13 +404,13 @@ function buddyforms_settings_page_tabs_content() {
 												</p>
 											</th>
 											<td>
-												<label for="buddyforms_gdpr_terms_label">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_terms_label">
 													<p><?php _e( 'Terms Label ( Will be displayed under the form )', 'buddyforms' ) ?></p>
 												</label>
 												<textarea cols="70" rows="5" id="buddyforms_gdpr_terms_label"
 												          name="buddyforms_gdpr[terms_label]"><?php echo empty( $buddyforms_gdpr['terms_label'] ) ? $terms_label : $buddyforms_gdpr['terms_label']; ?></textarea>
 
-												<label for="buddyforms_gdpr_terms">
+												<label class="buddyforms-form-label" for="buddyforms_gdpr_terms">
 													<p><?php _e( 'Terms Page ( Will be displayed as link after the terms label)', 'buddyforms' ) ?></p>
 												</label>
 												<?php
