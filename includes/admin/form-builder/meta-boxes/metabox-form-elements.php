@@ -202,6 +202,10 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'Website', 'buddyforms' ),
 					'unique' => 'unique'
 				),
+				'display_name' => array(
+					'label'  => __( 'Display Name', 'buddyforms' ),
+					'unique' => 'unique'
+				),
 				'user_bio'     => array(
 					'label'  => __( 'About / Bio', 'buddyforms' ),
 					'unique' => 'unique'

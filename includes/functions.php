@@ -1299,6 +1299,7 @@ function buddyforms_user_fields_array() {
 		'user_last',
 		'user_pass',
 		'user_website',
+		'display_name',
 		'user_bio',
 		'country',
 		'state'

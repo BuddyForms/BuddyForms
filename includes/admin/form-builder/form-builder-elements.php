@@ -305,6 +305,26 @@ function buddyforms_display_form_element( $args ) {
 
 			$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'user_last' );
 			break;
+		case 'display_name':
+				unset( $form_fields['advanced']['slug'] );
+
+				$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Display Name', 'buddyforms' );
+				$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
+					'data'     => $field_id,
+					'class'    => "use_as_slug",
+					'value'    => $name,
+					'required' => 1
+				) );
+
+				$hide_if_logged_in                           = isset( $customfield['hide_if_logged_in'] ) ? $customfield['hide_if_logged_in'] : 'show';
+				$form_fields['general']['hide_if_logged_in'] = new Element_Checkbox( '<b>' . __( 'Hide Form Element for LoggedIn User', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]", array( 'hide' => '<b>' . __( 'Hide for logged in user', 'buddyforms' ) . '</b>' ), array(
+					'value'     => $hide_if_logged_in,
+					'id'        => "buddyforms_options[form_fields][" . $field_id . "][hide_if_logged_in]",
+					'shortDesc' => __( 'If you dont\'t want to allow your users to edit their profile you can hide this field for logged in users to prevent change with every update.', 'buddyforms' )
+				) );
+
+				$form_fields['hidden']['slug'] = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][slug]", 'display_name' );
+				break;
 		case 'user_pass':
 			unset( $form_fields['advanced']['slug'] );
 

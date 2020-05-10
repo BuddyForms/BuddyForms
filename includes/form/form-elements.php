@@ -232,6 +232,12 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 						break;
 
+					case 'display_name':
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						}
+						break;
+
 					case 'user_pass':
 						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
 							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr, $customfield ) );
