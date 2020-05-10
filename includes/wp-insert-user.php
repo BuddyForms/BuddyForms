@@ -430,7 +430,6 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id, $form
 		}
 	}
 
-	$emailBody = nl2br( $emailBody );
 	$mail     = buddyforms_email( $user_email, $subject, $from_email, $from_email, $emailBody, array(), array(), $form_slug );
 
 	return $mail;

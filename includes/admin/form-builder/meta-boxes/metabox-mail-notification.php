@@ -462,7 +462,6 @@ function buddyforms_test_email() {
 
 			$blog_title  = get_bloginfo( 'name' );
 			$admin_email = apply_filters( 'buddyforms_test_email', get_option( 'admin_email' ) );
-			$body        = nl2br( $body );
 			$result      = buddyforms_email( $admin_email, $subject, $blog_title, $admin_email, $body, array(), array(), $form_slug, '', true );
 		}
 		if ( ! $result ) {
