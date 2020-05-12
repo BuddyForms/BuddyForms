@@ -1735,53 +1735,106 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
 }
 
 /**
+ * Output the form table for the field groups
+ *
  * @param $form_fields
  * @param string $field_id
  * @param string $striped
+ * @param string $version
+ *
+ * @since 2.5.19 Added a flag to use the version of the form builder
  */
-function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped' ) {
-	?>
-	<table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
-		<tbody>
-		<?php
-		if ( isset( $form_fields ) ) {
-			foreach ( $form_fields as $key => $field ) {
-
-				$type     = $field->getAttribute( 'type' );
-				$class    = $field->getAttribute( 'class' );
-				$disabled = $field->getAttribute( 'disabled' );
-				$classes  = empty( $class ) ? '' : $class . ' ';
-				$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
-
-				switch ( $type ) {
-					case 'html':
-						echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $classes . '"><td colspan="2">';
-						$field->render();
-						echo '</td></tr>';
-						break;
-					case 'hidden':
-						$field->render();
-						break;
-					default :
-						?>
-						<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
-							<th scope="row">
-								<label class="buddyforms-form-label" for="form_title"><?php echo $field->getLabel() ?></label>
-							</th>
-							<td>
-								<?php echo $field->render() ?>
-								<p class="description"><?php echo $field->getShortDesc() ?></p>
-							</td>
-						</tr>
-						<?php
-						break;
+function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped', $version = 'v1' ) {
+	if ( $version === 'v2' ) {
+		if ( ! empty( $form_fields ) && is_array( $form_fields ) ) {
+			$has_tabs   = count( $form_fields ) > 1;
+			$tab_keys   = array_keys( $form_fields );
+			$tab_active = isset( $tab_keys[0] ) ? $tab_keys[0] : '';
+			?>
+			<div class="buddyforms-panel">
+				<?php if ( $has_tabs ): ?>
+					<!-- Include Tabs-->
+					<div class="buddyforms-panel-nav">
+						<ul class="buddyforms-tab buddyforms-tab-block">
+							<?php foreach ( $form_fields as $tab_key => $tab_data ): ?>
+								<li class="buddyforms-tab-item <?php echo esc_attr( $tab_key ); ?> <?php echo isset( $tab_data['tooltip'] ) ? 'buddyforms-tooltip' : ''; ?>" <?php echo ( isset( $tab_data['tooltip'] ) ) ? 'data-tooltip="' . $tab_data['tooltip'] . '"' : ''; ?>>
+									<a href="#<?php echo esc_attr( $tab_key ); ?>" <?php echo ( $tab_key == $tab_active ) ? 'class="buddyforms-active"' : ''; ?>><?php echo esc_attr( $tab_data['title'] ); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				<?php endif; ?>
+				<div class="buddyforms-panel-body">
+					<?php foreach ( $form_fields as $tab_key => $tab_data ): ?>
+						<?php if ( ! empty( $tab_data['fields'] ) ): ?>
+							<div id="<?php echo esc_attr( $tab_key ); ?>" class="buddyforms-tab-content <?php echo esc_attr( $tab_key );
+							echo ( $tab_key != $tab_active ) ? ' buddyforms-d-none' : ''; ?>">
+								<table class="buddyforms-table buddyforms-table-hover">
+									<tbody>
+									<?php foreach ( $tab_data['fields'] as $field_key => $field_data ): ?>
+										<?php buddyforms_render_inner_option( $field_key, $field_data, $field_id ); ?>
+									<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php
+		}
+	} else {
+		?>
+		<table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
+			<tbody>
+			<?php
+			if ( isset( $form_fields ) ) {
+				foreach ( $form_fields as $key => $field ) {
+					buddyforms_render_inner_option( $key, $field, $field_id );
 				}
 			}
-		}
-		?>
-		</tbody>
-	</table>
-	<?php
+			?>
+			</tbody>
+		</table>
+		<?php
+	}
+}
+
+/**
+ * @param $key
+ * @param Element $field
+ * @param string $field_id
+ * @param string $version
+ */
+function buddyforms_render_inner_option( $key, $field, $field_id = 'global', $version = 'v1' ) {
+	$type     = $field->getAttribute( 'type' );
+	$class    = $field->getAttribute( 'class' );
+	$disabled = $field->getAttribute( 'disabled' );
+	$classes  = empty( $class ) ? '' : $class . ' ';
+	$classes  .= empty( $disabled ) ? '' : 'bf-' . $disabled . ' ';
+	switch ( $type ) {
+		case 'html':
+			echo '<tr id="table_row_' . $field_id . '_' . $key . '" class="' . $classes . '"><td colspan="2">';
+			$field->render();
+			echo '</td></tr>';
+			break;
+		case 'hidden':
+			$field->render();
+			break;
+		default :
+			?>
+			<tr id="table_row_<?php echo $field_id ?>_<?php echo $key ?>" class="<?php echo $classes ?>">
+				<th scope="row">
+					<label class="buddyforms-form-label" for="form_title"><?php echo $field->getLabel() ?></label>
+				</th>
+				<td>
+					<?php echo $field->render() ?>
+					<p class="description"><?php echo $field->getShortDesc() ?></p>
+				</td>
+			</tr>
+			<?php
+			break;
+	}
 }
 
 /**

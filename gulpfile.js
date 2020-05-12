@@ -8,18 +8,20 @@ var autoprefixer = require('gulp-autoprefixer');
 
 var paths = {
   source: './assets/src/*.scss',
-  doc: './tools/spectre/docs/src/scss/*.scss'
 };
 
 gulp.task('prefix', function() {
   gulp.src('./assets/css/buddyforms.css')
       .pipe(cssPrefix('buddyforms-'))
-      .pipe(gulp.dest('./assets/css'))
+      .pipe(gulp.dest('./assets/css'));
+  gulp.src('./assets/css/buddyforms-admin.css')
+      .pipe(cssPrefix('buddyforms-'))
+      .pipe(gulp.dest('./assets/css'));
 });
 
 gulp.task('watch', function() {
   gulp.watch('./assets/src/**/*.scss', ['build-spectre', 'prefix']);
-  gulp.watch('./tools/spectre/**/*.scss', ['build-spectre', 'prefix']);
+  gulp.watch('../spectre/src/**/*.scss', ['build-spectre', 'prefix']);
 });
 
 gulp.task('build-spectre', function() {

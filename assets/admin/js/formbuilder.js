@@ -274,11 +274,29 @@ function BuddyFormsAdmin() {
         }
     }
 
+    function bfTabHandler(e) {
+        e.preventDefault();
+        var elem = jQuery(e.target);
+        if (elem && elem.length > 0) {
+            jQuery('.buddyforms-tab-content').addClass('buddyforms-d-none');
+            jQuery('.buddyforms-tab-item a').removeClass('buddyforms-active');
+            var targetId = elem.attr('href');
+            elem.addClass('buddyforms-active');
+            if (targetId) {
+                var target = jQuery(targetId);
+                if (target && target.length > 0) {
+                    target.removeClass('buddyforms-d-none');
+                }
+            }
+        }
+    }
+
     return {
         init: function () {
             var existBuilder = jQuery('.buddyforms-metabox');
             if (existBuilder && existBuilder.length > 0) {
                 jQuery(document).on('click', '.buddyforms-shortcodes-action', insertShortCodeEvent);
+                jQuery(document).on('click', '.buddyforms-tab', bfTabHandler);
             }
         },
     };
@@ -459,7 +477,7 @@ jQuery(document).ready(function () {
             jQuery('button.bf_form_template').prop('disabled', false);
             jQuery(document.body).trigger({type: 'buddyform:load_notifications'});
             BuddyFormsBuilderHooks.doAction('buddyforms-change-form-type', [targetType]);
-            if(defaultPage && defaultPage.length > 0) {
+            if (defaultPage && defaultPage.length > 0) {
                 jQuery('#attached_page').val(defaultPage).change();
             }
         });
