@@ -1993,6 +1993,11 @@ summary.buddyforms-accordion-header::-webkit-details-marker
     border: .05rem solid #bcc3ce; border-radius: .1rem;
 }
 
+.buddyforms-panel.buddyforms-panel-horizontal
+{
+    flex-direction: row;
+}
+
 .buddyforms-panel .buddyforms-panel-header,
 .buddyforms-panel .buddyforms-panel-footer
 {padding: .8rem; 
@@ -2153,6 +2158,11 @@ summary.buddyforms-accordion-header::-webkit-details-marker
     margin-top: -.2rem;
 }
 
+.buddyforms-tab.buddyforms-tab-vertical
+{
+    flex-direction: column;
+}
+
 .buddyforms-tab.buddyforms-tab-block .buddyforms-tab-item
 {text-align: center; 
 
@@ -2169,7 +2179,8 @@ summary.buddyforms-accordion-header::-webkit-details-marker
     position: absolute; top: .1rem; right: .1rem; transform: translate(0, 0);
 }
 
-.buddyforms-tab:not(.buddyforms-tab-block) .buddyforms-badge
+.buddyforms-tab:not(.buddyforms-tab-block) .buddyforms-badge,
+.buddyforms-tab:not(.buddyforms-tab-vertical) .buddyforms-badge
 {
     padding-right: 0;
 }
