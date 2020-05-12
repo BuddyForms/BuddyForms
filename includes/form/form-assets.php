@@ -117,7 +117,7 @@ class BuddyFormsAssets {
 	 *
 	 */
 	public static function front_js_css( $content = '', $form_slug = '' ) {
-		global $wp_query;
+		global $wp_query, $buddyforms;
 
 		/**
 		 * @since 2.5.10 added the $content and $form_slug parameters
@@ -185,6 +185,10 @@ class BuddyFormsAssets {
 			'delete_text'              => __( 'Delete Permanently', 'buddyforms' ),
 			'tb_pathToImage'           => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
 		);
+		if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+			$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug );
+			$front_js_arguments[ $form_slug ] = $options;
+		}
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 		//Global frontend vars

@@ -397,7 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.19-beta7 - 9 May 2020 =
+= 2.5.19-beta8 - 9 May 2020 =
 * Fixed the issue related to the lost of osme core styles when the form builder was loaded.
 * Fixed validation message show in the direct input form builder wizzard.
 * Fixed the min and max lenght validation message not showing for the message field.
@@ -435,6 +435,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Improved the styles of the dropdown and select2 form elements.
 * Added a new user Form Element to handle the user display option. Thanks to a contribution from Marco Massari Calderone marco@marcomc.com
 * Improved the email notification to let 3rd party extension to extend the email templates.
+* Fixed the form validation for not logged in user.
 
 = 2.5.18 - 23 March 2020 =
 * Fixed the permission tab style for the wizard.

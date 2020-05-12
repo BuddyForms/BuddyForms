@@ -1611,7 +1611,7 @@ function buddyforms_is_gutenberg_page() {
  * @since 2.4.0
  *
  */
-function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id ) {
+function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id = 0 ) {
 	/**
 	 * Let the user change the user granted options to use in the frontend global variable buddyformsGlobal
 	 *
