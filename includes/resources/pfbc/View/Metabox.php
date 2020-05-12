@@ -30,7 +30,7 @@ class View_Metabox extends FormView {
 			$element->setLabel( "" );
 		}
 
-		echo '<div class="buddyforms-field-group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
 		echo $element->render();
 		echo $this->renderDescriptions( $element );
@@ -52,6 +52,6 @@ class View_Metabox extends FormView {
 			$label = $label . $this->renderRequired();
 		}
 
-		return sprintf('<div class="bf-label buddyforms-form-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
+		return sprintf('<div class="bf-label"><label for="%s">%s</label></div>', $element->getAttribute( "id" ), $label);
 	}
 }

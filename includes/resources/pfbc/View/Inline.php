@@ -34,7 +34,7 @@ class View_Inline extends FormView {
 			$element->setLabel( "" );
 		}
 
-		echo '<div class="buddyforms-field-group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo $element->render(), $this->renderDescriptions( $element );
 		echo "</div> ";
 	}
@@ -49,6 +49,6 @@ class View_Inline extends FormView {
 			$label = $label . $this->renderRequired();
 		}
 
-		echo sprintf(' <label class="buddyforms-form-label" for="%s">%s</label>', $element->getAttribute( "id" ), $label);
+		echo sprintf(' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label);
 	}
 }
