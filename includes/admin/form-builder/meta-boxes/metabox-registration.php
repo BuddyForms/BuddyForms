@@ -41,7 +41,7 @@ class BuddyFormsMetaBoxRegistration {
 	 */
 	private function tab_panel_html_array( $id, $class ) {
 		return array(
-			'start' => sprintf( '<div class="tab-pane fade in" id="%s"><div class="%s">', $id, $class ),
+			'start' => sprintf( '<div class="tab-pane" id="%s"><div class="%s">', $id, $class ),
 			'end'   => '</div></div>',
 		);
 	}

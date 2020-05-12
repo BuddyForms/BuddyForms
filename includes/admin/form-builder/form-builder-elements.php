@@ -1642,7 +1642,7 @@ JS;
 										$class_active = 'active';
 									}
 									?>
-									<div class="tab-pane fade in <?php echo $class_active ?>"
+									<div class="tab-pane <?php echo $class_active ?>"
 									     id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
 										<div class="buddyforms_accordion_general">
 											<?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
@@ -1746,7 +1746,9 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 		<?php
 		if ( isset( $form_fields ) ) {
 			foreach ( $form_fields as $key => $field ) {
-
+                if(empty($field)){
+                    continue;
+                }
 				$type     = $field->getAttribute( 'type' );
 				$class    = $field->getAttribute( 'class' );
 				$disabled = $field->getAttribute( 'disabled' );

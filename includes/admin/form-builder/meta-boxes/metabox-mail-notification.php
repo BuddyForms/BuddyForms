@@ -534,7 +534,7 @@ function buddyforms_form_setup_nav_li_notification() { ?>
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification' );
 
 function buddyforms_form_setup_tab_pane_notification() { ?>
-	<div class="tab-pane fade in" id="notification">
+	<div class="tab-pane " id="notification">
 	<div class="buddyforms_accordion_notification">
 		<div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 

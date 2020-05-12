@@ -243,7 +243,7 @@ add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_p
 
 function buddyforms_form_setup_tab_pane_permission() {
 	?>
-	<div class="tab-pane fade in" id="permission">
+	<div class="tab-pane " id="permission">
 	<div class="buddyforms_accordion_permission">
 		<?php buddyforms_permissions_unregistered_screen() ?>
 		<?php buddyforms_permissions_screen(); ?>

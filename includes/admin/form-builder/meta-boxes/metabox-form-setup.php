@@ -435,7 +435,7 @@ function buddyforms_metabox_form_setup() {
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab );
 				?>
-                <div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
+                <div class="tab-pane <?php echo $i == 0 ? 'active' : '' ?>"
                      id="<?php echo $tab_slug; ?>">
                     <div class="buddyforms_accordion_general">
 						<?php
