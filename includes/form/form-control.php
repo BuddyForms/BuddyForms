@@ -1011,7 +1011,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			if ( $html ) {
 				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
 			} else {
-				$meta_value = esc_url( $author->user_url );
+				$meta_value = esc_url( $meta_value );
 			}
 			break;
 		case 'gdpr':
