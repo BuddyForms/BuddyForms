@@ -206,6 +206,8 @@ function validateAndUploadImage(field) {
     var current = jQuery(field);
     var id = current.attr("field-id");
     jQuery("#" + id + "_label").text("");
+    jQuery("#" + id + "_image").attr('src', "");
+    jQuery("#field_" + id).val("");
     var url = jQuery("#" + id + "_upload_from_url").val();
 
     if (checkURL(url)) {
@@ -225,23 +227,27 @@ function validateAndUploadImage(field) {
             },
             success: function (response) {
                 var result = JSON.parse(response);
-                jQuery("#" + id + "_image").attr('src', result.response);
-                jQuery("#" + id + "_image").attr('width', 300);
-                jQuery("#" + id + "_image").attr('height', 300);
-                jQuery("#field_" + id).val(result.attachment_id);
+                if(result.status ==="OK"){
+                    jQuery("#" + id + "_image").attr('src', result.response);
+                    jQuery("#" + id + "_image").attr('width', 300);
+                    jQuery("#" + id + "_image").attr('height', 300);
+                    jQuery("#field_" + id).val(result.attachment_id);
 
-                jQuery("#" + id + "_upload_button").text("Upload");
-                jQuery("#" + id + "_upload_button").attr('disabled', false);
-                submitButtons.attr('disabled', false);
-
-
+                    jQuery("#" + id + "_upload_button").text("Upload");
+                    jQuery("#" + id + "_upload_button").attr('disabled', false);
+                    submitButtons.attr('disabled', false);
+                }else{
+                    if(result.status ==="FAILED"){
+                        jQuery("#" + id + "_label").text(result.response);
+                        jQuery("#" + id + "_upload_button").text("Upload");
+                        jQuery("#" + id + "_upload_button").attr('disabled', false);
+                        submitButtons.attr('disabled', false);
+                    }
+                }
             },
             error: function (error) {
                 var result = JSON.parse(error);
-                jQuery("#" + id + "_label").text(result.response);
-                jQuery("#" + id + "_upload_button").text("Upload");
-                jQuery("#" + id + "_upload_button").attr('disabled', false);
-                submitButtons.attr('disabled', false);
+
 
 
             }
