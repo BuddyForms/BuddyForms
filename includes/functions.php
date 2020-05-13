@@ -1370,7 +1370,9 @@ function buddyforms_upload_image_from_url() {
 		$upload_dir = wp_upload_dir();
 		$image_url  = urldecode( $url );
 		$image_data = file_get_contents( $image_url ); // Get image data
-		if ( $image_data ) {
+        $image_data_information = getimagesize($image_url);
+
+		if ( $image_data && $image_data_information){
 			$file_name   = $file_id . ".png";
 			$full_path   = wp_normalize_path( $upload_dir['path'] . DIRECTORY_SEPARATOR . $file_name );
 			$upload_file = wp_upload_bits( $file_name, null, $image_data );
@@ -1392,6 +1394,10 @@ function buddyforms_upload_image_from_url() {
 			}
 
 		}
+		else{
+            echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'The Url provided is not an image.' ) );
+            die();
+        }
 
 	} else {
 		echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'Wrong Format or Empty Url.' ) );
