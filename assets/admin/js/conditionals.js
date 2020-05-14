@@ -29,9 +29,9 @@ function from_setup_form_type(value) {
 
             // Show/Hide the corresponding form elements in the form select
             jQuery('.bf_show_if_f_type_post').hide();
+            jQuery('.bf_show_if_f_type_registration').hide();
             jQuery('.bf_show_if_f_type_all').show();
             jQuery('.bf_show_if_f_type_contact').show();
-            jQuery('.bf_show_if_f_type_registration').show();
 
 
             // Show/Hide after submission post options
@@ -56,6 +56,7 @@ function from_setup_form_type(value) {
             jQuery('.bf_show_if_f_type_registration').show();
             jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
             jQuery('.bf_show_if_f_type_post').hide();
+            jQuery('.bf_show_if_f_type_contact').hide();
 
             // Hide after submission post options
             //jQuery('#bf-after-submission-action option[value=display_form]').hide();
@@ -80,6 +81,8 @@ function from_setup_form_type(value) {
             // Show the corresponding form elements in the form select
             jQuery('.bf_show_if_f_type_all').show();
             jQuery('.bf_show_if_f_type_post').show();
+            jQuery('.bf_show_if_f_type_contact').hide();
+            jQuery('.bf_show_if_f_type_registration').hide();
 
             break;
     }
