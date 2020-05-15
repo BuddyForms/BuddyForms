@@ -947,6 +947,32 @@ function buddyforms_get_form_by_slug( $form_slug ) {
 }
 
 /**
+ * Get form option
+ *
+ * @param $form_slug
+ * @param string $option
+ *
+ * @return string|bool
+ * @since 2.5.19
+ */
+function buddyforms_get_form_option( $form_slug, $option ) {
+	$value = false;
+	if ( ! empty( $form_slug ) && ! empty( $option ) ) {
+		$cache_key = 'buddyforms_form_' . $form_slug . '_option_' . $option;
+		$value     = wp_cache_get( $cache_key, 'buddyforms' );
+		if ( $value === false ) {
+			$bf_form = buddyforms_get_form_by_slug( $form_slug );
+			if ( ! empty( $bf_form ) ) {
+				$value = ( isset( $bf_form[ $option ] ) ) ? $bf_form[ $option ] : false;
+				wp_cache_set( $cache_key, $value, 'buddyforms' );
+			}
+		}
+	}
+
+	return $value;
+}
+
+/**
  * Will return the form slug from post meta or the default. none if no form is attached
  *
  * @param $post_id
@@ -1252,13 +1278,14 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 			$display_message = buddyforms_default_message_on_update();
 		}
 	}
+	$display_message = apply_filters('buddyforms_form_display_message', $display_message, $form_slug, $post_id, $source);
 	if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
 		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
 	}
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
-	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
+	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
 
 
 	return do_shortcode( $display_message );
@@ -1272,6 +1299,7 @@ function buddyforms_user_fields_array() {
 		'user_last',
 		'user_pass',
 		'user_website',
+		'display_name',
 		'user_bio',
 		'country',
 		'state'
@@ -1342,7 +1370,9 @@ function buddyforms_upload_image_from_url() {
 		$upload_dir = wp_upload_dir();
 		$image_url  = urldecode( $url );
 		$image_data = file_get_contents( $image_url ); // Get image data
-		if ( $image_data ) {
+        $image_data_information = getimagesize($image_url);
+
+		if ( $image_data && $image_data_information){
 			$file_name   = $file_id . ".png";
 			$full_path   = wp_normalize_path( $upload_dir['path'] . DIRECTORY_SEPARATOR . $file_name );
 			$upload_file = wp_upload_bits( $file_name, null, $image_data );
@@ -1364,6 +1394,10 @@ function buddyforms_upload_image_from_url() {
 			}
 
 		}
+		else{
+            echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'The Url provided is not an image.' ) );
+            die();
+        }
 
 	} else {
 		echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'Wrong Format or Empty Url.' ) );
@@ -1583,7 +1617,7 @@ function buddyforms_is_gutenberg_page() {
  * @since 2.4.0
  *
  */
-function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id ) {
+function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id = 0 ) {
 	/**
 	 * Let the user change the user granted options to use in the frontend global variable buddyformsGlobal
 	 *
@@ -1963,3 +1997,12 @@ function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
 }
 
 add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );
+
+/**
+ * Enqueue buddyforms thickbox wrapper
+ * @since 2.5.19
+ */
+function buddyforms_add_bf_thickbox() {
+	wp_enqueue_script( 'buddyforms-thickbox' );
+	wp_enqueue_style( 'buddyforms-thickbox' );
+}

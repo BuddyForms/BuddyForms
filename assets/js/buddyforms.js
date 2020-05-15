@@ -412,6 +412,17 @@ function BuddyForms() {
             ) {
                 return true;
             }
+            var msjString = 'Please enter a valid URL.';
+            var currentFieldSlug = jQuery(element).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (fieldData.validation_email_msj) {
+                    msjString = fieldData.validation_email_msj;
+                }
+            }
+
+            jQuery.validator.messages['bf-email'] = msjString;
+
             return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
         }, "Please enter a valid URL.");// todo need il18n
     }
@@ -912,6 +923,20 @@ function BuddyForms() {
                 fieldName = fieldName.replace('[]', '');
                 fieldName = BuddyFormsHooks.applyFilters('buddyforms:field:name', fieldName, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
                 return buddyformsGlobal[formSlug].form_fields[fieldId].name.toLowerCase() === fieldName.toLowerCase();
+            });
+            if (fieldIdResult) {
+                return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
+            }
+        }
+        return false;
+    }
+
+    function getFieldFrom(fieldValue, formSlug, from = 'name') {
+        if (fieldValue && typeof fieldValue === "string" && formSlug && buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].form_fields) {
+            var fieldIdResult = Object.keys(buddyformsGlobal[formSlug].form_fields).filter(function (fieldId) {
+                fieldValue = fieldValue.replace('[]', '');
+                fieldValue = BuddyFormsHooks.applyFilters('buddyforms:field:from', fieldValue, [formSlug, fieldId, buddyformsGlobal[formSlug]]);
+                return buddyformsGlobal[formSlug].form_fields[fieldId][from].toLowerCase() === fieldValue.toLowerCase();
             });
             if (fieldIdResult) {
                 return buddyformsGlobal[formSlug].form_fields[fieldIdResult];
@@ -1494,6 +1519,12 @@ function BuddyForms() {
         },
         actionFromButton: function (e) {
             return actionFromButton(e);
+        },
+        getFieldFromName: function(fieldName, formSlug){
+          return getFieldFromName(fieldName, formSlug);
+        },
+        getFieldFrom: function(fieldValue, formSlug, from){
+          return getFieldFrom(fieldValue, formSlug, from);
         },
         getFieldFromSlug: function (fieldSlug, formSlug) {
             return getFieldFromSlug(fieldSlug, formSlug);

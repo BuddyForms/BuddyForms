@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
-Tested up to: 5.3
-Stable tag: 2.5.19-beta3
+Tested up to: 5.4
+Stable tag: 2.5.19
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,7 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.19-beta3 - 24 April 2020 =
+= 2.5.19 - 17 May 2020 =
 * Fixed the issue related to the lost of osme core styles when the form builder was loaded.
 * Fixed validation message show in the direct input form builder wizzard.
 * Fixed the min and max lenght validation message not showing for the message field.
@@ -412,19 +412,31 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Formatting the code for the Phone Validation.
 * Fixed the issue related to the Form Element category not create categories when the entry is created.
 * Added form element output for all user form elements.
-
-= 2.5.19-beta2 - 9 April 2020 =
 * Moved the option `Enable Login on the form` to the Form submission tab inside the Form Setup metabox.
 * Fixed disable all the grid columns and rows on the permission tab when the free version is installed.
 * Fixed the captcha label.
 * Fixed the assign user to a post when the user is created during post submission.
-
-= 2.5.19-beta1 - 27 March 2020 =
 * Fixed the empty option for the DropDowns form Elements.
 * Improved the password hints.
 * Fixed the password strength score.
 * Added 2 hooks to avoid send user email activation to letting the use-case of manual activation form the user administration.
 * Fixed the multiple form submission trigger.
+* Fixed marketing wrong message.
+* Fixed the reCaptcha v3.
+* Fixed user form element to be included as hidden when they are setup to be hidden for logged in users.
+* Added a hook filter to force the html output of the form element metas.
+* Improved the styles for Dropdowns.
+* Fixed media buttons notice.
+* Fixed description position option for tag element.
+* Added own implementation of thickbox.
+* Fixed the user website field validation when not was correct.
+* Added a filter to let 3rd party extension change the form submission message.
+* Added a filter to let 3rd party extension change the submission link shortcode url.
+* Improved the styles of the dropdown and select2 form elements.
+* Added a new user Form Element to handle the user display option. Thanks to a contribution from Marco Massari Calderone marco@marcomc.com
+* Improved the email notification to let 3rd party extension to extend the email templates.
+* Fixed the form validation for not logged in user.
+* Fixed the style issue in the form builder.
 
 = 2.5.18 - 23 March 2020 =
 * Fixed the permission tab style for the wizard.

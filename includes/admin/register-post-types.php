@@ -29,7 +29,7 @@ function buddyforms_add_meta_boxes() {
 	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
-	buddyforms_remove_filters_for_anonymous_class( 'media_buttons_context', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
+	buddyforms_remove_filters_for_anonymous_class( 'media_buttons', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
 }
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
@@ -245,7 +245,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
-	buddyforms_track( 'builder-end', array( 'form-type' => $buddyform['form_type'] ) );
+	buddyforms_track( 'builder-save', array( 'form-type' => $buddyform['form_type'] ) );
 
 	do_action( 'buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post );
 }

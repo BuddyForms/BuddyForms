@@ -446,7 +446,7 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 	}
 	$arguments = shortcode_atts( array(
 		'name'   => __( 'Now', 'buddyforms' ),
-		'link'   => $default_link,
+		'link'   => apply_filters('buddyforms_create_submission_link', $default_link, $form_slug, $args),
 		'target' => '_blank',
 	), $args );
 

@@ -41,7 +41,7 @@ class BuddyFormsMetaBoxRegistration {
 	 */
 	private function tab_panel_html_array( $id, $class ) {
 		return array(
-			'start' => sprintf( '<div class="tab-pane fade in" id="%s"><div class="%s">', $id, $class ),
+			'start' => sprintf( '<div class="tab-pane" id="%s"><div class="%s">', $id, $class ),
 			'end'   => '</div></div>',
 		);
 	}
@@ -100,9 +100,9 @@ class BuddyFormsMetaBoxRegistration {
 		$activation_page = isset( $buddyform['registration']['activation_page'] ) ? $buddyform['registration']['activation_page'] : 'none';
 
 		// Activation Page
-		$form_setup[] = new Element_Select( '<b>' . __( "Activation Page", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_page]", $all_pages, array(
+		$form_setup[] = new Element_Select( '<b>' . __( "After Activation Page", 'buddyforms' ) . '</b>', "buddyforms_options[registration][activation_page]", $all_pages, array(
 			'value'     => $activation_page,
-			'shortDesc' => __( 'Select the page the user should land on if he clicks the activation link in the activation email.', 'buddyforms' ),
+			'shortDesc' => __( 'Select the page where the user should land on if he clicks the activation link from the activation email and all well correct.', 'buddyforms' ),
 			'class'     => '',
 		) );
 

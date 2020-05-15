@@ -6,7 +6,7 @@
  * @since 0.3 beta
  *
  */
-add_action( 'media_buttons_context', 'buddyforms_editor_button' );
+add_action( 'media_buttons', 'buddyforms_editor_button' );
 /**
  * @param $context
  *

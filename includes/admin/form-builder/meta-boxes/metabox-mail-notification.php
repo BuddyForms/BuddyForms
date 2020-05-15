@@ -126,10 +126,10 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	) );
 
 
-	// From eMail
-	$element      = new Element_Radio( '<b>' . __( 'From eMail', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
-		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
-		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
+	// From email
+	$element      = new Element_Radio( '<b>' . __( 'From email', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from]", array(
+		'submitter' => __( 'Submitter - User email Field', 'buddyforms' ),
+		'admin'     => __( 'Admin - email from WP General Settings', 'buddyforms' ),
 		'custom'    => __( 'Custom', 'buddyforms' )
 	), array(
 		'value' => isset( $buddyform['mail_submissions'][ $trigger ]['mail_from'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_from'] : 'submitter',
@@ -146,9 +146,9 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 
 	$default_mail_to = $is_edit_action ? '' : 'admin';
 	$mail_to         = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : $default_mail_to;
-	$element         = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
-		'submitter' => __( 'Submitter - User eMail Field', 'buddyforms' ),
-		'admin'     => __( 'Admin - eMail from WP General Settings', 'buddyforms' ),
+	$element         = new Element_Checkbox( '<b>' . __( 'Send mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
+		'submitter' => __( 'Submitter - User email Field', 'buddyforms' ),
+		'admin'     => __( 'Admin - email from WP General Settings', 'buddyforms' ),
 		'cc'        => __( 'CC', 'buddyforms' ),
 		'bcc'       => __( 'BCC', 'buddyforms' ),
 	), array(
@@ -180,7 +180,7 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	}
 	$form_setup[] = new Element_Textbox( '<b>' . __( "BCC", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_bcc_address]", $attrs );
 
-	// to eMail
+	// to email
 	$form_setup[] = new Element_Textbox( '<b>' . __( "Custom sent mail to", 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to_address]", array(
 		"class"     => "bf-mail-field",
 		'value'     => isset( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) ? BuddyFormsEncoding::toUTF8( $buddyform['mail_submissions'][ $trigger ]['mail_to_address'] ) : '',
@@ -209,7 +209,7 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	wp_editor( BuddyFormsEncoding::toUTF8( $mail_content ), "bf_mail_body" . $trigger, $settings );
 	$wp_editor    = ob_get_clean();
 	$wp_editor    = '<div class="bf_field_group bf_form_content">
-	<label for="form_title"><b>' . __( 'eMail Message Content', 'buddyforms' ) . '</b><br>
+	<label for="form_title"><b>' . __( 'Email Message Content', 'buddyforms' ) . '</b><br>
 
 		<p><strong>' . __( 'Important: ', 'buddyforms' ) . '</strong>' . __( 'If you use the "Message" form element you can leave this field empty and the "Message" form element value will be used . If you enter content in here, this content will overwrite the "Message" form element .', 'buddyforms' ) . '</p>
 		<p>' . __( 'You can add any form element with tags [] e . g . [ message ] will be replaced with the form element "Message" [ form_elements_table ] will add a table of all form elements .', 'buddyforms' ) . '</p>
@@ -317,7 +317,7 @@ function buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug
 		'shortDesc' => __( 'The senders email e.g. user@domain.com or use any form element slug as shortcode [field_slug]', 'buddyforms' )
 	) );
 
-	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Sent mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_notification][" . $trigger . "][mail_to]", array(
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Send mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_notification][" . $trigger . "][mail_to]", array(
 		'author' => __( 'The Post Author', 'buddyforms' ),
 		'admin'  => __( 'Admin E-mail Address from Settings/General', 'buddyforms' )
 	), array(
@@ -462,7 +462,6 @@ function buddyforms_test_email() {
 
 			$blog_title  = get_bloginfo( 'name' );
 			$admin_email = apply_filters( 'buddyforms_test_email', get_option( 'admin_email' ) );
-			$body        = nl2br( $body );
 			$result      = buddyforms_email( $admin_email, $subject, $blog_title, $admin_email, $body, array(), array(), $form_slug, '', true );
 		}
 		if ( ! $result ) {
@@ -535,7 +534,7 @@ function buddyforms_form_setup_nav_li_notification() { ?>
 add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_notification' );
 
 function buddyforms_form_setup_tab_pane_notification() { ?>
-	<div class="tab-pane fade in" id="notification">
+	<div class="tab-pane " id="notification">
 	<div class="buddyforms_accordion_notification">
 		<div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 

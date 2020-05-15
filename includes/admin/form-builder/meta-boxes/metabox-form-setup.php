@@ -33,10 +33,10 @@ function buddyforms_metabox_form_setup() {
 	$after_update_submit_message_text = isset( $buddyform['after_update_submit_message_text'] ) ? $buddyform['after_update_submit_message_text'] : buddyforms_default_message_on_update();
 	$empty_submit_list_message_text   = isset( $buddyform['empty_submit_list_message_text'] ) ? $buddyform['empty_submit_list_message_text'] : buddyforms_default_message_on_empty_submission_list();
 
-	$attached_page     = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
-	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
-	$comment_status    = isset( $buddyform['comment_status'] ) ? $buddyform['comment_status'] : 'false';
-	$revision          = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
+	$attached_page  = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
+	$status         = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
+	$comment_status = isset( $buddyform['comment_status'] ) ? $buddyform['comment_status'] : 'false';
+	$revision       = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
 //	$draft_action      = isset( $buddyform['draft_action'] ) ? $buddyform['draft_action'] : 'false';
 	$admin_bar         = isset( $buddyform['admin_bar'] ) ? $buddyform['admin_bar'] : 'false';
 	$edit_link         = isset( $buddyform['edit_link'] ) ? $buddyform['edit_link'] : 'all';
@@ -64,12 +64,12 @@ function buddyforms_metabox_form_setup() {
 	//
 	// Submission
 	//
-    $element = new Element_Textbox( '<b>' . __( "From Slug", 'buddyforms' ). '</b>', "buddyforms_options[slug]", array(
+	$element = new Element_Textbox( '<b>' . __( "From Slug", 'buddyforms' ) . '</b>', "buddyforms_options[slug]", array(
 		'value'     => $slug,
 		'shortDesc' => __( 'The Form Slug is used in shortcodes and other places, please take care changing this option.', 'buddyforms' ),
 	) );
 
-    if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 
@@ -161,7 +161,7 @@ function buddyforms_metabox_form_setup() {
 	$form_setup['Form Submission'][] = $element;
 
 	$public_submit_login = isset( $buddyform['public_submit_login'] ) ? $buddyform['public_submit_login'] : 'above';
-	$element        = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array(
+	$element             = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array(
 		'none'  => __( 'None', 'buddyforms' ),
 		'above' => __( 'Above the Form', 'buddyforms' ),
 		'under' => __( 'Under the Form', 'buddyforms' )
@@ -202,6 +202,19 @@ function buddyforms_metabox_form_setup() {
 			$shortDesc_post_type = sprintf( '%s<a target="_blank" href="#">%s</a>', __( 'Select a post type if you want to create posts from form submissions. ', 'buddyforms' ), __( 'Read the Documentation', 'buddyforms' ) );
 		}
 	}
+
+	$hide_registration_for_logged_in = isset( $buddyform['hide_for_logged_in_users'] ) ? $buddyform['hide_for_logged_in_users'] : 'no';
+
+	$element = new Element_Select( '<b>' . __( "Hide for logged-in users", 'buddyforms' ) . '</b>', "buddyforms_options[hide_for_logged_in_users]", array(
+		'no'  => __( 'No', 'buddyforms' ),
+		'yes' => __( 'Yes', 'buddyforms' ),
+	), array(
+		'value' => $hide_registration_for_logged_in,
+		'class' => 'bf_show_if_f_type_registration'
+	) );
+
+	$form_setup['Form Submission'][] = $element;
+
 	//
 	// Create Content
 	//
@@ -273,13 +286,13 @@ function buddyforms_metabox_form_setup() {
 	// Edit Submissions
 	//
 
-    // Make sure to use the default submissions management page if non exist!
-    if( ! $attached_page || $attached_page == 'none' ||  $attached_page == 'false'){
-	    	    $buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
-	    if($buddyforms_submissions_page){
-		    $attached_page = $buddyforms_submissions_page;
-        }
-    }
+	// Make sure to use the default submissions management page if non exist!
+	if ( ! $attached_page || $attached_page == 'none' || $attached_page == 'false' ) {
+		$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
+		if ( $buddyforms_submissions_page ) {
+			$attached_page = $buddyforms_submissions_page;
+		}
+	}
 
 	$siteurl           = get_bloginfo( 'wpurl' );
 	$attached_page_url = get_permalink( $attached_page );
@@ -402,7 +415,7 @@ function buddyforms_metabox_form_setup() {
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
 	?>
-    <span class="bf-form-type-wrap"> —
+	<span class="bf-form-type-wrap"> —
 			<label for="bf-form-type-select">
 				<select id="bf-form-type-select" name="buddyforms_options[form_type]">
 					<optgroup label="Form Type">
@@ -413,31 +426,31 @@ function buddyforms_metabox_form_setup() {
 				</select>
 			</label>
 	</span>
-    <div class="tabs tabbable buddyform-tabs-left">
-        <ul class="nav buddyform-nav-tabs buddyform-nav-pills">
+	<div class="tabs tabbable buddyform-tabs-left">
+		<ul class="nav buddyform-nav-tabs buddyform-nav-pills">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab ); ?>
-            <li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav">
-                <a href="#<?php echo $tab_slug; ?>" data-toggle="tab"><?php echo $tab; ?></a>
-                </li><?php
+			<li class="<?php echo $i == 0 ? 'active' : '' ?><?php echo $tab_slug ?>_nav">
+				<a href="#<?php echo $tab_slug; ?>" data-toggle="tab"><?php echo $tab; ?></a>
+				</li><?php
 				$i ++;
 			}
 			// Allow other plugins to add new sections
 			do_action( 'buddyforms_form_setup_nav_li_last' );
 			?>
 
-        </ul>
-        <div class="tab-content">
+		</ul>
+		<div class="tab-content">
 			<?php
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab );
 				?>
-                <div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
-                     id="<?php echo $tab_slug; ?>">
-                    <div class="buddyforms_accordion_general">
+				<div class="tab-pane <?php echo $i == 0 ? 'active' : '' ?>"
+				     id="<?php echo $tab_slug; ?>">
+					<div class="buddyforms_accordion_general">
 						<?php
 						// get all the html elements and add them above the settings
 						foreach ( $fields as $field_key => $field ) {
@@ -446,8 +459,8 @@ function buddyforms_metabox_form_setup() {
 								$field->render();
 							}
 						} ?>
-                        <table class="wp-list-table widefat posts striped fixed">
-                            <tbody>
+						<table class="wp-list-table widefat posts striped fixed">
+							<tbody>
 							<?php foreach ( $fields as $field_key => $field ) {
 
 								$type     = $field->getAttribute( 'type' );
@@ -459,28 +472,28 @@ function buddyforms_metabox_form_setup() {
 								// If the form element is not html create it as table row
 								if ( $type != 'html' ) {
 									?>
-                                    <tr class="<?php echo $classes ?>">
-                                        <th scope="row">
-                                            <label for="form_title"><?php echo $field->getLabel() ?></label>
-                                        </th>
-                                        <td>
+									<tr class="<?php echo $classes ?>">
+										<th scope="row">
+											<label for="form_title"><?php echo $field->getLabel() ?></label>
+										</th>
+										<td>
 											<?php echo $field->render() ?>
-                                            <p class="description"><?php echo $field->getShortDesc() ?></p>
-                                        </td>
-                                    </tr>
+											<p class="description"><?php echo $field->getShortDesc() ?></p>
+										</td>
+									</tr>
 								<?php }
 							} ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+							</tbody>
+						</table>
+					</div>
+				</div>
 				<?php
 				$i ++;
 			}
 			// Allow other plugins to hook there content for there nav into the tab content
 			do_action( 'buddyforms_form_setup_tab_pane_last' );
 			?>
-        </div>  <!-- close .tab-content -->
-    </div> <!--	close .tabs -->
+		</div>  <!-- close .tab-content -->
+	</div> <!--	close .tabs -->
 	<?php
 }

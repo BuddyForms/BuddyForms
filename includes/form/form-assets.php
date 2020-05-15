@@ -38,6 +38,8 @@ class BuddyFormsAssets {
 		$found     = false;
 		$form_slug = '';
 
+		$this->register_bf_thickbox();
+
 		if ( ! empty( $post->post_content ) ) {
 			$form_slug = buddyforms_get_form_slug_from_content( $post->post_content );
 			// check the post content for the short code
@@ -72,6 +74,23 @@ class BuddyFormsAssets {
 	}
 
 	/**
+	 * Register buddyforms thickbox this library is used from other buddyforms extension
+	 */
+	function register_bf_thickbox() {
+		wp_register_style( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.css', array(), BUDDYFORMS_VERSION );
+		wp_register_script( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+		wp_localize_script( 'buddyforms-thickbox', 'bf_thickboxL10n', array(
+			'next'             => __( 'Next &gt;' ),
+			'prev'             => __( '&lt; Prev' ),
+			'image'            => __( 'Image' ),
+			'of'               => __( 'of' ),
+			'close'            => __( 'Close' ),
+			'noiframes'        => __( 'This feature requires inline frames. You have iframes disabled or your browser does not support them.' ),
+			'loadingAnimation' => includes_url( 'js/thickbox/loadingAnimation.gif' ),
+		) );
+	}
+
+	/**
 	 * @since 2.5.2 Load select2 assets
 	 */
 	public static function load_select2_assets() {
@@ -98,7 +117,7 @@ class BuddyFormsAssets {
 	 *
 	 */
 	public static function front_js_css( $content = '', $form_slug = '' ) {
-		global $wp_query;
+		global $wp_query, $buddyforms;
 
 		/**
 		 * @since 2.5.10 added the $content and $form_slug parameters
@@ -164,8 +183,12 @@ class BuddyFormsAssets {
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields(),
 			'delete_text'              => __( 'Delete Permanently', 'buddyforms' ),
-			'tb_pathToImage'            => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
+			'tb_pathToImage'           => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
 		);
+		if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+			$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug );
+			$front_js_arguments[ $form_slug ] = $options;
+		}
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 		//Global frontend vars
@@ -219,6 +242,7 @@ class BuddyFormsAssets {
 			wp_enqueue_style( 'buddyforms-admin-css', BUDDYFORMS_ASSETS . 'admin/css/admin.css' );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 			wp_enqueue_style( 'wp-color-picker' );
+//			wp_enqueue_style( 'buddyforms', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-admin.css', array() );
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', BUDDYFORMS_ASSETS . 'admin/css/admin-post-metabox.css' );
 		}

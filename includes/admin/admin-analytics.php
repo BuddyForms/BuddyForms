@@ -7,7 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function buddyforms_track( $event_name, $data_args = array() ) {
 	try {
-		if ( function_exists( 'buddyforms_core_fs' ) && ! empty( $event_name ) ) {
+		$is_debug = ( ! defined( 'WP_DEBUG' ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) );
+		if ( function_exists( 'buddyforms_core_fs' ) && ! empty( $event_name ) && ! $is_debug && is_admin() ) {
 			$buddyforms_freemius = buddyforms_core_fs();
 			if ( ! empty( $buddyforms_freemius ) ) {
 				$is_allowed = $buddyforms_freemius->is_tracking_allowed();
@@ -44,9 +45,9 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 			}
 		}
 	} catch ( Exception $ex ) {
-		trigger_error( 'buddyforms::' . $ex->getMessage(), E_USER_NOTICE );
+		error_log( 'buddyforms::' . $ex->getMessage(), E_USER_NOTICE );
 	} catch ( \GuzzleHttp\Exception\GuzzleException $ex ) {
-		trigger_error( 'buddyforms::GuzzleException::' . $ex->getMessage(), E_USER_NOTICE );
+		error_log( 'buddyforms::GuzzleException::' . $ex->getMessage(), E_USER_NOTICE );
 	}
 }
 

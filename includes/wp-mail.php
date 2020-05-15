@@ -204,8 +204,6 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		}
 	}
 
-	$emailBody = nl2br( $emailBody );
-
 	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc, $form_slug, $post_ID );
 }
 
@@ -221,16 +219,20 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
  * @param array $mail_to_bcc
  * @param string $form_slug
  * @param string $post_id
- * @param $is_testing
+ * @param bool $is_testing
+ * @param bool $is_html
  *
  * @return bool
+ * @since 2.5.19 Added a flag to force html email.
+ *                  Autodetect when the email body have html.
+ *                  Add a filter `buddyforms_email_html` to allow create email templates from code
  * @since 2.5.12 Added the flag $is_testing to include a header to track test emails.
  * @since 2.5.10 Added the $form_slug and $post_id as parameter.
  *                Also added the filters `buddyforms_email_body`, `buddyforms_email_headers_priority`, `buddyforms_email_headers_mime_version`,
  *                `buddyforms_email_headers_content_type` and `buddyforms_email_headers_content_transfer_encoding`
  * @since 2.2.8
  */
-function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array(), $form_slug = '', $post_id = '', $is_testing = false ) {
+function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_body, $mail_to_cc = array(), $mail_to_bcc = array(), $form_slug = '', $post_id = '', $is_testing = false, $is_html = false ) {
 	mb_internal_encoding( 'UTF-8' );
 	$encoded_subject   = mb_encode_mimeheader( $subject, 'UTF-8', 'B', "\r\n", strlen( 'Subject: ' ) );
 	$encoded_from_name = mb_encode_mimeheader( $from_name, 'UTF-8', 'B' );
@@ -246,9 +248,15 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 	if ( $is_testing ) {
 		$mail_header[] = 'X-Mailer-Type:WPMailSMTP/Admin/Test';
 	}
+
+	if ( ! buddyforms_string_have_html( $email_body ) && $is_html == false ) {
+		$email_body = nl2br( $email_body );
+	}
+
 	$encoded_email_body = BuddyFormsEncoding::toUTF8( $email_body );
 	$encoded_email_body = apply_filters( 'buddyforms_email_body', $encoded_email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
-	$message            = '<html><head></head><body>' . $encoded_email_body . '</body></html>';
+	$encoded_email_html = apply_filters( 'buddyforms_email_html', '<html><head></head><body>%s</body></html>', $encoded_email_body, $mail_header, $subject, $from_name, $from_email, $form_slug, $post_id );
+	$message            = sprintf( $encoded_email_html, $encoded_email_body );
 
 	/**
 	 * @since 2.5.9
@@ -257,6 +265,21 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 
 	// OK Let us sent the mail
 	return wp_mail( $mail_to, $encoded_subject, $message, $mail_header );
+}
+
+/**
+ * Check if the given string have html tags
+ *
+ * @param $string
+ *
+ * @return bool
+ */
+function buddyforms_string_have_html( $string ) {
+	if ( empty( $string ) ) {
+		return false;
+	}
+
+	return ( $string != strip_tags( $string ) );
 }
 
 /**
@@ -411,8 +434,6 @@ function buddyforms_send_post_status_change_notification( $post ) {
 			$emailBody = $short_codes_and_values['[form_elements_table]'];
 		}
 	}
-
-	$emailBody = nl2br( $emailBody );
 
 	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, array(), array(), $form_slug, $post_ID );
 }

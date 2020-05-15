@@ -111,7 +111,7 @@ function buddyforms_form_builder_wizard_save() {
 		}
 	}
 
-	buddyforms_track( 'wizard-end', array( 'form-type' => $buddyform['form_type'] ) );
+	buddyforms_track( 'wizard-save', array( 'form-type' => $buddyform['form_type'] ) );
 
 	// Regenerate the global $buddyforms.
 	// The global$buddyforms is sored in the option table and provides all forms and form fields

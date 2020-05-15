@@ -40,6 +40,9 @@ function buddyforms_wp_update_user() {
 	if ( ! empty( $_POST["website"] ) ) {
 		$user_args['user_url'] = esc_url( $_POST["website"] );
 	}
+	if ( ! empty( $_POST["display_name"] ) ) {
+		$user_args['display_name'] = sanitize_text_field( $_POST["display_name"] );
+	}
 	if ( ! empty( $_POST["user_bio"] ) ) {
 		$user_args['description'] = esc_textarea( $_POST["user_bio"] );
 	}
@@ -168,6 +171,9 @@ function buddyforms_wp_insert_user() {
 		$user_url     = ! empty( $_POST["website"] )
 			? esc_url( $_POST["website"] )
 			: '';
+		$display_name    = ! empty( $_POST["display_name"] )
+			? sanitize_text_field( $_POST["display_name"] )
+			: '';
 		$description  = ! empty( $_POST["user_bio"] )
 			? esc_textarea( $_POST["user_bio"] )
 			: '';
@@ -241,6 +247,7 @@ function buddyforms_wp_insert_user() {
 				'user_registered' => date( 'Y-m-d H:i:s' ),
 				'role'            => $user_role,
 				'user_url'        => $user_url,
+				'display_name'    => $display_name,
 				'description'     => $description
 			)
 		);
@@ -423,7 +430,6 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id, $form
 		}
 	}
 
-	$emailBody = nl2br( $emailBody );
 	$mail     = buddyforms_email( $user_email, $subject, $from_email, $from_email, $emailBody, array(), array(), $form_slug );
 
 	return $mail;
