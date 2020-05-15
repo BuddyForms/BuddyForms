@@ -190,7 +190,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 					case 'user_login':
 						if ( ! is_admin() || $recovering ) {
 							if ( is_user_logged_in() ) {
+								$element_attr = array_merge( $element_attr, array( 'disabled' => 'disabled' ) );
 								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
+									if ( isset( $customfield['required'] ) ) {
+										unset( $customfield['required'] );
+									}
+									if ( isset( $element_attr['required'] ) ) {
+										unset( $element_attr['required'] );
+									}
 									$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
 								}
 							} else {
@@ -202,39 +209,55 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						break;
 
 					case 'user_email':
-						if ( ! is_admin() || $recovering ) {
-							if ( is_user_logged_in() ) {
-								if ( ! isset( $customfield['hide_if_logged_in'] ) ) {
-									$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
-								}
-							} else {
-								$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
-							}
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Email( $name, $slug, $element_attr, $customfield ) );
 						} else {
 							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
 						}
 						break;
 
 					case 'user_first':
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
+						}
 						break;
 
 					case 'user_last':
-						$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
+						}
+						break;
+
+					case 'display_name':
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textbox( $name, $slug, $element_attr, $customfield ) );
+						}
 						break;
 
 					case 'user_pass':
-						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ! is_admin() && ( $action === 'new' || $action === 'edit' ) ) {
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
 							$form->addElement( new Element_Password( $name, 'buddyforms_user_pass', $element_attr, $customfield ) );
 						}
 						break;
 
 					case 'user_website':
-						$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Url( $name, $slug, $element_attr, $customfield ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
+						}
 						break;
 
 					case 'user_bio':
-						$form->addElement( new Element_Textarea( $name, $slug, $element_attr, $customfield ) );
+						if ( ! ( is_user_logged_in() && isset( $customfield['hide_if_logged_in'] ) ) && ( $action === 'new' || $action === 'edit' ) ) {
+							$form->addElement( new Element_Textarea( $name, $slug, $element_attr, $customfield ) );
+						} else {
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, $customfields ) );
+						}
 						break;
 
 					case 'number':
@@ -1099,7 +1122,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						</script>
 						
 	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
-		                	<span class="help-inline">' . $description . '</span>
+		                	
 		                ';
 
 						if ( isset( $customfield['hidden_field'] ) ) {

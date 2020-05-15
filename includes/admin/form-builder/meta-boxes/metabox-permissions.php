@@ -21,17 +21,6 @@ function buddyforms_permissions_unregistered_screen() {
 		)
 	);
 
-	$public_submit_login = isset( $buddyform['public_submit_login'] ) ? $buddyform['public_submit_login'] : 'above';
-	$form_setup[]        = new Element_Select( '<b>' . __( 'Enable Login on the form', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_login]", array(
-		'none'  => __( 'None', 'buddyforms' ),
-		'above' => __( 'Above the Form', 'buddyforms' ),
-		'under' => __( 'Under the Form', 'buddyforms' )
-	), array(
-		'value'     => $public_submit_login,
-		'shortDesc' => __( 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.', 'buddyforms' ),
-		'class'     => 'public-submit-option'
-	) );
-
 	$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
 	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
 		array(
@@ -165,11 +154,15 @@ function buddyforms_permissions_screen() {
 			unset( $form_user_role['draft'] );
 			unset( $form_user_role['admin-submission'] );
 		}
+        $disabled_class = '';
+        if ( ! buddyforms_core_fs()->is_paying_or_trial() ) {
+            $disabled_class = 'disabled';
+        }
 
 		$element = new Element_Checkbox( '<b>' . $role_name . '</b>', 'buddyforms_roles[' . $role_name . ']', $default_roles, array(
 			'value'  => $form_user_role,
 			'inline' => true,
-			'class'  => $role_name,
+			'class'  => $role_name.' '.$disabled_class,
 			'id'     => 'permission_for_' . $role_name,
 		) );
 
@@ -250,7 +243,7 @@ add_action( 'buddyforms_form_setup_nav_li_last', 'buddyforms_form_setup_nav_li_p
 
 function buddyforms_form_setup_tab_pane_permission() {
 	?>
-	<div class="tab-pane fade in" id="permission">
+	<div class="tab-pane " id="permission">
 	<div class="buddyforms_accordion_permission">
 		<?php buddyforms_permissions_unregistered_screen() ?>
 		<?php buddyforms_permissions_screen(); ?>

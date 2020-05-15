@@ -40,6 +40,9 @@ function buddyforms_wp_update_user() {
 	if ( ! empty( $_POST["website"] ) ) {
 		$user_args['user_url'] = esc_url( $_POST["website"] );
 	}
+	if ( ! empty( $_POST["display_name"] ) ) {
+		$user_args['display_name'] = sanitize_text_field( $_POST["display_name"] );
+	}
 	if ( ! empty( $_POST["user_bio"] ) ) {
 		$user_args['description'] = esc_textarea( $_POST["user_bio"] );
 	}
@@ -168,6 +171,9 @@ function buddyforms_wp_insert_user() {
 		$user_url     = ! empty( $_POST["website"] )
 			? esc_url( $_POST["website"] )
 			: '';
+		$display_name    = ! empty( $_POST["display_name"] )
+			? sanitize_text_field( $_POST["display_name"] )
+			: '';
 		$description  = ! empty( $_POST["user_bio"] )
 			? esc_textarea( $_POST["user_bio"] )
 			: '';
@@ -241,18 +247,12 @@ function buddyforms_wp_insert_user() {
 				'user_registered' => date( 'Y-m-d H:i:s' ),
 				'role'            => $user_role,
 				'user_url'        => $user_url,
+				'display_name'    => $display_name,
 				'description'     => $description
 			)
 		);
 
 		if ( ! is_wp_error( $new_user_id ) && is_int( $new_user_id ) ) {
-
-			if ( apply_filters( 'buddyforms_wp_insert_user_activation_mail', true, $new_user_id ) != true ) {
-				// send an email to the admin alerting them of the registration
-				wp_new_user_notification( $new_user_id );
-
-				return $new_user_id;
-			}
 
 			// if multisite is enabled we need to make sure the user will become a member of the form blog id
 			if ( buddyforms_is_multisite() ) {
@@ -272,10 +272,17 @@ function buddyforms_wp_insert_user() {
 				add_user_meta( $new_user_id, 'bf_pw_redirect_url', $bf_pw_redirect_url, true );
 			}
 
-			// send an email to the admin alerting them of the registration
-			wp_new_user_notification( $new_user_id );
+			$user_activation_admin_mail = apply_filters( 'buddyforms_wp_insert_user_activation_admin_mail', true, $new_user_id, $form_slug );
+			if ( $user_activation_admin_mail === true ) {
+				// send an email to the admin alerting them of the registration
+				wp_new_user_notification( $new_user_id );
+			}
 
-			$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
+			$mail = true;
+			$insert_user_activation_mail = apply_filters( 'buddyforms_wp_insert_user_activation_mail', true, $new_user_id, $form_slug );
+			if (  $insert_user_activation_mail === true ) {
+				$mail = buddyforms_activate_account_mail( $activation_link, $new_user_id );
+			}
 
 			// send an activation link to the user asking them to activate there account
 			$was_send_activation_email = apply_filters( 'buddyforms_send_activation_mail_was_send', $mail, $new_user_id );
@@ -423,7 +430,6 @@ function buddyforms_activate_account_mail( $activation_link, $new_user_id, $form
 		}
 	}
 
-	$emailBody = nl2br( $emailBody );
 	$mail     = buddyforms_email( $user_email, $subject, $from_email, $from_email, $emailBody, array(), array(), $form_slug );
 
 	return $mail;

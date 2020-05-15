@@ -114,6 +114,7 @@ function buddyforms_ajax_process_edit_post() {
 		$form_slug = $form_data['form_slug'];
 	}
 
+	$json_array['form_slug'] = $form_slug;
 	if ( $hasError == true ) {
 
 		if ( $form_notice ) {
@@ -129,6 +130,7 @@ function buddyforms_ajax_process_edit_post() {
 	} else {
 		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
 		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$json_array['form_action'] = $form_action;
 		$message_source = 'after_submit_message_text';
 		if ( 'registration' === $form_type ) {
 			if ( is_user_logged_in() ) {
@@ -289,7 +291,7 @@ function buddyforms_ajax_delete_post() {
  */
 function buddyforms_after_save_post_redirect( $url ) {
 	$url             = apply_filters( 'buddyforms_after_save_post_redirect', $url );
-	$redirect_string = apply_filters( 'buddyforms_after_save_post_redirect_string', __( 'Redirecting..', 'buddyforms' ) );
+	$redirect_string = apply_filters( 'buddyforms_after_save_post_redirect_string', __( 'Redirecting... ', 'buddyforms' ) );
 	$string          = $redirect_string . '<script type="text/javascript">';
 	$string          .= 'window.location = "' . $url . '"';
 	$string          .= '</script>';

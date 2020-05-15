@@ -54,7 +54,6 @@ class BuddyFormsSubmissionPage {
 			$current_screen->render_screen_meta();
 			$selected_form = $_GET['form_slug'];
 		}
-
 		?>
 
         <div id="icon-users" class="icon32"><br/></div>

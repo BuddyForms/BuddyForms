@@ -178,6 +178,9 @@ function buddyforms_sanitize( $type, $value ) {
 		case 'message':
 			$value = esc_textarea( $value );
 			break;
+		case 'display_name':
+			$value = sanitize_text_field( $value );
+			break;
 		case 'user_login':
 			$value = sanitize_user( $value );
 			break;

@@ -470,7 +470,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 			$i = 0;
 			foreach ( $form_setup as $tab => $fields ) {
 				$tab_slug = sanitize_title( $tab ); ?>
-                <div class="tab-pane fade in <?php echo $i == 0 ? 'active' : '' ?>"
+                <div class="tab-pane <?php echo $i == 0 ? 'active' : '' ?>"
                      id="<?php echo $tab_slug; ?>">
                     <div class="buddyforms_accordion_general">
 						<?php

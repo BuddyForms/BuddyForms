@@ -38,6 +38,8 @@ class BuddyFormsAssets {
 		$found     = false;
 		$form_slug = '';
 
+		$this->register_bf_thickbox();
+
 		if ( ! empty( $post->post_content ) ) {
 			$form_slug = buddyforms_get_form_slug_from_content( $post->post_content );
 			// check the post content for the short code
@@ -72,6 +74,23 @@ class BuddyFormsAssets {
 	}
 
 	/**
+	 * Register buddyforms thickbox this library is used from other buddyforms extension
+	 */
+	function register_bf_thickbox() {
+		wp_register_style( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.css', array(), BUDDYFORMS_VERSION );
+		wp_register_script( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.js', array( 'jquery' ), BUDDYFORMS_VERSION );
+		wp_localize_script( 'buddyforms-thickbox', 'bf_thickboxL10n', array(
+			'next'             => __( 'Next &gt;' ),
+			'prev'             => __( '&lt; Prev' ),
+			'image'            => __( 'Image' ),
+			'of'               => __( 'of' ),
+			'close'            => __( 'Close' ),
+			'noiframes'        => __( 'This feature requires inline frames. You have iframes disabled or your browser does not support them.' ),
+			'loadingAnimation' => includes_url( 'js/thickbox/loadingAnimation.gif' ),
+		) );
+	}
+
+	/**
 	 * @since 2.5.2 Load select2 assets
 	 */
 	public static function load_select2_assets() {
@@ -98,14 +117,14 @@ class BuddyFormsAssets {
 	 *
 	 */
 	public static function front_js_css( $content = '', $form_slug = '' ) {
-		global $wp_query;
+		global $wp_query, $buddyforms;
 
 		/**
 		 * @since 2.5.10 added the $content and $form_slug parameters
 		 */
 		do_action( 'buddyforms_front_js_css_enqueue', $content, $form_slug );
 
-		if ( ! empty( $form_slug ) && $form_slug !== 'none' && empty($wp_query->query_vars['bf_form_slug'])) {
+		if ( ! empty( $form_slug ) && $form_slug !== 'none' && empty( $wp_query->query_vars['bf_form_slug'] ) ) {
 			$wp_query->query_vars['bf_form_slug'] = $form_slug;
 		}
 
@@ -125,14 +144,14 @@ class BuddyFormsAssets {
 
 		BuddyForms::buddyforms_js_global_set_parameters( array(
 			'pwsL10n' => array(
-				'empty'             => isset( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator', 'buddyforms' ),
-				'short'             => isset( $password_strength_settings['lavel_1'] ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.', 'buddyforms' ),
-				'bad'               => isset( $password_strength_settings['lavel_2'] ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak', 'buddyforms' ),
-				'good'              => isset( $password_strength_settings['lavel_3'] ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'buddyforms' ),
-				'strong'            => isset( $password_strength_settings['lavel_4'] ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong', 'buddyforms' ),
-				'mismatch'          => isset( $password_strength_settings['mismatch'] ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch', 'buddyforms' ),
-				'hint_text'         => isset( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).', 'buddyforms' ),
-				'required_strength' => isset( $password_strength_settings['required_strength'] ) && ! empty( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : '0',
+				'empty'             => ! empty( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Strength indicator', 'buddyforms' ),
+				'short'             => ! empty( $password_strength_settings['lavel_1'] ) && ! empty( $password_strength_settings['lavel_1'] ) ? $password_strength_settings['lavel_1'] : __( 'Short: Your password is too short.', 'buddyforms' ),
+				'bad'               => ! empty( $password_strength_settings['lavel_2'] ) && ! empty( $password_strength_settings['lavel_2'] ) ? $password_strength_settings['lavel_2'] : __( 'Password Strength: Weak', 'buddyforms' ),
+				'good'              => ! empty( $password_strength_settings['lavel_3'] ) && ! empty( $password_strength_settings['lavel_3'] ) ? $password_strength_settings['lavel_3'] : _x( 'Password Strength: OK', 'buddyforms' ),
+				'strong'            => ! empty( $password_strength_settings['lavel_4'] ) && ! empty( $password_strength_settings['lavel_4'] ) ? $password_strength_settings['lavel_4'] : __( 'Password Strength: Strong', 'buddyforms' ),
+				'mismatch'          => ! empty( $password_strength_settings['mismatch'] ) && ! empty( $password_strength_settings['mismatch'] ) ? $password_strength_settings['mismatch'] : __( 'Mismatch', 'buddyforms' ),
+				'hint_text'         => ! empty( $password_strength_settings['hint_text'] ) && ! empty( $password_strength_settings['hint_text'] ) ? $password_strength_settings['hint_text'] : __( 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; ).', 'buddyforms' ),
+				'required_strength' => ! empty( $password_strength_settings ) && isset( $password_strength_settings['required_strength'] ) ? $password_strength_settings['required_strength'] : apply_filters( 'buddyforms_password_strength_default_strength', 3, $form_slug ),
 			)
 		) );
 
@@ -163,8 +182,13 @@ class BuddyFormsAssets {
 			'current_screen'           => '',//Keep for compatibility
 			'is_admin'                 => is_admin(),
 			'localize'                 => BuddyForms::localize_fields(),
-			'delete_text'              => __( 'Delete Permanently', 'buddyforms' )
+			'delete_text'              => __( 'Delete Permanently', 'buddyforms' ),
+			'tb_pathToImage'           => includes_url( 'js/thickbox/loadingAnimation.gif', 'relative' ),
 		);
+		if ( ! empty( $form_slug ) && ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) ) {
+			$options                          = buddyforms_filter_frontend_js_form_options( $buddyforms[ $form_slug ], $form_slug );
+			$front_js_arguments[ $form_slug ] = $options;
+		}
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 
 		//Global frontend vars
@@ -218,6 +242,7 @@ class BuddyFormsAssets {
 			wp_enqueue_style( 'buddyforms-admin-css', BUDDYFORMS_ASSETS . 'admin/css/admin.css' );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 			wp_enqueue_style( 'wp-color-picker' );
+//			wp_enqueue_style( 'buddyforms', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-admin.css', array() );
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', BUDDYFORMS_ASSETS . 'admin/css/admin-post-metabox.css' );
 		}
@@ -323,9 +348,9 @@ class BuddyFormsAssets {
 		} else {
 			wp_localize_script( "buddyforms-admin-all-js", "buddyformsGlobal",
 				apply_filters( 'buddyforms_global_localize_scripts', array(
-						'admin_url' => admin_url( 'admin-ajax.php' ),
-						'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
-					), ''
+					'admin_url' => admin_url( 'admin-ajax.php' ),
+					'ajaxnonce' => wp_create_nonce( 'fac_drop' ),
+				), ''
 				)
 			);
 			do_action( 'buddyforms_all_admin_js_css_enqueue' );

@@ -181,10 +181,11 @@ function buddyforms_locate_template( $slug, $form_slug = '' ) {
 /**
  * Retrieves the post excerpt.
  *
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
+ *
+ * @return string Post excerpt.
  * @since 2.5.17
  *
- * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
- * @return string Post excerpt.
  */
 function buddyforms_get_the_excerpt( $post = null ) {
 	$post = get_post( $post );
@@ -946,6 +947,32 @@ function buddyforms_get_form_by_slug( $form_slug ) {
 }
 
 /**
+ * Get form option
+ *
+ * @param $form_slug
+ * @param string $option
+ *
+ * @return string|bool
+ * @since 2.5.19
+ */
+function buddyforms_get_form_option( $form_slug, $option ) {
+	$value = false;
+	if ( ! empty( $form_slug ) && ! empty( $option ) ) {
+		$cache_key = 'buddyforms_form_' . $form_slug . '_option_' . $option;
+		$value     = wp_cache_get( $cache_key, 'buddyforms' );
+		if ( $value === false ) {
+			$bf_form = buddyforms_get_form_by_slug( $form_slug );
+			if ( ! empty( $bf_form ) ) {
+				$value = ( isset( $bf_form[ $option ] ) ) ? $bf_form[ $option ] : false;
+				wp_cache_set( $cache_key, $value, 'buddyforms' );
+			}
+		}
+	}
+
+	return $value;
+}
+
+/**
  * Will return the form slug from post meta or the default. none if no form is attached
  *
  * @param $post_id
@@ -1075,29 +1102,52 @@ function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default
 }
 
 
-function buddyforms_get_all_pages( $type = 'id', $view = "form_builder" ) {
-
+function buddyforms_get_all_pages( $type = 'id', $view = "form_builder", $exclude_global_submission_endpoint = false, $extra_exclude_ids = array(), $default_string = '' ) {
+	$exclude = array();
+	if ( empty( $default_string ) ) {
+		$default_string = __( 'Select a Page', 'buddyforms' );
+	}
 	// get the page_on_front and exclude it from the query. This page should not get used for the endpoints
 	$page_on_front = get_option( 'page_on_front' );
-	$exclude       = isset( $page_on_front ) ? $page_on_front : '';
+	if ( ! empty( $page_on_front ) ) {
+		$exclude[] = $page_on_front;
+	}
 
 	if ( $view == 'form_builder' ) {
 		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
-		$exclude                      .= isset( $buddyforms_registration_page ) ? $buddyforms_registration_page : '';
+		if ( ! empty( $buddyforms_registration_page ) ) {
+			$exclude[] = $buddyforms_registration_page;
+		}
 	}
 
-	$pages = get_pages( array(
+	if ( ! empty( $exclude_global_submission_endpoint ) ) {
+		$buddyforms_submissions_page = get_option( 'buddyforms_submissions_page' );
+		if ( ! empty( $buddyforms_submissions_page ) ) {
+			$exclude[] = $buddyforms_submissions_page;
+		}
+	}
+
+	if ( ! empty( $extra_exclude_ids ) ) {
+		$exclude = array_merge( $extra_exclude_ids, $exclude );
+	}
+
+	$args = array(
 		'sort_order'  => 'asc',
 		'sort_column' => 'post_title',
 		'parent'      => - 1,
 		'post_type'   => 'page',
 		'post_status' => 'publish',
-		'exclude'     => $exclude
-	) );
+	);
+
+	if ( ! empty( $exclude ) ) {
+		$args['exclude'] = $exclude;
+	}
+
+	$pages = get_pages( $args );
 
 
 	$all_pages         = Array();
-	$all_pages['none'] = __( 'Select a Page', 'buddyforms' );
+	$all_pages['none'] = $default_string;
 
 	if ( $type == 'id' ) {
 		// Generate the pages array by id
@@ -1228,13 +1278,14 @@ function buddyforms_form_display_message( $form_slug, $post_id, $source = 'after
 			$display_message = buddyforms_default_message_on_update();
 		}
 	}
+	$display_message = apply_filters('buddyforms_form_display_message', $display_message, $form_slug, $post_id, $source);
 	if ( ! empty( $buddyforms[ $form_slug ]['attached_page'] ) ) {
 		$permalink       = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 		$display_message = str_ireplace( '[edit_link]', '<a title="' . __( 'Edit Post', 'buddyforms' ) . '" href="' . $permalink . 'edit/' . $form_slug . '/' . $post_id . '">' . __( 'Continue Editing', 'buddyforms' ) . '</a>', $display_message );
 	}
 	$display_message = str_ireplace( '[form_singular_name]', $buddyforms[ $form_slug ]['singular_name'], $display_message );
 	$display_message = str_ireplace( '[post_title]', get_the_title( $post_id ), $display_message );
-	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '"">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
+	$display_message = str_ireplace( '[post_link]', '<a title="' . __( 'Display Post', 'buddyforms' ) . '" href="' . get_permalink( $post_id ) . '">' . __( 'Display Post', 'buddyforms' ) . '</a>', $display_message );
 
 
 	return do_shortcode( $display_message );
@@ -1248,6 +1299,7 @@ function buddyforms_user_fields_array() {
 		'user_last',
 		'user_pass',
 		'user_website',
+		'display_name',
 		'user_bio',
 		'country',
 		'state'
@@ -1318,7 +1370,9 @@ function buddyforms_upload_image_from_url() {
 		$upload_dir = wp_upload_dir();
 		$image_url  = urldecode( $url );
 		$image_data = file_get_contents( $image_url ); // Get image data
-		if ( $image_data ) {
+        $image_data_information = getimagesize($image_url);
+
+		if ( $image_data && $image_data_information){
 			$file_name   = $file_id . ".png";
 			$full_path   = wp_normalize_path( $upload_dir['path'] . DIRECTORY_SEPARATOR . $file_name );
 			$upload_file = wp_upload_bits( $file_name, null, $image_data );
@@ -1340,6 +1394,10 @@ function buddyforms_upload_image_from_url() {
 			}
 
 		}
+		else{
+            echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'The Url provided is not an image.' ) );
+            die();
+        }
 
 	} else {
 		echo wp_json_encode( array( 'status' => 'FAILED', 'response' => 'Wrong Format or Empty Url.' ) );
@@ -1559,7 +1617,7 @@ function buddyforms_is_gutenberg_page() {
  * @since 2.4.0
  *
  */
-function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id ) {
+function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_post_id = 0 ) {
 	/**
 	 * Let the user change the user granted options to use in the frontend global variable buddyformsGlobal
 	 *
@@ -1578,6 +1636,19 @@ function buddyforms_filter_frontend_js_form_options( $options, $form_slug, $bf_p
 	foreach ( $granted as $item ) {
 		if ( isset( $options[ $item ] ) ) {
 			$result[ $item ] = $options[ $item ];
+		}
+	}
+	//Filter the field options
+	$remove_field_options = apply_filters( 'buddyforms_remove_frontend_forms_fields_option', array(
+		'captcha_private_key',
+	), $form_slug, $bf_post_id );
+	if ( ! empty( $result['form_fields'] ) ) {
+		foreach ( $remove_field_options as $remove_field ) {
+			foreach ( $result['form_fields'] as $field_id => $field ) {
+				if ( isset( $field[ $remove_field ] ) ) {
+					unset( $result['form_fields'][ $field_id ][ $remove_field ] );
+				}
+			}
 		}
 	}
 
@@ -1926,3 +1997,12 @@ function buddyforms_contact_author_loop_form_slug( $form_slug, $post_id ) {
 }
 
 add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_slug', 10, 2 );
+
+/**
+ * Enqueue buddyforms thickbox wrapper
+ * @since 2.5.19
+ */
+function buddyforms_add_bf_thickbox() {
+	wp_enqueue_script( 'buddyforms-thickbox' );
+	wp_enqueue_style( 'buddyforms-thickbox' );
+}

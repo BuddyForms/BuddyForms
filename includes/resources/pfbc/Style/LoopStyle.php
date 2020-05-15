@@ -85,7 +85,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
             margin-bottom: 10px;
             float: right;
             text-align: left;
-            min-width: 150px;
+            min-width: 175px;
             font-size: 12px;
             clear: none;
         }

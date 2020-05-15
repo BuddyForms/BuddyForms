@@ -1,9 +1,9 @@
 === Contact - Registration - Post Form Builder & FrontEnd Editor BuddyForms - Making WordPress Forms A Breeze ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem
-Tags: form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, content, content generation, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload, user submitted, user-generated, user-submit,
+Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
-Tested up to: 5.3
-Stable tag: 2.5.17
+Tested up to: 5.4
+Stable tag: 2.5.19
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -198,6 +198,14 @@ BuddyForm works great with other Plug-Ins. Enhance its capabilities with the fol
 
 ---
 
+---
+
+####How To Videos
+
+[https://www.youtube.com/playlist?list=PLYPguOC5yk7-vo3eNlRaQ_yilEoS-rLOW]
+
+---
+
 Want to se more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
 
 ---
@@ -343,7 +351,7 @@ Also more Fields available by Add-Ons
 ---
 
 > #### Follow Us
-> [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/buddyforms) | [Facebook](https://www.facebook.com/buddyforms/) | [Google+](https://plus.google.com/u/0/b/100975390423636463712/?pageId=100975390423636463712) | [YouTube](https://www.youtube.com/playlist?list=PLYPguOC5yk7_aB2Q2FTaktqHCXDc_mzqb)
+> [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
 
 ---
 
@@ -389,6 +397,60 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.19 - 17 May 2020 =
+* Fixed the issue related to the lost of osme core styles when the form builder was loaded.
+* Fixed validation message show in the direct input form builder wizzard.
+* Fixed the min and max lenght validation message not showing for the message field.
+* Fixed the add the valid phone number validation.  Client and Server side validation.
+* Fixed the field slug missing for some Form Elements.
+* Fixed tje check All option on the permissions tab.
+* Fixed the CheckAll option to not check the disabled columns.
+* Updated the last version of jquery validation.
+* Fixed the override of the required method of jQuery validate to not lose the other methods.
+* Added form element output for all user form elements.
+* Fixed the Category assign for creating post with user form elements.
+* Formatting the code for the Phone Validation.
+* Fixed the issue related to the Form Element category not create categories when the entry is created.
+* Added form element output for all user form elements.
+* Moved the option `Enable Login on the form` to the Form submission tab inside the Form Setup metabox.
+* Fixed disable all the grid columns and rows on the permission tab when the free version is installed.
+* Fixed the captcha label.
+* Fixed the assign user to a post when the user is created during post submission.
+* Fixed the empty option for the DropDowns form Elements.
+* Improved the password hints.
+* Fixed the password strength score.
+* Added 2 hooks to avoid send user email activation to letting the use-case of manual activation form the user administration.
+* Fixed the multiple form submission trigger.
+* Fixed marketing wrong message.
+* Fixed the reCaptcha v3.
+* Fixed user form element to be included as hidden when they are setup to be hidden for logged in users.
+* Added a hook filter to force the html output of the form element metas.
+* Improved the styles for Dropdowns.
+* Fixed media buttons notice.
+* Fixed description position option for tag element.
+* Added own implementation of thickbox.
+* Fixed the user website field validation when not was correct.
+* Added a filter to let 3rd party extension change the form submission message.
+* Added a filter to let 3rd party extension change the submission link shortcode url.
+* Improved the styles of the dropdown and select2 form elements.
+* Added a new user Form Element to handle the user display option. Thanks to a contribution from Marco Massari Calderone marco@marcomc.com
+* Improved the email notification to let 3rd party extension to extend the email templates.
+* Fixed the form validation for not logged in user.
+* Fixed the style issue in the form builder.
+
+= 2.5.18 - 23 March 2020 =
+* Fixed the permission tab style for the wizard.
+* Removed deprecated option label button from the featured image field.
+* Added composer instructions to the readme for the case somebody use the plugin from the repository.
+* Updated the readme tags.
+* Improved the function to get all pages excluding the pages from global settings.
+* Improved the shortcodes processing from a string and they now are able to process shortcode attributes.
+* Moved the field Country and State Form Element to the Extra section.
+* Updated the user related fields to include the option to be hide for logged in users.
+* Added styles for disabled inputs.
+* Added a restriction to the user_login Form Element due to a WordPress restriction updating the username.
+* Fixed the password strength option.
+
 = 2.5.17 - 17 March 2020 =
 * Fixed the duplicate labels for the Category, Tag and Taxonomy form element.
 * Fixed the template system to show the parent page and not duplicate the content.

@@ -202,15 +202,13 @@ function buddyforms_form_elements_select_options() {
 					'label'  => __( 'Website', 'buddyforms' ),
 					'unique' => 'unique'
 				),
+				'display_name' => array(
+					'label'  => __( 'Display Name', 'buddyforms' ),
+					'unique' => 'unique'
+				),
 				'user_bio'     => array(
 					'label'  => __( 'About / Bio', 'buddyforms' ),
 					'unique' => 'unique'
-				),
-				'country'      => array(
-					'label' => __( 'Country', 'buddyforms' ),
-				),
-				'state'        => array(
-					'label' => __( 'State', 'buddyforms' ),
 				),
 			),
 		),
@@ -261,7 +259,7 @@ function buddyforms_form_elements_select_options() {
 				'checkbox'    => array(
 					'label' => __( 'Checkbox', 'buddyforms' ),
 				),
-				'link'    => array(
+				'link'        => array(
 					'label' => __( 'Url', 'buddyforms' ),
 				),
 				'gdpr'        => array(
@@ -280,85 +278,77 @@ function buddyforms_form_elements_select_options() {
 				),
 			),
 		),
-
 	);
 
 	// Post Fields
-	$elements_select_options['post']['fields']['category']       =
-		array(
-			'label'  => __( 'Category', 'buddyforms' ),
-			'unique' => 'unique'
-		);
-	$elements_select_options['post']['fields']['tags']           =
-		array(
-			'label'  => __( 'Tags', 'buddyforms' ),
-			'unique' => 'unique'
-		);
-	$elements_select_options['post']['fields']['post_formats']   =
-		array(
-			'label'  => __( 'Post Formats', 'buddyforms' ),
-			'unique' => 'unique'
-		);
-	$elements_select_options['post']['fields']['comments']       =
-		array(
-			'label'  => __( 'Comments', 'buddyforms' ),
-			'unique' => 'unique'
-		);
-	$elements_select_options['post']['fields']['status']         =
-		array(
-			'label'  => __( 'Post Status', 'buddyforms' ),
-			'unique' => 'unique'
-		);
-	$elements_select_options['post']['fields']['featured_image'] =
-		array(
-			'label'  => __( 'Featured Image', 'buddyforms' ),
-			'unique' => 'unique'
-		);
+	$elements_select_options['post']['fields']['category']       = array(
+		'label'  => __( 'Category', 'buddyforms' ),
+		'unique' => 'unique'
+	);
+	$elements_select_options['post']['fields']['tags']           = array(
+		'label'  => __( 'Tags', 'buddyforms' ),
+		'unique' => 'unique'
+	);
+	$elements_select_options['post']['fields']['post_formats']   = array(
+		'label'  => __( 'Post Formats', 'buddyforms' ),
+		'unique' => 'unique'
+	);
+	$elements_select_options['post']['fields']['comments']       = array(
+		'label'  => __( 'Comments', 'buddyforms' ),
+		'unique' => 'unique'
+	);
+	$elements_select_options['post']['fields']['status']         = array(
+		'label'  => __( 'Post Status', 'buddyforms' ),
+		'unique' => 'unique'
+	);
+	$elements_select_options['post']['fields']['featured_image'] = array(
+		'label'  => __( 'Featured Image', 'buddyforms' ),
+		'unique' => 'unique'
+	);
 
 
-	$elements_select_options['post']['fields']['taxonomy']      =
-		array(
-			'label'  => __( 'Taxonomy', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['basic']['fields']['form_actions'] =
-		array(
-			'label'  => __( 'Form Actions', 'buddyforms' ),
-			'is_pro' => true,
-		);
+	$elements_select_options['post']['fields']['taxonomy']      = array(
+		'label'  => __( 'Taxonomy', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['basic']['fields']['form_actions'] = array(
+		'label'  => __( 'Form Actions', 'buddyforms' ),
+		'is_pro' => true,
+	);
 
-	$elements_select_options['extra']['label']            = __( 'Extra Fields', 'buddyforms' );
-	$elements_select_options['extra']['class']            = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
-	$elements_select_options['extra']['fields']['file']   =
-		array(
-			'label'  => __( 'File', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['extra']['fields']['upload'] =
-		array(
-			'label'  => __( 'Upload', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['basic']['fields']['hidden'] =
-		array(
-			'label'  => __( 'Hidden', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['basic']['fields']['html']   =
-		array(
-			'label'  => __( 'HTML', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['extra']['fields']['range']  =
-		array(
-			'label'  => __( 'Range', 'buddyforms' ),
-			'is_pro' => true,
-		);
-	$elements_select_options['extra']['fields']['price']  =
-		array(
-			'label'  => __( 'Price', 'buddyforms' ),
-			'is_pro' => true,
-		);
+	$elements_select_options['extra']['label']             = __( 'Extra Fields', 'buddyforms' );
+	$elements_select_options['extra']['class']             = 'bf_show_if_f_type_post bf_show_if_f_type_contact';
+	$elements_select_options['extra']['fields']['file']    = array(
+		'label'  => __( 'File', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['extra']['fields']['upload']  = array(
+		'label'  => __( 'Upload', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['extra']['fields']['country'] = array(
+		'label' => __( 'Country', 'buddyforms' ),
+	);
+	$elements_select_options['extra']['fields']['state']   = array(
+		'label'  => __( 'State', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['basic']['fields']['hidden']  = array(
+		'label'  => __( 'Hidden', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['basic']['fields']['html']    = array(
+		'label'  => __( 'HTML', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['extra']['fields']['range']   = array(
+		'label'  => __( 'Range', 'buddyforms' ),
+		'is_pro' => true,
+	);
+	$elements_select_options['extra']['fields']['price']   = array(
+		'label'  => __( 'Price', 'buddyforms' ),
+		'is_pro' => true,
+	);
 
 
 	// Allow others to filter the array

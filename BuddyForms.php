@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.5.17
+ * Version: 2.5.19
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -46,7 +46,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.5.17';
+		public $version = '2.5.19';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -148,6 +148,17 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		public function init_hook() {
 			$this->set_globals();
 			do_action( 'buddyforms_init' );
+
+			if ( function_exists( 'buddyforms_core_fs' ) ) {
+				$bf_fr = buddyforms_core_fs();
+				if ( ! empty( $bf_fr ) ) {
+					$bf_fr->add_filter( 'plugin_icon', array( $this, 'buddyforms_freemius_icon' ) );
+				}
+			}
+		}
+
+		public function buddyforms_freemius_icon() {
+			return BUDDYFORMS_INSTALL_PATH . 'assets/images/buddyforms.jpg';
 		}
 
 		/**
@@ -236,6 +247,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			new BfAdminNotices();
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/TkTrackApi.php' );
+			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-analytics.php' );
 
 			//Compatibility
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'compatibility.php' );

@@ -89,7 +89,7 @@ class View_Frontend extends FormView {
 			return;
 		}
 
-		if ( $element instanceof Element_INLINE_HTML ) {
+		if ( $element instanceof Element_InlineHTML ) {
 			$element->render();
 
 			return;
@@ -166,6 +166,11 @@ class View_Frontend extends FormView {
 			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
 			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
 			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
+		}
+
+		//No echo label for captcha
+		if ( $element instanceof Element_Captcha ) {
+			return;
 		}
 
 		//TODO not echo label if the textarea already have it

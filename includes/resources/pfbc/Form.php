@@ -166,14 +166,17 @@ class Form extends Base {
 			if ( ! empty( $form_instance ) && ! empty( $form_instance->_elements ) ) {
 				/** @var Element $element */
 				foreach ( $form_instance->_elements as $element ) {
-					$name = $element->getAttribute( "name" );
+					$name          = $element->getAttribute( "name" );
 					$field_options = $element->getFieldOptions();
 					if ( $element instanceof Element_Email ) {
 						$element->setValidation( new Validation_Email() );
 					}
+					if ( $element instanceof Element_Phone ) {
+						$element->setValidation( new Validation_Phone() );
+					}
 
 					if ( $element instanceof Element_Upload ) {
-						$name          = $field_options['slug'];
+						$name = $field_options['slug'];
 					}
 
 					if ( substr( $name, - 2 ) == "[]" ) {
@@ -203,13 +206,13 @@ class Form extends Base {
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
-								$element->setAttribute('class', 'error');
+								$element->setAttribute( 'class', 'error' );
 								$valid = false;
 							}
 						}
 					} else {
 						if ( ! $element->isValid( $value ) ) {
-							$element->setAttribute('class', 'error');
+							$element->setAttribute( 'class', 'error' );
 							$valid = false;
 						}
 					}
@@ -465,7 +468,16 @@ class Form extends Base {
 		if ( $this->ajax ) {
 			echo <<<JS
 		jQuery(document.body).on('submit', '#$id', function (event) {
+		    var formIsInitialized = jQuery(this).data('initialize');
+		    var formSlug = '$form_slug';
+		    console.log(formSlug);
+		    var hasError = (buddyformsGlobal && buddyformsGlobal[formSlug] && buddyformsGlobal[formSlug].hasOwnProperty('errors'));
+		    console.log(hasError);
+		    if(typeof formIsInitialized !== 'undefined' && !hasError){
+		        return false;
+		    }
             event.preventDefault();
+            console.log('internal submit');
             if(BuddyFormsHooks){
                 var formTargetStatus = 'publish';
                 var formTargetStatusElement = jQuery(this).find("button[type=submit]:focus" );
@@ -473,7 +485,7 @@ class Form extends Base {
                     formTargetStatus = formTargetStatusElement.attr('data-status');
                 }
                 BuddyFormsHooks.doAction('buddyforms:submit', [jQuery(this), event]);
-            	BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
+                BuddyFormsHooks.doAction('buddyforms:form:render', ["$form_slug", $prevent, "$this->ajax", "$method", formTargetStatus]);
             } else {
                 alert('Error, contact the admin!');
             }

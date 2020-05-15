@@ -134,7 +134,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		if ( $wp_query->query_vars['bf_action'] == 'edit' ) {
 			$the_post_form_slug = get_post_meta( $post_id, '_bf_form_slug', true );
 			if ( $the_post_form_slug !== $form_slug ) {
-				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
+				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
 					echo $echo_content;
@@ -146,7 +146,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 			}
 			//Check if the post to edit match with the form setting
 			if ( $the_post->post_type !== $post_type ) {
-				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
+				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
 					echo $echo_content;
@@ -177,7 +177,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 			$user_can_edit = apply_filters( 'buddyforms_user_can_edit', $user_can_edit, $form_slug, $post_id );
 
 			if ( $user_can_edit == false ) {
-				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
+				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
 					echo $echo_content;

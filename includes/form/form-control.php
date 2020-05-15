@@ -250,42 +250,6 @@ function buddyforms_process_submission( $args = array() ) {
 		do_action( 'buddyforms_process_submission_end', $args );
 	}
 
-	// Check if user is logged in and if not check if registration during submission is enabled.
-	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
-
-		// ok let us try to register a user
-		$user_id = buddyforms_wp_insert_user();
-
-		// Check if registration was successful
-		if ( ! $user_id ) {
-			$args = array(
-				'hasError'  => true,
-				'form_slug' => $form_slug,
-			);
-
-			return $args;
-		}
-		if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && ! empty( $user_data ) ) {
-			/**
-			 * Avoid save user meta data.
-			 *
-			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
-			 *
-			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
-			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
-			 * @param array $data This parameter holds the information what wil be saved.
-			 *
-			 * @since 2.1.7
-			 *
-			 */
-			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
-			if ( $save_usermeta ) {
-				// Save the Browser user data
-				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
-			}
-		}
-	}
-
 	// Ok let us start processing the post form
 	do_action( 'buddyforms_process_submission_start', $args );
 
@@ -311,6 +275,43 @@ function buddyforms_process_submission( $args = array() ) {
 				);
 
 				return $args;
+			}
+		}
+	}
+
+	// Check if user is logged in and if not check if registration during submission is enabled.
+	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
+		// ok let us try to register a user
+		$user_id = buddyforms_wp_insert_user();
+		// Check if registration was successful
+		if ( ! $user_id ) {
+			$args = array(
+				'hasError'  => true,
+				'form_slug' => $form_slug,
+			);
+
+			return $args;
+		}
+		//Assign the created post to the new register author
+		$the_post->post_author = $user_id;
+
+		if ( buddyforms_core_fs()->is_paying_or_trial__premium_only() && ! empty( $user_data ) ) {
+			/**
+			 * Avoid save user meta data.
+			 *
+			 * This hook prevent buddyforms plugin to save user meta. Is important to use it if you like to save the user meta with your own plugin.
+			 *
+			 * @param boolean $grant This parameter determine if the data will be saved by buddyforms functions.
+			 * @param string $type The type of information for the next parameter. Possible values is 'browser data' and 'field'.
+			 * @param array $data This parameter holds the information what wil be saved.
+			 *
+			 * @since 2.1.7
+			 *
+			 */
+			$save_usermeta = apply_filters( 'buddyforms_not_save_usermeta', true, 'browser_data', $user_data );
+			if ( $save_usermeta ) {
+				// Save the Browser user data
+				add_user_meta( $user_id, 'buddyforms_browser_user_data', $user_data, true );
 			}
 		}
 	}
@@ -361,6 +362,16 @@ function buddyforms_process_submission( $args = array() ) {
 		$args = array(
 			'hasError'      => true,
 			'error_message' => apply_filters( 'buddyforms_user_role_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
+		);
+
+		return $args;
+	}
+
+	$process_submission_ok = apply_filters( 'buddyforms_process_submission_ok', true, $form_slug, $post_id );
+	if ( $process_submission_ok == false ) {
+		$args = array(
+			'hasError'      => true,
+			'error_message' => apply_filters( 'buddyforms_process_submission_ok_error_message', __( 'Sorry you are not allow to submit this Form.', 'buddyforms' ), $form_slug, $post_id ),
 		);
 
 		return $args;
@@ -442,6 +453,8 @@ function buddyforms_process_submission( $args = array() ) {
 					$have_user_fields = true;
 					break;
 				}
+			}
+			foreach ( $customfields as $customfield ) {
 				if ( in_array( $customfield['type'], array( 'category' ) ) ) {
 					$args['has_post_category'] = true;
 					break;
@@ -517,6 +530,7 @@ function buddyforms_process_submission( $args = array() ) {
 	$args = array_merge( $args, $args2 );
 
 	do_action( 'buddyforms_process_submission_end', $args );
+	do_action( 'buddyforms_after_submission_end', $args );
 
 	if ( buddyforms_is_multisite() ) {
 		restore_current_blog();
@@ -635,14 +649,15 @@ function buddyforms_get_field_value_from_string( $string, $post_id, $form_slug, 
 	if ( false !== strpos( $string, '[' ) ) {
 		$matches_fields_slugs = buddyforms_extract_form_fields_shortcode( $form_slug, $string );
 
-		if ( ! empty( $matches_fields_slugs ) && ! empty( $matches_fields_slugs[1] ) ) {
-			foreach ( $matches_fields_slugs[1] as $target_slug ) {
-				if ( empty( $target_slug ) ) {
+		if ( ! empty( $matches_fields_slugs ) && ! empty( $matches_fields_slugs[2] ) ) {
+			foreach ( $matches_fields_slugs[2] as $target_key => $target_slug ) {
+				if ( empty( $target_slug ) || empty( $matches_fields_slugs[0][ $target_key ] ) ) {
 					continue;
 				}
+				$shortcode_string   = $matches_fields_slugs[0][ $target_key ];
 				$result_field       = buddyforms_get_field_with_meta( $form_slug, $post_id, $target_slug, $full_string );
 				$field_result_value = ! empty( $result_field['value'] ) ? $result_field['value'] : apply_filters( 'buddyforms_field_shortcode_empty_value', '', $result_field, $form_slug, $post_id, $target_slug );
-				$string             = buddyforms_replace_shortcode_for_value( $string, sprintf( "[%s]", $target_slug ), apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
+				$string             = buddyforms_replace_shortcode_for_value( $string, $shortcode_string, apply_filters( 'buddyforms_field_shortcode_value', $field_result_value, $form_slug, $post_id, $target_slug, $result_field ) );
 			}
 		}
 	}
@@ -701,7 +716,7 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
 
 	$result = wp_cache_get( 'buddyforms_get_post_field_meta_' . $form_slug . '_' . $fields_key, 'buddyforms' );
 	if ( $result === false ) {
-		$fields_slugs = array();
+		$fields_slugs = array( 'if' );
 		foreach ( $custom_fields as $custom_field ) {
 			if ( isset( $custom_field['slug'] ) ) {
 				$slug = $custom_field['slug'];
@@ -713,8 +728,18 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
 
 			$fields_slugs[] = $slug;
 		}
-		$field_pattern = join( '|', $fields_slugs );
-		$result        = buddyforms_extract_all_shortcode( $string, $field_pattern );
+
+		$result = buddyforms_extract_all_shortcode( $string, $fields_slugs );
+
+		//Process shortcode tags
+		if ( ! empty( $result ) && ! empty( $result[2] ) ) {
+			foreach ( $result[2] as $target => $shortcode_name ) {
+				if ( ! empty( $shortcode_name ) && ! empty( $result[3][ $target ] ) ) {
+					$attr_str             = html_entity_decode( $result[3][ $target ] );
+					$result[3][ $target ] = shortcode_parse_atts( $attr_str );
+				}
+			}
+		}
 
 		wp_cache_set( 'buddyforms_get_post_field_meta_' . $form_slug . '_' . $fields_key, $result, 'buddyforms' );
 	}
@@ -726,17 +751,16 @@ function buddyforms_extract_form_fields_shortcode( $form_slug, $string ) {
  * Extract all shortcodes from the given string. Ideally use to extract the fields slugs from strings.
  *
  * @param $string
- * @param string $field_pattern
+ * @param $fields_slugs
  *
  * @return mixed
  *
  * @since 2.4.1
- *
  */
-function buddyforms_extract_all_shortcode( $string, $field_pattern = '.*?' ) {
-	$pattern = sprintf( "/\\[(%s)(\\s.*?)?\\]/", $field_pattern );
+function buddyforms_extract_all_shortcode( $string, $fields_slugs ) {
+	$pattern = get_shortcode_regex( $fields_slugs );
 	$matches = array();
-	preg_match_all( $pattern, $string, $matches );
+	preg_match_all( '/' . $pattern . '/', $string, $matches );
 
 	return $matches;
 }
@@ -750,11 +774,14 @@ function buddyforms_extract_all_shortcode( $string, $field_pattern = '.*?' ) {
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return array
  * @since 2.4.1
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $full_string = false ) {
+function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $full_string = false, $html = true ) {
 	if ( ! isset( $form_slug ) || ! isset( $post_id ) ) {
 		return array();
 	}
@@ -763,11 +790,15 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $ful
 		return array();
 	}
 
+	if ( in_array( $field_slug, array( 'captcha' ) ) ) {
+		return array();
+	}
+
 	$field_with_value_result = wp_cache_get( 'buddyforms_get_field_with_meta_' . $form_slug . '_' . $post_id . '_' . $field_slug, 'buddyforms' );
 
 	if ( $field_with_value_result === false ) {
 		$form_fields = $buddyforms[ $form_slug ]['form_fields'];
-		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields, $full_string );
+		$form_fields = buddyforms_get_post_field_meta( $post_id, $form_fields, $full_string, $html );
 		foreach ( $form_fields as $custom_field ) {
 			if ( isset( $custom_field['slug'] ) ) {
 				$slug = $custom_field['slug'];
@@ -796,11 +827,14 @@ function buddyforms_get_field_with_meta( $form_slug, $post_id, $field_slug, $ful
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return array
  * @since 2.4.1
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string = false ) {
+function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string = false, $html = true ) {
 	if ( ! isset( $custom_fields ) ) {
 		return $post_id;
 	}
@@ -820,12 +854,16 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
 				$slug = buddyforms_sanitize_slug( $custom_field['name'] );
 			}
 
+			if ( in_array( $slug, apply_filters( 'buddyforms_submission_exclude_columns', array( 'user_pass', 'captcha' ) ) ) ) {
+				continue;
+			}
+
 			$meta_value = get_post_meta( $post_id, $slug, true );
 
 			$post = get_post( $post_id );
 
 			//Map field with his meta values
-			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string );
+			$meta_value = buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string, $html );
 
 			$result_custom_fields[ $field_id ]['value'] = $meta_value;
 		}
@@ -846,11 +884,24 @@ function buddyforms_get_post_field_meta( $post_id, $custom_fields, $full_string 
  *
  * @param bool $full_string
  *
+ * @param bool $html
+ *
  * @return false|string
  * @since 2.5.2
  * @since 2.5.17 Added the $full_string parameter to avoid ellipsis
+ * @since 2.5.19 Added the $html parameter to avoid html output
  */
-function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false ) {
+function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_value, $slug, $full_string = false, $html = true ) {
+	$author = false;
+	if ( in_array( $custom_field['type'], buddyforms_user_fields_array() ) ) {
+		$author_id = ( ! empty( $post->post_author ) ) ? $post->post_author : 0;
+		if ( ! empty( $author_id ) ) {
+			$author = get_user_by( 'ID', $author_id );
+		}
+	}
+
+	$html = apply_filters( 'buddyforms_force_field_html', $html, $post_id, $custom_field, $post, $meta_value, $slug );
+
 	switch ( $custom_field['type'] ) {
 		case 'title':
 			$meta_value = get_the_title( $post_id );
@@ -909,12 +960,38 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$meta_value = buddyforms_get_post_status_readable( get_post_status( $post_id ) );
 			break;
 		case 'user_login':
-			$author_id = ( ! empty( $post->post_author ) ) ? $post->post_author : 0;
-			if ( ! empty( $author_id ) ) {
-				$author = get_user_by( 'ID', $author_id );
-				if ( $author instanceof WP_User ) {
-					$meta_value = $author->user_login;
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->user_login;
+			}
+			break;
+		case 'user_email':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->user_email;
+			}
+			break;
+		case 'user_first':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->first_name;
+			}
+			break;
+		case 'user_last':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->last_name;
+			}
+			break;
+		case 'user_website':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				if ( $html ) {
+					$meta_value = "<p><a href='" . esc_url( $author->user_url ) . "' " . $custom_field['name'] . ">" . esc_attr( $author->user_url ) . " </a></p>";
+				} else {
+					$meta_value = esc_url( $author->user_url );
 				}
+//				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
+			}
+			break;
+		case 'user_bio':
+			if ( ! empty( $author ) && $author instanceof WP_User ) {
+				$meta_value = $author->description;
 			}
 			break;
 		case 'taxonomy':
@@ -931,10 +1008,11 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			}
 			break;
 		case 'link':
-			$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
-			break;
-		case 'user_website':
-			$meta_value = "<p><a href='" . $meta_value . "' " . $custom_field['name'] . ">" . $meta_value . " </a></p>";
+			if ( $html ) {
+				$meta_value = "<p><a href='" . esc_url( $meta_value ) . "' " . $custom_field['name'] . ">" . esc_attr( $meta_value ) . " </a></p>";
+			} else {
+				$meta_value = esc_url( $meta_value );
+			}
 			break;
 		case 'gdpr':
 			$gdpr_empty  = apply_filters( 'buddyforms_get_gdpr_field_meta_empty', __( '<p>Empty Agreement(s)</p>', 'buddyforms' ), $meta_value, $post_id, $slug );
@@ -961,7 +1039,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			break;
 	}
 
-	return apply_filters( 'buddyforms_get_post_field_meta', $meta_value, $post_id, $slug );
+	return apply_filters( 'buddyforms_get_post_field_meta', $meta_value, $post_id, $slug, $custom_field );
 }
 
 /**
@@ -1175,7 +1253,6 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 						}
 					}
 				}
-
 				// Add the new terms to the taxonomy
 				wp_set_object_terms( $post_id, $cat_string, $customfield['taxonomy'], true );
 
