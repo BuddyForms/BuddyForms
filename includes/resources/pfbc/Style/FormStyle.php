@@ -11,6 +11,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			// only output CSS for labels if the option to disable CSS is unchecked
 	if( $bfdesign['labels_disable_css'] == '' ) { ?>
 	/* Design Options - Labels */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label {
 		margin-right: 10px;
 	<?php
@@ -42,12 +43,18 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	// only output CSS for these form elements if the option to disable CSS is unchecked
 	if( $bfdesign['other_elements_disable_css'] == '' ) { ?>
 	/* Design Options - Form Elements */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .radio,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .radio {
 		display: <?php echo esc_attr( $bfdesign['radio_button_alignment']); ?>;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .checkbox,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .checkbox {
 		display: <?php echo esc_attr( $bfdesign['checkbox_alignment']); ?>;
+	}
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .checkbox label.settings-input span,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .checkbox label.settings-input span {
+		margin-left: 5px;
 	}
 
 	<?php } ?>
@@ -56,21 +63,27 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	// only output CSS for form elements if the option to disable CSS is unchecked
 	if( empty($bfdesign['field_disable_css']) ) { ?>
 	/* Design Options - Text Fields */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"],
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"] {
-		width: 95%;
+		width: 100%;
+		padding-left: 0;
+		padding-right: 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
 		display: block;
 		width: 100%;
+		border: 1px solid #aaa;
 
 	<?php
 			// Padding
 			if( !empty($bfdesign['field_padding']) ) {
-				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
+				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
 			} else {
-				echo 'padding-left: 5px;';
+				echo 'padding: ' . 5 . 'px;';
 			}
 			// Background Color
 			if( $bfdesign['field_background_color']['style'] == 'color' ) {
@@ -99,10 +112,19 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			// Font Color
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
-			} ?> min-height: 40px;
+			} ?>
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.settings-input.form-control,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.settings-input.form-control,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"],
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"] {
+		border: none;
 	}
 
 	/* Design Options - Text Fields Active */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea:focus,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:focus,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea:focus,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:focus {
 	<?php
@@ -124,6 +146,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			} ?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:disabled,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control:disabled {
 		background: rgba(255, 255, 255, 0.5);
 		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -133,7 +156,9 @@ $css_form_class = 'buddyforms-' . $form_slug;
 
 	<?php // Placeholder Font Color
 	if( $bfdesign['field_placeholder_font_color']['style'] == 'color' ) {
-		echo '.the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input textarea::placeholder, .the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input .form-control::placeholder { color: ' . $bfdesign['field_placeholder_font_color']['color'] . '; }';
+		echo '/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input textarea::placeholder, /* Divi */ .et-db #et-boc .et-l .the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input .form-control::placeholder,';
+		echo '.the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input textarea::placeholder, .the_buddyforms_form form#'.esc_attr($css_form_id).' .bf-input .form-control::placeholder {';
+		echo 'color: ' . $bfdesign['field_placeholder_font_color']['color'] . '; }';
 	} ?>
 
 	<?php } ?>
@@ -144,6 +169,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	if( empty($bfdesign['desc_disable_css']) ) { ?>
 
 	/* Design Options - Descriptions */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block {
 		padding: 5px 0;
@@ -171,6 +198,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	// only output CSS for buttons if the option to disable CSS is unchecked
 	if( empty($bfdesign['button_disable_css']) ) { ?>
 	/* Design Options - Buttons */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
 		margin-bottom: 10px;
 	<?php
@@ -213,6 +241,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			} ?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions {
 		text-align: <?php echo esc_attr( $bfdesign['button_alignment']); ?>;
 	}
@@ -220,6 +249,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/*Button Width Behaviour -- if always on block*/
 	<?php if( $bfdesign['button_width'] != 'block' ) : ?>
 	@media (min-width: 768px) {
+		/* Divi */ .et-db #et-boc .et-l .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft,
 		.<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
 			display: inline;
 			width: auto;
@@ -229,6 +259,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	<?php endif; ?>
 
 	/* Design Options - Buttons Hover State */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:hover,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft:hover,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:focus,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft:focus,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:hover,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft:hover,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit:focus,
@@ -257,30 +291,38 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	<?php echo esc_attr( $bfdesign['custom_css']); ?>
 	/* The BuddyForms Form */
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
 		margin-top: 20px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
 		margin: 0 -15px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .bf_field_group,
 	.bf_field_group {
 		margin: 15px 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs {
 		margin: 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs .wp-editor-container table tr,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs .wp-editor-container table tr {
 		background: transparent;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> label,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> label {
 		display: block;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block {
 		display: block;
@@ -289,35 +331,48 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		font-weight: normal;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .revision,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .revision {
 		overflow: auto;
 		overflow-x: hidden;
 		margin: 40px 0 20px 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions {
 		list-style: none outside none;
 		margin: 10px 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li {
 		margin: 5px 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li img,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> ul.post-revisions li img {
 		margin-right: 10px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .post-revisions li,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .post-revisions li {
 		float: left;
 		padding: 5px;
 		width: 100%;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l #loginform input.input,
 	#loginform input.input {
 		max-width: 300px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l #loginform input.input,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form textarea,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=url],
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=link],
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=text],
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=email],
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=password],
 	#loginform input.input,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form textarea,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=url],
@@ -337,6 +392,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		padding: 6px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-xs-12,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-xs-12 {
 		position: relative;
 		min-height: 1px;
@@ -347,6 +403,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		box-sizing: border-box;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9 {
 		position: relative;
 		min-height: 1px;
@@ -357,6 +414,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		box-sizing: border-box;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8 {
 		position: relative;
 		min-height: 1px;
@@ -367,6 +425,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		box-sizing: border-box;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6 {
 		position: relative;
 		min-height: 1px;
@@ -377,6 +436,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		box-sizing: border-box;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4 {
 		position: relative;
 		min-height: 1px;
@@ -387,6 +447,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		box-sizing: border-box;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3 {
 		position: relative;
 		min-height: 1px;
@@ -398,26 +459,37 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	}
 
 	@media (min-width: 992px) {
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9 {
 			width: 75%;
 		}
 
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8 {
 			width: 66.66%;
 		}
 
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6 {
 			width: 50%;
 		}
 
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4 {
 			width: 33.33%;
 		}
 
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3 {
 			width: 25%;
 		}
 
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6.bf-start-row,
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4.bf-start-row,
+		/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3.bf-start-row,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
 		.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
@@ -428,32 +500,42 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		}
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #insert-media-button,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #insert-media-button {
 		padding: 1px 7px 1px 5px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-tools .wp-switch-editor,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-tools .wp-switch-editor {
 		height: auto !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container.error,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container.error {
 		border: 1px solid red !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container {
 		border: 1px solid rgba(0, 0, 0, 0.2) !important;
 
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container iframe,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> #wp-buddyforms_form_content-editor-container iframe {
 		width: 99% !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .dropzone .dz-message {
 		text-align: left;
 	}
 
 	/* --- Form Errors --- */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group button.error,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group textarea.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group input.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group select.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group button.error,
@@ -461,23 +543,29 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		border: 1px solid red !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group div.dropzone.dz-clickable.error {
 		border: 1px solid red !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.a textarea.error {
 		border: 1px solid red !important;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group label.error {
 		color: red;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .checkbox label label.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .checkbox label label.error {
 		color: red;
 		font-weight: bold;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--single.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--multiple.error,
 	html body .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group span.select2-selection.select2-selection--single.error {
 		border: 1px solid red !important;
@@ -485,6 +573,12 @@ $css_form_class = 'buddyforms-' . $form_slug;
 
 	/* --- Form Errors --- */
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-6.bf-start-row,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-4.bf-start-row,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-3.bf-start-row,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-12.bf-start-row,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-9.bf-start-row,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-md-8.bf-start-row,
@@ -494,6 +588,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		clear: both;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input #comments.form-control,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea, .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input #comments.form-control {
 		display: block;
 		width: 100%;
@@ -502,51 +597,74 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		float: unset;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l #content .buddypress-wrap .the_buddyforms_form .standard-form input[type="search"],
 	#content .buddypress-wrap .the_buddyforms_form .standard-form input[type="search"] {
 		background: #fff;
 		border: unset;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l #content .buddypress-wrap .the_buddyforms_form .standard-form li.select2-selection__choice,
 	#content .buddypress-wrap .the_buddyforms_form .standard-form li.select2-selection__choice {
 		padding: 0 5px !important;
+		list-style: none;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.bf-input .select2-selection,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.bf-input .select2-selection,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection {
-		min-height: 40px;
-		font-size: 15px;
-		float: unset;
 		width: 100%;
-		background-color: #fafafa !important;
+		float: unset;
+		height: auto;
+		display: flex;
+		font-size: 15px;
 		appearance: none;
-		height: 54px !important;
+		min-height: unset;
+		border: 1px solid #aaa;
+		background-color: #fafafa !important;
+		box-sizing: content-box !important;
+		<?php
+			if(!empty($bfdesign['field_padding'])) {
+				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
+				echo 'min-height: calc(52px  - ' . ($bfdesign['field_padding'] * 2) + 5 . 'px);';
+				echo 'width: calc(100% - ' . $bfdesign['field_padding'] * 2 . 'px) !important;';
+			}
+		?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__arrow:before,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__arrow:before {
 		content: "" !important;
 		width: 100% !important;
 		display: block;
 		height: 100%;
 		line-height: 35px;
-
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--single .select2-selection__arrow,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--single .select2-selection__arrow {
 		height: 100%;
-		position: absolute;
 		top: 1px;
 		right: 0;
 		width: 20px;
+		position: absolute;
 		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
 		background-repeat: no-repeat, repeat;
 		background-position: right .7em top 50%, 0 0;
 		background-size: .65em auto, 100%;
+		<?php
+			if(!empty($bfdesign['field_padding'])) {
+				echo 'right: ' . $bfdesign['field_padding'] . 'px;';
+			}
+		?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--single .select2-selection__arrow b,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--single .select2-selection__arrow b {
 		display: none;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__choice,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__choice {
 		background-color: #e4e4e4;
 		border: 1px solid #aaa;
@@ -556,129 +674,181 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		margin-right: 5px;
 		margin-top: 5px;
 		padding: 0 5px;
-		height: 35px;
-		line-height: 35px;
+		height: 24px;
+		line-height: 150%;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.acf-field .select2-selection--multiple .select2-selection__rendered li,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group.acf-field .select2-selection--multiple .select2-selection__rendered li {
 		line-height: 30px;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li {
-		height: 35px;
-		line-height: 15px;
+		height: auto;
+		list-style: none;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li .select2-search__field,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+		padding: 0;
+		height: 100%;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear {
 		right: 0;
-		top: 1px;
+		top: 0;
+		bottom: 0px;
+		position: absolute;
 		margin-left: 5px !important;
 		font-size: 1rem;
+		display: flex;
+    align-items: center;
+		<?php
+			if(!empty($bfdesign['field_padding'])) {
+				echo 'right: ' . ($bfdesign['field_padding'] + 35) . 'px;';
+			}
+		?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice {
 		color: #444;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice__remove,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection.select2-selection--multiple .select2-selection__choice__remove {
 		color: #666666;
 		cursor: pointer;
-		display: inline-block;
 		font-weight: bold;
 		margin-right: 5px;
+		display: inline-block;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__clear,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__clear {
-		cursor: pointer;
+		right: 10px;
 		float: right;
-		font-weight: bold;
-		margin-top: 5px;
-		line-height: 50px;
+		margin-top: -4;
 		font-size: 1em;
+		cursor: pointer;
+		font-weight: bold;
+		position: absolute;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__placeholder,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__placeholder {
 		color: #666666;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection.select2-selection--multiple .select2-selection__rendered,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection.select2-selection--multiple .select2-selection__rendered {
-		width: 97%;
-		overflow-y: auto;
+		padding: 0;
+		height: auto;
+		margin: -5px 0;
+		overflow: hidden;
+		line-height: 35px;
+		padding-right: 40px;
+		box-sizing: content-box;
+		width: calc(100% - 40px);
+		position: relative;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__rendered {
-		height: 54px;
-		position: absolute;
-		line-height: 50px;
+		padding: 0;
+		height: auto;
+		position: static;
+		line-height: 20px;
+		<?php
+			if(!empty($bfdesign['field_padding'])) {
+				//echo 'right: ' . $bfdesign['field_padding'] . 'px;';
+			}
+		?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field {
 		color: #666666;
+		line-height: unset;
 		background-color: #fafafa !important;
-		line-height: 40px;
 	}
 
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::-webkit-input-placeholder { /* Edge */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::-webkit-input-placeholder,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::-webkit-input-placeholder {
+		/* Edge */
 		color: #666666;
 	}
 
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field:-ms-input-placeholder,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field:-ms-input-placeholder {
+		/* Internet Explorer 10-11 */
 		color: #666666;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::placeholder,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field::placeholder {
 		color: #666666;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control {
 		display: block;
-		width: 100%;
-		max-width: 100%;
-		box-sizing: border-box;
 		margin: 0;
+		width: 100%;
+		padding: 5px;
+		appearance: none;
+		overflow: visible;
+		line-height: revert;
 		-moz-appearance: none;
 		-webkit-appearance: none;
-		border: 1px solid #aaa;
-		border-radius: 4px;
-		appearance: none;
 		background-color: #fafafa;
-		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+		background-size: .65em auto, 100%;
+		box-sizing: border-box !important;
 		background-repeat: no-repeat, repeat;
 		background-position: right .7em top 50%, 0 0;
-		background-size: .65em auto, 100%;
-	<?php
-	if( !empty($bfdesign['field_padding'])) {
-		echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
-	} else {
-		echo 'padding-left: 5px;';
-	}
-	?>
+		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+		<?php
+			if (!empty($bfdesign['field_padding'])) {
+				echo 'padding: ' . $bfdesign['field_padding'] . 'px !important;';
+				//echo 'width: calc(100% - ' . ($bfdesign['field_padding'] * 2) . 'px) !important;';
+				echo 'background-position: right ' . $bfdesign['field_padding'] . 'px top 50%, 0 0 !important;';
+			}
+		?>
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control::-ms-expand,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input select.form-control::-ms-expand {
 		display: none;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'],
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .radio > label, .bf_field_group .radio > label > input[type='radio'] {
 		cursor: pointer;
 	}
 
 	/* Avoid red style over the elements comming from BuddyPress */
+	/* Divi */ .et-db #et-boc .et-l .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
+	/* Divi */ .et-db #et-boc .et-l .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid,
 	.buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form input[required]:invalid,
 	.buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form textarea[required]:invalid {
 		border-color: #d6d6d6;
 	}
 
 	/* Fix to avoid BP override the width of the MCE editor on the text tab */
+	/* Divi */ .et-db #et-boc .et-l .buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form .wp-editor-wrap input:not(.small),
 	.buddypress-wrap .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>.standard-form .wp-editor-wrap input:not(.small) {
 		width: initial;
 	}
 
 	/* Fix to avoid BP override the width of text inputs */
+	/* Divi */ .et-db #et-boc .et-l #buddypress .the_buddyforms_form .standard-form input[type="text"],
 	#buddypress .the_buddyforms_form .standard-form input[type="text"] {
 		width: 100%;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l #content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset,
 	#content .the_buddyforms_form form.<?php echo esc_attr($css_form_class) ?> fieldset {
 		border: 1px solid #d6d6d6;
 		padding: 0;
@@ -690,6 +860,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	}
 
 	/* Solution to avoid the select2 dropdown not left behind the popups */
+	/* Divi */ .et-db #et-boc .et-l span.select2-dropdown.buddyforms-dropdown,
 	span.select2-dropdown.buddyforms-dropdown {
 		z-index: 200000;
 	}

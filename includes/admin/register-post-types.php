@@ -544,7 +544,7 @@ function buddyforms_hide_publishing_actions() {
 					<?php
 					$tmp = '<div id="buddyforms-adminhead-wizard" style="font-size: 52px; margin-top: -5px; float: left; margin-right: 15px;" class="tk-icon-buddyforms"></div> BuddyForms';
 					if ( ! isset( $_GET['wizard'] ) ) {
-						$tmp .= ' <a href="post-new.php?post_type=buddyforms" class="page-title-action">' . __( 'Add New', 'buddyforms' ) . '</a> <a class="page-title-action" id="btn-open">' . __( 'Documentation', 'buddyforms' ) . '</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">' . __( 'Contact Us', 'buddyforms' ) . '</a>';
+						$tmp .= ' <a href="post-new.php?post_type=buddyforms" class="page-title-action">' . __( 'Add New', 'buddyforms' ) . '</a> <a class="page-title-action" href="edit.php?post_type=buddyforms&page=buddyforms_settings&tab=import" id="btn-open">' . __( 'Import', 'buddyforms' ) . '</a> <a class="page-title-action" href="https://docs.buddyforms.com/" target="_blank" id="btn-open">' . __( 'Documentation', 'buddyforms' ) . '</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">' . __( 'Contact Us', 'buddyforms' ) . '</a>';
 					}
 					echo "var h1 = jQuery('body').find('h1:first');";
 

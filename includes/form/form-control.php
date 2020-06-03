@@ -1048,16 +1048,22 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
  * @param $string
  * @param int $length
  * @param bool $echo
+ * @param bool $force
  *
  * @return string|void
+ * @since 2.5.20 Added a flag to force to break the srting to given position
  * @since 2.5.2
- *
  */
-function buddyforms_add_ellipsis( $string, $length = 25, $echo = false ) {
+function buddyforms_add_ellipsis( $string, $length = 25, $echo = false, $force = false ) {
 	$str = $string;
 	if ( strlen( $string ) > $length ) {
 		$str = explode( "\n", wordwrap( $string, $length ) );
-		$str = $str[0] . '...';
+		if ( $force ) {
+			$str = substr( $str[0], 0, $length );
+		} else {
+			$str = $str[0];
+		}
+		$str .= '...';
 	}
 
 	if ( $echo ) {
