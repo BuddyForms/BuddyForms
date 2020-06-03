@@ -83,7 +83,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			if( !empty($bfdesign['field_padding']) ) {
 				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
 			} else {
-				echo 'padding-left: 5px;';
+				echo 'padding: ' . 5 . 'px;';
 			}
 			// Background Color
 			if( $bfdesign['field_background_color']['style'] == 'color' ) {
@@ -113,7 +113,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
 			} ?>
-			min-height: 40px;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.settings-input.form-control,
@@ -627,7 +626,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		<?php
 			if(!empty($bfdesign['field_padding'])) {
 				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
-				echo 'min-height: calc(52px  - ' . $bfdesign['field_padding'] * 2 . 'px);';
+				echo 'min-height: calc(52px  - ' . ($bfdesign['field_padding'] * 2) + 5 . 'px);';
 				echo 'width: calc(100% - ' . $bfdesign['field_padding'] * 2 . 'px) !important;';
 			}
 		?>
@@ -687,8 +686,13 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li {
 		height: auto;
-		line-height: unset;
 		list-style: none;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li .select2-search__field,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+		padding: 0;
+		height: 100%;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear,
