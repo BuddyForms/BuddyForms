@@ -626,7 +626,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		<?php
 			if(!empty($bfdesign['field_padding'])) {
 				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
-				echo 'min-height: calc(52px  - ' . ($bfdesign['field_padding'] * 2) + 5 . 'px);';
+				echo 'min-height: calc(52px  - ' . (($bfdesign['field_padding'] * 2) + 5) . 'px);';
 				echo 'width: calc(100% - ' . $bfdesign['field_padding'] * 2 . 'px) !important;';
 			}
 		?>
