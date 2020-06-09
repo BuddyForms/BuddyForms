@@ -1101,7 +1101,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 									        jQuery(this).data("placeholder");
 									    },
 									    allowClear: true,
-									    tokenSeparators: [',']
+									    tokenSeparators: [','],
 								       	{$minimumResultsForSearch}
 								       	{$maximumSelectionLength}
 								       	{$ajax_options}
