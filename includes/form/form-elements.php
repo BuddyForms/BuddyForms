@@ -989,7 +989,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$exclude  = isset( $customfield['taxonomy_exclude'] ) ? implode( ',', $customfield['taxonomy_exclude'] ) : '';
 						$include  = isset( $customfield['taxonomy_include'] ) ? implode( ',', $customfield['taxonomy_include'] ) : '';
 
-						$args          = array(
+						$args = array(
 							'hide_empty'    => 0,
 							'id'            => $field_id,
 							'child_of'      => 0,
@@ -1008,6 +1008,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							'include'       => $include,
 							'allowClear'    => true,
 						);
+
 						$is_required   = isset( $customfield['required'] ) && is_array( $customfield['required'] ) ? true : false;
 						$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 						$placeholder   = ! empty( $customfield['taxonomy_placeholder'] ) ? $customfield['taxonomy_placeholder'] : 'Select an option';
@@ -1054,84 +1055,70 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 						}
 
-						$required = '';
-						if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
-							$required = $form->renderRequired();
-						}
-
-						$minimumResultsForSearch = empty( $customfield['taxonomy_default'] ) ? 'minimumResultsForSearch: -1, ' : '';
-						$tags                    = isset( $customfield['create_new_tax'] ) ? 'tags: true, ' : 'tags: false, ';
-						$maximumSelectionLength  = '';
-						if ( isset( $customfield['multiple'] ) && isset( $customfield['maximumSelectionLength'] ) ) {
-							$maximumSelectionLength = 'maximumSelectionLength: ' . $customfield['maximumSelectionLength'] . ', ';
-						}
-						$ajax_options = '';
-						$is_ajax      = isset( $customfield['ajax'] );
-						if ( $is_ajax ) {
-							if ( isset( $customfield['minimumInputLength'] ) ) {
-								$ajax_options .= 'minimumInputLength: ' . $customfield['minimumInputLength'] . ', ';
-							}
-							$ajax_options .= 'ajax:{ ' .
-							                 'url: "' . admin_url( 'admin-ajax.php' ) . '", ' .
-							                 'delay: 250, ' .
-							                 'dataType: "json", ' .
-							                 'cache: true, ' .
-							                 'method : "POST", ' .
-							                 'data: function (params) { ' .
-							                 'var query = { ' .
-							                 'search: params.term, ' .
-							                 'type: "public", ' .
-							                 'action: "bf_load_taxonomy", ' .
-							                 'nonce: "' . wp_create_nonce( 'bf_tax_loading' ) . '", ' .
-							                 'form_slug: "' . $form_slug . '", ' .
-							                 'taxonomy: "' . $taxonomy . '", ' .
-							                 'order: "' . $order . '", ' .
-							                 'exclude: "' . $exclude . '", ' .
-							                 'include: "' . $include . '" ' .
-							                 '}; ' .
-
-							                 'return query; ' .
-							                 ' } ' .
-							                 '}, ';
-						}
-
-						$label_name = $labels_layout === 'label' ? $name . $required : '';
-						$dropdown   = '
-						<script>
-							jQuery(document).ready(function () {
-							    jQuery(".bf-select2-' . $field_id . '").select2({
-							            ' . $minimumResultsForSearch . '
-										' . $maximumSelectionLength . '
-										' . $ajax_options . '
-										    placeholder: function(){
-										        jQuery(this).data("placeholder");
-										    },
-                                     allowClear: true,
-							        ' . $tags . '
-							        tokenSeparators: [\',\']
-							    });
-							    jQuery(".bf-select2-' . $field_id . '").on("change", function () {
-				                     var formSlug = jQuery(this).data("form");
-				                     if(formSlug){
-			                         	if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-				                        	jQuery(\'form[id="buddyforms_form_\'+formSlug+\'"]\').valid();
-				                        }
-				                     }
-				                });
-						    });
-						</script>
-						
-	                        <div class="bf_inputs bf-input">' . $dropdown . '</div>
-		                	
-		                ';
-
 						if ( isset( $customfield['hidden_field'] ) ) {
 							if ( isset( $customfield['taxonomy_default'] ) ) {
 								foreach ( $customfield['taxonomy_default'] as $key => $tax ) {
+									unset($customfield['type']);
+									unset($customfield['name']);
 									$form->addElement( new Element_Hidden( $slug . '[' . $key . ']', $tax, $customfield ) );
 								}
 							}
 						} else {
+							$required = '';
+							if ( isset( $customfield['required'] ) && is_array( $customfield['required'] ) ) {
+								$required = $form->renderRequired();
+							}
+
+							$minimumResultsForSearch = empty( $customfield['taxonomy_default'] ) ? 'minimumResultsForSearch: -1, ' : '';
+							$tags                    = isset( $customfield['create_new_tax'] ) ? 'tags: true, ' : 'tags: false, ';
+							$maximumSelectionLength  = '';
+							if ( isset( $customfield['multiple'] ) && isset( $customfield['maximumSelectionLength'] ) ) {
+								$maximumSelectionLength = sprintf( "maximumSelectionLength: %s, ", $customfield['maximumSelectionLength'] );
+							}
+							$ajax_options = '';
+							$is_ajax      = isset( $customfield['ajax'] );
+							if ( $is_ajax ) {
+								if ( isset( $customfield['minimumInputLength'] ) ) {
+									$ajax_options .= sprintf( "minimumInputLength: %s, ", $customfield['minimumInputLength'] );
+								}
+								$ajax_options .= sprintf(
+									"ajax:{ url: \"%s\", delay: 250, dataType: \"json\", cache: true, method : \"POST\", data: function (params) { var query = { search: params.term, type: \"public\", action: \"bf_load_taxonomy\", nonce: \"%s\", form_slug: \"%s\", taxonomy: \"%s\", order: \"%s\", exclude: \"%s\", include: \"%s\" }; return query;  } }, ",
+									admin_url( 'admin-ajax.php' ),
+									wp_create_nonce( 'bf_tax_loading' ),
+									$form_slug,
+									$taxonomy,
+									$order,
+									$exclude,
+									$include
+								);
+							}
+							$label_name = $labels_layout === 'label' ? $name . $required : '';
+							$dropdown   = <<<MARKDOWN
+							<script>
+								jQuery(document).ready(function () {
+								    jQuery(".bf-select2-{$field_id}").select2({
+								    	placeholder: function(){
+									        jQuery(this).data("placeholder");
+									    },
+									    allowClear: true,
+									    tokenSeparators: [',']
+								       	{$minimumResultsForSearch}
+								       	{$maximumSelectionLength}
+								       	{$ajax_options}
+									    {$tags}
+								    });
+								    jQuery(".bf-select2-{$field_id}").on("change", function () {
+					                     var formSlug = jQuery(this).data("form");
+					                     if(formSlug && buddyformsGlobal && buddyformsGlobal[formSlug]){
+				                            if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
+					                            jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
+					                        }
+					                     }
+					                });
+							    });
+							</script>
+	                        <div class="bf_inputs bf-input">{$dropdown}</div>
+MARKDOWN;
 							//Load select2
 							$element = new Element_Select2( $dropdown, $name, $slug, $customfield );
 							$form->addElement( $element );
