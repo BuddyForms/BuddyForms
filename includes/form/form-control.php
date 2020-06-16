@@ -567,7 +567,13 @@ function buddyforms_update_post( $args ) {
 	if ( 'registration' === $form_type && $new_user_id > 0 ) {
 		$new_user = get_user_by( 'ID', $new_user_id );
 		if ( ! empty( $new_user ) && ! is_wp_error( $new_user ) ) {
-			$default_post_title = ! empty( $new_user->user_nicename ) ? $new_user->user_nicename : ! empty( $new_user->user_login ) ? $new_user->user_login : __( 'none', 'buddyforms' );
+			if ( ! empty( $new_user->user_nicename ) ) {
+				$default_post_title = $new_user->user_nicename;
+			} elseif ( ! empty( $new_user->user_login ) ) {
+				$default_post_title = $new_user->user_login;
+			} else {
+				$default_post_title = __( 'none', 'buddyforms' );
+			}
 		}
 	} elseif ( 'contact' === $form_type ) {
 		$default_post_title = ! empty( $_POST['subject'] ) ? stripslashes( $_POST['subject'] ) : __( 'none', 'buddyforms' );
@@ -1048,16 +1054,22 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
  * @param $string
  * @param int $length
  * @param bool $echo
+ * @param bool $force
  *
  * @return string|void
+ * @since 2.5.20 Added a flag to force to break the srting to given position
  * @since 2.5.2
- *
  */
-function buddyforms_add_ellipsis( $string, $length = 25, $echo = false ) {
+function buddyforms_add_ellipsis( $string, $length = 25, $echo = false, $force = false ) {
 	$str = $string;
 	if ( strlen( $string ) > $length ) {
 		$str = explode( "\n", wordwrap( $string, $length ) );
-		$str = $str[0] . '...';
+		if ( $force ) {
+			$str = substr( $str[0], 0, $length );
+		} else {
+			$str = $str[0];
+		}
+		$str .= '...';
 	}
 
 	if ( $echo ) {

@@ -53,10 +53,10 @@ function from_setup_form_type(value) {
             jQuery('.buddyforms-metabox-hide-if-form-type-register').hide();
 
             // Show/Hide the corresponding form elements in the form select
-            jQuery('.bf_show_if_f_type_registration').show();
-            jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
             jQuery('.bf_show_if_f_type_post').hide();
             jQuery('.bf_show_if_f_type_contact').hide();
+            jQuery('.bf_show_if_f_type_registration').show();
+            jQuery('.bf_show_if_f_type_all').show(); // todo: only show correct fields
 
             // Hide after submission post options
             //jQuery('#bf-after-submission-action option[value=display_form]').hide();
@@ -79,10 +79,10 @@ function from_setup_form_type(value) {
             jQuery('.create-content_nav,.permission_nav, .edit-submissions_nav, .bf_show_if_f_type_post, .notifications_nav').show();
 
             // Show the corresponding form elements in the form select
-            jQuery('.bf_show_if_f_type_all').show();
-            jQuery('.bf_show_if_f_type_post').show();
             jQuery('.bf_show_if_f_type_contact').hide();
             jQuery('.bf_show_if_f_type_registration').hide();
+            jQuery('.bf_show_if_f_type_all').show();
+            jQuery('.bf_show_if_f_type_post').show();
 
             break;
     }

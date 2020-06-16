@@ -26,14 +26,16 @@ class Element_Select extends OptionElement {
 		ob_start();
 		$selected_count = array();
 		echo sprintf( "<select %s>", $this->getAttributes( array( "value", "selected" ) ) );
-        echo '<option value=""></option>';
+		if ( ! empty( $this->field_options ) && ! empty( $this->field_options["empty_option"] ) && $this->field_options["empty_option"] ) {
+			echo '<option value=""></option>';
+		}
 		foreach ( $this->options as $value => $text ) {
 			$value            = $this->getOptionValue( $value );
 			$current_selected = in_array( $value, $this->_attributes["value"] );
-			if($current_selected) {
+			if ( $current_selected ) {
 				$selected_count[] = $current_selected;
 			}
-			$selected         = '';
+			$selected = '';
 			if ( empty ( $this->_attributes["multiple"] ) ) {
 				if ( count( $selected_count ) == 1 ) {
 					$selected = selected( $current_selected, true, false );

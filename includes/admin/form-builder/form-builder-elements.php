@@ -684,6 +684,9 @@ function buddyforms_display_form_element( $args ) {
 				'field_id'  => $field_id,
 				'buddyform' => $buddyform
 			);
+			$empty_option                           = isset( $customfield['empty_option'] ) ? $customfield['empty_option'] : 'false';
+            $form_fields['general']['empty_option'] = new Element_Checkbox( '<b>' . __( 'Empty Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][empty_option]", array( 'empty_option' => '<b>' . __( 'Add Blank Option', 'buddyforms' ) . '</b>' ), array( 'value' => $empty_option ) );
+
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
 			break;
 		case 'radiobutton':
