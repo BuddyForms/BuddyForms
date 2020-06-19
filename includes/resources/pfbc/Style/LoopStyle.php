@@ -109,7 +109,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     ul.buddyforms-list .item-status:before {
         background-color: #e3e3e3;
         content: "";
-        padding: 0px 8px;
+        padding: 0px 7.5px;
         border-radius: 50%;
         margin-right: 4px;
     }
@@ -151,7 +151,8 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         min-height: 0;
     }
 
-    .buddyforms-list .edit_links a {
+    .buddyforms-list .edit_links a,
+    .buddyforms_posts_table .edit_links a {
         padding: 3px 8px;
         margin: 0 5px 5px 0;
         display: inline-block;
@@ -167,7 +168,9 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     }
 
     .buddyforms-list .edit_links a:hover,
-    .buddyforms-list .edit_links a:focus {
+    .buddyforms_posts_table .edit_links a:hover,
+    .buddyforms-list .edit_links a:focus,
+    .buddyforms_posts_table .edit_links a:focus {
         border: 1px solid #8f8f8f;
         border: 1px solid rgba(0, 0, 0, 0.4);
     }
@@ -422,7 +425,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
     .buddyforms_posts_table .table-item-status:before {
         background-color: #e3e3e3;
         content: "";
-        padding: 0px 7px;
+        padding: 0px 8.5px;
         border-radius: 50%;
         margin-right: 4px;
     }
