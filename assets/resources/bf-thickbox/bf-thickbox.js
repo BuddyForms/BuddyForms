@@ -8,7 +8,7 @@
 */
 
 if (typeof tb_pathToImage != 'string') {
-    var tb_pathToImage = (buddyformsGlobal && buddyformsGlobal.tb_pathToImage) ? buddyformsGlobal.tb_pathToImage : "/wp-includes/js/thickbox/loadingAnimation.gif";
+    var tb_pathToImage = ( typeof buddyformsGlobal !== "undefined" && buddyformsGlobal.tb_pathToImage) ? buddyformsGlobal.tb_pathToImage : "/wp-includes/js/thickbox/loadingAnimation.gif";
 }
 
 /*!!!!!!!!!!!!!!!!! edit below this line at your own risk !!!!!!!!!!!!!!!!!!!!!!!*/
