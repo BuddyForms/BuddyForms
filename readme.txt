@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.4
-Stable tag: 2.5.20-beta2
+Stable tag: 2.5.21-beta2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,7 +397,14 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.20-beta2 - 22 May 2020 =
+= 2.5.21-beta2 - 1 Jul 2020 =
+* Fixed styles issue for the entries table.
+* Improved the bf-thickbox library.
+* Improve compatibility with PHP 7.4.
+* Fixed a typo code in the Bcc and Cc email headers.
+
+
+= 2.5.20 - 9 Jun 2020 =
 * Fixed the header actions in the list of forms.
 * Fixed boostrap compatibility issue form-control class.
 * Fixed the ellipsis function to force to break the strings.
@@ -405,6 +412,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the hardcoded blank option on the dropdown and added a new settings to make it optional.
 * Improved the form styles.
 * Added compatibility with Divi.
+* Updating freemius.
+* Fixed style in dropdown.
+* Fixed the Category when it suppose to be hidden.
+* Fixed the conditional logic for the Form Builder to show the extra field group.
+* Improved compatibility for PHP 7.4.
 
 = 2.5.19 - 17 May 2020 =
 * Fixed the issue related to the lost of osme core styles when the form builder was loaded.
