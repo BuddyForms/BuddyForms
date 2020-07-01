@@ -401,6 +401,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed styles issue for the entries table.
 * Improved the bf-thickbox library.
 * Improve compatibility with PHP 7.4.
+* Fixed a typo code in the Bcc and Cc email headers.
 
 
 = 2.5.20 - 9 Jun 2020 =
