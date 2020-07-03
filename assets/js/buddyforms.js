@@ -1192,6 +1192,17 @@ function BuddyForms() {
                 };
 
                 var validationSettings = {
+                    invalidHandler: function(form, validator) {
+
+                        if (!validator.numberOfInvalids()) {
+                            return;
+                        }
+
+                        var firstElm = jQuery(validator.errorList[0].element);
+                        var position = firstElm.parents('.bf-start-row').offset().top;
+                        jQuery(window).scrollTop(parseInt(position) - 100);
+
+                    },
                     ignore: function (index, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
