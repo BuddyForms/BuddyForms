@@ -1222,6 +1222,14 @@ function BuddyForms() {
                         var elem = jQuery(element);
                         if (elem.hasClass('select2-hidden-accessible')) {
                             elem.parent().find('span.select2-selection').addClass(errorClass);
+                        } else if(elem.hasClass('wp-editor-area')){
+                            elem.off('change').change(function(e) {
+                                if (elem.valid()) {
+                                    elem.parents('.wp-editor-container').removeClass(errorClass);
+                                } else {
+                                    elem.parents('.wp-editor-container').addClass(errorClass);
+                                }
+                            });
                         } else {
                             elem.addClass(errorClass);
                         }
