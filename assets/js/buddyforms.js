@@ -1077,7 +1077,9 @@ function BuddyForms() {
         BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, status, event]);
     }
 
+
     function actionFromButton(args) {
+
         var targetForms = args[0];
         var target = args[1];
         var status = args[2];
@@ -1096,6 +1098,19 @@ function BuddyForms() {
                     statusElement.val(post_status);
                 }
             }
+
+            var captchaElement = jQuery('#buddyforms_form_' + target).find('#bf-cpchtk');
+            if (captchaElement && captchaElement.length > 0) {
+                reCaptchaV3NoAjax(args, function (submitCaptchaCallback) {
+
+                    if(args[0]==='Submit'){
+                        var targetForms = args[1];
+                        targetForms.trigger('submit');
+                    }
+                });
+                return false;
+            }
+
             targetForms.trigger('submit');
         }
         return false;
@@ -1359,6 +1374,31 @@ function BuddyForms() {
                             jQuery(currentElement).val(token).change();
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
+                            callback(options);
+                        });
+                    });
+                }
+            }
+        } else {
+            callback(options);
+        }
+    }
+
+    function reCaptchaV3NoAjax(options, callback) {
+        var currentElement = jQuery('#buddyforms_form_' + options[1]).find('#bf-cpchtk');
+        if (currentElement && currentElement.length > 0) {
+            var formSlug = getFormSlugFromFormElement(currentElement);
+            var currentFieldSlug = jQuery(currentElement).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldStateData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (typeof grecaptcha !== "undefined") {
+                    grecaptcha.ready(function () {
+                        var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
+                        grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
+                            jQuery(currentElement).val(token).change();
+                            var recaptchaResponse = document.getElementById('bf-cpchtk');
+                            recaptchaResponse.value = token;
+                            options.splice(0, 0, "Submit");
                             callback(options);
                         });
                     });
