@@ -76,7 +76,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 	foreach ( $customfields as $field_id => $customfield ) {
 
-		$form = apply_filters( 'buddyforms_fields_inner_loop_start', $form, $customfield, $form_slug);
+		$form = apply_filters( 'buddyforms_fields_inner_loop_start', $form, $field_id, $customfield, $form_slug);
 
 
 		if ( isset( $customfield['slug'] ) ) {
