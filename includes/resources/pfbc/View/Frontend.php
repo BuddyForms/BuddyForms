@@ -29,12 +29,24 @@ class View_Frontend extends FormView {
 			return;
 		}
 
+		$custom_HTML = apply_filters( 'buddyforms_custom_HTML_before_render_element_loop', $form_slug, $this->_form );
+		if ($custom_HTML && is_string($custom_HTML)) {
+			echo $custom_HTML;
+		}
+
 		$elements     = $this->_form->getElements();
+		$elements = apply_filters( 'buddyforms_before_render_element_loop', $elements, $form_slug, $this->_form );
 		$elementSize  = sizeof( $elements );
 		$elementCount = 0;
 		for ( $e = 0; $e < $elementSize; ++ $e ) {
 			$element = $elements[ $e ];
 			$element = apply_filters( 'buddyforms_pre_render_element', $element, $this );
+			
+			$custom_HTML = apply_filters( 'buddyforms_custom_HTML_before_render_element', $element, $form_slug, $elementCount, $elementSize );
+			if ($custom_HTML && is_string($custom_HTML)) {
+				echo $custom_HTML;
+			}
+			
 			if ( $element instanceof Element_Button ) {
 				if ( $e == 0 || ! $elements[ ( $e - 1 ) ] instanceof Element_Button ) {
 					echo '<div class="form-actions ' . $layout_style . '">';
@@ -50,6 +62,12 @@ class View_Frontend extends FormView {
 				$this->renderElement( $element );
 			}
 			++ $elementCount;
+
+			$custom_HTML = apply_filters( 'buddyforms_custom_HTML_after_render_element', $element, $form_slug, $elementCount, $elementSize );
+			if ($custom_HTML && is_string($custom_HTML)) {
+				echo $custom_HTML;
+			}
+
 		}
 
 		$this->renderFormClose();
