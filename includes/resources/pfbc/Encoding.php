@@ -1,9 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /*
  * Copyright (c) 2008 Sebastián Grignoli
  * All rights reserved.

@@ -10,14 +10,22 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 
 ## Dependencies Manager 
+We are using `bamarni/composer-bin-plugin` to scope the dependencies and avoid collisions with 3rd party plugins.
+Any production library need to be scoped using the next command.
+Example of command:
+- `composer bin buddyforms [composer-command]`
+
+## Important
 If you want to use the last version of BuddyForms from the develop branch you need to install composer and run the next command from the plugin folder 
-* composer install --no-dev
+* `composer install --no-dev`
 
 ## Contributors
 * [Sven Lehnert](https://github.com/svenl77)
 * [Konrad Sroka](https://github.com/konradS)
 * [Guillermo Figueroa](https://github.com/gfirem)
 * [Victor Marin](https://github.com/marin250189)
+* [Edilson Nuñez Prieto](https://github.com/edisoft00)
+* [Jairo Niño](https://github.com/jnfDev)
 
 ## License
 

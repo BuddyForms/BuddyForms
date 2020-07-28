@@ -1,8 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+
 
 include_once 'Error/BuddyForms_Error.php';
 

@@ -7,9 +7,6 @@
  *
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 ob_start();
 require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoopStyle.php' );
 $css = ob_get_clean();

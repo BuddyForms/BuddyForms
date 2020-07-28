@@ -7,9 +7,6 @@
  *
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 $wp_date_format = get_option( 'date_format' );
 if ( empty( $wp_date_format ) ) {
 	$wp_date_format = 'M j, Y';

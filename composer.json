@@ -17,16 +17,27 @@
   "homepage": "https://themekraft.com/buddyforms/",
   "license": "GPLv2 or later",
   "minimum-stability": "dev",
-  "require": {
-    "guzzlehttp/guzzle" : "6.5.3",
-    "google/recaptcha": "^1.2"
+  "require-dev": {
+    "consolidation/robo": "^1.0.0",
+    "bamarni/composer-bin-plugin": "dev-master"
   },
-  "require-dev": {},
   "scripts": {
+    "bin": "echo 'bin not installed'",
+    "post-install-cmd": [
+      "@composer bin all install --ansi"
+    ],
+    "post-update-cmd": [
+      "@composer bin all update --ansi"
+    ],
     "package": "sh .tk/package.sh BuddyForms",
     "wp-release": "sh .tk/wp_release.sh",
     "beta-release": "sh .tk/full-deploy.sh BuddyForms 391 false beta",
     "full-release": "sh .tk/full-deploy.sh BuddyForms 391 false released",
     "update-freemius": "sh .tk/update-freemius.sh ../wordpress-sdk includes/resources/freemius"
+  },
+  "extra": {
+    "bamarni-bin": {
+      "target-directory": "vendor-scope"
+    }
   }
 }

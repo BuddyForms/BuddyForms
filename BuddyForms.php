@@ -34,9 +34,6 @@
  ****************************************************************************
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 if ( ! class_exists( 'BuddyForms' ) ) {
 	/**
 	 * Class BuddyForms
@@ -232,7 +229,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
-			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor/autoload.php' );
+			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor-scope/buddyforms/vendor/autoload.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
