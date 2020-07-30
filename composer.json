@@ -29,10 +29,6 @@
     "post-update-cmd": [
       "@composer bin all update --ansi"
     ],
-    "package": "sh .tk/package.sh BuddyForms",
-    "wp-release": "sh .tk/wp_release.sh",
-    "beta-release": "sh .tk/full-deploy.sh BuddyForms 391 false beta",
-    "full-release": "sh .tk/full-deploy.sh BuddyForms 391 false released",
     "update-freemius": "sh .tk/update-freemius.sh ../wordpress-sdk includes/resources/freemius"
   },
   "extra": {
