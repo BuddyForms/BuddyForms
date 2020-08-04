@@ -1214,8 +1214,17 @@ function BuddyForms() {
                         }
 
                         var firstElm = jQuery(validator.errorList[0].element);
-                        var position = firstElm.parents('.bf-start-row').offset().top;
-                        jQuery(window).scrollTop(parseInt(position) - 100);
+                        var startRow = firstElm.parents('.bf-start-row').length;
+                        if (startRow==0){
+
+                            var position = firstElm.offset().top;
+                            jQuery(window).scrollTop(parseInt(position) - 100);
+                        }
+                        else if(startRow >0){
+                            var position = firstElm.parents('.bf-start-row').offset().top;
+                            jQuery(window).scrollTop(parseInt(position) - 100);
+                        }
+
 
                     },
                     ignore: function (index, element) {
