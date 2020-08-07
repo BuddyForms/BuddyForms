@@ -482,6 +482,26 @@ function buddyformsCopyStringToClipboard(string) {
     }
 }
 
+/**
+ * Find the localize string
+ */
+function bf_trans(str) {
+
+    if (typeof str === 'string'
+        && typeof buddyformsGlobal !== 'undefined'
+        && typeof buddyformsGlobal.localize !== 'undefined'
+        && typeof buddyformsGlobal.localize.bf_trans !== 'undefined'
+    ) {
+        const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
+            return elm.msgid === str
+        });
+    
+        return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
+    }
+
+    return str;
+}
+
 //
 // Lets do some stuff after the document is loaded
 //

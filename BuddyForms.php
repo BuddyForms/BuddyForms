@@ -170,6 +170,28 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'error_string_singular' => __( 'error was', 'buddyforms' ),
 					'error_string_plural'   => __( 'errors were', 'buddyforms' ),
 					'error_string_end'      => __( 'found: ', 'buddyforms' ),
+				),
+				'bf_trans' => array(
+					array(
+						'msgid' => 'The following',
+						'msgstr' => __( 'The following', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'error was',
+						'msgstr' => __( 'error was', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'errors were',
+						'msgstr' => __( 'errors were', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'found: ',
+						'msgstr' => __( 'found: ', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Delete Permanently',
+						'msgstr' => __( 'Delete Permanently', 'buddyforms' )
+					),
 				)
 			) );
 		}
