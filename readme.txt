@@ -397,7 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.21-beta3 - 30 Jul 2020 =
+= 2.5.21-beta4 - 30 Jul 2020 =
 * Fixed styles issue for the entries table.
 * Improved the bf-thickbox library.
 * Improve compatibility with PHP 7.4.
@@ -408,6 +408,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed Avoid themes hiding .bf_alert messages with less specific CSS rules.
 * Fixed Captcha V3 submission when ajax is not activated.
 * Fixed the case of empty field on the phone validation process.
+* Fixed when in a Custom row the sum of the width of all the fields in the row is greater than 100 the bf-start-row was not added and a js error was happening.
+
 
 = 2.5.20 - 9 Jun 2020 =
 * Fixed the header actions in the list of forms.
