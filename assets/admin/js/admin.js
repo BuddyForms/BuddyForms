@@ -719,8 +719,9 @@ jQuery(document).ready(function (jQuery) {
     jQuery(document).on('click', '.bf_delete_field', function () {
 
         var del_id = jQuery(this).attr('id');
+        var delete_str = bf_trans('Delete Permanently');
 
-        if (confirm('Delete Permanently'))
+        if (confirm(delete_str))
             jQuery("#field_" + del_id).remove();
 
         return false;
@@ -731,7 +732,9 @@ jQuery(document).ready(function (jQuery) {
     //
     jQuery(document).on('click', '.bf_delete_trigger', function () {
         var del_id = jQuery(this).attr('id');
-        if (confirm('Delete Permanently')) {
+        var delete_str = bf_trans('Delete Permanently');
+
+        if (confirm(delete_str)) {
             jQuery("#trigger" + del_id).remove();
             jQuery(".trigger" + del_id).remove();
         }
@@ -831,7 +834,9 @@ jQuery(document).ready(function (jQuery) {
     //
     jQuery(document).on('click', '.bf_delete_input', function () {
         var del_id = jQuery(this).attr('id');
-        if (confirm('Delete Permanently'))
+        var delete_str = bf_trans('Delete Permanently');
+
+        if (confirm(delete_str))
             jQuery(".field_item_" + del_id).remove();
         return false;
     });
