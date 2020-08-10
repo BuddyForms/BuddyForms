@@ -316,13 +316,11 @@ function BuddyForms() {
 
     function bf_delete_post() {
         var post_id = jQuery(this).attr('id');
+        var action_str_delete = bf_trans('Delete Permanently');
 
-        buddyformsGlobal.delete_text = 'Delete Permanently';
+        action_str_delete = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', action_str_delete, [post_id]);
 
-        buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id]);
-
-
-        if (confirm(buddyformsGlobal.delete_text)) {// todo need il18n
+        if (confirm(action_str_delete)) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -1307,9 +1305,9 @@ function BuddyForms() {
             var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
             var errorFormat;
             if (errorSize == 1) {
-                errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
+                errorFormat = bf_trans('error was');
             } else {
-                errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
+                errorFormat = errorSize + ' ' + bf_trans('errors were');
             }
             //Clean all error
             jQuery('.bf-alert').remove();
@@ -1344,7 +1342,7 @@ function BuddyForms() {
             });
 
             if (errorHTMLItems.length > 0) {
-                var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; margin-left: 1em; padding-inline-start: 0.5em;">';
+                var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + bf_trans('The following') + ' ' + errorFormat + ' ' + bf_trans('found: ') + '</strong><ul style="padding: 0; margin-left: 1em; padding-inline-start: 0.5em;">';
                 jQuery.each(errorHTMLItems, function (i, e) {
                     if (e && e.message && e.message !== '') {
                         errorHTML += '<li data-target-field="' + e.id + '">' + e.message + '</li>'
@@ -1688,3 +1686,23 @@ if (BuddyFormsHooks) {
 //     }
 //     return requiredMessage;
 // }, 10);
+
+/**
+ * Find the localize string
+ */
+function bf_trans(str) {
+
+    if (typeof str === 'string'
+        && typeof buddyformsGlobal !== 'undefined'
+        && typeof buddyformsGlobal.localize !== 'undefined'
+        && typeof buddyformsGlobal.localize.bf_trans !== 'undefined'
+    ) {
+        const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
+            return elm.msgid === str
+        });
+    
+        return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
+    }
+
+    return str;
+}
