@@ -448,7 +448,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 	}
 	?>
 
-    <div class="tabs tabbable buddyform-tabs-left">
+    <div class="tabbable buddyform-tabs-left">
         <ul class="nav buddyform-nav-tabs buddyform-nav-pills">
 			<?php
 			$i = 0;
