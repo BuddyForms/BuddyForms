@@ -688,6 +688,9 @@ function buddyforms_display_form_element( $args ) {
             $form_fields['general']['empty_option'] = new Element_Checkbox( '<b>' . __( 'Empty Option', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][empty_option]", array( 'empty_option' => '<b>' . __( 'Add Blank Option', 'buddyforms' ) . '</b>' ), array( 'value' => $empty_option ) );
 
 			$form_fields['general']['select_options'] = new Element_HTML( buddyforms_form_element_multiple( $form_fields, $field_args ) );
+
+            $disable_select2_option                           = isset( $customfield['disable_select2'] ) ? $customfield['disable_select2'] : 'false';
+            $form_fields['advanced']['disable_select2'] = new Element_Checkbox( '<b>' . __( 'Disable Select2 library', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][disable_select2]", array( 'disable_select2' => '<b>' . __( 'Disable Select2 Option', 'buddyforms' ) . '</b>' ), array( 'value' => $disable_select2_option ) );
 			break;
 		case 'radiobutton':
 			$name                                     = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Radio Button', 'buddyforms' );
