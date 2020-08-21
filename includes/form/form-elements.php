@@ -445,8 +445,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							if ( ! empty( $customfield['frontend_reset'][0] ) ) {
 								$element_attr['data-reset'] = 'true';
 							}
+                            $select2_class = ' bf-select2';
+                            if ( ! empty( $customfield['disable_select2'][0] ) ) {
+                                $select2_class = ' ';
+                            }
 
-							$element_attr['class'] = $element_attr['class'] . ' bf-select2';
+
+
+							$element_attr['class'] = $element_attr['class'] . ' '.$select2_class;
 
 							$element = new Element_Select( $name, $slug, $options, $element_attr, $customfield );
 
