@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.5.21-beta2
+ * Version: 2.5.21-beta.6
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -34,9 +34,6 @@
  ****************************************************************************
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 if ( ! class_exists( 'BuddyForms' ) ) {
 	/**
 	 * Class BuddyForms
@@ -46,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.5.21-beta2';
+		public $version = '2.5.21-beta.6';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -173,6 +170,28 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'error_string_singular' => __( 'error was', 'buddyforms' ),
 					'error_string_plural'   => __( 'errors were', 'buddyforms' ),
 					'error_string_end'      => __( 'found: ', 'buddyforms' ),
+				),
+				'bf_trans' => array(
+					array(
+						'msgid' => 'The following',
+						'msgstr' => __( 'The following', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'error was',
+						'msgstr' => __( 'error was', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'errors were',
+						'msgstr' => __( 'errors were', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'found: ',
+						'msgstr' => __( 'found: ', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Delete Permanently',
+						'msgstr' => __( 'Delete Permanently', 'buddyforms' )
+					),
 				)
 			) );
 		}
@@ -232,7 +251,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
-			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor/autoload.php' );
+			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor-scope/buddyforms/vendor/autoload.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {

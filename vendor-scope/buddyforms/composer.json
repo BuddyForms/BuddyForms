@@ -1,0 +1,6 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "^6.5.5",
+        "google/recaptcha": "^1.2"
+    }
+}

@@ -6,10 +6,6 @@
  *
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 $post_id = get_the_ID();
 ?>
 

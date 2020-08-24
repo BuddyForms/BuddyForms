@@ -1,8 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 /**
  * Class BuddyFormsAssets

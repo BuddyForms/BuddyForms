@@ -2146,6 +2146,12 @@ div#formbuilder-action-templates {
     vertical-align: text-top;
 }
 
+.buddyforms_forms_builder table.wp-list-table.widefat.posts.fixed [id^="table_row_"][id$="_data_types"] td {
+    display: block;
+    overflow: auto;
+    max-height: 240px;
+}
+
 .buddyform-tabs-left.ui-widget.ui-widget-content {
     border: unset;
 }

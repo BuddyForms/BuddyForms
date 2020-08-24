@@ -17,16 +17,43 @@
   "homepage": "https://themekraft.com/buddyforms/",
   "license": "GPLv2 or later",
   "minimum-stability": "dev",
-  "require": {
-    "guzzlehttp/guzzle" : "6.5.3",
-    "google/recaptcha": "^1.2"
+  "require-dev": {
+    "consolidation/robo": "^1.0.0",
+    "bamarni/composer-bin-plugin": "dev-master",
+    "phpunit/phpunit": "^6.1",
+    "php-coveralls/php-coveralls": "^2.0@dev",
+    "squizlabs/php_codesniffer": "3.*",
+    "friendsofphp/php-cs-fixer": "^2.9",
+    "jakub-onderka/php-parallel-lint": "dev-master",
+    "jakub-onderka/php-console-highlighter": "dev-master",
+    "wp-coding-standards/wpcs": "dev-master",
+    "symplify/easy-coding-standard": "^5.2@dev",
+    "brainmaestro/composer-git-hooks": "dev-master",
+    "lucatume/wp-browser": "dev-master",
+    "vlucas/phpdotenv": "3.6.0",
+    "codeception/module-asserts": "dev-master",
+    "codeception/module-webdriver": "dev-master",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-db": "^1.0",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-cli": "^1.0",
+    "codeception/util-universalframework": "^1.0"
   },
-  "require-dev": {},
   "scripts": {
-    "package": "sh .tk/package.sh BuddyForms",
-    "wp-release": "sh .tk/wp_release.sh",
-    "beta-release": "sh .tk/full-deploy.sh BuddyForms 391 false beta",
-    "full-release": "sh .tk/full-deploy.sh BuddyForms 391 false released",
+    "bin": "echo 'bin not installed'",
+    "codecept": "vendor/bin/codecept",
+    "chromedriver": "sh .tk/chromedriver.sh",
+    "post-install-cmd": [
+      "@composer bin all install --ansi"
+    ],
+    "post-update-cmd": [
+      "@composer bin all update --ansi"
+    ],
     "update-freemius": "sh .tk/update-freemius.sh ../wordpress-sdk includes/resources/freemius"
+  },
+  "extra": {
+    "bamarni-bin": {
+      "target-directory": "vendor-scope"
+    }
   }
 }

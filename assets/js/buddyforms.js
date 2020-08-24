@@ -316,13 +316,11 @@ function BuddyForms() {
 
     function bf_delete_post() {
         var post_id = jQuery(this).attr('id');
+        var action_str_delete = bf_trans('Delete Permanently');
 
-        buddyformsGlobal.delete_text = 'Delete Permanently';
+        action_str_delete = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', action_str_delete, [post_id]);
 
-        buddyformsGlobal.delete_text = BuddyFormsHooks.applyFilters('buddyforms_global_delete_text', buddyformsGlobal.delete_text, [post_id]);
-
-
-        if (confirm(buddyformsGlobal.delete_text)) {// todo need il18n
+        if (confirm(action_str_delete)) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
@@ -572,7 +570,7 @@ function BuddyForms() {
         jQuery.validator.addMethod("bf-tel", function (value, element, param) {
 
             $valid_phone_number = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value);
-            if (!$valid_phone_number) {
+            if (value !== '' && !$valid_phone_number) {
                 jQuery.validator.messages['bf-tel'] = "Invalid Phone Number";
                 return false;
             }
@@ -1077,7 +1075,9 @@ function BuddyForms() {
         BuddyFormsHooks.doAction('buddyforms:submit:click', [targetForms, target, status, event]);
     }
 
+
     function actionFromButton(args) {
+
         var targetForms = args[0];
         var target = args[1];
         var status = args[2];
@@ -1096,6 +1096,19 @@ function BuddyForms() {
                     statusElement.val(post_status);
                 }
             }
+
+            var captchaElement = jQuery('#buddyforms_form_' + target).find('#bf-cpchtk');
+            if (captchaElement && captchaElement.length > 0) {
+                reCaptchaV3NoAjax(args, function (submitCaptchaCallback) {
+
+                    if(args[0]==='Submit'){
+                        var targetForms = args[1];
+                        targetForms.trigger('submit');
+                    }
+                });
+                return false;
+            }
+
             targetForms.trigger('submit');
         }
         return false;
@@ -1192,6 +1205,26 @@ function BuddyForms() {
                 };
 
                 var validationSettings = {
+                    invalidHandler: function(form, validator) {
+
+                        if (!validator.numberOfInvalids()) {
+                            return;
+                        }
+
+                        var firstElm = jQuery(validator.errorList[0].element);
+                        var startRow = firstElm.parents('.bf-start-row').length;
+                        if (startRow==0){
+
+                            var position = firstElm.offset().top;
+                            jQuery(window).scrollTop(parseInt(position) - 100);
+                        }
+                        else if(startRow >0){
+                            var position = firstElm.parents('.bf-start-row').offset().top;
+                            jQuery(window).scrollTop(parseInt(position) - 100);
+                        }
+
+
+                    },
                     ignore: function (index, element) {
                         var formSlug = getFormSlugFromFormElement(element);
                         var targetElement = jQuery(element);
@@ -1211,6 +1244,14 @@ function BuddyForms() {
                         var elem = jQuery(element);
                         if (elem.hasClass('select2-hidden-accessible')) {
                             elem.parent().find('span.select2-selection').addClass(errorClass);
+                        } else if(elem.hasClass('wp-editor-area')){
+                            elem.off('change').change(function(e) {
+                                if (elem.valid()) {
+                                    elem.parents('.wp-editor-container').removeClass(errorClass);
+                                } else {
+                                    elem.parents('.wp-editor-container').addClass(errorClass);
+                                }
+                            });
                         } else {
                             elem.addClass(errorClass);
                         }
@@ -1264,9 +1305,9 @@ function BuddyForms() {
             var errorSize = (errors.errors[id] && errors.errors[id].length) ? errors.errors[id].length : '';
             var errorFormat;
             if (errorSize == 1) {
-                errorFormat = buddyformsGlobal.localize.error_strings.error_string_singular;
+                errorFormat = bf_trans('error was');
             } else {
-                errorFormat = errorSize + ' ' + buddyformsGlobal.localize.error_strings.error_string_plural;
+                errorFormat = errorSize + ' ' + bf_trans('errors were');
             }
             //Clean all error
             jQuery('.bf-alert').remove();
@@ -1301,7 +1342,7 @@ function BuddyForms() {
             });
 
             if (errorHTMLItems.length > 0) {
-                var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + buddyformsGlobal.localize.error_strings.error_string_start + ' ' + errorFormat + ' ' + buddyformsGlobal.localize.error_strings.error_string_end + '</strong><ul style="padding: 0; margin-left: 1em; padding-inline-start: 0.5em;">';
+                var errorHTML = '<div class="bf-alert error is-dismissible"><strong class="alert-heading">' + bf_trans('The following') + ' ' + errorFormat + ' ' + bf_trans('found: ') + '</strong><ul style="padding: 0; margin-left: 1em; padding-inline-start: 0.5em;">';
                 jQuery.each(errorHTMLItems, function (i, e) {
                     if (e && e.message && e.message !== '') {
                         errorHTML += '<li data-target-field="' + e.id + '">' + e.message + '</li>'
@@ -1340,6 +1381,31 @@ function BuddyForms() {
                             jQuery(currentElement).val(token).change();
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
+                            callback(options);
+                        });
+                    });
+                }
+            }
+        } else {
+            callback(options);
+        }
+    }
+
+    function reCaptchaV3NoAjax(options, callback) {
+        var currentElement = jQuery('#buddyforms_form_' + options[1]).find('#bf-cpchtk');
+        if (currentElement && currentElement.length > 0) {
+            var formSlug = getFormSlugFromFormElement(currentElement);
+            var currentFieldSlug = jQuery(currentElement).attr('name');
+            if (currentFieldSlug && formSlug) {
+                var fieldStateData = getFieldFromSlug(currentFieldSlug, formSlug);
+                if (typeof grecaptcha !== "undefined") {
+                    grecaptcha.ready(function () {
+                        var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
+                        grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
+                            jQuery(currentElement).val(token).change();
+                            var recaptchaResponse = document.getElementById('bf-cpchtk');
+                            recaptchaResponse.value = token;
+                            options.splice(0, 0, "Submit");
                             callback(options);
                         });
                     });
@@ -1620,3 +1686,23 @@ if (BuddyFormsHooks) {
 //     }
 //     return requiredMessage;
 // }, 10);
+
+/**
+ * Find the localize string
+ */
+function bf_trans(str) {
+
+    if (typeof str === 'string'
+        && typeof buddyformsGlobal !== 'undefined'
+        && typeof buddyformsGlobal.localize !== 'undefined'
+        && typeof buddyformsGlobal.localize.bf_trans !== 'undefined'
+    ) {
+        const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
+            return elm.msgid === str
+        });
+    
+        return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
+    }
+
+    return str;
+}

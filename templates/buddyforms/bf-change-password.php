@@ -1,10 +1,13 @@
-<?php if ( isset( $_GET['bf-password-reset'] ) && $_GET['bf-password-reset'] == 'true' ) { ?>
+<?php
+/** @var string $current_url */
+?>
+<?php if ( isset( $_GET['bf-password-reset'] ) && $_GET['bf-password-reset'] == 'true' ) : ?>
     <div class="bf-alert success">
         <span><?php _e( 'Password changed successfully', 'buddyforms' ); ?></span>
     </div>
-<?php } ?>
+<?php endif; ?>
 
-<form id="buddyforms_password_form" method="POST" action="<?php /** @var string $current_url */ echo $current_url; ?>">
+<form id="buddyforms_password_form" method="POST" action="<?php  echo $current_url; ?>">
     <fieldset>
         <p>
             <label for="buddyforms_user_pass"><?php _e( 'New Password', 'buddyforms' ); ?></label>
