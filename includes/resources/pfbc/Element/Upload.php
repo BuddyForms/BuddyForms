@@ -298,6 +298,7 @@ class Element_Upload extends Element_Textbox {
 		$allowed_types['mp3']              = 'audio/mp3';
 		$form_slug                         = $this->getAttribute( 'form_slug' );
 		$upload_from_url                   = $this->getAttribute( 'upload_from_url' );
+		$custom_class                      = $this->getAttribute('custom_class');
 		foreach ( $accepted_files as $key => $value ) {
 			$mime_type .= $allowed_types[ $value ] . ',';
 		}
@@ -356,7 +357,7 @@ class Element_Upload extends Element_Textbox {
 			}
 
 			$box .= sprintf( '<div class="dz-default dz-message" data-dz-message=""><span>%s</span></div>', $message );
-			$box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
+			$box .= sprintf( '<input type="text" style="visibility: hidden" class="form-control upload_field_input %s" name="%s" value="%s" id="field_%s" data-rule-upload-max-exceeded="[%s]" multiple_files_validation_message = "%s"  data-rule-upload-group="true" data-rule-upload-error="true" upload_error_validation_message="%s" %s %s />', $custom_class, $id, $result_value, $id, $multiple_files, $multiple_files_validation_message, $upload_error_validation_message, $required, $ensure_amount );
 			$box .= '</div>';
 			if ( ! empty( $description ) ) {
 				$box .= sprintf( '<span class="help-inline">%s</span>', $description );
