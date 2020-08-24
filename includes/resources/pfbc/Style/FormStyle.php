@@ -326,7 +326,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block {
 		display: block;
-		font-size: 80%;
 		font-style: italic;
 		font-weight: normal;
 	}
