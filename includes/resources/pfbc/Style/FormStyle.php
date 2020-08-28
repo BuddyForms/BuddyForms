@@ -177,7 +177,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	<?php
 			// Font Size
 			if( $bfdesign['desc_font_size'] != '' ) {
-				echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px;';
+				echo 'font-size: ' . $bfdesign['desc_font_size'] . 'px !important;';
 			}
 			// Font Color
 			if( $bfdesign['desc_font_color']['style'] == 'color' ) {
