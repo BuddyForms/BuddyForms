@@ -310,6 +310,8 @@ jQuery(document).ready(function (jQuery) {
 
                     } else {
 
+                        buddyformAutoFillEmptyOrDuplicateSlugs();
+
                         // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
@@ -345,6 +347,10 @@ jQuery(document).ready(function (jQuery) {
                 }
                 if (currentIndex == 3) {
                     if (type == 'post') {
+
+                        buddyformAutoFillEmptyOrDuplicateSlugs();
+
+                        // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
                             // if the value is empty, that means that is invalid
