@@ -328,7 +328,6 @@ jQuery(document).ready(function (jQuery) {
                                 var element_name = jQuery(this).eq(0).attr('name');
                                 bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
                                 jQuery(this).addClass("bf-error");
-                                return false;
                             }
                         });
                         var validation_result = buddyforms_process_errors(bfErrors);
@@ -363,7 +362,6 @@ jQuery(document).ready(function (jQuery) {
                                 var element_name = jQuery(this).eq(0).attr('name');
                                 bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
                                 jQuery(this).addClass("bf-error");
-                                return false;
                             }
                         });
                         var validation_result = buddyforms_process_errors(bfErrors);
