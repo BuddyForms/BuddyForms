@@ -17,9 +17,11 @@
   "homepage": "https://themekraft.com/buddyforms/",
   "license": "GPLv2 or later",
   "minimum-stability": "dev",
+  "require": {
+  	"consolidation/robo": "^1.0.0",
+    "bamarni/composer-bin-plugin": "dev-master"
+  },
   "require-dev": {
-    "consolidation/robo": "^1.0.0",
-    "bamarni/composer-bin-plugin": "dev-master",
     "phpunit/phpunit": "^6.1",
     "php-coveralls/php-coveralls": "^2.0@dev",
     "squizlabs/php_codesniffer": "3.*",
@@ -56,4 +58,4 @@
       "target-directory": "vendor-scope"
     }
   }
-}
+},
