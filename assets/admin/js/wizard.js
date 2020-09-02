@@ -310,6 +310,8 @@ jQuery(document).ready(function (jQuery) {
 
                     } else {
 
+                        buddyformAutoFillEmptyOrDuplicateSlugs();
+
                         // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
@@ -328,7 +330,6 @@ jQuery(document).ready(function (jQuery) {
                                 var element_name = jQuery(this).eq(0).attr('name');
                                 bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
                                 jQuery(this).addClass("bf-error");
-                                return false;
                             }
                         });
                         var validation_result = buddyforms_process_errors(bfErrors);
@@ -346,6 +347,10 @@ jQuery(document).ready(function (jQuery) {
                 }
                 if (currentIndex == 3) {
                     if (type == 'post') {
+
+                        buddyformAutoFillEmptyOrDuplicateSlugs();
+
+                        // traverse all the required elements looking for an empty one
                         jQuery("#buddyforms_forms_builder input[required]").each(function () {
 
                             // if the value is empty, that means that is invalid
@@ -363,7 +368,6 @@ jQuery(document).ready(function (jQuery) {
                                 var element_name = jQuery(this).eq(0).attr('name');
                                 bfErrors.push({isValid: isValid, element: jQuery(this)[0], type: 'accordion', field_name: element_name});
                                 jQuery(this).addClass("bf-error");
-                                return false;
                             }
                         });
                         var validation_result = buddyforms_process_errors(bfErrors);
