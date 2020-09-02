@@ -232,14 +232,16 @@ function BuddyForms() {
      */
     function checkPasswordStrength() {
         if (buddyformsGlobal) {
-            var pass1 = jQuery('input[name=buddyforms_user_pass]').val();
-            var pass2 = jQuery('input[name=buddyforms_user_pass_confirm]').val();
-            var strengthResult = jQuery('#password-strength');
+            var formSlug = getFormSlugFromFormElement(this);
+            var context = '#buddyforms_form_' + formSlug;
+            var pass1 = jQuery('input[name=buddyforms_user_pass]', context).val();
+            var pass2 = jQuery('input[name=buddyforms_user_pass_confirm]', context).val();
+            var strengthResult = jQuery('#password-strength', context);
             var blacklistArray = ['black', 'listed', 'word'];
-            var passwordHint = jQuery('.buddyforms-password-hint');
+            var passwordHint = jQuery('.buddyforms-password-hint', context);
 
             // Reset the form & meter
-            BuddyFormsHooks.doAction('buddyforms:submit:disable');
+            BuddyFormsHooks.doAction('buddyforms:submit:disable', formSlug);
 
             strengthResult.removeClass('short bad good strong');
 
@@ -291,10 +293,9 @@ function BuddyForms() {
             // enable only the submit button if the password is strong and
             // both passwords are filled up
             if (buddyformsGlobal.pwsL10n.required_strength <= strength.score && strength.score !== 5 && '' !== pass2.trim()) {
-                BuddyFormsHooks.doAction('buddyforms:submit:enable');
+                BuddyFormsHooks.doAction('buddyforms:submit:enable', formSlug);
                 strengthResult.after(hint_html);
             } else {
-                var formSlug = getFormSlugFromFormElement(this);
                 var fieldData = getFieldFromSlug('user_pass', formSlug);
                 if (fieldData && fieldData['required']) {
                     strengthResult.after(hint_html);
@@ -302,7 +303,7 @@ function BuddyForms() {
                     //If The field is not required  and the value is emprty don´t valdiate.
                     if (pass1.trim() === "" && pass2.trim() === "") {
                         strengthResult.removeClass('short bad good strong');
-                        BuddyFormsHooks.doAction('buddyforms:submit:enable');
+                        BuddyFormsHooks.doAction('buddyforms:submit:enable', formSlug);
                     } else {
                         strengthResult.after(hint_html);
                     }
@@ -1114,9 +1115,10 @@ function BuddyForms() {
         return false;
     }
 
-    function disableFormSubmit() {
-        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit');
-        if (submitButton) {
+    function disableFormSubmit(formSlug) {
+        var context = formSlug ? '#buddyforms_form_' + formSlug : false;
+        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit', context);
+        if (submitButton.length > 0) {
             var target = submitButton.data('target');
             if (target) {
                 submitButton.attr('disabled', 'disabled');
@@ -1124,9 +1126,10 @@ function BuddyForms() {
         }
     }
 
-    function enableFormSubmit() {
-        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit');
-        if (submitButton) {
+    function enableFormSubmit(formSlug) {
+        var context = formSlug ? '#buddyforms_form_' + formSlug : false;
+        var submitButton = jQuery('button.bf-submit, input[type="submit"]#buddyforms_password_submit', context);
+        if (submitButton.length > 0) {
             var target = submitButton.data('target');
             if (target) {
                 submitButton.removeAttr('disabled');
