@@ -89,6 +89,35 @@ function buddyformsMakeFieldId() {
 }
 
 //
+// Autofill empty slug's fields 
+// or append hashes to duplicate ones
+//
+function buddyformAutoFillEmptyOrDuplicateSlugs() {
+    var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
+    findFieldsSlugs.each(function () {
+        var fieldSlugs = jQuery(this);
+        if (!fieldSlugs.val()) {
+            console.log('empty field slug');
+            var field_id = fieldSlugs.attr('data');
+            var fieldContainer = jQuery('li#field_' + field_id);
+            if (fieldContainer && fieldContainer.length > 0) {
+                var fieldNameValue = fieldContainer.find('tr.use_as_slug input[name="buddyforms_options[form_fields][' + field_id + '][name]"]').val();
+                if (fieldNameValue) {
+                    var slugFromName = slug(fieldNameValue, {lower: false});
+                    fieldContainer.find('tr.slug' + field_id + ' input[name="buddyforms_options[form_fields][' + field_id + '][slug]"]').val(slugFromName);
+                }
+            }
+        }
+        findFieldsSlugs.each(function () {
+            if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
+                fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
+                return false;
+            }
+        });
+    });
+}
+
+//
 // Validate an email using regex
 //
 function buddyformsIsEmailOrShortcode(email) {
@@ -654,28 +683,7 @@ jQuery(document).ready(function (jQuery) {
         }
 
         //Fill and avoid duplicates of field slugs
-        var findFieldsSlugs = jQuery("#post input[name^='buddyforms_options[form_fields]'][name$='[slug]'][type!='hidden']");
-        findFieldsSlugs.each(function () {
-            var fieldSlugs = jQuery(this);
-            if (!fieldSlugs.val()) {
-                console.log('empty field slug');
-                var field_id = fieldSlugs.attr('data');
-                var fieldContainer = jQuery('li#field_' + field_id);
-                if (fieldContainer && fieldContainer.length > 0) {
-                    var fieldNameValue = fieldContainer.find('tr.use_as_slug input[name="buddyforms_options[form_fields][' + field_id + '][name]"]').val();
-                    if (fieldNameValue) {
-                        var slugFromName = slug(fieldNameValue, {lower: false});
-                        fieldContainer.find('tr.slug' + field_id + ' input[name="buddyforms_options[form_fields][' + field_id + '][slug]"]').val(slugFromName);
-                    }
-                }
-            }
-            findFieldsSlugs.each(function () {
-                if (jQuery(this).val() === fieldSlugs.val() && fieldSlugs.attr('name') !== jQuery(this).attr('name')) {
-                    fieldSlugs.val(fieldSlugs.val() + '_' + buddyformsMakeFieldId());
-                    return false;
-                }
-            });
-        });
+        buddyformAutoFillEmptyOrDuplicateSlugs();
 
         // traverse all the required elements looking for an empty one
         jQuery("#post input[required]").each(function () {
