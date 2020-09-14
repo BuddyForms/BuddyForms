@@ -243,7 +243,7 @@ function buddyforms_email( $mail_to, $subject, $from_name, $from_email, $email_b
 //	$mail_header[] = apply_filters( 'buddyforms_email_headers_content_transfer_encoding', "Content-Transfer-Encoding: 7bit", $subject, $from_name, $from_email, $form_slug, $post_id );
 	$mail_header[] = "From: $encoded_from_name <$from_email>";
 	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_cc );
-	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'bcc' );
+	$mail_header[] = buddyforms_email_prepare_cc_bcc( $mail_to_bcc, 'Bcc' );
 
 	if ( $is_testing ) {
 		$mail_header[] = 'X-Mailer-Type:WPMailSMTP/Admin/Test';
@@ -292,11 +292,13 @@ function buddyforms_string_have_html( $string ) {
  * @since 2.2.8
  *
  */
-function buddyforms_email_prepare_cc_bcc( $email_array, $type = 'cc' ) {
+function buddyforms_email_prepare_cc_bcc( $email_array, $type = 'Cc' ) {
 	$result = '';
-	if ( ! empty( $email_array ) && is_array( $email_array ) ) {
-		foreach ( $email_array as $email ) {
-			$result .= sprintf( "%s: %s", $type, $email );
+	if ( ! empty( $email_array ) ) {
+		if ( is_array( $email_array ) ) {
+			$result = $type . ':' . join( ',', $email_array );
+		} elseif ( is_string( $email_array ) ) {
+			$result .= sprintf( "%s: %s", $type, $email_array );
 		}
 	}
 

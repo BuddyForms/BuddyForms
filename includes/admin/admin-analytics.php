@@ -1,10 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-
 function buddyforms_track( $event_name, $data_args = array() ) {
 	try {
 		$is_debug = ( ! defined( 'WP_DEBUG' ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) );

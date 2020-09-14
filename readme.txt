@@ -1,9 +1,9 @@
 === Contact - Registration - Post Form Builder & FrontEnd Editor BuddyForms - Making WordPress Forms A Breeze ===
-Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem
+Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.4
-Stable tag: 2.5.20
+Stable tag: 2.5.21
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,29 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.21 - 30 Jul 2020 =
+* Fixed styles issue for the entries table.
+* Improved the bf-thickbox library.
+* Improve compatibility with PHP 7.4.
+* Fixed a typo code in the Bcc and Cc email headers.
+* Fixed to add "_bf_registration_user_id" post_meta before the buddyforms_update_post_meta hook.
+* Fixed in scroll validation.
+* Fixed validation in wp-editor (content) field.
+* Fixed Avoid themes hiding .bf_alert messages with less specific CSS rules.
+* Fixed Captcha V3 submission when ajax is not activated.
+* Fixed the case of empty field on the phone validation process.
+* Fixed when in a Custom row the sum of the width of all the fields in the row is greater than 100 the bf-start-row was not added and a js error was happening.
+* Improved the way localized strings are used in JS.
+* Fixed the tabs css class Incompatibility issue with third party plugins.
+* Fixed attributes assignation to hidden elements.
+* Added option to disabled select2 option for the dropdown.
+* Fixed for the custom classes wasn't showing on the Upload field.
+* Fixed description size style.
+* Fixed font-size description.
+* Fixed password validation issue on page with multiples forms.
+* Fixed issue related to required fields validation on the Wizard.
+* Fixed to Autofill empty slugs and avoid duplicate ones on the Wizard.
+
 = 2.5.20 - 9 Jun 2020 =
 * Fixed the header actions in the list of forms.
 * Fixed boostrap compatibility issue form-control class.

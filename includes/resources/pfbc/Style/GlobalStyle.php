@@ -9,6 +9,7 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 
     /* Alerts */
     .bf-alert {
+        display:block;
         padding: 15px;
         margin-bottom: 20px;
         border: 1px solid rgba(0, 0, 0, 0.1);

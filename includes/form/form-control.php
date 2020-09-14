@@ -441,6 +441,11 @@ function buddyforms_process_submission( $args = array() ) {
 	 */
 	if ( ! is_wp_error( $post_id ) && ! empty( $post_id ) ) {
 
+        // If this was a registration form save the user id
+        if ( $user_id ) {
+            update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
+        }
+
 		// Check if the post has post meta / custom fields
 		if ( isset( $customfields ) ) {
 			$customfields = buddyforms_update_post_meta( $post_id, $customfields );
@@ -464,11 +469,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 		// Check if user is logged in and update user relevant fields
 		if ( is_user_logged_in() && $have_user_fields === true ) {
-			$user_id = buddyforms_wp_update_user();
-			// If this was a registration form save the user id
-			if ( isset( $user_id ) ) {
-				update_post_meta( $post_id, "_bf_registration_user_id", $user_id );
-			}
+			 buddyforms_wp_update_user();
 		}
 
 		/*

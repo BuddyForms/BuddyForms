@@ -1,9 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 class BuddyForms_Error extends WP_Error {
 	/**
 	 * @var string

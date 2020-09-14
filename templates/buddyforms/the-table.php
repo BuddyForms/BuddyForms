@@ -7,9 +7,10 @@
  *
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+ob_start();
+require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoopStyle.php' );
+$css = ob_get_clean();
+echo buddyforms_minify_css( $css );
 ?>
 
     <div id="buddyforms-table-view" class="buddyforms_posts_table buddyforms-posts-container">

@@ -1,8 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 function buddyforms_marketing_meet_condition() {
 	$meet = false;
