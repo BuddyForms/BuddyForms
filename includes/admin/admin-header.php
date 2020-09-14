@@ -1,3 +1,6 @@
+<?php
+//Leaven empty tag to let automation add the path disclosure line
+?>
 <style>
     .wrap .wp-heading-inline + .page-title-action {
         display: none;
