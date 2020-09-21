@@ -258,6 +258,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	$wp_login_form .= wp_login_form(
 		array(
 			'echo'           => false,
+			'form_id'		 => 'bf_loginform',
 			'redirect'       => $redirect_url,
 			'id_username'    => 'bf_user_name',
 			'id_password'    => 'bf_user_pass',
@@ -312,8 +313,13 @@ function buddyforms_register_url( $wp_register_url ) {
 
 add_filter( 'register_url', 'buddyforms_register_url' );
 
-add_filter( 'login_form_bottom', 'buddyforms_register_link' );
-function buddyforms_register_link( $wp_login_form ) {
+add_filter( 'login_form_bottom', 'buddyforms_register_link', 10, 2 );
+function buddyforms_register_link( $wp_login_form, $args) {
+	
+	if ( $args['form_id'] !== 'bf_loginform') {
+		return $wp_login_form;
+	}
+
 	$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 	if ( $buddyforms_registration_page != 'none' ) {
 		$permalink = get_permalink( $buddyforms_registration_page );
@@ -328,8 +334,13 @@ function buddyforms_register_link( $wp_login_form ) {
 }
 
 
-add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link' );
-function buddyforms_add_lost_password_link( $wp_login_form ) {
+add_action( 'login_form_bottom', 'buddyforms_add_lost_password_link', 10, 2 );
+function buddyforms_add_lost_password_link( $wp_login_form, $args ) {
+
+	if ( $args['form_id'] !== 'bf_loginform') {
+		return $wp_login_form;
+	}
+
 	$lost_password_url = apply_filters( 'buddyforms_lost_password_url', wp_lostpassword_url() );
 	$wp_login_form     .= '<a href="' . esc_url( $lost_password_url ) . '">' . __( 'Lost Password?', 'buddyforms' ) . '</a> ';
 
