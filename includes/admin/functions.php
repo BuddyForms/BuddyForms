@@ -235,3 +235,12 @@ function buddyforms_available_shortcodes( $form_slug, $element_name ) {
 function buddyforms_unauthorized_shortcodes_field_type( $form_slug, $element_name ) {
 	return apply_filters( 'buddyforms_unauthorized_shortcodes_field_type', array(), $form_slug, $element_name );
 }
+
+/**
+ * Clean up external TinyMCE plugins 
+ * to avoid errors on BuddyForms pages.
+ */
+add_filter( 'mce_external_plugins', 'buddyforms_remove_mce_external_plugins', 999 );
+function buddyforms_remove_mce_external_plugins( $plugins ) {
+	return ( is_admin() && get_post_type() !== 'buddyforms' ) ? $plugins : array(); 
+}
