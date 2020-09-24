@@ -294,11 +294,14 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
 		margin-top: 20px;
+		margin: 0 -15px;
 	}
 
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?>,
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> {
-		margin: 0 -15px;
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> > fieldset,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> > fieldset {
+		hyphens: manual;
+		box-sizing: border-box;
+		display: contents !important;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .bf_field_group,
