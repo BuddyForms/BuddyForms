@@ -309,6 +309,28 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		margin: 15px 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l [class^="bf_field_group elem-gdpragreement"],
+	[class^="bf_field_group elem-gdpragreement"] {
+		margin-top: 0;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l [class^="bf_field_group elem-gdpragreement"]:not(.elem-gdpragreement-1) label[for^="gdpragreement"],
+	[class^="bf_field_group elem-gdpragreement"]:not(.elem-gdpragreement-1) label[for^="gdpragreement"] {
+		display: none;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l [class^="bf_field_group elem-gdpragreement"] .bf-input .checkbox label.settings-input,
+	[class^="bf_field_group elem-gdpragreement"] .bf-input .checkbox label.settings-input {
+		padding-left: 0;
+		padding-right: 0;
+		margin-bottom: 0;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l [class^="bf_field_group elem-gdpragreement"]:not(.elem-gdpragreement-1) .bf-input .checkbox label.settings-input,
+	[class^="bf_field_group elem-gdpragreement"]:not(.elem-gdpragreement-1) .bf-input .checkbox label.settings-input {
+		padding-top: 0;
+	}
+
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf_field_group .bf_inputs {
 		margin: 0;
