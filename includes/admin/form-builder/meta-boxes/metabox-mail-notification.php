@@ -144,14 +144,17 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 		'shortDesc' => __( 'You can use any form element slug as shortcode [field_slug]', 'buddyforms' )
 	) );
 
-	$default_mail_to = $is_edit_action ? '' : 'admin';
-	$mail_to         = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : $default_mail_to;
-	$element         = new Element_Checkbox( '<b>' . __( 'Send mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", array(
+	$default_mail_to   = $is_edit_action ? '' : 'admin';
+	$mail_to           = isset( $buddyform['mail_submissions'][ $trigger ]['mail_to'] ) ? $buddyform['mail_submissions'][ $trigger ]['mail_to'] : $default_mail_to;
+	$send_mail_to_opts = array(
 		'submitter' => __( 'Submitter - User email Field', 'buddyforms' ),
 		'admin'     => __( 'Admin - email from WP General Settings', 'buddyforms' ),
 		'cc'        => __( 'CC', 'buddyforms' ),
 		'bcc'       => __( 'BCC', 'buddyforms' ),
-	), array(
+	);
+
+	$send_mail_to_opts = apply_filters( 'buddyforms_notifications_send_mail_to_options', $send_mail_to_opts, $trigger, $form_slug );
+	$element           = new Element_Checkbox( '<b>' . __( 'Send mail to', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_to]", $send_mail_to_opts, array(
 		'value' => $mail_to,
 		'id'    => 'mail_submissions' . $trigger,
 		'class' => 'mail_to_checkbox bf_sent_mail_to_multi_checkbox'
