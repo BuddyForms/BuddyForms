@@ -397,6 +397,9 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.23-beta.2 - 30 Sept 2020 =
+* New filters added.
+
 = 2.5.23-beta.1 - 24 Sept 2020 =
 * Fixed to show custom login links only for buddyforms.
 * Fixed a bug in forms using Elementor.
