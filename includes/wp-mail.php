@@ -204,6 +204,8 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		}
 	}
 
+	$mail_to = apply_filters('buddyforms_mail_to_before_send_notification', $mail_to, $notification, $form_slug, $post_ID);
+
 	buddyforms_email( $mail_to, $subject, $from_name, $from_email, $emailBody, $mail_to_cc, $mail_to_bcc, $form_slug, $post_ID );
 }
 
