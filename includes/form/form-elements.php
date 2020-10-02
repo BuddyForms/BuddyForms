@@ -653,7 +653,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						}
 
 						if ( isset( $customfield['hidden_field'] ) ) {
-							$form->addElement( new Element_Hidden( $name, $customfield_val, array() ) );
+							$form->addElement( new Element_Hidden( $slug, $customfield_val, array() ) );
 						} else {
 							if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
 								$wp_editor = '<div class="bf_field_group bf_form_content">' . $wp_editor_label . '<span class="help-inline">' . $description . '</span><div class="bf_inputs bf-input">' . $wp_editor . '</div></div>';
