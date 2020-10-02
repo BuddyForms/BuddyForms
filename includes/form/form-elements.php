@@ -649,7 +649,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 							$wp_editor = preg_replace( '/<textarea/', "<textarea placeholder=\"" . $name . $required . "\"", $wp_editor );
 						} else {
-							$wp_editor_label = '<label for="buddyforms_form_"' . $name . '>' . $name . $required . '</label>';
+							$wp_editor_label = '<label for="'. $slug . '" >' . $name . $required . '</label>';
 						}
 
 						if ( isset( $customfield['hidden_field'] ) ) {
