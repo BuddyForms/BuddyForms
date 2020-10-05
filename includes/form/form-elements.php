@@ -1114,7 +1114,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$dropdown   = <<<MARKDOWN
 							<script>
 								jQuery(document).ready(function () {
-								    jQuery(".bf-select2-{$field_id}").select2({
+									const select2Elm = jQuery(".bf-select2-{$field_id}");
+									
+									// Prevent Firefox from maintaining previously selected items.
+									select2Elm.find('[selected="selected"]').each(function() {
+										jQuery(this).prop("selected", true);
+									});
+
+								    select2Elm.select2({
 								    	placeholder: function(){
 									        jQuery(this).data("placeholder");
 									    },
