@@ -37,6 +37,8 @@ class BuddyFormsSubmissionPage {
 	public function buddyforms_submissions_screen() {
 		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
 
+
+
 		// Check that the user is allowed to update options
 		if ( ! current_user_can( $this->bf_submission_capability ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'buddyforms' ) );
@@ -48,7 +50,11 @@ class BuddyFormsSubmissionPage {
 		?>
         <hr style="margin-bottom: 0px !important;"/><?php
 		$this->bf_submissions_table->prepare_items();
+
+
+		$user_list = get_users();
 		$selected_form = '';
+		$selected_author = isset( $_GET['submission_author'] ) ? $_GET['submission_author'] : "all";
 		if ( isset( $_GET['form_slug'] ) ) {
 			$current_screen->set_parentage( $parent_file );
 			$current_screen->render_screen_meta();
@@ -57,36 +63,69 @@ class BuddyFormsSubmissionPage {
 		?>
 
         <div id="icon-users" class="icon32"><br/></div>
-        <div id="buddyforms_admin_main_menu" class="">
-            <ul>
-                <li>
-                    <h4><?php _e( 'Select a form to display the submissions', 'buddyforms' ) ?></h4>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function (jQuery) {
-                            jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
-                                window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
-                            });
-                            jQuery('.metabox-prefs input:checkbox').each(function () {
-                                var colID = jQuery(this).attr('id');
-                                var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked');
-                                if (!hasCheckedAtt) {
-                                    document.getElementById(colID).checked = false
-                                }
-                            })
-                        })
-                    </script>
-                    <select id="buddyforms_admin_menu_submissions_form_select">
-                        <option value="none"><?php _e( 'Select Form', 'buddyforms' ) ?></option>
-						<?php foreach ( $buddyforms as $form_slug => $form ) : ?>
-							<?php if ( ! $this->has_the_capability( $form_slug ) ) : ?>
-								<?php continue; ?>
-							<?php endif; ?>
-                            <option <?php selected( $selected_form, $form_slug ) ?> value="<?php echo $form_slug ?>"><?php echo $form['name']; ?></option>
-						<?php endforeach; ?>
-                    </select>
-                </li>
-            </ul>
-        </div>
+		<table width="100%">
+			<tr>
+				<td>
+					<div id="buddyforms_admin_main_menu" class="">
+						<ul>
+							<li>
+								<h4><?php _e( 'Select a form to display the submissions', 'buddyforms' ) ?></h4>
+								<script type="text/javascript">
+									jQuery(document).ready(function (jQuery) {
+										jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
+											window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
+										});
+										jQuery('#search_author_button').click(function () {
+
+											var fslug = jQuery('#buddyforms_admin_menu_submissions_form_select').val();
+											var author_dropdown_value = jQuery('#buddyforms_admin_menu_submissions_author_select').val();
+											window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + fslug+'&submission_author='+author_dropdown_value
+										});
+										jQuery('.metabox-prefs input:checkbox').each(function () {
+											var colID = jQuery(this).attr('id');
+											var hasCheckedAtt = document.getElementById(colID).hasAttribute('checked');
+											if (!hasCheckedAtt) {
+												document.getElementById(colID).checked = false
+											}
+										})
+									})
+								</script>
+								<select id="buddyforms_admin_menu_submissions_form_select">
+									<option value="none"><?php _e( 'Select Form', 'buddyforms' ) ?></option>
+									<?php foreach ( $buddyforms as $form_slug => $form ) : ?>
+										<?php if ( ! $this->has_the_capability( $form_slug ) ) : ?>
+											<?php continue; ?>
+										<?php endif; ?>
+										<option <?php selected( $selected_form, $form_slug ) ?> value="<?php echo $form_slug ?>"><?php echo $form['name']; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</li>
+						</ul>
+					</div>
+				</td>
+
+				<td align="right">
+				<div>
+					<ul>
+						<li>
+							<h4> <?php _e( 'Filter Submissions by Author', 'buddyforms' ) ?> </h4>
+							<select id="buddyforms_admin_menu_submissions_author_select">
+								<option value="all"><?php _e( 'All Authors', 'buddyforms' ) ?></option>
+								<?php foreach ( $user_list as $user_index => $user_value ) : ?>
+
+									<option <?php selected( $selected_author, $user_value->ID ) ?> value="<?php echo $user_value->ID  ?>"><?php echo $user_value->data->display_name; ?></option>
+								<?php endforeach; ?>
+							</select>
+							<input type="button" id="search_author_button" class="button" value="<?php _e( 'Search Author', 'buddyforms' ) ?>">
+
+						</li>
+					</ul>
+
+				</div>
+				</td>
+			</tr>
+		</table>
+
 
 		<?php if ( isset( $_GET['form_slug'] ) ) : ?>
 			<?php if ( $this->has_the_capability( $_GET['form_slug'] ) ) : ?>
@@ -284,12 +323,19 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$this->get_bulk_actions();
 
 		$data = array();
+		$author_filter = isset( $_GET['submission_author'] ) ? is_numeric($_GET['submission_author']) ? $_GET['submission_author'] : false : false;
 		if ( isset( $_GET['form_slug'] ) ) {
 			$customkey   = '_bf_form_slug'; // set to your custom key
 			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
 			$sql_args    = array( 'ID', 'post_title', 'post_author' );
 			$sql_select  = implode( ', ', $sql_args );
-			$data        = $wpdb->get_results( $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s ORDER BY post_date DESC", $customkey, $customvalue ) );
+			if($author_filter){
+				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s AND post_author = %d ORDER BY post_date DESC", $customkey, $customvalue,$author_filter );
+			}
+			else{
+				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s  ORDER BY post_date DESC", $customkey, $customvalue );
+			}
+			$data        = $wpdb->get_results( $sql_query );
 		}
 
 		$current_page = $this->get_pagenum();
