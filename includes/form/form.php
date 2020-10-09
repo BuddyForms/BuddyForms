@@ -256,7 +256,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	);
 
 	if ( isset( $_POST['bf_submitted'] ) ) {
-		$args                 = $bf_form_response_args;
+		$args                 = isset( $bf_form_response_args ) ? $bf_form_response_args : $args;
 		$args['current_user'] = $current_user;
 	}
 
