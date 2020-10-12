@@ -51,9 +51,11 @@ echo buddyforms_minify_css( $css );
 
 					$form_slug = apply_filters('buddyforms_loop_form_slug', $form_slug, get_the_ID());
 
-					$the_permalink = get_permalink();
+                    $the_permalink = get_permalink();
+                    
+                    $post_type = isset( $buddyforms[ $form_slug ]['post_type'] ) ? $buddyforms[ $form_slug ]['post_type'] : false;
 
-					if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) {
+					if ( $post_type === 'bf_submissions' ) {
 						$the_permalink = '#';
 					}
 
@@ -77,7 +79,7 @@ echo buddyforms_minify_css( $css );
                     <tr id="bf_post_tr_<?php the_ID() ?>" class="<?php echo $post_status_css; ?>">
                         <td class="bf_posts_<?php the_ID() ?>">
 							<?php // Create the modal for the submissions single view
-							if ( $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ) { ?>
+							if ( $post_type === 'bf_submissions' ) { ?>
                                 <div style="display:none;" id="bf-submission-modal_<?php the_ID() ?>">
 									<?php buddyforms_locate_template( 'submission-single', $form_slug ); ?>
                                 </div>
@@ -87,7 +89,7 @@ echo buddyforms_minify_css( $css );
                         </td>
                         <td>
 <!--                            <span class="mobile-th">--><?php //_e( 'Title', 'buddyforms' ); ?><!--</span>-->
-                            <a class="<?php echo $buddyforms[ $form_slug ]['post_type'] == 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
+                            <a class="<?php echo $post_type === 'bf_submissions' ? 'bf-submission-modal' : '' ?> "
                                data-id="<?php the_ID() ?>" href="<?php echo $the_permalink; ?>" rel="bookmark"
                                title="<?php _e( 'Permanent Link to', 'buddyforms' ) ?> <?php the_title_attribute(); ?>"><?php echo $the_title; ?></a>
 	                        <?php do_action( 'buddyforms_the_loop_item_title_after', get_the_ID() ); ?>
