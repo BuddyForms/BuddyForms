@@ -184,10 +184,10 @@ $css_form_class = 'buddyforms-' . $form_slug;
 				echo 'color: ' . $bfdesign['desc_font_color']['color'] . ';';
 			}
 			// Font Style
-			if( $bfdesign['desc_font_style'] == 'italic' ) 	{
+			if( $bfdesign['desc_font_style'] == 'italic' ) {
 				echo 'font-style: italic;';
 			} else {
-				echo 'font-style: normal;';
+				echo 'font-style: normal !important;';
 			} ?>;
 	}
 
