@@ -27,7 +27,6 @@ services:
 
    wordpress:
      depends_on:
-       - chrome
        - mailhog
        - db
      build: ./.tk/docker/
@@ -41,21 +40,11 @@ services:
        WORDPRESS_DB_NAME: local
      volumes:
        - .:/var/www/html/wp-content/plugins/buddyforms-premium
-       - ./.tk/docker/docker-entrypoint.sh:/var/www/html/docker-entrypoint.sh
+#       - ./.tk/docker/docker-entrypoint.sh:/var/www/html/docker-entrypoint.sh
      networks:
        default:
          aliases:
            - test.local
-
-   chrome:
-     environment:
-       - DBUS_SESSION_BUS_ADDRESS=/dev/null
-     volumes:
-       - /dev/shm:/dev/shm
-     image: selenium/standalone-chrome-debug:3.141.59-20200525
-     ports:
-       - 4444
-       - 5900:5900
 
 volumes:
     db_data: {}
