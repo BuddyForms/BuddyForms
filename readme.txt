@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.23-beta.2
+Stable tag: 2.5.23-beta.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,14 +397,26 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.23-beta.2 - 30 Sept 2020 =
-* New filters added.
-
-= 2.5.23-beta.1 - 24 Sept 2020 =
+= 2.5.23-beta.3 - 21 Oct 2020 =
 * Fixed to show custom login links only for buddyforms.
 * Fixed a bug in forms using Elementor.
 * Improved compatibility issues with the Divi theme.
 * Improved Buddyforms Form Builder compatibility with TinyMCE plugins on admin Buddyforms pages.
+* New Submission by author filter added.
+* Fixed the visual issue with time picker (date form field).
+* Fixed to Prevent Firefox from maintaining previously selected items to ensure all selected items get showing.
+* Fixed the Invalid name attribute in post_excerpt when is a hidden field.
+* Fixed the Invalid "for" attribute (label) in post_excerpt when the labels are shown.
+* Fixed the GDPR Field Templates not loading when the plugin  is activated.
+* Fixed the validation for the global variable before using it to replace the args variable.
+* Fixed the Nested ternary expressions (without parentheses) deprecated in PHP 7.4.
+* Fixed the Add min attribute to avoid negative values in Taxonomy Limit Selections.
+* Fixed the add template text to the GDPR when missing.	5208cb1c	DESKTOP-5SDFPDV\marin <marin250189@gmail.com>	Oct 13, 2020 at 1:04 AM
+* Fixed the Description font style.
+* Fixed notice in the post view when there are posts created from the admin and the options "List all Author Posts of the Post Type" and "List Style Table" are enabled.
+* Fixed to replace deprecated jQuery method "live"  by "on".
+* Fixed for the Submitted form override the slug in other forms when submitted on a page with several forms.
+* Fixed previous entry is overridden by the next one when submitted entries from several forms by-one-by on the same page.
 
 = 2.5.22 - 14 Sept 2020 =
 * Fix a code in a wrong position for the BF settings header.
