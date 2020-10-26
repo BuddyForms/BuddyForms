@@ -64,8 +64,13 @@ abstract class FormView extends Base {
 	}
 
 	public function renderCSS() {
+		global $buddyforms, $form_slug;
+
+		if ( ! isset( $buddyforms[ $form_slug ]['layout']['desc_disable_css'] ) ) {
+			echo 'span.help-inline, span.help-block { color: #888; font-size: .9em; font-style: italic; }';
+		}
+		
 		echo 'label span.required { color: #B94A48; }';
-		echo 'span.help-inline, span.help-block { color: #888; font-size: .9em; font-style: italic; }';
 	}
 
 	public function renderJS() {

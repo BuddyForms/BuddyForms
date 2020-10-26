@@ -346,6 +346,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		display: block;
 	}
 
+	<?php if( empty($bfdesign['desc_disable_css']) ): ?>
+
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-block,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> span.help-inline,
@@ -354,6 +356,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		font-style: italic;
 		font-weight: normal;
 	}
+
+	<?php endif; ?>
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .revision,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .revision {
