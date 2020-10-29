@@ -2,6 +2,10 @@
 	box-sizing: border-box;
 	padding-bottom: 0 !important;
 
+	@media (min-width: 700px) {
+		min-width: 450px;
+	}
+
 	.corner-head {
 		margin-bottom: 0;
 		padding-bottom: 0;

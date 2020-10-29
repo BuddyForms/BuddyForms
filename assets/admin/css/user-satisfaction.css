@@ -4,6 +4,12 @@
   padding-bottom: 0 !important;
 }
 
+@media (min-width: 700px) {
+  #corner-popup {
+    min-width: 450px;
+  }
+}
+
 #corner-popup .corner-head {
   margin-bottom: 0;
   padding-bottom: 0;
