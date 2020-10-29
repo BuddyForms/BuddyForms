@@ -26,28 +26,35 @@ function userSatisfaction() {
               });
 
               if (Object.keys(data).length >= 1) {
-                let ajaxForm = jQuery.get(href, data);
+                let ajaxForm = jQuery.post(href, data);
                 ajaxForm.then((data, textStatus, jqXHR) => {
-                  console.log(textStatus, jqXHR);
                   sectionNav();
+                  jQuery(this).removeClass('error');
+                  jQuery(this).removeClass('user');
+                  jQuery(this).removeClass('server');
                 });
                 ajaxForm.fail((data, textStatus, jqXHR) => {
-                  console.log(textStatus, jqXHR);
+                  jQuery(this).addClass('error');
+                  jQuery(this).addClass('server');
+                  setTimeout(() => {
+                      jQuery(this).removeClass('error');
+                      jQuery(this).removeClass('server');
+                  }, 15000);
                 });
                 break;
               } else {
-                console.error('error');
+                jQuery(this).addClass('error');
+                jQuery(this).addClass('user');
+                setTimeout(() => {
+                    jQuery(this).removeClass('error');
+                    jQuery(this).removeClass('user');
+                }, 15000);
               }
             }
           break;
         }
       });
     }
-
-    jQuery(document).on('click', '[data-section-browser]', function (e) {
-      e.preventDefault();
-      sectionNav(jQuery(this).attr('data-section-browser'));
-    });
 
     function sectionNav(action) {
       let thisWindow = jQuery('.bf-satisfaction');
@@ -77,6 +84,17 @@ function userSatisfaction() {
       },
       init: function () {
         ajaxEvent();
+        jQuery(document).on('click', '[data-section-browser]', function (e) {
+            e.preventDefault();
+            sectionNav(jQuery(this).attr('data-section-browser'));
+        });
+        jQuery(document).on('click', '[data-satisfaction-action]', function (e) {
+            e.preventDefault();
+            let state = jQuery(this).attr('data-satisfaction-action');
+            if (state == 'close') {
+                jQuery('#corner-popup .corner-close').click()
+            }
+        });
       }
     }
   }

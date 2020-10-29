@@ -199,22 +199,21 @@ function user_satisfaction_trigger() {
 									</label>
 								</div>
 								<div>
-									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_recommendation:checked\">Submit</button>
+									<div></div>
+									<button class=\"bf-satisfaction-button\" data-user-error=\"Please select an item to continue\" data-server-error=\"Internal error\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_recommendation:checked\">Submit</button>
 								</div>
 							</section>
 							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are gap to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
-								<div>Section</div>
 								<textarea name=\"satisfaction_comments\" cols=\"30\" rows=\"10\"></textarea>
 								<div>
 									<button class=\"bf-satisfaction-button\" data-section-browser=\"-\">Back</button>
-									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_comments\">Submit</button>
+									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_comments\">Submit or Done</button>
 								</div>
 							</section>
 							<section class=\"bf-satisfaction-column\" data-section=\"3\" data-section-title=\"Thanks you\">
-								<div>Section</div>
 								<div>
 									<div></div>
-									<button class=\"bf-satisfaction-button\" data-satisfaction-action=\"0\">Close</button>
+									<button class=\"bf-satisfaction-button\" data-satisfaction-action=\"close\">Close</button>
 									<div></div>
 								</div>
 							</section>
