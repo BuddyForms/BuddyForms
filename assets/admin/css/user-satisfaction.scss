@@ -2,6 +2,10 @@
 	box-sizing: border-box;
 	padding-bottom: 0 !important;
 
+	@media (min-width: 700px) {
+		min-width: 450px;
+	}
+
 	.corner-head {
 		margin-bottom: 0;
 		padding-bottom: 0;
@@ -170,6 +174,7 @@
 							position: absolute;
 							white-space: nowrap;
 							pointer-events: none;
+							box-sizing: content-box;
 							top: 0; right: 0;
 							background: rgba(red, 1);
 							transform: translate(0, 0);
