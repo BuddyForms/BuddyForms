@@ -223,6 +223,8 @@
   position: absolute;
   white-space: nowrap;
   pointer-events: none;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   top: 0;
   right: 0;
   background: red;
