@@ -146,13 +146,14 @@
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style="hover"] input[type="radio"] ~ span {
-  top: -1px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
   font-size: 14px;
   color: #ffffff;
+  line-height: 25px;
   position: absolute;
   width: -webkit-fit-content;
   width: -moz-fit-content;
