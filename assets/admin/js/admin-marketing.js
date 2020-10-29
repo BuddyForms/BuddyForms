@@ -1,81 +1,86 @@
 function userSatisfaction() {
     function ajaxEvent() {
-      jQuery(document).on('click', '[data-satisfaction-form-action]', function (e) {
-        e.preventDefault();
-        let action = jQuery(this).attr('data-satisfaction-form-action');
+        jQuery(document).on('click', '[data-satisfaction-form-action]', function (e) {
+            e.preventDefault();
+            let action = jQuery(this).attr('data-satisfaction-form-action');
 
-        switch (action) {
-          case 'ajax':
-            let href = "/";
-            let inputs = jQuery(this).attr('data-satisfaction-form-inputs').split(',');
-            let data = {};
-            if (href && inputs) {
-              inputs.forEach(input => {
-                let newInput = input.split(':');
-                if (newInput.length >= 2) {
-                  let jqNewInput = jQuery('[name="'+newInput[0]+'"]:'+newInput[1]);
-                  if (jqNewInput.length >= 1) {
-                    Object.assign(data, {[jqNewInput[0].name]: jqNewInput.val()});
-                  }
-                } else {
-                  let jqNewInput = jQuery('[name="'+newInput[0]+'"]');
-                  if (jqNewInput.length >= 1) {
-                    Object.assign(data, {[jqNewInput[0].name]: jqNewInput.val()});
-                  }
-                }
-              });
+            switch (action) {
+                case 'ajax':
+                    let href = "/";
+                    let inputs = jQuery(this).attr('data-satisfaction-form-inputs').split(',');
+                    let data = {};
+                    if (href && inputs) {
+                        inputs.forEach(input => {
+                            let newInput = input.split(':');                            
+                            let jqNewInput = newInput.length >= 2 
+                                ? jQuery('[name="' + newInput[0] + '"]:' + newInput[1]) 
+                                : jQuery('[name="' + newInput[0] + '"]');
 
-              if (Object.keys(data).length >= 1) {
-                let ajaxForm = jQuery.post(href, data);
-                ajaxForm.then((data, textStatus, jqXHR) => {
-                  sectionNav();
-                  jQuery(this).removeClass('error');
-                  jQuery(this).removeClass('user');
-                  jQuery(this).removeClass('server');
-                });
-                ajaxForm.fail((data, textStatus, jqXHR) => {
-                  jQuery(this).addClass('error');
-                  jQuery(this).addClass('server');
-                  setTimeout(() => {
-                      jQuery(this).removeClass('error');
-                      jQuery(this).removeClass('server');
-                  }, 15000);
-                });
-                break;
-              } else {
-                jQuery(this).addClass('error');
-                jQuery(this).addClass('user');
-                setTimeout(() => {
-                    jQuery(this).removeClass('error');
-                    jQuery(this).removeClass('user');
-                }, 15000);
-              }
+                            if (jqNewInput.length >= 1) {
+                                Object.assign(data, { key: jqNewInput[0].name, value: jqNewInput.val() });
+                            }
+                        });
+
+                        if (Object.keys(data).length >= 1) {
+                            let ajaxForm = jQuery.post({
+                                url: buddyformsGlobal.admin_url,
+                                dataType: 'json',
+                                data: {
+                                    'action': 'buddyforms_user_satisfaction_ajax',
+                                    'nonce': buddyformsGlobal.ajaxnonce,
+                                    'key': data.key,
+                                    'value': data.value
+                                }
+                            })
+                            ajaxForm.then((data, textStatus, jqXHR) => {
+                                sectionNav();
+                                jQuery(this).removeClass('error');
+                                jQuery(this).removeClass('user');
+                                jQuery(this).removeClass('server');
+                            });
+                            ajaxForm.fail((data, textStatus, jqXHR) => {
+                                jQuery(this).addClass('error');
+                                jQuery(this).addClass('server');
+                                setTimeout(() => {
+                                    jQuery(this).removeClass('error');
+                                    jQuery(this).removeClass('server');
+                                }, 15000);
+                            });
+                            break;
+                        } else {
+                            jQuery(this).addClass('error');
+                            jQuery(this).addClass('user');
+                            setTimeout(() => {
+                                jQuery(this).removeClass('error');
+                                jQuery(this).removeClass('user');
+                            }, 15000);
+                        }
+                    }
+                    break;
             }
-          break;
-        }
-      });
+        });
     }
 
     function sectionNav(action) {
-      let thisWindow = jQuery('.bf-satisfaction');
-      let thisSection = Number(thisWindow.attr('data-section'));
+        let thisWindow = jQuery('.bf-satisfaction');
+        let thisSection = Number(thisWindow.attr('data-section'));
 
-      switch (action) {
-        case '-': {
-          thisSection--;
-          break;
+        switch (action) {
+            case '-': {
+                thisSection--;
+                break;
+            }
+            case '1': {
+                thisSection = 1;
+                break;
+            }
+            default: {
+                thisSection++;
+                break;
+            }
         }
-        case '1': {
-          thisSection = 1;
-          break;
-        }
-        default: {
-          thisSection++;
-          break;
-        }
-      }
-      thisWindow.attr('data-section', thisSection);
-      jQuery('.bf-satisfaction .bf-satisfaction-top-title').html(jQuery('section[data-section="'+thisSection+'"]').attr('data-section-title'));
+        thisWindow.attr('data-section', thisSection);
+        jQuery('.bf-satisfaction .bf-satisfaction-top-title').html(jQuery('section[data-section="' + thisSection + '"]').attr('data-section-title'));
     }
 
     return {
@@ -97,7 +102,7 @@ function userSatisfaction() {
         });
       }
     }
-  }
+}
 
 
 jQuery(document).ready(function (jQuery) {
