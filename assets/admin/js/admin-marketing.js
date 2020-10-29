@@ -39,6 +39,36 @@ jQuery(document).ready(function (jQuery) {
                         url: buddyformsGlobal.admin_url,
                         data: {
                             'action': 'buddyforms_marketing_form_list_coupon_for_free_close',
+                            'key': 'form_list_coupon_for_free',
+                            'nonce': buddyformsGlobal.ajaxnonce,
+                        }
+                    });
+                }
+            },
+            content: buddyformsMarketingHandler.content,
+        });
+    }
+    //Popup for user satisfaction
+    if (buddyformsMarketingHandler && buddyformsGlobal && buddyformsMarketingHandler.content) {
+        targetContainer.cornerpopup({
+            variant: 10,
+            slide: 1,
+            slideTop: 1,
+            escClose: 1,
+            bgcolor: "#fff",
+            bordercolor: "#efefef",
+            textcolor: "#181818",
+            btntextcolor: "#fff",
+            afterPopup: function () {
+                if (confirm('Close for ever?')) {
+                    //hide for ever
+                    jQuery.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: buddyformsGlobal.admin_url,
+                        data: {
+                            'action': 'buddyforms_marketing_hide_for_ever_close',
+                            'popup_key': buddyformsMarketingHandler.key || '',
                             'nonce': buddyformsGlobal.ajaxnonce,
                         }
                     });
