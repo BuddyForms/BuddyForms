@@ -134,13 +134,95 @@ function user_satisfaction_trigger() {
 			return;
 		}
 		//todo Add validation to check if the user create one form
-		
+
 		$is_able_to_open_option = get_option( 'buddyforms_marketing_hide_for_ever_close' );
 		$is_able_to_open        = ( ! empty( $is_able_to_open_option ) && ! empty( $is_able_to_open_option['buddyforms_marketing_user_satisfaction_close'] ) );
 
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) ) {
-			$base_content = "<div class=\"corner-head\"><h1>AAAAAAA ssdfsdfsdfs</h1></div>";
+			$base_content = "<div class=\"corner-head\">
+				<div class=\"bf-satisfaction\" data-section=\"1\">
+					<div class=\"bf-satisfaction-container\">
+						<div class=\"bf-satisfaction-top\">
+							<div class=\"bf-satisfaction-top-title\">How likely is it that you would recommend BuddyForms to a friend or colleague?</div>
+						</div>
+						<div class=\"bf-satisfaction-body\">
+							<section class=\"bf-satisfaction-column\" data-section=\"1\" data-section-title=\"How likely is it that you would recommend BuddyForms to a friend or colleague?\">
+								<div>
+									<span class=\"bf-satisfaction-body-medium\">Not at all likely</span>
+									<span class=\"bf-satisfaction-body-medium\">Extremely likely</span>
+								</div>
+								<div class=\"bf-satisfaction-row\">
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"0\">
+										<span>0</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"1\">
+										<span>1</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"2\">
+										<span>2</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"3\">
+										<span>3</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"4\">
+										<span>4</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"5\">
+										<span>5</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"6\">
+										<span>6</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"7\">
+										<span>7</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"8\">
+										<span>8</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"9\">
+										<span>9</span>
+									</label>
+									<label data-style=\"hover\">
+										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"10\">
+										<span>10</span>
+									</label>
+								</div>
+								<div>
+									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_recommendation:checked\">Submit</button>
+								</div>
+							</section>
+							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are gap to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
+								<div>Section</div>
+								<textarea name=\"satisfaction_comments\" cols=\"30\" rows=\"10\"></textarea>
+								<div>
+									<button class=\"bf-satisfaction-button\" data-section-browser=\"-\">Back</button>
+									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_comments\">Submit</button>
+								</div>
+							</section>
+							<section class=\"bf-satisfaction-column\" data-section=\"3\" data-section-title=\"Thanks you\">
+								<div>Section</div>
+								<div>
+									<div></div>
+									<button class=\"bf-satisfaction-button\" data-satisfaction-action=\"0\">Close</button>
+									<div></div>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>";
+			wp_enqueue_style( 'buddyforms-satisfaction-style', BUDDYFORMS_ASSETS . 'admin/css/user-satisfaction.css', array(), BUDDYFORMS_VERSION );
 			wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'buddyforms-marketing-popup-handler', BUDDYFORMS_ASSETS . 'admin/js/admin-marketing.js', array( 'jquery' ), BUDDYFORMS_VERSION );

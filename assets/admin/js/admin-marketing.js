@@ -1,3 +1,87 @@
+function userSatisfaction() {
+    function ajaxEvent() {
+      jQuery(document).on('click', '[data-satisfaction-form-action]', function (e) {
+        e.preventDefault();
+        let action = jQuery(this).attr('data-satisfaction-form-action');
+
+        switch (action) {
+          case 'ajax':
+            let href = "/";
+            let inputs = jQuery(this).attr('data-satisfaction-form-inputs').split(',');
+            let data = {};
+            if (href && inputs) {
+              inputs.forEach(input => {
+                let newInput = input.split(':');
+                if (newInput.length >= 2) {
+                  let jqNewInput = jQuery('[name="'+newInput[0]+'"]:'+newInput[1]);
+                  if (jqNewInput.length >= 1) {
+                    Object.assign(data, {[jqNewInput[0].name]: jqNewInput.val()});
+                  }
+                } else {
+                  let jqNewInput = jQuery('[name="'+newInput[0]+'"]');
+                  if (jqNewInput.length >= 1) {
+                    Object.assign(data, {[jqNewInput[0].name]: jqNewInput.val()});
+                  }
+                }
+              });
+
+              if (Object.keys(data).length >= 1) {
+                let ajaxForm = jQuery.get(href, data);
+                ajaxForm.then((data, textStatus, jqXHR) => {
+                  console.log(textStatus, jqXHR);
+                  sectionNav();
+                });
+                ajaxForm.fail((data, textStatus, jqXHR) => {
+                  console.log(textStatus, jqXHR);
+                });
+                break;
+              } else {
+                console.error('error');
+              }
+            }
+          break;
+        }
+      });
+    }
+
+    jQuery(document).on('click', '[data-section-browser]', function (e) {
+      e.preventDefault();
+      sectionNav(jQuery(this).attr('data-section-browser'));
+    });
+
+    function sectionNav(action) {
+      let thisWindow = jQuery('.bf-satisfaction');
+      let thisSection = Number(thisWindow.attr('data-section'));
+
+      switch (action) {
+        case '-': {
+          thisSection--;
+          break;
+        }
+        case '1': {
+          thisSection = 1;
+          break;
+        }
+        default: {
+          thisSection++;
+          break;
+        }
+      }
+      thisWindow.attr('data-section', thisSection);
+      jQuery('.bf-satisfaction .bf-satisfaction-top-title').html(jQuery('section[data-section="'+thisSection+'"]').attr('data-section-title'));
+    }
+
+    return {
+      nav: function (action) {
+        sectionNav(action);
+      },
+      init: function () {
+        ajaxEvent();
+      }
+    }
+  }
+
+
 jQuery(document).ready(function (jQuery) {
     //Popup for the themekraft bundle insisde the addons page
     var addonsContainer = jQuery('#fs_addons');
@@ -78,4 +162,6 @@ jQuery(document).ready(function (jQuery) {
         });
         jQuery('div#corner-popup').addClass('buddyforms-marketing-container buddyforms-marketing-bundle-container');
     }
+
+    userSatisfaction().init();
 });

@@ -1,0 +1,175 @@
+.corner-head .bf-satisfaction:not([data-section="1"]) section[data-section="1"] {
+  display: none !important;
+}
+.corner-head .bf-satisfaction:not([data-section="2"]) section[data-section="2"] {
+  display: none !important;
+}
+.corner-head .bf-satisfaction:not([data-section="3"]) section[data-section="3"] {
+  display: none !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container {
+  display: block;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-top .bf-satisfaction-top-title {
+  font-size: 18px;
+  padding-right: 24px;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  flex-direction: row;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-row > * {
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-row > *:last-child {
+  margin-right: 0;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-column > * {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-column > *:first-child {
+  margin-top: 0;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-column > *:last-child {
+  margin-bottom: 0;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-body-medium {
+  opacity: 0.77;
+  font-size: 14px;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover], .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] * {
+  transition: 0s !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] input[type=radio] {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] input[type=radio]::before {
+  display: none;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] input[type=radio] ~ span {
+  top: -1px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 14px;
+  color: #000000;
+  position: absolute;
+  width: fit-content;
+  width: -ms-fit-content;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  height: fit-content;
+  height: -ms-fit-content;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] input[type=radio]:checked {
+  background: #000000;
+  border-color: transparent;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style=hover] input[type=radio]:checked ~ span {
+  color: #ffffff;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button {
+  width: fit-content;
+  width: -ms-fit-content;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  height: fit-content;
+  height: -ms-fit-content;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin: auto;
+  margin-top: 0;
+  margin-left: auto;
+  font-size: 12px;
+  color: #000000;
+  font-weight: bold;
+  background: #ffffff;
+  border: 2px solid #000000;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:last-child {
+  margin-left: auto;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:hover {
+  color: #ffffff;
+  background: #000000;
+  border-color: transparent;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section textarea {
+  padding: 12px;
+  resize: vertical;
+  min-height: 100px;
+  border-width: 2px;
+  border-radius: 6px;
+  margin-bottom: 12px !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child {
+  display: flex;
+  flex-direction: row;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:first-child :first-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:first-child :first-child {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:first-child :last-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:first-child :last-child {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:last-child :first-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:last-child :first-child {
+  margin-left: 0 !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:last-child :first-child:last-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:last-child :last-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:last-child :first-child:last-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:last-child :last-child {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child:last-child :first-child:last-child,
+.corner-head .bf-satisfaction .bf-satisfaction-container section > div:last-child:last-child :first-child:last-child {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
