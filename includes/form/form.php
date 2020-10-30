@@ -205,7 +205,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	if ( $post_id == 0 ) {
 		//check if auto-draft exist
 		global $wpdb;
-		$query   = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} INNER JOIN wp_postmeta ON wp_posts.ID = wp_postmeta.post_id WHERE 1=1 AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s AND post_type = %s AND wp_postmeta.meta_key = '_bf_form_slug' AND wp_postmeta.meta_value = %s ORDER BY ID DESC", $current_user->ID, $post_type, $form_slug );
+		$query   = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE 1=1 AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s AND post_type = %s AND {$wpdb->postmeta}.meta_key = '_bf_form_slug' AND {$wpdb->postmeta}.meta_value = %s ORDER BY ID DESC", $current_user->ID, $post_type, $form_slug );
 		$post_id = (int) $wpdb->get_var( $query );
 		if ( empty( $post_id ) ) {
 			$the_post = bf_get_default_post_to_edit( $post_type, true );
