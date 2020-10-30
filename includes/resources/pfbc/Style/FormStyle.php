@@ -252,7 +252,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		/* Divi */ .et-db #et-boc .et-l .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft,
 		.<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-submit, .<?php echo esc_attr($css_form_class) ?> .form-actions button.bf-draft {
 			display: inline;
-			width: auto;
+			width: auto !important;
 		}
 	}
 
