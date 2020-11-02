@@ -16,6 +16,7 @@ function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
 
 	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
+	add_action( 'wp_ajax_buddyforms_user_satisfaction_ajax', 'buddyforms_user_satisfaction_ajax' );
 
 	add_action( 'wp_ajax_buddyforms_marketing_hide_for_ever_close', 'buddyforms_marketing_hide_for_ever_close' );
 	add_action( 'wp_ajax_buddyforms_marketing_reset_permissions', 'buddyforms_marketing_reset_permissions' );
@@ -60,6 +61,7 @@ function buddyforms_marketing_hide_for_ever_close() {
 				$options = array( $key => true );
 			}
 			update_option( 'buddyforms_marketing_hide_for_ever_close', $options );
+			buddyforms_track( 'satisfaction-close' );
 		}
 
 		wp_send_json( '' );
@@ -140,6 +142,7 @@ function user_satisfaction_trigger() {
 
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) ) {
+			buddyforms_track( 'satisfaction-show' );
 			$base_content = "<div class=\"corner-head\">
 				<div class=\"bf-satisfaction\" data-section=\"1\">
 					<div class=\"bf-satisfaction-container\">
@@ -234,6 +237,59 @@ function user_satisfaction_trigger() {
 
 	}
 }
+
+function buddyforms_user_satisfaction_ajax() {
+
+	try {
+	
+		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			wp_send_json_error();
+		}
+		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
+			wp_send_json_error();
+		}
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+			wp_send_json_error();
+		}
+	
+		if ( ! isset( $_POST['user_satisfaction_key']) || empty( $_POST['user_satisfaction_value'] ) ) {
+			wp_send_json_error();
+		}
+
+		$us_key = sanitize_text_field( $_POST['user_satisfaction_key'] );
+		$us_value = sanitize_text_field( $_POST['user_satisfaction_value'] );
+	
+		switch ( $us_key ) {
+			case 'satisfaction_recommendation':
+				
+				if ( ! isset( $us_value ) || empty( $us_value ) ) {
+					wp_send_json_error();
+				}
+	
+				buddyforms_track( 'satisfaction-rate', array( 'rate' => $us_value ) );
+	
+				wp_send_json( '' );
+				break;
+			
+			case 'satisfaction_comments':
+				
+				if ( isset( $us_value ) && ! empty( $us_value ) ) {
+					buddyforms_track( 'satisfaction-comment', array( 'comment' => $us_value ) );
+				}
+	
+				wp_send_json( '' );
+				break;
+				
+			default:
+				wp_send_json_error();
+				break;
+		}
+
+	}  catch ( Exception $ex ) {
+		wp_send_json_error( $ex->getMessage() );
+	}
+}
+
 
 function buddyforms_marketing_assets() {
 	try {

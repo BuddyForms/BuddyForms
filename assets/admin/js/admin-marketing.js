@@ -28,8 +28,8 @@ function userSatisfaction() {
                                 data: {
                                     'action': 'buddyforms_user_satisfaction_ajax',
                                     'nonce': buddyformsGlobal.ajaxnonce,
-                                    'key': data.key,
-                                    'value': data.value
+                                    'user_satisfaction_key': data.key,
+                                    'user_satisfaction_value': data.value
                                 }
                             })
                             ajaxForm.then((data, textStatus, jqXHR) => {
@@ -59,6 +59,9 @@ function userSatisfaction() {
                     break;
             }
         });
+
+        
+
     }
 
     function sectionNav(action) {
