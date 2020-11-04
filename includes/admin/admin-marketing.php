@@ -61,7 +61,7 @@ function buddyforms_marketing_hide_for_ever_close() {
 				$options = array( $key => true );
 			}
 			update_option( 'buddyforms_marketing_hide_for_ever_close', $options );
-			buddyforms_track( 'satisfaction-close' );
+			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-close' ) );
 		}
 
 		wp_send_json( '' );
@@ -142,7 +142,7 @@ function user_satisfaction_trigger() {
 
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) ) {
-			buddyforms_track( 'satisfaction-show' );
+			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-show' ) );
 			$base_content = "<div class=\"corner-head\">
 				<div class=\"bf-satisfaction\" data-section=\"1\">
 					<div class=\"bf-satisfaction-container\">
@@ -241,7 +241,7 @@ function user_satisfaction_trigger() {
 function buddyforms_user_satisfaction_ajax() {
 
 	try {
-	
+
 		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			wp_send_json_error();
 		}
@@ -251,41 +251,40 @@ function buddyforms_user_satisfaction_ajax() {
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
 			wp_send_json_error();
 		}
-	
-		if ( ! isset( $_POST['user_satisfaction_key']) || empty( $_POST['user_satisfaction_value'] ) ) {
+
+		if ( ! isset( $_POST['user_satisfaction_key'] ) || empty( $_POST['user_satisfaction_value'] ) ) {
 			wp_send_json_error();
 		}
 
-		$us_key = sanitize_text_field( $_POST['user_satisfaction_key'] );
-		$us_value = sanitize_text_field( $_POST['user_satisfaction_value'] );
-	
+		$us_key   = sanitize_text_field( $_POST['user_satisfaction_key'] );
+		$us_value = sanitize_textarea_field( $_POST['user_satisfaction_value'] );
+
 		switch ( $us_key ) {
 			case 'satisfaction_recommendation':
-				
+
 				if ( ! isset( $us_value ) || empty( $us_value ) ) {
 					wp_send_json_error();
 				}
-	
-				buddyforms_track( 'satisfaction-rate', array( 'rate' => $us_value ) );
-	
+				buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-rate', 'rate' => intval( $us_value ) ) );
+
 				wp_send_json( '' );
 				break;
-			
+
 			case 'satisfaction_comments':
-				
+
 				if ( isset( $us_value ) && ! empty( $us_value ) ) {
-					buddyforms_track( 'satisfaction-comment', array( 'comment' => $us_value ) );
+					buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-comment', 'comment' =>  $us_value ) );
 				}
-	
+
 				wp_send_json( '' );
 				break;
-				
+
 			default:
 				wp_send_json_error();
 				break;
 		}
 
-	}  catch ( Exception $ex ) {
+	} catch ( Exception $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	}
 }
