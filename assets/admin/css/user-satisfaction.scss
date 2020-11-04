@@ -200,6 +200,12 @@
 								content: attr(data-server-error);
 							}
 						}
+
+						&:disabled {
+							user-select: none;
+							opacity: .7 !important;
+							pointer-events: none !important;
+						}
 					}
 				}
 				section {

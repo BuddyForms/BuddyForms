@@ -257,6 +257,15 @@
   content: attr(data-server-error);
 }
 
+#corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:disabled {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: .7 !important;
+  pointer-events: none !important;
+}
+
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container section textarea {
   padding: 12px;
   resize: vertical;
