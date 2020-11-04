@@ -6,14 +6,14 @@ function userSatisfaction() {
 
             switch (action) {
                 case 'ajax':
-                    let href = "/";
+                    let href = '/';
                     let inputs = jQuery(this).attr('data-satisfaction-form-inputs').split(',');
                     let data = {};
                     if (href && inputs) {
                         inputs.forEach(input => {
-                            let newInput = input.split(':');                            
-                            let jqNewInput = newInput.length >= 2 
-                                ? jQuery('[name="' + newInput[0] + '"]:' + newInput[1]) 
+                            let newInput = input.split(':');
+                            let jqNewInput = newInput.length >= 2
+                                ? jQuery('[name="' + newInput[0] + '"]:' + newInput[1])
                                 : jQuery('[name="' + newInput[0] + '"]');
 
                             if (jqNewInput.length >= 1) {
@@ -35,7 +35,7 @@ function userSatisfaction() {
                                     'user_satisfaction_key': data.key,
                                     'user_satisfaction_value': data.value
                                 }
-                            })
+                            });
                             ajaxForm.then((data, textStatus, jqXHR) => {
                                 sectionNav();
                                 jQuery(this).removeClass('error');
@@ -66,9 +66,6 @@ function userSatisfaction() {
                     break;
             }
         });
-
-        
-
     }
 
     function sectionNav(action) {
@@ -94,24 +91,24 @@ function userSatisfaction() {
     }
 
     return {
-      nav: function (action) {
-        sectionNav(action);
-      },
-      init: function () {
-        ajaxEvent();
-        jQuery(document).on('click', '[data-section-browser]', function (e) {
-            e.preventDefault();
-            sectionNav(jQuery(this).attr('data-section-browser'));
-        });
-        jQuery(document).on('click', '[data-satisfaction-action]', function (e) {
-            e.preventDefault();
-            let state = jQuery(this).attr('data-satisfaction-action');
-            if (state == 'close') {
-                jQuery('#corner-popup .corner-close').click()
-            }
-        });
-      }
-    }
+        nav: function (action) {
+            sectionNav(action);
+        },
+        init: function () {
+            ajaxEvent();
+            jQuery(document).on('click', '[data-section-browser]', function (e) {
+                e.preventDefault();
+                sectionNav(jQuery(this).attr('data-section-browser'));
+            });
+            jQuery(document).on('click', '[data-satisfaction-action]', function (e) {
+                e.preventDefault();
+                let state = jQuery(this).attr('data-satisfaction-action');
+                if (state == 'close') {
+                    jQuery('#corner-popup .corner-close').click();
+                }
+            });
+        }
+    };
 }
 
 
@@ -176,9 +173,9 @@ jQuery(document).ready(function (jQuery) {
             bordercolor: "#efefef",
             textcolor: "#181818",
             btntextcolor: "#fff",
-            afterPopup: function () {                
+            afterPopup: function () {
                 const current_section = jQuery(this).find('.bf-satisfaction').data('section');
-                                
+
                 if (current_section > 1) {
                     return;
                 }
