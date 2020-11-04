@@ -216,7 +216,7 @@ function user_satisfaction_trigger() {
 							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are gap to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
 								<textarea name=\"satisfaction_comments\" cols=\"30\" rows=\"10\"></textarea>
 								<div>
-									<button class=\"bf-satisfaction-button\" data-section-browser=\"-\">Back</button>
+									<div></div>
 									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_comments\">Submit or Done</button>
 								</div>
 							</section>
@@ -224,7 +224,6 @@ function user_satisfaction_trigger() {
 								<div>
 									<div></div>
 									<button class=\"bf-satisfaction-button\" data-satisfaction-action=\"close\">Close</button>
-									<div></div>
 								</div>
 							</section>
 						</div>

@@ -166,11 +166,19 @@
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
   -webkit-border-radius: 100px;
      -moz-border-radius: 100px;
           border-radius: 100px;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.24);
+}
+
+#corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style="hover"] input[type="radio"]:hover {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.24);
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style="hover"] input[type="radio"]::before {
@@ -193,18 +201,15 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  pointer-events: none;
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style="hover"] input[type="radio"]:checked {
   background: #f4a141;
   border-color: transparent;
-  -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.7);
-     -moz-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.7);
-          box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.7);
-}
-
-#corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body label[data-style="hover"] input[type="radio"]:checked ~ span {
-  color: #000000;
+  -webkit-box-shadow: 0 0 0 0 white;
+     -moz-box-shadow: 0 0 0 0 white;
+          box-shadow: 0 0 0 0 white;
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button {
@@ -219,6 +224,7 @@
   height: -moz-fit-content;
   height: fit-content;
   border: none;
+  cursor: pointer;
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
           border-radius: 0;
@@ -228,7 +234,7 @@
   margin-top: 0;
   margin-left: auto;
   font-size: 12px;
-  color: #000000;
+  color: #ffffff;
   font-weight: bold;
   background: #f4a141;
   border: 0 solid transparent;
@@ -239,9 +245,9 @@
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:focus, #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:hover {
-  -webkit-box-shadow: 0 0 0 2px black;
-     -moz-box-shadow: 0 0 0 2px black;
-          box-shadow: 0 0 0 2px black;
+  -webkit-box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
+     -moz-box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
+          box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button::before {

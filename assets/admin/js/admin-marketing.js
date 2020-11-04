@@ -23,9 +23,13 @@ function userSatisfaction() {
 
                         // Disable button to avoid
                         // duplicate actions.
-                        jQuery(this).attr('disabled', true);
 
                         if (Object.keys(data).length >= 1) {
+                            const oldButtonText = jQuery(this).html();
+
+                            jQuery(this).html('Sending...');
+                            jQuery(this).attr('disabled', true);
+
                             let ajaxForm = jQuery.post({
                                 url: buddyformsGlobal.admin_url,
                                 dataType: 'json',
@@ -41,22 +45,23 @@ function userSatisfaction() {
                                 jQuery(this).removeClass('error');
                                 jQuery(this).removeClass('user');
                                 jQuery(this).removeClass('server');
-                                jQuery(this).attr('disabled', false);
                             });
                             ajaxForm.fail((data, textStatus, jqXHR) => {
                                 jQuery(this).addClass('error');
                                 jQuery(this).addClass('server');
-                                jQuery(this).attr('disabled', false);
                                 setTimeout(() => {
                                     jQuery(this).removeClass('error');
                                     jQuery(this).removeClass('server');
                                 }, 15000);
                             });
+                            ajaxForm.always(() => {
+                                jQuery(this).html(oldButtonText);
+                                jQuery(this).attr('disabled', false);
+                            });
                             break;
                         } else {
                             jQuery(this).addClass('error');
                             jQuery(this).addClass('user');
-                            jQuery(this).attr('disabled', false);
                             setTimeout(() => {
                                 jQuery(this).removeClass('error');
                                 jQuery(this).removeClass('user');
