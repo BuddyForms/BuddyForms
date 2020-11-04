@@ -83,7 +83,9 @@ function buddyforms_marketing_reset_permissions() {
 			die();
 		}
 
-		$result = delete_option( 'buddyforms_marketing_hide_for_ever_close' );
+		$result1 = delete_option( 'buddyforms_marketing_hide_for_ever_close' );
+		$result2 = delete_option( 'buddyforms_user_satisfaction_sent' );
+		$result  = $result1 && $result2;
 
 		wp_send_json( $result );
 	} catch ( Exception $ex ) {
@@ -139,7 +141,7 @@ function user_satisfaction_trigger() {
 
 		$is_able_to_open_option = get_option( 'buddyforms_marketing_hide_for_ever_close' );
 		$is_able_to_open        = ( ! empty( $is_able_to_open_option ) && ! empty( $is_able_to_open_option['buddyforms_marketing_user_satisfaction_close'] ) );
-		$is_already_sent		= get_option( 'buddyforms_user_satisfaction_sent' );
+		$is_already_sent        = get_option( 'buddyforms_user_satisfaction_sent' );
 
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
@@ -275,7 +277,7 @@ function buddyforms_user_satisfaction_ajax() {
 			case 'satisfaction_comments':
 
 				if ( isset( $us_value ) && ! empty( $us_value ) ) {
-					buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-comment', 'comment' =>  $us_value ) );
+					buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-comment', 'comment' => $us_value ) );
 				}
 
 				wp_send_json( '' );
