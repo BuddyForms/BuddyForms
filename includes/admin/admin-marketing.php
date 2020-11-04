@@ -139,9 +139,10 @@ function user_satisfaction_trigger() {
 
 		$is_able_to_open_option = get_option( 'buddyforms_marketing_hide_for_ever_close' );
 		$is_able_to_open        = ( ! empty( $is_able_to_open_option ) && ! empty( $is_able_to_open_option['buddyforms_marketing_user_satisfaction_close'] ) );
+		$is_already_sent		= get_option( 'buddyforms_user_satisfaction_sent' );
 
 		$current_screen = get_current_screen();
-		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) ) {
+		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
 			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-show' ) );
 			$base_content = "<div class=\"corner-head\">
 				<div class=\"bf-satisfaction\" data-section=\"1\">
@@ -266,6 +267,7 @@ function buddyforms_user_satisfaction_ajax() {
 					wp_send_json_error();
 				}
 				buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-rate', 'rate' => intval( $us_value ) ) );
+				update_option( 'buddyforms_user_satisfaction_sent', 1 );
 
 				wp_send_json( '' );
 				break;

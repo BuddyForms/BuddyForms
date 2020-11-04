@@ -21,6 +21,10 @@ function userSatisfaction() {
                             }
                         });
 
+                        // Disable button to avoid
+                        // duplicate actions.
+                        jQuery(this).attr('disabled', true);
+
                         if (Object.keys(data).length >= 1) {
                             let ajaxForm = jQuery.post({
                                 url: buddyformsGlobal.admin_url,
@@ -37,10 +41,12 @@ function userSatisfaction() {
                                 jQuery(this).removeClass('error');
                                 jQuery(this).removeClass('user');
                                 jQuery(this).removeClass('server');
+                                jQuery(this).attr('disabled', false);
                             });
                             ajaxForm.fail((data, textStatus, jqXHR) => {
                                 jQuery(this).addClass('error');
                                 jQuery(this).addClass('server');
+                                jQuery(this).attr('disabled', false);
                                 setTimeout(() => {
                                     jQuery(this).removeClass('error');
                                     jQuery(this).removeClass('server');
@@ -50,6 +56,7 @@ function userSatisfaction() {
                         } else {
                             jQuery(this).addClass('error');
                             jQuery(this).addClass('user');
+                            jQuery(this).attr('disabled', false);
                             setTimeout(() => {
                                 jQuery(this).removeClass('error');
                                 jQuery(this).removeClass('user');
@@ -169,7 +176,13 @@ jQuery(document).ready(function (jQuery) {
             bordercolor: "#efefef",
             textcolor: "#181818",
             btntextcolor: "#fff",
-            afterPopup: function () {
+            afterPopup: function () {                
+                const current_section = jQuery(this).find('.bf-satisfaction').data('section');
+                                
+                if (current_section > 1) {
+                    return;
+                }
+
                 if (confirm('Close for ever?')) {
                     //hide for ever
                     jQuery.ajax({
