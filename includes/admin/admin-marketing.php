@@ -61,7 +61,6 @@ function buddyforms_marketing_hide_for_ever_close() {
 				$options = array( $key => true );
 			}
 			update_option( 'buddyforms_marketing_hide_for_ever_close', $options );
-			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-close' ) );
 		}
 
 		wp_send_json( '' );
