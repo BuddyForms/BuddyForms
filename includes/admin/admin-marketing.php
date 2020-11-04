@@ -128,6 +128,8 @@ function buddyforms_marketing_include_assets( $content, $base_content, $key = ''
 }
 
 function user_satisfaction_trigger() {
+	global $buddyforms;
+
 	try {
 		$user_id = get_current_user_id();
 		if ( empty( $user_id ) || ! is_user_logged_in() ) {
@@ -136,14 +138,17 @@ function user_satisfaction_trigger() {
 		if ( ! current_user_can( 'administrator' ) ) {
 			return;
 		}
-		//todo Add validation to check if the user create one form
+
+		if ( ! isset( $buddyforms ) || ! is_array( $buddyforms ) ) {
+			return;
+		}
 
 		$is_able_to_open_option = get_option( 'buddyforms_marketing_hide_for_ever_close' );
 		$is_able_to_open        = ( ! empty( $is_able_to_open_option ) && ! empty( $is_able_to_open_option['buddyforms_marketing_user_satisfaction_close'] ) );
 		$is_already_sent        = get_option( 'buddyforms_user_satisfaction_sent' );
 
 		$current_screen = get_current_screen();
-		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
+		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && count( $buddyforms ) > 0 && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
 			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-show' ) );
 			$base_content = "<div class=\"corner-head\">
 				<div class=\"bf-satisfaction\" data-section=\"1\">
