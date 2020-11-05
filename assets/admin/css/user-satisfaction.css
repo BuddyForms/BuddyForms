@@ -245,9 +245,9 @@
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:focus, #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button:hover {
-  -webkit-box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
-     -moz-box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
-          box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.06);
+  -webkit-box-shadow: 0 0 0 2px white;
+     -moz-box-shadow: 0 0 0 2px white;
+          box-shadow: 0 0 0 2px white;
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container .bf-satisfaction-body .bf-satisfaction-button::before {
@@ -334,18 +334,6 @@
           border-radius: 0;
   border-color: rgba(0, 0, 0, 0);
   margin-bottom: 12px !important;
-}
-
-#corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container section textarea:hover {
-  -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
-     -moz-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-#corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container section textarea:focus {
-  -webkit-box-shadow: 0 0 0 2px black;
-     -moz-box-shadow: 0 0 0 2px black;
-          box-shadow: 0 0 0 2px black;
 }
 
 #corner-popup .corner-head .bf-satisfaction .bf-satisfaction-container section > div:first-child,
