@@ -2233,3 +2233,21 @@ html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     border: unset;
 }
 
+.post-type-buddyforms .postbox-header .handle-actions {
+    display: none;
+}
+
+.post-type-buddyforms #submitdiv.postbox .postbox-header {
+    display: block;
+}
+
+.post-type-buddyforms #submitdiv.postbox .postbox-header .notice-error {
+    margin: 8px 12px;
+    margin-top: 0;
+    padding: 8px 12px;
+}
+
+.post-type-buddyforms #submitdiv.postbox .postbox-header .notice-error :last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
