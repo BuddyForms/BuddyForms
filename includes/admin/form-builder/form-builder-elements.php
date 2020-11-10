@@ -1230,7 +1230,7 @@ function buddyforms_display_form_element( $args ) {
                                     jQuery('#taxonomy_field_id_$field_id').html(data);
                                     jQuery('#taxonomy_field_id_$field_id').trigger('change');
                                     bf_taxonomy_input( "$field_id" );
-    
+
                                 },
                                 error: function () {
                                     jQuery('.formbuilder-spinner').removeClass('is-active');
@@ -1277,6 +1277,7 @@ JS;
 
 			$value                           = isset( $customfield['value'] ) ? $customfield['value'] : '';
 			$form_fields['general']['value'] = new Element_Textbox( '<b>' . __( 'Value:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][value]", array( 'value' => $value ) );
+			$form_fields['general']['value'] = new Element_Textbox( '<b>' . __( 'Name:', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array( 'value' => $name ) );
 			break;
 		case 'comments':
 			unset( $form_fields['validation'] );
