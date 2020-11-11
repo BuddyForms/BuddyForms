@@ -1493,11 +1493,8 @@ function BuddyForms() {
                                         jQuery("#buddyforms_form_" + id + " .form-actions .bf-draft").remove();
                                     }
                                     break;
-                                case 'form_slug': 
-                                    jQuery('#buddyforms_form_' + val + ' input[name="form_slug"]').val(val);
-                                    break;
                                 default:
-                                    jQuery('input[name="' + i + '"]').val(val);
+                                    jQuery('#buddyforms_form_' + id + ' input[name="'+ i +'"]').val(val);
                             }
                             jQuery('#recaptcha_reload').trigger('click');
                             BuddyFormsHooks.doAction('buddyforms:init', [id]);
