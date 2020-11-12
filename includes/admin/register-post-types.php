@@ -202,10 +202,12 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 		}
 	}
 
-	$form_type = $buddyform['form_type'];
+	$buddyform = apply_filters( 'buddyforms_before_update_form_options', $buddyform, $post_id );
 
 	// Update post meta
 	update_post_meta( $post_id, '_buddyforms_options', $buddyform );
+
+	$form_type = $buddyform['form_type'];
 
 	// Save the Roles and capabilities.
 	if ( isset( $_POST['buddyforms_roles'] ) ) {
