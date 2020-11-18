@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.23-beta.5
+Stable tag: 2.5.24
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,15 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.23-beta.5 - 13 Nov 2020 =
-* Fixed adding spacing on "form-type" meta-box.
-* Fixed issues in the query that gets the last auto-draft associate with the author and form.
-* Fixed to set full-width button on mobile only
-* Added to hidden fields new name option.
-* Fixed issue related with multi-form per page use case.
-* Add a new filter to catch postmeta before get saved on the form builder page submission.
-
-= 2.5.23-beta.4 - 26 Oct 2020 =
+= 2.5.24 - 18 Nov 2020 =
 * Fixed to show custom login links only for buddyforms.
 * Fixed a bug in forms using Elementor.
 * Improved compatibility issues with the Divi theme.
@@ -426,6 +418,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed for the Submitted form override the slug in other forms when submitted on a page with several forms.
 * Fixed previous entry is overridden by the next one when submitted entries from several forms by-one-by on the same page.
 * Fixed to improve the Disable CSS for description option to disabled all the style-related with description if is enabled.
+* Fixed adding spacing on "form-type" meta-box.
+* Fixed issues in the query that gets the last auto-draft associate with the author and form.
+* Fixed to set full-width button on mobile only
+* Added to hidden fields new name option.
+* Fixed issue related with multi-form per page use case.
+* Add a new filter to catch postmeta before get saved on the form builder page submission.
+* Added a user satisfaction wizard to understand more the user and improve the product.
 
 = 2.5.22 - 14 Sept 2020 =
 * Fix a code in a wrong position for the BF settings header.
