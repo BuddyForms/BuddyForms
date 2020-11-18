@@ -22,14 +22,15 @@
     "npm": ">=6.0.0"
   },
   "devDependencies": {
-    "bulma": "^0.9.1",
-    "node-sass": "^5.0.0",
-    "postcss-prefixer": "^2.1.2",
     "autoprefixer": "^9.7.6",
+    "bulma": "^0.9.1",
     "bulma-checkradio": "^1.1.1",
     "clean-css-cli": "^4.3.0",
+    "font-awesome": "^4.7.0",
+    "node-sass": "^5.0.0",
     "postcss": "^7.0.30",
     "postcss-cli": "^7.1.1",
+    "postcss-prefixer": "^2.1.2",
     "rimraf": "^3.0.2"
   }
 }
