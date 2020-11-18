@@ -3,7 +3,6 @@
 /**
  * Add the FormBuilder and Form Settings MetaBox to the edit screen
  */
-add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 function buddyforms_add_meta_boxes() {
 	global $post, $buddyform;
 
@@ -15,6 +14,7 @@ function buddyforms_add_meta_boxes() {
 		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 	}
 
+	//TODO this need to be re-design
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
 	}
@@ -24,13 +24,17 @@ function buddyforms_add_meta_boxes() {
 	}
 
 	// Add the FormBuilder and the Form Setup Metabox
+	add_meta_box( 'buddyforms_form_editor', __( "BuddyForms Editor", 'buddyforms' ), 'buddyforms_metabox_form_editor', 'buddyforms', 'normal', 'high' );
 	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
+//	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+//	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	buddyforms_remove_filters_for_anonymous_class( 'media_buttons', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
 }
+
+add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
+
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
@@ -40,6 +44,7 @@ add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 /**
  * Add the 'buddyforms_metabox' class to all buddyforms related metaboxes to hide the rest.
  */
+add_filter( 'postbox_classes_buddyforms_buddyforms_form_editor', 'buddyforms_metabox_class' );
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_elements', 'buddyforms_metabox_class' );
 add_filter( 'buddyforms_metabox_sidebar', 'buddyforms_metabox_class' );
 add_filter( 'postbox_classes_buddyforms_buddyforms_form_setup', 'buddyforms_metabox_class' );
