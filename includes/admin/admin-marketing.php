@@ -213,7 +213,7 @@ function user_satisfaction_trigger() {
 									<button class=\"bf-satisfaction-button\" data-user-error=\"Please select an item to continue\" data-server-error=\"Internal error\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_recommendation:checked\">Submit</button>
 								</div>
 							</section>
-							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are gap to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
+							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are king to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
 								<textarea name=\"satisfaction_comments\" cols=\"30\" rows=\"10\"></textarea>
 								<div>
 									<div></div>
