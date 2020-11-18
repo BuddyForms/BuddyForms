@@ -314,13 +314,13 @@ class BuddyFormsAssets {
 			$admin_text_array['check']   = __( 'Check all', 'buddyforms' );
 			$admin_text_array['uncheck'] = __( 'Uncheck all', 'buddyforms' );
 
-			if(count($templates)==0){
+			if ( count( $templates ) == 0 ) {
 				$registration_gdpr_template = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   ", 'buddyforms' );
-				$post_gdpr_template        = __( "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ", 'buddyforms' );
-				$contact_gdpr_template     = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
-				$templates['registration'] = $registration_gdpr_template;
-				$templates['post']		= $post_gdpr_template;
-				$templates['contact']  = $contact_gdpr_template;
+				$post_gdpr_template         = __( "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ", 'buddyforms' );
+				$contact_gdpr_template      = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
+				$templates['registration']  = $registration_gdpr_template;
+				$templates['post']          = $post_gdpr_template;
+				$templates['contact']       = $contact_gdpr_template;
 
 			}
 

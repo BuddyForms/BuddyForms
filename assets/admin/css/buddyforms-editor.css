@@ -33,6 +33,11 @@
   width: 0.625em;
 }
 
+.tk-title:not(:last-child),
+.tk-subtitle:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
 .tk-button.tk-is-loading::after, .tk-select.tk-is-loading::after, .tk-control.tk-is-loading::after {
   animation: spinAround 500ms infinite linear;
   border: 2px solid #dbdbdb;
@@ -93,6 +98,224 @@ fieldset[disabled] .tk-select select,
 fieldset[disabled] .tk-file-cta,
 fieldset[disabled] .tk-file-name {
   cursor: not-allowed;
+}
+
+/* Bulma Base */
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+td:not([align]),
+th:not([align]) {
+  text-align: inherit;
+}
+
+html {
+  background-color: #EFF0EB;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  min-width: 300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+}
+
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+section {
+  display: block;
+}
+
+body,
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: "Nunito", sans-serif;
+}
+
+code,
+pre {
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: auto;
+  font-family: monospace;
+}
+
+body {
+  color: #757763;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+a {
+  color: #FA7C91;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a strong {
+  color: currentColor;
+}
+
+a:hover {
+  color: #363636;
+}
+
+code {
+  background-color: whitesmoke;
+  color: #da1039;
+  font-size: 0.875em;
+  font-weight: normal;
+  padding: 0.25em 0.5em 0.25em;
+}
+
+hr {
+  background-color: whitesmoke;
+  border: none;
+  display: block;
+  height: 2px;
+  margin: 1.5rem 0;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  vertical-align: baseline;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+span {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+strong {
+  color: #363636;
+  font-weight: 700;
+}
+
+fieldset {
+  border: none;
+}
+
+pre {
+  -webkit-overflow-scrolling: touch;
+  background-color: whitesmoke;
+  color: #757763;
+  font-size: 0.875em;
+  overflow-x: auto;
+  padding: 1.25rem 1.5rem;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+pre code {
+  background-color: transparent;
+  color: currentColor;
+  font-size: 1em;
+  padding: 0;
+}
+
+table td,
+table th {
+  vertical-align: top;
+}
+
+table td:not([align]),
+table th:not([align]) {
+  text-align: inherit;
+}
+
+table th {
+  color: #363636;
 }
 
 .tk-button {
@@ -1479,6 +1702,145 @@ fieldset[disabled] .tk-button {
 .tk-buttons.tk-is-right:not(.tk-has-addons) .tk-button:not(.tk-is-fullwidth) {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}
+
+.tk-container {
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  width: auto;
+}
+
+.tk-container.tk-is-fluid {
+  max-width: none !important;
+  padding-left: 32px;
+  padding-right: 32px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-container {
+    max-width: 960px;
+  }
+}
+
+.tk-title,
+.tk-subtitle {
+  word-break: break-word;
+}
+
+.tk-title em,
+.tk-title span,
+.tk-subtitle em,
+.tk-subtitle span {
+  font-weight: inherit;
+}
+
+.tk-title sub,
+.tk-subtitle sub {
+  font-size: 0.75em;
+}
+
+.tk-title sup,
+.tk-subtitle sup {
+  font-size: 0.75em;
+}
+
+.tk-title .tk-tag,
+.tk-subtitle .tk-tag {
+  vertical-align: middle;
+}
+
+.tk-title {
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+}
+
+.tk-title strong {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.tk-title + .tk-highlight {
+  margin-top: -0.75rem;
+}
+
+.tk-title:not(.tk-is-spaced) + .tk-subtitle {
+  margin-top: -1.25rem;
+}
+
+.tk-title.tk-is-1 {
+  font-size: 3rem;
+}
+
+.tk-title.tk-is-2 {
+  font-size: 2.5rem;
+}
+
+.tk-title.tk-is-3 {
+  font-size: 2rem;
+}
+
+.tk-title.tk-is-4 {
+  font-size: 1.5rem;
+}
+
+.tk-title.tk-is-5 {
+  font-size: 1.25rem;
+}
+
+.tk-title.tk-is-6 {
+  font-size: 1rem;
+}
+
+.tk-title.tk-is-7 {
+  font-size: 0.75rem;
+}
+
+.tk-subtitle {
+  color: #757763;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.tk-subtitle strong {
+  color: #363636;
+  font-weight: 600;
+}
+
+.tk-subtitle:not(.tk-is-spaced) + .tk-title {
+  margin-top: -1.25rem;
+}
+
+.tk-subtitle.tk-is-1 {
+  font-size: 3rem;
+}
+
+.tk-subtitle.tk-is-2 {
+  font-size: 2.5rem;
+}
+
+.tk-subtitle.tk-is-3 {
+  font-size: 2rem;
+}
+
+.tk-subtitle.tk-is-4 {
+  font-size: 1.5rem;
+}
+
+.tk-subtitle.tk-is-5 {
+  font-size: 1.25rem;
+}
+
+.tk-subtitle.tk-is-6 {
+  font-size: 1rem;
+}
+
+.tk-subtitle.tk-is-7 {
+  font-size: 0.75rem;
 }
 
 /* Bulma Form */
