@@ -279,7 +279,7 @@ function buddyforms_metabox_form_setup() {
 //	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 //		$element->setAttribute( 'disabled', 'disabled' );
 //	}
-	$form_setup['Create Content'][] = $element;
+//  $form_setup['Create Content'][] = $element;
 
 
 	//
