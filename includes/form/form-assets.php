@@ -280,6 +280,7 @@ class BuddyFormsAssets {
 			|| $hook_suffix == 'buddyforms_page_buddyforms_submissions'
 			|| $hook_suffix == 'buddyforms_page_buddyforms_settings'
 		) {
+			wp_register_script( 'buddyforms-admin-editor', BUDDYFORMS_ASSETS . 'admin/js/buddyforms-editor.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-js', BUDDYFORMS_ASSETS . 'admin/js/admin.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-slugifies-js', BUDDYFORMS_ASSETS . 'admin/js/slugifies.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-deprecated-js', BUDDYFORMS_ASSETS . 'admin/js/deprecated.js', array(), BUDDYFORMS_VERSION );
@@ -289,6 +290,7 @@ class BuddyFormsAssets {
 			//Loading shared assets
 			self::shared_styles( $hook_suffix );
 
+			wp_enqueue_script( 'buddyforms-admin-editor' );//todo main file
 			wp_enqueue_script( 'buddyforms-admin-js' );
 			wp_enqueue_script( 'buddyforms-admin-slugifies-js' );
 			wp_enqueue_script( 'buddyforms-admin-deprecated-js' );
