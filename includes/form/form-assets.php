@@ -239,7 +239,7 @@ class BuddyFormsAssets {
 			wp_enqueue_style( 'buddyforms-admin-css', BUDDYFORMS_ASSETS . 'admin/css/admin.css' );
 			wp_enqueue_style( 'wp-jquery-ui-dialog' );
 			wp_enqueue_style( 'wp-color-picker' );
-			wp_enqueue_style( 'buddyforms-admin-css', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-editor.css' );
+			wp_enqueue_style( 'buddyforms-admin-editor', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-editor.css' );
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', BUDDYFORMS_ASSETS . 'admin/css/admin-post-metabox.css' );
 		}
