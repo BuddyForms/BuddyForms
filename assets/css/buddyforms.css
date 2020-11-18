@@ -1,0 +1,5106 @@
+/* Bulma Utilities */
+@keyframes spinAround {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.tk-button, .tk-file {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tk-select:not(.tk-is-multiple):not(.tk-is-loading)::after, .tk-navbar-link:not(.tk-is-arrowless)::after {
+  border: 3px solid transparent;
+  border-radius: 2px;
+  border-right: 0;
+  border-top: 0;
+  content: " ";
+  display: block;
+  height: 0.625em;
+  margin-top: -0.4375em;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  width: 0.625em;
+}
+
+.tk-title:not(:last-child),
+.tk-subtitle:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.tk-button.tk-is-loading::after, .tk-select.tk-is-loading::after, .tk-control.tk-is-loading::after {
+  animation: spinAround 500ms infinite linear;
+  border: 2px solid #dbdbdb;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  height: 1em;
+  position: relative;
+  width: 1em;
+}
+
+.tk-hero-video {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tk-button, .tk-input, .tk-textarea, .tk-select select, .tk-file-cta,
+.tk-file-name {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.5em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.5em - 2px);
+  padding-left: calc(0.75em - 2px);
+  padding-right: calc(0.75em - 2px);
+  padding-top: calc(0.5em - 2px);
+  position: relative;
+  vertical-align: top;
+}
+
+.tk-button:focus, .tk-input:focus, .tk-textarea:focus, .tk-select select:focus, .tk-file-cta:focus,
+.tk-file-name:focus, .tk-is-focused.tk-button, .tk-is-focused.tk-input, .tk-is-focused.tk-textarea, .tk-select select.tk-is-focused, .tk-is-focused.tk-file-cta,
+.tk-is-focused.tk-file-name, .tk-button:active, .tk-input:active, .tk-textarea:active, .tk-select select:active, .tk-file-cta:active,
+.tk-file-name:active, .tk-is-active.tk-button, .tk-is-active.tk-input, .tk-is-active.tk-textarea, .tk-select select.tk-is-active, .tk-is-active.tk-file-cta,
+.tk-is-active.tk-file-name {
+  outline: none;
+}
+
+.tk-button[disabled], .tk-input[disabled], .tk-textarea[disabled], .tk-select select[disabled], .tk-file-cta[disabled],
+.tk-file-name[disabled],
+fieldset[disabled] .tk-button,
+fieldset[disabled] .tk-input,
+fieldset[disabled] .tk-textarea,
+fieldset[disabled] .tk-select select,
+.tk-select fieldset[disabled] select,
+fieldset[disabled] .tk-file-cta,
+fieldset[disabled] .tk-file-name {
+  cursor: not-allowed;
+}
+
+/* Bulma Base */
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+td:not([align]),
+th:not([align]) {
+  text-align: inherit;
+}
+
+html {
+  background-color: #EFF0EB;
+  font-size: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  min-width: 300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+}
+
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+section {
+  display: block;
+}
+
+body,
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: "Nunito", sans-serif;
+}
+
+code,
+pre {
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: auto;
+  font-family: monospace;
+}
+
+body {
+  color: #757763;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+a {
+  color: #FA7C91;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a strong {
+  color: currentColor;
+}
+
+a:hover {
+  color: #363636;
+}
+
+code {
+  background-color: whitesmoke;
+  color: #da1039;
+  font-size: 0.875em;
+  font-weight: normal;
+  padding: 0.25em 0.5em 0.25em;
+}
+
+hr {
+  background-color: whitesmoke;
+  border: none;
+  display: block;
+  height: 2px;
+  margin: 1.5rem 0;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  vertical-align: baseline;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+span {
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+strong {
+  color: #363636;
+  font-weight: 700;
+}
+
+fieldset {
+  border: none;
+}
+
+pre {
+  -webkit-overflow-scrolling: touch;
+  background-color: whitesmoke;
+  color: #757763;
+  font-size: 0.875em;
+  overflow-x: auto;
+  padding: 1.25rem 1.5rem;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+pre code {
+  background-color: transparent;
+  color: currentColor;
+  font-size: 1em;
+  padding: 0;
+}
+
+table td,
+table th {
+  vertical-align: top;
+}
+
+table td:not([align]),
+table th:not([align]) {
+  text-align: inherit;
+}
+
+table th {
+  color: #363636;
+}
+
+.tk-button {
+  background-color: white;
+  border-color: #dbdbdb;
+  border-width: 2px;
+  color: #363636;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.5em - 2px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(0.5em - 2px);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tk-button strong {
+  color: inherit;
+}
+
+.tk-button .tk-icon, .tk-button .tk-icon.tk-is-small, .tk-button .tk-icon.tk-is-medium, .tk-button .tk-icon.tk-is-large {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.tk-button .tk-icon:first-child:not(:last-child) {
+  margin-left: calc(-0.5em - 2px);
+  margin-right: 0.25em;
+}
+
+.tk-button .tk-icon:last-child:not(:first-child) {
+  margin-left: 0.25em;
+  margin-right: calc(-0.5em - 2px);
+}
+
+.tk-button .tk-icon:first-child:last-child {
+  margin-left: calc(-0.5em - 2px);
+  margin-right: calc(-0.5em - 2px);
+}
+
+.tk-button:hover, .tk-button.tk-is-hovered {
+  border-color: #D0D1CD;
+  color: #363636;
+}
+
+.tk-button:focus, .tk-button.tk-is-focused {
+  border-color: #3273dc;
+  color: #363636;
+}
+
+.tk-button:focus:not(:active), .tk-button.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(250, 124, 145, 0.25);
+}
+
+.tk-button:active, .tk-button.tk-is-active {
+  border-color: #757763;
+  color: #363636;
+}
+
+.tk-button.tk-is-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: #757763;
+  text-decoration: underline;
+}
+
+.tk-button.tk-is-text:hover, .tk-button.tk-is-text.tk-is-hovered, .tk-button.tk-is-text:focus, .tk-button.tk-is-text.tk-is-focused {
+  background-color: whitesmoke;
+  color: #363636;
+}
+
+.tk-button.tk-is-text:active, .tk-button.tk-is-text.tk-is-active {
+  background-color: #e8e8e8;
+  color: #363636;
+}
+
+.tk-button.tk-is-text[disabled],
+fieldset[disabled] .tk-button.tk-is-text {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-white {
+  background-color: white;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white:hover, .tk-button.tk-is-white.tk-is-hovered {
+  background-color: #f9f9f9;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white:focus, .tk-button.tk-is-white.tk-is-focused {
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white:focus:not(:active), .tk-button.tk-is-white.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
+}
+
+.tk-button.tk-is-white:active, .tk-button.tk-is-white.tk-is-active {
+  background-color: #f2f2f2;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white[disabled],
+fieldset[disabled] .tk-button.tk-is-white {
+  background-color: white;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-white.tk-is-inverted {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+.tk-button.tk-is-white.tk-is-inverted:hover, .tk-button.tk-is-white.tk-is-inverted.tk-is-hovered {
+  background-color: black;
+}
+
+.tk-button.tk-is-white.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-white.tk-is-inverted {
+  background-color: #0a0a0a;
+  border-color: transparent;
+  box-shadow: none;
+  color: white;
+}
+
+.tk-button.tk-is-white.tk-is-loading::after {
+  border-color: transparent transparent #0a0a0a #0a0a0a !important;
+}
+
+.tk-button.tk-is-white.tk-is-outlined {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
+
+.tk-button.tk-is-white.tk-is-outlined:hover, .tk-button.tk-is-white.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-white.tk-is-outlined:focus, .tk-button.tk-is-white.tk-is-outlined.tk-is-focused {
+  background-color: white;
+  border-color: white;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent white white !important;
+}
+
+.tk-button.tk-is-white.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-white.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-white.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-white.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #0a0a0a #0a0a0a !important;
+}
+
+.tk-button.tk-is-white.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-white.tk-is-outlined {
+  background-color: transparent;
+  border-color: white;
+  box-shadow: none;
+  color: white;
+}
+
+.tk-button.tk-is-white.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-white.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+.tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent white white !important;
+}
+
+.tk-button.tk-is-white.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-white.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #0a0a0a;
+  box-shadow: none;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black {
+  background-color: #0a0a0a;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-button.tk-is-black:hover, .tk-button.tk-is-black.tk-is-hovered {
+  background-color: #040404;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-button.tk-is-black:focus, .tk-button.tk-is-black.tk-is-focused {
+  border-color: transparent;
+  color: white;
+}
+
+.tk-button.tk-is-black:focus:not(:active), .tk-button.tk-is-black.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
+}
+
+.tk-button.tk-is-black:active, .tk-button.tk-is-black.tk-is-active {
+  background-color: black;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-button.tk-is-black[disabled],
+fieldset[disabled] .tk-button.tk-is-black {
+  background-color: #0a0a0a;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-black.tk-is-inverted {
+  background-color: white;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black.tk-is-inverted:hover, .tk-button.tk-is-black.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-black.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-black.tk-is-inverted {
+  background-color: white;
+  border-color: transparent;
+  box-shadow: none;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black.tk-is-loading::after {
+  border-color: transparent transparent white white !important;
+}
+
+.tk-button.tk-is-black.tk-is-outlined {
+  background-color: transparent;
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black.tk-is-outlined:hover, .tk-button.tk-is-black.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-black.tk-is-outlined:focus, .tk-button.tk-is-black.tk-is-outlined.tk-is-focused {
+  background-color: #0a0a0a;
+  border-color: #0a0a0a;
+  color: white;
+}
+
+.tk-button.tk-is-black.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #0a0a0a #0a0a0a !important;
+}
+
+.tk-button.tk-is-black.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-black.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-black.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-black.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent white white !important;
+}
+
+.tk-button.tk-is-black.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-black.tk-is-outlined {
+  background-color: transparent;
+  border-color: #0a0a0a;
+  box-shadow: none;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
+
+.tk-button.tk-is-black.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: white;
+  color: #0a0a0a;
+}
+
+.tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #0a0a0a #0a0a0a !important;
+}
+
+.tk-button.tk-is-black.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-black.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: white;
+  box-shadow: none;
+  color: white;
+}
+
+.tk-button.tk-is-light {
+  background-color: whitesmoke;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light:hover, .tk-button.tk-is-light.tk-is-hovered {
+  background-color: #eeeeee;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light:focus, .tk-button.tk-is-light.tk-is-focused {
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light:focus:not(:active), .tk-button.tk-is-light.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(245, 245, 245, 0.25);
+}
+
+.tk-button.tk-is-light:active, .tk-button.tk-is-light.tk-is-active {
+  background-color: #e8e8e8;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light[disabled],
+fieldset[disabled] .tk-button.tk-is-light {
+  background-color: whitesmoke;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-light.tk-is-inverted {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: whitesmoke;
+}
+
+.tk-button.tk-is-light.tk-is-inverted:hover, .tk-button.tk-is-light.tk-is-inverted.tk-is-hovered {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-light.tk-is-inverted {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: transparent;
+  box-shadow: none;
+  color: whitesmoke;
+}
+
+.tk-button.tk-is-light.tk-is-loading::after {
+  border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
+}
+
+.tk-button.tk-is-light.tk-is-outlined {
+  background-color: transparent;
+  border-color: whitesmoke;
+  color: whitesmoke;
+}
+
+.tk-button.tk-is-light.tk-is-outlined:hover, .tk-button.tk-is-light.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-light.tk-is-outlined:focus, .tk-button.tk-is-light.tk-is-outlined.tk-is-focused {
+  background-color: whitesmoke;
+  border-color: whitesmoke;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent whitesmoke whitesmoke !important;
+}
+
+.tk-button.tk-is-light.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-light.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-light.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-light.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
+}
+
+.tk-button.tk-is-light.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-light.tk-is-outlined {
+  background-color: transparent;
+  border-color: whitesmoke;
+  box-shadow: none;
+  color: whitesmoke;
+}
+
+.tk-button.tk-is-light.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-light.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: whitesmoke;
+}
+
+.tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent whitesmoke whitesmoke !important;
+}
+
+.tk-button.tk-is-light.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-light.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.7);
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-dark {
+  background-color: #363636;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark:hover, .tk-button.tk-is-dark.tk-is-hovered {
+  background-color: #2f2f2f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark:focus, .tk-button.tk-is-dark.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark:focus:not(:active), .tk-button.tk-is-dark.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(54, 54, 54, 0.25);
+}
+
+.tk-button.tk-is-dark:active, .tk-button.tk-is-dark.tk-is-active {
+  background-color: #292929;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark[disabled],
+fieldset[disabled] .tk-button.tk-is-dark {
+  background-color: #363636;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted {
+  background-color: #fff;
+  color: #363636;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted:hover, .tk-button.tk-is-dark.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-dark.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #363636;
+}
+
+.tk-button.tk-is-dark.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-dark.tk-is-outlined {
+  background-color: transparent;
+  border-color: #363636;
+  color: #363636;
+}
+
+.tk-button.tk-is-dark.tk-is-outlined:hover, .tk-button.tk-is-dark.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-dark.tk-is-outlined:focus, .tk-button.tk-is-dark.tk-is-outlined.tk-is-focused {
+  background-color: #363636;
+  border-color: #363636;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #363636 #363636 !important;
+}
+
+.tk-button.tk-is-dark.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-dark.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-dark.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-dark.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-dark.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-dark.tk-is-outlined {
+  background-color: transparent;
+  border-color: #363636;
+  box-shadow: none;
+  color: #363636;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #363636;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #363636 #363636 !important;
+}
+
+.tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-dark.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary {
+  background-color: #8A4D76;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary:hover, .tk-button.tk-is-primary.tk-is-hovered {
+  background-color: #82486f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary:focus, .tk-button.tk-is-primary.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary:focus:not(:active), .tk-button.tk-is-primary.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(138, 77, 118, 0.25);
+}
+
+.tk-button.tk-is-primary:active, .tk-button.tk-is-primary.tk-is-active {
+  background-color: #7a4468;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary[disabled],
+fieldset[disabled] .tk-button.tk-is-primary {
+  background-color: #8A4D76;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted {
+  background-color: #fff;
+  color: #8A4D76;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted:hover, .tk-button.tk-is-primary.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-primary.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #8A4D76;
+}
+
+.tk-button.tk-is-primary.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-primary.tk-is-outlined {
+  background-color: transparent;
+  border-color: #8A4D76;
+  color: #8A4D76;
+}
+
+.tk-button.tk-is-primary.tk-is-outlined:hover, .tk-button.tk-is-primary.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-primary.tk-is-outlined:focus, .tk-button.tk-is-primary.tk-is-outlined.tk-is-focused {
+  background-color: #8A4D76;
+  border-color: #8A4D76;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #8A4D76 #8A4D76 !important;
+}
+
+.tk-button.tk-is-primary.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-primary.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-primary.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-primary.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-primary.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-primary.tk-is-outlined {
+  background-color: transparent;
+  border-color: #8A4D76;
+  box-shadow: none;
+  color: #8A4D76;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #8A4D76;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #8A4D76 #8A4D76 !important;
+}
+
+.tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-primary.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-primary.tk-is-light {
+  background-color: #f8f2f6;
+  color: #9d5886;
+}
+
+.tk-button.tk-is-primary.tk-is-light:hover, .tk-button.tk-is-primary.tk-is-light.tk-is-hovered {
+  background-color: #f3eaf0;
+  border-color: transparent;
+  color: #9d5886;
+}
+
+.tk-button.tk-is-primary.tk-is-light:active, .tk-button.tk-is-primary.tk-is-light.tk-is-active {
+  background-color: #efe2ea;
+  border-color: transparent;
+  color: #9d5886;
+}
+
+.tk-button.tk-is-link {
+  background-color: #FA7C91;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-link:hover, .tk-button.tk-is-link.tk-is-hovered {
+  background-color: #fa7087;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-link:focus, .tk-button.tk-is-link.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-link:focus:not(:active), .tk-button.tk-is-link.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(250, 124, 145, 0.25);
+}
+
+.tk-button.tk-is-link:active, .tk-button.tk-is-link.tk-is-active {
+  background-color: #f9637c;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-link[disabled],
+fieldset[disabled] .tk-button.tk-is-link {
+  background-color: #FA7C91;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-link.tk-is-inverted {
+  background-color: #fff;
+  color: #FA7C91;
+}
+
+.tk-button.tk-is-link.tk-is-inverted:hover, .tk-button.tk-is-link.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-link.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-link.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #FA7C91;
+}
+
+.tk-button.tk-is-link.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-link.tk-is-outlined {
+  background-color: transparent;
+  border-color: #FA7C91;
+  color: #FA7C91;
+}
+
+.tk-button.tk-is-link.tk-is-outlined:hover, .tk-button.tk-is-link.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-link.tk-is-outlined:focus, .tk-button.tk-is-link.tk-is-outlined.tk-is-focused {
+  background-color: #FA7C91;
+  border-color: #FA7C91;
+  color: #fff;
+}
+
+.tk-button.tk-is-link.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #FA7C91 #FA7C91 !important;
+}
+
+.tk-button.tk-is-link.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-link.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-link.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-link.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-link.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-link.tk-is-outlined {
+  background-color: transparent;
+  border-color: #FA7C91;
+  box-shadow: none;
+  color: #FA7C91;
+}
+
+.tk-button.tk-is-link.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-link.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #FA7C91;
+}
+
+.tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #FA7C91 #FA7C91 !important;
+}
+
+.tk-button.tk-is-link.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-link.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-link.tk-is-light {
+  background-color: #feebef;
+  color: #ac0722;
+}
+
+.tk-button.tk-is-link.tk-is-light:hover, .tk-button.tk-is-link.tk-is-light.tk-is-hovered {
+  background-color: #fedfe4;
+  border-color: transparent;
+  color: #ac0722;
+}
+
+.tk-button.tk-is-link.tk-is-light:active, .tk-button.tk-is-link.tk-is-light.tk-is-active {
+  background-color: #fdd3da;
+  border-color: transparent;
+  color: #ac0722;
+}
+
+.tk-button.tk-is-info {
+  background-color: #3298dc;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-info:hover, .tk-button.tk-is-info.tk-is-hovered {
+  background-color: #2793da;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-info:focus, .tk-button.tk-is-info.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-info:focus:not(:active), .tk-button.tk-is-info.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(50, 152, 220, 0.25);
+}
+
+.tk-button.tk-is-info:active, .tk-button.tk-is-info.tk-is-active {
+  background-color: #238cd1;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-info[disabled],
+fieldset[disabled] .tk-button.tk-is-info {
+  background-color: #3298dc;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-info.tk-is-inverted {
+  background-color: #fff;
+  color: #3298dc;
+}
+
+.tk-button.tk-is-info.tk-is-inverted:hover, .tk-button.tk-is-info.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-info.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-info.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #3298dc;
+}
+
+.tk-button.tk-is-info.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-info.tk-is-outlined {
+  background-color: transparent;
+  border-color: #3298dc;
+  color: #3298dc;
+}
+
+.tk-button.tk-is-info.tk-is-outlined:hover, .tk-button.tk-is-info.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-info.tk-is-outlined:focus, .tk-button.tk-is-info.tk-is-outlined.tk-is-focused {
+  background-color: #3298dc;
+  border-color: #3298dc;
+  color: #fff;
+}
+
+.tk-button.tk-is-info.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #3298dc #3298dc !important;
+}
+
+.tk-button.tk-is-info.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-info.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-info.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-info.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-info.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-info.tk-is-outlined {
+  background-color: transparent;
+  border-color: #3298dc;
+  box-shadow: none;
+  color: #3298dc;
+}
+
+.tk-button.tk-is-info.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-info.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #3298dc;
+}
+
+.tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #3298dc #3298dc !important;
+}
+
+.tk-button.tk-is-info.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-info.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-info.tk-is-light {
+  background-color: #eef6fc;
+  color: #1d72aa;
+}
+
+.tk-button.tk-is-info.tk-is-light:hover, .tk-button.tk-is-info.tk-is-light.tk-is-hovered {
+  background-color: #e3f1fa;
+  border-color: transparent;
+  color: #1d72aa;
+}
+
+.tk-button.tk-is-info.tk-is-light:active, .tk-button.tk-is-info.tk-is-light.tk-is-active {
+  background-color: #d8ebf8;
+  border-color: transparent;
+  color: #1d72aa;
+}
+
+.tk-button.tk-is-success {
+  background-color: #48c774;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-success:hover, .tk-button.tk-is-success.tk-is-hovered {
+  background-color: #3ec46d;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-success:focus, .tk-button.tk-is-success.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-success:focus:not(:active), .tk-button.tk-is-success.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(72, 199, 116, 0.25);
+}
+
+.tk-button.tk-is-success:active, .tk-button.tk-is-success.tk-is-active {
+  background-color: #3abb67;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-success[disabled],
+fieldset[disabled] .tk-button.tk-is-success {
+  background-color: #48c774;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-success.tk-is-inverted {
+  background-color: #fff;
+  color: #48c774;
+}
+
+.tk-button.tk-is-success.tk-is-inverted:hover, .tk-button.tk-is-success.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-success.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-success.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #48c774;
+}
+
+.tk-button.tk-is-success.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-success.tk-is-outlined {
+  background-color: transparent;
+  border-color: #48c774;
+  color: #48c774;
+}
+
+.tk-button.tk-is-success.tk-is-outlined:hover, .tk-button.tk-is-success.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-success.tk-is-outlined:focus, .tk-button.tk-is-success.tk-is-outlined.tk-is-focused {
+  background-color: #48c774;
+  border-color: #48c774;
+  color: #fff;
+}
+
+.tk-button.tk-is-success.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #48c774 #48c774 !important;
+}
+
+.tk-button.tk-is-success.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-success.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-success.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-success.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-success.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-success.tk-is-outlined {
+  background-color: transparent;
+  border-color: #48c774;
+  box-shadow: none;
+  color: #48c774;
+}
+
+.tk-button.tk-is-success.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-success.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #48c774;
+}
+
+.tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #48c774 #48c774 !important;
+}
+
+.tk-button.tk-is-success.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-success.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-success.tk-is-light {
+  background-color: #effaf3;
+  color: #257942;
+}
+
+.tk-button.tk-is-success.tk-is-light:hover, .tk-button.tk-is-success.tk-is-light.tk-is-hovered {
+  background-color: #e6f7ec;
+  border-color: transparent;
+  color: #257942;
+}
+
+.tk-button.tk-is-success.tk-is-light:active, .tk-button.tk-is-success.tk-is-light.tk-is-active {
+  background-color: #dcf4e4;
+  border-color: transparent;
+  color: #257942;
+}
+
+.tk-button.tk-is-warning {
+  background-color: #ffdd57;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning:hover, .tk-button.tk-is-warning.tk-is-hovered {
+  background-color: #ffdb4a;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning:focus, .tk-button.tk-is-warning.tk-is-focused {
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning:focus:not(:active), .tk-button.tk-is-warning.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
+}
+
+.tk-button.tk-is-warning:active, .tk-button.tk-is-warning.tk-is-active {
+  background-color: #ffd83d;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning[disabled],
+fieldset[disabled] .tk-button.tk-is-warning {
+  background-color: #ffdd57;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-warning.tk-is-inverted {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffdd57;
+}
+
+.tk-button.tk-is-warning.tk-is-inverted:hover, .tk-button.tk-is-warning.tk-is-inverted.tk-is-hovered {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-warning.tk-is-inverted {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: transparent;
+  box-shadow: none;
+  color: #ffdd57;
+}
+
+.tk-button.tk-is-warning.tk-is-loading::after {
+  border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
+}
+
+.tk-button.tk-is-warning.tk-is-outlined {
+  background-color: transparent;
+  border-color: #ffdd57;
+  color: #ffdd57;
+}
+
+.tk-button.tk-is-warning.tk-is-outlined:hover, .tk-button.tk-is-warning.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-warning.tk-is-outlined:focus, .tk-button.tk-is-warning.tk-is-outlined.tk-is-focused {
+  background-color: #ffdd57;
+  border-color: #ffdd57;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #ffdd57 #ffdd57 !important;
+}
+
+.tk-button.tk-is-warning.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-warning.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-warning.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-warning.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
+}
+
+.tk-button.tk-is-warning.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-warning.tk-is-outlined {
+  background-color: transparent;
+  border-color: #ffdd57;
+  box-shadow: none;
+  color: #ffdd57;
+}
+
+.tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffdd57;
+}
+
+.tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #ffdd57 #ffdd57 !important;
+}
+
+.tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-warning.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.7);
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-button.tk-is-warning.tk-is-light {
+  background-color: #fffbeb;
+  color: #947600;
+}
+
+.tk-button.tk-is-warning.tk-is-light:hover, .tk-button.tk-is-warning.tk-is-light.tk-is-hovered {
+  background-color: #fff8de;
+  border-color: transparent;
+  color: #947600;
+}
+
+.tk-button.tk-is-warning.tk-is-light:active, .tk-button.tk-is-warning.tk-is-light.tk-is-active {
+  background-color: #fff6d1;
+  border-color: transparent;
+  color: #947600;
+}
+
+.tk-button.tk-is-danger {
+  background-color: #f14668;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger:hover, .tk-button.tk-is-danger.tk-is-hovered {
+  background-color: #f03a5f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger:focus, .tk-button.tk-is-danger.tk-is-focused {
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger:focus:not(:active), .tk-button.tk-is-danger.tk-is-focused:not(:active) {
+  box-shadow: 0 0 0 0.125em rgba(241, 70, 104, 0.25);
+}
+
+.tk-button.tk-is-danger:active, .tk-button.tk-is-danger.tk-is-active {
+  background-color: #ef2e55;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger[disabled],
+fieldset[disabled] .tk-button.tk-is-danger {
+  background-color: #f14668;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted {
+  background-color: #fff;
+  color: #f14668;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted:hover, .tk-button.tk-is-danger.tk-is-inverted.tk-is-hovered {
+  background-color: #f2f2f2;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted[disabled],
+fieldset[disabled] .tk-button.tk-is-danger.tk-is-inverted {
+  background-color: #fff;
+  border-color: transparent;
+  box-shadow: none;
+  color: #f14668;
+}
+
+.tk-button.tk-is-danger.tk-is-loading::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-danger.tk-is-outlined {
+  background-color: transparent;
+  border-color: #f14668;
+  color: #f14668;
+}
+
+.tk-button.tk-is-danger.tk-is-outlined:hover, .tk-button.tk-is-danger.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-danger.tk-is-outlined:focus, .tk-button.tk-is-danger.tk-is-outlined.tk-is-focused {
+  background-color: #f14668;
+  border-color: #f14668;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger.tk-is-outlined.tk-is-loading::after {
+  border-color: transparent transparent #f14668 #f14668 !important;
+}
+
+.tk-button.tk-is-danger.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-danger.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-danger.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-danger.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #fff #fff !important;
+}
+
+.tk-button.tk-is-danger.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-danger.tk-is-outlined {
+  background-color: transparent;
+  border-color: #f14668;
+  box-shadow: none;
+  color: #f14668;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined:hover, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-hovered, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined:focus, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-focused {
+  background-color: #fff;
+  color: #f14668;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-loading:hover::after, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-hovered::after, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-loading:focus::after, .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined.tk-is-loading.tk-is-focused::after {
+  border-color: transparent transparent #f14668 #f14668 !important;
+}
+
+.tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined[disabled],
+fieldset[disabled] .tk-button.tk-is-danger.tk-is-inverted.tk-is-outlined {
+  background-color: transparent;
+  border-color: #fff;
+  box-shadow: none;
+  color: #fff;
+}
+
+.tk-button.tk-is-danger.tk-is-light {
+  background-color: #feecf0;
+  color: #cc0f35;
+}
+
+.tk-button.tk-is-danger.tk-is-light:hover, .tk-button.tk-is-danger.tk-is-light.tk-is-hovered {
+  background-color: #fde0e6;
+  border-color: transparent;
+  color: #cc0f35;
+}
+
+.tk-button.tk-is-danger.tk-is-light:active, .tk-button.tk-is-danger.tk-is-light.tk-is-active {
+  background-color: #fcd4dc;
+  border-color: transparent;
+  color: #cc0f35;
+}
+
+.tk-button.tk-is-small {
+  border-radius: 2px;
+  font-size: 0.75rem;
+}
+
+.tk-button.tk-is-normal {
+  font-size: 1rem;
+}
+
+.tk-button.tk-is-medium {
+  font-size: 1.25rem;
+}
+
+.tk-button.tk-is-large {
+  font-size: 1.5rem;
+}
+
+.tk-button[disabled],
+fieldset[disabled] .tk-button {
+  background-color: white;
+  border-color: #dbdbdb;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+.tk-button.tk-is-fullwidth {
+  display: flex;
+  width: 100%;
+}
+
+.tk-button.tk-is-loading {
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.tk-button.tk-is-loading::after {
+  position: absolute;
+  left: calc(50% - (1em / 2));
+  top: calc(50% - (1em / 2));
+  position: absolute !important;
+}
+
+.tk-button.tk-is-static {
+  background-color: whitesmoke;
+  border-color: #dbdbdb;
+  color: #7a7a7a;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.tk-button.tk-is-rounded {
+  border-radius: 290486px;
+  padding-left: calc(1em + 0.25em);
+  padding-right: calc(1em + 0.25em);
+}
+
+.tk-buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tk-buttons .tk-button {
+  margin-bottom: 0.5rem;
+}
+
+.tk-buttons .tk-button:not(:last-child):not(.tk-is-fullwidth) {
+  margin-right: 0.5rem;
+}
+
+.tk-buttons:last-child {
+  margin-bottom: -0.5rem;
+}
+
+.tk-buttons:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.tk-buttons.tk-are-small .tk-button:not(.tk-is-normal):not(.tk-is-medium):not(.tk-is-large) {
+  border-radius: 2px;
+  font-size: 0.75rem;
+}
+
+.tk-buttons.tk-are-medium .tk-button:not(.tk-is-small):not(.tk-is-normal):not(.tk-is-large) {
+  font-size: 1.25rem;
+}
+
+.tk-buttons.tk-are-large .tk-button:not(.tk-is-small):not(.tk-is-normal):not(.tk-is-medium) {
+  font-size: 1.5rem;
+}
+
+.tk-buttons.tk-has-addons .tk-button:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.tk-buttons.tk-has-addons .tk-button:not(:last-child) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-right: -1px;
+}
+
+.tk-buttons.tk-has-addons .tk-button:last-child {
+  margin-right: 0;
+}
+
+.tk-buttons.tk-has-addons .tk-button:hover, .tk-buttons.tk-has-addons .tk-button.tk-is-hovered {
+  z-index: 2;
+}
+
+.tk-buttons.tk-has-addons .tk-button:focus, .tk-buttons.tk-has-addons .tk-button.tk-is-focused, .tk-buttons.tk-has-addons .tk-button:active, .tk-buttons.tk-has-addons .tk-button.tk-is-active, .tk-buttons.tk-has-addons .tk-button.tk-is-selected {
+  z-index: 3;
+}
+
+.tk-buttons.tk-has-addons .tk-button:focus:hover, .tk-buttons.tk-has-addons .tk-button.tk-is-focused:hover, .tk-buttons.tk-has-addons .tk-button:active:hover, .tk-buttons.tk-has-addons .tk-button.tk-is-active:hover, .tk-buttons.tk-has-addons .tk-button.tk-is-selected:hover {
+  z-index: 4;
+}
+
+.tk-buttons.tk-has-addons .tk-button.tk-is-expanded {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-buttons.tk-is-centered {
+  justify-content: center;
+}
+
+.tk-buttons.tk-is-centered:not(.tk-has-addons) .tk-button:not(.tk-is-fullwidth) {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.tk-buttons.tk-is-right {
+  justify-content: flex-end;
+}
+
+.tk-buttons.tk-is-right:not(.tk-has-addons) .tk-button:not(.tk-is-fullwidth) {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.tk-container {
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  width: auto;
+}
+
+.tk-container.tk-is-fluid {
+  max-width: none !important;
+  padding-left: 32px;
+  padding-right: 32px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-container {
+    max-width: 960px;
+  }
+}
+
+.tk-title,
+.tk-subtitle {
+  word-break: break-word;
+}
+
+.tk-title em,
+.tk-title span,
+.tk-subtitle em,
+.tk-subtitle span {
+  font-weight: inherit;
+}
+
+.tk-title sub,
+.tk-subtitle sub {
+  font-size: 0.75em;
+}
+
+.tk-title sup,
+.tk-subtitle sup {
+  font-size: 0.75em;
+}
+
+.tk-title .tk-tag,
+.tk-subtitle .tk-tag {
+  vertical-align: middle;
+}
+
+.tk-title {
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+}
+
+.tk-title strong {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.tk-title + .tk-highlight {
+  margin-top: -0.75rem;
+}
+
+.tk-title:not(.tk-is-spaced) + .tk-subtitle {
+  margin-top: -1.25rem;
+}
+
+.tk-title.tk-is-1 {
+  font-size: 3rem;
+}
+
+.tk-title.tk-is-2 {
+  font-size: 2.5rem;
+}
+
+.tk-title.tk-is-3 {
+  font-size: 2rem;
+}
+
+.tk-title.tk-is-4 {
+  font-size: 1.5rem;
+}
+
+.tk-title.tk-is-5 {
+  font-size: 1.25rem;
+}
+
+.tk-title.tk-is-6 {
+  font-size: 1rem;
+}
+
+.tk-title.tk-is-7 {
+  font-size: 0.75rem;
+}
+
+.tk-subtitle {
+  color: #757763;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.tk-subtitle strong {
+  color: #363636;
+  font-weight: 600;
+}
+
+.tk-subtitle:not(.tk-is-spaced) + .tk-title {
+  margin-top: -1.25rem;
+}
+
+.tk-subtitle.tk-is-1 {
+  font-size: 3rem;
+}
+
+.tk-subtitle.tk-is-2 {
+  font-size: 2.5rem;
+}
+
+.tk-subtitle.tk-is-3 {
+  font-size: 2rem;
+}
+
+.tk-subtitle.tk-is-4 {
+  font-size: 1.5rem;
+}
+
+.tk-subtitle.tk-is-5 {
+  font-size: 1.25rem;
+}
+
+.tk-subtitle.tk-is-6 {
+  font-size: 1rem;
+}
+
+.tk-subtitle.tk-is-7 {
+  font-size: 0.75rem;
+}
+
+/* Bulma Form */
+.tk-input, .tk-textarea, .tk-select select {
+  background-color: white;
+  border-color: transparent;
+  border-radius: 4px;
+  color: #363636;
+}
+
+.tk-input::-moz-placeholder, .tk-textarea::-moz-placeholder, .tk-select select::-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.tk-input::-webkit-input-placeholder, .tk-textarea::-webkit-input-placeholder, .tk-select select::-webkit-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.tk-input:-moz-placeholder, .tk-textarea:-moz-placeholder, .tk-select select:-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.tk-input:-ms-input-placeholder, .tk-textarea:-ms-input-placeholder, .tk-select select:-ms-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.tk-input:hover, .tk-textarea:hover, .tk-select select:hover, .tk-is-hovered.tk-input, .tk-is-hovered.tk-textarea, .tk-select select.tk-is-hovered {
+  border-color: #D0D1CD;
+}
+
+.tk-input:focus, .tk-textarea:focus, .tk-select select:focus, .tk-is-focused.tk-input, .tk-is-focused.tk-textarea, .tk-select select.tk-is-focused, .tk-input:active, .tk-textarea:active, .tk-select select:active, .tk-is-active.tk-input, .tk-is-active.tk-textarea, .tk-select select.tk-is-active {
+  border-color: #FA7C91;
+  box-shadow: 0 0 0 0.125em rgba(250, 124, 145, 0.25);
+}
+
+.tk-input[disabled], .tk-textarea[disabled], .tk-select select[disabled],
+fieldset[disabled] .tk-input,
+fieldset[disabled] .tk-textarea,
+fieldset[disabled] .tk-select select,
+.tk-select fieldset[disabled] select {
+  background-color: whitesmoke;
+  border-color: whitesmoke;
+  box-shadow: none;
+  color: #7a7a7a;
+}
+
+.tk-input[disabled]::-moz-placeholder, .tk-textarea[disabled]::-moz-placeholder, .tk-select select[disabled]::-moz-placeholder,
+fieldset[disabled] .tk-input::-moz-placeholder,
+fieldset[disabled] .tk-textarea::-moz-placeholder,
+fieldset[disabled] .tk-select select::-moz-placeholder,
+.tk-select fieldset[disabled] select::-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.tk-input[disabled]::-webkit-input-placeholder, .tk-textarea[disabled]::-webkit-input-placeholder, .tk-select select[disabled]::-webkit-input-placeholder,
+fieldset[disabled] .tk-input::-webkit-input-placeholder,
+fieldset[disabled] .tk-textarea::-webkit-input-placeholder,
+fieldset[disabled] .tk-select select::-webkit-input-placeholder,
+.tk-select fieldset[disabled] select::-webkit-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.tk-input[disabled]:-moz-placeholder, .tk-textarea[disabled]:-moz-placeholder, .tk-select select[disabled]:-moz-placeholder,
+fieldset[disabled] .tk-input:-moz-placeholder,
+fieldset[disabled] .tk-textarea:-moz-placeholder,
+fieldset[disabled] .tk-select select:-moz-placeholder,
+.tk-select fieldset[disabled] select:-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.tk-input[disabled]:-ms-input-placeholder, .tk-textarea[disabled]:-ms-input-placeholder, .tk-select select[disabled]:-ms-input-placeholder,
+fieldset[disabled] .tk-input:-ms-input-placeholder,
+fieldset[disabled] .tk-textarea:-ms-input-placeholder,
+fieldset[disabled] .tk-select select:-ms-input-placeholder,
+.tk-select fieldset[disabled] select:-ms-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.tk-input, .tk-textarea {
+  box-shadow: none;
+  max-width: 100%;
+  width: 100%;
+}
+
+.tk-input[readonly], .tk-textarea[readonly] {
+  box-shadow: none;
+}
+
+.tk-is-white.tk-input, .tk-is-white.tk-textarea {
+  border-color: white;
+}
+
+.tk-is-white.tk-input:focus, .tk-is-white.tk-textarea:focus, .tk-is-white.tk-is-focused.tk-input, .tk-is-white.tk-is-focused.tk-textarea, .tk-is-white.tk-input:active, .tk-is-white.tk-textarea:active, .tk-is-white.tk-is-active.tk-input, .tk-is-white.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
+}
+
+.tk-is-black.tk-input, .tk-is-black.tk-textarea {
+  border-color: #0a0a0a;
+}
+
+.tk-is-black.tk-input:focus, .tk-is-black.tk-textarea:focus, .tk-is-black.tk-is-focused.tk-input, .tk-is-black.tk-is-focused.tk-textarea, .tk-is-black.tk-input:active, .tk-is-black.tk-textarea:active, .tk-is-black.tk-is-active.tk-input, .tk-is-black.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
+}
+
+.tk-is-light.tk-input, .tk-is-light.tk-textarea {
+  border-color: whitesmoke;
+}
+
+.tk-is-light.tk-input:focus, .tk-is-light.tk-textarea:focus, .tk-is-light.tk-is-focused.tk-input, .tk-is-light.tk-is-focused.tk-textarea, .tk-is-light.tk-input:active, .tk-is-light.tk-textarea:active, .tk-is-light.tk-is-active.tk-input, .tk-is-light.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(245, 245, 245, 0.25);
+}
+
+.tk-is-dark.tk-input, .tk-is-dark.tk-textarea {
+  border-color: #363636;
+}
+
+.tk-is-dark.tk-input:focus, .tk-is-dark.tk-textarea:focus, .tk-is-dark.tk-is-focused.tk-input, .tk-is-dark.tk-is-focused.tk-textarea, .tk-is-dark.tk-input:active, .tk-is-dark.tk-textarea:active, .tk-is-dark.tk-is-active.tk-input, .tk-is-dark.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(54, 54, 54, 0.25);
+}
+
+.tk-is-primary.tk-input, .tk-is-primary.tk-textarea {
+  border-color: #8A4D76;
+}
+
+.tk-is-primary.tk-input:focus, .tk-is-primary.tk-textarea:focus, .tk-is-primary.tk-is-focused.tk-input, .tk-is-primary.tk-is-focused.tk-textarea, .tk-is-primary.tk-input:active, .tk-is-primary.tk-textarea:active, .tk-is-primary.tk-is-active.tk-input, .tk-is-primary.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(138, 77, 118, 0.25);
+}
+
+.tk-is-link.tk-input, .tk-is-link.tk-textarea {
+  border-color: #FA7C91;
+}
+
+.tk-is-link.tk-input:focus, .tk-is-link.tk-textarea:focus, .tk-is-link.tk-is-focused.tk-input, .tk-is-link.tk-is-focused.tk-textarea, .tk-is-link.tk-input:active, .tk-is-link.tk-textarea:active, .tk-is-link.tk-is-active.tk-input, .tk-is-link.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(250, 124, 145, 0.25);
+}
+
+.tk-is-info.tk-input, .tk-is-info.tk-textarea {
+  border-color: #3298dc;
+}
+
+.tk-is-info.tk-input:focus, .tk-is-info.tk-textarea:focus, .tk-is-info.tk-is-focused.tk-input, .tk-is-info.tk-is-focused.tk-textarea, .tk-is-info.tk-input:active, .tk-is-info.tk-textarea:active, .tk-is-info.tk-is-active.tk-input, .tk-is-info.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(50, 152, 220, 0.25);
+}
+
+.tk-is-success.tk-input, .tk-is-success.tk-textarea {
+  border-color: #48c774;
+}
+
+.tk-is-success.tk-input:focus, .tk-is-success.tk-textarea:focus, .tk-is-success.tk-is-focused.tk-input, .tk-is-success.tk-is-focused.tk-textarea, .tk-is-success.tk-input:active, .tk-is-success.tk-textarea:active, .tk-is-success.tk-is-active.tk-input, .tk-is-success.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(72, 199, 116, 0.25);
+}
+
+.tk-is-warning.tk-input, .tk-is-warning.tk-textarea {
+  border-color: #ffdd57;
+}
+
+.tk-is-warning.tk-input:focus, .tk-is-warning.tk-textarea:focus, .tk-is-warning.tk-is-focused.tk-input, .tk-is-warning.tk-is-focused.tk-textarea, .tk-is-warning.tk-input:active, .tk-is-warning.tk-textarea:active, .tk-is-warning.tk-is-active.tk-input, .tk-is-warning.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
+}
+
+.tk-is-danger.tk-input, .tk-is-danger.tk-textarea {
+  border-color: #f14668;
+}
+
+.tk-is-danger.tk-input:focus, .tk-is-danger.tk-textarea:focus, .tk-is-danger.tk-is-focused.tk-input, .tk-is-danger.tk-is-focused.tk-textarea, .tk-is-danger.tk-input:active, .tk-is-danger.tk-textarea:active, .tk-is-danger.tk-is-active.tk-input, .tk-is-danger.tk-is-active.tk-textarea {
+  box-shadow: 0 0 0 0.125em rgba(241, 70, 104, 0.25);
+}
+
+.tk-is-small.tk-input, .tk-is-small.tk-textarea {
+  border-radius: 2px;
+  font-size: 0.75rem;
+}
+
+.tk-is-medium.tk-input, .tk-is-medium.tk-textarea {
+  font-size: 1.25rem;
+}
+
+.tk-is-large.tk-input, .tk-is-large.tk-textarea {
+  font-size: 1.5rem;
+}
+
+.tk-is-fullwidth.tk-input, .tk-is-fullwidth.tk-textarea {
+  display: block;
+  width: 100%;
+}
+
+.tk-is-inline.tk-input, .tk-is-inline.tk-textarea {
+  display: inline;
+  width: auto;
+}
+
+.tk-input.tk-is-rounded {
+  border-radius: 290486px;
+  padding-left: calc(calc(0.75em - 2px) + 0.375em);
+  padding-right: calc(calc(0.75em - 2px) + 0.375em);
+}
+
+.tk-input.tk-is-static {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tk-textarea {
+  display: block;
+  max-width: 100%;
+  min-width: 100%;
+  padding: calc(0.75em - 2px);
+  resize: vertical;
+}
+
+.tk-textarea:not([rows]) {
+  max-height: 40em;
+  min-height: 8em;
+}
+
+.tk-textarea[rows] {
+  height: initial;
+}
+
+.tk-textarea.tk-has-fixed-size {
+  resize: none;
+}
+
+.tk-checkbox, .tk-radio {
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.25;
+  position: relative;
+}
+
+.tk-checkbox input, .tk-radio input {
+  cursor: pointer;
+}
+
+.tk-checkbox:hover, .tk-radio:hover {
+  color: #363636;
+}
+
+.tk-checkbox[disabled], .tk-radio[disabled],
+fieldset[disabled] .tk-checkbox,
+fieldset[disabled] .tk-radio,
+.tk-checkbox input[disabled],
+.tk-radio input[disabled] {
+  color: #7a7a7a;
+  cursor: not-allowed;
+}
+
+.tk-radio + .tk-radio {
+  margin-left: 0.5em;
+}
+
+.tk-select {
+  display: inline-block;
+  max-width: 100%;
+  position: relative;
+  vertical-align: top;
+}
+
+.tk-select:not(.tk-is-multiple) {
+  height: 2.5em;
+}
+
+.tk-select:not(.tk-is-multiple):not(.tk-is-loading)::after {
+  border-color: #FA7C91;
+  right: 1.125em;
+  z-index: 4;
+}
+
+.tk-select.tk-is-rounded select {
+  border-radius: 290486px;
+  padding-left: 1em;
+}
+
+.tk-select select {
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  max-width: 100%;
+  outline: none;
+}
+
+.tk-select select::-ms-expand {
+  display: none;
+}
+
+.tk-select select[disabled]:hover,
+fieldset[disabled] .tk-select select:hover {
+  border-color: whitesmoke;
+}
+
+.tk-select select:not([multiple]) {
+  padding-right: 2.5em;
+}
+
+.tk-select select[multiple] {
+  height: auto;
+  padding: 0;
+}
+
+.tk-select select[multiple] option {
+  padding: 0.5em 1em;
+}
+
+.tk-select:not(.tk-is-multiple):not(.tk-is-loading):hover::after {
+  border-color: #363636;
+}
+
+.tk-select.tk-is-white:not(:hover)::after {
+  border-color: white;
+}
+
+.tk-select.tk-is-white select {
+  border-color: white;
+}
+
+.tk-select.tk-is-white select:hover, .tk-select.tk-is-white select.tk-is-hovered {
+  border-color: #f2f2f2;
+}
+
+.tk-select.tk-is-white select:focus, .tk-select.tk-is-white select.tk-is-focused, .tk-select.tk-is-white select:active, .tk-select.tk-is-white select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
+}
+
+.tk-select.tk-is-black:not(:hover)::after {
+  border-color: #0a0a0a;
+}
+
+.tk-select.tk-is-black select {
+  border-color: #0a0a0a;
+}
+
+.tk-select.tk-is-black select:hover, .tk-select.tk-is-black select.tk-is-hovered {
+  border-color: black;
+}
+
+.tk-select.tk-is-black select:focus, .tk-select.tk-is-black select.tk-is-focused, .tk-select.tk-is-black select:active, .tk-select.tk-is-black select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
+}
+
+.tk-select.tk-is-light:not(:hover)::after {
+  border-color: whitesmoke;
+}
+
+.tk-select.tk-is-light select {
+  border-color: whitesmoke;
+}
+
+.tk-select.tk-is-light select:hover, .tk-select.tk-is-light select.tk-is-hovered {
+  border-color: #e8e8e8;
+}
+
+.tk-select.tk-is-light select:focus, .tk-select.tk-is-light select.tk-is-focused, .tk-select.tk-is-light select:active, .tk-select.tk-is-light select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(245, 245, 245, 0.25);
+}
+
+.tk-select.tk-is-dark:not(:hover)::after {
+  border-color: #363636;
+}
+
+.tk-select.tk-is-dark select {
+  border-color: #363636;
+}
+
+.tk-select.tk-is-dark select:hover, .tk-select.tk-is-dark select.tk-is-hovered {
+  border-color: #292929;
+}
+
+.tk-select.tk-is-dark select:focus, .tk-select.tk-is-dark select.tk-is-focused, .tk-select.tk-is-dark select:active, .tk-select.tk-is-dark select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(54, 54, 54, 0.25);
+}
+
+.tk-select.tk-is-primary:not(:hover)::after {
+  border-color: #8A4D76;
+}
+
+.tk-select.tk-is-primary select {
+  border-color: #8A4D76;
+}
+
+.tk-select.tk-is-primary select:hover, .tk-select.tk-is-primary select.tk-is-hovered {
+  border-color: #7a4468;
+}
+
+.tk-select.tk-is-primary select:focus, .tk-select.tk-is-primary select.tk-is-focused, .tk-select.tk-is-primary select:active, .tk-select.tk-is-primary select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(138, 77, 118, 0.25);
+}
+
+.tk-select.tk-is-link:not(:hover)::after {
+  border-color: #FA7C91;
+}
+
+.tk-select.tk-is-link select {
+  border-color: #FA7C91;
+}
+
+.tk-select.tk-is-link select:hover, .tk-select.tk-is-link select.tk-is-hovered {
+  border-color: #f9637c;
+}
+
+.tk-select.tk-is-link select:focus, .tk-select.tk-is-link select.tk-is-focused, .tk-select.tk-is-link select:active, .tk-select.tk-is-link select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(250, 124, 145, 0.25);
+}
+
+.tk-select.tk-is-info:not(:hover)::after {
+  border-color: #3298dc;
+}
+
+.tk-select.tk-is-info select {
+  border-color: #3298dc;
+}
+
+.tk-select.tk-is-info select:hover, .tk-select.tk-is-info select.tk-is-hovered {
+  border-color: #238cd1;
+}
+
+.tk-select.tk-is-info select:focus, .tk-select.tk-is-info select.tk-is-focused, .tk-select.tk-is-info select:active, .tk-select.tk-is-info select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(50, 152, 220, 0.25);
+}
+
+.tk-select.tk-is-success:not(:hover)::after {
+  border-color: #48c774;
+}
+
+.tk-select.tk-is-success select {
+  border-color: #48c774;
+}
+
+.tk-select.tk-is-success select:hover, .tk-select.tk-is-success select.tk-is-hovered {
+  border-color: #3abb67;
+}
+
+.tk-select.tk-is-success select:focus, .tk-select.tk-is-success select.tk-is-focused, .tk-select.tk-is-success select:active, .tk-select.tk-is-success select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(72, 199, 116, 0.25);
+}
+
+.tk-select.tk-is-warning:not(:hover)::after {
+  border-color: #ffdd57;
+}
+
+.tk-select.tk-is-warning select {
+  border-color: #ffdd57;
+}
+
+.tk-select.tk-is-warning select:hover, .tk-select.tk-is-warning select.tk-is-hovered {
+  border-color: #ffd83d;
+}
+
+.tk-select.tk-is-warning select:focus, .tk-select.tk-is-warning select.tk-is-focused, .tk-select.tk-is-warning select:active, .tk-select.tk-is-warning select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
+}
+
+.tk-select.tk-is-danger:not(:hover)::after {
+  border-color: #f14668;
+}
+
+.tk-select.tk-is-danger select {
+  border-color: #f14668;
+}
+
+.tk-select.tk-is-danger select:hover, .tk-select.tk-is-danger select.tk-is-hovered {
+  border-color: #ef2e55;
+}
+
+.tk-select.tk-is-danger select:focus, .tk-select.tk-is-danger select.tk-is-focused, .tk-select.tk-is-danger select:active, .tk-select.tk-is-danger select.tk-is-active {
+  box-shadow: 0 0 0 0.125em rgba(241, 70, 104, 0.25);
+}
+
+.tk-select.tk-is-small {
+  border-radius: 2px;
+  font-size: 0.75rem;
+}
+
+.tk-select.tk-is-medium {
+  font-size: 1.25rem;
+}
+
+.tk-select.tk-is-large {
+  font-size: 1.5rem;
+}
+
+.tk-select.tk-is-disabled::after {
+  border-color: #7a7a7a;
+}
+
+.tk-select.tk-is-fullwidth {
+  width: 100%;
+}
+
+.tk-select.tk-is-fullwidth select {
+  width: 100%;
+}
+
+.tk-select.tk-is-loading::after {
+  margin-top: 0;
+  position: absolute;
+  right: 0.625em;
+  top: 0.625em;
+  transform: none;
+}
+
+.tk-select.tk-is-loading.tk-is-small:after {
+  font-size: 0.75rem;
+}
+
+.tk-select.tk-is-loading.tk-is-medium:after {
+  font-size: 1.25rem;
+}
+
+.tk-select.tk-is-loading.tk-is-large:after {
+  font-size: 1.5rem;
+}
+
+.tk-file {
+  align-items: stretch;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.tk-file.tk-is-white .tk-file-cta {
+  background-color: white;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-file.tk-is-white:hover .tk-file-cta, .tk-file.tk-is-white.tk-is-hovered .tk-file-cta {
+  background-color: #f9f9f9;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-file.tk-is-white:focus .tk-file-cta, .tk-file.tk-is-white.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(255, 255, 255, 0.25);
+  color: #0a0a0a;
+}
+
+.tk-file.tk-is-white:active .tk-file-cta, .tk-file.tk-is-white.tk-is-active .tk-file-cta {
+  background-color: #f2f2f2;
+  border-color: transparent;
+  color: #0a0a0a;
+}
+
+.tk-file.tk-is-black .tk-file-cta {
+  background-color: #0a0a0a;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-file.tk-is-black:hover .tk-file-cta, .tk-file.tk-is-black.tk-is-hovered .tk-file-cta {
+  background-color: #040404;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-file.tk-is-black:focus .tk-file-cta, .tk-file.tk-is-black.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(10, 10, 10, 0.25);
+  color: white;
+}
+
+.tk-file.tk-is-black:active .tk-file-cta, .tk-file.tk-is-black.tk-is-active .tk-file-cta {
+  background-color: black;
+  border-color: transparent;
+  color: white;
+}
+
+.tk-file.tk-is-light .tk-file-cta {
+  background-color: whitesmoke;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-light:hover .tk-file-cta, .tk-file.tk-is-light.tk-is-hovered .tk-file-cta {
+  background-color: #eeeeee;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-light:focus .tk-file-cta, .tk-file.tk-is-light.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(245, 245, 245, 0.25);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-light:active .tk-file-cta, .tk-file.tk-is-light.tk-is-active .tk-file-cta {
+  background-color: #e8e8e8;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-dark .tk-file-cta {
+  background-color: #363636;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-dark:hover .tk-file-cta, .tk-file.tk-is-dark.tk-is-hovered .tk-file-cta {
+  background-color: #2f2f2f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-dark:focus .tk-file-cta, .tk-file.tk-is-dark.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(54, 54, 54, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-dark:active .tk-file-cta, .tk-file.tk-is-dark.tk-is-active .tk-file-cta {
+  background-color: #292929;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-primary .tk-file-cta {
+  background-color: #8A4D76;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-primary:hover .tk-file-cta, .tk-file.tk-is-primary.tk-is-hovered .tk-file-cta {
+  background-color: #82486f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-primary:focus .tk-file-cta, .tk-file.tk-is-primary.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(138, 77, 118, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-primary:active .tk-file-cta, .tk-file.tk-is-primary.tk-is-active .tk-file-cta {
+  background-color: #7a4468;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-link .tk-file-cta {
+  background-color: #FA7C91;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-link:hover .tk-file-cta, .tk-file.tk-is-link.tk-is-hovered .tk-file-cta {
+  background-color: #fa7087;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-link:focus .tk-file-cta, .tk-file.tk-is-link.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(250, 124, 145, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-link:active .tk-file-cta, .tk-file.tk-is-link.tk-is-active .tk-file-cta {
+  background-color: #f9637c;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-info .tk-file-cta {
+  background-color: #3298dc;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-info:hover .tk-file-cta, .tk-file.tk-is-info.tk-is-hovered .tk-file-cta {
+  background-color: #2793da;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-info:focus .tk-file-cta, .tk-file.tk-is-info.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(50, 152, 220, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-info:active .tk-file-cta, .tk-file.tk-is-info.tk-is-active .tk-file-cta {
+  background-color: #238cd1;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-success .tk-file-cta {
+  background-color: #48c774;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-success:hover .tk-file-cta, .tk-file.tk-is-success.tk-is-hovered .tk-file-cta {
+  background-color: #3ec46d;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-success:focus .tk-file-cta, .tk-file.tk-is-success.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(72, 199, 116, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-success:active .tk-file-cta, .tk-file.tk-is-success.tk-is-active .tk-file-cta {
+  background-color: #3abb67;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-warning .tk-file-cta {
+  background-color: #ffdd57;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-warning:hover .tk-file-cta, .tk-file.tk-is-warning.tk-is-hovered .tk-file-cta {
+  background-color: #ffdb4a;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-warning:focus .tk-file-cta, .tk-file.tk-is-warning.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(255, 221, 87, 0.25);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-warning:active .tk-file-cta, .tk-file.tk-is-warning.tk-is-active .tk-file-cta {
+  background-color: #ffd83d;
+  border-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-file.tk-is-danger .tk-file-cta {
+  background-color: #f14668;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-danger:hover .tk-file-cta, .tk-file.tk-is-danger.tk-is-hovered .tk-file-cta {
+  background-color: #f03a5f;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-danger:focus .tk-file-cta, .tk-file.tk-is-danger.tk-is-focused .tk-file-cta {
+  border-color: transparent;
+  box-shadow: 0 0 0.5em rgba(241, 70, 104, 0.25);
+  color: #fff;
+}
+
+.tk-file.tk-is-danger:active .tk-file-cta, .tk-file.tk-is-danger.tk-is-active .tk-file-cta {
+  background-color: #ef2e55;
+  border-color: transparent;
+  color: #fff;
+}
+
+.tk-file.tk-is-small {
+  font-size: 0.75rem;
+}
+
+.tk-file.tk-is-medium {
+  font-size: 1.25rem;
+}
+
+.tk-file.tk-is-medium .tk-file-icon .tk-fa {
+  font-size: 21px;
+}
+
+.tk-file.tk-is-large {
+  font-size: 1.5rem;
+}
+
+.tk-file.tk-is-large .tk-file-icon .tk-fa {
+  font-size: 28px;
+}
+
+.tk-file.tk-has-name .tk-file-cta {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.tk-file.tk-has-name .tk-file-name {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.tk-file.tk-has-name.tk-is-empty .tk-file-cta {
+  border-radius: 4px;
+}
+
+.tk-file.tk-has-name.tk-is-empty .tk-file-name {
+  display: none;
+}
+
+.tk-file.tk-is-boxed .tk-file-label {
+  flex-direction: column;
+}
+
+.tk-file.tk-is-boxed .tk-file-cta {
+  flex-direction: column;
+  height: auto;
+  padding: 1em 3em;
+}
+
+.tk-file.tk-is-boxed .tk-file-name {
+  border-width: 0 1px 1px;
+}
+
+.tk-file.tk-is-boxed .tk-file-icon {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.tk-file.tk-is-boxed .tk-file-icon .tk-fa {
+  font-size: 21px;
+}
+
+.tk-file.tk-is-boxed.tk-is-small .tk-file-icon .tk-fa {
+  font-size: 14px;
+}
+
+.tk-file.tk-is-boxed.tk-is-medium .tk-file-icon .tk-fa {
+  font-size: 28px;
+}
+
+.tk-file.tk-is-boxed.tk-is-large .tk-file-icon .tk-fa {
+  font-size: 35px;
+}
+
+.tk-file.tk-is-boxed.tk-has-name .tk-file-cta {
+  border-radius: 4px 4px 0 0;
+}
+
+.tk-file.tk-is-boxed.tk-has-name .tk-file-name {
+  border-radius: 0 0 4px 4px;
+  border-width: 0 1px 1px;
+}
+
+.tk-file.tk-is-centered {
+  justify-content: center;
+}
+
+.tk-file.tk-is-fullwidth .tk-file-label {
+  width: 100%;
+}
+
+.tk-file.tk-is-fullwidth .tk-file-name {
+  flex-grow: 1;
+  max-width: none;
+}
+
+.tk-file.tk-is-right {
+  justify-content: flex-end;
+}
+
+.tk-file.tk-is-right .tk-file-cta {
+  border-radius: 0 4px 4px 0;
+}
+
+.tk-file.tk-is-right .tk-file-name {
+  border-radius: 4px 0 0 4px;
+  border-width: 1px 0 1px 1px;
+  order: -1;
+}
+
+.tk-file-label {
+  align-items: stretch;
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
+}
+
+.tk-file-label:hover .tk-file-cta {
+  background-color: #eeeeee;
+  color: #363636;
+}
+
+.tk-file-label:hover .tk-file-name {
+  border-color: #d5d5d5;
+}
+
+.tk-file-label:active .tk-file-cta {
+  background-color: #e8e8e8;
+  color: #363636;
+}
+
+.tk-file-label:active .tk-file-name {
+  border-color: #cfcfcf;
+}
+
+.tk-file-input {
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  outline: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.tk-file-cta,
+.tk-file-name {
+  border-color: #dbdbdb;
+  border-radius: 4px;
+  font-size: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
+.tk-file-cta {
+  background-color: whitesmoke;
+  color: #757763;
+}
+
+.tk-file-name {
+  border-color: #dbdbdb;
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
+  display: block;
+  max-width: 16em;
+  overflow: hidden;
+  text-align: inherit;
+  text-overflow: ellipsis;
+}
+
+.tk-file-icon {
+  align-items: center;
+  display: flex;
+  height: 1em;
+  justify-content: center;
+  margin-right: 0.5em;
+  width: 1em;
+}
+
+.tk-file-icon .tk-fa {
+  font-size: 14px;
+}
+
+.tk-label {
+  color: #363636;
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tk-label:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.tk-label.tk-is-small {
+  font-size: 0.75rem;
+}
+
+.tk-label.tk-is-medium {
+  font-size: 1.25rem;
+}
+
+.tk-label.tk-is-large {
+  font-size: 1.5rem;
+}
+
+.tk-help {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.tk-help.tk-is-white {
+  color: white;
+}
+
+.tk-help.tk-is-black {
+  color: #0a0a0a;
+}
+
+.tk-help.tk-is-light {
+  color: whitesmoke;
+}
+
+.tk-help.tk-is-dark {
+  color: #363636;
+}
+
+.tk-help.tk-is-primary {
+  color: #8A4D76;
+}
+
+.tk-help.tk-is-link {
+  color: #FA7C91;
+}
+
+.tk-help.tk-is-info {
+  color: #3298dc;
+}
+
+.tk-help.tk-is-success {
+  color: #48c774;
+}
+
+.tk-help.tk-is-warning {
+  color: #ffdd57;
+}
+
+.tk-help.tk-is-danger {
+  color: #f14668;
+}
+
+.tk-field:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.tk-field.tk-has-addons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tk-field.tk-has-addons .tk-control:not(:last-child) {
+  margin-right: -1px;
+}
+
+.tk-field.tk-has-addons .tk-control:not(:first-child):not(:last-child) .tk-button,
+.tk-field.tk-has-addons .tk-control:not(:first-child):not(:last-child) .tk-input,
+.tk-field.tk-has-addons .tk-control:not(:first-child):not(:last-child) .tk-select select {
+  border-radius: 0;
+}
+
+.tk-field.tk-has-addons .tk-control:first-child:not(:only-child) .tk-button,
+.tk-field.tk-has-addons .tk-control:first-child:not(:only-child) .tk-input,
+.tk-field.tk-has-addons .tk-control:first-child:not(:only-child) .tk-select select {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.tk-field.tk-has-addons .tk-control:last-child:not(:only-child) .tk-button,
+.tk-field.tk-has-addons .tk-control:last-child:not(:only-child) .tk-input,
+.tk-field.tk-has-addons .tk-control:last-child:not(:only-child) .tk-select select {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.tk-field.tk-has-addons .tk-control .tk-button:not([disabled]):hover, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]).tk-is-hovered,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]):hover,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]).tk-is-hovered,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]):hover,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]).tk-is-hovered {
+  z-index: 2;
+}
+
+.tk-field.tk-has-addons .tk-control .tk-button:not([disabled]):focus, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]).tk-is-focused, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]):active, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]).tk-is-active,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]):focus,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]).tk-is-focused,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]):active,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]).tk-is-active,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]):focus,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]).tk-is-focused,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]):active,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]).tk-is-active {
+  z-index: 3;
+}
+
+.tk-field.tk-has-addons .tk-control .tk-button:not([disabled]):focus:hover, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]).tk-is-focused:hover, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]):active:hover, .tk-field.tk-has-addons .tk-control .tk-button:not([disabled]).tk-is-active:hover,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]):focus:hover,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]).tk-is-focused:hover,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]):active:hover,
+.tk-field.tk-has-addons .tk-control .tk-input:not([disabled]).tk-is-active:hover,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]):focus:hover,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]).tk-is-focused:hover,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]):active:hover,
+.tk-field.tk-has-addons .tk-control .tk-select select:not([disabled]).tk-is-active:hover {
+  z-index: 4;
+}
+
+.tk-field.tk-has-addons .tk-control.tk-is-expanded {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-field.tk-has-addons.tk-has-addons-centered {
+  justify-content: center;
+}
+
+.tk-field.tk-has-addons.tk-has-addons-right {
+  justify-content: flex-end;
+}
+
+.tk-field.tk-has-addons.tk-has-addons-fullwidth .tk-control {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.tk-field.tk-is-grouped {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tk-field.tk-is-grouped > .tk-control {
+  flex-shrink: 0;
+}
+
+.tk-field.tk-is-grouped > .tk-control:not(:last-child) {
+  margin-bottom: 0;
+  margin-right: 0.75rem;
+}
+
+.tk-field.tk-is-grouped > .tk-control.tk-is-expanded {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-centered {
+  justify-content: center;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-right {
+  justify-content: flex-end;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-multiline {
+  flex-wrap: wrap;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-multiline > .tk-control:last-child, .tk-field.tk-is-grouped.tk-is-grouped-multiline > .tk-control:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-multiline:last-child {
+  margin-bottom: -0.75rem;
+}
+
+.tk-field.tk-is-grouped.tk-is-grouped-multiline:not(:last-child) {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-field.tk-is-horizontal {
+    display: flex;
+  }
+}
+
+.tk-field-label .tk-label {
+  font-size: inherit;
+}
+
+@media screen and (max-width: 768px) {
+  .tk-field-label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-field-label {
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+    text-align: right;
+  }
+  .tk-field-label.tk-is-small {
+    font-size: 0.75rem;
+    padding-top: 0.375em;
+  }
+  .tk-field-label.tk-is-normal {
+    padding-top: 0.375em;
+  }
+  .tk-field-label.tk-is-medium {
+    font-size: 1.25rem;
+    padding-top: 0.375em;
+  }
+  .tk-field-label.tk-is-large {
+    font-size: 1.5rem;
+    padding-top: 0.375em;
+  }
+}
+
+.tk-field-body .tk-field .tk-field {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-field-body {
+    display: flex;
+    flex-basis: 0;
+    flex-grow: 5;
+    flex-shrink: 1;
+  }
+  .tk-field-body .tk-field {
+    margin-bottom: 0;
+  }
+  .tk-field-body > .tk-field {
+    flex-shrink: 1;
+  }
+  .tk-field-body > .tk-field:not(.tk-is-narrow) {
+    flex-grow: 1;
+  }
+  .tk-field-body > .tk-field:not(:last-child) {
+    margin-right: 0.75rem;
+  }
+}
+
+.tk-control {
+  box-sizing: border-box;
+  clear: both;
+  font-size: 1rem;
+  position: relative;
+  text-align: inherit;
+}
+
+.tk-control.tk-has-icons-left .tk-input:focus ~ .tk-icon,
+.tk-control.tk-has-icons-left .tk-select:focus ~ .tk-icon, .tk-control.tk-has-icons-right .tk-input:focus ~ .tk-icon,
+.tk-control.tk-has-icons-right .tk-select:focus ~ .tk-icon {
+  color: #757763;
+}
+
+.tk-control.tk-has-icons-left .tk-input.tk-is-small ~ .tk-icon,
+.tk-control.tk-has-icons-left .tk-select.tk-is-small ~ .tk-icon, .tk-control.tk-has-icons-right .tk-input.tk-is-small ~ .tk-icon,
+.tk-control.tk-has-icons-right .tk-select.tk-is-small ~ .tk-icon {
+  font-size: 0.75rem;
+}
+
+.tk-control.tk-has-icons-left .tk-input.tk-is-medium ~ .tk-icon,
+.tk-control.tk-has-icons-left .tk-select.tk-is-medium ~ .tk-icon, .tk-control.tk-has-icons-right .tk-input.tk-is-medium ~ .tk-icon,
+.tk-control.tk-has-icons-right .tk-select.tk-is-medium ~ .tk-icon {
+  font-size: 1.25rem;
+}
+
+.tk-control.tk-has-icons-left .tk-input.tk-is-large ~ .tk-icon,
+.tk-control.tk-has-icons-left .tk-select.tk-is-large ~ .tk-icon, .tk-control.tk-has-icons-right .tk-input.tk-is-large ~ .tk-icon,
+.tk-control.tk-has-icons-right .tk-select.tk-is-large ~ .tk-icon {
+  font-size: 1.5rem;
+}
+
+.tk-control.tk-has-icons-left .tk-icon, .tk-control.tk-has-icons-right .tk-icon {
+  color: #dbdbdb;
+  height: 2.5em;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 2.5em;
+  z-index: 4;
+}
+
+.tk-control.tk-has-icons-left .tk-input,
+.tk-control.tk-has-icons-left .tk-select select {
+  padding-left: 2.5em;
+}
+
+.tk-control.tk-has-icons-left .tk-icon.tk-is-left {
+  left: 0;
+}
+
+.tk-control.tk-has-icons-right .tk-input,
+.tk-control.tk-has-icons-right .tk-select select {
+  padding-right: 2.5em;
+}
+
+.tk-control.tk-has-icons-right .tk-icon.tk-is-right {
+  right: 0;
+}
+
+.tk-control.tk-is-loading::after {
+  position: absolute !important;
+  right: 0.625em;
+  top: 0.625em;
+  z-index: 4;
+}
+
+.tk-control.tk-is-loading.tk-is-small:after {
+  font-size: 0.75rem;
+}
+
+.tk-control.tk-is-loading.tk-is-medium:after {
+  font-size: 1.25rem;
+}
+
+.tk-control.tk-is-loading.tk-is-large:after {
+  font-size: 1.5rem;
+}
+
+.tk-navbar {
+  background-color: white;
+  min-height: 3.25rem;
+  position: relative;
+  z-index: 30;
+}
+
+.tk-navbar.tk-is-white {
+  background-color: white;
+  color: #0a0a0a;
+}
+
+.tk-navbar.tk-is-white .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-white .tk-navbar-brand .tk-navbar-link {
+  color: #0a0a0a;
+}
+
+.tk-navbar.tk-is-white .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-white .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-white .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-white .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-white .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-white .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #f2f2f2;
+  color: #0a0a0a;
+}
+
+.tk-navbar.tk-is-white .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #0a0a0a;
+}
+
+.tk-navbar.tk-is-white .tk-navbar-burger {
+  color: #0a0a0a;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-white .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-white .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-white .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-white .tk-navbar-end .tk-navbar-link {
+    color: #0a0a0a;
+  }
+  .tk-navbar.tk-is-white .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-white .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-white .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-white .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-white .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-white .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-white .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-white .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-white .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-white .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-white .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-white .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #f2f2f2;
+    color: #0a0a0a;
+  }
+  .tk-navbar.tk-is-white .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-white .tk-navbar-end .tk-navbar-link::after {
+    border-color: #0a0a0a;
+  }
+  .tk-navbar.tk-is-white .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-white .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-white .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #f2f2f2;
+    color: #0a0a0a;
+  }
+  .tk-navbar.tk-is-white .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: white;
+    color: #0a0a0a;
+  }
+}
+
+.tk-navbar.tk-is-black {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+.tk-navbar.tk-is-black .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-black .tk-navbar-brand .tk-navbar-link {
+  color: white;
+}
+
+.tk-navbar.tk-is-black .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-black .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-black .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-black .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-black .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-black .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: black;
+  color: white;
+}
+
+.tk-navbar.tk-is-black .tk-navbar-brand .tk-navbar-link::after {
+  border-color: white;
+}
+
+.tk-navbar.tk-is-black .tk-navbar-burger {
+  color: white;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-black .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-black .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-black .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-black .tk-navbar-end .tk-navbar-link {
+    color: white;
+  }
+  .tk-navbar.tk-is-black .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-black .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-black .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-black .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-black .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-black .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-black .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-black .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-black .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-black .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-black .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-black .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: black;
+    color: white;
+  }
+  .tk-navbar.tk-is-black .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-black .tk-navbar-end .tk-navbar-link::after {
+    border-color: white;
+  }
+  .tk-navbar.tk-is-black .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-black .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-black .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: black;
+    color: white;
+  }
+  .tk-navbar.tk-is-black .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #0a0a0a;
+    color: white;
+  }
+}
+
+.tk-navbar.tk-is-light {
+  background-color: whitesmoke;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-light .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-light .tk-navbar-brand .tk-navbar-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-light .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-light .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-light .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-light .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-light .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-light .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #e8e8e8;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-light .tk-navbar-brand .tk-navbar-link::after {
+  border-color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-light .tk-navbar-burger {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-light .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-light .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-light .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-light .tk-navbar-end .tk-navbar-link {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-light .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-light .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-light .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-light .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-light .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-light .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-light .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-light .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-light .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-light .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-light .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-light .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #e8e8e8;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-light .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-light .tk-navbar-end .tk-navbar-link::after {
+    border-color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-light .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-light .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-light .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #e8e8e8;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-light .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: whitesmoke;
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.tk-navbar.tk-is-dark {
+  background-color: #363636;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-dark .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-dark .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-dark .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-dark .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-dark .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-dark .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-dark .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-dark .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #292929;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-dark .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-dark .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-dark .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-dark .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-dark .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-dark .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-dark .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-dark .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-dark .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-dark .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-dark .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-dark .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-dark .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-dark .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-dark .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-dark .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-dark .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-dark .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #292929;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-dark .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-dark .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-dark .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-dark .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-dark .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #292929;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-dark .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #363636;
+    color: #fff;
+  }
+}
+
+.tk-navbar.tk-is-primary {
+  background-color: #8A4D76;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-primary .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-primary .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-primary .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-primary .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-primary .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-primary .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-primary .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-primary .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #7a4468;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-primary .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-primary .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-primary .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-primary .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-primary .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-primary .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-primary .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-primary .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-primary .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-primary .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-primary .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-primary .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-primary .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-primary .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-primary .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-primary .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-primary .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-primary .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #7a4468;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-primary .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-primary .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-primary .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-primary .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-primary .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #7a4468;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-primary .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #8A4D76;
+    color: #fff;
+  }
+}
+
+.tk-navbar.tk-is-link {
+  background-color: #FA7C91;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-link .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-link .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-link .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-link .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-link .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-link .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-link .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-link .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #f9637c;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-link .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-link .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-link .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-link .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-link .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-link .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-link .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-link .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-link .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-link .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-link .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-link .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-link .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-link .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-link .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-link .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-link .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-link .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #f9637c;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-link .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-link .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-link .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-link .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-link .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #f9637c;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-link .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #FA7C91;
+    color: #fff;
+  }
+}
+
+.tk-navbar.tk-is-info {
+  background-color: #3298dc;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-info .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-info .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-info .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-info .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-info .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-info .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-info .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-info .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #238cd1;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-info .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-info .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-info .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-info .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-info .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-info .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-info .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-info .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-info .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-info .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-info .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-info .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-info .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-info .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-info .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-info .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-info .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-info .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #238cd1;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-info .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-info .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-info .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-info .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-info .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #238cd1;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-info .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #3298dc;
+    color: #fff;
+  }
+}
+
+.tk-navbar.tk-is-success {
+  background-color: #48c774;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-success .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-success .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-success .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-success .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-success .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-success .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-success .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-success .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #3abb67;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-success .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-success .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-success .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-success .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-success .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-success .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-success .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-success .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-success .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-success .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-success .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-success .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-success .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-success .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-success .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-success .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-success .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-success .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #3abb67;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-success .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-success .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-success .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-success .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-success .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #3abb67;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-success .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #48c774;
+    color: #fff;
+  }
+}
+
+.tk-navbar.tk-is-warning {
+  background-color: #ffdd57;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-warning .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-warning .tk-navbar-brand .tk-navbar-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-warning .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-warning .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-warning .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-warning .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-warning .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-warning .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #ffd83d;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-warning .tk-navbar-brand .tk-navbar-link::after {
+  border-color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-navbar.tk-is-warning .tk-navbar-burger {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-warning .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-warning .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-warning .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-warning .tk-navbar-end .tk-navbar-link {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-warning .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-warning .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-warning .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-warning .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-warning .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-warning .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-warning .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-warning .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-warning .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-warning .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-warning .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-warning .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #ffd83d;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-warning .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-warning .tk-navbar-end .tk-navbar-link::after {
+    border-color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-warning .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-warning .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-warning .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #ffd83d;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .tk-navbar.tk-is-warning .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #ffdd57;
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.tk-navbar.tk-is-danger {
+  background-color: #f14668;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-danger .tk-navbar-brand > .tk-navbar-item,
+.tk-navbar.tk-is-danger .tk-navbar-brand .tk-navbar-link {
+  color: #fff;
+}
+
+.tk-navbar.tk-is-danger .tk-navbar-brand > a.tk-navbar-item:focus, .tk-navbar.tk-is-danger .tk-navbar-brand > a.tk-navbar-item:hover, .tk-navbar.tk-is-danger .tk-navbar-brand > a.tk-navbar-item.tk-is-active,
+.tk-navbar.tk-is-danger .tk-navbar-brand .tk-navbar-link:focus,
+.tk-navbar.tk-is-danger .tk-navbar-brand .tk-navbar-link:hover,
+.tk-navbar.tk-is-danger .tk-navbar-brand .tk-navbar-link.tk-is-active {
+  background-color: #ef2e55;
+  color: #fff;
+}
+
+.tk-navbar.tk-is-danger .tk-navbar-brand .tk-navbar-link::after {
+  border-color: #fff;
+}
+
+.tk-navbar.tk-is-danger .tk-navbar-burger {
+  color: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar.tk-is-danger .tk-navbar-start > .tk-navbar-item,
+  .tk-navbar.tk-is-danger .tk-navbar-start .tk-navbar-link,
+  .tk-navbar.tk-is-danger .tk-navbar-end > .tk-navbar-item,
+  .tk-navbar.tk-is-danger .tk-navbar-end .tk-navbar-link {
+    color: #fff;
+  }
+  .tk-navbar.tk-is-danger .tk-navbar-start > a.tk-navbar-item:focus, .tk-navbar.tk-is-danger .tk-navbar-start > a.tk-navbar-item:hover, .tk-navbar.tk-is-danger .tk-navbar-start > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-danger .tk-navbar-start .tk-navbar-link:focus,
+  .tk-navbar.tk-is-danger .tk-navbar-start .tk-navbar-link:hover,
+  .tk-navbar.tk-is-danger .tk-navbar-start .tk-navbar-link.tk-is-active,
+  .tk-navbar.tk-is-danger .tk-navbar-end > a.tk-navbar-item:focus,
+  .tk-navbar.tk-is-danger .tk-navbar-end > a.tk-navbar-item:hover,
+  .tk-navbar.tk-is-danger .tk-navbar-end > a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-danger .tk-navbar-end .tk-navbar-link:focus,
+  .tk-navbar.tk-is-danger .tk-navbar-end .tk-navbar-link:hover,
+  .tk-navbar.tk-is-danger .tk-navbar-end .tk-navbar-link.tk-is-active {
+    background-color: #ef2e55;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-danger .tk-navbar-start .tk-navbar-link::after,
+  .tk-navbar.tk-is-danger .tk-navbar-end .tk-navbar-link::after {
+    border-color: #fff;
+  }
+  .tk-navbar.tk-is-danger .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link,
+  .tk-navbar.tk-is-danger .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link,
+  .tk-navbar.tk-is-danger .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #ef2e55;
+    color: #fff;
+  }
+  .tk-navbar.tk-is-danger .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: #f14668;
+    color: #fff;
+  }
+}
+
+.tk-navbar > .tk-container {
+  align-items: stretch;
+  display: flex;
+  min-height: 3.25rem;
+  width: 100%;
+}
+
+.tk-navbar.tk-has-shadow {
+  box-shadow: 0 2px 0 0 whitesmoke;
+}
+
+.tk-navbar.tk-is-fixed-bottom, .tk-navbar.tk-is-fixed-top {
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 30;
+}
+
+.tk-navbar.tk-is-fixed-bottom {
+  bottom: 0;
+}
+
+.tk-navbar.tk-is-fixed-bottom.tk-has-shadow {
+  box-shadow: 0 -2px 0 0 whitesmoke;
+}
+
+.tk-navbar.tk-is-fixed-top {
+  top: 0;
+}
+
+html.tk-has-navbar-fixed-top,
+body.tk-has-navbar-fixed-top {
+  padding-top: 3.25rem;
+}
+
+html.tk-has-navbar-fixed-bottom,
+body.tk-has-navbar-fixed-bottom {
+  padding-bottom: 3.25rem;
+}
+
+.tk-navbar-brand,
+.tk-navbar-tabs {
+  align-items: stretch;
+  display: flex;
+  flex-shrink: 0;
+  min-height: 3.25rem;
+}
+
+.tk-navbar-brand a.tk-navbar-item:focus, .tk-navbar-brand a.tk-navbar-item:hover {
+  background-color: transparent;
+}
+
+.tk-navbar-tabs {
+  -webkit-overflow-scrolling: touch;
+  max-width: 100vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.tk-navbar-burger {
+  color: #757763;
+  cursor: pointer;
+  display: block;
+  height: 3.25rem;
+  position: relative;
+  width: 3.25rem;
+  margin-left: auto;
+}
+
+.tk-navbar-burger span {
+  background-color: currentColor;
+  display: block;
+  height: 1px;
+  left: calc(50% - 8px);
+  position: absolute;
+  transform-origin: center;
+  transition-duration: 86ms;
+  transition-property: background-color, opacity, transform;
+  transition-timing-function: ease-out;
+  width: 16px;
+}
+
+.tk-navbar-burger span:nth-child(1) {
+  top: calc(50% - 6px);
+}
+
+.tk-navbar-burger span:nth-child(2) {
+  top: calc(50% - 1px);
+}
+
+.tk-navbar-burger span:nth-child(3) {
+  top: calc(50% + 4px);
+}
+
+.tk-navbar-burger:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tk-navbar-burger.tk-is-active span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.tk-navbar-burger.tk-is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.tk-navbar-burger.tk-is-active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.tk-navbar-menu {
+  display: none;
+}
+
+.tk-navbar-item,
+.tk-navbar-link {
+  color: #757763;
+  display: block;
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+}
+
+.tk-navbar-item .tk-icon:only-child,
+.tk-navbar-link .tk-icon:only-child {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+}
+
+a.tk-navbar-item,
+.tk-navbar-link {
+  cursor: pointer;
+}
+
+a.tk-navbar-item:focus, a.tk-navbar-item:focus-within, a.tk-navbar-item:hover, a.tk-navbar-item.tk-is-active,
+.tk-navbar-link:focus,
+.tk-navbar-link:focus-within,
+.tk-navbar-link:hover,
+.tk-navbar-link.tk-is-active {
+  background-color: #fafafa;
+  color: #FA7C91;
+}
+
+.tk-navbar-item {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.tk-navbar-item img {
+  max-height: 1.75rem;
+}
+
+.tk-navbar-item.tk-has-dropdown {
+  padding: 0;
+}
+
+.tk-navbar-item.tk-is-expanded {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-navbar-item.tk-is-tab {
+  border-bottom: 1px solid transparent;
+  min-height: 3.25rem;
+  padding-bottom: calc(0.5rem - 1px);
+}
+
+.tk-navbar-item.tk-is-tab:focus, .tk-navbar-item.tk-is-tab:hover {
+  background-color: transparent;
+  border-bottom-color: #FA7C91;
+}
+
+.tk-navbar-item.tk-is-tab.tk-is-active {
+  background-color: transparent;
+  border-bottom-color: #FA7C91;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  color: #FA7C91;
+  padding-bottom: calc(0.5rem - 3px);
+}
+
+.tk-navbar-content {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-navbar-link:not(.tk-is-arrowless) {
+  padding-right: 2.5em;
+}
+
+.tk-navbar-link:not(.tk-is-arrowless)::after {
+  border-color: #FA7C91;
+  margin-top: -0.375em;
+  right: 1.125em;
+}
+
+.tk-navbar-dropdown {
+  font-size: 0.875rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.tk-navbar-dropdown .tk-navbar-item {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.tk-navbar-divider {
+  background-color: whitesmoke;
+  border: none;
+  display: none;
+  height: 2px;
+  margin: 0.5rem 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-navbar > .tk-container {
+    display: block;
+  }
+  .tk-navbar-brand .tk-navbar-item,
+  .tk-navbar-tabs .tk-navbar-item {
+    align-items: center;
+    display: flex;
+  }
+  .tk-navbar-link::after {
+    display: none;
+  }
+  .tk-navbar-menu {
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
+    padding: 0.5rem 0;
+  }
+  .tk-navbar-menu.tk-is-active {
+    display: block;
+  }
+  .tk-navbar.tk-is-fixed-bottom-touch, .tk-navbar.tk-is-fixed-top-touch {
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 30;
+  }
+  .tk-navbar.tk-is-fixed-bottom-touch {
+    bottom: 0;
+  }
+  .tk-navbar.tk-is-fixed-bottom-touch.tk-has-shadow {
+    box-shadow: 0 -2px 3px rgba(10, 10, 10, 0.1);
+  }
+  .tk-navbar.tk-is-fixed-top-touch {
+    top: 0;
+  }
+  .tk-navbar.tk-is-fixed-top .tk-navbar-menu, .tk-navbar.tk-is-fixed-top-touch .tk-navbar-menu {
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 3.25rem);
+    overflow: auto;
+  }
+  html.tk-has-navbar-fixed-top-touch,
+  body.tk-has-navbar-fixed-top-touch {
+    padding-top: 3.25rem;
+  }
+  html.tk-has-navbar-fixed-bottom-touch,
+  body.tk-has-navbar-fixed-bottom-touch {
+    padding-bottom: 3.25rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-navbar,
+  .tk-navbar-menu,
+  .tk-navbar-start,
+  .tk-navbar-end {
+    align-items: stretch;
+    display: flex;
+  }
+  .tk-navbar {
+    min-height: 3.25rem;
+  }
+  .tk-navbar.tk-is-spaced {
+    padding: 1rem 2rem;
+  }
+  .tk-navbar.tk-is-spaced .tk-navbar-start,
+  .tk-navbar.tk-is-spaced .tk-navbar-end {
+    align-items: center;
+  }
+  .tk-navbar.tk-is-spaced a.tk-navbar-item,
+  .tk-navbar.tk-is-spaced .tk-navbar-link {
+    border-radius: 4px;
+  }
+  .tk-navbar.tk-is-transparent a.tk-navbar-item:focus, .tk-navbar.tk-is-transparent a.tk-navbar-item:hover, .tk-navbar.tk-is-transparent a.tk-navbar-item.tk-is-active,
+  .tk-navbar.tk-is-transparent .tk-navbar-link:focus,
+  .tk-navbar.tk-is-transparent .tk-navbar-link:hover,
+  .tk-navbar.tk-is-transparent .tk-navbar-link.tk-is-active {
+    background-color: transparent !important;
+  }
+  .tk-navbar.tk-is-transparent .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link, .tk-navbar.tk-is-transparent .tk-navbar-item.tk-has-dropdown.tk-is-hoverable:focus .tk-navbar-link, .tk-navbar.tk-is-transparent .tk-navbar-item.tk-has-dropdown.tk-is-hoverable:focus-within .tk-navbar-link, .tk-navbar.tk-is-transparent .tk-navbar-item.tk-has-dropdown.tk-is-hoverable:hover .tk-navbar-link {
+    background-color: transparent !important;
+  }
+  .tk-navbar.tk-is-transparent .tk-navbar-dropdown a.tk-navbar-item:focus, .tk-navbar.tk-is-transparent .tk-navbar-dropdown a.tk-navbar-item:hover {
+    background-color: whitesmoke;
+    color: #0a0a0a;
+  }
+  .tk-navbar.tk-is-transparent .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: whitesmoke;
+    color: #FA7C91;
+  }
+  .tk-navbar-burger {
+    display: none;
+  }
+  .tk-navbar-item,
+  .tk-navbar-link {
+    align-items: center;
+    display: flex;
+  }
+  .tk-navbar-item.tk-has-dropdown {
+    align-items: stretch;
+  }
+  .tk-navbar-item.tk-has-dropdown-up .tk-navbar-link::after {
+    transform: rotate(135deg) translate(0.25em, -0.25em);
+  }
+  .tk-navbar-item.tk-has-dropdown-up .tk-navbar-dropdown {
+    border-bottom: 2px solid #dbdbdb;
+    border-radius: 6px 6px 0 0;
+    border-top: none;
+    bottom: 100%;
+    box-shadow: 0 -8px 8px rgba(10, 10, 10, 0.1);
+    top: auto;
+  }
+  .tk-navbar-item.tk-is-active .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:focus .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:focus-within .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:hover .tk-navbar-dropdown {
+    display: block;
+  }
+  .tk-navbar.tk-is-spaced .tk-navbar-item.tk-is-active .tk-navbar-dropdown, .tk-navbar-item.tk-is-active .tk-navbar-dropdown.tk-is-boxed, .tk-navbar.tk-is-spaced .tk-navbar-item.tk-is-hoverable:focus .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:focus .tk-navbar-dropdown.tk-is-boxed, .tk-navbar.tk-is-spaced .tk-navbar-item.tk-is-hoverable:focus-within .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:focus-within .tk-navbar-dropdown.tk-is-boxed, .tk-navbar.tk-is-spaced .tk-navbar-item.tk-is-hoverable:hover .tk-navbar-dropdown, .tk-navbar-item.tk-is-hoverable:hover .tk-navbar-dropdown.tk-is-boxed {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .tk-navbar-menu {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+  .tk-navbar-start {
+    justify-content: flex-start;
+    margin-right: auto;
+  }
+  .tk-navbar-end {
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .tk-navbar-dropdown {
+    background-color: white;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top: 2px solid #dbdbdb;
+    box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1);
+    display: none;
+    font-size: 0.875rem;
+    left: 0;
+    min-width: 100%;
+    position: absolute;
+    top: 100%;
+    z-index: 20;
+  }
+  .tk-navbar-dropdown .tk-navbar-item {
+    padding: 0.375rem 1rem;
+    white-space: nowrap;
+  }
+  .tk-navbar-dropdown a.tk-navbar-item {
+    padding-right: 3rem;
+  }
+  .tk-navbar-dropdown a.tk-navbar-item:focus, .tk-navbar-dropdown a.tk-navbar-item:hover {
+    background-color: whitesmoke;
+    color: #0a0a0a;
+  }
+  .tk-navbar-dropdown a.tk-navbar-item.tk-is-active {
+    background-color: whitesmoke;
+    color: #FA7C91;
+  }
+  .tk-navbar.tk-is-spaced .tk-navbar-dropdown, .tk-navbar-dropdown.tk-is-boxed {
+    border-radius: 6px;
+    border-top: none;
+    box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    top: calc(100% + (-4px));
+    transform: translateY(-5px);
+    transition-duration: 86ms;
+    transition-property: opacity, transform;
+  }
+  .tk-navbar-dropdown.tk-is-right {
+    left: auto;
+    right: 0;
+  }
+  .tk-navbar-divider {
+    display: block;
+  }
+  .tk-navbar > .tk-container .tk-navbar-brand,
+  .tk-container > .tk-navbar .tk-navbar-brand {
+    margin-left: -0.75rem;
+  }
+  .tk-navbar > .tk-container .tk-navbar-menu,
+  .tk-container > .tk-navbar .tk-navbar-menu {
+    margin-right: -0.75rem;
+  }
+  .tk-navbar.tk-is-fixed-bottom-desktop, .tk-navbar.tk-is-fixed-top-desktop {
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 30;
+  }
+  .tk-navbar.tk-is-fixed-bottom-desktop {
+    bottom: 0;
+  }
+  .tk-navbar.tk-is-fixed-bottom-desktop.tk-has-shadow {
+    box-shadow: 0 -2px 3px rgba(10, 10, 10, 0.1);
+  }
+  .tk-navbar.tk-is-fixed-top-desktop {
+    top: 0;
+  }
+  html.tk-has-navbar-fixed-top-desktop,
+  body.tk-has-navbar-fixed-top-desktop {
+    padding-top: 3.25rem;
+  }
+  html.tk-has-navbar-fixed-bottom-desktop,
+  body.tk-has-navbar-fixed-bottom-desktop {
+    padding-bottom: 3.25rem;
+  }
+  html.tk-has-spaced-navbar-fixed-top,
+  body.tk-has-spaced-navbar-fixed-top {
+    padding-top: 5.25rem;
+  }
+  html.tk-has-spaced-navbar-fixed-bottom,
+  body.tk-has-spaced-navbar-fixed-bottom {
+    padding-bottom: 5.25rem;
+  }
+  a.tk-navbar-item.tk-is-active,
+  .tk-navbar-link.tk-is-active {
+    color: #0a0a0a;
+  }
+  a.tk-navbar-item.tk-is-active:not(:focus):not(:hover),
+  .tk-navbar-link.tk-is-active:not(:focus):not(:hover) {
+    background-color: transparent;
+  }
+  .tk-navbar-item.tk-has-dropdown:focus .tk-navbar-link, .tk-navbar-item.tk-has-dropdown:hover .tk-navbar-link, .tk-navbar-item.tk-has-dropdown.tk-is-active .tk-navbar-link {
+    background-color: #fafafa;
+  }
+}
+
+.tk-hero.tk-is-fullheight-with-navbar {
+  min-height: calc(100vh - 3.25rem);
+}
+
+.tk-hero {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tk-hero .tk-navbar {
+  background: none;
+}
+
+.tk-hero .tk-tabs ul {
+  border-bottom: none;
+}
+
+.tk-hero.tk-is-white {
+  background-color: white;
+  color: #0a0a0a;
+}
+
+.tk-hero.tk-is-white a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-white strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-white .tk-title {
+  color: #0a0a0a;
+}
+
+.tk-hero.tk-is-white .tk-subtitle {
+  color: rgba(10, 10, 10, 0.9);
+}
+
+.tk-hero.tk-is-white .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-white .tk-subtitle strong {
+  color: #0a0a0a;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-white .tk-navbar-menu {
+    background-color: white;
+  }
+}
+
+.tk-hero.tk-is-white .tk-navbar-item,
+.tk-hero.tk-is-white .tk-navbar-link {
+  color: rgba(10, 10, 10, 0.7);
+}
+
+.tk-hero.tk-is-white a.tk-navbar-item:hover, .tk-hero.tk-is-white a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-white .tk-navbar-link:hover,
+.tk-hero.tk-is-white .tk-navbar-link.tk-is-active {
+  background-color: #f2f2f2;
+  color: #0a0a0a;
+}
+
+.tk-hero.tk-is-white .tk-tabs a {
+  color: #0a0a0a;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-white .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-white .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-white .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-white .tk-tabs.tk-is-toggle a {
+  color: #0a0a0a;
+}
+
+.tk-hero.tk-is-white .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-white .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-white .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-white .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-white .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-white .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #0a0a0a;
+  border-color: #0a0a0a;
+  color: white;
+}
+
+.tk-hero.tk-is-white.tk-is-bold {
+  background-image: linear-gradient(141deg, #e6e6e6 0%, white 71%, white 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-white.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #e6e6e6 0%, white 71%, white 100%);
+  }
+}
+
+.tk-hero.tk-is-black {
+  background-color: #0a0a0a;
+  color: white;
+}
+
+.tk-hero.tk-is-black a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-black strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-black .tk-title {
+  color: white;
+}
+
+.tk-hero.tk-is-black .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-black .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-black .tk-subtitle strong {
+  color: white;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-black .tk-navbar-menu {
+    background-color: #0a0a0a;
+  }
+}
+
+.tk-hero.tk-is-black .tk-navbar-item,
+.tk-hero.tk-is-black .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-black a.tk-navbar-item:hover, .tk-hero.tk-is-black a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-black .tk-navbar-link:hover,
+.tk-hero.tk-is-black .tk-navbar-link.tk-is-active {
+  background-color: black;
+  color: white;
+}
+
+.tk-hero.tk-is-black .tk-tabs a {
+  color: white;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-black .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-black .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-black .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-black .tk-tabs.tk-is-toggle a {
+  color: white;
+}
+
+.tk-hero.tk-is-black .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-black .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-black .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-black .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-black .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-black .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: white;
+  border-color: white;
+  color: #0a0a0a;
+}
+
+.tk-hero.tk-is-black.tk-is-bold {
+  background-image: linear-gradient(141deg, black 0%, #0a0a0a 71%, #181616 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-black.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, black 0%, #0a0a0a 71%, #181616 100%);
+  }
+}
+
+.tk-hero.tk-is-light {
+  background-color: whitesmoke;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-light a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-light strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-light .tk-title {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-light .tk-subtitle {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.tk-hero.tk-is-light .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-light .tk-subtitle strong {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-light .tk-navbar-menu {
+    background-color: whitesmoke;
+  }
+}
+
+.tk-hero.tk-is-light .tk-navbar-item,
+.tk-hero.tk-is-light .tk-navbar-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-light a.tk-navbar-item:hover, .tk-hero.tk-is-light a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-light .tk-navbar-link:hover,
+.tk-hero.tk-is-light .tk-navbar-link.tk-is-active {
+  background-color: #e8e8e8;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-light .tk-tabs a {
+  color: rgba(0, 0, 0, 0.7);
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-light .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-light .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-light .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-light .tk-tabs.tk-is-toggle a {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-light .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-light .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-light .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-light .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-light .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-light .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(0, 0, 0, 0.7);
+  color: whitesmoke;
+}
+
+.tk-hero.tk-is-light.tk-is-bold {
+  background-image: linear-gradient(141deg, #dfd8d9 0%, whitesmoke 71%, white 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-light.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #dfd8d9 0%, whitesmoke 71%, white 100%);
+  }
+}
+
+.tk-hero.tk-is-dark {
+  background-color: #363636;
+  color: #fff;
+}
+
+.tk-hero.tk-is-dark a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-dark strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-dark .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-dark .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-dark .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-dark .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-dark .tk-navbar-menu {
+    background-color: #363636;
+  }
+}
+
+.tk-hero.tk-is-dark .tk-navbar-item,
+.tk-hero.tk-is-dark .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-dark a.tk-navbar-item:hover, .tk-hero.tk-is-dark a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-dark .tk-navbar-link:hover,
+.tk-hero.tk-is-dark .tk-navbar-link.tk-is-active {
+  background-color: #292929;
+  color: #fff;
+}
+
+.tk-hero.tk-is-dark .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-dark .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-dark .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-dark .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-dark .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-dark .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-dark .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-dark .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-dark .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-dark .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-dark .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #363636;
+}
+
+.tk-hero.tk-is-dark.tk-is-bold {
+  background-image: linear-gradient(141deg, #1f191a 0%, #363636 71%, #46403f 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-dark.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #1f191a 0%, #363636 71%, #46403f 100%);
+  }
+}
+
+.tk-hero.tk-is-primary {
+  background-color: #8A4D76;
+  color: #fff;
+}
+
+.tk-hero.tk-is-primary a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-primary strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-primary .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-primary .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-primary .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-primary .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-primary .tk-navbar-menu {
+    background-color: #8A4D76;
+  }
+}
+
+.tk-hero.tk-is-primary .tk-navbar-item,
+.tk-hero.tk-is-primary .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-primary a.tk-navbar-item:hover, .tk-hero.tk-is-primary a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-primary .tk-navbar-link:hover,
+.tk-hero.tk-is-primary .tk-navbar-link.tk-is-active {
+  background-color: #7a4468;
+  color: #fff;
+}
+
+.tk-hero.tk-is-primary .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-primary .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-primary .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-primary .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-primary .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-primary .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-primary .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-primary .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-primary .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-primary .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-primary .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #8A4D76;
+}
+
+.tk-hero.tk-is-primary.tk-is-bold {
+  background-image: linear-gradient(141deg, #713367 0%, #8A4D76 71%, #a05079 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-primary.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #713367 0%, #8A4D76 71%, #a05079 100%);
+  }
+}
+
+.tk-hero.tk-is-link {
+  background-color: #FA7C91;
+  color: #fff;
+}
+
+.tk-hero.tk-is-link a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-link strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-link .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-link .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-link .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-link .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-link .tk-navbar-menu {
+    background-color: #FA7C91;
+  }
+}
+
+.tk-hero.tk-is-link .tk-navbar-item,
+.tk-hero.tk-is-link .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-link a.tk-navbar-item:hover, .tk-hero.tk-is-link a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-link .tk-navbar-link:hover,
+.tk-hero.tk-is-link .tk-navbar-link.tk-is-active {
+  background-color: #f9637c;
+  color: #fff;
+}
+
+.tk-hero.tk-is-link .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-link .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-link .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-link .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-link .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-link .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-link .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-link .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-link .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-link .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-link .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #FA7C91;
+}
+
+.tk-hero.tk-is-link.tk-is-bold {
+  background-image: linear-gradient(141deg, #ff4482 0%, #FA7C91 71%, #fe9292 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-link.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #ff4482 0%, #FA7C91 71%, #fe9292 100%);
+  }
+}
+
+.tk-hero.tk-is-info {
+  background-color: #3298dc;
+  color: #fff;
+}
+
+.tk-hero.tk-is-info a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-info strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-info .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-info .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-info .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-info .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-info .tk-navbar-menu {
+    background-color: #3298dc;
+  }
+}
+
+.tk-hero.tk-is-info .tk-navbar-item,
+.tk-hero.tk-is-info .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-info a.tk-navbar-item:hover, .tk-hero.tk-is-info a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-info .tk-navbar-link:hover,
+.tk-hero.tk-is-info .tk-navbar-link.tk-is-active {
+  background-color: #238cd1;
+  color: #fff;
+}
+
+.tk-hero.tk-is-info .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-info .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-info .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-info .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-info .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-info .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-info .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-info .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-info .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-info .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-info .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #3298dc;
+}
+
+.tk-hero.tk-is-info.tk-is-bold {
+  background-image: linear-gradient(141deg, #159dc6 0%, #3298dc 71%, #4389e5 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-info.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #159dc6 0%, #3298dc 71%, #4389e5 100%);
+  }
+}
+
+.tk-hero.tk-is-success {
+  background-color: #48c774;
+  color: #fff;
+}
+
+.tk-hero.tk-is-success a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-success strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-success .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-success .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-success .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-success .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-success .tk-navbar-menu {
+    background-color: #48c774;
+  }
+}
+
+.tk-hero.tk-is-success .tk-navbar-item,
+.tk-hero.tk-is-success .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-success a.tk-navbar-item:hover, .tk-hero.tk-is-success a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-success .tk-navbar-link:hover,
+.tk-hero.tk-is-success .tk-navbar-link.tk-is-active {
+  background-color: #3abb67;
+  color: #fff;
+}
+
+.tk-hero.tk-is-success .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-success .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-success .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-success .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-success .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-success .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-success .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-success .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-success .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-success .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-success .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #48c774;
+}
+
+.tk-hero.tk-is-success.tk-is-bold {
+  background-image: linear-gradient(141deg, #29b342 0%, #48c774 71%, #56d296 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-success.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #29b342 0%, #48c774 71%, #56d296 100%);
+  }
+}
+
+.tk-hero.tk-is-warning {
+  background-color: #ffdd57;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-warning a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-warning strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-warning .tk-title {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-warning .tk-subtitle {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.tk-hero.tk-is-warning .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-warning .tk-subtitle strong {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-warning .tk-navbar-menu {
+    background-color: #ffdd57;
+  }
+}
+
+.tk-hero.tk-is-warning .tk-navbar-item,
+.tk-hero.tk-is-warning .tk-navbar-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-warning a.tk-navbar-item:hover, .tk-hero.tk-is-warning a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-warning .tk-navbar-link:hover,
+.tk-hero.tk-is-warning .tk-navbar-link.tk-is-active {
+  background-color: #ffd83d;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-warning .tk-tabs a {
+  color: rgba(0, 0, 0, 0.7);
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-warning .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-warning .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-warning .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-warning .tk-tabs.tk-is-toggle a {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tk-hero.tk-is-warning .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-warning .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-warning .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-warning .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-warning .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-warning .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(0, 0, 0, 0.7);
+  color: #ffdd57;
+}
+
+.tk-hero.tk-is-warning.tk-is-bold {
+  background-image: linear-gradient(141deg, #ffaf24 0%, #ffdd57 71%, #fffa70 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-warning.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #ffaf24 0%, #ffdd57 71%, #fffa70 100%);
+  }
+}
+
+.tk-hero.tk-is-danger {
+  background-color: #f14668;
+  color: #fff;
+}
+
+.tk-hero.tk-is-danger a:not(.tk-button):not(.tk-dropdown-item):not(.tk-tag):not(.tk-pagination-link.tk-is-current),
+.tk-hero.tk-is-danger strong {
+  color: inherit;
+}
+
+.tk-hero.tk-is-danger .tk-title {
+  color: #fff;
+}
+
+.tk-hero.tk-is-danger .tk-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tk-hero.tk-is-danger .tk-subtitle a:not(.tk-button),
+.tk-hero.tk-is-danger .tk-subtitle strong {
+  color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .tk-hero.tk-is-danger .tk-navbar-menu {
+    background-color: #f14668;
+  }
+}
+
+.tk-hero.tk-is-danger .tk-navbar-item,
+.tk-hero.tk-is-danger .tk-navbar-link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tk-hero.tk-is-danger a.tk-navbar-item:hover, .tk-hero.tk-is-danger a.tk-navbar-item.tk-is-active,
+.tk-hero.tk-is-danger .tk-navbar-link:hover,
+.tk-hero.tk-is-danger .tk-navbar-link.tk-is-active {
+  background-color: #ef2e55;
+  color: #fff;
+}
+
+.tk-hero.tk-is-danger .tk-tabs a {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.tk-hero.tk-is-danger .tk-tabs a:hover {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-danger .tk-tabs li.tk-is-active a {
+  opacity: 1;
+}
+
+.tk-hero.tk-is-danger .tk-tabs.tk-is-boxed a, .tk-hero.tk-is-danger .tk-tabs.tk-is-toggle a {
+  color: #fff;
+}
+
+.tk-hero.tk-is-danger .tk-tabs.tk-is-boxed a:hover, .tk-hero.tk-is-danger .tk-tabs.tk-is-toggle a:hover {
+  background-color: rgba(10, 10, 10, 0.1);
+}
+
+.tk-hero.tk-is-danger .tk-tabs.tk-is-boxed li.tk-is-active a, .tk-hero.tk-is-danger .tk-tabs.tk-is-boxed li.tk-is-active a:hover, .tk-hero.tk-is-danger .tk-tabs.tk-is-toggle li.tk-is-active a, .tk-hero.tk-is-danger .tk-tabs.tk-is-toggle li.tk-is-active a:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #f14668;
+}
+
+.tk-hero.tk-is-danger.tk-is-bold {
+  background-image: linear-gradient(141deg, #fa0a62 0%, #f14668 71%, #f7595f 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero.tk-is-danger.tk-is-bold .tk-navbar-menu {
+    background-image: linear-gradient(141deg, #fa0a62 0%, #f14668 71%, #f7595f 100%);
+  }
+}
+
+.tk-hero.tk-is-small .tk-hero-body {
+  padding: 1.5rem;
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-hero.tk-is-medium .tk-hero-body {
+    padding: 9rem 1.5rem;
+  }
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-hero.tk-is-large .tk-hero-body {
+    padding: 18rem 1.5rem;
+  }
+}
+
+.tk-hero.tk-is-halfheight .tk-hero-body, .tk-hero.tk-is-fullheight .tk-hero-body, .tk-hero.tk-is-fullheight-with-navbar .tk-hero-body {
+  align-items: center;
+  display: flex;
+}
+
+.tk-hero.tk-is-halfheight .tk-hero-body > .tk-container, .tk-hero.tk-is-fullheight .tk-hero-body > .tk-container, .tk-hero.tk-is-fullheight-with-navbar .tk-hero-body > .tk-container {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tk-hero.tk-is-halfheight {
+  min-height: 50vh;
+}
+
+.tk-hero.tk-is-fullheight {
+  min-height: 100vh;
+}
+
+.tk-hero-video {
+  overflow: hidden;
+}
+
+.tk-hero-video video {
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.tk-hero-video.tk-is-transparent {
+  opacity: 0.3;
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero-video {
+    display: none;
+  }
+}
+
+.tk-hero-buttons {
+  margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .tk-hero-buttons .tk-button {
+    display: flex;
+  }
+  .tk-hero-buttons .tk-button:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 769px), print {
+  .tk-hero-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  .tk-hero-buttons .tk-button:not(:last-child) {
+    margin-right: 1.5rem;
+  }
+}
+
+.tk-hero-head,
+.tk-hero-foot {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.tk-hero-body {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding: 3rem 1.5rem;
+}
+
+.tk-section {
+  padding: 3rem 1.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .tk-section.tk-is-medium {
+    padding: 9rem 1.5rem;
+  }
+  .tk-section.tk-is-large {
+    padding: 18rem 1.5rem;
+  }
+}

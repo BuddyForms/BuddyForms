@@ -19,7 +19,8 @@
   "minimum-stability": "dev",
   "require": {
   	"consolidation/robo": "^1.0.0",
-    "bamarni/composer-bin-plugin": "dev-master"
+    "bamarni/composer-bin-plugin": "dev-master",
+    "scssphp/scssphp": "^1.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.1",
