@@ -397,12 +397,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.24 - 18 Nov 2020 =
+= 2.5.25 - 18 Nov 2020 =
 * Fixed to show custom login links only for buddyforms.
 * Fixed a bug in forms using Elementor.
 * Improved compatibility issues with the Divi theme.
 * Improved Buddyforms Form Builder compatibility with TinyMCE plugins on admin Buddyforms pages.
-* New Submission by author filter added.
+* Added a new Submission by author filter.
 * Fixed the visual issue with time picker (date form field).
 * Fixed to Prevent Firefox from maintaining previously selected items to ensure all selected items get showing.
 * Fixed the Invalid name attribute in post_excerpt when is a hidden field.
@@ -423,8 +423,9 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed to set full-width button on mobile only
 * Added to hidden fields new name option.
 * Fixed issue related with multi-form per page use case.
-* Add a new filter to catch postmeta before get saved on the form builder page submission.
+* Added a new filter to catch postmeta before get saved on the form builder page submission.
 * Added a user satisfaction wizard to understand more the user and improve the product.
+* Updated Freemius library.
 
 = 2.5.22 - 14 Sept 2020 =
 * Fix a code in a wrong position for the BF settings header.
