@@ -14,7 +14,7 @@ class TkTrackApi {
 	 *
 	 * @var string
 	 */
-	protected $api_url_base = 'https://themekraft.com/wp-json/freev/';
+	protected $api_url_base = 'https://www.gfirem.com/wp-json/freev/';
 
 	/**
 	 * API resources
@@ -117,8 +117,10 @@ class TkTrackApi {
 			$request = new Request( $method, $url );
 		} else {
 			$request = new Request( $method, $url, array(
-				'Content-Type'   => 'application/json',
-				'Content-Length' => strlen( $request_body )
+				'timeout'         => 5, // Response timeout
+				'connect_timeout' => 5, // Connection timeout
+				'Content-Type'    => 'application/json',
+				'Content-Length'  => strlen( $request_body )
 			), $request_body );
 		}
 
