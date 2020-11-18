@@ -5,13 +5,14 @@
   "license": "GPLv2 or later",
   "homepage": "https://themekraft.com/buddyforms/",
   "version": "2.5.14",
-  "main": "gulpfile.js",
-  "dependencies": {
-    "@wordpress/scripts": "^7.0.1",
-    "gulp": "^3.9.1"
-  },
+  "dependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run css-build && npm run custom-prefix-buddyforms && npm run custom-prefix-cleancss-buddyforms && npm run custom-prefix-sourcemap-buddyforms",
+    "css-build": "node-sass --output-style expanded --no-source-map -r scss -o assets && npm run custom-prefix-buddyforms",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch",
+    "custom-prefix-buddyforms": "postcss assets/css/buddyforms.css --no-map --replace true --verbose",
+    "custom-prefix-cleancss-buddyforms": "cleancss -o assets/css/buddyforms.min.css assets/css/buddyforms.css"
   },
   "repository": "BuddyForms/BuddyForms.git",
   "engines": {
@@ -19,22 +20,14 @@
     "npm": ">=6.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.17.0",
-    "eslint-config-wordpress": "^2.0.0",
-    "eslint-plugin-jest": "^21.7.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-wordpress": "^0.1.0",
-    "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-deporder": "^1.1.0",
-    "gulp-eslint": "^4.0.2",
-    "gulp-strip-debug": "^3.0.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-uglifycss": "^1.1.0",
-    "gulp-util": "^3.0.8",
-    "install": "^0.12.0",
-    "npm": "^6.1.0"
+    "bulma": "^0.9.1",
+    "node-sass": "^5.0.0",
+    "postcss-prefixer": "^2.1.2",
+    "autoprefixer": "^9.7.6",
+    "bulma-checkradio": "^1.1.1",
+    "clean-css-cli": "^4.3.0",
+    "postcss": "^7.0.30",
+    "postcss-cli": "^7.1.1",
+    "rimraf": "^3.0.2"
   }
 }
