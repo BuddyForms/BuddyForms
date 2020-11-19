@@ -41,7 +41,7 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 		}
 	} catch ( Exception $ex ) {
 		error_log( 'buddyforms::' . $ex->getMessage(), E_USER_NOTICE );
-	} catch ( \GuzzleHttp\Exception\GuzzleException $ex ) {
+	} catch ( \tk\GuzzleHttp\Exception\GuzzleException $ex ) {
 		error_log( 'buddyforms::GuzzleException::' . $ex->getMessage(), E_USER_NOTICE );
 	}
 }

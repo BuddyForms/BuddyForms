@@ -1,7 +1,7 @@
 <?php
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use tk\GuzzleHttp\Client;
+use tk\GuzzleHttp\Psr7\Request;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
