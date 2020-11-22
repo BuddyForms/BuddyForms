@@ -3,14 +3,16 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
-
 $fa-font-path: "../../../assets/admin/fonts";
+
+//Import Font Awesome
+@import "../../../fontawesome/scss/fontawesome.scss";
+@import "../../../fontawesome/scss/solid.scss";
+
+
 
 $family-sans-serif: "Roboto", sans-serif;
 $input-shadow: none;
-
-//Import Font Awesome
-@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
 
 // Import only what you need from Bulma
 @import "../../../node_modules/bulma/bulma.sass";
