@@ -7,28 +7,96 @@
 		<ul>
 			<li class="tk-is-active">
 				<a>
-					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-image" aria-hidden="true"></i></span>
-					<span>Pictures</span>
+					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-list-alt" aria-hidden="true"></i></span>
+					<span><?php _e( 'Editor', 'buddyforms' ); ?></span>
 				</a>
 			</li>
 			<li>
 				<a>
-					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-music" aria-hidden="true"></i></span>
-					<span>Music</span>
+					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-tools" aria-hidden="true"></i></span>
+					<span><?php _e( 'Settings', 'buddyforms' ); ?></span>
 				</a>
 			</li>
 			<li>
 				<a>
-					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-film" aria-hidden="true"></i></span>
-					<span>Videos</span>
-				</a>
-			</li>
-			<li>
-				<a>
-					<span class="tk-icon tk-is-small"><i class="tk-far tk-fa-file-alt" aria-hidden="true"></i></span>
-					<span>Documents</span>
+					<span class="tk-icon tk-is-small"><i class="tk-fas tk-fa-palette" aria-hidden="true"></i></span>
+					<span><?php _e( 'Designer', 'buddyforms' ); ?></span>
 				</a>
 			</li>
 		</ul>
+	</div>
+	<div id="buddyforms_forms_builder" class="buddyforms_forms_builder">
+		<div class="fields_header">
+			<table class="tk-table tk-is-bordered tk-is-hoverable tk-is-fullwidth">
+				<thead>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<th class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></th>
+					<th class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></th>
+					<th class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></th>
+					<th class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></th>
+					<th class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				<tr>
+					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
+					<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
+					<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
+					<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
