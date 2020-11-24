@@ -15,13 +15,13 @@ function buddyforms_add_meta_boxes() {
 	}
 
 	//TODO this need to be re-design
-	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
-	}
+//	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
+//		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
+//	}
 
-	if ( is_array( $buddyform ) ) {
-		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
-	}
+//	if ( is_array( $buddyform ) ) {
+//		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
+//	}
 
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_editor', __( "BuddyForms Editor", 'buddyforms' ), 'buddyforms_metabox_form_editor', 'buddyforms', 'normal', 'high' );
@@ -35,6 +35,11 @@ function buddyforms_add_meta_boxes() {
 
 add_action( 'add_meta_boxes', 'buddyforms_add_meta_boxes' );
 
+function buddyforms_editor_title_nav_actions(){
+	include BUDDYFORMS_ADMIN_VIEW.'editor/header.php';
+}
+
+add_action('edit_form_before_permalink', 'buddyforms_editor_title_nav_actions');
 
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );

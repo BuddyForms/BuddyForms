@@ -27,7 +27,7 @@
 	</div>
 	<div id="buddyforms_forms_builder" class="buddyforms_forms_builder">
 		<div class="fields_header">
-			<table class="tk-table tk-is-bordered tk-is-hoverable tk-is-fullwidth">
+			<table class="tk-table tk-is-bordered tk-is-hoverable tk-is-fullwidth wp-list-table widefat fixed posts">
 				<thead>
 				<tr>
 					<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
@@ -97,6 +97,8 @@
 				</tr>
 				</tbody>
 			</table>
+			<ul id="sortable_buddyforms_elements" class="sortable sortable_">
+			</ul>
 		</div>
 	</div>
 </div>

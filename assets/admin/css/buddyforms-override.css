@@ -1,0 +1,8 @@
+.post-type-buddyforms #post-body-content #titlediv {
+  display: inline-block;
+  width: 100%;
+}
+
+.post-type-buddyforms #post-body-content #titlediv #titlewrap {
+  width: 50%;
+}
