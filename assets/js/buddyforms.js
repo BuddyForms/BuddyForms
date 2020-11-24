@@ -411,6 +411,10 @@ function BuddyForms() {
             ) {
                 return true;
             }
+            if(!value){
+                return true;
+            }
+
             var msjString = 'Please enter a valid URL.';
             var currentFieldSlug = jQuery(element).attr('name');
             if (currentFieldSlug && formSlug) {
@@ -1703,7 +1707,7 @@ function bf_trans(str) {
         const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
             return elm.msgid === str
         });
-    
+
         return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
     }
 
