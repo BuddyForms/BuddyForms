@@ -164,6 +164,11 @@
     background: #4db6ac;
 }
 
+.tk-feedback-backend-dialog-window-body #tk-feedback-alert section[data-id="load"] {
+    color: black;
+    background: white;
+}
+
 .tk-feedback-backend-dialog-window-body #tk-feedback-alert[data-state="load"] [data-id="load"],
 .tk-feedback-backend-dialog-window-body #tk-feedback-alert[data-state="user"] [data-id="user"],
 .tk-feedback-backend-dialog-window-body #tk-feedback-alert[data-state="server"] [data-id="server"],
