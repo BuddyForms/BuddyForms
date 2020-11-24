@@ -15,6 +15,8 @@ function buddyforms_marketing_init() {
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
 
+	add_action( 'admin_footer_text', 'passive_feedback_trigger', 1, 1 );
+
 	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
 	add_action( 'wp_ajax_buddyforms_user_satisfaction_ajax', 'buddyforms_user_satisfaction_ajax' );
 
@@ -125,6 +127,48 @@ function buddyforms_marketing_include_assets( $content, $base_content, $key = ''
 		'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
 		'key'     => $key,
 	) );
+}
+
+function passive_feedback_trigger($return) {
+	$current_screen = get_current_screen();
+
+	if ( ! empty( $current_screen->id ) && strpos($current_screen->id, 'buddyforms') !== false) {
+		wp_enqueue_style(  'buddyforms-passive-feedback-style', BUDDYFORMS_ASSETS . 'admin/css/passive-feedback.css', array(), BUDDYFORMS_VERSION );
+		wp_enqueue_script( 'buddyforms-html2canvas-script', BUDDYFORMS_ASSETS . 'admin/js/html2canvas.min.js', array(), BUDDYFORMS_VERSION );
+		wp_enqueue_script( 'buddyforms-passive-feedback-script', BUDDYFORMS_ASSETS . 'admin/js/passive-feedback.js', array(), BUDDYFORMS_VERSION );
+
+		?>
+			<div class="tk-feedback" data-html2canvas-ignore="true" hidden="hidden">
+				<div class="tk-feedback-frontend">
+					<button class="tk-feedback-frontend-button tk-always-active" data-tk-feedback-action="dialog:1"><svg height="24px" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"></path></svg></button>
+				</div>
+				<div class="tk-feedback-backend">
+					<div class="tk-feedback-backend-dialog" data-open="0">
+						<div class="tk-feedback-backend-dialog-back" data-tk-feedback-action="dialog:0"></div>
+						<div class="tk-feedback-backend-dialog-window">
+							<div class="tk-feedback-backend-dialog-window-top">Send feedback</div>
+							<div class="tk-feedback-backend-dialog-window-body">
+								<div id="tk-feedback-alert" data-state="">
+									<section data-id="ok">Sent successfully to support.</section>
+									<section data-id="load">Sending...</section>
+									<section data-id="user">Write something before sending.</section>
+									<section data-id="server">We couldn't send it, try later</section>
+								</div>
+								<textarea id="tk-feedback-text" name="tk-feedback-text" placeholder="Have feedback? We’d love to hear it, but please don’t share sensitive information. Have questions?"></textarea>
+								<div id="tk-feedback-screenshot"><img src="" alt="Screenshot"></div>
+							</div>
+							<div class="tk-feedback-backend-dialog-window-end">
+								<button data-tk-feedback-action="dialog:0">Cancel</button>
+								<button data-tk-feedback-action="submit:1">Send</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php
+	}
+
+	return $return;
 }
 
 function user_satisfaction_trigger() {
