@@ -254,10 +254,12 @@ function BuddyForms() {
             var hint_html = '<small class="buddyforms-password-hint">';
             if (strength && strength.feedback) {
                 if (strength.feedback.warning) {
-                    hint_html += 'Warning: ' + strength.feedback.warning + '<br/>';
+                    hint_html += bf_trans('Warning: ') + bf_trans(strength.feedback.warning) + '<br/>';
                 }
                 if (strength.feedback.suggestions && strength.feedback.suggestions.length > 0) {
-                    hint_html += 'Suggestions: ' + strength.feedback.suggestions.join("<br/>");
+                    hint_html += bf_trans('Suggestions: ') + strength.feedback.suggestions.reduce(function(acc, cur){
+                        return  acc + bf_trans(cur) + '<br/>';
+                    }, '');
                 }
             }
             hint_html += '</small>';
