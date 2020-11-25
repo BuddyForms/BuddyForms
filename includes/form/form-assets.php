@@ -282,7 +282,6 @@ class BuddyFormsAssets {
 		) {
 			wp_register_script( 'buddyforms-admin-js', BUDDYFORMS_ASSETS . 'admin/js/admin.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-slugifies-js', BUDDYFORMS_ASSETS . 'admin/js/slugifies.js', array(), BUDDYFORMS_VERSION );
-			//wp_register_script( 'buddyforms-admin-wizard-js', BUDDYFORMS_ASSETS . 'admin/js/wizard.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-deprecated-js', BUDDYFORMS_ASSETS . 'admin/js/deprecated.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-conditionals-js', BUDDYFORMS_ASSETS . 'admin/js/conditionals.js', array(), BUDDYFORMS_VERSION );
 			wp_register_script( 'buddyforms-admin-formbuilder-js', BUDDYFORMS_ASSETS . 'admin/js/formbuilder.js', array(), BUDDYFORMS_VERSION );
@@ -292,11 +291,9 @@ class BuddyFormsAssets {
 
 			wp_enqueue_script( 'buddyforms-admin-js' );
 			wp_enqueue_script( 'buddyforms-admin-slugifies-js' );
-			wp_enqueue_script( 'buddyforms-admin-wizard-js' );
 			wp_enqueue_script( 'buddyforms-admin-deprecated-js' );
 			wp_enqueue_script( 'buddyforms-admin-formbuilder-js' );
 			wp_enqueue_script( 'buddyforms-admin-conditionals-js' );
-			wp_enqueue_script( 'buddyforms-jquery-steps-js', BUDDYFORMS_ASSETS . 'resources/jquery-steps/jquery.steps.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-accordion' );
 			wp_enqueue_script( 'jquery-ui-dialog' );
