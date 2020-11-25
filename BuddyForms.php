@@ -298,7 +298,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			if ( is_admin() ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-wizard.php' );
+				//require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-wizard.php' );
 
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
