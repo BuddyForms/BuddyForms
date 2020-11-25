@@ -22,7 +22,7 @@ BuddyFormsBuilderHooks.addAction = function (tag, callback, priority) {
     }
     // If the tag doesn't exist, create it.
     BuddyFormsBuilderHooks.actions[tag] = BuddyFormsBuilderHooks.actions[tag] || [];
-    BuddyFormsBuilderHooks.actions[tag].push({priority: priority, callback: callback});
+    BuddyFormsBuilderHooks.actions[tag].push({ priority: priority, callback: callback });
 };
 
 /**
@@ -38,7 +38,7 @@ BuddyFormsBuilderHooks.addFilter = function (tag, callback, priority) {
     }
     // If the tag doesn't exist, create it.
     BuddyFormsBuilderHooks.filters[tag] = BuddyFormsBuilderHooks.filters[tag] || [];
-    BuddyFormsBuilderHooks.filters[tag].push({priority: priority, callback: callback});
+    BuddyFormsBuilderHooks.filters[tag].push({ priority: priority, callback: callback });
 };
 
 /**
@@ -123,7 +123,7 @@ BuddyFormsBuilderHooks.applyFilters = function (tag, value, options) {
     return value;
 };
 
-function BuddyFormsEditor(){
+function BuddyFormsEditor() {
     jQuery.fn.extend({
         insertShortCode: function (short) {
             return this.each(function (i) {
@@ -206,12 +206,54 @@ function BuddyFormsEditor(){
         }
     }
 
+    function tabs() {
+        const selectorButtons = '#buddyforms_form_editor [data-bf-editor-section-button]';
+        const selectorSections = '#buddyforms_form_editor [data-bf-editor-section]';
+
+        function runEvent() {
+            jQuery(document).on('click', selectorButtons, function (e) {
+                e.preventDefault();
+                setTab(jQuery(this)[0].dataset.bfEditorSectionButton);
+            });
+        }
+
+        function setTab(id) {
+            if (!jQuery(selectorSections + '[data-bf-editor-section="' + id + '"]').length > 0) {
+                id = jQuery(selectorSections)[0].dataset.bfEditorSection;
+            }
+
+            jQuery(selectorSections).attr('hidden', 'hidden');
+            jQuery(selectorButtons).removeClass('tk-is-active');
+
+            jQuery(selectorSections + '[data-bf-editor-section="' + id + '"]').removeAttr('hidden');
+            jQuery(selectorButtons + '[data-bf-editor-section-button="' + id + '"]').addClass('tk-is-active');
+        }
+
+        function constructor() {
+            let id = null;
+
+            if (jQuery(selectorButtons + '.tk-is-active')[0]) {
+                id = jQuery(selectorButtons + '.tk-is-active')[0].dataset.bfEditorSectionButton;
+            }
+
+            setTab(id);
+        }
+
+        return {
+            init: function () {
+                constructor();
+                runEvent();
+            }
+        };
+    }
+
     return {
         init: function () {
             var existBuilder = jQuery('.buddyforms-metabox');
             if (existBuilder && existBuilder.length > 0) {
                 jQuery(document).on('click', '.buddyforms-shortcodes-action', insertShortCodeEvent);
             }
+            tabs().init();
         },
     };
 }

@@ -17683,3 +17683,19 @@ a.tk-has-text-danger-dark:hover, a.tk-has-text-danger-dark:focus {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
+
+#buddyforms_form_editor {
+  padding-top: 24px;
+}
+
+#buddyforms_form_editor .inside {
+  display: contents;
+}
+
+#buddyforms_form_editor .postbox-header {
+  display: none;
+}
+
+#buddyforms_form_editor section[data-bf-editor-section][hidden] {
+  display: none !important;
+}
