@@ -145,6 +145,10 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 	$none_dependency_string = __( 'None', 'buddyforms' );
 	ob_start();
 
+	if ( empty( $is_wizard ) && isset( $_REQUEST['bf_template'] ) ) {
+		$is_wizard = true;
+	}
+
 	?>
 	<div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
 		<?php if ( ! $is_wizard ): ?>
