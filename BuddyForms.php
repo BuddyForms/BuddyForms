@@ -418,10 +418,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			}
 
 			update_option( 'buddyforms_preview_page', $page_id );
-
-			$options = get_option( 'buddyforms_forms', true );
-
-			update_option( 'buddyforms_first_path_after_install', is_array( $options ) && count( $options ) > 0 ? 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' : 'post-new.php?post_type=buddyforms&wizard=1' );
+			
+			update_option( 'buddyforms_first_path_after_install', 'post-new.php?post_type=buddyforms&bf_template=1' );
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
