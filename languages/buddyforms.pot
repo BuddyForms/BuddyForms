@@ -3603,3 +3603,90 @@ msgstr ""
 #. Author of the plugin/theme
 msgid "ThemeKraft"
 msgstr ""
+
+msgid "Use a few words, avoid common phrases"
+msgstr ""
+
+msgid "No need for symbols, digits, or uppercase letters"
+msgstr ""
+
+msgid "Add another word or two. Uncommon words are better."
+msgstr ""
+
+msgid "Straight rows of keys are easy to guess"
+msgstr ""
+
+msgid "Short keyboard patterns are easy to guess"
+msgstr ""
+
+msgid "Use a longer keyboard pattern with more turns"
+msgstr ""
+
+msgid "Repeats like \"aaa\" are easy to guess"
+msgstr ""
+
+msgid "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\""
+msgstr ""
+
+msgid "Avoid repeated words and characters"
+msgstr ""
+
+msgid "Sequences like abc or 6543 are easy to guess"
+msgstr ""
+
+msgid "Recent years are easy to guess"
+msgstr ""
+
+msgid "Avoid recent years"
+msgstr ""
+
+msgid "Avoid years that are associated with you"
+msgstr ""
+
+msgid "Dates are often easy to guess"
+msgstr ""
+
+msgid "Avoid dates and years that are associated with you"
+msgstr ""
+
+msgid "This is a top-10 common password"
+msgstr ""
+
+msgid "This is a top-100 common password"
+msgstr ""
+
+msgid "This is a very common password"
+msgstr ""
+
+msgid "This is similar to a commonly used password"
+msgstr ""
+
+msgid "A word by itself is easy to guess"
+msgstr ""
+
+msgid "Names and surnames by themselves are easy to guess"
+msgstr ""
+
+msgid "Common names and surnames are easy to guess"
+msgstr ""
+
+msgid "Capitalization doesn\\'t help very much"
+msgstr ""
+
+msgid "All-uppercase is almost as easy to guess as all-lowercase"
+msgstr ""
+
+msgid "Reversed words aren\\'t much harder to guess"
+msgstr ""
+
+msgid "Predictable substitutions like \\'@\\' instead of \\'a\\' don\\'t help very much"
+msgstr ""
+
+msgid "Avoid sequences"
+msgstr ""
+
+msgid "Warning: "
+msgstr ""
+
+msgid "Suggestions: "
+msgstr ""
