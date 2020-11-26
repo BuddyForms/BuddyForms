@@ -3,8 +3,8 @@
 /**
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
- * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.5.25
+ * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
+ * Version: 2.5.26-beta.1
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -43,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.5.25';
+		public $version = '2.5.26-beta.1';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -533,7 +533,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			}
 
 			update_option( 'buddyforms_preview_page', $page_id );
-			
+
 			update_option( 'buddyforms_first_path_after_install', 'post-new.php?post_type=buddyforms&bf_template=1' );
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
