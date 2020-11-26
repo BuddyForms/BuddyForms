@@ -84,5 +84,11 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
 
     #bf_hweb {
         display: none !important;
-    }
+	}
+
+	.bf-clearfix::after {
+		content: "";
+		clear: both;
+		display: table;
+	}
 </style>

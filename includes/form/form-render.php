@@ -143,7 +143,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	$form_html .= '</div>';
-	$form_html .= '<div class="form_wrapper">';
+	$form_html .= '<div class="form_wrapper clearfix">';
 
 	$bfdesign = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
 
@@ -221,7 +221,7 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
-	$form_class = 'standard-form buddyforms-active-form buddyforms-' . $form_slug . ' ';
+	$form_class = 'standard-form buddyforms-active-form buddyforms-' . $form_slug . ' bf-clearfix ';
 
 	if ( ! isset( $buddyforms[ $form_slug ]['local_storage'] ) ) {
 		$form_class .= ' bf-garlic';
