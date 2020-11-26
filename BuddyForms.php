@@ -192,6 +192,122 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'msgid' => 'Delete Permanently',
 						'msgstr' => __( 'Delete Permanently', 'buddyforms' )
 					),
+					array(
+						'msgid' => 'Use a few words, avoid common phrases',
+						'msgstr' => __( 'Use a few words, avoid common phrases', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'No need for symbols, digits, or uppercase letters',
+						'msgstr' => __( 'No need for symbols, digits, or uppercase letters', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Add another word or two. Uncommon words are better.',
+						'msgstr' => __( 'Add another word or two. Uncommon words are better.', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Straight rows of keys are easy to guess',
+						'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Short keyboard patterns are easy to guess',
+						'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Use a longer keyboard pattern with more turns',
+						'msgstr' => __( 'Use a longer keyboard pattern with more turns', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Repeats like "aaa" are easy to guess',
+						'msgstr' => __( 'Repeats like "aaa" are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"',
+						'msgstr' => __( 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Avoid repeated words and characters',
+						'msgstr' => __( 'Avoid repeated words and characters', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Sequences like abc or 6543 are easy to guess',
+						'msgstr' => __( 'Sequences like abc or 6543 are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Recent years are easy to guess',
+						'msgstr' => __( 'Recent years are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Avoid recent years',
+						'msgstr' => __( 'Avoid recent years', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Avoid years that are associated with you',
+						'msgstr' => __( 'Avoid years that are associated with you', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Dates are often easy to guess',
+						'msgstr' => __( 'Dates are often easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Avoid dates and years that are associated with you',
+						'msgstr' => __( 'Avoid dates and years that are associated with you', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'This is a top-10 common password',
+						'msgstr' => __( 'This is a top-10 common password', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'This is a top-100 common password',
+						'msgstr' => __( 'This is a top-100 common password', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'This is a very common password',
+						'msgstr' => __( 'This is a very common password', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'This is similar to a commonly used password',
+						'msgstr' => __( 'This is similar to a commonly used password', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'A word by itself is easy to guess',
+						'msgstr' => __( 'A word by itself is easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Names and surnames by themselves are easy to guess',
+						'msgstr' => __( 'Names and surnames by themselves are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Common names and surnames are easy to guess',
+						'msgstr' => __( 'Common names and surnames are easy to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Capitalization doesn\'t help very much',
+						'msgstr' => __( 'Capitalization doesn\'t help very much', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'All-uppercase is almost as easy to guess as all-lowercase',
+						'msgstr' => __( 'All-uppercase is almost as easy to guess as all-lowercase', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Reversed words aren\'t much harder to guess',
+						'msgstr' => __( 'Reversed words aren\'t much harder to guess', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much',
+						'msgstr' => __( 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Avoid sequences',
+						'msgstr' => __( 'Avoid sequences', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Warning: ',
+						'msgstr' => __( 'Warning: ', 'buddyforms' )
+					),
+					array(
+						'msgid' => 'Suggestions: ',
+						'msgstr' => __( 'Suggestions: ', 'buddyforms' )
+					),
 				)
 			) );
 		}
