@@ -167,14 +167,10 @@ function update_extra_profile_fields( $user_id ) {
  * @return bool|int
  */
 function buddyforms_update_user_meta( $user_id, $field_type, $field_slug ) {
-	$result = false;
-	// Check if the form element type starts with user_ as prefix. user_ is reserved by WordPress and handled separably
-	if ( substr( $field_type, 0, 5 ) != 'user_' && $field_type !== 'website' ) {
-		$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
-		$value  = isset( $_POST[ $slug ] ) ? $_POST[ $slug ] : '';
-		$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
-	}
 
+	$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
+	$value  = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : '';
+	$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
 	return $result;
 }
 
@@ -223,11 +219,10 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
 	if ( ! in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) ) {
 		return get_user_meta( $user_id, $slug, true );
 	} else {
-		$user  = get_userdata( $user_id );
 		$slug  = buddyforms_get_mapped_slug_from_user_meta( $slug );
 		$value = '';
-		if ( isset( $user->$slug ) ) {
-			$value = $user->$slug;
+		if ( get_user_meta( $user_id,$slug,true) ) {
+			$value = get_user_meta( $user_id,$slug,true);
 		}
 
 		return $value;
