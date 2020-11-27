@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.25
+Stable tag: 2.5.26-beta.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,16 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.26-beta.1 - 26 Nov 2020 =
+* Fixed duplicate Singular Name option on the Form Builder.
+* Fixed the Race Condition issue on Composer dependencies, now all the namespaces in our Composer dependencies are prefixed.
+* Add Portuguese translations with .mo and .po files provided by a customer.
+* Fixed the URL validation for required and non required Website field.
+* Fixed a CCS-issue by adding clearfix class on the form parent container to avoid containers without height.
+* Changed the redirection to the Form Wizard after enabling the plugin, now it will redirect to the Form Builder.
+* Removed several files and references related to the Form Wizard in the code, as a part of the progressive Form Wizard extinction.
+* Added localize strings (translatable strings) to the Suggestions and Warnings displayed on the Password field at the Front-end.
+
 = 2.5.25 - 18 Nov 2020 =
 * Fixed to show custom login links only for buddyforms.
 * Fixed a bug in forms using Elementor.
