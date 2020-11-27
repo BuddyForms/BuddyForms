@@ -402,6 +402,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the Race Condition issue on Composer dependencies, now all the namespaces in our Composer dependencies are prefixed.
 * Add Portuguese translations with .mo and .po files provided by a customer.
 * Fixed the URL validation for required and non required Website field.
+* Fixed Website field getting value from WordPress cache and not database.
 * Fixed a CCS-issue by adding clearfix class on the form parent container to avoid containers without height.
 * Changed the redirection to the Form Wizard after enabling the plugin, now it will redirect to the Form Builder.
 * Removed several files and references related to the Form Wizard in the code, as a part of the progressive Form Wizard extinction.
