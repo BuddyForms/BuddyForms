@@ -6077,8 +6077,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url("../../../assets/admin/fonts/fa-solid-900.eot");
-  src: url("../../../assets/admin/fonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../../../assets/admin/fonts/fa-solid-900.woff2") format("woff2"), url("../../../assets/admin/fonts/fa-solid-900.woff") format("woff"), url("../../../assets/admin/fonts/fa-solid-900.ttf") format("truetype"), url("../../../assets/admin/fonts/fa-solid-900.svg#fontawesome") format("svg");
+  src: url("../webfonts/fa-solid-900.eot");
+  src: url("../webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.woff") format("woff"), url("../webfonts/fa-solid-900.ttf") format("truetype"), url("../webfonts/fa-solid-900.svg#fontawesome") format("svg");
 }
 
 .tk-fa,
@@ -17682,20 +17682,4 @@ a.tk-has-text-danger-dark:hover, a.tk-has-text-danger-dark:focus {
 .tk-footer {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
-}
-
-#buddyforms_form_editor {
-  padding-top: 24px;
-}
-
-#buddyforms_form_editor .inside {
-  display: contents;
-}
-
-#buddyforms_form_editor .postbox-header {
-  display: none;
-}
-
-#buddyforms_form_editor section[data-bf-editor-section][hidden] {
-  display: none !important;
 }

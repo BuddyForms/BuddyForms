@@ -1,44 +1,73 @@
-<div class="tk-buddyforms-editor-nav">
-	<?php global $post;
-
-	if ( get_post_type( $post ) != 'buddyforms' ) {
-		return;
-	}
-
-	$buddyform               = get_post_meta( $post->ID, '_buddyforms_options', true );
-	$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : '';
-
-	$base = home_url();
-
-	$preview_page_id = get_option( 'buddyforms_preview_page', true );
-	?>
-	<div id="buddyforms-actions" class="misc-pub-section">
-		<?php if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-			<div id="frontend-actions">
-				<a class="button button-large bf_button_action" target="_blank"
-				   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
-						class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?>
+<div id="buddyforms_form_editor_header">
+	<div class="tk-editor-header-info tk-select">
+		<input type="text" name="post_title" placeholder="Add title" spellcheck="true" autocomplete="off" size="30">
+		<select data-header="select" name="bf_forms_selector">
+			<option value="this:form">THIS FORM</option>
+			<option value="audi">Audi</option>
+			<option value="volvo">Volvo</option>
+			<option value="mercedes">Mercedes</option>
+		</select>
+	</div>
+	<div class="tk-editor-header-actions">
+		<label class="tk-select">
+			<span>Form Type:</span>
+			<select data-header="select" name="bf_forms_type">
+				<optgroup label="Form Type">
+					<option value="audi">Audi</option>
+					<option value="a">A</option>
+					<option value="b">B</option>
+					<option value="c">C</option>
+				</optgroup>
+			</select>
+		</label>
+		<div class="tk-button tk-select">
+			<a href="#" class="tk-link">
+				<span class="tk-icon">
+					<i class="tk-fas tk-on-normal tk-fa-list-ul"></i>
+					<i class="tk-fas tk-on-hover  tk-fa-external-link-square-alt"></i>
+				</span>
+				<span class="tk-on-normal">Frontend Form</span>
+				<span class="tk-on-hover">Open Frontend</span>
+			</a>
+			<ul class="tk-menu">
+				<a href="#" class="tk-button is-fullwidth">
+					<span class="tk-icon">
+						<i class="tk-fas tk-fa-save"></i>
+					</span>
+					<span>123</span>
 				</a>
-			</div>
-		<?php } ?>
-		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
-			<div class="bf-tile actions">
-				<div id="frontend-actions">
-					<label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
-					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
-                <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
-				</div>
-			</div>
-		<?php }
-		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
-			<div class="bf-tile actions">
-				<div id="admin-actions">
-					<label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
-					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
-				</div>
-			</div>
-		<?php } ?>
-
-		<div class="clear"></div>
+				<a href="#" class="tk-button is-fullwidth">
+					<span class="tk-icon">
+						<i class="tk-fas tk-fa-save"></i>
+					</span>
+					<span>123</span>
+				</a>
+			</ul>
+		</div>
+		<div class="tk-button">
+			<span class="tk-icon">
+				<i class="tk-fas tk-on-normal tk-fa-list-ul"></i>
+				<i class="tk-fas tk-on-hover  tk-fa-external-link-square-alt"></i>
+			</span>
+			<span>Admin Submissions</span>
+		</div>
+		<div class="tk-button tk-is-info">
+			<span class="tk-icon">
+				<i class="tk-fas tk-on-normal tk-fa-eye"></i>
+				<i class="tk-fas tk-on-hover  tk-fa-external-link-square-alt"></i>
+			</span>
+			<span>Preview</span>
+		</div>
+		<div class="tk-button tk-is-danger">
+			<span class="tk-icon">
+				<i class="tk-fas tk-fa-trash-alt"></i>
+			</span>
+		</div>
+		<div class="tk-button tk-is-primary">
+			<span class="tk-icon">
+				<i class="tk-fas tk-fa-save"></i>
+			</span>
+			<span>Update</span>
+		</div>
 	</div>
 </div>
