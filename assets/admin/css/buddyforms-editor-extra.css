@@ -1,0 +1,251 @@
+/*
+====================================
+== DEFAULT_SECTION          START ==
+====================================
+*/
+
+/*
+====================================
+== DEFAULT_SECTION            END ==
+====================================
+*/
+
+/*
+====================================
+== Header                   START ==
+====================================
+*/
+
+#buddyforms_form_editor_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info {
+  width: 60%;
+  min-height: 40px;
+  overflow: hidden;
+  max-width: 400px;
+  position: relative;
+  border-radius: 3px;
+  background: white;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info select {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 0;
+  max-width: unset;
+  box-shadow: none;
+  background: none;
+  position: absolute;
+  border-radius: 3px;
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 0 !important;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: auto;
+  border: none;
+  display: block;
+  max-width: unset;
+  background: none;
+  box-shadow: none;
+  position: absolute;
+  border-radius: 3px;
+  padding: 0 0 0 15px;
+  box-sizing: border-box;
+  width: calc(100% - 45px) !important;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input.bf-ok,
+#buddyforms_form_editor_header .tk-editor-header-info input.bf-error {
+  border: none !important;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input:hover ~ select {
+  border-color: #b5b5b5;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input:focus ~ select {
+  border-color: #3273dc;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input.bf-ok ~ select {
+  border-color: #7ad03a;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-info input.bf-error ~ select {
+  border-color: #d02a21;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 40px;
+  margin-top: -10px;
+  position: relative;
+  border-radius: 3px;
+  margin-left: 7.5px;
+  padding-left: 7.5px;
+  flex-direction: row;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions > * {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions > *:last-child {
+  margin-right: 0;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions select {
+  display: block;
+  box-shadow: none;
+  min-height: unset;
+  background: white;
+  height: 100% !important;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions label > span {
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button {
+  height: 100%;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select {
+  position: relative;
+  padding-right: 2.5em;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select:hover {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select > .tk-menu {
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  z-index: 99;
+  display: none;
+  padding: 5px 0;
+  position: absolute;
+  background: white;
+  flex-direction: column;
+  border: 1px solid #b5b5b5;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select > .tk-menu .tk-button {
+  opacity: 0.8;
+  border: none;
+  background: none;
+  margin-left: -1px;
+  margin-right: -1px;
+  justify-content: left;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select > .tk-menu .tk-button:hover {
+  opacity: 1;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select > .tk-menu .tk-button:hover {
+  z-index: 1;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-button.tk-select:hover > .tk-menu {
+  display: flex;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button:hover .tk-on-normal,
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button .tk-on-hover {
+  display: none;
+}
+
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button .tk-on-normal,
+#buddyforms_form_editor_header .tk-editor-header-actions .tk-button:hover .tk-on-hover {
+  display: inline-flex;
+}
+
+@media (max-width: 1000px) {
+  #buddyforms_form_editor_header {
+    flex-direction: column;
+  }
+
+  #buddyforms_form_editor_header .tk-editor-header-info {
+    width: 100%;
+    max-width: unset;
+    margin-bottom: 15px;
+  }
+
+  #buddyforms_form_editor_header .tk-editor-header-actions {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  #buddyforms_form_editor_header .tk-editor-header-actions label > span {
+    display: none;
+  }
+}
+
+/*
+====================================
+== Header                     END ==
+====================================
+*/
+
+/*
+====================================
+== Editor                   START ==
+====================================
+*/
+
+#buddyforms_form_editor {
+  padding-top: 24px;
+}
+
+#buddyforms_form_editor .fields_header {
+  background: none;
+}
+
+#buddyforms_form_editor .inside {
+  display: contents;
+}
+
+#buddyforms_form_editor .postbox-header {
+  display: none;
+}
+
+#buddyforms_form_editor section[data-bf-editor-section][hidden] {
+  display: none !important;
+}
+
+/*
+====================================
+== Editor                     END ==
+====================================
+*/

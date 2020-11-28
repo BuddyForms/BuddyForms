@@ -241,6 +241,7 @@ class BuddyFormsAssets {
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style( 'buddyforms-override', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-override.css' );
 			wp_enqueue_style( 'buddyforms-admin-editor', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-editor.css' );
+			wp_enqueue_style( 'buddyforms-admin-editor-extra', BUDDYFORMS_ASSETS . 'admin/css/buddyforms-editor-extra.css' );
 		} else {
 			wp_enqueue_style( 'buddyforms-admin-post-metabox', BUDDYFORMS_ASSETS . 'admin/css/admin-post-metabox.css' );
 		}

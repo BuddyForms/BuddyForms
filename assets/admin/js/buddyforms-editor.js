@@ -206,6 +206,79 @@ function BuddyFormsEditor() {
         }
     }
 
+    function header() {
+        const headerId = '#buddyforms_form_editor_header';
+
+        function change() {
+            function activeForm(id) {
+                console.log('Changed to ➡️', id);
+            }
+
+            function formType(id) {
+                console.log('Changed to ➡️', id);
+            }
+
+            function frontend(id) {
+                console.log('Changed to ➡️', id);
+            }
+
+            return {
+                activeForm: function (id) {
+                    activeForm(id);
+                },
+                formType: function (id) {
+                    formType(id);
+                },
+                frontend: function (id) {
+                    frontend(id);
+                }
+            };
+        }
+
+        function runEvent() {
+            jQuery(document).on('change', headerId + ' select[data-header="select"][name]', function (e) {
+                e.preventDefault();
+
+                const selectName = jQuery(this)[0].name;
+                const selectVal = jQuery(this).val();
+
+                switch (selectName) {
+                    case 'bf_forms_selector': {
+                        change().activeForm(selectVal);
+                        break;
+                    }
+                    case 'bf_forms_type': {
+                        change().formType(selectVal);
+                        break;
+                    }
+                    case 'bf_forms_frontend': {
+                        change().frontend(selectVal);
+                        break;
+                    }
+                }
+            });
+        }
+
+        function constructor() {
+            const formTitle = jQuery('#titlediv #title[name="post_title"]');
+            const formId = jQuery('form input[name="post_ID"]').val();
+
+            jQuery('#post-body').removeClass('columns-2');
+
+            formTitle.remove();
+            jQuery(headerId + ' .tk-editor-header-info input[name="post_title"]').val(formTitle.val());
+            jQuery(headerId + ' .tk-editor-header-info select[name="bf_forms_selector"] option[value="this:form"]').html(formTitle.val());
+            jQuery(headerId + ' .tk-editor-header-info select[name="bf_forms_selector"] option[value="this:form"]').val(formId);
+        }
+
+        return {
+            init: function () {
+                constructor();
+                runEvent();
+            }
+        };
+    }
+
     function tabs() {
         const selectorButtons = '#buddyforms_form_editor [data-bf-editor-section-button]';
         const selectorSections = '#buddyforms_form_editor [data-bf-editor-section]';
@@ -253,6 +326,7 @@ function BuddyFormsEditor() {
             if (existBuilder && existBuilder.length > 0) {
                 jQuery(document).on('click', '.buddyforms-shortcodes-action', insertShortCodeEvent);
             }
+            header().init();
             tabs().init();
         },
     };
