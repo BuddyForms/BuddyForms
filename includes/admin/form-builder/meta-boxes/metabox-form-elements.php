@@ -33,12 +33,10 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	            <table class="wp-list-table widefat fixed posts">
 	                <thead>
 	                    <tr>
-	                        <th class="field_order">' . __( 'Field Order', 'buddyforms' ) . '</th>
-	                        <th class="field_label">' . __( 'Field Label', 'buddyforms' ) . '</th>
-	                        <th class="field_name">' . __( 'Field Slug', 'buddyforms' ) . '</th>
-	                        <th class="field_type">' . __( 'Field Type', 'buddyforms' ) . '</th>
-	                        <th class="field_type">' . __( 'Action', 'buddyforms' ) . '</th>
-	                        <th class="field_type">' . __( 'Layout', 'buddyforms' ) . '</th>
+	                        <th class="field_order">' . __( 'Order', 'buddyforms' ) . '</th>
+	                        <th class="field_label">' . __( 'Label', 'buddyforms' ) . '</th>
+	                        <th class="field_name">' . __( 'Slug', 'buddyforms' ) . '</th>
+	                        <th class="field_type">' . __( 'Type', 'buddyforms' ) . '</th>
 	                    </tr>
 	                </thead>
 	            </table>
