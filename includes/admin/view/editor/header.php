@@ -32,7 +32,7 @@ if ( ! $preview_btn_disabled ) {
 	<div class="tk-editor-header-info tk-select">
 		<input type="text" name="post_title" placeholder="Add title" spellcheck="true" autocomplete="off" size="30">
 		<select data-header="select" name="bf_forms_selector">
-			<option value=""></option>
+			<option value="this:form"></option>
 			<?php foreach ( $buddyforms as $form_slug => $form ) : ?>
 				<?php
 				$post = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
