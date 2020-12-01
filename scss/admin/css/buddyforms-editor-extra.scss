@@ -1,12 +1,16 @@
 /*
 ====================================
-== DEFAULT_SECTION          START ==
+== Global                   START ==
 ====================================
 */
 
+section[data-bf-editor-section][hidden] {
+  display: none !important;
+}
+
 /*
 ====================================
-== DEFAULT_SECTION            END ==
+== Global                     END ==
 ====================================
 */
 
@@ -231,14 +235,127 @@
   .postbox-header {
     display: none;
   }
-
-  section[data-bf-editor-section][hidden] {
-    display: none !important;
-  }
 }
 
 /*
 ====================================
 == Editor                     END ==
+====================================
+*/
+
+/*
+====================================
+== Add Element              START ==
+====================================
+*/
+
+#buddyforms_editor_add_element.tk-modal {
+  z-index: 99999;
+
+  .tk-modal-content {
+    max-width: 90%;
+    max-height: 80%;
+
+    .tk-title {
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    section {
+      margin: -5px;
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      flex-direction: row;
+    }
+
+    .bf-element {
+      $paddingX: 12px;
+      $paddingY: 24px;
+
+      margin: 5px;
+      height: auto;
+      position: relative;
+      display: inline-block;
+      padding: $paddingX $paddingY;
+      width: calc((100% / 4) - 10px);
+
+      @media (max-width: 700px) {
+        width: calc((100% / 2) - 10px);
+
+        @media (max-width: 500px) {
+          width: calc((100% / 1) - 10px);
+        }
+      }
+
+      &-alert {
+        margin: 0;
+        color: coral;
+        top: $paddingX;
+        right: $paddingX;
+        position: absolute;
+        border-radius: 3px;
+        background: white;
+
+        &[data-tooltip] {
+          &::after {
+            content: attr(data-tooltip);
+
+            opacity: 0;
+            z-index: 1;
+            right: -5px;
+            color: white;
+            font-size: 14px;
+            line-height: 32px;
+            border-radius: 3px;
+            position: absolute;
+            pointer-events: none;
+            padding: 0px 10px 0 10px;
+            background: rgba(black, .5);
+            border: 1px solid rgba(black, .25);
+
+            -webkit-transition: .1s;
+                    transition: .1s;
+            -webkit-transform: translateY(5px);
+                    transform: translateY(5px);
+            -webkit-backdrop-filter: blur(32px);
+                    backdrop-filter: blur(32px);
+          }
+
+          &:hover::after {
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+                    transform: translateY(0px);
+          }
+        }
+      }
+
+      &-icon {
+        $size: 64px;
+
+        margin: 0 0;
+        width: $size;
+        height: $size;
+      }
+
+      &-title {
+        font-weight: 600;
+      }
+
+      &-description {
+      }
+    }
+  }
+
+  .tk-modal-close {
+    z-index: 999;
+  }
+}
+
+/*
+====================================
+== Add Element                END ==
 ====================================
 */

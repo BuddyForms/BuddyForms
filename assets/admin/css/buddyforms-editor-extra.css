@@ -1,11 +1,15 @@
 /*
 ====================================
-== DEFAULT_SECTION          START ==
+== Global                   START ==
 ====================================
 */
+section[data-bf-editor-section][hidden] {
+  display: none !important;
+}
+
 /*
 ====================================
-== DEFAULT_SECTION            END ==
+== Global                     END ==
 ====================================
 */
 /*
@@ -224,12 +228,115 @@
   display: none;
 }
 
-#buddyforms_form_editor section[data-bf-editor-section][hidden] {
-  display: none !important;
+/*
+====================================
+== Editor                     END ==
+====================================
+*/
+/*
+====================================
+== Add Element              START ==
+====================================
+*/
+#buddyforms_editor_add_element.tk-modal {
+  z-index: 99999;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content {
+  max-width: 90%;
+  max-height: 80%;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .tk-title {
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content section {
+  margin: -5px;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  flex-direction: row;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element {
+  margin: 5px;
+  height: auto;
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  width: calc((100% / 4) - 10px);
+}
+
+@media (max-width: 700px) {
+  #buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element {
+    width: calc((100% / 2) - 10px);
+  }
+}
+
+@media (max-width: 700px) and (max-width: 500px) {
+  #buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element {
+    width: calc((100% / 1) - 10px);
+  }
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element-alert {
+  margin: 0;
+  color: coral;
+  top: 12px;
+  right: 12px;
+  position: absolute;
+  border-radius: 3px;
+  background: white;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element-alert[data-tooltip]::after {
+  content: attr(data-tooltip);
+  opacity: 0;
+  z-index: 1;
+  right: -5px;
+  color: white;
+  font-size: 14px;
+  line-height: 32px;
+  border-radius: 3px;
+  position: absolute;
+  pointer-events: none;
+  padding: 0px 10px 0 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  -webkit-transition: .1s;
+  transition: .1s;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(32px);
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element-alert[data-tooltip]:hover::after {
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element-icon {
+  margin: 0 0;
+  width: 64px;
+  height: 64px;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-content .bf-element-title {
+  font-weight: 600;
+}
+
+#buddyforms_editor_add_element.tk-modal .tk-modal-close {
+  z-index: 999;
 }
 
 /*
 ====================================
-== Editor                     END ==
+== Add Element                END ==
 ====================================
 */

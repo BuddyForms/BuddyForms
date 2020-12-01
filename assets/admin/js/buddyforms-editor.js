@@ -280,42 +280,154 @@ function BuddyFormsEditor() {
     }
 
     function tabs() {
-        const selectorButtons = '#buddyforms_form_editor [data-bf-editor-section-button]';
-        const selectorSections = '#buddyforms_form_editor [data-bf-editor-section]';
+        const selectorButtons = '[data-bf-editor-section-button]';
+        const selectorSections = '[data-bf-editor-section]';
+        const selectorGroup = '[data-bf-editor-section-group]';
 
         function runEvent() {
-            jQuery(document).on('click', selectorButtons, function (e) {
+            jQuery(document).on('click', selectorButtons + selectorGroup, function (e) {
                 e.preventDefault();
-                setTab(jQuery(this)[0].dataset.bfEditorSectionButton);
+                const id = jQuery(this)[0].dataset.bfEditorSectionButton;
+                const group = jQuery(this)[0].dataset.bfEditorSectionGroup;
+
+                setTab(id, group);
             });
         }
 
-        function setTab(id) {
-            if (!jQuery(selectorSections + '[data-bf-editor-section="' + id + '"]').length > 0) {
-                id = jQuery(selectorSections)[0].dataset.bfEditorSection;
+        function setTab(id, group) {
+            if (!id || !group || jQuery(selectorSections + '[data-bf-editor-section="' + id + '"]').length === 0) {
+                return false;
             }
 
-            jQuery(selectorSections).attr('hidden', 'hidden');
-            jQuery(selectorButtons).removeClass('tk-is-active');
+            jQuery(selectorSections + '[data-bf-editor-section-group="' + group + '"]').attr('hidden', 'hidden');
+            jQuery(selectorButtons + '[data-bf-editor-section-group="' + group + '"]').removeClass('tk-is-active');
 
-            jQuery(selectorSections + '[data-bf-editor-section="' + id + '"]').removeAttr('hidden');
-            jQuery(selectorButtons + '[data-bf-editor-section-button="' + id + '"]').addClass('tk-is-active');
+            jQuery(selectorSections + '[data-bf-editor-section-group="' + group + '"][data-bf-editor-section="' + id + '"]').removeAttr('hidden');
+            jQuery(selectorButtons + '[data-bf-editor-section-group="' + group + '"][data-bf-editor-section-button="' + id + '"]').addClass('tk-is-active');
         }
 
         function constructor() {
-            let id = null;
+            jQuery(jQuery(selectorButtons + '.tk-is-active')).map(function () {
+                const id = jQuery(this)[0].dataset.bfEditorSectionButton;
+                const group = jQuery(this)[0].dataset.bfEditorSectionGroup;
 
-            if (jQuery(selectorButtons + '.tk-is-active')[0]) {
-                id = jQuery(selectorButtons + '.tk-is-active')[0].dataset.bfEditorSectionButton;
-            }
-
-            setTab(id);
+                setTab(id, group);
+            });
         }
 
         return {
             init: function () {
                 constructor();
                 runEvent();
+            }
+        };
+    }
+
+    function modal() {
+        const tkModal = function (id) {
+            let res = '.tk-modal';
+
+            if (id !== 0) {
+                if (id) {
+                    res += '[data-modal-id="' + id + '"]';
+                } else {
+                    res += '[data-modal-id]';
+                }
+            }
+
+            return res;
+        };
+        const tkModalOn = 'tk-is-active';
+
+        function generateId(init) {
+            let res = '';
+            let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+            if (init) {
+                res = init + ':';
+            }
+
+            for (var i = 0; i < 16; i++) {
+                res += str.charAt(Math.floor(Math.random() * str.length));
+            }
+
+            return res;
+        }
+
+        function stateChange(id, act) {
+            const thisModal = jQuery(tkModal(id));
+
+            if (!thisModal.length) {
+                return false;
+            }
+
+            switch (act) {
+                case 0: {
+                    thisModal.removeClass(tkModalOn);
+                    break;
+                }
+
+                case 1: {
+                    thisModal.addClass(tkModalOn);
+                    break;
+                }
+
+                default: {
+                    if (thisModal.is('.' + tkModalOn)) {
+                        thisModal.removeClass(tkModalOn);
+                    } else {
+                        thisModal.addClass(tkModalOn);
+                    }
+                    break;
+                }
+            }
+
+            return true;
+        }
+
+        function constructor() {
+            jQuery(tkModal(0)).each(function () {
+                const id = generateId('TK-MODAL');
+
+                function setDataId(e) {
+                    jQuery(e).attr('data-modal-id', id);
+
+                    if (jQuery(e)[0].children.length > 0) {
+                        childrenEach(jQuery(e)[0].children);
+                    }
+                }
+
+                function childrenEach(e) {
+                    jQuery(e).map(function () {
+                        setDataId(jQuery(this));
+                    });
+                }
+
+                setDataId(jQuery(this));
+            });
+        }
+
+
+        function runEvent() {
+            jQuery(document).on('click', tkModal(), function (e) {
+                const modalId = jQuery(this)[0].dataset.modalId;
+
+                if (
+                    jQuery(e.target).is(tkModal() + ' .tk-modal-close') ||
+                    jQuery(e.target).is(tkModal() + ' .tk-modal-background')
+                ) {
+                    stateChange(modalId, 0);
+                }
+            });
+        }
+
+        return {
+            init: function () {
+                constructor();
+                runEvent();
+            },
+            state: function (id, act) {
+                stateChange(id, act);
             }
         };
     }
@@ -328,7 +440,11 @@ function BuddyFormsEditor() {
             }
             header().init();
             tabs().init();
+            modal().init();
         },
+        modalStateChange: function (id, act) {
+            modal().state(id, act);
+        }
     };
 }
 

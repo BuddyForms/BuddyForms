@@ -41,6 +41,12 @@ function buddyforms_editor_title_nav_actions(){
 
 add_action('edit_form_before_permalink', 'buddyforms_editor_title_nav_actions');
 
+function buddyforms_editor_add_element() {
+	include BUDDYFORMS_ADMIN_VIEW . 'editor/add-element.php';
+}
+
+add_action('edit_form_before_permalink', 'buddyforms_editor_add_element');
+
 add_filter( "get_user_option_meta-box-order_buddyforms", function () {
 	remove_all_actions( 'edit_form_advanced' );
 	remove_all_actions( 'edit_page_form' );
