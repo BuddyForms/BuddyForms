@@ -415,15 +415,6 @@ function buddyforms_metabox_form_setup() {
 
 	// Display all Form Elements in a nice Tab UI and List them in a Table
 	?>
-	<p>
-		<select id="bf-form-type-select" style="margin-left: 0 !important;" name="buddyforms_options[form_type]">
-			<optgroup label="Form Type">
-				<option <?php selected( $form_type, 'contact' ) ?> value="contact"><?php _e( 'Contact Form', 'buddyforms' ) ?></option>
-				<option <?php selected( $form_type, 'registration' ) ?> value="registration"><?php _e( 'Registration Form', 'buddyforms' ) ?></option>
-				<option <?php selected( $form_type, 'post' ) ?> value="post"><?php _e( 'Post Form', 'buddyforms' ) ?></option>
-			</optgroup>
-		</select>
-	</p>
 	<div class="tabbable buddyform-tabs-left">
 		<ul class="nav buddyform-nav-tabs buddyform-nav-pills">
 			<?php
