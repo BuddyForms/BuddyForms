@@ -211,7 +211,7 @@ function BuddyFormsEditor() {
 
         function change() {
             function activeForm(id) {
-                console.log('Changed to ➡️', id);
+                window.location = '/wp-admin/post.php?post='+id+'&action=edit';
             }
 
             function formType(id) {
