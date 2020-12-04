@@ -280,8 +280,8 @@ function BuddyFormsEditor() {
     }
 
     function tabs() {
-        const selectorButtons = '#buddyforms_form_editor [data-bf-editor-section-button]';
-        const selectorSections = '#buddyforms_form_editor [data-bf-editor-section]';
+        const selectorButtons = '#buddyforms_form_elements [data-bf-editor-section-button]';
+        const selectorSections = '#buddyforms_form_elements [data-bf-editor-section]';
 
         function runEvent() {
             jQuery(document).on('click', selectorButtons, function (e) {

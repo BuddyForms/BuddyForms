@@ -2,20 +2,7 @@
 /**
  * Editor Main meta-box container
  */
-function buddyforms_metabox_form_editor(){
-	global $post, $buddyform;
-
-	if ( $post->post_type != 'buddyforms' ) {
-		return;
-	}
-
-	if ( ! $buddyform ) {
-		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
-	}
-
-	// Generate the form slug from the post name
-	$form_slug = ( isset( $post->post_name ) ) ? $post->post_name : '';
-
+function buddyforms_metabox_form_editor($post){
 	include BUDDYFORMS_ADMIN_VIEW.'editor/editor-container.php';
 }
 
@@ -26,8 +13,18 @@ function buddyforms_metabox_form_editor(){
  * @param bool $buddyform
  */
 function buddyforms_form_editor_elements($post, $buddyform = false){
+	global $post, $buddyform;
+
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+
 	// Generate the form slug from the post name
 	$form_slug = ( isset( $post->post_name ) ) ? $post->post_name : '';
+
+	if ( ! $buddyform ) {
+		$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	}
 
 	// Create the form elements array
 	$form_setup = array();

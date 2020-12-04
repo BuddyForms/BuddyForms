@@ -6,7 +6,7 @@ if ( $post->post_type != 'buddyforms' ) {
 }
 
 if ( ! $buddyform ) {
-	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
+	$buddyform = get_post_meta( $post->ID, '_buddyforms_options', true );
 }
 
 $current_form_ID         = isset( $_REQUEST['bf_forms_selector'] ) ? $_REQUEST['bf_forms_selector'] : '';
@@ -35,12 +35,12 @@ if ( ! $preview_btn_disabled ) {
 			<option value="this:form"></option>
 			<?php foreach ( $buddyforms as $form_slug => $form ) : ?>
 				<?php
-				$post = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
-				if ( empty( $post ) ) {
+				$form_item = get_page_by_path( $form_slug, 'OBJECT', 'buddyforms' );
+				if ( empty( $form_item ) ) {
 					continue;
 				}
 				?>
-				<option value="<?php echo $post->ID ?>"><?php echo $form['name']; ?></option>
+				<option value="<?php echo $form_item->ID ?>"><?php echo $form['name']; ?></option>
 			<?php endforeach; ?>
 		</select>
 	</div>

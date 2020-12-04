@@ -208,23 +208,23 @@
 == Editor                   START ==
 ====================================
 */
-#buddyforms_form_editor {
+#buddyforms_form_elements {
   padding-top: 24px;
 }
 
-#buddyforms_form_editor .fields_header {
+#buddyforms_form_elements .fields_header {
   background: none;
 }
 
-#buddyforms_form_editor .inside {
+#buddyforms_form_elements .inside {
   display: contents;
 }
 
-#buddyforms_form_editor .postbox-header {
+#buddyforms_form_elements .postbox-header {
   display: none;
 }
 
-#buddyforms_form_editor section[data-bf-editor-section][hidden] {
+#buddyforms_form_elements section[data-bf-editor-section][hidden] {
   display: none !important;
 }
 
