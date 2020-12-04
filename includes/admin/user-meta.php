@@ -167,7 +167,6 @@ function update_extra_profile_fields( $user_id ) {
  * @return bool|int
  */
 function buddyforms_update_user_meta( $user_id, $field_type, $field_slug ) {
-
 	$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
 	$value  = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : '';
 	$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
@@ -219,10 +218,11 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
 	if ( ! in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) ) {
 		return get_user_meta( $user_id, $slug, true );
 	} else {
+		$user  = get_userdata( $user_id );
 		$slug  = buddyforms_get_mapped_slug_from_user_meta( $slug );
 		$value = '';
-		if ( get_user_meta( $user_id,$slug,true) ) {
-			$value = get_user_meta( $user_id,$slug,true);
+		if ( isset( $user->$slug ) ) {
+			$value = $user->$slug;
 		}
 
 		return $value;

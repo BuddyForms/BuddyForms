@@ -91,7 +91,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			if ( $action === 'edit' ) {
 				$customfield_val = get_post_meta( $post_id, $slug, true );
 			}
-			if ( empty( $customfield_val ) && is_user_logged_in() ) {
+			if ( in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) && is_user_logged_in() ) {
 				$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
 			}
 
