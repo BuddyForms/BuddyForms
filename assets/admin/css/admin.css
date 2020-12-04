@@ -1671,10 +1671,6 @@ table .element_field_table_sortable tbody {
     display: block;
 }
 
-#buddyforms_template_list_container {
-    display: none;
-}
-
 #buddyforms_template_header_container h3 > a {
     color: initial;
     text-decoration-style: solid;
@@ -1692,7 +1688,7 @@ img.buddyforms_template_arrow {
 #buddyforms_template_header_container {
     text-align: center;
     align-items: center;
-    display: flex;
+    display: none;
     justify-content: center;
 }
 
@@ -1713,6 +1709,7 @@ img.buddyforms_template_arrow {
 div#formbuilder-action-templates {
     width: 30%;
     float: left;
+    display: none;
 }
 
 /*

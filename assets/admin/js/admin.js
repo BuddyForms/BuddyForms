@@ -89,7 +89,7 @@ function buddyformsMakeFieldId() {
 }
 
 //
-// Autofill empty slug's fields 
+// Autofill empty slug's fields
 // or append hashes to duplicate ones
 //
 function buddyformAutoFillEmptyOrDuplicateSlugs() {
@@ -321,7 +321,6 @@ function load_formbuilder_template(template, completeCallBack) {
                 });
             },
             complete: function (jqXHR, textStatus) {
-                jQuery('#formbuilder-show-templates').hide();
                 if (typeof completeCallBack === 'function') {
                     completeCallBack(jqXHR, textStatus);
                 }
@@ -524,7 +523,7 @@ function bf_trans(str) {
         const localize_str = Object.values(buddyformsGlobal.localize.bf_trans).find(function(elm) {
             return elm.msgid === str
         });
-    
+
         return (typeof localize_str !== 'undefined') ? localize_str.msgstr : str;
     }
 
@@ -713,9 +712,20 @@ jQuery(document).ready(function (jQuery) {
 
     /**
      *
-     * @since 2.5.0
+     * @since 2.5.26
      */
-    jQuery(document).on('click', 'a.formbuilder-show-templates, #formbuilder-show-templates', function () {
+    jQuery(document).on('click', 'button#btn-compile-custom', function (event) {
+        event.preventDefault();
+        jQuery('#buddyforms_template_header_container').show('slow').css('display', 'flex');
+        jQuery('#formbuilder-action-templates').show('slow');
+        jQuery('#buddyforms_template_list_container').hide('fast');
+    });
+
+    /**
+     *
+     * @since 2.5.26
+     */
+    jQuery(document).on('click', '#formbuilder-show-templates', function () {
         jQuery('#buddyforms_template_header_container').hide('fast');
         jQuery('#buddyforms_template_list_container').show('slow');
         jQuery('#formbuilder-show-templates').hide();
