@@ -750,13 +750,12 @@ a.button.button-large.bf_button_action {
 }
 
 .buddyforms_forms_builder .fields_header {
-    border-bottom: 1px solid #e5e5e5;
     background: #f9f9f9;
     margin-top: -6px;
-    margin-right: -12px;
-    margin-left: -12px;
-    padding: 0 10px;
+    margin-right: 0;
+    margin-left: 0;
     margin-bottom: 6px;
+    padding: 0;
 }
 
 .buddyforms_forms_builder .fields_header thead th {
