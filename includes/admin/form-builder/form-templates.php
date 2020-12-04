@@ -45,9 +45,9 @@ function buddyforms_form_builder_register_templates() {
 	}
 
 	$templates                 = array();
+	$templates['post']         = $buddyforms_templates['post'];
 	$templates['contact']      = $buddyforms_templates['contact'];
 	$templates['registration'] = $buddyforms_templates['registration'];
-	$templates['post']         = $buddyforms_templates['post'];
 
 	return apply_filters( 'buddyforms_form_builder_templates', $templates );
 
@@ -151,24 +151,37 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 
 	?>
 	<div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
-		<?php if ( ! $is_wizard ): ?>
-			<div id="buddyforms_template_header_container">
-				<div id="buddyforms_template_header_container_h3">
-					<h3><a href="javascript:void(0);" class="formbuilder-show-templates">Choose a pre-configured Form</a> or start adding Field </h3>
-				</div>
-				<div id="buddyforms_template_arrow_container">
-					<img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
-				</div>
+		<div id="buddyforms_template_header_container">
+			<div id="buddyforms_template_header_container_h3">
+				<h3><?php _e( 'Start adding Fields to your Form.', 'buddyforms' ) ?></h3>
 			</div>
-		<?php endif; ?>
+			<div id="buddyforms_template_arrow_container">
+				<img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
+			</div>
+		</div>
 
 		<?php add_thickbox(); ?>
 
-		<div <?php echo ( ! $is_wizard ) ? 'id="buddyforms_template_list_container"' : '' ?>>
-			<h5><?php _e( 'Choose a pre-configured form template or start a new fields from the bottom.', 'buddyforms' ) ?></h5>
+		<div id="buddyforms_template_list_container">
+			<h5><?php _e( 'Choose a Form Template or build a custom Form. If you don\' find the template you need, drop us one <a href="mailto:support@themekraft.com">email to support@themekraft.com</a>.', 'buddyforms' ) ?></h5>
+
+			<div class="bf-3-tile bf-tile">
+				<h4 class="bf-tile-title"><?php _e( 'CUSTOM FORM', 'buddyforms' ) ?></h4>
+				<div class="xbf-col-50 bf-tile-desc-wrap">
+					<p class="bf-tile-desc"><?php _e( 'Select the field you want to use to build your form.', 'buddyforms' ) ?></p>
+				</div>
+				<div class="bf-tile-preview-wrap"></div>
+				<div id="template-custom">
+					<div class="bf-tile-desc-wrap"></div>
+					<button id="btn-compile-custom" data-type="" class="bf_form_template_custom button button-primary" onclick="">
+						<?php _e( 'Start Custom', 'buddyforms' ) ?>
+					</button>
+				</div>
+			</div>
+
 			<?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 
-				<h2><?php echo strtoupper( $sort_key ) ?> FORMS</h2>
+				<h2><?php echo strtoupper( $sort_key ) ?>&nbsp;<?php _e( 'FORMS', 'buddyforms' ) ?></h2>
 
 				<?php foreach ( $sort_item as $key => $template ) {
 
