@@ -89,15 +89,13 @@ if ( ! $preview_btn_disabled ) {
 					<span><?php _e( 'Admin Submissions', 'buddyforms' ) ?></span>
 				</a>
 			</div>
-			<div class="tk-button tk-is-info">
-				<a href="<?php echo esc_url( $preview_btn_cta ); ?>" target="_blank" class="tk-link">
-					<span class="tk-icon">
-						<i class="tk-fas tk-on-normal tk-fa-eye"></i>
-						<i class="tk-fas tk-on-hover  tk-fa-external-link-square-alt"></i>
-					</span>
-					<span><?php _e( 'Preview', 'buddyforms' ) ?></span>
-				</a>
-			</div>
+			<a class="tk-button tk-is-info" href="<?php echo esc_url( $preview_btn_cta ); ?>" target="_blank">
+				<span class="tk-icon">
+					<i class="tk-fas tk-on-normal tk-fa-eye"></i>
+					<i class="tk-fas tk-on-hover  tk-fa-external-link-square-alt"></i>
+				</span>
+				<span><?php _e( 'Preview', 'buddyforms' ) ?></span>
+			</a>
 		<?php endif; ?>
 		<div class="tk-button tk-is-danger">
 			<span class="tk-icon">

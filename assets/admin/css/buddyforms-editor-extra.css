@@ -24,7 +24,7 @@
   width: 60%;
   min-height: 40px;
   overflow: hidden;
-  max-width: 400px;
+  max-width: 40%;
   position: relative;
   border-radius: 3px;
   background: white;
@@ -150,6 +150,7 @@
 #buddyforms_form_editor_header .tk-editor-header-actions .tk-button.tk-select > .tk-menu .tk-button {
   opacity: 0.8;
   border: none;
+  cursor: pointer;
   background: none;
   margin-left: -1px;
   margin-right: -1px;
@@ -180,7 +181,7 @@
   display: inline-flex;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1800px) {
   #buddyforms_form_editor_header {
     flex-direction: column;
   }
@@ -192,9 +193,6 @@
   #buddyforms_form_editor_header .tk-editor-header-actions {
     margin-left: 0;
     padding-left: 0;
-  }
-  #buddyforms_form_editor_header .tk-editor-header-actions label > span {
-    display: none;
   }
 }
 
