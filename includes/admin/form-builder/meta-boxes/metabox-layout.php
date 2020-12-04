@@ -481,7 +481,7 @@ function buddyforms_layout_screen( $option_name = "buddyforms_options" ) {
 								$field->render();
 							}
 						} ?>
-                        <table class="wp-list-table widefat posts striped fixed">
+                        <table class="wp-list-table widefat posts fixed">
                             <tbody>
 							<?php foreach ( $fields as $field_key => $field ) {
 

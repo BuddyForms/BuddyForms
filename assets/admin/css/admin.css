@@ -730,6 +730,26 @@ a.button.button-large.bf_button_action {
     border: none;
 }
 
+.buddyforms-metabox .inside .tab-content table.widefat {
+    border: none;
+}
+
+.buddyforms-metabox .inside .tab-content table.widefat tbody > tr:hover {
+    background: rgba(0, 0, 0, .03);
+}
+
+.buddyforms-metabox .inside .tab-content table.widefat tbody > tr:not(:first-child) > * {
+    border-top: 1px solid rgba(0, 0, 0, .15);
+}
+
+.buddyforms-metabox .inside .tab-content table.widefat tbody > tr > * > p:empty {
+    display: none;
+}
+
+.buddyforms_forms_builder .accordion-inner .ui-widget-content .ui-state-active > * {
+    color: #000000;
+}
+
 .buddyforms_forms_builder .fields_header {
     border-bottom: 1px solid #e5e5e5;
     background: #f9f9f9;
@@ -737,6 +757,7 @@ a.button.button-large.bf_button_action {
     margin-right: -12px;
     margin-left: -12px;
     padding: 0 10px;
+    margin-bottom: 6px;
 }
 
 .buddyforms_forms_builder .fields_header thead th {
@@ -1749,6 +1770,18 @@ div#formbuilder-action-templates {
     cursor: pointer;
 }
 
+.buddyforms_forms_builder table td.field_layout.tk-editor-field-item-layout,
+.buddyforms_forms_builder .fields_header thead th.field_layout {
+    width: 17%;
+}
+
+.buddyforms_forms_builder table td.field_type.tk-editor-field-item-type,
+.buddyforms_forms_builder .fields_header thead th.field_type {
+    width: 20%;
+}
+
+.buddyforms_forms_builder .fields_header thead th.field_order,
+.buddyforms_forms_builder table td.field_order.tk-editor-field-item-order,
 #buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container td.field_order {
     width: 10%;
 }
@@ -1834,7 +1867,6 @@ div#formbuilder-action-templates {
 html .buddyforms_forms_builder .ui-button.ui-state-disabled:hover,
 html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     border-bottom: 1px solid #c5c5c5;
-    background: #f6f6f6;
     font-weight: normal;
     color: #454545;
 }
@@ -1870,8 +1902,29 @@ html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     color: initial;
 }
 
+.buddyforms-metabox .ui-state-active,
+.buddyforms-metabox .ui-state-active > *,
+.buddyforms-metabox .ui-widget-content .ui-state-active,
+.buddyforms-metabox .ui-widget-content .ui-state-active > *,
+.buddyforms-metabox .ui-widget-header .ui-state-active,
+.buddyforms-metabox .ui-widget-header .ui-state-active > * {
+    text-decoration: none;
+    border-right-color: transparent !important;
+}
+
 .buddyforms-metabox .ui-state-default, .buddyforms-metabox .ui-widget-content .ui-state-default, .buddyforms-metabox .ui-widget-header .ui-state-default {
     border: unset;
+}
+
+.buddyforms-metabox .ui-state-default,
+.buddyforms-metabox .ui-state-default *,
+.buddyforms-metabox .ui-widget-content .ui-state-default,
+.buddyforms-metabox .ui-widget-content .ui-state-default *,
+.buddyforms-metabox .ui-widget-header .ui-state-default,
+.buddyforms-metabox .ui-widget-header .ui-state-default *
+{
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .post-type-buddyforms .postbox-header .handle-actions {

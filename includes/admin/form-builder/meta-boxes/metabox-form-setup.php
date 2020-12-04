@@ -457,7 +457,7 @@ function buddyforms_metabox_form_setup() {
 								$field->render();
 							}
 						} ?>
-						<table class="wp-list-table widefat posts striped fixed">
+						<table class="wp-list-table widefat posts fixed">
 							<tbody>
 							<?php foreach ( $fields as $field_key => $field ) {
 
