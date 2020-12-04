@@ -1769,6 +1769,18 @@ div#formbuilder-action-templates {
     cursor: pointer;
 }
 
+.buddyforms_forms_builder table td.field_layout.tk-editor-field-item-layout,
+.buddyforms_forms_builder .fields_header thead th.field_layout {
+    width: 17%;
+}
+
+.buddyforms_forms_builder table td.field_type.tk-editor-field-item-type,
+.buddyforms_forms_builder .fields_header thead th.field_type {
+    width: 20%;
+}
+
+.buddyforms_forms_builder .fields_header thead th.field_order,
+.buddyforms_forms_builder table td.field_order.tk-editor-field-item-order,
 #buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container td.field_order {
     width: 10%;
 }

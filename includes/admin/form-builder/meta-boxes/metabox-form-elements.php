@@ -37,6 +37,7 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	                        <th class="field_label">' . __( 'Label', 'buddyforms' ) . '</th>
 	                        <th class="field_name">' . __( 'Slug', 'buddyforms' ) . '</th>
 	                        <th class="field_type">' . __( 'Type', 'buddyforms' ) . '</th>
+	                        <th class="field_layout">' . __( 'Layout', 'buddyforms' ) . '</th>
 	                    </tr>
 	                </thead>
 	            </table>

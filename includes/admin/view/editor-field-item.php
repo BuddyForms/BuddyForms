@@ -1,5 +1,7 @@
 <?php
 //Leaven empty tag to let automation add the path disclosure line
+
+$layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layout']['cords'][ $field_id ] : '1';
 ?>
 <li id="field_<?php echo $field_id ?>" class="bf_list_item <?php echo $field_id ?> bf_<?php echo sanitize_title( $field_type ) ?>" data-field_id="<?php echo $field_id ?> ">
 
@@ -54,6 +56,16 @@
 							</div>
 						</td>
 						<td class="field_type tk-editor-field-item-type"><?php echo $field_type ?></td>
+						<td class="field_layout tk-editor-field-item-layout">
+							<select class="" name="buddyforms_options[layout][cords][<?php echo $field_id ?>]">
+								<option <?php selected( $layout, '1' ); ?> value="1"><?php _e( 'Full Width', 'buddyforms' ) ?></option>
+								<option <?php selected( $layout, '2' ); ?> value="2">1/2</option>
+								<option <?php selected( $layout, '3' ); ?> value="3">1/3</option>
+								<option <?php selected( $layout, '4' ); ?> value="4">1/4</option>
+								<option <?php selected( $layout, '5' ); ?> value="5">2/3</option>
+								<option <?php selected( $layout, '6' ); ?> value="6">3/4</option>
+							</select>
+						</td>
 					</tr>
 					</tbody>
 				</table>

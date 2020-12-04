@@ -1534,19 +1534,6 @@ JS;
 	$custom_class                            = isset( $customfield['custom_class'] ) ? stripcslashes( $customfield['custom_class'] ) : '';
 	$form_fields['advanced']['custom_class'] = new Element_Textbox( '<b>' . __( 'Add custom class to the form element', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][custom_class]", array( 'value' => $custom_class ) );
 
-	$field_layout      = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layout']['cords'][ $field_id ] : '1';
-	$layout_html = sprintf( '<select class="" name="buddyforms_options[layout][cords][%s]"><option %s value="1">%s</option><option %s value="2">%s</option><option %s  value="3">%s</option><option %s  value="4">%s</option><option %s  value="5">%s</option><option %s  value="6">%s</option></select>',
-		$field_id,
-		selected( $field_layout, '1', false ), __( 'Full Width', 'buddyforms' ),
-		selected( $field_layout, '2', false ), __( '1/2', 'buddyforms' ),
-		selected( $field_layout, '3', false ), __( '1/3', 'buddyforms' ),
-		selected( $field_layout, '4', false ), __( '1/4', 'buddyforms' ),
-		selected( $field_layout, '5', false ), __( '2/3', 'buddyforms' ),
-		selected( $field_layout, '6', false ), __( '3/4', 'buddyforms' )
-	);
-
-	$form_fields['design']['layout'] = new Element_HTML( $layout_html );
-
 	$form_fields = apply_filters( 'buddyforms_formbuilder_fields_options', $form_fields, $field_type, $field_id, $form_slug, $customfield );
 
 
