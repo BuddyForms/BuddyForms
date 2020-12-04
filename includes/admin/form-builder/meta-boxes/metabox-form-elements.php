@@ -48,7 +48,6 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	// Start the form element sortable list
 	$form_setup[] = new Element_HTML( '<ul id="sortable_buddyforms_elements" class="sortable sortable_' . $form_slug . '">' );
 
-	$has_fields = false;
 	if ( ! empty( $buddyform['form_fields'] ) && is_array( $buddyform['form_fields'] ) ) {
 
 		// Loop all form elements
@@ -79,7 +78,6 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 				$form_setup[] = new Element_HTML( buddyforms_display_form_element( $args ) );
 			}
 		}
-		$has_fields = true;
 	} else {
 		$form_setup[] = new Element_HTML( buddyforms_form_builder_templates() );
 	}
@@ -87,14 +85,10 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	// End the sortable form elements list
 	$form_setup[] = new Element_HTML( '</ul>' );
 
-	$select_a_template_button = ( ! $has_fields ) ? '<input type="button" name="formbuilder-show-templates" id="formbuilder-show-templates" class="button button-primary button-large" value="' . __( 'Select a Template', 'buddyforms' ) . '">' : '';
 	// Metabox footer for the form elements select
 	$form_setup[] = new Element_HTML( '
 		<div id="formbuilder-actions-wrap">
 			<div class="formbuilder-actions-select-wrap">
-				<div id="formbuilder-action-templates">
-					' . $select_a_template_button . '
-				</div>
 				<div id="formbuilder-action-add">
 					<span class="formbuilder-spinner spinner"></span>
 					<input type="button" name="formbuilder-add-element" id="formbuilder-add-element" class="button button-primary button-large" value="' . __( '+ Add Field', 'buddyforms' ) . '">
