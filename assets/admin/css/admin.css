@@ -742,6 +742,10 @@ a.button.button-large.bf_button_action {
     display: none;
 }
 
+.buddyforms_forms_builder .accordion-inner .ui-widget-content .ui-state-active > * {
+    color: #000000;
+}
+
 .buddyforms_forms_builder .fields_header {
     border-bottom: 1px solid #e5e5e5;
     background: #f9f9f9;
@@ -1850,7 +1854,6 @@ div#formbuilder-action-templates {
 html .buddyforms_forms_builder .ui-button.ui-state-disabled:hover,
 html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     border-bottom: 1px solid #c5c5c5;
-    background: #f6f6f6;
     font-weight: normal;
     color: #454545;
 }
@@ -1884,6 +1887,16 @@ html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     background: unset;
     font-weight: normal;
     color: initial;
+}
+
+.buddyforms-metabox .ui-state-active,
+.buddyforms-metabox .ui-state-active > *,
+.buddyforms-metabox .ui-widget-content .ui-state-active,
+.buddyforms-metabox .ui-widget-content .ui-state-active > *,
+.buddyforms-metabox .ui-widget-header .ui-state-active,
+.buddyforms-metabox .ui-widget-header .ui-state-active > * {
+    text-decoration: none;
+    box-shadow: none !important;
 }
 
 .buddyforms-metabox .ui-state-default, .buddyforms-metabox .ui-widget-content .ui-state-default, .buddyforms-metabox .ui-widget-header .ui-state-default {
