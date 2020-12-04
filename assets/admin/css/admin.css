@@ -730,10 +730,12 @@ a.button.button-large.bf_button_action {
     border: none;
 }
 
+.buddyforms-metabox .accordion-inner table.widefat tbody > tr:hover,
 .buddyforms_forms_builder .accordion-inner table.widefat tbody > tr:hover {
     background: rgba(0, 0, 0, .03);
 }
 
+.buddyforms-metabox .accordion-inner table.widefat tbody > tr:not(:first-child) > *,
 .buddyforms_forms_builder .accordion-inner table.widefat tbody > tr:not(:first-child) > * {
     border-top: 1px solid rgba(0, 0, 0, .15);
 }

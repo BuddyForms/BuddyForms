@@ -47,7 +47,7 @@
         </tbody>
     </table>
 
-    <table class="wp-list-table widefat posts striped">
+    <table class="wp-list-table widefat posts ">
         <tbody>
         <tr>
             <td>

@@ -1621,9 +1621,9 @@ function buddyforms_form_element_gdpr( $form_fields, $args ) {
  * @param string $field_id
  * @param string $striped
  */
-function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = 'striped' ) {
+function buddyforms_display_field_group_table( $form_fields, $field_id = 'global', $striped = '' ) {
 	?>
-	<table class="wp-list-table widefat posts fixed <?php echo $striped ?>">
+	<table class="wp-list-table widefat posts fixed">
 		<tbody>
 		<?php
 		if ( isset( $form_fields ) ) {

@@ -117,7 +117,7 @@ $layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layo
 								<div class="tab-pane <?php echo $class_active ?>"
 								     id="<?php echo $key . '-' . $field_type . '-' . $field_id ?>">
 									<div class="buddyforms_accordion_general">
-										<?php buddyforms_display_field_group_table( $form_field, $field_id, '' ) ?>
+										<?php buddyforms_display_field_group_table( $form_field, $field_id ) ?>
 									</div>
 								</div>
 								<?php
