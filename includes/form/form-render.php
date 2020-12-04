@@ -68,7 +68,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	if ( ! empty( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] == 'registration'
-	     || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit'
+	     || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' && ! is_user_logged_in()
 	) {
 		$user_can_edit = true;
 	}
