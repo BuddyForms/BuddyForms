@@ -25,8 +25,8 @@ function buddyforms_add_meta_boxes() {
 
 	// Add the FormBuilder and the Form Setup Metabox
 	add_meta_box( 'buddyforms_form_editor', __( "BuddyForms Editor", 'buddyforms' ), 'buddyforms_metabox_form_editor', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+//	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
+//	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
 //	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views

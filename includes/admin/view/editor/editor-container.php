@@ -28,91 +28,16 @@
 
 
 	<section data-bf-editor-section="1" hidden="hidden">
-		<div id="buddyforms_forms_builder" class="buddyforms_forms_builder">
-			<div class="fields_header">
-				<table class="tk-table tk-is-bordered tk-is-hoverable tk-is-fullwidth wp-list-table widefat fixed posts">
-					<thead>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<th class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></th>
-						<th class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></th>
-						<th class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></th>
-						<th class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></th>
-						<th class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					<tr>
-						<th class="field_order"><?php _e( 'Order', 'buddyforms' ); ?></th>
-						<td class="field_label"><?php _e( 'Label', 'buddyforms' ); ?></td>
-						<td class="field_name"><?php _e( 'Slug', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Type', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Action', 'buddyforms' ); ?></td>
-						<td class="field_type"><?php _e( 'Layout', 'buddyforms' ); ?></td>
-					</tr>
-					</tbody>
-				</table>
-				<ul id="sortable_buddyforms_elements" class="sortable sortable_">
-				</ul>
-			</div>
-		</div>
+		<?php buddyforms_form_editor_elements( $post ); ?>
 	</section>
 
 
 	<section data-bf-editor-section="2" hidden="hidden">
-
+		<?php buddyforms_metabox_form_setup(); ?>
 	</section>
 
 
 	<section data-bf-editor-section="3" hidden="hidden">
-
+		<?php buddyforms_metabox_form_designer(); ?>
 	</section>
 </div>
