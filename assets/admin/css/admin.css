@@ -730,6 +730,18 @@ a.button.button-large.bf_button_action {
     border: none;
 }
 
+.buddyforms_forms_builder .accordion-inner table.widefat tbody > tr:hover {
+    background: rgba(0, 0, 0, .03);
+}
+
+.buddyforms_forms_builder .accordion-inner table.widefat tbody > tr:not(:first-child) > * {
+    border-top: 1px solid rgba(0, 0, 0, .15);
+}
+
+.buddyforms_forms_builder .accordion-inner table.widefat tbody > tr > * > p:empty {
+    display: none;
+}
+
 .buddyforms_forms_builder .fields_header {
     border-bottom: 1px solid #e5e5e5;
     background: #f9f9f9;
@@ -737,6 +749,7 @@ a.button.button-large.bf_button_action {
     margin-right: -12px;
     margin-left: -12px;
     padding: 0 10px;
+    margin-bottom: 6px;
 }
 
 .buddyforms_forms_builder .fields_header thead th {
