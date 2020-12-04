@@ -733,15 +733,15 @@ a.button.button-large.bf_button_action {
     border: none;
 }
 
-.buddyforms-metabox .inside .tab-content table.widefat tbody > tr:hover {
+.buddyforms-metabox .inside .tab-content table.widefat > tbody > tr:hover {
     background: rgba(0, 0, 0, .03);
 }
 
-.buddyforms-metabox .inside .tab-content table.widefat tbody > tr:not(:first-child) > * {
+.buddyforms-metabox .inside .tab-content table.widefat > tbody > tr:not(:first-child) > * {
     border-top: 1px solid rgba(0, 0, 0, .15);
 }
 
-.buddyforms-metabox .inside .tab-content table.widefat tbody > tr > * > p:empty {
+.buddyforms-metabox .inside .tab-content table.widefat > tbody > tr > * > p:empty {
     display: none;
 }
 
