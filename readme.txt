@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.26-beta.1
+Stable tag: 2.5.26
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,7 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.26-beta.1 - 26 Nov 2020 =
+= 2.5.26 - 7 Dec 2020 =
 * Fixed duplicate Singular Name option on the Form Builder.
 * Fixed the Race Condition issue on Composer dependencies, now all the namespaces in our Composer dependencies are prefixed.
 * Add Portuguese translations with .mo and .po files provided by a customer.
@@ -407,6 +407,15 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Changed the redirection to the Form Wizard after enabling the plugin, now it will redirect to the Form Builder.
 * Removed several files and references related to the Form Wizard in the code, as a part of the progressive Form Wizard extinction.
 * Added localize strings (translatable strings) to the Suggestions and Warnings displayed on the Password field at the Front-end.
+* Updated the fields output.
+* Fixed default data for the users fields.
+* Removed the add template button from the metabox.
+* Fixed issue related to creation permission. Users without creation permission can't create entries.
+* Added border and hover style on the Form Builder options.
+* Fixed tabs style on the Form Builder.
+* Updated the "Add a Form" process, it was improved to show first the template list.
+* Removed the stripe for the options on the Form Builder.
+* Added border to all tables and tabs outline.
 
 = 2.5.25 - 18 Nov 2020 =
 * Fixed to show custom login links only for buddyforms.
