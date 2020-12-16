@@ -521,7 +521,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				$preview_post = array(
 					'post_title'   => $title,
 					'post_content' => __( 'This is a preview of how this form will appear on your website', 'buddyforms' ),
-					'post_status'  => 'draft',
+					'post_status'  => 'publish',
 					'post_type'    => 'page',
 					'post_name'    => sanitize_title( 'BuddyForms Preview Page' )
 				);
