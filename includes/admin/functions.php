@@ -237,10 +237,24 @@ function buddyforms_unauthorized_shortcodes_field_type( $form_slug, $element_nam
 }
 
 /**
- * Clean up external TinyMCE plugins 
+ * Clean up external TinyMCE plugins
  * to avoid errors on BuddyForms pages.
  */
 add_filter( 'mce_external_plugins', 'buddyforms_remove_mce_external_plugins', 999 );
 function buddyforms_remove_mce_external_plugins( $plugins ) {
-	return ( is_admin() && get_post_type() !== 'buddyforms' ) ? $plugins : array(); 
+	return ( is_admin() && get_post_type() !== 'buddyforms' ) ? $plugins : array();
+}
+
+add_filter( 'display_post_states', 'buddyforms_add_display_post_states', 999, 2 );
+function buddyforms_add_display_post_states(  $post_states, $post ) {
+
+	if ( $post->ID === (int) get_option( 'buddyforms_preview_page' ) ) {
+		$post_states['buddyforms-preview-page'] = __( 'BuddyForms Preview Page', 'woocommerce' );
+	}
+
+	if ( $post->ID === (int) get_option( 'buddyforms_submissions_page' ) ) {
+		$post_states['buddyforms-submissions-page'] = __( 'BuddyForms Submissions Page', 'woocommerce' );
+	}
+
+	return $post_states;
 }
