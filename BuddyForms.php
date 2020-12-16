@@ -534,6 +534,26 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			update_option( 'buddyforms_preview_page', $page_id );
 
+			$title 		      = apply_filters( 'buddyforms_submissions_page_title', __( 'BuddyForms Submissions Page', 'buddyforms' ) );
+			$submissions_page = get_page_by_title( $title );
+			if ( ! $submissions_page ) {
+				// Create submissions page object
+				$preview_post = array(
+					'post_title'   => $title,
+					'post_content' => __( 'This is the default page use like endpoint to the page submissions', 'buddyforms' ),
+					'post_status'  => 'publish',
+					'post_type'    => 'page',
+					'post_name'    => sanitize_title( 'BuddyForms Submissions Page' )
+				);
+
+				// Insert the page into the database
+				$page_id = wp_insert_post( $preview_post );
+			} else {
+				$page_id = $submissions_page->ID;
+			}
+
+			update_option( 'buddyforms_submissions_page', $page_id );
+
 			update_option( 'buddyforms_first_path_after_install', 'post-new.php?post_type=buddyforms&bf_template=1' );
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
@@ -555,11 +575,13 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since  2.0
 		 */
 		function plugin_deactivation() {
-			$buddyforms_preview_page = get_option( 'buddyforms_preview_page', true );
-
-			wp_delete_post( $buddyforms_preview_page, true );
-
+			$buddyforms_page = get_option( 'buddyforms_preview_page', true );
+			wp_delete_post( $buddyforms_page, true );
 			delete_option( 'buddyforms_preview_page' );
+
+			$buddyforms_page = get_option( 'buddyforms_submissions_page', true );
+			wp_delete_post( $buddyforms_page, true );
+			delete_option( 'buddyforms_submissions_page' );
 		}
 
 		public static function error_log( $message ) {
