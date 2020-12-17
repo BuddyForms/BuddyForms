@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.26
+Stable tag: 2.5.27
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.27 - 17 Dec 2020 =
+* Add a default page for submissions after enable the plugin.
+* Add labels to the default pages of BuddyForms to improve the user experience.
+* Fixed JS issue related to the feature image and upload form element not working properly.	d5c7c075	Guillermo Figueroa Mesa (gfirem) <gfirem@gmail.com>	Dec 16, 2020 at 11:59 PM
+* Added Passive Feedback.
+
 = 2.5.26 - 7 Dec 2020 =
 * Fixed duplicate Singular Name option on the Form Builder.
 * Fixed the Race Condition issue on Composer dependencies, now all the namespaces in our Composer dependencies are prefixed.
