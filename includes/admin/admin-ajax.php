@@ -228,7 +228,7 @@ function buddyforms_passive_feedback_ajax() {
 			error_log( 'buddyforms::passive_feedback', E_USER_NOTICE );
 		}
 
-		wp_schedule_single_event( strtotime( '+1 minutes' ), 'buddyforms_passive_feedback_attachment_delete', array( $attach_id ) );
+		wp_schedule_single_event( strtotime( '+1 day' ), 'buddyforms_passive_feedback_attachment_delete', array( $attach_id ) );
 	} catch ( \GuzzleHttp\Exception\GuzzleException $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	} catch ( \tk\GuzzleHttp\Exception\GuzzleException $ex ) {
