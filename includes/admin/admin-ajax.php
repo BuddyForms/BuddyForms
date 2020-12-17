@@ -355,3 +355,18 @@ function buddyforms_marketing_reset_permissions() {
 }
 
 add_action( 'wp_ajax_buddyforms_marketing_reset_permissions', 'buddyforms_marketing_reset_permissions' );
+
+function buddyforms_custom_form_template_tracking() {
+	if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		die();
+	}
+	if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
+		die();
+	}
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+		die();
+	}
+	buddyforms_track( 'selected-form-template', array( 'template' => 'custom', 'type' => 'custom' ) );
+}
+
+add_action( 'wp_ajax_buddyforms_custom_form_template', 'buddyforms_custom_form_template_tracking' );
