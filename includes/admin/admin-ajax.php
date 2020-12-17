@@ -150,10 +150,72 @@ function buddyforms_passive_feedback_ajax() {
 			wp_send_json_error();
 		}
 
+		$encoded_image = $_POST['passive_feedback_screenshot'];
+		$upload_dir    = wp_upload_dir();
+		$upload_path   = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ) . DIRECTORY_SEPARATOR;
+
+		$img             = str_replace( ' ', '+', str_replace( 'data:image/png;base64,', '', $encoded_image ) );
+		$decoded         = base64_decode( $img );
+		$filename        = 'passive_feedback.png';
+		$hashed_filename = md5( $filename . microtime() ) . '_' . $filename;
+		$image_upload    = file_put_contents( $upload_path . $hashed_filename, $decoded );
+
+		//HANDLE UPLOADED FILE
+		if ( ! function_exists( 'wp_handle_sideload' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		}
+
+		// Without that I'm getting a debug error!?
+		if ( ! function_exists( 'wp_get_current_user' ) ) {
+			require_once( ABSPATH . 'wp-includes/pluggable.php' );
+		}
+		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		}
+		$file             = array();
+		$file['error']    = '';
+		$file['tmp_name'] = $upload_path . $hashed_filename;
+		$file['name']     = $hashed_filename;
+		$file['type']     = 'image/jpeg';
+		$file['size']     = filesize( $upload_path . $hashed_filename );
+		// upload file to server
+		// use $file instead of $image_upload
+		$file_return = wp_handle_sideload( $file, array( 'test_form' => false ) );
+		$filename    = $file_return['file'];
+		$attachment  = array(
+			'post_mime_type' => $file_return['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+			'guid'           => $upload_dir['url'] . '/' . basename( $filename )
+		);
+
+		$attach_id = wp_insert_attachment( $attachment, $filename );
+		/// generate thumbnails of newly uploaded image
+		$attachment_meta = wp_generate_attachment_metadata( $attach_id, $filename );
+		wp_update_attachment_metadata( $attach_id, $attachment_meta );
+
+		$attach_thumb_url = wp_get_attachment_image_url( $attach_id );
+		$attach_full_url  = wp_get_attachment_image_url( $attach_id, 'full' );
+
+		$freemius_user_id    = 0;
+		$freemius_user_email = '';
+		$buddyforms_freemius = buddyforms_core_fs();
+		if ( ! empty( $buddyforms_freemius ) ) {
+			$user = $buddyforms_freemius->get_user();
+			if ( ! empty( $user ) ) {
+				$freemius_user_id    = $user->id;
+				$freemius_user_email = $user->email;
+			}
+		}
+
 		$data = array(
-			'passive_feedback_text'       => $_POST['passive_feedback_text'],
-			'passive_feedback_screenshot' => $_POST['passive_feedback_screenshot'],
-			'passive_feedback_url'        => $_POST['passive_feedback_url'],
+			'passive_feedback_text'             => $_POST['passive_feedback_text'],
+			'passive_feedback_screenshot_thumb' => $attach_thumb_url,
+			'passive_feedback_screenshot_full'  => $attach_full_url,
+			'passive_feedback_url'              => $_POST['passive_feedback_url'],
+			'passive_feedback_fuid'             => $freemius_user_id,
+			'passive_feedback_email'            => $freemius_user_email,
 		);
 
 		$args = array( 'data' => base64_encode( json_encode( $data ) . '|' . wp_nonce_tick() ) );
@@ -166,6 +228,7 @@ function buddyforms_passive_feedback_ajax() {
 			error_log( 'buddyforms::passive_feedback', E_USER_NOTICE );
 		}
 
+		wp_schedule_single_event( strtotime( '+1 minutes' ), 'buddyforms_passive_feedback_attachment_delete', array( $attach_id ) );
 	} catch ( \GuzzleHttp\Exception\GuzzleException $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	} catch ( \tk\GuzzleHttp\Exception\GuzzleException $ex ) {
