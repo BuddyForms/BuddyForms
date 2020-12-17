@@ -15,6 +15,12 @@ class TkTrackApi {
 	 * @var string
 	 */
 	protected $api_url_base = 'https://www.gfirem.com/wp-json/freev/';
+	/**
+	 * Api Key
+	 *
+	 * @var string
+	 */
+	protected $api_key = 'qRJu0fpC0BhPgCEuw2BCoMWZfLXfUdgL';
 
 	/**
 	 * API resources
@@ -61,7 +67,15 @@ class TkTrackApi {
 	public function __construct( $debug = false ) {
 
 		$this->debug  = $debug;
-		$this->client = new Client();
+		$this->client = new Client( array( 'verify', false ) );
+
+		if ( defined( 'BUDDYFORMS_API_URL' ) ) {
+			$this->api_url_base = BUDDYFORMS_API_URL;
+		}
+
+		if ( defined( 'BUDDYFORMS_API_KEY' ) ) {
+			$this->api_key = BUDDYFORMS_API_KEY;
+		}
 
 		if ( $debug ) {
 			$this->debug_logger = new Logger( 'tk-debug' );
@@ -77,6 +91,7 @@ class TkTrackApi {
 	 *
 	 * @return array|bool|mixed|object
 	 * @throws \GuzzleHttp\Exception\GuzzleException
+	 * @throws \tk\GuzzleHttp\Exception\GuzzleException
 	 */
 	public function track( $options, $product = 'buddyforms' ) {
 		if ( ! is_array( $options ) ) {
@@ -89,12 +104,32 @@ class TkTrackApi {
 	}
 
 	/**
+	 * Send a passive event
+	 *
+	 * @param $options
+	 * @param string $product
+	 *
+	 * @return array|bool|mixed|object
+	 * @throws \GuzzleHttp\Exception\GuzzleException
+	 * @throws \tk\GuzzleHttp\Exception\GuzzleException
+	 */
+	public function passive_feedback( $args ) {
+		if ( ! is_array( $args ) ) {
+			throw new \InvalidArgumentException;
+		}
+
+		$request = $this->api_version . sprintf( '/passive_feedback/%s', $this->api_key );
+
+		return $this->make_request( $request, 'POST', $args );
+	}
+
+	/**
 	 * @param $endpoint
 	 * @param $method
 	 * @param array $args
 	 *
 	 * @return array|bool|mixed|object
-	 * @throws \GuzzleHttp\Exception\GuzzleException
+	 * @throws \tk\GuzzleHttp\Exception\GuzzleException
 	 */
 	private function make_request( $endpoint, $method, $args = array() ) {
 

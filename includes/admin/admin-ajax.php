@@ -130,6 +130,8 @@ function buddyforms_url_builder() {
 
 /**
  * Ajax to process the passive
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function buddyforms_passive_feedback_ajax() {
 	try {
@@ -144,39 +146,36 @@ function buddyforms_passive_feedback_ajax() {
 			wp_send_json_error();
 		}
 
-		if ( ! isset( $_POST['passive_feedback_text'] ) || empty( $_POST['passive_feedback_screenshot'] ) || empty( $_POST['passive_feedback_url'] ) ) {
+		if ( empty( $_POST['passive_feedback_text'] ) || empty( $_POST['passive_feedback_screenshot'] ) || empty( $_POST['passive_feedback_url'] ) ) {
 			wp_send_json_error();
 		}
 
-		$request_body = json_encode( array(
+		$data = array(
 			'passive_feedback_text'       => $_POST['passive_feedback_text'],
 			'passive_feedback_screenshot' => $_POST['passive_feedback_screenshot'],
 			'passive_feedback_url'        => $_POST['passive_feedback_url'],
-		) );
+		);
 
-		$client  = new tk\GuzzleHttp\Client();
-		$request = new tk\GuzzleHttp\Psr7\Request( 'POST', 'example.com/passive-feedback', array(
-			'timeout'         => 5,
-			'connect_timeout' => 5,
-			'Content-Type'    => 'application/json',
-			'Content-Length'  => strlen( $request_body )
-		), $request_body );
+		$args = array( 'data' => base64_encode( json_encode( $data ) . '|' . wp_nonce_tick() ) );
 
-		$response      = $client->send( $request );
-		$response_body = json_decode( $response->getBody()->getContents() );
+		$free_track_api = new TkTrackApi();
+		$res            = $free_track_api->passive_feedback( $args );
 
-		if ( empty( $response_body ) ) {
-			wp_send_json_error();
+		//Check for success
+		if ( empty( $res ) || empty( $res->success ) ) {
+			error_log( 'buddyforms::passive_feedback', E_USER_NOTICE );
 		}
 
-		wp_send_json( '' );
-
+	} catch ( \GuzzleHttp\Exception\GuzzleException $ex ) {
+		wp_send_json_error( $ex->getMessage() );
 	} catch ( \tk\GuzzleHttp\Exception\GuzzleException $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	} catch ( Exception $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	}
 }
+
+add_action( 'wp_ajax_buddyforms_passive_feedback_ajax', 'buddyforms_passive_feedback_ajax' );
 
 /**
  * Ajax callback to process the user satisfaction.
