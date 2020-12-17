@@ -171,6 +171,51 @@ function passive_feedback_trigger($return) {
 	return $return;
 }
 
+function buddyforms_passive_feedback_ajax() {
+	try {
+
+		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			wp_send_json_error();
+		}
+		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
+			wp_send_json_error();
+		}
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+			wp_send_json_error();
+		}
+
+		if ( ! isset( $_POST['passive_feedback_text'] ) || empty( $_POST['passive_feedback_screenshot'] ) || empty( $_POST['passive_feedback_url'] ) ) {
+			wp_send_json_error();
+		}
+
+		$request_body = json_encode( array(
+			'passive_feedback_text'       => $_POST['passive_feedback_text'],
+			'passive_feedback_screenshot' => $_POST['passive_feedback_screenshot'],
+			'passive_feedback_url'		  => $_POST['passive_feedback_url'],
+		) );
+
+		$client  = new tk\GuzzleHttp\Client();
+		$request = new tk\GuzzleHttp\Psr7\Request( 'POST', 'example.com/passive-feedback', array(
+			'timeout'         => 5,
+			'connect_timeout' => 5,
+			'Content-Type'    => 'application/json',
+			'Content-Length'  => strlen( $request_body )
+		), $request_body );
+
+		$response = $client->send( $request );
+		$response_body = json_decode( $response->getBody()->getContents() );
+
+		if ( empty( $response_body ) ) {
+			wp_send_json_error();
+		}
+
+		wp_send_json( '' );
+
+	} catch ( Exception $ex ) {
+		wp_send_json_error( $ex->getMessage() );
+	}
+}
+
 function user_satisfaction_trigger() {
 	global $buddyforms;
 

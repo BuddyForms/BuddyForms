@@ -57,13 +57,14 @@ function tkFeedbackPassive() {
 
                         const sendForm = jQuery.ajax({
                             type: 'post',
-                            url: '/',
+                            url: buddyformsGlobal.admin_url,
                             data: {
-                                text: feedbackText,
-                                screenshot: feedbackScreen
+                                'action'                      : 'buddyforms_passive_feedback_ajax',
+                                'nonce'                       : buddyformsGlobal.ajaxnonce,
+                                'passive_feedback_text'       : feedbackText,
+                                'passive_feedback_screenshot' : feedbackScreen,
+                                'passive_feedback_url'        : window.location.href
                             }
-                        }, function () {
-                            console.log('send');
                         });
 
                         sendForm.always(function () {
