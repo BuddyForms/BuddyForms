@@ -748,7 +748,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						if ( $labels_layout !== 'inline' ) {
 							$box .= sprintf( '<label for="%s">%s</label>', $customfield['name'], $label_name );
 						}
-						$classes = 'dropzone  featured-image-uploader dz-clickable';
+						$classes = 'dropzone featured-image-uploader dz-clickable';
 						if ( $has_error ) {
 							$classes .= ' error';
 						}

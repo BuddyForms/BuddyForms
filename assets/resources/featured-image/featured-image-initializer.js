@@ -12,14 +12,9 @@ jQuery(document).ready(function() {
         var current = jQuery(this),
             id = current.attr('id'),
             max_file_size = current.attr('max_file_size'),
-            action = current.attr('action'),
             page = current.attr('page'),
-            uploadFields = current.data('entry')
-          ;
-       var entrada= current.find('input:text');
+            uploadFields = current.data('entry');
 
-
-        Dropzone.autoDiscover = false;
         var clickeable = page !== 'buddyforms_submissions';
         var currentField = jQuery('#field_' + id);
 
@@ -135,3 +130,7 @@ jQuery(document).ready(function() {
 
     });
 });
+
+if(Dropzone) {
+    Dropzone.autoDiscover = false;
+}
