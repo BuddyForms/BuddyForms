@@ -398,7 +398,8 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 = 2.5.28 - 18 Dec 2020 =
-* Fix issue related to PHP code in the HTML of template files.
+* Fixed issue related to PHP code in the HTML of template files.
+* Fixed issue related with Featured Image and Dropzone library.
 
 = 2.5.27 - 17 Dec 2020 =
 * Add a default page for submissions after enable the plugin.
