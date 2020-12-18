@@ -35,7 +35,7 @@ class BuddyFormsSubmissionPage {
 	}
 
 	public function buddyforms_submissions_screen() {
-		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
+		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id,$wpdb;
 
 
 
@@ -52,7 +52,8 @@ class BuddyFormsSubmissionPage {
 		$this->bf_submissions_table->prepare_items();
 
 
-		$user_list = get_users();
+
+
 		$selected_form = '';
 		$selected_author = isset( $_GET['submission_author'] ) ? $_GET['submission_author'] : "all";
 		if ( isset( $_GET['form_slug'] ) ) {
@@ -60,6 +61,12 @@ class BuddyFormsSubmissionPage {
 			$current_screen->render_screen_meta();
 			$selected_form = $_GET['form_slug'];
 		}
+		$author_query = "
+		SELECT pst.post_author FROM wp_postmeta pm INNER JOIN wp_posts pst
+		ON pm.post_id = pst.ID
+		 WHERE pm.meta_key = '_bf_form_slug' AND pm.meta_value ='".$selected_form."'
+		 GROUP BY pst.post_author";
+		$user_list = $wpdb->get_results($author_query);
 		?>
 
         <div id="icon-users" class="icon32"><br/></div>
@@ -111,9 +118,19 @@ class BuddyFormsSubmissionPage {
 							<h4> <?php _e( 'Filter Submissions by Author', 'buddyforms' ) ?> </h4>
 							<select id="buddyforms_admin_menu_submissions_author_select">
 								<option value="all"><?php _e( 'All Authors', 'buddyforms' ) ?></option>
-								<?php foreach ( $user_list as $user_index => $user_value ) : ?>
+								<?php foreach ( $user_list as $user_index  ) : ?>
+								<?php
+									$author_id = $user_index->post_author;
+									if ( ! empty( $author_id ) ) {
+										$nickname = get_the_author_meta( 'nickname', $author_id );
+									}else{
+										$nickname = __( 'Anonymous', 'buddyforms' );
+									}
 
-									<option <?php selected( $selected_author, $user_value->ID ) ?> value="<?php echo $user_value->ID  ?>"><?php echo $user_value->data->display_name; ?></option>
+											?>
+
+									<option <?php selected( $selected_author,$author_id) ?> value="<?php echo $author_id  ?>"><?php echo $nickname; ?></option>
+
 								<?php endforeach; ?>
 							</select>
 							<input type="button" id="search_author_button" class="button" value="<?php _e( 'Search Author', 'buddyforms' ) ?>">
