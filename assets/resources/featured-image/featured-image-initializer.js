@@ -19,6 +19,15 @@ jQuery(document).ready(function() {
         var currentField = jQuery('#field_' + id);
 
         if(buddyformsGlobal) {
+
+            // Fallback:
+            // Check if the form was already inizialize
+            // by a third party plugin or theme.
+            const dropzoneControl = current[0].dropzone;
+            if (dropzoneControl) {
+                dropzoneControl.destroy();
+            }
+
             var myDropzone = new Dropzone("div#" + id, {
                 url: buddyformsGlobal.admin_url,
                 maxFilesize: max_file_size,
