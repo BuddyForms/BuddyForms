@@ -1,3 +1,6 @@
+<?php
+//Leaven empty tag to let automation add the path disclosure line
+?>
 <div class="tk-feedback" data-html2canvas-ignore="true" hidden="hidden">
 	<div class="tk-feedback-frontend">
 		<button class="tk-feedback-frontend-button tk-always-active" data-tk-feedback-action="dialog:1">

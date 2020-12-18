@@ -1,3 +1,6 @@
+<?php
+//Leaven empty tag to let automation add the path disclosure line
+?>
 <div class="corner-head">
 	<div class="bf-satisfaction" data-section="1">
 		<div class="bf-satisfaction-container">
