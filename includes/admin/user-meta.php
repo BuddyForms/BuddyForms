@@ -25,7 +25,7 @@ function buddyforms_user_profile_fields( $user ) {
 						$slug = $user_meta['slug'];
 
 						$element_attr = array(
-							'value' => esc_attr( get_the_author_meta( $user_meta['slug'], $user->ID ) )
+							'value' => get_the_author_meta( $user_meta['slug'], $user->ID )
 						);
 
 						switch ( sanitize_title( $user_meta['type'] ) ) {
