@@ -404,7 +404,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 = 2.5.27 - 17 Dec 2020 =
 * Add a default page for submissions after enable the plugin.
 * Add labels to the default pages of BuddyForms to improve the user experience.
-* Fixed JS issue related to the feature image and upload form element not working properly.	d5c7c075	Guillermo Figueroa Mesa (gfirem) <gfirem@gmail.com>	Dec 16, 2020 at 11:59 PM
+* Fixed JS issue related to the feature image and upload form element not working properly.
 * Added Passive Feedback.
 
 = 2.5.26 - 7 Dec 2020 =
