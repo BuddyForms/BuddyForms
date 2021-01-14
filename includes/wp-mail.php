@@ -431,7 +431,10 @@ function buddyforms_send_post_status_change_notification( $post ) {
 		$emailBody = buddyforms_get_field_value_from_string( $emailBody, $post_ID, $form_slug );
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
-			$emailBody = buddyforms_replace_shortcode_for_value( $emailBody, $shortcode, $short_code_value );
+			$subject    = buddyforms_replace_shortcode_for_value( $subject , $shortcode, $short_code_value );
+			$from_name  = buddyforms_replace_shortcode_for_value( $from_name , $shortcode, $short_code_value );
+			$from_email = buddyforms_replace_shortcode_for_value( $from_email , $shortcode, $short_code_value );
+ 			$emailBody  = buddyforms_replace_shortcode_for_value( $emailBody, $shortcode, $short_code_value );
 		}
 	} else {
 		if ( isset( $buddyforms[ $form_slug ]['form_fields'] ) ) {
