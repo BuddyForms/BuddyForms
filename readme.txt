@@ -397,7 +397,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.29-beta.1 - 19 Jan 2021 =
+= 2.5.29-beta.1 - 20 Jan 2021 =
 * Fixed issue related to checkboxes values on the metabox that's on the admin user edit screen.
 * Fixed on the fr_FR language file to avoid warnings on BuddyForms admin pages like eg Form Builder.
 * Fixed visual issue related with Taxonomy and Category fields on the Admin Form Builder page.
