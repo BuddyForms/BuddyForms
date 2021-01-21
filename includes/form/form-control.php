@@ -279,6 +279,14 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 	}
 
+	// Check if the Auto-Draft post generate by our forms
+	// was already take by another user, if so, generate a new one.
+	if ( $post_id !== 0 && isset( $_POST['form_action'] ) && $_POST['form_action'] === 'create' && get_post_status( $post_id ) !== 'auto-draft' ) {
+		$the_post = bf_get_default_post_to_edit( $post_type, true );
+		$post_id  = $the_post->ID;
+	}
+
+
 	// Check if user is logged in and if not check if registration during submission is enabled.
 	if ( isset( $buddyforms[ $form_slug ]['public_submit_create_account'] ) && ! is_user_logged_in() ) {
 		// ok let us try to register a user
@@ -315,6 +323,11 @@ function buddyforms_process_submission( $args = array() ) {
 			}
 		}
 	}
+
+	// TODO: Get the $action value based on the
+	// $_POST['form_action'] value instead of use the status of the post.
+	// Also, change all the references of action 'save' and 'update' by 'create' and 'edit'
+	// respectively, here and on the whole plugin.
 
 	$action             = 'save';//Base action
 	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
