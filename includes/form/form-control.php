@@ -449,6 +449,9 @@ function buddyforms_process_submission( $args = array() ) {
 
 	extract( $args );
 
+	//Create the post
+	$args = buddyforms_update_post( $args );
+
 	/*
 	 * Check if the update or insert was successful
 	 */
@@ -508,9 +511,6 @@ function buddyforms_process_submission( $args = array() ) {
 		$error_message = $post_id->get_error_message();
 		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
-
-	//Create the post
-	$args = buddyforms_update_post( $args );
 
 	// Display the message
 	if ( ! $hasError ) {
