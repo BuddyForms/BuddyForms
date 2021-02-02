@@ -230,6 +230,15 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
 }
 
 /**
+ * Get the array of avoid fields from the user. This fields are stored in the same wp user meta
+ * @deprecated since 2.5.30 - use instead buddyforms_avoid_user_fields_slugs_in_forms
+ * @return array
+ */
+function buddyforms_avoid_user_fields_in_forms() {
+	return buddyforms_avoid_user_fields_slugs_in_forms();
+}
+
+/**
  * Get the array of avoid fields slugs from the user. This fields are stored in the same wp user meta
  *
  * @return array
