@@ -86,21 +86,29 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 		if ( $slug != '' ) {
 
+			$field_type      = '';
 			$customfield_val = '';
+
+			if ( isset( $customfield['type'] ) ) {
+				$field_type = $customfield['type'];
+			}
+
 			//Get form field value when the form is editing
 			if ( $action === 'edit' ) {
 				$customfield_val = get_post_meta( $post_id, $slug, true );
 			}
-			if ( in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) && is_user_logged_in() ) {
-				$customfield_val = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
+
+			// Get custom field value from user meta if the field it's an user's type.
+			if ( in_array( $field_type, buddyforms_avoid_user_fields_types_in_forms() ) && is_user_logged_in() ) {
+				$usermeta = buddyforms_get_value_from_user_meta( $current_user_id, $slug );
+				$customfield_val = empty( $usermeta ) ? $customfield_val : $usermeta;
 			}
 
 			if ( isset( $_POST[ $slug ] ) && empty( $customfield_val ) ) {
 				$customfield_val = $_POST[ $slug ];
 			}
 
-			if ( isset( $customfield['type'] ) ) {
-				$field_type = sanitize_title( $customfield['type'] );
+			if ( ! empty ( $field_type ) ) {
 				if ( empty( $customfield_val ) ) {
 					$default_value = isset( $customfield['default'] ) ? $customfield['default'] : '';
 					if ( ! empty( $_GET[ $slug ] ) && ! in_array( $field_type, array( 'user_login', 'user_pass' ) ) ) {
@@ -1115,7 +1123,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							<script>
 								jQuery(document).ready(function () {
 									const select2Elm = jQuery(".bf-select2-{$field_id}");
-									
+
 									// Prevent Firefox from maintaining previously selected items.
 									select2Elm.find('[selected="selected"]').each(function() {
 										jQuery(this).prop("selected", true);
