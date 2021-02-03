@@ -194,9 +194,6 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	// if post edit screen is displayed
 	if ( ! empty( $post_id ) && $buddyforms[ $form_slug ]['form_type'] !== 'registration' ) {
-
-		$form_action = empty( $form_action ) ? 'edit' : $form_action;
-
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
@@ -207,9 +204,6 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
-
-		$form_action = empty( $form_action ) ? 'create' : $form_action;
-
 		//check if auto-draft exist
 		global $wpdb;
 		$query   = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE 1=1 AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s AND post_type = %s AND {$wpdb->postmeta}.meta_key = '_bf_form_slug' AND {$wpdb->postmeta}.meta_value = %s ORDER BY ID DESC", $current_user->ID, $post_type, $form_slug );
