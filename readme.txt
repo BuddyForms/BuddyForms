@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.5
-Stable tag: 2.5.29-beta.2
+Stable tag: 2.5.29-beta.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.29-beta.3 - 3 Feb 2021 =
+* Fix for the Password Reset feature. The password validation inside was broken!.
+* Fix conflict between user website and custom fields with a "website" slug.
+* Deprecated buddyforms_avoid_user_fields_slugs_in_forms in favor of buddyforms_avoid_user_fields_slugs_in_forms.
+* Fix related with overridden posts issue on public submissions.
+
 = 2.5.29-beta.2 - 21 Jan 2021 =
 * Changed version of select2 library to his latest.
 * Fix issue related to Taxonomies fields, on the first submission (post creation) their values were not saved.

@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.5.29-beta.2
+ * Version: 2.5.29-beta.3
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -43,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.5.29-beta.2';
+		public $version = '2.5.29-beta.3';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -559,8 +559,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
-			$registration_gdpr_template = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   ", 'buddyforms' );
-			$post_gdpr_template        = __( "By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ", 'buddyforms' );
+			$registration_gdpr_template = __( "By signing up on our site you agree to our terms and conditions [link]. We'll create a new user account for you based on your submissions. All data you submit will be stored on our servers.After your registration we'll instantly send you an email with an activation link to verify your mail address. ", 'buddyforms' );
+			$post_gdpr_template        = __( "By submitting this form you grant us the rights <br>• to store your submitted contents in our database <br>• to generate a post on our site based on your data <br>• to make this post publicly accessible ", 'buddyforms' );
 			$contact_gdpr_template     = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
 			$buddyforms_gdpr = array();
 			$buddyforms_gdpr['templates']['registration'] = $registration_gdpr_template;
