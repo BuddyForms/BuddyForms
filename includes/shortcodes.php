@@ -8,7 +8,7 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  *
  * @return string
  */
-function buddyforms_create_edit_form_shortcode( $args ) {
+function buddyforms_create_edit_form_shortcode( $args, $content, $tag ) {
 	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
 
 	extract( shortcode_atts( array(
@@ -23,6 +23,14 @@ function buddyforms_create_edit_form_shortcode( $args ) {
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
+	}
+
+
+	// Let's set the form action.
+	// starting up with the default action.
+	$args['form_action'] = 'create';
+	if ( ! empty( $the_post ) || ! empty( $post_id )  ) {
+		$args['form_action'] = 'edit';
 	}
 
 	// If multisite is enabled make sure we switch back to the current blog to get the correct form

@@ -46,7 +46,8 @@ function buddyforms_attached_page_content( $content ) {
 				'form_slug'   => $form_slug,
 				'post_id'     => $post_id,
 				'parent_post' => $parent_post_id,
-				'post_type'   => $post_type
+				'post_type'   => $post_type,
+				'form_action' => $action
 			);
 
 			if ( $action == 'create' || $action == 'edit' || $action == 'revision' ) {
