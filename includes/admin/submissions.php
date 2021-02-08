@@ -35,7 +35,7 @@ class BuddyFormsSubmissionPage {
 	}
 
 	public function buddyforms_submissions_screen() {
-		global $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
+		global $wpdb, $buddyforms, $current_screen, $parent_file, $form_slug, $post_id;
 
 
 
@@ -52,7 +52,34 @@ class BuddyFormsSubmissionPage {
 		$this->bf_submissions_table->prepare_items();
 
 
-		$user_list = get_users();
+		$user_list_ids = array();
+		$submissions   = array();
+
+		// If the table it's not filtered by users
+		// let's reuse the previous query for performance matter,
+		// otherwise, let's do a new query.
+		if ( empty( $_GET['submission_author'] ) ) {
+			$submissions = $this->bf_submissions_table->items;
+
+		} else {
+			$submissions = $this->bf_submissions_table->query();
+		}
+
+		if ( ! empty( $submissions ) && is_array( $submissions ) ) {
+			foreach ( $submissions as $submission ) {
+				$user_list_ids[] = $submission->post_author;
+			}
+		}
+
+		// If $user_list_ids is empty or null,
+		// let's set a not null or empty value
+		// to avoid load all the users.
+		if ( empty( $user_list_ids ) ) {
+			$user_list_ids = array(0);
+		}
+
+		$user_list = get_users( array( 'include' => array_unique($user_list_ids) ) );
+
 		$selected_form = '';
 		$selected_author = isset( $_GET['submission_author'] ) ? $_GET['submission_author'] : "all";
 		if ( isset( $_GET['form_slug'] ) ) {
@@ -314,41 +341,17 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 
 		$per_page = $this->get_items_per_page( 'entries_per_page', 10 );
 
-		$columns  = $this->get_columns();
-		$hidden   = array();
-		$sortable = $this->get_sortable_columns();
-
 		$this->_column_headers = $this->get_column_info();
-
 		$this->get_bulk_actions();
 
-		$data = array();
-		$author_filter = isset( $_GET['submission_author'] ) ? is_numeric($_GET['submission_author']) ? $_GET['submission_author'] : false : false;
-		if ( isset( $_GET['form_slug'] ) ) {
-			$customkey   = '_bf_form_slug'; // set to your custom key
-			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
-			$sql_args    = array( 'ID', 'post_title', 'post_author' );
-			$sql_select  = implode( ', ', $sql_args );
-			if($author_filter){
-				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s AND post_author = %d ORDER BY post_date DESC", $customkey, $customvalue,$author_filter );
-			}
-			else{
-				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s  ORDER BY post_date DESC", $customkey, $customvalue );
-			}
-			$data        = $wpdb->get_results( $sql_query );
-		}
-
-		$current_page = $this->get_pagenum();
-		$total_items  = count( $data );
-
-		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
-
-		$this->items = $data;
+		$author_filter = isset( $_GET['submission_author'] ) && is_numeric($_GET['submission_author']) ? $_GET['submission_author'] : false;
+		$this->items   = $this->query( $per_page, $author_filter );
+		$total_items   = count( $this->items );
 
 		$this->set_pagination_args( array(
-			'total_items' => $total_items,                  //WE have to calculate the total number of items
-			'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
-			'total_pages' => ceil( $total_items / $per_page )   //WE have to calculate the total number of pages
+			'total_items' => $total_items,                     //WE have to calculate the total number of items
+			'per_page'    => $per_page,                        //WE have to determine how many items to show on a page
+			'total_pages' => ceil( $total_items / $per_page ), //WE have to calculate the total number of pages
 		) );
 	}
 
@@ -374,5 +377,33 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		}
 
 		return $columns;
+	}
+
+	function query( $items_per_page = -1, $author_to_filter = array() ) {
+		global $wpdb;
+
+		$data = array();
+		if ( isset( $_GET['form_slug'] ) ) {
+			$customkey   = '_bf_form_slug'; // set to your custom key
+			$customvalue = ! empty( $_GET['form_slug'] ) ? $_GET['form_slug'] : '';
+			$sql_args    = array( 'ID', 'post_title', 'post_author' );
+			$sql_select  = implode( ', ', $sql_args );
+			if( ! empty( $author_to_filter ) ){
+				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s AND post_author = %d AND post_title != 'Auto Draft' ORDER BY post_date DESC", $customkey, $customvalue, $author_to_filter );
+
+			} else {
+				$sql_query = $wpdb->prepare( "SELECT {$sql_select} FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE ID = {$wpdb->postmeta}.post_id AND meta_key = %s AND meta_value = %s AND post_title != 'Auto Draft' ORDER BY post_date DESC", $customkey, $customvalue );
+			}
+
+			$data = $wpdb->get_results( $sql_query );
+		}
+
+		$current_page = $this->get_pagenum();
+
+		if ( $items_per_page !== -1 ) {
+			$data = array_slice( $data, ( ( $current_page - 1 ) * $items_per_page ), $items_per_page );
+		}
+
+		return $data;
 	}
 }
