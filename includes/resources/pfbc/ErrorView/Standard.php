@@ -14,7 +14,10 @@ class ErrorView_Standard extends ErrorView {
 				foreach ( $all_errors_groups as $code => $errors ) {
 					if ( is_array( $errors ) ) {
 						foreach ( $errors as $error ) {
-							$all_errors[] = $error[0];
+							if ( is_array( $error ) ){
+								$all_errors[] = reset($error);
+							}
+							$all_errors[] = $error;
 						}
 					} else {
 						$all_errors[] = $global_bf_error->get_error_message( $code );
