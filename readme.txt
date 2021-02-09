@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
-Tested up to: 5.5
-Stable tag: 2.5.26
+Tested up to: 5.6
+Stable tag: 2.5.29-beta.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,32 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.29-beta.3 - 3 Feb 2021 =
+* Fix for the Password Reset feature. The password validation inside was broken!.
+* Fix conflict between user website and custom fields with a "website" slug.
+* Deprecated buddyforms_avoid_user_fields_slugs_in_forms in favor of buddyforms_avoid_user_fields_slugs_in_forms.
+* Fix related with overridden posts issue on public submissions.
+
+= 2.5.29-beta.2 - 21 Jan 2021 =
+* Changed version of select2 library to his latest.
+* Fix issue related to Taxonomies fields, on the first submission (post creation) their values were not saved.
+
+= 2.5.29-beta.1 - 20 Jan 2021 =
+* Fixed issue related to checkboxes values on the metabox that's on the admin user edit screen.
+* Fixed on the fr_FR language file to avoid warnings on BuddyForms admin pages like eg Form Builder.
+* Fixed visual issue related with Taxonomy and Category fields on the Admin Form Builder page.
+* Changed in notification system to allow global shortcodes as [site_name], [user_login], [published_post_link_html] to be used in fields like Subject, Email and Name.
+
+= 2.5.28 - 18 Dec 2020 =
+* Fixed issue related to PHP code in the HTML of template files.
+* Fixed issue related with Featured Image and Dropzone library.
+
+= 2.5.27 - 17 Dec 2020 =
+* Add a default page for submissions after enable the plugin.
+* Add labels to the default pages of BuddyForms to improve the user experience.
+* Fixed JS issue related to the feature image and upload form element not working properly.
+* Added Passive Feedback.
+
 = 2.5.26 - 7 Dec 2020 =
 * Fixed duplicate Singular Name option on the Form Builder.
 * Fixed the Race Condition issue on Composer dependencies, now all the namespaces in our Composer dependencies are prefixed.

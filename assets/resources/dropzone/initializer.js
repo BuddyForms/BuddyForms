@@ -1,5 +1,4 @@
 function uploadHandler() {
-    Dropzone.autoDiscover = false;
     var submitButtons, submitButton,
         existingHtmlInsideSubmitButton = '';
 
@@ -247,17 +246,12 @@ function validateAndUploadImage(field) {
             },
             error: function (error) {
                 var result = JSON.parse(error);
-
-
-
             }
 
         });
 
     } else {
         jQuery("#" + id + "_label").text("Wrong Url Format");
-
-
     }
 }
 
@@ -268,6 +262,7 @@ function checkURL(url) {
 var uploadImplementation = uploadHandler();
 jQuery(document).ready(function () {
     uploadImplementation.init();
-
-
 });
+if(Dropzone) {
+    Dropzone.autoDiscover = false;
+}

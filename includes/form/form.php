@@ -39,6 +39,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	$post_status = '';
 	$form_slug   = false;
 	$form_notice = '';
+	$form_action = false;
 
 	$short_array = shortcode_atts( array(
 		'post_type'   => '',
@@ -47,6 +48,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		'post_parent' => 0,
 		'form_slug'   => false,
 		'form_notice' => '',
+		'form_action' => false
 	), $args );
 
 	extract( $short_array );
@@ -192,7 +194,6 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	// if post edit screen is displayed
 	if ( ! empty( $post_id ) && $buddyforms[ $form_slug ]['form_type'] !== 'registration' ) {
-
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
 		} else {
@@ -243,6 +244,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		}
 	}
 
+	if ( empty( $form_action) ) {
+		$form_action = ( isset( $wp_query->query_vars['bf_action'] ) ) ? $wp_query->query_vars['bf_action'] : 'save';
+	}
+
 	$args = array(
 		'post_type'    => $post_type,
 		'the_post'     => $the_post,
@@ -253,7 +258,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		'form_slug'    => $form_slug,
 		'form_notice'  => $form_notice,
 		'current_user' => $current_user,
-		'action'       => ( isset( $wp_query->query_vars['bf_action'] ) ) ? $wp_query->query_vars['bf_action'] : 'save',
+		'action'       => $form_action,
 	);
 
 	if ( isset( $_POST['bf_submitted'] ) ) {

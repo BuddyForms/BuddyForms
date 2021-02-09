@@ -7,7 +7,7 @@
     </div>
 <?php endif; ?>
 
-<form id="buddyforms_password_form" method="POST" action="<?php  echo $current_url; ?>">
+<form id="buddyforms_form_password_reset" method="POST" action="<?php  echo $current_url; ?>">
     <fieldset>
         <p>
             <label for="buddyforms_user_pass"><?php _e( 'New Password', 'buddyforms' ); ?></label>
@@ -22,8 +22,11 @@
             <input type="hidden" name="buddyforms_redirect" value="<?php echo $redirect; ?>"/>
             <input type="hidden" name="buddyforms_password_nonce" value="<?php echo wp_create_nonce( 'buddyforms-password-nonce' ); ?>"/>
 
-        <div><div id="password-strength"></div></div>
-        <input id="buddyforms_password_submit" type="submit" data-target="buddyforms_password_form" class="bf-submit" value="<?php _e( 'Change Password', 'buddyforms' ); ?>"/>
+        <div style="margin: 1em;">
+			<div id="password-strength"></div>
+		</div>
+
+        <input id="buddyforms_password_submit" type="submit" data-target="buddyforms_form_password_reset" class="bf-submit" value="<?php _e( 'Change Password', 'buddyforms' ); ?>"/>
 
         </p>
     </fieldset>

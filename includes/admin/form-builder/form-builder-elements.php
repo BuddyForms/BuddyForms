@@ -1039,6 +1039,8 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = wp_dropdown_categories( $wp_dropdown_categories_args );
 
+			$dropdown = str_replace( 'id=', 'style="width: 100%;" id=', $dropdown );
+
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
 			if ( is_array( $taxonomy_default ) ) {
@@ -1051,7 +1053,7 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = '<table style="width:100%;"id="table_row_' . $field_id . '_taxonomy_default" class="wp-list-table posts fixed bf_hide_if_post_type_none"><tr><th scope="row">
 				<label for="form_title"><b style="margin-left: -10px;">' . __( 'Default Terms', 'buddyforms' ) . '</b></label></th>
-				<td><div>' . $dropdown . '<p class="description">' . __( 'You can select a default category', 'buddyforms' ) . '</p></div></td></table>';
+				<td style="padding-right: 0;"><div>' . $dropdown . '<p class="description">' . __( 'You can select a default category', 'buddyforms' ) . '</p></div></td></table>';
 
 			$form_fields['general']['taxonomy_default'] = new Element_HTML( $dropdown );
 
@@ -1107,6 +1109,8 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_include_args );
 
+			$dropdown = str_replace( 'id=', 'style="width: 100%;" id=', $dropdown );
+
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
 			if ( is_array( $taxonomy_include ) ) {
@@ -1121,7 +1125,7 @@ function buddyforms_display_form_element( $args ) {
                     <th scope="row">
                         <label for="form_title"><b style="margin-left: -10px;">' . __( 'Include Items', 'buddyforms' ) . '</b></label>
                     </th>
-                    <td>
+                    <td style="padding-right: 0;">
                         <div>' . $dropdown . '
                             <p class="description">' . __( 'You can select multiple items', 'buddyforms' ) . '</p>
                         </div>
@@ -1152,6 +1156,8 @@ function buddyforms_display_form_element( $args ) {
 
 			$dropdown = wp_dropdown_categories( $wp_dropdown_taxonomy_exclude_args );
 
+			$dropdown = str_replace( 'id=', 'style="width: 100%;" id=', $dropdown );
+
 			$dropdown = str_replace( 'id=', 'multiple="multiple" id=', $dropdown );
 
 			if ( is_array( $taxonomy_exclude ) ) {
@@ -1166,7 +1172,7 @@ function buddyforms_display_form_element( $args ) {
                     <th scope="row">
                         <label for="form_title"><b style="margin-left: -10px;">' . __( 'Exclude Items', 'buddyforms' ) . '</b></label>
                     </th>
-                    <td>
+                    <td style="padding-right: 0;">
                         <div>' . $dropdown . '
                             <p class="description">' . __( 'You can select multiple items', 'buddyforms' ) . '</p>
                         </div>

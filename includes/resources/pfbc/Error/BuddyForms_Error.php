@@ -8,6 +8,7 @@ class BuddyForms_Error extends WP_Error {
 
 	public function __construct( $code = '', $message = '', $data = '', $form_slug = '' ) {
 		$this->form_slug = $form_slug;
+
 		parent::__construct( $code, $message, $data );
 	}
 
@@ -23,6 +24,18 @@ class BuddyForms_Error extends WP_Error {
 	 */
 	public function set_form_slug( $form_slug ) {
 		$this->form_slug = $form_slug;
+	}
+	public function get_error_message( $code = '' ) {
+		if ( empty( $code ) ) {
+			$code = $this->get_error_code();
+		}
+		$messages = $this->get_error_messages( $code );
+		if ( empty( $messages ) ) {
+			return '';
+		}
+
+		$first_item  = reset($messages);
+		return key($messages).': '. $first_item;
 	}
 
 	public function add( $code, $message, $data = '', $form_slug = '' ) {

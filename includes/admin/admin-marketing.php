@@ -15,11 +15,9 @@ function buddyforms_marketing_init() {
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
 
-	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
-	add_action( 'wp_ajax_buddyforms_user_satisfaction_ajax', 'buddyforms_user_satisfaction_ajax' );
+	add_action( 'admin_footer_text', 'passive_feedback_trigger', 1, 1 );
 
-	add_action( 'wp_ajax_buddyforms_marketing_hide_for_ever_close', 'buddyforms_marketing_hide_for_ever_close' );
-	add_action( 'wp_ajax_buddyforms_marketing_reset_permissions', 'buddyforms_marketing_reset_permissions' );
+	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
 }
 
 function buddyforms_marketing_offer_bundle( $hook ) {
@@ -36,61 +34,6 @@ function buddyforms_marketing_offer_bundle( $hook ) {
 	$base_content = "<p class=\"corner-head\">Buy ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
 	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
 	buddyforms_marketing_include_assets( $content, $base_content );
-}
-
-function buddyforms_marketing_hide_for_ever_close() {
-	try {
-		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			die();
-		}
-		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
-			die();
-		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
-			die();
-		}
-
-		if ( ! empty( $_POST['popup_key'] ) ) {
-			$key     = sanitize_text_field( $_POST['popup_key'] );
-			$options = get_option( 'buddyforms_marketing_hide_for_ever_close' );
-			if ( ! empty( $options ) && is_array( $options ) ) {
-				if ( empty( $options[ $key ] ) ) {
-					$options[ $key ] = true;
-				}
-			} else {
-				$options = array( $key => true );
-			}
-			update_option( 'buddyforms_marketing_hide_for_ever_close', $options );
-		}
-
-		wp_send_json( '' );
-	} catch ( Exception $ex ) {
-		BuddyFormsContactAuthor::error_log( $ex->getMessage() );
-	}
-	die();
-}
-
-function buddyforms_marketing_reset_permissions() {
-	try {
-		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			die();
-		}
-		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
-			die();
-		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
-			die();
-		}
-
-		$result1 = delete_option( 'buddyforms_marketing_hide_for_ever_close' );
-		$result2 = delete_option( 'buddyforms_user_satisfaction_sent' );
-		$result  = $result1 && $result2;
-
-		wp_send_json( $result );
-	} catch ( Exception $ex ) {
-		BuddyFormsContactAuthor::error_log( $ex->getMessage() );
-	}
-	die();
 }
 
 function buddyforms_marketing_form_list_coupon_for_free( $hook ) {
@@ -127,6 +70,20 @@ function buddyforms_marketing_include_assets( $content, $base_content, $key = ''
 	) );
 }
 
+function passive_feedback_trigger( $return ) {
+	$current_screen = get_current_screen();
+
+	if ( ! empty( $current_screen->id ) && strpos( $current_screen->id, 'buddyforms' ) !== false ) {
+		wp_enqueue_style( 'buddyforms-passive-feedback-style', BUDDYFORMS_ASSETS . 'admin/css/passive-feedback.css', array(), BUDDYFORMS_VERSION );
+		wp_enqueue_script( 'buddyforms-html2canvas-script', BUDDYFORMS_ASSETS . 'admin/js/html2canvas.min.js', array(), BUDDYFORMS_VERSION );
+		wp_enqueue_script( 'buddyforms-passive-feedback-script', BUDDYFORMS_ASSETS . 'admin/js/passive-feedback.js', array(), BUDDYFORMS_VERSION );
+
+		include_once BUDDYFORMS_ADMIN_VIEW . 'passive-feedback.php';
+	}
+
+	return $return;
+}
+
 function user_satisfaction_trigger() {
 	global $buddyforms;
 
@@ -150,86 +107,10 @@ function user_satisfaction_trigger() {
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && count( $buddyforms ) > 0 && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
 			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-show' ) );
-			$base_content = "<div class=\"corner-head\">
-				<div class=\"bf-satisfaction\" data-section=\"1\">
-					<div class=\"bf-satisfaction-container\">
-						<div class=\"bf-satisfaction-top\">
-							<div class=\"bf-satisfaction-top-title\">How likely is it that you would recommend BuddyForms to a friend or colleague?</div>
-						</div>
-						<div class=\"bf-satisfaction-body\">
-							<section class=\"bf-satisfaction-column\" data-section=\"1\" data-section-title=\"How likely is it that you would recommend BuddyForms to a friend or colleague?\">
-								<div>
-									<span class=\"bf-satisfaction-body-medium\">Not at all likely</span>
-									<span class=\"bf-satisfaction-body-medium\">Extremely likely</span>
-								</div>
-								<div class=\"bf-satisfaction-row\">
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"0\">
-										<span>0</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"1\">
-										<span>1</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"2\">
-										<span>2</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"3\">
-										<span>3</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"4\">
-										<span>4</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"5\">
-										<span>5</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"6\">
-										<span>6</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"7\">
-										<span>7</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"8\">
-										<span>8</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"9\">
-										<span>9</span>
-									</label>
-									<label data-style=\"hover\">
-										<input type=\"radio\" name=\"satisfaction_recommendation\" value=\"10\">
-										<span>10</span>
-									</label>
-								</div>
-								<div>
-									<div></div>
-									<button class=\"bf-satisfaction-button\" data-user-error=\"Please select an item to continue\" data-server-error=\"Internal error\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_recommendation:checked\">Submit</button>
-								</div>
-							</section>
-							<section class=\"bf-satisfaction-column\" data-section=\"2\" data-section-title=\"We are king to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)\">
-								<textarea name=\"satisfaction_comments\" cols=\"30\" rows=\"10\"></textarea>
-								<div>
-									<div></div>
-									<button class=\"bf-satisfaction-button\" data-satisfaction-form-action=\"ajax\" data-satisfaction-form-inputs=\"satisfaction_comments\">Submit or Done</button>
-								</div>
-							</section>
-							<section class=\"bf-satisfaction-column\" data-section=\"3\" data-section-title=\"Thanks you\">
-								<div>
-									<div></div>
-									<button class=\"bf-satisfaction-button\" data-satisfaction-action=\"close\">Close</button>
-								</div>
-							</section>
-						</div>
-					</div>
-				</div>
-			</div>";
+
+			ob_start();
+			include_once BUDDYFORMS_ADMIN_VIEW . 'user-satisfaction.php';
+			$base_content = ob_get_clean();
 			wp_enqueue_style( 'buddyforms-satisfaction-style', BUDDYFORMS_ASSETS . 'admin/css/user-satisfaction.css', array(), BUDDYFORMS_VERSION );
 			wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
@@ -241,58 +122,6 @@ function user_satisfaction_trigger() {
 		}
 	} catch ( Exception $ex ) {
 
-	}
-}
-
-function buddyforms_user_satisfaction_ajax() {
-
-	try {
-
-		if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			wp_send_json_error();
-		}
-		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
-			wp_send_json_error();
-		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
-			wp_send_json_error();
-		}
-
-		if ( ! isset( $_POST['user_satisfaction_key'] ) || empty( $_POST['user_satisfaction_value'] ) ) {
-			wp_send_json_error();
-		}
-
-		$us_key   = sanitize_text_field( $_POST['user_satisfaction_key'] );
-		$us_value = sanitize_textarea_field( $_POST['user_satisfaction_value'] );
-
-		switch ( $us_key ) {
-			case 'satisfaction_recommendation':
-
-				if ( ! isset( $us_value ) || empty( $us_value ) ) {
-					wp_send_json_error();
-				}
-				buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-rate', 'rate' => intval( $us_value ) ) );
-				update_option( 'buddyforms_user_satisfaction_sent', 1 );
-
-				wp_send_json( '' );
-				break;
-
-			case 'satisfaction_comments':
-
-				if ( isset( $us_value ) && ! empty( $us_value ) ) {
-					buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-comment', 'comment' => $us_value ) );
-				}
-
-				wp_send_json( '' );
-				break;
-
-			default:
-				wp_send_json_error();
-				break;
-		}
-
-	} catch ( Exception $ex ) {
-		wp_send_json_error( $ex->getMessage() );
 	}
 }
 
@@ -339,12 +168,11 @@ function buddyforms_marketing_assets() {
 
 		if ( $is_free ) {
 			$content = buddyforms_marketing_content_pro_coupon();
-		} else if ( $is_trial ) {
+		} elseif ( $is_trial ) {
 			$content = buddyforms_marketing_content_pro_coupon();
-		} else if ( $is_pro ) {
+		} elseif ( $is_pro ) {
 
 		}
-
 
 		wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 		wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );

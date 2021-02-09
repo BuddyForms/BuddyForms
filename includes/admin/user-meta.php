@@ -25,7 +25,7 @@ function buddyforms_user_profile_fields( $user ) {
 						$slug = $user_meta['slug'];
 
 						$element_attr = array(
-							'value' => esc_attr( get_the_author_meta( $user_meta['slug'], $user->ID ) )
+							'value' => get_the_author_meta( $user_meta['slug'], $user->ID )
 						);
 
 						switch ( sanitize_title( $user_meta['type'] ) ) {
@@ -215,7 +215,7 @@ function buddyforms_get_mapped_slug_from_user_meta( $slug ) {
  * @return string
  */
 function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
-	if ( ! in_array( $slug, buddyforms_avoid_user_fields_in_forms() ) ) {
+	if ( ! in_array( $slug, buddyforms_avoid_user_fields_slugs_in_forms() ) ) {
 		return get_user_meta( $user_id, $slug, true );
 	} else {
 		$user  = get_userdata( $user_id );
@@ -231,10 +231,19 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
 
 /**
  * Get the array of avoid fields from the user. This fields are stored in the same wp user meta
- *
+ * @deprecated since 2.5.30 - use instead buddyforms_avoid_user_fields_slugs_in_forms
  * @return array
  */
 function buddyforms_avoid_user_fields_in_forms() {
+	return buddyforms_avoid_user_fields_slugs_in_forms();
+}
+
+/**
+ * Get the array of avoid fields slugs from the user. This fields are stored in the same wp user meta
+ *
+ * @return array
+ */
+function buddyforms_avoid_user_fields_slugs_in_forms() {
 	return apply_filters( 'buddyforms_avoid_user_fields', array(
 		'captcha',
 		'display_name',
@@ -244,6 +253,25 @@ function buddyforms_avoid_user_fields_in_forms() {
 		'user_last',
 		'user_pass',
 		'website',
+		'user_bio',
+	) );
+}
+
+/**
+ * Get the array of avoid fields types from the user. This fields are stored in the same wp user meta
+ *
+ * @return array
+ */
+function buddyforms_avoid_user_fields_types_in_forms() {
+	return apply_filters( 'buddyforms_avoid_user_fields', array(
+		'captcha',
+		'display_name',
+		'user_login',
+		'user_email',
+		'user_first',
+		'user_last',
+		'user_pass',
+		'user_website',
 		'user_bio',
 	) );
 }

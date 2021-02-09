@@ -35,5 +35,21 @@ jQuery(document).ready(function (jQuery) {
             });
         }
     });
-
+    jQuery(document.body).on('click', '#btn-compile-custom', function() {
+        jQuery.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: buddyformsGlobal.admin_url,
+            data: {
+                'action': 'buddyforms_custom_form_template',
+                'nonce': buddyformsGlobal.ajaxnonce,
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(request, status, error) {
+                console.log(data);
+            },
+        });
+    });
 });
