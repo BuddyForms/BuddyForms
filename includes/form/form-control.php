@@ -934,6 +934,11 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			$content    = apply_filters( 'the_content', $post->post_content );
 			$content    = str_replace( ']]>', ']]&gt;', $content );
 			$meta_value = strip_shortcodes( $content );
+
+			if ( ! $html ) {
+				$meta_value = wp_strip_all_tags( $meta_value );
+			}
+
 			if ( ! $full_string ) {
 				$meta_value = buddyforms_add_ellipsis( $meta_value );
 			}
