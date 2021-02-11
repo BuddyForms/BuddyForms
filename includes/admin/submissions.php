@@ -330,7 +330,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 	public function get_column_values( $field_slug, $field_type, $item, $bf_value, $bf_field ) {
 		$post = get_post( $item->ID );
 
-		$bf_value = buddyforms_get_field_output( $item->ID, $bf_field, $post, $bf_value, $field_slug );
+		$bf_value = buddyforms_get_field_output( $item->ID, $bf_field, $post, $bf_value, $field_slug, false, false );
 
 		echo apply_filters( "bf_submission_column_default", $bf_value, $item, $field_type, $field_slug );
 	}
