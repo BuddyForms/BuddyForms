@@ -8,7 +8,7 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
  *
  * @return string
  */
-function buddyforms_create_edit_form_shortcode( $args, $content, $tag ) {
+function buddyforms_create_edit_form_shortcode( $args ) {
 	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
 
 	extract( shortcode_atts( array(
