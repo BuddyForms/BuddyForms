@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 2.5.29-beta.3
+Stable tag: 2.5.29-beta.4
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.29-beta.4 - 15 Feb 2021 =
+* Fixed issue related with wrong server-side validation messages.
+* Fixed issue related to Content columns on submission list table (Submission Page). Some Content columns with HTML inside were breaking the layout of the table.
+* Fixed issue introduce on the letest beta (2.5.29-beta.3) related with BF block on Guthember.
+
 = 2.5.29-beta.3 - 3 Feb 2021 =
 * Fix for the Password Reset feature. The password validation inside was broken!.
 * Fix conflict between user website and custom fields with a "website" slug.
