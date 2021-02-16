@@ -345,8 +345,12 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		$this->get_bulk_actions();
 
 		$author_filter = isset( $_GET['submission_author'] ) && is_numeric($_GET['submission_author']) ? $_GET['submission_author'] : false;
-		$this->items   = $this->query( $per_page, $author_filter );
-		$total_items   = count( $this->items );
+		$query_result  = $this->query( $author_filter );
+
+		$total_items   = count( $query_result );
+		$current_page  = $this->get_pagenum();
+
+		$this->items =  array_slice( $query_result, ( ( $current_page - 1 ) * $per_page ), $per_page );
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items,                     //WE have to calculate the total number of items
@@ -379,7 +383,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		return $columns;
 	}
 
-	function query( $items_per_page = -1, $author_to_filter = array() ) {
+	function query( $author_to_filter = array() ) {
 		global $wpdb;
 
 		$data = array();
@@ -396,12 +400,6 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 			}
 
 			$data = $wpdb->get_results( $sql_query );
-		}
-
-		$current_page = $this->get_pagenum();
-
-		if ( $items_per_page !== -1 ) {
-			$data = array_slice( $data, ( ( $current_page - 1 ) * $items_per_page ), $items_per_page );
 		}
 
 		return $data;
