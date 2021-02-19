@@ -190,6 +190,13 @@ function buddyforms_send_mail_submissions( $notification, $post ) {
 		'[form_elements_table]'       => buddyforms_mail_notification_form_elements_as_table( $form_slug, $post ),
 	);
 
+	// Let's set global shortcodes for subject, from_name & from_email.
+	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
+		$subject    = buddyforms_replace_shortcode_for_value( $subject , $shortcode, $short_code_value );
+		$from_name  = buddyforms_replace_shortcode_for_value( $from_name , $shortcode, $short_code_value );
+		$from_email = buddyforms_replace_shortcode_for_value( $from_email , $shortcode, $short_code_value );
+	}
+
 	// If we have content let us check if there are any tags we need to replace with the correct values.
 	if ( ! empty( $emailBody ) ) {
 		$emailBody = stripslashes( $emailBody );
@@ -425,15 +432,19 @@ function buddyforms_send_post_status_change_notification( $post ) {
 		'[form_elements_table]'       => buddyforms_mail_notification_form_elements_as_table( $form_slug, $post ),
 	);
 
+	// Let's set global shortcodes for subject, from_name & from_email.
+	foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
+		$subject    = buddyforms_replace_shortcode_for_value( $subject , $shortcode, $short_code_value );
+		$from_name  = buddyforms_replace_shortcode_for_value( $from_name , $shortcode, $short_code_value );
+		$from_email = buddyforms_replace_shortcode_for_value( $from_email , $shortcode, $short_code_value );
+	}
+
 	// If we have content let us check if there are any tags we need to replace with the correct values.
 	if ( ! empty( $emailBody ) ) {
 		$emailBody = stripslashes( $emailBody );
 		$emailBody = buddyforms_get_field_value_from_string( $emailBody, $post_ID, $form_slug );
 
 		foreach ( $short_codes_and_values as $shortcode => $short_code_value ) {
-			$subject    = buddyforms_replace_shortcode_for_value( $subject , $shortcode, $short_code_value );
-			$from_name  = buddyforms_replace_shortcode_for_value( $from_name , $shortcode, $short_code_value );
-			$from_email = buddyforms_replace_shortcode_for_value( $from_email , $shortcode, $short_code_value );
  			$emailBody  = buddyforms_replace_shortcode_for_value( $emailBody, $shortcode, $short_code_value );
 		}
 	} else {
