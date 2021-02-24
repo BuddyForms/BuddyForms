@@ -28,7 +28,7 @@ function buddyforms_display_form_element( $args ) {
 	}
 
 	$form_slug = ( ! empty( $post->post_name ) ) ? $post->post_name : '';
-	$post_type = ( ! empty( $post->post_type ) ) ? $post->post_type : '';
+	$post_type = ( ! empty( $buddyform['post_type'] ) ) ? $buddyform['post_type'] : '';
 
 	if ( isset( $field_unique ) && $field_unique == 'unique' ) {
 		if ( isset( $buddyform['form_fields'] ) ) {
@@ -980,7 +980,7 @@ function buddyforms_display_form_element( $args ) {
 				$taxonomies = buddyforms_taxonomies( $post_type );
 			} else {
 				$taxonomies = array( 'category' => 'Categories' );
-				if ( isset( $post_type ) ) {
+				if ( ! empty( $post_type ) ) {
 					$error                                             = '<table style="width:100%;"id="table_row_' . $field_id . '_post_type_no_taxonomy_error" class="wp-list-table posts fixed">
                         <td colspan="2">
                             <div class="post_type_no_taxonomy_error bf-error">' . __( 'This Post Type does not have any ' . $error_field_type_name . '.', 'buddyforms' ) . '</div>
