@@ -74,11 +74,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
-		display: block;
-		width: 100%;
-		border: 1px solid #aaa;
 
-	<?php
+		<?php
 			// Padding
 			if( !empty($bfdesign['field_padding']) ) {
 				echo 'padding: ' . ($bfdesign['field_padding'] - 1) . 'px;';
@@ -113,6 +110,57 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
 			} ?>
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input:not([type="checkbox"], [type="radio"])
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input:not([type="checkbox"], [type="radio"]) {
+		display: block;
+		width: 100%;
+		border: 1px solid #aaa;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"],
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"],
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"],
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"] {
+		width: 20px;
+		height: 20px;
+		padding: 0;
+		margin: 0 5px 0 0;
+		-webkit-appearance: auto;
+		-moz-appearance: auto;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.form-control,
+	/* BuddyBoss */ body.buddyboss-theme .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.form-control,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.form-control {
+		padding: 0;
+		display:-webkit-box;
+	   	display:-ms-flexbox;
+   		display:flex;
+   		-webkit-box-align: center;
+       	-ms-flex-align: center;
+		align-items: center;
+	}
+
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]::after,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]::after,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]::before,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]::before,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]:checked::after,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]:checked::after,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]:checked::before,
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]:checked::before,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]::after,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]::after,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]::before,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]::before,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]:checked::after,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]:checked::after,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"]:checked::before,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="radio"]:checked::before
+	{
+		content: unset;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input label.settings-input.form-control,
