@@ -880,7 +880,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection .select2-search--inline .select2-search__field {
 		margin: 0;
 		color: #666666;
-		line-height: 0;
+		line-height: 1; /* Safari 13.x */
 		display: block;
 		padding-top: 3px;
 		position: relative;
