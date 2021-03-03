@@ -707,8 +707,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		float: left;
 		margin-right: 5px;
 		margin-top: 5px;
-		padding: 0 5px;
-		height: 24px;
+		height: 39px;
 		line-height: 150%;
 	}
 
