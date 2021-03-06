@@ -1414,8 +1414,27 @@ JS;
 			$form_fields['general']['post_status'] = new Element_Checkbox( '<b>' . __( 'Select the post status you want to make available in the frontend form', 'buddyforms' ) . '</b><br><br>', "buddyforms_options[form_fields][" . $field_id . "][post_status]", buddyforms_get_post_status_array(), array(
 				'value'     => $post_status,
 				'id'        => "buddyforms_options[form_fields][" . $field_id . "][post_status]",
-				'shortDesc' => __( "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms' )
+				'shortDesc' => __( "This Post Field allows users to override this form’s Status setting (find the setting above in the Form Settings bock).", 'buddyforms' ),
+				'onclick'	=> "setStatusDateFormat(this)"
+
 			) );
+
+			//More formats in https://trentrichardson.com/examples/timepicker
+			$date_format_class = "";
+			if(!is_array($post_status)){
+				$date_format_class = "bf-hidden";
+			}
+
+			$status_date_format                           = isset( $customfield['status_date_format'] ) ? stripcslashes( $customfield['status_date_format'] ) : 'dd/mm/yy';
+			$status_date_format_element  = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][status_date_format]", array(
+					'value'     => $status_date_format,
+					'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://api.jqueryui.com/datepicker/#utility-formatDate">at.</a>', 'buddyforms' ),
+					'class'		=> "status-date-format ".$date_format_class,
+
+			) );
+
+			$form_fields['general']['status_date_format'] =$status_date_format_element;
+
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;
 		case 'featured_image':

@@ -228,6 +228,15 @@ function buddyforms_load_select2(element) {
         });
 }
 
+function setStatusDateFormat(arg){
+    if(arg.checked){
+        jQuery('.status-date-format').show();
+    }else{
+        jQuery('.status-date-format').hide();
+    }
+
+}
+
 //
 // Helper Function to lode form element templates depend on the form type
 //
@@ -1161,5 +1170,7 @@ jQuery(document).ready(function (jQuery) {
         }
         return false;
     });
+
+
 
 });
