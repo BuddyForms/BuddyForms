@@ -1119,8 +1119,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								);
 							}
 							$label_name = $labels_layout === 'label' ? $name . $required : '';
-							$dropdown   = <<<MARKDOWN
-							<script>
+							$dropdown   = <<<HTML
+								<script>
 								jQuery(document).ready(function () {
 									const select2Elm = jQuery(".bf-select2-{$field_id}");
 
@@ -1129,29 +1129,22 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 										jQuery(this).prop("selected", true);
 									});
 
-								    select2Elm.select2({
-								    	placeholder: function(){
-									        jQuery(this).data("placeholder");
-									    },
-									    allowClear: true,
-									    tokenSeparators: [','],
-								       	{$minimumResultsForSearch}
-								       	{$maximumSelectionLength}
-								       	{$ajax_options}
-									    {$tags}
-								    });
-								    jQuery(".bf-select2-{$field_id}").on("change", function () {
-					                     var formSlug = jQuery(this).data("form");
-					                     if(formSlug && buddyformsGlobal && buddyformsGlobal[formSlug]){
-				                            if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-					                            jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
-					                        }
-					                     }
-					                });
-							    });
-							</script>
-	                        <div class="bf_inputs bf-input">{$dropdown}</div>
-MARKDOWN;
+									select2Elm.select2({
+										placeholder: function(){
+											jQuery(this).data("placeholder");
+										},
+										allowClear: true,
+										tokenSeparators: [','],
+										{$minimumResultsForSearch}
+										{$maximumSelectionLength}
+										{$ajax_options}
+										{$tags}
+									});
+								});
+								</script>
+								<div class='bf_inputs bf-input'>{$dropdown}</div>
+							HTML;
+
 							//Load select2
 							$element = new Element_Select2( $dropdown, $name, $slug, $customfield );
 							$form->addElement( $element );
