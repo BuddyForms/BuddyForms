@@ -1140,6 +1140,14 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 										{$ajax_options}
 										{$tags}
 									});
+									jQuery(".bf-select2-{$field_id}").on("change", function () {
+									var formSlug = jQuery(this).data("form");
+									if (formSlug && buddyformsGlobal && buddyformsGlobal[formSlug]){
+										if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
+											jQuery('form[id="buddyforms_form_' + formSlug+'"]').validate().element(".bf-select2-{$field_id}");
+										}
+									}
+								});
 								});
 								</script>
 								<div class='bf_inputs bf-input'>{$dropdown}</div>
