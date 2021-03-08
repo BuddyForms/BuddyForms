@@ -939,20 +939,42 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 				$meta_value = wp_strip_all_tags( $meta_value );
 			}
 
-			if ( ! $full_string ) {
+			if ( ! $html && ! $full_string ) {
 				$meta_value = buddyforms_add_ellipsis( $meta_value );
 			}
 			break;
+		case 'file':
 		case 'upload':
 		case 'featured_image':
-			$result        = '';
-			$attachment_id = explode( ",", $meta_value );
-			foreach ( $attachment_id as $id ) {
-				if ( ! empty( $id ) ) {
-					$result = wp_get_attachment_url( $id );
+			$result        = array();
+			$attachment_ids = explode( ",", $meta_value );
+			foreach ( $attachment_ids as $attachment_id ) {
+				if ( ! empty( $attachment_id ) ) {
+					$attachment_url = wp_get_attachment_url( $attachment_id );
+
+					if ( $html ) {
+						$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+
+						if ( ! $attachment_thumbnail_url  ) {
+							$attachment_thumbnail_url = array( BUDDYFORMS_ASSETS . '/images/multimedia.png' );
+						}
+
+						$result[] = "<a href='".$attachment_url."' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";
+
+					} else {
+						$result[] = $attachment_url;
+					}
+
 				}
 			}
-			$meta_value = ( ! empty( $result ) ) ? trim( $result ) : '';
+
+			$glue       = $html ? ' ' : ', ';
+			$meta_value = ( ! empty( $result ) ) ? trim( implode( $glue, $result ) ) : '';
+
+			if ( ! $html && ! $full_string ) {
+				$meta_value = buddyforms_add_ellipsis( $meta_value );
+			}
+
 			break;
 		case 'Creation_Date':
 			$meta_value = get_the_date( 'F j, Y', $post_id );
