@@ -1425,15 +1425,23 @@ JS;
 				$date_format_class = "bf-hidden";
 			}
 
-			$status_date_format                           = isset( $customfield['status_date_format'] ) ? stripcslashes( $customfield['status_date_format'] ) : 'dd/mm/yy';
+			$status_date_format                           = isset( $customfield['status_date_format'] ) ? !empty($customfield['status_date_format']) ? stripcslashes( $customfield['status_date_format'] ) : 'dd/mm/yy': 'dd/mm/yy';
 			$status_date_format_element  = new Element_Textbox( '<b>' . __( 'Date Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][status_date_format]", array(
 					'value'     => $status_date_format,
 					'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://api.jqueryui.com/datepicker/#utility-formatDate">at.</a>', 'buddyforms' ),
 					'class'		=> "status-date-format ".$date_format_class,
 
 			) );
+			$status_time_format                           = isset( $customfield['status_time_format'] ) ? !empty($customfield['status_time_format']) ? stripcslashes( $customfield['status_time_format'] ) : 'hh:mm:ss': 'hh:mm:ss';
+			$status_time_format_element  = new Element_Textbox( '<b>' . __( 'Time Format', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][status_time_format]", array(
+					'value'     => $status_time_format,
+					'shortDesc' => __( 'Read more about the format <a target="_blank" href="https://api.jqueryui.com/datepicker/#utility-formatDate">at.</a>', 'buddyforms' ),
+					'class'		=> "status-time-format ".$date_format_class,
+
+			) );
 
 			$form_fields['general']['status_date_format'] =$status_date_format_element;
+			$form_fields['general']['status_time_format'] =$status_time_format_element;
 
 			$form_fields['hidden']['type']         = new Element_Hidden( "buddyforms_options[form_fields][" . $field_id . "][type]", $field_type );
 			break;

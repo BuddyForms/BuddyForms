@@ -535,9 +535,10 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 
 							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr, $customfield ) );
 							$status_date_format =  isset($customfield['status_date_format']) ? $customfield['status_date_format'] : 'dd/mm/yy';
+							$status_time_format =  isset($customfield['status_time_format']) ? $customfield['status_time_format'] : 'hh:mm:ss';
 							ob_start();
 							echo '<script type="text/javascript">
-									jQuery("input[name='.'schedule'.']").datepicker({dateFormat: "'.$status_date_format.'"}).val();
+									jQuery("input[name='.'schedule'.']").datetimepicker({dateFormat: "'.$status_date_format.'",timeFormat: "'.$status_time_format.'"}).val();
 
 									</script>';
 							$tmp = ob_get_clean();
