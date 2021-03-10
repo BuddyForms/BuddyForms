@@ -531,7 +531,21 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap bf_datetimepicker';
 							$element_attr['id']          = $element_attr['id'] . '_bf_datetime';
 							$element_attr['placeholder'] = __( 'Schedule Time', 'buddyforms' );
+
+
 							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr, $customfield ) );
+							$status_date_format =  isset($customfield['status_date_format']) ? $customfield['status_date_format'] : 'dd/mm/yy';
+							$status_time_format =  isset($customfield['status_time_format']) ? $customfield['status_time_format'] : 'hh:mm:ss';
+							ob_start();
+							echo '<script type="text/javascript">
+									jQuery("input[name='.'schedule'.']").datetimepicker({dateFormat: "'.$status_date_format.'",timeFormat: "'.$status_time_format.'"}).val();
+
+									</script>';
+							$tmp = ob_get_clean();
+
+							$elementJs = new Element_HTML( $tmp,"","",array() );
+							$form->addElement( $elementJs );
+
 
 						}
 						break;
