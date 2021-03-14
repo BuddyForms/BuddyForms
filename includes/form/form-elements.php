@@ -1133,7 +1133,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								);
 							}
 							$label_name = $labels_layout === 'label' ? $name . $required : '';
-							$dropdown   = <<<MARKDOWN
+							$dropdown   = <<<HTML
 								<script>
 								jQuery(document).ready(function () {
 									const select2Elm = jQuery(".bf-select2-{$field_id}");
@@ -1165,7 +1165,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								});
 								</script>
 								<div class='bf_inputs bf-input'>{$dropdown}</div>
-							MARKDOWN;
+HTML;
 
 							//Load select2
 							$element = new Element_Select2( $dropdown, $name, $slug, $customfield );
