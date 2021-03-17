@@ -220,6 +220,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_login':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Username', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -242,7 +243,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_email':
 			unset( $form_fields['advanced']['slug'] );
-
+			unset($form_fields['advanced']['metabox_enabled']);
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'User eMail', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
 				'data'     => $field_id,
@@ -267,6 +268,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_first':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'First Name', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -287,6 +289,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_last':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Last Name', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -307,6 +310,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'display_name':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Display Name', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -327,6 +331,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_pass':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Password', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -362,6 +367,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_website':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Website', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
@@ -382,6 +388,7 @@ function buddyforms_display_form_element( $args ) {
 			break;
 		case 'user_bio':
 			unset( $form_fields['advanced']['slug'] );
+			unset($form_fields['advanced']['metabox_enabled']);
 
 			$name                           = isset( $customfield['name'] ) ? stripcslashes( $customfield['name'] ) : __( 'Bio', 'buddyforms' );
 			$form_fields['general']['name'] = new Element_Textbox( '<b>' . __( 'Label', 'buddyforms' ) . '</b>', "buddyforms_options[form_fields][" . $field_id . "][name]", array(
