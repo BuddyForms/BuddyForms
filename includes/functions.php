@@ -315,7 +315,7 @@ add_filter( 'register_url', 'buddyforms_register_url' );
 
 add_filter( 'login_form_bottom', 'buddyforms_register_link', 10, 2 );
 function buddyforms_register_link( $wp_login_form, $args) {
-	
+
 	if ( $args['form_id'] !== 'bf_loginform') {
 		return $wp_login_form;
 	}
@@ -1377,11 +1377,19 @@ add_action( 'wp_ajax_upload_image_from_url', 'buddyforms_upload_image_from_url' 
 function buddyforms_upload_image_from_url() {
 	$url     = isset( $_REQUEST['url'] ) ? $_REQUEST['url'] : '';
 	$file_id = isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : '';
+	$accepted_files = isset( $_REQUEST['accepted_files'] ) ? explode(',',$_REQUEST['accepted_files']) : array('jpeg');
+
+
 	if ( ! empty( $url ) && ! empty( $file_id ) ) {
 		$upload_dir = wp_upload_dir();
 		$image_url  = urldecode( $url );
 		$image_data = file_get_contents( $image_url ); // Get image data
         $image_data_information = getimagesize($image_url);
+		$image_mime_information = $image_data_information['mime'];
+		if(!in_array($image_mime_information,$accepted_files)){
+			echo wp_json_encode( array( 'status' => 'FAILED', 'response' => __('File type '.$image_mime_information.' is not allowed.','budduforms') ) );
+			die();
+		}
 
 		if ( $image_data && $image_data_information){
 			$file_name   = $file_id . ".png";
