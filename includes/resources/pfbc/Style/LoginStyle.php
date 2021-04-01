@@ -32,5 +32,8 @@ $css_form_id = 'buddyforms_form_' . $form_slug;
         border-radius: 3px;
         color: inherit;
         font: inherit;
+		font-size: 15px;
+		padding: 15px;
+		min-height: 40px;
     }
 </style>
