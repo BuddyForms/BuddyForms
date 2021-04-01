@@ -222,7 +222,7 @@ function buddyforms_wp_login_form( $hide = false, $form_slug = 'none' ) {
  * @return string|boolean
  */
 function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args = array(), $hide = false ) {
-	global $buddyforms;
+	global $buddyforms, $wp;
 
 	if ( is_admin() ) {
 		return false;
@@ -255,6 +255,23 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	}
 
 	$wp_login_form .= '<h3>' . $title . '</h3>';
+
+	if ( isset( $_GET['bf_login_error_redirect'] ) ) {
+
+		// Remove query strings form URL.
+		$wp_login_form .= '<script>window.history.replaceState(null, null, window.location.pathname);</script>';
+
+		$wp_login_form .= '<div class="bf-login-error">';
+		foreach ($_GET as $key => $value) {
+			if ( strpos( $key, 'error_msg_' ) !== false ) {
+				$error = str_replace( 'Error: ', '<strong>Error: </strong>',  $value);
+				$wp_login_form .= $error .'<br />';
+			}
+		}
+
+		$wp_login_form .= '</div>';
+	}
+
 	$wp_login_form .= wp_login_form(
 		array(
 			'echo'           => false,
@@ -275,6 +292,10 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 
 	$wp_login_form = str_replace( '</form>', '<input type="hidden" name="caller" value="' . esc_attr( $caller ) . '"></form>', $wp_login_form );
 
+	if ( isset( $wp->request ) ) {
+		$wp_login_form = str_replace( '</form>', '<input type="hidden" name="login_error_redirect" value="' . $wp->request . '"></form>', $wp_login_form );
+	}
+
 	if ( $form_slug != 'none' ) {
 		if ( $buddyforms[ $form_slug ]['public_submit'] == 'registration_form' && $buddyforms[ $form_slug ]['logged_in_only_reg_form'] != 'none' ) {
 			$reg_form_slug = $buddyforms[ $form_slug ]['logged_in_only_reg_form'];
@@ -290,6 +311,50 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 
 	return $wp_login_form;
 }
+
+function buddyforms_wp_login_errors_redirect( $errors ) {
+	global $pagenow;
+
+	if ( empty( $_POST['login_error_redirect'] ) ) {
+		return $errors;
+	}
+
+	if ( isset( $_GET['action'] ) && $_GET['action'] === 'logout' ) {
+		return $errors;
+	}
+
+	if ( isset( $_GET['action'] ) && $_GET['action'] === 'switch_to_user' ) {
+		return $errors;
+	}
+
+	if ( isset( $_GET['action'] ) && $_GET['action'] === 'switch_to_olduser' ) {
+		return $errors;
+	}
+
+	if ( $pagenow !== "wp-login.php" || $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+		return $errors;
+	}
+
+	$login_page 	    = $_POST['login_error_redirect'];
+	$new_login_page_url = home_url( $login_page ) . '?bf_login_error_redirect=1&';
+	$errors 			= $errors->get_error_messages();
+
+	for ( $i = 0; $i < count( $errors ); $i++ ) {
+
+		$new_login_page_url .= 'error_msg_' . $i . '=' . wp_strip_all_tags( $errors[ $i ] );
+
+		// Isn't last iteration?
+		if ( $i !== ( count( $errors ) - 1 ) ) {
+			$new_login_page_url .= '&';
+		}
+
+	}
+
+	wp_redirect( esc_url_raw( $new_login_page_url ) );
+	exit;
+}
+
+add_filter( 'wp_login_errors', 'buddyforms_wp_login_errors_redirect' );
 
 /**
  * since 2.5.13
