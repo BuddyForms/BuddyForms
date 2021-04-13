@@ -70,6 +70,19 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		padding-right: 0;
 	}
 
+	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control,
+	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control {
+		display: block;
+		width: 100%;
+		border: 1px solid #aaa;
+	}
+
+	/* BuddyBoss */ body.buddyboss-theme #buddypress .standard-form textarea {
+		padding-top: 14px;
+		padding-bottom: 14px;
+		height: auto;
+	}
+
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .form-control,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input textarea,
@@ -110,13 +123,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
 			if( $bfdesign['field_font_color']['style'] == 'color' ) {
 				echo 'color: ' . $bfdesign['field_font_color']['color'] . ';';
 			} ?>
-	}
-
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input:not([type="checkbox"], [type="radio"])
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input:not([type="checkbox"], [type="radio"]) {
-		display: block;
-		width: 100%;
-		border: 1px solid #aaa;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="checkbox"],
@@ -168,6 +174,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"],
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input input[type="range"] {
 		border: none;
+		outline: none;
 	}
 
 	/* Design Options - Text Fields Active */
@@ -440,32 +447,6 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	/* Divi */ .et-db #et-boc .et-l #loginform input.input,
 	#loginform input.input {
 		max-width: 300px;
-	}
-
-	/* Divi */ .et-db #et-boc .et-l #loginform input.input,
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form textarea,
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=url],
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=link],
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=text],
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=email],
-	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=password],
-	#loginform input.input,
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form textarea,
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=url],
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=link],
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=text],
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=email],
-	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .standard-form input[type=password] {
-		width: 100%;
-		background: #fff;
-		border: 1px solid #ccc;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-		border-radius: 3px;
-		color: inherit;
-		font: inherit;
-		font-size: 14px;
-		padding: 6px;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> fieldset .col-xs-12,
@@ -777,19 +758,26 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		height: 100%;
 	}
 
+	.select2-container li.select2-results__option {
+		margin: 0;
+	}
+
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear,
 	.the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-selection .select2-selection__clear {
+		height: 26px;
 		right: 0;
-		top: 0;
+		top: calc( 50% - 26px/2 );
 		bottom: 0px;
 		position: absolute;
 		margin-left: 5px !important;
-		font-size: 1rem;
-		display: flex;
-    align-items: center;
+		font-size: 15px;
+    	align-items: center;
+		padding: 0;
+		color: #666666;
+		background: transparent;
 		<?php
 			if(!empty($bfdesign['field_padding'])) {
-				echo 'right: ' . ($bfdesign['field_padding'] + 35) . 'px;';
+				echo 'right: ' . ($bfdesign['field_padding'] + 25) . 'px;';
 			}
 		?>
 	}
@@ -822,6 +810,8 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		font-weight: bold;
 		margin-right: 5px;
 		display: inline-block;
+		padding-right: 9px;
+		background-color: #e4e4e4;
 	}
 
 	/* Divi */ .et-db #et-boc .et-l .the_buddyforms_form .<?php echo esc_attr($css_form_class) ?> .bf-input .select2-container--default .select2-selection--multiple .select2-selection__clear,
@@ -929,7 +919,7 @@ $css_form_class = 'buddyforms-' . $form_slug;
 		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%2.5.21-beta11.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
 		<?php
 			if (!empty($bfdesign['field_padding'])) {
-				echo 'padding: ' . $bfdesign['field_padding'] . 'px !important;';
+				echo 'padding: ' . $bfdesign['field_padding'] . 'px;';
 				//echo 'width: calc(100% - ' . ($bfdesign['field_padding'] * 2) . 'px) !important;';
 				echo 'background-position: right ' . $bfdesign['field_padding'] . 'px top 50%, 0 0 !important;';
 			}
