@@ -1304,7 +1304,7 @@ function BuddyForms() {
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
                     var thousandsSeparator = (fieldData.thousands_separator) ? fieldData.thousands_separator : '.';
-                    var prefix = (fieldData.prefix) ? fieldData.prefix : '$';
+                    var prefix = (fieldData.prefix) ? fieldData.prefix : '';
                     var suffix = (fieldData.suffix) ? fieldData.suffix : '';
                     var centsSeparator = (fieldData.cents_separator) ? fieldData.cents_separator : ',';
 
