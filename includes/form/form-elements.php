@@ -1262,12 +1262,20 @@ HTML;
 							'action'          => $action,
 						);
 
-						// hook to add your form element
+						/**
+						 * Display your custom form elements
+						 */
 						$form = apply_filters( 'buddyforms_create_edit_form_display_element', $form, $form_args );
 
 						break;
 
 				}
+
+				/**
+				 * Add or edit form elements
+				 */
+				$form = apply_filters( 'buddyforms_create_edit_form_add_element', $form, $customfield, $field_id, $element_attr );
+
 			}
 
 		}
