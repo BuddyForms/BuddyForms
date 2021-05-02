@@ -965,10 +965,15 @@ function BuddyForms() {
     }
 
     function enabledGarlic() {
-        var bf_garlic = jQuery('.bf-garlic');
+        const bf_garlic = jQuery('.bf-garlic');
+
+        BuddyFormsHooks.doAction('buddyforms:before-garlic-enabled', bf_garlic);
+
         if (bf_garlic.length > 0) {
             bf_garlic.garlic();
         }
+
+        BuddyFormsHooks.doAction('buddyforms:after-garlic-enabled', bf_garlic);
     }
 
     function enabledSelect2() {
