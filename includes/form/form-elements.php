@@ -531,7 +531,21 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$element_attr['class']       = $element_attr['class'] . ' bf_datetime bf_datetime_wrap bf_datetimepicker';
 							$element_attr['id']          = $element_attr['id'] . '_bf_datetime';
 							$element_attr['placeholder'] = __( 'Schedule Time', 'buddyforms' );
+
+
 							$form->addElement( new Element_Textbox( '', 'schedule', $element_attr, $customfield ) );
+							$status_date_format =  isset($customfield['status_date_format']) ? $customfield['status_date_format'] : 'dd/mm/yy';
+							$status_time_format =  isset($customfield['status_time_format']) ? $customfield['status_time_format'] : 'hh:mm:ss';
+							ob_start();
+							echo '<script type="text/javascript">
+									jQuery("input[name='.'schedule'.']").datetimepicker({dateFormat: "'.$status_date_format.'",timeFormat: "'.$status_time_format.'"}).val();
+
+									</script>';
+							$tmp = ob_get_clean();
+
+							$elementJs = new Element_HTML( $tmp,"","",array() );
+							$form->addElement( $elementJs );
+
 
 						}
 						break;
@@ -1119,8 +1133,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 								);
 							}
 							$label_name = $labels_layout === 'label' ? $name . $required : '';
-							$dropdown   = <<<MARKDOWN
-							<script>
+							$dropdown   = <<<HTML
+								<script>
 								jQuery(document).ready(function () {
 									const select2Elm = jQuery(".bf-select2-{$field_id}");
 
@@ -1129,29 +1143,30 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 										jQuery(this).prop("selected", true);
 									});
 
-								    select2Elm.select2({
-								    	placeholder: function(){
-									        jQuery(this).data("placeholder");
-									    },
-									    allowClear: true,
-									    tokenSeparators: [','],
-								       	{$minimumResultsForSearch}
-								       	{$maximumSelectionLength}
-								       	{$ajax_options}
-									    {$tags}
-								    });
-								    jQuery(".bf-select2-{$field_id}").on("change", function () {
-					                     var formSlug = jQuery(this).data("form");
-					                     if(formSlug && buddyformsGlobal && buddyformsGlobal[formSlug]){
-				                            if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-					                            jQuery('form[id="buddyforms_form_'+formSlug+'"]').valid();
-					                        }
-					                     }
-					                });
-							    });
-							</script>
-	                        <div class="bf_inputs bf-input">{$dropdown}</div>
-MARKDOWN;
+									select2Elm.select2({
+										placeholder: function(){
+											jQuery(this).data("placeholder");
+										},
+										allowClear: true,
+										tokenSeparators: [','],
+										{$minimumResultsForSearch}
+										{$maximumSelectionLength}
+										{$ajax_options}
+										{$tags}
+									});
+									jQuery(".bf-select2-{$field_id}").on("change", function () {
+									var formSlug = jQuery(this).data("form");
+									if (formSlug && buddyformsGlobal && buddyformsGlobal[formSlug]){
+										if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
+											jQuery('form[id="buddyforms_form_' + formSlug+'"]').validate().element(".bf-select2-{$field_id}");
+										}
+									}
+								});
+								});
+								</script>
+								<div class='bf_inputs bf-input'>{$dropdown}</div>
+HTML;
+
 							//Load select2
 							$element = new Element_Select2( $dropdown, $name, $slug, $customfield );
 							$form->addElement( $element );

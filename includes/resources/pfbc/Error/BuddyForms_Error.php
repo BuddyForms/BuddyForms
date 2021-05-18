@@ -35,6 +35,10 @@ class BuddyForms_Error extends WP_Error {
 		}
 
 		$first_item  = reset($messages);
+		$first_key = key($messages);
+		if(strpos($first_item,$first_key)  !== false){
+			return $first_item;
+		}
 		return key($messages).': '. $first_item;
 	}
 

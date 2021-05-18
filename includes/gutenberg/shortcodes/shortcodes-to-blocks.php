@@ -46,7 +46,7 @@ function buddyforms_shortcodes_to_block_init() {
 	}
 	wp_localize_script( 'bf-embed-form', 'buddyforms_post_forms', $forms );
 
-	wp_localize_script( 'bf-embed-form', 'buddyforms_create_new_form_url', get_admin_url( get_current_blog_id(), 'post-new.php?post_type=buddyforms' ) );
+	wp_add_inline_script( 'bf-embed-form', 'const buddyforms_create_new_form_url = "' . get_admin_url( get_current_blog_id(), 'post-new.php?post_type=buddyforms' . '"' ) );
 
 	// All WordPress User Roles
 	$roles = buddyform_get_role_names();

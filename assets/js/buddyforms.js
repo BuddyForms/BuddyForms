@@ -705,7 +705,11 @@ function BuddyForms() {
             ) {
                 return true;
             }
-            if (Dropzone) {
+
+            if (jQuery(element).hasClass('upload_field_from_url')) {
+                return jQuery(element).val() !== '';
+
+            } else if (Dropzone) {
                 var dropZoneId = jQuery(element).attr('name');
                 var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
                 if (currentDropZone) {
@@ -745,20 +749,30 @@ function BuddyForms() {
             ) {
                 return true;
             }
-            var $fields = jQuery('.upload_field_input', element.form),
-                $fieldsFirst = $fields.eq(0),
-                validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this),
-                result = $fields.filter(function (key) {
-                    var dropZoneId = jQuery(this).attr('name');
-                    var currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
-                    if (currentDropZone.files.length > 0) {
-                        return currentDropZone.files.filter(function (file) {
-                            return file.status !== Dropzone.SUCCESS;
-                        });
-                    } else {
-                        return true;
-                    }
-                });
+
+            const $fields      = jQuery('.upload_field_input', element.form);
+            const $fieldsFirst = $fields.eq(0);
+            const validator    = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : jQuery.extend({}, this);
+
+            const result = $fields.filter(function (key) {
+                const dropZoneId      = jQuery(this).attr('name');
+
+                // Check if field it's a dropzone valid field.
+                if (typeof jQuery('#' + dropZoneId)[0] === 'undefined') {
+                    return false;
+                }
+
+                const currentDropZone = jQuery('#' + dropZoneId)[0].dropzone;
+
+                if (currentDropZone.files.length > 0) {
+                    return currentDropZone.files.filter(function (file) {
+                        return file.status !== Dropzone.SUCCESS;
+                    });
+                } else {
+                    return true;
+                }
+            });
+
             var isValid = true;
             if (jQuery.isArray(result)) {
                 isValid = result.length === 0;

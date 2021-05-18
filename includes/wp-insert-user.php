@@ -80,7 +80,7 @@ function buddyforms_wp_update_user() {
 			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ), 'user_pass', $form_slug ) );
 		}
 
-		buddyforms_insert_user_set_error( $form_slug );
+
 	}
 
 	// Let us check if we run into any error.
@@ -226,7 +226,7 @@ function buddyforms_wp_insert_user() {
 			$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_password_mismatch', __( 'Passwords do not match', 'buddyforms' ), '', $form_slug ) );
 		}
 
-		buddyforms_insert_user_set_error( $form_slug );
+
 
 	} else {
 		// General error message that one of the required fields are missing
@@ -316,7 +316,7 @@ function buddyforms_insert_user_set_error( $form_slug = '' ) {
 			 * @var  BuddyForms_Error|WP_Error $error
 			 */
 			foreach ( $global_error->get_global_error()->errors as $code => $error ) {
-				$message = $global_error->get_global_error()->get_error_message( $code );
+				//$message = $global_error->get_global_error()->get_error_message( $code );
 				$data    = $global_error->get_global_error()->get_error_data( $code );
 				if ( empty( $form_slug ) ) {
 					$form_slug = $global_error->get_global_error()->get_form_slug();
@@ -324,7 +324,7 @@ function buddyforms_insert_user_set_error( $form_slug = '' ) {
 				if ( empty( $message ) ) {
 					continue;
 				}
-				$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $data, $form_slug ) );
+				//$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $data, $form_slug ) );
 			}
 		}
 	}

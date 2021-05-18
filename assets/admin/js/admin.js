@@ -228,6 +228,17 @@ function buddyforms_load_select2(element) {
         });
 }
 
+function setStatusDateFormat(arg){
+    if(arg.checked){
+        jQuery('.status-date-format').show();
+        jQuery('.status-time-format').show();
+    }else{
+        jQuery('.status-date-format').hide();
+        jQuery('.status-time-format').hide();
+    }
+
+}
+
 //
 // Helper Function to lode form element templates depend on the form type
 //
@@ -551,8 +562,8 @@ jQuery(document).ready(function (jQuery) {
 
                 jQuery(window).scrollTop(0);
 
-                // Hide all post box metaboxes except the buddyforms meta boxes
-                jQuery('div .postbox').not('.buddyforms-metabox').hide();
+                // Remove all post box metaboxes except the buddyforms meta boxes
+                jQuery('div .postbox').not('.buddyforms-metabox, #submitdiv').remove();
 
                 // Show the submit metabox
                 jQuery('#submitdiv').show();
@@ -1161,5 +1172,7 @@ jQuery(document).ready(function (jQuery) {
         }
         return false;
     });
+
+
 
 });
