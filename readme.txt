@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 2.5.30
+Stable tag: 2.5.31-beta.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,6 +397,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.31-beta.1 - 17 May 2021 =
+* Improvements on the Price field to allow price without prefix.
+* Added new hook "buddyforms_create_edit_form_add_element" to add or edit form fields on the Frontend.
+* Added JavaScript Hook before and after the garlic init.
+
 = 2.5.30 - 17 May 2021 =
 * Fixed/improvement the UI on Checkbox & Radios inputs on the Front-end view of forms.
 * Fixed misleading error message shown on the Category Field in the Form Builder.
