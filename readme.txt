@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 2.5.30-beta.3
+Stable tag: 2.5.30
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -397,22 +397,21 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
-= 2.5.30-beta.3 - 1 Apr 2021 =
-* Removed the “Add this field to Metabox” option for  the user fields.
-* Fixed to validate mime type when upload image from url is checked.
-* Added the notification feature to the registration forms.
-* Improvements to show login errors on login forms.
-
-= 2.5.30-beta.2 - 14 Mar 2021 =
-* Fixed compatibilty issue witn WP 5.7 related with Gutenberg Blocks.
-* Added Time & Date Format to the schedule option of the post_status field.
-
-= 2.5.30-beta.1 - 9 Mar 2021 =
+= 2.5.30 - 17 May 2021 =
 * Fixed/improvement the UI on Checkbox & Radios inputs on the Front-end view of forms.
 * Fixed misleading error message shown on the Category Field in the Form Builder.
 * Fixed issue related with placeholder on select2 fields for Safari 13.x (<=).
 * Improved function to output HTML for Upload and File fields, this improvement its used by BF Hook Fields.
 * Fixed jQuery Validation on select2 fields to avoid trigger other fields validation.
+* Fixed compatibilty issue witn WP 5.7 related with Gutenberg Blocks.
+* Added Time & Date Format to the schedule option of the post_status field.
+* Removed the “Add this field to Metabox” option for  the user fields.
+* Fixed to validate mime type when upload image from url is checked.
+* Added the notification feature to the registration forms.
+* Improvements to show login errors on login forms.
+* Remove unused Composer dependencies.
+* improvement on the UI for standard form fields at Front-end.
+* Fixed conflict with ACF metabox on the Form Builder.
 
 = 2.5.29 - 19 Feb 2021 =
 * Fixed issue related with wrong server-side validation messages.
