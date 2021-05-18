@@ -308,7 +308,7 @@ class Element_Upload extends Element_Textbox {
 		if ( strpos($mime_type_result,'application/rar') || strpos($mime_type_result,'application/x-7z-compressed')
 		    || strpos($mime_type_result,'application/x-gzip') || strpos($mime_type_result,'application/zip') ){
 
-			$mime_type_result .=',.zip';
+			$mime_type_result .=',.zip, .rar';
 		}
 		if ( strpos($mime_type_result,'audio/mp3') ){
 
