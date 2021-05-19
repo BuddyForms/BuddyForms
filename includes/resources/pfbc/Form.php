@@ -373,6 +373,24 @@ class Form extends Base {
 		$this->_values = array_merge( $this->_values, $values );
 	}
 
+	public function getValues( array $names, $single = false ) {
+		$values   = array();
+		$elements = $this->getElements();
+
+		foreach ($elements as $element_id => $element) {
+			if ( in_array( $element->getName(), $names ) ) {
+				$values[ $element->getName() ] = $element->getAttribute( 'value' );
+			}
+		}
+
+		// Is single?
+		if ( $single === true ) {
+			$values = reset( $values );
+		}
+
+		return $values;
+	}
+
 	/**
 	 * @param null $element
 	 * @param bool $returnHTML
