@@ -2090,3 +2090,26 @@ function buddyforms_add_bf_thickbox() {
 	wp_enqueue_script( 'buddyforms-thickbox' );
 	wp_enqueue_style( 'buddyforms-thickbox' );
 }
+
+add_filter( 'buddyforms_mail_to_before_send_notification', 'buddyforms_process_shortcode_notificate_to_attr', 10, 2 );
+function buddyforms_process_shortcode_notificate_to_attr( $mail_to, $notification ) {
+
+	if ( isset( $_POST['notificate_to'] ) && ! empty( $_POST['notificate_to'] ) ) {
+		$notificate_to = sanitize_text_field( $_POST['notificate_to'] );
+		$notificate_to = trim( preg_replace( '/\s+/', '', $notificate_to ) );
+		$notificate_to = explode( ',', $notificate_to );
+
+		foreach ( $notificate_to as $value ) {
+			$_notificate_to = explode( '-', $value );
+			$mail_trigger_id = $_notificate_to[0];
+			$user_email = sanitize_email( $_notificate_to[1] );
+
+			// Check if mail_trigger_id match with current notification.
+			if ( $notification['mail_trigger_id'] === $mail_trigger_id && is_email( $user_email ) ) {
+				array_push( $mail_to, $user_email );
+			}
+		}
+	}
+
+	return $mail_to;
+}
