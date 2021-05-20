@@ -108,7 +108,7 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 	// <input type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value="' . $trigger . '">
 
 	$copy_trigger_email = '<div class="copy-trigger-email">';
-	$copy_trigger_email .= '<div><label><b>Copy Trigger ID</b></label><p>Use this code to trigger notification via shortcode, read more <a href="#">here.</a></p></div>';
+	$copy_trigger_email .= '<div><label><b>Copy Trigger ID</b></label><p>Use this code to trigger notification via shortcode. Eg: <br/> <code>[bf form_slug="'. $form_slug .'" <b>notificate_to="'. $trigger . '-userEmail"</b>]</code></div>';
 	$copy_trigger_email .= '<div class="tooltip"><input type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value="' . $trigger . '"><span class="tooltip-container">Copy to clipboard</span> </div>';
 	$copy_trigger_email .= '</div>';
 	$form_setup[] = new Element_HTML( $copy_trigger_email );
