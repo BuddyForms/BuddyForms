@@ -1055,7 +1055,10 @@ jQuery(document).ready(function (jQuery) {
     //
 
     // Remove all Visual Composer elements form BuddyForms View
-    jQuery('*[class^="vc_"]').remove();
+    // Only apply this action on BuddyForms Views
+    if ( window.location.search.indexOf( 'post_type=buddyforms' ) !== -1 ) {
+        jQuery('*[class^="vc_"]').remove();
+    }
 
     //
     // Layout Meta-box related functions
