@@ -305,6 +305,15 @@ class Element_Upload extends Element_Textbox {
 		if ( ! empty( $mime_type ) ) {
 			$mime_type_result = rtrim( trim( $mime_type ), ',' );
 		}
+		if ( strpos($mime_type_result,'application/rar') || strpos($mime_type_result,'application/x-7z-compressed')
+		    || strpos($mime_type_result,'application/x-gzip') || strpos($mime_type_result,'application/zip') ){
+
+			$mime_type_result .=',.zip, .rar';
+		}
+		if ( strpos($mime_type_result,'audio/mp3') ){
+
+			$mime_type_result .=',.mp3';
+		}
 
 		if ( ! empty( $required ) ) {
 			$required = 'data-rule-upload-required=\'true\' ';
