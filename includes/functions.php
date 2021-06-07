@@ -272,19 +272,19 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		$wp_login_form .= '</div>';
 	}
 
-	$wp_login_form .= wp_login_form(
-		array(
-			'echo'           => false,
-			'form_id'		 => 'bf_loginform',
-			'redirect'       => $redirect_url,
-			'id_username'    => 'bf_user_name',
-			'id_password'    => 'bf_user_pass',
-			'label_username' => $label_username,
-			'label_password' => $label_password,
-			'label_remember' => $label_remember,
-			'label_log_in'   => $label_log_in,
-		)
-	);
+	$login_settings = apply_filters( 'buddyforms_loggin_settings',  array(
+		'echo'           => false,
+		'form_id'		 => 'bf_loginform',
+		'redirect'       => $redirect_url,
+		'id_username'    => 'bf_user_name',
+		'id_password'    => 'bf_user_pass',
+		'label_username' => $label_username,
+		'label_password' => $label_password,
+		'label_remember' => $label_remember,
+		'label_log_in'   => $label_log_in,
+	) );
+
+	$wp_login_form .= wp_login_form( $login_settings );
 
 	if ( $form_slug !== 'none' ) {
 		$wp_login_form = str_replace( '</form>', '<input type="hidden" name="form_slug" value="' . esc_attr( $form_slug ) . '"></form>', $wp_login_form );
