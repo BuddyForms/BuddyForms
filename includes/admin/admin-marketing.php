@@ -15,8 +15,6 @@ function buddyforms_marketing_init() {
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
 
-	add_action( 'admin_footer_text', 'passive_feedback_trigger', 1, 1 );
-
 	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
 }
 
@@ -68,20 +66,6 @@ function buddyforms_marketing_include_assets( $content, $base_content, $key = ''
 		'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
 		'key'     => $key,
 	) );
-}
-
-function passive_feedback_trigger( $return ) {
-	$current_screen = get_current_screen();
-
-	if ( ! empty( $current_screen->id ) && strpos( $current_screen->id, 'buddyforms' ) !== false ) {
-		wp_enqueue_style( 'buddyforms-passive-feedback-style', BUDDYFORMS_ASSETS . 'admin/css/passive-feedback.css', array(), BUDDYFORMS_VERSION );
-		wp_enqueue_script( 'buddyforms-html2canvas-script', BUDDYFORMS_ASSETS . 'admin/js/html2canvas.min.js', array(), BUDDYFORMS_VERSION );
-		wp_enqueue_script( 'buddyforms-passive-feedback-script', BUDDYFORMS_ASSETS . 'admin/js/passive-feedback.js', array(), BUDDYFORMS_VERSION );
-
-		include_once BUDDYFORMS_ADMIN_VIEW . 'passive-feedback.php';
-	}
-
-	return $return;
 }
 
 function user_satisfaction_trigger() {

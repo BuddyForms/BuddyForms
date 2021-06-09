@@ -389,7 +389,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'compatibility.php' );
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'cron.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'gdpr.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'change-password.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
