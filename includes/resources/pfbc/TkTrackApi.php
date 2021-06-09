@@ -104,26 +104,6 @@ class TkTrackApi {
 	}
 
 	/**
-	 * Send a passive event
-	 *
-	 * @param $options
-	 * @param string $product
-	 *
-	 * @return array|bool|mixed|object
-	 * @throws \GuzzleHttp\Exception\GuzzleException
-	 * @throws \tk\GuzzleHttp\Exception\GuzzleException
-	 */
-	public function passive_feedback( $args ) {
-		if ( ! is_array( $args ) ) {
-			throw new \InvalidArgumentException;
-		}
-
-		$request = $this->api_version . sprintf( '/passive_feedback/%s', $this->api_key );
-
-		return $this->make_request( $request, 'POST', $args );
-	}
-
-	/**
 	 * @param $endpoint
 	 * @param $method
 	 * @param array $args
