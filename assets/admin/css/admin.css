@@ -1145,8 +1145,14 @@ tr.upload_accepted_fields_container > td > div.bf-input {
     padding: 8px 15px;
 }
 
-.buddyforms_forms_builder .accordion-toggle {
+
+body.post-type-buddyforms .buddyforms-metabox a {
     cursor: pointer;
+    display: inline-block;
+}
+
+body.post-type-buddyforms a.ui-tabs-anchor {
+    display: block;
 }
 
 .buddyforms_forms_builder .accordion-inner {
