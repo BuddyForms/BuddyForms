@@ -59,6 +59,8 @@ echo buddyforms_minify_css( $css );
 						$the_permalink = '#';
 					}
 
+					$the_permalink = apply_filters( 'buddyforms_post_link_on_the_table', $the_permalink, get_the_ID(), $form_slug );
+
 					$post_status = get_post_status();
 
 					$the_title = get_the_title();

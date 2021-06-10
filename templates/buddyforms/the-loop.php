@@ -36,6 +36,8 @@ echo buddyforms_minify_css( $css );
 						$the_permalink = '#';
 					}
 
+					$the_permalink = apply_filters( 'buddyforms_post_link_on_the_loop', $the_permalink, get_the_ID(), $form_slug );
+
 					$post_status      = get_post_status();
 					$post_status_css  = buddyforms_get_post_status_css_class( $post_status, $form_slug );
 					$post_status_name = buddyforms_get_post_status_readable( $post_status );
