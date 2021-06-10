@@ -397,6 +397,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.5.31-beta.5 - 06 Jun 2021 =
+* Fixed issue with "Allow multiple file upload" option on the File field.
+* Added new filter to customize buddyforms login form settings.
+* Remove passive feedback.
+* Fixed CSS glitch on the Form Builder.
+* Added method to dequeue conflictive assets from third-party plugins.
+
 = 2.5.31-beta.4 - 03 Jun 2021 =
 * Added paged attribute on the shortcode buddyforms_the_loop to allow set current page on the pagination.
 * Added two new filter to the links pagination on post list.
