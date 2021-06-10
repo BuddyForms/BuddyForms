@@ -420,7 +420,7 @@ class BuddyFormsAssets {
 			 */
 			$assets_to_remove = array(
 				'js'  => 'sabox-admin-js',
-				'css' => 'sabox-admin-js',
+				'css' => 'saboxplugin-admin-style',
 			);
 
 			foreach ($assets_to_remove as $type => $asset) {
