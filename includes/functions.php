@@ -272,6 +272,10 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		$wp_login_form .= '</div>';
 	}
 
+	if ( empty( $redirect_url ) ) {
+		$redirect_url = home_url();
+	}
+
 	$login_settings = apply_filters( 'buddyforms_loggin_settings',  array(
 		'echo'           => false,
 		'form_id'		 => 'bf_loginform',
