@@ -1854,7 +1854,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	if ( $is_draft_enabled && $include_form_draft_button ) {
 		if ( ! $exist_field_status && $form_type === 'post' && is_user_logged_in() ) {
-			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
+			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : apply_filters( 'buddyforms_draft_button_text',  __( 'Save as draft', 'buddyforms' ), $form_slug );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
 			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'submit', array(
 				'id'             => $form_slug . '-draft',
