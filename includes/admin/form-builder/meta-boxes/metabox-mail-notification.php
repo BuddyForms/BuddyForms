@@ -404,6 +404,8 @@ function buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug
 	</li>
 
 	<?php
+
+	return $trigger;
 }
 
 function buddyforms_new_mail_notification() {
@@ -527,7 +529,16 @@ function buddyforms_new_post_status_mail_notification() {
 			return false;
 		}
 
-		buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug );
+		
+
+		ob_start();
+		$trigger_id   = buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug );
+		$trigger_html = ob_get_clean();
+
+		$json['trigger_id'] = $trigger_id;
+		$json['html']       = $trigger_html;
+
+		echo json_encode( $json );
 	} catch ( Exception $ex ) {
 		error_log( 'BuddyForms::' . $ex->getMessage() );
 	}

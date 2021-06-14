@@ -980,6 +980,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery.ajax({
                 type: 'POST',
                 url: buddyformsGlobal.admin_url,
+                dataType: "json",
                 data: {
                     "action": "buddyforms_new_post_status_mail_notification",
                     'form_slug': jQuery(this).attr('data-form-slug'),
@@ -992,10 +993,10 @@ jQuery(document).ready(function (jQuery) {
                         return false;
                     }
                     jQuery('#no-trigger-post-status-mail-container').hide();
-                    jQuery('#post-status-mail-container').append(data);
+                    jQuery('#post-status-mail-container').append(data['html']);
 
-                    tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body');
-                    tinymce.execCommand('mceAddEditor', false, 'bf_mail_body');
+                    tinymce.execCommand('mceRemoveEditor', false, 'bf_mail_body' + data['trigger_id']);
+                    tinymce.execCommand('mceAddEditor', false, 'bf_mail_body' + data['trigger_id']);
 
                     bf_update_list_item_number_mail();
 
