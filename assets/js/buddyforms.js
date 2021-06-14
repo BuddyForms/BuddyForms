@@ -1023,8 +1023,9 @@ function BuddyForms() {
                         showTimepicker: enableTime || false,
                         stepMinute: parseInt(fieldTimeStep),
                         onSelect: function () {
+                            const $this = jQuery(this);
                             if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-                                jQuery('#buddyforms_form_' + formSlug).valid();
+                                jQuery('#buddyforms_form_' + formSlug).validate().element( $this );
                             }
                         }
                     };
