@@ -342,12 +342,12 @@ class Element_Upload extends Element_Textbox {
 
 			$label = $this->getAttribute( 'placeholder' );
 			if ( $required ) {
-				$label = $label . html_entity_decode( $this->renderRequired() );
+				$label = $label . wp_strip_all_tags( html_entity_decode( $this->renderRequired() ) );
 			}
-			$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
+			//$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
+			$placeholder = ( $labels_layout === 'inline' ) ? $label : __('Image Url', 'buddyforms');
 
-
-			$box .= sprintf( '<input placeholder="Image Url" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s"  accepted_files="%s" onclick="validateAndUploadImage(this)">upload</button>', 'width:75%; margin-right: 3px;', $id . "_upload_from_url", $id, $url, $id, $id,$mime_type_result );
+			$box .= sprintf( '<input placeholder="%s" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s"  accepted_files="%s" onclick="validateAndUploadImage(this)">upload</button>', $placeholder, 'width:75%; margin-right: 3px;', $id . "_upload_from_url", $id, $url, $id, $id,$mime_type_result );
 			$box .= sprintf( '<label  id="%s_label" class="error" ></label>', $id );
 			$box .= sprintf( '<img  id="%s_image" src="%s" ></img>', $id, $url );
 			$box .= sprintf( '<input type="text" style="display: none" class="form-control upload_field_from_url" name="%s" value="%s" id="field_%s" %s />', $id, $attachmet_id, $id, $required );
