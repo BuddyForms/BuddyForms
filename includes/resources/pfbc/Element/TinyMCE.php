@@ -30,7 +30,7 @@ class Element_TinyMCE extends Element_Textarea {
 
 		$ajax = $this->_form->getAjax();
 		if ( ! empty( $ajax ) ) {
-			echo 'jQuery("#$id").bind("submit", function() { tinyMCE.triggerSave(); });';
+			echo 'jQuery("#$id").on("submit", function() { tinyMCE.triggerSave(); });';
 		}
 	}
 

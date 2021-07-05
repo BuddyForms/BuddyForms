@@ -53,7 +53,7 @@ JS;
 
 		$ajax = $this->_form->getAjax();
 		if ( ! empty( $ajax ) ) {
-			echo 'jQuery("#', $id, '").bind("submit", function() { CKEDITOR.instances["', $this->_attributes["id"], '"].updateElement(); });';
+			echo 'jQuery("#', $id, '").on("submit", function() { CKEDITOR.instances["', $this->_attributes["id"], '"].updateElement(); });';
 		}
 	}
 

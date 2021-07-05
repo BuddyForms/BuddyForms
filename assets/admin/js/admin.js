@@ -378,7 +378,7 @@ function buddyforms_process_errors(errors) {
                     case 'number':
                     case 'subject':
                     case 'message': {
-                        jQuery("a[href='#validation-" + type + "-" + current_error.field_id + "']").click();
+                        jQuery("a[href='#validation-" + type + "-" + current_error.field_id + "']").trigger("click");
                         var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
                         sortableBuddyformsElements.accordion({
                             active: false
@@ -396,7 +396,7 @@ function buddyforms_process_errors(errors) {
                     }
                     case 'accordion': {
                         var general_tab_id = jQuery(current_error.element).closest('div').parent().attr("id");
-                        jQuery("a[href='#" + general_tab_id + "']").click();
+                        jQuery("a[href='#" + general_tab_id + "']").trigger("click");
 
                         //close all
                         var sortableBuddyformsElements = jQuery("#sortable_buddyforms_elements");
@@ -417,7 +417,7 @@ function buddyforms_process_errors(errors) {
                     case 'settings': {
                         if (!jQuery(current_error.element).is(':visible')) {
                             var currentId = jQuery(current_error.element).closest('div.tab-pane.ui-widget-content.ui-corner-bottom').attr('id');
-                            jQuery('.buddyform-nav-tabs li[aria-controls="' + currentId + '"]>a').click()
+                            jQuery('.buddyform-nav-tabs li[aria-controls="' + currentId + '"]>a').trigger("click");
                         }
                         break;
                     }
@@ -652,7 +652,7 @@ jQuery(document).ready(function (jQuery) {
     });
 
     // Validate the form before publish
-    jQuery('#publish').click(function () {
+    jQuery('#publish').on('click', function () {
 
         var post_title = jQuery('[name="post_title"]');
 
