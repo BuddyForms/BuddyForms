@@ -385,7 +385,7 @@ jQuery(document).ready(function (jQuery) {
     });
 
     // Trigger the change event after page load to load refresh the ui and show hide options
-    jQuery('select#bf-after-submission-action').change();
+    jQuery('select#bf-after-submission-action').trigger("change");
 
 
     //

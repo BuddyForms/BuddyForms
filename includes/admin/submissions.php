@@ -99,11 +99,10 @@ class BuddyFormsSubmissionPage {
 								<h4><?php _e( 'Select a form to display the submissions', 'buddyforms' ) ?></h4>
 								<script type="text/javascript">
 									jQuery(document).ready(function (jQuery) {
-										jQuery('#buddyforms_admin_menu_submissions_form_select').change(function () {
+										jQuery('#buddyforms_admin_menu_submissions_form_select').on('change', function () {
 											window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + this.value
 										});
-										jQuery('#search_author_button').click(function () {
-
+										jQuery('#search_author_button').on('click', function () {
 											var fslug = jQuery('#buddyforms_admin_menu_submissions_form_select').val();
 											var author_dropdown_value = jQuery('#buddyforms_admin_menu_submissions_author_select').val();
 											window.location = '?post_type=buddyforms&page=buddyforms_submissions&form_slug=' + fslug+'&submission_author='+author_dropdown_value

@@ -10,7 +10,7 @@ if(function_exists('register_block_type')) {
  * @since 2.3.1
  *
  */
-function buddyforms_block_category( $categories, $post ) {
+function buddyforms_block_category( $categories ) {
 	return array_merge(
 		$categories,
 		array(
@@ -22,7 +22,7 @@ function buddyforms_block_category( $categories, $post ) {
 	);
 }
 
-add_filter( 'block_categories', 'buddyforms_block_category', 10, 2 );
+add_filter( 'block_categories_all', 'buddyforms_block_category' );
 
 /**
  * Load all the assets needed

@@ -146,7 +146,7 @@ jQuery(function () {
         });
     });
 
-    jQuery('form').bind('submit', function () {
+    jQuery('form').on('submit', function () {
         jQuery(this).find(':input').prop('disabled', false);
     });
 
@@ -460,7 +460,7 @@ jQuery(document).ready(function () {
             jQuery(document.body).trigger({type: 'buddyform:load_notifications'});
             BuddyFormsBuilderHooks.doAction('buddyforms-change-form-type', [targetType]);
             if(defaultPage && defaultPage.length > 0) {
-                jQuery('#attached_page').val(defaultPage).change();
+                jQuery('#attached_page').val(defaultPage).trigger("change");
             }
         });
         return false;
