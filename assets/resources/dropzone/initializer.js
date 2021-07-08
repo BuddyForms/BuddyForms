@@ -11,22 +11,22 @@ function uploadHandler() {
 
     function buildDropZoneFieldsOptions() {
         jQuery(".upload_field").each(function () {
-            var current = jQuery(this);
-            var clickeable = (current.attr('page') !== 'buddyforms_submissions');
-            var maxFileSize = current.attr('file_limit');
-            var acceptedFiles = current.attr('accepted_files');
-            var multipleFiles = current.attr('multiple_files');
-            var entry = current.data('entry');
-            var form_slug = current.attr('form-slug');
+            var $field = jQuery(this);
+            var clickeable = ($field.attr('page') !== 'buddyforms_submissions');
+            var maxFileSize = $field.attr('file_limit');
+            var acceptedFiles = $field.attr('accepted_files');
+            var multipleFiles = $field.attr('multiple_files');
+            var entry = $field.data('entry');
+            var form_slug = $field.attr('form-slug');
             jQuery('#buddyforms_form_' + form_slug).show();
 
-            initSingleDropZone(current, current.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
+            initSingleDropZone($field, $field.attr('id'), maxFileSize, acceptedFiles, multipleFiles, clickeable, entry)
         })
     }
 
-    function initSingleDropZone(current, id, maxSize, acceptedFiles, multipleFiles, clickeable, uploadFields) {
+    function initSingleDropZone($field, id, maxSize, acceptedFiles, multipleFiles, clickeable, uploadFields) {
         //Hidden field
-        var hidden_field = jQuery(current).find('input[type="text"][style*="hidden"]');
+        var hidden_field = jQuery($field).find('input[type="text"][style*="hidden"]');
         //Container field
         var dropzoneStringId = '#' + id;
         //Set default values
@@ -41,7 +41,7 @@ function uploadHandler() {
                 addRemoveLinks: clickeable,
                 init: function () {
                     this.on('queuecomplete', function () {
-                        current.removeClass('error');
+                        $field.removeClass('error');
                     });
                     this.on('addedfile', function () {
                         DropZoneAddedFile(dropzoneStringId);
@@ -86,7 +86,7 @@ function uploadHandler() {
                 dictFallbackMessage: buddyformsGlobal.localize.upload.dictFallbackMessage || "Your browser does not support drag'n'drop file uploads.",
                 dictDefaultMessage: buddyformsGlobal.localize.upload.dictDefaultMessage || "Drop files here to upload",
             };
-            jQuery(current).dropzone(options);
+            jQuery($field).dropzone(options);
         }
     }
 
@@ -105,17 +105,17 @@ function uploadHandler() {
         formData.append('nonce', buddyformsGlobal.ajaxnonce);
     }
 
-    function DropZoneSuccess(file, response, currentField) {
+    function DropZoneSuccess(file, response, $fieldField) {
         file.previewElement.classList.add("dz-success");
         file['attachment_id'] = response; // push the id for future reference
-        var ids = jQuery(currentField).val() + ',' + response;
+        var ids = jQuery($fieldField).val() + ',' + response;
         var idsFormat = "";
         if (ids[0] === ',') {
             idsFormat = ids.substring(1, ids.length);
         } else {
             idsFormat = ids;
         }
-        jQuery(currentField).attr('value', idsFormat);
+        jQuery($fieldField).attr('value', idsFormat);
     }
 
     function DropZoneError(file, response) {
@@ -124,9 +124,9 @@ function uploadHandler() {
         enabledSubmitButtons();
     }
 
-    function DropZoneRemovedFile(file, currentField) {
+    function DropZoneRemovedFile(file, $fieldField) {
         var attachment_id = file.attachment_id;
-        var ids = jQuery(currentField).val();
+        var ids = jQuery($fieldField).val();
         var remainigIds = ids.replace(attachment_id, "");
         if (remainigIds[0] === ',') {
             remainigIds = remainigIds.substring(1, ids.length);
@@ -135,7 +135,7 @@ function uploadHandler() {
         if (lastChar === ',') {
             remainigIds = remainigIds.slice(0, -1);
         }
-        jQuery(currentField).attr('value', remainigIds);
+        jQuery($fieldField).attr('value', remainigIds);
         handleDeletedMedia(attachment_id);
     }
 
@@ -167,9 +167,9 @@ function uploadHandler() {
     function checkToEnableSubmit() {
         var result = true;
         jQuery(".upload_field").each(function () {
-            var currentDropZone = jQuery(this)[0].dropzone;
-            if (currentDropZone && currentDropZone.files.length > 0) {
-                var allFilesSuccessDiff = currentDropZone.files.filter(function (file) {
+            var $fieldDropZone = jQuery(this)[0].dropzone;
+            if ($fieldDropZone && $fieldDropZone.files.length > 0) {
+                var allFilesSuccessDiff = $fieldDropZone.files.filter(function (file) {
                     return file.status === Dropzone.UPLOADING;
                 });
                 result = allFilesSuccessDiff.length === 0;
@@ -186,6 +186,95 @@ function uploadHandler() {
         }
     }
 
+    function validateAndUploadImage(field) {
+
+        const $field         = jQuery(field);
+        const id             = $field.attr("field-id");
+        const accepted_files = $field.attr("accepted_files");
+        const maxFileSize    = $field.data('max-file-size');
+        const url            = jQuery("#" + id + "_upload_from_url").val();
+
+        const uploadedImages  = parseInt($field.closest('.bf-input').find('.bf-uploaded-image-wrapper').length);
+        const uploadMaxExceeded = parseInt($field .data('upload-max-exceeded'));
+        if (uploadedImages>= uploadMaxExceeded) {
+            const dictMaxFilesExceeded = (((buddyformsGlobal || {}).localize || {}).upload || {}).dictMaxFilesExceeded || "You can not upload any more files.";
+            jQuery("#" + id + "_label").text(dictMaxFilesExceeded);
+            return;
+        }
+
+        jQuery("#" + id + "_label").text("");
+
+        if (checkURL(url)) {
+
+            jQuery("#" + id + "_upload_button").text("Uploading..");
+            jQuery("#" + id + "_upload_button").attr('disabled', true);
+            var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
+            submitButtons.attr('disabled', true);
+
+            jQuery.ajax({
+                url: buddyformsGlobal.admin_url,
+                type: 'post',
+                data: {
+                    action: 'upload_image_from_url',
+                    url: encodeURIComponent(url),
+                    accepted_files: accepted_files,
+                    id: id,
+                    max_file_size: maxFileSize
+                },
+                success: function (response) {
+                    var result = JSON.parse(response);
+                    if (result.status ==="OK"){
+
+                        const attachmentWrapper      = jQuery('<div class="bf-uploaded-image-wrapper"></div>');
+                        const removeImageLocalizeStr = (((buddyformsGlobal || {} ).localize || {}).upload || {}).removeImage || 'Remove Image';
+
+                        jQuery("#field_" + id).closest('.bf-input').append(
+                            attachmentWrapper
+                                .append(`<img id="${id}_image" src="${result.response}" width="150" height="150">`)
+                                .append(`<br><a data-field-id="${id}" data-attachment-id="${result.attachment_id}" class="remove_image_button">${removeImageLocalizeStr}</a>`)
+                        );
+
+                        const $fieldValue = jQuery("#field_" + id).val();
+                        jQuery("#field_" + id).val($fieldValue.trim() + "," + result.attachment_id);
+
+                        jQuery("#" + id + "_upload_button").text("Upload");
+                        jQuery("#" + id + "_upload_button").attr('disabled', false);
+                        submitButtons.attr('disabled', false);
+                    }else{
+                        if(result.status ==="FAILED"){
+                            jQuery("#" + id + "_label").text(result.response);
+                            jQuery("#" + id + "_upload_button").text("Upload");
+                            jQuery("#" + id + "_upload_button").attr('disabled', false);
+                            submitButtons.attr('disabled', false);
+                        }
+                    }
+                },
+                error: function (error) {
+                    var result = JSON.parse(error);
+                }
+
+            });
+
+        } else {
+            jQuery("#" + id + "_label").text("Wrong Url Format");
+        }
+    }
+
+    function uploadFromUrlRemoveFile(el) {
+        const $el = jQuery(el);
+        const attachmentId = $el.data('attachment-id');
+
+        // Remove image from dom.
+        $el.closest('.bf-uploaded-image-wrapper').remove();
+
+        // Delete the media via AJAX
+        handleDeletedMedia(attachmentId);
+    }
+
+    function checkURL(url) {
+        return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+
     return {
         init: function () {
             var uploadFields = jQuery(".upload_field");
@@ -196,69 +285,16 @@ function uploadHandler() {
             if (uploadFields.length > 0) {
                 buildDropZoneFieldsOptions();
             }
+
+            jQuery(document).on('click', '.upload_button', function(){
+                validateAndUploadImage(this);
+            });
+
+            jQuery(document).on('click', '.remove_image_button', function() {
+                uploadFromUrlRemoveFile(this);
+            });
         }
     }
-}
-
-function validateAndUploadImage(field) {
-
-    var current = jQuery(field);
-    var id = current.attr("field-id");
-    var accepted_files = current.attr("accepted_files");
-    jQuery("#" + id + "_label").text("");
-    jQuery("#" + id + "_image").attr('src', "");
-    jQuery("#field_" + id).val("");
-    var url = jQuery("#" + id + "_upload_from_url").val();
-
-    if (checkURL(url)) {
-
-        jQuery("#" + id + "_upload_button").text("Uploading..");
-        jQuery("#" + id + "_upload_button").attr('disabled', true);
-        var submitButtons = jQuery("div.form-actions button.bf-submit[type=submit], div.form-actions button.bf-draft[type=button]");
-        submitButtons.attr('disabled', true);
-
-        jQuery.ajax({
-            url: buddyformsGlobal.admin_url,
-            type: 'post',
-            data: {
-                action: 'upload_image_from_url',
-                url: encodeURIComponent(url),
-                accepted_files: accepted_files,
-                id: id
-            },
-            success: function (response) {
-                var result = JSON.parse(response);
-                if(result.status ==="OK"){
-                    jQuery("#" + id + "_image").attr('src', result.response);
-                    jQuery("#" + id + "_image").attr('width', 300);
-                    jQuery("#" + id + "_image").attr('height', 300);
-                    jQuery("#field_" + id).val(result.attachment_id);
-
-                    jQuery("#" + id + "_upload_button").text("Upload");
-                    jQuery("#" + id + "_upload_button").attr('disabled', false);
-                    submitButtons.attr('disabled', false);
-                }else{
-                    if(result.status ==="FAILED"){
-                        jQuery("#" + id + "_label").text(result.response);
-                        jQuery("#" + id + "_upload_button").text("Upload");
-                        jQuery("#" + id + "_upload_button").attr('disabled', false);
-                        submitButtons.attr('disabled', false);
-                    }
-                }
-            },
-            error: function (error) {
-                var result = JSON.parse(error);
-            }
-
-        });
-
-    } else {
-        jQuery("#" + id + "_label").text("Wrong Url Format");
-    }
-}
-
-function checkURL(url) {
-    return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 var uploadImplementation = uploadHandler();

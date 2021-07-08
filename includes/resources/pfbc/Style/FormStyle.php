@@ -972,4 +972,9 @@ $css_form_class = 'buddyforms-' . $form_slug;
 	span.select2-dropdown.buddyforms-dropdown {
 		z-index: 200000;
 	}
+
+	.bf-uploaded-image-wrapper {
+		margin: 1rem 1rem 1rem 0;
+		float: left;
+	}
 </style>

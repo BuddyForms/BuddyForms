@@ -1447,7 +1447,7 @@ function buddyforms_upload_image_from_url() {
 	$url     = isset( $_REQUEST['url'] ) ? $_REQUEST['url'] : '';
 	$file_id = isset( $_REQUEST['id'] ) ? $_REQUEST['id'] : '';
 	$accepted_files = isset( $_REQUEST['accepted_files'] ) ? explode(',',$_REQUEST['accepted_files']) : array('jpeg');
-
+	$max_file_size  = (float) $_POST['max_file_size'];
 
 	if ( ! empty( $url ) && ! empty( $file_id ) ) {
 		$upload_dir = wp_upload_dir();
@@ -1455,8 +1455,19 @@ function buddyforms_upload_image_from_url() {
 		$image_data = file_get_contents( $image_url ); // Get image data
         $image_data_information = getimagesize($image_url);
 		$image_mime_information = $image_data_information['mime'];
+		$image_size = -1;
+		$image_header = get_headers($image_url, 1);
+		if (isset($image_header['Content-Length'])) {
+			$image_size = ( $image_header['Content-Length'] / 1048576 ); // Get value in mb.
+		}
+
 		if(!in_array($image_mime_information,$accepted_files)){
 			echo wp_json_encode( array( 'status' => 'FAILED', 'response' => __('File type '.$image_mime_information.' is not allowed.','budduforms') ) );
+			die();
+		}
+
+		if ( $image_size > $max_file_size ) {
+			echo wp_json_encode( array( 'status' => 'FAILED', 'response' => __('Image sizes greater than '.$max_file_size.' mb aren\'t allowed.','budduforms') ) );
 			die();
 		}
 

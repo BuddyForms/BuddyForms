@@ -98,6 +98,7 @@ class Element_Upload extends Element_Textbox {
 			'dictFileTooBig'               => __( 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.', 'buddyforms' ),
 			'dictFallbackMessage'          => __( 'Your browser does not support drag\'n\'drop file uploads.', 'buddyforms' ),
 			'dictDefaultMessage'           => __( 'Drop files here to upload', 'buddyforms' ),
+			'removeImage'                  => __('Remove Image', 'buddyforms'),
 		);
 	}
 
@@ -347,9 +348,19 @@ class Element_Upload extends Element_Textbox {
 			//$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
 			$placeholder = ( $labels_layout === 'inline' ) ? $label : __('Image Url', 'buddyforms');
 
-			$box .= sprintf( '<input placeholder="%s" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s"  accepted_files="%s" onclick="validateAndUploadImage(this)">upload</button>', $placeholder, 'width:75%; margin-right: 3px;', $id . "_upload_from_url", $id, $url, $id, $id,$mime_type_result );
+			$box .= sprintf( '<input placeholder="%s" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button" id="%s_upload_button" field-id="%s"  accepted_files="%s" data-upload-max-exceeded="%s" data-max-file-size="%s" class="upload_button">upload</button>', $placeholder, 'width:75%; margin-right: 3px;', $id . "_upload_from_url", $id, $url, $id, $id,$mime_type_result, $multiple_files, $max_size );
 			$box .= sprintf( '<label  id="%s_label" class="error" ></label>', $id );
-			$box .= sprintf( '<img  id="%s_image" src="%s" ></img>', $id, $url );
+			$box .= '<div class="bf-clearfix">';
+			foreach ( $entries as $entry ) {
+				if ( ! empty( $entry->attachment_id ) || ! empty( $entry->url ) ) {
+					$box .= '<div class="bf-uploaded-image-wrapper">';
+					$box .= sprintf( '<img width="150" height="150" id="%s_image_%s" src="%s">', $id, $entry->attachment_id, $entry->url );
+					$box .= sprintf( '<br><a data-field-id="%s" data-attachment-id="%s" class="remove_image_button" href="#field_%s">Remove Image</a>', $id, $entry->attachment_id, $id );
+					$box .= '</div>';
+				}
+			}
+			$box .= '</div>';
+
 			$box .= sprintf( '<input type="text" style="display: none" class="form-control upload_field_from_url" name="%s" value="%s" id="field_%s" %s />', $id, $attachmet_id, $id, $required );
 
 			if ( ! empty( $description ) ) {
