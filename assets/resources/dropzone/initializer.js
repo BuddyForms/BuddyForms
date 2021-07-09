@@ -186,7 +186,7 @@ function uploadHandler() {
         }
     }
 
-    function validateAndUploadImage(field) {
+    function uploadImageFromUrl(field) {
 
         const $field         = jQuery(field);
         const id             = $field.attr("field-id");
@@ -260,7 +260,7 @@ function uploadHandler() {
         }
     }
 
-    function uploadFromUrlRemoveFile(el) {
+    function removeFileUploadedFromUrl(el) {
         const $el = jQuery(el);
         const attachmentId = $el.data('attachment-id');
 
@@ -287,11 +287,11 @@ function uploadHandler() {
             }
 
             jQuery(document).on('click', '.upload_button', function(){
-                validateAndUploadImage(this);
+                uploadImageFromUrl(this);
             });
 
             jQuery(document).on('click', '.remove_image_button', function() {
-                uploadFromUrlRemoveFile(this);
+                removeFileUploadedFromUrl(this);
             });
         }
     }
