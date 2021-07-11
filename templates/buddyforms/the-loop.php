@@ -36,6 +36,8 @@ echo buddyforms_minify_css( $css );
 						$the_permalink = '#';
 					}
 
+					$the_permalink = apply_filters( 'buddyforms_post_link_on_the_loop', $the_permalink, get_the_ID(), $form_slug );
+
 					$post_status      = get_post_status();
 					$post_status_css  = buddyforms_get_post_status_css_class( $post_status, $form_slug );
 					$post_status_name = buddyforms_get_post_status_readable( $post_status );
@@ -123,9 +125,12 @@ echo buddyforms_minify_css( $css );
 				<?php if ( function_exists( 'wp_pagenavi' ) ) : ?>
 					<?php wp_pagenavi(); ?>
 
-				<?php else: ?>
-					<div class="alignleft"><?php next_posts_link( '&larr;' . __( 'Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-					<div class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+				<?php else:
+					$next_posts_link    = get_next_posts_link( '&larr;' . __( 'Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages );
+					$previos_posts_link = get_previous_posts_link( __( 'Next Entries', 'buddyforms' ) . '&rarr;' );
+					?>
+					<div class="alignright"><?php echo apply_filters( 'buddyforms_previos_posts_link', $previos_posts_link, $form_slug ) ?></div>
+					<div class="alignleft"><?php echo apply_filters( 'buddyforms_next_posts_link', $next_posts_link, $form_slug ) ?></div>
 				<?php endif; ?>
 
 			</div>

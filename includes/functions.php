@@ -272,19 +272,23 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 		$wp_login_form .= '</div>';
 	}
 
-	$wp_login_form .= wp_login_form(
-		array(
-			'echo'           => false,
-			'form_id'		 => 'bf_loginform',
-			'redirect'       => $redirect_url,
-			'id_username'    => 'bf_user_name',
-			'id_password'    => 'bf_user_pass',
-			'label_username' => $label_username,
-			'label_password' => $label_password,
-			'label_remember' => $label_remember,
-			'label_log_in'   => $label_log_in,
-		)
-	);
+	if ( empty( $redirect_url ) ) {
+		$redirect_url = home_url();
+	}
+
+	$login_settings = apply_filters( 'buddyforms_loggin_settings',  array(
+		'echo'           => false,
+		'form_id'		 => 'bf_loginform',
+		'redirect'       => $redirect_url,
+		'id_username'    => 'bf_user_name',
+		'id_password'    => 'bf_user_pass',
+		'label_username' => $label_username,
+		'label_password' => $label_password,
+		'label_remember' => $label_remember,
+		'label_log_in'   => $label_log_in,
+	) );
+
+	$wp_login_form .= wp_login_form( $login_settings );
 
 	if ( $form_slug !== 'none' ) {
 		$wp_login_form = str_replace( '</form>', '<input type="hidden" name="form_slug" value="' . esc_attr( $form_slug ) . '"></form>', $wp_login_form );
@@ -1850,7 +1854,7 @@ function buddyforms_form_action_buttons( $form, $form_slug, $post_id, $field_opt
 
 	if ( $is_draft_enabled && $include_form_draft_button ) {
 		if ( ! $exist_field_status && $form_type === 'post' && is_user_logged_in() ) {
-			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : __( 'Save as draft', 'buddyforms' );
+			$bf_draft_button_text    = ! empty( $bfdesign['draft_text'] ) ? $bfdesign['draft_text'] : apply_filters( 'buddyforms_draft_button_text',  __( 'Save as draft', 'buddyforms' ), $form_slug );
 			$bf_draft_button_classes = 'bf-draft ' . $button_class;
 			$bf_draft_button         = new Element_Button( $bf_draft_button_text, 'submit', array(
 				'id'             => $form_slug . '-draft',
@@ -2089,4 +2093,27 @@ add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_sl
 function buddyforms_add_bf_thickbox() {
 	wp_enqueue_script( 'buddyforms-thickbox' );
 	wp_enqueue_style( 'buddyforms-thickbox' );
+}
+
+add_filter( 'buddyforms_mail_to_before_send_notification', 'buddyforms_process_shortcode_notificate_to_attr', 10, 2 );
+function buddyforms_process_shortcode_notificate_to_attr( $mail_to, $notification ) {
+
+	if ( isset( $_POST['notificate_to'] ) && ! empty( $_POST['notificate_to'] ) ) {
+		$notificate_to = sanitize_text_field( $_POST['notificate_to'] );
+		$notificate_to = trim( preg_replace( '/\s+/', '', $notificate_to ) );
+		$notificate_to = explode( ',', $notificate_to );
+
+		foreach ( $notificate_to as $value ) {
+			$_notificate_to = explode( '-', $value );
+			$mail_trigger_id = $_notificate_to[0];
+			$user_email = sanitize_email( $_notificate_to[1] );
+
+			// Check if mail_trigger_id match with current notification.
+			if ( $notification['mail_trigger_id'] === $mail_trigger_id && is_email( $user_email ) ) {
+				array_push( $mail_to, $user_email );
+			}
+		}
+	}
+
+	return $mail_to;
 }

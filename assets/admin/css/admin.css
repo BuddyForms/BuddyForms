@@ -1145,8 +1145,14 @@ tr.upload_accepted_fields_container > td > div.bf-input {
     padding: 8px 15px;
 }
 
-.buddyforms_forms_builder .accordion-toggle {
+
+body.post-type-buddyforms .buddyforms-metabox a {
     cursor: pointer;
+    display: inline-block;
+}
+
+body.post-type-buddyforms a.ui-tabs-anchor {
+    display: block;
 }
 
 .buddyforms_forms_builder .accordion-inner {
@@ -1672,6 +1678,7 @@ table .element_field_table_sortable tbody {
  *  For now this only work inside the editor
  */
 
+#buddyforms_form_setup .buddyforms_accordion_notification .tooltip > .tooltip-container,
 #buddyforms_form_shortcodes .bf-shortcode div.tooltip > .tooltip-container,
 #buddyforms_forms_builder .field_name .tooltip-container {
     display: none;
@@ -1686,7 +1693,7 @@ table .element_field_table_sortable tbody {
     margin-left: 5px;
     z-index: 99;
 }
-
+#buddyforms_form_setup .buddyforms_accordion_notification .tooltip:hover .tooltip-container,
 #buddyforms_form_shortcodes .bf-shortcode div.tooltip:hover .tooltip-container,
 #buddyforms_forms_builder .tooltip:hover .tooltip-container {
     display: block;
@@ -1944,4 +1951,28 @@ html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
 .post-type-buddyforms #submitdiv.postbox .postbox-header .notice-error :last-child {
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+#buddyforms_form_setup .buddyforms_accordion_notification .copy-trigger-email {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#buddyforms_form_setup .buddyforms_accordion_notification .copy-trigger-email > div {
+    width: 50%;
+}
+#buddyforms_form_setup .buddyforms_accordion_notification .copy-trigger-email > div:nth-child(1) {
+    padding-right: 1rem;
+}
+
+#buddyforms_form_setup .buddyforms_accordion_notification .copy-trigger-email > div:nth-child(2) .tooltip-container {
+    margin-top: 0.65rem;
+    margin-left: 0;
+}
+#buddyforms_form_setup .buddyforms_accordion_notification .copy-trigger-email .bf-ready-to-copy {
+    cursor: pointer;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
 }

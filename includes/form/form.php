@@ -248,17 +248,23 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$form_action = ( isset( $wp_query->query_vars['bf_action'] ) ) ? $wp_query->query_vars['bf_action'] : 'save';
 	}
 
+	$notificate_to = '';
+	if ( ! empty( $args['notificate_to'] ) ) {
+		$notificate_to = $args['notificate_to'];
+	}
+
 	$args = array(
-		'post_type'    => $post_type,
-		'the_post'     => $the_post,
-		'post_parent'  => $post_parent,
-		'post_status'  => $post_status,
-		'customfields' => $customfields,
-		'post_id'      => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
-		'form_slug'    => $form_slug,
-		'form_notice'  => $form_notice,
-		'current_user' => $current_user,
-		'action'       => $form_action,
+		'post_type'     => $post_type,
+		'the_post'      => $the_post,
+		'post_parent'   => $post_parent,
+		'post_status'   => $post_status,
+		'customfields'  => $customfields,
+		'post_id'       => apply_filters( 'buddyforms_set_post_id_for_draft', $post_id, $args, $customfields ),
+		'form_slug'     => $form_slug,
+		'form_notice'   => $form_notice,
+		'current_user'  => $current_user,
+		'action'        => $form_action,
+		'notificate_to' => $notificate_to,
 	);
 
 	if ( isset( $_POST['bf_submitted'] ) ) {

@@ -104,6 +104,16 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 		__( 'This test Email will be sent using the Site Admin Email and the exiting Subject and Body.', 'buddyforms' ) );
 	$form_setup[] = new Element_HTML( $test_button );
 
+
+	// <input type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value="' . $trigger . '">
+
+	$copy_trigger_email = '<div class="copy-trigger-email">';
+	$copy_trigger_email .= '<div><label><b>Copy Trigger ID</b></label><p>Use this code to trigger notification via shortcode. Eg: <br/> <code>[bf form_slug="'. $form_slug .'" <b>notificate_to="'. $trigger . '-userEmail"</b>]</code></div>';
+	$copy_trigger_email .= '<div class="tooltip"><input type="text" class="bf-ready-to-copy" readonly="readonly" onfocus="this.select();" onmouseup="return false;" value="' . $trigger . '"><span class="tooltip-container">Copy to clipboard</span> </div>';
+	$copy_trigger_email .= '</div>';
+	$form_setup[] = new Element_HTML( $copy_trigger_email );
+
+
 	// From Name
 	$element      = new Element_Radio( '<b>' . __( 'From Name', 'buddyforms' ) . '</b>', "buddyforms_options[mail_submissions][" . $trigger . "][mail_from_name]", array(
 		'user_login'      => __( 'Username', 'buddyforms' ),
@@ -229,7 +239,7 @@ function buddyforms_mail_notification_form( $trigger = false, $form_slug = '' ) 
 						<tbody>
 						<tr>
 							<td class="field_order ui-sortable-handle">
-								<span class="circle">1</span>
+								<span class="circle"> 1 </span>
 							</td>
 							<td class="field_label">
 								<strong>
@@ -394,6 +404,8 @@ function buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug
 	</li>
 
 	<?php
+
+	return $trigger;
 }
 
 function buddyforms_new_mail_notification() {
@@ -517,7 +529,16 @@ function buddyforms_new_post_status_mail_notification() {
 			return false;
 		}
 
-		buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug );
+		
+
+		ob_start();
+		$trigger_id   = buddyforms_new_post_status_mail_notification_form( $trigger, $form_slug );
+		$trigger_html = ob_get_clean();
+
+		$json['trigger_id'] = $trigger_id;
+		$json['html']       = $trigger_html;
+
+		echo json_encode( $json );
 	} catch ( Exception $ex ) {
 		error_log( 'BuddyForms::' . $ex->getMessage() );
 	}

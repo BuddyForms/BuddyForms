@@ -213,7 +213,7 @@ function BuddyForms() {
     }
 
     function checkPasswordStrengthInternal(password1, blacklist, password2) {
-        if (!jQuery.isArray(blacklist))
+        if (!Array.isArray(blacklist))
             blacklist = [blacklist.toString()];
 
         if (password1 != password2 && password2 && password2.length > 0)
@@ -774,7 +774,7 @@ function BuddyForms() {
             });
 
             var isValid = true;
-            if (jQuery.isArray(result)) {
+            if (Array.isArray(result)) {
                 isValid = result.length === 0;
             }
 
@@ -965,10 +965,15 @@ function BuddyForms() {
     }
 
     function enabledGarlic() {
-        var bf_garlic = jQuery('.bf-garlic');
+        const bf_garlic = jQuery('.bf-garlic');
+
+        BuddyFormsHooks.doAction('buddyforms:before-garlic-enabled', bf_garlic);
+
         if (bf_garlic.length > 0) {
             bf_garlic.garlic();
         }
+
+        BuddyFormsHooks.doAction('buddyforms:after-garlic-enabled', bf_garlic);
     }
 
     function enabledSelect2() {
@@ -1018,8 +1023,9 @@ function BuddyForms() {
                         showTimepicker: enableTime || false,
                         stepMinute: parseInt(fieldTimeStep),
                         onSelect: function () {
+                            const $this = jQuery(this);
                             if (formSlug && buddyformsGlobal[formSlug] && typeof buddyformsGlobal[formSlug].js_validation == "undefined") {
-                                jQuery('#buddyforms_form_' + formSlug).valid();
+                                jQuery('#buddyforms_form_' + formSlug).validate().element( $this );
                             }
                         }
                     };
@@ -1073,7 +1079,7 @@ function BuddyForms() {
             var bf_status = statusElement.val();
             jQuery('.bf_datetime_wrap').toggle(bf_status === 'future');
 
-            statusElement.change(function () {
+            statusElement.on('change', function () {
                 var bf_status = jQuery(this).val();
                 jQuery('.bf_datetime_wrap').toggle(bf_status === 'future');
             });
@@ -1268,7 +1274,7 @@ function BuddyForms() {
                         if (elem.hasClass('select2-hidden-accessible')) {
                             elem.parent().find('span.select2-selection').addClass(errorClass);
                         } else if(elem.hasClass('wp-editor-area')){
-                            elem.off('change').change(function(e) {
+                            elem.off('change').on('change', function(e) {
                                 if (elem.valid()) {
                                     elem.parents('.wp-editor-container').removeClass(errorClass);
                                 } else {
@@ -1303,8 +1309,8 @@ function BuddyForms() {
                 var formSlug = getFormSlugFromFormElement(currentElement);
                 if (currentFieldSlug && formSlug) {
                     var fieldData = getFieldFromSlug(currentFieldSlug, formSlug);
-                    var thousandsSeparator = (fieldData.thousands_separator) ? fieldData.thousands_separator : '.';
-                    var prefix = (fieldData.prefix) ? fieldData.prefix : '$';
+                    var thousandsSeparator = (fieldData.thousands_separator) ? fieldData.thousands_separator : '';
+                    var prefix = (fieldData.prefix) ? fieldData.prefix : '';
                     var suffix = (fieldData.suffix) ? fieldData.suffix : '';
                     var centsSeparator = (fieldData.cents_separator) ? fieldData.cents_separator : ',';
 
@@ -1401,7 +1407,7 @@ function BuddyForms() {
                     grecaptcha.ready(function () {
                         var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
                         grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
-                            jQuery(currentElement).val(token).change();
+                            jQuery(currentElement).val(token).trigger("change");
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
                             callback(options);
@@ -1425,7 +1431,7 @@ function BuddyForms() {
                     grecaptcha.ready(function () {
                         var captcha_action = fieldStateData.captcha_v3_action.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
                         grecaptcha.execute(fieldStateData.captcha_site_key, {action: captcha_action}).then(function (token) {
-                            jQuery(currentElement).val(token).change();
+                            jQuery(currentElement).val(token).trigger("change");
                             var recaptchaResponse = document.getElementById('bf-cpchtk');
                             recaptchaResponse.value = token;
                             options.splice(0, 0, "Submit");

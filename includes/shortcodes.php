@@ -97,6 +97,7 @@ function buddyforms_the_loop( $args ) {
 		'meta_compare'        => '=',
 		'list_posts_style'    => '',
 		'posts_per_page'      => '10',
+		'paged'               => 0,
 		'posts_status'        => array( 'publish', 'pending', 'draft', 'future' )
 	), $args ) );
 
@@ -149,7 +150,9 @@ function buddyforms_the_loop( $args ) {
 		$post_status = array( 'publish' );
 	}
 
-	$paged = buddyforms_get_url_var( 'page' );
+	if ( empty( $paged ) ) {
+		$paged = buddyforms_get_url_var( 'page' );
+	}
 
 	switch ( $query_option ) {
 		case 'list_all_published_posts':

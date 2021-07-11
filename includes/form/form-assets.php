@@ -20,6 +20,9 @@ class BuddyFormsAssets {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_js' ), 102, 1 );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
 
+		// Unregister third-party conflictive assets
+		add_action( 'admin_enqueue_scripts', array( $this, 'remove_conflictive_third_party_assets' ), 999, 1 );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'front_js_loader' ), 9999, 1 );
 	}
 
@@ -395,5 +398,43 @@ class BuddyFormsAssets {
 		}
 
 		return $footer_text;
+	}
+
+	/**
+	 * This method is use to remove all the third-party
+	 * assets that cause any conflict or issue over BuddyForms pages.
+	 */
+	public function remove_conflictive_third_party_assets( $hook_suffix ) {
+		global $post;
+
+		if ( isset( $post ) && ( $post->post_type === 'buddyforms' || $post->post_type === 'bf_template' )
+			|| isset( $_GET['post_type'] ) && $_GET['post_type'] === 'buddyforms'
+			|| $hook_suffix === 'buddyforms_page_buddyforms_settings'
+			|| $hook_suffix === 'buddyforms_page_buddyforms_submissions'
+		) {
+
+			/**
+			 * Add here all the javascript or CSS
+			 * that will be remove from BuddyForms admin views
+			 * [ js|css => handle ]
+			 */
+			$assets_to_remove = array(
+				'js'  => 'sabox-admin-js',
+				'css' => 'saboxplugin-admin-style',
+			);
+
+			foreach ($assets_to_remove as $type => $asset) {
+
+				if ( $type === 'css' ) {
+					wp_dequeue_style( $asset );
+				}
+
+				if ( $type === 'js' ) {
+					wp_dequeue_script( $asset );
+				}
+
+			}
+		}
+
 	}
 }

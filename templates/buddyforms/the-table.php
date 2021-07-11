@@ -52,12 +52,14 @@ echo buddyforms_minify_css( $css );
 					$form_slug = apply_filters('buddyforms_loop_form_slug', $form_slug, get_the_ID());
 
                     $the_permalink = get_permalink();
-                    
+
                     $post_type = isset( $buddyforms[ $form_slug ]['post_type'] ) ? $buddyforms[ $form_slug ]['post_type'] : false;
 
 					if ( $post_type === 'bf_submissions' ) {
 						$the_permalink = '#';
 					}
+
+					$the_permalink = apply_filters( 'buddyforms_post_link_on_the_table', $the_permalink, get_the_ID(), $form_slug );
 
 					$post_status = get_post_status();
 
@@ -127,14 +129,19 @@ echo buddyforms_minify_css( $css );
                 </tbody>
             </table>
 
-            <div class="navigation">
-				<?php if ( function_exists( 'wp_pagenavi' ) ) : wp_pagenavi();
-				else: ?>
-                    <div class="alignleft"><?php next_posts_link( '&larr;' . __( ' Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages ) ?></div>
-                    <div class="alignright"><?php previous_posts_link( __( 'Next Entries ', 'buddyforms' ) . '&rarr;' ) ?></div>
+			<div class="navigation">
+				<?php if ( function_exists( 'wp_pagenavi' ) ) : ?>
+					<?php wp_pagenavi(); ?>
+
+				<?php else:
+					$next_posts_link    = get_next_posts_link( '&larr;' . __( 'Previous Entries', 'buddyforms' ), $the_lp_query->max_num_pages );
+					$previos_posts_link = get_previous_posts_link( __( 'Next Entries', 'buddyforms' ) . '&rarr;' );
+					?>
+					<div class="alignright"><?php echo apply_filters( 'buddyforms_previos_posts_link', $previos_posts_link, $form_slug ) ?></div>
+					<div class="alignleft"><?php echo apply_filters( 'buddyforms_next_posts_link', $next_posts_link, $form_slug ) ?></div>
 				<?php endif; ?>
 
-            </div>
+			</div>
 
 		<?php else : ?>
 

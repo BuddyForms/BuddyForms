@@ -109,7 +109,7 @@ function userSatisfaction() {
                 e.preventDefault();
                 let state = jQuery(this).attr('data-satisfaction-action');
                 if (state == 'close') {
-                    jQuery('#corner-popup .corner-close').click();
+                    jQuery('#corner-popup .corner-close').trigger("click");
                 }
             });
         }

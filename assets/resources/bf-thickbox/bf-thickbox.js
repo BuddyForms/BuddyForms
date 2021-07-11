@@ -52,12 +52,12 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
             jQuery("html").css("overflow", "hidden");
             if (document.getElementById("TB_HideSelect") === null) {//iframe to hide select elements in ie6
                 jQuery("body").append("<iframe id='TB_HideSelect'>" + bf_thickboxL10n.noiframes + "</iframe><div id='TB_overlay'></div><div id='TB_window' class='bf-thickbox-loading " + classes + "'></div>");
-                jQuery("#TB_overlay").click(bf_tb_remove);
+                jQuery("#TB_overlay").on('click', bf_tb_remove);
             }
         } else {//all others
             if (document.getElementById("TB_overlay") === null) {
                 jQuery("body").append("<div id='TB_overlay'></div><div id='TB_window' class='bf-thickbox-loading " + classes + "'></div>");
-                jQuery("#TB_overlay").click(bf_tb_remove);
+                jQuery("#TB_overlay").on('click', bf_tb_remove);
                 jQuery('body').addClass('modal-open');
             }
         }
@@ -146,7 +146,7 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
                 TB_HEIGHT = imageHeight + 60;
                 jQuery("#TB_window").append("<a href='' id='TB_ImageOff'><span class='screen-reader-text'>" + bf_thickboxL10n.close + "</span><img id='TB_Image' src='" + url + "' width='" + imageWidth + "' height='" + imageHeight + "' alt='" + caption + "'/></a>" + "<div id='TB_caption'>" + caption + "<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><button type='button' id='TB_closeWindowButton'><span class='screen-reader-text'>" + bf_thickboxL10n.close + "</span><span class='tb-close-icon'></span></button></div>");
 
-                jQuery("#TB_closeWindowButton").click(bf_tb_remove);
+                jQuery("#TB_closeWindowButton").on('click', bf_tb_remove);
 
                 if (!(TB_PrevHTML === "")) {
                     function goPrev() {
@@ -159,7 +159,7 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
                         return false;
                     }
 
-                    jQuery("#TB_prev").click(goPrev);
+                    jQuery("#TB_prev").on('click', goPrev);
                 }
 
                 if (!(TB_NextHTML === "")) {
@@ -170,11 +170,11 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
                         return false;
                     }
 
-                    jQuery("#TB_next").click(goNext);
+                    jQuery("#TB_next").on('click', goNext);
 
                 }
 
-                jQuery(document).bind('keydown.bf-thickbox', function (e) {
+                jQuery(document).on('keydown.bf-thickbox', function (e) {
                     if (e.which == 27) { // close
                         bf_tb_remove();
 
@@ -194,7 +194,7 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
 
                 bf_tb_position();
                 jQuery("#TB_load").remove();
-                jQuery("#TB_ImageOff").click(bf_tb_remove);
+                jQuery("#TB_ImageOff").on('click', bf_tb_remove);
                 jQuery("#TB_window").css({'visibility': 'visible'}); //for safari using css instead of show
             };
 
@@ -235,11 +235,11 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
                 }
             }
 
-            jQuery("#TB_closeWindowButton").click(bf_tb_remove);
+            jQuery("#TB_closeWindowButton").on('click', bf_tb_remove);
 
             if (url.indexOf('TB_inline') != -1) {
                 jQuery("#TB_ajaxContent").append(jQuery('#' + params['inlineId']).children());
-                jQuery("#TB_window").bind('bf_tb_unload', function () {
+                jQuery("#TB_window").on('bf_tb_unload', function () {
                     jQuery('#' + params['inlineId']).append(jQuery("#TB_ajaxContent").children()); // move elements back when you're finished
                 });
                 bf_tb_position();
@@ -263,7 +263,7 @@ function bf_tb_show(caption, url, imageGroup, classes) {//function called when t
         }
 
         if (!params['modal']) {
-            jQuery(document).bind('keydown.bf-thickbox', function (e) {
+            jQuery(document).on('keydown.bf-thickbox', function (e) {
                 if (e.which == 27) { // close
                     bf_tb_remove();
                     return false;
