@@ -8,6 +8,8 @@ function buddyforms_metabox_shortcodes() {
     <div class="bf-shortcode">
         <div id="bf-shortcode">
 
+			<?php do_action( 'buddyforms_shortcode_list_before' ) ?>
+
             <div class="bf-tile">
                 <label for="the-form"><?php _e( 'Display Form', 'buddyforms' ); ?></label>
                 <div class="tooltip">
@@ -53,6 +55,8 @@ function buddyforms_metabox_shortcodes() {
 
 				<?php } ?>
 			<?php } ?>
+
+			<?php do_action( 'buddyforms_shortcode_list_after' ) ?>
 
         </div>
         <br>
