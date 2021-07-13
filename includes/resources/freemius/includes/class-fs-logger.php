@@ -142,7 +142,7 @@
 			return $this->_file_start;
 		}
 
-		private function _log( &$message, $type, $wrapper = false ) {
+		private function _log( &$message, $type = 'log', $wrapper ) {
 			if ( ! $this->is_on() ) {
 				return;
 			}
