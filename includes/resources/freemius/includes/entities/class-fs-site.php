@@ -102,14 +102,6 @@
          * @var bool
          */
         public $is_uninstalled = false;
-        /**
-         * @author Edgar Melkonyan
-         *
-         * @since 2.4.2
-         *
-         * @var bool
-         */
-        public $is_beta;
 
         /**
          * @param stdClass|bool $site
@@ -240,14 +232,5 @@
          */
         function is_tracking_prohibited() {
             return ! $this->is_tracking_allowed();
-        }
-
-        /**
-         * @author Edgar Melkonyan
-         *
-         * @return bool
-         */
-        function is_beta() {
-            return ( isset( $this->is_beta ) && true === $this->is_beta );
         }
     }

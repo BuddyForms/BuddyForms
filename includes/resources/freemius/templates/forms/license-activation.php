@@ -115,15 +115,13 @@ HTML;
              * @var FS_Plugin_License $license
              */
             foreach ( $available_licenses as $license ) {
-                $plan = $fs->_get_plan_by_id( $license->plan_id );
-
                 $label = sprintf(
                     "%s-Site %s License - %s",
                     ( 1 == $license->quota ?
                         'Single' :
                         ( $license->is_unlimited() ? 'Unlimited' : $license->quota )
                     ),
-                    ( is_object( $plan ) ? $plan->title : '' ),
+                    $fs->_get_plan_by_id( $license->plan_id )->title,
                     $license->get_html_escaped_masked_secret_key()
                 );
 
