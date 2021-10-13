@@ -60,6 +60,7 @@ abstract class FormView extends Base {
 	}
 
 	public function renderFormClose() {
+		do_action('buddyforms_after_form_closing');
 		echo ' </fieldset></form> ';
 	}
 
