@@ -31,16 +31,6 @@
     border: none;
 }
 
-.bf-frame {
-    /*-ms-zoom: 0.75;
-    -moz-transform: scale(0.75);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.75);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.75);
-    -webkit-transform-origin: 0 0;*/
-}
-
 #TB_window .button-primary {
     position: absolute;
     top: 56px;
@@ -194,6 +184,7 @@
 .bf_admin_wrap .accordion-group .accordion-heading {
     text-shadow: #fff 0 1px 0;
     -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
 }
 
 .sortable .accordion-group:hover {
@@ -898,9 +889,6 @@ a.button.button-large.bf_button_action {
         min-height: 182px;
     }
 
-    .bf-3-tile.disabled {
-        /*min-height: 180px;*/
-    }
 }
 
 input[readonly] {
@@ -978,10 +966,6 @@ label.error {
     width: 91%;
 }
 
-.bf-tile.alt {
-    /*background: #f5f4f1;*/
-}
-
 .post-type-buddyforms .postbox .bf-tile label {
     display: block;
     font-weight: bold;
@@ -999,10 +983,6 @@ label.error {
 .bf_button_action .dashicons {
     line-height: 1.4;
     padding-right: 3px;
-}
-
-#screen-meta-links {
-    /*display: none;*/
 }
 
 /* --- Submission Single View --- */
@@ -1771,6 +1751,7 @@ div#formbuilder-action-templates {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, .5);
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 #buddyforms_form_setup table.wp-list-table.widefat.fixed.posts.notification-container {

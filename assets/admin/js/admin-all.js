@@ -52,4 +52,15 @@ jQuery(document).ready(function (jQuery) {
             },
         });
     });
+
+    jQuery(".bf-welcome-accordion_tab").click(function(){
+        jQuery(".bf-welcome-accordion_tab").each(function(){
+          jQuery(this).parent().removeClass("active");
+          jQuery(this).removeClass("active");
+        });
+        jQuery(this).parent().addClass("active");
+        jQuery(this).addClass("active");
+    });
+
+
 });

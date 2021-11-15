@@ -554,7 +554,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			update_option( 'buddyforms_submissions_page', $page_id );
 
-			update_option( 'buddyforms_first_path_after_install', 'post-new.php?post_type=buddyforms&bf_template=1' );
+			update_option( 'buddyforms_first_path_after_install', 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' );
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
