@@ -124,7 +124,7 @@ li.fs-cta a, #fs_addons h2 {
 }
 
 .bf-welcome-accordion{
-    width: 40%;
+    width: 60%;
     height: 60px;
     margin: 0 auto;
     background: #fff;
@@ -196,6 +196,12 @@ li.fs-cta a, #fs_addons h2 {
     line-height: 20px;
 }
 
+.bf-welcome-accordion_item img{
+    margin-left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 1px 3px 6px #000;
+}
+
 div.about-wrap.buddyforms-welcome{
     display:block;
     width:100%;
@@ -225,11 +231,16 @@ div.about-wrap.buddyforms-welcome{
     padding: 0px 10px;
 }
 
+p.item_title_description{
+    text-align: justify;
+    padding: 0px 50px;
+}
 p.bf-shortcode-doc{
     width:max-content;
     background-color:#d3d3d3;
     color:#000 !important;
-    padding:5px 20px;
+    margin-left: 50px;
+    padding:5px 50px;
 }
 
 .bf-3-tile {
@@ -352,4 +363,6 @@ p.bf-shortcode-doc{
 div#buddyforms_template_header_container{
     display: none;
 }
+
+
 

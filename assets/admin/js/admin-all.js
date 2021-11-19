@@ -54,13 +54,16 @@ jQuery(document).ready(function (jQuery) {
     });
 
     jQuery(".bf-welcome-accordion_tab").click(function(){
-        jQuery(".bf-welcome-accordion_tab").each(function(){
-          jQuery(this).parent().removeClass("active");
-          jQuery(this).removeClass("active");
+
+        jQuery(".bf-welcome-accordion_tab").not(this).each(function(){
+            
+            jQuery(this).parent().removeClass("active");
+            jQuery(this).removeClass("active");
+
         });
-        jQuery(this).parent().addClass("active");
-        jQuery(this).addClass("active");
+
+        jQuery(this).parent().toggleClass("active");
+        jQuery(this).toggleClass("active");
+        jQuery(this).animate({ color:'#509699' }, 500);
     });
-
-
 });
