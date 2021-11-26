@@ -365,6 +365,12 @@ Yes, you can create Content forms for any post type.
 = Can I Combine Registration Forms and Content Forms =
 Yes, you can add login and registration Form Elements to any form and ask your user to Login or Register during form submission.
 
+= Do I need coding skills to use Buddyforms? =
+Not at all! Buddyforms is an easy-to-use drag-and-drop form builder with a simple UX, meaning you can build advanced forms without any coding knowledge.
+
+= Will Buddyforms slow down my website? =
+Absolutely not. Buddyforms is built with peak performance in mind. From top to bottom, we developed everything to ensure the smoothest and fastest form plugin possible.
+
 == Documentation & Support ==
 Find our Getting Started, How-to and Developer Docs on [docs.buddyforms.com](http://docs.buddyforms.com/) or watch one of our Video Tutorials [Videos](https://themekraft.com/buddyforms-videos/)
 If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard and the Help Center!
