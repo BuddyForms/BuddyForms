@@ -1,6 +1,6 @@
 === Contact - Registration - Post Form Builder & FrontEnd Editor BuddyForms - Making WordPress Forms A Breeze ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
-Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload,
+Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload
 Requires at least: 4.0
 Tested up to: 5.8
 Stable tag: 2.5.31
@@ -8,59 +8,55 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Step by step with an easy to use Form Wizard. Ideal for User Submitted Posts. Extendable with Addons!
+== #DESCRIPTION ==
 
-== Description ==
+Are you tired of those boring forms, your customers hardly fill to the end? With Buddyform, you can make contact forms, postforms, and registration forms that everyone wants to fill like a professional even if you cannot write a single line of code.
 
-##Best WordPress form builder for frontend-publishing - no coding required.</h4>
-A simple yet powerful [Form Builder](https://themekraft.com/buddyforms). Contact, Register and POST FORMS. Ideal for User Submitted Content. A Form Builder for beginners with drag and drop, ready-to-use form templates and full control over user submitted content (receive, collect, process and publish it). For developers & advanced level, benefit from filters and fully customizable forms that enables you to do whatever you need.
+You get better responses, more quality leads, collect feedback and much more with an easy to use form wizard all under a few minutes.
 
----
+#WHY CHOOSE BUDDYFORMS?</h4>
+##Can’t Code? No problem: Build a Quality and Highly Optimized form Without a Single Line Of Code.
 
-BuddyForms has proven to be an invaluable plugin for communities and networks. With simple forms it is very easy to encourage members, users and community to contribute and engage with your site. This makes the plugin priceless valuable as it supports organic traffic to your site.
+*A simple drag and drop, ready to use form templates that give you full control over user submitted content.
 
----
-##GDPR compliant WordPress form builder
-BuddyForms comes out of the box GDPR compliant plugin. We've used the time, to improve our data protection even more. What we've done so far:
+*Buddyform has a bunch of drag and drop blocks that make it easy to put forms together – name, email, phone number, text, file upload, website, date, time, numbers etc.
 
-* *Consent Checkbox* - a new form element has been added to give you an easy option to collect the consent for your user-generated form.
-* *Right to access & to be forgotten* - if your users want to get access to their data, you can easily show it with BuddyForms on the front-end. They even have the opportunity to change or delete their data from the front-end.
-* *Privacy by Design* - With BuddyForms our goal is it to make you the boss of your data. From the beginning, we've made it a major priority, that you store your data on your own server.
-
-In other words, BuddyForms is 100% approved to be GDPR compliant. The content is saved in on your WordPress hoster either as a post (post & post_meta table) or user data (user & user_meta table).
-
-[Try the new version of BuddyForms today](https://themekraft.com/buddyforms/)
+*Take advantage of our pre-configured forms.
 
 ---
+##Your Data Protection is Our Priority: Buddyform provides a Full GDPR compliant Wordpress Form builder.
 
+*You get Privacy by Design: With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server.
+
+*With Buddyforms you can easily grant users access to their data without, with the full option to also change or delete their data all from the frontend.
+
+*Buddyform lets you easily collect consent for your user generated form.
+
+---
+##Easy to navigate and User-friendly interface.
+*Easily embed forms anywhere on your website with just shortcodes or create a new form straight from your admin bar.
+*Create registration funnels and ask to create a password after clicking on the activation link.
+*Create forms for any kind of user generated content.
+*Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
+*Enable/Disable comments related to the submitted content,  Frontend Revision for users
+*Overwrite the WordPress default Registration Form and Page
+*Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
+
+ 
+##EASY INTEGRATION WITH OTHER PLUGINS
+Buddyform comes stacked with crowd favorite third-party integrations – email services, CRM, storage, and project managers. Enhance its capabilities with the following
 ## Features of BuddyForms Form Builder
 
+* BuddyPress – Enable all publishing features of BuddyForms in BuddyPress
+* Ultimate Member – Submit and manage posts from your Ultimate Member profile
+* WooCommerce – Build your own marketplace with user-submitted products
+* WooCommerce Simple Auctions – Create and manage auctions via front end
+* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* Posts 2 Posts – Efficient many-to-many connections between posts, pages, custom post types, users.
+* WC Vendors – BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products.
 
-* Customize your custom forms via Drag and Drop or benefit from our pre-configured forms
-* Choose between over 20 field types (text, numbers, check boxes, buttons, comments, media files, post status, taxonomies, CAPTCHA, ...)
-* Set custom validation rules to prevent users from submitting false data
-* Full moderation control of the submitted content by predefining the status: pending, draft, published
-* Define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
-* Submit your form by reloading the page or asynchronously with AJAX
-* Select which kind of content is submitted: page, post, attachment or no specific
-* Easily embed forms anywhere on your site via shortcodes or create a new form straight from your admin bar
-* Enable/Disable comments related to the submitted content
-* Enable/Disable Frontend Revision for users
-* Choose if unregistered users are able to see and submit content via forms or not
-* Control who can create, edit and delete content that is created from a form and even prevent 404 error messages when a published post is set back to draft mode
-* Set-up email notifications to notify admins when content is submitted
-* Set-up email notifications to notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation)
-* Featured Image Upload for Unregistered Users
-* Drop Zone File Upload of any file Type for Unregistered Users
-* Overwrite the WordPress default Registration Form and Page
-* Create registation funnels and ask to create a password after click on the activation link.
-* User registration & user profile. Front-end login, user registration and edit profile.
-* Create author profiles and list all author posts.
-* Create forms for any kind of user generated content
+##WITH BUDDYFORM YOU CAN CREATE
 
----
-
-## Typical Use-Cases that our users create with BuddyForms
 * Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 * Online Directories – Crowdsource categorized data from your community
 * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
@@ -152,18 +148,6 @@ Dependencies: WooCommerce, BuddyForms WooElements
 
 ---
 
-## BuddyForms Integration
-BuddyForm works great with other Plug-Ins. Enhance its capabilities with the following
-* *BuddyPress* – Enable all publishing features of BuddyForms in BuddyPress
-* *Ultimate Member* – Submit and manage posts from your Ultimate Member profile
-* *WooCommerce* – Build your own marketplace with user-submitted products
-* *WooCommerce Simple Auctions* – Create and manage auctions via front end
-* *Advanced Custom Fields* – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-* *Posts 2 Posts* - Efficient many-to-many connections between posts, pages, custom post types, users.
-* *WC Vendors* - BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products
-
----
-
 ## Videos about BuddyForms
 
 ###Why BuddyForms is the best Frontend-Publishing Plugin - BuddyForms Trailer
@@ -206,7 +190,7 @@ BuddyForm works great with other Plug-Ins. Enhance its capabilities with the fol
 
 ---
 
-Want to se more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
+Want to see more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
 
 ---
 
