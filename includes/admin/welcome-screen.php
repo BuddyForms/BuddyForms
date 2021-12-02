@@ -193,8 +193,8 @@ function buddyforms_welcome_screen_content() {
 	<?php
 }
 
-add_action( 'admin_head', 'my_header_scripts' );
-function my_header_scripts(){
+add_action( 'admin_head', 'buddyforms_welcome_scren_templates_redirect' );
+function buddyforms_welcome_scren_templates_redirect(){
     if( is_admin() ){
         if( isset( $_GET['template'] ) ){
             $template = $_GET['template'];
