@@ -25,7 +25,7 @@ function buddyforms_welcome_screen_content() {
                     </div>
                 </div>
                 <div class="bf-welcome-accordion_content">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/Gt8dcLZPR9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="100%" height="415" src="https://www.youtube.com/embed/DoPLWBBlRvA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
             
