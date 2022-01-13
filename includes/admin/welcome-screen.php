@@ -3,7 +3,7 @@
 // Add the Settings Page to the BuddyForms Menu
 //
 function buddyforms_welcome_screen_menu() {
-	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Info', 'buddyforms' ), __( 'Info', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content' );
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Welcome', 'buddyforms' ), __( 'Welcome', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content', 1 );
 }
 
 add_action( 'admin_menu', 'buddyforms_welcome_screen_menu', 9999 );
@@ -12,269 +12,178 @@ function buddyforms_welcome_screen_content() {
 	?>
     <div id="bf_admin_wrap" class="wrap">
 
-		<?php // include( 'admin-header.php' ); ?>
-
-        <style>
-            /* Welcome Page CSS */
-
-            .about-wrap.buddyforms-welcome {
-                margin-top: 40px;
-            }
-
-            .about-wrap.buddyforms-welcome .lead {
-                max-width: none;
-                margin: 20px 0;
-            }
-
-            .about-wrap.buddyforms-welcome .feature-section h1 {
-                max-width: none;
-                margin: 40px 0 20px;
-                font-weight: 300;
-            }
-
-            .about-wrap.buddyforms-welcome h2 {
-                max-width: none;
-                margin: 40px 0 20px;
-                text-align: left;
-            }
-
-            .about-wrap.buddyforms-welcome .about-text {
-                min-height: 40px;
-                margin-top: 20px;
-                font-size: 23px;
-                color: #32373c;
-                margin-bottom: 30px;
-                font-weight: 300;
-            }
-
-            .bfw-section {
-                margin: 70px 0;
-                overflow: auto;
-            }
-
-            .bfw-row {
-                overflow: auto;
-                clear: both;
-            }
-
-            .bfwell {
-                margin: 40px 0 0 0;
-                background: #e5e5e5;
-                overflow: auto;
-                border: 1px solid #ccc;
-                padding: 20px 10px;
-            }
-
-            .bfw-col {
-                display: block;
-                float: left;
-                width: 100%;
-                overflow: auto;
-                padding: 10px;
-                box-sizing: border-box;
-            }
-
-            .bfw-col-40 {
-                width: 40%;
-            }
-
-            .bfw-col-50 {
-                width: 50%;
-            }
-
-            .bfw-col-60 {
-                width: 60%;
-            }
-
-            .bfw-well {
-                padding: 20px;
-                background: #fafafa;
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-
-            .about-wrap.buddyforms-welcome .bfw-title {
-                margin-top: 0;
-                font-weight: 300;
-            }
-        </style>
-
-
         <div class="wrap about-wrap buddyforms-welcome">
-
             <h1><?php _e( 'Welcome to BuddyForms', 'buddyforms' ) ?> <?php echo BUDDYFORMS_VERSION ?></h1>
-
-            <p class="about-text"><?php _e( 'Enjoy Groundbreaking New Features and Add-ons!', 'buddyforms' ) ?></p>
-
-            <h2 class="nav-tab-wrapper wp-clearfix">
-                <a href="about.php" class="nav-tab nav-tab-active"><?php _e( 'What’s New', 'buddyforms' ) ?></a>
-                <a href="edit.php?post_type=buddyforms&page=buddyforms-addons" target="_new"
-                   title="<?php _e( 'Gutenberg Support', 'buddyforms' ) ?>"
-                   class="nav-tab"><?php _e( 'Add Ons', 'buddyforms' ) ?></a>
-            </h2>
-
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-                <div class="xcol col-big">
-                    <h2><?php _e( 'Gutenberg Support', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-	                    <?php _e( 'BuddyForms support now Gutenberg out of the box and comes with 5 different Gutenberg Blocks ', 'buddyforms' ) ?>
-                    </p>
-                </div>
-
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-overview.png' ?>"
-                             alt="<?php _e( 'Gutenberg', 'buddyforms' ) ?>">
+        </div>
+        <div class="welcome-screen-separator"></div>
+        <div class="wrapper">
+            <div class="bf-welcome-accordion">
+                <div class="bf-welcome-accordion_tab">
+                    Introduction
+                    <div class="bf-welcome-accordion_arrow">
+                        <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
                     </div>
                 </div>
-
-            </div>
-
-            <hr>
-
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-                <div class="xcol col-big">
-                    <h2><?php _e( 'Embed Forms', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-				        <?php _e( 'Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar', 'buddyforms' ) ?>
-                    </p>
+                <div class="bf-welcome-accordion_content">
+                <iframe width="100%" height="415" src="https://www.youtube.com/embed/DoPLWBBlRvA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-form.gif' ?>"
-                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+            </div>
+            
+            <div class="bf-welcome-accordion">
+                <div class="bf-welcome-accordion_tab">
+                    Templates
+                    <div class="bf-welcome-accordion_arrow">
+                        <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
                     </div>
                 </div>
+                <div class="bf-welcome-accordion_content bf-welcome-accordion-templates">
+                    <?php
+                        $buddyforms_templates = buddyforms_form_builder_register_templates();
+                        $none_dependency_string = __( 'None', 'buddyforms' );
+                        if ( empty( $is_wizard ) && isset( $_REQUEST['bf_template'] ) ) {
+                            $is_wizard = true;
+                        }
+                    ?>
+                    <div id="buddyforms_template_list_container">
 
-            </div>
-            <hr>
+                        <?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
+                            <h2><?php echo strtoupper( $sort_key ) ?>&nbsp;<?php _e( 'FORMS', 'buddyforms' ) ?></h2>
 
-                <div class="xcol col-big">
-                    <h2><?php _e( 'List Submissions', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-				        <?php _e( 'You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.', 'buddyforms' ) ?>
-                    </p>
-                </div>
+                            <?php foreach ( $sort_item as $key => $template ) {
 
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-list-submissions.gif' ?>"
-                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
+                                $dependencies = buddyforms_form_builder_template_get_dependencies( $template );
+
+                                $disabled = $dependencies != $none_dependency_string ? 'disabled' : '';
+
+                                ?>
+                                <div class="bf-3-tile bf-tile <?php if ( $dependencies != $none_dependency_string ) {
+                                    echo 'disabled ';
+                                } ?>">
+                                    <h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+                                    <div class="xbf-col-50 bf-tile-desc-wrap">
+                                        <p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
+                                    </div>
+                                    <div class="bf-tile-preview-wrap"></div>
+                                    <?php if ( $dependencies != $none_dependency_string ) { ?>
+                                        <p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
+                                    <?php } else { ?>
+                                        <button <?php echo $disabled ?> id="btn-add-new-<?php echo $key ?>"
+                                                                        data-type="<?php echo $sort_key ?>"
+                                                                        data-template="<?php echo $key ?>"
+                                                                        class="welcome-screen-template btn btn-primary btn-50"
+                                                                        onclick="document.location.href='<?php echo self_admin_url( 'post-new.php?post_type=buddyforms&template=' . $key )?>'">
+                                            <?php _e( 'Use This Template', 'buddyforms' ) ?>
+                                        </button>
+                                    <?php } ?>
+                                    <div id="template-<?php echo $key ?>" style="display:none;">
+                                        <div class="bf-tile-desc-wrap">
+                                            <p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
+                                            <button <?php echo $disabled ?> id="btn-add-new-<?php echo $key ?>"
+                                                                            data-type="<?php echo $sort_key ?>"
+                                                                            data-template="<?php echo $key ?>"
+                                                                            class="welcome-screen-template button button-primary"
+                                                                            onclick="document.location.href='<?php echo self_admin_url( 'post-new.php?post_type=buddyforms&template=' . $key )?>'">
+                                                <!-- <span class="dashicons dashicons-plus"></span>  -->
+                                                <?php _e( 'Use This Template', 'buddyforms' ) ?>
+                                            </button>
+                                        </div>
+                                        <iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"
+                                                frameborder="0" class="bf-frame"
+                                                style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
+                                    </div>
+                                </div>
+                            <?php }
+                        } ?>
                     </div>
-                </div>
-
-            </div>
-            <hr>
-
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-                <div class="xcol col-big">
-                    <h2><?php _e( 'Embed Navigation', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-				        <?php _e( 'Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder', 'buddyforms' ) ?>
-                    </p>
-                </div>
-
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-add-navigation.gif' ?>"
-                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
-                    </div>
-                </div>
-
-            </div>
-            <hr>
-
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-                <div class="xcol col-big">
-                    <h2><?php _e( 'Login/ Logout Form', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-				        <?php _e( 'Display a login form or a logout button if the user is logged in.', 'buddyforms' ) ?>
-                    </p>
-                </div>
-
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-login-form.gif' ?>"
-                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
-                    </div>
-                </div>
-
-            </div>
-            <hr>
-
-            <div class="feature-section two-col" style="margin: 30px 0; overflow: auto;">
-
-                <div class="xcol col-big">
-                    <h2><?php _e( ' Password Reset', 'buddyforms' ) ?></h2>
-                    <p class="lead">
-				        <?php _e( 'Display a password reset form. This can be helpful if you want to create a registration form and ask the user to create a password first after he clicks on the activation link. Select the page with the password reset block as a redirect link in the registration form settings if you like to create this kind of funnel.', 'buddyforms' ) ?>
-                    </p>
-                </div>
-
-                <div class="xcol col-small">
-                    <div class="imgframe">
-                        <img class="nopad"
-                             style="width: 800px; height: auto; max-width: 100%; margin: 10px 0; padding: 5px; background: #fff; border: 1px solid #ddd;"
-                             src="<?php echo BUDDYFORMS_PLUGIN_URL . '/assets/admin/img/welcome-screen/gutenberg-password-reset.gif' ?>"
-                             alt="<?php _e( 'Embed Forms', 'buddyforms' ) ?>">
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Blogpost & Changelog -->
-            <div class="bfw-section bfw-news" style="margin-top: 30px;">
-                <div class="bfw-col bfw-col-50">
-                    <h2 class="bfw-title"><?php _e( 'Latest Blogpost', 'buddyforms' ) ?></h2>
-                    <p class="lead"><?php _e( 'Read all about this new BuddyForms version Tips and Tricks:', 'buddyforms' ) ?></p>
-                    <a href="https://themekraft.com/buddyforms-news/" target="_new" class="button button-primary"><?php _e( 'Read Blogpost', 'buddyforms' ) ?></a>
-                </div>
-                <div class="bfw-col bfw-col-50">
-                    <h2 class="bfw-title"><?php _e( 'Changelog', 'buddyforms' ) ?></h2>
-                    <p class="lead"><?php echo __( 'Check out the changelog for the version', 'buddyforms' ). ' ' .BUDDYFORMS_VERSION ?></p>
-                    <a href="https://wordpress.org/plugins/buddyforms/changelog/" target="_new" class="button button-primary"><?php _e( 'View Changelog', 'buddyforms' ) ?></a></p>
                 </div>
             </div>
 
-            <hr style="margin: 70px 0;">
-
-            <!-- Getting Started -->
-            <div class="bfw-section bfw-getting-started">
-                <div class="bfw-col bfw-col-50">
-                    <div class="well">
-                        <h3 class="bfw-title"><?php _e( 'First Time Here?', 'buddyforms' ) ?></h3>
-                        <a class="button xbutton-primary" href="http://docs.buddyforms.com/category/122-form-creation" title="" target="new"><?php _e( 'Getting Started', 'buddyforms' ) ?></a>
+            <div class="bf-welcome-accordion">
+                <div class="bf-welcome-accordion_tab">
+                    Shortcodes
+                    <div class="bf-welcome-accordion_arrow">
+                        <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
                     </div>
                 </div>
-                <div class="bfw-col bfw-col-50">
-                    <div class="well">
-                        <h3 class="bfw-title"><?php _e( 'How To Create New Forms', 'buddyforms' ) ?></h3>
-                        <a class="button xbutton-primary"
-                           href="http://docs.buddyforms.com/article/383-creating-a-contact-form-with-the-form-wizard"
-                           title="" target="new"><?php _e( 'Contact Form', 'buddyforms' ) ?></a>
-                        <a class="button xbutton-primary"
-                           href="http://docs.buddyforms.com/article/385-creating-a-registration-form-with-the-form-wizard"
-                           title="" target="new"><?php _e( 'Registration Form', 'buddyforms' ) ?></a>
-                        <a class="button xbutton-primary"
-                           href="http://docs.buddyforms.com/article/384-creating-a-post-form-with-the-form-wizard"
-                           title="" target="new"><?php _e( 'Post Form', 'buddyforms' ) ?></a>
+                <div class="bf-welcome-accordion_content">
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Display a Form</p>
+                        <p class="item_title_description">Use this shortcode if you wanna show a form on frontend. Don't forget to change YOUR-FORM-SLUG to your own form slug.</p>
+                        <p class="bf-shortcode-doc">[bf form_slug="YOUR-FORM-SLUG"]</p>
                     </div>
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Display Submissions</p>
+                        <p class="item_title_description">Use this shortcode if you wannan show a list of entries belongs to a Form. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "list_posts_style" is optional and its possible values ​​are "table" or "list" (default). </p>
+                        <p class="bf-shortcode-doc">[bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]</p>
+                    </div>
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Link to Form</p>
+                        <p class="item_title_description">This shortcode will create a link to the form for creating or editing submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "Add New").</p>
+                        <p class="bf-shortcode-doc">[bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]</p>
+                    </div>
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Link to User Posts</p>
+                        <p class="item_title_description">For logged in users you can use the following shortcode to display their submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "View").</p>
+                        <p class="bf-shortcode-doc">[bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]</p>
+                    </div>
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">User Posts List</p>
+                        <p class="item_title_description">For logged in users you can use the following shortcode to display a the list of posts. Don't forget to change YOUR-FORM-SLUG to your own form slug.</p>
+                        <p class="bf-shortcode-doc">[bf_user_posts_list form_slug="YOUR-FORM-SLUG"]</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-welcome-accordion">
+                <div class="bf-welcome-accordion_tab">
+                    Gutenberg Support
+                    <div class="bf-welcome-accordion_arrow">
+                        <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+                    </div>
+                </div>
+                <div class="bf-welcome-accordion_content">
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Embed Forms</p>
+                        <p>Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar.</p>
+                        <img style="width:650px;" src="<?php echo BUDDYFORMS_ASSETS; ?>admin/img/welcome-screen/gutenberg-form.gif" alt="">
+                    </div>
+
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">List Submissions</p>
+                        <p>You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.</p>
+                        <img style="width:650px;" src="<?php echo BUDDYFORMS_ASSETS; ?>admin/img/welcome-screen/gutenberg-list-submissions.gif" alt="">
+                    </div>
+
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Embed Navigation</p>
+                        <p>Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder.</p>
+                        <img style="width:650px;" src="<?php echo BUDDYFORMS_ASSETS; ?>admin/img/welcome-screen/gutenberg-add-navigation.gif" alt="">
+                    </div>
+
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Login/ Logout Form</p>
+                        <p>Display a login form or a logout button if the user is logged in.</p>
+                        <img style="width:650px;" src="<?php echo BUDDYFORMS_ASSETS; ?>admin/img/welcome-screen/gutenberg-login-form.gif" alt="">
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="bf-welcome-accordion">
+                <div class="bf-welcome-accordion_tab">
+                    More Info
+                    <div class="bf-welcome-accordion_arrow">
+                        <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+                    </div>
+                </div>
+                <div class="bf-welcome-accordion_content">
+                    <div class="bf-welcome-accordion_item">
+                        <p class="item_title">Documentation</p>
+                        <p>Our goal is to help you, that's why if you have any questions or concerns, on our website you can find all the information related to BuddyForms.</p>
+                        <a class="documentation_link" href="https://docs.buddyforms.com/" target="_blank">Visit Now!</a>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -282,4 +191,20 @@ function buddyforms_welcome_screen_content() {
 
     </div>
 	<?php
+}
+
+add_action( 'admin_head', 'buddyforms_welcome_scren_templates_redirect' );
+function buddyforms_welcome_scren_templates_redirect(){
+    if( is_admin() ){
+        if( isset( $_GET['template'] ) ){
+            $template = $_GET['template'];
+            ?>
+                <script>
+                    jQuery( document ).ready(function() {
+                        jQuery("#btn-compile-<?php echo $template ?>").click();
+                    });
+                </script>
+            <?php
+        }
+    }
 }
