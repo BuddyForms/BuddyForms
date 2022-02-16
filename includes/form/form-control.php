@@ -1297,12 +1297,14 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 					$cat_string = array_keys( $new_tax_items );
 				}
 
+				$taxonomy_exclude_handler = apply_filters( 'buddyforms_taxonomy_exclude_handler', false );
+
 				// We need to check if an excluded term was added via the backend edit screen.
 				// If a excluded term is found we need to make sure to add it to the cat_string. Otherwise the term is lost by every update from teh frontend
-				if ( isset( $customfield['taxonomy_exclude'] ) && is_array( $customfield['taxonomy_exclude'] ) ) {
+				if ( isset( $customfield['taxonomy_exclude'] ) && is_array( $customfield['taxonomy_exclude'] ) && $taxonomy_exclude_handler === true ) {
 					foreach ( $customfield['taxonomy_exclude'] as $exclude ) {
 						if ( in_array( $exclude, $term_list ) ) {
-							$cat_string .= ', ' . $exclude;
+							array_push( $cat_string, (int) $exclude );
 						}
 					}
 				}
