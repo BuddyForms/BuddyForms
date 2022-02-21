@@ -66,4 +66,8 @@ jQuery(document).ready(function (jQuery) {
         jQuery(this).toggleClass("active");
         jQuery(this).animate({ color:'#509699' }, 500);
     });
+
+    var activeTab = jQuery('.bf-welcome-accordion.active');
+    var videoHeight = activeTab.width();
+    jQuery('#bf-welcome-video-youtube').css('height', videoHeight*0.5);
 });
