@@ -131,3 +131,9 @@ function buddyforms_settings_missing_admin_notice() {
 		<?php
 	}
 }
+
+add_filter( 'show_affiliate_program_notice', 'bf_disable_affiliate_program_notice' );
+
+function bf_disable_affiliate_program_notice(){
+	return false;
+}
