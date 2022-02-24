@@ -10,11 +10,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == #DESCRIPTION ==
 
-[youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
-
 Are you tired of those boring forms, your customers hardly fill to the end? With Buddyform, you can make contact forms, postforms, and registration forms that everyone wants to fill like a professional even if you cannot write a single line of code.
 
 You get better responses, more quality leads, collect feedback and much more with an easy to use form wizard all under a few minutes.
+
+[youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
 #WHY CHOOSE BUDDYFORMS?</h4>
 ##Can’t Code? No problem: Build a Quality and Highly Optimized form Without a Single Line Of Code.
