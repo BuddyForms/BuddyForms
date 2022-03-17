@@ -385,6 +385,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 = 2.6.3 - 16 Mar 2022 =
 * Fixed security issue.
+* Improved handling of JS variables.
 
 = 2.6.2 - 11 Mar 2022 =
 * Fixed issue with JS variable conflict.
