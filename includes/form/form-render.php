@@ -93,11 +93,12 @@ function buddyforms_form_html( $args ) {
 
 	$buddyforms_global_js_data = apply_filters( 'buddyforms_form_frontend_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ), $form_slug );
 	if ( is_array( $buddyforms_global_js_data ) ) {
-		$output = 'var buddyformsGlobal = ' . wp_json_encode( $buddyforms_global_js_data );
+		$output = 'var buddyformsGlobalFrontend = ' . wp_json_encode( $buddyforms_global_js_data );
 		ob_start();
 		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
 		echo "/* <![CDATA[ */\n";
-		echo "$output\n";
+		echo "$output;\n";
+		echo "jQuery.extend(buddyformsGlobal,buddyformsGlobalFrontend);\n";
 		echo "/* ]]> */\n";
 		echo "</script>\n";
 		$global_js = ob_get_clean();
