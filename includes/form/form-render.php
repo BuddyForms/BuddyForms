@@ -91,20 +91,20 @@ function buddyforms_form_html( $args ) {
 		BuddyForms::buddyforms_js_global_set_parameters( $front_js_arguments );
 	}
 
-	// $buddyforms_global_js_data = apply_filters( 'buddyforms_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ), $form_slug );
-	// if ( is_array( $buddyforms_global_js_data ) ) {
-	// 	$output = 'var buddyformsGlobal = ' . wp_json_encode( $buddyforms_global_js_data );
-	// 	ob_start();
-	// 	echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
-	// 	echo "/* <![CDATA[ */\n";
-	// 	echo "$output\n";
-	// 	echo "/* ]]> */\n";
-	// 	echo "</script>\n";
-	// 	$global_js = ob_get_clean();
-	// 	if ( ! empty( $global_js ) ) {
-	// 		$form_html .= $global_js;
-	// 	}
-	// }
+	$buddyforms_global_js_data = apply_filters( 'buddyforms_form_frontend_global_localize_scripts', BuddyForms::buddyforms_js_global_get_parameters( $form_slug ), $form_slug );
+	if ( is_array( $buddyforms_global_js_data ) ) {
+		$output = 'var buddyformsGlobal = ' . wp_json_encode( $buddyforms_global_js_data );
+		ob_start();
+		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
+		echo "/* <![CDATA[ */\n";
+		echo "$output\n";
+		echo "/* ]]> */\n";
+		echo "</script>\n";
+		$global_js = ob_get_clean();
+		if ( ! empty( $global_js ) ) {
+			$form_html .= $global_js;
+		}
+	}
 
 	// Form start point
 	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
