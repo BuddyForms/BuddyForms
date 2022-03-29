@@ -576,7 +576,8 @@ function BuddyForms() {
     function addValidationPhone() {
         jQuery.validator.addMethod("bf-tel", function (value, element, param) {
 
-            $valid_phone_number = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value);
+            var numberPattern = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/;
+            $valid_phone_number = numberPattern.test(value);
             if (value !== '' && !$valid_phone_number) {
                 jQuery.validator.messages['bf-tel'] = "Invalid Phone Number";
                 return false;
@@ -1365,7 +1366,8 @@ function BuddyForms() {
                 if (targetField && targetField.length > 0) {
                     targetField.addClass('error');
                     var labelSlug = fieldData.slug + '-error';
-                    var labelElement = jQuery('<label>').attr({id: labelSlug, class: 'error', for: fieldData.slug}).text(e);
+                    e = e.replace(/_/g, " ");
+                    var labelElement = jQuery('<label>').attr({id: labelSlug, class: 'error', for: fieldData.slug}).text(e.charAt(0).toUpperCase() + e.slice(1));
                     errorPlacement(labelElement, targetField);
                 }
             });
