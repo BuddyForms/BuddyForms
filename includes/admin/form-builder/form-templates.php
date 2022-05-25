@@ -8,7 +8,6 @@ function buddyforms_form_builder_register_templates() {
 	// Get the templates form demo.buddyforms.com as json string
 	$response = wp_remote_get( 'http://demo.buddyforms.com/templates/wp-json/buddyforms/v1/all/' );
 
-
 	if ( is_wp_error( $response ) || $response['response']['code'] != 200 ) {
 		$response         = array();
 		$response['body'] = buddyforms_default_form_templates_json();
@@ -35,7 +34,6 @@ function buddyforms_form_builder_register_templates() {
 				} else {
 					$desc .= ', ' . $form_field->name;
 				}
-
 			}
 			$buddyforms_templates[ $sort_key ][ $form_slug ]['title'] = $buddyform->name;
 			$buddyforms_templates[ $sort_key ][ $form_slug ]['url']   = 'http://demo.buddyforms.com/' . $form_slug;
@@ -63,13 +61,19 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 	$deps         = array();
 
 	if ( ! ( $buddyform->post_type == 'post' || $buddyform->post_type == 'page' || $buddyform->post_type == 'bf_submissions' ) ) {
-		$deps[] = array( 'name' => __( 'BuddyForms Professional', 'buddyforms' ), 'url' => 'https://themekraft.com/buddyforms/' );
+		$deps[] = array(
+			'name' => __( 'BuddyForms Professional', 'buddyforms' ),
+			'url'  => 'https://themekraft.com/buddyforms/',
+		);
 	}
 
 	if ( isset( $buddyform->form_fields ) ) {
 		foreach ( $buddyform->form_fields as $field_key => $field ) {
 			if ( $field->slug == 'taxonomy' ) {
-				$deps[] = array( 'name' => __( 'BuddyForms Professional', 'buddyforms' ), 'url' => 'https://themekraft.com/buddyforms/' );
+				$deps[] = array(
+					'name' => __( 'BuddyForms Professional', 'buddyforms' ),
+					'url'  => 'https://themekraft.com/buddyforms/',
+				);
 			}
 		}
 	}
@@ -81,30 +85,48 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
 	}
 
 	if ( $buddyform->post_type == 'product' && ! post_type_exists( 'product' ) ) {
-		$deps[] = array( 'name' => 'WooCommerce', 'url' => admin_url( sprintf( $internal_plugin_search_string, 'WooCommerce' ) ) );
+		$deps[] = array(
+			'name' => 'WooCommerce',
+			'url'  => admin_url( sprintf( $internal_plugin_search_string, 'WooCommerce' ) ),
+		);
 	}
 
 	if ( isset( $buddyform->form_fields ) ) {
 		foreach ( $buddyform->form_fields as $field_key => $field ) {
 			if ( $field->type === 'geo_my_wp_address' ) {
 				if ( ! class_exists( 'buddyforms_geo_my_wp' ) ) {
-					$deps[] = array( 'name' => 'GEO my WP', 'url' => admin_url( sprintf( $internal_plugin_search_string, 'GEO my WP' ) ) );
-					$deps[] = array( 'name' => 'BuddyForms Geo My WP', 'url' => 'https://themekraft.com/products/buddyforms-geo-my-wp/' );
+					$deps[] = array(
+						'name' => 'GEO my WP',
+						'url'  => admin_url( sprintf( $internal_plugin_search_string, 'GEO my WP' ) ),
+					);
+					$deps[] = array(
+						'name' => 'BuddyForms Geo My WP',
+						'url'  => 'https://themekraft.com/products/buddyforms-geo-my-wp/',
+					);
 				}
 			}
 
 			if ( $field->slug == '_woocommerce' ) {
 
 				if ( ! class_exists( 'bf_woo_elem' ) ) {
-					$deps[] = array( 'name' => 'BuddyForms WooElements', 'url' => 'https://themekraft.com/products/buddyforms-woocommerce-form-elements/' );
+					$deps[] = array(
+						'name' => 'BuddyForms WooElements',
+						'url'  => 'https://themekraft.com/products/buddyforms-woocommerce-form-elements/',
+					);
 				}
 
 				if ( $field->product_type_default == 'auction' && ! class_exists( 'bf_woo_simple_auction' ) ) {
 					if ( ! class_exists( 'WooCommerce_simple_auction' ) ) {
-						$deps[] = array( 'name' => 'WC Simple Auctions', 'url' => admin_url( sprintf( $internal_plugin_search_string, 'WC Simple Auctions' ) ) );
+						$deps[] = array(
+							'name' => 'WC Simple Auctions',
+							'url'  => admin_url( sprintf( $internal_plugin_search_string, 'WC Simple Auctions' ) ),
+						);
 					}
 					if ( ! class_exists( 'bf_woo_simple_auction' ) ) {
-						$deps[] = array( 'name' => 'BuddyForms Simple Auction', 'url' => 'https://themekraft.com/products/buddyforms-woocommerce-simple-auction/' );
+						$deps[] = array(
+							'name' => 'BuddyForms Simple Auction',
+							'url'  => 'https://themekraft.com/products/buddyforms-woocommerce-simple-auction/',
+						);
 					}
 				}
 			}
@@ -136,7 +158,6 @@ function buddyforms_form_builder_template_get_dependencies( $template ) {
  *
  * @return false|string
  * @since 2.5.0
- *
  */
 function buddyforms_form_builder_templates( $is_wizard = false ) {
 
@@ -153,82 +174,89 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 	<div class="buddyforms_template buddyforms_template_container buddyforms_wizard_types">
 		<div id="buddyforms_template_header_container">
 			<div id="buddyforms_template_header_container_h3">
-				<h3><?php _e( 'Start adding Fields to your Form.', 'buddyforms' ) ?></h3>
+				<h3><?php esc_html_e( 'Start adding Fields to your Form.', 'buddyforms' ); ?></h3>
 			</div>
 			<div id="buddyforms_template_arrow_container">
-				<img class="buddyforms_template_arrow" src="<?php echo BUDDYFORMS_ASSETS . 'images/arrow.png' ?>">
+				<img class="buddyforms_template_arrow" src="<?php echo esc_url( BUDDYFORMS_ASSETS ) . 'images/arrow.png'; ?>">
 			</div>
 		</div>
 
 		<?php add_thickbox(); ?>
 
 		<div id="buddyforms_template_list_container">
-			<h5><?php _e( 'Choose a Form Template or build a custom Form. If you don\' find the template you need, drop us one <a href="mailto:support@themekraft.com">email to support@themekraft.com</a>.', 'buddyforms' ) ?></h5>
+			<h5><?php esc_html_e( 'Choose a Form Template or build a custom Form. If you don\' find the template you need, drop us one <a href="mailto:support@themekraft.com">email to support@themekraft.com</a>.', 'buddyforms' ); ?></h5>
 
 			<div class="bf-3-tile bf-tile">
-				<h4 class="bf-tile-title"><?php _e( 'CUSTOM FORM', 'buddyforms' ) ?></h4>
+				<h4 class="bf-tile-title"><?php esc_html_e( 'CUSTOM FORM', 'buddyforms' ); ?></h4>
 				<div class="xbf-col-50 bf-tile-desc-wrap">
-					<p class="bf-tile-desc"><?php _e( 'Select the field you want to use to build your form.', 'buddyforms' ) ?></p>
+					<p class="bf-tile-desc"><?php esc_html_e( 'Select the field you want to use to build your form.', 'buddyforms' ); ?></p>
 				</div>
 				<div class="bf-tile-preview-wrap"></div>
 				<div id="template-custom">
 					<div class="bf-tile-desc-wrap"></div>
 					<button id="btn-compile-custom" data-type="" class="bf_form_template_custom button button-primary" onclick="">
-						<?php _e( 'Start Custom', 'buddyforms' ) ?>
+						<?php esc_html_e( 'Start Custom', 'buddyforms' ); ?>
 					</button>
 				</div>
 			</div>
 
 			<?php foreach ( $buddyforms_templates as $sort_key => $sort_item ) { ?>
 
-				<h2><?php echo strtoupper( $sort_key ) ?>&nbsp;<?php _e( 'FORMS', 'buddyforms' ) ?></h2>
+				<h2><?php echo esc_html( strtoupper( $sort_key ) ); ?>&nbsp;<?php esc_html_e( 'FORMS', 'buddyforms' ); ?></h2>
 
-				<?php foreach ( $sort_item as $key => $template ) {
+				<?php
+				foreach ( $sort_item as $key => $template ) {
 
 					$dependencies = buddyforms_form_builder_template_get_dependencies( $template );
 
 					$disabled = $dependencies != $none_dependency_string ? 'disabled' : '';
 
 					?>
-					<div class="bf-3-tile bf-tile <?php if ( $dependencies != $none_dependency_string ) {
+					<div class="bf-3-tile bf-tile 
+					<?php
+					if ( $dependencies != $none_dependency_string ) {
 						echo 'disabled ';
-					} ?>">
-						<h4 class="bf-tile-title"><?php echo $template['title'] ?></h4>
+					}
+					?>
+					">
+						<h4 class="bf-tile-title"><?php echo esc_html( $template['title'] ); ?></h4>
 						<div class="xbf-col-50 bf-tile-desc-wrap">
-							<p class="bf-tile-desc"><?php echo wp_trim_words( $template['desc'], 15 ); ?></p>
+							<p class="bf-tile-desc"><?php echo esc_html( wp_trim_words( $template['desc'], 15 ) ); ?></p>
 						</div>
 						<div class="bf-tile-preview-wrap"></div>
 						<?php if ( $dependencies != $none_dependency_string ) { ?>
-							<p class="bf-tile-dependencies"><?php _e( 'Dependencies: ', 'buddyforms' ) ?><?php echo $dependencies ?></p>
+							<p class="bf-tile-dependencies"><?php esc_html_e( 'Dependencies: ', 'buddyforms' ); ?><?php echo wp_unslash( $dependencies ); ?></p>
 						<?php } else { ?>
-							<button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
-							                                data-type="<?php echo $sort_key ?>"
-							                                data-template="<?php echo $key ?>"
-							                                class="bf_wizard_types bf_form_template btn btn-primary btn-50"
-							                                onclick="">
-								<?php _e( 'Use This Template', 'buddyforms' ) ?>
+							<button <?php echo esc_attr( $disabled ); ?> id="btn-compile-<?php echo esc_attr( $key ); ?>"
+															data-type="<?php echo esc_attr( $sort_key ); ?>"
+															data-template="<?php echo esc_attr( $key ); ?>"
+															class="bf_wizard_types bf_form_template btn btn-primary btn-50"
+															onclick="">
+								<?php esc_html_e( 'Use This Template', 'buddyforms' ); ?>
 							</button>
 						<?php } ?>
-						<div id="template-<?php echo $key ?>" style="display:none;">
+						<div id="template-<?php echo esc_attr( $key ); ?>" style="display:none;">
 							<div class="bf-tile-desc-wrap">
-								<p class="bf-tile-desc"><?php echo $template['desc'] ?></p>
-								<button <?php echo $disabled ?> id="btn-compile-<?php echo $key ?>"
-								                                data-type="<?php echo $sort_key ?>"
-								                                data-template="<?php echo $key ?>"
-								                                class="bf_wizard_types bf_form_template button button-primary"
-								                                onclick="">
+								<p class="bf-tile-desc"><?php echo esc_html( $template['desc'] ); ?></p>
+								<button <?php echo esc_attr( $disabled ); ?> id="btn-compile-<?php echo esc_attr( $key ); ?>"
+																data-type="<?php echo esc_attr( $sort_key ); ?>"
+																data-template="<?php echo esc_attr( $key ); ?>"
+																class="bf_wizard_types bf_form_template button button-primary"
+																onclick="">
 									<!-- <span class="dashicons dashicons-plus"></span>  -->
-									<?php _e( 'Use This Template', 'buddyforms' ) ?>
+									<?php esc_html_e( 'Use This Template', 'buddyforms' ); ?>
 								</button>
 							</div>
-							<iframe id="iframe-<?php echo $key ?>" width="100%" height="800px" scrolling="yes"
-							        frameborder="0" class="bf-frame"
-							        style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
+							<iframe id="iframe-<?php echo esc_attr( $key ); ?>" width="100%" height="800px" scrolling="yes"
+									frameborder="0" class="bf-frame"
+									style="background: transparent; height: 639px; height: 75vh; margin: 0 auto; padding: 0 5px; width: calc( 100% - 10px );"></iframe>
 						</div>
 
 					</div>
-				<?php }
-			} ?>
+					<?php
+				}
+			}
+			?>
 		</div>
 	</div>
 
@@ -263,18 +291,27 @@ function buddyforms_form_template() {
 
 	$buddyforms_templates = $forms;
 
-	$target_template = sanitize_text_field( $_POST['template'] );
+	if ( ! isset( $_POST['template'] ) ) {
+		return;
+	}
+	$target_template = sanitize_text_field( wp_unslash( $_POST['template'] ) );
 
 	$buddyform = $buddyforms_templates[ $target_template ];
 
 	$buddyform = json_decode( $buddyform['json'], true );
 
 	if ( ! empty( $_POST['title'] ) ) {
-		$post->post_name   = sanitize_title( $_POST['title'] );
+		$post->post_name   = sanitize_title( wp_unslash( $_POST['title'] ) );
 		$buddyform['slug'] = $post->post_name;
 	}
 
-	buddyforms_track( 'selected-form-template', array( 'template' => $target_template, 'type' => $buddyform['form_type'] ) );
+	buddyforms_track(
+		'selected-form-template',
+		array(
+			'template' => $target_template,
+			'type'     => $buddyform['form_type'],
+		)
+	);
 
 	ob_start();
 	buddyforms_metabox_form_elements( $post, $buddyform );
@@ -288,10 +325,10 @@ function buddyforms_form_template() {
 	?>
 	<div class="hidden bf-hidden"><?php wp_editor( 'dummy', 'dummy' ); ?></div>
 
-	<?php buddyforms_mail_notification_screen() ?>
+	<?php buddyforms_mail_notification_screen(); ?>
 
 	<div class="bf_show_if_f_type_post bf_hide_if_post_type_none">
-		<?php buddyforms_post_status_mail_notification_screen() ?>
+		<?php buddyforms_post_status_mail_notification_screen(); ?>
 	</div>
 	<?php
 	$mail_notification = ob_get_clean();

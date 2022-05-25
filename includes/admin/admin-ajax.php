@@ -11,7 +11,7 @@ function buddyforms_post_types_taxonomies() {
 		die();
 	}
 
-	$post_type             = $_POST['post_type'];
+	$post_type             = sanitize_text_field( wp_unslash( $_POST['post_type'] ) );
 	$buddyforms_taxonomies = buddyforms_taxonomies( $post_type );
 
 	$tmp = '';
@@ -19,7 +19,15 @@ function buddyforms_post_types_taxonomies() {
 		$tmp .= '<option value="' . $name . '">' . $label . '</option>';
 	}
 
-	echo $tmp;
+	$allowed = array(
+		'option' => array(
+			'value'    => array(),
+			'selected' => array(),
+			'disabled' => array(),
+			'class'    => array(),
+		),
+	);
+	echo wp_kses( $tmp, $allowed );
 	die();
 
 }
@@ -32,7 +40,7 @@ function buddyforms_close_submission_default_page_notification() {
 	if ( ! ( is_array( $_POST ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 		die();
 	}
-	if ( ! isset( $_POST['action'] ) || wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) === false || $_POST['action'] !== 'buddyforms_close_submission_default_page_notification' ) {
+	if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) || wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'fac_drop' ) === false || $_POST['action'] !== 'buddyforms_close_submission_default_page_notification' ) {
 		die();
 	}
 	update_option( 'close_submission_default_page_notification', 1 );
@@ -42,13 +50,21 @@ function buddyforms_close_submission_default_page_notification() {
 add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
 function buddyforms_update_taxonomy_default() {
 
+	$allowed = array(
+		'option' => array(
+			'value'    => array(),
+			'selected' => array(),
+			'disabled' => array(),
+			'class'    => array(),
+		),
+	);
 	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none' ) {
 		$tmp = '<option value="none">' . __( 'First you need to select a Taxonomy to select the Taxonomy defaults', 'buddyforms' ) . '</option>';
-		echo $tmp;
+		echo wp_kses( $tmp, $allowed );
 		die();
 	}
 
-	$taxonomy = $_POST['taxonomy'];
+	$taxonomy = sanitize_text_field( wp_unslash( $_POST['taxonomy'] ) );
 
 	$args = array(
 		'orderby'    => 'name',
@@ -63,8 +79,7 @@ function buddyforms_update_taxonomy_default() {
 	foreach ( $terms as $key => $term_name ) {
 		$tmp .= '<option value="' . $key . '">' . $term_name . '</option>';
 	}
-
-	echo $tmp;
+	echo wp_kses( $tmp, $allowed );
 
 	die();
 
@@ -89,10 +104,10 @@ function buddyforms_new_page() {
 
 	// Create post object
 	$new_page = array(
-		'post_title'   => wp_strip_all_tags( $_POST['page_name'] ),
+		'post_title'   => wp_strip_all_tags( wp_unslash( $_POST['page_name'] ) ),
 		'post_content' => '',
 		'post_status'  => 'publish',
-		'post_type'    => 'page'
+		'post_type'    => 'page',
 	);
 
 	// Insert the post into the database
@@ -114,8 +129,11 @@ function buddyforms_new_page() {
 add_action( 'wp_ajax_buddyforms_url_builder', 'buddyforms_url_builder' );
 function buddyforms_url_builder() {
 	global $post;
-	$page_id   = $_POST['attached_page'];
-	$form_slug = $_POST['form_slug'];
+	if ( ! isset( $_POST['attached_page'] ) || ! isset( $_POST['form_slug'] ) ) {
+		return;
+	}
+	$page_id   = sanitize_key( wp_unslash( $_POST['attached_page'] ) );
+	$form_slug = buddyforms_sanitize_slug( wp_unslash( $_POST['form_slug'] ) );
 	$post      = get_post( $page_id );
 
 	if ( isset( $post->post_name ) ) {
@@ -139,7 +157,7 @@ function buddyforms_user_satisfaction_ajax() {
 		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
 			wp_send_json_error();
 		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'fac_drop' ) ) {
 			wp_send_json_error();
 		}
 
@@ -147,22 +165,38 @@ function buddyforms_user_satisfaction_ajax() {
 			wp_send_json_error();
 		}
 
-		$us_key   = sanitize_text_field( $_POST['user_satisfaction_key'] );
-		$us_value = sanitize_textarea_field( $_POST['user_satisfaction_value'] );
+		$us_key   = sanitize_text_field( wp_unslash( $_POST['user_satisfaction_key'] ) );
+		$us_value = sanitize_textarea_field( wp_unslash( $_POST['user_satisfaction_value'] ) );
 
 		switch ( $us_key ) {
 			case 'satisfaction_recommendation':
 				if ( ! isset( $us_value ) || empty( $us_value ) ) {
 					wp_send_json_error();
 				}
-				buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-rate', 'rate' => intval( $us_value ) ) );
+				buddyforms_track(
+					'$experiment_started',
+					array(
+						'Experiment name' => 'User Satisfaction',
+						'Variant name'    => 'v1',
+						'action'          => 'satisfaction-rate',
+						'rate'            => intval( $us_value ),
+					)
+				);
 				update_option( 'buddyforms_user_satisfaction_sent', 1 );
 
 				wp_send_json( '' );
 				break;
 			case 'satisfaction_comments':
 				if ( isset( $us_value ) && ! empty( $us_value ) ) {
-					buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-comment', 'comment' => $us_value ) );
+					buddyforms_track(
+						'$experiment_started',
+						array(
+							'Experiment name' => 'User Satisfaction',
+							'Variant name'    => 'v1',
+							'action'          => 'satisfaction-comment',
+							'comment'         => $us_value,
+						)
+					);
 				}
 
 				wp_send_json( '' );
@@ -171,7 +205,6 @@ function buddyforms_user_satisfaction_ajax() {
 				wp_send_json_error();
 				break;
 		}
-
 	} catch ( Exception $ex ) {
 		wp_send_json_error( $ex->getMessage() );
 	}
@@ -190,12 +223,12 @@ function buddyforms_marketing_hide_for_ever_close() {
 		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
 			die();
 		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'fac_drop' ) ) {
 			die();
 		}
 
 		if ( ! empty( $_POST['popup_key'] ) ) {
-			$key     = sanitize_text_field( $_POST['popup_key'] );
+			$key     = sanitize_text_field( wp_unslash( $_POST['popup_key'] ) );
 			$options = get_option( 'buddyforms_marketing_hide_for_ever_close' );
 			if ( ! empty( $options ) && is_array( $options ) ) {
 				if ( empty( $options[ $key ] ) ) {
@@ -227,7 +260,7 @@ function buddyforms_marketing_reset_permissions() {
 		if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
 			die();
 		}
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'fac_drop' ) ) {
 			die();
 		}
 
@@ -251,10 +284,16 @@ function buddyforms_custom_form_template_tracking() {
 	if ( ! isset( $_POST['action'] ) || ! isset( $_POST['nonce'] ) ) {
 		die();
 	}
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'fac_drop' ) ) {
+	if ( ! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'fac_drop' ) ) {
 		die();
 	}
-	buddyforms_track( 'selected-form-template', array( 'template' => 'custom', 'type' => 'custom' ) );
+	buddyforms_track(
+		'selected-form-template',
+		array(
+			'template' => 'custom',
+			'type'     => 'custom',
+		)
+	);
 }
 
 add_action( 'wp_ajax_buddyforms_custom_form_template', 'buddyforms_custom_form_template_tracking' );

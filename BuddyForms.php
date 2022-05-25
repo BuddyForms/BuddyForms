@@ -644,9 +644,9 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 	function buddyforms_php_version_admin_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php _e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
-			<p><?php _e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
-			<p><?php _e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
+			<p><?php esc_html_e( 'PHP Version Update Required!', 'buddyforms' ); ?></p>
+			<p><?php esc_html_e( 'You are using PHP Version ' . PHP_VERSION, 'buddyforms' ); ?></p>
+			<p><?php esc_html_e( 'Please make sure you have at least php version 5.3 installed.', 'buddyforms' ); ?></p>
 		</div>
 		<?php
 	}
