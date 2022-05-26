@@ -388,3 +388,10 @@ small#buddyforms_version{
     float:right;
 }
 
+.bf-permissions-header-1{
+    margin-left: 5%; float: left;
+}
+.bf-permissions-header-2{
+    margin-left: 3%; float: left;
+}
+

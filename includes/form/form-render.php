@@ -13,19 +13,24 @@ function buddyforms_form_html( $args ) {
 	$post_type    = $post_status = $the_post = $customfields = $revision_id = $post_parent = $redirect_to = $form_slug = $form_type = $form_notice = '';
 
 	// Extract the form args
-	extract( shortcode_atts( array(
-		'post_type'    => '',
-		'the_post'     => 0,
-		'customfields' => false,
-		'post_id'      => false,
-		'revision_id'  => false,
-		'post_parent'  => 0,
-		'redirect_to'  => esc_url_raw( $_SERVER['REQUEST_URI'] ),
-		'form_slug'    => '',
-		'post_status'  => '',
-		'form_notice'  => '',
-		'current_user' => false,
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'post_type'    => '',
+				'the_post'     => 0,
+				'customfields' => false,
+				'post_id'      => false,
+				'revision_id'  => false,
+				'post_parent'  => 0,
+				'redirect_to'  => esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+				'form_slug'    => '',
+				'post_status'  => '',
+				'form_notice'  => '',
+				'current_user' => false,
+			),
+			$args
+		)
+	);
 
 	$is_registration_form   = ! empty( $buddyforms[ $form_slug ]['form_type'] ) && 'registration' === $buddyforms[ $form_slug ]['form_type'];
 	$need_registration_form = ! empty( $buddyforms[ $form_slug ]['public_submit'] ) && 'registration_form' === $buddyforms[ $form_slug ]['public_submit'];
@@ -68,7 +73,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	if ( ! empty( $buddyforms[ $form_slug ]['form_type'] ) && $buddyforms[ $form_slug ]['form_type'] == 'registration'
-	     || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' && ! is_user_logged_in()
+		 || isset( $buddyforms[ $form_slug ]['public_submit'] ) && $buddyforms[ $form_slug ]['public_submit'] == 'public_submit' && ! is_user_logged_in()
 	) {
 		$user_can_edit = true;
 	}
@@ -111,11 +116,10 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div id="buddyforms_form_hero_' . $form_slug . '" class="the_buddyforms_form ' . apply_filters( 'buddyforms_form_hero_classes', '' ) . '" >';
 
 	// Hook above the form inside the BuddyForms form div
-	$form_html = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
+	$form_html  = apply_filters( 'buddyforms_form_hero_top', $form_html, $form_slug );
 	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'above' ? buddyforms_get_login_form_template( $form_slug ) : '';
 
-
-	//decide if the update of create message will show.
+	// decide if the update of create message will show.
 	$form_type      = ( ! empty( $form_type ) ) ? $form_type : 'submission';
 	$message_source = 'after_submit_message_text';
 	if ( 'registration' === $form_type ) {
@@ -132,7 +136,7 @@ function buddyforms_form_html( $args ) {
 	if ( isset( $_POST['bf_submitted'] ) ) {
 		$notice_class = apply_filters( 'buddyforms_form_notice_class', ! empty( $form_notice ) ? 'bf-alert success' : '', $form_slug );
 	}
-	$form_html    .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
+	$form_html   .= '<div class="' . $notice_class . '" id="form_message_' . $form_slug . '">';
 	$global_error = ErrorHandler::get_instance();
 	if ( ! empty( $global_error ) ) {
 		$global_bf_error = $global_error->get_global_error();
@@ -148,7 +152,6 @@ function buddyforms_form_html( $args ) {
 	$form_html .= '<div class="form_wrapper clearfix">';
 
 	$bfdesign = isset( $buddyforms[ $form_slug ]['layout'] ) ? $buddyforms[ $form_slug ]['layout'] : array();
-
 
 	// Alright, let's set some defaults
 
@@ -205,21 +208,19 @@ function buddyforms_form_html( $args ) {
 	// Extras
 	$bfdesign['extras_disable_all_css'] = isset( $bfdesign['extras_disable_all_css'] ) ? $bfdesign['extras_disable_all_css'] : '';
 
-
 	// only output the whole CSS if the option to disable CSS is unchecked
 	if ( $bfdesign['extras_disable_all_css'] == '' ) {
 		ob_start();
-		require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php' );
+		require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php';
 		$layout = ob_get_clean();
 		if ( ! empty( $layout ) ) {
-			$layout    = buddyforms_minify_css( $layout );
+			$layout     = buddyforms_minify_css( $layout );
 			$form_html .= $layout;
 		}
 	}
 
-
 	// Create the form object
-	$form = new Form( "buddyforms_form_" . $form_slug );
+	$form = new Form( 'buddyforms_form_' . $form_slug );
 
 	$buddyforms_frontend_form_template_name = apply_filters( 'buddyforms_frontend_form_template', 'View_Frontend' );
 
@@ -230,54 +231,65 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Set the form attribute
-	$form->configure( array(
-		"prevent" => array( "bootstrap", "jQuery", "focus" ),
-		"action"  => $redirect_to,
-		"view"    => new $buddyforms_frontend_form_template_name(),
-		'class'   => apply_filters( 'buddyforms_form_class', $form_class ),
-		'ajax'    => ! isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ? 'buddyforms_ajax_process_edit_post' : false,
-		'method'  => 'post'
-	) );
+	$form->configure(
+		array(
+			'prevent' => array( 'bootstrap', 'jQuery', 'focus' ),
+			'action'  => $redirect_to,
+			'view'    => new $buddyforms_frontend_form_template_name(),
+			'class'   => apply_filters( 'buddyforms_form_class', $form_class ),
+			'ajax'    => ! isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ? 'buddyforms_ajax_process_edit_post' : false,
+			'method'  => 'post',
+		)
+	);
 
 	ob_start();
 	do_action( 'template_notices' );
 	$template_notices = ob_get_contents();
 	$form->addElement( new Element_HTML( $template_notices ) );
 	$form->addElement( new Element_HTML( wp_nonce_field( 'buddyforms_form_nonce', '_wpnonce', true, false ) ) );
-	//Honey Pot
+	// Honey Pot
 	$honey_pot = new Element_HTML( '<input type="text" value="" id="bf_hweb" name="bf_hweb" />' );
 	$form->addElement( $honey_pot );
 
-	$form->addElement( new Element_Hidden( "redirect_to", $redirect_to ) );
-	$form->addElement( new Element_Hidden( "post_id", $post_id ) );
+	$form->addElement( new Element_Hidden( 'redirect_to', $redirect_to ) );
+	$form->addElement( new Element_Hidden( 'post_id', $post_id ) );
 	if ( is_user_logged_in() ) {
-		$form->addElement( new Element_Hidden( "post_author", ! empty( $current_user ) ? $current_user->ID : 0 ) );
+		$form->addElement( new Element_Hidden( 'post_author', ! empty( $current_user ) ? $current_user->ID : 0 ) );
 	}
-	$form->addElement( new Element_Hidden( "revision_id", $revision_id ) );
-	$form->addElement( new Element_Hidden( "post_parent", $post_parent ) );
-	$form->addElement( new Element_Hidden( "form_slug", $form_slug ) );
-	$form->addElement( new Element_Hidden( "bf_post_type", $post_type ) );
-	$form->addElement( new Element_Hidden( "form_type", isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '' ) );
-	$form->addElement( new Element_Hidden( "form_action", $form_action ) );
+	$form->addElement( new Element_Hidden( 'revision_id', $revision_id ) );
+	$form->addElement( new Element_Hidden( 'post_parent', $post_parent ) );
+	$form->addElement( new Element_Hidden( 'form_slug', $form_slug ) );
+	$form->addElement( new Element_Hidden( 'bf_post_type', $post_type ) );
+	$form->addElement( new Element_Hidden( 'form_type', isset( $buddyforms[ $form_slug ]['form_type'] ) ? $buddyforms[ $form_slug ]['form_type'] : '' ) );
+	$form->addElement( new Element_Hidden( 'form_action', $form_action ) );
 
 	if ( ! empty( $args['notificate_to'] ) ) {
-		$form->addElement( new Element_Hidden( "notificate_to", $args['notificate_to'] ) );
+		$form->addElement( new Element_Hidden( 'notificate_to', $args['notificate_to'] ) );
 	}
 
 	if ( isset( $buddyforms[ $form_slug ]['bf_ajax'] ) ) {
-		$form->addElement( new Element_Hidden( "ajax", 'off' ) );
+		$form->addElement( new Element_Hidden( 'ajax', 'off' ) );
 	}
 
 	// if the form has custom field to save as post meta data they get displayed here
 	buddyforms_form_elements( $form, $args );
 
-	$form->addElement( new Element_Hidden( "bf_submitted", 'true', array( 'value' => 'true', 'id' => "submitted" ) ) );
+	$form->addElement(
+		new Element_Hidden(
+			'bf_submitted',
+			'true',
+			array(
+				'value' => 'true',
+				'id'    => 'submitted',
+			)
+		)
+	);
 
 	$exist_field_status = buddyforms_exist_field_type_in_form( $form_slug, 'status' );
 	if ( ! $exist_field_status ) {
 		$setup_form_status = ! empty( $buddyforms[ $form_slug ]['status'] ) ? $buddyforms[ $form_slug ]['status'] : 'publish';
 		$post_status       = ( ! empty( $post_status ) ) ? $post_status : $setup_form_status;
-		$form->addElement( new Element_Hidden( "status", $post_status, array( 'id' => "status" ) ) );
+		$form->addElement( new Element_Hidden( 'status', $post_status, array( 'id' => 'status' ) ) );
 	}
 
 	$exist_field_form_actions = buddyforms_exist_field_type_in_form( $form_slug, 'form_actions' );
@@ -307,7 +319,7 @@ function buddyforms_form_html( $args ) {
 	}
 
 	// Hook under the form inside the BuddyForms form div
-	$form_html = apply_filters( 'buddyforms_form_hero_last', $form_html, $form_slug );
+	$form_html  = apply_filters( 'buddyforms_form_hero_last', $form_html, $form_slug );
 	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template( $form_slug ) : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
