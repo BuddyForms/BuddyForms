@@ -21,7 +21,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bf-welcome-accordion_tab">
 					Introduction
 					<div class="bf-welcome-accordion_arrow">
-						<img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+						<img src="<?php echo esc_url( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/PJRz0Fc.png" alt="arrow">
 					</div>
 				</div>
 				<div class="bf-welcome-accordion_content">
@@ -33,7 +33,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bf-welcome-accordion_tab">
 					Templates
 					<div class="bf-welcome-accordion_arrow">
-						<img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+						<img src="<?php echo esc_url( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/PJRz0Fc.png" alt="arrow">
 					</div>
 				</div>
 				<div class="bf-welcome-accordion_content bf-welcome-accordion-templates">
@@ -110,7 +110,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bf-welcome-accordion_tab">
 					Gutenberg Support
 					<div class="bf-welcome-accordion_arrow">
-						<img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+						<img src="<?php echo esc_url( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/PJRz0Fc.png" alt="arrow">
 					</div>
 				</div>
 				<div class="bf-welcome-accordion_content">
@@ -145,7 +145,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bf-welcome-accordion_tab">
 					Shortcodes
 					<div class="bf-welcome-accordion_arrow">
-						<img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+						<img src="<?php echo esc_url( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/PJRz0Fc.png" alt="arrow">
 					</div>
 				</div>
 				<div class="bf-welcome-accordion_content">
@@ -181,7 +181,7 @@ function buddyforms_welcome_screen_content() {
 				<div class="bf-welcome-accordion_tab">
 					More Info
 					<div class="bf-welcome-accordion_arrow">
-						<img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow">
+						<img src="<?php echo esc_url( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/PJRz0Fc.png" alt="arrow">
 					</div>
 				</div>
 				<div class="bf-welcome-accordion_content">

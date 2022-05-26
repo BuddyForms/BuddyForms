@@ -25,15 +25,6 @@ class Element_jQueryUIDate extends Element_Textbox {
 		);
 	}
 
-	/**
-	 * @return array
-	 */
-	public function getJSFiles() {
-		return array(
-			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
-		);
-	}
-
 	public function jQueryDocumentReady() {
 		parent::jQueryDocumentReady();
 		echo 'jQuery("#', $this->_attributes["id"], '").datepicker(', $this->jQueryOptions(), ');';

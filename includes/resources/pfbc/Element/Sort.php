@@ -18,15 +18,6 @@ class Element_Sort extends OptionElement {
 		);
 	}
 
-	/**
-	 * @return array
-	 */
-	public function getJSFiles() {
-		return array(
-			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
-		);
-	}
-
 	public function jQueryDocumentReady() {
 		echo 'jQuery("#', $this->_attributes["id"], '").sortable(', $this->jQueryOptions(), ');';
 		echo 'jQuery("#', $this->_attributes["id"], '").disableSelection();';
