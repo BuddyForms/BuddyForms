@@ -1110,7 +1110,7 @@ function buddyforms_add_ellipsis( $string, $length = 25, $echo = false, $force =
 	}
 
 	if ( $echo ) {
-		echo $str;
+		echo wp_kses_post( $str );
 	} else {
 		return $str;
 	}

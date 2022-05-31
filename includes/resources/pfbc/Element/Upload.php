@@ -109,7 +109,7 @@ class Element_Upload extends Element_Textbox {
 		$key_value              = '';
 		$attachment_ids         = array();
 		if ( $field_type === 'upload' || $field_type === 'featured_image' ) {
-			$key_value = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : "";
+			$key_value = isset( $_POST[ $field_slug ] ) ? buddyforms_sanitize_slug( wp_unslash( $_POST[ $field_slug ] ) ) : "";
 			if ( $field_type === 'upload' ) {
 				if ( ! empty( $key_value ) ) {
 					if ( empty( $attachment_ids ) ) {
@@ -241,13 +241,13 @@ class Element_Upload extends Element_Textbox {
 		global $buddyforms, $post_id;
 
 		$id     = $this->getAttribute( 'id' );
-		$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
-		$entry  = isset( $_GET['entry'] ) ? $_GET['entry'] : "";
-		$page   = isset( $_GET['page'] ) ? $_GET['page'] : "";
+		$action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : "";
+		$entry  = isset( $_GET['entry'] ) ? sanitize_key( $_GET['entry'] ) : "";
+		$page   = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : "";
 
 		//If Entry is empty we check if we are in a edit entry page
 		if ( empty( $entry ) ) {
-			$entry = isset( $_GET['post'] ) ? $_GET['post'] : "";
+			$entry = isset( $_GET['post'] ) ? sanitize_key( $_GET['post'] ) : "";
 		}
 
 		$column_val     = "";

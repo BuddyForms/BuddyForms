@@ -31,6 +31,23 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	// Hook for plugins to overwrite the $args.
 	$args = apply_filters( 'buddyforms_create_edit_form_args', $args );
 
+	$allowed = array(
+		'br' => array(),
+		'p' => array(),
+		'strong' => array(),
+		'div' => array(
+		  'class' => array(),
+		  'id' => array(),
+		  'data' => array(),
+		  'style' => array(),
+		),
+		'span' => array(
+		  'class' => array(),
+		  'id' => array(),
+		  'style' => array(),
+		),
+	  );
+
 	$post_type   = '';
 	$the_post    = 0;
 	$post_id     = 0;
@@ -143,7 +160,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
+					echo wp_kses( $echo_content, $allowed );
 
 					return;
 				} else {
@@ -155,7 +172,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
+					echo wp_kses( $echo_content, $allowed );
 
 					return;
 				} else {
@@ -186,7 +203,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
+					echo wp_kses( $echo_content, $allowed );
 
 					return;
 				} else {
@@ -231,7 +248,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 		if ( $echo ) {
-			echo $echo_content;
+			echo wp_kses( $echo_content, $allowed );
 		} else {
 			return $form_output . $echo_content;
 		}

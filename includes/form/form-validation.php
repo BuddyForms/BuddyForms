@@ -163,7 +163,7 @@ function buddyforms_jquery_validation() {
 	}
 	$form_html .= '
 	</script>';
-	echo $form_html;
+	echo esc_html( $form_html );
 }
 
 function buddyforms_sanitize( $type, $value ) {

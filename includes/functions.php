@@ -521,9 +521,31 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 	 * @since 2.3.0
 	 */
 	$result = $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
+	$allowed = array(
+		'a' => array(
+		  'href' => array(),
+		  'title' => array(),
+		  'class' => array(),
+		  'id' => array(),
+		  'data' => array(),
+		  'rel'   => array(),
+		),
+		'div' => array(
+		  'class' => array(),
+		  'id' => array(),
+		  'data' => array(),
+		  'style' => array(),
+		),
+		'span' => array(
+		  'class' => array(),
+		  'id' => array(),
+		  'style' => array(),
+		  'aria-label' => array(),
+		),
+	  );
 
 	if ( $echo ) {
-		echo $result;
+		echo wp_kses( $result, $allowed );
 	} else {
 		return $result;
 	}

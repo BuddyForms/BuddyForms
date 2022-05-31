@@ -665,6 +665,10 @@ function buddyforms_layout_screen( $option_name = 'buddyforms_options' ) {
 		echo '<a id="bf_load_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner spinner"></span> ' . esc_html__( 'Load Layout Settings', 'buddyforms' ) . '</a>';
 		echo '<a id="bf_reset_layout_options" class="button" href="#"><span style="display: none;" class="layout-spinner-reset spinner"></span> ' . esc_html__( 'Reset', 'buddyforms' ) . '</a></p>';
 	}
+	$allowed = array(
+		'p' => array(),
+		'b' => array(),
+	);
 	?>
 
 	<div class="tabbable buddyform-tabs-left">
@@ -720,11 +724,11 @@ function buddyforms_layout_screen( $option_name = 'buddyforms_options' ) {
 									?>
 									<tr class="<?php echo esc_attr( $classes ); ?>">
 										<th scope="row">
-											<label for="form_title"><?php echo esc_html( $field->getLabel() ); ?></label>
+											<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
 										</th>
 										<td>
 											<?php echo $field->render(); ?>
-											<p class="description"><?php echo esc_html( $field->getShortDesc() ); ?></p>
+											<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
 										</td>
 									</tr>
 									<?php
