@@ -323,7 +323,7 @@ class Element_Country extends Element_Select {
 		$i        = 0;
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
-			echo '<option value="', $this->filter( $value ), '"';
+			echo '<option value="', esc_attr( $this->filter( $value ) ) , '"';
 			if ( in_array( $value, $this->_attributes["value"] ) ) {
 				if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
 					continue;
@@ -334,7 +334,7 @@ class Element_Country extends Element_Select {
 			if ( $i == 0 && empty( $value ) && $is_required && $labels_layout === 'inline' ) {
 				$text = $text . ' ' . $this->getRequiredPlainSignal();
 			}
-			echo '>', $text, '</option>';
+			echo '>', wp_kses_post( $text ), '</option>';
 			$i ++;
 		}
 		echo '</select>';

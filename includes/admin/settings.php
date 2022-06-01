@@ -517,7 +517,7 @@ function buddyforms_process_settings_import() {
 	if ( ! isset( $_FILES['import_file']['name'] ) ) {
 		return false;
 	}
-	$name      = explode( '.', wp_unslash( $_FILES['import_file']['name'] ) );
+	$name      = explode( '.', buddyforms_sanitize_mixed( wp_unslash( $_FILES['import_file']['name'] ) ) );
 	$extension = end( $name );
 
 	if ( $extension != 'json' ) {

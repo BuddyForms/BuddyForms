@@ -294,7 +294,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		);
 
 		if ( isset( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) && isset( $_REQUEST['page'] ) && sanitize_text_field( wp_unslash( $buddyforms[ $_GET['form_slug'] ]['post_type'] ) ) == 'bf_submissions' ) {
-			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">%s</a>', $_REQUEST['page'], 'edit', $item->ID, $_GET['form_slug'], __( 'View Submission', 'buddyforms' ) );
+			$actions['edit'] = sprintf( '<a href="?post_type=buddyforms&page=%s&action=%s&entry=%s&form_slug=%s">%s</a>', buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['page'] ) ), 'edit', $item->ID, buddyforms_sanitize_mixed( wp_unslash( $_GET['form_slug'] ) ), __( 'View Submission', 'buddyforms' ) );
 		}
 
 		// Return the title contents

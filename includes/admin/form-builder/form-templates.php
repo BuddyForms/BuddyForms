@@ -225,7 +225,7 @@ function buddyforms_form_builder_templates( $is_wizard = false ) {
 						</div>
 						<div class="bf-tile-preview-wrap"></div>
 						<?php if ( $dependencies != $none_dependency_string ) { ?>
-							<p class="bf-tile-dependencies"><?php esc_html_e( 'Dependencies: ', 'buddyforms' ); ?><?php echo wp_unslash( $dependencies ); ?></p>
+							<p class="bf-tile-dependencies"><?php esc_html_e( 'Dependencies: ', 'buddyforms' ); ?><?php echo wp_kses_post( $dependencies ); ?></p>
 						<?php } else { ?>
 							<button <?php echo esc_attr( $disabled ); ?> id="btn-compile-<?php echo esc_attr( $key ); ?>"
 															data-type="<?php echo esc_attr( $sort_key ); ?>"

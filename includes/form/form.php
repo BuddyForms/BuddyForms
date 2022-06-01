@@ -117,7 +117,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	if ( ! empty( $global_css ) ) {
 		$global_css = buddyforms_minify_css( $global_css );
 		if ( $echo ) {
-			echo $global_css;
+			echo wp_kses_post( $global_css );
 		} else {
 			$form_output .= $global_css;
 		}
@@ -164,7 +164,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses_post( $form_output . $echo_content );
 				}
 			}
 			// Check if the post to edit match with the form setting
@@ -176,7 +176,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses_post( $form_output . $echo_content );
 				}
 			}
 
@@ -207,7 +207,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses_post( $form_output . $echo_content );
 				}
 			}
 		}
@@ -295,9 +295,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
-		echo $form_output . $echo_content;
+		echo wp_kses_post( $form_output . $echo_content );
 	} else {
-		return $form_output . $echo_content;
+		return wp_kses_post( $form_output . $echo_content );
 	}
 
 	if ( ! empty( $transient_name ) ) {
@@ -323,17 +323,17 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) {
 	$post_title = '';
 	if ( ! empty( $_REQUEST['post_title'] ) ) {
-		$post_title = esc_html( wp_unslash( $_REQUEST['post_title'] ) );
+		$post_title = buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['post_title'] ) );
 	}
 
 	$post_content = '';
 	if ( ! empty( $_REQUEST['content'] ) ) {
-		$post_content = esc_html( wp_unslash( $_REQUEST['content'] ) );
+		$post_content = buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['content'] ) );
 	}
 
 	$post_excerpt = '';
 	if ( ! empty( $_REQUEST['excerpt'] ) ) {
-		$post_excerpt = esc_html( wp_unslash( $_REQUEST['excerpt'] ) );
+		$post_excerpt = buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['excerpt'] ) );
 	}
 
 	if ( $create_in_db ) {

@@ -29,7 +29,7 @@ function buddyforms_append_preview_page( $content ) {
 	if( ! isset( $_REQUEST['form_slug'] ) ){
 		return;
 	}
-	$form_slug = $_REQUEST['form_slug'];
+	$form_slug = buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['form_slug'] ) );
 
 	// Create the array for the form
 	$args = array(

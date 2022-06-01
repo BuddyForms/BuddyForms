@@ -603,7 +603,7 @@ function buddyforms_metabox_form_setup() {
 											<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
 										</th>
 										<td>
-											<?php echo $field->render(); ?>
+											<?php echo wp_kses_post( $field->render() ); ?>
 											<p class="description"><?php echo esc_html( $field->getShortDesc() ); ?></p>
 										</td>
 									</tr>

@@ -71,7 +71,7 @@ function buddyforms_welcome_screen_content() {
 									</div>
 									<div class="bf-tile-preview-wrap"></div>
 									<?php if ( $dependencies != $none_dependency_string ) { ?>
-										<p class="bf-tile-dependencies"><?php esc_html_e( 'Dependencies: ', 'buddyforms' ); ?><?php echo wp_unslash( $dependencies ); ?></p>
+										<p class="bf-tile-dependencies"><?php esc_html_e( 'Dependencies: ', 'buddyforms' ); ?><?php echo wp_kses_post( $dependencies ); ?></p>
 									<?php } else { ?>
 										<button <?php echo esc_attr( $disabled ); ?> id="btn-add-new-<?php echo esc_attr( $key ); ?>"
 																		data-type="<?php echo esc_attr( $sort_key ); ?>"
@@ -204,7 +204,7 @@ add_action( 'admin_head', 'buddyforms_welcome_scren_templates_redirect' );
 function buddyforms_welcome_scren_templates_redirect() {
 	if ( is_admin() ) {
 		if ( isset( $_GET['template'] ) ) {
-			$template = $_GET['template'];
+			$template = buddyforms_sanitize_mixed( wp_unslash( $_GET['template'] ) );
 			?>
 				<script>
 					jQuery( document ).ready(function() {

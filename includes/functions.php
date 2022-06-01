@@ -93,7 +93,7 @@ function buddyforms_restrict_media_library( $wp_query_obj ) {
 		return;
 	}
 
-	if ( 'admin-ajax.php' != $pagenow || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] != 'query-attachments') ) {
+	if ( 'admin-ajax.php' != $pagenow || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] != 'query-attachments' ) ) {
 		return;
 	}
 
@@ -212,16 +212,16 @@ function buddyforms_granted_list_posts_style() {
 // Display the WordPress Login Form
 function buddyforms_wp_login_form( $hide = false, $form_slug = 'none' ) {
 	// Get The Login Form
-	if( ! isset( $_SERVER['REQUEST_URI'] ) ){
+	if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
 		return;
 	}
-	
+
 	echo buddyforms_get_wp_login_form(
 		$form_slug,
 		'',
 		array(
 			'caller'       => 'template',
-			'redirect_url' => esc_url_raw(  wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+			'redirect_url' => esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
 		),
 		$hide
 	);
@@ -448,10 +448,10 @@ function buddyforms_add_lost_password_link( $wp_login_form, $args ) {
  * @return int
  */
 function buddyforms_get_url_var( $name ) {
-	if( ! isset( $_SERVER['REQUEST_URI'] ) ){
+	if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
 		return;
 	}
-	$strURL  = esc_url_raw( wp_unslash($_SERVER['REQUEST_URI'] ) );
+	$strURL  = esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 	$arrVals = explode( '/', $strURL );
 	$found   = 0;
 	foreach ( $arrVals as $index => $value ) {
@@ -520,29 +520,29 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 	 *
 	 * @since 2.3.0
 	 */
-	$result = $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
+	$result  = $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
 	$allowed = array(
-		'a' => array(
-		  'href' => array(),
-		  'title' => array(),
-		  'class' => array(),
-		  'id' => array(),
-		  'data' => array(),
-		  'rel'   => array(),
+		'a'    => array(
+			'href'  => array(),
+			'title' => array(),
+			'class' => array(),
+			'id'    => array(),
+			'data'  => array(),
+			'rel'   => array(),
 		),
-		'div' => array(
-		  'class' => array(),
-		  'id' => array(),
-		  'data' => array(),
-		  'style' => array(),
+		'div'  => array(
+			'class' => array(),
+			'id'    => array(),
+			'data'  => array(),
+			'style' => array(),
 		),
 		'span' => array(
-		  'class' => array(),
-		  'id' => array(),
-		  'style' => array(),
-		  'aria-label' => array(),
+			'class'      => array(),
+			'id'         => array(),
+			'style'      => array(),
+			'aria-label' => array(),
 		),
-	  );
+	);
 
 	if ( $echo ) {
 		echo wp_kses( $result, $allowed );
@@ -635,9 +635,9 @@ function buddyforms_post_entry_actions( $form_slug ) {
 				if ( $current_user_can_edit || $current_user_can_all || $current_user_edit_draft ) {
 					echo '<li>';
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . esc_html__( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . esc_html__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_html__( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . esc_attr__( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . esc_url( $permalink ) . 'edit/' . esc_attr( $form_slug ) . '/' . get_the_ID() . '"><span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_html__( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug );
 					} else {
-						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . esc_html__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_html__( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
+						echo apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_html__( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug );
 					}
 					echo '</li>';
 				}
@@ -645,7 +645,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 
 			if ( $current_user_can_delete || $current_user_can_all ) {
 				echo '<li>';
-				echo '<a title="' . __( 'Delete', 'buddyforms' ) . '"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . __( 'Delete', 'buddyforms' ) . '" title="' . __( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"> </span> ' . __( 'Delete', 'buddyforms' ) . '</a></li>';
+				echo '<a title="' . esc_attr__( 'Delete', 'buddyforms' ) . '"  id="' . get_the_ID() . '" class="bf_delete_post" href="#"><span aria-label="' . esc_attr__( 'Delete', 'buddyforms' ) . '" title="' . esc_attr__( 'Delete', 'buddyforms' ) . '" class="dashicons dashicons-trash"> </span> ' . esc_html__( 'Delete', 'buddyforms' ) . '</a></li>';
 				echo '</li>';
 			}
 
@@ -1236,10 +1236,21 @@ function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default
 		'sort_column'       => 'post_title',
 		'echo'              => 0,
 	);
-
+	$allowed = array(
+		'select' => array(
+			'id'    => array(),
+			'class'    => array(),
+			'name'  => array(),
+		),
+		'option' => array(
+			'value'    => array(),
+			'selected' => array(),
+			'class'    => array(),
+		),
+	);
 	$output = wp_dropdown_pages( $args );
 
-	return $output;
+	return wp_kses( $output, $allowed );
 }
 
 
@@ -2162,6 +2173,15 @@ function buddyforms_sanitize_slug( $slug, $context = 'save' ) {
 	return $slug;
 }
 
+function buddyforms_sanitize_mixed( $arg ) {
+	if ( is_array( $arg ) ) {
+		return map_deep( $arg, 'sanitize_text_field' );
+	} elseif ( is_scalar( $arg ) ) {
+		return sanitize_text_field( $arg );
+	} else {
+		return $arg;
+	}
+}
 /**
  * Override the form_slug from the loop to get the correct base on the current post
  *

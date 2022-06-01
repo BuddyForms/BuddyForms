@@ -336,7 +336,7 @@ function buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyfor
 	if ( isset( $buddyforms[ $form_slug ][ $source ]['activation_page'] ) && $buddyforms[ $form_slug ][ $source ]['activation_page'] != 'home' ) {
 		if ( $buddyforms[ $form_slug ][ $source ]['activation_page'] == 'referrer' || $buddyforms[ $form_slug ][ $source ]['activation_page'] == 'none' ) {
 			if ( ! empty( $_POST['redirect_to'] ) ) {
-				$activation_page = $activation_page . esc_url_raw( $_POST['redirect_to'] );
+				$activation_page = $activation_page . esc_url_raw( wp_unslash( $_POST['redirect_to'] ) );
 			}
 		} else {
 			$activation_page = get_permalink( $buddyforms[ $form_slug ][ $source ]['activation_page'] );

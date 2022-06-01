@@ -727,7 +727,7 @@ function buddyforms_layout_screen( $option_name = 'buddyforms_options' ) {
 											<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
 										</th>
 										<td>
-											<?php echo $field->render(); ?>
+											<?php echo wp_kses_post( $field->render() ); ?>
 											<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
 										</td>
 									</tr>

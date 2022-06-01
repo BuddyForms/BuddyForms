@@ -246,7 +246,7 @@ function buddyforms_permissions_screen() {
 								<label for="role_role"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
 							</th>
 							<td>
-								<?php echo $field->render(); ?>
+								<?php echo wp_kses_post( $field->render() ); ?>
 								<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
 							</td>
 						</tr>

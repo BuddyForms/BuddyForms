@@ -2235,7 +2235,7 @@ JS;
 	if ( is_array( $args ) ) {
 		return $field_html;
 	} else {
-		echo $field_html;
+		echo wp_kses_post( $field_html );
 		die();
 	}
 
@@ -2350,7 +2350,7 @@ function buddyforms_display_field_group_table( $form_fields, $field_id = 'global
 								<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
 							</th>
 							<td>
-								<?php echo $field->render(); ?>
+								<?php echo wp_kses_post( $field->render() ); ?>
 								<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
 							</td>
 						</tr>

@@ -31,7 +31,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA    02111-1307    USA
  *
- ****************************************************************************
+ * ***************************************************************************
  */
 
 if ( ! class_exists( 'BuddyForms' ) ) {
@@ -64,7 +64,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$this->load_constants();
 
 			add_action( 'init', array( $this, 'init_hook' ), 1, 1 );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/form/form-assets.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . '/form/form-assets.php';
 			new BuddyFormsAssets();
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
@@ -164,152 +164,155 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @return array
 		 */
 		public static function localize_fields() {
-			return apply_filters( 'buddyforms_field_localization', array(
-				'error_strings' => array(
-					'error_string_start'    => __( 'The following', 'buddyforms' ),
-					'error_string_singular' => __( 'error was', 'buddyforms' ),
-					'error_string_plural'   => __( 'errors were', 'buddyforms' ),
-					'error_string_end'      => __( 'found: ', 'buddyforms' ),
-				),
-				'bf_trans' => array(
-					array(
-						'msgid' => 'The following',
-						'msgstr' => __( 'The following', 'buddyforms' )
+			return apply_filters(
+				'buddyforms_field_localization',
+				array(
+					'error_strings' => array(
+						'error_string_start'    => __( 'The following', 'buddyforms' ),
+						'error_string_singular' => __( 'error was', 'buddyforms' ),
+						'error_string_plural'   => __( 'errors were', 'buddyforms' ),
+						'error_string_end'      => __( 'found: ', 'buddyforms' ),
 					),
-					array(
-						'msgid' => 'error was',
-						'msgstr' => __( 'error was', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'errors were',
-						'msgstr' => __( 'errors were', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'found: ',
-						'msgstr' => __( 'found: ', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Delete Permanently',
-						'msgstr' => __( 'Delete Permanently', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Use a few words, avoid common phrases',
-						'msgstr' => __( 'Use a few words, avoid common phrases', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'No need for symbols, digits, or uppercase letters',
-						'msgstr' => __( 'No need for symbols, digits, or uppercase letters', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Add another word or two. Uncommon words are better.',
-						'msgstr' => __( 'Add another word or two. Uncommon words are better.', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Straight rows of keys are easy to guess',
-						'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Short keyboard patterns are easy to guess',
-						'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Use a longer keyboard pattern with more turns',
-						'msgstr' => __( 'Use a longer keyboard pattern with more turns', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Repeats like "aaa" are easy to guess',
-						'msgstr' => __( 'Repeats like "aaa" are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"',
-						'msgstr' => __( 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Avoid repeated words and characters',
-						'msgstr' => __( 'Avoid repeated words and characters', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Sequences like abc or 6543 are easy to guess',
-						'msgstr' => __( 'Sequences like abc or 6543 are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Recent years are easy to guess',
-						'msgstr' => __( 'Recent years are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Avoid recent years',
-						'msgstr' => __( 'Avoid recent years', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Avoid years that are associated with you',
-						'msgstr' => __( 'Avoid years that are associated with you', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Dates are often easy to guess',
-						'msgstr' => __( 'Dates are often easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Avoid dates and years that are associated with you',
-						'msgstr' => __( 'Avoid dates and years that are associated with you', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'This is a top-10 common password',
-						'msgstr' => __( 'This is a top-10 common password', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'This is a top-100 common password',
-						'msgstr' => __( 'This is a top-100 common password', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'This is a very common password',
-						'msgstr' => __( 'This is a very common password', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'This is similar to a commonly used password',
-						'msgstr' => __( 'This is similar to a commonly used password', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'A word by itself is easy to guess',
-						'msgstr' => __( 'A word by itself is easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Names and surnames by themselves are easy to guess',
-						'msgstr' => __( 'Names and surnames by themselves are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Common names and surnames are easy to guess',
-						'msgstr' => __( 'Common names and surnames are easy to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Capitalization doesn\'t help very much',
-						'msgstr' => __( 'Capitalization doesn\'t help very much', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'All-uppercase is almost as easy to guess as all-lowercase',
-						'msgstr' => __( 'All-uppercase is almost as easy to guess as all-lowercase', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Reversed words aren\'t much harder to guess',
-						'msgstr' => __( 'Reversed words aren\'t much harder to guess', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much',
-						'msgstr' => __( 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Avoid sequences',
-						'msgstr' => __( 'Avoid sequences', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Warning: ',
-						'msgstr' => __( 'Warning: ', 'buddyforms' )
-					),
-					array(
-						'msgid' => 'Suggestions: ',
-						'msgstr' => __( 'Suggestions: ', 'buddyforms' )
+					'bf_trans'      => array(
+						array(
+							'msgid'  => 'The following',
+							'msgstr' => __( 'The following', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'error was',
+							'msgstr' => __( 'error was', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'errors were',
+							'msgstr' => __( 'errors were', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'found: ',
+							'msgstr' => __( 'found: ', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Delete Permanently',
+							'msgstr' => __( 'Delete Permanently', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Use a few words, avoid common phrases',
+							'msgstr' => __( 'Use a few words, avoid common phrases', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'No need for symbols, digits, or uppercase letters',
+							'msgstr' => __( 'No need for symbols, digits, or uppercase letters', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Add another word or two. Uncommon words are better.',
+							'msgstr' => __( 'Add another word or two. Uncommon words are better.', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Straight rows of keys are easy to guess',
+							'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Short keyboard patterns are easy to guess',
+							'msgstr' => __( 'Short keyboard patterns are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Use a longer keyboard pattern with more turns',
+							'msgstr' => __( 'Use a longer keyboard pattern with more turns', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Repeats like "aaa" are easy to guess',
+							'msgstr' => __( 'Repeats like "aaa" are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"',
+							'msgstr' => __( 'Repeats like "abcabcabc" are only slightly harder to guess than "abc"', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Avoid repeated words and characters',
+							'msgstr' => __( 'Avoid repeated words and characters', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Sequences like abc or 6543 are easy to guess',
+							'msgstr' => __( 'Sequences like abc or 6543 are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Recent years are easy to guess',
+							'msgstr' => __( 'Recent years are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Avoid recent years',
+							'msgstr' => __( 'Avoid recent years', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Avoid years that are associated with you',
+							'msgstr' => __( 'Avoid years that are associated with you', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Dates are often easy to guess',
+							'msgstr' => __( 'Dates are often easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Avoid dates and years that are associated with you',
+							'msgstr' => __( 'Avoid dates and years that are associated with you', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'This is a top-10 common password',
+							'msgstr' => __( 'This is a top-10 common password', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'This is a top-100 common password',
+							'msgstr' => __( 'This is a top-100 common password', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'This is a very common password',
+							'msgstr' => __( 'This is a very common password', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'This is similar to a commonly used password',
+							'msgstr' => __( 'This is similar to a commonly used password', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'A word by itself is easy to guess',
+							'msgstr' => __( 'A word by itself is easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Names and surnames by themselves are easy to guess',
+							'msgstr' => __( 'Names and surnames by themselves are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Common names and surnames are easy to guess',
+							'msgstr' => __( 'Common names and surnames are easy to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Capitalization doesn\'t help very much',
+							'msgstr' => __( 'Capitalization doesn\'t help very much', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'All-uppercase is almost as easy to guess as all-lowercase',
+							'msgstr' => __( 'All-uppercase is almost as easy to guess as all-lowercase', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Reversed words aren\'t much harder to guess',
+							'msgstr' => __( 'Reversed words aren\'t much harder to guess', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much',
+							'msgstr' => __( 'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Avoid sequences',
+							'msgstr' => __( 'Avoid sequences', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Warning: ',
+							'msgstr' => __( 'Warning: ', 'buddyforms' ),
+						),
+						array(
+							'msgid'  => 'Suggestions: ',
+							'msgstr' => __( 'Suggestions: ', 'buddyforms' ),
+						),
 					),
 				)
-			) );
+			);
 		}
 
 		/**
@@ -367,86 +370,86 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * @since 0.1-beta
 		 */
 		public function includes() {
-			require_once( BUDDYFORMS_INSTALL_PATH . '/vendor-scope/buddyforms/vendor/autoload.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php' );
+			require_once BUDDYFORMS_INSTALL_PATH . '/vendor-scope/buddyforms/vendor/autoload.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Encoding.php';
 
 			if ( ! function_exists( 'PFBC_Load' ) ) {
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/FieldControl.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Form.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/FieldControl.php';
 				new FieldControl();
 
 				$global_error = ErrorHandler::get_instance();
 			}
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/class-bf-admin-notices.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/class-bf-admin-notices.php';
 			new BfAdminNotices();
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/TkTrackApi.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-analytics.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/TkTrackApi.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/admin-analytics.php';
 
-			//Compatibility
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'compatibility.php' );
+			// Compatibility
+			require_once BUDDYFORMS_INCLUDES_PATH . 'compatibility.php';
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'functions.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'gdpr.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'change-password.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'multisite.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'the-content.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'revisions.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . 'functions.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'gdpr.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'change-password.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'multisite.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'the-content.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'rewrite-roles.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'shortcodes.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'wp-mail.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'revisions.php';
 
 			// Gutenberg
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/gutenberg.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . 'gutenberg/gutenberg.php';
 
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-preview.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-ajax.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php' );
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-preview.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-render.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-ajax.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-elements.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-control.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . 'form/form-validation.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/user-meta.php';
 
 			if ( is_admin() ) {
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-builder-elements.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php';
 
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-marketing.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/admin-marketing.php';
 
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/functions.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/deregister.php';
 
 				// GDPR
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-exporter.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-eraser.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-exporter.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/personal-data-eraser.php';
 
 				if ( buddyforms_core_fs()->is__premium_only() ) {
 					if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
-						require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php' );
+						require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-metabox.php';
 					}
 				}
 
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/mce-editor-button.php';
 
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-layout.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-registration.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-shortcodes.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-header.php' );
-				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php' );
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-mail-notification.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-permissions.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-layout.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-registration.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-shortcodes.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-select-form.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-elements.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-setup.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-header.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/meta-boxes/metabox-form-footer.php';
 			}
 		}
 
@@ -510,6 +513,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 		/**
 		 * Plugin activation
+		 *
 		 * @since  2.0
 		 */
 		function plugin_activation() {
@@ -523,7 +527,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'post_content' => __( 'This is a preview of how this form will appear on your website', 'buddyforms' ),
 					'post_status'  => 'draft',
 					'post_type'    => 'page',
-					'post_name'    => sanitize_title( 'BuddyForms Preview Page' )
+					'post_name'    => sanitize_title( 'BuddyForms Preview Page' ),
 				);
 
 				// Insert the page into the database
@@ -534,7 +538,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			update_option( 'buddyforms_preview_page', $page_id );
 
-			$title 		      = apply_filters( 'buddyforms_submissions_page_title', __( 'BuddyForms Submissions Page', 'buddyforms' ) );
+			$title            = apply_filters( 'buddyforms_submissions_page_title', __( 'BuddyForms Submissions Page', 'buddyforms' ) );
 			$submissions_page = get_page_by_title( $title );
 			if ( ! $submissions_page ) {
 				// Create submissions page object
@@ -543,7 +547,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'post_content' => __( 'This is the default page use like endpoint to the page submissions', 'buddyforms' ),
 					'post_status'  => 'publish',
 					'post_type'    => 'page',
-					'post_name'    => sanitize_title( 'BuddyForms Submissions Page' )
+					'post_name'    => sanitize_title( 'BuddyForms Submissions Page' ),
 				);
 
 				// Insert the page into the database
@@ -558,20 +562,21 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
-			$registration_gdpr_template = __( "By signing up on our site you agree to our terms and conditions [link]. We'll create a new user account for you based on your submissions. All data you submit will be stored on our servers.After your registration we'll instantly send you an email with an activation link to verify your mail address. ", 'buddyforms' );
-			$post_gdpr_template        = __( "By submitting this form you grant us the rights <br>• to store your submitted contents in our database <br>• to generate a post on our site based on your data <br>• to make this post publicly accessible ", 'buddyforms' );
-			$contact_gdpr_template     = __( "By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.", 'buddyforms' );
-			$buddyforms_gdpr = array();
+			$registration_gdpr_template                   = __( "By signing up on our site you agree to our terms and conditions [link]. We'll create a new user account for you based on your submissions. All data you submit will be stored on our servers.After your registration we'll instantly send you an email with an activation link to verify your mail address. ", 'buddyforms' );
+			$post_gdpr_template                           = __( 'By submitting this form you grant us the rights <br>• to store your submitted contents in our database <br>• to generate a post on our site based on your data <br>• to make this post publicly accessible ', 'buddyforms' );
+			$contact_gdpr_template                        = __( 'By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.', 'buddyforms' );
+			$buddyforms_gdpr                              = array();
 			$buddyforms_gdpr['templates']['registration'] = $registration_gdpr_template;
-			$buddyforms_gdpr['templates']['post']		= $post_gdpr_template;
-			$buddyforms_gdpr['templates']['contact']  = $contact_gdpr_template;
-			$buddyforms_gdpr['templates']['other']  = '';
-			update_option('buddyforms_gdpr',$buddyforms_gdpr);
+			$buddyforms_gdpr['templates']['post']         = $post_gdpr_template;
+			$buddyforms_gdpr['templates']['contact']      = $contact_gdpr_template;
+			$buddyforms_gdpr['templates']['other']        = '';
+			update_option( 'buddyforms_gdpr', $buddyforms_gdpr );
 
 		}
 
 		/**
 		 * Plugin deactivation
+		 *
 		 * @since  2.0
 		 */
 		function plugin_deactivation() {
@@ -607,28 +612,29 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				// Include Freemius SDK.
 				require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
 
-
-				$buddyforms_core_fs = fs_dynamic_init( array(
-					'id'              => '391',
-					'slug'            => 'buddyforms',
-					'type'            => 'plugin',
-					'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
-					'is_premium'      => true,
-					'has_addons'      => true,
-					'has_paid_plans'  => true,
-					'trial'           => array(
-						'days'               => 14,
-						'is_require_payment' => true,
-					),
-					'has_affiliation' => 'selected',
-					'menu'            => array(
-						'slug'       => 'edit.php?post_type=buddyforms',
-						'first-path' => $first_path,
-						'support'    => false,
-						'contact'    => true,
-						'addons'     => true,
-					),
-				) );
+				$buddyforms_core_fs = fs_dynamic_init(
+					array(
+						'id'              => '391',
+						'slug'            => 'buddyforms',
+						'type'            => 'plugin',
+						'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
+						'is_premium'      => true,
+						'has_addons'      => true,
+						'has_paid_plans'  => true,
+						'trial'           => array(
+							'days'               => 14,
+							'is_require_payment' => true,
+						),
+						'has_affiliation' => 'selected',
+						'menu'            => array(
+							'slug'       => 'edit.php?post_type=buddyforms',
+							'first-path' => $first_path,
+							'support'    => false,
+							'contact'    => true,
+							'addons'     => true,
+						),
+					)
+				);
 			}
 
 			// Signal that parent SDK was initiated.

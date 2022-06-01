@@ -165,7 +165,7 @@ function update_extra_profile_fields( $user_id ) {
  */
 function buddyforms_update_user_meta( $user_id, $field_type, $field_slug ) {
 	$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
-	$value  = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : '';
+	$value  = isset( $_POST[ $field_slug ] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST[ $field_slug ] ) ) : '';
 	$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
 	return $result;
 }

@@ -36,7 +36,7 @@ function buddyforms_process_submission( $args = array() ) {
 				'post_parent' => 0,
 				'revision_id' => false,
 				'form_slug'   => 0,
-				'redirect_to' => esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+				'redirect_to' => sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
 				'bf_hweb'     => '',
 				'post_author' => 0,
 			),
@@ -75,7 +75,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 		// Collect all submitter data
 		if ( ! in_array( 'ipaddress', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			$user_data['ipaddress'] = wp_unslash( $_SERVER['REMOTE_ADDR'] );
+			$user_data['ipaddress'] = buddyforms_sanitize_mixed( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		}
 		if ( ! in_array( 'referer', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ) {
 			$user_data['referer'] = esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) );
@@ -99,7 +99,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 	// Check HoneyPot
 	if ( isset( $_POST['bf_hweb'] ) ){
-		$bf_honeypot = wp_unslash( $_POST['bf_hweb'] );
+		$bf_honeypot = buddyforms_sanitize_mixed( wp_unslash( $_POST['bf_hweb'] ) );
 		if ( ! empty( $bf_honeypot ) ) {
 			return array(
 				'hasError'      => true,
@@ -126,7 +126,7 @@ function buddyforms_process_submission( $args = array() ) {
 
 	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; // Post status setup in the form
-	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; // Post status from the form. default actions draft and publish or setup option
+	$post_status_action = ! empty( $_POST['status'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST['status'] ) ) : $post_status; // Post status from the form. default actions draft and publish or setup option
 
 	$is_draft_not_need_validation = ( $is_draft_enabled && $post_status_action === 'draft' );
 	// Avoid validation if the form is save as draft
@@ -333,7 +333,7 @@ function buddyforms_process_submission( $args = array() ) {
 	$action             = 'save';// Base action
 	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; // Post status setup in the form
-	$post_status_action = ! empty( $_POST['status'] ) ? $_POST['status'] : $post_status; // Post status from the form. default actions draft and publish or setup option
+	$post_status_action = ! empty( $_POST['status'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST['status'] ) ) : $post_status; // Post status from the form. default actions draft and publish or setup option
 	// Check the current post status
 	if ( $post_id != 0 ) {
 		$post_current_status = get_post_status( $post_id );
@@ -602,7 +602,7 @@ function buddyforms_update_post( $args ) {
 		'post_author'    => $post_author,
 		'post_title'     => $post_title,
 		'post_name'      => sanitize_title( $post_title ),
-		'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? wp_unslash( $_POST['buddyforms_form_content'] ) : '', $form_slug, $post_id ),
+		'post_content'   => apply_filters( 'buddyforms_update_form_content', isset( $_POST['buddyforms_form_content'] ) && ! empty( $_POST['buddyforms_form_content'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_form_content'] ) ) : '', $form_slug, $post_id ),
 		'post_type'      => $post_type,
 		'post_status'    => $post_status,
 		'comment_status' => $comment_status,
@@ -626,7 +626,7 @@ function buddyforms_update_post( $args ) {
 
 	} else {
 		// Add optional scheduled post dates
-		if ( isset( $_POST['status'] ) && isset( $_POST['schedule'] ) && $_POST['status'] == 'future' && $_POST['schedule'] ) {
+		if ( isset( $_POST['status'] ) && isset( $_POST['schedule'] ) && $_POST['status'] == 'future' && buddyforms_sanitize_mixed( wp_unslash( $_POST['schedule'] ) ) ) {
 			$post_schedule_request = sanitize_text_field( wp_unslash( $_POST['schedule'] ) );
 			$post_schedule         = Element_Date::create_from_format( $post_schedule_request );
 			if ( ! empty( $post_schedule ) ) {
@@ -1143,7 +1143,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 
 		// Update the post
 		if ( isset( $_POST[ $slug ] ) && ! ( $_POST[ $slug ] == 'user_pass' || $_POST[ $slug ] == 'user_pass_confirm' ) ) {
-			$field_value = buddyforms_sanitize( $customfield['type'], $_POST[ $slug ] );
+			$field_value = buddyforms_sanitize( $customfield['type'], sanitize_text_field( $_POST[ $slug ] ) );
 			/**
 			 * @since 2.5.12
 			 */
@@ -1174,7 +1174,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 		//
 		if ( $customfield['type'] == 'file' && ! empty( $_POST[ $customfield['slug'] ] ) ) {
 
-			$attachement_ids = wp_unslash( $_POST[ $customfield['slug'] ] );
+			$attachement_ids = buddyforms_sanitize_mixed( wp_unslash( $_POST[ $customfield['slug'] ] ) );
 			$attachement_ids = explode( ',', $attachement_ids );
 
 			if ( is_array( $attachement_ids ) ) {
@@ -1197,7 +1197,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 		// Save post format if needed
 		//
 		if ( $customfield['type'] == 'post_formats' && isset( $_POST['post_formats'] ) && $_POST['post_formats'] != 'none' ) {
-			set_post_format( $post_id, wp_unslash( $_POST['post_formats'] ) );
+			set_post_format( $post_id, buddyforms_sanitize_mixed( wp_unslash( $_POST['post_formats'] ) ) );
 		}
 
 		//
@@ -1224,7 +1224,7 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 			if ( $customfield['taxonomy'] != 'none' && isset( $_POST[ $customfield['slug'] ] ) ) {
 
 				// Get the tax items
-				$tax_terms = wp_unslash( $_POST[ $customfield['slug'] ] );
+				$tax_terms = buddyforms_sanitize_mixed( wp_unslash( $_POST[ $customfield['slug'] ] ) );
 				$taxonomy  = get_taxonomy( $customfield['taxonomy'] );
 
 				// Get the term list before delete all term relations
@@ -1330,7 +1330,7 @@ add_filter( 'wp_handle_upload_prefilter', 'buddyforms_wp_handle_upload_prefilter
 function buddyforms_wp_handle_upload_prefilter( $file ) {
 	if ( isset( $_POST['allowed_type'] ) && ! empty( $_POST['allowed_type'] ) ) {
 		// this allows you to set multiple types seperated by a pipe "|"
-		$allowed = explode( ',', wp_unslash( $_POST['allowed_type'] ) );
+		$allowed = explode( ',', buddyforms_sanitize_mixed( wp_unslash( $_POST['allowed_type'] ) ) );
 		$ext     = $file['type'];
 
 		// first check if the user uploaded the right type
@@ -1356,7 +1356,7 @@ function buddyforms_wp_handle_upload_prefilter( $file ) {
  * @return array
  */
 function buddyforms_get_browser() {
-	$u_agent  = wp_unslash( $_SERVER['HTTP_USER_AGENT'] );
+	$u_agent  = buddyforms_sanitize_mixed( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 	$bname    = 'Unknown';
 	$platform = 'Unknown';
 	$version  = '';
@@ -1452,7 +1452,7 @@ function buddyforms_str_replace_form_fields_val_by_slug( $string, $customfields,
 		foreach ( $customfields as $f_id => $t_field ) {
 			if ( isset( $t_field['slug'] ) && isset( $_POST[ $t_field['slug'] ] ) && is_string( $_POST[ $t_field['slug'] ] ) ) {
 
-				$field_val = wp_unslash( $_POST[ $t_field['slug'] ] );
+				$field_val = buddyforms_sanitize_mixed( wp_unslash( $_POST[ $t_field['slug'] ] ) );
 
 				$string_tmp          = $field_val;
 				$include_inline_html = apply_filters( 'buddyforms_form_field_include_extra_html', true, $form_slug, $t_field['slug'], $post_id );
@@ -1562,7 +1562,7 @@ function buddyforms_after_update_post( $post_ID, $post ) {
 			return;
 		}
 
-		$fields = $buddyforms[ wp_unslash( $_POST['_bf_form_slug'] ) ]['form_fields'];
+		$fields = $buddyforms[ buddyforms_sanitize_mixed( wp_unslash( $_POST['_bf_form_slug'] ) ) ]['form_fields'];
 		foreach ( $fields as $key => $field ) {
 			if ( isset( $field['slug'] ) ) {
 				$slug = $field['slug'];
@@ -1572,13 +1572,13 @@ function buddyforms_after_update_post( $post_ID, $post ) {
 			}
 			switch ( $field['type'] ) {
 				case 'title':
-					$value = isset( $_POST['post_title'] ) ? wp_unslash( $_POST['post_title'] ) : '';
+					$value = isset( $_POST['post_title'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST['post_title'] ) ) : '';
 					break;
 				case 'content':
-					$value = isset( $_POST['content'] ) ? wp_unslash( $_POST['content'] ) : '';
+					$value = isset( $_POST['content'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST['content'] ) ) : '';
 					break;
 				default:
-					$value = isset( $_POST[ $slug ] ) ? wp_unslash( $_POST[ $slug ] ) : '';
+					$value = isset( $_POST[ $slug ] ) ? buddyforms_sanitize_mixed( wp_unslash( $_POST[ $slug ] ) ) : '';
 			}
 			$_POST[ $field['slug'] ] = $value;
 		}

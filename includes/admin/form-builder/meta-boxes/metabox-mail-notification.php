@@ -490,7 +490,7 @@ function buddyforms_new_mail_notification() {
 			die();
 		}
 
-		$form_slug = buddyforms_sanitize_slug( $_POST['form_slug'] );
+		$form_slug = buddyforms_sanitize_slug( wp_unslash( $_POST['form_slug'] ) );
 		ob_start();
 		$trigger_id   = buddyforms_mail_notification_form( false, $form_slug );
 		$trigger_html = ob_get_clean();

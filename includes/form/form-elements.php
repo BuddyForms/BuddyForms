@@ -105,7 +105,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			}
 
 			if ( isset( $_POST[ $slug ] ) && empty( $customfield_val ) ) {
-				$customfield_val = wp_unslash( $_POST[ $slug ] );
+				$customfield_val = buddyforms_sanitize_mixed( wp_unslash( $_POST[ $slug ] ) );
 			}
 
 			if ( ! empty( $field_type ) ) {
@@ -316,7 +316,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						remove_filter( 'the_content', 'do_shortcode', 11 );
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
-							$buddyforms_form_content_val = stripslashes( wp_unslash( $_POST['buddyforms_form_content'] ) );
+							$buddyforms_form_content_val = stripslashes( buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_form_content'] ) ) );
 						} else {
 							if ( ! empty( $the_post->post_content ) && ( $action !== 'new' ) ) {
 								$buddyforms_form_content_val = $the_post->post_content;
@@ -517,7 +517,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							}
 
 							if ( isset( $_POST['status'] ) ) {
-								$customfield_val = wp_unslash( $_POST['status'] );
+								$customfield_val = buddyforms_sanitize_mixed( wp_unslash( $_POST['status'] ) );
 							}
 
 							$form->addElement( new Element_Select( $name, 'status', $post_status, $element_attr, $customfield ) );
@@ -532,7 +532,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 							$status_time_format = isset( $customfield['status_time_format'] ) ? $customfield['status_time_format'] : 'hh:mm:ss';
 							ob_start();
 							echo '<script type="text/javascript">
-									jQuery("input[name=' . 'schedule' . ']").datetimepicker({dateFormat: "' . $status_date_format . '",timeFormat: "' . $status_time_format . '"}).val();
+									jQuery("input[name=' . 'schedule' . ']").datetimepicker({dateFormat: "' . esc_js( $status_date_format ) . '",timeFormat: "' . esc_js( $status_time_format ) . '"}).val();
 
 									</script>';
 							$tmp = ob_get_clean();
@@ -723,8 +723,8 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						$validation_error_message        = isset( $customfield['validation_error_message'] ) ? $customfield['validation_error_message'] : '';
 						$required                        = isset( $customfield['required'] ) ? "data-rule-featured-image-required ='true' validation_error_message='$validation_error_message'" : '';
 						$id                              = $slug;
-						$feature_action                  = isset( $_GET['action'] ) ? wp_unslash( $_GET['action'] ) : '';
-						$page                            = isset( $_GET['page'] ) ? wp_unslash( $_GET['page'] ) : '';
+						$feature_action                  = isset( $_GET['action'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_GET['action'] ) ) : '';
+						$page                            = isset( $_GET['page'] ) ? buddyforms_sanitize_mixed( wp_unslash( $_GET['page'] ) ) : '';
 						$result                          = '';
 						$result_value                    = '';
 						$entries                         = array();
