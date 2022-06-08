@@ -31,23 +31,6 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	// Hook for plugins to overwrite the $args.
 	$args = apply_filters( 'buddyforms_create_edit_form_args', $args );
 
-	$allowed = array(
-		'br' => array(),
-		'p' => array(),
-		'strong' => array(),
-		'div' => array(
-		  'class' => array(),
-		  'id' => array(),
-		  'data' => array(),
-		  'style' => array(),
-		),
-		'span' => array(
-		  'class' => array(),
-		  'id' => array(),
-		  'style' => array(),
-		),
-	  );
-
 	$post_type   = '';
 	$the_post    = 0;
 	$post_id     = 0;
@@ -114,12 +97,12 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	ob_start();
 	require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php';
 	$global_css = ob_get_clean();
-	$form_css = strip_tags( $global_css );
+	$form_css   = strip_tags( $global_css );
 	if ( ! empty( $global_css ) ) {
 		if ( $echo ) {
-			wp_register_style( 'dummy-handle', false );
-			wp_enqueue_style( 'dummy-handle' );
-			wp_add_inline_style( 'dummy-handle', $form_css );
+			wp_register_style( 'form-css-handle', false );
+			wp_enqueue_style( 'form-css-handle' );
+			wp_add_inline_style( 'form-css-handle', $form_css );
 		} else {
 			$form_output .= $global_css;
 		}
@@ -162,7 +145,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, $allowed );
+					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -173,7 +156,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, $allowed );
+					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -203,7 +186,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, $allowed );
+					echo wp_kses( $echo_content, buddyforms_form_allowed_tags());
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -247,7 +230,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 		if ( $echo ) {
-			echo wp_kses( $echo_content, $allowed );
+			echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 		} else {
 			return $form_output . $echo_content;
 		}
@@ -294,7 +277,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
-		echo $form_output . $echo_content;
+
+		echo wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+
 	} else {
 		return $form_output . $echo_content;
 	}
@@ -322,17 +307,17 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) {
 	$post_title = '';
 	if ( ! empty( $_REQUEST['post_title'] ) ) {
-		$post_title = esc_html( wp_unslash( $_REQUEST['post_title'] ) );
+		$post_title = wp_kses_post( $_REQUEST['post_title'] );
 	}
 
 	$post_content = '';
 	if ( ! empty( $_REQUEST['content'] ) ) {
-		$post_content = esc_html( wp_unslash( $_REQUEST['content'] ) );
+		$post_content = wp_kses_post( $_REQUEST['content'] );
 	}
 
 	$post_excerpt = '';
 	if ( ! empty( $_REQUEST['excerpt'] ) ) {
-		$post_excerpt = esc_html( wp_unslash( $_REQUEST['excerpt'] ) );
+		$post_excerpt = wp_kses_post( $_REQUEST['excerpt'] );
 	}
 
 	if ( $create_in_db ) {
@@ -489,4 +474,83 @@ function buddyforms_form_response_no_ajax() {
 		}
 	}
 
+}
+
+function buddyforms_form_allowed_tags() {
+
+	global $allowedposttags;
+	$allowed_atts = array(
+		'align'                           => array(),
+		'class'                           => array(),
+		'type'                            => array(),
+		'id'                              => array(),
+		'data-form'                       => array(),
+		'data-editor'                     => array(),
+		'data-target'                     => array(),
+		'data-status'                     => array(),
+		'data-placeholder'                => array(),
+		'data-wp-editor-id'               => array(),
+		'data-dz-message'                 => array(),
+		'data-rule-featured-image-error'  => array(),
+		'upload_error_validation_message' => array(),
+		'dir'                             => array(),
+		'lang'                            => array(),
+		'style'                           => array(),
+		'xml:lang'                        => array(),
+		'src'                             => array(),
+		'alt'                             => array(),
+		'href'                            => array(),
+		'rel'                             => array(),
+		'rev'                             => array(),
+		'target'                          => array(),
+		'novalidate'                      => array(),
+		'type'                            => array(),
+		'value'                           => array(),
+		'name'                            => array(),
+		'tabindex'                        => array(),
+		'action'                          => array(),
+		'method'                          => array(),
+		'for'                             => array(),
+		'width'                           => array(),
+		'height'                          => array(),
+		'data'                            => array(),
+		'title'                           => array(),
+		'placeholder'                     => array(),
+	);
+
+	$allowedposttags['form']     = $allowed_atts;
+	$allowedposttags['label']    = $allowed_atts;
+	$allowedposttags['input']    = $allowed_atts;
+	$allowedposttags['textarea'] = $allowed_atts;
+	$allowedposttags['select']   = $allowed_atts;
+	$allowedposttags['option']   = $allowed_atts;
+	$allowedposttags['iframe']   = $allowed_atts;
+	$allowedposttags['script']   = $allowed_atts;
+	$allowedposttags['style']    = $allowed_atts;
+	$allowedposttags['strong']   = $allowed_atts;
+	$allowedposttags['small']    = $allowed_atts;
+	$allowedposttags['table']    = $allowed_atts;
+	$allowedposttags['span']     = $allowed_atts;
+	$allowedposttags['code']     = $allowed_atts;
+	$allowedposttags['div']      = $allowed_atts;
+	$allowedposttags['button']   = $allowed_atts;
+	$allowedposttags['img']      = $allowed_atts;
+	$allowedposttags['h1']       = $allowed_atts;
+	$allowedposttags['h2']       = $allowed_atts;
+	$allowedposttags['h3']       = $allowed_atts;
+	$allowedposttags['h4']       = $allowed_atts;
+	$allowedposttags['h5']       = $allowed_atts;
+	$allowedposttags['h6']       = $allowed_atts;
+	$allowedposttags['ol']       = $allowed_atts;
+	$allowedposttags['ul']       = $allowed_atts;
+	$allowedposttags['li']       = $allowed_atts;
+	$allowedposttags['em']       = $allowed_atts;
+	$allowedposttags['br']       = $allowed_atts;
+	$allowedposttags['tr']       = $allowed_atts;
+	$allowedposttags['td']       = $allowed_atts;
+	$allowedposttags['p']        = $allowed_atts;
+	$allowedposttags['a']        = $allowed_atts;
+	$allowedposttags['b']        = $allowed_atts;
+
+	return $allowedposttags;
 }

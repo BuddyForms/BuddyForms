@@ -100,15 +100,18 @@ function buddyforms_form_html( $args ) {
 	if ( is_array( $buddyforms_global_js_data ) ) {
 		$output = 'var buddyformsGlobalFrontend = ' . wp_json_encode( $buddyforms_global_js_data );
 		ob_start();
-		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5.
-		echo "/* <![CDATA[ */\n";
-		echo "$output;\n";
+		echo "<script type='text/javascript'>\n";
+		echo wp_kses( $output, buddyforms_form_allowed_tags() );
+		echo "\n";
 		echo "jQuery.extend(buddyformsGlobal,buddyformsGlobalFrontend);\n";
 		echo "/* ]]> */\n";
 		echo "</script>\n";
 		$global_js = ob_get_clean();
+		$global_js = strip_tags( $global_js );
 		if ( ! empty( $global_js ) ) {
-			$form_html .= $global_js;
+			wp_register_script( 'form-global-js', '',);
+			wp_enqueue_script( 'form-global-js' );
+			wp_add_inline_script( 'form-global-js', $global_js ); 
 		}
 	}
 
@@ -213,9 +216,11 @@ function buddyforms_form_html( $args ) {
 		ob_start();
 		require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php';
 		$layout = ob_get_clean();
+		$form_css = strip_tags( $layout );
 		if ( ! empty( $layout ) ) {
-			$layout     = buddyforms_minify_css( $layout );
-			$form_html .= $layout;
+			wp_register_style( 'form-layout-css', false );
+			wp_enqueue_style( 'form-layout-css' );
+			wp_add_inline_style( 'form-layout-css', $form_css );
 		}
 	}
 

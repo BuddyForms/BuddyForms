@@ -3,46 +3,47 @@
  * Submission Single View
  *
  * This template can be overridden by copying it to yourtheme/buddyforms/submission-single.php.
- *
  */
 
 $post_id = get_the_ID();
 ?>
 
 <script>
-    jQuery(document).ready(function () {
-        jQuery(".bf_submit_form<?php echo $post_id; ?> :input").attr("disabled", true);
-        jQuery(".bf_submit_form<?php echo $post_id; ?>").show();
-        jQuery(".bf_submit_form<?php echo $post_id; ?> span.bf_add_files").remove();
-    });
+	jQuery(document).ready(function () {
+		jQuery(".bf_submit_form<?php echo esc_js( $post_id ); ?> :input").attr("disabled", true);
+		jQuery(".bf_submit_form<?php echo esc_js( $post_id ); ?>").show();
+		jQuery(".bf_submit_form<?php echo esc_js( $post_id ); ?> span.bf_add_files").remove();
+	});
 </script>
 
-<div id="bf-submission-<?php echo $post_id; ?>" class="bf-submission-single bf_submit_form<?php echo $post_id; ?>">
-    <div class="inner-wrap">
-        <p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>">
-                <i class="dashicons dashicons-arrow-left-alt2"> </i>&nbsp;<?php _e( 'Back', 'buddyforms' ) ?>
-            </a>
-        </p>
+<div id="bf-submission-<?php echo esc_attr( $post_id ); ?>" class="bf-submission-single bf_submit_form<?php echo esc_attr( $post_id ); ?>">
+	<div class="inner-wrap">
+		<p><a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID(); ?>">
+				<i class="dashicons dashicons-arrow-left-alt2"> </i>&nbsp;<?php esc_html_e( 'Back', 'buddyforms' ); ?>
+			</a>
+		</p>
 
-        <script>
-            jQuery(document).ready(function () {
-                jQuery("#metabox_<?php echo $form_slug ?> :input").attr("disabled", true);
-                jQuery('#metabox_<?php echo $form_slug ?>').prop('readonly', true);
-                jQuery('#metabox_<?php echo $form_slug ?>').find('input, textarea, button, select').attr('disabled', 'disabled');
-            });
-        </script>
+		<script>
+			jQuery(document).ready(function () {
+				jQuery("#metabox_<?php echo esc_js( $form_slug ); ?> :input").attr("disabled", true);
+				jQuery('#metabox_<?php echo esc_js( $form_slug ); ?>').prop('readonly', true);
+				jQuery('#metabox_<?php echo esc_js( $form_slug ); ?>').find('input, textarea, button, select').attr('disabled', 'disabled');
+			});
+		</script>
 
 		<?php
 		// Create the form object
-		$form = new Form( "submissions_" . $form_slug );
+		$form = new Form( 'submissions_' . $form_slug );
 
 		// Set the form attribute
-		$form->configure( array(
-			//"prevent" => array("bootstrap", "jQuery", "focus"),
-			//"action" => $redirect_to,
-			"view"  => new View_Metabox(),
-			'class' => 'standard-form bf-submission',
-		) );
+		$form->configure(
+			array(
+				// "prevent" => array("bootstrap", "jQuery", "focus"),
+				// "action" => $redirect_to,
+				'view'  => new View_Metabox(),
+				'class' => 'standard-form bf-submission',
+			)
+		);
 
 		$fields = $buddyforms[ $form_slug ]['form_fields'];
 
@@ -61,37 +62,37 @@ $post_id = get_the_ID();
 
 		?>
 
-    </div>
+	</div>
 
-    <div class="bf-submission-single-meta-wrap bf-row">
+	<div class="bf-submission-single-meta-wrap bf-row">
 
-        <div id="bf-submissions-entry-actions" class="bf-submission-metabox bf-col-50">
-            <div class="inner-wrap">
-                <h3><?php _e( 'Entry Actions', 'buddyforms' ) ?></h3>
-                <p><span id="timestamp-<?php echo $post_id; ?>"><?php _e( 'Submitted on:', 'buddyforms' ) ?> <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
-                </p>
-                <p>
-                    <span class="dashicons dashicons-format-aside wp-media-buttons-icon"> </span>
-                    <a href="#" onclick="window.print();return false;"><?php _e( 'Print', 'buddyforms' ) ?></a></p>
-            </div>
-        </div>
+		<div id="bf-submissions-entry-actions" class="bf-submission-metabox bf-col-50">
+			<div class="inner-wrap">
+				<h3><?php esc_html_e( 'Entry Actions', 'buddyforms' ); ?></h3>
+				<p><span id="timestamp-<?php echo esc_attr( $post_id ); ?>"><?php esc_html_e( 'Submitted on:', 'buddyforms' ); ?> <b><?php echo get_the_date( 'l, F j, Y', $post_id ); ?></b></span>
+				</p>
+				<p>
+					<span class="dashicons dashicons-format-aside wp-media-buttons-icon"> </span>
+					<a href="#" onclick="window.print();return false;"><?php esc_html_e( 'Print', 'buddyforms' ); ?></a></p>
+			</div>
+		</div>
 
-        <div id="bf-submissions-entry-details" class="bf-submission-metabox bf-col-50">
-            <div class="inner-wrap">
-                <h3><?php _e( 'Entry Details', 'buddyforms' ) ?></h3>
-                <p>
-                    <span class="dashicons dashicons-id wp-media-buttons-icon"></span>&nbsp;<?php _e( 'Entry ID:', 'buddyforms' ) ?>
-                    <b><?php echo $post_id; ?></b>
-                </p>
-            </div>
-        </div>
+		<div id="bf-submissions-entry-details" class="bf-submission-metabox bf-col-50">
+			<div class="inner-wrap">
+				<h3><?php esc_html_e( 'Entry Details', 'buddyforms' ); ?></h3>
+				<p>
+					<span class="dashicons dashicons-id wp-media-buttons-icon"></span>&nbsp;<?php esc_html_e( 'Entry ID:', 'buddyforms' ); ?>
+					<b><?php echo esc_html( $post_id ); ?></b>
+				</p>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
-    <p>
-        <a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID() ?>">
-            <i class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;<?php _e( 'Back To All Submissions', 'buddyforms' ) ?>
-        </a>
-    </p>
+	<p>
+		<a href="#" class="bf-close-submissions-modal button btn btn-primary" data-id="<?php the_ID(); ?>">
+			<i class="dashicons dashicons-arrow-left-alt2"></i>&nbsp;<?php esc_html_e( 'Back To All Submissions', 'buddyforms' ); ?>
+		</a>
+	</p>
 
 </div>

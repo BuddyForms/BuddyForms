@@ -1512,9 +1512,9 @@ function buddyforms_upload_handle_delete_media() {
 add_action( 'wp_ajax_nopriv_upload_image_from_url', 'buddyforms_upload_image_from_url' );
 add_action( 'wp_ajax_upload_image_from_url', 'buddyforms_upload_image_from_url' );
 function buddyforms_upload_image_from_url() {
-	$url            = isset( $_REQUEST['url'] ) ? wp_unslash( $_REQUEST['url'] ) : '';
+	$url            = isset( $_REQUEST['url'] ) ? esc_url_raw( $_REQUEST['url'] ) : '';
 	$file_id        = isset( $_REQUEST['id'] ) ? sanitize_key( $_REQUEST['id'] ) : '';
-	$accepted_files = isset( $_REQUEST['accepted_files'] ) ? explode( ',', wp_unslash( $_REQUEST['accepted_files'] ) ) : array( 'jpeg' );
+	$accepted_files = isset( $_REQUEST['accepted_files'] ) ? explode( ',', sanitize_text_field( $_REQUEST['accepted_files'] ) ) : array( 'jpeg' );
 
 	if ( ! empty( $url ) && ! empty( $file_id ) ) {
 		$upload_dir             = wp_upload_dir();

@@ -324,7 +324,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( $column_name == 'Author' ) {
 			$post = get_post( $item->ID );
 			if ( ! empty( $post->post_author ) ) {
-				echo apply_filters( 'bf_submission_column_default_author_meta', get_the_author_meta( 'nickname', $post->post_author ), $post->post_author );
+				echo esc_html( apply_filters( 'bf_submission_column_default_author_meta', get_the_author_meta( 'nickname', $post->post_author ), $post->post_author ) );
 			} else {
 				esc_html_e( 'Anonymous', 'buddyforms' );
 			}

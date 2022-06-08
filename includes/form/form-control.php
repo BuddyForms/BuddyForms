@@ -590,9 +590,9 @@ function buddyforms_update_post( $args ) {
 			}
 		}
 	} elseif ( 'contact' === $form_type ) {
-		$default_post_title = ! empty( $_POST['subject'] ) ? stripslashes( wp_unslash( $_POST['subject'] ) ) : __( 'none', 'buddyforms' );
+		$default_post_title = ! empty( $_POST['subject'] ) ? sanitize_text_field( wp_unslash( $_POST['subject'] ) ) : __( 'none', 'buddyforms' );
 	} else {
-		$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ? stripslashes( sanitize_text_field( wp_unslash( $_POST['buddyforms_form_title'] ) ) ) : __( 'none', 'buddyforms' );
+		$default_post_title = isset( $_POST['buddyforms_form_title'] ) && ! empty( $_POST['buddyforms_form_title'] ) ?  sanitize_text_field( wp_unslash( $_POST['buddyforms_form_title'] ) ) : __( 'none', 'buddyforms' );
 	}
 
 	$post_title = apply_filters( 'buddyforms_update_form_title', $default_post_title, $form_slug, $post_id );
