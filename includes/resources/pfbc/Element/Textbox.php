@@ -7,7 +7,7 @@ class Element_Textbox extends Element {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( "type" => "text" );
+	protected $_attributes = array( 'type' => 'text' );
 	/**
 	 * @var
 	 */
@@ -20,17 +20,17 @@ class Element_Textbox extends Element {
 	public function render() {
 		$addons = array();
 		if ( ! empty( $this->prepend ) ) {
-			$addons[] = "input-group";
-		} else if ( ! empty( $this->append ) ) {
-			$addons[] = "input-group";
+			$addons[] = 'input-group';
+		} elseif ( ! empty( $this->append ) ) {
+			$addons[] = 'input-group';
 		}
 		if ( ! empty( $addons ) ) {
-			echo '<div class="', implode( " ", $addons ), '">';
+			echo '<div class="', esc_attr( implode( ' ', $addons ) ), '">';
 		}
 
-		$this->renderAddOn( "prepend" );
+		$this->renderAddOn( 'prepend' );
 		parent::render();
-		$this->renderAddOn( "append" );
+		$this->renderAddOn( 'append' );
 
 		if ( ! empty( $addons ) ) {
 			echo '</div>';
@@ -40,13 +40,13 @@ class Element_Textbox extends Element {
 	/**
 	 * @param string $type
 	 */
-	protected function renderAddOn( $type = "prepend" ) {
-		if ( empty ( $this->$type ) ) {
+	protected function renderAddOn( $type = 'prepend' ) {
+		if ( empty( $this->$type ) ) {
 			return;
 		}
 
 		$span = true;
-		if ( strpos( $this->$type, "<button" ) !== false ) {
+		if ( strpos( $this->$type, '<button' ) !== false ) {
 			$span = false;
 		}
 
@@ -56,7 +56,7 @@ class Element_Textbox extends Element {
 			echo '<span class="input-group-btn">';
 		}
 
-		echo $this->$type;
+		echo esc_html( $this->$type );
 
 		echo '</span>';
 	}

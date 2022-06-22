@@ -10,16 +10,16 @@ class Element_CKEditor extends Element_Textarea {
 	protected $basic;
 
 	public function render() {
-		echo "<textarea", $this->getAttributes( array( "value", "required" ) ), ">";
-		if ( ! empty( $this->_attributes["value"] ) ) {
-			echo $this->_attributes["value"];
+		echo '<textarea', esc_attr( $this->getAttributes( array( 'value', 'required' ) ) ), '>';
+		if ( ! empty( $this->_attributes['value'] ) ) {
+			echo $this->_attributes['value'];
 		}
-		echo "</textarea>";
+		echo '</textarea>';
 	}
 
 	function renderJS() {
-		$id     = $this->_form->getAttribute( "id" );
-		$formID = "#" . $id . " #" . $this->_attributes["id"];
+		$id     = $this->_form->getAttribute( 'id' );
+		$formID = '#' . $id . ' #' . $this->_attributes['id'];
 		if ( ! empty( $this->basic ) ) {
 			echo <<<JS
 var basicConfig = {
@@ -53,7 +53,7 @@ JS;
 
 		$ajax = $this->_form->getAjax();
 		if ( ! empty( $ajax ) ) {
-			echo 'jQuery("#', $id, '").on("submit", function() { CKEDITOR.instances["', $this->_attributes["id"], '"].updateElement(); });';
+			echo 'jQuery("#', $id, '").on("submit", function() { CKEDITOR.instances["', $this->_attributes['id'], '"].updateElement(); });';
 		}
 	}
 
@@ -62,7 +62,7 @@ JS;
 	 */
 	function getJSFiles() {
 		return array(
-			"//cdn.ckeditor.com/4.5.4/standard/ckeditor.js"
+			'//cdn.ckeditor.com/4.5.4/standard/ckeditor.js',
 		);
 	}
 }

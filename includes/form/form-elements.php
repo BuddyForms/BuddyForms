@@ -316,7 +316,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 						remove_filter( 'the_content', 'do_shortcode', 11 );
 						add_filter( 'tiny_mce_before_init', 'buddyforms_tinymce_setup_function' );
 						if ( isset( $_POST['buddyforms_form_content'] ) ) {
-							$buddyforms_form_content_val = stripslashes( buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_form_content'] ) ) );
+							$buddyforms_form_content_val = buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_form_content'] ) );
 						} else {
 							if ( ! empty( $the_post->post_content ) && ( $action !== 'new' ) ) {
 								$buddyforms_form_content_val = $the_post->post_content;

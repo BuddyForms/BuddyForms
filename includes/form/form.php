@@ -148,7 +148,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() ) ;
 				}
 			}
 			// Check if the post to edit match with the form setting
@@ -159,7 +159,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
 				}
 			}
 
@@ -186,10 +186,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, buddyforms_form_allowed_tags());
+					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
 				}
 			}
 		}
@@ -232,7 +232,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		if ( $echo ) {
 			echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
 		} else {
-			return $form_output . $echo_content;
+			return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
 		}
 	}
 
@@ -281,7 +281,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		echo wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
 
 	} else {
-		return $form_output . $echo_content;
+		return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
 	}
 
 	if ( ! empty( $transient_name ) ) {

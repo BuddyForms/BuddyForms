@@ -78,7 +78,7 @@ function buddyforms_process_submission( $args = array() ) {
 			$user_data['ipaddress'] = buddyforms_sanitize_mixed( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		}
 		if ( ! in_array( 'referer', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $_SERVER['REMOHTTP_REFERERTE_ADDR'] ) ) {
-			$user_data['referer'] = esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) );
+			$user_data['referer'] = buddyforms_sanitize_mixed( wp_unslash( $_SERVER['HTTP_REFERER'] ) );
 		}
 		if ( ! in_array( 'browser', $buddyforms[ $form_slug ]['user_data'], true ) && isset( $browser_data['name'] ) ) {
 			$user_data['browser'] = $browser_data['name'];

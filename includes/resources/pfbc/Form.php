@@ -456,14 +456,6 @@ class Form extends Base {
 				$urls = array_merge( $urls, $elementUrls );
 			}
 		}
-
-		//This section prevents duplicate css files from being loaded.
-		if ( ! empty( $urls ) ) {
-			$urls = array_values( array_unique( $urls ) );
-			foreach ( $urls as $url ) {
-				echo '<link type="text/css" rel="stylesheet" href="', $url, '"/>';
-			}
-		}
 	}
 
 	/**
@@ -528,14 +520,6 @@ JS;
 			$elementUrls = $element->getJSFiles();
 			if ( is_array( $elementUrls ) ) {
 				$urls = array_merge( $urls, $elementUrls );
-			}
-		}
-
-		//This section prevents duplicate js files from being loaded.
-		if ( ! empty( $urls ) ) {
-			$urls = array_values( array_unique( $urls ) );
-			foreach ( $urls as $url ) {
-				echo '<script type="text/javascript" src="', $url, '"></script>';
 			}
 		}
 	}

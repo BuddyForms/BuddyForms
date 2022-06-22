@@ -192,7 +192,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 		return;
 	}
 
-	$buddyform = wp_unslash( $_POST['buddyforms_options'] );
+	$buddyform = buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_options'] ) );
 
 	// Add post title as form name and post name as form slug.
 	$buddyform['name'] = $post->post_title;
@@ -227,7 +227,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 			}
 		}
 
-		foreach ( wp_unslash( $_POST['buddyforms_roles'] ) as $form_role => $capabilities ) {
+		foreach ( buddyforms_sanitize_mixed( wp_unslash( $_POST['buddyforms_roles'] ) ) as $form_role => $capabilities ) {
 			$role = get_role( $form_role );
 			foreach ( $capabilities as $cap ) {
 				if ( buddyforms_core_fs()->is_not_paying() && ( $cap === 'draft' || $cap === 'all' || $cap === 'admin-submission' ) ) {
