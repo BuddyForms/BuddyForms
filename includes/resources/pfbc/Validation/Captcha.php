@@ -56,10 +56,10 @@ class Validation_Captcha extends Validation {
 			$action = preg_replace( "/[^a-zA-Z0-9]+/", '', $action );
 			$captcha    = sanitize_text_field( $_POST["bf-cpchtk"] );
 			$recaptcha  = new \tk\ReCaptcha\ReCaptcha( $this->privateKey );
-			$resp       = $recaptcha->setExpectedHostname( $_SERVER['HTTP_HOST'] )
+			$resp       = $recaptcha->setExpectedHostname( sanitize_url( $_SERVER['HTTP_HOST'] ) )
 			                        ->setExpectedAction( $action )
 			                        ->setScoreThreshold( floatval( $score ) )
-			                        ->verify( $captcha, $_SERVER['REMOTE_ADDR'] );
+			                        ->verify( $captcha, sanitize_key( $_SERVER['REMOTE_ADDR'] ) );
 			$is_success = $resp->isSuccess();
 			if ( ! $is_success ) {
 				$errors = $resp->getErrorCodes();//Todo write to the logs
@@ -75,6 +75,6 @@ class Validation_Captcha extends Validation {
 	}
 
 	public function validate_google_captcha( $captcha, $secret ) {
-		return json_decode( file_get_contents( "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ), true );
+		return json_decode( file_get_contents( "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . sanitize_key( $_SERVER['REMOTE_ADDR'] ) ), true );
 	}
 }

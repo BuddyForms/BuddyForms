@@ -7,12 +7,12 @@ class Element_PostExcerpt extends Element {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( "type" => "post_excerpt" );
+	protected $_attributes = array( 'type' => 'post_excerpt' );
 
 	/**
 	 * @var string
 	 */
-	protected $message = "Error: %element% is a required field.";
+	protected $message = 'Error: %element% is a required field.';
 
 	/**
 	 * Element_PostExcerpt constructor.
@@ -26,8 +26,8 @@ class Element_PostExcerpt extends Element {
 		global $field_id;
 
 		$properties = array(
-			"value"    => $value,
-			"field_id" => $field_id
+			'value'    => $value,
+			'field_id' => $field_id,
 		);
 		parent::__construct( $label, $name, $properties, $field_options );
 	}
@@ -42,9 +42,9 @@ class Element_PostExcerpt extends Element {
 			$result = $validation->isNotApplicable( $value ) || ! empty( $matches[1][0] );
 
 			if ( ! $result ) {
-				$msj = $validation->getMessage();
-				$label = $this->getLabel();
-				$this->_errors[] = str_replace( "%element%", $label, $msj );
+				$msj             = $validation->getMessage();
+				$label           = $this->getLabel();
+				$this->_errors[] = str_replace( '%element%', $label, $msj );
 			}
 
 			return apply_filters( 'buddyforms_element_post_excerpt_validation', $result, $this );
@@ -56,6 +56,6 @@ class Element_PostExcerpt extends Element {
 
 	public function render() {
 		wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
-		echo $this->_attributes["value"];
+		echo $this->_attributes['value'];
 	}
 }

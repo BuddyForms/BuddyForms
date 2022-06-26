@@ -7,7 +7,7 @@ class View_Frontend extends FormView {
 	/**
 	 * @var string
 	 */
-	protected $class = "form-inline";
+	protected $class = 'form-inline';
 
 	/**
 	 * @param null $onlyElement
@@ -15,16 +15,16 @@ class View_Frontend extends FormView {
 	public function render( $onlyElement = null ) {
 		global $buddyforms, $form_slug;
 
-		$field_id     = $this->_form->getAttribute( "field_id" );
+		$field_id     = $this->_form->getAttribute( 'field_id' );
 		$layout_style = buddyforms_layout_style( $field_id );
 
 		$this->class = apply_filters( 'buddyforms_forms_classes', $this->class, $this, $form_slug );
 		if ( $this->class ) {
-			$this->_form->appendAttribute( "class", $this->class );
+			$this->_form->appendAttribute( 'class', $this->class );
 		}
 
 		$this->_form->getErrorView()->render();
-		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
+		echo '<form ', $this->_form->getAttributes(), '><!--csrftoken--><fieldset> ';
 		if ( $onlyElement && $onlyElement == 'open' ) {
 			return;
 		}
@@ -37,7 +37,7 @@ class View_Frontend extends FormView {
 			$element = apply_filters( 'buddyforms_pre_render_element', $element, $this );
 			if ( $element instanceof Element_Button ) {
 				if ( $e == 0 || ! $elements[ ( $e - 1 ) ] instanceof Element_Button ) {
-					echo '<div class="form-actions ' . $layout_style . '">';
+					echo wp_kses( '<div class="form-actions ' . $layout_style . '">', buddyforms_form_allowed_tags());
 				} else {
 					echo ' ';
 				}
@@ -45,7 +45,6 @@ class View_Frontend extends FormView {
 				if ( ( $e + 1 ) == $elementSize || ! $elements[ ( $e + 1 ) ] instanceof Element_Button ) {
 					echo '</div>';
 				}
-
 			} else {
 				$this->renderElement( $element );
 			}
@@ -61,7 +60,7 @@ class View_Frontend extends FormView {
 	public function renderElement( $element ) {
 		global $form_slug, $buddyforms;
 
-		$field_id     = $element->getAttribute( "field_id" );
+		$field_id     = $element->getAttribute( 'field_id' );
 		$layout_style = buddyforms_layout_style( $field_id );
 
 		$is_first_row = false;
@@ -73,7 +72,7 @@ class View_Frontend extends FormView {
 			}
 			$total_width = 0;
 			foreach ( $reverse_layout_fields as $reverse_field_id => $width ) {
-				$total_width                                                               += $width;
+				$total_width += $width;
 				$buddyforms[ $form_slug ]['form_fields'][ $reverse_field_id ]['first_row'] = ( $total_width === 100 );
 				if ( $total_width === 100 ) {
 					$total_width = 0;
@@ -96,11 +95,11 @@ class View_Frontend extends FormView {
 		}
 
 		$style_first_row = ! empty( $is_first_row ) ? ' bf-start-row' : '';
-		echo '<div class="' . $layout_style . $style_first_row . '">';
+		echo wp_kses( '<div class="' . $layout_style . $style_first_row . '">', buddyforms_form_allowed_tags() );
 
 		if ( $element instanceof Element_HTML || $element instanceof Element_Content ) {
 			$element->render();
-			echo "</div>";
+			echo '</div>';
 
 			return;
 		}
@@ -114,14 +113,14 @@ class View_Frontend extends FormView {
 		$date_is_inline = false;
 		if ( $element instanceof Element_Date ) {
 			$date_is_inline = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
-			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
-			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
-			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
+							  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+							  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
+							  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
 		}
 
 		if ( ! $element instanceof Element_Range && ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File && ! $date_is_inline ) {
 
-			$element->appendAttribute( "class", "form-control" );
+			$element->appendAttribute( 'class', 'form-control' );
 
 			if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] == 'inline' ) {
 
@@ -135,20 +134,20 @@ class View_Frontend extends FormView {
 					}
 				}
 
-				$element->setAttribute( "placeholder", $label );
-				$element->setLabel( "" );
+				$element->setAttribute( 'placeholder', $label );
+				$element->setLabel( '' );
 			}
 		}
 
-		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
+		echo '<div class="bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', wp_kses( $this->renderLabel( $element ), buddyforms_form_allowed_tags() ), '<div class="bf-input">';
 		if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-			echo $this->renderDescriptions( $element );
-			echo $element->render();
+			echo wp_kses( $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
+			echo wp_kses( $element->render(), buddyforms_form_allowed_tags() );
 		} else {
-			echo $element->render();
-			echo $this->renderDescriptions( $element );
+			echo wp_kses( $element->render(), buddyforms_form_allowed_tags() );
+			echo wp_kses( $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
 		}
-		echo "</div></div></div>";
+		echo '</div></div></div>';
 	}
 
 	/**
@@ -158,25 +157,25 @@ class View_Frontend extends FormView {
 		global $form_slug, $buddyforms;
 
 		$label    = $element->getLabel();
-		$field_id = $element->getAttribute( "field_id" );
+		$field_id = $element->getAttribute( 'field_id' );
 
 		$date_is_inline = false;
 		if ( $element instanceof Element_Date ) {
 			$date_is_inline = isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
-			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
-			                  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
-			                  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
+							  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ] )
+							  && isset( $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'] )
+							  && $buddyforms[ $form_slug ]['form_fields'][ $field_id ]['is_inline'][0] === 'is_inline';
 		}
 
-		//No echo label for captcha
+		// No echo label for captcha
 		if ( $element instanceof Element_Captcha ) {
 			return;
 		}
 
-		//TODO not echo label if the textarea already have it
+		// TODO not echo label if the textarea already have it
 		if ( $element instanceof Element_Textarea || $element instanceof Element_PostExcerpt ) {
-			$val = $element->getAttribute("value");
-			if ( ! empty( $val) && is_string( $val ) ) {
+			$val = $element->getAttribute( 'value' );
+			if ( ! empty( $val ) && is_string( $val ) ) {
 				$have_label_string = strpos( $val, '</label>' );
 				if ( $have_label_string !== false ) {
 					return;
@@ -184,7 +183,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		//TODO improve required flag position adding new layout option to place before/after the label or the placeholder
+		// TODO improve required flag position adding new layout option to place before/after the label or the placeholder
 		if ( isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) && $buddyforms[ $form_slug ]['layout']['labels_layout'] != 'inline' || $date_is_inline || $element instanceof Element_Checkbox || $element instanceof Element_Radio ) {
 			if ( $element->isRequired() ) {
 				$gdpr_required = false;
@@ -194,11 +193,10 @@ class View_Frontend extends FormView {
 				if ( ! $gdpr_required ) {
 					$label = $label . html_entity_decode( $this->renderRequired() );
 				}
-
 			}
 		}
 
-		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( "id" ), $label );
+		echo sprintf( ' <label for="%s">%s</label>', esc_attr( $element->getAttribute( 'id' ) ), esc_html( $label ) );
 	}
 }
 
@@ -214,22 +212,22 @@ function buddyforms_layout_style( $field_id ) {
 	}
 
 	switch ( $layout_style ) {
-		case '1' :
+		case '1':
 			$layout_style = 'col-xs-12';
 			break;
-		case '2' :
+		case '2':
 			$layout_style = 'col-md-6';
 			break;
-		case '3' :
+		case '3':
 			$layout_style = 'col-md-4';
 			break;
-		case '4' :
+		case '4':
 			$layout_style = 'col-md-3';
 			break;
-		case '5' :
+		case '5':
 			$layout_style = 'col-md-8';
 			break;
-		case '6' :
+		case '6':
 			$layout_style = 'col-md-9';
 			break;
 		default:

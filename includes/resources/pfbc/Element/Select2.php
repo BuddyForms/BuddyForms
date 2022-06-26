@@ -8,12 +8,12 @@ class Element_Select2 extends Element {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( "type" => "content" );
+	protected $_attributes = array( 'type' => 'content' );
 
 	/**
 	 * @var string
 	 */
-	protected $message = "Error: %element% is a required field.";
+	protected $message = 'Error: %element% is a required field.';
 
 	/**
 	 * Element_HTML constructor.
@@ -21,15 +21,15 @@ class Element_Select2 extends Element {
 	 * @param $value
 	 * @param string $label
 	 * @param string $name
-	 * @param array $field_options
+	 * @param array  $field_options
 	 */
-	public function __construct( $value, $label = "", $name = "", $field_options = array() ) {
+	public function __construct( $value, $label = '', $name = '', $field_options = array() ) {
 		global $field_id;
 
 		$properties = array(
-			"value"    => $value,
-			"field_id" => $field_id,
-            "shortDesc" => $field_options['description']
+			'value'     => $value,
+			'field_id'  => $field_id,
+			'shortDesc' => $field_options['description'],
 		);
 
 		if ( ! empty( $field_options ) && ! empty( $field_options['type'] ) ) {
@@ -44,6 +44,6 @@ class Element_Select2 extends Element {
 	}
 
 	public function render() {
-		echo $this->_attributes["value"];
+		echo $this->_attributes['value'];
 	}
 }

@@ -47,7 +47,7 @@ abstract class FormView extends Base {
 			$this->_form->appendAttribute( "class", $this->class );
 		}
 		$this->_form->getErrorView()->render();
-		echo '<form ', $this->_form->getAttributes(), "><!--csrftoken--><fieldset> ";
+		echo '<form ', esc_attr( $this->_form->getAttributes() ), "><!--csrftoken--><fieldset> ";
 		if ( $onlyElement && $onlyElement == 'open' ) {
 			return;
 		}
@@ -83,12 +83,12 @@ abstract class FormView extends Base {
 	protected function renderDescriptions( $element ) {
 		$shortDesc = $element->getShortDesc();
 		if ( ! empty( $shortDesc ) ) {
-			echo '<span class="help-inline">', $shortDesc, '</span>';
+			echo '<span class="help-inline">', esc_html( $shortDesc ), '</span>';
 		};
 
 		$longDesc = $element->getLongDesc();
 		if ( ! empty( $longDesc ) ) {
-			echo '<span class="help-block">', $longDesc, '</span>';
+			echo '<span class="help-block">', esc_html( $longDesc ), '</span>';
 		};
 	}
 

@@ -19,35 +19,35 @@ class View_Vertical extends FormView {
 			return;
 		}
 		if ( ! $element instanceof Element_Radio && ! $element instanceof Element_Checkbox && ! $element instanceof Element_File ) {
-			$element->appendAttribute( "class", "form-control" );
+			$element->appendAttribute( 'class', 'form-control' );
 		}
 
-		$attr_error   = $element->getAttribute( 'error' );
-		$opt_error    = $element->getOption( 'error' );
+		$attr_error = $element->getAttribute( 'error' );
+		$opt_error  = $element->getOption( 'error' );
 		if ( ! empty( $attr_error ) || ! empty( $opt_error ) ) {
 			$element->appendAttribute( 'class', 'error' );
 		}
 
 		if ( $this->sharedCount == 0 ) {
 			$rowClass = $element->getShared() ? 'row' : '';
-			echo '<div class="' . $rowClass . ' bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
+			echo '<div class="' . esc_attr( $rowClass ) . ' bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', wp_kses( $this->renderLabel( $element ), buddyforms_form_allowed_tags() );
 		}
 
 		if ( $element->getShared() ) {
-			$colSize           = $element->getShared();
+			$colSize            = $element->getShared();
 			$this->sharedCount += $colSize[ strlen( $colSize ) - 1 ];
-			echo " <div class='$colSize'> ";
+			echo '<div class="' . esc_attr( $colSize ) . '">';
 		}
 
 		$element->setAttribute( 'placeholder', $element->getLabel() );
-		echo $element->render(), $this->renderDescriptions( $element );
+		echo wp_kses( $element->render() . $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
 		if ( $element->getShared() ) {
-			echo " </div> ";
+			echo ' </div> ';
 		}
 
 		if ( $this->sharedCount == 0 || $this->sharedCount == 12 ) {
 			$this->sharedCount = 0;
-			echo " </div> ";
+			echo ' </div> ';
 		}
 	}
 

@@ -17,7 +17,7 @@ class Element_State extends Element_Select {
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties
-	 * @param null $field_options
+	 * @param null       $field_options
 	 */
 	public function __construct( $label, $name, array $properties = null, $field_options = null ) {
 		self::init_state_list();
@@ -40,60 +40,60 @@ class Element_State extends Element_Select {
 		if ( empty( self::$state_list ) ) {
 			self::$state_list = array(
 				''        => __( 'Select State', 'buddyforms' ),
-				"nostate" => __( 'No State', 'buddyforms' ),
+				'nostate' => __( 'No State', 'buddyforms' ),
 				'US'      => array(
-					"AL" => "Alabama",
-					"AK" => "Alaska",
-					"AZ" => "Arizona",
-					"AR" => "Arkansas",
-					"CA" => "California",
-					"CO" => "Colorado",
-					"CT" => "Connecticut",
-					"DE" => "Delaware",
-					"DC" => "District of Columbia",
-					"FL" => "Florida",
-					"GA" => "Georgia",
-					"HI" => "Hawaii",
-					"ID" => "Idaho",
-					"IL" => "Illinois",
-					"IN" => "Indiana",
-					"IA" => "Iowa",
-					"KS" => "Kansas",
-					"KY" => "Kentucky",
-					"LA" => "Louisiana",
-					"ME" => "Maine",
-					"MD" => "Maryland",
-					"MA" => "Massachusetts",
-					"MI" => "Michigan",
-					"MN" => "Minnesota",
-					"MS" => "Mississippi",
-					"MO" => "Missouri",
-					"MT" => "Montana",
-					"NE" => "Nebraska",
-					"NV" => "Nevada",
-					"NH" => "New Hampshire",
-					"NJ" => "New Jersey",
-					"NM" => "New Mexico",
-					"NY" => "New York",
-					"NC" => "North Carolina",
-					"ND" => "North Dakota",
-					"OH" => "Ohio",
-					"OK" => "Oklahoma",
-					"OR" => "Oregon",
-					"PA" => "Pennsylvania",
-					"RI" => "Rhode Island",
-					"SC" => "South Carolina",
-					"SD" => "South Dakota",
-					"TN" => "Tennessee",
-					"TX" => "Texas",
-					"UT" => "Utah",
-					"VT" => "Vermont",
-					"VA" => "Virginia",
-					"WA" => "Washington",
-					"WV" => "West Virginia",
-					"WI" => "Wisconsin",
-					"WY" => "Wyoming"
-				)
+					'AL' => 'Alabama',
+					'AK' => 'Alaska',
+					'AZ' => 'Arizona',
+					'AR' => 'Arkansas',
+					'CA' => 'California',
+					'CO' => 'Colorado',
+					'CT' => 'Connecticut',
+					'DE' => 'Delaware',
+					'DC' => 'District of Columbia',
+					'FL' => 'Florida',
+					'GA' => 'Georgia',
+					'HI' => 'Hawaii',
+					'ID' => 'Idaho',
+					'IL' => 'Illinois',
+					'IN' => 'Indiana',
+					'IA' => 'Iowa',
+					'KS' => 'Kansas',
+					'KY' => 'Kentucky',
+					'LA' => 'Louisiana',
+					'ME' => 'Maine',
+					'MD' => 'Maryland',
+					'MA' => 'Massachusetts',
+					'MI' => 'Michigan',
+					'MN' => 'Minnesota',
+					'MS' => 'Mississippi',
+					'MO' => 'Missouri',
+					'MT' => 'Montana',
+					'NE' => 'Nebraska',
+					'NV' => 'Nevada',
+					'NH' => 'New Hampshire',
+					'NJ' => 'New Jersey',
+					'NM' => 'New Mexico',
+					'NY' => 'New York',
+					'NC' => 'North Carolina',
+					'ND' => 'North Dakota',
+					'OH' => 'Ohio',
+					'OK' => 'Oklahoma',
+					'OR' => 'Oregon',
+					'PA' => 'Pennsylvania',
+					'RI' => 'Rhode Island',
+					'SC' => 'South Carolina',
+					'SD' => 'South Dakota',
+					'TN' => 'Tennessee',
+					'TX' => 'Texas',
+					'UT' => 'Utah',
+					'VT' => 'Vermont',
+					'VA' => 'Virginia',
+					'WA' => 'Washington',
+					'WV' => 'West Virginia',
+					'WI' => 'Wisconsin',
+					'WY' => 'Wyoming',
+				),
 			);
 		}
 	}
@@ -106,16 +106,16 @@ class Element_State extends Element_Select {
 
 	public function render() {
 		$this->appendAttribute( 'class', 'c-select' );
-		if ( isset( $this->_attributes["value"] ) ) {
-			if ( ! is_array( $this->_attributes["value"] ) ) {
-				$this->_attributes["value"] = array( $this->_attributes["value"] );
+		if ( isset( $this->_attributes['value'] ) ) {
+			if ( ! is_array( $this->_attributes['value'] ) ) {
+				$this->_attributes['value'] = array( $this->_attributes['value'] );
 			}
 		} else {
-			$this->_attributes["value"] = array();
+			$this->_attributes['value'] = array();
 		}
 
-		if ( ! empty( $this->_attributes["multiple"] ) && substr( $this->_attributes["name"], - 2 ) != "[]" ) {
-			$this->_attributes["name"] .= "[]";
+		if ( ! empty( $this->_attributes['multiple'] ) && substr( $this->_attributes['name'], - 2 ) != '[]' ) {
+			$this->_attributes['name'] .= '[]';
 		}
 
 		$is_link_with_country = ! empty( $this->field_options['link_with_country'] ) && ! empty( $this->field_options['link_with_country'][0] ) && $this->field_options['link_with_country'][0] === 'link';
@@ -128,7 +128,7 @@ class Element_State extends Element_Select {
 
 		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
-		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
+		echo '<select', $this->getAttributes( array( 'value', 'selected' ) ), '>';
 		$selected = false;
 		$i        = 0;
 		foreach ( $this->options as $country_key => $state ) {
@@ -136,9 +136,9 @@ class Element_State extends Element_Select {
 			if ( is_array( $state ) ) {
 				foreach ( $state as $value => $text ) {
 					$value = $this->getOptionValue( $value );
-					echo '<option data-country="' . $country_key . '" value="', $value, '"';
-					if ( in_array( $value, $this->_attributes["value"] ) ) {
-						if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
+					echo '<option data-country="' . esc_attr( $country_key ) . '" value="', esc_attr( $value ), '"';
+					if ( in_array( $value, $this->_attributes['value'] ) ) {
+						if ( $selected && empty( $this->_attributes['multiple'] ) ) {
 							continue;
 						}
 						echo ' selected="selected"';
@@ -148,13 +148,13 @@ class Element_State extends Element_Select {
 					if ( ! empty( $is_link_with_country ) ) {
 						echo ' style="display: none;"';
 					}
-					echo '>', $text, '</option>';
+					echo '>', esc_html( $text ), '</option>';
 				}
 			} else {
 				if ( $i == 0 && empty( $country_key ) && $is_required && $labels_layout === 'inline' ) {
 					$state = $state . ' ' . $this->getRequiredPlainSignal();
 				}
-				echo '<option data-country="' . $country_key . '" value="', $country_key, '">' . $state . "</option>";
+				echo '<option data-country="' . esc_attr( $country_key ) . '" value="', esc_attr( $country_key ), '">' . esc_html( $state ) . '</option>';
 			}
 			$i ++;
 		}

@@ -27,14 +27,14 @@ Version: 4.0
  * @param $class
  */
 function PFBC_Load( $class ) {
-	$file = dirname( __FILE__ ) . "/" . str_replace( "_", DIRECTORY_SEPARATOR, $class ) . ".php";
+	$file = dirname( __FILE__ ) . '/' . str_replace( '_', DIRECTORY_SEPARATOR, $class ) . '.php';
 	if ( is_file( $file ) ) {
 		include_once $file;
 	}
 }
 
 try {
-	spl_autoload_register( "PFBC_Load" );
+	spl_autoload_register( 'PFBC_Load' );
 } catch ( Exception $e ) {
 	trigger_error( 'BF::PFBC_Load::Autoload_Error', E_USER_NOTICE );
 }
@@ -62,7 +62,7 @@ class Form extends Base {
 	/**
 	 * @var string
 	 */
-	protected $_prefix = "http";
+	protected $_prefix = 'http';
 	/**
 	 * @var array
 	 */
@@ -83,7 +83,8 @@ class Form extends Base {
 	 * @var bool
 	 */
 	protected $noLabel = false;
-	/*Prevents various automated from being automatically applied.  Current options for this array
+	/*
+	Prevents various automated from being automatically applied.  Current options for this array
 	included jQuery, bootstrap and focus.*/
 	/**
 	 * @var string
@@ -107,38 +108,42 @@ class Form extends Base {
 	 *
 	 * @param string $id
 	 */
-	public function __construct( $id = "pfbc" ) {
+	public function __construct( $id = 'pfbc' ) {
 
-		$this->configure( array(
-			"action" => $_SERVER['REQUEST_URI'],
-			"id"     => preg_replace( "/\W/", "-", $id ),
-			"method" => "post"
-		) );
+		$this->configure(
+			array(
+				'action' => sanitize_url( $_SERVER['REQUEST_URI'] ),
+				'id'     => preg_replace( '/\W/', '-', $id ),
+				'method' => 'post',
+			)
+		);
 
-		if ( isset( $_SERVER["HTTPS"] ) && $_SERVER["HTTPS"] == "on" ) {
-			$this->_prefix = "https";
+		if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) {
+			$this->_prefix = 'https';
 		}
 
-		/*The Standard view class is applied by default and will be used unless a different view is
+		/*
+		The Standard view class is applied by default and will be used unless a different view is
 		specified in the form's configure method*/
 		if ( empty( $this->view ) ) {
-			$this->view = new View_SideBySide;
+			$this->view = new View_SideBySide();
 		}
 
 		$this->global_error = ErrorHandler::get_instance();
 
 		$this->global_error->set_form( $this );
 
-		/*The resourcesPath property is used to identify where third-party resources needed by the
+		/*
+		The resourcesPath property is used to identify where third-party resources needed by the
 		project are located.  This property will automatically be set properly if the PFBC directory
 		is uploaded within the server's document root.  If symbolic links are used to reference the PFBC
 		directory, you may need to set this property in the form's configure method or directly in this
 		constructor.*/
-		$path = dirname( __FILE__ ) . "/Resources";
-		if ( strpos( $path, $_SERVER["DOCUMENT_ROOT"] ) !== false ) {
-			$this->resourcesPath = substr( $path, strlen( $_SERVER["DOCUMENT_ROOT"] ) );
+		$path = dirname( __FILE__ ) . '/Resources';
+		if ( strpos( $path, wp_kses_post( $_SERVER['DOCUMENT_ROOT'] ) ) !== false ) {
+			$this->resourcesPath = substr( $path, strlen( wp_kses_post( $_SERVER['DOCUMENT_ROOT'] ) ) );
 		} else {
-			$this->resourcesPath = "/PFBC/Resources";
+			$this->resourcesPath = '/PFBC/Resources';
 		}
 	}
 
@@ -153,7 +158,7 @@ class Form extends Base {
 		$valid = true;
 		if ( ! empty( $id ) ) {
 			$global_error = ErrorHandler::get_instance();
-			if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+			if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				$data = $_POST;
 			} else {
 				$data = $_GET;
@@ -162,11 +167,11 @@ class Form extends Base {
 			$post_id       = ! empty( $data ) && ! empty( $data['post_id'] ) ? $data['post_id'] : 0;
 			$form_instance = self::recover_instance( $id, $post_id );
 
-			//Each element's value is saved in the session and checked against any validation rules applied to the element.
+			// Each element's value is saved in the session and checked against any validation rules applied to the element.
 			if ( ! empty( $form_instance ) && ! empty( $form_instance->_elements ) ) {
 				/** @var Element $element */
 				foreach ( $form_instance->_elements as $element ) {
-					$name          = $element->getAttribute( "name" );
+					$name          = $element->getAttribute( 'name' );
 					$field_options = $element->getFieldOptions();
 					if ( $element instanceof Element_Email ) {
 						$element->setValidation( new Validation_Email() );
@@ -179,13 +184,13 @@ class Form extends Base {
 						$name = $field_options['slug'];
 					}
 
-					if ( substr( $name, - 2 ) == "[]" ) {
+					if ( substr( $name, - 2 ) == '[]' ) {
 						$name = substr( $name, 0, - 2 );
 					}
 
-					//The File element must be handled differently b/c it uses the $_FILES superglobal and not $_GET or $_POST.
+					// The File element must be handled differently b/c it uses the $_FILES superglobal and not $_GET or $_POST.
 					if ( $element instanceof Element_File ) {
-						$data[ $name ] = $_FILES[ $name ]["name"];
+						$data[ $name ] = $_FILES[ $name ]['name'];
 					}
 
 					if ( isset( $data[ $name ] ) ) {
@@ -202,7 +207,7 @@ class Form extends Base {
 						$value = null;
 					}
 
-					//If a validation error is found, the error message is saved in the session along with the element's name.
+					// If a validation error is found, the error message is saved in the session along with the element's name.
 					if ( is_array( $value ) ) {
 						foreach ( $value as $v ) {
 							if ( ! $element->isValid( $v ) ) {
@@ -257,48 +262,52 @@ class Form extends Base {
 	 * @param $formId
 	 * @param $items
 	 * @param $values
-	 * @param int $buttons
+	 * @param int    $buttons
 	 */
 	public static function renderArray( $formId, $items, $values, $buttons = 1 ) {
 		$form = new Form( $formId );
-		$opts = Array();
+		$opts = array();
 
-		if ( empty ( $items['ajax'] ) ) {
-			$items["ajax"] = Array( "Hidden", "", "", Array( "value" => "false" ) );
+		if ( empty( $items['ajax'] ) ) {
+			$items['ajax'] = array( 'Hidden', '', '', array( 'value' => 'false' ) );
 		} else {
 			$opts['ajax']         = true;
 			$opts['ajaxCallback'] = $items['ajax'];
-			unset ( $items['ajax'] );
+			unset( $items['ajax'] );
 		}
 		if ( $buttons ) {
-			$items["noneSubmitButton"] = Array( "Button", "Submit" );
-			if ( $buttons != Form::$SUBMIT ) {
-				if ( ! empty ( $values['id'] ) ) {
+			$items['noneSubmitButton'] = array( 'Button', 'Submit' );
+			if ( $buttons != self::$SUBMIT ) {
+				if ( ! empty( $values['id'] ) ) {
 					if ( is_array( $buttons ) ) {
 						foreach ( $buttons as $k => $b ) {
 							$items[ $k ] = $b;
 						}
-						$items['noneRemoveButton'] = Array(
-							"Button",
-							"Remove",
-							"button",
-							array( "class" => "btn-danger", "data-toggle" => "modal", "data-target" => "#rmConfirm" )
+						$items['noneRemoveButton'] = array(
+							'Button',
+							'Remove',
+							'button',
+							array(
+								'class'       => 'btn-danger',
+								'data-toggle' => 'modal',
+								'data-target' => '#rmConfirm',
+							),
 						);
 					}
 				}
-				if ( ! empty ( $items['ajax'] ) ) {
-					$items["noneCancelButton"] = Array(
-						"Button",
-						"Cancel",
-						"button",
-						array( "onclick" => "history.go(-1);" )
+				if ( ! empty( $items['ajax'] ) ) {
+					$items['noneCancelButton'] = array(
+						'Button',
+						'Cancel',
+						'button',
+						array( 'onclick' => 'history.go(-1);' ),
 					);
 				}
 			}
 		}
 		$form->configure( $opts );
 		$form->addElements( $items );
-		if ( ! empty ( $values ) ) {
+		if ( ! empty( $values ) ) {
 			$form->setValues( $values );
 		}
 		$form->render();
@@ -309,14 +318,14 @@ class Form extends Base {
 	 */
 	public function addElements( $items ) {
 		foreach ( $items as $id => $props ) {
-			$elementClassName = "Element_" . $props[0];
+			$elementClassName = 'Element_' . $props[0];
 			for ( $i = 1; $i <= 4; $i ++ ) {
-				if ( ! isset ( $props[ $i ] ) ) {
+				if ( ! isset( $props[ $i ] ) ) {
 					$props[ $i ] = null;
 				}
 			}
-			$element = new $elementClassName ( $props[1], $props[2], $props[3], $props[4] );
-			if ( ! preg_match( "/^none/i", $id ) ) {
+			$element = new $elementClassName( $props[1], $props[2], $props[3], $props[4] );
+			if ( ! preg_match( '/^none/i', $id ) ) {
 				$element->setAttribute( 'name', $id );
 			}
 			$this->AddElement( $element );
@@ -329,30 +338,29 @@ class Form extends Base {
 	public function addElement( Element $element ) {
 		$element->_setForm( $this );
 
-		//If the element doesn't have a specified id, a generic identifier is applied.
-		$id   = $element->getAttribute( "id" );
-		$name = $element->getAttribute( "name" );
-		if ( empty ( $id ) && $name ) {
-			$element->setAttribute( "id", $name );
-		} elseif ( empty ( $id ) ) {
-			$element->setAttribute( "id", $this->_attributes["id"] . "-element-" . sizeof( $this->_elements ) );
+		// If the element doesn't have a specified id, a generic identifier is applied.
+		$id   = $element->getAttribute( 'id' );
+		$name = $element->getAttribute( 'name' );
+		if ( empty( $id ) && $name ) {
+			$element->setAttribute( 'id', $name );
+		} elseif ( empty( $id ) ) {
+			$element->setAttribute( 'id', $this->_attributes['id'] . '-element-' . sizeof( $this->_elements ) );
 		}
 		$this->_elements[] = $element;
 
-		//For ease-of-use, the form tag's encytype attribute is automatically set if the File element class is added.
+		// For ease-of-use, the form tag's encytype attribute is automatically set if the File element class is added.
 		if ( $element instanceof Element_File ) {
-			$this->_attributes["enctype"] = "multipart/form-data";
+			$this->_attributes['enctype'] = 'multipart/form-data';
 		}
 	}
 
 	/**
 	 * Override element in the element list for other element of the same type
 	 *
-	 * @param Element $new_element
+	 * @param Element          $new_element
 	 * @param $element_position
 	 *
 	 * @since 2.5.5
-	 *
 	 */
 	public function overrideExistingElement( Element $new_element, $element_position ) {
 		if ( ! empty( $this->_elements ) && isset( $this->_elements[ $element_position ] ) ) {
@@ -377,7 +385,7 @@ class Form extends Base {
 		$values   = array();
 		$elements = $this->getElements();
 
-		foreach ($elements as $element_id => $element) {
+		foreach ( $elements as $element_id => $element ) {
 			if ( in_array( $element->getName(), $names ) ) {
 				$values[ $element->getName() ] = $element->getAttribute( 'value' );
 			}
@@ -425,11 +433,11 @@ class Form extends Base {
 
 	protected function applyValues() {
 		foreach ( $this->_elements as $element ) {
-			$name = $element->getAttribute( "name" );
+			$name = $element->getAttribute( 'name' );
 			if ( isset( $this->_values[ $name ] ) ) {
-				$element->setAttribute( "value", $this->_values[ $name ] );
-			} elseif ( substr( $name, - 2 ) == "[]" && isset( $this->_values[ substr( $name, 0, - 2 ) ] ) ) {
-				$element->setAttribute( "value", $this->_values[ substr( $name, 0, - 2 ) ] );
+				$element->setAttribute( 'value', $this->_values[ $name ] );
+			} elseif ( substr( $name, - 2 ) == '[]' && isset( $this->_values[ substr( $name, 0, - 2 ) ] ) ) {
+				$element->setAttribute( 'value', $this->_values[ substr( $name, 0, - 2 ) ] );
 			}
 		}
 	}
@@ -465,13 +473,12 @@ class Form extends Base {
 		$this->renderJSFiles();
 
 		ob_start();
-		echo '<script type="text/javascript">';
 		$this->view->renderJS();
 		foreach ( $this->_elements as $element ) {
 			$element->renderJS();
 		}
 
-		$id        = $this->_attributes["id"];
+		$id        = $this->_attributes['id'];
 		$form_slug = str_replace( 'buddyforms_form_', '', $id );
 		$method    = $this->_attributes['method'];
 		$prevent   = wp_json_encode( $this->prevent );
@@ -507,11 +514,10 @@ JS;
 		foreach ( $this->_elements as $element ) {
 			$element->jQueryDocumentReady();
 		}
-
-		echo '</script>';
 		$output = ob_get_clean();
-
-		echo $output;
+		wp_register_script( 'bf-form-base-render', '',);
+		wp_enqueue_script( 'bf-form-base-render' );
+		wp_add_inline_script( 'bf-form-base-render', $output);;
 	}
 
 	protected function renderJSFiles() {
@@ -526,13 +532,13 @@ JS;
 
 	/**
 	 * @param $formId
-	 * @param null $values
-	 * @param null $opts
+	 * @param null   $values
+	 * @param null   $opts
 	 *
 	 * @return Form|null
 	 */
 	public static function open( $formId, $values = null, $opts = null ) {
-		$default = Array();
+		$default = array();
 		if ( $opts ) {
 			foreach ( $opts as $key => $val ) {
 				if ( $key == 'ajax' ) {
@@ -540,15 +546,15 @@ JS;
 					$default['ajaxCallback'] = $opts['ajax'];
 				} elseif ( $key == 'view' ) {
 					$viewName        = 'View_' . $val;
-					$default[ $key ] = new $viewName;
+					$default[ $key ] = new $viewName();
 				} else {
 					$default[ $key ] = $val;
 				}
 			}
 		}
-		self::$form = new Form ( $formId );
+		self::$form = new Form( $formId );
 		self::$form->configure( $default );
-		if ( ! empty ( $values ) ) {
+		if ( ! empty( $values ) ) {
 			self::$form->setValues( $values );
 		}
 		self::$form->render( 'open' );
@@ -564,7 +570,7 @@ JS;
 	 */
 	public static function __callStatic( $type, $props ) {
 		if ( $type == 'close' ) {
-			if ( ! isset ( $props[0] ) ) {
+			if ( ! isset( $props[0] ) ) {
 				$props[0] = 1;
 			}
 
@@ -586,12 +592,12 @@ JS;
 	private static function _call( $form, $type, $props ) {
 		$elementClassName = "Element_$type";
 		for ( $i = 0; $i <= 3; $i ++ ) {
-			if ( ! isset ( $props[ $i ] ) ) {
+			if ( ! isset( $props[ $i ] ) ) {
 				$props[ $i ] = null;
 			}
 		}
 
-		$element = new $elementClassName ( $props[0], $props[1], $props[2], $props[3] );
+		$element = new $elementClassName( $props[0], $props[1], $props[2], $props[3] );
 		$form->AddElement( $element );
 		$form->applyValues();
 		$form->view->renderElement( $element );
@@ -605,7 +611,7 @@ JS;
 	 * @return array
 	 */
 	public function __sleep() {
-		return array( "_attributes", "_elements", "errorView" );
+		return array( '_attributes', '_elements', 'errorView' );
 	}
 
 	/**
@@ -630,7 +636,6 @@ JS;
 	 * @param $position
 	 *
 	 * @since 2.4.6
-	 *
 	 */
 	public function removeElement( $position ) {
 		if ( $position >= 0 ) {
@@ -672,7 +677,6 @@ JS;
 	 *
 	 * @return WP_Error[]|BuddyForms_Error[]
 	 * @since 2.4.7
-	 *
 	 */
 	public function getErrors() {
 		$global_error    = ErrorHandler::get_instance();
@@ -712,16 +716,20 @@ JS;
 			return $this->view->renderFormClose();
 		}
 		echo '<div class="row"><div class="col-md-4"></div><div class="col-md-6">';
-		$this->Button( "Submit" );
-		if ( $buttons != Form::$SUBMIT ) {
-			$this->Button( "Remove", "button", array(
-				"class"       => "btn-danger",
-				"data-toggle" => "modal",
-				"data-target" => "#rmConfirm"
-			) );
+		$this->Button( 'Submit' );
+		if ( $buttons != self::$SUBMIT ) {
+			$this->Button(
+				'Remove',
+				'button',
+				array(
+					'class'       => 'btn-danger',
+					'data-toggle' => 'modal',
+					'data-target' => '#rmConfirm',
+				)
+			);
 		}
 
-		$this->Button( "Cancel", "button", array( "onclick" => "history.go(-1);" ) );
+		$this->Button( 'Cancel', 'button', array( 'onclick' => 'history.go(-1);' ) );
 		echo '</div></div>';
 		$this->view->renderFormClose();
 

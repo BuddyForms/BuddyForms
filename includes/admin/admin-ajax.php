@@ -104,7 +104,7 @@ function buddyforms_new_page() {
 
 	// Create post object
 	$new_page = array(
-		'post_title'   => wp_strip_all_tags( wp_unslash( $_POST['page_name'] ) ),
+		'post_title'   => sanitize_title( wp_unslash( $_POST['page_name'] ) ),
 		'post_content' => '',
 		'post_status'  => 'publish',
 		'post_type'    => 'page',
@@ -118,7 +118,7 @@ function buddyforms_new_page() {
 		$json['error'] = $new_page;
 	} else {
 		$json['id']   = $new_page;
-		$json['name'] = wp_strip_all_tags( $_POST['page_name'] );
+		$json['name'] = sanitize_title( wp_unslash( $_POST['page_name'] ) );
 	}
 
 	echo json_encode( $json );

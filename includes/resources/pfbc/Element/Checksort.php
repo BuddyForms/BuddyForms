@@ -39,15 +39,17 @@ class Element_Checksort extends Element_Sort {
 			if ( ! empty( $this->inline ) && $count > 0 ) {
 				echo ' ';
 			}
-			echo '<label class="', esc_attr( $labelClass ), '"><input id="', $this->_attributes['id'], '-', $count, '"', $this->getAttributes(
-				array(
-					'id',
-					'class',
-					'value',
-					'checked',
-					'name',
-					'onclick',
-					'required',
+			echo '<label class="', esc_attr( $labelClass ), '"><input id="', esc_attr( $this->_attributes['id'] ), '-', esc_attr( $count ), '"', esc_attr(
+				$this->getAttributes(
+					array(
+						'id',
+						'class',
+						'value',
+						'checked',
+						'name',
+						'onclick',
+						'required',
+					)
 				)
 			), ' value="', esc_attr( $this->filter( $value ) ), '"';
 			if ( in_array( $value, $this->_attributes['value'] ) ) {
@@ -60,7 +62,7 @@ class Element_Checksort extends Element_Sort {
 					"\'",
 				),
 				$text
-			), '\');"/>', $text, '</label>';
+			), '\');"/>', esc_html( $text ), '</label>';
 
 			if ( in_array( $value, $this->_attributes['value'] ) ) {
 				$existing .= '<li id="' . $this->_attributes['id'] . '-sort-' . $count . '" class="ui-state-default"><input type="hidden" name="' . $this->_attributes['name'] . '" value="' . $value . '"/>' . $text . '</li>';

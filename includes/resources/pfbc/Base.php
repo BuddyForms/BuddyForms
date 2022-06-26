@@ -202,7 +202,7 @@ abstract class Base {
 	public function renderRequired( $echo = false ) {
 		$html = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
 		if ( $echo ) {
-			echo $html;
+			echo wp_kses( $html, buddyforms_form_allowed_tags() );
 		} else {
 			return $html;
 		}

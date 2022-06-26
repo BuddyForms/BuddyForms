@@ -37,18 +37,18 @@ class Element_Checkbox extends OptionElement {
 			$value = $this->getOptionValue( $value );
 
 			// get optional ID
-			$id = isset( $this->_attributes['id'] ) ? ' id="' . $this->_attributes['id'] . '-' . $count . '"' : '';
+			$id = isset( $this->_attributes['id'] ) ? ' id="' . esc_attr( $this->_attributes['id'] ) . '-' . esc_attr( $count ) . '"' : '';
 
 			echo '<label class="' , esc_attr( $labelClass ) , ' ' , esc_attr( $value ) , '">';
 
-			echo '<input', $id, $this->getAttributes(
+			echo '<input', $id, wp_kses( $this->getAttributes(
 				array(
 					'id',
 					'class',
 					'value',
 					'checked',
 				)
-			), ' value="', $this->filter( $value ), '"';
+			), buddyforms_form_allowed_tags() ), ' value="', esc_attr( $this->filter( $value ) ), '"';
 			if ( in_array( $value, $this->_attributes['value'] ) ) {
 				echo ' checked="checked"';
 			}

@@ -7,7 +7,11 @@ class Element_Url extends Element_Textbox {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( 'type' => 'text', 'class' => 'bf-user-website', 'data-rule-user-website' => 'true' );
+	protected $_attributes = array(
+		'type'                   => 'text',
+		'class'                  => 'bf-user-website',
+		'data-rule-user-website' => 'true',
+	);
 
 	public function render() {
 

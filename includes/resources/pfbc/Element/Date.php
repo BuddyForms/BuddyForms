@@ -10,14 +10,14 @@ class Element_Date extends Element_Textbox {
 	 * @param $label
 	 * @param $name
 	 * @param $field_options
-	 * @param array|null $properties
+	 * @param array|null    $properties
 	 */
 	public function __construct( $label, $name, $field_options, array $properties = null ) {
 		$element_class = ' bf_datetimepicker ';
 		if ( ! empty( $properties['class'] ) ) {
-			$properties['class'] .= sprintf( " %s ", $element_class );
+			$properties['class'] .= sprintf( ' %s ', $element_class );
 		} else {
-			$properties['class'] = sprintf( " %s ", $element_class );
+			$properties['class'] = sprintf( ' %s ', $element_class );
 		}
 
 		$show_label = isset( $field_options['is_inline'] ) && isset( $field_options['is_inline'][0] ) && $field_options['is_inline'][0] === 'is_inline';
@@ -39,12 +39,17 @@ class Element_Date extends Element_Textbox {
 	}
 
 	public static function include_assets() {
-		wp_enqueue_script( 'buddyforms-jquery-ui-timepicker-addon-js', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', array(
-			'jquery',
-			'jquery-ui-datepicker',
-			'jquery-ui-core',
+		wp_enqueue_script(
+			'buddyforms-jquery-ui-timepicker-addon-js',
+			BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js',
+			array(
+				'jquery',
+				'jquery-ui-datepicker',
+				'jquery-ui-core',
 
-		), '1.6.3' );
+			),
+			'1.6.3'
+		);
 		wp_enqueue_script( 'buddyforms-moment-js', includes_url() . 'js/dist/vendor/moment.js', array( 'jquery' ), '2.29.2' );
 		wp_enqueue_script( 'buddyforms-date-format', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/date-format/date-formats.js', array( 'jquery', 'buddyforms-moment-js', 'jquery-ui-datepicker' ), '1.0.0' );
 		wp_enqueue_style( 'buddyforms-jquery-ui-themes', BUDDYFORMS_ASSETS . 'resources/jquery-ui-timepicker-addon/jquery-ui.css', array(), '1.12.1' );
@@ -68,7 +73,7 @@ class Element_Date extends Element_Textbox {
 		$this->setAttribute( 'autocomplete', 'off' );
 
 		if ( ! empty( $expected_format ) ) {
-			$this->validation[] = new Validation_Date ( "Error: The %element% field must match the following date format: " . ! empty( $expected_format ) ? $expected_format : '', $this->field_options );
+			$this->validation[] = new Validation_Date( 'Error: The %element% field must match the following date format: ' . ! empty( $expected_format ) ? $expected_format : '', $this->field_options );
 		}
 		parent::render();
 	}
