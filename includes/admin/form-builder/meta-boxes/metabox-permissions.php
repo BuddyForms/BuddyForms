@@ -99,16 +99,8 @@ function buddyforms_permissions_screen() {
 
 	$form_action = ! empty( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : 'create';
 	// User Roles Description
-	$allowed = array(
-		'div' => array(
-			'id'    => array(),
-			'class' => array(),
-		),
-		'p'  => array(),
-		'h4'  => array(),
-		'br'  => array(),
-	);
-	echo wp_kses( $shortDesc_permission, $allowed );
+
+	echo $shortDesc_permission;
 
 	$checkbox_style_group_1 = 'margin-left: 5%; float: left;';
 	$checkbox_style_group_2 = 'margin-left: 3%; float: left;';
@@ -243,11 +235,11 @@ function buddyforms_permissions_screen() {
 						?>
 						<tr data-target-role="<?php echo esc_attr( $class ); ?>" id="table_row_<?php echo esc_attr( $field->getAttribute( 'id' ) ); ?>_<?php echo esc_attr( $key ); ?>" class=" <?php echo esc_attr( $classes ); ?>">
 							<th scope="row">
-								<label for="role_role"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
+								<label for="role_role"><?php echo $field->getLabel(); ?></label>
 							</th>
 							<td>
-								<?php echo wp_kses_post( $field->render() ); ?>
-								<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
+								<?php echo $field->render(); ?>
+								<p class="description"><?php echo $field->getShortDesc(); ?></p>
 							</td>
 						</tr>
 						<?php

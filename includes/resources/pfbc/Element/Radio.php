@@ -41,7 +41,7 @@ class Element_Radio extends OptionElement {
 			$input[] = '/>';
 
 			$text_out = sprintf( ' %s ', $text );
-			echo wp_kses( $label_start . join( ' ', $input ) . $text_out . $label_end, buddyforms_form_allowed_tags() );
+			echo $label_start . join( ' ', $input ) . $text_out . $label_end;
 
 			++ $count;
 			if ( $labelClass != 'radio-inline' ) {

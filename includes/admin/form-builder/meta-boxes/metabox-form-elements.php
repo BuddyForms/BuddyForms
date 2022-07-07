@@ -114,9 +114,9 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	$form_setup[] = new Element_HTML( '</div>' );
 
 	foreach ( $form_setup as $key => $field ) {
-		echo wp_kses_post( $field->getLabel() );
-		echo wp_kses_post( $field->getShortDesc() );
-		echo wp_kses_post( $field->render() );
+		echo  $field->getLabel();
+		echo  $field->getShortDesc();
+		echo  $field->render();
 	}
 }
 

@@ -273,7 +273,7 @@ abstract class Element extends Base {
 	 * If an element requires inline stylesheet definitions, this method is used send them to the browser before the form is rendered.
 	 */
 	public function render() {
-		echo wp_kses( $this->html(), buddyforms_form_allowed_tags() );
+		echo $this->html();
 	}
 
 	/**

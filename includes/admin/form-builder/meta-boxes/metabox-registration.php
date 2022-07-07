@@ -26,20 +26,9 @@ class BuddyFormsMetaBoxRegistration {
 	 * Add the html to the form setting metabox
 	 */
 	public function buddyforms_form_setup_nav_li_registration() {
-		$allowed         = array(
-			'li' => array(
-				'id'    => array(),
-				'class' => array(),
-			),
-			'a'  => array(
-				'href'        => array(),
-				'class'       => array(),
-				'data-toggle' => array(),
-			),
-		);
 		$registration_li = $this->tab_panel_nav_li( 'registration', __( 'User Register', 'buddyforms' ) );
 		$user_update_li  = $this->tab_panel_nav_li( 'user_update', __( 'User Update', 'buddyforms' ) );
-		echo wp_kses( $registration_li . $user_update_li, $allowed );
+		echo $registration_li . $user_update_li;
 	}
 
 	/**
@@ -61,22 +50,17 @@ class BuddyFormsMetaBoxRegistration {
 	 * Add the container of the options
 	 */
 	public function buddyforms_form_setup_tab_pane_registration() {
-		$allowed                     = array(
-			'div' => array(
-				'id'    => array(),
-				'class' => array(),
-			),
-		);
+
 		$registration_tab_array_html = $this->tab_panel_html_array( 'registration', 'buddyforms_accordion_registration' );
 		$user_update_tab_array_html  = $this->tab_panel_html_array( 'user_update', 'buddyforms_accordion_user_update' );
 
-		echo wp_kses( $registration_tab_array_html['start'], $allowed );
+		echo $registration_tab_array_html['start'];
 		$this->buddyforms_registration_screen();
-		echo wp_kses( $registration_tab_array_html['end'], $allowed );
+		echo $registration_tab_array_html['end'];
 
-		echo wp_kses( $user_update_tab_array_html['start'], $allowed );
+		echo $user_update_tab_array_html['start'];
 		$this->buddyforms_user_update_screen();
-		echo wp_kses( $user_update_tab_array_html['end'], $allowed );
+		echo $user_update_tab_array_html['end'];
 	}
 
 	public function buddyforms_registration_screen() {

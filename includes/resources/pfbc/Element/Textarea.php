@@ -68,7 +68,7 @@ class Element_Textarea extends Element {
 		}
 
 		if ( $echo ) {
-			echo wp_kses( $output, buddyforms_form_allowed_tags() );
+			echo $output;
 
 			return '';
 		} else {

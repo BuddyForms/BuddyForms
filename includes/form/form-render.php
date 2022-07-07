@@ -101,7 +101,7 @@ function buddyforms_form_html( $args ) {
 		$output = 'var buddyformsGlobalFrontend = ' . wp_json_encode( $buddyforms_global_js_data );
 		ob_start();
 		echo "<script type='text/javascript'>\n";
-		echo wp_kses( $output, buddyforms_form_allowed_tags() );
+		echo $output;
 		echo "\n";
 		echo "jQuery.extend(buddyformsGlobal,buddyformsGlobalFrontend);\n";
 		echo "/* ]]> */\n";

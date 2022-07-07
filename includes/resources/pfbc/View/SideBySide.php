@@ -41,7 +41,7 @@ class View_SideBySide extends FormView {
 		}
 
 		if ( $this->sharedCount == 0 ) {
-			echo '<div class="bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', wp_kses( $this->renderLabel( $element ), buddyforms_form_allowed_tags() );
+			echo '<div class="bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', $this->renderLabel( $element );
 		}
 
 		if ( $element->getShared() ) {
@@ -50,7 +50,7 @@ class View_SideBySide extends FormView {
 		}
 
 		echo '<div class="' . esc_attr( $colSize ) . '"> ';
-		echo wp_kses( $element->render() . $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
+		echo $element->render() . $this->renderDescriptions( $element );
 		echo ' </div> ';
 
 		if ( $this->sharedCount == 0 || $this->sharedCount == 8 ) {

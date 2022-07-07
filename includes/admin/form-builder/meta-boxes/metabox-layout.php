@@ -724,11 +724,11 @@ function buddyforms_layout_screen( $option_name = 'buddyforms_options' ) {
 									?>
 									<tr class="<?php echo esc_attr( $classes ); ?>">
 										<th scope="row">
-											<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
+											<label for="form_title"><?php echo $field->getLabel(); ?></label>
 										</th>
 										<td>
-											<?php echo wp_kses_post( $field->render() ); ?>
-											<p class="description"><?php echo wp_kses( $field->getShortDesc(), $allowed ); ?></p>
+											<?php echo $field->render(); ?>
+											<p class="description"><?php echo $field->getShortDesc(); ?></p>
 										</td>
 									</tr>
 									<?php

@@ -19,15 +19,7 @@ function buddyforms_post_types_taxonomies() {
 		$tmp .= '<option value="' . $name . '">' . $label . '</option>';
 	}
 
-	$allowed = array(
-		'option' => array(
-			'value'    => array(),
-			'selected' => array(),
-			'disabled' => array(),
-			'class'    => array(),
-		),
-	);
-	echo wp_kses( $tmp, $allowed );
+	echo $tmp;
 	die();
 
 }
@@ -50,17 +42,9 @@ function buddyforms_close_submission_default_page_notification() {
 add_action( 'wp_ajax_buddyforms_update_taxonomy_default', 'buddyforms_update_taxonomy_default' );
 function buddyforms_update_taxonomy_default() {
 
-	$allowed = array(
-		'option' => array(
-			'value'    => array(),
-			'selected' => array(),
-			'disabled' => array(),
-			'class'    => array(),
-		),
-	);
 	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none' ) {
 		$tmp = '<option value="none">' . __( 'First you need to select a Taxonomy to select the Taxonomy defaults', 'buddyforms' ) . '</option>';
-		echo wp_kses( $tmp, $allowed );
+		echo $tmp;
 		die();
 	}
 
@@ -79,7 +63,7 @@ function buddyforms_update_taxonomy_default() {
 	foreach ( $terms as $key => $term_name ) {
 		$tmp .= '<option value="' . $key . '">' . $term_name . '</option>';
 	}
-	echo wp_kses( $tmp, $allowed );
+	echo $tmp;
 
 	die();
 

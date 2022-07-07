@@ -10,21 +10,8 @@
  * @param bool   $link
  */
 function buddyforms_go_pro( $h2 = '', $h4 = '', $pros = array(), $link = true ) {
-	$allowed = array(
-		'div' => array(
-			'id'    => array(),
-			'class' => array(),
-		),
-		'a'   => array(
-			'href'  => array(),
-			'class' => array(),
-		),
-		'h2'  => array(),
-		'h4'  => array(),
-		'ul'  => array(),
-		'li'  => array(),
-	);
-	echo wp_kses( buddyforms_get_go_pro( $h2, $h4, $pros, $link ), $allowed );
+
+	echo buddyforms_get_go_pro( $h2, $h4, $pros, $link );
 }
 
 /**
@@ -59,11 +46,7 @@ function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = array(), $link = tru
 }
 
 function buddyforms_version_type() {
-	$allowed = array(
-		'p' => array(),
-		'b' => array(),
-	);
-	echo wp_kses( buddyforms_get_version_type(), $allowed );
+	echo buddyforms_get_version_type();
 }
 
 /**

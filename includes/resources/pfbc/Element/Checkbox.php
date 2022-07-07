@@ -41,14 +41,14 @@ class Element_Checkbox extends OptionElement {
 
 			echo '<label class="' , esc_attr( $labelClass ) , ' ' , esc_attr( $value ) , '">';
 
-			echo '<input', $id, wp_kses( $this->getAttributes(
+			echo '<input', $id, $this->getAttributes(
 				array(
 					'id',
 					'class',
 					'value',
 					'checked',
 				)
-			), buddyforms_form_allowed_tags() ), ' value="', esc_attr( $this->filter( $value ) ), '"';
+			), ' value="', esc_attr( $this->filter( $value ) ), '"';
 			if ( in_array( $value, $this->_attributes['value'] ) ) {
 				echo ' checked="checked"';
 			}

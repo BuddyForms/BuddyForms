@@ -1236,21 +1236,9 @@ function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default
 		'sort_column'       => 'post_title',
 		'echo'              => 0,
 	);
-	$allowed = array(
-		'select' => array(
-			'id'    => array(),
-			'class'    => array(),
-			'name'  => array(),
-		),
-		'option' => array(
-			'value'    => array(),
-			'selected' => array(),
-			'class'    => array(),
-		),
-	);
 	$output = wp_dropdown_pages( $args );
 
-	return wp_kses( $output, $allowed );
+	return $output;
 }
 
 

@@ -40,6 +40,6 @@ class Element_Content extends Element {
 
 	public function render() {
 		wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
-		echo wp_kses_post( $this->_attributes['value'] );
+		echo $this->_attributes['value'];
 	}
 }

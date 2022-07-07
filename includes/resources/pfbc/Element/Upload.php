@@ -373,7 +373,7 @@ class Element_Upload extends Element_Textbox {
 				$box .= sprintf( '<span class="help-inline">%s</span>', $description );
 			}
 		}
-		echo wp_kses( $box, buddyforms_form_allowed_tags() );
+		echo $box;
 		// $box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 	}
 }

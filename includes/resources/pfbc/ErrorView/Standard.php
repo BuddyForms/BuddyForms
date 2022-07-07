@@ -40,7 +40,7 @@ class ErrorView_Standard extends ErrorView {
 				// Do the include
 				include $template_path;
 
-				echo wp_kses( ob_get_clean(), buddyforms_form_allowed_tags() );
+				echo ob_get_clean();
 			}
 		}
 	}

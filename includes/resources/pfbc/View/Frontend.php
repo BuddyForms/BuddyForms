@@ -37,7 +37,7 @@ class View_Frontend extends FormView {
 			$element = apply_filters( 'buddyforms_pre_render_element', $element, $this );
 			if ( $element instanceof Element_Button ) {
 				if ( $e == 0 || ! $elements[ ( $e - 1 ) ] instanceof Element_Button ) {
-					echo wp_kses( '<div class="form-actions ' . $layout_style . '">', buddyforms_form_allowed_tags());
+					echo '<div class="form-actions ' . $layout_style . '">';
 				} else {
 					echo ' ';
 				}
@@ -95,7 +95,7 @@ class View_Frontend extends FormView {
 		}
 
 		$style_first_row = ! empty( $is_first_row ) ? ' bf-start-row' : '';
-		echo wp_kses( '<div class="' . $layout_style . $style_first_row . '">', buddyforms_form_allowed_tags() );
+		echo '<div class="' . $layout_style . $style_first_row . '">';
 
 		if ( $element instanceof Element_HTML || $element instanceof Element_Content ) {
 			$element->render();
@@ -139,13 +139,13 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo '<div class="bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', wp_kses( $this->renderLabel( $element ), buddyforms_form_allowed_tags() ), '<div class="bf-input">';
+		echo '<div class="bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
 		if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-			echo wp_kses( $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
-			echo wp_kses( $element->render(), buddyforms_form_allowed_tags() );
+			echo $this->renderDescriptions( $element );
+			echo $element->render();
 		} else {
-			echo wp_kses( $element->render(), buddyforms_form_allowed_tags() );
-			echo wp_kses( $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
+			echo $element->render();
+			echo $this->renderDescriptions( $element );
 		}
 		echo '</div></div></div>';
 	}

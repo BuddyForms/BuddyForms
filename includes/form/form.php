@@ -145,10 +145,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
+					echo $echo_content;
 					return;
 				} else {
-					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() ) ;
+					return $form_output . $echo_content;
 				}
 			}
 			// Check if the post to edit match with the form setting
@@ -156,10 +156,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
+					echo $echo_content;
 					return;
 				} else {
-					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+					return $form_output . $echo_content;
 				}
 			}
 
@@ -186,10 +186,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
+					echo $echo_content;
 					return;
 				} else {
-					return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+					return $form_output . $echo_content;
 				}
 			}
 		}
@@ -230,9 +230,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 		if ( $echo ) {
-			echo wp_kses( $echo_content, buddyforms_form_allowed_tags() );
+			echo $echo_content;
 		} else {
-			return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+			return $form_output . $echo_content;
 		}
 	}
 
@@ -278,10 +278,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
 
-		echo wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+		echo $form_output . $echo_content;
 
 	} else {
-		return wp_kses( $form_output . $echo_content, buddyforms_form_allowed_tags() );
+		return $form_output . $echo_content;
 	}
 
 	if ( ! empty( $transient_name ) ) {

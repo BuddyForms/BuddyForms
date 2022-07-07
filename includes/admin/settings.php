@@ -47,16 +47,10 @@ function buddyforms_admin_tabs( $current = 'homepage' ) {
 	$tabs['import'] = __( 'Import Forms', 'buddyforms' );
 	$tabs['gdpr']   = 'GDPR';
 	echo '<h2 class="nav-tab-wrapper" style="padding-bottom: 0;">';
-	$allowed = array(
-		'a'  => array(
-			'href'  => array(),
-			'class' => array(),
-		),
-		'h2' => array(),
-	);
+
 	foreach ( $tabs as $tab => $name ) {
 		$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-		echo wp_kses( "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=buddyforms_settings&tab=$tab'>$name</a>", $allowed );
+		echo "<a class='nav-tab$class' href='edit.php?post_type=buddyforms&page=buddyforms_settings&tab=$tab'>$name</a>";
 	}
 	echo '</h2>';
 }
@@ -154,19 +148,7 @@ function buddyforms_settings_page_tabs_content() {
 												<?php
 												$pages_dropdown = buddyforms_get_all_pages_dropdown( 'buddyforms_registration_page', $buddyforms_registration_page );
 												if ( ! empty( $pages_dropdown ) ) {
-													$allowed = array(
-														'select' => array(
-															'id'    => array(),
-															'class'    => array(),
-															'name'  => array(),
-														),
-														'option' => array(
-															'value'    => array(),
-															'selected' => array(),
-															'class'    => array(),
-														),
-													);
-													echo wp_kses( $pages_dropdown, $allowed );
+													echo $pages_dropdown;
 												}
 												?>
 											</td>
@@ -181,16 +163,10 @@ function buddyforms_settings_page_tabs_content() {
 													echo '<select name="buddyforms_registration_form" id="buddyforms_registration_form">';
 													echo '<option value="none">' . esc_html__( 'WordPress Default', 'buddyforms' ) . '</option>';
 													echo '<option ' . selected( $buddyforms_registration_form, 'page' ) . ' value="page">' . esc_html__( 'No Form', 'buddyforms' ) . '</option>';
-													$allowed = array(
-														'option' => array(
-															'value'    => array(),
-															'selected' => array(),
-															'class'    => array(),
-														),
-													);
+
 													foreach ( $buddyforms as $form_slug => $form ) {
 														if ( $form['form_type'] == 'registration' ) {
-															echo wp_kses( '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>', $allowed );
+															echo '<option ' . selected( $buddyforms_registration_form, $form['slug'] ) . 'value="' . $form['slug'] . '">' . $form['name'] . '</option>';
 														}
 													}
 													echo '</select>';
@@ -299,7 +275,7 @@ function buddyforms_settings_page_tabs_content() {
 														),
 													);
 													foreach ( $pages as $page_id => $page_name ) {
-														echo wp_kses( '<option ' . selected( $buddyforms_submissions_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>', $allowed );
+														echo '<option ' . selected( $buddyforms_submissions_page, $page_id ) . 'value="' . $page_id . '">' . $page_name . '</option>';
 													}
 													echo '</select>';
 												}

@@ -472,11 +472,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 			} elseif ( $buddyform['form_type'] == 'registration' ) {
 				$post_type_html = '<p>' . __( 'Registration Form', 'buddyforms' ) . '</p>';
 			}
-			$allowed = array(
-				'p'  => array(),
-				'br' => array(),
-			);
-			echo wp_kses( $post_type_html, $allowed );
+			echo $post_type_html;
 			break;
 		case 'attached_page':
 			if ( isset( $buddyform['attached_page'] ) && empty( $buddyform['attached_page'] ) ) {
@@ -486,10 +482,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 			} else {
 				$attached_page = 'Off';
 			}
-			$allowed = array(
-				'p' => array(),
-			);
-			echo wp_kses( $attached_page, $allowed );
+			echo $attached_page;
 
 			if ( $attached_page != 'Off' ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
@@ -565,30 +558,12 @@ function buddyforms_hide_publishing_actions() {
 						$tmp .= ' <a href="post-new.php?post_type=buddyforms" class="page-title-action">' . __( 'Add New', 'buddyforms' ) . '</a> <a class="page-title-action" href="edit.php?post_type=buddyforms&page=buddyforms_settings&tab=import" id="btn-open">' . __( 'Import', 'buddyforms' ) . '</a> <a class="page-title-action" href="https://docs.buddyforms.com/" target="_blank" id="btn-open">' . __( 'Documentation', 'buddyforms' ) . '</a> <a href="edit.php?post_type=buddyforms&page=buddyforms-contact" class="page-title-action" id="btn-open">' . __( 'Contact Us', 'buddyforms' ) . '</a>';
 					}
 					echo "var h1 = jQuery('body').find('h1:first');";
-					$allowed = array(
-						'div'   => array(
-							'id'    => array(),
-							'class' => array(),
-						),
-						'a'     => array(
-							'href'   => array(),
-							'class'  => array(),
-							'id'     => array(),
-							'target' => array(),
-						),
-						'p'     => array(),
-						'h1'    => array(),
-						'small' => array(
-							'id'    => array(),
-							'class' => array(),
-						),
-					);
-					echo "h1.html('" . wp_kses( $tmp, $allowed ) . "');";
+
+					echo "h1.html('" . $tmp . "');";
 
 					$tmp = '<small id="buddyforms_version">' . buddyforms_get_version_type() . ' ' . __( 'Version', 'buddyforms' ) . ' ' . BUDDYFORMS_VERSION . '</small>';
-					echo "h1.append('" . wp_kses( $tmp, $allowed ) . "');";
+					echo "h1.append('" . $tmp . "');";
 
-					// echo "jQuery('" . $tmp . "').insertAfter(h1);";
 					?>
 					jQuery('h1').show();
 				});

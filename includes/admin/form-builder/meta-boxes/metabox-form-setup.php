@@ -593,17 +593,13 @@ function buddyforms_metabox_form_setup() {
 
 								// If the form element is not html create it as table row
 								if ( $type != 'html' ) {
-									$allowed = array(
-										'p' => array(),
-										'b' => array(),
-									);
 									?>
 									<tr class="<?php echo esc_attr( $classes ); ?>">
 										<th scope="row">
-											<label for="form_title"><?php echo wp_kses( $field->getLabel(), $allowed ); ?></label>
+											<label for="form_title"><?php echo $field->getLabel(); ?></label>
 										</th>
 										<td>
-											<?php echo wp_kses_post( $field->render() ); ?>
+											<?php echo $field->render(); ?>
 											<p class="description"><?php echo esc_html( $field->getShortDesc() ); ?></p>
 										</td>
 									</tr>

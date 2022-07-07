@@ -30,7 +30,7 @@ class View_Vertical extends FormView {
 
 		if ( $this->sharedCount == 0 ) {
 			$rowClass = $element->getShared() ? 'row' : '';
-			echo '<div class="' . esc_attr( $rowClass ) . ' bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', wp_kses( $this->renderLabel( $element ), buddyforms_form_allowed_tags() );
+			echo '<div class="' . esc_attr( $rowClass ) . ' bf_field_group elem-' . esc_attr( $element->getAttribute( 'id' ) ) . '"> ', $this->renderLabel( $element );
 		}
 
 		if ( $element->getShared() ) {
@@ -40,7 +40,7 @@ class View_Vertical extends FormView {
 		}
 
 		$element->setAttribute( 'placeholder', $element->getLabel() );
-		echo wp_kses( $element->render() . $this->renderDescriptions( $element ), buddyforms_form_allowed_tags() );
+		echo $element->render() . $this->renderDescriptions( $element );
 		if ( $element->getShared() ) {
 			echo ' </div> ';
 		}

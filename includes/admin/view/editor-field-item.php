@@ -95,7 +95,7 @@ $layout = isset( $buddyform['layout']['cords'][ $field_id ] ) ? $buddyform['layo
 								?>
 								<li class="<?php echo esc_attr( $class_active ); ?>">
 									<a href="#<?php echo esc_attr( $key ) . '-' . esc_attr( $field_type ) . '-' . esc_attr( $field_id ); ?>" data-toggle="tab">
-										<?php echo wp_kses_post( str_replace( '-', ' ', ucfirst( $key ) ) ); ?>
+										<?php echo str_replace( '-', ' ', ucfirst( $key ) ); ?>
 									</a>
 								</li>
 								<?php

@@ -19,7 +19,7 @@ class Element_File extends Element_Textbox {
 		$box = ob_get_contents();
 		ob_end_clean();
 		if ( $this->bootstrapVersion == 3 ) {
-			echo wp_kses_post( $box );
+			echo $box;
 		} else {
 			echo preg_replace(
 				'/(.*)(<input .*\/>)(.*)/i',

@@ -44,11 +44,11 @@ class Element_Select extends OptionElement {
 				$selected = selected( $current_selected, true, false );
 			}
 			$option = sprintf( '<option value="%s" %s>%s</option>', $this->filter( $value ), $selected, $text );
-			echo wp_kses( $option, buddyforms_form_allowed_tags() );
+			echo $option;
 		}
 		echo '</select>';
 		$content = ob_get_clean();
 
-		echo wp_kses( $content, buddyforms_form_allowed_tags() );
+		echo $content;
 	}
 }

@@ -15,7 +15,7 @@ function buddyforms_ajax_edit_post() {
 	ob_start();
 	buddyforms_create_edit_form( $args );
 	$content = ob_get_clean();
-	echo wp_kses_post( $content );
+	echo $content;
 	die();
 }
 
