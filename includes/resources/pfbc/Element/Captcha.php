@@ -38,7 +38,7 @@ class Element_Captcha extends Element {
 				$captcha_attributes_string = '?' . apply_filters( 'buddyforms_captcha_js_source_parameter', $captcha_attributes_string, $this );
 			}
 			echo '<style>#recaptcha_table {table-layout: auto;}</style>';
-			echo sprintf( '<script src="//www.google.com/recaptcha/api.js%s"></script>', urlencode( $captcha_attributes_string ) );
+			echo sprintf( '<script src="//www.google.com/recaptcha/api.js%s"></script>', $captcha_attributes_string );
 			echo '<div data-type="' . esc_attr( $this->getAttribute( 'data_type' ) ) . '" data-size="' . esc_attr( $this->getAttribute( 'data_size' ) ) . '" data-theme="' . esc_attr( $this->getAttribute( 'data_theme' ) ) . '" class="g-recaptcha" data-sitekey="' . esc_attr( $this->getAttribute( 'site_key' ) ) . '"></div>';
 		} else {
 			echo sprintf( '<script src="//www.google.com/recaptcha/api.js?render=%s"></script>', esc_attr( $this->getAttribute( 'site_key' ) ) );

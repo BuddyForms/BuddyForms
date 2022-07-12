@@ -37,7 +37,7 @@ class Element_Checkbox extends OptionElement {
 			$value = $this->getOptionValue( $value );
 
 			// get optional ID
-			$id = isset( $this->_attributes['id'] ) ? ' id="' . esc_attr( $this->_attributes['id'] ) . '-' . esc_attr( $count ) . '"' : '';
+			$id = isset( $this->_attributes['id'] ) ? ' id="' . $this->_attributes['id'] . '-' . $count . '"' : '';
 
 			echo '<label class="' , esc_attr( $labelClass ) , ' ' , esc_attr( $value ) , '">';
 
@@ -48,7 +48,7 @@ class Element_Checkbox extends OptionElement {
 					'value',
 					'checked',
 				)
-			), ' value="', esc_attr( $this->filter( $value ) ), '"';
+			), ' value="', $this->filter( $value ), '"';
 			if ( in_array( $value, $this->_attributes['value'] ) ) {
 				echo ' checked="checked"';
 			}

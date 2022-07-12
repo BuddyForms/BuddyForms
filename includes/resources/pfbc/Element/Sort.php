@@ -37,7 +37,7 @@ class Element_Sort extends OptionElement {
 	}
 
 	public function renderCSS() {
-		echo '#', esc_attr( $this->_attributes['id'] ), ' { list-style-type: none; margin: 0; padding: 0; cursor: pointer; max-width: 400px; }';
-		echo '#', esc_attr( $this->_attributes['id'] ), ' li { margin: 0.25em 0; padding: 0.5em; font-size: 1em; }';
+		echo '#', $this->_attributes['id'], ' { list-style-type: none; margin: 0; padding: 0; cursor: pointer; max-width: 400px; }';
+		echo '#', $this->_attributes['id'], ' li { margin: 0.25em 0; padding: 0.5em; font-size: 1em; }';
 	}
 }

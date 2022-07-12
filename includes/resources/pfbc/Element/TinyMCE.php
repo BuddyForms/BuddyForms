@@ -12,7 +12,7 @@ class Element_TinyMCE extends Element_Textarea {
 	public function render() {
 		echo '<textarea', $this->getAttributes( array( 'value', 'required' ) ), '>';
 		if ( ! empty( $this->_attributes['value'] ) ) {
-			echo esc_html( $this->_attributes['value'] );
+			echo $this->_attributes['value'];
 		}
 		echo '</textarea>';
 	}

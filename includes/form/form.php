@@ -97,12 +97,10 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	ob_start();
 	require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php';
 	$global_css = ob_get_clean();
-	$form_css   = strip_tags( $global_css );
 	if ( ! empty( $global_css ) ) {
+		$global_css = buddyforms_minify_css( $global_css );
 		if ( $echo ) {
-			wp_register_style( 'form-css-handle', false );
-			wp_enqueue_style( 'form-css-handle' );
-			wp_add_inline_style( 'form-css-handle', $form_css );
+			echo $global_css;
 		} else {
 			$form_output .= $global_css;
 		}

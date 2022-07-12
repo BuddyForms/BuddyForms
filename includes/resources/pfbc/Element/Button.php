@@ -64,6 +64,6 @@ class Element_Button extends Element {
 				$value = '<span class="' . $this->icon . '"></span> ' . $value;
 			}
 		}
-		echo '<button', esc_attr( $this->getAttributes( array( 'value' ) ) ), '>', esc_html( $value ), '</button> ';
+		echo '<button', $this->getAttributes( array( 'value' ) ), '>', esc_html( $value ), '</button> ';
 	}
 }

@@ -216,11 +216,9 @@ function buddyforms_form_html( $args ) {
 		ob_start();
 		require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/FormStyle.php';
 		$layout = ob_get_clean();
-		$form_css = strip_tags( $layout );
 		if ( ! empty( $layout ) ) {
-			wp_register_style( 'form-layout-css', false );
-			wp_enqueue_style( 'form-layout-css' );
-			wp_add_inline_style( 'form-layout-css', $form_css );
+			$layout    = buddyforms_minify_css( $layout );
+			$form_html .= $layout;
 		}
 	}
 

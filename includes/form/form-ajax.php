@@ -285,7 +285,7 @@ function buddyforms_ajax_delete_post() {
 		}
 	}
 
-	echo esc_html( $post_id );
+	echo $post_id;
 	die();
 }
 

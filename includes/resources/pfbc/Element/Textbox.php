@@ -56,7 +56,7 @@ class Element_Textbox extends Element {
 			echo '<span class="input-group-btn">';
 		}
 
-		echo esc_html( $this->$type );
+		echo $this->$type;
 
 		echo '</span>';
 	}
