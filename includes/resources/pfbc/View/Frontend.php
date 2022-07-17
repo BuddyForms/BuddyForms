@@ -196,7 +196,7 @@ class View_Frontend extends FormView {
 			}
 		}
 
-		echo sprintf( ' <label for="%s">%s</label>', esc_attr( $element->getAttribute( 'id' ) ), esc_html( $label ) );
+		echo sprintf( ' <label for="%s">%s</label>', $element->getAttribute( 'id' ), $label );
 	}
 }
 
