@@ -83,12 +83,12 @@ abstract class FormView extends Base {
 	protected function renderDescriptions( $element ) {
 		$shortDesc = $element->getShortDesc();
 		if ( ! empty( $shortDesc ) ) {
-			echo '<span class="help-inline">', esc_html( $shortDesc ), '</span>';
+			echo '<span class="help-inline">', $shortDesc, '</span>';
 		};
 
 		$longDesc = $element->getLongDesc();
 		if ( ! empty( $longDesc ) ) {
-			echo '<span class="help-block">', esc_html( $longDesc ), '</span>';
+			echo '<span class="help-block">', $longDesc, '</span>';
 		};
 	}
 

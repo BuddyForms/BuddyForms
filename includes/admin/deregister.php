@@ -9,12 +9,12 @@
 // This functions create conflicts with WordPress.com and I think it is not needed anymore. It was importand before we switch from Bootstrap to jQuery.
 // we should keep it and check if we get any support requests with plugin conflicts and than only dectivate the scripts loaded by this plugins.
 
-// add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 );
+//add_action( 'admin_enqueue_scripts', 'buddyforms_remove_admin_scripts', 9999, 1 );
 function buddyforms_remove_admin_scripts( $hook_suffix ) {
 	global $wp_scripts, $wp_styles, $post;
 
 	// Add a check for WordPress.com to make sure its working on .com
-	if ( defined( 'VIP_GO_ENV' ) ) {
+	if( defined('VIP_GO_ENV')){
 		return;
 	}
 
@@ -34,7 +34,8 @@ function buddyforms_remove_admin_scripts( $hook_suffix ) {
 		remove_all_actions( 'admin_footer' );
 
 		// Attach the default filters back so we have all dependencies loaded
-		require ABSPATH . WPINC . '/default-filters.php';
+		require( ABSPATH . WPINC . '/default-filters.php' );
+
 
 		// Remove css and js added by other plugins. We want to keep the conflicts out of our world ;)
 		foreach ( $wp_scripts->registered as $handle ) :

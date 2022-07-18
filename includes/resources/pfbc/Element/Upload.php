@@ -8,19 +8,19 @@ class Element_Upload extends Element_Textbox {
 	/**
 	 * @var string
 	 */
-	protected $message = 'Error: %element% is a required field.';
+	protected $message = "Error: %element% is a required field.";
 
 	/**
 	 * @var array
 	 */
 	protected $_attributes = array(
-		'type'           => 'file',
-		'file_limit'     => '',
-		'accepted_files' => '',
-		'multiple_files' => '',
-		'delete_files'   => '',
-		'description'    => '',
-		'mandatory'      => '',
+		"type"           => "file",
+		"file_limit"     => "",
+		"accepted_files" => "",
+		"multiple_files" => "",
+		"delete_files"   => "",
+		"description"    => "",
+		"mandatory"      => ""
 	);
 
 	public function isValid( $value ) {
@@ -30,7 +30,7 @@ class Element_Upload extends Element_Textbox {
 			$result = $validation->isValid( $value, $this );
 
 			if ( ! $result ) {
-				$this->_errors[] = str_replace( '%element%', $this->getLabel(), $validation->getMessage() );
+				$this->_errors[] = str_replace( "%element%", $this->getLabel(), $validation->getMessage() );
 			}
 
 			return apply_filters( 'buddyforms_element_content_validation', $result, $this );
@@ -48,13 +48,13 @@ class Element_Upload extends Element_Textbox {
 		if ( $customfield['type'] == 'featured_image' ) {
 			if ( ! empty( $_POST[ $customfield['slug'] ] ) ) {
 				$attachment_id = $_POST[ $customfield['slug'] ];
-				// Update attachment parent
+				//Update attachment parent
 				$attachment_args = array(
 					'ID'          => $attachment_id,
 					'post_parent' => $post_id,
 				);
 				wp_update_post( $attachment_args );
-				// Update post thumb data
+				//Update post thumb data
 				set_post_thumbnail( $post_id, $attachment_id );
 			}
 		}
@@ -78,14 +78,12 @@ class Element_Upload extends Element_Textbox {
 	 *
 	 * @return array
 	 * @since 2.4.0
+	 *
 	 */
 	public static function localize_string( $default ) {
-		return array_merge(
-			$default,
-			array(
-				'upload' => self::strings(),
-			)
-		);
+		return array_merge( $default, array(
+			'upload' => self::strings()
+		) );
 	}
 
 	public static function strings() {
@@ -111,13 +109,13 @@ class Element_Upload extends Element_Textbox {
 		$key_value              = '';
 		$attachment_ids         = array();
 		if ( $field_type === 'upload' || $field_type === 'featured_image' ) {
-			$key_value = isset( $_POST[ $field_slug ] ) ? buddyforms_sanitize_slug( wp_unslash( $_POST[ $field_slug ] ) ) : '';
+			$key_value = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : "";
 			if ( $field_type === 'upload' ) {
 				if ( ! empty( $key_value ) ) {
 					if ( empty( $attachment_ids ) ) {
-						$attachment_ids = explode( ',', $key_value );
+						$attachment_ids = explode( ",", $key_value );
 					} else {
-						$attachment_ids = array_merge( $attachment_ids, explode( ',', $key_value ) );
+						$attachment_ids = array_merge( $attachment_ids, explode( ",", $key_value ) );
 					}
 				}
 			}
@@ -128,7 +126,7 @@ class Element_Upload extends Element_Textbox {
 				$absolute_path = wp_upload_dir()['path'];
 				foreach ( $attachment_ids as $id_value ) {
 					$file_already_uploaded = isset( $media_attached_to_post[ $id_value ] );
-					// If the file was already uploaded don´t execute the attachment logic
+					//If the file was already uploaded don´t execute the attachment logic
 					if ( ! $file_already_uploaded && ! empty( $id_value ) ) {
 						$metadata    = wp_prepare_attachment_for_js( $id_value );
 						$file_name   = $metadata['filename'];
@@ -139,7 +137,7 @@ class Element_Upload extends Element_Textbox {
 							'post_content'   => '',
 							'post_status'    => 'inherit',
 							'ID'             => $id_value,
-							'post_parent'    => $post_id,
+							'post_parent'    => $post_id
 						);
 
 						// Create the attachment
@@ -148,7 +146,7 @@ class Element_Upload extends Element_Textbox {
 
 						// Include image.php if not was loaded
 						if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
-							require_once ABSPATH . 'wp-admin/includes/image.php';
+							require_once( ABSPATH . 'wp-admin/includes/image.php' );
 						}
 
 						$attach_data = wp_generate_attachment_metadata( $attach_id, $absolute_path . '/' . $file_name );
@@ -156,6 +154,7 @@ class Element_Upload extends Element_Textbox {
 						// Assign metadata to attachment
 						wp_update_attachment_metadata( $attach_id, $attach_data );
 					}
+
 				}
 			}
 		} else {
@@ -194,7 +193,7 @@ class Element_Upload extends Element_Textbox {
 						'post_mime_type' => $wp_filetype['type'],
 						'post_title'     => sanitize_file_name( $filename ),
 						'post_content'   => '',
-						'post_status'    => 'inherit',
+						'post_status'    => 'inherit'
 					);
 
 					// Create the attachment
@@ -202,7 +201,7 @@ class Element_Upload extends Element_Textbox {
 
 					// Include image.php if not was loaded
 					if ( ! buddyforms_check_loaded_file( ABSPATH . 'wp-admin/includes/image.php' ) ) {
-						require_once ABSPATH . 'wp-admin/includes/image.php';
+						require_once( ABSPATH . 'wp-admin/includes/image.php' );
 					}
 
 					// Define attachment metadata
@@ -216,7 +215,7 @@ class Element_Upload extends Element_Textbox {
 				wp_update_post(
 					array(
 						'ID'          => $attach_id,
-						'post_parent' => $post_id,
+						'post_parent' => $post_id
 					)
 				);
 
@@ -236,36 +235,36 @@ class Element_Upload extends Element_Textbox {
 
 	public function render() {
 		self::loadAssets();
-		// DropZone
+		//DropZone
 		wp_enqueue_script( 'buddyforms_dropzone_initializer', BUDDYFORMS_ASSETS . 'resources/dropzone/initializer.js', array( 'jquery' ), BUDDYFORMS_VERSION, true );
 
 		global $buddyforms, $post_id;
 
 		$id     = $this->getAttribute( 'id' );
-		$action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : '';
-		$entry  = isset( $_GET['entry'] ) ? sanitize_key( $_GET['entry'] ) : '';
-		$page   = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : '';
+		$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
+		$entry  = isset( $_GET['entry'] ) ? $_GET['entry'] : "";
+		$page   = isset( $_GET['page'] ) ? $_GET['page'] : "";
 
-		// If Entry is empty we check if we are in a edit entry page
+		//If Entry is empty we check if we are in a edit entry page
 		if ( empty( $entry ) ) {
-			$entry = isset( $_GET['post'] ) ? sanitize_key( $_GET['post'] ) : '';
+			$entry = isset( $_GET['post'] ) ? $_GET['post'] : "";
 		}
 
-		$column_val     = '';
-		$result         = '';
-		$result_value   = '';
+		$column_val     = "";
+		$result         = "";
+		$result_value   = "";
 		$entries        = array();
-		$entries_result = '';
+		$entries_result = "";
 		if ( $post_id > 0 ) {
 			$column_val = get_post_meta( $post_id, $id, true );
 
-			$attachmet_id = explode( ',', $column_val );
+			$attachmet_id = explode( ",", $column_val );
 			foreach ( $attachmet_id as $id_value ) {
 
 				$metadata = wp_prepare_attachment_for_js( $id_value );
 				if ( $metadata != null ) {
 					$url                     = wp_get_attachment_thumb_url( $id_value );
-					$result                 .= $id_value . ',';
+					$result                  .= $id_value . ",";
 					$mockFile                = new stdClass();
 					$mockFile->name          = isset( $metadata['filename'] ) ? $metadata['filename'] : '';
 					$mockFile->url           = esc_url( $url );
@@ -273,6 +272,7 @@ class Element_Upload extends Element_Textbox {
 					$mockFile->size          = isset( $metadata['filesizeInBytes'] ) ? $metadata['filesizeInBytes'] : '';
 					$entries[ $id_value ]    = $mockFile;
 				}
+
 			}
 		}
 		if ( count( $entries ) > 0 ) {
@@ -298,23 +298,21 @@ class Element_Upload extends Element_Textbox {
 		$allowed_types['mp3']              = 'audio/mp3';
 		$form_slug                         = $this->getAttribute( 'form_slug' );
 		$upload_from_url                   = $this->getAttribute( 'upload_from_url' );
-		$custom_class                      = $this->getAttribute( 'custom_class' );
-		if( ! empty( $accepted_files ) && is_array( $accepted_files ) ){
-			foreach ( $accepted_files as $key => $value ) {
-				$mime_type .= $allowed_types[ $value ] . ',';
-			}
+		$custom_class                      = $this->getAttribute('custom_class');
+		foreach ( $accepted_files as $key => $value ) {
+			$mime_type .= $allowed_types[ $value ] . ',';
 		}
 		if ( ! empty( $mime_type ) ) {
 			$mime_type_result = rtrim( trim( $mime_type ), ',' );
 		}
-		if ( strpos( $mime_type_result, 'application/rar' ) || strpos( $mime_type_result, 'application/x-7z-compressed' )
-			|| strpos( $mime_type_result, 'application/x-gzip' ) || strpos( $mime_type_result, 'application/zip' ) ) {
+		if ( strpos($mime_type_result,'application/rar') || strpos($mime_type_result,'application/x-7z-compressed')
+		    || strpos($mime_type_result,'application/x-gzip') || strpos($mime_type_result,'application/zip') ){
 
-			$mime_type_result .= ',.zip, .rar';
+			$mime_type_result .=',.zip, .rar';
 		}
-		if ( strpos( $mime_type_result, 'audio/mp3' ) ) {
+		if ( strpos($mime_type_result,'audio/mp3') ){
 
-			$mime_type_result .= ',.mp3';
+			$mime_type_result .=',.mp3';
 		}
 
 		if ( ! empty( $required ) ) {
@@ -338,9 +336,9 @@ class Element_Upload extends Element_Textbox {
 		}
 		if ( $upload_from_url === 'upload_from_url' ) {
 
-			$url          = empty( $column_val ) == false ? wp_get_attachment_url( $column_val ) : '';
-			$box          = '';
-			$attachmet_id = empty( $column_val ) == false ? $column_val : '';
+			$url          = empty( $column_val ) == false ? wp_get_attachment_url( $column_val ) : "";
+			$box          = "";
+			$attachmet_id = empty( $column_val ) == false ? $column_val : "";
 
 			$label = $this->getAttribute( 'placeholder' );
 			if ( $required ) {
@@ -348,7 +346,8 @@ class Element_Upload extends Element_Textbox {
 			}
 			$box .= sprintf( '<div class="bf-field-label-container"><label>%s</label></div>', $label );
 
-			$box .= sprintf( '<input placeholder="Image Url" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s"  accepted_files="%s" onclick="validateAndUploadImage(this)">upload</button>', 'width:75%; margin-right: 3px;', $id . '_upload_from_url', $id, $url, $id, $id, $mime_type_result );
+
+			$box .= sprintf( '<input placeholder="Image Url" type="text" style="%s" id="%s" field-id="%s" value="%s" /><button type="button"  id="%s_upload_button" field-id="%s"  accepted_files="%s" onclick="validateAndUploadImage(this)">upload</button>', 'width:75%; margin-right: 3px;', $id . "_upload_from_url", $id, $url, $id, $id,$mime_type_result );
 			$box .= sprintf( '<label  id="%s_label" class="error" ></label>', $id );
 			$box .= sprintf( '<img  id="%s_image" src="%s" ></img>', $id, $url );
 			$box .= sprintf( '<input type="text" style="display: none" class="form-control upload_field_from_url" name="%s" value="%s" id="field_%s" %s />', $id, $attachmet_id, $id, $required );
@@ -372,8 +371,11 @@ class Element_Upload extends Element_Textbox {
 			if ( ! empty( $description ) ) {
 				$box .= sprintf( '<span class="help-inline">%s</span>', $description );
 			}
+
+
 		}
 		echo $box;
-		// $box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
+		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
+
 	}
 }

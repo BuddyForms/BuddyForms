@@ -8,7 +8,7 @@ class Element_InlineHTML extends Element {
 	/**
 	 * @var array
 	 */
-	protected $_attributes = array( 'type' => 'html' );
+	protected $_attributes = array( "type" => "html" );
 
 	/**
 	 * Element_HTML constructor.
@@ -19,13 +19,13 @@ class Element_InlineHTML extends Element {
 		global $field_id;
 
 		$properties = array(
-			'value'    => $value,
-			'field_id' => $field_id,
+			"value"    => $value,
+			"field_id" => $field_id
 		);
-		parent::__construct( '', '', $properties );
+		parent::__construct( "", "", $properties );
 	}
 
 	public function render() {
-		echo $this->_attributes['value'];
+		echo $this->_attributes["value"];
 	}
 }

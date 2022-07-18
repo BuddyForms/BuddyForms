@@ -111,7 +111,7 @@ class BuddyForms_Session {
 	 *
 	 * @since 2.1.0.3
 	 *
-	 * @param string  $key Session key
+	 * @param string $key Session key
 	 * @param integer $value Session variable
 	 *
 	 * @return string Session variable

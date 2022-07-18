@@ -12,6 +12,7 @@ function buddyforms_template_include( $template ) {
 		if ( $action == 'view' || $action == 'create' || $action == 'edit' || $action == 'revision' ) {
 			remove_all_actions( 'wpseo_head' );
 		}
+
 	}
 
 	return $template;
@@ -46,19 +47,19 @@ function buddyforms_attached_page_content( $content ) {
 				'post_id'     => $post_id,
 				'parent_post' => $parent_post_id,
 				'post_type'   => $post_type,
-				'form_action' => $action,
+				'form_action' => $action
 			);
 
 			if ( $action == 'create' || $action == 'edit' || $action == 'revision' ) {
 				ob_start();
 				buddyforms_create_edit_form( $args );
-				$bf_form     = ob_get_clean();
+				$bf_form = ob_get_clean();
 				$new_content = $bf_form;
 			}
 			if ( $action == 'view' ) {
 				ob_start();
 				buddyforms_the_loop( $args );
-				$bf_form     = ob_get_clean();
+				$bf_form = ob_get_clean();
 				$new_content = $bf_form;
 			}
 

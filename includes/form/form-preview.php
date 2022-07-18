@@ -3,13 +3,13 @@
 // Generate the Preview
 add_action( 'init', 'buddyforms_preview_form' );
 function buddyforms_preview_form() {
-	if ( ! empty( $_REQUEST['form_slug'] ) and ! empty( $_REQUEST['preview'] ) ) { // I
+	if ( ! empty ( $_REQUEST['form_slug'] ) AND ! empty ( $_REQUEST['preview'] ) ) { //I
 
 		// Get the Preview Page
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
 
 		// Check if the preview Page is displayed and get out of here if not.
-		if ( isset( $_REQUEST['page_id'] ) && $preview_page_id != $_REQUEST['page_id'] ) {
+		if ( $preview_page_id != $_REQUEST['page_id'] ) {
 			return;
 		}
 
@@ -26,10 +26,7 @@ function buddyforms_preview_form() {
 function buddyforms_append_preview_page( $content ) {
 
 	// GHet the form slug from the url parameter
-	if( ! isset( $_REQUEST['form_slug'] ) ){
-		return;
-	}
-	$form_slug = buddyforms_sanitize_mixed( wp_unslash( $_REQUEST['form_slug'] ) );
+	$form_slug = $_REQUEST['form_slug'];
 
 	// Create the array for the form
 	$args = array(

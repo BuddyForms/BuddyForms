@@ -4,13 +4,17 @@
 function buddyforms_marketing_meet_condition() {
 	$meet = false;
 
+
 	return $meet;
 }
 
 add_action( 'admin_init', 'buddyforms_marketing_init' );
 
 function buddyforms_marketing_init() {
+//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
 	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
+//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
+
 	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
 }
 
@@ -26,10 +30,7 @@ function buddyforms_marketing_offer_bundle( $hook ) {
 		return;
 	}
 	$base_content = "<p class=\"corner-head\">Buy ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
-	$content      = array(
-		'%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.',
-		'%cta'     => 'Get the OFFER',
-	);
+	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
 	buddyforms_marketing_include_assets( $content, $base_content );
 }
 
@@ -51,10 +52,7 @@ function buddyforms_marketing_form_list_coupon_for_free( $hook ) {
 	$current_screen         = get_current_screen();
 	if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && ( $is_free || $is_trial ) && empty( $is_able_to_open ) ) {
 		$base_content = "<p class=\"corner-head\">30% off .:. 50% off</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://themekraft.com/price-off-in-5-minutos?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
-		$content      = array(
-			'%content' => 'UNLOCK the complete POWER of this tools to provide better solutions to your clients.',
-			'%cta'     => 'Let\'s do it',
-		);
+		$content      = array( '%content' => 'UNLOCK the complete POWER of this tools to provide better solutions to your clients.', '%cta' => 'Let\'s do it' );
 		buddyforms_marketing_include_assets( $content, $base_content, 'buddyforms_marketing_form_list_coupon_for_free_close' );
 	}
 
@@ -64,14 +62,10 @@ function buddyforms_marketing_include_assets( $content, $base_content, $key = ''
 	wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 	wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 	wp_enqueue_script( 'buddyforms-marketing-popup-handler', BUDDYFORMS_ASSETS . 'admin/js/admin-marketing.js', array( 'jquery' ), BUDDYFORMS_VERSION );
-	wp_localize_script(
-		'buddyforms-marketing-popup-handler',
-		'buddyformsMarketingHandler',
-		array(
-			'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
-			'key'     => $key,
-		)
-	);
+	wp_localize_script( 'buddyforms-marketing-popup-handler', 'buddyformsMarketingHandler', array(
+		'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
+		'key'     => $key,
+	) );
 }
 
 function user_satisfaction_trigger() {
@@ -96,14 +90,7 @@ function user_satisfaction_trigger() {
 
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && $current_screen->id === 'edit-buddyforms' && count( $buddyforms ) > 0 && empty( $is_able_to_open ) && empty( $is_already_sent ) ) {
-			buddyforms_track(
-				'$experiment_started',
-				array(
-					'Experiment name' => 'User Satisfaction',
-					'Variant name'    => 'v1',
-					'action'          => 'satisfaction-show',
-				)
-			);
+			buddyforms_track( '$experiment_started', array( 'Experiment name' => 'User Satisfaction', 'Variant name' => 'v1', 'action' => 'satisfaction-show' ) );
 
 			ob_start();
 			include_once BUDDYFORMS_ADMIN_VIEW . 'user-satisfaction.php';
@@ -112,14 +99,10 @@ function user_satisfaction_trigger() {
 			wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 			wp_enqueue_script( 'buddyforms-marketing-popup-handler', BUDDYFORMS_ASSETS . 'admin/js/admin-marketing.js', array( 'jquery' ), BUDDYFORMS_VERSION );
-			wp_localize_script(
-				'buddyforms-marketing-popup-handler',
-				'buddyformsMarketingHandler',
-				array(
-					'content' => $base_content,
-					'key'     => 'buddyforms_marketing_user_satisfaction_close',
-				)
-			);
+			wp_localize_script( 'buddyforms-marketing-popup-handler', 'buddyformsMarketingHandler', array(
+				'content' => $base_content,
+				'key'     => 'buddyforms_marketing_user_satisfaction_close',
+			) );
 		}
 	} catch ( Exception $ex ) {
 
@@ -137,7 +120,7 @@ function buddyforms_marketing_assets() {
 			return;
 		}
 
-		$base_content = '<p class="corner-head">This is only for you</p><p class="corner-text">%content</p><div class="bf-marketing-action-container"><a href="#" class="bf-marketing-btn corner-btn-close">%no</a><a href="#" class="bf-marketing-btn corner-btn-close">%yes</a></div>';
+		$base_content = "<p class=\"corner-head\">This is only for you</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a href=\"#\" class=\"bf-marketing-btn corner-btn-close\">%no</a><a href=\"#\" class=\"bf-marketing-btn corner-btn-close\">%yes</a></div>";
 		$content      = buddyforms_marketing_content_interest();
 		$is_free      = false;
 		$is_pro       = false;
@@ -161,9 +144,9 @@ function buddyforms_marketing_assets() {
 			$license = $freeemius->_get_license();
 			if ( ! empty( $license ) ) {
 				$created_date = new DateTime( $license->created );
-				// Add an interval to define when to show the modal
-				// Create something generic to handle this generic process like condition meet and then do X
-				// Like a class system where we can override generic behavior using heritage
+				//Add an interval to define when to show the modal
+				//Create something generic to handle this generic process like condition meet and then do X
+				//Like a class system where we can override generic behavior using heritage
 			}
 		}
 
@@ -178,13 +161,9 @@ function buddyforms_marketing_assets() {
 		wp_enqueue_style( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/css/corner-popup.min.css', array(), BUDDYFORMS_VERSION );
 		wp_enqueue_script( 'buddyforms-marketing-popup', BUDDYFORMS_ASSETS . 'resources/corner-popup/js/corner-popup.min.js', array( 'jquery' ), BUDDYFORMS_VERSION );
 		wp_enqueue_script( 'buddyforms-marketing-popup-handler', BUDDYFORMS_ASSETS . 'admin/js/admin-marketing.js', array( 'jquery' ), BUDDYFORMS_VERSION );
-		wp_localize_script(
-			'buddyforms-marketing-popup-handler',
-			'buddyformsMarketingHandler',
-			array(
-				'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
-			)
-		);
+		wp_localize_script( 'buddyforms-marketing-popup-handler', 'buddyformsMarketingHandler', array(
+			'content' => str_replace( array_keys( $content ), array_values( $content ), $base_content ),
+		) );
 	} catch ( Exception $ex ) {
 
 	}
@@ -194,42 +173,26 @@ function buddyforms_marketing_assets() {
  * Popup content asking to receive the offer
  */
 function buddyforms_marketing_content_interest() {
-	return array(
-		'%content' => 'Are you interest in get a personal offer',
-		'%no'      => 'No Thanks',
-		'%yes'     => 'Yes',
-	);
+	return array( '%content' => 'Are you interest in get a personal offer', '%no' => 'No Thanks', '%yes' => 'Yes' );
 }
 
 /**
  * Popup content to offer a discount coupon
  */
 function buddyforms_marketing_content_pro_coupon() {
-	return array(
-		'%content' => 'Get your discount coupon',
-		'%no'      => 'No thanks',
-		'%yes'     => 'Yes please',
-	);
+	return array( '%content' => 'Get your discount coupon', '%no' => 'No thanks', '%yes' => 'Yes please' );
 }
 
 /**
  * Popup content to upgrade from month to yearly
  */
 function buddyforms_marketing_content_yearly_coupon() {
-	return array(
-		'%content' => 'Upgrade to yearly with a special copuon',
-		'%no'      => 'No thanks',
-		'%yes'     => 'Go for it',
-	);
+	return array( '%content' => 'Upgrade to yearly with a special copuon', '%no' => 'No thanks', '%yes' => 'Go for it' );
 }
 
 /**
  * Popup content to increase site quote
  */
 function buddyforms_marketing_content_site_quote() {
-	return array(
-		'%content' => 'Be ready to install this amazing tool in more sites',
-		'%no'      => 'No thanks',
-		'%yes'     => 'Yes please',
-	);
+	return array( '%content' => 'Be ready to install this amazing tool in more sites', '%no' => 'No thanks', '%yes' => 'Yes please' );
 }

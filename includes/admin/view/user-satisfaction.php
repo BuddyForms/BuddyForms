@@ -1,17 +1,17 @@
 <?php
-// Leaven empty tag to let automation add the path disclosure line
+//Leaven empty tag to let automation add the path disclosure line
 ?>
 <div class="corner-head">
 	<div class="bf-satisfaction" data-section="1">
 		<div class="bf-satisfaction-container">
 			<div class="bf-satisfaction-top">
-				<div class="bf-satisfaction-top-title"><?php esc_html_e( 'How likely is it that you would recommend BuddyForms to a friend or colleague?', 'buddyforms' ); ?></div>
+				<div class="bf-satisfaction-top-title"><?php _e('How likely is it that you would recommend BuddyForms to a friend or colleague?', 'buddyforms'); ?></div>
 			</div>
 			<div class="bf-satisfaction-body">
-				<section class="bf-satisfaction-column" data-section="1" data-section-title="<?php esc_html_e( 'How likely is it that you would recommend BuddyForms to a friend or colleague?', 'buddyforms' ); ?>">
+				<section class="bf-satisfaction-column" data-section="1" data-section-title="<?php _e('How likely is it that you would recommend BuddyForms to a friend or colleague?', 'buddyforms'); ?>">
 					<div>
-						<span class="bf-satisfaction-body-medium"><?php esc_html_e( 'Not at all likely', 'buddyforms' ); ?></span>
-						<span class="bf-satisfaction-body-medium"><?php esc_html_e( 'Extremely likely', 'buddyforms' ); ?></span>
+						<span class="bf-satisfaction-body-medium"><?php _e('Not at all likely', 'buddyforms'); ?></span>
+						<span class="bf-satisfaction-body-medium"><?php _e('Extremely likely', 'buddyforms'); ?></span>
 					</div>
 					<div class="bf-satisfaction-row">
 						<label data-style="hover">
@@ -61,20 +61,20 @@
 					</div>
 					<div>
 						<div></div>
-						<button class="bf-satisfaction-button" data-user-error="<?php esc_html_e( 'Please select an item to continue', 'buddyforms' ); ?>" data-server-error="<?php esc_html_e( 'Internal error', 'buddyforms' ); ?>" data-satisfaction-form-action="ajax" data-satisfaction-form-inputs="satisfaction_recommendation:checked"><?php esc_html_e( 'Submit', 'buddyforms' ); ?></button>
+						<button class="bf-satisfaction-button" data-user-error="<?php _e('Please select an item to continue', 'buddyforms'); ?>" data-server-error="<?php _e('Internal error', 'buddyforms'); ?>" data-satisfaction-form-action="ajax" data-satisfaction-form-inputs="satisfaction_recommendation:checked"><?php _e('Submit', 'buddyforms'); ?></button>
 					</div>
 				</section>
-				<section class="bf-satisfaction-column" data-section="2" data-section-title="<?php esc_html_e( 'We are king to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)', 'buddyforms' ); ?>">
+				<section class="bf-satisfaction-column" data-section="2" data-section-title="<?php _e('We are king to see you happy! What is that one thing, for you, that make BuddyForms stand apart? (Optional)', 'buddyforms'); ?>">
 					<textarea name="satisfaction_comments" cols="30" rows="10"></textarea>
 					<div>
 						<div></div>
-						<button class="bf-satisfaction-button" data-satisfaction-form-action="ajax" data-satisfaction-form-inputs="satisfaction_comments"><?php esc_html_e( 'Submit or Done', 'buddyforms' ); ?></button>
+						<button class="bf-satisfaction-button" data-satisfaction-form-action="ajax" data-satisfaction-form-inputs="satisfaction_comments"><?php _e('Submit or Done', 'buddyforms'); ?></button>
 					</div>
 				</section>
-				<section class="bf-satisfaction-column" data-section="3" data-section-title="<?php esc_html_e( 'Thanks you', 'buddyforms' ); ?>">
+				<section class="bf-satisfaction-column" data-section="3" data-section-title="<?php _e('Thanks you', 'buddyforms'); ?>">
 					<div>
 						<div></div>
-						<button class="bf-satisfaction-button" data-satisfaction-action="close"><?php esc_html_e( 'Close', 'buddyforms' ); ?></button>
+						<button class="bf-satisfaction-button" data-satisfaction-action="close"><?php _e('Close', 'buddyforms'); ?></button>
 					</div>
 				</section>
 			</div>

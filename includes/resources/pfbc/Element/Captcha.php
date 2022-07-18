@@ -7,12 +7,12 @@ class Element_Captcha extends Element {
 	/**
 	 * Element_Captcha constructor.
 	 *
-	 * @param string     $label
+	 * @param string $label
 	 * @param array|null $properties
-	 * @param null       $customfield
+	 * @param null $customfield
 	 */
-	public function __construct( $label = '', array $properties = null, $customfield = null ) {
-		parent::__construct( $label, 'recaptcha_response_field', $properties, $customfield );
+	public function __construct( $label = "", array $properties = null, $customfield = null ) {
+		parent::__construct( $label, "recaptcha_response_field", $properties, $customfield );
 	}
 
 	public function isValid( $value ) {

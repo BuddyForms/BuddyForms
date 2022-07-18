@@ -1957,29 +1957,3 @@ html .buddyforms_forms_builder .ui-button.ui-state-disabled:active {
     background-color: transparent;
     border: none;
 }
-div.bf-go-pro-content-box{
-    padding: 0  12px;
-}
-
-div#buddyforms-adminhead-wizard{
-    font-size: 52px;
-    margin-top: -5px;
-    float: left;
-    margin-right: 15px;
-}
-
-small#buddyforms_version{
-    line-height: 1;
-    margin-top: -10px;
-    color: #888;
-    font-size: 13px;
-    padding-top: 30px;
-    float:right;
-}
-
-.bf-permissions-header-1{
-    margin-left: 5%; float: left;
-}
-.bf-permissions-header-2{
-    margin-left: 3%; float: left;
-}

@@ -1,11 +1,11 @@
 <?php
 /**
- * These functions are taken from the WordPress 3.6-BETA3-24432 release and heavily modified to work for us in the frontend.
+ * These functions are taken from the WORDPRESS 3.6-BETA3-24432 release and heavily modified to work for us in the frontend.
  *
  * @package BuddyForms
  * @since 0.1 beta
  *
- * @param int    $post_id
+ * @param int $post_id
  * @param string $type
  */
 function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
@@ -36,14 +36,9 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 
 		$rows .= "\t<li>" . buddyforms_wp_post_revision_title_expanded( $revision, $post_id ) . "</li>\n";
 	}
-	$arr = array(
-		'div' => array( 'class' => array() ),
-		'h3'  => array(),
-		'ul'  => array( 'class' => array() ),
-	);
-	echo wp_kses( '<div class="revision">', $arr );
-	echo wp_kses( '<h3>' . esc_html__( 'Revision', 'buddyforms' ) . '</h3>', $arr );
-	echo wp_kses( "<ul class='post-revisions'>\n", $arr );
+	echo '<div class="revision">';
+	echo '<h3>' . __( 'Revision', 'buddyforms' ) . '</h3>';
+	echo "<ul class='post-revisions'>\n";
 	echo $rows;
 
 	// if the post was previously restored from a revision
@@ -55,23 +50,23 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 		$date      = date_i18n( $datef, strtotime( $restored_from_meta['restored_time'] ) );
 		$time_diff = human_time_diff( $restored_from_meta['restored_time'] );
 		?>
-		<hr/>
-		<div id="revisions-meta-restored">
+        <hr/>
+        <div id="revisions-meta-restored">
 			<?php
 			printf(
 			/* translators: restored revision details: 1: gravatar image, 2: author name, 3: time ago, 4: date */
-				esc_html__( 'Previously restored by %1$s %2$s, %3$s ago (%4$s)' ),
+				__( 'Previously restored by %1$s %2$s, %3$s ago (%4$s)' ),
 				get_avatar( $author->ID, 24 ),
-				esc_html( $author->display_name ),
-				esc_html( $time_diff ),
-				esc_html( $date )
+				$author->display_name,
+				$time_diff,
+				$date
 			);
 			?>
-		</div>
+        </div>
 		<?php
 	}
-	echo '</ul>';
-	echo '</div>';
+	echo "</ul>";
+	echo "</div>";
 
 }
 
@@ -106,7 +101,7 @@ function buddyforms_wp_revisions_enabled( $post ) {
 }
 
 /**
- * @param int  $post_id
+ * @param int $post_id
  * @param null $args
  *
  * @return array
@@ -117,19 +112,13 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 		return array();
 	}
 
-	$defaults = array(
-		'order'   => 'DESC',
-		'orderby' => 'date',
-	);
+	$defaults = array( 'order' => 'DESC', 'orderby' => 'date' );
 	$args     = wp_parse_args( $args, $defaults );
-	$args     = array_merge(
-		$args,
-		array(
-			'post_parent' => $post->ID,
-			'post_type'   => 'revision',
-			'post_status' => 'inherit',
-		)
-	);
+	$args     = array_merge( $args, array(
+		'post_parent' => $post->ID,
+		'post_type'   => 'revision',
+		'post_status' => 'inherit'
+	) );
 
 	if ( ! $revisions = get_children( $args ) ) {
 		return array();
@@ -141,7 +130,7 @@ function buddyforms_wp_get_post_revisions( $post_id = 0, $args = null ) {
 /**
  * @param $revision
  * @param $post_id
- * @param bool     $link
+ * @param bool $link
  *
  * @return array|bool|null|string|WP_Post
  */
@@ -155,6 +144,7 @@ function buddyforms_wp_post_revision_title_expanded( $revision, $post_id, $link 
 	if ( ! in_array( $revision->post_type, array( 'post', 'page', 'revision' ) ) ) {
 		return false;
 	}
+
 
 	if ( isset( $wp_query->query_vars['bf_form_slug'] ) ) {
 		$form_slug = $wp_query->query_vars['bf_form_slug'];

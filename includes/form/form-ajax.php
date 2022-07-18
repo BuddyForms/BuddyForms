@@ -2,15 +2,12 @@
 
 add_action( 'wp_ajax_buddyforms_ajax_edit_post', 'buddyforms_ajax_edit_post' );
 function buddyforms_ajax_edit_post() {
-	if ( ! isset( $_POST['post_id'] ) ) {
-		return;
-	}
 	$post_id   = intval( $_POST['post_id'] );
 	$form_slug = get_post_meta( $post_id, '_bf_form_slug', true );
 
-	$args = array(
+	$args = Array(
 		'post_id'   => $post_id,
-		'form_slug' => $form_slug,
+		'form_slug' => $form_slug
 	);
 	ob_start();
 	buddyforms_create_edit_form( $args );
@@ -26,7 +23,7 @@ function buddyforms_ajax_load_taxonomy() {
 		return;
 	}
 
-	if ( ! isset( $_POST['nonce'] ) || ! isset( $_POST['action'] ) || wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'bf_tax_loading' ) === false ) {
+	if ( ! isset( $_POST['action'] ) || wp_verify_nonce( $_POST['nonce'], 'bf_tax_loading' ) === false ) {
 		wp_die();
 	}
 
@@ -42,27 +39,27 @@ function buddyforms_ajax_load_taxonomy() {
 	if ( empty( $_POST['form_slug'] ) ) {
 		wp_send_json_error( new WP_Error( 'invalid_form_slug', 'Invalid Form Slug' ), 500 );
 	} else {
-		$form_slug = sanitize_title( wp_unslash( $_POST['form_slug'] ) );
+		$form_slug = sanitize_title( $_POST['form_slug'] );
 	}
 
 	if ( ! empty( $_POST['search'] ) ) {
-		$args['search'] = sanitize_title_for_query( wp_unslash( $_POST['search'] ) );
+		$args['search'] = sanitize_title_for_query( $_POST['search'] );
 	}
 
 	if ( ! empty( $_POST['taxonomy'] ) ) {
-		$args['taxonomy'] = buddyforms_sanitize_mixed( wp_unslash( $_POST['taxonomy'] ) );
+		$args['taxonomy'] = $_POST['taxonomy'];
 	}
 
 	if ( ! empty( $_POST['order'] ) ) {
-		$args['order'] = sanitize_text_field( wp_unslash( $_POST['order'] ) );
+		$args['order'] = $_POST['order'];
 	}
 
 	if ( ! empty( $_POST['exclude'] ) ) {
-		$args['exclude'] = buddyforms_sanitize_mixed( wp_unslash( $_POST['exclude'] ) );
+		$args['exclude'] = $_POST['exclude'];
 	}
 
 	if ( ! empty( $_POST['include'] ) ) {
-		$args['include'] = buddyforms_sanitize_mixed( wp_unslash( $_POST['include'] ) );
+		$args['include'] = $_POST['include'];
 	}
 
 	$terms_result = false;
@@ -76,10 +73,10 @@ function buddyforms_ajax_load_taxonomy() {
 	if ( is_wp_error( $terms_result ) ) {
 		wp_send_json_error( $terms_result, 500 );
 	} else {
-		$response = new stdClass();
+		$response = new stdClass;
 		$result   = array();
 		foreach ( $terms_result->get_terms() as $key => $term ) {
-			$current       = new stdClass();
+			$current       = new stdClass;
 			$current->id   = $key;
 			$current->text = $term;
 			$result[]      = $current;
@@ -97,7 +94,7 @@ function buddyforms_ajax_process_edit_post() {
 	$form_data = array();
 
 	if ( isset( $_POST['data'] ) ) {
-		parse_str( buddyforms_sanitize_mixed( wp_unslash( $_POST['data'] ) ), $form_data );
+		parse_str( $_POST['data'], $form_data );
 		$_POST = $form_data;
 	}
 
@@ -131,10 +128,10 @@ function buddyforms_ajax_process_edit_post() {
 		$global_error->renderAjaxErrorResponse();
 
 	} else {
-		$form_type                 = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
-		$form_action               = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
+		$form_type      = ( ! empty( $args['form_type'] ) ) ? $args['form_type'] : 'submission';
+		$form_action    = ( ! empty( $args['action'] ) ) ? $args['action'] : 'save';
 		$json_array['form_action'] = $form_action;
-		$message_source            = 'after_submit_message_text';
+		$message_source = 'after_submit_message_text';
 		if ( 'registration' === $form_type ) {
 			if ( is_user_logged_in() ) {
 				$message_source = 'after_update_submit_message_text';
@@ -171,10 +168,10 @@ function buddyforms_ajax_process_edit_post() {
 					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $buddyforms[ $form_slug ]['after_submission_url'] );
 					break;
 				case 'display_posts_list':
-					$json_array['form_remove']  = 'true';
-					$permalink                  = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
-					$post_list_link             = $permalink . 'view/' . $args['form_slug'] . '/';
-					$json_array['form_notice']  = buddyforms_after_save_post_redirect( $post_list_link );
+					$json_array['form_remove'] = 'true';
+					$permalink                 = get_permalink( $buddyforms[ $args['form_slug'] ]['attached_page'] );
+					$post_list_link            = $permalink . 'view/' . $args['form_slug'] . '/';
+					$json_array['form_notice'] = buddyforms_after_save_post_redirect( $post_list_link );
 					$json_array['form_notice'] .= $display_message;
 					break;
 				case 'display_message':
@@ -201,7 +198,7 @@ function buddyforms_ajax_process_edit_post() {
 			}
 		}
 
-		// change the form actions base on form permissions
+		//change the form actions base on form permissions
 		$is_draft_permission_enabled  = buddyforms_is_permission_enabled( $form_slug );
 		$is_edit_permission_enabled   = buddyforms_is_permission_enabled( $form_slug, 'edit' );
 		$is_create_permission_enabled = buddyforms_is_permission_enabled( $form_slug, 'create' );
@@ -217,22 +214,20 @@ function buddyforms_ajax_process_edit_post() {
 }
 
 add_action( 'wp_ajax_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post' );
-// add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
+//add_action('wp_ajax_nopriv_buddyforms_ajax_delete_post', 'buddyforms_ajax_delete_post');
 /**
  *
  */
 function buddyforms_ajax_delete_post() {
 	global $current_user, $buddyforms;
 	$current_user = wp_get_current_user();
-	if ( ! isset( $_POST['post_id'] ) ) {
-		return;
-	}
+
 	$post_id  = intval( $_POST['post_id'] );
 	$the_post = get_post( $post_id );
 
 	$form_slug = get_post_meta( $post_id, '_bf_form_slug', true );
 	if ( ! $form_slug ) {
-		esc_html_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
+		_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
 		die();
 	}
 
@@ -244,7 +239,7 @@ function buddyforms_ajax_delete_post() {
 		}
 		$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
 		if ( $user_can_delete == false ) {
-			esc_html_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
+			_e( 'You are not allowed to delete this entry! What are you doing here?', 'buddyforms' );
 			die();
 		}
 		// check if the user has the roles roles and capabilities
@@ -257,26 +252,26 @@ function buddyforms_ajax_delete_post() {
 	}
 	$user_can_delete = apply_filters( 'buddyforms_user_can_delete', $user_can_delete, $form_slug, $post_id );
 	if ( $user_can_delete == false ) {
-		esc_html_e( 'You do not have the required user role to use this form', 'buddyforms' );
+		_e( 'You do not have the required user role to use this form', 'buddyforms' );
 		die();
 	}
 
 	do_action( 'buddyforms_delete_post', $post_id );
 	wp_delete_post( $post_id );
 
-	// Delete Files from server option
-	$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : array();
+	//Delete Files from server option
+	$buddyFData = isset( $buddyforms[ $form_slug ]['form_fields'] ) ? $buddyforms[ $form_slug ]['form_fields'] : [];
 	foreach ( $buddyFData as $key => $value ) {
 		$field = $value['slug'];
 		$type  = $value['type'];
 		if ( $type == 'upload' ) {
-			// Check if the option Delete Files When Remove Entry is ON.
+			//Check if the option Delete Files When Remove Entry is ON.
 			$can_delete_files = isset( $value['delete_files'] ) ? true : false;
 			if ( $can_delete_files ) {
 				// If true then Delete the files attached to the entry
 				$column_val = get_post_meta( $post_id, $field, true );
 				if ( ! empty( $column_val ) ) {
-					$attachmet_id = explode( ',', $column_val );
+					$attachmet_id = explode( ",", $column_val );
 					foreach ( $attachmet_id as $id ) {
 						wp_delete_attachment( $id, true );
 					}
@@ -298,8 +293,8 @@ function buddyforms_after_save_post_redirect( $url ) {
 	$url             = apply_filters( 'buddyforms_after_save_post_redirect', $url );
 	$redirect_string = apply_filters( 'buddyforms_after_save_post_redirect_string', __( 'Redirecting... ', 'buddyforms' ) );
 	$string          = $redirect_string . '<script type="text/javascript">';
-	$string         .= 'window.location = "' . $url . '"';
-	$string         .= '</script>';
+	$string          .= 'window.location = "' . $url . '"';
+	$string          .= '</script>';
 
 	return $string;
 }

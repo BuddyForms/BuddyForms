@@ -24,11 +24,11 @@ function buddyforms_exporter( $email_address, $page = 1 ) {
 
 				$my_data[] = array(
 					'name'  => __( 'Title', 'buddyforms' ),
-					'value' => get_the_title(),
+					'value' => get_the_title()
 				);
 				$my_data[] = array(
 					'name'  => __( 'Content', 'buddyforms' ),
-					'value' => get_the_content(),
+					'value' => get_the_content()
 				);
 
 				if ( isset( $buddyform['form_fields'] ) ) {
@@ -36,10 +36,11 @@ function buddyforms_exporter( $email_address, $page = 1 ) {
 						$user_id   = get_the_author_meta( 'ID' );
 						$my_data[] = array(
 							'name'  => $field['name'],
-							'value' => get_post_meta( $user_id, $field['slug'], true ),
+							'value' => get_post_meta( $user_id, $field['slug'], true )
 						);
 					}
 				}
+
 			}
 
 			wp_reset_postdata();
@@ -54,6 +55,7 @@ function buddyforms_exporter( $email_address, $page = 1 ) {
 			'data'        => $my_data,
 		);
 	}
+
 
 	// Tell core if we have more comments to work on still
 

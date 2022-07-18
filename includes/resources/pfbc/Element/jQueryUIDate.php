@@ -8,8 +8,8 @@ class Element_jQueryUIDate extends Element_Textbox {
 	 * @var array
 	 */
 	protected $_attributes = array(
-		'type'         => 'text',
-		'autocomplete' => 'off',
+		"type"         => "text",
+		"autocomplete" => "off"
 	);
 	/**
 	 * @var
@@ -21,17 +21,26 @@ class Element_jQueryUIDate extends Element_Textbox {
 	 */
 	public function getCSSFiles() {
 		return array(
-		// $this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css"
+//			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css"
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getJSFiles() {
+		return array(
+			$this->_form->getPrefix() . "://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
 		);
 	}
 
 	public function jQueryDocumentReady() {
 		parent::jQueryDocumentReady();
-		echo 'jQuery("#', esc_js( $this->_attributes['id'] ), '").datepicker(', esc_js( $this->jQueryOptions() ), ');';
+		echo 'jQuery("#', $this->_attributes["id"], '").datepicker(', $this->jQueryOptions(), ');';
 	}
 
 	public function render() {
-		$this->validation[] = new Validation_Date();
+		$this->validation[] = new Validation_Date;
 		parent::render();
 	}
 }

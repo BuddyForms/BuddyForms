@@ -1989,10 +1989,6 @@ function buddyforms_get_exclude_field_slugs() {
  * @see sanitize_title_with_dashes
  */
 function buddyforms_sanitize_slug( $slug, $context = 'save' ) {
-	if( is_array( $slug ) ){
-		$slug = buddyforms_sanitize_mixed( $slug );
-		return $slug;
-	}
 	$slug = strip_tags( $slug );
 	// Preserve escaped octets.
 	$slug = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $slug );
@@ -2068,16 +2064,6 @@ function buddyforms_sanitize_slug( $slug, $context = 'save' ) {
 	$slug = trim( $slug, '-' );
 
 	return $slug;
-}
-
-function buddyforms_sanitize_mixed( $arg ) {
-	if ( is_array( $arg ) ) {
-		return map_deep( $arg, 'sanitize_text_field' );
-	} elseif ( is_scalar( $arg ) ) {
-		return sanitize_text_field( $arg );
-	} else {
-		return $arg;
-	}
 }
 
 /**

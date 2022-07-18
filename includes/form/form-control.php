@@ -1079,7 +1079,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 			if ( is_array( $meta_value ) ) {
 				$str_result = '';
 				foreach ( $meta_value as $key => $val ) {
-					$str_result .= $val . ', ';
+					$str_result .= $val;
 				}
 				$meta_value = $str_result;
 			}

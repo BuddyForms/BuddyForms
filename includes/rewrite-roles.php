@@ -131,11 +131,12 @@ function buddyforms_my_edit_post_link( $url, $post_ID ) {
  * Can be used within the WordPress loop or outside of it. Can be used with
  * pages, posts, attachments, and revisions.
  *
- * @param int    $id Optional. Post ID.
+ * @param int $id Optional. Post ID.
  * @param string $context Optional, defaults to display. How to write the '&', defaults to '&amp;'.
  *
  * @return string The edit post link for the given post.
  * @since 2.3.0
+ *
  */
 function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	if ( ! $post = get_post( $id ) ) {
@@ -155,6 +156,7 @@ function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 		return $id;
 	}
 
+
 	/**
 	 * Filter the post edit link.
 	 *
@@ -164,6 +166,7 @@ function buddyforms_get_edit_post_link( $id = 0, $context = 'display' ) {
 	 *                        are encoded.
 	 *
 	 * @since 2.3.0
+	 *
 	 */
 	return apply_filters( 'get_edit_post_link', admin_url( sprintf( $post_type_object->_edit_link . $action, $post->ID ) ), $post->ID, $context );
 }
@@ -178,7 +181,7 @@ function buddyforms_registration_page_redirect() {
 		return;
 	}
 
-	if ( ( strtolower( $pagenow ) == 'wp-login.php' ) && ( strtolower( sanitize_text_field( wp_unslash( $_GET['action'] ) ) ) == 'register' ) ) {
+	if ( ( strtolower( $pagenow ) == 'wp-login.php' ) && ( strtolower( $_GET['action'] ) == 'register' ) ) {
 
 		$buddyforms_registration_page = get_option( 'buddyforms_registration_page' );
 
@@ -186,6 +189,7 @@ function buddyforms_registration_page_redirect() {
 			$permalink = get_permalink( $buddyforms_registration_page );
 			wp_redirect( $permalink );
 		}
+
 	}
 }
 
@@ -207,18 +211,19 @@ function buddyforms_login_redirect( $redirect_to, $request, $user ) {
 		// Look for 'redirect_to'
 		if ( isset( $_REQUEST['redirect_to'] ) && is_string( $_REQUEST['redirect_to'] ) && isset( $_REQUEST['log'] ) ) {
 			if ( ! empty( $_REQUEST['form_slug'] ) && $_REQUEST['form_slug'] !== 'none' ) {
-				$form_slug = buddyforms_sanitize_slug( wp_unslash( $_REQUEST['form_slug'] ) );
+				$form_slug = buddyforms_sanitize_slug( $_REQUEST['form_slug'] );
 				global $buddyforms;
 				if ( ! empty( $buddyforms ) && isset( $buddyforms[ $form_slug ] ) && $buddyforms[ $form_slug ]['form_type'] === 'registration' ) {
-					$redirect_url = apply_filters( 'buddyforms_login_form_redirect_url', esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) );
+					$redirect_url = apply_filters( 'buddyforms_login_form_redirect_url', $_REQUEST['redirect_to'] );
 				}
 			} else {
-				$redirect_url = apply_filters( 'buddyforms_login_form_redirect_url', esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) );
+				$redirect_url = apply_filters( 'buddyforms_login_form_redirect_url', $_REQUEST['redirect_to'] );
 			}
 
 			if ( ! empty( $redirect_url ) ) {
 				$redirect_to = $redirect_url;
 			}
+
 		}
 	}
 
@@ -277,7 +282,7 @@ function buddyforms_registration_page_content( $content ) {
 			$content = do_shortcode( '[bf form_slug="' . $buddyforms_registration_form . '"]' );
 		}
 
-		// Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
+		//Direct include of the assets with the new content because the normal flow not detect this new form to include the assets
 		BuddyFormsAssets::front_js_css( $content, $buddyforms_registration_form );
 		BuddyFormsAssets::load_tk_font_icons();
 	}

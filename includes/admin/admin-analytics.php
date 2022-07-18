@@ -19,15 +19,12 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 						$data['data'] = $data_args;
 					}
 
-					$data = array_merge(
-						$data,
-						array(
-							'id'    => $user->id,
-							'first' => $user->first,
-							'last'  => $user->last,
-							'email' => $user->email,
-						)
-					);
+					$data = array_merge( $data, array(
+						'id'    => $user->id,
+						'first' => $user->first,
+						'last'  => $user->last,
+						'email' => $user->email
+					) );
 					$data = array_merge( $data, array( 'action' => $event_name ) );
 
 					$data = array( 'data' => base64_encode( json_encode( $data ) . '|' . wp_nonce_tick() ) );
@@ -35,7 +32,7 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 					$free_track_api = new TkTrackApi();
 					$res            = $free_track_api->track( $data );
 
-					// Check for success
+					//Check for success
 					if ( empty( $res ) || empty( $res->success ) ) {
 						error_log( 'buddyforms::analytics', E_USER_NOTICE );
 					}
@@ -52,10 +49,10 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 function buddyforms_track_admin_pages( $hook ) {
 	if ( ! empty( $hook ) ) {
 		if ( $hook === 'buddyforms_page_buddyforms-contact' || $hook === 'buddyforms_page_buddyforms-account' ||
-			 $hook === 'buddyforms_page_buddyforms-affiliation' || $hook === 'buddyforms_page_buddyforms-addons' ||
-			 $hook === 'buddyforms_page_buddyforms-pricing' || $hook === 'buddyforms_page_buddyforms_welcome_screen' ) {
+		     $hook === 'buddyforms_page_buddyforms-affiliation' || $hook === 'buddyforms_page_buddyforms-addons' ||
+		     $hook === 'buddyforms_page_buddyforms-pricing' || $hook === 'buddyforms_page_buddyforms_welcome_screen' ) {
 			buddyforms_track( $hook );
-		} elseif ( $hook === 'post-new.php' ) {
+		} else if ( $hook === 'post-new.php' ) {
 			$action_create = empty( $_REQUEST['action'] );
 			$is_buddyforms = ! empty( $_REQUEST['post_type'] ) && $_REQUEST['post_type'] === 'buddyforms';
 			if ( $action_create && $is_buddyforms ) {
