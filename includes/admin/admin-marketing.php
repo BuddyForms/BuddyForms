@@ -29,8 +29,8 @@ function buddyforms_marketing_offer_bundle( $hook ) {
 	if ( ! current_user_can( 'administrator' ) ) {
 		return;
 	}
-	$base_content = "<p class=\"corner-head\">Buy ALL by once</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://checkout.freemius.com/mode/dialog/bundle/2046/plan/4316?utm=buddyform-plugin\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
-	$content      = array( '%content' => 'Get the result that you expect to provide to your final customers earning all these Add-ons with the ThemeKraft Bundle.', '%cta' => 'Get the OFFER' );
+	$base_content = "<p class=\"corner-head\">Get all plugins for the price of one!</p><p class=\"corner-text\">%content</p><div class=\"bf-marketing-action-container\"><a target='_blank' href=\"https://themekraft.com/themekraft-premium-bundle/\" class=\"bf-marketing-btn corner-btn-close\">%cta</a></div>";
+	$content      = array( '%content' => '', '%cta' => 'Get it Now' );
 	buddyforms_marketing_include_assets( $content, $base_content );
 }
 

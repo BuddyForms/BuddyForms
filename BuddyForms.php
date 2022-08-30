@@ -628,6 +628,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'contact'    => true,
 						'addons'     => true,
 					),
+					'bundle_license_auto_activation' => true,
 				) );
 			}
 
