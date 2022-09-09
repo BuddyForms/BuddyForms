@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload
 Requires at least: 4.0
-Tested up to: 6.0.1
-Stable tag: 2.7.1
+Tested up to: 6.0.2
+Stable tag: 2.7.2
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -383,6 +383,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 
 == Changelog ==
+= 2.7.2 - 08 Sep 2022 =
+* Improved integration with ACF extension.
+* Tested up to WordPress 6.0.2
+
 = 2.7.1 - 29 Aug 2022 =
 * Added automatic activation when using a bundle license.
 * Updated bundle link and popup text.
