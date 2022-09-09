@@ -62,6 +62,10 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 				$field_slug = buddyforms_sanitize_slug( $customfield['name'] );
 			}
 
+			if ( $customfield['type'] == 'acf-field' && $field_slug == 'acf_false' ){
+				$field_slug = 'acf_'. $customfield['acf_field'];
+			}
+
 			// Make sure we have a field slug and name
 			if ( $field_slug != '' && isset( $customfield['name'] ) ) {
 

@@ -1159,6 +1159,11 @@ function buddyforms_update_post_meta( $post_id, $custom_fields ) {
 			}
 		}
 
+		if ( $customfield['type'] == 'acf-field' && isset( $_POST['acf'][$customfield['acf_field']] ) ){
+			$field_value = buddyforms_sanitize( $customfield['type'], $_POST['acf'][$customfield['acf_field']] );
+			update_post_meta( $post_id, $slug, $field_value );
+		}
+
 		// Save the GDPR Agreement
 		if ( $customfield['type'] == 'gdpr' && isset( $customfield['options'] ) ) {
 			$gdpr_data = array();
