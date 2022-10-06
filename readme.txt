@@ -10,11 +10,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == #DESCRIPTION ==
 
-Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
+From Contact Forms to Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-* A simple drag and drop, form builder with ready to use form templates that give you all the form types with on click. Build Contact, Registration, and Post Forms with one exactly for your needs with an easy to use Form Builder and Form Designer.
+* A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer to customize any aspect to your needs.
 
 #### Supported Frontend Form Types
 * Contact Form
@@ -30,7 +30,6 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
 
-
 #### Form Builder Features
 * Drag and Drop Forms Builder
 * Form Designer to Layout your forms with options and custom css
@@ -41,12 +40,7 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 * Ideal for guest posts. Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
 * Frontend generated content made possible with Endpoints and ShortCodes for easy access
 
-
 ---
-
-#### Forms Creation in easy steps.
-* Form Creation step by step with easy to use form creator wizard
-* Form Administration with an easy to use form manager user roles and capabilities in the form builder
 
 ### Free Field Types
 
@@ -68,6 +62,8 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 #### Post Fields
 * Title
 * Content
+* Category
+* Tags
 * Text, Textarea
 * Number
 * Dropdown, Select
@@ -75,8 +71,6 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 * Checkbox
 
 #### Pro Field Types
-* Category
-* Tags
 * Taxonomy
 * Post Formats
 * Comments
@@ -86,12 +80,7 @@ Contact Forms, Post Forms for User Generated Content and Registration Forms easi
 * Hidden
 * HTML
 * Date
-* and more coming all the time
-
-Also more Fields available by Add-Ons
-
-
-
+* more Fields available by Add-Ons!
 
 
 ---
@@ -101,26 +90,32 @@ Also more Fields available by Add-Ons
 
 ---
 ##Easy to navigate and User-friendly interface.
-*Easily embed forms anywhere on your website with just shortcodes or create a new form straight from your admin bar.
-*Create registration funnels and ask to create a password after clicking on the activation link.
-*Create forms for any kind of user generated content.
-*Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
-*Enable/Disable comments related to the submitted content,  Frontend Revision for users
-*Overwrite the WordPress default Registration Form and Page
-*Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
+* Easily embed forms anywhere on your website with just shortcodes by blocks or code.
+* Create registration funnels and ask to create a password after clicking on the activation link.
+* Create forms for any kind of user generated content.
+* Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
+* Enable/Disable comments related to the submitted content,  Frontend Revision for users
+* Overwrite the WordPress default Registration Form and Page
+* Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
 
  
 ##EASY INTEGRATION WITH OTHER PLUGINS
 Buddyform comes stacked with crowd favorite third-party integrations – email services, CRM, storage, and project managers. Enhance its capabilities with the following
 ## Features of BuddyForms Form Builder
 
-* BuddyPress – Enable all publishing features of BuddyForms in BuddyPress
-* Ultimate Member – Submit and manage posts from your Ultimate Member profile
+* BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
+* Ultimate Member – Submit and manage posts from your Ultimate Member Profile
+* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* Pods Forms
+* MailPoed
 * WooCommerce – Build your own marketplace with user-submitted products
 * WooCommerce Simple Auctions – Create and manage auctions via front end
-* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* HubSpot
 * Posts 2 Posts – Efficient many-to-many connections between posts, pages, custom post types, users.
 * WC Vendors – BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products.
+* Geo My WP
+* .. and many more!
+
 
 ##WITH BUDDYFORM YOU CAN CREATE
 
@@ -158,7 +153,7 @@ Most of the time you just want a simple form to collect leads or other data. Thi
 ---
 
 
-### Form Wizard for any Form Type with easy to follow Steps.
+### Ready to use templates
 
 ---
 
