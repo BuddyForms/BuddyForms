@@ -90,6 +90,7 @@ For logged in users you can use the following shortcode to display a the list of
 ####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
 
 ---
+---
 
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
@@ -97,9 +98,13 @@ For logged in users you can use the following shortcode to display a the list of
 #### Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
+---
+
 ### Display Your Website Data Anywhere You Choose
 #### Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
+
+---
 
 ### Publishing Content in BuddyPress & BuddyBoss Made Easy.
 #### Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
@@ -107,6 +112,8 @@ For logged in users you can use the following shortcode to display a the list of
 
 #### More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
 
+
+---
 ---
 
 #### Form Builder Features
