@@ -30,21 +30,40 @@ A simple drag and drop form builder with ready to use form templates that give y
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
 
+#### 1. Contact Forms
+* Create Custom Contact Forms for your Brand and Business in Minutes
+* Prevent users from submitting false data by setting custom validation rules on your forms
+
+#### 2. Registration Forms
+* Overwrite the WordPress Registration Form.
+* Redirect to a Custom Registration Page
+* Redirect your users to a custom location page or form if they click the activation link.
+* Combine Registration and Post forms and redirect your user to the Post Form after Registration.
+
+#### 2. Post Forms
+* Let users Save drafts and let them work on there edit before they send it to moderation
+* Define the Permission for an User Role and grand Create Edit and Delete Rights
+* Define Moderators to manage submissions from the frontend'
+
+---
+
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
-####Guest Posts Submission Management in WordPress
+#### Guest Posts Submission Management in WordPress
 Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-####Display Your Website Data Anywhere You Choose
+#### Display Your Website Data Anywhere You Choose
 Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
-####Publishing Content in BuddyPress & BuddyBoss Made Easy.
+#### Publishing Content in BuddyPress & BuddyBoss Made Easy.
 Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
 [Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
 More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
+
+---
 
 ### Form Builder Features
 * Drag and Drop Forms Builder
@@ -96,15 +115,16 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 * Date
 * more Fields available by Add-Ons!
 
-
 ---
+
 ###Your Data Protection is Our Priority 
 Buddyform is Full GDPR compliant Wordpress Form Builder.
 
 ####You get Privacy by Design
 With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
- 
+
 ---
+
 ####Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
 * Create registration funnels and ask to create a password after clicking on the activation link.
@@ -112,14 +132,9 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
 * Enable/Disable comments related to the submitted content,  Frontend Revision for users
 * Overwrite the WordPress default Registration Form and Page
-* Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
+* Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
- 
-####Integrate with other Plugins
-Buddyform comes stacked with crowd favorite third-party integrations – email services, CRM, storage, and project managers. Enhance its capabilities with the following
-
-
-###Some of our most popular Extensions
+###Integrate with other Plugins
 * BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
 * Ultimate Member – Submit and manage posts from your Ultimate Member Profile
 * Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
@@ -130,15 +145,16 @@ Buddyform comes stacked with crowd favorite third-party integrations – email s
 * HubSpot
 * Geo My WP
 
-Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
+---
 
-
-##WITH BUDDYFORM YOU CAN CREATE
-
+###List of Forms
 * Contact Forms – Collect leads and customer support data
 * Registration Forms – Sign-up users to your webpage
 * Profile Forms – Let your user update there profile information.
-* Login Forms – Grant users access to restricted content* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
+* Login Forms – Grant users access to restricted content
+* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
+
+###List of User Examples
 * Online Directories – Crowdsource categorized data from your community
 * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
 * News Magazines – Create single articles through collaborative writing among a team of editors
@@ -146,23 +162,7 @@ Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress
 * Marketplace – Sell and purchase products from different vendors and list all the product features
 * Content Forms for any kind of user generated content, user submitted posts
 
-
-### 1. Contact Forms
-* Create Custom Contact Forms for your Brand and Business in Minutes
-* Prevent users from submitting false data by setting custom validation rules on your forms
-
----
-
-### 2. Registration Forms
-* Overwrite the WordPress Registration Form.
-* Redirect to a Custom Registration Page
-* Redirect your users to a custom location page or form if they click the activation link.
-* Combine Registration and Post forms and redirect your user to the Post Form after Registration.
-
-### 2. Post Forms
-* Let users Save drafts and let them work on there edit before they send it to moderation
-* Define the Permission for an User Role and grand Create Edit and Delete Rights
-* Define Moderators to manage submissions from the frontend'
+Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
