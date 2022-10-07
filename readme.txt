@@ -57,7 +57,6 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 * Frontend generated content made possible with Endpoints and ShortCodes for easy access
 * All the tools you need to manage guste posts, Full frontend Moderation Controles and Frontend Post Management
 
-
 ### Free Field Types
 
 #### Contact Fields
@@ -73,7 +72,6 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 * About / Bio
 * Date
 * Captcha
-
 
 #### Post Fields
 * Title
@@ -100,12 +98,14 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 
 
 ---
-##Your Data Protection is Our Priority: Buddyform provides a Full GDPR compliant Wordpress Form Builder.
+###Your Data Protection is Our Priority 
+Buddyform is Full GDPR compliant Wordpress Form Builder.
 
-* You get Privacy by Design: With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server.
-
+####You get Privacy by Design
+With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
+ 
 ---
-##Easy to navigate and User-friendly interface.
+####Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
 * Create registration funnels and ask to create a password after clicking on the activation link.
 * Create forms for any kind of user generated content.
@@ -115,10 +115,11 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 * Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
 
  
-##EASY INTEGRATION WITH OTHER PLUGINS
+####Integrate with other Plugins
 Buddyform comes stacked with crowd favorite third-party integrations – email services, CRM, storage, and project managers. Enhance its capabilities with the following
-## Features of BuddyForms Form Builder
 
+
+###Some of our most popular Extensions
 * BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
 * Ultimate Member – Submit and manage posts from your Ultimate Member Profile
 * Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
@@ -127,8 +128,6 @@ Buddyform comes stacked with crowd favorite third-party integrations – email s
 * WooCommerce – Build your own marketplace with user-submitted products
 * WooCommerce Simple Auctions – Create and manage auctions via front end
 * HubSpot
-* Posts 2 Posts – Efficient many-to-many connections between posts, pages, custom post types, users.
-* WC Vendors – BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products.
 * Geo My WP
 
 Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
@@ -136,7 +135,10 @@ Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress
 
 ##WITH BUDDYFORM YOU CAN CREATE
 
-* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
+* Contact Forms – Collect leads and customer support data
+* Registration Forms – Sign-up users to your webpage
+* Profile Forms – Let your user update there profile information.
+* Login Forms – Grant users access to restricted content* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 * Online Directories – Crowdsource categorized data from your community
 * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
 * News Magazines – Create single articles through collaborative writing among a team of editors
@@ -144,16 +146,6 @@ Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress
 * Marketplace – Sell and purchase products from different vendors and list all the product features
 * Content Forms for any kind of user generated content, user submitted posts
 
----
-
-## Other more basic use Cases with our Form Builder
-Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create:
-* Contact Forms – Collect leads and customer support data
-* Registration Forms – Sign-up users to your webpage
-* Profile Forms – Let your user update there profile information.
-* Login Forms – Grant users access to restricted content
-
----
 
 ### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
@@ -167,75 +159,10 @@ Most of the time you just want a simple form to collect leads or other data. Thi
 * Redirect your users to a custom location page or form if they click the activation link.
 * Combine Registration and Post forms and redirect your user to the Post Form after Registration.
 
----
-
-
-### Ready to use templates
-
----
-
-## CONTACT FORM TEMPLATES
-* Contact Full Name
-First Name, Last Name, Email, Subject, Message
-
-* Contact Simple
-Your Name, Your Email, Your Message
-
-* User Support
-First Name, Last Name, Support Type, Subject, Email, Message
-
----
-
-## REGISTRATION FORM TEMPLATES
-* Become a Vendor
-Username, eMail, Password, Shop Name, PayPal E-mail (required), Seller Info, Shop description
-
-* Registration Full Name
-Username, First Name, Last Name, eMail, Password
-
-* Registration Profile
-Username, First Name, Last Name, Bio, Website, eMail, Password
- Preview
-
-* Registration Simple
-Username, eMail, Password
-
----
-
-## POST FORM TEMPLATES
-* Post Form All Fields
-Title, Content, Categories, Tags, Featured Image
-
-* Post Simple
-Title, Content, User eMail
-
-* WC Grouped Product
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
-* WC Product All Fields
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
-* WC Simple Auction
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements, BuddyForms Simple Auction, WC Simple Auctions
-
-* WC Simple Product
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
-
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
 
----
-
-> **Powered with ❤ by [ThemeKraft](https://themekraft.com)**
-
-Upgrade to ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
-
-→ Get more information and upgrade at [BuddyForms](https://themekraft.com/wordpress-products/frontend-post-form-buddyforms/)
+**Powered with ❤ by [ThemeKraft](https://themekraft.com)**
 
 == Installation ==
 
