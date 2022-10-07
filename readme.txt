@@ -159,6 +159,11 @@ Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress
 * Redirect your users to a custom location page or form if they click the activation link.
 * Combine Registration and Post forms and redirect your user to the Post Form after Registration.
 
+### 2. Post Forms
+* Let users Save drafts and let them work on there edit before they send it to moderation
+* Define the Permission for an User Role and grand Create Edit and Delete Rights
+* Define Moderators to manage submissions from the frontend'
+
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
 
