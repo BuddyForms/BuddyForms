@@ -8,13 +8,13 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-== DESCRIPTION ==
-
 From Contact Forms to Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
 
-[youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
+== DESCRIPTION ==
 
-A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer to customize any aspect to your needs.
+A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer. Submit posts and images or any content and media from the front-end of your site.
+
+[youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
 #### Supported Frontend Form Types
 * Contact Form
@@ -30,6 +30,9 @@ A simple drag and drop form builder with ready to use form templates that give y
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
 * Change Password Form
+
+
+###Easily submit posts and images from the front-end of your site.
 
 #### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
