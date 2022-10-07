@@ -8,7 +8,7 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-== #DESCRIPTION ==
+== DESCRIPTION ==
 
 From Contact Forms to Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
 
@@ -30,6 +30,24 @@ From Contact Forms to Post Forms for User Generated Content and Registration For
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
 
+#### BuddyFormms Deeply Tested Solutions you can Trust
+
+##Guest Posts Submission Management in WordPress
+Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
+[Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
+
+
+##Display Your Website Data Anywhere You Choose
+Make all information submitted through a form easily accessible from wherever you like. 
+[Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
+
+
+##Publishing Content in BuddyPress & BuddyBoss Made Easy.
+Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
+[Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
+
+More Supported Soluztions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
+
 #### Form Builder Features
 * Drag and Drop Forms Builder
 * Form Designer to Layout your forms with options and custom css
@@ -40,7 +58,6 @@ From Contact Forms to Post Forms for User Generated Content and Registration For
 * Ideal for guest posts. Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
 * Frontend generated content made possible with Endpoints and ShortCodes for easy access
 
----
 
 ### Free Field Types
 
@@ -114,7 +131,8 @@ Buddyform comes stacked with crowd favorite third-party integrations – email s
 * Posts 2 Posts – Efficient many-to-many connections between posts, pages, custom post types, users.
 * WC Vendors – BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products.
 * Geo My WP
-* .. and many more!
+
+Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
 
 ##WITH BUDDYFORM YOU CAN CREATE
