@@ -69,17 +69,17 @@ Display a login form or a logout button if the user is logged in.
 
 #### Display a Form
 Use this shortcode if you wanna show a form on frontend.
-> [ bf form_slug="YOUR-FORM-SLUG"]
+> [bf form_slug="YOUR-FORM-SLUG"]
 
 #### Display Submissions
 Use this shortcode if you wannan show a list of entries belongs to a Form. 
 The attribute "list_posts_style" is optional and its possible values are "table" or "list"
-[ bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
+> [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
 #### Link to Form
 This shortcode will create a link to the form for creating or editing submissions.
 The attribute "label" is optional (default value is "Add New").
-> [ bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
+> [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
 
 #### Link to User Posts
 For logged in users you can use the following shortcode to display their submissions. 
@@ -92,32 +92,21 @@ For logged in users you can use the following shortcode to display a the list of
 
 ####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
 
----
----
-
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
 ### Guest Posts Submission Management in WordPress
-#### Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
+Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
----
-
 ### Display Your Website Data Anywhere You Choose
-#### Make all information submitted through a form easily accessible from wherever you like. 
+Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
----
-
 ### Publishing Content in BuddyPress & BuddyBoss Made Easy.
-#### Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
+Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
 [Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
 #### More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
-
-
----
----
 
 #### Form Builder Features
 * Drag and Drop Forms Builder
@@ -169,15 +158,11 @@ For logged in users you can use the following shortcode to display a the list of
 * Date
 * more Fields available by Add-Ons!
 
----
-
 ### Your Data Protection is Our Priority 
 Buddyform is Full GDPR compliant Wordpress Form Builder.
 
 #### You get Privacy by Design
 With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
-
----
 
 #### Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
@@ -187,8 +172,6 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Enable/Disable comments related to the submitted content,  Frontend Revision for users
 * Overwrite the WordPress default Registration Form and Page
 * Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
-
----
 
 ### Integrate with other Plugins
 ** BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
@@ -202,8 +185,6 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 ** Geo My WP
 
 #### Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
-
----
 
 ### List of Forms
 * Contact Forms – Collect leads and customer support data
