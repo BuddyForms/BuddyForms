@@ -45,6 +45,7 @@ A simple drag and drop form builder with ready to use form templates that give y
 * Define the Permission for an User Role and grand Create Edit and Delete Rights
 * Define Moderators to manage submissions from the frontend'
 
+
 ###Full Gutenberg Support 
 
 #### Embed Forms
@@ -59,15 +60,16 @@ Link to form endpoints or user posts lists for every post form with an attached 
 #### Login/ Logout Form
 Display a login form or a logout button if the user is logged in.
 
+
 ### Shortcodes
 
 #### Display a Form
 Use this shortcode if you wanna show a form on frontend. Don't forget to change YOUR-FORM-SLUG to your own form slug.
-*[bf form_slug="YOUR-FORM-SLUG"]
+* [bf form_slug="YOUR-FORM-SLUG"]
 
 #### Display Submissions
 Use this shortcode if you wannan show a list of entries belongs to a Form. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "list_posts_style" is optional and its possible values ​​are "table" or "list" (default).
-*[bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
+* [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
 #### Link to Form
 This shortcode will create a link to the form for creating or editing submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "Add New").
@@ -75,12 +77,11 @@ This shortcode will create a link to the form for creating or editing submission
 
 #### Link to User Posts
 For logged in users you can use the following shortcode to display their submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "View").
+* [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
 
-#### [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
-
-User Posts List
+#### User Posts List
 For logged in users you can use the following shortcode to display a the list of posts. Don't forget to change YOUR-FORM-SLUG to your own form slug.
-*[bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
+* [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
 
 ---
 
@@ -102,7 +103,7 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 
 ---
 
-### Form Builder Features
+#### Form Builder Features
 * Drag and Drop Forms Builder
 * Form Designer to Layout your forms with options and custom css
 * Form Grid to sort form elements in a grid
@@ -171,16 +172,18 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Overwrite the WordPress default Registration Form and Page
 * Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
-###Integrate with other Plugins
+####Integrate with other Plugins
 * BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
 * Ultimate Member – Submit and manage posts from your Ultimate Member Profile
-* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-* Pods Forms
+* ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* Pods
 * MailPoed
 * WooCommerce – Build your own marketplace with user-submitted products
 * WooCommerce Simple Auctions – Create and manage auctions via front end
 * HubSpot
 * Geo My WP
+
+Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
 ---
 
@@ -198,8 +201,6 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 * Marketplace – Sell and purchase products from different vendors and list all the product features
 * Content Forms for any kind of user generated content, user submitted posts
-
-Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
