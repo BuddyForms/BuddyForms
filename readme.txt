@@ -47,7 +47,7 @@ A simple drag and drop form builder with ready to use form templates that give y
 * Define Moderators to manage submissions from the frontend'
 
 
-###Full Gutenberg Support 
+### Full Gutenberg Support 
 
 #### Embed Forms
 Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar.
@@ -88,19 +88,19 @@ For logged in users you can use the following shortcode to display a the list of
 
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
-#### Guest Posts Submission Management in WordPress
-Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
+### Guest Posts Submission Management in WordPress
+####Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-#### Display Your Website Data Anywhere You Choose
-Make all information submitted through a form easily accessible from wherever you like. 
+### Display Your Website Data Anywhere You Choose
+####Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
 #### Publishing Content in BuddyPress & BuddyBoss Made Easy.
-Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
+####Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
 [Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
+#### More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
 
 ---
 
@@ -156,15 +156,15 @@ More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solution
 
 ---
 
-###Your Data Protection is Our Priority 
+### Your Data Protection is Our Priority 
 Buddyform is Full GDPR compliant Wordpress Form Builder.
 
-####You get Privacy by Design
+#### You get Privacy by Design
 With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
 
 ---
 
-####Easy to navigate and User-friendly interface.
+#### Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
 * Create registration funnels and ask to create a password after clicking on the activation link.
 * Create forms for any kind of user generated content.
@@ -173,29 +173,31 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Overwrite the WordPress default Registration Form and Page
 * Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
-####Integrate with other Plugins
-* BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
-* Ultimate Member – Submit and manage posts from your Ultimate Member Profile
-* ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-* Pods
-* MailPoed
-* WooCommerce – Build your own marketplace with user-submitted products
-* WooCommerce Simple Auctions – Create and manage auctions via front end
-* HubSpot
-* Geo My WP
+---
 
-Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
+### Integrate with other Plugins
+** BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
+** Ultimate Member – Submit and manage posts from your Ultimate Member Profile
+** ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+** Pods
+** MailPoed
+** WooCommerce – Build your own marketplace with user-submitted products
+** WooCommerce Simple Auctions – Create and manage auctions via front end
+** HubSpot
+** Geo My WP
+
+#### Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
 ---
 
-###List of Forms
+### List of Forms
 * Contact Forms – Collect leads and customer support data
 * Registration Forms – Sign-up users to your webpage
 * Profile Forms – Let your user update there profile information.
 * Login Forms – Grant users access to restricted content
 * Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 
-###List of User Examples
+### List of User Examples
 * Online Directories – Crowdsource categorized data from your community
 * Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
 * News Magazines – Create single articles through collaborative writing among a team of editors
