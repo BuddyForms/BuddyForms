@@ -65,39 +65,44 @@ Display a login form or a logout button if the user is logged in.
 ### Shortcodes
 
 #### Display a Form
-Use this shortcode if you wanna show a form on frontend. Don't forget to change YOUR-FORM-SLUG to your own form slug.
-* [bf form_slug="YOUR-FORM-SLUG"]
+Use this shortcode if you wanna show a form on frontend.
+> [bf form_slug="YOUR-FORM-SLUG"]
 
 #### Display Submissions
-Use this shortcode if you wannan show a list of entries belongs to a Form. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "list_posts_style" is optional and its possible values ​​are "table" or "list" (default).
-* [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
+Use this shortcode if you wannan show a list of entries belongs to a Form. 
+The attribute "list_posts_style" is optional and its possible values are "table" or "list"
+> [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
 #### Link to Form
-This shortcode will create a link to the form for creating or editing submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "Add New").
-* [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
+This shortcode will create a link to the form for creating or editing submissions.
+The attribute "label" is optional (default value is "Add New").
+> [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
 
 #### Link to User Posts
-For logged in users you can use the following shortcode to display their submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "View").
-* [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
+For logged in users you can use the following shortcode to display their submissions. 
+The attribute "label" is optional (default value is "View").
+> [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
 
 #### User Posts List
-For logged in users you can use the following shortcode to display a the list of posts. Don't forget to change YOUR-FORM-SLUG to your own form slug.
-* [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
+For logged in users you can use the following shortcode to display a the list of posts.
+> [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
+
+####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
 
 ---
 
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
 ### Guest Posts Submission Management in WordPress
-####Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
+#### Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
 ### Display Your Website Data Anywhere You Choose
-####Make all information submitted through a form easily accessible from wherever you like. 
+#### Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
-#### Publishing Content in BuddyPress & BuddyBoss Made Easy.
-####Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
+### Publishing Content in BuddyPress & BuddyBoss Made Easy.
+#### Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
 [Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
 #### More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
