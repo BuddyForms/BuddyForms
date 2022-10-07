@@ -45,6 +45,43 @@ A simple drag and drop form builder with ready to use form templates that give y
 * Define the Permission for an User Role and grand Create Edit and Delete Rights
 * Define Moderators to manage submissions from the frontend'
 
+###Full Gutenberg Support 
+
+#### Embed Forms
+Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar.
+
+#### List Submissions
+You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.
+
+#### Embed Navigation
+Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder.
+
+#### Login/ Logout Form
+Display a login form or a logout button if the user is logged in.
+
+### Shortcodes
+
+#### Display a Form
+Use this shortcode if you wanna show a form on frontend. Don't forget to change YOUR-FORM-SLUG to your own form slug.
+*[bf form_slug="YOUR-FORM-SLUG"]
+
+#### Display Submissions
+Use this shortcode if you wannan show a list of entries belongs to a Form. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "list_posts_style" is optional and its possible values ​​are "table" or "list" (default).
+*[bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
+
+#### Link to Form
+This shortcode will create a link to the form for creating or editing submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "Add New").
+* [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
+
+#### Link to User Posts
+For logged in users you can use the following shortcode to display their submissions. Don't forget to change YOUR-FORM-SLUG to your own form slug. The attribute "label" is optional (default value is "View").
+
+#### [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
+
+User Posts List
+For logged in users you can use the following shortcode to display a the list of posts. Don't forget to change YOUR-FORM-SLUG to your own form slug.
+*[bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
+
 ---
 
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
@@ -195,18 +232,14 @@ Yes, you can add login and registration Form Elements to any form and ask your u
 == Documentation & Support ==
 Documentation: [docs.buddyforms.com](http://docs.buddyforms.com/)
 
-If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard and the Help Center!
+If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard and the Help Center! Our goal is to help you, that's why if you have any questions or concerns, on our website you can find all the information related to BuddyForms.
 
 == Screenshots ==
 
-1. Form Wizard - The easy way to create forms
-2. Form Builder - Expert view to setup individual forms with endless possibilities
-3. Form Settings -  Form Builder Settings View
-4. Forms Overview in Admin
-5. EmbedForm the form in Pages via Shortcodes
-6. Frontend Form Example of a Simple Post Form
-7. Form Submissions in the admin backend
-
+1. Embed Forms - The easy way to embed forms
+2. List Submissions - Display the user Submissions
+3. Embed Navigation -  Link to forms and Submissions
+4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
 = 2.7.2 - 08 Sep 2022 =
