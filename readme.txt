@@ -71,7 +71,7 @@ Use this shortcode if you wanna show a form on frontend.
 #### Display Submissions
 Use this shortcode if you wannan show a list of entries belongs to a Form. 
 The attribute "list_posts_style" is optional and its possible values are "table" or "list"
-> [ bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
+[ bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
 #### Link to Form
 This shortcode will create a link to the form for creating or editing submissions.
