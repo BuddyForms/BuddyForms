@@ -29,6 +29,7 @@ A simple drag and drop form builder with ready to use form templates that give y
 * User meta Form
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
+* Change Password Form
 
 #### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
