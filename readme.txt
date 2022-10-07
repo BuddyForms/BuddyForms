@@ -1,6 +1,6 @@
 === Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
-Tags: post form, registation form, content form, profile form, guest post, submissions, user submissions, user frontend, user profiles frontend forms, 
+Tags: post form, registation form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles, frontend post
 Requires at least: 4.0
 Tested up to: 6.0.2
 Stable tag: 2.7.2
