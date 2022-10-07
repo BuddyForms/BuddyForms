@@ -14,7 +14,7 @@ From Contact Forms to Post Forms for User Generated Content and Registration For
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-* A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer to customize any aspect to your needs.
+A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer to customize any aspect to your needs.
 
 #### Supported Frontend Form Types
 * Contact Form
@@ -23,40 +23,39 @@ From Contact Forms to Post Forms for User Generated Content and Registration For
 * Registration Form
 * Profile Form
 * Image Upload Form
-* media Upload Form
+* Media Upload Form
 * Mixed Custom Post Type and Registation Form
 * Post meta Form
-* User meat Form
+* User meta Form
 * Profile Form for WordPress user data
 * Author Forms for WordPress Author data like Bio
 
-#### BuddyFormms Deeply Tested Solutions you can Trust
+## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
-##Guest Posts Submission Management in WordPress
+####Guest Posts Submission Management in WordPress
 Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-
-##Display Your Website Data Anywhere You Choose
+####Display Your Website Data Anywhere You Choose
 Make all information submitted through a form easily accessible from wherever you like. 
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
-
-##Publishing Content in BuddyPress & BuddyBoss Made Easy.
+####Publishing Content in BuddyPress & BuddyBoss Made Easy.
 Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
 [Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-More Supported Soluztions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
+More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
 
-#### Form Builder Features
+### Form Builder Features
 * Drag and Drop Forms Builder
 * Form Designer to Layout your forms with options and custom css
 * Form Grid to sort form elements in a grid
-* Submission Manager. Find All Forms and there submissions in one place. Post Forms Registration and Contact Forms
+* Submission Manager. Find All Forms and there submissions in one place. Post Forms, Registration Forms and Contact Forms
 
 #### User Submitted Content
 * Ideal for guest posts. Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
 * Frontend generated content made possible with Endpoints and ShortCodes for easy access
+* All the tools you need to manage guste posts, Full frontend Moderation Controles and Frontend Post Management
 
 
 ### Free Field Types
