@@ -3,7 +3,7 @@
 // Generate the Preview
 add_action( 'init', 'buddyforms_preview_form' );
 function buddyforms_preview_form() {
-	if ( ! empty ( $_REQUEST['form_slug'] ) AND ! empty ( $_REQUEST['preview'] ) ) { //I
+	if ( ! empty( $_REQUEST['form_slug'] ) and ! empty( $_REQUEST['preview'] ) ) { // I
 
 		// Get the Preview Page
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
@@ -26,8 +26,7 @@ function buddyforms_preview_form() {
 function buddyforms_append_preview_page( $content ) {
 
 	// GHet the form slug from the url parameter
-	$form_slug = $_REQUEST['form_slug'];
-
+	$form_slug = filter_var( wp_unslash( $_REQUEST['form_slug'] ), FILTER_SANITIZE_STRING );
 	// Create the array for the form
 	$args = array(
 		'form_slug' => $form_slug,

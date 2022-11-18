@@ -48,11 +48,12 @@ abstract class Element extends Base {
 	 */
 	public function __construct( $label, $name, array $properties = null, array $field_options = null ) {
 		$configuration = array(
-			"label" => $label,
-			"name"  => $name
+			'label' => $label,
+			'name'  => $name,
 		);
 
-		/*Merge any properties provided with an associative array containing the label
+		/*
+		Merge any properties provided with an associative array containing the label
 		and name properties.*/
 		if ( is_array( $properties ) ) {
 			$configuration = array_merge( $configuration, $properties );
@@ -67,16 +68,18 @@ abstract class Element extends Base {
 		$this->configure( $configuration );
 	}
 
-	/*When an element is serialized and stored in the session, this method prevents any non-essential
+	/*
+	When an element is serialized and stored in the session, this method prevents any non-essential
 	information from being included.*/
 	/**
 	 * @return array
 	 */
 	public function __sleep() {
-		return array( "_attributes", "label", "validation" );
+		return array( '_attributes', 'label', 'validation' );
 	}
 
-	/*If an element requires external stylesheets, this method is used to return an
+	/*
+	If an element requires external stylesheets, this method is used to return an
 	array of entries that will be applied before the form is rendered.*/
 	public function getCSSFiles() {
 	}
@@ -88,7 +91,8 @@ abstract class Element extends Base {
 		return $this->_errors;
 	}
 
-	/*If an element requires external javascript file, this method is used to return an
+	/*
+	If an element requires external javascript file, this method is used to return an
 	array of entries that will be applied after the form is rendered.*/
 	public function getJSFiles() {
 	}
@@ -152,7 +156,8 @@ abstract class Element extends Base {
 		return false;
 	}
 
-	/*The isValid method ensures that the provided value satisfies each of the
+	/*
+	The isValid method ensures that the provided value satisfies each of the
 	element's validation rules.*/
 
 	/**
@@ -162,7 +167,8 @@ abstract class Element extends Base {
 		return $this->shortDesc;
 	}
 
-	/*If an element requires jQuery, this method is used to include a section of javascript
+	/*
+	If an element requires jQuery, this method is used to include a section of javascript
 	that will be applied within the jQuery(document).ready(function() {}); section after the
 	form has been rendered.*/
 
@@ -172,58 +178,57 @@ abstract class Element extends Base {
 	 *
 	 * @return bool
 	 * @since 2.4.6 added the $element parameter
-	 *
 	 */
 	public function isValid( $value ) {
 		$valid = true;
 		if ( ! empty( $this->validation ) ) {
 			if ( ! empty( $this->label ) ) {
 				$element = $this->label;
-			} elseif ( ! empty( $this->_attributes["placeholder"] ) ) {
-				$element = $this->_attributes["placeholder"];
+			} elseif ( ! empty( $this->_attributes['placeholder'] ) ) {
+				$element = $this->_attributes['placeholder'];
 			} else {
-				$element = $this->_attributes["name"];
+				$element = $this->_attributes['name'];
 			}
 
-			if ( substr( $element, - 1 ) == ":" ) {
+			if ( substr( $element, - 1 ) == ':' ) {
 				$element = substr( $element, 0, - 1 );
 			}
 
 			$global_error = ErrorHandler::get_instance();
-			$form_slug    = $this->getAttribute('data-form');
-			if(empty($form_slug)){
-				$form_slug = $this->_form->getAttribute('id');
+			$form_slug    = $this->getAttribute( 'data-form' );
+			if ( empty( $form_slug ) ) {
+				$form_slug = $this->_form->getAttribute( 'id' );
 			}
-			$slug         = $this->getAttribute( 'name' );
+			$slug = $this->getAttribute( 'name' );
 			if ( strlen( $value > 0 ) ) {
 				if ( ! empty( $this->_attributes['minlength'] ) && strlen( $value ) < $this->_attributes['minlength'] ) {
-					$message = sprintf( "%s should be at least %s characters", $element, $this->_attributes['minlength'] );
+					$message = sprintf( '%s should be at least %s characters', $element, $this->_attributes['minlength'] );
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
 					} else {
 						$this->_errors[] = $message;
 					}
-					$valid           = false;
+					$valid = false;
 				}
 				if ( ! empty( $this->_attributes['maxlength'] ) && strlen( $value ) > $this->_attributes['maxlength'] ) {
-					$message = sprintf( "%s should be not more then %s characters", $element, $this->_attributes['maxlength'] );
+					$message = sprintf( '%s should be not more then %s characters', $element, $this->_attributes['maxlength'] );
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
 					} else {
 						$this->_errors[] = $message;
 					}
-					$valid           = false;
+					$valid = false;
 				}
 			}
 
 			foreach ( $this->validation as $validation ) {
 				if ( ! $validation->isValid( $value, $this ) ) {
-					//In the error message, %element% will be replaced by the element's label or name if label is not provided.
+					// In the error message, %element% will be replaced by the element's label or name if label is not provided.
 					$message = $validation->getMessage();
 					if ( ! empty( $form_slug ) ) {
 						$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $message, $slug, $form_slug ) );
 					} else {
-						$this->_errors[] = str_replace( "%element%", $element, $message );
+						$this->_errors[] = str_replace( '%element%', $element, $message );
 					}
 					$valid = false;
 				}
@@ -233,32 +238,34 @@ abstract class Element extends Base {
 		return $valid;
 	}
 
-	/*Elements that have the jQueryOptions property included (Date, Sort, Checksort, and Color)
+	/*
+	Elements that have the jQueryOptions property included (Date, Sort, Checksort, and Color)
 	can make use of this method to render out the element's appropriate jQuery options.*/
 
 	public function jQueryDocumentReady() {
 	}
 
-	/*Many of the included elements make use of the <input> tag for display.  These include the Hidden, Textbox,
+	/*
+	Many of the included elements make use of the <input> tag for display.  These include the Hidden, Textbox,
 	Password, Date, Color, Button, Email, and File element classes.  The project's other element classes will
 	override this method with their own implementation.*/
 
 	public function jQueryOptions() {
 		if ( ! empty( $this->jQueryOptions ) ) {
-			$options = "";
+			$options = '';
 			foreach ( $this->jQueryOptions as $option => $value ) {
 				if ( ! empty( $options ) ) {
-					$options .= ", ";
+					$options .= ', ';
 				}
 				$options .= $option . ': ';
 				/*When javascript needs to be applied as a jQuery option's value, no quotes are needed.*/
-				if ( is_string( $value ) && substr( $value, 0, 3 ) == "js:" ) {
+				if ( is_string( $value ) && substr( $value, 0, 3 ) == 'js:' ) {
 					$options .= substr( $value, 3 );
 				} else {
 					$options .= var_export( $value, true );
 				}
 			}
-			echo "{ ", $options, " }";
+			echo wp_kses( '{ ', $options, ' }', buddyforms_wp_kses_allowed_atts() );
 		}
 	}
 
@@ -266,18 +273,20 @@ abstract class Element extends Base {
 	 * If an element requires inline stylesheet definitions, this method is used send them to the browser before the form is rendered.
 	 */
 	public function render() {
-		echo $this->html();
+		echo wp_kses( $this->html(), buddyforms_wp_kses_allowed_atts() );
 	}
 
 	/**
 	 * Get the element html instead of render it
+	 *
 	 * @return string
 	 */
 	public function html() {
 		return '<input' . $this->getAttributes() . '/>';
 	}
 
-	/*If an element requires javascript to be loaded, this method is used send them to the browser after
+	/*
+	If an element requires javascript to be loaded, this method is used send them to the browser after
 	the form is rendered.*/
 
 	public function renderCSS() {
@@ -302,7 +311,7 @@ abstract class Element extends Base {
 		if ( ! empty( $required ) ) {
 
 			$this->validation[]            = new Validation_Required( '', $this->field_options );
-			$this->_attributes["required"] = "";
+			$this->_attributes['required'] = '';
 		}
 
 	}
@@ -322,7 +331,7 @@ abstract class Element extends Base {
 			if ( $object instanceof Validation ) {
 				$this->validation[] = $object;
 				if ( $object instanceof Validation_Required ) {
-					$this->_attributes["required"] = "";
+					$this->_attributes['required'] = '';
 				}
 			}
 		}

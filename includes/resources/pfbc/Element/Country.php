@@ -12,7 +12,7 @@ class Element_Country extends Element_Select {
 	 * @param $label
 	 * @param $name
 	 * @param array|null $properties
-	 * @param null $field_options
+	 * @param null       $field_options
 	 */
 	public function __construct( $label, $name, array $properties = null, $field_options = null ) {
 		self::init_country_list();
@@ -298,16 +298,16 @@ class Element_Country extends Element_Select {
 
 	public function render() {
 		$this->appendAttribute( 'class', 'c-select' );
-		if ( isset( $this->_attributes["value"] ) ) {
-			if ( ! is_array( $this->_attributes["value"] ) ) {
-				$this->_attributes["value"] = array( $this->_attributes["value"] );
+		if ( isset( $this->_attributes['value'] ) ) {
+			if ( ! is_array( $this->_attributes['value'] ) ) {
+				$this->_attributes['value'] = array( $this->_attributes['value'] );
 			}
 		} else {
-			$this->_attributes["value"] = array();
+			$this->_attributes['value'] = array();
 		}
 
-		if ( ! empty( $this->_attributes["multiple"] ) && substr( $this->_attributes["name"], - 2 ) != "[]" ) {
-			$this->_attributes["name"] .= "[]";
+		if ( ! empty( $this->_attributes['multiple'] ) && substr( $this->_attributes['name'], - 2 ) != '[]' ) {
+			$this->_attributes['name'] .= '[]';
 		}
 
 		$is_required = $this->isRequired();
@@ -318,14 +318,14 @@ class Element_Country extends Element_Select {
 
 		$labels_layout = isset( $buddyforms[ $form_slug ]['layout']['labels_layout'] ) ? $buddyforms[ $form_slug ]['layout']['labels_layout'] : 'inline';
 
-		echo '<select', $this->getAttributes( array( "value", "selected" ) ), '>';
+		echo '<select', wp_kses( $this->getAttributes( array( 'value', 'selected' ) ), buddyforms_wp_kses_allowed_atts() ), '>';
 		$selected = false;
 		$i        = 0;
 		foreach ( $this->options as $value => $text ) {
 			$value = $this->getOptionValue( $value );
-			echo '<option value="', $this->filter( $value ), '"';
-			if ( in_array( $value, $this->_attributes["value"] ) ) {
-				if ( $selected && empty ( $this->_attributes["multiple"] ) ) {
+			echo '<option value="', esc_attr( $this->filter( $value ) ), '"';
+			if ( in_array( $value, $this->_attributes['value'] ) ) {
+				if ( $selected && empty( $this->_attributes['multiple'] ) ) {
 					continue;
 				}
 				echo ' selected="selected"';
@@ -334,7 +334,7 @@ class Element_Country extends Element_Select {
 			if ( $i == 0 && empty( $value ) && $is_required && $labels_layout === 'inline' ) {
 				$text = $text . ' ' . $this->getRequiredPlainSignal();
 			}
-			echo '>', $text, '</option>';
+			echo '>', wp_kses( $text, buddyforms_wp_kses_allowed_atts() ), '</option>';
 			$i ++;
 		}
 		echo '</select>';

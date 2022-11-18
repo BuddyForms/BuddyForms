@@ -16,26 +16,30 @@ function buddyforms_add_meta_boxes() {
 	}
 
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-		add_meta_box( 'buddyforms_form_go_pro', __( "Awesome Premium Features", 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
+		add_meta_box( 'buddyforms_form_go_pro', __( 'Awesome Premium Features', 'buddyforms' ), 'buddyforms_metabox_go_pro', 'buddyforms', 'side', 'low' );
 	}
 
 	if ( is_array( $buddyform ) ) {
-		add_meta_box( 'buddyforms_form_shortcodes', __( "Shortcodes", 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
+		add_meta_box( 'buddyforms_form_shortcodes', __( 'Shortcodes', 'buddyforms' ), 'buddyforms_metabox_shortcodes', 'buddyforms', 'side', 'low' );
 	}
 
 	// Add the FormBuilder and the Form Setup Metabox
-	add_meta_box( 'buddyforms_form_elements', __( "Form Builder", 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_setup', __( "Form Setup", 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
-	add_meta_box( 'buddyforms_form_designer', __( "Form Designer", 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
+	add_meta_box( 'buddyforms_form_elements', __( 'Form Builder', 'buddyforms' ), 'buddyforms_metabox_form_elements', 'buddyforms', 'normal', 'high' );
+	add_meta_box( 'buddyforms_form_setup', __( 'Form Setup', 'buddyforms' ), 'buddyforms_metabox_form_setup', 'buddyforms', 'normal', 'high' );
+	add_meta_box( 'buddyforms_form_designer', __( 'Form Designer', 'buddyforms' ), 'buddyforms_metabox_form_designer', 'buddyforms', 'normal', 'high' );
 
 	// NinjaForms jQuery dialog is different from core so we remove the NinjaForms media buttons on the BuddyForms views
 	buddyforms_remove_filters_for_anonymous_class( 'media_buttons', 'NF_Admin_AddFormModal', 'insert_form_tinymce_buttons', 10 );
 }
 
-add_filter( "get_user_option_meta-box-order_buddyforms", function () {
-	remove_all_actions( 'edit_form_advanced' );
-	remove_all_actions( 'edit_page_form' );
-}, PHP_INT_MAX );
+add_filter(
+	'get_user_option_meta-box-order_buddyforms',
+	function () {
+		remove_all_actions( 'edit_form_advanced' );
+		remove_all_actions( 'edit_page_form' );
+	},
+	PHP_INT_MAX
+);
 
 /**
  * Add the 'buddyforms_metabox' class to all buddyforms related metaboxes to hide the rest.
@@ -154,7 +158,7 @@ function buddyforms_wp_insert_post_data( $data, $postarr ) {
 	}
 
 	if ( ! empty( $data['post_type'] ) && $data['post_type'] === 'buddyforms' && ! empty( $_POST['buddyforms_options'] ) && ! empty( $_POST['buddyforms_options']['slug'] ) ) {
-		$new_slug = sanitize_title( $_POST['buddyforms_options']['slug'] );
+		$new_slug = sanitize_title( wp_unslash( $_POST['buddyforms_options']['slug'] ) );
 		if ( ! empty( $data['post_name'] ) && $data['post_name'] !== $new_slug ) {
 			$result = buddyforms_update_form_slug( $data['post_name'], $new_slug );
 			if ( $result ) {
@@ -188,7 +192,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 		return;
 	}
 
-	$buddyform = $_POST['buddyforms_options'];
+	$buddyform = buddyforms_sanitize( '', wp_unslash( $_POST['buddyforms_options'] ) );
 
 	// Add post title as form name and post name as form slug.
 	$buddyform['name'] = $post->post_title;
@@ -220,11 +224,10 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 						$role->remove_cap( $capability );
 					}
 				}
-
 			}
 		}
 
-		foreach ( $_POST['buddyforms_roles'] as $form_role => $capabilities ) {
+		foreach ( buddyforms_sanitize( '', wp_unslash( $_POST['buddyforms_roles'] ) ) as $form_role => $capabilities ) {
 			$role = get_role( $form_role );
 			foreach ( $capabilities as $cap ) {
 				if ( buddyforms_core_fs()->is_not_paying() && ( $cap === 'draft' || $cap === 'all' || $cap === 'admin-submission' ) ) {
@@ -237,7 +240,6 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 				$role->add_cap( $cap_slug );
 			}
 		}
-
 	}
 
 	// Regenerate the global $buddyforms.
@@ -284,16 +286,18 @@ add_action( 'transition_post_status', 'buddyforms_transition_post_status_regener
 
 function buddyforms_regenerate_global_options() {
 	// get all forms and update the global
-	$posts = get_posts( array(
-		'numberposts'      => - 1,
-		'post_type'        => 'buddyforms',
-		'orderby'          => 'menu_order title',
-		'order'            => 'asc',
-		'suppress_filters' => false,
-		'post_status'      => 'publish'
-	) );
+	$posts = get_posts(
+		array(
+			'numberposts'      => - 1,
+			'post_type'        => 'buddyforms',
+			'orderby'          => 'menu_order title',
+			'order'            => 'asc',
+			'suppress_filters' => false,
+			'post_status'      => 'publish',
+		)
+	);
 
-	$buddyforms_forms = Array();
+	$buddyforms_forms = array();
 
 	if ( $posts ) {
 		foreach ( $posts as $post ) {
@@ -327,52 +331,58 @@ function buddyforms_register_post_type() {
 		'not_found_in_trash' => __( 'No Forms found in Trash', 'buddyforms' ),
 	);
 
-	register_post_type( 'buddyforms', array(
-		'labels'              => $labels,
-		'public'              => false,
-		'show_ui'             => true,
-		'_builtin'            => false,
-		'capability_type'     => 'post',
-		'hierarchical'        => false,
-		'rewrite'             => false,
-		'supports'            => array(
-			'title'
-		),
-		'show_in_menu'        => true,
-		'exclude_from_search' => true,
-		'publicly_queryable'  => false,
-		'menu_icon'           => 'dashicons-buddyforms',
-	) );
+	register_post_type(
+		'buddyforms',
+		array(
+			'labels'              => $labels,
+			'public'              => false,
+			'show_ui'             => true,
+			'_builtin'            => false,
+			'capability_type'     => 'post',
+			'hierarchical'        => false,
+			'rewrite'             => false,
+			'supports'            => array(
+				'title',
+			),
+			'show_in_menu'        => true,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => false,
+			'menu_icon'           => 'dashicons-buddyforms',
+		)
+	);
 
 	// Create BuddyForms post type
 	$labels = array(
 		'name'          => __( 'Submissions', 'buddyforms' ),
 		'singular_name' => __( 'Submissions', 'buddyforms' ),
-//		'add_new'            => __( 'Add New', 'buddyforms' ),
-//		'add_new_item'       => __( 'Add New Form', 'buddyforms' ),
-//		'edit_item'          => __( 'Edit Form', 'buddyforms' ),
-//		'new_item'           => __( 'New Form', 'buddyforms' ),
-//		'view_item'          => __( 'View Form', 'buddyforms' ),
-//		'search_items'       => __( 'Search BuddyForms', 'buddyforms' ),
-//		'not_found'          => __( 'No BuddyForm found', 'buddyforms' ),
-//		'not_found_in_trash' => __( 'No Forms found in Trash', 'buddyforms' ),
+	// 'add_new'            => __( 'Add New', 'buddyforms' ),
+	// 'add_new_item'       => __( 'Add New Form', 'buddyforms' ),
+	// 'edit_item'          => __( 'Edit Form', 'buddyforms' ),
+	// 'new_item'           => __( 'New Form', 'buddyforms' ),
+	// 'view_item'          => __( 'View Form', 'buddyforms' ),
+	// 'search_items'       => __( 'Search BuddyForms', 'buddyforms' ),
+	// 'not_found'          => __( 'No BuddyForm found', 'buddyforms' ),
+	// 'not_found_in_trash' => __( 'No Forms found in Trash', 'buddyforms' ),
 	);
 
-	register_post_type( 'bf_submissions', array(
-		'labels'              => $labels,
-		'public'              => false,
-		'show_ui'             => true,
-		'_builtin'            => false,
-		'capability_type'     => 'posts',
-		'hierarchical'        => false,
-		'rewrite'             => false,
-		'supports'            => false,
-		//'show_in_menu'        => 'edit.php?post_type=buddyforms',
-		'show_in_menu'        => false,
-		'exclude_from_search' => true,
-		'publicly_queryable'  => false,
-		'menu_icon'           => 'dashicons-buddyforms',
-	) );
+	register_post_type(
+		'bf_submissions',
+		array(
+			'labels'              => $labels,
+			'public'              => false,
+			'show_ui'             => true,
+			'_builtin'            => false,
+			'capability_type'     => 'posts',
+			'hierarchical'        => false,
+			'rewrite'             => false,
+			'supports'            => false,
+			// 'show_in_menu'        => 'edit.php?post_type=buddyforms',
+			'show_in_menu'        => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => false,
+			'menu_icon'           => 'dashicons-buddyforms',
+		)
+	);
 
 }
 
@@ -427,7 +437,7 @@ add_filter( 'post_updated_messages', 'buddyforms_form_updated_messages', 999 );
  */
 function set_custom_edit_buddyforms_columns( $columns ) {
 	unset( $columns['date'] );
-	//$columns['slug']               = __( 'Slug', 'buddyforms' );
+	// $columns['slug']               = __( 'Slug', 'buddyforms' );
 	$columns['attached_post_type'] = __( 'Form Type', 'buddyforms' );
 	$columns['attached_page']      = __( 'Logged In User Access', 'buddyforms' );
 	$columns['shortcode']          = __( 'Shortcode', 'buddyforms' );
@@ -449,11 +459,10 @@ function custom_buddyforms_column( $column, $post_id ) {
 	$buddyform = get_post_meta( $post_id, '_buddyforms_options', true );
 
 	switch ( $column ) {
-		case 'slug' :
-			echo $post->post_name;
+		case 'slug':
+			echo wp_kses( $post->post_name, buddyforms_wp_kses_allowed_atts() );
 			break;
-		case 'attached_post_type' :
-
+		case 'attached_post_type':
 			if ( ! isset( $buddyform['form_type'] ) ) {
 				$post_type_html = '<p>' . __( 'Contact Form', 'buddyforms' ) . '</p>';
 			} elseif ( $buddyform['form_type'] == 'contact' ) {
@@ -464,9 +473,9 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$post_type_html = '<p>' . __( 'Registration Form', 'buddyforms' ) . '</p>';
 			}
 
-			echo $post_type_html;
+			echo wp_kses( $post_type_html, buddyforms_wp_kses_allowed_atts() );
 			break;
-		case 'attached_page' :
+		case 'attached_page':
 			if ( isset( $buddyform['attached_page'] ) && empty( $buddyform['attached_page'] ) ) {
 				$attached_page = '<p style="color: red;">' . __( 'No Page Attached', 'buddyforms' ) . '</p>';
 			} elseif ( isset( $buddyform['attached_page'] ) && $attached_page_title = get_the_title( $buddyform['attached_page'] ) ) {
@@ -475,16 +484,16 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$attached_page = 'Off';
 			}
 
-			echo $attached_page;
+			echo wp_kses( $attached_page, buddyforms_wp_kses_allowed_atts() );
 
 			if ( $attached_page != 'Off' ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>
 				<div class="row-actions">
 					<span class="view-form">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'create/' . $post->post_name ?>"><?php _e( 'View Form', 'buddyforms' ) ?></a> |
+						<a target="_blank" href="<?php echo esc_attr( $attached_page_permalink ) . 'create/' . esc_attr( $post->post_name ); ?>"><?php esc_html_e( 'View Form', 'buddyforms' ); ?></a> |
 					</span>
 					<span class="view-entryies">
-						<a target="_blank" href="<?php echo $attached_page_permalink . 'view/' . $post->post_name ?>"><?php _e( 'View Entries', 'buddyforms' ) ?></a>
+						<a target="_blank" href="<?php echo esc_attr( $attached_page_permalink ) . 'view/' . esc_attr( $post->post_name ); ?>"><?php esc_html_e( 'View Entries', 'buddyforms' ); ?></a>
 					</span>
 
 				</div>
@@ -492,7 +501,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 			}
 			break;
 		case 'shortcode':
-			echo '[bf form_slug="' . $post->post_name . '"]';
+			echo '[bf form_slug="' . esc_html( $post->post_name ) . '"]';
 			break;
 	}
 }
@@ -505,7 +514,8 @@ add_action( 'manage_buddyforms_posts_custom_column', 'custom_buddyforms_column',
 function buddyforms_hide_publishing_actions() {
 	global $post;
 
-	if ( get_post_type( $post ) == 'buddyforms' ) { ?>
+	if ( get_post_type( $post ) == 'buddyforms' ) {
+		?>
 		<style type="text/css">
 			.misc-pub-visibility,
 			.misc-pub-curtime,
@@ -536,7 +546,8 @@ function buddyforms_hide_publishing_actions() {
 
 		</style>
 		<?php
-		if ( get_post_type( $post ) == 'buddyforms' && ! isset( $_GET['wizard'] ) || isset( $_GET['wizard'] ) && $_GET['wizard'] != 'done' || ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms' ) ) { ?>
+		if ( get_post_type( $post ) == 'buddyforms' && ! isset( $_GET['wizard'] ) || isset( $_GET['wizard'] ) && $_GET['wizard'] != 'done' || ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'buddyforms' ) ) {
+			?>
 			<script>
 				jQuery(document).ready(function (jQuery) {
 					jQuery('body').find('h1:first').css('line-height', '58px');
@@ -550,13 +561,12 @@ function buddyforms_hide_publishing_actions() {
 					}
 					echo "var h1 = jQuery('body').find('h1:first');";
 
-					echo "h1.html('" . $tmp . "');";
-
+					echo "h1.html('" . wp_kses( $tmp, buddyforms_wp_kses_allowed_atts() ) . "');";
 
 					$tmp = '<small id="buddyforms_version" style="line-height: 1; margin-top: -10px; color: #888; font-size: 13px; padding-top: 30px; float:right;">' . buddyforms_get_version_type() . ' ' . __( 'Version', 'buddyforms' ) . ' ' . BUDDYFORMS_VERSION . '</small>';
-					echo "h1.append('" . $tmp . "');";
+					echo "h1.append('" . wp_kses( $tmp, buddyforms_wp_kses_allowed_atts() ) . "');";
 
-					//echo "jQuery('" . $tmp . "').insertAfter(h1);";
+					// echo "jQuery('" . $tmp . "').insertAfter(h1);";
 					?>
 					jQuery('h1').show();
 				});
@@ -599,36 +609,40 @@ function buddyforms_add_button_to_submit_box() {
 		<?php if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
 			<div id="frontend-actions">
 				<a class="button button-large bf_button_action" target="_blank"
-				   href="<?php echo $base ?>/?page_id=<?php echo $preview_page_id ?>&preview=true&form_slug=<?php echo $post->post_name ?>"><span
-						class="dashicons dashicons-visibility"></span> <?php _e( 'Preview Form', 'buddyforms' ) ?>
+				   href="<?php echo esc_attr( $base ); ?>/?page_id=<?php echo esc_attr( $preview_page_id ); ?>&preview=true&form_slug=<?php echo esc_attr( $post->post_name ); ?>"><span
+						class="dashicons dashicons-visibility"></span> <?php esc_html_e( 'Preview Form', 'buddyforms' ); ?>
 				</a>
 			</div>
 		<?php } ?>
 		<?php if ( isset( $buddyform['attached_page'] ) && isset( $buddyform['post_type'] ) && $buddyform['attached_page'] != 'none' ) { ?>
 			<div class="bf-tile actions">
 				<div id="frontend-actions">
-					<label for="button"><?php _e( 'Frontend', 'buddyforms' ) ?></label>
-					<?php 
+					<label for="button"><?php esc_html_e( 'Frontend', 'buddyforms' ); ?></label>
+					<?php
 						$preview_form_url = $attached_page_permalink . 'create/' . $post->post_name . '/';
-						$url_request = curl_init( $preview_form_url );
-						curl_setopt( $url_request,  CURLOPT_RETURNTRANSFER, TRUE );
+						$url_request      = curl_init( $preview_form_url );
+						curl_setopt( $url_request, CURLOPT_RETURNTRANSFER, true );
 						$response = curl_exec( $url_request );
-						$httpCode = curl_getinfo( $url_request, CURLINFO_HTTP_CODE);
-						if( $httpCode == 404 ) {
-							flush_rewrite_rules();
-						}
+						$httpCode = curl_getinfo( $url_request, CURLINFO_HTTP_CODE );
+					if ( $httpCode == 404 ) {
+						flush_rewrite_rules();
+					}
 						curl_close( $url_request );
 					?>
-					<?php echo '<a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'view/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . __( 'Your Submissions', 'buddyforms' ) . '</a>
-                <a class="button button-large bf_button_action" href="' . $attached_page_permalink . 'create/' . $post->post_name . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . __( 'The Form', 'buddyforms' ) . '</a>'; ?>
+					<?php
+					echo '<a class="button button-large bf_button_action" href="' . esc_attr( $attached_page_permalink ) . 'view/' . esc_attr( $post->post_name ) . '/" target="_new"><span class="dashicons dashicons-admin-page"></span> ' . esc_html__( 'Your Submissions', 'buddyforms' ) . '</a>
+                <a class="button button-large bf_button_action" href="' . esc_attr( $attached_page_permalink ) . 'create/' . esc_attr( $post->post_name ) . '/" target="_new"><span class="dashicons dashicons-feedback"></span>    ' . esc_html__( 'The Form', 'buddyforms' ) . '</a>';
+					?>
 				</div>
 			</div>
-		<?php }
-		if ( isset( $post->post_name ) && $post->post_name != '' ) { ?>
+			<?php
+		}
+		if ( isset( $post->post_name ) && $post->post_name != '' ) {
+			?>
 			<div class="bf-tile actions">
 				<div id="admin-actions">
-					<label for="button"><?php _e( 'Admin', 'buddyforms' ) ?></label>
-					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '"><span class="dashicons dashicons-email"></span> ' . __( 'Submissions', 'buddyforms' ) . '</a>'; ?>
+					<label for="button"><?php esc_html_e( 'Admin', 'buddyforms' ); ?></label>
+					<?php echo '<a class="button button-large bf_button_action" href="edit.php?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . esc_attr( $post->post_name ) . '"><span class="dashicons dashicons-email"></span> ' . esc_html__( 'Submissions', 'buddyforms' ) . '</a>'; ?>
 				</div>
 			</div>
 		<?php } ?>
@@ -679,7 +693,7 @@ function buddyforms_add_action_buttons( $actions, $post ) {
 		$preview_page_id = get_option( 'buddyforms_preview_page', true );
 
 		$actions['export']       = '<a href="' . esc_url( $url ) . '">' . __( 'Export', 'buddyforms' ) . '</a>';
-		$actions['submissions']  = '<a href="?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '">' . __( "View Submissions", "buddyforms" ) . '</a>';
+		$actions['submissions']  = '<a href="?post_type=buddyforms&page=buddyforms_submissions&form_slug=' . $post->post_name . '">' . __( 'View Submissions', 'buddyforms' ) . '</a>';
 		$actions['preview_link'] = '<a target="_blank" href="' . $base . '/?page_id=' . $preview_page_id . '&preview=true&form_slug=' . $post->post_name . '">' . __( 'Preview Form', 'buddyforms' ) . '</a>';
 
 	}
@@ -693,7 +707,7 @@ add_filter( 'post_row_actions', 'buddyforms_add_action_buttons', 10, 2 );
 function buddyforms_export_form() {
 	if ( isset( $_REQUEST['my_action'] ) && 'export_form' == $_REQUEST['my_action'] ) {
 
-		$buddyform_options = get_post_meta( $_REQUEST['post_id'], '_buddyforms_options', true );
+		$buddyform_options = get_post_meta( filter_var( wp_unslash( $_REQUEST['post_id'] ), FILTER_VALIDATE_INT ), '_buddyforms_options', true );
 
 		header( 'Content-Type: application/json' );
 		header( 'Content-Disposition: attachment; filename="BuddyFormsExport.json"' );

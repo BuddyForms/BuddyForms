@@ -14,8 +14,8 @@ class ErrorView_Standard extends ErrorView {
 				foreach ( $all_errors_groups as $code => $errors ) {
 					if ( is_array( $errors ) ) {
 						foreach ( $errors as $error ) {
-							if ( is_array( $error ) ){
-								$all_errors[] = reset($error);
+							if ( is_array( $error ) ) {
+								$all_errors[] = reset( $error );
 							}
 							$all_errors[] = $error;
 						}
@@ -25,7 +25,7 @@ class ErrorView_Standard extends ErrorView {
 				}
 				$size = sizeof( $all_errors );
 
-				$errors_string = implode( "</li><li>", $all_errors );
+				$errors_string = implode( '</li><li>', $all_errors );
 
 				ob_start();
 
@@ -33,14 +33,14 @@ class ErrorView_Standard extends ErrorView {
 				$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/bf-error-container.php';
 
 				// Check if template exist in the child or parent theme and use this path if available
-				if ( $template_file = locate_template( "buddyforms/bf-error-container.php", false, false ) ) {
+				if ( $template_file = locate_template( 'buddyforms/bf-error-container.php', false, false ) ) {
 					$template_path = $template_file;
 				}
 
 				// Do the include
 				include $template_path;
 
-				echo ob_get_clean();
+				echo wp_kses( ob_get_clean(), buddyforms_wp_kses_allowed_atts() );
 			}
 		}
 	}
@@ -50,9 +50,9 @@ class ErrorView_Standard extends ErrorView {
 		$global_bf_error = $global_error->get_global_error();
 		if ( ! empty( $global_bf_error ) ) {
 			if ( $global_bf_error->has_errors() ) {
-				header( "Content-type: application/json" );
+				header( 'Content-type: application/json' );
 				$errors = (array) $global_bf_error->errors;
-				echo wp_json_encode( array( "errors" => $errors ) );
+				echo wp_json_encode( array( 'errors' => $errors ) );
 				die;
 			}
 		}

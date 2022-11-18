@@ -1,14 +1,13 @@
 <?php
 
-if(function_exists('register_block_type')) {
+if ( function_exists( 'register_block_type' ) ) {
 	// Require all needed files
-	require_once( BUDDYFORMS_INCLUDES_PATH . 'gutenberg/shortcodes/shortcodes-to-blocks.php' );
+	require_once BUDDYFORMS_INCLUDES_PATH . 'gutenberg/shortcodes/shortcodes-to-blocks.php';
 }
 /**
  * Add Gutenberg block category "BuddyForms"
  *
  * @since 2.3.1
- *
  */
 function buddyforms_block_category( $categories ) {
 	return array_merge(

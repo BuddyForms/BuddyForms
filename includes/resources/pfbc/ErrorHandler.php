@@ -2,7 +2,7 @@
 
 
 
-include_once 'Error/BuddyForms_Error.php';
+require_once 'Error/BuddyForms_Error.php';
 
 /**
  * Class ErrorHandler
@@ -34,19 +34,18 @@ class ErrorHandler {
 
 	public function __construct() {
 		$this->set_global_error( new BuddyForms_Error( null, null, null, null ) );
-		$this->error_view = new ErrorView_Standard;
+		$this->error_view = new ErrorView_Standard();
 	}
 
 	/**
 	 * Return an instance of this class.
-	 *
 	 *
 	 * @return ErrorHandler A single instance of this class.
 	 */
 	public static function get_instance() {
 		// If the single instance hasn't been set, set it now.
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
