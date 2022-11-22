@@ -30,7 +30,7 @@ class Element_jQueryUIDate extends Element_Textbox {
 	 */
 	public function getJSFiles() {
 		return array(
-			$this->_form->getPrefix() . '://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js',
+			//$this->_form->getPrefix() . '://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js',
 		);
 	}
 

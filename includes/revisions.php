@@ -39,7 +39,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	echo '<div class="revision">';
 	echo '<h3>' . esc_html__( 'Revision', 'buddyforms' ) . '</h3>';
 	echo "<ul class='post-revisions'>\n";
-	echo $rows;
+	echo wp_kses( $rows, buddyforms_wp_kses_allowed_atts() );
 
 	// if the post was previously restored from a revision
 	// show the restore event details

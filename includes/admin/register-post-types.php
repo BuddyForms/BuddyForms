@@ -622,7 +622,6 @@ function buddyforms_add_button_to_submit_box() {
 						$preview_form_url = $attached_page_permalink . 'create/' . $post->post_name . '/';
 						$url_request      = curl_init( $preview_form_url );
 						curl_setopt( $url_request, CURLOPT_RETURNTRANSFER, true );
-						$response = curl_exec( $url_request );
 						$httpCode = curl_getinfo( $url_request, CURLINFO_HTTP_CODE );
 					if ( $httpCode == 404 ) {
 						flush_rewrite_rules();
