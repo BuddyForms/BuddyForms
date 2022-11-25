@@ -23,10 +23,10 @@ function buddyforms_wp_update_user() {
 		$user_args['user_login'] = sanitize_user( wp_unslash( $_POST['user_login'] ) );
 	}
 	if ( ! empty( $_POST['buddyforms_user_pass'] ) ) {
-		$user_args['user_pass'] = $_POST['buddyforms_user_pass'];
+		$user_args['user_pass'] = sanitize_text_field( $_POST['buddyforms_user_pass'] );
 	}
 	if ( ! empty( $_POST['buddyforms_user_pass_confirm'] ) ) {
-		$user_args['user_pass_confirm'] = $_POST['buddyforms_user_pass_confirm'];
+		$user_args['user_pass_confirm'] = sanitize_text_field( $_POST['buddyforms_user_pass_confirm'] );
 	}
 	if ( ! empty( $_POST['user_email'] ) ) {
 		$user_args['user_email'] = sanitize_email( wp_unslash( $_POST['user_email'] ) );
@@ -161,10 +161,10 @@ function buddyforms_wp_insert_user() {
 			? sanitize_text_field( wp_unslash( $_POST['user_last'] ) )
 			: '';
 		$user_pass    = ! empty( $_POST['buddyforms_user_pass'] )
-			? $_POST['buddyforms_user_pass']
+			? sanitize_text_field( $_POST['buddyforms_user_pass'] )
 			: '';
 		$pass_confirm = ! empty( $_POST['buddyforms_user_pass_confirm'] )
-			? $_POST['buddyforms_user_pass_confirm']
+			? sanitize_text_field( $_POST['buddyforms_user_pass_confirm'] )
 			: '';
 		$user_url     = ! empty( $_POST['website'] )
 			? sanitize_url( wp_unslash( $_POST['website'] ) )

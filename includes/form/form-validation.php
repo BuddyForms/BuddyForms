@@ -99,7 +99,7 @@ function buddyforms_sanitize( $type, $value ) {
 			$value = sanitize_text_field( $value );
 			break;
 		case 'user_pass':
-			$value = esc_attr( $value );
+			$value = sanitize_text_field( $value );
 			break;
 		case 'user_website':
 			$value = esc_url( $value );

@@ -71,7 +71,7 @@ function buddyforms_reset_password() {
 					// change the password here
 					$user_data = array(
 						'ID'        => $user_ID,
-						'user_pass' => $_POST['buddyforms_user_pass'],
+						'user_pass' => sanitize_text_field( $_POST['buddyforms_user_pass'] ),
 					);
 					wp_update_user( $user_data );
 

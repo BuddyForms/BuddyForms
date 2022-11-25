@@ -163,7 +163,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
 			// Check if the post to edit match with the form setting
@@ -188,7 +188,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
 
@@ -232,7 +232,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
 		}
@@ -289,7 +289,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				)
 			);
 		} else {
-			return $form_output . $echo_content;
+			return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 		}
 	}
 
@@ -335,9 +335,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
     		 echo wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );     
-		//echo $form_output . $echo_content;
 	} else {
-		return $form_output . $echo_content;
+		return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 	}
 
 	if ( ! empty( $transient_name ) ) {
@@ -484,7 +483,7 @@ function buddyforms_form_response_no_ajax() {
 					$transient_name,
 					array(
 						'error'  => $global_error,
-						'post'   => $_POST,
+						'post'   => buddyforms_sanitize( '', $_POST ),
 						'action' => $action,
 					)
 				);
