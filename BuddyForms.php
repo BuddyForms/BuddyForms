@@ -419,6 +419,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/form-builder/form-templates.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php';
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/pricing-screen.php' );
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php';
@@ -626,9 +627,11 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'menu'                           => array(
 							'slug'       => 'edit.php?post_type=buddyforms',
 							'first-path' => $first_path,
-							'support'    => false,
-							'contact'    => true,
-							'addons'     => true,
+							'support'         => false,
+							'contact'         => true,
+							'addons'          => true,
+							'affiliation'     => false,
+							'pricing'     => false,
 						),
 						'bundle_license_auto_activation' => true,
 					)
