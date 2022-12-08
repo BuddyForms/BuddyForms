@@ -44,7 +44,8 @@ jQuery(document).ready(function (jQuery) {
     var videoHeight = activeTab.width();
     jQuery('#bf-welcome-video-youtube').css('height', videoHeight*0.5);
 
-    jQuery('#menu-posts-buddyforms > ul > li:nth-child(7)').insertAfter('#menu-posts-buddyforms > ul > li:last-child');
+    jQuery('a.bf-go-pro').css('color', '#fca300' );
+    jQuery('a.bf-go-pro').parent().insertAfter('#menu-posts-buddyforms > ul > li:last-child');
 
     jQuery('#purchase').on('click', function (e) {
 

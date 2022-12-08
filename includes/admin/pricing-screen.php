@@ -10,7 +10,11 @@ function buddyforms_freemius_checkout_script() {
 
 
 function buddyforms_bundle_screen_menu() {
-	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Get Bundle!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'buddyforms_bundle_screen_content', 99 );
+	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Go Pro!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'buddyforms_bundle_screen_content', 99 );
+
+    global $submenu;
+    $submenu[ 'edit.php?post_type=buddyforms' ][5][4] = "bf-go-pro";
+
 }
 
 add_action( 'admin_menu', 'buddyforms_bundle_screen_menu', 9999 );
@@ -23,7 +27,7 @@ function buddyforms_bundle_screen_content(){
                 <h3>Upgrade your free version or join our premium membership community of online business owners who build, grow and scale together, with our bundles.</h3>
                 <div class="price-row">
                 <div class="price-col tk-bundle-1">
-                        <p class="bundle-type">Standard</p>
+                        <p class="bundle-type">Pro Version</p>
                         <h4><span id='savings-price'>$59.99</span> <span>/year</span></h4>
                         <h5>BLOCKED WITH THE FREE VERSION? UNLOCK ALL PRO FEATURES.</h5>
                         <h3><span class="fs-bundle-currency">$</span><span class="fs-bundle-price-1">39.99</span> /year</h3>
@@ -38,7 +42,7 @@ function buddyforms_bundle_screen_content(){
                         <button id="purchase">GET NOW</button>
                     </div>
                     <div class="price-col tk-bundle-2">
-                        <p class="bundle-type">Pro</p>
+                        <p class="bundle-type">BuddyForms Bundle</p>
                         <h4><span id='savings-price-2'>$342.84</span> <span>/year</span></h4>
                         <h5>GET ALL BUDDYFORMS PRODUCTS FOR THE PRICE OF ONE.</h5>
                         <h3><span class="fs-bundle-currency">$</span><span class="fs-bundle-price-2">89.99</span> /year</h3>
@@ -71,7 +75,7 @@ function buddyforms_bundle_screen_content(){
                         <button id="purchase-2">GET NOW</button>
                     </div>
                     <div class="price-col tk-bundle-3">
-                        <p class="bundle-type">Themekraft</p>
+                        <p class="bundle-type">TK Membership</p>
                         <h4><span id='savings-price-3'>$602.75</span> <span>/year</span></h4>
                         <h5>PREMIUM PACK WITH ALL OUR PRODUCTS INCLUDED.</h5>
                         <h3><span class="fs-bundle-currency">$</span><span class="fs-bundle-price-3">99.99</span> /year</h3>

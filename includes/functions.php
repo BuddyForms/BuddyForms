@@ -520,24 +520,7 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 	$result = $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
 
 	if ( $echo ) {
-		echo wp_kses(
-			$result,
-			array(
-				'a'    => array(
-					'title' => array(),
-					'class' => array(),
-					'href'  => array(),
-					'id'    => array(),
-					'data'  => array(),
-				),
-				'span' => array(
-					'class'      => array(),
-					'aria-label' => array(),
-					'id'         => array(),
-					'data'       => array(),
-				),
-			)
-		);
+		echo wp_kses( $result, buddyforms_wp_kses_allowed_atts() );
 	} else {
 		return $result;
 	}
@@ -629,40 +612,12 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo wp_kses(
 							apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . esc_attr__( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_attr__( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug ),
-							array(
-								'a'    => array(
-									'title' => array(),
-									'class' => array(),
-									'href'  => array(),
-									'id'    => array(),
-									'data'  => array(),
-								),
-								'span' => array(
-									'class'      => array(),
-									'aria-label' => array(),
-									'id'         => array(),
-									'data'       => array(),
-								),
-							)
+							buddyforms_wp_kses_allowed_atts() 
 						);
 					} else {
 						echo wp_kses(
 							apply_filters( 'buddyforms_loop_edit_post_link', buddyforms_edit_post_link( '<span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_attr__( 'Edit', 'buddyforms' ), '', '', 0, false ), get_the_ID(), $form_slug ),
-							array(
-								'a'    => array(
-									'title' => array(),
-									'class' => array(),
-									'href'  => array(),
-									'id'    => array(),
-									'data'  => array(),
-								),
-								'span' => array(
-									'class'      => array(),
-									'aria-label' => array(),
-									'id'         => array(),
-									'data'       => array(),
-								),
-							)
+							buddyforms_wp_kses_allowed_atts()
 						);
 					}
 					echo '</li>';
@@ -683,25 +638,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 			// Display all actions
 			echo wp_kses(
 				apply_filters( 'buddyforms_the_loop_meta_html', $meta_tmp ),
-				array(
-					'li'   => array(
-						'class' => array(),
-						'id'    => array(),
-					),
-					'a'    => array(
-						'title' => array(),
-						'class' => array(),
-						'href'  => array(),
-						'id'    => array(),
-						'data'  => array(),
-					),
-					'span' => array(
-						'class'      => array(),
-						'aria-label' => array(),
-						'id'         => array(),
-						'data'       => array(),
-					),
-				)
+				buddyforms_wp_kses_allowed_atts()
 			);
 		}
 
@@ -1286,19 +1223,7 @@ function buddyforms_get_all_pages_dropdown( $name, $selected, $id = '', $default
 
 	return wp_kses(
 		wp_dropdown_pages( $args ),
-		array(
-			'select' => array(
-				'class' => array(),
-				'id'    => array(),
-				'name'  => array(),
-			),
-			'option' => array(
-				'class' => array(),
-				'id'    => array(),
-				'name'  => array(),
-				'value' => array(),
-			),
-		)
+		buddyforms_wp_kses_allowed_atts()
 	);
 }
 
@@ -2314,9 +2239,11 @@ function buddyforms_wp_kses_allowed_atts(){
 			'aria-haspopup'             => array(),
 			'aria-hidden'               => array(),
 			'aria-expanded'             => array(),
+			'aria-label'                => array(),
 			'aria-disable'              => array(),
 			'aria-labelledby'           => array(),
 			'tabindex'                  => array(),
+			'data'                      => array(),
 			'data-dz-size'              => array(),
 			'data-dz-name'              => array(),
 			'data-dz-uploadprogress'    => array(),
@@ -2440,6 +2367,7 @@ function buddyforms_wp_kses_allowed_atts(){
 			'title'            => array(),
 			'type'             => array(),
 			'tabindex'         => array(),
+			'data'             => array(),
 			'data-toggle'      => array(),
 			'data-type'        => array(),
 			'data-gdpr-type'   => array(),
