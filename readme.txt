@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
 Requires at least: 4.0
 Tested up to: 6.1.1
-Stable tag: 2.7.3
+Stable tag: 2.7.4
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,17 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
+= 2.7.4 - 8 Dec 2022 =
+* Fixed issue with Custom Login extension.
+* Added new pricing screen.
+* Updated Freemius SDK.
+* Tested up with WordPress 6.1.1
+
+= 2.7.3 - 18 Nov 2022 =
+* Fixed issue with fields validation.
+* Improved forms security.
+* Tested up with WordPress 6.1
+
 = 2.7.2 - 08 Sep 2022 =
 * Improved integration with ACF extension.
 * Tested up to WordPress 6.0.2
