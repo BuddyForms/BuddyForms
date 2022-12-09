@@ -70,6 +70,7 @@ function buddyforms_bundle_screen_content(){
                         </ul>
                         <select id="licenses-2">
                             <option value="1" selected="selected">Single Site License</option>
+                            <option value="5">5-Site License</option>
                             <option value="unlimited">Unlimited Sites License</option>
                         </select>
                         <button id="purchase-2">GET NOW</button>

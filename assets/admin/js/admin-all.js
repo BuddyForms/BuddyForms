@@ -110,7 +110,7 @@ jQuery(document).ready(function (jQuery) {
     jQuery("select#licenses-1").change(function () {
         var selectedCountry = jQuery(this).children("option:selected").val();
         if( selectedCountry == '1'){
-            jQuery('.fs-bundle-price-1').text('49.99');
+            jQuery('.fs-bundle-price-1').text('39.99');
             jQuery('#savings-price').text('59.99');
         }
         if( selectedCountry == '5'){
@@ -128,6 +128,10 @@ jQuery(document).ready(function (jQuery) {
         if( selectedCountry == '1'){
             jQuery('.fs-bundle-price-2').text('89.99');
             jQuery('#savings-price-2').text('342.84');
+        }
+        if( selectedCountry == '5'){
+            jQuery('.fs-bundle-price-2').text('99.99');
+            jQuery('#savings-price-2').text('525.84');
         }
         if( selectedCountry == 'unlimited'){
             jQuery('.fs-bundle-price-2').text('119.99');

@@ -63,7 +63,7 @@ function buddyforms_metabox_form_setup() {
 	// Submission
 	//
 	$element = new Element_Textbox(
-		'<b>' . __( 'From Slug', 'buddyforms' ) . '</b>',
+		'<b>' . __( 'Form Slug', 'buddyforms' ) . '</b>',
 		'buddyforms_options[slug]',
 		array(
 			'value'     => $slug,
