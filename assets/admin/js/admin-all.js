@@ -155,6 +155,12 @@ jQuery(document).ready(function (jQuery) {
         }
     });
 
+    jQuery( ".bundle-list-see-more" ).click(function() {
+        jQuery(".list-bundle-ul").animate({
+            height: "1200"
+        });
+        jQuery(".separator, .bundle-list-see-more").hide();
+    });
 });
 
 

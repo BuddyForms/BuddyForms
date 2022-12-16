@@ -927,6 +927,9 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 		case 'post_excerpt':
 		case 'content':
 			$content    = apply_filters( 'the_content', $post->post_content );
+			if( isset( $_POST['buddyforms_form_content'] ) && ( strpos( $content, $_POST['buddyforms_form_content'] ) == false ) ){
+				$content = $post->post_content;
+			}
 			$content    = str_replace( ']]>', ']]&gt;', $content );
 			$meta_value = strip_shortcodes( $content );
 

@@ -471,8 +471,27 @@ div#buddyforms_template_header_container{
     cursor: pointer;
     transition: background 0.5s;
 }
-.price-col button:hover{
+
+.price-col #purchase-3:hover, .price-col #purchase-2:hover, .price-col #purchase:hover{
     background: #fca300;
+}
+
+.price-col.tk-bundle-1{
+    height: 480px;
+}
+
+button.bundle-list-see-more{
+    background: none;
+    border: none;
+    padding-top: 0px;
+}
+
+div.separator{
+    display: block;
+    width: 80%;
+    height: 3px;
+    background: #243b53;
+    margin: 10px auto;
 }
 
 p.bundle-type{
@@ -487,18 +506,10 @@ select#licenses-1, select#licenses-2, select#licenses-3{
 }
 
 li.tk-bundle-product{
-    list-style-image: url("../img/check.png");
     font-size: 12px;
     color: #000000;
     letter-spacing: 2px;
-}
-
-.tk-bundle-1{
-    height: 450px;
-}
-
-.tk-bundle-2{
-    height: 1150px;
+    list-style: none;
 }
 
 .container-pricing h3{
@@ -518,4 +529,9 @@ li.tk-bundle-product{
 
 .bundle-picture img{
     width: 300px;
+}
+
+.list-bundle-ul{
+    height: 200px;
+    overflow: hidden;
 }
