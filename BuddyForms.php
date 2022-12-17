@@ -620,7 +620,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 						'has_addons'                     => true,
 						'has_paid_plans'                 => true,
 						'trial'                          => array(
-							'days'               => 14,
+							'days'               => 7,
 							'is_require_payment' => true,
 						),
 						'has_affiliation'                => 'selected',
