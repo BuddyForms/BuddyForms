@@ -18,13 +18,13 @@ abstract class ErrorView extends Base {
 		$this->configure( $properties );
 	}
 
-	public abstract function render();
+	abstract public function render();
 
-	public abstract function renderCSS();
+	abstract public function renderCSS();
 
-	public abstract function renderAjaxErrorResponse();
+	abstract public function renderAjaxErrorResponse();
 
 	public function clear() {
-		echo 'jQuery("#', $this->_form->getAttribute( "id" ), ' .alert-error").remove();';
+		echo 'jQuery("#', esc_js( $this->_form->getAttribute( 'id' ) ), ' .alert-error").remove();';
 	}
 }

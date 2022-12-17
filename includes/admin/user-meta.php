@@ -16,7 +16,7 @@ function buddyforms_user_profile_fields( $user ) {
 			if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 
 				$form_setup = array();
-				echo '<h2>' . $buddyform['name'] . '</h2>';
+				echo '<h2>' . esc_html( $buddyform['name'] ) . '</h2>';
 				foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
 
 					if ( substr( $user_meta['type'], 0, 5 ) != 'user_' ) {
@@ -25,7 +25,7 @@ function buddyforms_user_profile_fields( $user ) {
 						$slug = $user_meta['slug'];
 
 						$element_attr = array(
-							'value' => get_the_author_meta( $user_meta['slug'], $user->ID )
+							'value' => get_the_author_meta( $user_meta['slug'], $user->ID ),
 						);
 
 						switch ( sanitize_title( $user_meta['type'] ) ) {
@@ -50,14 +50,14 @@ function buddyforms_user_profile_fields( $user ) {
 								$form_setup[] = new Element_Date( $name, $slug, $element_attr );
 								break;
 
-							case 'mail' :
+							case 'mail':
 								$form_setup[] = new Element_Email( $name, $slug, $element_attr );
 								break;
 
-							case 'radiobutton' :
+							case 'radiobutton':
 								if ( isset( $user_meta['options'] ) && is_array( $user_meta['options'] ) ) {
 
-									$options = Array();
+									$options = array();
 									foreach ( $user_meta['options'] as $key => $option ) {
 										$options[ $option['value'] ] = $option['label'];
 									}
@@ -68,11 +68,10 @@ function buddyforms_user_profile_fields( $user ) {
 								}
 								break;
 
-							case 'checkbox' :
-
+							case 'checkbox':
 								if ( isset( $user_meta['options'] ) && is_array( $user_meta['options'] ) ) {
 
-									$options = Array();
+									$options = array();
 									foreach ( $user_meta['options'] as $key => $option ) {
 										$options[ $option['value'] ] = $option['label'];
 									}
@@ -83,11 +82,10 @@ function buddyforms_user_profile_fields( $user ) {
 								}
 								break;
 
-							case 'dropdown' :
-
+							case 'dropdown':
 								if ( isset( $user_meta['options'] ) && is_array( $user_meta['options'] ) ) {
 
-									$options = Array();
+									$options = array();
 									foreach ( $user_meta['options'] as $key => $option ) {
 										$options[ $option['value'] ] = $option['label'];
 									}
@@ -107,20 +105,19 @@ function buddyforms_user_profile_fields( $user ) {
 								}
 								break;
 
-							case 'textarea' :
+							case 'textarea':
 								$form_setup[] = new Element_Textarea( $name, $slug, $element_attr );
 								break;
 
-							case 'text' :
+							case 'text':
 								$form_setup[] = new Element_Textbox( $name, $slug, $element_attr );
 								break;
 
-							case 'link' :
+							case 'link':
 								$form_setup[] = new Element_Url( $name, $slug, $element_attr );
 								break;
 
 						}
-
 					}
 				}
 				buddyforms_display_field_group_table( $form_setup );
@@ -145,7 +142,7 @@ function update_extra_profile_fields( $user_id ) {
 			foreach ( $buddyforms as $form_slug => $buddyform ) {
 				if ( $buddyform['form_type'] == 'registration' && isset( $buddyform['form_fields'] ) ) {
 					foreach ( $buddyform['form_fields'] as $key => $user_meta ) {
-						//TODO this need to be improved, because exist the possibility to write
+						// TODO this need to be improved, because exist the possibility to write
 						// the 2 field in different forms just becasue they have the same slug
 						buddyforms_update_user_meta( $user_id, $user_meta['type'], $user_meta['slug'] );
 					}
@@ -162,13 +159,13 @@ function update_extra_profile_fields( $user_id ) {
  * @param $user_id
  * @param $field_type
  * @param $field_slug
- * @param string $value
+ * @param string     $value
  *
  * @return bool|int
  */
 function buddyforms_update_user_meta( $user_id, $field_type, $field_slug ) {
 	$slug   = buddyforms_get_mapped_slug_from_user_meta( $field_slug );
-	$value  = isset( $_POST[ $field_slug ] ) ? $_POST[ $field_slug ] : '';
+	$value  = isset( $_POST[ $field_slug ] ) ? buddyforms_sanitize( '', wp_unslash( $_POST[ $field_slug ] ) ) : '';
 	$result = update_user_meta( $user_id, $slug, buddyforms_sanitize( $field_type, $value ) );
 	return $result;
 }
@@ -231,6 +228,7 @@ function buddyforms_get_value_from_user_meta( $user_id, $slug ) {
 
 /**
  * Get the array of avoid fields from the user. This fields are stored in the same wp user meta
+ *
  * @deprecated since 2.5.30 - use instead buddyforms_avoid_user_fields_slugs_in_forms
  * @return array
  */
@@ -244,17 +242,20 @@ function buddyforms_avoid_user_fields_in_forms() {
  * @return array
  */
 function buddyforms_avoid_user_fields_slugs_in_forms() {
-	return apply_filters( 'buddyforms_avoid_user_fields', array(
-		'captcha',
-		'display_name',
-		'user_login',
-		'user_email',
-		'user_first',
-		'user_last',
-		'user_pass',
-		'website',
-		'user_bio',
-	) );
+	return apply_filters(
+		'buddyforms_avoid_user_fields',
+		array(
+			'captcha',
+			'display_name',
+			'user_login',
+			'user_email',
+			'user_first',
+			'user_last',
+			'user_pass',
+			'website',
+			'user_bio',
+		)
+	);
 }
 
 /**
@@ -263,15 +264,18 @@ function buddyforms_avoid_user_fields_slugs_in_forms() {
  * @return array
  */
 function buddyforms_avoid_user_fields_types_in_forms() {
-	return apply_filters( 'buddyforms_avoid_user_fields', array(
-		'captcha',
-		'display_name',
-		'user_login',
-		'user_email',
-		'user_first',
-		'user_last',
-		'user_pass',
-		'user_website',
-		'user_bio',
-	) );
+	return apply_filters(
+		'buddyforms_avoid_user_fields',
+		array(
+			'captcha',
+			'display_name',
+			'user_login',
+			'user_email',
+			'user_first',
+			'user_last',
+			'user_pass',
+			'user_website',
+			'user_bio',
+		)
+	);
 }

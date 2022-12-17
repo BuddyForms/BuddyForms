@@ -11,25 +11,29 @@ add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
 function buddyforms_create_edit_form_shortcode( $args ) {
 	$post_type = $the_post = $post_id = $revision_id = $form_slug = $slug = $id = '';
 
-	extract( shortcode_atts( array(
-		'post_type'   => '',
-		'the_post'    => 0,
-		'post_id'     => '',
-		'revision_id' => false,
-		'form_slug'   => '',
-		'slug'        => '',
-		'id'          => '',
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'post_type'   => '',
+				'the_post'    => 0,
+				'post_id'     => '',
+				'revision_id' => false,
+				'form_slug'   => '',
+				'slug'        => '',
+				'id'          => '',
+			),
+			$args
+		)
+	);
 
 	if ( empty( $form_slug ) ) {
 		$form_slug = $slug;
 	}
 
-
 	// Let's set the form action.
 	// starting up with the default action.
 	$args['form_action'] = 'create';
-	if ( ! empty( $the_post ) || ! empty( $post_id )  ) {
+	if ( ! empty( $the_post ) || ! empty( $post_id ) ) {
 		$args['form_action'] = 'edit';
 	}
 
@@ -82,31 +86,40 @@ function buddyforms_the_loop( $args ) {
 	// Enable other plugins to manipulate the arguments used for query the posts
 	$args = apply_filters( 'buddyforms_the_loop_args', $args );
 
-	extract( shortcode_atts( array(
-		'author'              => '',
-		'post_type'           => '',
-		'form_slug'           => '',
-		'id'                  => '',
-		'caller'              => $caller,
-		'post_parent'         => 0,
-		'query_option'        => '',
-		'list_posts_option'   => '',
-		'user_logged_in_only' => 'logged_in_only',
-		'meta_key'            => '',
-		'meta_value'          => '',
-		'meta_compare'        => '=',
-		'list_posts_style'    => '',
-		'posts_per_page'      => '10',
-		'paged'               => 0,
-		'posts_status'        => array( 'publish', 'pending', 'draft', 'future' )
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'author'              => '',
+				'post_type'           => '',
+				'form_slug'           => '',
+				'id'                  => '',
+				'caller'              => $caller,
+				'post_parent'         => 0,
+				'query_option'        => '',
+				'list_posts_option'   => '',
+				'user_logged_in_only' => 'logged_in_only',
+				'meta_key'            => '',
+				'meta_value'          => '',
+				'meta_compare'        => '=',
+				'list_posts_style'    => '',
+				'posts_per_page'      => '10',
+				'paged'               => 0,
+				'posts_status'        => array( 'publish', 'pending', 'draft', 'future' ),
+			),
+			$args
+		)
+	);
 
-	$post_status = apply_filters( 'buddyforms_shortcode_the_loop_post_status', array(
-		'publish',
-		'pending',
-		'draft',
-		'future'
-	), $form_slug );
+	$post_status = apply_filters(
+		'buddyforms_shortcode_the_loop_post_status',
+		array(
+			'publish',
+			'pending',
+			'draft',
+			'future',
+		),
+		$form_slug
+	);
 
 	if ( ( $user_logged_in_only == 'logged_in_only' || $user_logged_in_only == 'true' ) && ! is_user_logged_in() ) {
 		buddyforms_wp_login_form( false, $form_slug );
@@ -175,7 +188,7 @@ function buddyforms_the_loop( $args ) {
 				'paged'          => $paged,
 				'meta_key'       => $meta_key,
 				'meta_compare'   => $meta_compare,
-				'meta_value'     => $meta_value
+				'meta_value'     => $meta_value,
 			);
 			break;
 		case 'list_all':
@@ -197,7 +210,7 @@ function buddyforms_the_loop( $args ) {
 				'posts_per_page' => apply_filters( 'buddyforms_user_posts_query_args_posts_per_page', $posts_per_page ),
 				'paged'          => $paged,
 				'meta_key'       => '_bf_form_slug',
-				'meta_value'     => $form_slug
+				'meta_value'     => $form_slug,
 			);
 			break;
 
@@ -213,7 +226,6 @@ function buddyforms_the_loop( $args ) {
 	$query_args = apply_filters( 'buddyforms_user_posts_query_args', $query_args );
 	// Deprecated
 	$query_args = apply_filters( 'buddyforms_post_to_display_args', $query_args );
-
 
 	do_action( 'buddyforms_the_loop_start', $query_args );
 
@@ -302,21 +314,26 @@ add_shortcode( 'bf_nav', 'buddyforms_nav' );
  */
 function buddyforms_nav( $args ) {
 	$form_slug = $separator = $label_add = $label_view = '';
-	extract( shortcode_atts( array(
-		'form_slug'  => '',
-		'separator'  => ' | ',
-		'label_add'  => __( 'Add New', 'buddyforms' ),
-		'label_view' => __( 'View', 'buddyforms' ),
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'form_slug'  => '',
+				'separator'  => ' | ',
+				'label_add'  => __( 'Add New', 'buddyforms' ),
+				'label_view' => __( 'View', 'buddyforms' ),
+			),
+			$args
+		)
+	);
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
 	$args['label'] = isset( $args['label_view'] ) ? $args['label_view'] : __( 'View', 'buddyforms' );
 	$tmp           = buddyforms_button_view_posts( $args );
-	$tmp           .= $separator;
+	$tmp          .= $separator;
 	$args['label'] = isset( $args['label_add'] ) ? $args['label_add'] : __( 'Add New', 'buddyforms' );
-	$tmp           .= buddyforms_button_add_new( $args );
+	$tmp          .= buddyforms_button_add_new( $args );
 
 	return $tmp;
 }
@@ -331,10 +348,15 @@ add_shortcode( 'bf_link_to_user_posts', 'buddyforms_button_view_posts' );
 function buddyforms_button_view_posts( $args ) {
 	global $buddyforms;
 	$form_slug = $label_view = '';
-	extract( shortcode_atts( array(
-		'form_slug' => '',
-		'label_view'     => __( 'View', 'buddyforms' ),
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'form_slug'  => '',
+				'label_view' => __( 'View', 'buddyforms' ),
+			),
+			$args
+		)
+	);
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
@@ -355,10 +377,15 @@ add_shortcode( 'bf_link_to_form', 'buddyforms_button_add_new' );
 function buddyforms_button_add_new( $args ) {
 	global $buddyforms;
 	$form_slug = $label_add = '';
-	extract( shortcode_atts( array(
-		'form_slug' => '',
-		'label_add'     => __( 'Add New', 'buddyforms' ),
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'form_slug' => '',
+				'label_add' => __( 'Add New', 'buddyforms' ),
+			),
+			$args
+		)
+	);
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
@@ -379,15 +406,20 @@ function buddyforms_view_login_form( $args ) {
 	$form_slug   = $redirect_url = $title = $label_username = $label_password = $label_remember = $label_log_in = '';
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 
-	extract( shortcode_atts( array(
-		'form_slug'      => 'none',
-		'redirect_url'   => $current_url,
-		'title'          => 'Login',
-		'label_username' => __( 'Username or Email Address', 'buddyforms' ),
-		'label_password' => __( 'Password', 'buddyforms' ),
-		'label_remember' => __( 'Remember Me', 'buddyforms' ),
-		'label_log_in'   => __( 'Log In', 'buddyforms' ),
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'form_slug'      => 'none',
+				'redirect_url'   => $current_url,
+				'title'          => 'Login',
+				'label_username' => __( 'Username or Email Address', 'buddyforms' ),
+				'label_password' => __( 'Password', 'buddyforms' ),
+				'label_remember' => __( 'Remember Me', 'buddyforms' ),
+				'label_log_in'   => __( 'Log In', 'buddyforms' ),
+			),
+			$args
+		)
+	);
 
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
@@ -405,9 +437,14 @@ function buddyforms_view_login_form( $args ) {
 // password reset form
 function buddyforms_reset_password_form( $args ) {
 	$redirect_url = '';
-	extract( shortcode_atts( array(
-		'redirect_url' => '',
-	), $args ) );
+	extract(
+		shortcode_atts(
+			array(
+				'redirect_url' => '',
+			),
+			$args
+		)
+	);
 
 	BuddyFormsAssets::front_js_css();
 	BuddyFormsAssets::load_tk_font_icons();
@@ -448,16 +485,19 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 		$attached_page_url = get_permalink( $attached_page );
 
 		if ( ! empty( $attached_page_url ) ) {
-			$default_link = $attached_page_url . "create/" . $form_slug;
+			$default_link = $attached_page_url . 'create/' . $form_slug;
 		} else {
 			$default_link = $siteurl . '/' . $attached_page . '/create/' . $form_slug;
 		}
 	}
-	$arguments = shortcode_atts( array(
-		'name'   => __( 'Now', 'buddyforms' ),
-		'link'   => apply_filters('buddyforms_create_submission_link', $default_link, $form_slug, $args),
-		'target' => '_blank',
-	), $args );
+	$arguments = shortcode_atts(
+		array(
+			'name'   => __( 'Now', 'buddyforms' ),
+			'link'   => apply_filters( 'buddyforms_create_submission_link', $default_link, $form_slug, $args ),
+			'target' => '_blank',
+		),
+		$args
+	);
 
 	$target = '';
 	if ( ! empty( $arguments['target'] ) && 'false' !== $arguments['target'] ) {
@@ -473,10 +513,13 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 add_shortcode( 'bf_new_submission_link', 'buddyforms_create_submission_link_shortcode' );
 
 function buddyforms_post_meta_key_count( $args ) {
-	$arguments = shortcode_atts( array(
-		'slug'      => '',
-		'form-slug' => '',
-	), $args );
+	$arguments = shortcode_atts(
+		array(
+			'slug'      => '',
+			'form-slug' => '',
+		),
+		$args
+	);
 
 	if ( empty( $arguments['slug'] ) ) {
 		return '';
@@ -487,13 +530,13 @@ function buddyforms_post_meta_key_count( $args ) {
 	$where = '';
 
 	if ( ! empty( $arguments['form-slug'] ) ) {
-		$where .= $wpdb->prepare( "pm.post_id in (SELECT pm1.post_id FROM {$wpdb->postmeta} pm1 WHERE pm1.meta_key='_bf_form_slug' and pm1.meta_value = '%s') AND ", $arguments['form-slug'] );
+		$where .= $wpdb->prepare( "pm.post_id in (SELECT pm1.post_id FROM {$wpdb->postmeta} pm1 WHERE pm1.meta_key='_bf_form_slug' and pm1.meta_value = %s) AND ", $arguments['form-slug'] );
 	}
 
-	$where .= $wpdb->prepare( "pm.post_id in (SELECT pm2.post_id FROM {$wpdb->postmeta} pm2 WHERE pm2.meta_key = '%s')", $arguments['slug'] );
+	$where .= $wpdb->prepare( "pm.post_id in (SELECT pm2.post_id FROM {$wpdb->postmeta} pm2 WHERE pm2.meta_key = %s)", $arguments['slug'] );
 
 	// Query the db to return the post count according to key and value if value is set
-	$count = $wpdb->get_var( "SELECT count(DISTINCT pm.post_id) FROM {$wpdb->postmeta} pm WHERE {$where}" );
+	$count = $wpdb->get_var( "SELECT count(DISTINCT pm.post_id) FROM {$wpdb->postmeta} pm WHERE {$where}" ); // @codingStandardsIgnoreLine.
 
 	return $count;
 }
@@ -517,13 +560,15 @@ function buddyforms_create_form_metabox( $form_slug, $custom_fields, $post_id, $
 	ob_start();
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	// Create the form object
-	$form = new Form( "metabox_" . $form_slug );
+	$form = new Form( 'metabox_' . $form_slug );
 
 	// Set the form attribute
-	$form->configure( array(
-		"view"  => new View_Metabox,
-		'class' => 'standard-form',
-	) );
+	$form->configure(
+		array(
+			'view'  => new View_Metabox(),
+			'class' => 'standard-form',
+		)
+	);
 
 	$args = array(
 		'post_type'    => $post_type,

@@ -18,7 +18,8 @@ abstract class Base {
 		if ( ! empty( $properties ) ) {
 			$class = get_class( $this );
 
-			/*The property_reference lookup array is created so that properties can be set
+			/*
+			The property_reference lookup array is created so that properties can be set
 			case-insensitively.*/
 			$available          = array_keys( get_class_vars( $class ) );
 			$property_reference = array();
@@ -26,7 +27,8 @@ abstract class Base {
 				$property_reference[ trim( $property ) ] = $property;
 			}
 
-			/*The method reference lookup array is created so that "set" methods can be called
+			/*
+			The method reference lookup array is created so that "set" methods can be called
 			case-insensitively.*/
 			$available        = get_class_methods( $class );
 			$method_reference = array();
@@ -37,18 +39,20 @@ abstract class Base {
 			foreach ( $properties as $property => $value ) {
 				$property = trim( $property );
 				/*Properties beginning with "_" cannot be set directly.*/
-				if ( $property[0] != "_" ) {
-					/*If the appropriate class has a "set" method for the property provided, then
+				if ( $property[0] != '_' ) {
+					/*
+					If the appropriate class has a "set" method for the property provided, then
 					it is called instead or setting the property directly.*/
-					if ( isset ( $method_reference[ "set" . $property ] ) ) {
-						$funcName = $method_reference[ "set" . $property ];
-						$this->$funcName ( $value );
+					if ( isset( $method_reference[ 'set' . $property ] ) ) {
+						$funcName = $method_reference[ 'set' . $property ];
+						$this->$funcName( $value );
 					} elseif ( isset( $property_reference[ $property ] ) ) {
 						$funcName        = $property_reference[ $property ];
 						$this->$funcName = $value;
-					} /*Entries that don't match an available class property are stored in the attributes
-                    property if applicable.  Typically, these entries will be element attributes such as
-                    class, value, onkeyup, etc.*/
+					} /*
+					Entries that don't match an available class property are stored in the attributes
+					property if applicable.  Typically, these entries will be element attributes such as
+					class, value, onkeyup, etc.*/
 					else {
 						$this->setAttribute( $property, $value );
 					}
@@ -66,7 +70,7 @@ abstract class Base {
 	 * @param $value
 	 */
 	public function setAttribute( $attribute, $value ) {
-		if ( isset ( $this->_attributes ) ) {
+		if ( isset( $this->_attributes ) ) {
 			$this->_attributes[ $attribute ] = $value;
 		}
 	}
@@ -75,7 +79,7 @@ abstract class Base {
 	 * @param $attribute
 	 */
 	public function unsetAttribute( $attribute ) {
-		if ( isset ( $this->_attributes ) ) {
+		if ( isset( $this->_attributes ) ) {
 			unset( $this->_attributes[ $attribute ] );
 		}
 	}
@@ -84,7 +88,7 @@ abstract class Base {
 	/*This method prevents double/single quotes in html attributes from breaking the markup.*/
 
 	public function debug() {
-		echo "<pre>", print_r( $this, true ), "</pre>";
+		echo '<pre>', wp_kses( print_r( $this, true ), buddyforms_wp_kses_allowed_atts() ), '</pre>';
 	}
 
 	/**
@@ -93,7 +97,7 @@ abstract class Base {
 	 * @return string
 	 */
 	public function getAttribute( $attribute ) {
-		if ( isset ( $this->_attributes[ $attribute ] ) ) {
+		if ( isset( $this->_attributes[ $attribute ] ) ) {
 			return ! empty( $this->_attributes[ $attribute ] ) ? $this->_attributes[ $attribute ] : '';
 		}
 
@@ -124,7 +128,7 @@ abstract class Base {
 			$attributes = apply_filters( 'buddyforms_element_attribute', $attributes, $this );
 			foreach ( $attributes as $attribute ) {
 				$str .= ' ' . $attribute;
-				if ( $this->_attributes[ $attribute ] !== "" ) {
+				if ( $this->_attributes[ $attribute ] !== '' ) {
 					$str .= '="' . $this->filter( $this->_attributes[ $attribute ] ) . '"';
 				}
 			}
@@ -154,7 +158,6 @@ abstract class Base {
 	 * @param $str
 	 *
 	 * @internal
-	 *
 	 */
 	public function apply_filter( &$str ) {
 		$str = htmlspecialchars( $str );
@@ -165,9 +168,9 @@ abstract class Base {
 	 * @param $value
 	 */
 	public function appendAttribute( $attribute, $value ) {
-		if ( isset ( $this->_attributes ) ) {
-			if ( ! empty ( $this->_attributes[ $attribute ] ) ) {
-				$this->_attributes[ $attribute ] .= " " . $value;
+		if ( isset( $this->_attributes ) ) {
+			if ( ! empty( $this->_attributes[ $attribute ] ) ) {
+				$this->_attributes[ $attribute ] .= ' ' . $value;
 			} else {
 				$this->_attributes[ $attribute ] = $value;
 			}
@@ -201,8 +204,9 @@ abstract class Base {
 	 */
 	public function renderRequired( $echo = false ) {
 		$html = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
+		$html = str_replace( '&ast;', '*', $html );
 		if ( $echo ) {
-			echo $html;
+			echo wp_kses( $html, buddyforms_wp_kses_allowed_atts() );
 		} else {
 			return $html;
 		}
@@ -221,7 +225,7 @@ abstract class Base {
 	 * @return string
 	 */
 	public function getOption( $attribute ) {
-		if ( ! empty ( $this->field_options[ $attribute ] ) ) {
+		if ( ! empty( $this->field_options[ $attribute ] ) ) {
 			return $this->field_options[ $attribute ];
 		}
 

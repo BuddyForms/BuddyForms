@@ -20,7 +20,7 @@ abstract class OptionElement extends Element {
 	 */
 	public function __construct( $label, $name, $options, array $properties = null, array $field_options = null ) {
 		if ( ! is_array( $options ) ) {
-			$options = Array();
+			$options = array();
 		}
 		$this->options = $options;
 		if ( ! empty( $this->options ) && array_values( $this->options ) === $this->options ) {
@@ -36,10 +36,10 @@ abstract class OptionElement extends Element {
 	 * @return string
 	 */
 	protected function getOptionValue( $value ) {
-		$position = strpos( $value, ":pfbc" );
+		$position = strpos( $value, ':pfbc' );
 		if ( $position !== false ) {
 			if ( $position == 0 ) {
-				$value = "";
+				$value = '';
 			} else {
 				$value = substr( $value, 0, $position );
 			}

@@ -10,7 +10,7 @@ function buddyforms_add_custom_box() {
 		return;
 	}
 
-	$screens = Array();
+	$screens = array();
 	foreach ( $buddyforms as $key => $buddyform ) {
 		if ( isset( $buddyform['post_type'] ) ) {
 			array_push( $screens, $buddyform['post_type'] );
@@ -55,11 +55,11 @@ function buddyforms_inner_custom_box( $post ) {
 	}
 
 	echo '<label for="_bf_form_slug">';
-	_e( "Select the form", 'buddyforms' );
+	esc_html_e( 'Select the form', 'buddyforms' );
 	echo '</label> ';
-	//echo '<input type="text" id="_bf_form_slug" name="_bf_form_slug" value="' . esc_attr( $value ) . '" size="25" />';
+	// echo '<input type="text" id="_bf_form_slug" name="_bf_form_slug" value="' . esc_attr( $value ) . '" size="25" />';
 	echo ' <p><select name="_bf_form_slug" id="_bf_form_slug">';
-	echo ' <option value="none">' . __( 'None', 'buddyforms' ) . '</option>';
+	echo ' <option value="none">' . esc_html__( 'None', 'buddyforms' ) . '</option>';
 
 	foreach ( $buddyforms as $key => $buddyform ) {
 		$selected = '';
@@ -68,7 +68,7 @@ function buddyforms_inner_custom_box( $post ) {
 		}
 
 		if ( $buddyform['post_type'] == get_post_type( $post ) ) {
-			echo ' <option value="' . $buddyform['slug'] . '"' . $selected . '>' . $buddyform['name'] . '</option>';
+			echo ' <option value="' . esc_attr( $buddyform['slug'] ) . '"' . esc_attr( $selected ) . '>' . wp_kses_post( $buddyform['name'] ) . '</option>';
 		}
 	}
 
@@ -112,7 +112,6 @@ function buddyforms_save_postdata( $post_id ) {
 		if ( ! current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		}
-
 	} else {
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
@@ -123,7 +122,7 @@ function buddyforms_save_postdata( $post_id ) {
 	/* OK, its safe for us to save the data now. */
 
 	// Sanitize user input.
-	$form_slug = sanitize_text_field( $_POST['_bf_form_slug'] );
+	$form_slug = sanitize_text_field( wp_unslash( $_POST['_bf_form_slug'] ) );
 
 	// Update the form slug for this post
 	update_post_meta( $post_id, '_bf_form_slug', $form_slug );

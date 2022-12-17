@@ -41,10 +41,18 @@ function buddyforms_admin_form_metabox() {
 	}
 
 	if ( $metabox_enabled ) {
-		add_meta_box( 'buddyforms_form_' . $form_slug, 'BuddyForms Form: ' . $form['name'], 'buddyforms_metabox_admin_form_metabox', $form['post_type'], 'normal', 'high', array(
-			'form_slug' => $form_slug,
-			'form'      => $form,
-		) );
+		add_meta_box(
+			'buddyforms_form_' . $form_slug,
+			'BuddyForms Form: ' . $form['name'],
+			'buddyforms_metabox_admin_form_metabox',
+			$form['post_type'],
+			'normal',
+			'high',
+			array(
+				'form_slug' => $form_slug,
+				'form'      => $form,
+			)
+		);
 	}
 
 }
@@ -77,7 +85,7 @@ function buddyforms_metabox_admin_form_metabox( $post, $metabox ) {
 		return;
 	}
 
-	$fields = $buddyforms[ $form_slug ]['form_fields'];
+	$fields         = $buddyforms[ $form_slug ]['form_fields'];
 	$metabox_fields = array();
 	foreach ( $fields as $field_key => $field ) {
 		if ( isset( $field['metabox_enabled'] ) ) {
@@ -85,7 +93,7 @@ function buddyforms_metabox_admin_form_metabox( $post, $metabox ) {
 		}
 	}
 
-	echo buddyforms_create_form_metabox($form_slug, $metabox_fields, $post->ID, $buddyforms[ $form_slug ]['post_type']);
+	echo wp_kses( buddyforms_create_form_metabox( $form_slug, $metabox_fields, $post->ID, $buddyforms[ $form_slug ]['post_type'] ), buddyforms_wp_kses_allowed_atts() );
 }
 
 //

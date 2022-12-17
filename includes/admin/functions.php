@@ -6,25 +6,25 @@
 /**
  * @param string $h2
  * @param string $h4
- * @param array $pros
- * @param bool $link
+ * @param array  $pros
+ * @param bool   $link
  */
-function buddyforms_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) {
-	echo buddyforms_get_go_pro( $h2, $h4, $pros, $link );
+function buddyforms_go_pro( $h2 = '', $h4 = '', $pros = array(), $link = true ) {
+	echo wp_kses( buddyforms_get_go_pro( $h2, $h4, $pros, $link ), buddyforms_wp_kses_allowed_atts() );
 }
 
 /**
  * @param string $h2
  * @param string $h4
- * @param array $pros
- * @param bool $link
+ * @param array  $pros
+ * @param bool   $link
  *
  * @return string
  */
-function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = true ) {
+function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = array(), $link = true ) {
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 
-		$tmp = '<div id="bf-gopro-sidebar">';
+		$tmp  = '<div id="bf-gopro-sidebar">';
 		$tmp .= ! empty( $h2 ) ? '<h2>' . $h2 . '</h2>' : '';
 		$tmp .= '<div style="padding: 0 12px;">';
 		$tmp .= ! empty( $h2 ) ? '<h4>' . $h4 . '</h4>' : '';
@@ -35,7 +35,7 @@ function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = tru
 		$tmp .= '</ul>';
 
 		if ( $link ) {
-			$tmp .= '<a class="buddyforms_get_pro button button-primary" href="' . buddyforms_core_fs()->get_upgrade_url() . '">' . __( "Upgrade Now!", "buddyforms" ) . '</a>';
+			$tmp .= '<a class="buddyforms_get_pro button button-primary" href="' . buddyforms_core_fs()->get_upgrade_url() . '">' . __( 'Upgrade Now!', 'buddyforms' ) . '</a>';
 		}
 
 		$tmp .= '</div></div>';
@@ -45,14 +45,13 @@ function buddyforms_get_go_pro( $h2 = '', $h4 = '', $pros = Array(), $link = tru
 }
 
 function buddyforms_version_type() {
-	echo buddyforms_get_version_type();
+	echo wp_kses( buddyforms_get_version_type(), buddyforms_wp_kses_allowed_atts() );
 }
 
 /**
  * @return string|void
  */
 function buddyforms_get_version_type() {
-
 
 	// This "if" block will be auto removed from the Free version.
 	if ( buddyforms_core_fs()->is__premium_only() ) {
@@ -79,7 +78,7 @@ function buddyforms_rating_admin_notice() {
 	if ( ! get_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed' ) ) {
 		?>
 		<div class="notice notice-success is-dismissible">
-			<h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo BUDDYFORMS_VERSION ?> version of BuddyForms – that’s awesome!</h4>
+			<h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo esc_html( BUDDYFORMS_VERSION ); ?> version of BuddyForms – that’s awesome!</h4>
 			<p style="line-height: 2.2; font-size: 13px;">Could you please do me a BIG favor and give it a 5-star rating
 				on WordPress? Just to help us spread the word and boost our motivation.
 			<p>
@@ -156,7 +155,6 @@ function buddyforms_strip_html_title_for_entries_in_post_screen( $title, $id = n
  *
  * @return bool
  * @since 2.4.6
- *
  */
 function buddyforms_update_form_slug( $old_slug, $new_slug ) {
 	if ( empty( $new_slug ) || empty( $old_slug ) ) {
@@ -185,7 +183,6 @@ function buddyforms_update_form_slug( $old_slug, $new_slug ) {
  * @author gfirem
  *
  * @since 2.5.10
- *
  */
 function buddyforms_get_shortcode_string( $shortcodes_array, $target_element ) {
 	$all_shortcodes = array();
@@ -208,18 +205,23 @@ function buddyforms_get_shortcode_string( $shortcodes_array, $target_element ) {
  * @since 2.5.10
  */
 function buddyforms_available_shortcodes( $form_slug, $element_name ) {
-	return apply_filters( 'buddyforms_available_shortcodes', array(
-		'[user_login]',
-		'[user_nicename]',
-		'[first_name]',
-		'[last_name]',
-		'[published_post_link_plain]',
-		'[published_post_link_html]',
-		'[published_post_title]',
-		'[site_name]',
-		'[site_url]',
-		'[site_url_html]',
-	), $form_slug, $element_name );
+	return apply_filters(
+		'buddyforms_available_shortcodes',
+		array(
+			'[user_login]',
+			'[user_nicename]',
+			'[first_name]',
+			'[last_name]',
+			'[published_post_link_plain]',
+			'[published_post_link_html]',
+			'[published_post_title]',
+			'[site_name]',
+			'[site_url]',
+			'[site_url_html]',
+		),
+		$form_slug,
+		$element_name
+	);
 }
 
 /**
@@ -246,7 +248,7 @@ function buddyforms_remove_mce_external_plugins( $plugins ) {
 }
 
 add_filter( 'display_post_states', 'buddyforms_add_display_post_states', 999, 2 );
-function buddyforms_add_display_post_states(  $post_states, $post ) {
+function buddyforms_add_display_post_states( $post_states, $post ) {
 
 	if ( $post->ID === (int) get_option( 'buddyforms_preview_page' ) ) {
 		$post_states['buddyforms-preview-page'] = __( 'BuddyForms Preview Page', 'woocommerce' );

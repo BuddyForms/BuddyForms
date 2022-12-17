@@ -7,14 +7,14 @@ function buddyforms_change_password_form( $redirect_url = '' ) {
 		$current_url = get_permalink( $post->ID );
 	} else {
 		$pageURL = 'http';
-		if ( $_SERVER["HTTPS"] == "on" ) {
-			$pageURL .= "s";
+		if ( $_SERVER['HTTPS'] == 'on' ) {
+			$pageURL .= 's';
 		}
-		$pageURL .= "://";
-		if ( $_SERVER["SERVER_PORT"] != "80" ) {
-			$pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+		$pageURL .= '://';
+		if ( $_SERVER['SERVER_PORT'] != '80' ) {
+			$pageURL .= sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) . ':' . sanitize_text_field( wp_unslash( $_SERVER['SERVER_PORT'] ) ) . sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 		} else {
-			$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+			$pageURL .= sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) . sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
 		}
 		$current_url = $pageURL;
 	}
@@ -33,7 +33,7 @@ function buddyforms_change_password_form( $redirect_url = '' ) {
 	$template_path = BUDDYFORMS_TEMPLATE_PATH . 'buddyforms/bf-change-password.php';
 
 	// Check if template exist in the child or parent theme and use this path if available
-	if ( $template_file = locate_template( "buddyforms/bf-change-password.php", false, false ) ) {
+	if ( $template_file = locate_template( 'buddyforms/bf-change-password.php', false, false ) ) {
 		$template_path = $template_file;
 	}
 
@@ -53,7 +53,7 @@ function buddyforms_reset_password() {
 			return;
 		}
 
-		if ( wp_verify_nonce( $_POST['buddyforms_password_nonce'], 'buddyforms-password-nonce' ) ) {
+		if ( wp_verify_nonce( wp_unslash( $_POST['buddyforms_password_nonce'] ), 'buddyforms-password-nonce' ) ) {
 			$global_error = ErrorHandler::get_instance();
 			if ( $_POST['buddyforms_user_pass'] == '' || $_POST['buddyforms_user_pass_confirm'] == '' ) {
 				// password(s) field empty
@@ -71,12 +71,12 @@ function buddyforms_reset_password() {
 					// change the password here
 					$user_data = array(
 						'ID'        => $user_ID,
-						'user_pass' => $_POST['buddyforms_user_pass']
+						'user_pass' => sanitize_text_field( $_POST['buddyforms_user_pass'] ),
 					);
 					wp_update_user( $user_data );
 
 					// send password change email here (if WP doesn't)
-					$redirect_url = apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] );
+					$redirect_url = sanitize_url( wp_unslash( apply_filters( 'buddyforms_reset_password_redirect', $_POST['buddyforms_redirect'] ) ) );
 
 					$bf_pw_redirect_url = get_user_meta( $user_ID, 'bf_pw_redirect_url', true );
 
@@ -84,7 +84,6 @@ function buddyforms_reset_password() {
 						$redirect_url = $bf_pw_redirect_url;
 						delete_user_meta( $user_ID, 'bf_pw_redirect_url' );
 					}
-
 
 					wp_redirect( add_query_arg( 'bf-password-reset', 'true', $redirect_url ) );
 					exit;

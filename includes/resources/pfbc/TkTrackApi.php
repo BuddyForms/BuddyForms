@@ -87,7 +87,7 @@ class TkTrackApi {
 	 * Send a tracking event
 	 *
 	 * @param $options
-	 * @param string $product
+	 * @param string  $product
 	 *
 	 * @return array|bool|mixed|object
 	 * @throws \GuzzleHttp\Exception\GuzzleException
@@ -95,7 +95,7 @@ class TkTrackApi {
 	 */
 	public function track( $options, $product = 'buddyforms' ) {
 		if ( ! is_array( $options ) ) {
-			throw new \InvalidArgumentException;
+			throw new \InvalidArgumentException();
 		}
 
 		$request = $this->api_version . sprintf( '/track/%s', $product );
@@ -106,7 +106,7 @@ class TkTrackApi {
 	/**
 	 * @param $endpoint
 	 * @param $method
-	 * @param array $args
+	 * @param array    $args
 	 *
 	 * @return array|bool|mixed|object
 	 * @throws \tk\GuzzleHttp\Exception\GuzzleException
@@ -114,40 +114,48 @@ class TkTrackApi {
 	private function make_request( $endpoint, $method, $args = array() ) {
 
 		if ( ! is_string( $endpoint ) || ! is_string( $method ) || ! is_array( $args ) ) {
-			throw new \InvalidArgumentException;
+			throw new \InvalidArgumentException();
 		}
 
 		$url = $this->api_url_base . $endpoint;
 
-		$this->create_log( sprintf( "Making request on %s.", $url ) );
+		$this->create_log( sprintf( 'Making request on %s.', $url ) );
 
 		$request_body = json_encode( $args );
 
-		$this->create_log( sprintf( "%s, Request body: %s", $method, $request_body ) );
+		$this->create_log( sprintf( '%s, Request body: %s', $method, $request_body ) );
 
-		if ( $method === "GET" ) {
+		if ( $method === 'GET' ) {
 			if ( $args ) {
 				$url .= '?' . http_build_query( $args );
 			}
 			$request = new Request( $method, $url );
 		} else {
-			$request = new Request( $method, $url, array(
-				'timeout'         => 5, // Response timeout
-				'connect_timeout' => 5, // Connection timeout
-				'Content-Type'    => 'application/json',
-				'Content-Length'  => strlen( $request_body )
-			), $request_body );
+			$request = new Request(
+				$method,
+				$url,
+				array(
+					'timeout'         => 5, // Response timeout
+					'connect_timeout' => 5, // Connection timeout
+					'Content-Type'    => 'application/json',
+					'Content-Length'  => strlen( $request_body ),
+				),
+				$request_body
+			);
 		}
 
-		$response = $this->client->send( $request, [
-			'exceptions' => false
-		] );
+		$response = $this->client->send(
+			$request,
+			array(
+				'exceptions' => false,
+			)
+		);
 
 		$status_code = $response->getStatusCode();
 
 		// If not between 200 and 300
-		if ( ! preg_match( "/^[2-3][0-9]{2}/", $status_code ) ) {
-			$this->create_log( sprintf( "Response code is %s.", $status_code ) );
+		if ( ! preg_match( '/^[2-3][0-9]{2}/', $status_code ) ) {
+			$this->create_log( sprintf( 'Response code is %s.', $status_code ) );
 
 			return false;
 		}
@@ -155,12 +163,12 @@ class TkTrackApi {
 		$response_body = json_decode( $response->getBody()->getContents() );
 
 		if ( $response_body ) {
-			$this->create_log( "Finish request successfully." );
+			$this->create_log( 'Finish request successfully.' );
 
 			return $response_body;
 		}
 
-		$this->create_log( "Failed to finish request." );
+		$this->create_log( 'Failed to finish request.' );
 
 		return false;
 

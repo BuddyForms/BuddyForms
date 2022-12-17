@@ -1,283 +1,123 @@
-=== Post Form - Registration Form - Post Form Builder & FrontEnd Editor BuddyForms - Making WordPress Forms A Breeze ===
+=== Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
-Tags:  content, content generation, user submitted, user-generated, user-submit, generated content, create content, frontend create content, form builder, contact forms, post forms, user-generated content, user submitted posts, contact form, form, forms, frontend post, frontend publisher, frontend post, submit, submissions, custom form, custom forms, form, form administration, form creation, form creator, form manager, forms, forms builder, forms creation, forms creator, forms manager, community, crowdsourced content, frontend generated content, images, Post, posts, public, publish, Share, submission, submissions, submit, submitted, upload
+Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
 Requires at least: 4.0
-Tested up to: 5.8
-Stable tag: 2.5.31
+Tested up to: 6.1.1
+Stable tag: 2.7.6
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-== #DESCRIPTION ==
+From Contact Forms to Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
 
-Are you tired of those boring forms, your customers hardly fill to the end? With Buddyform, you can make contact forms, postforms, and registration forms that everyone wants to fill like a professional even if you cannot write a single line of code.
+== DESCRIPTION ==
 
-You get better responses, more quality leads, collect feedback and much more with an easy to use form wizard all under a few minutes.
+A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer. Submit posts and images or any content and media from the front-end of your site.
 
-#WHY CHOOSE BUDDYFORMS?</h4>
-##Can’t Code? No problem: Build a Quality and Highly Optimized form Without a Single Line Of Code.
+[youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-*A simple drag and drop, ready to use form templates that give you full control over user submitted content.
+#### Supported Frontend Form Types
+* Contact Form
+* Post Form 
+* Content Form for any Post Type
+* Registration Form
+* Profile Form
+* Image Upload Form
+* Media Upload Form
+* Mixed Custom Post Type and Registation Form
+* Post meta Form
+* User meta Form
+* Profile Form for WordPress user data
+* Author Forms for WordPress Author data like Bio
+* Change Password Form
 
-*Buddyform has a bunch of drag and drop blocks that make it easy to put forms together – name, email, phone number, text, file upload, website, date, time, numbers etc.
 
-*Take advantage of our pre-configured forms.
+###Easily submit posts and images from the front-end of your site.
 
----
-##Your Data Protection is Our Priority: Buddyform provides a Full GDPR compliant Wordpress Form builder.
-
-*You get Privacy by Design: With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server.
-
-*With Buddyforms you can easily grant users access to their data without, with the full option to also change or delete their data all from the frontend.
-
-*Buddyform lets you easily collect consent for your user generated form.
-
----
-##Easy to navigate and User-friendly interface.
-*Easily embed forms anywhere on your website with just shortcodes or create a new form straight from your admin bar.
-*Create registration funnels and ask to create a password after clicking on the activation link.
-*Create forms for any kind of user generated content.
-*Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
-*Enable/Disable comments related to the submitted content,  Frontend Revision for users
-*Overwrite the WordPress default Registration Form and Page
-*Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
-
- 
-##EASY INTEGRATION WITH OTHER PLUGINS
-Buddyform comes stacked with crowd favorite third-party integrations – email services, CRM, storage, and project managers. Enhance its capabilities with the following
-## Features of BuddyForms Form Builder
-
-* BuddyPress – Enable all publishing features of BuddyForms in BuddyPress
-* Ultimate Member – Submit and manage posts from your Ultimate Member profile
-* WooCommerce – Build your own marketplace with user-submitted products
-* WooCommerce Simple Auctions – Create and manage auctions via front end
-* Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-* Posts 2 Posts – Efficient many-to-many connections between posts, pages, custom post types, users.
-* WC Vendors – BuddyPress WooCommerce Vendors integrates WC Vendors with BuddyPress and enables your vendors to use BuddyForms to create and manage their Products.
-
-##WITH BUDDYFORM YOU CAN CREATE
-
-* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
-* Online Directories – Crowdsource categorized data from your community
-* Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
-* News Magazines – Create single articles through collaborative writing among a team of editors
-* How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
-* Marketplace – Sell and purchase products from different vendors and list all the product features
-* Content Forms for any kind of user generated content, user submitted posts
-
----
-
-## Other more basic use Cases with our Form Builder
-Most of the time you just want a simple form to collect leads or other data. This is also really simple with BuddyForms. You can create:
-* Contact Forms – Collect leads and customer support data
-* Registration Forms – Sign-up users to your webpage
-* Profile Forms – Let your user update there profile information.
-* Login Forms – Grant users access to restricted content
-
----
-
-### 1. Contact Forms
+#### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
 * Prevent users from submitting false data by setting custom validation rules on your forms
 
----
-
-### 2. Registration Forms
+#### 2. Registration Forms
 * Overwrite the WordPress Registration Form.
 * Redirect to a Custom Registration Page
 * Redirect your users to a custom location page or form if they click the activation link.
 * Combine Registration and Post forms and redirect your user to the Post Form after Registration.
 
----
+#### 2. Post Forms
+* Let users Save drafts and let them work on there edit before they send it to moderation
+* Define the Permission for an User Role and grand Create Edit and Delete Rights
+* Define Moderators to manage submissions from the frontend'
 
 
-### Form Wizard for any Form Type with easy to follow Steps.
+### Full Gutenberg Support 
 
----
+#### Embed Forms
+Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar.
 
-## CONTACT FORM TEMPLATES
-* Contact Full Name
-First Name, Last Name, Email, Subject, Message
+#### List Submissions
+You can list form submissions form any form and post type. Filter post lists by author or only display posts from the logged in user. Use the options in the Block sidebar.
 
-* Contact Simple
-Your Name, Your Email, Your Message
+#### Embed Navigation
+Link to form endpoints or user posts lists for every post form with an attached page to create and edit submissions. You can select the attached page under the "Edit Submissions" tab in the Form Builder.
 
-* User Support
-First Name, Last Name, Support Type, Subject, Email, Message
-
----
-
-## REGISTRATION FORM TEMPLATES
-* Become a Vendor
-Username, eMail, Password, Shop Name, PayPal E-mail (required), Seller Info, Shop description
-
-* Registration Full Name
-Username, First Name, Last Name, eMail, Password
-
-* Registration Profile
-Username, First Name, Last Name, Bio, Website, eMail, Password
- Preview
-
-* Registration Simple
-Username, eMail, Password
-
----
-
-## POST FORM TEMPLATES
-* Post Form All Fields
-Title, Content, Categories, Tags, Featured Image
-
-* Post Simple
-Title, Content, User eMail
-
-* WC Grouped Product
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
-* WC Product All Fields
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
-* WC Simple Auction
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements, BuddyForms Simple Auction, WC Simple Auctions
-
-* WC Simple Product
-Title, Content, WooCommerce, Product Gallery, FeaturedImage
-Dependencies: WooCommerce, BuddyForms WooElements
-
----
-
-## Videos about BuddyForms
-
-###Why BuddyForms is the best Frontend-Publishing Plugin - BuddyForms Trailer
-[https://www.youtube.com/watch?v=By1GIBiilcI]
-
----
-
-###Contact Forms
-[youtube https://www.youtube.com/watch?v=Me-2MJMInYc]
-
-###Registration Forms
-[youtube https://www.youtube.com/watch?v=6BxxGE5djgg]
-
----
-
-###Post Forms
-[youtube https://www.youtube.com/watch?v=iHhDO_zFmbc&feature=youtu.be]
-
----
-
-###Integration with BuddyPress or Ultimate Member
-
-####BuddyPress Integration
-
-[youtube https://www.youtube.com/watch?v=Gt8dcLZPR9A]
-
----
-
-####Ultimate Member Integration
-
-[youtube https://www.youtube.com/watch?v=b7YNax-ORzQ&t=78s]
-
----
-
----
-
-####How To Videos
-
-[https://www.youtube.com/playlist?list=PLYPguOC5yk7-vo3eNlRaQ_yilEoS-rLOW]
-
----
-
-Want to see more Videos? [Go here!](https://themekraft.com/buddyforms-videos/)
-
----
+#### Login/ Logout Form
+Display a login form or a logout button if the user is logged in.
 
 
-### Related BuddyForms Posts
+### Shortcodes
 
-<a href="https://themekraft.com/create-forms-step-by-step-for-your-wordpress-website-with-an-easy-to-use-form-wizard/"> Create forms step-by-step for your WordPress website with an easy to use form wizard </a>
-Are you looking for a hassle free creation of forms and a way to easily embed those to your WordPress website? Are you in need of something that helps you step by step through that process, with no distractions and a clear design? With the WordPress Plugin BuddyForms you can configure fully customizable contact, registration [&hellip;]
+#### Display a Form
+Use this shortcode if you wanna show a form on frontend.
+> [bf form_slug="YOUR-FORM-SLUG"]
 
----
+#### Display Submissions
+Use this shortcode if you wannan show a list of entries belongs to a Form. 
+The attribute "list_posts_style" is optional and its possible values are "table" or "list"
+> [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
-<a href="https://themekraft.com/make-readers-creating-content/"> How to Make Your Readers Creating Content for You </a>
-Online users are now involved with brands they love more than ever. Customers are demanding to be heard and not just talked to. This new way of interaction has led to an increase in user generated content (UCG). Today, UGC is one of the best sources of marketing content for businesses. UCG boosts engagement, brand [&hellip;]
+#### Link to Form
+This shortcode will create a link to the form for creating or editing submissions.
+The attribute "label" is optional (default value is "Add New").
+> [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
 
----
+#### Link to User Posts
+For logged in users you can use the following shortcode to display their submissions. 
+The attribute "label" is optional (default value is "View").
+> [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
 
-<a href="https://themekraft.com/create-post-forms-wordpress/"> How to Create Post Forms in WordPress </a>
-Many web users want to have a voice on your blog and are always happy to share their thoughts with you. There are so many benefits of encouraging user generated content on your website. So how can your web users share their content with you without having to access your backend or without you having [&hellip;]
+#### User Posts List
+For logged in users you can use the following shortcode to display a the list of posts.
+> [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
 
----
+####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
 
-<a href="https://themekraft.com/create-incredible-contact-forms-wordpress/"> How to Create Incredible Contact Forms for WordPress </a>
-To continuously ensure that your marketing efforts are addressing the needs of your customers you need to know what they want. You can only find out what your customers want by asking them. If you want to easily collect essential information from your web users you should create contact forms for your WordPress site. Contact [&hellip;]
+## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
----
+### Guest Posts Submission Management in WordPress
+Enable Guest Posts Submission Management with Full Moderation from the Front End for Any WordPress Site and Theme.
+[Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-<a href="https://themekraft.com/create-user-generated-content-wordpress-website-business/"> How to Create User Generated Content for Your WordPress Website and Business </a>
-First off, what exactly is user generated content (UGC)? This is content that is created by your customers. It can be anything from a blog post, product reviews, photos, videos or comments. Content marketing is currently a top marketing strategy for most businesses. A report by Demand Gen shows that 47% of customers surveyed will [&hellip;]
+### Display Your Website Data Anywhere You Choose
+Make all information submitted through a form easily accessible from wherever you like. 
+[Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
----
+### Publishing Content in BuddyPress & BuddyBoss Made Easy.
+Enable your users to create content and bring your community to life. Easy Front-End Blogging with BuddyPress and BuddyForms!+
+[Posting Content in BuddyPress and BuddyBoss](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
-<a href="https://themekraft.com/automate-content-creating-process-guest-articles/"> How To Automate the Content Creating Process with Guest Articles </a>
-You are a blogger or owner of an online magazine and want allow other authors to contribute to your site in form of guest articles? Usually there are a lot of steps involved from getting in contact with the author, deciding on the content and topic, reviewing the article, adding the article to your [&hellip;]
-
----
-
-[Content Forms](https://themekraft.com/content-forms-vs-contact-forms/) vs Contact Forms
-[Marketplace with BuddyPress – WooCommerce and WC Vendors](https://themekraft.com/free-marketplace-buddypress-woocommerce-wc-vendors/)
-[New Post Forms Moderation Tools in Your Hands.](https://themekraft.com/new-moderation-tools-in-your-hands/)
-[BuddyForms Sponsors the first BuddyCamp Europe](https://themekraft.com/buddyforms-sponsors-the-first-buddycamp-europe/)
-
----
-
-#### Other Blog Posts
-
-WPExplorer
-[BuddyForms Form Builder & Front-end Post Editor WordPress Plugin](http://www.wpexplorer.com/buddyforms-form-builder-front-end-post-editor-wordpress-plugin/)
-
-BuddyBoss User Generated Content
-Content Generation for your site has never been easier. Read this blog post on how to add user generated posts to your site.
-[How To Add User Generated Content To A WordPress Site With BuddyForms](https://www.buddyboss.com/how-to-add-user-generated-content-to-a-wordpress-site-with-buddyforms/)
-
-[9 Plugins to Encourage User-Generated Content Submissions on Your WordPress Site](https://premium.wpmudev.org/blog/plugins-user-generated-content/)
-
-
-#### Supported Frontend Form Types
-* Contact Form
-* Content Form
-* Post Form
-* Registration Form
-* Custom Form to submit images or any media
-* Post Submission and Post Management from the frontend
-* Product Form for WooCommerce
-* Any Frontend Form Type
-* Post Meta Forms
-* User Meat Forms
-* Profile Forms for normal WordPress User Data
-* Profile Forms with BuddyPress xProfile Support
-
+#### More Supported Solutions. [BuddyForms Solutions](https://themekraft.com/solutions/buddyforms/)
 
 #### Form Builder Features
 * Drag and Drop Forms Builder
 * Form Designer to Layout your forms with options and custom css
 * Form Grid to sort form elements in a grid
-* Forms Manager and Submission Manager. Find All Forms and there submissions in one place. Post Forms Registration or Contact Forms
+* Submission Manager. Find All Forms and there submissions in one place. Post Forms, Registration Forms and Contact Forms
 
 #### User Submitted Content
-* Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
-* crowdsourced content will bring your community members user-generated content to the next level
+* Ideal for guest posts. Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
 * Frontend generated content made possible with Endpoints and ShortCodes for easy access
-
-
----
-
-#### Forms Creation in easy steps.
-* Form Creation step by step with easy to use form creator wizard
-* Form Administration with an easy to use form manager user roles and capabilities in the form builder
+* All the tools you need to manage guste posts, Full frontend Moderation Controles and Frontend Post Management
 
 ### Free Field Types
 
@@ -295,10 +135,11 @@ Content Generation for your site has never been easier. Read this blog post on h
 * Date
 * Captcha
 
-
 #### Post Fields
 * Title
 * Content
+* Category
+* Tags
 * Text, Textarea
 * Number
 * Dropdown, Select
@@ -306,8 +147,6 @@ Content Generation for your site has never been easier. Read this blog post on h
 * Checkbox
 
 #### Pro Field Types
-* Category
-* Tags
 * Taxonomy
 * Post Formats
 * Comments
@@ -317,33 +156,55 @@ Content Generation for your site has never been easier. Read this blog post on h
 * Hidden
 * HTML
 * Date
-* and more coming all the time
+* more Fields available by Add-Ons!
 
-Also more Fields available by Add-Ons
+### Your Data Protection is Our Priority 
+Buddyform is Full GDPR compliant Wordpress Form Builder.
 
+#### You get Privacy by Design
+With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
 
----
+#### Easy to navigate and User-friendly interface.
+* Easily embed forms anywhere on your website with just shortcodes by blocks or code.
+* Create registration funnels and ask to create a password after clicking on the activation link.
+* Create forms for any kind of user generated content.
+* Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
+* Enable/Disable comments related to the submitted content,  Frontend Revision for users
+* Overwrite the WordPress default Registration Form and Page
+* Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
-> #### Submit Issues - Contribute
-> * Pull request are welcome. BuddyForms is community driven and developed on [Github](https://buddyforms.github.io/BuddyForms/)
+### Integrate with other Plugins
+** BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
+** Ultimate Member – Submit and manage posts from your Ultimate Member Profile
+** ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+** Pods
+** MailPoed
+** WooCommerce – Build your own marketplace with user-submitted products
+** WooCommerce Simple Auctions – Create and manage auctions via front end
+** HubSpot
+** Geo My WP
 
----
+#### Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
-> #### Demo Site
-> * Feel free to test BuddyForms on our Demo Site: [BuddyForms Demo](https://addendio.com/try-plugin/?slug=buddyforms)
+### List of Forms
+* Contact Forms – Collect leads and customer support data
+* Registration Forms – Sign-up users to your webpage
+* Profile Forms – Let your user update there profile information.
+* Login Forms – Grant users access to restricted content
+* Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 
----
+### List of User Examples
+* Online Directories – Crowdsource categorized data from your community
+* Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
+* News Magazines – Create single articles through collaborative writing among a team of editors
+* How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
+* Marketplace – Sell and purchase products from different vendors and list all the product features
+* Content Forms for any kind of user generated content, user submitted posts
 
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
 
----
-
-> **Powered with ❤ by [ThemeKraft](https://themekraft.com)**
-
-Upgrade to ‘Professional’ to skyrocket the engagement around your website and gain even more control over submission forms!
-
-→ Get more information and upgrade at [BuddyForms](https://themekraft.com/buddyforms)
+**Powered with ❤ by [ThemeKraft](https://themekraft.com)**
 
 == Installation ==
 
@@ -354,33 +215,132 @@ Head to the 'BuddyForms' menu item in your admin sidebar
 == Frequently Asked Questions ==
 
 = Can I create a normal Contact Forms =
-Yes, you can create Simple Contact Forms or Complex Contact Forms with many different actions to create your submission logic.
+Yes, you can create Simple Contact Forms or Complex Contact Forms withj different custom fields
 
 = Can I create a Registration Forms =
 Yes, you can Create Registration Forms
 
 = Can I create a Content Forms =
-Yes, you can create Content forms for any post type.
+Yes, you can create Content forms for any caontent and post type.
+
+= Can I create a post Forms =
+Yes, you can create post forms for any post type.
 
 = Can I Combine Registration Forms and Content Forms =
 Yes, you can add login and registration Form Elements to any form and ask your user to Login or Register during form submission.
 
 == Documentation & Support ==
-Find our Getting Started, How-to and Developer Docs on [docs.buddyforms.com](http://docs.buddyforms.com/) or watch one of our Video Tutorials [Videos](https://themekraft.com/buddyforms-videos/)
-If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard and the Help Center!
+Documentation: [docs.buddyforms.com](http://docs.buddyforms.com/)
+
+If you still get stuck somewhere, our support gets you back on the right track. You can find all help buttons in your BuddyForms Settings Panel in your WP Dashboard and the Help Center! Our goal is to help you, that's why if you have any questions or concerns, on our website you can find all the information related to BuddyForms.
 
 == Screenshots ==
 
-1. Form Wizard - The easy way to create forms
-2. Form Builder - Expert view to setup individual forms with endless possibilities
-3. Form Settings -  Form Builder Settings View
-4. Forms Overview in Admin
-5. EmbedForm the form in Pages via Shortcodes
-6. Frontend Form Example of a Simple Post Form
-7. Form Submissions in the admin backend
-
+1. Embed Forms - The easy way to embed forms
+2. List Submissions - Display the user Submissions
+3. Embed Navigation -  Link to forms and Submissions
+4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
+= 2.7.6 - 16 Dec 2022 =
+* Fixed issue with post content field value.
+* Fixed issue with textarea field value after submission.
+* Updated duration of trial version.
+* Improved Go pro screen.
+* Updated Freemius SDK.
+
+= 2.7.5 - 9 Dec 2022 =
+* Correcting price of BuddyForms plans in Go Pro screen.
+* Added 5 site license option in BuddyForms bundle.
+* Correcting misspelled element description in setup metabox.
+
+= 2.7.4 - 8 Dec 2022 =
+* Fixed issue with Custom Login extension.
+* Added new pricing screen.
+* Updated Freemius SDK.
+* Tested up with WordPress 6.1.1
+
+= 2.7.3 - 18 Nov 2022 =
+* Fixed issue with fields validation.
+* Improved forms security.
+* Tested up with WordPress 6.1
+
+= 2.7.2 - 08 Sep 2022 =
+* Improved integration with ACF extension.
+* Tested up to WordPress 6.0.2
+
+= 2.7.1 - 29 Aug 2022 =
+* Added automatic activation when using a bundle license.
+* Updated bundle link and popup text.
+
+= 2.7.0 - 19 Jul 2022 =
+* Fixed issue with fields validation.
+
+= 2.6.15 - 19 Jul 2022 =
+* Fixed issue with global JS.
+
+= 2.6.14 - 19 Jul 2022 =
+* Fixed issue with form render.
+
+= 2.6.13 - 16 Jul 2022 =
+* Fixed issue with required attribute.
+* Fixed issue with email notification table.
+
+= 2.6.12 - 13 Jul 2022 =
+* Fixed issue with reCaptcha validation.
+* Fixed issue with email field validation.
+* Tested up to WordPress 6.0.1
+
+= 2.6.11 - 06 Jul 2022 =
+* Fixed issue with Post type selection.
+* Fixed issue with form fields values.
+
+= 2.6.10 - 26 Jun 2022 =
+* Fixed vulnerability issue.
+
+= 2.6.9 - 22 Jun 2022 =
+* Fixed security issue.
+
+= 2.6.8 - 8 Jun 2022 =
+* Fixed vulnerability issue.
+
+= 2.6.7 - 31 May 2022 =
+* Fixed vulnerability issue.
+
+= 2.6.6 - 26 May 2022 =
+* Fixed issue with jQuery call.
+* Fixed issue with remote assets call.
+
+= 2.6.5 - 26 May 2022 =
+* Fixed security issues.
+* Tested up to WordPress 6.0
+
+= 2.6.4 - 17 May 2022 =
+* Fixed issue with phone field validation.
+* Changed format of form error message.
+* Updated readme.txt
+
+= 2.6.3 - 16 Mar 2022 =
+* Fixed security issue.
+* Improved handling of JS variables.
+
+= 2.6.2 - 11 Mar 2022 =
+* Fixed issue with JS variable conflict.
+* Fixed issue with forms permalinks. 
+
+= 2.6.1 - 24 Feb 2022 =
+* Changed the position of the descriptive video in the readme.txt
+
+= 2.6.0 - 23 Feb 2022 =
+* Disabled affiliate program notices.
+* Fixed issue with taxonomies field type.
+* Added new welcome screen.
+* Tested up to WordPress 5.9
+
+= 2.5.32 - 2 Dec 2021 =
+* Added new hook for improve forms render in frontend.
+* Updated readme.txt
+
 = 2.5.31 - 10 Jul 2021 =
 * Tested up to WordPress 5.8
 * Fixed issue with Beta Program, now betas should be showing if the user enable the Beta Program.

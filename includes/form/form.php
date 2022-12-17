@@ -6,7 +6,6 @@
  * @param $args
  * @param bool $echo
  *
- *
  * @return string|void
  * @since 2.4.0 The function only return string or empty
  *
@@ -16,8 +15,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	global $current_user, $buddyforms, $wp_query, $bf_form_response_args, $wp, $bf_form_error;
 
 	if ( isset( $_REQUEST['form_slug'] ) && isset( $_REQUEST['post_id'] ) && isset( $_REQUEST['_wpnonce'] ) ) {
-		$form_slug       = filter_var( $_REQUEST['form_slug'], FILTER_SANITIZE_STRING );
-		$post_id         = filter_var( $_REQUEST['post_id'], FILTER_VALIDATE_INT );
+		$form_slug       = filter_var( wp_unslash( $_REQUEST['form_slug'] ), FILTER_SANITIZE_STRING );
+		$post_id         = filter_var( wp_unslash( $_REQUEST['post_id'] ), FILTER_VALIDATE_INT );
 		$transient_name  = sprintf( 'buddyforms_transit_post_page_%s_%s', $form_slug, $post_id );
 		$transient_entry = get_transient( $transient_name );
 		if ( ! empty( $transient_entry ) ) {
@@ -41,15 +40,18 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	$form_notice = '';
 	$form_action = false;
 
-	$short_array = shortcode_atts( array(
-		'post_type'   => '',
-		'the_post'    => 0,
-		'post_id'     => 0,
-		'post_parent' => 0,
-		'form_slug'   => false,
-		'form_notice' => '',
-		'form_action' => false
-	), $args );
+	$short_array = shortcode_atts(
+		array(
+			'post_type'   => '',
+			'the_post'    => 0,
+			'post_id'     => 0,
+			'post_parent' => 0,
+			'form_slug'   => false,
+			'form_notice' => '',
+			'form_action' => false,
+		),
+		$args
+	);
 
 	extract( $short_array );
 
@@ -70,33 +72,38 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	}
 
 	if ( $buddyforms[ $form_slug ]['form_type'] == 'registration' && is_user_logged_in() ) {
-		$current_user_entry = new WP_Query( array(
-			'post_type'      => $post_type,
-			'fields'         => 'ids',
-			'posts_per_page' => '1',
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'author'         => $current_user->ID,
-			'meta_query'     => array(
-				'relation' => 'AND',
-				array(
-					'key'   => '_bf_form_slug',
-					'value' => sanitize_title( $form_slug ),
-				)
+		$current_user_entry = new WP_Query(
+			array(
+				'post_type'      => $post_type,
+				'fields'         => 'ids',
+				'posts_per_page' => '1',
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'author'         => $current_user->ID,
+				'meta_query'     => array(
+					'relation' => 'AND',
+					array(
+						'key'   => '_bf_form_slug',
+						'value' => sanitize_title( $form_slug ),
+					),
+				),
 			)
-		) );
+		);
 		if ( ! empty( $current_user_entry->posts ) ) {
 			$post_id = $current_user_entry->posts[0];
 		}
 	}
 	$form_output = '';
 	ob_start();
-	require( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php' );
+	require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php';
 	$global_css = ob_get_clean();
 	if ( ! empty( $global_css ) ) {
 		$global_css = buddyforms_minify_css( $global_css );
 		if ( $echo ) {
-			echo $global_css;
+			file_put_contents( dirname( BUDDYFORMS_INCLUDES_PATH ) . '/assets/css/bf-global-css-' . $form_slug . '.css', $global_css );
+			$login_form_css_url = BUDDYFORMS_ASSETS . 'css/bf-global-css-' . $form_slug . '.css';
+			wp_register_style( 'bf-global-css-' . $form_slug, $login_form_css_url );
+			wp_enqueue_style( 'bf-global-css-' . $form_slug );
 		} else {
 			$form_output .= $global_css;
 		}
@@ -139,23 +146,49 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
-
+					echo wp_kses(
+						$echo_content,
+						array(
+							'div'    => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'span'   => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'strong' => array(),
+							'p'      => array(),
+						)
+					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
-			//Check if the post to edit match with the form setting
+			// Check if the post to edit match with the form setting
 			if ( $the_post->post_type !== $post_type ) {
 				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
-
+					echo wp_kses(
+						$echo_content,
+						array(
+							'div'    => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'span'   => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'strong' => array(),
+							'p'      => array(),
+						)
+					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
 
@@ -164,7 +197,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$current_post_is_draft = $the_post->post_status == 'draft';
 				$current_user_can_edit = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
 				if ( $current_post_is_draft ) {
-					//Let the user edit the draft until is published
+					// Let the user edit the draft until is published
 					$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
 					$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );
 					$user_can_edit           = ( $current_user_can_draft || $current_user_can_edit ) && $current_user_can_create;
@@ -182,11 +215,24 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
-					echo $echo_content;
-
+					echo wp_kses(
+						$echo_content,
+						array(
+							'div'    => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'span'   => array(
+								'class' => array(),
+								'id'    => array(),
+							),
+							'strong' => array(),
+							'p'      => array(),
+						)
+					);
 					return;
 				} else {
-					return $form_output . $echo_content;
+					return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 				}
 			}
 		}
@@ -204,7 +250,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	// If post_id == 0 a new post is created
 	if ( $post_id == 0 ) {
-		//check if auto-draft exist
+		// check if auto-draft exist
 		global $wpdb;
 		$query   = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE 1=1 AND post_title ='Auto Draft' AND post_content = '' AND post_author = %s AND post_type = %s AND {$wpdb->postmeta}.meta_key = '_bf_form_slug' AND {$wpdb->postmeta}.meta_value = %s ORDER BY ID DESC", $current_user->ID, $post_type, $form_slug );
 		$post_id = (int) $wpdb->get_var( $query );
@@ -216,7 +262,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	}
 
 	if ( empty( $post_type ) ) {
-		$post_type = $the_post->post_type;//buddyforms??
+		$post_type = $the_post->post_type;// buddyforms??
 	}
 
 	if ( empty( $form_slug ) ) {
@@ -227,9 +273,23 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 		if ( $echo ) {
-			echo $echo_content;
+			echo wp_kses(
+				$echo_content,
+				array(
+					'div'    => array(
+						'class' => array(),
+						'id'    => array(),
+					),
+					'span'   => array(
+						'class' => array(),
+						'id'    => array(),
+					),
+					'strong' => array(),
+					'p'      => array(),
+				)
+			);
 		} else {
-			return $form_output . $echo_content;
+			return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 		}
 	}
 
@@ -244,7 +304,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		}
 	}
 
-	if ( empty( $form_action) ) {
+	if ( empty( $form_action ) ) {
 		$form_action = ( isset( $wp_query->query_vars['bf_action'] ) ) ? $wp_query->query_vars['bf_action'] : 'save';
 	}
 
@@ -274,9 +334,9 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
-		echo $form_output . $echo_content;
+    		 echo wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );     
 	} else {
-		return $form_output . $echo_content;
+		return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 	}
 
 	if ( ! empty( $transient_name ) ) {
@@ -294,26 +354,25 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
  * @note modification of the original function `get_default_post_to_edit` to not set any post format with `set_post_format`
  *
  * @param string $post_type Optional. A post type string. Default 'post'.
- * @param bool $create_in_db Optional. Whether to insert the post into database. Default false.
+ * @param bool   $create_in_db Optional. Whether to insert the post into database. Default false.
  *
  * @return WP_Post Post object containing all the default post data as attributes
  * @since 2.5.1
- *
  */
 function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) {
 	$post_title = '';
 	if ( ! empty( $_REQUEST['post_title'] ) ) {
-		$post_title = esc_html( wp_unslash( $_REQUEST['post_title'] ) );
+		$post_title = wp_kses_post( wp_unslash( $_REQUEST['post_title'] ) );
 	}
 
 	$post_content = '';
 	if ( ! empty( $_REQUEST['content'] ) ) {
-		$post_content = esc_html( wp_unslash( $_REQUEST['content'] ) );
+		$post_content = wp_kses_post( wp_unslash( $_REQUEST['content'] ) );
 	}
 
 	$post_excerpt = '';
 	if ( ! empty( $_REQUEST['excerpt'] ) ) {
-		$post_excerpt = esc_html( wp_unslash( $_REQUEST['excerpt'] ) );
+		$post_excerpt = wp_kses_post( wp_unslash( $_REQUEST['excerpt'] ) );
 	}
 
 	if ( $create_in_db ) {
@@ -331,7 +390,7 @@ function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false
 			wp_schedule_event( time(), 'daily', 'wp_scheduled_auto_draft_delete' );
 		}
 	} else {
-		$post                 = new stdClass;
+		$post                 = new stdClass();
 		$post->ID             = 0;
 		$post->post_author    = '';
 		$post->post_date      = '';
@@ -359,7 +418,6 @@ function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false
 	 * @param WP_Post $post Post object.
 	 *
 	 * @since 1.5.0
-	 *
 	 */
 	$post->post_content = (string) apply_filters( 'default_content', $post_content, $post );
 
@@ -370,7 +428,6 @@ function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false
 	 * @param WP_Post $post Post object.
 	 *
 	 * @since 1.5.0
-	 *
 	 */
 	$post->post_title = (string) apply_filters( 'default_title', $post_title, $post );
 
@@ -381,7 +438,6 @@ function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false
 	 * @param WP_Post $post Post object.
 	 *
 	 * @since 1.5.0
-	 *
 	 */
 	$post->post_excerpt = (string) apply_filters( 'default_excerpt', $post_excerpt, $post );
 
@@ -403,8 +459,8 @@ function buddyforms_form_response_no_ajax() {
 		$_POST     = buddyforms_sanitize( '', $_POST );
 		$form_slug = get_query_var( 'form_slug' );
 		if ( isset( $_REQUEST['post_id'] ) && isset( $_REQUEST['_wpnonce'] ) ) {
-			$post_id        = filter_var( $_REQUEST['post_id'], FILTER_VALIDATE_INT );
-			$wp_nonce       = filter_var( $_REQUEST['_wpnonce'], FILTER_SANITIZE_STRING );
+			$post_id        = filter_var( wp_unslash( $_REQUEST['post_id'] ), FILTER_VALIDATE_INT );
+			$wp_nonce       = filter_var( wp_unslash( $_REQUEST['_wpnonce'] ), FILTER_SANITIZE_STRING );
 			$transient_name = sprintf( 'buddyforms_transit_post_page_%s_%s', $form_slug, $post_id );
 		}
 
@@ -423,10 +479,17 @@ function buddyforms_form_response_no_ajax() {
 			$action       = ! empty( $action ) ? $action : 'create';
 			if ( ! empty( $transient_name ) && ! empty( $global_error ) ) {
 				unset( $_POST['bf_submitted'] );
-				set_transient( $transient_name, array( 'error' => $global_error, 'post' => $_POST, 'action' => $action ) );
+				set_transient(
+					$transient_name,
+					array(
+						'error'  => $global_error,
+						'post'   => buddyforms_sanitize( '', $_POST ),
+						'action' => $action,
+					)
+				);
 			}
 			$sendback = remove_query_arg( array( 'form_slug', 'post_id', '_wpnonce', 'bf_submitted' ), wp_get_referer() );
-			$sendback = rtrim( $sendback, "/" );
+			$sendback = rtrim( $sendback, '/' );
 
 			$sendback = add_query_arg( 'form_slug', $form_slug, $sendback );
 			$sendback = add_query_arg( 'post_id', $post_id, $sendback );
@@ -463,9 +526,7 @@ function buddyforms_form_response_no_ajax() {
 				wp_redirect( $post_list_link, 302 );
 				exit;
 			}
-
 		}
-
 	}
 
 }

@@ -23,12 +23,13 @@
 
 			notice.fadeOut( 'fast', function() {
 				var data = {
-					action    : 'fs_dismiss_notice_action_' + ajaxActionSuffix,
+					action   : 'fs_dismiss_notice_action_' + ajaxActionSuffix,
+                    // As such we don't need to use `wp_json_encode` method but using it to follow wp.org guideline.
+                    _wpnonce : <?php echo wp_json_encode( wp_create_nonce( 'fs_dismiss_notice_action' ) ); ?>,
 					message_id: id
 				};
 
-				// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-				$.post( ajaxurl, data, function( response ) {
+				$.post( <?php echo Freemius::ajax_url() ?>, data, function( response ) {
 
 				});
 
