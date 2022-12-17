@@ -788,7 +788,6 @@ function buddyforms_display_form_element( $args ) {
 			);
 			$post_textarea_options                     = isset( $customfield['post_textarea_options'] ) ? $customfield['post_textarea_options'] : 'false';
 			$post_textarea_options_array               = array(
-				'media_buttons' => 'media_buttons',
 				'tinymce'       => 'tinymce',
 				'quicktags'     => 'quicktags',
 			);

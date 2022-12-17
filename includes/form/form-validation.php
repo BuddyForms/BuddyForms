@@ -120,7 +120,7 @@ function buddyforms_sanitize( $type, $value ) {
 			$value = sanitize_email( $value );
 			break;
 		case 'textarea':
-			$value = sanitize_textarea_field( $value );
+			$value = wp_kses_post( $value );
 			break;
 		case 'text':
 			$value = sanitize_text_field( $value );
