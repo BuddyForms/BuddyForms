@@ -242,8 +242,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
-= 2.7.6 - 15 Dec 2022 =
+= 2.7.6 - 16 Dec 2022 =
 * Fixed issue with post content field value.
+* Fixed issue with textarea field value after submission.
+* Updated duration of trial version.
 * Improved Go pro screen.
 * Updated Freemius SDK.
 
