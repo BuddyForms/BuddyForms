@@ -32,13 +32,6 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 
 					$data = array( 'data' => base64_encode( json_encode( $data ) . '|' . wp_nonce_tick() ) );
 
-					$free_track_api = new TkTrackApi();
-					$res            = $free_track_api->track( $data );
-
-					// Check for success
-					if ( empty( $res ) || empty( $res->success ) ) {
-						error_log( 'buddyforms::analytics', E_USER_NOTICE );
-					}
 				}
 			}
 		}
