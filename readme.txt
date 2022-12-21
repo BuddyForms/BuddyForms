@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
 Requires at least: 4.0
 Tested up to: 6.1.1
-Stable tag: 2.7.6
+Stable tag: 2.7.7-beta
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
