@@ -67,43 +67,6 @@ function buddyforms_get_version_type() {
 	return '<b>' . __( 'Free', 'buddyforms' ) . '</b>';
 }
 
-add_action( 'admin_notices', 'buddyforms_rating_admin_notice' );
-function buddyforms_rating_admin_notice() {
-
-	if ( defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
-		return;
-	}
-
-	$user_id = get_current_user_id();
-	if ( ! get_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed' ) ) {
-		?>
-		<div class="notice notice-success is-dismissible">
-			<h4 style="margin-top: 20px;">Hey, you just updated to the <?php echo esc_html( BUDDYFORMS_VERSION ); ?> version of BuddyForms – that’s awesome!</h4>
-			<p style="line-height: 2.2; font-size: 13px;">Could you please do me a BIG favor and give it a 5-star rating
-				on WordPress? Just to help us spread the word and boost our motivation.
-			<p>
-			<p style="margin: 20px 0;">
-				<a class="button xbutton-primary"
-				   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1;"
-				   href="?buddyforms_rating_admin_notice_dismissed">Dismiss</a>
-				<a class="button button-primary"
-				   style="font-size: 15px; padding: 8px 20px; height: auto; line-height: 1; box-shadow: none; text-shadow: none; background: #46b450; color: #fff; border: 1px solid rgba(0,0,0,0.1);"
-				   href="https://wordpress.org/support/plugin/buddyforms/reviews/" target="_blank">Review Now</a>
-			</p>
-		</div>
-		<?php
-	}
-
-}
-
-add_action( 'admin_init', 'buddyforms_rating_admin_notice_dismissed' );
-function buddyforms_rating_admin_notice_dismissed() {
-	$user_id = get_current_user_id();
-	if ( isset( $_GET['buddyforms_rating_admin_notice_dismissed'] ) ) {
-		add_user_meta( $user_id, 'buddyforms_rating_admin_notice_dismissed', 'true', true );
-	}
-}
-
 add_filter( 'display_post_states', 'buddyforms_add_label_to_post_list', 10, 2 );
 /**
  * Add a label to the post in the list in the backend where the title was auto generated
