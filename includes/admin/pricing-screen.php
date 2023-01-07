@@ -11,10 +11,6 @@ function buddyforms_freemius_checkout_script() {
 
 function buddyforms_bundle_screen_menu() {
 	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Go Pro!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'buddyforms_bundle_screen_content', 99 );
-
-    global $submenu;
-    $submenu[ 'edit.php?post_type=buddyforms' ][5][4] = "bf-go-pro";
-
 }
 
 add_action( 'admin_menu', 'buddyforms_bundle_screen_menu', 9999 );

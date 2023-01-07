@@ -44,8 +44,9 @@ jQuery(document).ready(function (jQuery) {
     var videoHeight = activeTab.width();
     jQuery('#bf-welcome-video-youtube').css('height', videoHeight*0.5);
 
-    jQuery('a.bf-go-pro').css('color', '#fca300' );
-    jQuery('a.bf-go-pro').parent().insertAfter('#menu-posts-buddyforms > ul > li:last-child');
+    var goPro = jQuery('a[href="edit.php?post_type=buddyforms&page=buddyforms_bundle_screen"]');
+    goPro.css('color', '#fca300' );
+    goPro.parent().insertAfter('#menu-posts-buddyforms > ul > li:last-child');
 
     jQuery('#purchase').on('click', function (e) {
 
