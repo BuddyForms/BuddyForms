@@ -304,6 +304,10 @@ registerBlockType('buddyforms/bf-list-submissions', {
             {value: 'list', label: __('List', 'buddyforms')},
             {value: 'table', label: __('Table', 'buddyforms')},
         ];
+        for (var key in buddyforms_content_templates) {
+            bf_list_posts_style_options.push({value: key, label: buddyforms_content_templates[key]});
+        }
+
 
         var forms = [
             {value: 'no', label: __('Select a Form', 'buddyforms')},

@@ -51,6 +51,10 @@ function buddyforms_shortcodes_to_block_init() {
 	$roles = buddyform_get_role_names();
 	wp_localize_script( 'bf-embed-form', 'buddyforms_roles', $roles );
 
+
+	$templates = buddyforms_hooks_fields_get_templates();
+	wp_localize_script( 'bf-embed-form', 'buddyforms_content_templates', $templates );
+
 	//
 	// Embed a form
 	//
@@ -471,7 +475,7 @@ function buddyforms_blocks_the_loop( $args ) {
 	} elseif ( $list_posts_style == 'list' ) {
 		buddyforms_locate_template( 'the-loop', $form_slug );
 	} else {
-		buddyforms_locate_template( $list_posts_style, $form_slug );
+		buddyforms_locate_template( 'dynamic-template', $form_slug );
 	}
 
 	wp_reset_postdata();
