@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
 Requires at least: 4.0
 Tested up to: 6.1.1
-Stable tag: 2.7.7
+Stable tag: 2.7.8
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
+= 2.7.8 - 11 Jan 2023 =
+* Fixed vulnerability with image uploaded from url.
+* Fixed issue with swapped classes in menu items.
+
 = 2.7.7 - 23 Dec 2022 =
 * Removed rating admin notice.
 * Removed license activation screen from free version.
