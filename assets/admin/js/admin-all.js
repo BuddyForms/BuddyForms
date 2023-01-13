@@ -54,7 +54,6 @@ jQuery(document).ready(function (jQuery) {
             plugin_id:  '391',
             plan_id:    '583',
             public_key: 'pk_d462eaeb50bc258e3d97c2c146eb6',
-            image:      '//s3-us-west-2.amazonaws.com/freemius/plugins/391/icons/4c838240bf4dd36a293f2b00790c8480.jpg'
         });
         
         handler.open({
@@ -74,7 +73,6 @@ jQuery(document).ready(function (jQuery) {
             plugin_id:  '7487',
             plan_id:    '12239',
             public_key: 'pk_68d9aeacd7352d37de451d91e3081',
-            image:      '//s3-us-west-2.amazonaws.com/freemius/plugins/391/icons/4c838240bf4dd36a293f2b00790c8480.jpg'
         });
         
         handler.open({
@@ -94,7 +92,6 @@ jQuery(document).ready(function (jQuery) {
             plugin_id:  '2046',
             plan_id:    '4316',
             public_key: 'pk_ee958df753d34648b465568a836aa',
-            image:      '//s3-us-west-2.amazonaws.com/freemius/plugins/2046/icons/2921156b0159ff6ef809b152449e6aa9.jpg'
         });
         
         handler.open({

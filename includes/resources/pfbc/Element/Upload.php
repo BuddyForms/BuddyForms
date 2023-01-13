@@ -47,7 +47,7 @@ class Element_Upload extends Element_Textbox {
 	public static function save_post_meta( $customfield, $post_id ) {
 		if ( $customfield['type'] == 'featured_image' ) {
 			if ( ! empty( $_POST[ $customfield['slug'] ] ) ) {
-				$attachment_id = $_POST[ $customfield['slug'] ];
+				$attachment_id = buddyforms_sanitize( '', $_POST[ $customfield['slug'] ] );
 				// Update attachment parent
 				$attachment_args = array(
 					'ID'          => $attachment_id,
