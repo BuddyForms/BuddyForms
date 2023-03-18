@@ -243,7 +243,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 = 2.7.9 - 17 Mar 2023 =
-* Improved phar file verification.
+* Improved phar file verification (issue found by Jesús Miguel Calderón).
 * Fixed issue with new user activation link.
 
 = 2.7.8 - 11 Jan 2023 =
