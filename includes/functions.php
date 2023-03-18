@@ -1488,7 +1488,7 @@ add_action( 'wp_ajax_upload_image_from_url', 'buddyforms_upload_image_from_url' 
 function buddyforms_upload_image_from_url() {
 	$url            = isset( $_REQUEST['url'] ) ? wp_kses_post( wp_unslash( $_REQUEST['url'] ) ) : '';
 	$valid_url = strtolower( $url );
-	if ( strpos( $valid_url, 'phar://') !== false ) {
+	if ( ( strpos( $valid_url, 'phar://') !== false ) || ( pathinfo( $valid_url, PATHINFO_EXTENSION ) === 'phar') ) {
 		return;
 	}
 	$file_id        = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';

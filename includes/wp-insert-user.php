@@ -504,6 +504,7 @@ function buddyforms_activate_action() {
 	$user_id = filter_input( INPUT_GET, 'user', FILTER_VALIDATE_INT );
 	delete_user_meta( $user_id, 'has_to_be_activated' );
 	delete_user_meta( $user_id, 'bf_activation_link' );
+	delete_transient( 'buddyforms_get_users_pending_for_activation' );
 
 	do_action( 'buddyforms_after_user_activation', $user_id );
 
