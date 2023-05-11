@@ -335,7 +335,7 @@ function buddyforms_nav( $args ) {
 	$args['label'] = isset( $args['label_add'] ) ? $args['label_add'] : __( 'Add New', 'buddyforms' );
 	$tmp          .= buddyforms_button_add_new( $args );
 
-	return $tmp;
+	return wp_kses( $tmp, buddyforms_wp_kses_allowed_atts() );
 }
 
 add_shortcode( 'buddyforms_button_view_posts', 'buddyforms_button_view_posts' );
@@ -363,7 +363,7 @@ function buddyforms_button_view_posts( $args ) {
 
 	$button = '<a class="button bf-navigation bf-navigation-view" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
 
-	return apply_filters( 'buddyforms_button_view_posts', $button, $args );
+	return wp_kses( apply_filters( 'buddyforms_button_view_posts', $button, $args ), buddyforms_wp_kses_allowed_atts() );
 
 }
 
@@ -392,7 +392,7 @@ function buddyforms_button_add_new( $args ) {
 
 	$button = '<a class="button bf-navigation bf-navigation-create" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $label_add . '</a>';
 
-	return apply_filters( 'buddyforms_button_add_new', $button, $args );
+	return wp_kses( apply_filters( 'buddyforms_button_add_new', $button, $args ), buddyforms_wp_kses_allowed_atts() );
 
 }
 
@@ -430,7 +430,7 @@ function buddyforms_view_login_form( $args ) {
 		$tmp = buddyforms_get_wp_login_form( $form_slug, $title, $args );
 	}
 
-	return $tmp;
+	return wp_kses( $tmp, buddyforms_wp_kses_allowed_atts() );
 }
 
 
