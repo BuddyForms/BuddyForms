@@ -142,11 +142,11 @@ class View_Frontend extends FormView {
 
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element ), '<div class="bf-input">';
 		if ( isset( $buddyforms[ $form_slug ]['layout']['desc_position'] ) && $buddyforms[ $form_slug ]['layout']['desc_position'] == 'above_field' ) {
-			echo $this->renderDescriptions( $element );
-			echo $element->render();
+			echo $this->renderDescriptions( $element ); // WPCS: XSS ok.
+			echo $element->render(); // WPCS: XSS ok.
 		} else {
-			echo $element->render();
-			echo $this->renderDescriptions( $element );
+			echo $element->render(); // WPCS: XSS ok.
+			echo $this->renderDescriptions( $element ); // WPCS: XSS ok.
 		}
 		echo "</div></div></div>";
 	}

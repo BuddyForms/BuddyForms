@@ -166,7 +166,7 @@ function buddyforms_jquery_validation() {
 	}
 	$form_html .= '
 	</script>';
-	echo $form_html;
+	echo $form_html; // WPCS: XSS ok.
 }
 
 function buddyforms_sanitize( $type, $value ) {

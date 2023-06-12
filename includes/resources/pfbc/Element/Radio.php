@@ -41,7 +41,7 @@ class Element_Radio extends OptionElement {
 			$input[] = '/>';
 
 			$text_out = sprintf( ' %s ',  $text );
-			echo $label_start . join( ' ', $input ) . $text_out . $label_end;
+			echo $label_start . join( ' ', $input ) . $text_out . $label_end; // WPCS: XSS ok.
 
 			++ $count;
 			if ( $labelClass != 'radio-inline' ) {

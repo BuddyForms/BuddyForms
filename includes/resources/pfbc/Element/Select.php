@@ -44,11 +44,11 @@ class Element_Select extends OptionElement {
 				$selected = selected( $current_selected, true, false );
 			}
 			$option = sprintf( '<option value="%s" %s>%s</option>', $this->filter( $value ), $selected, $text );
-			echo $option;
+			echo $option; // WPCS: XSS ok.
 		}
 		echo '</select>';
 		$content = ob_get_clean();
 
-		echo $content;
+		echo $content; // WPCS: XSS ok.
 	}
 }

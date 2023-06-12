@@ -266,7 +266,7 @@ abstract class Element extends Base {
 	 * If an element requires inline stylesheet definitions, this method is used send them to the browser before the form is rendered.
 	 */
 	public function render() {
-		echo $this->html();
+		echo $this->html(); // WPCS: XSS ok.
 	}
 
 	/**

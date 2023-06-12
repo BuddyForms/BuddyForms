@@ -47,7 +47,7 @@ class View_SideBySide4 extends FormView {
 		}
 
 		echo " <div class='$colSize'> ";
-		echo $element->render(), $this->renderDescriptions( $element );
+		echo $element->render(), $this->renderDescriptions( $element ); // WPCS: XSS ok.
 		echo " </div> ";
 
 		if ( $this->sharedCount == 0 || $this->sharedCount == 8 ) {

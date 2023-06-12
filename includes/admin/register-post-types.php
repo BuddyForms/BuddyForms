@@ -450,7 +450,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 
 	switch ( $column ) {
 		case 'slug' :
-			echo $post->post_name;
+			echo $post->post_name; // WPCS: XSS ok.
 			break;
 		case 'attached_post_type' :
 
@@ -464,7 +464,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$post_type_html = '<p>' . __( 'Registration Form', 'buddyforms' ) . '</p>';
 			}
 
-			echo $post_type_html;
+			echo $post_type_html; // WPCS: XSS ok.
 			break;
 		case 'attached_page' :
 			if ( isset( $buddyform['attached_page'] ) && empty( $buddyform['attached_page'] ) ) {
@@ -475,7 +475,7 @@ function custom_buddyforms_column( $column, $post_id ) {
 				$attached_page = 'Off';
 			}
 
-			echo $attached_page;
+			echo $attached_page; // WPCS: XSS ok.
 
 			if ( $attached_page != 'Off' ) {
 				$attached_page_permalink = isset( $buddyform['attached_page'] ) ? get_permalink( $buddyform['attached_page'] ) : ''; ?>

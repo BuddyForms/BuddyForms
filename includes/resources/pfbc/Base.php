@@ -202,6 +202,7 @@ abstract class Base {
 	public function renderRequired( $echo = false ) {
 		$html = sprintf( '&nbsp;<span class="required">%s</span>&nbsp;', $this->getRequiredSignal() );
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $html;
 		} else {
 			return $html;

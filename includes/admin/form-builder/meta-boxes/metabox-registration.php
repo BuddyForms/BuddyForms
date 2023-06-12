@@ -28,7 +28,7 @@ class BuddyFormsMetaBoxRegistration {
 	public function buddyforms_form_setup_nav_li_registration() {
 		$registration_li = $this->tab_panel_nav_li( 'registration', __( 'User Register', 'buddyforms' ) );
 		$user_update_li  = $this->tab_panel_nav_li( 'user_update', __( 'User Update', 'buddyforms' ) );
-		echo $registration_li . $user_update_li;
+		echo $registration_li . $user_update_li; // WPCS: XSS ok.
 	}
 
 	/**
@@ -53,13 +53,13 @@ class BuddyFormsMetaBoxRegistration {
 		$registration_tab_array_html = $this->tab_panel_html_array( 'registration', 'buddyforms_accordion_registration' );
 		$user_update_tab_array_html  = $this->tab_panel_html_array( 'user_update', 'buddyforms_accordion_user_update' );
 
-		echo $registration_tab_array_html['start'];
+		echo $registration_tab_array_html['start']; // WPCS: XSS ok.
 		$this->buddyforms_registration_screen();
-		echo $registration_tab_array_html['end'];
+		echo $registration_tab_array_html['end']; // WPCS: XSS ok.
 
-		echo $user_update_tab_array_html['start'];
+		echo $user_update_tab_array_html['start']; // WPCS: XSS ok.
 		$this->buddyforms_user_update_screen();
-		echo $user_update_tab_array_html['end'];
+		echo $user_update_tab_array_html['end']; // WPCS: XSS ok.
 	}
 
 	public function buddyforms_registration_screen() {

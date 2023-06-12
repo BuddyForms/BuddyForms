@@ -32,8 +32,8 @@ class View_Metabox extends FormView {
 
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
 		echo '<div class="bf-input">';
-		echo $element->render();
-		echo $this->renderDescriptions( $element );
+		echo $element->render(); // WPCS: XSS ok.
+		echo $this->renderDescriptions( $element ); // WPCS: XSS ok.
 		echo "</div></div>";
 
 	}

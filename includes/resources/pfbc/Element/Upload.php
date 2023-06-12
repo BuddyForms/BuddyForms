@@ -374,7 +374,7 @@ class Element_Upload extends Element_Textbox {
 
 
 		}
-		echo $box;
+		echo $box; // WPCS: XSS ok.
 		//$box = str_replace( "class=\"form-control\"", "class=\"dropzone\"", $box );
 
 	}

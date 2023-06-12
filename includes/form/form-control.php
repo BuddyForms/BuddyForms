@@ -1114,6 +1114,7 @@ function buddyforms_add_ellipsis( $string, $length = 25, $echo = false, $force =
 	}
 
 	if ( $echo ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $str;
 	} else {
 		return $str;

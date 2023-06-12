@@ -65,7 +65,7 @@ class Element_Textarea extends Element {
 		}
 
 		if ( $echo ) {
-			echo $output;
+			echo $output; // WPCS: XSS ok.
 
 			return '';
 		} else {

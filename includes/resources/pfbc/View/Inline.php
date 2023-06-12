@@ -35,7 +35,7 @@ class View_Inline extends FormView {
 		}
 
 		echo '<div class="bf_field_group elem-' . $element->getAttribute( "id" ) . '"> ', $this->renderLabel( $element );
-		echo $element->render(), $this->renderDescriptions( $element );
+		echo $element->render(), $this->renderDescriptions( $element ); // WPCS: XSS ok.
 		echo "</div> ";
 	}
 

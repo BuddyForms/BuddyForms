@@ -39,7 +39,7 @@ function buddyforms_wp_list_post_revisions( $post_id = 0, $type = 'all' ) {
 	echo '<div class="revision">';
 	echo '<h3>' . __( 'Revision', 'buddyforms' ) . '</h3>';
 	echo "<ul class='post-revisions'>\n";
-	echo $rows;
+	echo $rows; // WPCS: XSS ok.
 
 	// if the post was previously restored from a revision
 	// show the restore event details

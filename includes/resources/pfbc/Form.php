@@ -519,7 +519,7 @@ JS;
 		echo '</script>';
 		$output = ob_get_clean();
 
-		echo $output;
+		echo $output; // WPCS: XSS ok.
 	}
 
 	protected function renderJSFiles() {

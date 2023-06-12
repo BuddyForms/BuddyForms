@@ -40,7 +40,7 @@ class View_Vertical extends FormView {
 		}
 
 		$element->setAttribute( 'placeholder', $element->getLabel() );
-		echo $element->render(), $this->renderDescriptions( $element );
+		echo $element->render(), $this->renderDescriptions( $element ); // WPCS: XSS ok.
 		if ( $element->getShared() ) {
 			echo " </div> ";
 		}

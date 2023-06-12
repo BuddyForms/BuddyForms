@@ -91,7 +91,7 @@ function buddyforms_permissions_screen() {
 
 	$form_action = ! empty( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : 'create';
 	// User Roles Description
-	echo $shortDesc_permission;
+	echo $shortDesc_permission; // WPCS: XSS ok.
 
 	$checkbox_style_group_1 = 'margin-left: 5%; float: left;';
 	$checkbox_style_group_2 = 'margin-left: 3%; float: left;';

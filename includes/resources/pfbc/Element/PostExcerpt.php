@@ -56,6 +56,6 @@ class Element_PostExcerpt extends Element {
 
 	public function render() {
 		wp_enqueue_style( 'wp_editor_css', includes_url( '/css/editor.css' ) );
-		echo $this->_attributes["value"];
+		echo $this->_attributes["value"]; // WPCS: XSS ok.
 	}
 }

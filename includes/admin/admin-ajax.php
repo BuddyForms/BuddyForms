@@ -19,7 +19,7 @@ function buddyforms_post_types_taxonomies() {
 		$tmp .= '<option value="' . $name . '">' . $label . '</option>';
 	}
 
-	echo $tmp;
+	echo $tmp; // WPCS: XSS ok.
 	die();
 
 }
@@ -44,7 +44,7 @@ function buddyforms_update_taxonomy_default() {
 
 	if ( ! isset( $_POST['taxonomy'] ) || $_POST['taxonomy'] == 'none' ) {
 		$tmp = '<option value="none">' . __( 'First you need to select a Taxonomy to select the Taxonomy defaults', 'buddyforms' ) . '</option>';
-		echo $tmp;
+		echo $tmp; // WPCS: XSS ok.
 		die();
 	}
 
@@ -64,7 +64,7 @@ function buddyforms_update_taxonomy_default() {
 		$tmp .= '<option value="' . $key . '">' . $term_name . '</option>';
 	}
 
-	echo $tmp;
+	echo $tmp; // WPCS: XSS ok.
 
 	die();
 

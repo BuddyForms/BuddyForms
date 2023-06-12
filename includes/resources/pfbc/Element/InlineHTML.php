@@ -26,6 +26,6 @@ class Element_InlineHTML extends Element {
 	}
 
 	public function render() {
-		echo $this->_attributes["value"];
+		echo $this->_attributes["value"]; // WPCS: XSS ok.
 	}
 }

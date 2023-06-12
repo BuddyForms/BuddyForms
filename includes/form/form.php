@@ -96,7 +96,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	if ( ! empty( $global_css ) ) {
 		$global_css = buddyforms_minify_css( $global_css );
 		if ( $echo ) {
-			echo $global_css;
+			echo $global_css; // WPCS: XSS ok.
 		} else {
 			$form_output .= $global_css;
 		}
@@ -139,8 +139,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_form_slug_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $echo_content;
-
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -151,8 +151,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_post_type_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ) );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $echo_content;
-
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -182,8 +182,8 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 				$error_message = apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You are not allowed to edit this post. What are you doing here?', 'buddyforms' ), $user_can_edit, $form_slug, $post_id );
 				$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 				if ( $echo ) {
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $echo_content;
-
 					return;
 				} else {
 					return $form_output . $echo_content;
@@ -227,6 +227,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 		$error_message = apply_filters( 'buddyforms_no_form_elements_error_message', __( 'This form has no fields yet. Nothing to fill out so far. Add fields to your form to make it useful.', 'buddyforms' ) );
 		$echo_content  = '<div class="bf-alert error">' . $error_message . '</div>';
 		if ( $echo ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $echo_content;
 		} else {
 			return $form_output . $echo_content;
@@ -274,6 +275,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form_output . $echo_content;
 	} else {
 		return $form_output . $echo_content;

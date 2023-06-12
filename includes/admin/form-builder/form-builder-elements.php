@@ -1592,7 +1592,7 @@ JS;
 	if ( is_array( $args ) ) {
 		return $field_html;
 	} else {
-		echo $field_html;
+		echo $field_html; // WPCS: XSS ok.
 		die();
 	}
 

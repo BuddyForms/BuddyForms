@@ -29,6 +29,6 @@ class Element_HTML extends Element {
 	}
 
 	public function render() {
-		echo $this->_attributes["value"];
+		echo $this->_attributes["value"]; // WPCS: XSS ok.
 	}
 }

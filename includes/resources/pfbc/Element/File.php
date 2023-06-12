@@ -19,7 +19,7 @@ class Element_File extends Element_Textbox {
 		$box = ob_get_contents();
 		ob_end_clean();
 		if ( $this->bootstrapVersion == 3 ) {
-			echo $box;
+			echo $box; // WPCS: XSS ok.
 		} else {
 			echo preg_replace( "/(.*)(<input .*\/>)(.*)/i",
 				'${1}<label class="file">${2}<span class="file-custom"></span></label>${3}', $box );

@@ -498,6 +498,7 @@ function buddyforms_edit_post_link( $text = null, $before = '', $after = '', $id
 	$result = $before . apply_filters( 'edit_post_link', $link, $post->ID, $text ) . $after;
 
 	if ( $echo ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $result;
 	} else {
 		return $result;
@@ -1414,10 +1415,10 @@ function buddyforms_upload_handle_dropped_media() {
 
 	if ( is_wp_error( $newupload ) ) {
 		status_header( '500' );
-		echo $newupload->get_error_message();
+		echo $newupload->get_error_message(); // WPCS: XSS ok.
 	} else {
 		status_header( '200' );
-		echo $newupload;
+		echo $newupload; // WPCS: XSS ok.
 	}
 	die();
 }

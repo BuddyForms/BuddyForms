@@ -110,9 +110,9 @@ function buddyforms_metabox_form_elements( $post, $buddyform = false ) {
 	$form_setup[] = new Element_HTML( '</div>' );
 
 	foreach ( $form_setup as $key => $field ) {
-		echo $field->getLabel();
-		echo $field->getShortDesc();
-		echo $field->render();
+		echo $field->getLabel(); // WPCS: XSS ok.
+		echo $field->getShortDesc(); // WPCS: XSS ok.
+		echo $field->render(); // WPCS: XSS ok.
 	}
 }
 

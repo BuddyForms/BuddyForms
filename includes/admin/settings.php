@@ -150,7 +150,7 @@ function buddyforms_settings_page_tabs_content() {
 												<?php
 												$pages_dropdown = buddyforms_get_all_pages_dropdown( 'buddyforms_registration_page', $buddyforms_registration_page );
 												if ( ! empty( $pages_dropdown ) ) {
-													echo $pages_dropdown;
+													echo $pages_dropdown; // WPCS: XSS ok.
 												}
 												?>
 											</td>

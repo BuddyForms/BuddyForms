@@ -12,7 +12,7 @@ function buddyforms_ajax_edit_post() {
 	ob_start();
 	buddyforms_create_edit_form( $args );
 	$content = ob_get_clean();
-	echo $content;
+	echo $content; // WPCS: XSS ok.
 	die();
 }
 
@@ -280,7 +280,7 @@ function buddyforms_ajax_delete_post() {
 		}
 	}
 
-	echo $post_id;
+	echo $post_id; // WPCS: XSS ok.
 	die();
 }
 

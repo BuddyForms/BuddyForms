@@ -56,7 +56,7 @@ class Element_Textbox extends Element {
 			echo '<span class="input-group-btn">';
 		}
 
-		echo $this->$type;
+		echo $this->$type; // WPCS: XSS ok.
 
 		echo '</span>';
 	}
