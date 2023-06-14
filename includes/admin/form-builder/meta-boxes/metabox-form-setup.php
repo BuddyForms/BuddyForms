@@ -37,7 +37,6 @@ function buddyforms_metabox_form_setup() {
 	$status         = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
 	$comment_status = isset( $buddyform['comment_status'] ) ? $buddyform['comment_status'] : 'false';
 	$revision       = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
-//	$draft_action      = isset( $buddyform['draft_action'] ) ? $buddyform['draft_action'] : 'false';
 	$admin_bar         = isset( $buddyform['admin_bar'] ) ? $buddyform['admin_bar'] : 'false';
 	$edit_link         = isset( $buddyform['edit_link'] ) ? $buddyform['edit_link'] : 'all';
 	$bf_ajax           = isset( $buddyform['bf_ajax'] ) ? $buddyform['bf_ajax'] : false;
@@ -64,7 +63,7 @@ function buddyforms_metabox_form_setup() {
 	//
 	// Submission
 	//
-	$element = new Element_Textbox( '<b>' . __( "From Slug", 'buddyforms' ) . '</b>', "buddyforms_options[slug]", array(
+	$element = new Element_Textbox( '<b>' . __( "Form Slug", 'buddyforms' ) . '</b>', "buddyforms_options[slug]", array(
 		'value'     => $slug,
 		'shortDesc' => __( 'The Form Slug is used in shortcodes and other places, please take care changing this option.', 'buddyforms' ),
 	) );
@@ -111,9 +110,6 @@ function buddyforms_metabox_form_setup() {
 		'class' => 'display_message display_form',
 		'value' => $after_submit_message_text,
 		'id'    => 'after_submit_message_text',
-//		'shortDesc' => $post_type == 'false'
-//			? __('Add a after Submission Message', 'buddyforms')
-//			: __( ' You can use special shortcodes to add dynamic content:<br>[form_singular_name] = Singular Name<br>[post_title] = The Post Title<br>[post_link] = The Post Permalink<br>[edit_link] = Link to the Post Edit Form', 'buddyforms' )
 	) );
 
 	$form_setup['Form Submission'][] = new Element_Textarea( '<b>' . __( 'After Update Submission Message Text', 'buddyforms' ) . '</b>', "buddyforms_options[after_update_submit_message_text]", array(
@@ -203,18 +199,6 @@ function buddyforms_metabox_form_setup() {
 		}
 	}
 
-	$hide_registration_for_logged_in = isset( $buddyform['hide_for_logged_in_users'] ) ? $buddyform['hide_for_logged_in_users'] : 'no';
-
-	$element = new Element_Select( '<b>' . __( "Hide for logged-in users", 'buddyforms' ) . '</b>', "buddyforms_options[hide_for_logged_in_users]", array(
-		'no'  => __( 'No', 'buddyforms' ),
-		'yes' => __( 'Yes', 'buddyforms' ),
-	), array(
-		'value' => $hide_registration_for_logged_in,
-		'class' => 'bf_show_if_f_type_registration'
-	) );
-
-	$form_setup['Form Submission'][] = $element;
-
 	//
 	// Create Content
 	//
@@ -270,17 +254,6 @@ function buddyforms_metabox_form_setup() {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
 	$form_setup['Create Content'][] = $element;
-
-//	$element = new Element_Checkbox( '<b>' . __( 'Enable Draft', 'buddyforms' ) . '</b>', "buddyforms_options[draft_action]", array( 'Enable Draft' => __( 'Enable Draft Form Action', 'buddyforms' ) ),
-//		array(
-//			'value' => $draft_action,
-//			'class' => 'bf_hide_if_post_type_none'
-//		) );
-//	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
-//		$element->setAttribute( 'disabled', 'disabled' );
-//	}
-//  $form_setup['Create Content'][] = $element;
-
 
 	//
 	// Edit Submissions

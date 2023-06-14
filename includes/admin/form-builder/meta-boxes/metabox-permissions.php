@@ -21,21 +21,32 @@ function buddyforms_permissions_unregistered_screen() {
 		)
 	);
 
-	$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
-	$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
-		array(
-			'value'     => $public_submit_create_account,
-			'shortDesc' => __( 'Create a new user during form submission', 'buddyforms' ),
-		)
-	);
+	if( $buddyform['form_type'] !== 'registration'){
+		$public_submit_create_account = isset( $buddyform['public_submit_create_account'] ) ? $buddyform['public_submit_create_account'] : 'false';
+		$element                      = new Element_Checkbox( '<b>' . __( 'Create an account?', 'buddyforms' ) . '</b>', "buddyforms_options[public_submit_create_account]", array( 'public_submit_create_account' => __( 'Create account during submission', 'buddyforms' ) ),
+			array(
+				'value'     => $public_submit_create_account,
+				'shortDesc' => __( 'Create a new user during form submission', 'buddyforms' ),
+			)
+		);
 
-	$element->setAttribute( 'id', 'public_submit_create_account' );
-	$element->setAttribute( 'class', 'public-submit-option public_submit_create_account' );
+		$element->setAttribute( 'id', 'public_submit_create_account' );
+		$element->setAttribute( 'class', 'public-submit-option public_submit_create_account' );
+
+		$form_setup[] = $element;
+	}
+
+	$hide_registration_for_logged_in = isset( $buddyform['hide_for_logged_in_users'] ) ? $buddyform['hide_for_logged_in_users'] : 'no';
+
+	$element = new Element_Select( '<b>' . __( "Hide for logged-in users", 'buddyforms' ) . '</b>', "buddyforms_options[hide_for_logged_in_users]", array(
+		'no'  => __( 'No', 'buddyforms' ),
+		'yes' => __( 'Yes', 'buddyforms' ),
+	), array(
+		'value' => $hide_registration_for_logged_in,
+		'class' => 'bf_show_if_f_type_registration'
+	) );
 
 	$form_setup[] = $element;
-
-
-//	$all_pages      = buddyforms_get_all_pages('id');
 
 	$all_forms['none'] = __( 'No Registration', 'buddyforms' );
 	if ( isset( $buddyforms ) && is_array( $buddyforms ) ) {
@@ -70,7 +81,7 @@ function buddyforms_permissions_screen() {
 	}
 
 	$shortDesc_permission = '<br><br>
-		<div class="bf-roles-main-desc">
+		<div class="bf-roles-main-desc permission_roles">
 			<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
 			<p><b>' . __( 'Get full control with the pro version', 'buddyforms' ) . '</b></p>
 			<p>' . __( 'Control who can create, edit and delete content that is created from this form for each user role with the pro version.', 'buddyforms' ) . '</p>
@@ -80,7 +91,7 @@ function buddyforms_permissions_screen() {
 	if ( buddyforms_core_fs()->is__premium_only() ) {
 		if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 			$shortDesc_permission = '<br><br>
-			<div class="bf-roles-main-desc">
+			<div class="bf-roles-main-desc permission_roles">
 				<h4>' . __( 'Logged in User', 'buddyforms' ) . '</h4><br>
 				<p>' . __( 'Control who can create, edit and delete content that is created with this form for each user role. If you want to create additional custom user roles, we recommend the Members plugin.', 'buddyforms' ) . '</p>
 				<p>' . __( 'If you check the All Submission the user role will get all users submission in the frontend.', 'buddyforms' ) . '</p>
@@ -177,7 +188,7 @@ function buddyforms_permissions_screen() {
 		$form_setup[] = $element;
 	}
 	?>
-	<div class="fields_header">
+	<div class="fields_header permission_roles">
 		<table class="wp-list-table widefat posts striped bf_permissions">
 			<thead>
 			<tr>
