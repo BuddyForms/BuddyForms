@@ -76,6 +76,9 @@ function buddyforms_display_form_element( $args ) {
 	) );
 
 	$field_slug                      = isset( $customfield['slug'] ) ? buddyforms_sanitize_slug( $customfield['slug'] ) : $name;
+	if ( $customfield['type'] == 'acf-field' && $field_slug == 'acf_false' ){
+		$field_slug = 'acf_' . $customfield['acf_field'];
+	}
 	$form_fields['advanced']['slug'] = new Element_Textbox( '<b>' . __( 'Slug', 'buddyforms' ) . '</b>' . sprintf( '<small>(%s)</small>', __( 'optional', 'buddyforms' ) ), "buddyforms_options[form_fields][" . $field_id . "][slug]", array(
 		'shortDesc' => __( 'Underscore before the slug like _name will create a hidden post meta field', 'buddyforms' ),
 		'value'     => $field_slug,
