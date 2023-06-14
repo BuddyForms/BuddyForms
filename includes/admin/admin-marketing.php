@@ -12,10 +12,9 @@ add_action( 'admin_init', 'buddyforms_marketing_init' );
 
 function buddyforms_marketing_init() {
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_assets' );
-	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
+//	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_offer_bundle', 10, 1 );
 //	add_action( 'admin_enqueue_scripts', 'buddyforms_marketing_form_list_coupon_for_free', 10, 1 );
-
-	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
+//	add_action( 'admin_enqueue_scripts', 'user_satisfaction_trigger', 10, 1 );
 }
 
 function buddyforms_marketing_offer_bundle( $hook ) {
