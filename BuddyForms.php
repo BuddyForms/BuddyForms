@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
- * Version: 2.6.4
+ * Version: 2.8.2
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -43,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.6.4';
+		public $version = '2.8.2';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -418,7 +418,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-ajax.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/welcome-screen.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-marketing.php' );
-
+				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/pricing-screen.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/submissions.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/settings.php' );
 				require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/password-strengh-settings.php' );
@@ -617,16 +617,17 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 					'has_addons'      => true,
 					'has_paid_plans'  => true,
 					'trial'           => array(
-						'days'               => 14,
+						'days'               => 7,
 						'is_require_payment' => true,
 					),
 					'has_affiliation' => 'selected',
 					'menu'            => array(
-						'slug'       => 'edit.php?post_type=buddyforms',
-						'first-path' => $first_path,
-						'support'    => false,
-						'contact'    => true,
-						'addons'     => true,
+						'slug'        => 'edit.php?post_type=buddyforms',
+						'first-path'  => $first_path,
+						'support'     => false,
+						'contact'     => true,
+						'addons'      => true,
+						'affiliation' => false,
 					),
 					'bundle_license_auto_activation' => true,
 				) );

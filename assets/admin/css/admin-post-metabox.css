@@ -285,6 +285,7 @@ p.bf-shortcode-doc{
 	box-shadow: 0 1px 0 #006799;
 	border-width: 1px;
 	border-style: solid;
+    appearance: none;
 	-webkit-appearance: none;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -368,5 +369,170 @@ div#buddyforms_template_header_container{
     display: none;
 }
 
+.container-pricing{
+    width: 100%;
+    min-height: 100vh;
+}
+
+.container-pricing h2{
+    color: #fca300;
+    font-size:32px;
+    padding:25px 0;
+    text-align: center;
+    line-height: 1.2em;
+}
+
+.price-row{
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 25px;
+}
+
+.price-col{
+    background: rgb(107,107,107);
+    background: linear-gradient(360deg, rgba(107,107,107,1) 0%, rgba(174,174,177,1) 35%, rgba(255,255,255,1) 100%);
+    padding: 10% 15%;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.price-col p{
+    font-size: 22px;
+}
+
+.price-col h5{
+    color: #243b53;
+    margin-bottom: 40px;
+}
+
+.price-col h4{
+    margin-bottom: 20px !important;
+}
+
+.price-col h4, #savings-price, #savings-price-2, #savings-price-3{
+    position: relative;
+    font-size: 24px;
+    margin: 20px 0 40px;
+    font-weight: 500;
+    color: #243b53;
+}
+
+.price-col h4::after{
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    width: 130px;
+    height: 1px;
+    content: ' ';
+    transform: rotate(-6deg);
+    border-bottom: 2px solid #d64545;
+}
+
+.price-col h4 span{
+    font-size: 16px;
+    color: #fca300;
+}
+
+.price-col h3{
+    position: relative;
+}
+
+.price-col h3 span.fs-bundle-currency{
+    font-size: 1.5em;
+}
+
+.price-col h3 span.fs-bundle-price-1, .price-col h3 span.fs-bundle-price-2, .price-col h3 span.fs-bundle-price-3{
+    font-size: 50px;
+    color: #243b53;
+}
+
+.price-col ul{
+    text-align: left;
+    margin: 20px 0;
+    color: #ddd;
+}
+.price-col ul li{
+    margin: 15px 0;
+    size: 20px;
+}
+.price-col button{
+    width: 100%;
+    padding: 14px 0;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.5s;
+}
+
+.price-col #purchase-3:hover, .price-col #purchase-2:hover, .price-col #purchase:hover{
+    background: #fca300;
+}
+
+.price-col.tk-bundle-1{
+    height: 480px;
+}
+
+button.bundle-list-see-more{
+    background: none;
+    border: none;
+    padding-top: 0px;
+}
+
+div.separator{
+    display: block;
+    width: 80%;
+    height: 3px;
+    background: #243b53;
+    margin: 10px auto;
+}
+
+p.bundle-type{
+    color: #fca300;
+    font-weight: bold;
+    box-shadow: 1px 1px 10px #000000;
+    margin-bottom: 50px;
+}
+
+select#licenses-1, select#licenses-2, select#licenses-3{
+    margin-bottom: 30px;
+}
+
+li.tk-bundle-product{
+    font-size: 12px;
+    color: #000000;
+    letter-spacing: 2px;
+    list-style: none;
+}
+
+.container-pricing h3{
+    text-align: center;
+    color: #727272;
+    margin-bottom: 50px;
+}
+
+.tk-bundle-link{
+    text-decoration: none;
+    color: black;
+}
+
+.bundle-picture{
+    text-align: center;
+}
+
+.bundle-picture img{
+    width: 300px;
+}
+
+.list-bundle-ul{
+    height: 200px;
+    overflow: hidden;
+}
 
 
