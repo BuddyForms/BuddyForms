@@ -382,7 +382,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			new BfAdminNotices();
 
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php' );
-			require_once( BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/TkTrackApi.php' );
 			require_once( BUDDYFORMS_INCLUDES_PATH . '/admin/admin-analytics.php' );
 
 			//Compatibility
