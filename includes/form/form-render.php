@@ -308,6 +308,7 @@ function buddyforms_form_html( $args ) {
 
 	// Hook under the form inside the BuddyForms form div
 	$form_html = apply_filters( 'buddyforms_form_hero_last', $form_html, $form_slug );
+	$form_html = apply_filters( 'buddyforms_form_hero_form_html_last', $form_html, $form_slug, $post_id );
 	$form_html .= ! is_user_logged_in() && isset( $buddyforms[ $form_slug ]['public_submit_login'] ) && $buddyforms[ $form_slug ]['public_submit_login'] == 'under' ? buddyforms_get_login_form_template( $form_slug ) : '';
 
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
