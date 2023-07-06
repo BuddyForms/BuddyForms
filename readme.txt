@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
 Requires at least: 4.0
-Tested up to: 6.2
-Stable tag: 2.8.2
+Tested up to: 6.2.2
+Stable tag: 2.8.3
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
 
 == Changelog ==
+= 2.8.3 - 05 Jul 2023 =
+* Fixed XSS vulnerability.
+* Fixed issue with upload field and allowed formats.
+* Fixed issue with string maxlength validation.
+* Tested up to WordPress 6.2.2
+
 = 2.8.2 - 11 May 2023 =
 * Fixed vulnerability issue in shortcode.
 
