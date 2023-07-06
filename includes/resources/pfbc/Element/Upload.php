@@ -300,7 +300,9 @@ class Element_Upload extends Element_Textbox {
 		$upload_from_url                   = $this->getAttribute( 'upload_from_url' );
 		$custom_class                      = $this->getAttribute( 'custom_class' );
 		foreach ( $accepted_files as $key => $value ) {
-			$mime_type .= $allowed_types[ $value ] . ',';
+			if( isset( $allowed_types[ $value ] ) ){
+				$mime_type .= $allowed_types[ $value ] . ',';
+			}
 		}
 		if ( ! empty( $mime_type ) ) {
 			$mime_type_result = rtrim( trim( $mime_type ), ',' );
