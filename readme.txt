@@ -16,7 +16,7 @@ A simple drag and drop form builder with ready to use form templates that give y
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-#### Supported Frontend Form Types
+#### Supported Frontend Form Types 
 * Contact Form
 * Post Form 
 * Content Form for any Post Type
