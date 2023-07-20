@@ -1,6 +1,6 @@
-=== Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
+=== User Registration - Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
-Tags: post form, registration form, content form, profile form, guest post, form builder, user submissions, user post, submit post, user profiles
+Tags: user registration, registration form, user profile, frontend submit content form, guest post, form builder, user submissions, user post frontend, user-generated content, submit post,
 Requires at least: 4.0
 Tested up to: 6.2.2
 Stable tag: 2.8.3
@@ -8,46 +8,50 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-From Contact Forms to Post Forms for User Generated Content and Registration Forms easily build in minutes. Ideal for User Submitted Posts. Extendable with Addons!
+Easily customize WordPress user registration. Build various forms. Submit posts from the front end. Ideal for user-submitted posts. Extendable with Addons!
 
 == DESCRIPTION ==
 
-A simple drag and drop form builder with ready to use form templates that give you all the form types with on click. Build Contact Forms, Registration Forms, and Post Forms with an easy to use Form Builder and Form Designer. Submit posts and images or any content and media from the front-end of your site.
+**User Registration - User Profile Builder - Frontend Submission **
+
+An easy-to-use drag-and-drop form builder with ready-to-use form templates that give you all the form types with one click. Build contact forms, user registration forms, and post forms with an easy-to-use form builder 
+and form designer. Submit posts and images or any content and media from the front end of your site.
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
 #### Supported Frontend Form Types 
+* User Registration
 * Contact Form
 * Post Form 
 * Content Form for any Post Type
-* Registration Form
-* Profile Form
+* User profile form
 * Image Upload Form
 * Media Upload Form
-* Mixed Custom Post Type and Registation Form
-* Post meta Form
-* User meta Form
-* Profile Form for WordPress user data
-* Author Forms for WordPress Author data like Bio
-* Change Password Form
+* Mixed Custom Post Type and registration form
+* Post meta form
+* User meta form
+* Profile form for WordPress user data
+* Author forms for WordPress author data like Bio
+* Change password form
+* Frontend submission
 
 
-###Easily submit posts and images from the front-end of your site.
+###Easily submit posts and images directly from the front end of your site.
 
 #### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
 * Prevent users from submitting false data by setting custom validation rules on your forms
 
-#### 2. Registration Forms
-* Overwrite the WordPress Registration Form.
+#### 2. User Registration Forms
+* Overwrite and customize the WordPress Registration Form.
 * Redirect to a Custom Registration Page
 * Redirect your users to a custom location page or form if they click the activation link.
 * Combine Registration and Post forms and redirect your user to the Post Form after Registration.
 
-#### 2. Post Forms
-* Let users Save drafts and let them work on there edit before they send it to moderation
-* Define the Permission for an User Role and grand Create Edit and Delete Rights
-* Define Moderators to manage submissions from the frontend'
+#### 2. Post Forms - Frontend submission
+* Let users save drafts and let them work on their edits before they send them to moderation
+* Define the Permission for a user role and grant create edit and delete rights
+* Define Moderators to manage submissions from the front end'
 
 
 ### Full Gutenberg Support 
@@ -72,22 +76,22 @@ Use this shortcode if you wanna show a form on frontend.
 > [bf form_slug="YOUR-FORM-SLUG"]
 
 #### Display Submissions
-Use this shortcode if you wannan show a list of entries belongs to a Form. 
+Use this shortcode if you wanna show a list of entries belonging to a Form. 
 The attribute "list_posts_style" is optional and its possible values are "table" or "list"
 > [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
 #### Link to Form
 This shortcode will create a link to the form for creating or editing submissions.
-The attribute "label" is optional (default value is "Add New").
+The attribute "label" is optional (the default value is "Add New").
 > [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
 
 #### Link to User Posts
-For logged in users you can use the following shortcode to display their submissions. 
-The attribute "label" is optional (default value is "View").
+For logged-in users you can use the following shortcode to display their submissions. 
+The attribute "label" is optional (the default value is "View").
 > [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
 
 #### User Posts List
-For logged in users you can use the following shortcode to display a the list of posts.
+For logged-in users you can use the following shortcode to display a list of posts.
 > [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
 
 ####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
@@ -115,9 +119,9 @@ Enable your users to create content and bring your community to life. Easy Front
 * Submission Manager. Find All Forms and there submissions in one place. Post Forms, Registration Forms and Contact Forms
 
 #### User Submitted Content
-* Ideal for guest posts. Let your user-submit the content. User generated content is the easy and effective why to get unique content on your site.
-* Frontend generated content made possible with Endpoints and ShortCodes for easy access
-* All the tools you need to manage guste posts, Full frontend Moderation Controles and Frontend Post Management
+* Ideal for guest posts. Let your user submit the content. User-generated content is an easy and effective way to get unique content on your site.
+* Frontend-generated content made possible with Endpoints and ShortCodes for easy access
+* All the tools you need to manage guest posts, Full frontend Moderation Controles and Frontend Post Management
 
 ### Free Field Types
 
@@ -126,7 +130,7 @@ Enable your users to create content and bring your community to life. Easy Front
 * Message
 * User Fields
 * Username
-* User eEmail
+* User email
 * User First Name
 * User Last Name
 * Password
@@ -159,19 +163,19 @@ Enable your users to create content and bring your community to life. Easy Front
 * more Fields available by Add-Ons!
 
 ### Your Data Protection is Our Priority 
-Buddyform is Full GDPR compliant Wordpress Form Builder.
+Buddyform is a Full GDPR compliant WordPress Form Builder.
 
 #### You get Privacy by Design
-With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compilant.
+With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compliant.
 
 #### Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
 * Create registration funnels and ask to create a password after clicking on the activation link.
-* Create forms for any kind of user generated content.
-* Easily define what happens after a user submits content (display a submission message, displaying the page content, redirecting to a specific URL)
+* Create forms for any kind of user-generated content.
+* Easily define what happens after a user submits content (display a submission message, display the page content, redirect to a specific URL)
 * Enable/Disable comments related to the submitted content,  Frontend Revision for users
 * Overwrite the WordPress default Registration Form and Page
-* Set-up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
+* Set up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
 ### Integrate with other Plugins
 ** BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
@@ -189,17 +193,17 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 ### List of Forms
 * Contact Forms – Collect leads and customer support data
 * Registration Forms – Sign-up users to your webpage
-* Profile Forms – Let your user update there profile information.
+* Profile Forms – Let your user update their profile information.
 * Login Forms – Grant users access to restricted content
 * Post Forms for Blog Posts – Follow your editorial schedule and keep your blog up-to-date by collecting content from different authors
 
 ### List of User Examples
 * Online Directories – Crowdsource categorized data from your community
-* Showcase – Present your recent work or let clients showcase their use-cases built with your product or tool
+* Showcase – Present your recent work or let clients showcase their use cases built with your product or tool
 * News Magazines – Create single articles through collaborative writing among a team of editors
 * How-to’s – Gather a learning community around you, let users share their knowledge and engage discussions on your site
 * Marketplace – Sell and purchase products from different vendors and list all the product features
-* Content Forms for any kind of user generated content, user submitted posts
+* Content Forms for any kind of user-generated content, user-submitted posts
 
 > #### Follow Us
 > [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
@@ -214,20 +218,20 @@ Head to the 'BuddyForms' menu item in your admin sidebar
 
 == Frequently Asked Questions ==
 
-= Can I create a normal Contact Forms =
-Yes, you can create Simple Contact Forms or Complex Contact Forms withj different custom fields
+= Can I create a normal Contact Form =
+Yes, you can create Simple Contact Forms or Complex Contact Forms with different custom fields
 
-= Can I create a Registration Forms =
+= Can I create a Registration Form =
 Yes, you can Create Registration Forms
 
-= Can I create a Content Forms =
-Yes, you can create Content forms for any caontent and post type.
+= Can I create a Content Form =
+Yes, you can create Content forms for any content and post type.
 
 = Can I create a post Forms =
 Yes, you can create post forms for any post type.
 
 = Can I Combine Registration Forms and Content Forms =
-Yes, you can add login and registration Form Elements to any form and ask your user to Login or Register during form submission.
+Yes, you can add login and registration Form Elements to any form and ask your user to log in or Register during form submission.
 
 == Documentation & Support ==
 Documentation: [docs.buddyforms.com](http://docs.buddyforms.com/)
@@ -239,20 +243,20 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 1. Embed Forms - The easy way to embed forms
 2. List Submissions - Display the user Submissions
 3. Embed Navigation -  Link to forms and Submissions
-4. Login/ Logout Form - Add Loggin Forms and defin a custom rediret after login
+4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
 = 2.8.3 - 05 Jul 2023 =
 * Fixed XSS vulnerability.
-* Fixed issue with upload field and allowed formats.
-* Fixed issue with string maxlength validation.
+* Fixed issue with an upload field and allowed formats.
+* Fixed issue with string max length validation.
 * Tested up to WordPress 6.2.2
 
 = 2.8.2 - 11 May 2023 =
 * Fixed vulnerability issue in shortcode.
 
 = 2.8.1 - 04 May 2023 =
-* Added new hook to filter form html content.
+* Added a new hook to filter form html content.
 * Updated Freemius SDK.
 * Tested up to WordPress 6.2
 
@@ -264,26 +268,26 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed issue with new user activation link.
 
 = 2.7.8 - 11 Jan 2023 =
-* Fixed vulnerability with image uploaded from url.
+* Fixed vulnerability with image uploaded from URL.
 * Fixed issue with swapped classes in menu items.
 
 = 2.7.7 - 23 Dec 2022 =
 * Removed rating admin notice.
-* Removed license activation screen from free version.
-* Fixed issue with non existent script.
+* Removed license activation screen from the free version.
+* Fixed issue with non-existent script.
 * Added missing form element attributes.
 
 = 2.7.6 - 16 Dec 2022 =
 * Fixed issue with post content field value.
-* Fixed issue with textarea field value after submission.
-* Updated duration of trial version.
-* Improved Go pro screen.
+* Fixed issue with text area field value after submission.
+* Updated duration of the trial version.
+* Improved Go Pro screen.
 * Updated Freemius SDK.
 
 = 2.7.5 - 9 Dec 2022 =
-* Correcting price of BuddyForms plans in Go Pro screen.
-* Added 5 site license option in BuddyForms bundle.
-* Correcting misspelled element description in setup metabox.
+* Correcting the price of BuddyForms plans in Go Pro screen.
+* Added 5 site license options in the BuddyForms bundle.
+* Correcting misspelt element description in setup meta box.
 
 = 2.7.4 - 8 Dec 2022 =
 * Fixed issue with Custom Login extension.
@@ -292,7 +296,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Tested up with WordPress 6.1.1
 
 = 2.7.3 - 18 Nov 2022 =
-* Fixed issue with fields validation.
+* Fixed issue with field validation.
 * Improved forms security.
 * Tested up with WordPress 6.1
 
@@ -302,10 +306,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 = 2.7.1 - 29 Aug 2022 =
 * Added automatic activation when using a bundle license.
-* Updated bundle link and popup text.
+* Updated bundled link and popup text.
 
 = 2.7.0 - 19 Jul 2022 =
-* Fixed issue with fields validation.
+* Fixed issue with field validation.
 
 = 2.6.15 - 19 Jul 2022 =
 * Fixed issue with global JS.
@@ -314,7 +318,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed issue with form render.
 
 = 2.6.13 - 16 Jul 2022 =
-* Fixed issue with required attribute.
+* Fixed issue with the required attribute.
 * Fixed issue with email notification table.
 
 = 2.6.12 - 13 Jul 2022 =
@@ -324,7 +328,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 = 2.6.11 - 06 Jul 2022 =
 * Fixed issue with Post type selection.
-* Fixed issue with form fields values.
+* Fixed issue with form field values.
 
 = 2.6.10 - 26 Jun 2022 =
 * Fixed vulnerability issue.
