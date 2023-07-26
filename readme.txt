@@ -1,4 +1,4 @@
-=== Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions and User  ===
+=== Post Form - Registration Form - Profile Form for User Profiles - Frontend Content Forms for User Submissions (UGC) ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags: post form, registration form, profile form, content form, file upload
 Requires at least: 4.0
