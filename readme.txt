@@ -1,4 +1,4 @@
-=== User Registration - Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
+=== Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions and User  ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags: post form, registration form, profile form, content form, file upload
 Requires at least: 4.0
@@ -192,15 +192,15 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Set up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
 
 ### Integrate with other Plugins
-** BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
-** Ultimate Member – Submit and manage posts from your Ultimate Member Profile
-** ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
-** Pods
-** MailPoed
-** WooCommerce – Build your own marketplace with user-submitted products
-** WooCommerce Simple Auctions – Create and manage auctions via front end
-** HubSpot
-** Geo My WP
+* BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
+* Ultimate Member – Submit and manage posts from your Ultimate Member Profile
+* ACF - Advanced Custom Fields – Integrate Advanced Custom Fields in your forms like native BuddyForms form elements
+* Pods
+* MailPoed
+* WooCommerce – Build your own marketplace with user-submitted products
+* WooCommerce Simple Auctions – Create and manage auctions via front end
+* HubSpot
+* Geo My WP
 
 #### Search All Extensions. [BuddyForms Exdtensions](https://themekraft.com/wordpress-product/buddyforms/)
 
@@ -220,9 +220,7 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Content Forms for any kind of user-generated content, user-submitted posts
 
 > #### Follow Us
-> [Blog](https://themekraft.com/blog/) | [Twitter](https://twitter.com/themekraft) | [Facebook](https://www.facebook.com/themekraft/) | [YouTube](https://www.youtube.com/themekraft)
-
-**Powered with ❤ by [ThemeKraft](https://themekraft.com)**
+> [Blog](https://themekraft.com/blog/) | [YouTube](https://www.youtube.com/themekraft)
 
 == Installation ==
 
