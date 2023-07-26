@@ -1,6 +1,6 @@
 === User Registration - Post Form - Registration Form - Profile Form for User Profiles and Content Forms for User Submissions ===
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
-Tags: user registration, registration form, user profile, frontend submit content form, guest post, form builder, user submissions, user post frontend, user-generated content, submit post,
+Tags: post form, registration form, profile form, content form, file upload
 Requires at least: 4.0
 Tested up to: 6.2.2
 Stable tag: 2.8.3
@@ -8,32 +8,45 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily customize WordPress user registration. Build various forms. Submit posts from the front end. Ideal for user-submitted posts. Extendable with Addons!
+BuddyForms is a versatile WordPress plugin that allows the creation of post forms, registration forms, profile forms, content forms, and supports file uploads.
 
-== DESCRIPTION ==
+== Description ==
 
-**User Registration - User Profile Builder - Frontend Submission **
+Manage your WordPress content effortlessly with BuddyForms, a plugin that simplifies form creation and content management.
 
-An easy-to-use drag-and-drop form builder with ready-to-use form templates that give you all the form types with one click. Build contact forms, user registration forms, and post forms with an easy-to-use form builder 
-and form designer. Submit posts and images or any content and media from the front end of your site.
+With BuddyForms, you can:
+
+Create Post Forms: BuddyForms makes creating and managing post forms simple. Build and customize your forms to meet your needs.
+
+Generate Registration Forms: Design your own registration processes with our registration form feature. It's efficient, customizable, and easy to use.
+
+Craft Profile Forms: Create profile forms tailored to your users. BuddyForms offers a robust solution for crafting and managing these forms.
+
+Manage Content Forms: Streamline your content creation process with our content forms. Handle blog posts, articles, or any other content type.
+
+Facilitate File Uploads: With BuddyForms, attaching files, images, or any other media to your forms is effortless.
+
+BuddyForms is a comprehensive solution for WordPress form creation and management. If you need to build post forms, registration forms, profile forms, or other content forms, BuddyForms is your go-to tool.
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
 #### Supported Frontend Form Types 
+* Post Form 
 * User Registration
 * Contact Form
-* Post Form 
 * Content Form for any Post Type
 * User profile form
 * Image Upload Form
 * Media Upload Form
-* Mixed Custom Post Type and registration form
+* File upload of any kind (restrict to specific file types)  
+* Mixed Custom Post Type and Registration Form
 * Post meta form
 * User meta form
 * Profile form for WordPress user data
 * Author forms for WordPress author data like Bio
 * Change password form
 * Frontend submission
+
 
 
 ###Easily submit posts and images directly from the front end of your site.
@@ -160,13 +173,13 @@ Enable your users to create content and bring your community to life. Easy Front
 * Hidden
 * HTML
 * Date
-* more Fields available by Add-Ons!
+* More Fields available by Add-Ons!
 
 ### Your Data Protection is Our Priority 
 Buddyform is a Full GDPR compliant WordPress Form Builder.
 
 #### You get Privacy by Design
-With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress compliant.
+With Buddyform, you are the boss of your data and we’ve made it our major priority that you store data on your own server fully WordPress-compliant.
 
 #### Easy to navigate and User-friendly interface.
 * Easily embed forms anywhere on your website with just shortcodes by blocks or code.
