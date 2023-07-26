@@ -31,11 +31,11 @@ Streamline your content creation process with our content forms. Handle blog pos
 ####Facilitate File Uploads
 With BuddyForms, attaching files, images, or any other media to your forms is effortless.
 
-BuddyForms is a comprehensive solution for WordPress form creation and management. If you need to build post forms, registration forms, profile forms, or other content forms, BuddyForms is your go-to tool.
+#####BuddyForms is a comprehensive solution for WordPress form creation and management. If you need to build post forms, registration forms, profile forms, or other content forms, BuddyForms is your go-to tool.
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-###Easily submit posts and images directly from the front end of your site.
+####Easily submit posts and images directly from the front end of your site.
 
 #### 1. Contact Forms
 * Create Custom Contact Forms for your Brand and Business in Minutes
