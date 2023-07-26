@@ -14,11 +14,11 @@ BuddyForms is a versatile WordPress plugin that allows the creation of post form
 
 Manage your WordPress content effortlessly with BuddyForms, a plugin that simplifies form creation and content management.
 
-With BuddyForms, you can:
+###With BuddyForms, you can:
 
 Create Post Forms: BuddyForms makes creating and managing post forms simple. Build and customize your forms to meet your needs.
 
-Generate Registration Forms: Design your own registration processes with our registration form feature. It's efficient, customizable, and easy to use.
+*Generate Registration Forms:* Design your own registration processes with our registration form feature. It's efficient, customizable, and easy to use.
 
 Craft Profile Forms: Create profile forms tailored to your users. BuddyForms offers a robust solution for crafting and managing these forms.
 
