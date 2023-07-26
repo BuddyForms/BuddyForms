@@ -35,23 +35,6 @@ With BuddyForms, attaching files, images, or any other media to your forms is ef
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
-####Easily submit posts and images directly from the front end of your site.
-
-#### 1. Contact Forms
-* Create Custom Contact Forms for your Brand and Business in Minutes
-* Prevent users from submitting false data by setting custom validation rules on your forms
-
-#### 2. User Registration Forms
-* Overwrite and customize the WordPress Registration Form.
-* Redirect to a Custom Registration Page
-* Redirect your users to a custom location page or form if they click the activation link.
-* Combine Registration and Post forms and redirect your user to the Post Form after Registration.
-
-#### 2. Post Forms - Frontend submission
-* Let users save drafts and let them work on their edits before they send them to moderation
-* Define the Permission for a user role and grant create edit and delete rights
-* Define Moderators to manage submissions from the front end'
-
 
 ### Full Gutenberg Support 
 
@@ -93,7 +76,22 @@ The attribute "label" is optional (the default value is "View").
 For logged-in users you can use the following shortcode to display a list of posts.
 > [bf_user_posts_list form_slug="YOUR-FORM-SLUG"]
 
-####Important: Don't forget to change YOUR-FORM-SLUG to your own form slug
+####Easily submit posts and images directly from the front end of your site.
+
+#### 1. Contact Forms
+* Create Custom Contact Forms for your Brand and Business in Minutes
+* Prevent users from submitting false data by setting custom validation rules on your forms
+
+#### 2. User Registration Forms
+* Overwrite and customize the WordPress Registration Form.
+* Redirect to a Custom Registration Page
+* Redirect your users to a custom location page or form if they click the activation link.
+* Combine Registration and Post forms and redirect your user to the Post Form after Registration.
+
+#### 2. Post Forms - Frontend submission
+* Let users save drafts and let them work on their edits before they send them to moderation
+* Define the Permission for a user role and grant create edit and delete rights
+* Define Moderators to manage submissions from the front end'
 
 ## Deeply Tested Solutions Built with BuddyForms you can Trust and rely on.
 
@@ -121,7 +119,6 @@ Enable your users to create content and bring your community to life. Easy Front
 * Ideal for guest posts. Let your user submit the content. User-generated content is an easy and effective way to get unique content on your site.
 * Frontend-generated content made possible with Endpoints and ShortCodes for easy access
 * All the tools you need to manage guest posts, Full frontend Moderation Controles and Frontend Post Management
-
 
 #### Supported Frontend Forms
 * Post Form 
