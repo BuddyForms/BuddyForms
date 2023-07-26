@@ -230,17 +230,23 @@ Head to the 'BuddyForms' menu item in your admin sidebar
 
 == Frequently Asked Questions ==
 
+= How easy is it to create a post form using BuddyForms? =
+Creating a post form using BuddyForms is incredibly simple. Our intuitive user interface allows you to build and customize your post forms to meet your unique requirements.
+
+= Can I customize the fields in the registration form? =
+Absolutely! BuddyForms allows you to fully customize your registration form fields. You can add or remove fields as needed, ensuring a seamless registration process for your users.
+
+= Is it possible to create multiple profile forms for different user roles? =
+Yes, with BuddyForms, you can create profile forms tailored to different user roles. Our plugin provides a robust solution for crafting and managing multiple profile forms with ease.
+
+= What types of content forms can I create with BuddyForms? =
+BuddyForms is versatile and allows you to create a variety of content forms. Whether you need to handle blog posts, articles, product descriptions, or any other content types, BuddyForms has got you covered.
+
+= Can users attach files to the forms? =
+Yes, BuddyForms supports file uploads. Users can easily attach files, images, or any other media to their forms, making BuddyForms a comprehensive solution for your form needs.
+
 = Can I create a normal Contact Form =
 Yes, you can create Simple Contact Forms or Complex Contact Forms with different custom fields
-
-= Can I create a Registration Form =
-Yes, you can Create Registration Forms
-
-= Can I create a Content Form =
-Yes, you can create Content forms for any content and post type.
-
-= Can I create a post Forms =
-Yes, you can create post forms for any post type.
 
 = Can I Combine Registration Forms and Content Forms =
 Yes, you can add login and registration Form Elements to any form and ask your user to log in or Register during form submission.
