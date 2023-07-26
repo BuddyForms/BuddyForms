@@ -16,38 +16,24 @@ Manage your WordPress content effortlessly with BuddyForms, a plugin that simpli
 
 ###With BuddyForms, you can:
 
-Create Post Forms: BuddyForms makes creating and managing post forms simple. Build and customize your forms to meet your needs.
+####Create Post Forms
+BuddyForms makes creating and managing post forms simple. Build and customize your forms to meet your needs.
 
-####Generate Registration Forms:#### Design your own registration processes with our registration form feature. It's efficient, customizable, and easy to use.
+####Generate Registration Forms
+Design your own registration processes with our registration form feature. It's efficient, customizable, and easy to use.
 
-Craft Profile Forms: Create profile forms tailored to your users. BuddyForms offers a robust solution for crafting and managing these forms.
+####Craft Profile Forms
+Create profile forms tailored to your users. BuddyForms offers a robust solution for crafting and managing these forms.
 
-Manage Content Forms: Streamline your content creation process with our content forms. Handle blog posts, articles, or any other content type.
+####Manage Content Forms
+Streamline your content creation process with our content forms. Handle blog posts, articles, or any other content type.
 
-Facilitate File Uploads: With BuddyForms, attaching files, images, or any other media to your forms is effortless.
+####Facilitate File Uploads
+With BuddyForms, attaching files, images, or any other media to your forms is effortless.
 
 BuddyForms is a comprehensive solution for WordPress form creation and management. If you need to build post forms, registration forms, profile forms, or other content forms, BuddyForms is your go-to tool.
 
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
-
-#### Supported Frontend Form Types 
-* Post Form 
-* User Registration
-* Contact Form
-* Content Form for any Post Type
-* User profile form
-* Image Upload Form
-* Media Upload Form
-* File upload of any kind (restrict to specific file types)  
-* Mixed Custom Post Type and Registration Form
-* Post meta form
-* User meta form
-* Profile form for WordPress user data
-* Author forms for WordPress author data like Bio
-* Change password form
-* Frontend submission
-
-
 
 ###Easily submit posts and images directly from the front end of your site.
 
@@ -135,6 +121,24 @@ Enable your users to create content and bring your community to life. Easy Front
 * Ideal for guest posts. Let your user submit the content. User-generated content is an easy and effective way to get unique content on your site.
 * Frontend-generated content made possible with Endpoints and ShortCodes for easy access
 * All the tools you need to manage guest posts, Full frontend Moderation Controles and Frontend Post Management
+
+
+#### Supported Frontend Forms
+* Post Form 
+* User Registration
+* Contact Form
+* Content Form for any Post Type
+* User profile form
+* Image Upload Form
+* Media Upload Form
+* File upload of any kind (restrict to specific file types)  
+* Mixed Custom Post Type and Registration Form
+* Post meta form
+* User meta form
+* Profile form for WordPress user data
+* Author forms for WordPress author data like Bio
+* Change password form
+* Frontend submission
 
 ### Free Field Types
 
