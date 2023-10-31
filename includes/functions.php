@@ -612,7 +612,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo wp_kses(
 							apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . esc_attr__( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_attr__( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug ),
-							buddyforms_wp_kses_allowed_atts() 
+							buddyforms_wp_kses_allowed_atts()
 						);
 					} else {
 						echo wp_kses(

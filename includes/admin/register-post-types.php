@@ -351,6 +351,97 @@ function buddyforms_register_post_type() {
 		)
 	);
 
+	$labels = array(
+			'name'               => 'Profile Builder',
+			'singular_name'      => 'Profile Builder',
+	);
+	register_post_type(
+			'Profile Builder',
+			array(
+					'labels'              => $labels,
+					'public'              => false,
+					'show_ui'             => true,
+					'_builtin'            => false,
+					'capability_type'     => 'post',
+					'hierarchical'        => false,
+					'rewrite'             => false,
+					'supports'            => array(
+							'title',
+					),
+					'show_in_menu'        => 'edit.php?post_type=buddyforms',
+					'exclude_from_search' => true,
+					'publicly_queryable'  => false,
+					'menu_icon'           => 'dashicons-buddyforms',
+			)
+	);
+
+	// Create BuddyForms post type
+	$labels = array(
+			'name'               => __( 'Post Types', 'buddyforms' ),
+			'singular_name'      => __( 'Post Type', 'buddyforms' ),
+			'add_new'            => __( 'Add New', 'buddyforms' ),
+			'add_new_item'       => __( 'Add New Taxonomy', 'buddyforms' ),
+			'edit_item'          => __( 'Edit Post Type', 'buddyforms' ),
+			'new_item'           => __( 'New Post Type', 'buddyforms' ),
+			'view_item'          => __( 'View Post Type', 'buddyforms' ),
+			'search_items'       => __( 'Search Post Types', 'buddyforms' ),
+			'not_found'          => __( 'No Post Type found', 'buddyforms' ),
+			'not_found_in_trash' => __( 'No Post Type found in Trash', 'buddyforms' ),
+	);
+
+	register_post_type(
+			'bf-post-types',
+			array(
+					'labels'              => $labels,
+					'public'              => false,
+					'show_ui'             => true,
+					'_builtin'            => false,
+					'capability_type'     => 'post',
+					'hierarchical'        => false,
+					'rewrite'             => false,
+					'supports'            => array(
+							'title',
+					),
+					'show_in_menu'        => 'edit.php?post_type=buddyforms',
+					'exclude_from_search' => true,
+					'publicly_queryable'  => false,
+					'menu_icon'           => 'dashicons-buddyforms',
+			)
+	);
+
+	// Create BuddyForms post type
+	$labels = array(
+			'name'               => __( 'Taxonomies', 'buddyforms' ),
+			'singular_name'      => __( 'Taxonomy', 'buddyforms' ),
+			'add_new'            => __( 'Add New', 'buddyforms' ),
+			'add_new_item'       => __( 'Add New Taxonomy', 'buddyforms' ),
+			'edit_item'          => __( 'Edit Taxonomy', 'buddyforms' ),
+			'new_item'           => __( 'New Taxonomy', 'buddyforms' ),
+			'view_item'          => __( 'View Taxonomy', 'buddyforms' ),
+			'search_items'       => __( 'Search Taxonomies', 'buddyforms' ),
+			'not_found'          => __( 'No Taxonomy found', 'buddyforms' ),
+			'not_found_in_trash' => __( 'No Taxonomy found in Trash', 'buddyforms' ),
+	);
+	register_post_type(
+			'bf-taxonomies',
+			array(
+					'labels'              => $labels,
+					'public'              => false,
+					'show_ui'             => true,
+					'_builtin'            => false,
+					'capability_type'     => 'post',
+					'hierarchical'        => false,
+					'rewrite'             => false,
+					'supports'            => array(
+							'title',
+					),
+					'show_in_menu'        => 'edit.php?post_type=buddyforms',
+					'exclude_from_search' => true,
+					'publicly_queryable'  => false,
+					'menu_icon'           => 'dashicons-buddyforms',
+			)
+	);
+
 	// Create BuddyForms post type
 	$labels = array(
 		'name'          => __( 'Submissions', 'buddyforms' ),
@@ -385,8 +476,48 @@ function buddyforms_register_post_type() {
 	);
 
 }
-
 add_action( 'init', 'buddyforms_register_post_type' );
+
+function buddyforms_create_dynamic_post_types(){
+	$args = array(
+			'post_type'        => 'bf-post-types',
+			'posts_per_page'   => 0,
+	);
+	$query = new WP_Query( $args );
+	if ( $query->have_posts() ) {
+		while ( $query->have_posts() ) {
+			$query->the_post();
+		// Create BuddyForms post type
+			$labels = array(
+					'name'               => get_the_title(),
+					'singular_name'      => get_the_title(),
+			);
+			register_post_type(
+					get_the_title(),
+					array(
+							'labels'              => $labels,
+							'public'              => false,
+							'show_ui'             => true,
+							'_builtin'            => false,
+							'capability_type'     => 'post',
+							'hierarchical'        => false,
+							'rewrite'             => false,
+							'supports'            => array(
+									'title',
+							),
+							'show_in_menu'        => true,
+							'exclude_from_search' => true,
+							'publicly_queryable'  => false,
+							'menu_icon'           => 'dashicons-buddyforms',
+					)
+			);
+
+		} // end while
+	} // end if
+	wp_reset_query();
+}
+
+add_action( 'init', 'buddyforms_create_dynamic_post_types' );
 
 function menue_icon_admin_head_css() {
 	BuddyFormsAssets::load_tk_font_icons();

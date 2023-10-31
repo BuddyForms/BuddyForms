@@ -34,7 +34,7 @@ function buddyforms_metabox_form_setup() {
 
 	$attached_page     			  = isset( $buddyform['attached_page'] ) ? $buddyform['attached_page'] : 'false';
 	$attached_page_div_id         = isset( $buddyform['attached_page_div_id'] ) ? stripslashes( $buddyform['attached_page_div_id'] ) : '';
-	
+
 	$status            = isset( $buddyform['status'] ) ? $buddyform['status'] : 'false';
 	$comment_status    = isset( $buddyform['comment_status'] ) ? $buddyform['comment_status'] : 'false';
 	$revision          = isset( $buddyform['revision'] ) ? $buddyform['revision'] : 'false';
@@ -283,6 +283,10 @@ function buddyforms_metabox_form_setup() {
 			'class' => 'bf_hide_if_post_type_none',
 		)
 	);
+
+	$form_setup['Post Types'][] = new Element_HTML('let us see where we go with the Post Types');
+	$form_setup['Taxonomies'][] = new Element_HTML('let us see where we go with the Taxonomiesx');
+
 	if ( buddyforms_core_fs()->is_not_paying() && ! buddyforms_core_fs()->is_trial() ) {
 		$element->setAttribute( 'disabled', 'disabled' );
 	}
@@ -392,7 +396,7 @@ function buddyforms_metabox_form_setup() {
 	) );
 
 	$form_setup['Edit Submissions'][] = $element;
-	
+
 	$element = new Element_Checkbox(
 		'<b>' . __( 'Admin Bar', 'buddyforms' ) . '</b>',
 		'buddyforms_options[admin_bar]',
