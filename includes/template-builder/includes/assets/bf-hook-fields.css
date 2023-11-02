@@ -1,0 +1,64 @@
+.bf-hook-field,
+body.single .bf-hook-field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.bf-hook-field a,
+body.single .bf-hook-field a {
+    padding: 0.5rem;
+    max-width: 100%;
+}
+
+.bf-hook-field video,
+.bf-hook-field img,
+body.single .bf-hook-field video,
+body.single .bf-hook-field img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.bf-hook-field .image-placeholder,
+body.single .bf-hook-field .image-placeholder {
+    border: 1px solid #fafafa;
+    text-align: center;
+    display: inline-block;
+    max-width: 100%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.bf-hook-field .image-placeholder img,
+body.single .bf-hook-field .image-placeholder img {
+    max-height: 125px;
+}
+
+.bf-hook-field .image-placeholder p,
+body.single .bf-hook-field .image-placeholder p {
+    margin: 0.5rem 0 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.bf-hook-field-container a,
+body.single .bf-hook-field-container a {
+    padding: 0.5rem;
+    max-width: 100%;
+}
+.bf-hook-field-container a.image-placeholder img,
+body.single .bf-hook-field-container a.image-placeholder img {
+    max-height: 150px;
+}
+
+.bf-hook-field-container tr td:nth-child(2) div,
+body.single .bf-hook-field-container tr td:nth-child(2) div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

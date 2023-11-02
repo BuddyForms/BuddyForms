@@ -534,7 +534,8 @@ add_action('init', 'buddyforms_register_post_type');
 
 add_action('edit_form_advanced', 'buddyforms_edit_form_after_title');
 
-function buddyforms_edit_form_after_title($post){
+function buddyforms_edit_form_after_title($post)
+{
 
 //	echo '<pre>';
 //	print_r($post);
@@ -542,7 +543,7 @@ function buddyforms_edit_form_after_title($post){
 //
 //
 //	echo $post->post_type;
-	if ( $post->post_type == 'bf-post-types' ) {
+	if ($post->post_type == 'bf-post-types') {
 		buddyforms_post_types_custom_box_html($post);
 	}
 }
@@ -583,7 +584,8 @@ function buddyforms_post_types_custom_box_html($post)
 								class="dashicons dashicons-warning"></span></p>
 				</th>
 				<td><input type="text" id="name" name="buddyforms_custom_post_type[name]"
-						   value="<?php echo $buddyforms_custom_post_type['name'] ?>" maxlength="20"
+						   value="<?php echo isset($buddyforms_custom_post_type['name']) ? $buddyforms_custom_post_type['name'] : '' ?>"
+						   maxlength="20"
 						   aria-required="true" required="true"><br>
 					<p class="buddyforms-field-description description">The post type name/slug. Used for
 						various queries for post type content.</p>
@@ -761,7 +763,6 @@ function buddyforms_post_types_custom_box_html($post)
 		</div>
 
 
-
 		<div id="buddyforms_panel_pt_basic_settings" class="buddyforms-section postbox closed">
 			<div class="postbox-header">
 				<h2 class="hndle ui-sortable-handle">
@@ -842,8 +843,6 @@ function buddyforms_post_types_custom_box_html($post)
 		</div>
 
 
-
-
 		<div id="buddyforms_panel_pt_basic_settings" class="buddyforms-section postbox closed">
 			<div class="postbox-header">
 				<h2 class="hndle ui-sortable-handle">
@@ -861,52 +860,52 @@ function buddyforms_post_types_custom_box_html($post)
 					<table class="form-table buddyforms-table">
 						<tbody>
 
-		<tr>
-			<th scope="row"><label for="menu_position">Menu Position</label>
-				<p>See
-					<a href="https://developer.wordpress.org/reference/functions/register_post_type/#menu_position"
-					   target="_blank" rel="noopener">Available options</a> in the "menu_position"
-					section. Range of 5-100</p></th>
-			<td><input type="text" id="menu_position" name="buddyforms_custom_post_type[menu_position]"
-					   value="" aria-required="false"><br>
-				<p class="buddyforms-field-description description">The position in the menu order the
-					post type should appear. show_in_menu must be true.</p></td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="show_in_menu">Show in Menu</label>
-				<p>"Show UI" must be "true". If an existing top level page such as "tools.php" is
-					indicated for second input, post type will be sub menu of that.</p></th>
-			<td><select id="show_in_menu" name="buddyforms_custom_post_type[show_in_menu]">
-					<option value="0">False</option>
-					<option value="1" selected="selected">True</option>
-				</select>
-				<p class="buddyforms-field-description description">(default: true) Whether or not to
-					show the post type in the admin menu and where to show that menu.</p><br><input
-						type="text" id="show_in_menu_string"
-						name="buddyforms_custom_post_type[show_in_menu_string]" value=""
-						aria-required="false"><br>
-				<p class="buddyforms-field-description description">The top-level admin menu page file
-					name for which the post type should be in the sub menu of.</p></td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<div id="menu_icon_preview"></div>
-				<label for="menu_icon">Menu Icon</label></th>
-			<td><input type="text" id="menu_icon" name="buddyforms_custom_post_type[menu_icon]" value=""
-					   aria-required="false" placeholder="(Full URL for icon or Dashicon class)"><span
-						class="visuallyhidden">(Full URL for icon or Dashicon class)</span><br>
-				<p class="buddyforms-field-description description">Image URL or <a
-							href="https://developer.wordpress.org/resource/dashicons/" target="_blank"
-							rel="noopener">Dashicon class name</a> to use for icon. Custom image should
-					be 20px by 20px.</p>
-				<div class="buddyforms-spacer"><input id="buddyforms_choose_dashicon"
-													  class="button dashicons-picker" type="button"
-													  value="Choose dashicon">
-					<div class="buddyforms-spacer"><input id="buddyforms_choose_icon" class="button "
-														  type="button" value="Choose image icon"></div>
-				</div>
-			</td>
-		</tr>
+						<tr>
+							<th scope="row"><label for="menu_position">Menu Position</label>
+								<p>See
+									<a href="https://developer.wordpress.org/reference/functions/register_post_type/#menu_position"
+									   target="_blank" rel="noopener">Available options</a> in the "menu_position"
+									section. Range of 5-100</p></th>
+							<td><input type="text" id="menu_position" name="buddyforms_custom_post_type[menu_position]"
+									   value="" aria-required="false"><br>
+								<p class="buddyforms-field-description description">The position in the menu order the
+									post type should appear. show_in_menu must be true.</p></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="show_in_menu">Show in Menu</label>
+								<p>"Show UI" must be "true". If an existing top level page such as "tools.php" is
+									indicated for second input, post type will be sub menu of that.</p></th>
+							<td><select id="show_in_menu" name="buddyforms_custom_post_type[show_in_menu]">
+									<option value="0">False</option>
+									<option value="1" selected="selected">True</option>
+								</select>
+								<p class="buddyforms-field-description description">(default: true) Whether or not to
+									show the post type in the admin menu and where to show that menu.</p><br><input
+										type="text" id="show_in_menu_string"
+										name="buddyforms_custom_post_type[show_in_menu_string]" value=""
+										aria-required="false"><br>
+								<p class="buddyforms-field-description description">The top-level admin menu page file
+									name for which the post type should be in the sub menu of.</p></td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<div id="menu_icon_preview"></div>
+								<label for="menu_icon">Menu Icon</label></th>
+							<td><input type="text" id="menu_icon" name="buddyforms_custom_post_type[menu_icon]" value=""
+									   aria-required="false" placeholder="(Full URL for icon or Dashicon class)"><span
+										class="visuallyhidden">(Full URL for icon or Dashicon class)</span><br>
+								<p class="buddyforms-field-description description">Image URL or <a
+											href="https://developer.wordpress.org/resource/dashicons/" target="_blank"
+											rel="noopener">Dashicon class name</a> to use for icon. Custom image should
+									be 20px by 20px.</p>
+								<div class="buddyforms-spacer"><input id="buddyforms_choose_dashicon"
+																	  class="button dashicons-picker" type="button"
+																	  value="Choose dashicon">
+									<div class="buddyforms-spacer"><input id="buddyforms_choose_icon" class="button "
+																		  type="button" value="Choose image icon"></div>
+								</div>
+							</td>
+						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -931,43 +930,43 @@ function buddyforms_post_types_custom_box_html($post)
 						<tbody>
 
 
-		<tr>
-			<th scope="row"><label for="show_in_rest">Show in REST API</label></th>
-			<td><select id="show_in_rest" name="buddyforms_custom_post_type[show_in_rest]">
-					<option value="0">False</option>
-					<option value="1" selected="selected">True</option>
-				</select>
-				<p class="buddyforms-field-description description">(Custom Post Type UI default: true)
-					Whether or not to show this post type data in the WP REST API.</p></td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="rest_base">REST API base slug</label></th>
-			<td><input type="text" id="rest_base" name="buddyforms_custom_post_type[rest_base]" value=""
-					   aria-required="false" placeholder="Slug to use in REST API URLs."><span
-						class="visuallyhidden">Slug to use in REST API URLs.</span></td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="rest_controller_class">REST API controller class</label></th>
-			<td><input type="text" id="rest_controller_class"
-					   name="buddyforms_custom_post_type[rest_controller_class]" value=""
-					   aria-required="false"
-					   placeholder="(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller."><span
-						class="visuallyhidden">(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller.</span>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="rest_namespace">REST API namespace</label></th>
-			<td><input type="text" id="rest_namespace"
-					   name="buddyforms_custom_post_type[rest_namespace]" value="" aria-required="false"
-					   placeholder="(default: wp/v2) To change the namespace URL of REST API route."><span
-						class="visuallyhidden">(default: wp/v2) To change the namespace URL of REST API route.</span>
-			</td>
-		</tr>
-		</tbody>
-		</table>
-	</div>
-	</div>
-	</div>
+						<tr>
+							<th scope="row"><label for="show_in_rest">Show in REST API</label></th>
+							<td><select id="show_in_rest" name="buddyforms_custom_post_type[show_in_rest]">
+									<option value="0">False</option>
+									<option value="1" selected="selected">True</option>
+								</select>
+								<p class="buddyforms-field-description description">(Custom Post Type UI default: true)
+									Whether or not to show this post type data in the WP REST API.</p></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="rest_base">REST API base slug</label></th>
+							<td><input type="text" id="rest_base" name="buddyforms_custom_post_type[rest_base]" value=""
+									   aria-required="false" placeholder="Slug to use in REST API URLs."><span
+										class="visuallyhidden">Slug to use in REST API URLs.</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="rest_controller_class">REST API controller class</label></th>
+							<td><input type="text" id="rest_controller_class"
+									   name="buddyforms_custom_post_type[rest_controller_class]" value=""
+									   aria-required="false"
+									   placeholder="(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller."><span
+										class="visuallyhidden">(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller.</span>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="rest_namespace">REST API namespace</label></th>
+							<td><input type="text" id="rest_namespace"
+									   name="buddyforms_custom_post_type[rest_namespace]" value="" aria-required="false"
+									   placeholder="(default: wp/v2) To change the namespace URL of REST API route."><span
+										class="visuallyhidden">(default: wp/v2) To change the namespace URL of REST API route.</span>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<div id="buddyforms_panel_pt_advanced_settings" class="buddyforms-section buddyforms-settings postbox closed">
 			<div class="postbox-header">
@@ -1108,7 +1107,8 @@ function buddyforms_post_types_custom_box_html($post)
 						<tr>
 							<th scope="row"><label for="add_new_item">Add New Item</label></th>
 							<td>
-								<input type="text" id="add_new_item" name="buddyforms_custom_post_type[add_new_item]" value=""
+								<input type="text" id="add_new_item" name="buddyforms_custom_post_type[add_new_item]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. Add New Movie)"
 									   data-label="Add new item" data-plurality="singular"><span class="visuallyhidden">(e.g. Add New Movie)</span><br>
 								<p class="buddyforms-field-description description">Used at the top of the post editor
@@ -1143,7 +1143,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="view_items">View Items</label></th>
-							<td><input type="text" id="view_items" name="buddyforms_custom_post_type[view_items]" value=""
+							<td><input type="text" id="view_items" name="buddyforms_custom_post_type[view_items]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. View Movies)" data-label="View item"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. View Movies)</span><br>
@@ -1152,7 +1153,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="search_items">Search Item</label></th>
-							<td><input type="text" id="search_items" name="buddyforms_custom_post_type[search_items]" value=""
+							<td><input type="text" id="search_items" name="buddyforms_custom_post_type[search_items]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. Search Movies)" data-label="Search item"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Search Movies)</span><br>
@@ -1169,7 +1171,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="not_found_in_trash">Not Found in Trash</label></th>
-							<td><input type="text" id="not_found_in_trash" name="buddyforms_custom_post_type[not_found_in_trash]"
+							<td><input type="text" id="not_found_in_trash"
+									   name="buddyforms_custom_post_type[not_found_in_trash]"
 									   value="" aria-required="false" placeholder="(e.g. No Movies found in Trash)"
 									   data-label="No item found in trash" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. No Movies found in Trash)</span><br>
@@ -1178,7 +1181,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="parent">Parent</label></th>
-							<td><input type="text" id="parent" name="buddyforms_custom_post_type[parent]" value="" aria-required="false"
+							<td><input type="text" id="parent" name="buddyforms_custom_post_type[parent]" value=""
+									   aria-required="false"
 									   placeholder="(e.g. Parent Movie:)" data-label="Parent item:"
 									   data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Parent Movie:)</span><br>
@@ -1187,7 +1191,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="featured_image">Featured Image</label></th>
-							<td><input type="text" id="featured_image" name="buddyforms_custom_post_type[featured_image]" value=""
+							<td><input type="text" id="featured_image"
+									   name="buddyforms_custom_post_type[featured_image]" value=""
 									   aria-required="false" placeholder="(e.g. Featured image for this movie)"
 									   data-label="Featured image for this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Featured image for this movie)</span><br>
@@ -1196,7 +1201,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="set_featured_image">Set Featured Image</label></th>
-							<td><input type="text" id="set_featured_image" name="buddyforms_custom_post_type[set_featured_image]"
+							<td><input type="text" id="set_featured_image"
+									   name="buddyforms_custom_post_type[set_featured_image]"
 									   value="" aria-required="false"
 									   placeholder="(e.g. Set featured image for this movie)"
 									   data-label="Set featured image for this item" data-plurality="singular"><span
@@ -1206,7 +1212,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="remove_featured_image">Remove Featured Image</label></th>
-							<td><input type="text" id="remove_featured_image" name="buddyforms_custom_post_type[remove_featured_image]"
+							<td><input type="text" id="remove_featured_image"
+									   name="buddyforms_custom_post_type[remove_featured_image]"
 									   value="" aria-required="false"
 									   placeholder="(e.g. Remove featured image for this movie)"
 									   data-label="Remove featured image for this item" data-plurality="singular"><span
@@ -1216,7 +1223,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="use_featured_image">Use Featured Image</label></th>
-							<td><input type="text" id="use_featured_image" name="buddyforms_custom_post_type[use_featured_image]"
+							<td><input type="text" id="use_featured_image"
+									   name="buddyforms_custom_post_type[use_featured_image]"
 									   value="" aria-required="false"
 									   placeholder="(e.g. Use as featured image for this movie)"
 									   data-label="Use as featured image for this item" data-plurality="singular"><span
@@ -1235,7 +1243,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="insert_into_item">Insert into item</label></th>
-							<td><input type="text" id="insert_into_item" name="buddyforms_custom_post_type[insert_into_item]" value=""
+							<td><input type="text" id="insert_into_item"
+									   name="buddyforms_custom_post_type[insert_into_item]" value=""
 									   aria-required="false" placeholder="(e.g. Insert into movie)"
 									   data-label="Insert into item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Insert into movie)</span><br>
@@ -1244,7 +1253,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="uploaded_to_this_item">Uploaded to this Item</label></th>
-							<td><input type="text" id="uploaded_to_this_item" name="buddyforms_custom_post_type[uploaded_to_this_item]"
+							<td><input type="text" id="uploaded_to_this_item"
+									   name="buddyforms_custom_post_type[uploaded_to_this_item]"
 									   value="" aria-required="false" placeholder="(e.g. Uploaded to this movie)"
 									   data-label="Upload to this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Uploaded to this movie)</span><br>
@@ -1253,7 +1263,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="filter_items_list">Filter Items List</label></th>
-							<td><input type="text" id="filter_items_list" name="buddyforms_custom_post_type[filter_items_list]" value=""
+							<td><input type="text" id="filter_items_list"
+									   name="buddyforms_custom_post_type[filter_items_list]" value=""
 									   aria-required="false" placeholder="(e.g. Filter movies list)"
 									   data-label="Filter item list" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Filter movies list)</span><br>
@@ -1262,7 +1273,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="items_list_navigation">Items List Navigation</label></th>
-							<td><input type="text" id="items_list_navigation" name="buddyforms_custom_post_type[items_list_navigation]"
+							<td><input type="text" id="items_list_navigation"
+									   name="buddyforms_custom_post_type[items_list_navigation]"
 									   value="" aria-required="false" placeholder="(e.g. Movies list navigation)"
 									   data-label="item list navigation" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies list navigation)</span><br>
@@ -1271,7 +1283,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="items_list">Items List</label></th>
-							<td><input type="text" id="items_list" name="buddyforms_custom_post_type[items_list]" value=""
+							<td><input type="text" id="items_list" name="buddyforms_custom_post_type[items_list]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. Movies list)" data-label="item list"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies list)</span><br>
@@ -1280,7 +1293,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="attributes">Attributes</label></th>
-							<td><input type="text" id="attributes" name="buddyforms_custom_post_type[attributes]" value=""
+							<td><input type="text" id="attributes" name="buddyforms_custom_post_type[attributes]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. Movies Attributes)"
 									   data-label="item attributes" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies Attributes)</span><br>
@@ -1289,7 +1303,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="name_admin_bar">"New" menu in admin bar</label></th>
-							<td><input type="text" id="name_admin_bar" name="buddyforms_custom_post_type[name_admin_bar]" value=""
+							<td><input type="text" id="name_admin_bar"
+									   name="buddyforms_custom_post_type[name_admin_bar]" value=""
 									   aria-required="false" placeholder="(e.g. Movie)" data-label="item"
 									   data-plurality="singular"><span class="visuallyhidden">(e.g. Movie)</span><br>
 								<p class="buddyforms-field-description description">Used in New in Admin menu bar.
@@ -1297,7 +1312,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="item_published">Item Published</label></th>
-							<td><input type="text" id="item_published" name="buddyforms_custom_post_type[item_published]" value=""
+							<td><input type="text" id="item_published"
+									   name="buddyforms_custom_post_type[item_published]" value=""
 									   aria-required="false" placeholder="(e.g. Movie published)"
 									   data-label="item published" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie published)</span><br>
@@ -1307,7 +1323,8 @@ function buddyforms_post_types_custom_box_html($post)
 						<tr>
 							<th scope="row"><label for="item_published_privately">Item Published Privately</label></th>
 							<td><input type="text" id="item_published_privately"
-									   name="buddyforms_custom_post_type[item_published_privately]" value="" aria-required="false"
+									   name="buddyforms_custom_post_type[item_published_privately]" value=""
+									   aria-required="false"
 									   placeholder="(e.g. Movie published privately.)"
 									   data-label="item published privately." data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie published privately.)</span><br>
@@ -1317,7 +1334,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="item_reverted_to_draft">Item Reverted To Draft</label></th>
-							<td><input type="text" id="item_reverted_to_draft" name="buddyforms_custom_post_type[item_reverted_to_draft]"
+							<td><input type="text" id="item_reverted_to_draft"
+									   name="buddyforms_custom_post_type[item_reverted_to_draft]"
 									   value="" aria-required="false" placeholder="(e.g. Movie reverted to draft)"
 									   data-label="item reverted to draft." data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie reverted to draft)</span><br>
@@ -1327,7 +1345,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="item_scheduled">Item Scheduled</label></th>
-							<td><input type="text" id="item_scheduled" name="buddyforms_custom_post_type[item_scheduled]" value=""
+							<td><input type="text" id="item_scheduled"
+									   name="buddyforms_custom_post_type[item_scheduled]" value=""
 									   aria-required="false" placeholder="(e.g. Movie scheduled)"
 									   data-label="item scheduled" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie scheduled)</span><br>
@@ -1337,7 +1356,8 @@ function buddyforms_post_types_custom_box_html($post)
 						</tr>
 						<tr>
 							<th scope="row"><label for="item_updated">Item Updated</label></th>
-							<td><input type="text" id="item_updated" name="buddyforms_custom_post_type[item_updated]" value=""
+							<td><input type="text" id="item_updated" name="buddyforms_custom_post_type[item_updated]"
+									   value=""
 									   aria-required="false" placeholder="(e.g. Movie updated)"
 									   data-label="item updated." data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie updated)</span><br>

@@ -401,6 +401,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			require_once BUDDYFORMS_INCLUDES_PATH . 'wp-insert-user.php';
 			require_once BUDDYFORMS_INCLUDES_PATH . 'revisions.php';
 
+			require_once BUDDYFORMS_INCLUDES_PATH . '/template-builder/template-builder.php';
 			// Gutenberg
 			require_once BUDDYFORMS_INCLUDES_PATH . 'gutenberg/gutenberg.php';
 
