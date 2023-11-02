@@ -3,7 +3,7 @@
 // Add the Settings Page to the BuddyForms Menu
 //
 function buddyforms_welcome_screen_menu() {
-	add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Welcome', 'buddyforms' ), __( 'Welcome', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content', 1 );
+	//add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Welcome', 'buddyforms' ), __( 'Welcome', 'buddyforms' ), 'manage_options', 'buddyforms_welcome_screen', 'buddyforms_welcome_screen_content', 1 );
 }
 
 add_action( 'admin_menu', 'buddyforms_welcome_screen_menu', 9999 );
@@ -28,7 +28,7 @@ function buddyforms_welcome_screen_content() {
 				<iframe id="bf-welcome-video-youtube" src="https://www.youtube.com/embed/DoPLWBBlRvA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			</div>
-			
+
 			<div class="bf-welcome-accordion">
 				<div class="bf-welcome-accordion_tab">
 					Templates
@@ -58,7 +58,7 @@ function buddyforms_welcome_screen_content() {
 								$disabled = $dependencies != $none_dependency_string ? 'disabled' : '';
 
 								?>
-								<div class="bf-3-tile bf-tile 
+								<div class="bf-3-tile bf-tile
 								<?php
 								if ( $dependencies != $none_dependency_string ) {
 									echo 'disabled ';
@@ -137,7 +137,7 @@ function buddyforms_welcome_screen_content() {
 						<p>Display a login form or a logout button if the user is logged in.</p>
 						<img style="width:650px;" src="<?php echo esc_attr( BUDDYFORMS_ASSETS ); ?>admin/img/welcome-screen/gutenberg-login-form.gif" alt="">
 					</div>
-					
+
 				</div>
 			</div>
 
@@ -176,7 +176,7 @@ function buddyforms_welcome_screen_content() {
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="bf-welcome-accordion">
 				<div class="bf-welcome-accordion_tab">
 					More Info
@@ -190,7 +190,7 @@ function buddyforms_welcome_screen_content() {
 						<p>Our goal is to help you, that's why if you have any questions or concerns, on our website you can find all the information related to BuddyForms.</p>
 						<a class="documentation_link" href="https://docs.buddyforms.com/" target="_blank">Visit Now!</a>
 					</div>
-					
+
 				</div>
 			</div>
 
