@@ -21,7 +21,10 @@ $the_loop_css_url = BUDDYFORMS_ASSETS . 'css/bf-the-loop-css-' . $form_slug . '.
 wp_register_style( 'bf-the-loop-css-' . $form_slug, $the_loop_css_url );
 wp_enqueue_style( 'bf-the-loop-css-' . $form_slug );
 ?>
-
+<div class="buddyforms-list-posts-filter">
+	<h3>Filter</h3>
+	Let us create some fuking great ajax filters that are just BOOM
+</div>
 	<div id="buddyforms-list-view" class="buddyforms_posts_list buddyforms-posts-container">
 
 		<?php if ( $the_lp_query->have_posts() ) : ?>

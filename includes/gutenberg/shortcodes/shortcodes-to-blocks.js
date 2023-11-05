@@ -138,6 +138,49 @@ registerBlockType('buddyforms/bf-password-reset-form', {
 
 
 //
+// Embed a post lists filter
+//
+registerBlockType('buddyforms/bf-list-posts-filter', {
+    title: __('Post Filter', 'buddyforms'),
+    icon: 'filter',
+    category: 'buddyforms',
+
+    edit: function (props) {
+
+        var forms = [
+            {value: 'no', label: __('Select a Form', 'buddyforms')},
+        ];
+        for (var key in buddyforms_forms) {
+            forms.push({value: key, label: buddyforms_forms[key]});
+        }
+
+        return [
+
+            el(ServerSideRender, {
+                block: 'buddyforms/bf-password-reset-form',
+                attributes: props.attributes,
+            }),
+
+            el(InspectorControls, {},
+                el('p', {}, ''),
+                el(TextControl, {
+                    label: __('Redirect URL', 'buddyforms'),
+                    value: props.attributes.bf_redirect_url,
+                    onChange: (value) => {
+                        props.setAttributes({bf_redirect_url: value});
+                    },
+                }),
+            )
+        ];
+    },
+
+    save: function () {
+        return null;
+    },
+});
+
+
+//
 // Embed a login form
 //
 registerBlockType('buddyforms/bf-embed-login-form', {

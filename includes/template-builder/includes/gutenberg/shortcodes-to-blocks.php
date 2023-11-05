@@ -71,6 +71,9 @@ function buddyforms_hook_fields_shortcodes_to_block_init() {
 				'bf_form_field' => array(
 					'type' => 'string',
 				),
+				'bf_link_to_post' => array(
+					'type' => 'string',
+				),
 			),
 			'editor_script'   => 'bf-embed-hook-field',
 			'render_callback' => 'buddyforms_hook_fields_block_render_form',
@@ -90,11 +93,23 @@ function buddyforms_hook_fields_block_render_form( $attributes ) {
 	if ( isset( $attributes['bf_form_slug'] ) && isset( $buddyforms[ $attributes['bf_form_slug'] ] ) ) {
 		$tmp = '<p>' . __( 'Please select a form element in the block settings sidebar!', 'buddyforms' ) . '</p>';
 		if ( isset( $attributes['bf_form_field'] ) ) {
-				$tmp = do_shortcode( '[bfsinglefield form-slug="' . $attributes['bf_form_slug'] . '" field-slug="' . $attributes['bf_form_field'] . '"]' );
+
+			if( isset($attributes['bf_link_to_post']) ){
+				$tmp = '<a href="' .get_permalink($post->ID).'" >';
+			}
+			$tmp .= do_shortcode( '[bfsinglefield form-slug="' . $attributes['bf_form_slug'] . '" field-slug="' . $attributes['bf_form_field'] . '"]' );
+
+			if( isset($attributes['bf_link_to_post']) ){
+				$tmp .= '</a>';
+			}
 		}
-//		if ( empty( $tmp ) ){
-//			$tmp = $attributes->ID; // get_the_content( null, false, $post->ID );
-//		}
+		if ( empty( strip_tags($tmp) ) ){
+			$tmp = $attributes['bf_form_field']; // get_the_content( null, false, $post->ID );
+		}
+		if ( empty( $tmp ) ){
+
+		}
+//		$tmp = 'wiso';
 		return $tmp;
 	} else {
 		return '<p>' . __( 'Please select a form in the block settings sidebar!', 'buddyforms' ) . '</p>';

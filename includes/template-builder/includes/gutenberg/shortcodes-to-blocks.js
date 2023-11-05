@@ -24,6 +24,9 @@ registerBlockType('buddyformshooks/bf-insert-form-field-value', {
         bf_form_field: {
             type: 'string',
         },
+        bf_link_to_post: {
+            type: 'string',
+        },
     },
     edit: function (props) {
 
@@ -37,6 +40,13 @@ registerBlockType('buddyformshooks/bf-insert-form-field-value', {
         var fields = [
             {value: 'no', label: __('Select a Field', 'buddyforms')},
         ];
+
+        var bf_link_to_post_options = [
+            {value: 'no', label: __('Not a link', 'buddyforms')},
+            {value: 'yes', label: __('Link to post', 'buddyforms')},
+        ];
+
+
 
         for (var key in buddyforms_forms_fields[props.attributes.bf_form_slug]) {
             fields.push({value: buddyforms_forms_fields[props.attributes.bf_form_slug][key], label: buddyforms_forms_fields[props.attributes.bf_form_slug][key]});
@@ -65,6 +75,14 @@ registerBlockType('buddyformshooks/bf-insert-form-field-value', {
                     options: fields,
                     onChange: (value) => {
                         props.setAttributes({bf_form_field: value});
+                    },
+                }),
+                el(SelectControl, {
+                    label: __('Link to post', 'buddyforms'),
+                    value: props.attributes.bf_link_to_post,
+                    options: bf_link_to_post_options,
+                    onChange: (value) => {
+                        props.setAttributes({bf_link_to_post: value});
                     },
                 }),
                 el('p', {}, ''),

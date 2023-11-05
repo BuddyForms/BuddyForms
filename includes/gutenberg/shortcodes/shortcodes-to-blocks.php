@@ -139,6 +139,23 @@ function buddyforms_shortcodes_to_block_init() {
 	);
 
 	//
+	// Embed a password reset form
+	//
+	register_block_type(
+		'buddyforms/bf-list-posts-filter',
+		array(
+			'attributes'      => array(
+				'bf_redirect_url' => array(
+					'type' => 'string',
+				),
+			),
+			'editor_script'   => 'bf-embed-form',
+			'render_callback' => 'buddyforms_block_list_submissions_filter',
+		)
+	);
+
+
+	//
 	// Embed a post list
 	//
 	register_block_type(
@@ -212,6 +229,11 @@ function buddyforms_block_render_login_form( $attributes ) {
 	return buddyforms_view_login_form( $attr );
 
 }
+
+function buddyforms_block_list_submissions_filter( $attributes ) {
+ return '<p>alter</p>';
+}
+
 
 /**
  * Render a password reset form
