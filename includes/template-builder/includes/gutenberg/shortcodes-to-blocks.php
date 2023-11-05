@@ -42,8 +42,21 @@ function buddyforms_hook_fields_shortcodes_to_block_init() {
 		}
 	}
 
+	$args = array(
+		'numberposts' => 5,
+		'post_type'   => 'bf_template',
+		'post_status' => 'private',
+	);
+	$templates = get_posts( $args );
+
+	$templates_array = array();
+	foreach ( $templates as $key => $template ) {
+		$templates_array[ $template->ID ] = $template->post_title;
+	}
+
 	wp_localize_script( 'bf-embed-hook-field', 'buddyforms_forms', $forms );
 	wp_localize_script( 'bf-embed-hook-field', 'buddyforms_forms_fields', $forms_fields );
+	wp_localize_script( 'bf-embed-hook-field', 'buddyforms_templates', $templates_array );
 
 	//
 	// Embed a form
@@ -79,6 +92,9 @@ function buddyforms_hook_fields_block_render_form( $attributes ) {
 		if ( isset( $attributes['bf_form_field'] ) ) {
 				$tmp = do_shortcode( '[bfsinglefield form-slug="' . $attributes['bf_form_slug'] . '" field-slug="' . $attributes['bf_form_field'] . '"]' );
 		}
+//		if ( empty( $tmp ) ){
+//			$tmp = $attributes->ID; // get_the_content( null, false, $post->ID );
+//		}
 		return $tmp;
 	} else {
 		return '<p>' . __( 'Please select a form in the block settings sidebar!', 'buddyforms' ) . '</p>';

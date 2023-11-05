@@ -471,9 +471,12 @@ function buddyforms_blocks_the_loop( $args ) {
 	} elseif ( $list_posts_style == 'list' ) {
 		buddyforms_locate_template( 'the-loop', $form_slug );
 	} else {
-		buddyforms_locate_template( $list_posts_style, $form_slug );
+		if(is_numeric($list_posts_style)){
+			buddyforms_locate_template( 'template', $form_slug );
+		} else {
+			buddyforms_locate_template( $list_posts_style, $form_slug );
+		}
 	}
-
 	wp_reset_postdata();
 
 	do_action( 'buddyforms_the_loop_end', $query_args );

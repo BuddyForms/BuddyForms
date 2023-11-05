@@ -59,6 +59,17 @@ function buddyforms_list_all_post_fields( $content ) {
 			$template_content = get_the_content( null, false, $post_template_id );
 			$template_content = apply_filters( 'the_content', $template_content );
 			$template_content = str_replace( ']]>', ']]&gt;', $template_content );
+//
+//			if ( has_blocks( $template_content ) ) {
+//				$blocks = parse_blocks( $template_content );
+//				print'<pre>';print_r($blocks);print'</pre>';
+//				foreach( $blocks as $block ) {
+//					echo render_block( $block );
+//				}
+//			}
+
+
+
 		}
 		$template_content = buddyforms_get_field_value_from_string( $template_content, $post->ID, $form_slug, true );
 		if ( ! empty( $template_content ) ) {
