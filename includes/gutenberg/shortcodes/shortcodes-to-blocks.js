@@ -157,7 +157,7 @@ registerBlockType('buddyforms/bf-list-posts-filter', {
         return [
 
             el(ServerSideRender, {
-                block: 'buddyforms/bf-password-reset-form',
+                block: 'buddyforms/bf-list-posts-filter',
                 attributes: props.attributes,
             }),
 

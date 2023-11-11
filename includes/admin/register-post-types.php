@@ -573,8 +573,145 @@ function buddyforms_post_types_custom_box_html($post)
 	?>
 	<div id="poststuff">
 
-		<table class="form-table buddyforms-table">
-			<tbody>
+
+
+			<style>
+				.entry {
+					width: 350px;
+					height: 220px;
+					background-color: #f0f0f0;
+					border: 1px solid #ccc;
+					margin: 10px;
+					display: inline-block;
+					cursor: pointer;
+					transition: transform 0.2s;
+					overflow: hidden;
+					background-size: cover;
+					background-position: center;
+				}
+
+				.selected {
+					border: 2px solid green;
+				}
+
+				.deselected {
+					opacity: 0.5; /* Adjust the opacity for deselected entries */
+				}
+
+				.entry.directory {
+					background: #f0f0f0 url('none');
+				}
+
+				.entry.blog {
+					background: #f0f0f0 url('none');
+				}
+
+				.entry.pages {
+					background: #f0f0f0 url('none');
+				}
+
+				.entry.hidden {
+					background: #f0f0f0 url('none');
+				}
+
+				.entry:hover {
+					transform: scale(1.05);
+				}
+
+				.description {
+					padding: 10px;
+					background-color: #fff;
+					text-align: left;
+					height: 100%;
+				}
+
+				.entry p {
+					font-size: 20px;
+				}
+
+				.entry span.dashicons {
+					font-size: 50px;
+					text-align: left;
+					float: left;
+					padding: 10px;
+				}
+			</style>
+		<h1>Quick Select your Use Case</h1>
+
+		<div class="entry directory dashicons" data-usecase="directory" onclick="selectEntry(this)">
+			<span class="dashicons dashicons-list-view"></span>
+			<p>Directory with Filter and Search</p>
+			<div class="description">Advanced directory with a search and filters to make it easily filterable by any form element. It's suitable for real estate listings, company directories, geo directories and various other types of directories.</div>
+		</div>
+
+		<div class="entry blog dashicons" data-usecase="blog" onclick="selectEntry(this)">
+			<span class="dashicons dashicons-admin-post"></span>
+			<p>Blog or Magazine Style</p>
+			<div class="description">This use case is perfect for creating a blog or magazine-style website with an archive of posts. It provides a chronological display of your articles for readers to explore.</div>
+		</div>
+
+		<div class="entry pages dashicons" data-usecase="pages" onclick="selectEntry(this)">
+			<span class="dashicons dashicons-admin-page"></span>
+			<p>WordPress Pages Style Hierarchy</p>
+			<div class="description">Create a hierarchy of pages in a WordPress-style structure, with parent pages and child pages. This use case is ideal for organizing and presenting content in a structured manner.</div>
+		</div>
+
+		<div class="entry hidden dashicons" data-usecase="hidden" onclick="selectEntry(this)">
+			<span class="dashicons dashicons-hidden"></span>
+			<p>Hidden Public Post Type</p>
+			<div class="description">This use case allows you to create a hidden post type that is publicly accessible but doesn't have an archive. The post exists only through its URL, making it useful for unique, standalone content.</div>
+		</div>
+
+		<script>
+			function selectEntry(entry) {
+				// Remove 'selected' class from all entries
+				const entries = document.querySelectorAll('.entry');
+				entries.forEach(e => e.classList.remove('selected'));
+
+				// Add 'selected' class to the clicked entry
+				entry.classList.add('selected');
+
+				// Remove 'deselected' class from all entries
+				entries.forEach(e => e.classList.remove('deselected'));
+
+				// Add 'deselected' class to all entries except the clicked entry
+				entries.forEach(e => {
+					if (e !== entry) {
+						e.classList.add('deselected');
+					}
+				});
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+		<h1>Advanced Settings </h1>
+
+		<div id="buddyforms_panel_pt_advanced_settings" class="buddyforms-section buddyforms-settings postbox closed">
+			<div class="postbox-header">
+				<h2 class="hndle ui-sortable-handle">
+					<span>General Settings</span>
+				</h2>
+				<div class="handle-actions hide-if-no-js">
+					<button type="button" class="handlediv" aria-expanded="false">
+						<span class="screen-reader-text">Toggle panel: General settings</span>
+						<span class="toggle-indicator" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+			<div class="inside">
+				<div class="main">
+					<table class="form-table buddyforms-table">
+						<tbody>
+
 			<tr>
 				<th scope="row">
 					<label for="name">Post Type Slug</label> <span class="required">*</span>
@@ -700,8 +837,11 @@ function buddyforms_post_types_custom_box_html($post)
 								value="post_tag"><label for="post_tag">Tags (WP Core)</label><br></fieldset>
 				</td>
 			</tr>
-			</tbody>
-		</table>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<div id="buddyforms_panel_pt_basic_settings" class="buddyforms-section postbox closed">
 			<div class="postbox-header">
