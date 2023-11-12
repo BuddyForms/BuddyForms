@@ -9,25 +9,31 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 	?>
 
 	<script>
+		jQuery( document ).ready(function() {
+			jQuery("#titlediv").hide();
+			jQuery('#post-body').removeClass( "columns-2" );
 
-		function saveThickboxContent() {
-			// Get values from input fields
-			const pluralLabel = document.getElementById('plural-label').value;
-			const singularLabel = document.getElementById('singular-label').value;
-			const slug = document.getElementById('slug').value;
+			preset = jQuery('#post-type-preset').val();
+			
+			jQuery('[data-usecase='+preset+']').addClass('selected');
 
-			// You can now use these values as needed, for example, update the entry's data attributes
-			const selectedEntry = document.querySelector('.entry.selected');
-			selectedEntry.setAttribute('data-plural-label', pluralLabel);
-			selectedEntry.setAttribute('data-singular-label', singularLabel);
-			selectedEntry.setAttribute('data-slug', slug);
+		});
 
-			// Hide Thickbox modal
-			tb_remove();
-		}
+
+
 	</script>
 
 	<style>
+		#minor-publishing,
+		.misc-pub-visibility,
+		.misc-pub-curtime,
+		.misc-pub-post-status {
+			display: none;
+		}
+		#post-type-settings{
+			/*width: 95%;*/
+		}
+
 		.entry {
 			width: 350px;
 			height: 220px;
@@ -126,42 +132,7 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		}
 	</style>
 
-	<div id="thickbox-content" style="display: none;">
-		<label for="name">Post Type Slug <span class="required">*</span></label>
-		<p id="slugchanged" class="hidemessage">Slug has changed<span class="dashicons dashicons-warning"></span></p>
-		<p id="slugexists" class="hidemessage">Slug already exists<span class="dashicons dashicons-warning"></span></p>
-		<input type="text" id="name" name="buddyforms_custom_post_type[name]"
-			   value="<?php echo isset($buddyforms_custom_post_type['name']) ? $buddyforms_custom_post_type['name'] : '' ?>"
-			   maxlength="20"
-			   aria-required="true" required="true"><br>
-		<p class="buddyforms-field-description description">The post type name/slug. Used for
-			various queries for post type content.</p>
-		<p class="buddyforms-slug-details">Slugs may only contain lowercase alphanumeric
-			characters, dashes, and underscores.</p>
-		<p>DO NOT EDIT the post type slug unless also planning to migrate posts. Changing the
-			slug registers a new post type entry.</p>
-		<div class="buddyforms-spacer"><input type="checkbox" id="update_post_types"
-											  name="update_post_types[]"
-											  value="update_post_types"><label
-					for="update_post_types">Migrate posts to newly renamed post
-				type?</label><br></div>
 
-		<label for="label">Plural Label <span class="required">*</span></label>
-		<input type="text" id="label" name="buddyforms_custom_post_type[label_plural]"
-			   value="<?php echo isset($buddyforms_custom_post_type['label_plural']) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
-			   aria-required="true"
-			   required="true" placeholder="(e.g. Movies)">
-		<p class="buddyforms-field-description description">Used for the post type admin menu item.</p>
-
-		<label for="singular_label">Singular Label <span class="required">*</span></label>
-		<input type="text" id="singular_label"
-			   name="buddyforms_custom_post_type[singular_label]"
-			   value="<?php echo isset($buddyforms_custom_post_type['label_singular']) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
-			   aria-required="true" required="true" placeholder="(e.g. Movie)">
-		<p class="buddyforms-field-description description">Used when a singular label is needed.</p></td>
-
-		<button onclick="saveThickboxContent()">Save</button>
-	</div>
 
 	<h1>Quickly Select Your Use Case and Customize It to Suit Your Needs</h1>
 	<p>Choose the use case that best fits your requirements and customize it further in the advanced section if
@@ -202,7 +173,7 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		</div>
 	</div>
 
-	<div class="entry hidden dashicons" data-usecase="hidden" onclick="selectEntry(this)">
+	<div class="entry hidden dashicons" data-usecase="exclusive" onclick="selectEntry(this)">
 		<span class="dashicons dashicons-privacy"></span>
 		<p>Private Post Type</p>
 		<div class="description">Create exclusive, private posts for logged-in users. User registration is required for
@@ -210,7 +181,7 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		</div>
 	</div>
 
-	<div class="entry hidden dashicons" data-usecase="hidden" onclick="selectEntry(this)">
+	<div class="entry hidden dashicons" data-usecase="internal" onclick="selectEntry(this)">
 		<span class="dashicons dashicons-welcome-view-site"></span>
 		<p>Private Internal Directory</p>
 		<div class="description">Private directory with search and filters to make it easily filterable by any form
@@ -228,18 +199,72 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 			// Add 'selected' class to the clicked entry
 			entry.classList.add('selected');
 
+			jQuery('#post-type-preset').val(jQuery(entry).attr('data-usecase'));
+
+			// Remove 'deselected' class from all entries
+			entries.forEach(e => e.classList.remove('deselected'));
+
+			// Add 'deselected' class to all entries except the clicked entry
+			entries.forEach(e => {
+				if (e !== entry) {
+					e.classList.add('deselected');
+				}
+			});
+
 			// Open Thickbox modal
 			tb_show('Entry Settings', '#TB_inline?width=300&height=250&inlineId=thickbox-content');
 
 			// Prevent default Thickbox closing behavior when clicking outside the modal
 			jQuery('#TB_overlay').unbind('click');
 		}
+
+		function saveThickboxContent() {
+			// Get values from input fields
+			const labelplural = document.getElementById('tb_label_plural').value;
+			const labelsingular = document.getElementById('tb_label_singular').value;
+
+			if(labelplural === ''){
+				alert('Please enter a plural lable');
+				return false;
+			}
+			if(labelsingular === ''){
+				alert('Please enter a singular lable');
+				return false;
+			}
+
+			jQuery('#title').val(labelplural);
+			jQuery('#label_plural').val(labelplural);
+			jQuery('#label_singular').val(labelsingular);
+
+			// Hide Thickbox modal
+			tb_remove();
+			jQuery('input[type=submit]').click();
+			alert('Post Type Created Sucsesfully. You can find the new created post type in the Adminbar. You can adjust the settings of the post Type in teh Advanced Section');
+		}
 	</script>
 
+	<input type="hidden"
+		   name="buddyforms_custom_post_type[post_type_preset]"
+		   value="<?php echo isset($buddyforms_custom_post_type['post_type_preset']) ? $buddyforms_custom_post_type['post_type_preset'] : ''; ?>"
+		   id="post-type-preset">
+
+
+	<div id="thickbox-content" style="display: none;">
+		<label for="tb_label_plural">Plural Label <span class="required">*</span></label>
+		<input type="text" id="tb_label_plural"
+			   value="<?php echo isset($buddyforms_custom_post_type['label_plural']) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
+			   placeholder="(e.g. Movies)">
+		<p class="buddyforms-field-description description">Used for the post type admin menu item.</p>
+
+		<label for="tb_label_singular">Singular Label <span class="required">*</span></label>
+		<input type="text" id="tb_label_singular"
+			   value="<?php echo isset($buddyforms_custom_post_type['label_singular']) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
+			    placeholder="(e.g. Movie)">
+		<p class="buddyforms-field-description description">Used when a singular label is needed.</p></td>
+
+		<button onclick="saveThickboxContent()">Save</button>
+	</div>
 	<?php
-
-
-	echo '<h2>Plural Label</h2>';
 }
 
 add_action('edit_form_top', 'buddyforms_custom_post_type_edit_form_after_title');
@@ -270,22 +295,9 @@ add_action('save_post', 'buddyforms_custom_post_type_save_postdata');
 function buddyforms_post_types_custom_box_html($post)
 {
 	$buddyforms_custom_post_type = get_post_meta($post->ID, '_buddyforms_custom_post_type', true);
-
-
-	/** This filter is documented in wp-admin/edit-tag-form.php */
-	$editable_slug = apply_filters('editable_slug', $post->post_name, $post);
 	?>
-	<h2>Post Type Slug</h2>
-	<input name="post_name" type="text" class="large-text" id="post_name"
-		   value="<?php echo esc_attr($editable_slug); ?>"/>
-	<?php
-//	echo '<pre>';
-//	print_r($buddyforms_custom_post_type);
-//	echo '</pre>';
 
-	?>
-	<div id="poststuff">
-
+	<div id="post-type-settings">
 
 		<h1>Advanced Settings</h1>
 		<p>Explore all available options for post types in WordPress and adjust them to your needs.</p>
@@ -293,7 +305,7 @@ function buddyforms_post_types_custom_box_html($post)
 		<div id="buddyforms_panel_pt_advanced_settings" class="buddyforms-section buddyforms-settings postbox closed">
 			<div class="postbox-header">
 				<h2 class="hndle ui-sortable-handle">
-					<span>Supports</span>
+					<span>General Setting</span>
 				</h2>
 				<div class="handle-actions hide-if-no-js">
 					<button type="button" class="handlediv" aria-expanded="false">
@@ -303,21 +315,25 @@ function buddyforms_post_types_custom_box_html($post)
 				</div>
 			</div>
 			<div class="inside">
-				<div class="main">
+				<div class="main" id="general-settings">
 					<table class="form-table buddyforms-table">
 						<tbody>
 						<tr>
 							<th scope="row">
-								<label for="name">Post Type Slug</label> <span class="required">*</span>
+
+								<?php
+								/** This filter is documented in wp-admin/edit-tag-form.php */
+								$editable_slug = apply_filters('editable_slug', $post->post_name, $post);
+								?>
+								<label for="name">Post Type Slug</label>
 								<p id="slugchanged" class="hidemessage">Slug has changed<span
 											class="dashicons dashicons-warning"></span></p>
 								<p id="slugexists" class="hidemessage">Slug already exists<span
 											class="dashicons dashicons-warning"></span></p>
 							</th>
-							<td><input type="text" id="name" name="buddyforms_custom_post_type[name]"
-									   value="<?php echo isset($buddyforms_custom_post_type['name']) ? $buddyforms_custom_post_type['name'] : '' ?>"
-									   maxlength="20"
-									   aria-required="true" required="true"><br>
+							<td><input type="text" id="post_name" name="post_name"
+									   value="<?php echo esc_attr($editable_slug); ?>"
+									   maxlength="20"><br>
 								<p class="buddyforms-field-description description">The post type name/slug. Used for
 									various queries for post type content.</p>
 								<p class="buddyforms-slug-details">Slugs may only contain lowercase alphanumeric
@@ -332,8 +348,8 @@ function buddyforms_post_types_custom_box_html($post)
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="label">Plural Label</label> <span class="required">*</span></th>
-							<td><input type="text" id="label" name="buddyforms_custom_post_type[label_plural]"
+							<th scope="row"><label for="label_plural">Plural Label</label> <span class="required">*</span></th>
+							<td><input type="text" id="label_plural" name="buddyforms_custom_post_type[label_plural]"
 									   value="<?php echo isset($buddyforms_custom_post_type['label_plural']) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
 									   aria-required="true"
 									   required="true" placeholder="(e.g. Movies)"><span class="visuallyhidden">(e.g. Movies)</span><br>
@@ -341,10 +357,10 @@ function buddyforms_post_types_custom_box_html($post)
 									item.</p></td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="singular_label">Singular Label</label> <span
+							<th scope="row"><label for="label_singular">Singular Label</label> <span
 										class="required">*</span></th>
-							<td><input type="text" id="singular_label"
-									   name="buddyforms_custom_post_type[singular_label]"
+							<td><input type="text" id="label_singular"
+									   name="buddyforms_custom_post_type[label_singular]"
 									   value="<?php echo isset($buddyforms_custom_post_type['label_singular']) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
 									   aria-required="true" required="true" placeholder="(e.g. Movie)"><span
 										class="visuallyhidden">(e.g. Movie)</span><br>
@@ -1114,6 +1130,7 @@ function buddyforms_post_types_custom_box_html($post)
 			</div>
 		</div>
 	</div>
+	<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Save">
 	<?php
 }
 
@@ -1128,7 +1145,7 @@ class Michael_Ecklunds_Admin_Customizer
 	function in_admin_header()
 	{
 		global $wp_meta_boxes;
-		unset($wp_meta_boxes['bf-post-types']['side']['core']['submitdiv']);
+		//unset($wp_meta_boxes['bf-post-types']['side']['core']['submitdiv']);
 		unset($wp_meta_boxes['bf-post-types']['normal']['core']['slugdiv']);
 	}
 }
