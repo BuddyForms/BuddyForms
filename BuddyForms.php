@@ -385,6 +385,8 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			new BfAdminNotices();
 
 			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/register-post-types.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/custom-post-types-ui.php';
+			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/create-dynamic-post-types.php';
 			require_once BUDDYFORMS_INCLUDES_PATH . '/admin/admin-analytics.php';
 
 			// Compatibility
