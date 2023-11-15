@@ -1,8 +1,7 @@
 <?php
 
 
-function buddyforms_create_dynamic_post_types()
-{
+function buddyforms_create_dynamic_post_types() {
 	$args = array(
 		'post_type' => 'bf-post-types',
 		'posts_per_page' => 0,

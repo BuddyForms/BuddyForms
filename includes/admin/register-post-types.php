@@ -644,8 +644,7 @@ add_action('manage_buddyforms_posts_custom_column', 'custom_buddyforms_column', 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function buddyforms_hide_publishing_actions()
-{
+function buddyforms_hide_publishing_actions() {
 	global $post;
 
 	if (get_post_type($post) == 'buddyforms') {

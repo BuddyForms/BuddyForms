@@ -1,24 +1,23 @@
 <?php
-function buddyforms_custom_post_type_edit_form_after_title($post){
-	if ($post->post_type != 'bf-post-types') {
+function buddyforms_custom_post_type_edit_form_after_title( $post ) {
+	if ( $post->post_type != 'bf-post-types' ) {
 		return;
 	}
-	$buddyforms_custom_post_type = get_post_meta($post->ID, '_buddyforms_custom_post_type', true);
-	wp_enqueue_script('thickbox');
-	wp_enqueue_style('thickbox');
+	$buddyforms_custom_post_type = get_post_meta( $post->ID, '_buddyforms_custom_post_type', true );
+	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_style( 'thickbox' );
 	?>
 
 	<script>
-		jQuery( document ).ready(function() {
-			jQuery("#titlediv").hide();
-			jQuery('#post-body').removeClass( "columns-2" );
+		jQuery(document).ready(function () {
+			//jQuery("#titlediv").hide();
+			jQuery('#post-body').removeClass("columns-2");
 
 			preset = jQuery('#post-type-preset').val();
-			
-			jQuery('[data-usecase='+preset+']').addClass('selected');
+
+			jQuery('[data-usecase=' + preset + ']').addClass('selected');
 
 		});
-
 
 
 	</script>
@@ -30,7 +29,8 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		.misc-pub-post-status {
 			display: none;
 		}
-		#post-type-settings{
+
+		#post-type-settings {
 			/*width: 95%;*/
 		}
 
@@ -127,11 +127,11 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		button:hover {
 			background-color: #45a049;
 		}
-		.hidemessage{
+
+		.hidemessage {
 			display: none;
 		}
 	</style>
-
 
 
 	<h1>Quickly Select Your Use Case and Customize It to Suit Your Needs</h1>
@@ -190,6 +190,17 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 		</div>
 	</div>
 	<script>
+
+		function GetParameterValues(param) {
+			var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			for (var i = 0; i < url.length; i++) {
+				var urlparam = url[i].split('=');
+				if (urlparam[0] == param) {
+					return urlparam[1];
+				}
+			}
+		}
+
 		function selectEntry(entry) {
 
 			// Remove 'selected' class from all entries
@@ -211,11 +222,14 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 				}
 			});
 
-			// Open Thickbox modal
-			tb_show('Entry Settings', '#TB_inline?width=300&height=250&inlineId=thickbox-content');
+			labelplural = jQuery('#label_plural').val();
+			if (labelplural === '') {
+				// Open Thickbox modal
+				tb_show('Entry Settings', '#TB_inline?width=300&height=250&inlineId=thickbox-content');
 
-			// Prevent default Thickbox closing behavior when clicking outside the modal
-			jQuery('#TB_overlay').unbind('click');
+				// Prevent default Thickbox closing behavior when clicking outside the modal
+				jQuery('#TB_overlay').unbind('click');
+			}
 		}
 
 		function saveThickboxContent() {
@@ -223,11 +237,11 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 			const labelplural = document.getElementById('tb_label_plural').value;
 			const labelsingular = document.getElementById('tb_label_singular').value;
 
-			if(labelplural === ''){
+			if (labelplural === '') {
 				alert('Please enter a plural lable');
 				return false;
 			}
-			if(labelsingular === ''){
+			if (labelsingular === '') {
 				alert('Please enter a singular lable');
 				return false;
 			}
@@ -238,6 +252,12 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 
 			// Hide Thickbox modal
 			tb_remove();
+
+
+			var action = GetParameterValues('action');
+
+			alert(action);
+
 			jQuery('input[type=submit]').click();
 			alert('Post Type Created Sucsesfully. You can find the new created post type in the Adminbar. You can adjust the settings of the post Type in teh Advanced Section');
 		}
@@ -245,21 +265,21 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 
 	<input type="hidden"
 		   name="buddyforms_custom_post_type[post_type_preset]"
-		   value="<?php echo isset($buddyforms_custom_post_type['post_type_preset']) ? $buddyforms_custom_post_type['post_type_preset'] : ''; ?>"
+		   value="<?php echo isset( $buddyforms_custom_post_type['post_type_preset'] ) ? $buddyforms_custom_post_type['post_type_preset'] : ''; ?>"
 		   id="post-type-preset">
 
 
 	<div id="thickbox-content" style="display: none;">
 		<label for="tb_label_plural">Plural Label <span class="required">*</span></label>
 		<input type="text" id="tb_label_plural"
-			   value="<?php echo isset($buddyforms_custom_post_type['label_plural']) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
+			   value="<?php echo isset( $buddyforms_custom_post_type['label_plural'] ) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
 			   placeholder="(e.g. Movies)">
 		<p class="buddyforms-field-description description">Used for the post type admin menu item.</p>
 
 		<label for="tb_label_singular">Singular Label <span class="required">*</span></label>
 		<input type="text" id="tb_label_singular"
-			   value="<?php echo isset($buddyforms_custom_post_type['label_singular']) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
-			    placeholder="(e.g. Movie)">
+			   value="<?php echo isset( $buddyforms_custom_post_type['label_singular'] ) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
+			   placeholder="(e.g. Movie)">
 		<p class="buddyforms-field-description description">Used when a singular label is needed.</p></td>
 
 		<button onclick="saveThickboxContent()">Save</button>
@@ -267,20 +287,18 @@ function buddyforms_custom_post_type_edit_form_after_title($post){
 	<?php
 }
 
-add_action('edit_form_top', 'buddyforms_custom_post_type_edit_form_after_title');
+add_action( 'edit_form_top', 'buddyforms_custom_post_type_edit_form_after_title' );
 
-function buddyforms_edit_form_after_title($post)
-{
-	if ($post->post_type == 'bf-post-types') {
-		buddyforms_post_types_custom_box_html($post);
+function buddyforms_edit_form_after_title( $post ) {
+	if ( $post->post_type == 'bf-post-types' ) {
+		buddyforms_post_types_custom_box_html( $post );
 	}
 }
 
-add_action('edit_form_advanced', 'buddyforms_edit_form_after_title');
+add_action( 'edit_form_advanced', 'buddyforms_edit_form_after_title' );
 
-function buddyforms_custom_post_type_save_postdata($post_id)
-{
-	if (array_key_exists('buddyforms_custom_post_type', $_POST)) {
+function buddyforms_custom_post_type_save_postdata( $post_id ) {
+	if ( array_key_exists( 'buddyforms_custom_post_type', $_POST ) ) {
 		update_post_meta(
 				$post_id,
 				'_buddyforms_custom_post_type',
@@ -289,12 +307,15 @@ function buddyforms_custom_post_type_save_postdata($post_id)
 	}
 }
 
-add_action('save_post', 'buddyforms_custom_post_type_save_postdata');
+add_action( 'save_post', 'buddyforms_custom_post_type_save_postdata' );
 
 
-function buddyforms_post_types_custom_box_html($post)
-{
-	$buddyforms_custom_post_type = get_post_meta($post->ID, '_buddyforms_custom_post_type', true);
+function buddyforms_post_types_custom_box_html( $post ) {
+	$buddyforms_custom_post_type = get_post_meta( $post->ID, '_buddyforms_custom_post_type', true );
+
+	echo '<pre>';
+	print_r( $buddyforms_custom_post_type );
+	echo '</pre>';
 	?>
 
 	<div id="post-type-settings">
@@ -323,7 +344,7 @@ function buddyforms_post_types_custom_box_html($post)
 
 								<?php
 								/** This filter is documented in wp-admin/edit-tag-form.php */
-								$editable_slug = apply_filters('editable_slug', $post->post_name, $post);
+								$editable_slug = apply_filters( 'editable_slug', $post->post_name, $post );
 								?>
 								<label for="name">Post Type Slug</label>
 								<p id="slugchanged" class="hidemessage">Slug has changed<span
@@ -332,7 +353,7 @@ function buddyforms_post_types_custom_box_html($post)
 											class="dashicons dashicons-warning"></span></p>
 							</th>
 							<td><input type="text" id="post_name" name="post_name"
-									   value="<?php echo esc_attr($editable_slug); ?>"
+									   value="<?php echo esc_attr( $editable_slug ); ?>"
 									   maxlength="20"><br>
 								<p class="buddyforms-field-description description">The post type name/slug. Used for
 									various queries for post type content.</p>
@@ -348,9 +369,10 @@ function buddyforms_post_types_custom_box_html($post)
 							</td>
 						</tr>
 						<tr>
-							<th scope="row"><label for="label_plural">Plural Label</label> <span class="required">*</span></th>
+							<th scope="row"><label for="label_plural">Plural Label</label> <span
+										class="required">*</span></th>
 							<td><input type="text" id="label_plural" name="buddyforms_custom_post_type[label_plural]"
-									   value="<?php echo isset($buddyforms_custom_post_type['label_plural']) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
+									   value="<?php echo isset( $buddyforms_custom_post_type['label_plural'] ) ? $buddyforms_custom_post_type['label_plural'] : ''; ?>"
 									   aria-required="true"
 									   required="true" placeholder="(e.g. Movies)"><span class="visuallyhidden">(e.g. Movies)</span><br>
 								<p class="buddyforms-field-description description">Used for the post type admin menu
@@ -361,7 +383,7 @@ function buddyforms_post_types_custom_box_html($post)
 										class="required">*</span></th>
 							<td><input type="text" id="label_singular"
 									   name="buddyforms_custom_post_type[label_singular]"
-									   value="<?php echo isset($buddyforms_custom_post_type['label_singular']) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
+									   value="<?php echo isset( $buddyforms_custom_post_type['label_singular'] ) ? $buddyforms_custom_post_type['label_singular'] : ''; ?>"
 									   aria-required="true" required="true" placeholder="(e.g. Movie)"><span
 										class="visuallyhidden">(e.g. Movie)</span><br>
 								<p class="buddyforms-field-description description">Used when a singular label is
@@ -380,50 +402,78 @@ function buddyforms_post_types_custom_box_html($post)
 							<td>
 								<fieldset tabindex="0">
 									<legend class="screen-reader-text">Post type options</legend>
-									<input type="checkbox" id="title" name="cpt_supports[]" value="title"
-										   checked="checked"><label for="title">Title</label><br><input type="checkbox"
-																										id="editor"
-																										name="cpt_supports[]"
-																										value="editor"
-																										checked="checked"><label
-											for="editor">Editor</label><br><input type="checkbox" id="thumbnail"
-																				  name="cpt_supports[]"
-																				  value="thumbnail"
-																				  checked="checked"><label
-											for="thumbnail">Featured Image</label><br><input type="checkbox"
-																							 id="excerpts"
-																							 name="cpt_supports[]"
-																							 value="excerpt"><label
+									<input type="checkbox" id="title"
+										   name="buddyforms_custom_post_type[supports][title]" value="title"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['title'] ) ? 'checked' : ''; ?>>
+									<label for="title">Title</label><br>
+									<input type="checkbox" id="editor"
+																			   name="buddyforms_custom_post_type[supports][editor]"
+																			   value="editor"
+											<?php echo isset( $buddyforms_custom_post_type['supports']['editor'] ) ? 'checked' : ''; ?>>
+									<label for="editor">Editor</label><br>
+									<input type="checkbox" id="thumbnail"
+																				 name="buddyforms_custom_post_type[supports][thumbnail]"
+																				 value="thumbnail"
+											<?php echo isset( $buddyforms_custom_post_type['supports']['thumbnail'] ) ? 'checked' : ''; ?>>
+									<label for="thumbnail">Featured Image</label><br>
+									<input type="checkbox"
+																							id="excerpts"
+																							name="buddyforms_custom_post_type[supports][excerpts]"
+																							value="excerpt"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['excerpts'] ) ? 'checked' : ''; ?>>
+									<label
 											for="excerpts">Excerpt</label><br><input type="checkbox" id="trackbacks"
-																					 name="cpt_supports[]"
-																					 value="trackbacks"><label
-											for="trackbacks">Trackbacks</label><br><input type="checkbox"
+																					 name="buddyforms_custom_post_type[supports][trackbacks]"
+																					 value="trackbacks"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['trackbacks'] ) ? 'checked' : ''; ?>>
+									<label
+											for="trackbacks">Trackbacks</label><br>
+									<input type="checkbox"
 																						  id="custom-fields"
-																						  name="cpt_supports[]"
-																						  value="custom-fields"><label
-											for="custom-fields">Custom Fields</label><br><input type="checkbox"
+																						  name="buddyforms_custom_post_type[supports][custom-fields]"
+																						  value="custom-fields"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['custom-fields'] ) ? 'checked' : ''; ?>>
+									<label
+											for="custom-fields">Custom Fields</label><br>
+									<input type="checkbox"
 																								id="comments"
-																								name="cpt_supports[]"
-																								value="comments"><label
-											for="comments">Comments</label><br><input type="checkbox" id="revisions"
-																					  name="cpt_supports[]"
-																					  value="revisions"><label
-											for="revisions">Revisions</label><br><input type="checkbox" id="author"
-																						name="cpt_supports[]"
-																						value="author"><label
-											for="author">Author</label><br><input type="checkbox" id="page-attributes"
-																				  name="cpt_supports[]"
-																				  value="page-attributes"><label
-											for="page-attributes">Page Attributes</label><br><input type="checkbox"
+																								name="buddyforms_custom_post_type[supports][comments]"
+																								value="comments"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['comments'] ) ? 'checked' : ''; ?>>
+									<label
+											for="comments">Comments</label><br>
+									<input type="checkbox" id="revisions"
+																					  name="buddyforms_custom_post_type[supports][revisions]"
+																					  value="revisions"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['revisions'] ) ? 'checked' : ''; ?>>
+									<label
+											for="revisions">Revisions</label><br>
+									<input type="checkbox" id="author"
+																						name="buddyforms_custom_post_type[supports]['author']"
+																						value="author"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['author'] ) ? 'checked' : ''; ?>>
+									<label
+											for="author">Author</label><br>
+									<input type="checkbox" id="page-attributes"
+																				  name="buddyforms_custom_post_type[supports][page-attributes]"
+																				  value="page-attributes"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['page-attributes'] ) ? 'checked' : ''; ?>>
+									<label
+											for="page-attributes">Page Attributes</label><br>
+									<input type="checkbox"
 																									id="post-formats"
-																									name="cpt_supports[]"
-																									value="post-formats"><label
-											for="post-formats">Post Formats</label><br><input type="checkbox" id="none"
-																							  name="cpt_supports[]"
-																							  value="none"><label
+																									name="buddyforms_custom_post_type[supports][post-formats]"
+																									value="post-formats"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['post-formats'] ) ? 'checked' : ''; ?>>
+									<label
+											for="post-formats">Post Formats</label><br>
+									<input type="checkbox" id="none"
+																							  name="buddyforms_custom_post_type[supports]['none']"
+																							  value="none"
+											<?php echo isset( $buddyforms_custom_post_type['label_singular']['none'] ) ? 'checked' : ''; ?>>
+									<label
 											for="none">None</label><br></fieldset>
-							</td>
-						</tr>
+							</td></tr>
 						<tr>
 							<th scope="row"><label for="custom_supports">Custom "Supports"</label>
 								<p>Use this input to register custom "supports" values, separated by commas. Learn about
@@ -830,7 +880,7 @@ function buddyforms_post_types_custom_box_html($post)
 						<tr>
 							<th scope="row"><label for="menu_name">Menu Name</label></th>
 							<td><input type="text" id="menu_name" name="buddyforms_custom_post_type[menu_name]"
-									   value="<?php echo isset($buddyforms_custom_post_type['menu_name']) ? $buddyforms_custom_post_type['menu_name'] : ''; ?>"
+									   value="<?php echo isset( $buddyforms_custom_post_type['menu_name'] ) ? $buddyforms_custom_post_type['menu_name'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. My Movies)" data-label="My item"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. My Movies)</span><br>
 								<p class="buddyforms-field-description description">Custom admin menu name for your
@@ -839,7 +889,7 @@ function buddyforms_post_types_custom_box_html($post)
 						<tr>
 							<th scope="row"><label for="all_items">All Items</label></th>
 							<td><input type="text" id="all_items" name="buddyforms_custom_post_type[label_all_items]"
-									   value="<?php echo isset($buddyforms_custom_post_type['label_add_new']) ? $buddyforms_custom_post_type['label_all_items'] : ''; ?>"
+									   value="<?php echo isset( $buddyforms_custom_post_type['label_add_new'] ) ? $buddyforms_custom_post_type['label_all_items'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. All Movies)" data-label="All item"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. All Movies)</span><br>
 								<p class="buddyforms-field-description description">Used in the post type admin
@@ -848,7 +898,7 @@ function buddyforms_post_types_custom_box_html($post)
 						<tr>
 							<th scope="row"><label for="add_new">Add New</label></th>
 							<td><input type="text" id="add_new" name="buddyforms_custom_post_type[add_new]"
-									   value="<?php echo isset($buddyforms_custom_post_type['label_add_new']) ? $buddyforms_custom_post_type['label_add_new'] : ''; ?>"
+									   value="<?php echo isset( $buddyforms_custom_post_type['label_add_new'] ) ? $buddyforms_custom_post_type['label_add_new'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Add New)" data-label="Add new"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. Add New)</span><br>
 								<p class="buddyforms-field-description description">Used in the post type admin
@@ -1130,23 +1180,20 @@ function buddyforms_post_types_custom_box_html($post)
 			</div>
 		</div>
 	</div>
-	<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Save">
 	<?php
+	submit_button();
 }
 
 
-class Michael_Ecklunds_Admin_Customizer
-{
-	function __construct()
-	{
-		add_action('in_admin_header', array($this, 'in_admin_header'));
+class Michael_Ecklunds_Admin_Customizer {
+	function __construct() {
+		add_action( 'in_admin_header', array( $this, 'in_admin_header' ) );
 	}
 
-	function in_admin_header()
-	{
+	function in_admin_header() {
 		global $wp_meta_boxes;
 		//unset($wp_meta_boxes['bf-post-types']['side']['core']['submitdiv']);
-		unset($wp_meta_boxes['bf-post-types']['normal']['core']['slugdiv']);
+		//unset($wp_meta_boxes['bf-post-types']['normal']['core']['slugdiv']);
 	}
 }
 
