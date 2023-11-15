@@ -652,7 +652,15 @@ function buddyforms_post_types_custom_box_html( $post ) {
 								<p class="buddyforms-field-description description">(buddyforms default: false) Whether
 									to delete posts of this type when deleting a user.</p></td>
 						</tr>
-
+						<tr>
+							<th scope="row"><label for="can_export">Can Export</label></th>
+							<td><select id="can_export" name="buddyforms_custom_post_type[can_export]">
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['can_export'] ) && $buddyforms_custom_post_type['can_export'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['can_export'] ) && $buddyforms_custom_post_type['can_export'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
+								</select>
+								<p class="buddyforms-field-description description">(default: false) Can this post_type
+									be exported.</p></td>
+						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -749,22 +757,22 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="show_in_rest">Show in REST API</label></th>
 							<td><select id="show_in_rest" name="buddyforms_custom_post_type[show_in_rest]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['show_in_rest'] ) && $buddyforms_custom_post_type['show_in_rest'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['show_in_rest'] ) && $buddyforms_custom_post_type['show_in_rest'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(Custom Post Type UI default: true)
 									Whether or not to show this post type data in the WP REST API.</p></td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="rest_base">REST API base slug</label></th>
-							<td><input type="text" id="rest_base" name="buddyforms_custom_post_type[rest_base]" value=""
+							<td><input type="text" id="rest_base" name="buddyforms_custom_post_type[rest_base]" value="<?php echo isset( $buddyforms_custom_post_type['rest_base'] ) ? $buddyforms_custom_post_type['rest_base'] : ''; ?>"
 									   aria-required="false" placeholder="Slug to use in REST API URLs."><span
 										class="visuallyhidden">Slug to use in REST API URLs.</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="rest_controller_class">REST API controller class</label></th>
 							<td><input type="text" id="rest_controller_class"
-									   name="buddyforms_custom_post_type[rest_controller_class]" value=""
+									   name="buddyforms_custom_post_type[rest_controller_class]" value="<?php echo isset( $buddyforms_custom_post_type['rest_controller_class'] ) ? $buddyforms_custom_post_type['rest_controller_class'] : ''; ?>"
 									   aria-required="false"
 									   placeholder="(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller."><span
 										class="visuallyhidden">(default: WP_REST_Posts_Controller) Custom controller to use instead of WP_REST_Posts_Controller.</span>
@@ -773,7 +781,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="rest_namespace">REST API namespace</label></th>
 							<td><input type="text" id="rest_namespace"
-									   name="buddyforms_custom_post_type[rest_namespace]" value="" aria-required="false"
+									   name="buddyforms_custom_post_type[rest_namespace]" value="<?php echo isset( $buddyforms_custom_post_type['rest_namespace'] ) ? $buddyforms_custom_post_type['rest_namespace'] : ''; ?>" aria-required="false"
 									   placeholder="(default: wp/v2) To change the namespace URL of REST API route."><span
 										class="visuallyhidden">(default: wp/v2) To change the namespace URL of REST API route.</span>
 							</td>
@@ -800,21 +808,11 @@ function buddyforms_post_types_custom_box_html( $post ) {
 				<div class="main">
 					<table class="form-table buddyforms-table">
 						<tbody>
-
-						<tr>
-							<th scope="row"><label for="can_export">Can Export</label></th>
-							<td><select id="can_export" name="buddyforms_custom_post_type[can_export]">
-									<option value="0" selected="selected">False</option>
-									<option value="1">True</option>
-								</select>
-								<p class="buddyforms-field-description description">(default: false) Can this post_type
-									be exported.</p></td>
-						</tr>
 						<tr>
 							<th scope="row"><label for="rewrite">Rewrite</label></th>
 							<td><select id="rewrite" name="buddyforms_custom_post_type[rewrite]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['rewrite'] ) && $buddyforms_custom_post_type['rewrite'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['rewrite'] ) && $buddyforms_custom_post_type['rewrite'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Whether or not
 									WordPress should use rewrites for this post type.</p></td>
@@ -822,7 +820,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="rewrite_slug">Custom Rewrite Slug</label></th>
 							<td><input type="text" id="rewrite_slug" name="buddyforms_custom_post_type[rewrite_slug]"
-									   value="" aria-required="false" placeholder="(default: post type slug)"><span
+									   value="<?php echo isset( $buddyforms_custom_post_type['rewrite_slug'] ) ? $buddyforms_custom_post_type['rewrite_slug'] : ''; ?>" aria-required="false" placeholder="(default: post type slug)"><span
 										class="visuallyhidden">(default: post type slug)</span><br>
 								<p class="buddyforms-field-description description">Custom post type slug to use instead
 									of the default.</p></td>
@@ -830,8 +828,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="rewrite_withfront">With Front</label></th>
 							<td><select id="rewrite_withfront" name="buddyforms_custom_post_type[rewrite_withfront]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['rewrite_withfront'] ) && $buddyforms_custom_post_type['rewrite_withfront'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['rewrite_withfront'] ) && $buddyforms_custom_post_type['rewrite_withfront'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Should the permalink
 									structure be prepended with the front base. (example: if your permalink structure is
@@ -840,8 +838,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="query_var">Query Var</label></th>
 							<td><select id="query_var" name="buddyforms_custom_post_type[query_var]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['query_var'] ) && $buddyforms_custom_post_type['query_var'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['query_var'] ) && $buddyforms_custom_post_type['query_var'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Sets the query_var
 									key for this post type.</p></td>
@@ -849,7 +847,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="query_var_slug">Custom Query Var Slug</label></th>
 							<td><input type="text" id="query_var_slug"
-									   name="buddyforms_custom_post_type[query_var_slug]" value="" aria-required="false"
+									   name="buddyforms_custom_post_type[query_var_slug]" value="<?php echo isset( $buddyforms_custom_post_type['query_var_slug'] ) ? $buddyforms_custom_post_type['query_var_slug'] : ''; ?>" aria-required="false"
 									   placeholder="(default: post type slug) Query var needs to be true to use."><span
 										class="visuallyhidden">(default: post type slug) Query var needs to be true to use.</span><br>
 								<p class="buddyforms-field-description description">Custom query var slug to use instead
@@ -858,7 +856,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="register_meta_box_cb">Metabox callback</label></th>
 							<td><input type="text" id="register_meta_box_cb"
-									   name="buddyforms_custom_post_type[register_meta_box_cb]" value=""
+									   name="buddyforms_custom_post_type[register_meta_box_cb]" value="<?php echo isset( $buddyforms_custom_post_type['register_meta_box_cb'] ) ? $buddyforms_custom_post_type['register_meta_box_cb'] : ''; ?>"
 									   aria-required="false"><br>
 								<p class="buddyforms-field-description description">Provide a callback function that
 									sets up the meta boxes for the edit form. Do `remove_meta_box()` and
@@ -888,15 +886,15 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tbody>
 						<tr>
 							<th scope="row"><label for="description">Post Type Description</label></th>
-							<td><textarea id="description" name="buddyforms_custom_post_type[description]" rows="4"
-										  cols="40"></textarea><br>
+							<td><textarea id="description" name="buddyforms_custom_post_type[labels][description]" rows="4"
+										  cols="40"><?php echo isset( $buddyforms_custom_post_type['labels']['description'] ) ? $buddyforms_custom_post_type['labels']['description'] : ''; ?></textarea><br>
 								<p class="buddyforms-field-description description">Perhaps describe what your custom
 									post type is used for?</p></td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="menu_name">Menu Name</label></th>
-							<td><input type="text" id="menu_name" name="buddyforms_custom_post_type[menu_name]"
-									   value="<?php echo isset( $buddyforms_custom_post_type['menu_name'] ) ? $buddyforms_custom_post_type['menu_name'] : ''; ?>"
+							<td><input type="text" id="menu_name" name="buddyforms_custom_post_type[labels][menu_name]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['menu_name'] ) ? $buddyforms_custom_post_type['labels']['menu_name'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. My Movies)" data-label="My item"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. My Movies)</span><br>
 								<p class="buddyforms-field-description description">Custom admin menu name for your
@@ -904,8 +902,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="all_items">All Items</label></th>
-							<td><input type="text" id="all_items" name="buddyforms_custom_post_type[label_all_items]"
-									   value="<?php echo isset( $buddyforms_custom_post_type['label_add_new'] ) ? $buddyforms_custom_post_type['label_all_items'] : ''; ?>"
+							<td><input type="text" id="all_items" name="buddyforms_custom_post_type[labels][all_items]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['all_items'] ) ? $buddyforms_custom_post_type['labels']['all_items'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. All Movies)" data-label="All item"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. All Movies)</span><br>
 								<p class="buddyforms-field-description description">Used in the post type admin
@@ -913,8 +911,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="add_new">Add New</label></th>
-							<td><input type="text" id="add_new" name="buddyforms_custom_post_type[add_new]"
-									   value="<?php echo isset( $buddyforms_custom_post_type['label_add_new'] ) ? $buddyforms_custom_post_type['label_add_new'] : ''; ?>"
+							<td><input type="text" id="add_new" name="buddyforms_custom_post_type[labels][add_new]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['add_new'] ) ? $buddyforms_custom_post_type['labels']['add_new'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Add New)" data-label="Add new"
 									   data-plurality="plural"><span class="visuallyhidden">(e.g. Add New)</span><br>
 								<p class="buddyforms-field-description description">Used in the post type admin
@@ -923,8 +921,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="add_new_item">Add New Item</label></th>
 							<td>
-								<input type="text" id="add_new_item" name="buddyforms_custom_post_type[add_new_item]"
-									   value=""
+								<input type="text" id="add_new_item" name="buddyforms_custom_post_type[labels][add_new_item]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['add_new_item'] ) ? $buddyforms_custom_post_type['labels']['add_new_item'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Add New Movie)"
 									   data-label="Add new item" data-plurality="singular"><span class="visuallyhidden">(e.g. Add New Movie)</span><br>
 								<p class="buddyforms-field-description description">Used at the top of the post editor
@@ -932,7 +930,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="edit_item">Edit Item</label></th>
-							<td><input type="text" id="edit_item" name="buddyforms_custom_post_type[edit_item]" value=""
+							<td><input type="text" id="edit_item" name="buddyforms_custom_post_type[labels][edit_item]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['edit_item'] ) ? $buddyforms_custom_post_type['labels']['edit_item'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Edit Movie)" data-label="Edit item"
 									   data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Edit Movie)</span><br>
@@ -941,7 +939,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="new_item">New Item</label></th>
-							<td><input type="text" id="new_item" name="buddyforms_custom_post_type[new_item]" value=""
+							<td><input type="text" id="new_item" name="buddyforms_custom_post_type[labels][new_item]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['new_item'] ) ? $buddyforms_custom_post_type['labels']['new_item'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. New Movie)" data-label="New item"
 									   data-plurality="singular"><span
 										class="visuallyhidden">(e.g. New Movie)</span><br>
@@ -950,7 +948,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="view_item">View Item</label></th>
-							<td><input type="text" id="view_item" name="buddyforms_custom_post_type[view_item]" value=""
+							<td><input type="text" id="view_item" name="buddyforms_custom_post_type[labels][view_item]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['view_item'] ) ? $buddyforms_custom_post_type['labels']['view_item'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. View Movie)" data-label="View item"
 									   data-plurality="singular"><span
 										class="visuallyhidden">(e.g. View Movie)</span><br>
@@ -959,8 +957,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="view_items">View Items</label></th>
-							<td><input type="text" id="view_items" name="buddyforms_custom_post_type[view_items]"
-									   value=""
+							<td><input type="text" id="view_items" name="buddyforms_custom_post_type[labels][view_items]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['view_items'] ) ? $buddyforms_custom_post_type['labels']['view_items'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. View Movies)" data-label="View item"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. View Movies)</span><br>
@@ -969,8 +967,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="search_items">Search Item</label></th>
-							<td><input type="text" id="search_items" name="buddyforms_custom_post_type[search_items]"
-									   value=""
+							<td><input type="text" id="search_items" name="buddyforms_custom_post_type[labels][search_items]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['search_items'] ) ? $buddyforms_custom_post_type['labels']['search_items'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Search Movies)" data-label="Search item"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Search Movies)</span><br>
@@ -979,7 +977,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="not_found">Not Found</label></th>
-							<td><input type="text" id="not_found" name="buddyforms_custom_post_type[not_found]" value=""
+							<td><input type="text" id="not_found" name="buddyforms_custom_post_type[labels][not_found]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['not_found'] ) ? $buddyforms_custom_post_type['labels']['not_found'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. No Movies found)"
 									   data-label="No item found" data-plurality="plural"><span class="visuallyhidden">(e.g. No Movies found)</span><br>
 								<p class="buddyforms-field-description description">Used when there are no posts to
@@ -988,8 +986,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="not_found_in_trash">Not Found in Trash</label></th>
 							<td><input type="text" id="not_found_in_trash"
-									   name="buddyforms_custom_post_type[not_found_in_trash]"
-									   value="" aria-required="false" placeholder="(e.g. No Movies found in Trash)"
+									   name="buddyforms_custom_post_type[labels][not_found_in_trash]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['not_found_in_trash'] ) ? $buddyforms_custom_post_type['labels']['not_found_in_trash'] : ''; ?>" aria-required="false" placeholder="(e.g. No Movies found in Trash)"
 									   data-label="No item found in trash" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. No Movies found in Trash)</span><br>
 								<p class="buddyforms-field-description description">Used when there are no posts to
@@ -997,7 +995,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="parent">Parent</label></th>
-							<td><input type="text" id="parent" name="buddyforms_custom_post_type[parent]" value=""
+							<td><input type="text" id="parent" name="buddyforms_custom_post_type[labels][parent]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['parent'] ) ? $buddyforms_custom_post_type['labels']['parent'] : ''; ?>"
 									   aria-required="false"
 									   placeholder="(e.g. Parent Movie:)" data-label="Parent item:"
 									   data-plurality="singular"><span
@@ -1008,7 +1006,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="featured_image">Featured Image</label></th>
 							<td><input type="text" id="featured_image"
-									   name="buddyforms_custom_post_type[featured_image]" value=""
+									   name="buddyforms_custom_post_type[labels][featured_image]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['featured_image'] ) ? $buddyforms_custom_post_type['labels']['featured_image'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Featured image for this movie)"
 									   data-label="Featured image for this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Featured image for this movie)</span><br>
@@ -1018,8 +1016,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="set_featured_image">Set Featured Image</label></th>
 							<td><input type="text" id="set_featured_image"
-									   name="buddyforms_custom_post_type[set_featured_image]"
-									   value="" aria-required="false"
+									   name="buddyforms_custom_post_type[labels][set_featured_image]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['set_featured_image'] ) ? $buddyforms_custom_post_type['labels']['set_featured_image'] : ''; ?>" aria-required="false"
 									   placeholder="(e.g. Set featured image for this movie)"
 									   data-label="Set featured image for this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Set featured image for this movie)</span><br>
@@ -1029,8 +1027,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="remove_featured_image">Remove Featured Image</label></th>
 							<td><input type="text" id="remove_featured_image"
-									   name="buddyforms_custom_post_type[remove_featured_image]"
-									   value="" aria-required="false"
+									   name="buddyforms_custom_post_type[labels][remove_featured_image]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['remove_featured_image'] ) ? $buddyforms_custom_post_type['labels']['remove_featured_image'] : ''; ?>" aria-required="false"
 									   placeholder="(e.g. Remove featured image for this movie)"
 									   data-label="Remove featured image for this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Remove featured image for this movie)</span><br>
@@ -1040,8 +1038,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="use_featured_image">Use Featured Image</label></th>
 							<td><input type="text" id="use_featured_image"
-									   name="buddyforms_custom_post_type[use_featured_image]"
-									   value="" aria-required="false"
+									   name="buddyforms_custom_post_type[labels][use_featured_image]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['use_featured_image'] ) ? $buddyforms_custom_post_type['labels']['use_featured_image'] : ''; ?>" aria-required="false"
 									   placeholder="(e.g. Use as featured image for this movie)"
 									   data-label="Use as featured image for this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Use as featured image for this movie)</span><br>
@@ -1050,7 +1048,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="archives">Archives</label></th>
-							<td><input type="text" id="archives" name="buddyforms_custom_post_type[archives]" value=""
+							<td><input type="text" id="archives" name="buddyforms_custom_post_type[labels][archives]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['archives'] ) ? $buddyforms_custom_post_type['labels']['archives'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movie archives)"
 									   data-label="item archives" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie archives)</span><br>
@@ -1060,7 +1058,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="insert_into_item">Insert into item</label></th>
 							<td><input type="text" id="insert_into_item"
-									   name="buddyforms_custom_post_type[insert_into_item]" value=""
+									   name="buddyforms_custom_post_type[labels][insert_into_item]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['insert_into_item'] ) ? $buddyforms_custom_post_type['labels']['insert_into_item'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Insert into movie)"
 									   data-label="Insert into item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Insert into movie)</span><br>
@@ -1070,8 +1068,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="uploaded_to_this_item">Uploaded to this Item</label></th>
 							<td><input type="text" id="uploaded_to_this_item"
-									   name="buddyforms_custom_post_type[uploaded_to_this_item]"
-									   value="" aria-required="false" placeholder="(e.g. Uploaded to this movie)"
+									   name="buddyforms_custom_post_type[labels][uploaded_to_this_item]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['uploaded_to_this_item'] ) ? $buddyforms_custom_post_type['labels']['uploaded_to_this_item'] : ''; ?>" aria-required="false" placeholder="(e.g. Uploaded to this movie)"
 									   data-label="Upload to this item" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Uploaded to this movie)</span><br>
 								<p class="buddyforms-field-description description">Used as the "Uploaded to this post"
@@ -1080,7 +1078,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="filter_items_list">Filter Items List</label></th>
 							<td><input type="text" id="filter_items_list"
-									   name="buddyforms_custom_post_type[filter_items_list]" value=""
+									   name="buddyforms_custom_post_type[labels][filter_items_list]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['filter_items_list'] ) ? $buddyforms_custom_post_type['labels']['filter_items_list'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Filter movies list)"
 									   data-label="Filter item list" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Filter movies list)</span><br>
@@ -1090,8 +1088,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="items_list_navigation">Items List Navigation</label></th>
 							<td><input type="text" id="items_list_navigation"
-									   name="buddyforms_custom_post_type[items_list_navigation]"
-									   value="" aria-required="false" placeholder="(e.g. Movies list navigation)"
+									   name="buddyforms_custom_post_type[labels][items_list_navigation]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['items_list_navigation'] ) ? $buddyforms_custom_post_type['labels']['items_list_navigation'] : ''; ?>" aria-required="false" placeholder="(e.g. Movies list navigation)"
 									   data-label="item list navigation" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies list navigation)</span><br>
 								<p class="buddyforms-field-description description">Screen reader text for the
@@ -1099,8 +1097,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="items_list">Items List</label></th>
-							<td><input type="text" id="items_list" name="buddyforms_custom_post_type[items_list]"
-									   value=""
+							<td><input type="text" id="items_list" name="buddyforms_custom_post_type[labels][items_list]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['items_list'] ) ? $buddyforms_custom_post_type['labels']['items_list'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movies list)" data-label="item list"
 									   data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies list)</span><br>
@@ -1109,8 +1107,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="attributes">Attributes</label></th>
-							<td><input type="text" id="attributes" name="buddyforms_custom_post_type[attributes]"
-									   value=""
+							<td><input type="text" id="attributes" name="buddyforms_custom_post_type[labels][attributes]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['attributes'] ) ? $buddyforms_custom_post_type['labels']['attributes'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movies Attributes)"
 									   data-label="item attributes" data-plurality="plural"><span
 										class="visuallyhidden">(e.g. Movies Attributes)</span><br>
@@ -1120,7 +1118,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="name_admin_bar">"New" menu in admin bar</label></th>
 							<td><input type="text" id="name_admin_bar"
-									   name="buddyforms_custom_post_type[name_admin_bar]" value=""
+									   name="buddyforms_custom_post_type[labels][name_admin_bar]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['name_admin_bar'] ) ? $buddyforms_custom_post_type['labels']['name_admin_bar'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movie)" data-label="item"
 									   data-plurality="singular"><span class="visuallyhidden">(e.g. Movie)</span><br>
 								<p class="buddyforms-field-description description">Used in New in Admin menu bar.
@@ -1129,7 +1127,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="item_published">Item Published</label></th>
 							<td><input type="text" id="item_published"
-									   name="buddyforms_custom_post_type[item_published]" value=""
+									   name="buddyforms_custom_post_type[labels][item_published]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['item_published'] ) ? $buddyforms_custom_post_type['labels']['item_published'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movie published)"
 									   data-label="item published" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie published)</span><br>
@@ -1139,7 +1137,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="item_published_privately">Item Published Privately</label></th>
 							<td><input type="text" id="item_published_privately"
-									   name="buddyforms_custom_post_type[item_published_privately]" value=""
+									   name="buddyforms_custom_post_type[labels][item_published_privately]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['item_published_privately'] ) ? $buddyforms_custom_post_type['labels']['item_published_privately'] : ''; ?>"
 									   aria-required="false"
 									   placeholder="(e.g. Movie published privately.)"
 									   data-label="item published privately." data-plurality="singular"><span
@@ -1151,8 +1149,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="item_reverted_to_draft">Item Reverted To Draft</label></th>
 							<td><input type="text" id="item_reverted_to_draft"
-									   name="buddyforms_custom_post_type[item_reverted_to_draft]"
-									   value="" aria-required="false" placeholder="(e.g. Movie reverted to draft)"
+									   name="buddyforms_custom_post_type[labels][item_reverted_to_draft]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['item_reverted_to_draft'] ) ? $buddyforms_custom_post_type['labels']['item_reverted_to_draft'] : ''; ?>" aria-required="false" placeholder="(e.g. Movie reverted to draft)"
 									   data-label="item reverted to draft." data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie reverted to draft)</span><br>
 								<p class="buddyforms-field-description description">Used in the editor notice after
@@ -1162,7 +1160,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="item_scheduled">Item Scheduled</label></th>
 							<td><input type="text" id="item_scheduled"
-									   name="buddyforms_custom_post_type[item_scheduled]" value=""
+									   name="buddyforms_custom_post_type[labels][item_scheduled]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['item_scheduled'] ) ? $buddyforms_custom_post_type['labels']['item_scheduled'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movie scheduled)"
 									   data-label="item scheduled" data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie scheduled)</span><br>
@@ -1172,8 +1170,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						</tr>
 						<tr>
 							<th scope="row"><label for="item_updated">Item Updated</label></th>
-							<td><input type="text" id="item_updated" name="buddyforms_custom_post_type[item_updated]"
-									   value=""
+							<td><input type="text" id="item_updated" name="buddyforms_custom_post_type[labels][item_updated]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['labels']['item_updated'] ) ? $buddyforms_custom_post_type['labels']['item_updated'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Movie updated)"
 									   data-label="item updated." data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Movie updated)</span><br>
@@ -1183,7 +1181,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="enter_title_here">Add Title</label></th>
 							<td><input type="text" id="enter_title_here"
-									   name="buddyforms_custom_post_type[enter_title_here]" value=""
+									   name="buddyforms_custom_post_type[labels][enter_title_here]" value="<?php echo isset( $buddyforms_custom_post_type['labels']['enter_title_here'] ) ? $buddyforms_custom_post_type['labels']['enter_title_here'] : ''; ?>"
 									   aria-required="false" placeholder="(e.g. Add Movie)" data-label="Add item"
 									   data-plurality="singular"><span
 										class="visuallyhidden">(e.g. Add Movie)</span><br>
@@ -1197,7 +1195,6 @@ function buddyforms_post_types_custom_box_html( $post ) {
 		</div>
 	</div>
 	<?php
-	submit_button();
 }
 
 
