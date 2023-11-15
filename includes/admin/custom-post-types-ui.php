@@ -300,9 +300,9 @@ add_action( 'edit_form_advanced', 'buddyforms_edit_form_after_title' );
 function buddyforms_custom_post_type_save_postdata( $post_id ) {
 	if ( array_key_exists( 'buddyforms_custom_post_type', $_POST ) ) {
 		update_post_meta(
-				$post_id,
-				'_buddyforms_custom_post_type',
-				$_POST['buddyforms_custom_post_type']
+			$post_id,
+			'_buddyforms_custom_post_type',
+			$_POST['buddyforms_custom_post_type']
 		);
 	}
 }
@@ -404,84 +404,87 @@ function buddyforms_post_types_custom_box_html( $post ) {
 									<legend class="screen-reader-text">Post type options</legend>
 									<input type="checkbox" id="title"
 										   name="buddyforms_custom_post_type[supports][title]" value="title"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['title'] ) ? 'checked' : ''; ?>>
+										<?php echo isset( $buddyforms_custom_post_type['supports']['title'] ) ? 'checked' : ''; ?>>
 									<label for="title">Title</label><br>
 									<input type="checkbox" id="editor"
-																			   name="buddyforms_custom_post_type[supports][editor]"
-																			   value="editor"
-											<?php echo isset( $buddyforms_custom_post_type['supports']['editor'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][editor]"
+										   value="editor"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['editor'] ) ? 'checked' : ''; ?>>
 									<label for="editor">Editor</label><br>
 									<input type="checkbox" id="thumbnail"
-																				 name="buddyforms_custom_post_type[supports][thumbnail]"
-																				 value="thumbnail"
-											<?php echo isset( $buddyforms_custom_post_type['supports']['thumbnail'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][thumbnail]"
+										   value="thumbnail"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['thumbnail'] ) ? 'checked' : ''; ?>>
 									<label for="thumbnail">Featured Image</label><br>
 									<input type="checkbox"
-																							id="excerpts"
-																							name="buddyforms_custom_post_type[supports][excerpts]"
-																							value="excerpt"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['excerpts'] ) ? 'checked' : ''; ?>>
+										   id="excerpts"
+										   name="buddyforms_custom_post_type[supports][excerpts]"
+										   value="excerpt"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['excerpts'] ) ? 'checked' : ''; ?>>
 									<label
 											for="excerpts">Excerpt</label><br><input type="checkbox" id="trackbacks"
 																					 name="buddyforms_custom_post_type[supports][trackbacks]"
 																					 value="trackbacks"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['trackbacks'] ) ? 'checked' : ''; ?>>
+										<?php echo isset( $buddyforms_custom_post_type['supports']['trackbacks'] ) ? 'checked' : ''; ?>>
 									<label
 											for="trackbacks">Trackbacks</label><br>
 									<input type="checkbox"
-																						  id="custom-fields"
-																						  name="buddyforms_custom_post_type[supports][custom-fields]"
-																						  value="custom-fields"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['custom-fields'] ) ? 'checked' : ''; ?>>
+										   id="custom-fields"
+										   name="buddyforms_custom_post_type[supports][custom-fields]"
+										   value="custom-fields"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['custom-fields'] ) ? 'checked' : ''; ?>>
 									<label
 											for="custom-fields">Custom Fields</label><br>
 									<input type="checkbox"
-																								id="comments"
-																								name="buddyforms_custom_post_type[supports][comments]"
-																								value="comments"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['comments'] ) ? 'checked' : ''; ?>>
+										   id="comments"
+										   name="buddyforms_custom_post_type[supports][comments]"
+										   value="comments"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['comments'] ) ? 'checked' : ''; ?>>
 									<label
 											for="comments">Comments</label><br>
 									<input type="checkbox" id="revisions"
-																					  name="buddyforms_custom_post_type[supports][revisions]"
-																					  value="revisions"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['revisions'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][revisions]"
+										   value="revisions"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['revisions'] ) ? 'checked' : ''; ?>>
 									<label
 											for="revisions">Revisions</label><br>
 									<input type="checkbox" id="author"
-																						name="buddyforms_custom_post_type[supports]['author']"
-																						value="author"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['author'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][author]"
+										   value="author"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['author'] ) ? 'checked' : ''; ?>>
 									<label
 											for="author">Author</label><br>
 									<input type="checkbox" id="page-attributes"
-																				  name="buddyforms_custom_post_type[supports][page-attributes]"
-																				  value="page-attributes"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['page-attributes'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][page-attributes]"
+										   value="page-attributes"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['page-attributes'] ) ? 'checked' : ''; ?>>
 									<label
 											for="page-attributes">Page Attributes</label><br>
 									<input type="checkbox"
-																									id="post-formats"
-																									name="buddyforms_custom_post_type[supports][post-formats]"
-																									value="post-formats"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['post-formats'] ) ? 'checked' : ''; ?>>
+										   id="post-formats"
+										   name="buddyforms_custom_post_type[supports][post-formats]"
+										   value="post-formats"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['post-formats'] ) ? 'checked' : ''; ?>>
 									<label
 											for="post-formats">Post Formats</label><br>
 									<input type="checkbox" id="none"
-																							  name="buddyforms_custom_post_type[supports]['none']"
-																							  value="none"
-											<?php echo isset( $buddyforms_custom_post_type['label_singular']['none'] ) ? 'checked' : ''; ?>>
+										   name="buddyforms_custom_post_type[supports][none]"
+										   value="none"
+										<?php echo isset( $buddyforms_custom_post_type['supports']['none'] ) ? 'checked' : ''; ?>>
 									<label
 											for="none">None</label><br></fieldset>
-							</td></tr>
+							</td>
+						</tr>
 						<tr>
 							<th scope="row"><label for="custom_supports">Custom "Supports"</label>
 								<p>Use this input to register custom "supports" values, separated by commas. Learn about
 									this at <a
 											href="http://docs.pluginize.com/article/28-third-party-support-upon-registration"
 											target="_blank" rel="noopener">Custom "Supports"</a></p></th>
-							<td><input type="text" id="custom_supports"
-									   name="buddyforms_custom_post_type[custom_supports]" value=""
+							<td>
+								<input type="text" id="custom_supports"
+									   name="buddyforms_custom_post_type[custom_supports]"
+									   value="<?php echo isset( $buddyforms_custom_post_type['custom_supports'] ) ? $buddyforms_custom_post_type['custom_supports'] : ''; ?>"
 									   aria-required="false"><br>
 								<p class="buddyforms-field-description description">Provide custom support slugs
 									here.</p></td>
@@ -489,12 +492,26 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row">Taxonomies<p>Add support for available registered taxonomies.</p></th>
 							<td>
-								<fieldset tabindex="0">
-									<legend class="screen-reader-text">Taxonomy options</legend>
-									<input type="checkbox" id="category" name="cpt_addon_taxes[]"
-										   value="category"><label for="category">Categories (WP Core)</label><br><input
-											type="checkbox" id="post_tag" name="cpt_addon_taxes[]"
-											value="post_tag"><label for="post_tag">Tags (WP Core)</label><br></fieldset>
+								<?php
+								$args = array(
+									'public'   => true,
+									'_builtin' => true
+
+								);
+								$output = 'objects'; // or objects
+								$operator = 'and'; // 'and' or 'or'
+								$taxonomies = get_taxonomies( $args, $output, $operator );
+								if ( $taxonomies ) {
+									echo '<fieldset>';
+									foreach ( $taxonomies  as $key => $taxonomy ) {
+										?>
+										<input type="checkbox" <?php echo isset( $buddyforms_custom_post_type['taxonomies'][$taxonomy->name] ) ? 'checked' : ''; ?> id="post_tag" name="buddyforms_custom_post_type[taxonomies][<?php echo $taxonomy->name; ?>]" value="<?php echo $taxonomy->name; ?>">
+										<label for="category"><?php echo $taxonomy->label; ?></label></br>
+										<?php
+									}
+									echo '</fieldset>';
+								}
+								?>
 							</td>
 						</tr>
 						</tbody>
@@ -523,14 +540,14 @@ function buddyforms_post_types_custom_box_html( $post ) {
 							<th scope="row"><label for="has_archive">Has Archive</label>
 								<p>If left blank, the archive slug will default to the post type slug.</p></th>
 							<td><select id="has_archive" name="buddyforms_custom_post_type[has_archive]">
-									<option value="0" selected="selected">False</option>
-									<option value="1">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['has_archive'] ) && $buddyforms_custom_post_type['has_archive'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['has_archive'] ) && $buddyforms_custom_post_type['has_archive'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: false) Whether or not the
 									post type will have a post type archive URL.</p><br><input type="text"
 																							   id="has_archive_string"
 																							   name="buddyforms_custom_post_type[has_archive_string]"
-																							   value=""
+																							   value="<?php echo isset( $buddyforms_custom_post_type['has_archive_string'] ) ? $buddyforms_custom_post_type['has_archive_string'] : ''; ?>"
 																							   aria-required="false"
 																							   placeholder="Slug to be used for archive URL."><span
 										class="visuallyhidden">Slug to be used for archive URL.</span></td>
@@ -539,8 +556,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 							<th scope="row"><label for="exclude_from_search">Exclude From Search</label></th>
 							<td><select id="exclude_from_search"
 										name="buddyforms_custom_post_type[exclude_from_search]">
-									<option value="0" selected="selected">False</option>
-									<option value="1">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['exclude_from_search'] ) && $buddyforms_custom_post_type['exclude_from_search'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['exclude_from_search'] ) && $buddyforms_custom_post_type['exclude_from_search'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: false) Whether or not to
 									exclude posts with this post type from front end search results. This also excludes
@@ -549,8 +566,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="hierarchical">Hierarchical</label></th>
 							<td><select id="hierarchical" name="buddyforms_custom_post_type[hierarchical]">
-									<option value="0" selected="selected">False</option>
-									<option value="1">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['hierarchical'] ) && $buddyforms_custom_post_type['hierarchical'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['hierarchical'] ) && $buddyforms_custom_post_type['hierarchical'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: false) Whether or not the
 									post type can have parent-child relationships. At least one published content item
@@ -582,7 +599,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="capability_type">Capability Type</label></th>
 							<td><input type="text" id="capability_type"
-									   name="buddyforms_custom_post_type[capability_type]" value="post"
+									   name="buddyforms_custom_post_type[capability_type]" value="<?php echo isset( $buddyforms_custom_post_type['capability_type'] ) ? $buddyforms_custom_post_type['capability_type'] : 'post'; ?>"
 									   aria-required="false"><br>
 								<p class="buddyforms-field-description description">The post type to use for checking
 									read, edit, and delete capabilities. A comma-separated second value can be used for
@@ -591,8 +608,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="public">Public</label></th>
 							<td><select id="public" name="buddyforms_custom_post_type[public]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['public'] ) && $buddyforms_custom_post_type['public'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['public'] ) && $buddyforms_custom_post_type['public'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(Custom Post Type UI default: true)
 									Whether or not posts of this type should be shown in the admin UI and is publicly
@@ -601,8 +618,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="publicly_queryable">Publicly Queryable</label></th>
 							<td><select id="publicly_queryable" name="buddyforms_custom_post_type[publicly_queryable]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['publicly_queryable'] ) && $buddyforms_custom_post_type['publicly_queryable'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['publicly_queryable'] ) && $buddyforms_custom_post_type['publicly_queryable'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Whether or not
 									queries can be performed on the front end as part of parse_request()</p></td>
@@ -610,8 +627,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="show_ui">Show UI</label></th>
 							<td><select id="show_ui" name="buddyforms_custom_post_type[show_ui]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['show_ui'] ) && $buddyforms_custom_post_type['show_ui'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['show_ui'] ) && $buddyforms_custom_post_type['show_ui'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Whether or not to
 									generate a default UI for managing this post type.</p></td>
@@ -619,8 +636,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="show_in_nav_menus">Show in Nav Menus</label></th>
 							<td><select id="show_in_nav_menus" name="buddyforms_custom_post_type[show_in_nav_menus]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['show_in_nav_menus'] ) && $buddyforms_custom_post_type['show_in_nav_menus'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['show_in_nav_menus'] ) && $buddyforms_custom_post_type['show_in_nav_menus'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(Custom Post Type UI default: true)
 									Whether or not this post type is available for selection in navigation menus.</p>
@@ -629,8 +646,8 @@ function buddyforms_post_types_custom_box_html( $post ) {
 						<tr>
 							<th scope="row"><label for="delete_with_user">Delete with user</label></th>
 							<td><select id="delete_with_user" name="buddyforms_custom_post_type[delete_with_user]">
-									<option value="0" selected="selected">False</option>
-									<option value="1">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['delete_with_user'] ) && $buddyforms_custom_post_type['delete_with_user'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['delete_with_user'] ) && $buddyforms_custom_post_type['delete_with_user'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(buddyforms default: false) Whether
 									to delete posts of this type when deleting a user.</p></td>
@@ -664,10 +681,9 @@ function buddyforms_post_types_custom_box_html( $post ) {
 							<th scope="row"><label for="menu_position">Menu Position</label>
 								<p>See
 									<a href="https://developer.wordpress.org/reference/functions/register_post_type/#menu_position"
-									   target="_blank" rel="noopener">Available options</a> in the "menu_position"
-									section. Range of 5-100</p></th>
+									   target="_blank" rel="noopener">Available options</a> in the "menu_position" section. Range of 5-100</p></th>
 							<td><input type="text" id="menu_position" name="buddyforms_custom_post_type[menu_position]"
-									   value="" aria-required="false"><br>
+									   value="<?php echo isset( $buddyforms_custom_post_type['menu_position'] ) ? $buddyforms_custom_post_type['menu_position'] : ''; ?>" aria-required="false"><br>
 								<p class="buddyforms-field-description description">The position in the menu order the
 									post type should appear. show_in_menu must be true.</p></td>
 						</tr>
@@ -676,22 +692,22 @@ function buddyforms_post_types_custom_box_html( $post ) {
 								<p>"Show UI" must be "true". If an existing top level page such as "tools.php" is
 									indicated for second input, post type will be sub menu of that.</p></th>
 							<td><select id="show_in_menu" name="buddyforms_custom_post_type[show_in_menu]">
-									<option value="0">False</option>
-									<option value="1" selected="selected">True</option>
+									<option value="0" <?php echo isset( $buddyforms_custom_post_type['show_in_menu'] ) && $buddyforms_custom_post_type['show_in_menu'] == 0 ? 'selected="selected"' : ''; ?>>False</option>
+									<option value="1" <?php echo isset( $buddyforms_custom_post_type['show_in_menu'] ) && $buddyforms_custom_post_type['show_in_menu'] == 1 ? 'selected="selected"' : ''; ?>>True</option>
 								</select>
 								<p class="buddyforms-field-description description">(default: true) Whether or not to
 									show the post type in the admin menu and where to show that menu.</p><br><input
 										type="text" id="show_in_menu_string"
-										name="buddyforms_custom_post_type[show_in_menu_string]" value=""
+										name="buddyforms_custom_post_type[show_in_menu_string]"
+										value="<?php echo isset( $buddyforms_custom_post_type['show_in_menu_string'] ) ? $buddyforms_custom_post_type['show_in_menu_string'] : ''; ?>"
 										aria-required="false"><br>
-								<p class="buddyforms-field-description description">The top-level admin menu page file
-									name for which the post type should be in the sub menu of.</p></td>
+								<p class="buddyforms-field-description description">The top-level admin menu page file name for which the post type should be in the sub menu of.</p></td>
 						</tr>
 						<tr>
 							<th scope="row">
 								<div id="menu_icon_preview"></div>
 								<label for="menu_icon">Menu Icon</label></th>
-							<td><input type="text" id="menu_icon" name="buddyforms_custom_post_type[menu_icon]" value=""
+							<td><input type="text" id="menu_icon" name="buddyforms_custom_post_type[menu_icon]" value="<?php echo isset( $buddyforms_custom_post_type['menu_icon'] ) ? $buddyforms_custom_post_type['menu_icon'] : ''; ?>"
 									   aria-required="false" placeholder="(Full URL for icon or Dashicon class)"><span
 										class="visuallyhidden">(Full URL for icon or Dashicon class)</span><br>
 								<p class="buddyforms-field-description description">Image URL or <a
