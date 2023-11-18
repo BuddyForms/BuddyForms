@@ -10,7 +10,7 @@ function buddyforms_custom_post_type_edit_form_after_title( $post ) {
 
 	<script>
 		jQuery(document).ready(function () {
-			//jQuery("#titlediv").hide();
+			jQuery("#titlediv").hide();
 			jQuery('#post-body').removeClass("columns-2");
 
 			preset = jQuery('#post-type-preset').val();
@@ -313,9 +313,9 @@ add_action( 'save_post', 'buddyforms_custom_post_type_save_postdata' );
 function buddyforms_post_types_custom_box_html( $post ) {
 	$buddyforms_custom_post_type = get_post_meta( $post->ID, '_buddyforms_custom_post_type', true );
 
-	echo '<pre>';
-	print_r( $buddyforms_custom_post_type );
-	echo '</pre>';
+//	echo '<pre>';
+//	print_r( $buddyforms_custom_post_type );
+//	echo '</pre>';
 	?>
 
 	<div id="post-type-settings">
@@ -1198,7 +1198,7 @@ function buddyforms_post_types_custom_box_html( $post ) {
 }
 
 
-class Michael_Ecklunds_Admin_Customizer {
+class BuddyForms_Remove_Admin_Edit_Metabox {
 	function __construct() {
 		add_action( 'in_admin_header', array( $this, 'in_admin_header' ) );
 	}
@@ -1206,8 +1206,8 @@ class Michael_Ecklunds_Admin_Customizer {
 	function in_admin_header() {
 		global $wp_meta_boxes;
 		//unset($wp_meta_boxes['bf-post-types']['side']['core']['submitdiv']);
-		//unset($wp_meta_boxes['bf-post-types']['normal']['core']['slugdiv']);
+		unset($wp_meta_boxes['bf-post-types']['normal']['core']['slugdiv']);
 	}
 }
 
-new Michael_Ecklunds_Admin_Customizer();
+new BuddyForms_Remove_Admin_Edit_Metabox();
