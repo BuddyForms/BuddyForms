@@ -11,10 +11,10 @@ function buddyforms_create_dynamic_post_types() {
 		while ($query->have_posts()) {
 			$query->the_post();
 			// Create BuddyForms post type
-			$labels = array(
-				'name' => get_the_title(),
-				'singular_name' => get_the_title(),
-			);
+//			$labels = array(
+//				'name' => get_the_title(),
+//				'singular_name' => get_the_title(),
+//			);
 
 			$buddyforms_custom_post_type = get_post_meta( get_the_ID(), '_buddyforms_custom_post_type', true );
 
@@ -23,12 +23,18 @@ function buddyforms_create_dynamic_post_types() {
 				'singular_name'         => isset($buddyforms_custom_post_type['singular_name']) ? _x( $buddyforms_custom_post_type['labels']['singular_name'], 'Post type singular name', 'buddyforms' ) : '',
 			);
 
-			if( isset($buddyforms_custom_post_type['labels']['menu_name']) && ! empty($buddyforms_custom_post_type['labels']['menu_name'])){
+			if( isset( $buddyforms_custom_post_type['labels']['menu_name'] ) && ! empty($buddyforms_custom_post_type['labels']['menu_name'])){
 				$labels['menu_name'] = _x( $buddyforms_custom_post_type['labels']['menu_name'], 'Admin Menu text', 'buddyforms' );
 			}
 
+			if( isset( $buddyforms_custom_post_type['labels']['name_admin_bar'] ) && ! empty($buddyforms_custom_post_type['labels']['name_admin_bar'])){
+				$labels['name_admin_bar'] = _x( $buddyforms_custom_post_type['labels']['name_admin_bar'], 'Admin Menu text', 'buddyforms' );
+			}
+			if( isset( $buddyforms_custom_post_type['labels']['add_new'] ) && ! empty($buddyforms_custom_post_type['labels']['add_new'])){
+				$labels['add_new'] = _x( $buddyforms_custom_post_type['labels']['add_new'], 'Admin Menu text', 'buddyforms' );
+			}
+
 			$add = array(
-				'menu_name'             => _x( 'Recipes', 'Admin Menu text', 'buddyforms' ),
 				'name_admin_bar'        => _x( 'Recipe', 'Add New on Toolbar', 'buddyforms' ),
 				'add_new'               => __( 'Add New', 'buddyforms' ),
 				'add_new_item'          => __( 'Add New buddyforms', 'buddyforms' ),
