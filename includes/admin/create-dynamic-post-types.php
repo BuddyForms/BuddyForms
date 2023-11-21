@@ -23,7 +23,7 @@ function buddyforms_create_dynamic_post_types() {
 				'singular_name'         => isset($buddyforms_custom_post_type['singular_name']) ? _x( $buddyforms_custom_post_type['labels']['singular_name'], 'Post type singular name', 'buddyforms' ) : '',
 			);
 
-			if(isset($buddyforms_custom_post_type['labels']['menu_name'])){
+			if( isset($buddyforms_custom_post_type['labels']['menu_name']) && ! empty($buddyforms_custom_post_type['labels']['menu_name'])){
 				$labels['menu_name'] = _x( $buddyforms_custom_post_type['labels']['menu_name'], 'Admin Menu text', 'buddyforms' );
 			}
 
