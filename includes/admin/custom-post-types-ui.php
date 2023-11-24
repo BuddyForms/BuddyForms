@@ -313,9 +313,9 @@ add_action( 'save_post', 'buddyforms_custom_post_type_save_postdata' );
 function buddyforms_post_types_custom_box_html( $post ) {
 	$buddyforms_custom_post_type = get_post_meta( $post->ID, '_buddyforms_custom_post_type', true );
 
-//	echo '<pre>';
-//	print_r( $buddyforms_custom_post_type );
-//	echo '</pre>';
+	echo '<pre>';
+	print_r( $buddyforms_custom_post_type );
+	echo '</pre>';
 	?>
 
 	<div id="post-type-settings">
