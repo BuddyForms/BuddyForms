@@ -299,57 +299,71 @@ function buddyforms_create_dynamic_post_types() {
 
 			// supports
 
-			$supports = array();
+			// Comment Has to be translatabe? I guess no?
 
-			if (isset($buddyforms_custom_post_type['supports']['title']) && !empty($buddyforms_custom_post_type['supports']['title'])) {
+			$supports = array(
+				'title' => false,
+				'editor' => false,
+				'author' => false,
+				'excerpt' => false,
+				'trackbacks' => false,
+				'custom-fields' => false,
+				'comments' => false,
+				'revisions' => false,
+				'page-attributes' => false,
+				'thumbnail' => false,
+				'post-formats' => false,
+			);
+
+			if (isset($buddyforms_custom_post_type['buddyforms_custom_post_type']['supports']['none']) && !empty($buddyforms_custom_post_type['supports']['none'])) {
+				$supports['none'] = _x($buddyforms_custom_post_type['supports']['none'], 'Custom Post Post Formats', 'buddyforms');				
+			}
+
+			if (isset($buddyforms_custom_post_type['supports']['title']) && !empty($buddyforms_custom_post_type['supports']['title']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['title'] = _x($buddyforms_custom_post_type['supports']['title'], 'Custom Post Title', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['editor']) && !empty($buddyforms_custom_post_type['supports']['editor'])) {
+			if (isset($buddyforms_custom_post_type['supports']['editor']) && !empty($buddyforms_custom_post_type['supports']['editor']) && !array_key_exists('none', $buddyforms_custom_post_type['supports']))  {
 				$supports['editor'] = _x($buddyforms_custom_post_type['supports']['editor'], 'Custom Post Editor', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['thumbnail']) && !empty($buddyforms_custom_post_type['supports']['thumbnail'])) {
+			if (isset($buddyforms_custom_post_type['supports']['thumbnail']) && !empty($buddyforms_custom_post_type['supports']['thumbnail']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['thumbnail'] = _x($buddyforms_custom_post_type['supports']['thumbnail'], 'Custom Post Featured Image', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['excerpts']) && !empty($buddyforms_custom_post_type['supports']['excerpts'])) {
+			if (isset($buddyforms_custom_post_type['supports']['excerpts']) && !empty($buddyforms_custom_post_type['supports']['excerpts']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['excerpts'] = _x($buddyforms_custom_post_type['supports']['excerpts'], 'Custom Post Excerpt', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['trackbacks']) && !empty($buddyforms_custom_post_type['supports']['trackbacks'])) {
+			if (isset($buddyforms_custom_post_type['supports']['trackbacks']) && !empty($buddyforms_custom_post_type['supports']['trackbacks']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['trackbacks'] = _x($buddyforms_custom_post_type['supports']['trackbacks'], 'Custom Post Trackbacks', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['custom-fields']) && !empty($buddyforms_custom_post_type['supports']['custom-fields'])) {
+			if (isset($buddyforms_custom_post_type['supports']['custom-fields']) && !empty($buddyforms_custom_post_type['supports']['custom-fields']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['custom-fields'] = _x($buddyforms_custom_post_type['supports']['custom-fields'], 'Custom Post Custom Fields', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['comments']) && !empty($buddyforms_custom_post_type['supports']['comments'])) {
+			if (isset($buddyforms_custom_post_type['supports']['comments']) && !empty($buddyforms_custom_post_type['supports']['comments']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['comments'] = _x($buddyforms_custom_post_type['supports']['comments'], 'Custom Post Comments', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['revisions']) && !empty($buddyforms_custom_post_type['supports']['revisions'])) {
+			if (isset($buddyforms_custom_post_type['supports']['revisions']) && !empty($buddyforms_custom_post_type['supports']['revisions']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['revisions'] = _x($buddyforms_custom_post_type['supports']['revisions'], 'Custom Post Revisions', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['author']) && !empty($buddyforms_custom_post_type['supports']['author'])) {
+			if (isset($buddyforms_custom_post_type['supports']['author']) && !empty($buddyforms_custom_post_type['supports']['author']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['author'] = _x($buddyforms_custom_post_type['supports']['author'], 'Custom Post Author', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['page-attributes']) && !empty($buddyforms_custom_post_type['supports']['page-attributes'])) {
+			if (isset($buddyforms_custom_post_type['supports']['page-attributes']) && !empty($buddyforms_custom_post_type['supports']['page-attributes']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['page-attributes'] = _x($buddyforms_custom_post_type['supports']['page-attributes'], 'Custom Post Page Attributes', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['supports']['post-formats']) && !empty($buddyforms_custom_post_type['supports']['post-formats'])) {
+			if (isset($buddyforms_custom_post_type['supports']['post-formats']) && !empty($buddyforms_custom_post_type['supports']['post-formats']) && !array_key_exists('none', $buddyforms_custom_post_type['supports'])) {
 				$supports['post-formats'] = _x($buddyforms_custom_post_type['supports']['post-formats'], 'Custom Post Post Formats', 'buddyforms');
 			}
 
-			if (isset($buddyforms_custom_post_type['buddyforms_custom_post_type']['supports']['none']) && !empty($buddyforms_custom_post_type['supports']['none'])) {
-				foreach($supports as $key => $value) {
-					$supports[$key] = false;
-				}
-			}
+			
 
 			// taxonomies
 
@@ -391,19 +405,20 @@ function buddyforms_create_dynamic_post_types() {
 					'public' => $public,
 					'hierarchical' => $hierarchical,
 					'exclude_from_search' => $exclude_from_search,
-					'publicly_queryable' => $publicly_queryable,
+					// 'publicly_queryable' => $publicly_queryable,
 					'show_ui' => $show_ui,
 					'show_in_menu' => true,
 					'show_in_nav_menus' => $show_in_nav_menus,
-					'menu_position' => $menu_position,
+					// 'menu_position' => $menu_position,
 					'menu_icon' => 'dashicons-buddyforms',
 					'capability_type' => $capability_type,
-					// 'show_in_rest' => $show_in_rest,
+					'has_archive' => $has_archive,
+					'show_in_rest' => $show_in_rest,
 					// 'rest_base' => $rest_base,
 					// 'rest_namespace' => $rest_namespace,
 					// 'rest_controller_class' => $rest_controller_class,
 					'_builtin' => false,
-					'rewrite' => $rewrite,
+					// 'rewrite' => $rewrite,
 					'query_var' => $query_var,
 					'can_export' => $can_export,
 					'delete_with_user' => $delete_with_user,
@@ -411,6 +426,8 @@ function buddyforms_create_dynamic_post_types() {
 					'taxonomies' => $taxonomies,
 				)
 			);
+
+			
 
 		} // end while
 	} // end if
