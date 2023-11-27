@@ -1,5 +1,6 @@
 <?php
 
+// for testing the rewrite args
 flush_rewrite_rules();
 
 function buddyforms_create_dynamic_post_types() {
@@ -217,11 +218,11 @@ function buddyforms_create_dynamic_post_types() {
 
 			// // show_in_rest
 
-			// $show_in_rest = false;
+			$show_in_rest = false;
 
-			// if (isset($buddyforms_custom_post_type['show_in_rest']) && !empty($buddyforms_custom_post_type['show_in_rest'])) {
-			// 	$show_in_rest = $buddyforms_custom_post_type['show_in_rest'];
-			// }
+			if (isset($buddyforms_custom_post_type['show_in_rest']) && !empty($buddyforms_custom_post_type['show_in_rest'])) {
+				$show_in_rest = $buddyforms_custom_post_type['show_in_rest'];
+			}
 
 			// rest_base
 
@@ -252,9 +253,18 @@ function buddyforms_create_dynamic_post_types() {
 			$menu_position = null;
 
 			if (isset($buddyforms_custom_post_type['menu_position']) && !empty($buddyforms_custom_post_type['menu_position'])) {
-				$menu_position = _x($buddyforms_custom_post_type['menu_position'], 'Custom Post Title', 'buddyforms');
+				$menu_position = _x($buddyforms_custom_post_type['menu_position'], 'Custom Post Menu Position', 'buddyforms');
 			}
 
+			// menu_icon
+
+			// working but has to be the correct size and maybe source of insecure connection if not https:// ...
+
+			$menu_icon = 'dashicons-buddyforms';
+
+			if (isset($buddyforms_custom_post_type['menu_icon']) && !empty($buddyforms_custom_post_type['menu_icon'])) {
+				$menu_icon = $buddyforms_custom_post_type['menu_icon'];
+			}
 			
 			// rewrite
 
@@ -363,7 +373,6 @@ function buddyforms_create_dynamic_post_types() {
 				$supports['post-formats'] = _x($buddyforms_custom_post_type['supports']['post-formats'], 'Custom Post Post Formats', 'buddyforms');
 			}
 
-			
 
 			// taxonomies
 
@@ -396,6 +405,8 @@ function buddyforms_create_dynamic_post_types() {
 			if (isset($buddyforms_custom_post_type['has_archive']) && !empty($buddyforms_custom_post_type['has_archive'])) {
 				$has_archive = $buddyforms_custom_post_type['has_archive'];
 			}
+
+			// missing from Wordpress Buddyforms interface [custom_supports, has_archive_slug, register_meta_box_cb, query_var_slug, show_in_menu_string ]
 		
 			register_post_type(
 				get_post_field( 'post_name' ),
@@ -407,10 +418,10 @@ function buddyforms_create_dynamic_post_types() {
 					'exclude_from_search' => $exclude_from_search,
 					// 'publicly_queryable' => $publicly_queryable,
 					'show_ui' => $show_ui,
-					'show_in_menu' => true,
-					'show_in_nav_menus' => $show_in_nav_menus,
+					'show_in_menu' => true, // otherwise doesn't show up
 					// 'menu_position' => $menu_position,
-					'menu_icon' => 'dashicons-buddyforms',
+					'show_in_nav_menus' => $show_in_nav_menus,
+					'menu_icon' => $menu_icon,
 					'capability_type' => $capability_type,
 					'has_archive' => $has_archive,
 					'show_in_rest' => $show_in_rest,
