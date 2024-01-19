@@ -155,7 +155,7 @@ class BuddyFormsSubmissionPage {
 			<?php if ( $this->has_the_capability( filter_var( wp_unslash( $_GET['form_slug'] ), FILTER_SANITIZE_STRING ) ) ) : ?>
 				<?php if ( ! isset( $_GET['entry'] ) ) { ?>
 					<form id="filter" method="get">
-						<input type="hidden" name="page" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) ); ?>"/>
+						<input type="hidden" name="page" value="<?php echo esc_attr( filter_var( wp_unslash( $_REQUEST['page'] ), FILTER_SANITIZE_STRING ) ); ?>"/>
 						<?php $this->bf_submissions_table->display(); ?>
 					</form>
 				<?php } ?>
