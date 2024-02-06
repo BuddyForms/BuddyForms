@@ -96,6 +96,7 @@ function buddyforms_form_elements( &$form, $args, $recovering = false ) {
 			// Get form field value when the form is editing
 			if ( $action === 'edit' ) {
 				$customfield_val = get_post_meta( $post_id, $slug, true );
+				$customfield_val = apply_filters( 'buddyforms_edit_custom_field_value', $customfield_val, $customfield, $post_id, $slug );
 			}
 
 			// Get custom field value from user meta if the field it's an user's type.
