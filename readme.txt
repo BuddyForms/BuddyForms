@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwac
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
 Tested up to: 6.4.3
-Stable tag: 2.8.7
+Stable tag: 2.8.8
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -264,6 +264,10 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
+= 2.8.8 - 06 Mar 2024 =
+* Improved security.
+* Fixed issue with creation of pages from submissions setup tab.
+
 = 2.8.7 - 06 Feb 2024 =
 * Added new hook to filter custom field value.
 * Tested up to WordPress 6.4.3
