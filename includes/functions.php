@@ -1445,23 +1445,33 @@ add_action( 'wp_ajax_nopriv_handle_dropped_media', 'buddyforms_upload_handle_dro
 add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_media' );
 function buddyforms_upload_handle_dropped_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
-	status_header( 200 );
-	$newupload = 0;
-	if ( ! empty( $_FILES ) ) {
-		$files = $_FILES;
-		foreach ( $files as $file_id => $file ) {
-			$newupload = media_handle_upload( $file_id, 0 );
+	$form_slug = isset( $_POST['form_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['form_slug'] ) ) : '';
+	$current_user		   = wp_get_current_user();
+	$current_user_can_edit   = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
+	$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
+	$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );
+	if( $current_user_can_edit || $current_user_can_create || $current_user_can_draft ){
+		status_header( 200 );
+		$newupload = 0;
+		if ( ! empty( $_FILES ) ) {
+			$files = $_FILES;
+			foreach ( $files as $file_id => $file ) {
+				$newupload = media_handle_upload( $file_id, 0 );
+			}
 		}
+	
+		if ( is_wp_error( $newupload ) ) {
+			status_header( '500' );
+			echo wp_kses_post( $newupload->get_error_message() );
+		} else {
+			status_header( '200' );
+			echo wp_kses_post( $newupload );
+		}
+		die();
+	} else{
+		die();
 	}
 
-	if ( is_wp_error( $newupload ) ) {
-		status_header( '500' );
-		echo wp_kses_post( $newupload->get_error_message() );
-	} else {
-		status_header( '200' );
-		echo wp_kses_post( $newupload );
-	}
-	die();
 }
 
 add_action( 'wp_ajax_nopriv_handle_deleted_media', 'buddyforms_upload_handle_delete_media' );
@@ -1470,8 +1480,13 @@ function buddyforms_upload_handle_delete_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
 	if ( isset( $_REQUEST['media_id'] ) ) {
 		$post_id = absint( $_REQUEST['media_id'] );
-
-		$status = wp_delete_attachment( $post_id, true );
+		$post = get_post($post_id);
+		$current_user = wp_get_current_user();
+		if ($post->post_author == $current_user->ID) {
+			$status = wp_delete_attachment($post_id, true);
+		} else {
+			$status = false;
+		}
 
 		if ( $status ) {
 			echo wp_json_encode( array( 'status' => 'OK' ) );
