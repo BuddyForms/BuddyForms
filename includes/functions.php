@@ -1512,7 +1512,21 @@ function buddyforms_upload_image_from_url() {
 	if ( ! empty( $url ) && ! empty( $file_id ) ) {
 		$upload_dir             = wp_upload_dir();
 		$image_url              = urldecode( $url );
-		$image_data             = file_get_contents( $image_url ); // Get image data
+		$url_response              = wp_safe_remote_get( $image_url );
+		if( isset( $url_response['response']['code'] ) && $url_response['response']['code'] != 200){
+			echo wp_json_encode(
+				array(
+					'status'   => 'FAILED',
+					'response' => __(
+						'Error downloading image.',
+						'buddyforms'
+					),
+				)
+			);
+			die();
+		} else {
+			$image_data = wp_remote_retrieve_body( $url_response );
+		}
 		$image_data_information = getimagesize( $image_url );
 		$image_mime_information = $image_data_information['mime'];
 		if ( ! in_array( $image_mime_information, $accepted_files ) ) {
@@ -1521,7 +1535,7 @@ function buddyforms_upload_image_from_url() {
 					'status'   => 'FAILED',
 					'response' => __(
 						'File type ' . $image_mime_information . ' is not allowed.',
-						'budduforms'
+						'buddyforms'
 					),
 				)
 			);
