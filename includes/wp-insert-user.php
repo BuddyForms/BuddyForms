@@ -328,7 +328,7 @@ function buddyforms_insert_user_set_error( $form_slug = '' ) {
 }
 
 function buddyforms_add_activation_data_to_user( $user_id, $form_slug, $buddyforms, $source = 'registration' ) {
-	$code            = sha1( $user_id . time() );
+	$code            = md5( wp_generate_password() );
 	$activation_page = get_home_url();
 	if ( isset( $buddyforms[ $form_slug ][ $source ]['activation_page'] ) && $buddyforms[ $form_slug ][ $source ]['activation_page'] != 'home' ) {
 		if ( $buddyforms[ $form_slug ][ $source ]['activation_page'] == 'referrer' || $buddyforms[ $form_slug ][ $source ]['activation_page'] == 'none' ) {
