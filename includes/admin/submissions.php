@@ -377,7 +377,7 @@ class BuddyForms_Submissions_List_Table extends WP_List_Table {
 		if ( isset( $_GET['form_slug'] ) && isset( $buddyforms[ $_GET['form_slug'] ]['form_fields'] ) ) {
 			foreach ( $buddyforms[ filter_var( wp_unslash( $_GET['form_slug'] ), FILTER_SANITIZE_STRING ) ]['form_fields'] as $key => $field ) {
 				if ( ! empty( $field['slug'] ) && ! in_array( $field['slug'], $this->exclude_columns ) ) {
-					$columns[ $field['slug'] ] = ! empty( $field['name'] ) ? $field['name'] : $field['slug'];
+					$columns[ $field['slug'] ] = ! empty( $field['name'] ) ? sanitize_text_field( $field['name'] ) : sanitize_text_field( $field['slug'] );
 				}
 			}
 		}
