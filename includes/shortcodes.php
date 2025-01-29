@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+
 // Shortcode to add the form everywhere easily ;) the form is located in form.php
 add_shortcode( 'buddyforms_form', 'buddyforms_create_edit_form_shortcode' );
 add_shortcode( 'bf', 'buddyforms_create_edit_form_shortcode' );
@@ -504,9 +507,9 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 		$target = sprintf( ' target="%s" ', $arguments['target'] );
 	}
 	if ( ! empty( $arguments['link'] ) ) {
-		return sprintf( '<a href="%s" %s >%s</a>', $arguments['link'], $target, $arguments['name'] );
+		return sprintf( '<a href="%s" %s >%s</a>', esc_url( $arguments['link'] ), esc_attr( $target ), esc_html( $arguments['name'] ) );
 	} else {
-		return $arguments['name'];
+		return esc_html( $arguments['name'] );
 	}
 }
 

@@ -25,5 +25,11 @@
     "bamarni-bin": {
       "target-directory": "vendor-scope"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "bamarni/composer-bin-plugin": true
+    }
   }
 }

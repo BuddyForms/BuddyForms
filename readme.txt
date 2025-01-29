@@ -2,8 +2,8 @@
 Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
-Tested up to: 6.6.2
-Stable tag: 2.8.13
+Tested up to: 6.7.1
+Stable tag: 2.8.14
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -36,7 +36,7 @@ With BuddyForms, attaching files, images, or any other media to your forms is ef
 [youtube https://www.youtube.com/watch?v=DoPLWBBlRvA]
 
 
-### Full Gutenberg Support 
+### Full Gutenberg Support
 
 #### Embed Forms
 Embed any BuddyForms Form as Gutenberg Block. Just select the form you like to embed in the block sidebar.
@@ -58,7 +58,7 @@ Use this shortcode if you wanna show a form on frontend.
 > [bf form_slug="YOUR-FORM-SLUG"]
 
 #### Display Submissions
-Use this shortcode if you wanna show a list of entries belonging to a Form. 
+Use this shortcode if you wanna show a list of entries belonging to a Form.
 The attribute "list_posts_style" is optional and its possible values are "table" or "list"
 > [bf_posts_list form_slug="YOUR-FORM-SLUG" list_posts_style=""]
 
@@ -68,7 +68,7 @@ The attribute "label" is optional (the default value is "Add New").
 > [bf_link_to_form form_slug="YOUR-FORM-SLUG" label=""]
 
 #### Link to User Posts
-For logged-in users you can use the following shortcode to display their submissions. 
+For logged-in users you can use the following shortcode to display their submissions.
 The attribute "label" is optional (the default value is "View").
 > [bf_link_to_user_posts form_slug="YOUR-FORM-SLUG" label=""]
 
@@ -100,7 +100,7 @@ Enable Guest Posts Submission Management with Full Moderation from the Front End
 [Guest Post Management](https://themekraft.com/wordpress-solutions/guest-posts-submission/)
 
 ### Display Your Website Data Anywhere You Choose
-Make all information submitted through a form easily accessible from wherever you like. 
+Make all information submitted through a form easily accessible from wherever you like.
 [Display Form Submission Data](https://themekraft.com/wordpress-solutions/display-form-data/)
 
 ### Publishing Content in BuddyPress & BuddyBoss Made Easy.
@@ -121,14 +121,14 @@ Enable your users to create content and bring your community to life. Easy Front
 * All the tools you need to manage guest posts, Full frontend Moderation Controles and Frontend Post Management
 
 #### Supported Frontend Forms
-* Post Form 
+* Post Form
 * User Registration
 * Contact Form
 * Content Form for any Post Type
 * User profile form
 * Image Upload Form
 * Media Upload Form
-* File upload of any kind (restrict to specific file types)  
+* File upload of any kind (restrict to specific file types)
 * Mixed Custom Post Type and Registration Form
 * Post meta form
 * User meta form
@@ -176,7 +176,7 @@ Enable your users to create content and bring your community to life. Easy Front
 * Date
 * More Fields available by Add-Ons!
 
-### Your Data Protection is Our Priority 
+### Your Data Protection is Our Priority
 Buddyform is a Full GDPR compliant WordPress Form Builder.
 
 #### You get Privacy by Design
@@ -189,7 +189,7 @@ With Buddyform, you are the boss of your data and we’ve made it our major prio
 * Easily define what happens after a user submits content (display a submission message, display the page content, redirect to a specific URL)
 * Enable/Disable comments related to the submitted content,  Frontend Revision for users
 * Overwrite the WordPress default Registration Form and Page
-* Set up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation). 
+* Set up email notifications to notify admins when content is submitted and also notify users when their content gets published or changes status (published, awaiting review, draft, scheduled, privately published, deleted, editing draft, awaiting moderation).
 
 ### Integrate with other Plugins
 * BuddyPress/ BuddyBoss – Enable all publishing features of BuddyForms in BuddyPress
@@ -264,8 +264,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
+= 2.8.14 - 9 Jan 2025 =
+* Fix vulnerability with bf_new_submission_link shortcode (issue found by Max Boll - @_b0lli).
+* Tested up to WordPress 6.7.1.
+
 = 2.8.13 - 23 Sep 2024 =
-* Fixed security issue 
+* Fixed security issue
 * Updated Freemius SDK
 
 = 2.8.12 - 11 Sep 2024 =
@@ -322,7 +326,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Tested up to WordPress 6.2
 
 = 2.8.0 - 22 Mar 2023 =
-* Added a new option to the Form Builder Edit Submission Settings to dynamically define the output from BuddyForms 
+* Added a new option to the Form Builder Edit Submission Settings to dynamically define the output from BuddyForms
 
 = 2.7.9 - 17 Mar 2023 =
 * Improved phar file verification (issue found by Jesús Miguel Calderón).
@@ -422,7 +426,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 = 2.6.2 - 11 Mar 2022 =
 * Fixed issue with JS variable conflict.
-* Fixed issue with forms permalinks. 
+* Fixed issue with forms permalinks.
 
 = 2.6.1 - 24 Feb 2022 =
 * Changed the position of the descriptive video in the readme.txt
@@ -1186,7 +1190,6 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed security issue related to the registration form. It was including the last entry id in the hidden field of a registration form where it suppose to be empty. Now the update user process work seamless.
 * Code cleaning
 
-
 = 2.3 – 21 Jan 2019
 * Removed an left over alert from the dropdown rewrite
 * Fixed user_website valdiation
@@ -1207,7 +1210,6 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 * Fixed the field id for the form_arg parameter
 * Updated the freemius sdk to version 2.2.3
 * Cleaned and refactored the code.
-
 
 = 2.2.9.2 – 29 November 2018
 * Added validation to the file element.
@@ -1242,7 +1244,6 @@ Reformat code
 * Updated php cs and fixer configuration
 * Fixed the validation og the website form element without http protocol
 * Improving the code.
-
 
 = 2.2.7 – 19 October 2018
 * Added missing translations
@@ -1621,7 +1622,6 @@ Reformat code
 * Fixed the layout import in the Form Designer. Colors and custom css was broken and did not get imported.
 * check if generate content and title is activated and generate teh content if the field is not empty.
 
-
 = 2.1.2.3 - 1 August 2017 =
 Freemius update to allow free and pro add ons
 
@@ -1770,7 +1770,6 @@ Summary of changes:
 * Added a new hook buddyforms_core_fs_loaded for other plugins to check if freemius sdk is loaded
 * smaller fixes and css improvements
 
-
 = 2.0.14 - 07.02.2017 =
 * Added new Filter buddyforms_the_loop_args to manipulate the loop args
 * Fixed a jQuery issue if the taxonomy select was not set to single it was not able to create a new tag.
@@ -1840,12 +1839,10 @@ Summary of changes:
 * Check if a mail notification exist to avoid php notice if debugger is enabled
 * Update the freemius SDK.
 
-
 = 2.0.6 =
 * Fixed an issue with categories and tax. The form element was only working as taxonomy form element.
 * Fixed the admin header for WordPress 4.7
 * Update the welcome screen links and screenshots
-
 
 = 2.0.5 =
 * Add a new function remove_admin_scripts to remove styles and scripts added by other plugins and themes
