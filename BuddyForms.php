@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Extendable with Addons!
- * Version: 2.8.14
+ * Version: 2.8.15
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -43,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.8.14';
+		public $version = '2.8.15';
 
 		/**
 		 * @var array Frontend Global JS parameters

@@ -3,7 +3,7 @@ Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, projectkarol
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
 Tested up to: 6.7.1
-Stable tag: 2.8.14
+Stable tag: 2.8.15
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -264,27 +264,30 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
+= 2.8.15 - 29 Jan 2025 =
+* Update Freemius SDK.
+
 = 2.8.14 - 9 Jan 2025 =
 * Fix vulnerability with bf_new_submission_link shortcode (issue found by Max Boll - @_b0lli).
 * Tested up to WordPress 6.7.1.
 
 = 2.8.13 - 23 Sep 2024 =
-* Fixed security issue
-* Updated Freemius SDK
+* Fixed security issue.
+* Updated Freemius SDK.
 
 = 2.8.12 - 11 Sep 2024 =
-* Only administrators can modify the default role "subscriber"
+* Only administrators can modify the default role "subscriber".
 * Updated Freemius SDK.
-* Tested up to WordPress 6.6.2
+* Tested up to WordPress 6.6.2.
 
 = 2.8.11 - 30 Jul 2024 =
 * Updated Freemius SDK.
-* Tested up to WordPress 6.6.1
+* Tested up to WordPress 6.6.1.
 
 = 2.8.10 - 11 Jun 2024 =
 * Fixed issue with activation code.
 * Updated Freemius SDK.
-* Tested up to WordPress 6.5.4
+* Tested up to WordPress 6.5.4.
 
 = 2.8.9 - 22 Mar 2024 =
 * Fixed partial issue with arbitrary file download vulnerability.
@@ -295,27 +298,27 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 = 2.8.7 - 06 Feb 2024 =
 * Added new hook to filter custom field value.
-* Tested up to WordPress 6.4.3
+* Tested up to WordPress 6.4.3.
 
 = 2.8.6 - 18 Jan 2024 =
 * Fixed XSS issue.
 * Fixed arbitrary file download issue.
 * Fixed issue related with filter submissions by author.
 * Updated Freemius SDK.
-* Tested up to WordPress 6.4.2
+* Tested up to WordPress 6.4.2.
 
 = 2.8.5 - 21 Nov 2023 =
 * Fixed issue with some file format.
 
 = 2.8.4 - 16 Nov 2023 =
 * Updated Freemius SDK.
-* Tested up to WordPress 6.4.1
+* Tested up to WordPress 6.4.1.
 
 = 2.8.3 - 05 Jul 2023 =
 * Fixed XSS vulnerability.
 * Fixed issue with an upload field and allowed formats.
 * Fixed issue with string max length validation.
-* Tested up to WordPress 6.2.2
+* Tested up to WordPress 6.2.2.
 
 = 2.8.2 - 11 May 2023 =
 * Fixed vulnerability issue in shortcode.
@@ -323,7 +326,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 = 2.8.1 - 04 May 2023 =
 * Added a new hook to filter form html content.
 * Updated Freemius SDK.
-* Tested up to WordPress 6.2
+* Tested up to WordPress 6.2.
 
 = 2.8.0 - 22 Mar 2023 =
-* Added a new option to the Form Builder Edit Submission Settings to dynamically define the output from BuddyForms
+* Added a new option to the Form Builder Edit Submission Settings to dynamically define the output from BuddyForms.
