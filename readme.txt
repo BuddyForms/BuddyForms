@@ -8,7 +8,7 @@ Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BuddyForms is a versatile WordPress plugin that allows the creation of post forms, registration forms, profile forms, content forms, and supports file uploads.
+BuddyForms is a versatile plugin that allows the creation of post forms, registration forms, profile forms, content forms, and supports file uploads.
 
 == Description ==
 
