@@ -1,5 +1,5 @@
 === Post Form - Registration Form - Profile Form for User Profiles - Frontend Content Forms for User Submissions (UGC) ===
-Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, christianwach, projectkarol, phuck22, gfirem, jnfdev
+Contributors: svenl77, konrads, themekraft, buddyforms, shabushabu, projectkarol, gfirem, jnfdev, camiloluna
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
 Tested up to: 6.7.1
