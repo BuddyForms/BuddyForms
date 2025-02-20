@@ -364,7 +364,8 @@ function buddyforms_button_view_posts( $args ) {
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button bf-navigation bf-navigation-view" href="' . esc_url( '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/' ) . '"> ' . wp_kses( $label_view, buddyforms_wp_kses_allowed_atts() ) . ' </a>';
+	$href = '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . esc_url( $form_slug ) . '/';
+	$button = '<a class="button bf-navigation bf-navigation-view" href="' . esc_url( $href ) . '"> ' . wp_kses( $label_view, buddyforms_wp_kses_allowed_atts() ) . ' </a>';
 
 	return wp_kses( apply_filters( 'buddyforms_button_view_posts', $button, $args ), buddyforms_wp_kses_allowed_atts() );
 }
@@ -392,7 +393,8 @@ function buddyforms_button_add_new( $args ) {
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button bf-navigation bf-navigation-create" href="' . esc_url( '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/' ) . '"> ' . wp_kses( $label_add, buddyforms_wp_kses_allowed_atts() ) . '</a>';
+	$href = '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . esc_url( $form_slug ) . '/';
+	$button = '<a class="button bf-navigation bf-navigation-create" href="' . esc_url( $href ) . '"> ' . wp_kses( $label_add, buddyforms_wp_kses_allowed_atts() ) . '</a>';
 
 	return wp_kses( apply_filters( 'buddyforms_button_add_new', $button, $args ), buddyforms_wp_kses_allowed_atts() );
 
