@@ -364,10 +364,9 @@ function buddyforms_button_view_posts( $args ) {
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button bf-navigation bf-navigation-view" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/"> ' . $label_view . ' </a>';
+	$button = '<a class="button bf-navigation bf-navigation-view" href="' . esc_url( '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/' ) . '"> ' . wp_kses( $label_view, buddyforms_wp_kses_allowed_atts() ) . ' </a>';
 
 	return wp_kses( apply_filters( 'buddyforms_button_view_posts', $button, $args ), buddyforms_wp_kses_allowed_atts() );
-
 }
 
 add_shortcode( 'buddyforms_button_add_new', 'buddyforms_button_add_new' );
@@ -393,7 +392,7 @@ function buddyforms_button_add_new( $args ) {
 	BuddyFormsAssets::front_js_css( '', $form_slug );
 	BuddyFormsAssets::load_tk_font_icons();
 
-	$button = '<a class="button bf-navigation bf-navigation-create" href="/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/"> ' . $label_add . '</a>';
+	$button = '<a class="button bf-navigation bf-navigation-create" href="' . esc_url( '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/' ) . '"> ' . wp_kses( $label_add, buddyforms_wp_kses_allowed_atts() ) . '</a>';
 
 	return wp_kses( apply_filters( 'buddyforms_button_add_new', $button, $args ), buddyforms_wp_kses_allowed_atts() );
 
@@ -507,7 +506,11 @@ function buddyforms_create_submission_link_shortcode( $args ) {
 		$target = sprintf( ' target="%s" ', $arguments['target'] );
 	}
 	if ( ! empty( $arguments['link'] ) ) {
-		return sprintf( '<a href="%s" %s >%s</a>', esc_url( $arguments['link'] ), esc_attr( $target ), esc_html( $arguments['name'] ) );
+		return sprintf(
+			'<a href="%s" %s >%s</a>',
+			( empty( esc_url( $arguments['link'] ) ) ? esc_url( $arguments['link'] ) : '#' ),
+			esc_attr( $target ), esc_html( $arguments['name'] )
+		);
 	} else {
 		return esc_html( $arguments['name'] );
 	}
