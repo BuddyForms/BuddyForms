@@ -612,7 +612,7 @@ function buddyforms_post_entry_actions( $form_slug ) {
 					if ( isset( $buddyforms[ $form_slug ]['edit_link'] ) && $buddyforms[ $form_slug ]['edit_link'] != 'none' ) {
 						echo wp_kses(
 							apply_filters( 'buddyforms_loop_edit_post_link', '<a title="' . esc_attr__( 'Edit', 'buddyforms' ) . '" id="' . get_the_ID() . '" class="bf_edit_post" href="' . $permalink . 'edit/' . $form_slug . '/' . get_the_ID() . '"><span aria-label="' . esc_attr__( 'Edit', 'buddyforms' ) . '" class="dashicons dashicons-edit"> </span> ' . esc_attr__( 'Edit', 'buddyforms' ) . '</a>', get_the_ID(), $form_slug ),
-							buddyforms_wp_kses_allowed_atts() 
+							buddyforms_wp_kses_allowed_atts()
 						);
 					} else {
 						echo wp_kses(
@@ -1043,11 +1043,11 @@ function buddyforms_add_mce_placeholder_plugin( $plugins ) {
  */
 function buddyforms_tinymce_setup_function( $initArray ) {
 	$initArray['setup'] = 'function(editor) {
-                editor.on("change keyup", function(e){
-                    editor.save();
-                    jQuery(editor.getElement()).trigger(\'change\');
-                });
-            }';
+				editor.on("change keyup", function(e){
+					editor.save();
+					jQuery(editor.getElement()).trigger(\'change\');
+				});
+			}';
 
 	return $initArray;
 }
@@ -1459,7 +1459,7 @@ function buddyforms_upload_handle_dropped_media() {
 				$newupload = media_handle_upload( $file_id, 0 );
 			}
 		}
-	
+
 		if ( is_wp_error( $newupload ) ) {
 			status_header( '500' );
 			echo wp_kses_post( $newupload->get_error_message() );
@@ -2262,6 +2262,11 @@ function buddyforms_wp_kses_allowed_atts(){
 			'data-index'      => array(),
 			'data-entry'      => array(),
 			'data-dz-message' => array(),
+			'data-type' => array(),
+			'data-size' => array(),
+			'data-theme' => array(),
+			'data-element-slug' => array(),
+			'data-sitekey' => array(),
 		),
 		'span'     => array(
 			'class'                     => array(),
@@ -2277,7 +2282,7 @@ function buddyforms_wp_kses_allowed_atts(){
 			'aria-labelledby'           => array(),
 			'tabindex'                  => array(),
 			'data'                      => array(),
-            'data-tip'                  => array(),
+			'data-tip'                  => array(),
 			'data-dz-size'              => array(),
 			'data-dz-name'              => array(),
 			'data-dz-uploadprogress'    => array(),
@@ -2286,11 +2291,11 @@ function buddyforms_wp_kses_allowed_atts(){
 		),
 		'strong'   => array(),
 		'p'        => array(
-            'class' => array(),
+			'class' => array(),
 			'id'    => array(),
 			'name'  => array(),
-            'title' => array(),
-        ),
+			'title' => array(),
+		),
 		'style'    => array(),
 		'form'     => array(
 			'class'      => array(),
@@ -2309,21 +2314,21 @@ function buddyforms_wp_kses_allowed_atts(){
 			'type'                => array(),
 			'role'                => array(),
 			'style'               => array(),
-            'step'                => array(),
+			'step'                => array(),
 			'value'               => array(),
 			'field-id'            => array(),
 			'field_id'            => array(),
 			'required'            => array(),
 			'checked'             => array(),
 			'tabindex'            => array(),
-            'pattern'             => array(),
+			'pattern'             => array(),
 			'placeholder'         => array(),
 			'autocomplete'        => array(),
 			'autocorrect'         => array(),
 			'autocapitalize'      => array(),
 			'spellcheck'          => array(),
 			'frontend_reset'      => array(),
-            'size'                => array(),
+			'size'                => array(),
 			'aria'                => array(),
 			'aria-invalid'        => array(),
 			'data'                => array(),
@@ -2336,6 +2341,11 @@ function buddyforms_wp_kses_allowed_atts(){
 			'data-msg-upload-required'  => array(),
 			'data-rule-featured-image-error'  => array(),
 			'upload_error_validation_message'  => array(),
+			'data-type' => array(),
+			'data-size' => array(),
+			'data-theme' => array(),
+			'data-element-slug' => array(),
+			'data-sitekey' => array(),
 		),
 		'select'    => array(
 			'class'               => array(),
@@ -2352,9 +2362,9 @@ function buddyforms_wp_kses_allowed_atts(){
 			'required'            => array(),
 			'aria-hidden'         => array(),
 			'data-form'           => array(),
-            'data-action'         => array(),
-            'data-exclude'        => array(),
-            'data-sortable'       => array(),
+			'data-action'         => array(),
+			'data-exclude'        => array(),
+			'data-sortable'       => array(),
 			'data-rule-minlength' => array(),
 			'data-rule-maxlength' => array(),
 			'data-placeholder'    => array(),
@@ -2394,8 +2404,8 @@ function buddyforms_wp_kses_allowed_atts(){
 			'id'       => array(),
 			'class'    => array(),
 			'style'    => array(),
-            'data'     => array(),
-            'data-tip' => array(),
+			'data'     => array(),
+			'data-tip' => array(),
 		),
 		'link'     => array(
 			'class' => array(),
@@ -2417,7 +2427,7 @@ function buddyforms_wp_kses_allowed_atts(){
 			'data'             => array(),
 			'data-toggle'      => array(),
 			'data-type'        => array(),
-            'data-row'         => array(),
+			'data-row'         => array(),
 			'data-gdpr-type'   => array(),
 			'data-form-slug'   => array(),
 			'onclick'          => array(),
@@ -2426,8 +2436,8 @@ function buddyforms_wp_kses_allowed_atts(){
 			'class'             => array(),
 			'id'                => array(),
 			'type'              => array(),
-            'name'              => array(),
-            'disabled'          => array(),
+			'name'              => array(),
+			'disabled'          => array(),
 			'data-editor'       => array(),
 			'data-wp-editor-id' => array(),
 			'data-target'       => array(),
@@ -2447,11 +2457,11 @@ function buddyforms_wp_kses_allowed_atts(){
 			'id'    => array(),
 			'name'  => array(),
 		),
-        'abbr' => array(
+		'abbr' => array(
 			'class' => array(),
 			'id'    => array(),
 			'name'  => array(),
-            'title' => array(),
+			'title' => array(),
 		),
 		'iframe' => array(
 			'id'                => array(),
@@ -2562,7 +2572,7 @@ function buddyforms_wp_kses_allowed_atts(){
 			'tabindex'         => array(),
 			'colspan'         => array(),
 		),
-         'tfoot' => array(
+		 'tfoot' => array(
 			'class'            => array(),
 			'id'               => array(),
 			'style'            => array(),
@@ -2605,7 +2615,6 @@ function buddyforms_wp_kses_allowed_atts(){
 			'name'             => array(),
 		),
 		'strong' => array(
-
 		),
 		'br' => array(),
 		'b' => array(
@@ -2613,6 +2622,9 @@ function buddyforms_wp_kses_allowed_atts(){
 			'id'               => array(),
 			'style'            => array(),
 			'name'             => array(),
+		),
+		'script' => array(
+			'src' => array()
 		),
 	);
 	return $allowed_tags;
