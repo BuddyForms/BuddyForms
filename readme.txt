@@ -264,6 +264,9 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
+
+* Swap file_get_contents() for CURL in Captha implementation.
+
 = 2.8.17 - 27 Feb 2025 =
 * Fixed permissions roles not showing when choosing contact form.
 * Fixed issues with reCaptcha v2.
