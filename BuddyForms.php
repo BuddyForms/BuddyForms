@@ -70,7 +70,18 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
 			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+			add_action( 'admin_menu', array( $this, 'buddyforms_bundle_screen_menu' ), 9999 );
+
 			register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
+		}
+
+		/**
+		 * Add the BuddyForms Bundle screen menu.
+		 */
+		public function buddyforms_bundle_screen_menu() {
+			if ( buddyforms_core_fs()->is_not_paying() ) {
+				add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Go Pro!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'buddyforms_bundle_screen_content', 99 );
+			}
 		}
 
 		/**
