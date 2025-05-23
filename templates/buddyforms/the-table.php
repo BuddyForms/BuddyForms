@@ -7,7 +7,7 @@
  */
 
 ob_start();
-require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoopStyle.php';
+require BUDDYFORMS_INCLUDES_PATH . 'resources/pfbc/Style/LoopStyle.php';
 $css = ob_get_clean();
 $table_css = buddyforms_minify_css( $css );
 file_put_contents( dirname( BUDDYFORMS_INCLUDES_PATH ) . '/assets/css/bf-table-css-' . $form_slug . '.css', $table_css );

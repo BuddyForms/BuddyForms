@@ -266,7 +266,7 @@ function buddyforms_get_wp_login_form( $form_slug = 'none', $title = '', $args =
 	$wp_login_form = '<div class="bf-show-login-form" ' . $hide_style . '>';
 	// include own login basic style
 	ob_start();
-	require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/LoginStyle.php';
+	require BUDDYFORMS_INCLUDES_PATH . 'resources/pfbc/Style/LoginStyle.php';
 	$style = ob_get_clean();
 	if ( ! empty( $style ) ) {
 		$style = buddyforms_minify_css( $style );

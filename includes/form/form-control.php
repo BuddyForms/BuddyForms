@@ -954,7 +954,7 @@ function buddyforms_get_field_output( $post_id, $custom_field, $post, $meta_valu
 						$attachment_thumbnail_url = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
 
 						if ( ! $attachment_thumbnail_url ) {
-							$attachment_thumbnail_url = array( BUDDYFORMS_ASSETS . '/images/multimedia.png' );
+							$attachment_thumbnail_url = array( BUDDYFORMS_ASSETS . 'images/multimedia.png' );
 						}
 
 						$result[] = "<a href='" . $attachment_url . "' target='_blank'> <img src='" . $attachment_thumbnail_url[0] . "' /></a>";

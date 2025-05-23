@@ -95,7 +95,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 	}
 	$form_output = '';
 	ob_start();
-	require BUDDYFORMS_INCLUDES_PATH . '/resources/pfbc/Style/GlobalStyle.php';
+	require BUDDYFORMS_INCLUDES_PATH . 'resources/pfbc/Style/GlobalStyle.php';
 	$global_css = ob_get_clean();
 	if ( ! empty( $global_css ) ) {
 		$global_css = buddyforms_minify_css( $global_css );
@@ -334,7 +334,7 @@ function buddyforms_create_edit_form( $args, $echo = true ) {
 
 	$echo_content = buddyforms_form_html( $args );
 	if ( $echo ) {
-    		 echo wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );     
+		echo wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 	} else {
 		return wp_kses( $form_output . $echo_content, buddyforms_wp_kses_allowed_atts() );
 	}

@@ -44,7 +44,7 @@ class BuddyFormsSubmissionPage {
 		?>
 		<div id="post" class="bf_admin_wrap wrap">
 		<?php
-		include BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php';
+		include BUDDYFORMS_INCLUDES_PATH . 'admin/admin-header.php';
 		?>
 		<hr style="margin-bottom: 0px !important;"/>
 		<?php

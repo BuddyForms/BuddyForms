@@ -18,7 +18,7 @@ function buddyforms_settings_page() { ?>
 
 		<?php
 		// Display the BuddyForms Header
-		include BUDDYFORMS_INCLUDES_PATH . '/admin/admin-header.php';
+		include BUDDYFORMS_INCLUDES_PATH . 'admin/admin-header.php';
 		?>
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-2">
@@ -343,8 +343,8 @@ function buddyforms_settings_page_tabs_content() {
 					$buddyforms_gdpr = get_option( 'buddyforms_gdpr' );
 					$pages           = buddyforms_get_all_pages( 'id', 'settings' );
 
-					$registration_templat = __( "By signing up on our site you agree to our terms and conditions [link].  We'll create a new user account for you based on your submissions.  All data you submit will be stored on our servers.  After your registration we'll instantly send you an email with an activation link to verify your mail address.   ", 'buddyforms' );
-					$post_template        = __( 'By submitting this form you grant us the rights <br> • to store your submitted contents in our database  <br>• to generate a post on our site based on your data  <br>• to make this post publicly accessible  ', 'buddyforms' );
+					$registration_templat = __( "By signing up on our site you agree to our terms and conditions [link]. We'll create a new user account for you based on your submissions. All data you submit will be stored on our servers. After your registration we'll instantly send you an email with an activation link to verify your mail address.", 'buddyforms' );
+					$post_template        = __( 'By submitting this form you grant us the rights<br>• to store your submitted contents in our database<br>• to generate a post on our site based on your data<br>• to make this post publicly accessible', 'buddyforms' );
 					$contact_templat      = __( 'By submitting these data you agree that we store all the data from the form our server. We may answer you via mail.', 'buddyforms' );
 					$terms_label          = '';
 					?>
@@ -376,10 +376,10 @@ function buddyforms_settings_page_tabs_content() {
 													<small>
 													<?php
 													esc_html_e(
-														'These templates are available in our new „GDPR Agreement form element“.  
+														'These templates are available in our new „GDPR Agreement form element“.
                                                 To give it a start, we inserted some adequate default text.
                                                 <br><br>
-                                                !! Please note that you should buy into professional legal advice for to be safe regarding reliable legal texts. !! 
+                                                !! Please note that you should buy into professional legal advice for to be safe regarding reliable legal texts. !!
                                                 <br><br>
                                                 Please edit these texts according to your needs here.',
 														'buddyforms'
