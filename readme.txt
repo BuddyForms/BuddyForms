@@ -3,7 +3,7 @@ Contributors: themekraft, svenl77, konrads, buddyforms, shabushabu, projectkarol
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
 Tested up to: 6.8.1
-Stable tag: 2.8.17
+Stable tag: 2.9.0-beta.1
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -266,6 +266,12 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 
 * Swap file_get_contents() for CURL in Captha implementation.
+
+= 2.9.0 - 30 May 2025 =
+* Replaced file_get_contents with curl in captcha implementation.
+* Fixed trailing slash inconsistency when using constants.
+* Update Go Pro page.
+* Tested up to WordPress 6.8.1.
 
 = 2.8.17 - 27 Feb 2025 =
 * Fixed permissions roles not showing when choosing contact form.
