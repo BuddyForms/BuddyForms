@@ -1445,12 +1445,16 @@ add_action( 'wp_ajax_nopriv_handle_dropped_media', 'buddyforms_upload_handle_dro
 add_action( 'wp_ajax_handle_dropped_media', 'buddyforms_upload_handle_dropped_media' );
 function buddyforms_upload_handle_dropped_media() {
 	check_ajax_referer( 'fac_drop', 'nonce' );
-	$form_slug = isset( $_POST['form_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['form_slug'] ) ) : '';
-	$current_user		   = wp_get_current_user();
+	$form_slug               = isset( $_POST['form_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['form_slug'] ) ) : '';
+	$form_post               = get_page_by_path( $form_slug, OBJECT, 'buddyforms' );
+	$form_id                 = $form_post->ID;
+	$public_submit           = get_post_meta( $form_id, '_buddyforms_options', true )['public_submit'] ?? false;
+	$allow_public_submit     = 'public_submit' === $public_submit;
+	$current_user            = wp_get_current_user();
 	$current_user_can_edit   = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_edit', array(), $form_slug );
 	$current_user_can_create = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_create', array(), $form_slug );
 	$current_user_can_draft  = bf_user_can( $current_user->ID, 'buddyforms_' . $form_slug . '_draft', array(), $form_slug );
-	if( $current_user_can_edit || $current_user_can_create || $current_user_can_draft ){
+	if ( $current_user_can_edit || $current_user_can_create || $current_user_can_draft || $allow_public_submit ) {
 		status_header( 200 );
 		$newupload = 0;
 		if ( ! empty( $_FILES ) ) {
@@ -1468,7 +1472,7 @@ function buddyforms_upload_handle_dropped_media() {
 			echo wp_kses_post( $newupload );
 		}
 		die();
-	} else{
+	} else {
 		die();
 	}
 
