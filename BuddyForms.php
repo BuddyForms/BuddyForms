@@ -4,7 +4,7 @@
  * Plugin Name: BuddyForms
  * Plugin URI:  https://themekraft.com/buddyforms/
  * Description: Contact Forms, Post Forms for User Generated Content and Registration Forms easily build in minutes. Extendable with Addons!
- * Version: 2.9.0-beta.2
+ * Version: 2.9.0
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * Licence: GPLv3
@@ -43,7 +43,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '2.9.0-beta.2';
+		public $version = '2.9.0';
 
 		/**
 		 * @var array Frontend Global JS parameters
@@ -621,27 +621,31 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 				$buddyforms_core_fs = fs_dynamic_init(
 					array(
-						'id'              => '391',
-						'slug'            => 'buddyforms',
-						'type'            => 'plugin',
-						'public_key'      => 'pk_dea3d8c1c831caf06cfea10c7114c',
-						'is_premium'      => true,
-						'has_addons'      => true,
-						'has_paid_plans'  => true,
-						'trial'           => array(
+						'id'                             => '391',
+						'slug'                           => 'buddyforms',
+						'type'                           => 'plugin',
+						'public_key'                     => 'pk_dea3d8c1c831caf06cfea10c7114c',
+						'is_premium'                     => true,
+						'has_addons'                     => true,
+						'has_paid_plans'                 => true,
+						'trial'                          => array(
 							'days'               => 7,
 							'is_require_payment' => true,
 						),
-						'has_affiliation' => 'selected',
-						'menu'            => array(
-							'slug'        => 'edit.php?post_type=buddyforms',
-							'first-path'  => $first_path,
-							'support'     => false,
-							'contact'     => true,
-							'addons'      => true,
-							'affiliation' => false,
-							'pricing'     => false,
+						'has_affiliation'                => 'selected',
+						'menu'                           => array(
+							'slug'       => 'edit.php?post_type=buddyforms',
+							'first-path' => $first_path,
+							'support'         => false,
+							'contact'         => true,
+							'addons'          => true,
+							'affiliation'     => false,
+							'pricing'         => false,
 						),
+						'bundle_id' => '2046',
+						'bundle_public_key' => 'pk_ee958df753d34648b465568a836aa',
+						'has_paid_plans' => true,
+						'bundle_license_auto_activation' => true,
 					)
 				);
 			}
