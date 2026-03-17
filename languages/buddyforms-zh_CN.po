@@ -85,7 +85,7 @@ msgid "No Post Type Selected. Please select a post type"
 msgstr ""
 
 #: includes/admin/class-bf-admin-notices.php:81
-msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
+msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
 msgstr ""
 
 #: includes/admin/class-bf-admin-notices.php:86
@@ -93,7 +93,7 @@ msgid "The Selected Post Type does not exist"
 msgstr "所选帖子类型不存在"
 
 #: includes/admin/class-bf-admin-notices.php:96
-msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
+msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
 msgstr ""
 
 #: includes/admin/class-bf-admin-notices.php:128

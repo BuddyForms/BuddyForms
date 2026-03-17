@@ -107,13 +107,13 @@ msgstr "Nenhum tipo de postagem selecionado. Selecione um tipo de postagem"
 msgid ""
 "BuddyForms Professional is required to use this Form. You need to upgrade to "
 "the Professional Plan. The Free and Starter Versions does not support Custom "
-"Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">"
+"Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">"
 "Go Pro Now</a>"
 msgstr ""
 "O BuddyForms Professional é necessário para usar este formulário. Você "
 "precisa de atualizar para o Plano Profissional. As versões gratuita e "
 "inicial não oferecem suporte a tipos de artigos personalizados <a "
-"href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\"> Adquira o "
+"href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\"> Adquira o "
 "Pro Agora </a>"
 
 #: includes/admin/class-bf-admin-notices.php:86
@@ -125,12 +125,12 @@ msgid ""
 "BuddyForms Professional is required to use this Form. You need to upgrade to "
 "the Professional Plan. The Free and Starter Versions does not support the "
 "required Form Elements <a href=\"edit.php?"
-"post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
+"post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
 msgstr ""
 "O BuddyForms Professional é necessário para usar este formulário. Você "
 "precisa atualizar para o Plano Profissional. As versões gratuita e inicial "
 "não oferecem suporte aos elementos de formulário necessários <a href=\"edit."
-"php?post_type=buddyforms&page=buddyforms-pricing\">Adquira Pro Agora</a>"
+"php?post_type=buddyforms&page=buddyforms_bundle_screen\">Adquira Pro Agora</a>"
 
 #: includes/admin/class-bf-admin-notices.php:128
 msgid "BuddyForms Submissions Page Missing!"
@@ -3262,7 +3262,7 @@ msgstr ""
 "Todos os dados que enviar serão armazenados nos nossos servidores.\n"
 "\n"
 "Após o registo, enviaremos instantaneamente um e-mail com um link de "
-"ativação para verificar o seu endereço de e-mail."
+"ativação para verificar o seu endereço de e-mail.\n"
 
 #: includes/admin/settings.php:342
 msgid ""
@@ -3272,7 +3272,7 @@ msgid ""
 " <br>• to make this post publicly accessible \n"
 msgstr ""
 "<br> • para gerar um artigo no nosso site com base nos seus dados\n"
-"  <br> • para tornar este artigo acessível ao público"
+"  <br> • para tornar este artigo acessível ao público\n"
 
 #: includes/admin/settings.php:343
 msgid ""
@@ -4434,4 +4434,3 @@ msgstr ""
 #. Author of the plugin/theme
 msgid "ThemeKraft"
 msgstr "ThemeKraft"
-

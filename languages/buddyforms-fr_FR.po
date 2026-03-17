@@ -106,7 +106,7 @@ msgstr ""
 msgid ""
 "BuddyForms Professional is required to use this Form. You need to upgrade to "
 "the Professional Plan. The Free and Starter Versions does not support Custom "
-"Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">"
+"Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">"
 "Go Pro Now</a>"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgid ""
 "BuddyForms Professional is required to use this Form. You need to upgrade to "
 "the Professional Plan. The Free and Starter Versions does not support the "
 "required Form Elements <a href=\"edit.php?"
-"post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
+"post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
 msgstr ""
 
 #: includes/admin/class-bf-admin-notices.php:128

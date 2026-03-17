@@ -44,9 +44,9 @@ function buddyforms_track( $event_name, $data_args = array() ) {
 
 function buddyforms_track_admin_pages( $hook ) {
 	if ( ! empty( $hook ) ) {
-		if ( $hook === 'buddyforms_page_buddyforms-contact' || $hook === 'buddyforms_page_buddyforms-account' ||
-			 $hook === 'buddyforms_page_buddyforms-affiliation' || $hook === 'buddyforms_page_buddyforms-addons' ||
-			 $hook === 'buddyforms_page_buddyforms-pricing' || $hook === 'buddyforms_page_buddyforms_welcome_screen' ) {
+			if ( $hook === 'buddyforms_page_buddyforms-contact' || $hook === 'buddyforms_page_buddyforms-account' ||
+				 $hook === 'buddyforms_page_buddyforms-affiliation' || $hook === 'buddyforms_page_buddyforms-addons' ||
+				 $hook === 'buddyforms_page_buddyforms_bundle_screen' || $hook === 'buddyforms_page_buddyforms_welcome_screen' ) {
 			buddyforms_track( $hook );
 		} elseif ( $hook === 'post-new.php' ) {
 			$action_create = empty( $_REQUEST['action'] );

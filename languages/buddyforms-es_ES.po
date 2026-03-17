@@ -88,16 +88,16 @@ msgid "No Post Type Selected. Please select a post type"
 msgstr "No se ha seleccionado ningún tipo de Post. Por favor, seleccione un tipo de Post"
 
 #: includes/admin/class-bf-admin-notices.php:81
-msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
-msgstr "BuddyForms Professional es necesario para utilizar este formulario. Necesita actualizarse al Plan Profesional. Las versiones Free y Starter no soportan Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Ir a Pro Ahora</a>>"
+msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
+msgstr "BuddyForms Professional es necesario para utilizar este formulario. Necesita actualizarse al Plan Profesional. Las versiones Free y Starter no soportan Custom Post Types <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Ir a Pro Ahora</a>>"
 
 #: includes/admin/class-bf-admin-notices.php:86
 msgid "The Selected Post Type does not exist"
 msgstr "El tipo de Post seleccionado no existe"
 
 #: includes/admin/class-bf-admin-notices.php:96
-msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Go Pro Now</a>"
-msgstr "BuddyForms Professional es necesario para utilizar este formulario. Necesita actualizarse al Plan Profesional. Las versiones Free y Starter no soportan los elementos de formulario necesarios <a href=\"edit.php?post_type=buddyforms&page=buddyforms-pricing\">Ir a Pro Ahora</a>>"
+msgid "BuddyForms Professional is required to use this Form. You need to upgrade to the Professional Plan. The Free and Starter Versions does not support the required Form Elements <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Go Pro Now</a>"
+msgstr "BuddyForms Professional es necesario para utilizar este formulario. Necesita actualizarse al Plan Profesional. Las versiones Free y Starter no soportan los elementos de formulario necesarios <a href=\"edit.php?post_type=buddyforms&page=buddyforms_bundle_screen\">Ir a Pro Ahora</a>>"
 
 #: includes/admin/class-bf-admin-notices.php:128
 #, fuzzy
