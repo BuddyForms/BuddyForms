@@ -34,6 +34,8 @@
  * ***************************************************************************
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 if ( ! class_exists( 'BuddyForms' ) ) {
 	/**
 	 * Class BuddyForms
@@ -615,10 +617,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			$first_path = get_option( 'buddyforms_first_path_after_install' );
 
 			if ( ! isset( $buddyforms_core_fs ) ) {
-
-				// Include Freemius SDK.
-				require_once dirname( __FILE__ ) . '/includes/resources/freemius/start.php';
-
 				$buddyforms_core_fs = fs_dynamic_init(
 					array(
 						'id'                             => '391',

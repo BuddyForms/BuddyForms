@@ -5,18 +5,18 @@ require '.tk/RoboFileBase.php';
 class RoboFile extends RoboFileBase {
 
 	public function directoriesStructure() {
-		return array( 'assets', 'includes', 'languages', 'templates', 'vendor-scope' );
+		return array( 'assets', 'includes', 'languages', 'templates', 'vendor', 'vendor-scope' );
 	}
 
 	public function fileStructure() {
-		return array( 'BuddyForms.php', 'composer.json', 'license.txt', 'loco.xml', 'readme.txt', 'vendor-scope/buddyforms/composer.json' );
+		return array( 'BuddyForms.php', 'composer.json', 'composer.lock', 'license.txt', 'loco.xml', 'readme.txt', 'vendor-scope/buddyforms/composer.json' );
 	}
 
 	/**
 	 * @return array List of relative paths from the root folder of the plugin
 	 */
 	public function cleanPhpDirectories() {
-		return array( 'assets', 'includes/resources/freemius', 'vendor-scope' );
+		return array( 'assets', 'vendor', 'vendor-scope' );
 	}
 
 	public function pluginMainFile() {

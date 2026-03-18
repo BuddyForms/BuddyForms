@@ -17,6 +17,9 @@
   "homepage": "https://themekraft.com/buddyforms/",
   "license": "GPLv2 or later",
   "minimum-stability": "dev",
+  "require": {
+    "freemius/wordpress-sdk": "^2.13"
+  },
   "require-dev": {
   	"consolidation/robo": "^1.0.0",
     "bamarni/composer-bin-plugin": "dev-master"
