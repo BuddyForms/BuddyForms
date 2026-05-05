@@ -7,8 +7,8 @@
  * Version: 2.10.0-beta.3
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
- * Licence: GPLv3
- * Network: false
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: buddyforms
  * Domain Path: /languages
  * Svn: buddyforms

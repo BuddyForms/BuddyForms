@@ -1,4 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
+### macOS
+.DS_Store
+
 ### WordPress template
 *.log
 

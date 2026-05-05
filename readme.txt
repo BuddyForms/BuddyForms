@@ -265,6 +265,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 
 == Changelog ==
 = 2.10.0 - 04 May 2026 =
+* Plugin Check: fixed plugin-header License field, removed the invalid Network header, stripped hidden macOS metadata, and removed vestigial empty Freemius leftover directories.
 * Updated Freemius SDK to 2.13.1.
 * Reworked the Go Pro page to use the parameterized shared pricing-page submodule with three site-license tiers.
 * Refreshed the Go Pro page card layout to a responsive CSS grid.
