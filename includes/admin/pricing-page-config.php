@@ -16,6 +16,11 @@ if ( ! function_exists( 'buddyforms_pricing_page_config' ) ) {
 	 * @return array<string,mixed>
 	 */
 	function buddyforms_pricing_page_config( $config ) {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( ! $screen || ! str_contains( $screen->id, 'buddyforms_bundle_screen' ) ) {
+			return $config;
+		}
+
 		$config['heading']    = __( 'Get the BuddyForms Bundle', 'buddyforms' );
 		$config['subheading'] = __( 'Unlock every BuddyForms add-on with a single license, plus a year of updates and support.', 'buddyforms' );
 
