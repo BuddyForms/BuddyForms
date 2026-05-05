@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3a2cb0e7eac236a174bb7174679d3e5",
+    "content-hash": "2354a87472bc1ee20d830c96869597ac",
     "packages": [
         {
             "name": "freemius/wordpress-sdk",
-            "version": "2.13.0",
+            "version": "2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freemius/wordpress-sdk.git",
-                "reference": "3cbe98b5bd0b0fb5ca4df97b8088592737ea4375"
+                "reference": "7376c0eca1ae7f92aaba9d3b550bd10affe797ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/3cbe98b5bd0b0fb5ca4df97b8088592737ea4375",
-                "reference": "3cbe98b5bd0b0fb5ca4df97b8088592737ea4375",
+                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/7376c0eca1ae7f92aaba9d3b550bd10affe797ff",
+                "reference": "7376c0eca1ae7f92aaba9d3b550bd10affe797ff",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Freemius/wordpress-sdk/issues",
-                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.13.0"
+                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.13.1"
             },
-            "time": "2025-11-11T07:52:08+00:00"
+            "time": "2026-03-25T15:26:13+00:00"
         }
     ],
     "packages-dev": [
@@ -2006,9 +2006,9 @@
     "stability-flags": {
         "bamarni/composer-bin-plugin": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

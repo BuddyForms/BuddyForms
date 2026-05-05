@@ -82,7 +82,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 */
 		public function buddyforms_bundle_screen_menu() {
 			if ( buddyforms_core_fs()->is_not_paying() ) {
-				add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Go Pro!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'buddyforms_bundle_screen_content', 99 );
+				add_submenu_page( 'edit.php?post_type=buddyforms', __( 'Bundle', 'buddyforms' ), __( 'Go Pro!', 'buddyforms' ), 'manage_options', 'buddyforms_bundle_screen', 'tk_pricing_page_render', 99 );
 			}
 		}
 
@@ -430,6 +430,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/form-builder/form-templates.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/admin-ajax.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/pricing-page/pricing-page.php';
+				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/pricing-page-config.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/welcome-screen.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/submissions.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/settings.php';
@@ -567,8 +568,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 
 			update_option( 'buddyforms_submissions_page', $page_id );
 
-			update_option( 'buddyforms_first_path_after_install', 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen' );
-
 			set_transient( '_buddyforms_welcome_screen_activation_redirect', true, 30 );
 
 			$registration_gdpr_template                   = __( "By signing up on our site you agree to our terms and conditions [link]. We'll create a new user account for you based on your submissions. All data you submit will be stored on our servers.After your registration we'll instantly send you an email with an activation link to verify your mail address. ", 'buddyforms' );
@@ -610,52 +609,45 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 	 *
 	 * @return Freemius
 	 */
-	function buddyforms_core_fs() {
-		global $buddyforms_core_fs;
-
-		try {
-			$first_path = get_option( 'buddyforms_first_path_after_install' );
+	if ( ! function_exists( 'buddyforms_core_fs' ) ) {
+		function buddyforms_core_fs() {
+			global $buddyforms_core_fs;
 
 			if ( ! isset( $buddyforms_core_fs ) ) {
-				$buddyforms_core_fs = fs_dynamic_init(
-					array(
-						'id'                             => '391',
-						'slug'                           => 'buddyforms',
-						'type'                           => 'plugin',
-						'public_key'                     => 'pk_dea3d8c1c831caf06cfea10c7114c',
-						'is_premium'                     => true,
-						'has_addons'                     => true,
-						'has_paid_plans'                 => true,
-						'trial'                          => array(
-							'days'               => 7,
-							'is_require_payment' => true,
-						),
-						'has_affiliation'                => 'selected',
-						'menu'                           => array(
-							'slug'       => 'edit.php?post_type=buddyforms',
-							'first-path' => $first_path,
-							'support'         => false,
-							'contact'         => true,
-							'addons'          => true,
-							'affiliation'     => false,
-							'pricing'         => false,
-						),
-						'bundle_id' => '2046',
-						'bundle_public_key' => 'pk_ee958df753d34648b465568a836aa',
-						'has_paid_plans' => true,
-						'bundle_license_auto_activation' => true,
-					)
-				);
+				$buddyforms_core_fs = fs_dynamic_init( array(
+					'id'                             => '391',
+					'slug'                           => 'buddyforms',
+					'type'                           => 'plugin',
+					'public_key'                     => 'pk_dea3d8c1c831caf06cfea10c7114c',
+					'is_premium'                     => true,
+					'has_premium_version'            => true,
+					'has_addons'                     => true,
+					'has_paid_plans'                 => true,
+					'is_org_compliant'               => true,
+					'wp_org_gatekeeper'              => 'OA7#BoRiBNqdf52FvzEf!!074aRLPs8fspif$7K1#4u4Csys1fQlCecVcUTOs2mcpeVHi#C2j9d09fOTvbC0HloPT7fFee5WdS3G',
+					'trial'                          => array(
+						'days'               => 7,
+						'is_require_payment' => true,
+					),
+					'has_affiliation'                => 'selected',
+					'menu'                           => array(
+						'slug'        => 'edit.php?post_type=buddyforms',
+						'first-path'  => 'edit.php?post_type=buddyforms&page=buddyforms_welcome_screen',
+						'support'     => false,
+						'contact'     => true,
+						'addons'      => true,
+						'affiliation' => false,
+						'pricing'     => false,
+					),
+					'bundle_license_auto_activation' => true,
+				) );
 			}
 
-			// Signal that parent SDK was initiated.
-			do_action( 'buddyforms_core_fs_loaded' );
-
-		} catch ( Freemius_Exception $e ) {
-
+			return $buddyforms_core_fs;
 		}
 
-		return $buddyforms_core_fs;
+		buddyforms_core_fs();
+		do_action( 'buddyforms_core_fs_loaded' );
 	}
 
 	function buddyforms_php_version_admin_notice() {
