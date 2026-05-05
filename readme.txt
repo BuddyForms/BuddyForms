@@ -3,7 +3,7 @@ Contributors: themekraft, svenl77, konrads, buddyforms, shabushabu, projectkarol
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 4.0
 Tested up to: 6.8.1
-Stable tag: 2.9.0
+Stable tag: 2.10.0
 Requires PHP: 5.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -264,8 +264,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
-
-* Swap file_get_contents() for CURL in Captha implementation.
+= 2.10.0 - 04 May 2026 =
+* Updated Freemius SDK to 2.13.1.
+* Reworked the Go Pro page to use the parameterized shared pricing-page submodule with three site-license tiers.
+* Cleaned up the Freemius SDK init: removed the dead first-path option lookup, the duplicate has_paid_plans key, and the empty try/catch wrapper.
+* Swapped file_get_contents() for cURL in the captcha implementation.
 
 = 2.9.0 - 30 May 2025 =
 * Replaced file_get_contents with curl in captcha implementation.
