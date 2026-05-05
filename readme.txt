@@ -267,8 +267,11 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 = 2.10.0 - 04 May 2026 =
 * Updated Freemius SDK to 2.13.1.
 * Reworked the Go Pro page to use the parameterized shared pricing-page submodule with three site-license tiers.
+* Refreshed the Go Pro page card layout to a responsive CSS grid.
+* Highlighted the Go Pro menu link in the admin sidebar.
 * Cleaned up the Freemius SDK init: removed the dead first-path option lookup, the duplicate has_paid_plans key, and the empty try/catch wrapper.
 * Swapped file_get_contents() for cURL in the captcha implementation.
+* Tested up to WordPress 6.9.
 
 = 2.9.0 - 30 May 2025 =
 * Replaced file_get_contents with curl in captcha implementation.
