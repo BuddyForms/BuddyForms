@@ -212,7 +212,7 @@ function buddyforms_metabox_form_setup() {
 		),
 		array(
 			'value'     => $public_submit_login,
-			'shortDesc' => __( 'Give your existing customers the choice to login. Just place a login form above or under the form. The Login Form is only visible for logged of user.', 'buddyforms' ),
+			'shortDesc' => __( 'Give your existing customers the option to log in. Just place a login form above or below the form. The login form is only visible to logged-out users.', 'buddyforms' ),
 			'class'     => 'public-submit-option',
 		)
 	);

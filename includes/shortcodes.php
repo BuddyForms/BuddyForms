@@ -335,11 +335,11 @@ function buddyforms_nav( $args ) {
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( ! isset( $buddyforms[ $form_slug ] ) ) {
-		return esc_html__( 'The form with the slug "' . $form_slug . '" does not exist.', 'buddyforms' );
+		return sprintf( esc_html__( 'The form with the slug "%s" does not exist.', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	if ( ! isset( $buddyforms[ $form_slug ]['attached_page'] ) || 'none' === $buddyforms[ $form_slug ]['attached_page'] ) {
-		return esc_html__( "No submission management page has been configured for the form \"$form_slug\".", 'buddyforms' );
+		return sprintf( esc_html__( 'No submission management page has been configured for the form "%s".', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	$args['label'] = isset( $args['label_view'] ) ? $args['label_view'] : __( 'View', 'buddyforms' );
@@ -375,11 +375,11 @@ function buddyforms_button_view_posts( $args ) {
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( ! isset( $buddyforms[ $form_slug ] ) ) {
-		return esc_html__( 'The form with the slug "' . $form_slug . '" does not exist.', 'buddyforms' );
+		return sprintf( esc_html__( 'The form with the slug "%s" does not exist.', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	if ( ! isset( $buddyforms[ $form_slug ]['attached_page'] ) || 'none' === $buddyforms[ $form_slug ]['attached_page'] ) {
-		return esc_html__( "No submission management page has been configured for the form \"$form_slug\".", 'buddyforms' );
+		return sprintf( esc_html__( 'No submission management page has been configured for the form "%s".', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	$href = '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/view/' . $form_slug . '/';
@@ -412,11 +412,11 @@ function buddyforms_button_add_new( $args ) {
 	BuddyFormsAssets::load_tk_font_icons();
 
 	if ( ! isset( $buddyforms[ $form_slug ] ) ) {
-		return esc_html__( 'The form with the slug "' . $form_slug . '" does not exist.', 'buddyforms' );
+		return sprintf( esc_html__( 'The form with the slug "%s" does not exist.', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	if ( ! isset( $buddyforms[ $form_slug ]['attached_page'] ) || 'none' === $buddyforms[ $form_slug ]['attached_page'] ) {
-		return esc_html__( 'The form with the slug "' . $form_slug . '" does not have an attached page.', 'buddyforms' );
+		return sprintf( esc_html__( 'The form with the slug "%s" does not have an attached page.', 'buddyforms' ), esc_html( $form_slug ) );
 	}
 
 	$href = '/' . get_post( $buddyforms[ $form_slug ]['attached_page'] )->post_name . '/create/' . $form_slug . '/';
@@ -491,7 +491,7 @@ function buddyforms_reset_password_form( $args ) {
 
 		$buddyforms_registration_form = get_option( 'buddyforms_registration_form', 'none' );
 
-		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __( 'You need to login to change your password.' ) );
+		return buddyforms_get_wp_login_form( $buddyforms_registration_form, __( 'You need to log in to change your password.', 'buddyforms' ) );
 	}
 }
 

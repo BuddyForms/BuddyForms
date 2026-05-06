@@ -83,7 +83,7 @@ class BfAdminNotices {
 			if ( buddyforms_core_fs()->is__premium_only() ) {
 				if ( buddyforms_core_fs()->is_plan( 'professional' ) || buddyforms_core_fs()->is_trial() ) {
 					if ( ! in_array( $buddyform['post_type'], $post_types ) ) {
-						$messages[] = __( 'The Selected Post Type does not exist', 'buddyforms' );
+						$messages[] = __( 'The selected post type does not exist.', 'buddyforms' );
 					}
 				}
 			}

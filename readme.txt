@@ -266,6 +266,7 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 == Changelog ==
 = 2.10.0 - 04 May 2026 =
 * Plugin Check: fixed plugin-header License field, removed the invalid Network header, stripped hidden macOS metadata, removed vestigial empty Freemius leftover directories, and dropped the manual `load_plugin_textdomain()` call (WordPress.org loads translations automatically since WP 4.6).
+* Cleaned up the user-facing English copy: "Admin rights can not get changed" → "cannot be changed", "logged of user" → "logged-out users", "logged off users / not need to get checked" → "logged-out users / do not need to be checked", missing text-domain on a login-form fallback string, and three template-error messages that were embedding `$form_slug` directly into `esc_html__()` calls (now sprintf'd so translators can localize the template). POT regenerated; bundled de_DE / es_ES / fr_FR / pt_BR / pt_PT / zh_CN translations carried forward where the meaning was preserved.
 * Updated Freemius SDK to 2.13.1.
 * Reworked the Go Pro page to use the parameterized shared pricing-page submodule with three site-license tiers.
 * Refreshed the Go Pro page card layout to a responsive CSS grid.
