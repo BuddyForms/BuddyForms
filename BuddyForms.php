@@ -70,7 +70,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 			new BuddyFormsAssets();
 			add_action( 'init', array( $this, 'includes' ), 4, 1 );
 			add_action( 'init', array( $this, 'update_db_check' ), 10 );
-			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 			add_action( 'admin_menu', array( $this, 'buddyforms_bundle_screen_menu' ), 9999 );
 
@@ -461,16 +460,6 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/form-builder/meta-boxes/metabox-form-header.php';
 				require_once BUDDYFORMS_INCLUDES_PATH . 'admin/form-builder/meta-boxes/metabox-form-footer.php';
 			}
-		}
-
-		/**
-		 * Load the textdomain for the plugin
-		 *
-		 * @package buddyforms
-		 * @since 0.1-beta
-		 */
-		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'buddyforms', false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 
 		/**
