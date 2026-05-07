@@ -55,7 +55,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Initiate the class
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 0.1-beta
 		 */
 		public function __construct() {
@@ -90,7 +90,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 *
 		 * These constants can be overridden in bp-custom.php or wp-config.php.
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 0.1-beta
 		 */
 		public function load_constants() {
@@ -150,7 +150,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		 * as well as other dependent plugins, to hook into the loading process in an
 		 * orderly fashion.
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 0.1-beta
 		 */
 		public function init_hook() {
@@ -357,7 +357,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Setup all globals
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 0.1-beta
 		 */
 		static function set_globals() {
@@ -377,7 +377,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Include files needed by BuddyForms
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 0.1-beta
 		 */
 		public function includes() {
@@ -465,7 +465,7 @@ if ( ! class_exists( 'BuddyForms' ) ) {
 		/**
 		 * Update form 1.x version
 		 *
-		 * @package buddyforms
+		 * @package BuddyForms
 		 * @since 2.0
 		 */
 		function update_db_check() {

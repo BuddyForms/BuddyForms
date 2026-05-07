@@ -29,7 +29,7 @@ class BuddyFormsAssets {
 	/**
 	 * Check if a buddyforms view is displayed and load the needed styles and scripts
 	 *
-	 * @package buddyforms
+	 * @package BuddyForms
 	 * @since 1.0
 	 */
 	function front_js_loader() {
@@ -116,7 +116,7 @@ class BuddyFormsAssets {
 	 * @since 2.5.9 return the form slug
 	 * @since 2.4.6 added the $form_slug as parameter
 	 *
-	 * @package buddyforms
+	 * @package BuddyForms
 	 * @since 1.0
 	 */
 	public static function front_js_css( $content = '', $form_slug = '' ) {
@@ -233,7 +233,7 @@ class BuddyFormsAssets {
 	 *
 	 * @since 0.1-beta
 	 *
-	 * @package buddyforms
+	 * @package BuddyForms
 	 */
 	public function admin_styles( $hook_suffix ) {
 		global $post;
@@ -279,7 +279,7 @@ class BuddyFormsAssets {
 	 *
 	 * @since 0.1-beta
 	 *
-	 * @package buddyforms
+	 * @package BuddyForms
 	 */
 	function admin_js( $hook_suffix ) {
 		global $post, $wp_query, $buddyforms;

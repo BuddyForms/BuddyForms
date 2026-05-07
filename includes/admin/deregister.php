@@ -2,7 +2,7 @@
 /**
  * Remove Scripts and Styles loaded by other plugins and themes if the BuddyForms Admin is displayed.
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 2.0.5
  */
 

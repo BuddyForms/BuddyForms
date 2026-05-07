@@ -3,7 +3,7 @@
  * Pricing page filter registration for BuddyForms.
  * Provides bundle credentials, copy, and tier data to the shared pricing-page submodule.
  *
- * @package buddyforms
+ * @package BuddyForms
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

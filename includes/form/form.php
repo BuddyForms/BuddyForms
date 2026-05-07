@@ -447,7 +447,7 @@ function bf_get_default_post_to_edit( $post_type = 'post', $create_in_db = false
 /**
  * Save the submited form and create a global array with the response array
  *
- * @package buddyforms
+ * @package BuddyForms
  * @since 1.5
  */
 
