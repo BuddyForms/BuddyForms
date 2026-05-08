@@ -74,23 +74,20 @@ class BuddyFormsAssets {
 	}
 
 	/**
-	 * Register buddyforms thickbox this library is used from other buddyforms extension
+	 * Register the BuddyForms thickbox shim. Used by BuddyForms core and
+	 * downstream add-ons (BuddyForms-Modal, BuddyForms-Moderation, ...) that
+	 * emit `<a class="bf-thickbox">` trigger links. The shim binds WordPress
+	 * core's bundled thickbox to our `.bf-thickbox` selectors instead of
+	 * forking the entire 700-line library; the script handle and CSS class
+	 * remain the same public API as before.
 	 */
 	function register_bf_thickbox() {
-		wp_register_style( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.css', array(), BUDDYFORMS_VERSION );
-		wp_register_script( 'buddyforms-thickbox', BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.js', array( 'jquery' ), BUDDYFORMS_VERSION );
-		wp_localize_script(
+		wp_register_script(
 			'buddyforms-thickbox',
-			'bf_thickboxL10n',
-			array(
-				'next'             => __( 'Next &gt;' ),
-				'prev'             => __( '&lt; Prev' ),
-				'image'            => __( 'Image' ),
-				'of'               => __( 'of' ),
-				'close'            => __( 'Close' ),
-				'noiframes'        => __( 'This feature requires inline frames. You have iframes disabled or your browser does not support them.' ),
-				'loadingAnimation' => includes_url( 'js/thickbox/loadingAnimation.gif' ),
-			)
+			BUDDYFORMS_ASSETS . 'resources/bf-thickbox/bf-thickbox.js',
+			array( 'jquery', 'thickbox' ),
+			BUDDYFORMS_VERSION,
+			true
 		);
 	}
 

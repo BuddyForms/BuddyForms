@@ -2210,8 +2210,10 @@ add_filter( 'buddyforms_loop_form_slug', 'buddyforms_contact_author_loop_form_sl
  * @since 2.5.19
  */
 function buddyforms_add_bf_thickbox() {
+	// `buddyforms-thickbox` depends on core `thickbox`, which pulls in the
+	// matching script. Pull in the core stylesheet too so the modal renders.
 	wp_enqueue_script( 'buddyforms-thickbox' );
-	wp_enqueue_style( 'buddyforms-thickbox' );
+	wp_enqueue_style( 'thickbox' );
 }
 
 add_filter( 'buddyforms_mail_to_before_send_notification', 'buddyforms_process_shortcode_notificate_to_attr', 10, 2 );
