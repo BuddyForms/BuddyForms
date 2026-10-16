@@ -97,6 +97,8 @@ function buddyforms_metabox_admin_form_metabox( $post, $metabox ) {
 		}
 	}
 
+	wp_nonce_field( 'buddyforms_admin_form_metabox_' . $post->ID, 'buddyforms_admin_form_metabox_nonce' );
+
 	echo wp_kses( buddyforms_create_form_metabox( $form_slug, $metabox_fields, $post->ID, $buddyforms[ $form_slug ]['post_type'] ), buddyforms_wp_kses_allowed_atts() );
 }
 
@@ -110,6 +112,23 @@ function buddyforms_metabox_admin_form_metabox_save( $post_id ) {
 	global $buddyforms;
 
 	if ( ! is_admin() || defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	// Only save what the BuddyForms metabox on this post's edit screen sent.
+	if ( empty( $_POST['buddyforms_admin_form_metabox_nonce'] ) || ! is_string( $_POST['buddyforms_admin_form_metabox_nonce'] ) ) {
+		return;
+	}
+	$nonce = sanitize_text_field( wp_unslash( $_POST['buddyforms_admin_form_metabox_nonce'] ) );
+	if ( ! wp_verify_nonce( $nonce, 'buddyforms_admin_form_metabox_' . $post_id ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
 

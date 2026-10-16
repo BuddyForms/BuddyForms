@@ -161,7 +161,8 @@ function buddyforms_wp_insert_post_data( $data, $postarr ) {
 		return $data;
 	}
 
-	if ( ! empty( $data['post_type'] ) && $data['post_type'] === 'buddyforms' && ! empty( $_POST['buddyforms_options'] ) && ! empty( $_POST['buddyforms_options']['slug'] ) ) {
+	$form_id = ! empty( $postarr['ID'] ) ? (int) $postarr['ID'] : 0;
+	if ( ! empty( $data['post_type'] ) && $data['post_type'] === 'buddyforms' && ! empty( $_POST['buddyforms_options'] ) && ! empty( $_POST['buddyforms_options']['slug'] ) && buddyforms_is_form_builder_save( $form_id ) ) {
 		$new_slug = sanitize_title( wp_unslash( $_POST['buddyforms_options']['slug'] ) );
 		if ( ! empty( $data['post_name'] ) && $data['post_name'] !== $new_slug ) {
 			$result = buddyforms_update_form_slug( $data['post_name'], $new_slug );
@@ -175,6 +176,58 @@ function buddyforms_wp_insert_post_data( $data, $postarr ) {
 }
 
 add_filter( 'wp_insert_post_data', 'buddyforms_wp_insert_post_data', 10, 2 );
+
+/**
+ * Print the form builder nonce inside the form edit screen's post form.
+ *
+ * It is not part of the Form Builder meta box because loading a template replaces that markup.
+ *
+ * @param WP_Post $post
+ *
+ * @since 2.10.6
+ */
+function buddyforms_form_builder_nonce_field( $post ) {
+	if ( empty( $post ) || $post->post_type !== 'buddyforms' ) {
+		return;
+	}
+
+	wp_nonce_field( 'buddyforms_form_builder_save_' . $post->ID, 'buddyforms_form_builder_nonce' );
+}
+
+add_action( 'edit_form_top', 'buddyforms_form_builder_nonce_field' );
+
+/**
+ * Check that the current request is a form builder save of this form: the builder's nonce for this
+ * form and permission to edit it. Front-end submissions never pass this.
+ *
+ * @param int $post_id The form post ID.
+ *
+ * @return bool
+ * @since 2.10.6
+ */
+function buddyforms_is_form_builder_save( $post_id ) {
+	if ( empty( $post_id ) || empty( $_POST['buddyforms_form_builder_nonce'] ) || ! is_string( $_POST['buddyforms_form_builder_nonce'] ) ) {
+		return false;
+	}
+
+	$nonce = sanitize_text_field( wp_unslash( $_POST['buddyforms_form_builder_nonce'] ) );
+	if ( ! wp_verify_nonce( $nonce, 'buddyforms_form_builder_save_' . $post_id ) ) {
+		return false;
+	}
+
+	return current_user_can( 'edit_post', $post_id );
+}
+
+/**
+ * Form settings that decide who can submit a form and what it does with the submission.
+ * A request from the front end can never change them, whatever else it may save.
+ *
+ * @return array
+ * @since 2.10.6
+ */
+function buddyforms_form_protected_options() {
+	return array( 'form_type', 'public_submit', 'public_submit_create_account', 'registration' );
+}
 
 /**
  * Adds a box to the main column on the Post and Page edit screens.
@@ -196,7 +249,26 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 		return;
 	}
 
+	if ( ! buddyforms_is_form_builder_save( $post_id ) ) {
+		return;
+	}
+
 	$buddyform = buddyforms_sanitize( '', wp_unslash( $_POST['buddyforms_options'] ) );
+	if ( ! is_array( $buddyform ) ) {
+		return;
+	}
+
+	// Outside wp-admin, keep the stored values of the settings that control public access.
+	if ( ! is_admin() || ! is_user_logged_in() ) {
+		$stored_options = get_post_meta( $post_id, '_buddyforms_options', true );
+		foreach ( buddyforms_form_protected_options() as $option_key ) {
+			if ( is_array( $stored_options ) && array_key_exists( $option_key, $stored_options ) ) {
+				$buddyform[ $option_key ] = $stored_options[ $option_key ];
+			} else {
+				unset( $buddyform[ $option_key ] );
+			}
+		}
+	}
 
 	// Add post title as form name and post name as form slug.
 	$buddyform['name'] = $post->post_title;
@@ -215,7 +287,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Update post meta
 	update_post_meta( $post_id, '_buddyforms_options', $buddyform );
 
-	$form_type = $buddyform['form_type'];
+	$form_type = isset( $buddyform['form_type'] ) ? $buddyform['form_type'] : '';
 
 	// Save the Roles and capabilities.
 	if ( isset( $_POST['buddyforms_roles'] ) ) {
@@ -253,7 +325,7 @@ function buddyforms_edit_form_save_meta_box_data( $post_id ) {
 	// Rewrite the page roles and flash permalink if needed
 	buddyforms_attached_page_rewrite_rules( true );
 
-	buddyforms_track( 'builder-save', array( 'form-type' => $buddyform['form_type'] ) );
+	buddyforms_track( 'builder-save', array( 'form-type' => $form_type ) );
 
 	do_action( 'buddyforms_after_update_form_options', $buddyform['slug'], $buddyform, $post );
 }
