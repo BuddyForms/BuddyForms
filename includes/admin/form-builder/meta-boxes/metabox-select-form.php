@@ -98,7 +98,7 @@ function buddyforms_save_postdata( $post_id ) {
 		return $post_id;
 	}
 
-	$nonce = $_POST['buddyforms_inner_custom_box_nonce'];
+	$nonce = sanitize_text_field( wp_unslash( $_POST['buddyforms_inner_custom_box_nonce'] ) );
 
 	// Verify that the nonce is valid.
 	if ( ! wp_verify_nonce( $nonce, 'buddyforms_inner_custom_box' ) ) {
@@ -110,17 +110,13 @@ function buddyforms_save_postdata( $post_id ) {
 		return $post_id;
 	}
 
-	// Check the user's permissions.
-	if ( 'page' == $_POST['post_type'] ) {
+	// Check the user's permissions. edit_post maps to edit_page for pages.
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return $post_id;
+	}
 
-		if ( ! current_user_can( 'edit_page', $post_id ) ) {
-			return $post_id;
-		}
-	} else {
-
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return $post_id;
-		}
+	if ( ! isset( $_POST['_bf_form_slug'] ) ) {
+		return $post_id;
 	}
 
 	/* OK, its safe for us to save the data now. */

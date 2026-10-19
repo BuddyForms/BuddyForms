@@ -135,6 +135,52 @@ function buddyforms_wp_update_user() {
 	return false;
 }
 
+/**
+ * Check if a role can be given to a visitor who registers through a form.
+ *
+ * Roles with any of the blocked capabilities are refused. A role that does not exist grants nothing.
+ *
+ * @param string $role      Role slug from the form settings.
+ * @param string $form_slug The form slug.
+ *
+ * @return bool
+ * @since 2.10.6
+ */
+function buddyforms_is_registration_role_allowed( $role, $form_slug = '' ) {
+	if ( ! is_string( $role ) ) {
+		return false;
+	}
+
+	$role_object = get_role( $role );
+	if ( empty( $role_object ) ) {
+		return true;
+	}
+
+	/**
+	 * Filter the capabilities a role must not have to be given to a visitor who registers through a form.
+	 *
+	 * @param array  $capabilities Blocked capabilities.
+	 * @param string $role         Role slug from the form settings.
+	 * @param string $form_slug    The form slug.
+	 *
+	 * @since 2.10.6
+	 */
+	$blocked_capabilities = apply_filters(
+		'buddyforms_registration_blocked_capabilities',
+		array( 'manage_options', 'promote_users', 'edit_users', 'create_users', 'install_plugins' ),
+		$role,
+		$form_slug
+	);
+
+	foreach ( (array) $blocked_capabilities as $capability ) {
+		if ( $role_object->has_cap( $capability ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 // register a new user
 /**
  * @return bool|int|WP_Error
@@ -235,6 +281,12 @@ function buddyforms_wp_insert_user() {
 	}
 
 	$user_role = isset( $buddyforms[ $form_slug ]['registration']['new_user_role'] ) ? $buddyforms[ $form_slug ]['registration']['new_user_role'] : 'subscriber';
+
+	// A visitor can never register with a role that can manage the site, whatever the form says.
+	if ( ! $hasError && ! is_user_logged_in() && ! buddyforms_is_registration_role_allowed( $user_role, $form_slug ) ) {
+		$hasError = true;
+		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, __( 'Registration is not available with this form. Please contact the site administrator.', 'buddyforms' ), '', $form_slug ) );
+	}
 
 	// only create the user in if there are no errors
 	if ( ! $hasError ) {

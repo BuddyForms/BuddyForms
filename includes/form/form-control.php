@@ -122,6 +122,17 @@ function buddyforms_process_submission( $args = array() ) {
 		return $args;
 	}
 
+	// The post type always comes from the saved form. The request's bf_post_type (and post_type) is
+	// ignored, so a submission can never create or edit posts of another type, forms included.
+	$post_type = buddyforms_get_form_post_type( $form_slug );
+	if ( buddyforms_is_submission_post_type_blocked( $post_type ) ) {
+		return array(
+			'hasError'      => true,
+			'form_slug'     => $form_slug,
+			'error_message' => __( 'Form submit error. Please contact the site administrator.', 'buddyforms' ),
+		);
+	}
+
 	$is_draft_enabled   = buddyforms_is_permission_enabled( $form_slug );
 	$post_status        = $buddyforms[ $form_slug ]['status']; // Post status setup in the form
 	$post_status_action = ! empty( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : $post_status; // Post status from the form. default actions draft and publish or setup option
@@ -254,10 +265,6 @@ function buddyforms_process_submission( $args = array() ) {
 	// Ok let us start processing the post form
 	do_action( 'buddyforms_process_submission_start', $args );
 
-	if ( isset( $_POST['bf_post_type'] ) ) {
-		$post_type = sanitize_text_field( wp_unslash( $_POST['bf_post_type'] ) );
-	}
-
 	if ( $post_id != 0 && $form_type !== 'registration' ) {
 		if ( ! empty( $revision_id ) ) {
 			$the_post = get_post( $revision_id );
@@ -266,14 +273,9 @@ function buddyforms_process_submission( $args = array() ) {
 			$the_post = get_post( $post_id );
 		}
 
-		// Check if the post to edit match with the form setting. An existing post must match the form's
-		// post type, not the one sent in the request.
-		$target_post        = get_post( $post_id );
-		$expected_post_type = $post_type;
-		if ( ! empty( $target_post ) && $target_post->post_status !== 'auto-draft' && ! empty( $buddyforms[ $form_slug ]['post_type'] ) ) {
-			$expected_post_type = $buddyforms[ $form_slug ]['post_type'];
-		}
-		if ( empty( $target_post ) || $target_post->post_type !== $expected_post_type ) {
+		// The post to edit, auto-drafts included, must be of the form's post type.
+		$target_post = get_post( $post_id );
+		if ( empty( $target_post ) || $target_post->post_type !== $post_type ) {
 			$args = array(
 				'hasError'      => true,
 				'error_message' => apply_filters( 'buddyforms_user_can_edit_error_message', __( 'You do not have the required user role to use this form', 'buddyforms' ) ),
@@ -452,6 +454,11 @@ function buddyforms_process_submission( $args = array() ) {
 	// Create the post
 	$args = buddyforms_update_post( $args );
 
+	// A new post (post_id 0) only gets its ID, or the WP_Error, from the update.
+	if ( isset( $args['post_id'] ) ) {
+		$post_id = $args['post_id'];
+	}
+
 	/*
 	 * Check if the update or insert was successful
 	 */
@@ -508,7 +515,7 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 	} else {
 		$hasError      = true;
-		$error_message = $post_id->get_error_message();
+		$error_message = is_wp_error( $post_id ) ? $post_id->get_error_message() : __( 'Form submit error. Please contact the site administrator.', 'buddyforms' );
 		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
 
@@ -550,6 +557,58 @@ function buddyforms_process_submission( $args = array() ) {
 	}
 
 	return $args;
+}
+
+/**
+ * Get the post type a form saves its entries as, taken from the saved form settings only.
+ *
+ * Callers must refuse the types buddyforms_is_submission_post_type_blocked() reports.
+ *
+ * @param string $form_slug
+ *
+ * @return string
+ * @since 2.10.6
+ */
+function buddyforms_get_form_post_type( $form_slug ) {
+	global $buddyforms;
+
+	$post_type = '';
+	if ( ! empty( $buddyforms[ $form_slug ]['post_type'] ) && is_string( $buddyforms[ $form_slug ]['post_type'] ) ) {
+		$post_type = $buddyforms[ $form_slug ]['post_type'];
+	}
+
+	/**
+	 * Filter the post type a form submission is saved as.
+	 *
+	 * @param string $post_type The post type from the form settings.
+	 * @param string $form_slug The form slug.
+	 *
+	 * @since 2.10.6
+	 */
+	$post_type = apply_filters( 'buddyforms_submission_post_type', $post_type, $form_slug );
+
+	return is_string( $post_type ) ? $post_type : '';
+}
+
+/**
+ * Whether a post type can never be the target of a front-end submission.
+ *
+ * These types are internal to WordPress or BuddyForms (the forms themselves, Customizer changesets,
+ * menu items, privacy requests, ...). Saving a public submission as one of them would let a visitor
+ * write configuration or content that core acts on.
+ *
+ * @param string $post_type
+ *
+ * @return bool
+ * @since 2.10.6
+ */
+function buddyforms_is_submission_post_type_blocked( $post_type ) {
+	$blocked = apply_filters(
+		'buddyforms_submission_blocked_post_types',
+		array( 'buddyforms', 'customize_changeset', 'nav_menu_item', 'user_request', 'oembed_cache', 'revision', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wp_block' )
+	);
+
+	return in_array( $post_type, (array) $blocked, true );
 }
 
 /**
