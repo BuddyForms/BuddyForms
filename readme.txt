@@ -3,7 +3,7 @@ Contributors: themekraft, svenl77, konrads, buddyforms, shabushabu, projectkarol
 Tags: custom form, form builder, registration, user registration, forms
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 2.10.5
+Stable tag: 2.10.6
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -264,6 +264,13 @@ If you still get stuck somewhere, our support gets you back on the right track. 
 4. Login/ Logout Form - Add Loggin Forms and define a custom redirect after login
 
 == Changelog ==
+= 2.10.6 - 19 Oct 2026 =
+* Security: front-end submissions always save entries as the post type configured in the form, and never as WordPress-internal types or as forms.
+* Security: anonymous registration cannot assign a role that can manage the site or its users. The list of blocked capabilities can be changed with the `buddyforms_registration_blocked_capabilities` filter.
+* Security: saving a form in the form builder and saving the entry fields meta box now check a nonce and the user's permission to edit the post.
+* Changed: the `post_type` attribute of the `[buddyforms_form]` shortcode no longer changes the post type entries are saved as. Use the `buddyforms_submission_post_type` filter instead.
+* Fixed a fatal error when a submission arrived without an entry ID.
+* Updated the Go Pro links to the current themekraft.com product pages.
 = 2.10.5 - 07 Oct 2026 =
 * Fixed a fatal error when activating the premium version while the free version is active. Activating one version now deactivates the other one.
 = 2.10.4 - 06 Oct 2026 =
