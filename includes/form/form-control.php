@@ -125,7 +125,7 @@ function buddyforms_process_submission( $args = array() ) {
 	// The post type always comes from the saved form. The request's bf_post_type (and post_type) is
 	// ignored, so a submission can never create or edit posts of another type, forms included.
 	$post_type = buddyforms_get_form_post_type( $form_slug );
-	if ( 'buddyforms' === $post_type ) {
+	if ( buddyforms_is_submission_post_type_blocked( $post_type ) ) {
 		return array(
 			'hasError'      => true,
 			'form_slug'     => $form_slug,
@@ -454,6 +454,11 @@ function buddyforms_process_submission( $args = array() ) {
 	// Create the post
 	$args = buddyforms_update_post( $args );
 
+	// A new post (post_id 0) only gets its ID, or the WP_Error, from the update.
+	if ( isset( $args['post_id'] ) ) {
+		$post_id = $args['post_id'];
+	}
+
 	/*
 	 * Check if the update or insert was successful
 	 */
@@ -510,7 +515,7 @@ function buddyforms_process_submission( $args = array() ) {
 		}
 	} else {
 		$hasError      = true;
-		$error_message = $post_id->get_error_message();
+		$error_message = is_wp_error( $post_id ) ? $post_id->get_error_message() : __( 'Form submit error. Please contact the site administrator.', 'buddyforms' );
 		$global_error->add_error( new BuddyForms_Error( 'buddyforms_form_' . $form_slug, $error_message, '', $form_slug ) );
 	}
 
@@ -557,7 +562,7 @@ function buddyforms_process_submission( $args = array() ) {
 /**
  * Get the post type a form saves its entries as, taken from the saved form settings only.
  *
- * Callers must refuse `buddyforms`, the post type of the forms themselves.
+ * Callers must refuse the types buddyforms_is_submission_post_type_blocked() reports.
  *
  * @param string $form_slug
  *
@@ -583,6 +588,27 @@ function buddyforms_get_form_post_type( $form_slug ) {
 	$post_type = apply_filters( 'buddyforms_submission_post_type', $post_type, $form_slug );
 
 	return is_string( $post_type ) ? $post_type : '';
+}
+
+/**
+ * Whether a post type can never be the target of a front-end submission.
+ *
+ * These types are internal to WordPress or BuddyForms (the forms themselves, Customizer changesets,
+ * menu items, privacy requests, ...). Saving a public submission as one of them would let a visitor
+ * write configuration or content that core acts on.
+ *
+ * @param string $post_type
+ *
+ * @return bool
+ * @since 2.10.6
+ */
+function buddyforms_is_submission_post_type_blocked( $post_type ) {
+	$blocked = apply_filters(
+		'buddyforms_submission_blocked_post_types',
+		array( 'buddyforms', 'customize_changeset', 'nav_menu_item', 'user_request', 'oembed_cache', 'revision', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wp_block' )
+	);
+
+	return in_array( $post_type, (array) $blocked, true );
 }
 
 /**

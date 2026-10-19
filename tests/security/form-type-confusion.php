@@ -54,6 +54,7 @@ $form_options = array(
 	'public'    => array( 'form_type' => 'post', 'post_type' => 'post', 'public_submit' => 'public_submit' ),
 	'reg_admin' => array( 'form_type' => 'registration', 'post_type' => 'bf_submissions', 'registration' => array( 'new_user_role' => 'administrator' ) ),
 	'reg_sub'   => array( 'form_type' => 'registration', 'post_type' => 'bf_submissions', 'registration' => array( 'new_user_role' => 'subscriber' ) ),
+	'internal'  => array( 'form_type' => 'post', 'post_type' => 'customize_changeset', 'public_submit' => 'public_submit' ),
 	'account'   => array( 'form_type' => 'post', 'post_type' => 'post', 'public_submit' => 'public_submit', 'public_submit_create_account' => array( 'public_submit_create_account' ), 'registration' => array( 'new_user_role' => 'administrator' ) ),
 );
 $forms_of_marker = function () use ( $marker ) {
@@ -95,6 +96,12 @@ try {
 		$pass = wp_generate_password( 16, false );
 		return array( 'form_slug' => $slug, 'post_id' => $draft, 'form_action' => 'create', 'bf_hweb' => '', 'redirect_to' => '/', 'user_login' => 'bftc' . $who . $marker, 'user_email' => 'bftc-' . $who . '-' . $marker . '@example.com', 'buddyforms_user_pass' => $pass, 'buddyforms_user_pass_confirm' => $pass );
 	};
+	// Angle brackets as JSON escapes: wp_kses_post() leaves them alone and core's json_decode() rebuilds the tag.
+	$changeset = '{"widget_custom_html[2]":{"value":{"title":"' . $marker . '","content":"\u003Cscript\u003Ewindow.bftcxss=1\u003C/script\u003E"}}}';
+	$changesets_of_marker = function () use ( $marker ) {
+		// Core moves a changeset created as published straight to the trash, so 'any' would miss it.
+		return get_posts( array( 'post_type' => 'customize_changeset', 'post_status' => array( 'publish', 'draft', 'pending', 'future', 'auto-draft', 'trash' ), 'numberposts' => -1, 's' => $marker, 'fields' => 'ids' ) );
+	};
 	$builder_post = function ( $name, $options ) use ( $posts, $slugs ) {
 		return array( 'post_ID' => $posts[ $name ], 'buddyforms_options' => array_merge( get_post_meta( $posts[ $name ], '_buddyforms_options', true ), array( 'slug' => $slugs[ $name ] ), $options ) );
 	};
@@ -105,6 +112,18 @@ try {
 			'case'  => array( 'run' => 'submit', 'user' => 0, 'nonces' => $form_nonce, 'post' => array_merge( $submission, array( 'post_id' => $posts['published'], 'bf_post_type' => 'buddyforms', 'post_type' => 'buddyforms', 'buddyforms_form_title' => 'BF injected ' . $marker, 'buddyforms_options' => $injected ) ) ),
 			'check' => function () use ( $forms_of_marker ) {
 				return array() === $forms_of_marker();
+			},
+		),
+		'guest submission with bf_post_type=customize_changeset stores no changeset' => array(
+			'case'  => array( 'run' => 'submit', 'user' => 0, 'nonces' => $form_nonce, 'post' => array_merge( $submission, array( 'post_id' => 0, 'bf_post_type' => 'customize_changeset', 'post_type' => 'customize_changeset', 'buddyforms_form_title' => 'BF changeset ' . $marker, 'buddyforms_form_content' => $changeset ) ) ),
+			'check' => function () use ( $changesets_of_marker ) {
+				return array() === $changesets_of_marker();
+			},
+		),
+		'guest submission to a form saved as customize_changeset is refused' => array(
+			'case'  => array( 'run' => 'submit', 'user' => 0, 'nonces' => $form_nonce, 'post' => array_merge( $submission, array( 'form_slug' => $slugs['internal'], 'post_id' => 0, 'buddyforms_form_title' => 'BF internal ' . $marker, 'buddyforms_form_content' => $changeset ) ) ),
+			'check' => function () use ( $changesets_of_marker ) {
+				return array() === $changesets_of_marker();
 			},
 		),
 		'guest submission cannot take over a buddyforms auto-draft' => array(
@@ -209,7 +228,7 @@ try {
 		}
 	}
 } finally {
-	foreach ( array_merge( $posts, $forms_of_marker() ) as $id ) {
+	foreach ( array_merge( $posts, $forms_of_marker(), isset( $changesets_of_marker ) ? $changesets_of_marker() : array() ) as $id ) {
 		wp_delete_post( $id, true );
 	}
 	foreach ( get_posts( array( 'post_type' => array( 'post', 'bf_submissions' ), 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'meta_query' => array( array( 'key' => '_bf_form_slug', 'value' => array_values( isset( $slugs ) ? $slugs : array() ), 'compare' => 'IN' ) ) ) ) as $id ) {
